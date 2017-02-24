@@ -1,0 +1,21 @@
+Package: pointblank
+Type: Package
+Title: Validation of local and remote data tables
+Version: 0.1
+Authors@R: person(
+             "Richard", "Iannone",
+             role = c("aut", "cre"),
+             email = "riannone@me.com")
+Maintainer: Richard Iannone <riannone@me.com>
+Description: Check data tables for problems at close range.
+License: MIT + file LICENSE
+Imports:
+    dplyr (>= 0.5.0),
+    magrittr (>= 1.5),
+    tibble (>= 1.2),
+    tidyr (>= 0.6.1)
+URL: https://github.com/rich-iannone/pointblank
+BugReports: https://github.com/rich-iannone/pointblank/issues
+Suggests:
+    knitr
+RoxygenNote: 6.0.1

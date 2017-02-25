@@ -5,7 +5,7 @@
 \title{Determine the course of action for a
 given verification step.}
 \usage{
-determine_action(judgment, report_count, warn_count, notify_count)
+determine_action(false_count, report_count, warn_count, notify_count)
 }
 \value{
 a tibble with decision results.

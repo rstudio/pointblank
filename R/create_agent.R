@@ -15,7 +15,6 @@ create_agent <- function() {
         tibble::tibble(
           tbl_name = as.character(NA),
           db_type = as.character(NA),
-          db_cred_file_path = as.character(NA),
           assertion_type = as.character(NA),
           column = as.character(NA),
           value = as.numeric(NA),
@@ -26,7 +25,9 @@ create_agent <- function() {
           report = as.logical(NA),
           warn = as.logical(NA),
           notify = as.logical(NA),
-          row_sample = as.numeric(NA))[-1, ]
+          row_sample = as.numeric(NA),
+          db_cred_file_path = as.character(NA)
+          )[-1, ]
     )
   
   return(agent)

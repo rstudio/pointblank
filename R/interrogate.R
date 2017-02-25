@@ -19,10 +19,13 @@ interrogate <- function(agent) {
     
     if (agent$validation_set$db_type[i] == "local") {
       
+      # Create `table` object as the direct reference to a
+      # local `data.frame` or `tbl_df` object
       table <- get(agent$validation_set$tbl_name[i])
       
     } else if (agent$validation_set$db_type[i] == "PostgreSQL") {
       
+      # Create `table` object as an SQL entry point for a remote table
       table <- 
         set_entry_point(
           table = agent$validation_set$tbl_name[i],
@@ -30,10 +33,12 @@ interrogate <- function(agent) {
           credentials_file = agent$validation_set$db_cred_file_path[i])
     }
     
+    # Get operator values for all assertion types
     if (agent$validation_set$assertion_type[i] == "verify_col_gt") {
       operator <- ">"
     }
     
+    # Get the final judgment on the table and the query
     judgment <- 
       table %>%
       dplyr::mutate_(.dots = setNames(
@@ -43,18 +48,28 @@ interrogate <- function(agent) {
           agent$validation_set$value[i]),
         "pb_is_good_"))
     
+    # Get total count of rows
+    n <-
+      judgment %>%
+      dplyr::group_by() %>%
+      dplyr::summarize(row_count = n()) %>%
+      tibble::as_tibble() %>%
+      .$row_count
+    
+    agent$validation_set$n[i] <- n
+    
     # Get count of rows where `pb_is_good_ == FALSE`
     false_count <-
       judgment %>%
-      filter(pb_is_good_ == FALSE) %>%
-      group_by() %>%
-      summarize(pb_is_not_good_ = n()) %>%
-      as_tibble() %>%
+      dplyr::filter(pb_is_good_ == FALSE) %>%
+      dplyr::group_by() %>%
+      dplyr::summarize(pb_is_not_good_ = n()) %>%
+      tibble::as_tibble() %>%
       .$pb_is_not_good_
     
     if (false_count > 0) {
       
-      agent$validation_set$passed <- FALSE
+      agent$validation_set$all_passed[i] <- FALSE
       
       problem_rows <- 
         judgment %>%
@@ -67,9 +82,9 @@ interrogate <- function(agent) {
         problem_rows %>%
         tidyr::nest_(key_col = "data", nest_cols = names(.))
       
-      agent$validation_set$row_sample[i][[1]][[1]] 
-    } else {
-      agent$validation_set$passed[i] <- TRUE
+
+    } else if (false_count == 0) {
+      agent$validation_set$all_passed[i] <- TRUE
     }
     
     actions <-

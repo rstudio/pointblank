@@ -10,8 +10,10 @@ Maintainer: Richard Iannone <riannone@me.com>
 Description: Check data tables for problems at close range.
 License: MIT + file LICENSE
 Imports:
+    DBI (>= 0.5),
     dplyr (>= 0.5.0),
     magrittr (>= 1.5),
+    RPostgreSQL (>= 0.4),
     tibble (>= 1.2),
     tidyr (>= 0.6.1)
 URL: https://github.com/rich-iannone/pointblank

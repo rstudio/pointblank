@@ -18,38 +18,26 @@ verify_col_gt <- function(agent,
                           db_type = NULL,
                           credentials_file = NULL) {
   
-  validation_component <-
-    tibble::tibble(
-      tbl_name = as.character(agent$focal_tbl_name),
-      db_type = as.character(agent$focal_db_type),
-      db_cred_file_path = as.character(agent$focal_db_cred_file_path),
-      assertion_type = "verify_col_gt",
-      column = as.character(column),
-      value = as.numeric(value),
-      passed = as.logical(NA),
-      report_count = as.numeric(report_count),
-      warn_count = as.numeric(warn_count),
-      notify_count = as.numeric(notify_count))
+  assertion_type <- "verify_col_gt"
   
-  # If just `tbl_name` provided, assume it is
-  # a local data frame
-  if (!is.null(tbl_name)) {
-    validation_component$tbl_name <- tbl_name
-  }
-  
-  if (!is.null(db_type)) {
-    validation_component$db_type <- db_type
-  }
-  
-  if (!is.null(credentials_file)) {
-    validation_component$db_cred_file_path <- credentials_file
-  }
+  validation_step <-
+    create_validation_step(
+      agent = agent,
+      assertion_type = assertion_type,
+      column = column,
+      value = value,
+      report_count = report_count,
+      warn_count = warn_count,
+      notify_count = notify_count,
+      tbl_name = ifelse(is.null(tbl_name), as.character(NA), tbl_name),
+      db_type = ifelse(is.null(db_type), as.character(NA), db_type),
+      credentials_file = ifelse(is.null(credentials_file), as.character(NA), credentials_file))
   
   # Append `validation_component` to `validation_set`
   agent$validation_set <-
     dplyr::bind_rows(
       agent$validation_set,
-      validation_component)
+      validation_step)
   
   return(agent)
 }

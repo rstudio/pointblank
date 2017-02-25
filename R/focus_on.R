@@ -8,7 +8,7 @@
 focus_on <- function(agent,
                      tbl_name,
                      db_type = NULL,
-                     credentials_file = NULL) {
+                     creds_file = NULL) {
   
   agent$focal_tbl_name <- tbl_name
   
@@ -18,10 +18,10 @@ focus_on <- function(agent,
     agent$focal_db_type <- db_type
   }
   
-  if (is.null(credentials_file)) {
+  if (is.null(creds_file)) {
     agent$focal_db_cred_file_path <- as.character(NA)
-  } else if (!is.null(credentials_file)) {
-    agent$focal_db_cred_file_path <- credentials_file
+  } else if (!is.null(creds_file)) {
+    agent$focal_db_cred_file_path <- creds_file
   }
   
   return(agent)

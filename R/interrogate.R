@@ -30,7 +30,7 @@ interrogate <- function(agent) {
         set_entry_point(
           table = agent$validation_set$tbl_name[i],
           db_type = agent$validation_set$db_type[i],
-          credentials_file = agent$validation_set$db_cred_file_path[i])
+          creds_file = agent$validation_set$db_cred_file_path[i])
     }
     
     # Get operator values for all assertion types

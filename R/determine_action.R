@@ -3,35 +3,28 @@
 #' @description Based on a recent judgment,
 #' what actions are taken now?
 #' @return a tibble with decision results.
-#' @importFrom dplyr filter
-#' @importFrom tibble tibble
+#' @importFrom dplyr filter group_by summarize
+#' @importFrom tibble tibble as_tibble
 #' @export determine_action
 
-determine_action <- function(judgment,
+determine_action <- function(false_count,
                              report_count,
                              warn_count,
                              notify_count) {
   
-  # Determine which rows do not pass the
-  # verification step
-  rows_bad <-
-    judgment %>%
-    dplyr::filter(pb_is_good_ == FALSE) %>%
-    nrow()
-  
-  if (rows_bad >= report_count) {
+  if (false_count >= report_count) {
     report <- TRUE
   } else {
     report <- FALSE
   }
   
-  if (rows_bad >= warn_count) {
+  if (false_count >= warn_count) {
     warn <- TRUE
   } else {
     warn <- FALSE
   }
   
-  if (rows_bad >= notify_count) {
+  if (false_count >= notify_count) {
     notify <- TRUE
   } else {
     notify <- FALSE
@@ -45,4 +38,3 @@ determine_action <- function(judgment,
   
   return(action_df)
 }
-

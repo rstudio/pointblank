@@ -6,8 +6,7 @@
 greater than a specified value}
 \usage{
 verify_col_gt(agent, column, value, report_count = 0, warn_count = 1,
-  notify_count = 2, tbl_name = NULL, db_type = NULL,
-  credentials_file = NULL)
+  notify_count = 2, tbl_name = NULL, db_type = NULL, creds_file = NULL)
 }
 \value{
 an agent object.

@@ -34,7 +34,7 @@ interrogate <- function(agent) {
     }
     
     # Get operator values for all assertion types
-    if (agent$validation_set$assertion_type[i] == "verify_col_gt") {
+    if (agent$validation_set$assertion_type[i] == "col_vals_gt") {
       operator <- ">"
     }
     

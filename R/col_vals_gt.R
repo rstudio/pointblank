@@ -6,19 +6,19 @@
 #' @return an agent object.
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
-#' @export verify_col_gt
+#' @export col_vals_gt
 
-verify_col_gt <- function(agent,
-                          column,
-                          value,
-                          report_count = 0,
-                          warn_count = 1,
-                          notify_count = 2,
-                          tbl_name = NULL,
-                          db_type = NULL,
-                          creds_file = NULL) {
+col_vals_gt <- function(agent,
+                        column,
+                        value,
+                        report_count = 0,
+                        warn_count = 1,
+                        notify_count = 2,
+                        tbl_name = NULL,
+                        db_type = NULL,
+                        creds_file = NULL) {
   
-  assertion_type <- "verify_col_gt"
+  assertion_type <- "col_vals_gt"
   
   validation_step <-
     create_validation_step(

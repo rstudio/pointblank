@@ -33,31 +33,60 @@ interrogate <- function(agent) {
           creds_file = agent$validation_set$db_cred_file_path[i])
     }
     
-    # Get operator values for all assertion types involving
-    # simple operator comparisons
-    if (agent$validation_set$assertion_type[i] == "col_vals_gt") {
-      operator <- ">"
-    } else if (agent$validation_set$assertion_type[i] == "col_vals_gte") {
-      operator <- ">="
-    } else if (agent$validation_set$assertion_type[i] == "col_vals_lt") {
-      operator <- "<"
-    } else if (agent$validation_set$assertion_type[i] == "col_vals_lte") {
-      operator <- "<="
-    } else if (agent$validation_set$assertion_type[i] == "col_vals_equal") {
-      operator <- "=="
-    } else if (agent$validation_set$assertion_type[i] == "col_vals_not_equal") {
-      operator <- "!="
-    } 
+    # Judge tables based on assertion types that rely on
+    # comparison operators
+    if (agent$validation_set$assertion_type[i] %in%
+        c("col_vals_gt", "col_vals_gte",
+          "col_vals_lt", "col_vals_lte",
+          "col_vals_equal", "col_vals_not_equal")) {
+      
+      # Get operator values for all assertion types involving
+      # simple operator comparisons
+      if (agent$validation_set$assertion_type[i] == "col_vals_gt") {
+        operator <- ">"
+      } else if (agent$validation_set$assertion_type[i] == "col_vals_gte") {
+        operator <- ">="
+      } else if (agent$validation_set$assertion_type[i] == "col_vals_lt") {
+        operator <- "<"
+      } else if (agent$validation_set$assertion_type[i] == "col_vals_lte") {
+        operator <- "<="
+      } else if (agent$validation_set$assertion_type[i] == "col_vals_equal") {
+        operator <- "=="
+      } else if (agent$validation_set$assertion_type[i] == "col_vals_not_equal") {
+        operator <- "!="
+      } 
+      
+      # Get the final judgment on the table and the query
+      judgment <- 
+        table %>%
+        dplyr::mutate_(.dots = setNames(
+          paste0(
+            agent$validation_set$column[i],
+            operator,
+            agent$validation_set$value[i]),
+          "pb_is_good_"))
+    }
     
-    # Get the final judgment on the table and the query
-    judgment <- 
-      table %>%
-      dplyr::mutate_(.dots = setNames(
-        paste0(
-          agent$validation_set$column[i],
-          operator,
-          agent$validation_set$value[i]),
-        "pb_is_good_"))
+    if (agent$validation_set$assertion_type[i] %in%
+        c("col_vals_in_set")) {
+      
+      # Get operator values for all assertion types involving
+      # simple operator comparisons
+      if (agent$validation_set$assertion_type[i] == "col_vals_in_set") {
+        set <- agent$validation_set$set[[i]][[1]][[1]]
+      }
+      
+      # Get the final judgment on the table and the query
+       judgment <- 
+         table %>%
+         dplyr::mutate_(.dots = setNames(
+           paste0(
+             agent$validation_set$column[i],
+             " %in% c(",
+             paste(paste0("'", set) %>% paste0("'"),
+                   collapse = ", "), ")"),
+           "pb_is_good_"))
+    }
     
     # Get total count of rows
     n <-
@@ -97,6 +126,11 @@ interrogate <- function(agent) {
     } else if (false_count == 0) {
       agent$validation_set$all_passed[i] <- TRUE
     }
+    
+    #
+    # Determine the course of action
+    # for each validation check
+    #
     
     actions <-
       determine_action(

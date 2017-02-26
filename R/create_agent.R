@@ -1,7 +1,8 @@
 #' Create an agent object
 #' @description Creates an agent object.
 #' @return an agent object.
-#' @importFrom tibble tibble
+#' @importFrom dplyr filter
+#' @importFrom tibble tibble as_tibble
 #' @export create_agent
 
 create_agent <- function() {
@@ -18,6 +19,7 @@ create_agent <- function() {
           assertion_type = as.character(NA),
           column = as.character(NA),
           value = as.numeric(NA),
+          set = as.numeric(NA),
           all_passed = as.logical(NA),
           n = as.integer(NA),
           n_passed = as.integer(NA),
@@ -32,8 +34,14 @@ create_agent <- function() {
           notify = as.logical(NA),
           row_sample = as.numeric(NA),
           db_cred_file_path = as.character(NA)
-          )[-1, ]
+          )
     )
   
+  agent$validation_set$set <- tibble::as_tibble(NA)
+  
+  agent$validation_set <-
+    agent$validation_set %>%
+    dplyr::filter(n == 1)
+
   return(agent)
 }

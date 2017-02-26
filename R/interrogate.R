@@ -99,5 +99,8 @@ interrogate <- function(agent) {
     agent$validation_set$warn[i] <- actions$warn
   }
   
+  # Disconnect any open PostgreSQL connections
+  disconnect_postgres()
+  
   return(agent)
 }

@@ -33,10 +33,21 @@ interrogate <- function(agent) {
           creds_file = agent$validation_set$db_cred_file_path[i])
     }
     
-    # Get operator values for all assertion types
+    # Get operator values for all assertion types involving
+    # simple operator comparisons
     if (agent$validation_set$assertion_type[i] == "col_vals_gt") {
       operator <- ">"
-    }
+    } else if (agent$validation_set$assertion_type[i] == "col_vals_gte") {
+      operator <- ">="
+    } else if (agent$validation_set$assertion_type[i] == "col_vals_lt") {
+      operator <- "<"
+    } else if (agent$validation_set$assertion_type[i] == "col_vals_lte") {
+      operator <- "<="
+    } else if (agent$validation_set$assertion_type[i] == "col_vals_equal") {
+      operator <- "=="
+    } else if (agent$validation_set$assertion_type[i] == "col_vals_not_equal") {
+      operator <- "!="
+    } 
     
     # Get the final judgment on the table and the query
     judgment <- 
@@ -82,7 +93,7 @@ interrogate <- function(agent) {
         problem_rows %>%
         tidyr::nest_(key_col = "data", nest_cols = names(.))
       
-
+      
     } else if (false_count == 0) {
       agent$validation_set$all_passed[i] <- TRUE
     }

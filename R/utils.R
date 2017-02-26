@@ -1,11 +1,13 @@
 
 #' Create a properly formatted validation step.
 #' Get a validation step as a tbl row.
-#' @importFrom tibble tibble
+#' @importFrom tibble tibble as_tibble
+#' @importFrom tidyr nest_
 create_validation_step <- function(agent,
                                    assertion_type,
                                    column,
-                                   value,
+                                   value = NULL,
+                                   set = NULL,
                                    report_count,
                                    warn_count,
                                    notify_count,
@@ -13,6 +15,8 @@ create_validation_step <- function(agent,
                                    db_type = as.character(NA),
                                    creds_file = as.character(NA)) {
   
+  # Create a validation step as a single-row
+  # `tbl_df` object
   validation_step <-
     tibble::tibble(
       tbl_name = as.character(agent$focal_tbl_name),
@@ -20,11 +24,22 @@ create_validation_step <- function(agent,
       db_cred_file_path = as.character(agent$focal_db_cred_file_path),
       assertion_type = assertion_type,
       column = as.character(column),
-      value = as.numeric(value),
+      value = ifelse(is.null(value), as.numeric(NA), as.numeric(value)),
+      set = as.numeric(NA),
       passed = as.logical(NA),
       report_count = as.numeric(report_count),
       warn_count = as.numeric(warn_count),
       notify_count = as.numeric(notify_count))
+  
+  # If a set has been provided as vector, include
+  # these values as a nested `df_tbl` object in the
+  # `set` column
+  if (!is.null(set)) {
+    validation_step$set <- 
+      set %>% 
+      tibble::as_tibble() %>%
+      tidyr::nest_(key_col = "set", nest_cols = names(.))
+  }
   
   # If just `tbl_name` provided, assume it is
   # a local data frame

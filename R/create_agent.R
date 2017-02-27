@@ -20,6 +20,7 @@ create_agent <- function() {
           column = as.character(NA),
           value = as.numeric(NA),
           set = as.numeric(NA),
+          regex = as.character(NA),
           all_passed = as.logical(NA),
           n = as.integer(NA),
           n_passed = as.integer(NA),

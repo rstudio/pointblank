@@ -1,35 +1,127 @@
+----------
 pointblank
 ----------
 
-Tables can often be trustworthy, all the data 
-you need is there and we can count on them to 
-deliver us the information we need. But still, 
-sometimes, the tables we trust are hiding things 
-from us. Malformed strings, numbers we don't 
-expect, missing values that ought not be missing. 
-They can be hiding almost in plain view. This 
-can be downright insidious and it can make us ask 
-ourselves, "can we trust this table?"
+Tables can often be trustworthy, all the data you need is
+there and we my feel we can count on them to deliver us the
+information we need. But still, sometimes, the tables we trust
+are hiding things from us. Malformed strings, numbers we don't
+expect, missing values that ought not be missing. These
+abberations can be hiding almost in plain sight. Such
+inconsistencies can be downright insidious, making us ask
+ourselves, "can we really trust any table?"
 
-Sure, we can sit down with a table during a 
-long interrogation session and maybe get a 
-bit rough with it with some SQL. Problem is, 
-we have a lot of tables, and we usually have 
-a lot of columns. Makes for long hours with 
-lots of suspect tables.
+Sure, we can sit down with a table during a long interrogation
+session and maybe get a bit rough with it with some SQL.
+Problem is, we have lots of tables, and we usually have a lot
+of columns in every table. Makes for long hours with lots of
+suspect tables...
 
-We need a tool like pointblank. It lets us get 
-up close with tables and unleash a fury of 
-validation checks. Are some tables remote? 
-That's no problem, we'll interrogate them from 
-afar. So your Redshift tables can get the same 
-line of questioning as your local data frames 
-or those innocent-looking tibbles. Trust me, 
-they'll talk and reveal what they're hiding. 
+We need a tool like pointblank. It lets us get up close with
+tables and unleash a fury of validation checks. Are some tables
+remote? That's no problem, we'll interrogate them from afar. 
+In essence your Redshift tables can get the same line of 
+questioning as your local data frames or those innocent-looking
+tibbles. Trust me, they'll talk and they'll surely reveal what
+they're hiding. 
 
-You don't have to type up a long report 
-either, pointblank will take care of the 
-paperwork. At the very least, you'll get a 
-tidy data frame of the essentials. With a 
-little planning, a very informative sitrep 
-can be produced.
+You don't have to type up a long report either, pointblank 
+will take care of the paperwork. At the very least, you'll get
+a tidy data frame of the essentials. With a little planning, a
+very informative sitrep can be regularly produced.
+
+------------- CODE FOLLOWS -------------
+
+# For a simple example with local tables, ensure that
+# the development version of `pointblank` is installed via
+
+devtools::install_github("rich-iannone/pointblank")
+
+# Then load the necessary packages
+
+library(tibble)
+library(pointblank)
+library(magrittr)
+
+# To illustrate a basic use of pointblank,
+# make a simple local table
+tbl_1 <-
+  tribble(
+    ~a,  ~b,  ~c,
+    1,   6,   "h2adb",
+    2,   7,   "h2spb",
+    3,   8,   "h2df",
+    4,   9,   "d3jwb",
+    5,  10,   "h2esf"
+  )
+
+# Make another local table
+tbl_2 <-
+  tribble(
+    ~d,  ~e,   ~f,
+    "a",   0,  32,
+    "b",   0,  31,
+    "a",   1,  30,
+    "a",   1,  32,
+    "ae", -1,  39
+  )
+
+# Now:
+#  - create an agent with `create_agent()`
+#  - focus on `tbl_1` using `focus_on()`
+#  - add step: are column vals in `a` >= 1?
+#  - add step: are column vals in `b` <= 10?
+#  - add step: do column vals in `c` conform to regex?
+#  - focus on `tbl_2` using `focus_on()`
+#  - add step: are values in `d` part of a set?
+#  - add step: are column vals in `e` >= 0?
+#  - finally, perform all checks with `interrogate()`
+agent <- 
+  create_agent() %>%
+  focus_on(
+    tbl_name = "tbl_1") %>% 
+  col_vals_gte(
+    column = "a",
+    value = 1) %>%
+  col_vals_lte(
+    column = "b",
+    value = 10) %>%
+  col_vals_regex(
+    column = "c",
+    regex = "h2.*") %>%
+  focus_on(
+    tbl_name = "tbl_2") %>% 
+  col_vals_in_set(
+    column = "d",
+    set = c("a", "b")) %>%
+  col_vals_gte(
+    column = "e",
+    value = 0) %>%
+  interrogate()
+
+# Get a summary of the interrogations, just the
+# basics (more info is available within `agent`)
+get_summary(agent)
+#> # A tibble: 5 × 11
+#>   tbl_name db_type  assertion_type column value
+#>      <chr>   <chr>           <chr>  <chr> <dbl>
+#> 1    tbl_1   local    col_vals_gte      a     1
+#> 2    tbl_1   local    col_vals_lte      b    10
+#> 3    tbl_1   local  col_vals_regex      c    NA
+#> 4    tbl_2   local col_vals_in_set      d    NA
+#> 5    tbl_2   local    col_vals_gte      e     0
+
+#>          set regex all_passed     n n_passed n_failed
+#>       <list> <chr>      <lgl> <int>    <int>    <int>
+#> 1     <NULL>  <NA>       TRUE     5        5        0
+#> 2     <NULL>  <NA>       TRUE     5        5        0
+#> 3     <NULL>  h2.*      FALSE     5        4        1
+#> 4 <list [1]>  <NA>      FALSE     5        4        1
+#> 5     <NULL>  <NA>      FALSE     5        4        1
+
+------------- CODE PORTION FINISHED -------------
+
+As can be seen, pointblank already proves to be an
+effective tool in finding out whether your local tables
+have unexpected values. More examples will follow with
+tables in remote databases.

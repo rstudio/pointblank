@@ -30,7 +30,7 @@ will take care of the paperwork. At the very least, you'll get
 a tidy data frame of the essentials. With a little planning, a
 very informative sitrep can be regularly produced.
 
-------------- CODE FOLLOWS -------------
+------------- CODE PORTION FOLLOWS -------------
 
 # For a simple example with local tables, ensure that
 # the development version of `pointblank` is installed via

@@ -9,14 +9,14 @@
 #' @export col_vals_equal
 
 col_vals_equal <- function(agent,
-                        column,
-                        value,
-                        report_count = 0,
-                        warn_count = 1,
-                        notify_count = 2,
-                        tbl_name = NULL,
-                        db_type = NULL,
-                        creds_file = NULL) {
+                           column,
+                           value,
+                           report_count = 0,
+                           warn_count = 1,
+                           notify_count = 2,
+                           tbl_name = NULL,
+                           db_type = NULL,
+                           creds_file = NULL) {
   
   assertion_type <- "col_vals_equal"
   

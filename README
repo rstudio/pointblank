@@ -2,28 +2,28 @@
 pointblank
 ----------
 
-Tables can often be trustworthy, all the data you need is
-there and we my feel we can count on them to deliver us the
-information we need. But still, sometimes, the tables we trust
+Tables can often be trustworthy. All the data seems to be
+there and we may feel we can count on these tables to deliver
+us the info we need. Still, sometimes, the tables we trust
 are hiding things from us. Malformed strings, numbers we don't
-expect, missing values that ought not be missing. These
+expect, missing values that ought not to be missing. These
 abberations can be hiding almost in plain sight. Such
 inconsistencies can be downright insidious, making us ask
 ourselves, "can we really trust any table?"
 
 Sure, we can sit down with a table during a long interrogation
-session and maybe get a bit rough with it with some SQL.
-Problem is, we have lots of tables, and we usually have a lot
-of columns in every table. Makes for long hours with lots of
-suspect tables...
+session and rough it up with a little some SQL. Problem is, we
+have lots of tables, and we usually have a lotof columns in every 
+one of these tables. Makes for long hours with lots of suspect 
+tables...
 
 We need a tool like pointblank. It lets us get up close with
 tables and unleash a fury of validation checks. Are some tables
 remote? That's no problem, we'll interrogate them from afar. 
-In essence your Redshift tables can get the same line of 
+In essence, your Redshift tables can get the same line of 
 questioning as your local data frames or those innocent-looking
-tibbles. Trust me, they'll talk and they'll surely reveal what
-they're hiding. 
+tibbles. Trust me, they'll start to talk and then they'll surely
+reveal what they're hiding after a pointblank session.
 
 You don't have to type up a long report either, pointblank 
 will take care of the paperwork. At the very least, you'll get
@@ -47,7 +47,7 @@ library(magrittr)
 # make a simple local table
 tbl_1 <-
   tribble(
-    ~a,  ~b,  ~c,
+    ~a, ~b,   ~c,
     1,   6,   "h2adb",
     2,   7,   "h2spb",
     3,   8,   "h2df",
@@ -58,7 +58,7 @@ tbl_1 <-
 # Make another local table
 tbl_2 <-
   tribble(
-    ~d,  ~e,   ~f,
+    ~d,   ~e,  ~f,
     "a",   0,  32,
     "b",   0,  31,
     "a",   1,  30,

@@ -12,9 +12,9 @@ inconsistencies can be downright insidious, making us ask
 ourselves, "can we really trust any table?"
 
 Sure, we can sit down with a table during a long interrogation
-session and rough it up with a little some SQL. Problem is, we
-have lots of tables, and we usually have a lotof columns in every 
-one of these tables. Makes for long hours with lots of suspect 
+session and rough it up with a little SQL. Problem is, we have 
+lots of tables, and we usually have a lot of columns in every 
+one of these tables. Makes for long hours with many suspect 
 tables...
 
 We need a tool like pointblank. It lets us get up close with

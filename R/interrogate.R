@@ -30,7 +30,8 @@ interrogate <- function(agent) {
         set_entry_point(
           table = agent$validation_set$tbl_name[i],
           db_type = agent$validation_set$db_type[i],
-          creds_file = agent$validation_set$db_cred_file_path[i])
+          creds_file = agent$validation_set$db_cred_file_path[i],
+          initial_sql = agent$validation_set$initial_sql[i])
     }
     
     # Judge tables based on assertion types that rely on

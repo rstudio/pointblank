@@ -14,6 +14,7 @@ create_validation_step <- function(agent,
                                    notify_count,
                                    tbl_name = as.character(NA),
                                    db_type = as.character(NA),
+                                   init_sql = as.character(NA),
                                    creds_file = as.character(NA)) {
   
   # Create a validation step as a single-row
@@ -22,7 +23,6 @@ create_validation_step <- function(agent,
     tibble::tibble(
       tbl_name = as.character(agent$focal_tbl_name),
       db_type = as.character(agent$focal_db_type),
-      db_cred_file_path = as.character(agent$focal_db_cred_file_path),
       assertion_type = assertion_type,
       column = as.character(column),
       value = ifelse(is.null(value), as.numeric(NA), as.numeric(value)),
@@ -31,7 +31,9 @@ create_validation_step <- function(agent,
       passed = as.logical(NA),
       report_count = as.numeric(report_count),
       warn_count = as.numeric(warn_count),
-      notify_count = as.numeric(notify_count))
+      notify_count = as.numeric(notify_count),
+      init_sql = as.character(agent$focal_init_sql),
+      db_cred_file_path = as.character(agent$focal_db_cred_file_path))
   
   # If a set has been provided as vector, include
   # these values as a nested `df_tbl` object in the
@@ -57,6 +59,10 @@ create_validation_step <- function(agent,
     validation_step$db_cred_file_path <- creds_file
   }
   
+  if (!is.na(init_sql)) {
+    validation_step$init_sql <- init_sql
+  }
+  
   return(validation_step)
 }
 
@@ -71,7 +77,8 @@ create_validation_step <- function(agent,
 #' @importFrom dplyr src_postgres tbl
 set_entry_point <- function(table,
                             db_type = NULL,
-                            creds_file = NULL) {
+                            creds_file = NULL,
+                            initial_sql = NULL) {
   
   if (is.null(db_type) & inherits(table, "data.frame")) {
     
@@ -104,9 +111,20 @@ set_entry_point <- function(table,
         stop("A credentials RDS file is required.")
       }
       
-      # Create table entry object
-      tbl_entry <- dplyr::tbl(src = connection, table)  
+      if (is.null(initial_sql)) {
+        # Create table entry object
+        tbl_entry <- dplyr::tbl(src = connection, table)
+      }
       
+      if (!is.null(initial_sql)) {
+        # Create table entry object with initial SQL
+        # SELECT statement
+        tbl_entry <- 
+          dplyr::tbl(
+            src = connection,
+            sql(paste0(
+              "SELECT * FROM ", table, " ", initial_sql)))
+      }
     }
   }
   

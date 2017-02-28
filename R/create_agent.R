@@ -35,6 +35,7 @@ create_agent <- function() {
           warn = as.logical(NA),
           notify = as.logical(NA),
           row_sample = as.numeric(NA),
+          init_sql = as.character(NA),
           db_cred_file_path = as.character(NA)
           )
     )

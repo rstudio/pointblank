@@ -14,8 +14,8 @@ create_validation_step <- function(agent,
                                    notify_count,
                                    tbl_name = as.character(NA),
                                    db_type = as.character(NA),
-                                   init_sql = as.character(NA),
-                                   creds_file = as.character(NA)) {
+                                   creds_file = as.character(NA),
+                                   init_sql = as.character(NA)) {
   
   # Create a validation step as a single-row
   # `tbl_df` object

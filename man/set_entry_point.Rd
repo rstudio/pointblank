@@ -8,7 +8,8 @@ in a database), this function will be
 invoked to set an entry point for the
 interrogation query.}
 \usage{
-set_entry_point(table, db_type = NULL, creds_file = NULL)
+set_entry_point(table, db_type = NULL, creds_file = NULL,
+  initial_sql = NULL)
 }
 \description{
 Acquire information on the coordinates of

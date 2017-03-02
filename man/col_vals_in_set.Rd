@@ -6,7 +6,8 @@
 part of a set of values}
 \usage{
 col_vals_in_set(agent, column, set, report_count = 0, warn_count = 1,
-  notify_count = 2, tbl_name = NULL, db_type = NULL, creds_file = NULL)
+  notify_count = 2, tbl_name = NULL, db_type = NULL, creds_file = NULL,
+  initial_sql = NULL)
 }
 \value{
 an agent object.

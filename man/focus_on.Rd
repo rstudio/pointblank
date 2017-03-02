@@ -4,7 +4,8 @@
 \alias{focus_on}
 \title{Place certain access details more to the fore}
 \usage{
-focus_on(agent, tbl_name, db_type = NULL, creds_file = NULL)
+focus_on(agent, tbl_name, db_type = NULL, creds_file = NULL,
+  initial_sql = NULL)
 }
 \value{
 an agent object.

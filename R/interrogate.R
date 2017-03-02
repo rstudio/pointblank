@@ -68,42 +68,60 @@ interrogate <- function(agent) {
           "pb_is_good_"))
     }
     
-    if (agent$validation_set$assertion_type[i] %in%
-        c("col_vals_in_set")) {
+    if (agent$validation_set$assertion_type[i] == "col_vals_in_set") {
       
       # Get the set values for the expression
-      if (agent$validation_set$assertion_type[i] == "col_vals_in_set") {
-        set <- agent$validation_set$set[[i]][[1]][[1]]
-      }
+      set <- agent$validation_set$set[[i]][[1]][[1]]
       
       # Get the final judgment on the table and the query
-       judgment <- 
-         table %>%
-         dplyr::mutate_(.dots = setNames(
-           paste0(
-             agent$validation_set$column[i],
-             " %in% c(",
-             paste(paste0("'", set) %>% paste0("'"),
-                   collapse = ", "), ")"),
-           "pb_is_good_"))
+      judgment <- 
+        table %>%
+        dplyr::mutate_(.dots = setNames(
+          paste0(
+            agent$validation_set$column[i],
+            " %in% c(",
+            paste(paste0("'", set) %>% paste0("'"),
+                  collapse = ", "), ")"),
+          "pb_is_good_"))
     }
     
-    if (agent$validation_set$assertion_type[i] %in%
-        c("col_vals_regex")) {
+    if (agent$validation_set$assertion_type[i] == "col_vals_regex") {
       
       # Get the regex matching statement
-      if (agent$validation_set$assertion_type[i] == "col_vals_regex") {
-        regex <- agent$validation_set$regex[i]
-      }
+      regex <- agent$validation_set$regex[i]
       
       # Get the final judgment on the table and the query
       judgment <- 
         table %>%
         dplyr::mutate_(.dots = setNames(
           paste0("grepl(\"",
-            agent$validation_set$regex[i],
-            "\", ", agent$validation_set$column[i],
-            ")"),
+                 agent$validation_set$regex[i],
+                 "\", ", agent$validation_set$column[i],
+                 ")"),
+          "pb_is_good_"))
+    }
+    
+    if (agent$validation_set$assertion_type[i] == "col_vals_null") {
+      
+      # Get the final judgment on the table and the query
+      judgment <- 
+        table %>%
+        dplyr::mutate_(.dots = setNames(
+          paste0("is.na(",
+                 agent$validation_set$column[i],
+                 ")"),
+          "pb_is_good_"))
+    }
+    
+    if (agent$validation_set$assertion_type[i] == "col_vals_not_null") {
+      
+      # Get the final judgment on the table and the query
+      judgment <- 
+        table %>%
+        dplyr::mutate_(.dots = setNames(
+          paste0("!is.na(",
+                 agent$validation_set$column[i],
+                 ")"),
           "pb_is_good_"))
     }
     

@@ -16,7 +16,8 @@ col_vals_gt <- function(agent,
                         notify_count = 2,
                         tbl_name = NULL,
                         db_type = NULL,
-                        creds_file = NULL) {
+                        creds_file = NULL,
+                        initial_sql = NULL) {
   
   assertion_type <- "col_vals_gt"
   
@@ -31,7 +32,8 @@ col_vals_gt <- function(agent,
       notify_count = notify_count,
       tbl_name = ifelse(is.null(tbl_name), as.character(NA), tbl_name),
       db_type = ifelse(is.null(db_type), as.character(NA), db_type),
-      creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file))
+      creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
+      init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql))
   
   # Append `validation_component` to `validation_set`
   agent$validation_set <-

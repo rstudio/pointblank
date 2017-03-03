@@ -2,8 +2,8 @@
 % Please edit documentation in R/col_vals_in_set.R
 \name{col_vals_in_set}
 \alias{col_vals_in_set}
-\title{Verify whether numerical column data are
-part of a set of values}
+\title{Verify whether column data are part of a set
+of values}
 \usage{
 col_vals_in_set(agent, column, set, report_count = 0, warn_count = 1,
   notify_count = 2, tbl_name = NULL, db_type = NULL, creds_file = NULL,

@@ -1,5 +1,5 @@
-#' Verify whether numerical column data are
-#' part of a set of values
+#' Verify whether column data are part of a set
+#' of values
 #' @description Set a verification step where
 #' numeric values in a table column should be
 #' part of a set of values.

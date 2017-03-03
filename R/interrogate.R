@@ -6,7 +6,7 @@
 #' and, according to plan.
 #' @return an agent object.
 #' @importFrom tibble tibble
-#' @importFrom dplyr mutate_ filter select
+#' @importFrom dplyr mutate_ filter select select_ collect
 #' @importFrom tidyr nest_
 #' @export interrogate
 
@@ -125,71 +125,113 @@ interrogate <- function(agent) {
           "pb_is_good_"))
     }
     
-    # Get total count of rows
-    n <-
-      judgment %>%
-      dplyr::group_by() %>%
-      dplyr::summarize(row_count = n()) %>%
-      tibble::as_tibble() %>%
-      .$row_count
-    
-    # Get total count of TRUE rows
-    n_passed <-
-      judgment %>%
-      filter(pb_is_good_ == TRUE) %>%
-      dplyr::group_by() %>%
-      dplyr::summarize(row_count = n()) %>%
-      tibble::as_tibble() %>%
-      .$row_count
-    
-    # Get total count of FALSE rows
-    n_failed <-
-      judgment %>%
-      filter(pb_is_good_ == FALSE) %>%
-      dplyr::group_by() %>%
-      dplyr::summarize(row_count = n()) %>%
-      tibble::as_tibble() %>%
-      .$row_count
-    
-    agent$validation_set$n[i] <- n
-    agent$validation_set$n_passed[i] <- n_passed
-    agent$validation_set$n_failed[i] <- n_failed
-    agent$validation_set$f_passed[i] <- round((n_passed / n), 3)
-    agent$validation_set$f_failed[i] <- round((n_failed / n), 3)
-    
-    # Get count of rows where `pb_is_good_ == FALSE`
-    false_count <-
-      judgment %>%
-      dplyr::filter(pb_is_good_ == FALSE) %>%
-      dplyr::group_by() %>%
-      dplyr::summarize(pb_is_not_good_ = n()) %>%
-      tibble::as_tibble() %>%
-      .$pb_is_not_good_
-    
-    if (false_count > 0) {
+    if (grepl("col_vals.*", agent$validation_set$assertion_type[i])) {
       
-      # State that `all_passed` is FALSE
-      agent$validation_set$all_passed[i] <- FALSE
+      # Get total count of rows
+      n <-
+        judgment %>%
+        dplyr::group_by() %>%
+        dplyr::summarize(row_count = n()) %>%
+        tibble::as_tibble() %>%
+        .$row_count
       
-      # Collect up to 5 problem rows 
-      problem_rows <- 
+      # Get total count of TRUE rows
+      n_passed <-
+        judgment %>%
+        filter(pb_is_good_ == TRUE) %>%
+        dplyr::group_by() %>%
+        dplyr::summarize(row_count = n()) %>%
+        tibble::as_tibble() %>%
+        .$row_count
+      
+      # Get total count of FALSE rows
+      n_failed <-
+        judgment %>%
+        filter(pb_is_good_ == FALSE) %>%
+        dplyr::group_by() %>%
+        dplyr::summarize(row_count = n()) %>%
+        tibble::as_tibble() %>%
+        .$row_count
+      
+      agent$validation_set$n[i] <- n
+      agent$validation_set$n_passed[i] <- n_passed
+      agent$validation_set$n_failed[i] <- n_failed
+      agent$validation_set$f_passed[i] <- round((n_passed / n), 3)
+      agent$validation_set$f_failed[i] <- round((n_failed / n), 3)
+      
+      # Get count of rows where `pb_is_good_ == FALSE`
+      false_count <-
         judgment %>%
         dplyr::filter(pb_is_good_ == FALSE) %>%
-        dplyr::select(-pb_is_good_) %>%
-        head(5) %>%
-        tibble::as_tibble()
+        dplyr::group_by() %>%
+        dplyr::summarize(pb_is_not_good_ = n()) %>%
+        tibble::as_tibble() %>%
+        .$pb_is_not_good_
       
-      # Place the sample of problem rows in
-      # the `agent$validation_set` tbl_df
-      # as a nested tbl_df
-      agent$validation_set$row_sample[i] <- 
-        problem_rows %>%
-        tidyr::nest_(
-          key_col = "data",
-          nest_cols = names(.))
+      if (false_count > 0) {
+        
+        # State that `all_passed` is FALSE
+        agent$validation_set$all_passed[i] <- FALSE
+        
+        # Collect up to 5 problem rows 
+        problem_rows <- 
+          judgment %>%
+          dplyr::filter(pb_is_good_ == FALSE) %>%
+          dplyr::select(-pb_is_good_) %>%
+          head(5) %>%
+          tibble::as_tibble()
+        
+        # Place the sample of problem rows in
+        # the `agent$validation_set` tbl_df
+        # as a nested tbl_df
+        agent$validation_set$row_sample[i] <- 
+          problem_rows %>%
+          tidyr::nest_(
+            key_col = "data",
+            nest_cols = names(.))
+        
+      } else if (false_count == 0) {
+        agent$validation_set$all_passed[i] <- TRUE
+      }
+    }
+    
+    if (grepl("col_is_.*", agent$validation_set$assertion_type[i])) {
       
-    } else if (false_count == 0) {
-      agent$validation_set$all_passed[i] <- TRUE
+      if (inherits(table, "data.frame")) {
+        
+        column_type <-
+          table %>%
+          dplyr::select_(agent$validation_set$column[i]) %>%
+          dplyr::filter(row_number() == 1) %>%
+          dplyr::collect() %>%
+          as.data.frame(stringsAsFactors = FALSE) %>% 
+          .[1,1] %>% 
+          class()
+        
+        agent$validation_set$n[i] <- 1
+        
+        if (agent$validation_set$assertion_type[i] == "col_is_numeric") {
+          passed <- ifelse(column_type == "numeric", TRUE, FALSE)
+        } else if (agent$validation_set$assertion_type[i] == "col_is_integer") {
+          passed <- ifelse(column_type == "integer", TRUE, FALSE)
+        } else if (agent$validation_set$assertion_type[i] == "col_is_character") {
+          passed <- ifelse(column_type == "character", TRUE, FALSE)
+        } else {
+          passed <- FALSE
+        }
+        
+        if (passed == TRUE) {
+          agent$validation_set$n_passed[i] <- 
+            agent$validation_set$f_passed[i] <- 1
+          agent$validation_set$n_failed[i] <- 
+            agent$validation_set$f_failed[i] <- 0
+        } else {
+          agent$validation_set$n_passed[i] <- 
+            agent$validation_set$f_passed[i] <- 0
+          agent$validation_set$n_failed[i] <- 
+            agent$validation_set$f_failed[i] <- 1
+        }
+      }
     }
     
     #

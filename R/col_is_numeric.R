@@ -1,24 +1,24 @@
-#' Verify that a column contains only floating
-#' point values
+#' Verify that a column contains only numeric
+#' values
 #' @description Set a verification step where
 #' a table column is expected to consist of
 #' floating point values.
 #' @return an agent object.
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
-#' @export col_is_float
+#' @export col_is_numeric
 
-col_is_float <- function(agent,
-                         column,
-                         report_count = 0,
-                         warn_count = 1,
-                         notify_count = 2,
-                         tbl_name = NULL,
-                         db_type = NULL,
-                         creds_file = NULL,
-                         initial_sql = NULL) {
+col_is_numeric <- function(agent,
+                           column,
+                           report_count = 0,
+                           warn_count = 1,
+                           notify_count = 2,
+                           tbl_name = NULL,
+                           db_type = NULL,
+                           creds_file = NULL,
+                           initial_sql = NULL) {
   
-  assertion_type <- "col_is_float"
+  assertion_type <- "col_is_numeric"
   
   validation_step <-
     create_validation_step(

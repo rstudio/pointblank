@@ -8,14 +8,14 @@
 #' @export col_is_integer
 
 col_is_integer <- function(agent,
-                         column,
-                         report_count = 0,
-                         warn_count = 1,
-                         notify_count = 2,
-                         tbl_name = NULL,
-                         db_type = NULL,
-                         creds_file = NULL,
-                         initial_sql = NULL) {
+                           column,
+                           report_count = 0,
+                           warn_count = 1,
+                           notify_count = 2,
+                           tbl_name = NULL,
+                           db_type = NULL,
+                           creds_file = NULL,
+                           initial_sql = NULL) {
   
   assertion_type <- "col_is_integer"
   

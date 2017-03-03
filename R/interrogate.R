@@ -85,6 +85,23 @@ interrogate <- function(agent) {
           "pb_is_good_"))
     }
     
+    if (agent$validation_set$assertion_type[i] == "col_vals_not_in_set") {
+      
+      # Get the set values for the expression
+      set <- agent$validation_set$set[[i]][[1]][[1]]
+      
+      # Get the final judgment on the table and the query
+      judgment <- 
+        table %>%
+        dplyr::mutate_(.dots = setNames(
+          paste0("!(",
+            agent$validation_set$column[i],
+            " %in% c(",
+            paste(paste0("'", set) %>% paste0("'"),
+                  collapse = ", "), "))"),
+          "pb_is_good_"))
+    }
+    
     if (agent$validation_set$assertion_type[i] == "col_vals_regex") {
       
       # Get the regex matching statement

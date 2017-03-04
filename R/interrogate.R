@@ -86,6 +86,24 @@ interrogate <- function(agent) {
           "pb_is_good_"))
     }
     
+    if (agent$validation_set$assertion_type[i] == "col_vals_not_between") {
+      
+      # Get the `left` and `right` bounding values
+      left <- agent$validation_set$set[[i]][[1]][[1]][1]
+      right <- agent$validation_set$set[[i]][[1]][[1]][2]
+      
+      # Get the final judgment on the table and the query
+      judgment <- 
+        table %>%
+        dplyr::mutate_(.dots = setNames(
+          paste0(
+            agent$validation_set$column[i],
+            " < ", left, " & ",
+            agent$validation_set$column[i],
+            " > ", right),
+          "pb_is_good_"))
+    }
+    
     if (agent$validation_set$assertion_type[i] == "col_vals_in_set") {
       
       # Get the set values for the expression

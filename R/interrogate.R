@@ -96,11 +96,11 @@ interrogate <- function(agent) {
       judgment <- 
         table %>%
         dplyr::mutate_(.dots = setNames(
-          paste0(
+          paste0("!(",
             agent$validation_set$column[i],
-            " < ", left, " & ",
+            " >= ", left, " & ",
             agent$validation_set$column[i],
-            " > ", right),
+            " <= ", right, ")"),
           "pb_is_good_"))
     }
     

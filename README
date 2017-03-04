@@ -67,57 +67,95 @@ tbl_2 <-
   )
 
 # Now:
-#  - create an agent with `create_agent()`
-#  - focus on `tbl_1` using `focus_on()`
-#  - add step: are column vals in `a` >= 1?
-#  - add step: are column vals in `b` <= 10?
-#  - add step: do column vals in `c` conform to regex?
-#  - focus on `tbl_2` using `focus_on()`
-#  - add step: are values in `d` part of a set?
-#  - add step: are column vals in `e` >= 0?
-#  - finally, perform all checks with `interrogate()`
+#  (1) - create an agent with `create_agent()`
+#  (2) - focus on `tbl_1` using `focus_on()`
+#  (3) - add step: are vals in col `a` > 0?
+#  (4) - add step: are vals in `col(a) + col(b)` >= 7?
+#  (5) - add step: are column vals in `b` <= 10?
+#  (6) - add step: do all `c` vals match regex `h2.*`?
+#  (7) - add step: are all `c` substrings part of a set?
+#  (8) - focus on `tbl_2` using `focus_on()`
+#  (9) - add step: are all values in `d` part of a set?
+# (10) - add step: are all `d` values not part of a set?
+# (11) - add step: are column vals in `e` >= 0?
+# (12) - add step: are all `f` values NULL/NA?
+# (13) - add step: are all `f` values not NULL/NA?
+# (14) - finally, perform all checks with `interrogate()`
 agent <- 
-  create_agent() %>%
+  create_agent() %>%             # (1)
   focus_on(
-    tbl_name = "tbl_1") %>% 
-  col_vals_gte(
+    tbl_name = "tbl_1") %>%      # (2)
+  col_vals_gt(
     column = "a",
-    value = 1) %>%
+    value = 0) %>%               # (3)
+  col_vals_gte(
+    column = "a + b",
+    value = 7) %>%               # (4)
   col_vals_lte(
     column = "b",
-    value = 10) %>%
+    value = 10) %>%              # (5)
   col_vals_regex(
     column = "c",
-    regex = "h2.*") %>%
+    regex = "h2.*") %>%          # (6)
+  col_vals_in_set(
+    column = "substr(c, 0, 2)",
+    set = c("h2", "d3")) %>%     # (7)
   focus_on(
-    tbl_name = "tbl_2") %>% 
+    tbl_name = "tbl_2") %>%      # (8)
   col_vals_in_set(
     column = "d",
-    set = c("a", "b")) %>%
+    set = c("a", "b")) %>%       # (9)
+  col_vals_not_in_set(
+    column = "d",
+    set = c("a", "b")) %>%       # (10)
   col_vals_gte(
     column = "e",
-    value = 0) %>%
-  interrogate()
+    value = 0) %>%               # (11)
+  col_vals_null(
+    column = "f") %>%            # (12)
+  col_vals_not_null(
+    column = "d") %>%            # (13)
+  interrogate()                  # (14)
 
 # Get a summary of the interrogations, just the
 # basics (more info is available within `agent`)
 get_summary(agent)
-#> # A tibble: 5 × 11
-#>   tbl_name db_type  assertion_type column value
-#>      <chr>   <chr>           <chr>  <chr> <dbl>
-#> 1    tbl_1   local    col_vals_gte      a     1
-#> 2    tbl_1   local    col_vals_lte      b    10
-#> 3    tbl_1   local  col_vals_regex      c    NA
-#> 4    tbl_2   local col_vals_in_set      d    NA
-#> 5    tbl_2   local    col_vals_gte      e     0
+#> # A tibble: 9 × 11
+#>   tbl_name db_type      assertion_type  
+#>      <chr>   <chr>               <chr>  
+#> 1    tbl_1   local        col_vals_gte  
+#> 2    tbl_1   local        col_vals_lte  
+#> 3    tbl_1   local      col_vals_regex  
+#> 4    tbl_1   local     col_vals_in_set  
+#> 5    tbl_2   local     col_vals_in_set  
+#> 6    tbl_2   local col_vals_not_in_set  
+#> 7    tbl_2   local        col_vals_gte  
+#> 8    tbl_2   local       col_vals_null  
+#> 9    tbl_2   local   col_vals_not_null  
 
-#>          set regex all_passed     n n_passed n_failed
-#>       <list> <chr>      <lgl> <int>    <int>    <int>
-#> 1     <NULL>  <NA>       TRUE     5        5        0
-#> 2     <NULL>  <NA>       TRUE     5        5        0
-#> 3     <NULL>  h2.*      FALSE     5        4        1
-#> 4 <list [1]>  <NA>      FALSE     5        4        1
-#> 5     <NULL>  <NA>      FALSE     5        4        1
+#>            column value        set regex
+#>             <chr> <dbl>     <list> <chr>
+#> 1           a + b     7     <NULL>  <NA>
+#> 2               b    10     <NULL>  <NA>
+#> 3               c    NA     <NULL>  h2.*
+#> 4 substr(c, 0, 2)    NA <list [1]>  <NA>
+#> 5               d    NA <list [1]>  <NA>
+#> 6               d    NA <list [1]>  <NA>
+#> 7               e     0     <NULL>  <NA>
+#> 8               f    NA     <NULL>  <NA>
+#> 9               d    NA     <NULL>  <NA>
+   
+#>   all_passed     n n_passed n_failed
+#>        <lgl> <int>    <int>    <int>
+#> 1       TRUE     5        5        0
+#> 2       TRUE     5        5        0
+#> 3      FALSE     5        4        1
+#> 4       TRUE     5        5        0
+#> 5      FALSE     5        4        1
+#> 6      FALSE     5        1        4
+#> 7      FALSE     5        4        1
+#> 8      FALSE     5        1        4
+#> 9       TRUE     5        5        0
 
 ------------- CODE PORTION FINISHED -------------
 

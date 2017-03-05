@@ -333,6 +333,7 @@ interrogate <- function(agent) {
           duplicate_rows %>%
             dplyr::group_by() %>%
             dplyr::summarize(row_count = n()) %>%
+            tibble::as_tibble() %>%
             .$row_count == 0, TRUE, FALSE)
       
       if (passed == TRUE) {

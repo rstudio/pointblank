@@ -289,6 +289,65 @@ interrogate <- function(agent) {
       }
     }
     
+    if (agent$validation_set$assertion_type[i] == "rows_not_duplicated") {
+      
+      # Determine if grouping columns are provided in the test
+      # for distinct rows and parse the column names
+      if (grepl("(,|&)", agent$validation_set$column[i])) {
+        columns <-
+          stringr::str_split(agent$validation_set$column[i], pattern = "(,|&)") %>%
+          purrr::flatten_chr() %>%
+          trimws()
+      } else {
+        columns <- agent$validation_set$column[i]
+      }
+      
+      # Get total count of rows
+      n <-
+        table %>%
+        dplyr::group_by() %>%
+        dplyr::summarize(row_count = n()) %>%
+        tibble::as_tibble() %>%
+        .$row_count
+      
+      # Get the rows that are duplicate rows, if any
+      duplicate_rows <- 
+        table %>%
+        dplyr::select_(paste0("c(", agent$validation_set$column[i], ")")) %>%
+        dplyr::group_by_(.dots = columns) %>%
+        dplyr::filter(n() > 1) %>%
+        dplyr::ungroup()
+      
+      # Determine whether the test for duplicated passed
+      # (no duplicates) or failed (one or more duplicates)
+      passed <-
+        ifelse(
+          duplicate_rows %>%
+            dplyr::group_by() %>%
+            dplyr::summarize(row_count = n()) %>%
+            .$row_count == 0, TRUE, FALSE)
+      
+      if (passed == TRUE) {
+        n_passed <- n
+        n_failed <- 0
+      } else if (passed == FALSE) {
+        n_failed <-
+          duplicate_rows %>%
+          dplyr::group_by() %>%
+          dplyr::summarize(row_count = n()) %>%
+          tibble::as_tibble() %>%
+          .$row_count
+        
+        n_passed <- n - n_failed
+      }
+      
+      agent$validation_set$n[i] <- n
+      agent$validation_set$n_passed[i] <- n_passed
+      agent$validation_set$n_failed[i] <- n_failed
+      agent$validation_set$f_passed[i] <- round((n_passed / n), 3)
+      agent$validation_set$f_failed[i] <- round((n_failed / n), 3)
+    }
+    
     #
     # Determine the course of action
     # for each validation check

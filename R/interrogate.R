@@ -280,11 +280,19 @@ interrogate <- function(agent) {
             agent$validation_set$f_passed[i] <- 1
           agent$validation_set$n_failed[i] <- 
             agent$validation_set$f_failed[i] <- 0
+          false_count <- 0
         } else {
           agent$validation_set$n_passed[i] <- 
             agent$validation_set$f_passed[i] <- 0
           agent$validation_set$n_failed[i] <- 
             agent$validation_set$f_failed[i] <- 1
+          false_count <- 1
+        }
+        
+        if (false_count > 0) {
+          agent$validation_set$all_passed[i] <- FALSE
+        } else if (false_count == 0) {
+          agent$validation_set$all_passed[i] <- TRUE
         }
       }
     }
@@ -346,6 +354,12 @@ interrogate <- function(agent) {
       agent$validation_set$n_failed[i] <- n_failed
       agent$validation_set$f_passed[i] <- round((n_passed / n), 3)
       agent$validation_set$f_failed[i] <- round((n_failed / n), 3)
+     
+      if (false_count > 0) {
+        agent$validation_set$all_passed[i] <- FALSE
+      } else if (false_count == 0) {
+        agent$validation_set$all_passed[i] <- TRUE
+      }
     }
     
     #

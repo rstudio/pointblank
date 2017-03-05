@@ -5,9 +5,11 @@
 #' interrogations can proceed efficiently,
 #' and, according to plan.
 #' @return an agent object.
-#' @importFrom tibble tibble
-#' @importFrom dplyr mutate_ filter select select_ collect
+#' @importFrom tibble tibble as_tibble
+#' @importFrom dplyr group_by group_by_ mutate_ filter select select_ collect ungroup summarize
 #' @importFrom tidyr nest_
+#' @importFrom stringr str_split
+#' @importFrom purrr flatten_chr
 #' @export interrogate
 
 interrogate <- function(agent) {

@@ -181,7 +181,8 @@ agent <-
     tbl_name = "table_1",
     db_type = "PostgreSQL",
     creds_file = "pg_redshift_dev.rds",
-    initial_sql = "WHERE date > '2017-01-15'") %>% 
+    initial_sql = "WHERE date > '2017-01-15'") %>%
+  rows_not_duplicated() %>%
   col_vals_gte(
     column = "a",
     value = 2) %>%

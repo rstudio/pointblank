@@ -329,9 +329,9 @@ interrogate <- function(agent) {
       
       if (passed == TRUE) {
         n_passed <- n
-        n_failed <- 0
+        n_failed <- false_count <- 0
       } else if (passed == FALSE) {
-        n_failed <-
+        n_failed <- false_count <-
           duplicate_rows %>%
           dplyr::group_by() %>%
           dplyr::summarize(row_count = n()) %>%

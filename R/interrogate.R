@@ -301,13 +301,22 @@ interrogate <- function(agent) {
       
       # Determine if grouping columns are provided in the test
       # for distinct rows and parse the column names
-      if (grepl("(,|&)", agent$validation_set$column[i])) {
+      
+      if (!is.na(agent$validation_set$column[i])) {
+        if (grepl("(,|&)", agent$validation_set$column[i])) {
+          columns <-
+            stringr::str_split(agent$validation_set$column[i], pattern = "(,|&)") %>%
+            purrr::flatten_chr() %>%
+            trimws()
+        } else {
+          columns <- agent$validation_set$column[i]
+        }
+      } else if (is.na(agent$validation_set$column[i])) {
         columns <-
-          stringr::str_split(agent$validation_set$column[i], pattern = "(,|&)") %>%
-          purrr::flatten_chr() %>%
-          trimws()
-      } else {
-        columns <- agent$validation_set$column[i]
+          table %>%
+          dplyr::filter(row_number() == 1) %>%
+          tibble::as_tibble() %>%
+          names()
       }
       
       # Get total count of rows
@@ -321,7 +330,7 @@ interrogate <- function(agent) {
       # Get the rows that are duplicate rows, if any
       duplicate_rows <- 
         table %>%
-        dplyr::select_(paste0("c(", agent$validation_set$column[i], ")")) %>%
+        dplyr::select_(paste0("c(", paste(columns, collapse = ", ")) %>% paste0(")")) %>%
         dplyr::group_by_(.dots = columns) %>%
         dplyr::filter(n() > 1) %>%
         dplyr::ungroup()

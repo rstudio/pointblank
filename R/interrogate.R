@@ -99,10 +99,10 @@ interrogate <- function(agent) {
         table %>%
         dplyr::mutate_(.dots = setNames(
           paste0("!(",
-            agent$validation_set$column[i],
-            " >= ", left, " & ",
-            agent$validation_set$column[i],
-            " <= ", right, ")"),
+                 agent$validation_set$column[i],
+                 " >= ", left, " & ",
+                 agent$validation_set$column[i],
+                 " <= ", right, ")"),
           "pb_is_good_"))
     }
     
@@ -133,10 +133,10 @@ interrogate <- function(agent) {
         table %>%
         dplyr::mutate_(.dots = setNames(
           paste0("!(",
-            agent$validation_set$column[i],
-            " %in% c(",
-            paste(paste0("'", set) %>% paste0("'"),
-                  collapse = ", "), "))"),
+                 agent$validation_set$column[i],
+                 " %in% c(",
+                 paste(paste0("'", set) %>% paste0("'"),
+                       collapse = ", "), "))"),
           "pb_is_good_"))
     }
     

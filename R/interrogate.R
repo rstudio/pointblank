@@ -193,7 +193,7 @@ interrogate <- function(agent) {
       # Get total count of TRUE rows
       n_passed <-
         judgment %>%
-        filter(pb_is_good_ == TRUE) %>%
+        dplyr::filter(pb_is_good_ == TRUE) %>%
         dplyr::group_by() %>%
         dplyr::summarize(row_count = n()) %>%
         tibble::as_tibble() %>%
@@ -202,7 +202,7 @@ interrogate <- function(agent) {
       # Get total count of FALSE rows
       n_failed <-
         judgment %>%
-        filter(pb_is_good_ == FALSE) %>%
+        dplyr::filter(pb_is_good_ == FALSE) %>%
         dplyr::group_by() %>%
         dplyr::summarize(row_count = n()) %>%
         tibble::as_tibble() %>%
@@ -260,7 +260,7 @@ interrogate <- function(agent) {
           dplyr::filter(row_number() == 1) %>%
           dplyr::collect() %>%
           as.data.frame(stringsAsFactors = FALSE) %>% 
-          .[1,1] %>% 
+          .[1, 1] %>% 
           class()
         
         agent$validation_set$n[i] <- 1

@@ -6,7 +6,7 @@
 #' and, according to plan.
 #' @return an agent object.
 #' @importFrom tibble tibble as_tibble
-#' @importFrom dplyr group_by group_by_ mutate_ filter select select_ collect ungroup summarize
+#' @importFrom dplyr group_by group_by_ mutate_ filter select select_ collect ungroup summarize row_number
 #' @importFrom tidyr nest_
 #' @importFrom stringr str_split
 #' @importFrom purrr flatten_chr

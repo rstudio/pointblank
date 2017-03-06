@@ -132,6 +132,23 @@ set_entry_point <- function(table,
 }
 
 
+#' Get all column names from the table
+#' currently the table in focus
+all_cols <- function() {
+
+  return("*")
+}
+
+get_all_cols <- function(agent) {
+  
+  # Get vector of all columns
+  # table currently in focus
+  col_names <- agent$focal_col_names
+
+  return(col_names)
+}
+
+
 #' Determine the course of action for a
 #' given verification step. Based on a recent
 #' judgment, what actions are taken now?

@@ -21,6 +21,12 @@ col_vals_lte <- function(agent,
   
   assertion_type <- "col_vals_lte"
   
+  # If "*" is provided for `column`, select all
+  # table columns for this verification
+  if (column[1] == "*") {
+    column <- get_all_cols(agent = agent)
+  }
+  
   validation_step <-
     create_validation_step(
       agent = agent,

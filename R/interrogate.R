@@ -271,6 +271,8 @@ interrogate <- function(agent) {
           passed <- ifelse(column_type[1] == "integer", TRUE, FALSE)
         } else if (agent$validation_set$assertion_type[i] == "col_is_character") {
           passed <- ifelse(column_type[1] == "character", TRUE, FALSE)
+        } else if (agent$validation_set$assertion_type[i] == "col_is_logical") {
+          passed <- ifelse(column_type[1] == "logical", TRUE, FALSE)
         } else if (agent$validation_set$assertion_type[i] == "col_is_factor") {
           passed <- ifelse(column_type[1] == "factor", TRUE, FALSE)
         } else if (agent$validation_set$assertion_type[i] == "col_is_posix") {

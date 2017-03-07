@@ -6,7 +6,7 @@
 #' @return an agent object.
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
-#' @export col_is_posixct
+#' @export col_is_posix
 
 col_is_posix <- function(agent,
                          column,

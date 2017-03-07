@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_is_date.R
 \name{col_is_date}
 \alias{col_is_date}
-\title{Verify that a column contains only R Date objects}
+\title{Verify that a column contains R Date objects}
 \usage{
 col_is_date(agent, column, report_count = 0, warn_count = 1,
   notify_count = 1, tbl_name = NULL, db_type = NULL, creds_file = NULL,

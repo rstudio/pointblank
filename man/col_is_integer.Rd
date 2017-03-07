@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_is_integer.R
 \name{col_is_integer}
 \alias{col_is_integer}
-\title{Verify that a column contains only integer values}
+\title{Verify that a column contains integer values}
 \usage{
 col_is_integer(agent, column, report_count = 0, warn_count = 1,
   notify_count = 1, tbl_name = NULL, db_type = NULL, creds_file = NULL,

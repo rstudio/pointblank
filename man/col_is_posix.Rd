@@ -2,8 +2,7 @@
 % Please edit documentation in R/col_is_posix.R
 \name{col_is_posix}
 \alias{col_is_posix}
-\title{Verify that a column contains only POSIXct
-formatted dates}
+\title{Verify that a column contains POSIXct dates}
 \usage{
 col_is_posix(agent, column, report_count = 0, warn_count = 1,
   notify_count = 1, tbl_name = NULL, db_type = NULL, creds_file = NULL,

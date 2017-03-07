@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_is_factor.R
 \name{col_is_factor}
 \alias{col_is_factor}
-\title{Verify that a column contains only R factor objects}
+\title{Verify that a column contains R factor objects}
 \usage{
 col_is_factor(agent, column, report_count = 0, warn_count = 1,
   notify_count = 1, tbl_name = NULL, db_type = NULL, creds_file = NULL,

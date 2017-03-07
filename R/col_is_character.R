@@ -1,5 +1,4 @@
-#' Verify that a column contains only character
-#' values
+#' Verify that a column contains character values
 #' @description Set a verification step where
 #' a table column is expected to consist of
 #' floating point values.

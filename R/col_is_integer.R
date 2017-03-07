@@ -1,4 +1,4 @@
-#' Verify that a column contains only integer values
+#' Verify that a column contains integer values
 #' @description Set a verification step where
 #' a table column is expected to consist of
 #' integer values.

@@ -1,4 +1,4 @@
-#' Verify that a column contains only R Date objects
+#' Verify that a column contains R Date objects
 #' @description Set a verification step where
 #' a table column is expected to consist entirely
 #' of R \code{Date} objects.

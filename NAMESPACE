@@ -3,6 +3,7 @@
 export(col_is_character)
 export(col_is_integer)
 export(col_is_numeric)
+export(col_is_posixct)
 export(col_vals_between)
 export(col_vals_equal)
 export(col_vals_gt)

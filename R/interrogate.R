@@ -266,11 +266,15 @@ interrogate <- function(agent) {
         agent$validation_set$n[i] <- 1
         
         if (agent$validation_set$assertion_type[i] == "col_is_numeric") {
-          passed <- ifelse(column_type == "numeric", TRUE, FALSE)
+          passed <- ifelse(column_type[1] == "numeric", TRUE, FALSE)
         } else if (agent$validation_set$assertion_type[i] == "col_is_integer") {
-          passed <- ifelse(column_type == "integer", TRUE, FALSE)
+          passed <- ifelse(column_type[1] == "integer", TRUE, FALSE)
         } else if (agent$validation_set$assertion_type[i] == "col_is_character") {
-          passed <- ifelse(column_type == "character", TRUE, FALSE)
+          passed <- ifelse(column_type[1] == "character", TRUE, FALSE)
+        } else if (agent$validation_set$assertion_type[i] == "col_is_posix") {
+          passed <- ifelse(column_type[1] == "POSIXct", TRUE, FALSE)
+        } else if (agent$validation_set$assertion_type[i] == "col_is_date") {
+          passed <- ifelse(column_type[1] == "Date", TRUE, FALSE)
         } else {
           passed <- FALSE
         }

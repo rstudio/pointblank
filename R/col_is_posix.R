@@ -1,4 +1,4 @@
-#' Verify that a column contains only POSIX
+#' Verify that a column contains only POSIXct
 #' formatted dates
 #' @description Set a verification step where
 #' a table column is expected to consist entirely

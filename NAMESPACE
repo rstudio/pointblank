@@ -2,6 +2,7 @@
 
 export(col_is_character)
 export(col_is_date)
+export(col_is_factor)
 export(col_is_integer)
 export(col_is_numeric)
 export(col_is_posix)

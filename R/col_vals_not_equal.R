@@ -17,7 +17,8 @@ col_vals_not_equal <- function(agent,
                                tbl_name = NULL,
                                db_type = NULL,
                                creds_file = NULL,
-                               initial_sql = NULL) {
+                               initial_sql = NULL,
+                               preconditions = NULL) {
   
   assertion_type <- "col_vals_not_equal"
   
@@ -36,6 +37,7 @@ col_vals_not_equal <- function(agent,
       report_count = report_count,
       warn_count = warn_count,
       notify_count = notify_count,
+      preconditions = preconditions,
       tbl_name = ifelse(is.null(tbl_name), as.character(NA), tbl_name),
       db_type = ifelse(is.null(db_type), as.character(NA), db_type),
       creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),

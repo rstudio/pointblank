@@ -148,19 +148,17 @@ set_entry_point <- function(table,
 }
 
 
-#' Get all column names from the table
-#' currently the table in focus
+#' With any `all_cols()` call, return a wildcard operator
 all_cols <- function() {
-
   return("*")
 }
 
+#' Get all column names from the table currently in focus
 get_all_cols <- function(agent) {
   
   # Get vector of all columns
   # table currently in focus
   col_names <- agent$focal_col_names
-
   return(col_names)
 }
 
@@ -192,6 +190,7 @@ determine_action <- function(false_count,
     notify <- FALSE
   }
   
+  # Generate a tbl with action information
   action_df <-
     tibble::tibble(
       report = report,

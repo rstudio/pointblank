@@ -9,6 +9,7 @@ create_validation_step <- function(agent,
                                    value = NULL,
                                    set = NULL,
                                    regex = NULL,
+                                   preconditions = NULL,
                                    report_count,
                                    warn_count,
                                    notify_count,
@@ -28,6 +29,7 @@ create_validation_step <- function(agent,
       value = ifelse(is.null(value), as.numeric(NA), as.numeric(value)),
       set = as.numeric(NA),
       regex = ifelse(is.null(regex), as.character(NA), as.character(regex)),
+      preconditions = as.numeric(NA),
       passed = as.logical(NA),
       report_count = as.numeric(report_count),
       warn_count = as.numeric(warn_count),
@@ -35,14 +37,28 @@ create_validation_step <- function(agent,
       init_sql = as.character(agent$focal_init_sql),
       db_cred_file_path = as.character(agent$focal_db_cred_file_path))
   
-  # If a set has been provided as vector, include
+  # If a set has been provided as a vector, include
   # these values as a nested `df_tbl` object in the
   # `set` column
   if (!is.null(set)) {
-    validation_step$set <- 
-      set %>% 
-      tibble::as_tibble() %>%
-      tidyr::nest_(key_col = "set", nest_cols = names(.))
+    for (i in 1:nrow(validation_step)) {
+      validation_step$set[i] <- 
+        set %>% 
+        tibble::as_tibble() %>%
+        tidyr::nest_(key_col = "set", nest_cols = names(.))
+    }
+  }
+  
+  # If one or more preconditions have been provided
+  # as a vector, include these values as a nested `df_tbl`
+  # object in the `preconditions` column
+  if (!is.null(preconditions)) {
+    for (i in 1:nrow(validation_step)) {
+      validation_step$preconditions[i] <- 
+        preconditions %>% 
+        tibble::as_tibble() %>%
+        tidyr::nest_(key_col = "preconditions", nest_cols = names(.))
+    }
   }
   
   # If just `tbl_name` provided, assume it is

@@ -23,6 +23,7 @@ create_agent <- function() {
           value = as.numeric(NA),
           set = as.numeric(NA),
           regex = as.character(NA),
+          preconditions = as.character(NA),
           all_passed = as.logical(NA),
           n = as.integer(NA),
           n_passed = as.integer(NA),
@@ -42,6 +43,8 @@ create_agent <- function() {
     )
   
   agent$validation_set$set <- tibble::as_tibble(NA)
+  
+  agent$validation_set$preconditions <- tibble::as_tibble(NA)
   
   agent$validation_set <-
     agent$validation_set %>%

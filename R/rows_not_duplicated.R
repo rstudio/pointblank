@@ -1,4 +1,4 @@
-#' Verify whether row data are not duplicated
+#' Verify that row data are not duplicated
 #' @description Set a verification step where
 #' row data should contain no duplicates.
 #' @return an agent object.

@@ -2,12 +2,10 @@
 % Please edit documentation in R/utils.R
 \name{all_cols}
 \alias{all_cols}
-\title{Get all column names from the table
-currently the table in focus}
+\title{With any `all_cols()` call, return a wildcard operator}
 \usage{
 all_cols()
 }
 \description{
-Get all column names from the table
-currently the table in focus
+With any `all_cols()` call, return a wildcard operator
 }

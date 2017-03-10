@@ -6,7 +6,7 @@
 #' and, according to plan.
 #' @return an agent object.
 #' @importFrom tibble tibble as_tibble
-#' @importFrom dplyr group_by group_by_ mutate_ filter select select_ collect ungroup summarize row_number
+#' @importFrom dplyr group_by group_by_ mutate_ filter filter_ select select_ collect ungroup summarize row_number
 #' @importFrom tidyr nest_
 #' @importFrom stringr str_split
 #' @importFrom purrr flatten_chr
@@ -34,6 +34,26 @@ interrogate <- function(agent) {
           db_type = agent$validation_set$db_type[i],
           creds_file = agent$validation_set$db_cred_file_path[i],
           initial_sql = agent$validation_set$init_sql[i])
+    }
+    
+    # Use preconditions to modify the table
+    if (!is.null(agent$validation_set$preconditions[[i]])) {
+      
+      # Get the preconditions as a character vector
+      preconditions <- 
+        agent$validation_set$preconditions[i][[1]][[1]] %>%
+        purrr::flatten_chr()
+      
+      if (!is.null(preconditions)) {
+        for (j in 1:length(preconditions)) {
+          
+          # Use preconditions to filter the table before
+          # any validation occurs
+          table <-
+            table %>%
+            dplyr::filter_(preconditions[j])
+        }
+      }
     }
     
     # Judge tables based on assertion types that rely on
@@ -372,7 +392,7 @@ interrogate <- function(agent) {
       agent$validation_set$n_failed[i] <- n_failed
       agent$validation_set$f_passed[i] <- round((n_passed / n), 3)
       agent$validation_set$f_failed[i] <- round((n_failed / n), 3)
-     
+      
       if (false_count > 0) {
         agent$validation_set$all_passed[i] <- FALSE
       } else if (false_count == 0) {

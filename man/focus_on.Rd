@@ -8,6 +8,9 @@ focus_on(agent, tbl_name, db_type = NULL, creds_file = NULL,
   initial_sql = NULL)
 }
 \arguments{
+\item{agent}{an agent object of class
+\code{ptblank_agent}.}
+
 \item{tbl_name}{the name of the local or remote
 table.}
 

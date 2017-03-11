@@ -133,8 +133,61 @@ set_entry_point <- function(table,
       }
       
       if (!is.null(initial_sql)) {
-        # Create table entry object with initial SQL
-        # SELECT statement
+        
+        if (grepl("^(SELECT|select)", initial_sql)) {
+          
+          # If there is a `SELECT` or `select` keyword
+          # in the `initial_sql` statement, provide
+          # the entire SQL statement to dplyr::tbl
+          # without changing the content
+          tbl_entry <- 
+            dplyr::tbl(src = connection, sql(initial_sql))
+          
+        } else {
+          
+          # If there is no `SELECT` or `select` lead in,
+          # insert that line at the beginning with the
+          # table name then carry on with the rest of the
+          # statement
+          tbl_entry <- 
+            dplyr::tbl(
+              src = connection,
+              sql(paste0(
+                "SELECT * FROM ", table, " ", initial_sql)))
+        }
+      }
+    } else if (db_type == "MySQL") {
+      
+      # Establish a new MySQL connection
+      if (!is.null(creds_file)) {
+        
+        # Serialize the credentials RDS file
+        credentials <- readRDS(creds_file)
+        
+        # Establish the connection with the serialized RDS object
+        connection <-
+          dplyr::src_mysql(
+            dbname = credentials[1],
+            host = credentials[2],
+            port = as.integer(credentials[3]),
+            user = credentials[4],
+            password = credentials[5])
+      } 
+      
+      else if (is.null(creds_file)) {
+        stop("A credentials RDS file is required.")
+      }
+      
+      if (is.null(initial_sql)) {
+        
+        # Create a table entry object
+        tbl_entry <- dplyr::tbl(src = connection, table)
+      }
+      
+      if (!is.null(initial_sql)) {
+        
+        # Create a table entry object with an initial
+        # SQL SELECT statement
         tbl_entry <- 
           dplyr::tbl(
             src = connection,

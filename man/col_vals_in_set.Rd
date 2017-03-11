@@ -9,6 +9,54 @@ col_vals_in_set(agent, column, set, report_count = 0, warn_count = 1,
   notify_count = 2, tbl_name = NULL, db_type = NULL, creds_file = NULL,
   initial_sql = NULL, preconditions = NULL)
 }
+\arguments{
+\item{agent}{an agent object of class
+\code{ptblank_agent}.}
+
+\item{report_count}{the threshold number for 
+individual validations returning a \code{FALSE}
+result before applying the \code{report} flag.}
+
+\item{warn_count}{the threshold number for 
+individual validations returning a \code{FALSE}
+result before applying the \code{warn} flag.}
+
+\item{notify_count}{the threshold number for 
+individual validations returning a \code{FALSE}
+result before applying the \code{notify} flag.}
+
+\item{tbl_name}{the name of the local or remote
+table.}
+
+\item{db_type}{if the table is located in a
+database, the type of database is required here.
+Currently, this can be either \code{PostgreSQL}
+or \code{MySQL}.}
+
+\item{creds_file}{if a connection to a database
+is required for reaching the table specified in
+\code{tbl_name}, then a path to a credentials file
+can be used to establish that connection. The
+credentials file is an \code{RDS} containing a
+character vector with the following items in the
+specified order: (1) database name (\code{dbname}),
+(2) the \code{host} name, (3) the \code{port},
+(4) the username (\code{user}), and (5) the
+\code{password}. This file can be easily created
+using the \code{create_creds_file()} function.}
+
+\item{initial_sql}{when accessing a remote table,
+this provides an option to provide an initial
+query component before conducting validations. 
+An entire SQL statement can be provided here, or,
+as a shortcut, the initial \code{SELECT...}
+statement can be omitted for simple queries (e.g.,
+\code{WHERE a > 1 AND b = 'one'}).}
+
+\item{preconditions}{a optional vector of filtering
+statements for filtering the table before this
+validation step.}
+}
 \value{
 an agent object.
 }

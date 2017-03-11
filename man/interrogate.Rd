@@ -7,6 +7,10 @@ tasks, perform an interrogation}
 \usage{
 interrogate(agent)
 }
+\arguments{
+\item{agent}{an agent object of class
+\code{ptblank_agent}.}
+}
 \value{
 an agent object.
 }

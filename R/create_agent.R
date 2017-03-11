@@ -49,6 +49,10 @@ create_agent <- function() {
   agent$validation_set <-
     agent$validation_set %>%
     dplyr::filter(n == 1)
-
+  
+  # Assign the class attribute value `ptblank_agent` to
+  # the `agent object`
+  attr(agent, "class") <- "ptblank_agent"
+  
   return(agent)
 }

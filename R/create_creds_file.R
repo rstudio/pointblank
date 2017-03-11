@@ -1,6 +1,14 @@
 #' Create a file with DB access credentials
 #' @description Creates an RDS file with
 #' access credentials for a database.
+#' @param file a file path for the credentials file
+#' to be stored on disk.
+#' @param dbname the database name.
+#' @param host the \code{host} name.
+#' @param port the port number.
+#' @param user the username for the database
+#' @param password the password associated with the
+#' \code{user}.
 #' @export create_creds_file
 
 create_creds_file <- function(file,

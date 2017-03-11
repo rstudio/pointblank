@@ -25,7 +25,7 @@ interrogate <- function(agent) {
       # local `data.frame` or `tbl_df` object
       table <- get(agent$validation_set$tbl_name[i])
       
-    } else if (agent$validation_set$db_type[i] == "PostgreSQL") {
+    } else if (agent$validation_set$db_type[i] %in% c("PostgreSQL", "MySQL")) {
       
       # Create `table` object as an SQL entry point for a remote table
       table <- 
@@ -47,8 +47,8 @@ interrogate <- function(agent) {
       if (!is.null(preconditions)) {
         for (j in 1:length(preconditions)) {
           
-          # Use preconditions to filter the table before
-          # any validation occurs
+          # Apply the preconditions to filter the table
+          # before any validation occurs
           table <-
             table %>%
             dplyr::filter_(preconditions[j])

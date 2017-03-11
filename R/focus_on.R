@@ -2,6 +2,8 @@
 #' @description Allows for a change of the 
 #' focus on the table name, database type, and
 #' the location of the credentials file.
+#' @param agent an agent object of class
+#' \code{ptblank_agent}.
 #' @param tbl_name the name of the local or remote
 #' table.
 #' @param db_type if the table is located in a

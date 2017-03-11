@@ -1,0 +1,20 @@
+language: r
+
+warnings_are_errors: false
+sudo: required
+
+r_packages:
+  - rstudioapi
+  - stringr
+  - shiny
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
+r_github_packages:
+  - jimhester/covr
+
+after_success:
+  - Rscript -e 'library(covr);codecov()'

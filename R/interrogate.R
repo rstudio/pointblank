@@ -4,6 +4,8 @@
 #' information on what to do, so now all
 #' interrogations can proceed efficiently,
 #' and, according to plan.
+#' @param agent an agent object of class
+#' \code{ptblank_agent}.
 #' @return an agent object.
 #' @importFrom tibble tibble as_tibble
 #' @importFrom dplyr group_by group_by_ mutate_ filter filter_ select select_ collect ungroup summarize row_number

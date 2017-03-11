@@ -5,23 +5,22 @@ pointblank
 [![Travis-CI Build Status](https://travis-ci.org/rich-iannone/pointblank.svg?branch=master)](https://travis-ci.org/rich-iannone/pointblank)
 [![codecov.io](https://codecov.io/github/rich-iannone/pointblank/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/pointblank?branch=master) 
 
-## You need to validate tabular data. I need to validate tabular data too.
+## You need to validate tabular data. *I* need to validate tabular data too.
 
 Tables can often be trustworthy. All the data seems to be there and we may feel we can count on these 
 tables to deliver us the info we need. Still, sometimes, the tables we trust are hiding things from
 us. Malformed strings, numbers we don't expect, missing values that ought not to be missing. These
-abberations can be hiding almost in plain sight. Such inconsistencies can be downright insidious, making us
-ask ourselves, "can we really trust any table?"
+abberations can be hiding almost in plain sight. Such inconsistencies can be downright insidious, and with time all of this makes us ask ourselves, "can we really trust any table?"
 
-Sure, we can sit down with a table during a long interrogation session and rough it up with a little SQL. The problem is we have lots of tables, and we usually have a lot of columns in every one of these tables. Makes for long hours with many suspect tables...
+Sure, we can sit down with a table during a long interrogation session and rough it up with a little **SQL**. The problem is we have lots of tables, and we usually have a lot of columns in every one of these tables. Makes for long hours with many suspect tables...
 
-We need a tool like pointblank. It lets us get up close with tables and unleash a fury of validation checks. Are some tables remote? That's no problem, we'll interrogate them from afar. In essence, your DB tables can get the same line of questioning as your local data frames or those innocent-looking tibbles. Trust me, they'll start to talk and then they'll surely reveal what they're hiding after a pointblank session.
+We need a tool like **pointblank**. It lets us get up close with tables and unleash a fury of validation checks. Are some tables remote? That's no problem, we'll interrogate them from afar. In essence, your DB tables can get the same line of questioning as your local data frames or those innocent-looking tibbles. Trust me, they'll start to talk and then they'll surely reveal what they're hiding after a **pointblank** session.
 
-You don't have to type up a long report either, pointblank will take care of the paperwork. At the very least, you'll get a tidy data frame of the essentials. With a little planning, a very informative sitrep can be regularly produced.
+You don't have to type up a long report either, **pointblank** will take care of the paperwork. At the very least, you'll get a tidy data frame of the essentials. With a little planning, a very informative sitrep can be regularly produced.
 
 ## Examples
 
-Ensure you have the dev version of `pointblank`
+Before getting down to it, some preliminaries: ensure you have the dev version of **pointblank**...
 
 ```r
 devtools::install_github("rich-iannone/pointblank")
@@ -181,7 +180,7 @@ create_creds_file(
   password = **************)
 ```
 
-A database table can be treated similarly to a local data frame. We also have the option to add some preparatory SQL (as statements following a `SELECT * FROM [table]` SQL line)
+A database table can be treated similarly to a local data frame. We also have the option to add some preparatory **SQL** (as statements following a `SELECT * FROM [table]` **SQL** line)
 
 ```r
 agent <- 
@@ -210,6 +209,4 @@ Get a summary of the interrogations
 get_summary(agent)
 ```
 
-As can be seen, pointblank already proves to be an
-effective tool in finding out whether your local data
-frames or your database tables have unexpected values.
+As can be seen, **pointblank** already proves to be an effective tool in finding out whether your local data frames or your database tables have unexpected values.

@@ -7,6 +7,35 @@
 focus_on(agent, tbl_name, db_type = NULL, creds_file = NULL,
   initial_sql = NULL)
 }
+\arguments{
+\item{tbl_name}{the name of the local or remote
+table.}
+
+\item{db_type}{if the table is located in a
+database, the type of database is required here.
+Currently, this can be either \code{PostgreSQL}
+or \code{MySQL}.}
+
+\item{creds_file}{if a connection to a database
+is required for reaching the table specified in
+\code{tbl_name}, then a path to a credentials file
+can be used to establish that connection. The
+credentials file is an \code{RDS} containing a
+character vector with the following items in the
+specified order: (1) database name (\code{dbname}),
+(2) the \code{host} name, (3) the \code{port},
+(4) the username (\code{user}), and (5) the
+\code{password}. This file can be easily created
+using the \code{create_creds_file()} function.}
+
+\item{initial_sql}{when accessing a remote table,
+this provides an option to provide an initial
+query component before conducting validations. 
+An entire SQL statement can be provided here, or,
+as a shortcut, the initial \code{SELECT...}
+statement can be omitted for simple queries (e.g.,
+\code{WHERE a > 1 AND b = 'one'}).}
+}
 \value{
 an agent object.
 }

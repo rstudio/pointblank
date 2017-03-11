@@ -21,5 +21,6 @@ Imports:
 URL: https://github.com/rich-iannone/pointblank
 BugReports: https://github.com/rich-iannone/pointblank/issues
 Suggests:
-    knitr
+    knitr,
+    testthat
 RoxygenNote: 6.0.1

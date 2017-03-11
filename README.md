@@ -2,6 +2,10 @@
 pointblank
 ----------
 
+[![Travis-CI Build Status](https://travis-ci.org/rich-iannone/pointblank.svg?branch=master)](https://travis-ci.org/rich-iannone/pointblank)
+![](http://cranlogs.r-pkg.org/badges/grand-total/pointblank?color=brightgreen)
+[![codecov.io](https://codecov.io/github/rich-iannone/pointblank/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/pointblank?branch=master) 
+
 ## You need to validate tabular data. I need to validate tabular data too.
 
 Tables can often be trustworthy. All the data seems to be there and we may feel we can count on these 

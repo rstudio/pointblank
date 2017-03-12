@@ -8,7 +8,7 @@
 #' \code{ptblank_agent}.
 #' @return an agent object.
 #' @importFrom tibble tibble as_tibble
-#' @importFrom dplyr group_by group_by_ mutate_ filter filter_ select select_ collect ungroup summarize row_number
+#' @importFrom dplyr group_by group_by_ mutate_ filter filter_ select select_ collect ungroup summarize row_number n
 #' @importFrom tidyr nest_
 #' @importFrom stringr str_split
 #' @importFrom purrr flatten_chr
@@ -17,6 +17,9 @@
 #' @export interrogate
 
 interrogate <- function(agent) {
+  
+  # Create binding for `pb_is_good_` variable
+  pb_is_good_ <- NULL
   
   # Get number of rows in `validation_set`
   n_validations <- nrow(agent$validation_set)
@@ -210,7 +213,7 @@ interrogate <- function(agent) {
       n <-
         judgment %>%
         dplyr::group_by() %>%
-        dplyr::summarize(row_count = n()) %>%
+        dplyr::summarize(row_count = dplyr::n()) %>%
         tibble::as_tibble() %>%
         .$row_count
       
@@ -219,7 +222,7 @@ interrogate <- function(agent) {
         judgment %>%
         dplyr::filter(pb_is_good_ == TRUE) %>%
         dplyr::group_by() %>%
-        dplyr::summarize(row_count = n()) %>%
+        dplyr::summarize(row_count = dplyr::n()) %>%
         tibble::as_tibble() %>%
         .$row_count
       
@@ -228,7 +231,7 @@ interrogate <- function(agent) {
         judgment %>%
         dplyr::filter(pb_is_good_ == FALSE) %>%
         dplyr::group_by() %>%
-        dplyr::summarize(row_count = n()) %>%
+        dplyr::summarize(row_count = dplyr::n()) %>%
         tibble::as_tibble() %>%
         .$row_count
       
@@ -243,7 +246,7 @@ interrogate <- function(agent) {
         judgment %>%
         dplyr::filter(pb_is_good_ == FALSE) %>%
         dplyr::group_by() %>%
-        dplyr::summarize(pb_is_not_good_ = n()) %>%
+        dplyr::summarize(pb_is_not_good_ = dplyr::n()) %>%
         tibble::as_tibble() %>%
         .$pb_is_not_good_
       
@@ -355,7 +358,7 @@ interrogate <- function(agent) {
       n <-
         table %>%
         dplyr::group_by() %>%
-        dplyr::summarize(row_count = n()) %>%
+        dplyr::summarize(row_count = dplyr::n()) %>%
         tibble::as_tibble() %>%
         .$row_count
       
@@ -364,7 +367,7 @@ interrogate <- function(agent) {
         table %>%
         dplyr::select_(paste0("c(", paste(columns, collapse = ", ")) %>% paste0(")")) %>%
         dplyr::group_by_(.dots = columns) %>%
-        dplyr::filter(n() > 1) %>%
+        dplyr::filter(dplyr::n() > 1) %>%
         dplyr::ungroup()
       
       # Determine whether the test for duplicated passed
@@ -373,7 +376,7 @@ interrogate <- function(agent) {
         ifelse(
           duplicate_rows %>%
             dplyr::group_by() %>%
-            dplyr::summarize(row_count = n()) %>%
+            dplyr::summarize(row_count = dplyr::n()) %>%
             tibble::as_tibble() %>%
             .$row_count == 0, TRUE, FALSE)
       
@@ -384,7 +387,7 @@ interrogate <- function(agent) {
         n_failed <- false_count <-
           duplicate_rows %>%
           dplyr::group_by() %>%
-          dplyr::summarize(row_count = n()) %>%
+          dplyr::summarize(row_count = dplyr::n()) %>%
           tibble::as_tibble() %>%
           .$row_count
         

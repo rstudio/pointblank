@@ -12,6 +12,10 @@ col_is_factor(agent, column, report_count = 0, warn_count = 1,
 \item{agent}{an agent object of class
 \code{ptblank_agent}.}
 
+\item{column}{the name of a single table column,
+multiple columns in the same table, or, a helper
+function such as \code{all_cols()}.}
+
 \item{report_count}{the threshold number for 
 individual validations returning a \code{FALSE}
 result before applying the \code{report} flag.}

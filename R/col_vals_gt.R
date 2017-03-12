@@ -5,6 +5,12 @@
 #' greater than a specified value.
 #' @param agent an agent object of class
 #' \code{ptblank_agent}.
+#' @param column the column (or a set of columns,
+#' provided as a character vector) to which this
+#' validation should be applied. Aside from a single
+#' column name, column operations can be used to
+#' create one or more computed columns (e.g., 
+#' \code{"a + b"} or \code{"a + sum(a)"}).
 #' @param report_count the threshold number for 
 #' individual validations returning a \code{FALSE}
 #' result before applying the \code{report} flag.

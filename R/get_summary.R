@@ -2,7 +2,9 @@
 #' interrogation
 #' @description Gets the essential information
 #' from an agent object after an interrogation
-#' is complete
+#' is complete.
+#' @param agent an agent object of class
+#' \code{ptblank_agent}.
 #' @return an agent object.
 #' @export get_summary
 

@@ -92,17 +92,17 @@ focus_on <- function(agent,
         table = tbl_name,
         db_type = db_type,
         creds_file = creds_file)
-  
-    } else if (agent$focal_db_type == "MySQL") {
-      
-      # Create `table` object as an SQL entry point
-      # for a remote MySQL table
-      table <- 
-        set_entry_point(
-          table = tbl_name,
-          db_type = db_type,
-          creds_file = creds_file) 
-    }
+    
+  } else if (agent$focal_db_type == "MySQL") {
+    
+    # Create `table` object as an SQL entry point
+    # for a remote MySQL table
+    table <- 
+      set_entry_point(
+        table = tbl_name,
+        db_type = db_type,
+        creds_file = creds_file) 
+  }
   
   # Get the column names from the table
   agent$focal_col_names <-

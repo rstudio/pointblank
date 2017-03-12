@@ -12,6 +12,8 @@
 #' @importFrom tidyr nest_
 #' @importFrom stringr str_split
 #' @importFrom purrr flatten_chr
+#' @importFrom stats setNames
+#' @importFrom utils head
 #' @export interrogate
 
 interrogate <- function(agent) {

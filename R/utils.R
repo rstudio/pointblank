@@ -202,6 +202,7 @@ set_entry_point <- function(table,
 
 
 #' With any `all_cols()` call, return a wildcard operator
+#' @export all_cols
 all_cols <- function() {
   return("*")
 }

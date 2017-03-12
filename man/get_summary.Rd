@@ -7,11 +7,15 @@ interrogation}
 \usage{
 get_summary(agent)
 }
+\arguments{
+\item{agent}{an agent object of class
+\code{ptblank_agent}.}
+}
 \value{
 an agent object.
 }
 \description{
 Gets the essential information
 from an agent object after an interrogation
-is complete
+is complete.
 }

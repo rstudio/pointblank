@@ -90,7 +90,7 @@ create_validation_step <- function(agent,
 #' interrogation query.
 #' @importFrom DBI dbListConnections dbListResults dbClearResult dbDisconnect
 #' @importFrom RPostgreSQL PostgreSQL
-#' @importFrom dplyr src_postgres tbl
+#' @importFrom dplyr src_postgres src_mysql tbl sql
 set_entry_point <- function(table,
                             db_type = NULL,
                             creds_file = NULL,

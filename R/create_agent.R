@@ -10,6 +10,7 @@ create_agent <- function() {
   agent <-
     list(
       focal_tbl_name = as.character(NA)[-1],
+      focal_file_name = as.character(NA)[-1],
       focal_db_type = as.character(NA)[-1],
       focal_col_names = as.character(NA)[-1],
       focal_db_cred_file_path = as.character(NA)[-1],

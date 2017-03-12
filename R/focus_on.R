@@ -34,12 +34,27 @@
 #' @export focus_on
 
 focus_on <- function(agent,
-                     tbl_name,
+                     tbl_name = NULL,
+                     file_name = NULL,
                      db_type = NULL,
                      creds_file = NULL,
                      initial_sql = NULL) {
   
-  agent$focal_tbl_name <- tbl_name
+  if (is.null(tbl_name) & is.null(file_name)) {
+    stop("A table name or a file name must be provided.")
+  }
+  
+  if (is.null(tbl_name)) {
+    agent$focal_tbl_name <- as.character(NA)
+  } else if (!is.null(tbl_name)) {
+    agent$focal_tbl_name <- tbl_name
+  }
+  
+  if (is.null(file_name)) {
+    agent$focal_file_name <- as.character(NA)
+  } else if (!is.null(file_name)) {
+    agent$focal_file_name <- file_name
+  }
   
   if (is.null(db_type)) {
     agent$focal_db_type <- "local"

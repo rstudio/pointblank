@@ -4,6 +4,9 @@
 #' integer values.
 #' @param agent an agent object of class
 #' \code{ptblank_agent}.
+#' @param column the name of a single table column,
+#' multiple columns in the same table, or, a helper
+#' function such as \code{all_cols()}.
 #' @param report_count the threshold number for 
 #' individual validations returning a \code{FALSE}
 #' result before applying the \code{report} flag.

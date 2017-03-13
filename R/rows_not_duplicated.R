@@ -40,6 +40,9 @@
 #' as a shortcut, the initial \code{SELECT...}
 #' statement can be omitted for simple queries (e.g.,
 #' \code{WHERE a > 1 AND b = 'one'}).
+#' @param file_path an optional path for a tabular data
+#' file to be loaded for this verification step. Valid
+#' types are CSV and TSV files.
 #' @param preconditions a optional vector of filtering
 #' statements for filtering the table before this
 #' validation step.

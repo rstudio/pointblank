@@ -17,7 +17,7 @@ test_that("Creating a valid `agent` object is possible", {
   # Expect an agent object of class `dgr_graph`
   expect_is(agent, "ptblank_agent")
   
-  # Expect that the `nodes_df` component is
+  # Expect that the `validation_set` component is
   # a data frame
   expect_is(agent$validation_set, "tbl_df")
   
@@ -45,5 +45,11 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$validation_set$report_count, "numeric")
   expect_is(agent$validation_set$warn_count, "numeric")
   expect_is(agent$validation_set$notify_count, "numeric")
+  expect_is(agent$validation_set$report, "logical")
+  expect_is(agent$validation_set$warn, "logical")
+  expect_is(agent$validation_set$notify, "logical")
+  expect_is(agent$validation_set$init_sql, "character")
+  expect_is(agent$validation_set$db_cred_file_path, "character")
+  expect_is(agent$validation_set$file_path, "character")
 })
 

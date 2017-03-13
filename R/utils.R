@@ -16,7 +16,8 @@ create_validation_step <- function(agent,
                                    tbl_name = as.character(NA),
                                    db_type = as.character(NA),
                                    creds_file = as.character(NA),
-                                   init_sql = as.character(NA)) {
+                                   init_sql = as.character(NA),
+                                   file_path = as.character(NA)) {
   
   # Create a validation step as a single-row
   # `tbl_df` object
@@ -30,12 +31,13 @@ create_validation_step <- function(agent,
       set = as.numeric(NA),
       regex = ifelse(is.null(regex), as.character(NA), as.character(regex)),
       preconditions = as.numeric(NA),
-      passed = as.logical(NA),
+      all_passed = as.logical(NA),
       report_count = as.numeric(report_count),
       warn_count = as.numeric(warn_count),
       notify_count = as.numeric(notify_count),
       init_sql = as.character(agent$focal_init_sql),
-      db_cred_file_path = as.character(agent$focal_db_cred_file_path))
+      db_cred_file_path = as.character(agent$focal_db_cred_file_path),
+      file_path = as.character(agent$focal_file_name))
   
   # If a set has been provided as a vector, include
   # these values as a nested `df_tbl` object in the
@@ -88,6 +90,30 @@ create_validation_step <- function(agent,
 #' in a database), this function will be
 #' invoked to set an entry point for the
 #' interrogation query.
+#' @param table the table with which an entry point
+#' is required.
+#' @param db_type if the table is located in a
+#' database, the type of database is required here.
+#' Currently, this can be either \code{PostgreSQL}
+#' or \code{MySQL}.
+#' @param creds_file if a connection to a database
+#' is required for reaching the table specified in
+#' \code{tbl_name}, then a path to a credentials file
+#' can be used to establish that connection. The
+#' credentials file is an \code{RDS} containing a
+#' character vector with the following items in the
+#' specified order: (1) database name (\code{dbname}),
+#' (2) the \code{host} name, (3) the \code{port},
+#' (4) the username (\code{user}), and (5) the
+#' \code{password}. This file can be easily created
+#' using the \code{create_creds_file()} function.
+#' @param initial_sql when accessing a remote table,
+#' this provides an option to provide an initial
+#' query component before conducting validations. 
+#' An entire SQL statement can be provided here, or,
+#' as a shortcut, the initial \code{SELECT...}
+#' statement can be omitted for simple queries (e.g.,
+#' \code{WHERE a > 1 AND b = 'one'}).
 #' @importFrom DBI dbListConnections dbListResults dbClearResult dbDisconnect
 #' @importFrom RPostgreSQL PostgreSQL
 #' @importFrom dplyr src_postgres src_mysql tbl sql
@@ -208,6 +234,8 @@ all_cols <- function() {
 }
 
 #' Get all column names from the table currently in focus
+#' @param agent an agent object of class
+#' \code{ptblank_agent}.
 get_all_cols <- function(agent) {
   
   # Get vector of all columns

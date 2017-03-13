@@ -6,7 +6,8 @@
 \usage{
 col_vals_between(agent, column, left, right, report_count = 0,
   warn_count = 1, notify_count = 2, tbl_name = NULL, db_type = NULL,
-  creds_file = NULL, initial_sql = NULL, preconditions = NULL)
+  creds_file = NULL, initial_sql = NULL, file_path = NULL,
+  preconditions = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -66,6 +67,10 @@ An entire SQL statement can be provided here, or,
 as a shortcut, the initial \code{SELECT...}
 statement can be omitted for simple queries (e.g.,
 \code{WHERE a > 1 AND b = 'one'}).}
+
+\item{file_path}{an optional path for a tabular data
+file to be loaded for this verification step. Valid
+types are CSV and TSV files.}
 
 \item{preconditions}{a optional vector of filtering
 statements for filtering the table before this

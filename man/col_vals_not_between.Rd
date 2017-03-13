@@ -6,7 +6,8 @@
 \usage{
 col_vals_not_between(agent, column, left, right, report_count = 0,
   warn_count = 1, notify_count = 2, tbl_name = NULL, db_type = NULL,
-  creds_file = NULL, initial_sql = NULL, preconditions = NULL)
+  creds_file = NULL, initial_sql = NULL, file_path = NULL,
+  preconditions = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -18,6 +19,18 @@ validation should be applied. Aside from a single
 column name, column operations can be used to
 create one or more computed columns (e.g., 
 \code{"a + b"} or \code{"a + sum(a)"}).}
+
+\item{left}{the lower bound for the range. The
+validation includes this bound value in addition
+to values greater than \code{left}. Any values
+\code{>= left} and \code{<= right} will be
+considered as failing.}
+
+\item{right}{the upper bound for the range. The
+validation includes this bound value in addition
+to values lower than \code{right}. Any values
+\code{<= right} and \code{>= left} will be
+considered as failing.}
 
 \item{report_count}{the threshold number for 
 individual validations returning a \code{FALSE}
@@ -58,6 +71,10 @@ An entire SQL statement can be provided here, or,
 as a shortcut, the initial \code{SELECT...}
 statement can be omitted for simple queries (e.g.,
 \code{WHERE a > 1 AND b = 'one'}).}
+
+\item{file_path}{an optional path for a tabular data
+file to be loaded for this verification step. Valid
+types are CSV and TSV files.}
 
 \item{preconditions}{a optional vector of filtering
 statements for filtering the table before this

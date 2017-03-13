@@ -14,6 +14,10 @@ focus_on(agent, tbl_name = NULL, file_name = NULL, db_type = NULL,
 \item{tbl_name}{the name of the local or remote
 table.}
 
+\item{file_name}{the name of a file to be
+loaded as a table. Valid types are CSV and TSV
+files.}
+
 \item{db_type}{if the table is located in a
 database, the type of database is required here.
 Currently, this can be either \code{PostgreSQL}

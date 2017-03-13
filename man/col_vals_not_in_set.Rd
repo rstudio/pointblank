@@ -2,12 +2,12 @@
 % Please edit documentation in R/col_vals_not_in_set.R
 \name{col_vals_not_in_set}
 \alias{col_vals_not_in_set}
-\title{Verify whether column data are not part of
+\title{Verify that column data are not part of
 a set of values}
 \usage{
 col_vals_not_in_set(agent, column, set, report_count = 0, warn_count = 1,
   notify_count = 2, tbl_name = NULL, db_type = NULL, creds_file = NULL,
-  initial_sql = NULL, preconditions = NULL)
+  initial_sql = NULL, file_path = NULL, preconditions = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -19,6 +19,10 @@ validation should be applied. Aside from a single
 column name, column operations can be used to
 create one or more computed columns (e.g., 
 \code{"a + b"} or \code{"a + sum(a)"}).}
+
+\item{set}{a vector of numeric or string-based
+elements, where column values found within this
+\code{set} will be considered as failing.}
 
 \item{report_count}{the threshold number for 
 individual validations returning a \code{FALSE}
@@ -59,6 +63,10 @@ An entire SQL statement can be provided here, or,
 as a shortcut, the initial \code{SELECT...}
 statement can be omitted for simple queries (e.g.,
 \code{WHERE a > 1 AND b = 'one'}).}
+
+\item{file_path}{an optional path for a tabular data
+file to be loaded for this verification step. Valid
+types are CSV and TSV files.}
 
 \item{preconditions}{a optional vector of filtering
 statements for filtering the table before this

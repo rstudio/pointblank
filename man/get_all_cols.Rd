@@ -6,6 +6,10 @@
 \usage{
 get_all_cols(agent)
 }
+\arguments{
+\item{agent}{an agent object of class
+\code{ptblank_agent}.}
+}
 \description{
 Get all column names from the table currently in focus
 }

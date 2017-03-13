@@ -6,7 +6,7 @@
 \usage{
 col_is_factor(agent, column, report_count = 0, warn_count = 1,
   notify_count = 1, tbl_name = NULL, db_type = NULL, creds_file = NULL,
-  initial_sql = NULL)
+  initial_sql = NULL, file_path = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -55,6 +55,10 @@ An entire SQL statement can be provided here, or,
 as a shortcut, the initial \code{SELECT...}
 statement can be omitted for simple queries (e.g.,
 \code{WHERE a > 1 AND b = 'one'}).}
+
+\item{file_path}{an optional path for a tabular data
+file to be loaded for this verification step. Valid
+types are CSV and TSV files.}
 }
 \value{
 an agent object.

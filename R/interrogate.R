@@ -12,6 +12,7 @@
 #' @importFrom tidyr nest_
 #' @importFrom stringr str_split
 #' @importFrom purrr flatten_chr
+#' @importFrom readr read_csv read_tsv
 #' @importFrom stats setNames
 #' @importFrom utils head
 #' @export interrogate
@@ -26,11 +27,29 @@ interrogate <- function(agent) {
   
   for (i in 1:n_validations) {
     
-    if (agent$validation_set$db_type[i] == "local") {
+    if (agent$validation_set$db_type[i] == "local_df") {
       
       # Create `table` object as the direct reference to a
       # local `data.frame` or `tbl_df` object
       table <- get(agent$validation_set$tbl_name[i])
+      
+    } else if (agent$validation_set$db_type[i] == "local_file") {
+      
+      file_path <- agent$validation_set$file_path[i]
+      
+      # Infer the file type from the extension
+      file_extension <- 
+        (agent$validation_set$file_path[i] %>% 
+           basename() %>% 
+           str_split(pattern = "\\.") %>% 
+           unlist())[2] %>% 
+        tolower()
+      
+      if (file_extension == "csv") {
+        table <- suppressMessages(readr::read_csv(file_path))
+      } else if (file_extension == "tsv") {
+        table <- suppressMessages(readr::read_tsv(file_path))
+      }
       
     } else if (agent$validation_set$db_type[i] %in% c("PostgreSQL", "MySQL")) {
       
@@ -210,10 +229,10 @@ interrogate <- function(agent) {
     if (grepl("col_vals.*", agent$validation_set$assertion_type[i])) {
       
       # Get total count of rows
-      n <-
+      row_count <-
         judgment %>%
         dplyr::group_by() %>%
-        dplyr::summarize(row_count = dplyr::n()) %>%
+        dplyr::summarize(row_count = n()) %>%
         tibble::as_tibble() %>%
         .$row_count
       
@@ -222,7 +241,7 @@ interrogate <- function(agent) {
         judgment %>%
         dplyr::filter(pb_is_good_ == TRUE) %>%
         dplyr::group_by() %>%
-        dplyr::summarize(row_count = dplyr::n()) %>%
+        dplyr::summarize(row_count = n()) %>%
         tibble::as_tibble() %>%
         .$row_count
       
@@ -231,22 +250,22 @@ interrogate <- function(agent) {
         judgment %>%
         dplyr::filter(pb_is_good_ == FALSE) %>%
         dplyr::group_by() %>%
-        dplyr::summarize(row_count = dplyr::n()) %>%
+        dplyr::summarize(row_count = n()) %>%
         tibble::as_tibble() %>%
         .$row_count
       
-      agent$validation_set$n[i] <- n
+      agent$validation_set$n[i] <- row_count
       agent$validation_set$n_passed[i] <- n_passed
       agent$validation_set$n_failed[i] <- n_failed
-      agent$validation_set$f_passed[i] <- round((n_passed / n), 3)
-      agent$validation_set$f_failed[i] <- round((n_failed / n), 3)
+      agent$validation_set$f_passed[i] <- round((n_passed / row_count), 3)
+      agent$validation_set$f_failed[i] <- round((n_failed / row_count), 3)
       
       # Get count of rows where `pb_is_good_ == FALSE`
       false_count <-
         judgment %>%
         dplyr::filter(pb_is_good_ == FALSE) %>%
         dplyr::group_by() %>%
-        dplyr::summarize(pb_is_not_good_ = dplyr::n()) %>%
+        dplyr::summarize(pb_is_not_good_ = n()) %>%
         tibble::as_tibble() %>%
         .$pb_is_not_good_
       
@@ -355,10 +374,10 @@ interrogate <- function(agent) {
       }
       
       # Get total count of rows
-      n <-
+      row_count <-
         table %>%
         dplyr::group_by() %>%
-        dplyr::summarize(row_count = dplyr::n()) %>%
+        dplyr::summarize(row_count = n()) %>%
         tibble::as_tibble() %>%
         .$row_count
       
@@ -367,7 +386,7 @@ interrogate <- function(agent) {
         table %>%
         dplyr::select_(paste0("c(", paste(columns, collapse = ", ")) %>% paste0(")")) %>%
         dplyr::group_by_(.dots = columns) %>%
-        dplyr::filter(dplyr::n() > 1) %>%
+        dplyr::filter(n() > 1) %>%
         dplyr::ungroup()
       
       # Determine whether the test for duplicated passed
@@ -376,29 +395,29 @@ interrogate <- function(agent) {
         ifelse(
           duplicate_rows %>%
             dplyr::group_by() %>%
-            dplyr::summarize(row_count = dplyr::n()) %>%
+            dplyr::summarize(row_count = n()) %>%
             tibble::as_tibble() %>%
             .$row_count == 0, TRUE, FALSE)
       
       if (passed == TRUE) {
-        n_passed <- n
+        n_passed <- row_count
         n_failed <- false_count <- 0
       } else if (passed == FALSE) {
         n_failed <- false_count <-
           duplicate_rows %>%
           dplyr::group_by() %>%
-          dplyr::summarize(row_count = dplyr::n()) %>%
+          dplyr::summarize(row_count = n()) %>%
           tibble::as_tibble() %>%
           .$row_count
         
-        n_passed <- n - n_failed
+        n_passed <- row_count - n_failed
       }
       
-      agent$validation_set$n[i] <- n
+      agent$validation_set$n[i] <- row_count
       agent$validation_set$n_passed[i] <- n_passed
       agent$validation_set$n_failed[i] <- n_failed
-      agent$validation_set$f_passed[i] <- round((n_passed / n), 3)
-      agent$validation_set$f_failed[i] <- round((n_failed / n), 3)
+      agent$validation_set$f_passed[i] <- round((n_passed / row_count), 3)
+      agent$validation_set$f_failed[i] <- round((n_failed / row_count), 3)
       
       if (false_count > 0) {
         agent$validation_set$all_passed[i] <- FALSE

@@ -43,6 +43,9 @@
 #' as a shortcut, the initial \code{SELECT...}
 #' statement can be omitted for simple queries (e.g.,
 #' \code{WHERE a > 1 AND b = 'one'}).
+#' @param file_path an optional path for a tabular data
+#' file to be loaded for this verification step. Valid
+#' types are CSV and TSV files.
 #' @param preconditions a optional vector of filtering
 #' statements for filtering the table before this
 #' validation step.
@@ -60,6 +63,7 @@ col_vals_null <- function(agent,
                           db_type = NULL,
                           creds_file = NULL,
                           initial_sql = NULL,
+                          file_path = NULL,
                           preconditions = NULL) {
   
   assertion_type <- "col_vals_null"
@@ -82,7 +86,8 @@ col_vals_null <- function(agent,
       tbl_name = ifelse(is.null(tbl_name), as.character(NA), tbl_name),
       db_type = ifelse(is.null(db_type), as.character(NA), db_type),
       creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
-      init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql))
+      init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
+      file_path = ifelse(is.null(file_path), as.character(NA), file_path))
   
   # Append `validation_component` to `validation_set`
   agent$validation_set <-

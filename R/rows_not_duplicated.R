@@ -57,6 +57,7 @@ rows_not_duplicated <- function(agent,
                                 db_type = NULL,
                                 creds_file = NULL,
                                 initial_sql = NULL,
+                                file_path = NULL,
                                 preconditions = NULL) {
   
   assertion_type <- "rows_not_duplicated"
@@ -73,7 +74,8 @@ rows_not_duplicated <- function(agent,
       tbl_name = ifelse(is.null(tbl_name), as.character(NA), tbl_name),
       db_type = ifelse(is.null(db_type), as.character(NA), db_type),
       creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
-      init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql))
+      init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
+      file_path = ifelse(is.null(file_path), as.character(NA), file_path))
   
   # Append `validation_component` to `validation_set`
   agent$validation_set <-

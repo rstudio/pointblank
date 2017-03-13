@@ -69,8 +69,8 @@ Now, perform a series of steps to validate these tables. Here's each step with s
 10. [add a step] are all values in `d` part of a set?
 11. [add a step] are all `d` values not part of a set?
 12. [add a step] are column vals in `e` >= 0?
-13. [add a step] are all `f` values NULL/NA?
-14. [add a step] are all `f` values not NULL/NA?
+13. [add a step] are all `f` values `NA`?
+14. [add a step] are all `d` values not `NA`?
 15. [interrogation] perform all checks with `interrogate()`
 
 ```r
@@ -118,54 +118,50 @@ Get a summary of the interrogations, really just the basics. (Note that much mor
 ```r
 get_summary(agent)
 
-#> # A tibble: 13 × 11
-#>    tbl_name db_type       assertion_type
-#>       <chr>   <chr>                <chr>
-#> 1     tbl_1   local          col_vals_gt
-#> 2     tbl_1   local  rows_not_duplicated
-#> 3     tbl_1   local         col_vals_gte
-#> 4     tbl_1   local         col_vals_lte
-#> 5     tbl_1   local col_vals_not_between
-#> 6     tbl_1   local       col_vals_regex
-#> 7     tbl_1   local      col_vals_in_set
-#> 8     tbl_2   local      col_vals_in_set
-#> 9     tbl_2   local  col_vals_not_in_set
-#> 10    tbl_2   local         col_vals_gte
-#> 11    tbl_2   local        col_vals_null
-#> 12    tbl_2   local    col_vals_not_null
-#> 13    tbl_2   local     col_vals_between
+#> # A tibble: 11 × 11
+#>    tbl_name  db_type      assertion_type
+#>       <chr>    <chr>               <chr>
+#> 1     tbl_1 local_df         col_vals_gt
+#> 2     tbl_1 local_df rows_not_duplicated
+#> 3     tbl_1 local_df        col_vals_gte
+#> 4     tbl_1 local_df        col_vals_lte
+#> 5     tbl_1 local_df      col_vals_regex
+#> 6     tbl_1 local_df     col_vals_in_set
+#> 7     tbl_2 local_df     col_vals_in_set
+#> 8     tbl_2 local_df col_vals_not_in_set
+#> 9     tbl_2 local_df        col_vals_gte
+#> 10    tbl_2 local_df       col_vals_null
+#> 11    tbl_2 local_df   col_vals_not_null
 
-#>              column value        set regex
-#>               <chr> <dbl>     <list> <chr>
-#> 1                 a     0     <NULL>  <NA>
-#> 2           a, b, c    NA     <NULL>  <NA>
-#> 3             a + b     7     <NULL>  <NA>
-#> 4                 b    10     <NULL>  <NA>
-#> 5                 b    NA <list [1]>  <NA>
-#> 6                 c    NA     <NULL>  h2.*
-#> 7   substr(c, 0, 2)    NA <list [1]>  <NA>
-#> 8                 d    NA <list [1]>  <NA>
-#> 9                 d    NA <list [1]>  <NA>
-#> 10                e     0     <NULL>  <NA>
-#> 11                f    NA     <NULL>  <NA>
-#> 12                d    NA     <NULL>  <NA>
-#> 13                e    NA <list [1]>  <NA>
+#> # A tibble: 11 × 11
+#>              column value        set regex 
+#>               <chr> <dbl>     <list> <chr> 
+#> 1                 a     0     <NULL>  <NA> 
+#> 2           a, b, c    NA     <NULL>  <NA> 
+#> 3             a + b     7     <NULL>  <NA> 
+#> 4                 b    10     <NULL>  <NA> 
+#> 5                 c    NA     <NULL>  h2.* 
+#> 6   substr(c, 0, 2)    NA <list [1]>  <NA> 
+#> 7                 d    NA <list [1]>  <NA> 
+#> 8                 d    NA <list [1]>  <NA> 
+#> 9                 e     0     <NULL>  <NA> 
+#> 10                f    NA     <NULL>  <NA> 
+#> 11                d    NA     <NULL>  <NA> 
 
-#>     all_passed     n n_passed n_failed 
-#>          <lgl> <int>    <int>    <dbl> 
-#> 1         TRUE     5        5        0 
-#> 2         TRUE     5        5        0 
-#> 3         TRUE     5        5        0 
-#> 4         TRUE     5        5        0 
-#> 5        FALSE     5        3        2 
-#> 6        FALSE     5        4        1 
-#> 7         TRUE     5        5        0 
-#> 8        FALSE     5        4        1 
-#> 9        FALSE     5        1        4 
-#> 10       FALSE     5        4        1 
-#> 11       FALSE     5        1        4 
-#> 12        TRUE     5        5        0 
-#> 13       FALSE     5        4        1 
+#> # A tibble: 11 × 11
+#>    preconditions all_passed     n n_passed
+#>           <list>      <lgl> <int>    <int>
+#> 1         <NULL>       TRUE     5        5
+#> 2         <NULL>       TRUE     5        5
+#> 3         <NULL>       TRUE     5        5
+#> 4         <NULL>       TRUE     5        5
+#> 5         <NULL>      FALSE     5        4
+#> 6         <NULL>       TRUE     5        5
+#> 7         <NULL>      FALSE     5        4
+#> 8         <NULL>      FALSE     5        1
+#> 9         <NULL>      FALSE     5        4
+#> 10        <NULL>      FALSE     5        0
+#> 11        <NULL>       TRUE     5        5
 ```
 
 To validate tables in a database, first create a credentials RDS file in the working directory.

@@ -6,6 +6,9 @@
 #' \code{ptblank_agent}.
 #' @param tbl_name the name of the local or remote
 #' table.
+#' @param file_name the name of a file to be
+#' loaded as a table. Valid types are CSV and TSV
+#' files.
 #' @param db_type if the table is located in a
 #' database, the type of database is required here.
 #' Currently, this can be either \code{PostgreSQL}
@@ -30,6 +33,7 @@
 #' \code{WHERE a > 1 AND b = 'one'}).
 #' @return an agent object.
 #' @importFrom dplyr filter
+#' @importFrom readr read_csv read_tsv
 #' @importFrom tibble as_tibble
 #' @export focus_on
 
@@ -56,10 +60,15 @@ focus_on <- function(agent,
     agent$focal_file_name <- file_name
   }
   
-  if (is.null(db_type)) {
-    agent$focal_db_type <- "local"
-  } else if (!is.null(db_type)) {
-    agent$focal_db_type <- db_type
+  # If a `tbl_name` provided without a `file_name`
+  # or a `db_type`, then assume a local data frame 
+  # (`local_df`) is the focus; if a `file_name`
+  # provided, assume a local file (`local_file`)
+  # is the focus
+  if (is.null(file_name) & is.null(db_type) & !is.null(tbl_name)) {
+    agent$focal_db_type <- "local_df"
+  } else if (!is.null(file_name)) {
+    agent$focal_db_type <- "local_file"
   }
   
   if (is.null(creds_file)) {
@@ -76,12 +85,41 @@ focus_on <- function(agent,
   
   # Make the table accessible to obtain basic
   # information from it
-  
-  if (agent$focal_db_type == "local") {
+  if (agent$focal_db_type == "local_df") {
     
     # Create `table` object as the direct reference to a
     # local `data.frame` or `tbl_df` object
     table <- get(tbl_name)
+    
+  } else if (agent$focal_db_type == "local_file") {
+    
+    # Infer the file type from the extension
+    file_extension <- 
+      (agent$focal_file_name %>% 
+      basename() %>% 
+      str_split(pattern = "\\.") %>% 
+      unlist())[2] %>% 
+        tolower()
+    
+    # Get the file name without the extension
+    file_name_no_ext <- 
+      (agent$focal_file_name %>% 
+         basename() %>% 
+         str_split(pattern = "\\.") %>% 
+         unlist())[1] %>% 
+      tolower()
+    
+    if (file_extension == "csv") {
+      table <-
+        suppressMessages(readr::read_csv(agent$focal_file_name, n_max = 1000))
+    } else if (file_extension == "tsv") {
+      table <-
+        suppressMessages(readr::read_tsv(agent$focal_file_name, n_max = 1000))
+    }
+    
+    if (is.na(agent$focal_tbl_name)) {
+      agent$focal_tbl_name <- file_name_no_ext
+    }
     
   } else if (agent$focal_db_type == "PostgreSQL") {
     

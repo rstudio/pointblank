@@ -5,7 +5,7 @@ pointblank
 [![Travis-CI Build Status](https://travis-ci.org/rich-iannone/pointblank.svg?branch=master)](https://travis-ci.org/rich-iannone/pointblank)
 [![codecov.io](https://codecov.io/github/rich-iannone/pointblank/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/pointblank?branch=master) 
 
-## You need to validate tabular data. *I* need to validate tabular data too.
+## We all need to validate tabular data sometimes.
 
 Tables can often be trustworthy. All the data seems to be there and we may feel we can count on these 
 tables to deliver us the info we need. Still, sometimes, the tables we trust are hiding things from

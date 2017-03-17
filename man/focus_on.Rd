@@ -4,8 +4,8 @@
 \alias{focus_on}
 \title{Place certain access details more to the fore}
 \usage{
-focus_on(agent, tbl_name = NULL, file_name = NULL, db_type = NULL,
-  creds_file = NULL, initial_sql = NULL)
+focus_on(agent, tbl_name = NULL, file_name = NULL, col_types = NULL,
+  db_type = NULL, creds_file = NULL, initial_sql = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -17,6 +17,16 @@ table.}
 \item{file_name}{the name of a file to be
 loaded as a table. Valid types are CSV and TSV
 files.}
+
+\item{col_types}{if validating a CSV or TSV file,
+an optional column specification can be provided
+here as a string. This string representation is
+where each character represents one column and the
+mappings are: \code{c} -> character, \code{i} ->
+integer, \code{n} -> number, \code{d} -> double, 
+\code{l} -> logical, \code{D} -> date, \code{T} ->
+date time, \code{t} -> time, \code{?} -> guess, 
+or \code{_/-}, which skips the column.}
 
 \item{db_type}{if the table is located in a
 database, the type of database is required here.

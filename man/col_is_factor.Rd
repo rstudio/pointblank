@@ -6,7 +6,7 @@
 \usage{
 col_is_factor(agent, column, report_count = 0, warn_count = 1,
   notify_count = 1, tbl_name = NULL, db_type = NULL, creds_file = NULL,
-  initial_sql = NULL, file_path = NULL)
+  initial_sql = NULL, file_path = NULL, col_types = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -59,6 +59,16 @@ statement can be omitted for simple queries (e.g.,
 \item{file_path}{an optional path for a tabular data
 file to be loaded for this verification step. Valid
 types are CSV and TSV files.}
+
+\item{col_types}{if validating a CSV or TSV file,
+an optional column specification can be provided
+here as a string. This string representation is
+where each character represents one column and the
+mappings are: \code{c} -> character, \code{i} ->
+integer, \code{n} -> number, \code{d} -> double, 
+\code{l} -> logical, \code{D} -> date, \code{T} ->
+date time, \code{t} -> time, \code{?} -> guess, 
+or \code{_/-}, which skips the column.}
 }
 \value{
 an agent object.

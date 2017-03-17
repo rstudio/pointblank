@@ -9,7 +9,8 @@ create_validation_step(agent, assertion_type, column, value = NULL,
   set = NULL, regex = NULL, preconditions = NULL, report_count,
   warn_count, notify_count, tbl_name = as.character(NA),
   db_type = as.character(NA), creds_file = as.character(NA),
-  init_sql = as.character(NA), file_path = as.character(NA))
+  init_sql = as.character(NA), file_path = as.character(NA),
+  col_types = as.character(NA))
 }
 \description{
 Create a properly formatted validation step.

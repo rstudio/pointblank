@@ -11,6 +11,7 @@ test_that("Creating a valid `agent` object is possible", {
     all(names(agent) ==
           c("focal_tbl_name", "focal_file_name",
             "focal_db_type", "focal_col_names",
+            "focal_col_types",
             "focal_db_cred_file_path",
             "focal_init_sql", "validation_set")))
   
@@ -27,6 +28,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$focal_file_name, "character")
   expect_is(agent$focal_db_type, "character")
   expect_is(agent$focal_col_names, "character")
+  expect_is(agent$focal_col_types, "character")
   expect_is(agent$focal_db_cred_file_path, "character")
   expect_is(agent$focal_init_sql, "character")
   expect_is(agent$validation_set$tbl_name, "character")
@@ -51,5 +53,5 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$validation_set$init_sql, "character")
   expect_is(agent$validation_set$db_cred_file_path, "character")
   expect_is(agent$validation_set$file_path, "character")
+  expect_is(agent$validation_set$col_types, "character")
 })
-

@@ -36,6 +36,7 @@ interrogate <- function(agent) {
     } else if (agent$validation_set$db_type[i] == "local_file") {
       
       file_path <- agent$validation_set$file_path[i]
+      col_types <- agent$validation_set$col_types[i]
       
       # Infer the file type from the extension
       file_extension <- 
@@ -45,10 +46,30 @@ interrogate <- function(agent) {
            unlist())[2] %>% 
         tolower()
       
-      if (file_extension == "csv") {
-        table <- suppressMessages(readr::read_csv(file_path))
-      } else if (file_extension == "tsv") {
-        table <- suppressMessages(readr::read_tsv(file_path))
+      if (is.na(col_types)) {
+        if (file_extension == "csv") {
+          table <- 
+            suppressMessages(
+              readr::read_csv(file_path))
+        } else if (file_extension == "tsv") {
+          table <- 
+            suppressMessages(
+              readr::read_tsv(file_path))
+        }
+      }
+      
+      if (!is.na(col_types)){
+        if (file_extension == "csv") {
+          table <- 
+            suppressMessages(
+              readr::read_csv(file_path,
+                              col_types = col_types))
+        } else if (file_extension == "tsv") {
+          table <- 
+            suppressMessages(
+              readr::read_tsv(file_path,
+                              col_types = col_types))
+        }
       }
       
     } else if (agent$validation_set$db_type[i] %in% c("PostgreSQL", "MySQL")) {

@@ -17,7 +17,8 @@ create_validation_step <- function(agent,
                                    db_type = as.character(NA),
                                    creds_file = as.character(NA),
                                    init_sql = as.character(NA),
-                                   file_path = as.character(NA)) {
+                                   file_path = as.character(NA),
+                                   col_types = as.character(NA)) {
   
   # Create a validation step as a single-row
   # `tbl_df` object
@@ -37,7 +38,8 @@ create_validation_step <- function(agent,
       notify_count = as.numeric(notify_count),
       init_sql = as.character(agent$focal_init_sql),
       db_cred_file_path = as.character(agent$focal_db_cred_file_path),
-      file_path = as.character(agent$focal_file_name))
+      file_path = as.character(agent$focal_file_name),
+      col_types = as.character(agent$focal_col_types))
   
   # If a set has been provided as a vector, include
   # these values as a nested `df_tbl` object in the
@@ -79,6 +81,14 @@ create_validation_step <- function(agent,
   
   if (!is.na(init_sql)) {
     validation_step$init_sql <- init_sql
+  }
+  
+  if (!is.na(file_path)) {
+    validation_step$file_path <- file_path
+  }
+  
+  if (!is.na(col_types)) {
+    validation_step$col_types <- col_types
   }
   
   return(validation_step)

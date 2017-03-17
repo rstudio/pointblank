@@ -13,6 +13,7 @@ create_agent <- function() {
       focal_file_name = as.character(NA)[-1],
       focal_db_type = as.character(NA)[-1],
       focal_col_names = as.character(NA)[-1],
+      focal_col_types = as.character(NA)[-1],
       focal_db_cred_file_path = as.character(NA)[-1],
       focal_init_sql = as.character(NA)[-1],
       validation_set =
@@ -40,7 +41,8 @@ create_agent <- function() {
           row_sample = as.numeric(NA),
           init_sql = as.character(NA),
           db_cred_file_path = as.character(NA),
-          file_path = as.character(NA))
+          file_path = as.character(NA),
+          col_types = as.character(NA))
     )
   
   agent$validation_set$set <- tibble::as_tibble(NA)

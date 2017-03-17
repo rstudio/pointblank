@@ -9,6 +9,15 @@
 #' @param file_name the name of a file to be
 #' loaded as a table. Valid types are CSV and TSV
 #' files.
+#' @param col_types if validating a CSV or TSV file,
+#' an optional column specification can be provided
+#' here as a string. This string representation is
+#' where each character represents one column and the
+#' mappings are: \code{c} -> character, \code{i} ->
+#' integer, \code{n} -> number, \code{d} -> double, 
+#' \code{l} -> logical, \code{D} -> date, \code{T} ->
+#' date time, \code{t} -> time, \code{?} -> guess, 
+#' or \code{_/-}, which skips the column.
 #' @param db_type if the table is located in a
 #' database, the type of database is required here.
 #' Currently, this can be either \code{PostgreSQL}
@@ -40,6 +49,7 @@
 focus_on <- function(agent,
                      tbl_name = NULL,
                      file_name = NULL,
+                     col_types = NULL,
                      db_type = NULL,
                      creds_file = NULL,
                      initial_sql = NULL) {
@@ -58,6 +68,12 @@ focus_on <- function(agent,
     agent$focal_file_name <- as.character(NA)
   } else if (!is.null(file_name)) {
     agent$focal_file_name <- file_name
+  }
+  
+  if (is.null(col_types)) {
+    agent$focal_col_types <- as.character(NA)
+  } else if (!is.null(col_types)) {
+    agent$focal_col_types <- col_types
   }
   
   # If a `tbl_name` provided without a `file_name`

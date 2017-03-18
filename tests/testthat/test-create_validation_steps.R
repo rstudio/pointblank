@@ -21,7 +21,7 @@ test_that("Creating a `col_is_character()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -59,13 +59,13 @@ test_that("Creating a `col_is_character()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_is_character(column = all_cols())
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_is_date()` step is possible", {
@@ -89,7 +89,7 @@ test_that("Creating a `col_is_date()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -127,13 +127,13 @@ test_that("Creating a `col_is_date()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_is_date(column = all_cols())
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_is_factor()` step is possible", {
@@ -157,7 +157,7 @@ test_that("Creating a `col_is_factor()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -195,13 +195,13 @@ test_that("Creating a `col_is_factor()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_is_factor(column = all_cols())
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_is_integer()` step is possible", {
@@ -225,7 +225,7 @@ test_that("Creating a `col_is_integer()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -263,13 +263,13 @@ test_that("Creating a `col_is_integer()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_is_integer(column = all_cols())
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_is_logical()` step is possible", {
@@ -293,7 +293,7 @@ test_that("Creating a `col_is_logical()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -331,13 +331,13 @@ test_that("Creating a `col_is_logical()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_is_logical(column = all_cols())
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_is_numeric()` step is possible", {
@@ -361,7 +361,7 @@ test_that("Creating a `col_is_numeric()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -399,13 +399,13 @@ test_that("Creating a `col_is_numeric()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_is_numeric(column = all_cols())
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_is_posix()` step is possible", {
@@ -429,7 +429,7 @@ test_that("Creating a `col_is_posix()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -467,13 +467,13 @@ test_that("Creating a `col_is_posix()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_is_posix(column = all_cols())
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_vals_between()` step is possible", {
@@ -497,7 +497,7 @@ test_that("Creating a `col_vals_between()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -536,13 +536,13 @@ test_that("Creating a `col_vals_between()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_vals_between(column = all_cols(), left = 2, right = 10)
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_vals_not_between()` step is possible", {
@@ -566,7 +566,7 @@ test_that("Creating a `col_vals_not_between()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -605,13 +605,13 @@ test_that("Creating a `col_vals_not_between()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_vals_not_between(column = all_cols(), left = 2, right = 10)
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_vals_equal()` step is possible", {
@@ -635,7 +635,7 @@ test_that("Creating a `col_vals_equal()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -673,13 +673,13 @@ test_that("Creating a `col_vals_equal()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_vals_equal(column = all_cols(), value = 5)
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_vals_not_equal()` step is possible", {
@@ -703,7 +703,7 @@ test_that("Creating a `col_vals_not_equal()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -741,13 +741,13 @@ test_that("Creating a `col_vals_not_equal()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_vals_not_equal(column = all_cols(), value = 5)
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_vals_gt()` step is possible", {
@@ -771,7 +771,7 @@ test_that("Creating a `col_vals_gt()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -809,13 +809,13 @@ test_that("Creating a `col_vals_gt()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_vals_gt(column = all_cols(), value = 5)
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_vals_gte()` step is possible", {
@@ -839,7 +839,7 @@ test_that("Creating a `col_vals_gte()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -877,13 +877,13 @@ test_that("Creating a `col_vals_gte()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_vals_gte(column = all_cols(), value = 5)
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_vals_lt()` step is possible", {
@@ -907,7 +907,7 @@ test_that("Creating a `col_vals_lt()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -945,13 +945,13 @@ test_that("Creating a `col_vals_lt()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_vals_lt(column = all_cols(), value = 5)
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_vals_lte()` step is possible", {
@@ -975,7 +975,7 @@ test_that("Creating a `col_vals_lte()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -1013,13 +1013,13 @@ test_that("Creating a `col_vals_lte()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_vals_lte(column = all_cols(), value = 5)
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_vals_in_set()` step is possible", {
@@ -1043,7 +1043,7 @@ test_that("Creating a `col_vals_in_set()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -1082,13 +1082,13 @@ test_that("Creating a `col_vals_in_set()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_vals_in_set(column = all_cols(), set = c("1-bcd-345", "5-jdo-903"))
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_vals_not_in_set()` step is possible", {
@@ -1112,7 +1112,7 @@ test_that("Creating a `col_vals_not_in_set()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -1151,13 +1151,13 @@ test_that("Creating a `col_vals_not_in_set()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_vals_not_in_set(column = all_cols(), set = c("1-bcd-345", "5-jdo-903"))
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_vals_regex()` step is possible", {
@@ -1181,7 +1181,7 @@ test_that("Creating a `col_vals_regex()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -1219,13 +1219,13 @@ test_that("Creating a `col_vals_regex()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_vals_regex(column = all_cols(), regex = "[0-9]-.*")
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_vals_null()` step is possible", {
@@ -1249,7 +1249,7 @@ test_that("Creating a `col_vals_null()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -1287,13 +1287,13 @@ test_that("Creating a `col_vals_null()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_vals_null(column = all_cols())
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `col_vals_not_null()` step is possible", {
@@ -1317,7 +1317,7 @@ test_that("Creating a `col_vals_not_null()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
@@ -1355,13 +1355,13 @@ test_that("Creating a `col_vals_not_null()` step is possible", {
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
     col_vals_not_null(column = all_cols())
   
-  # Expect 5 rows in the `validation_all$validation_set` object
-  expect_equivalent(nrow(validation_all$validation_set), 5)
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
   
   # Expect all column names in `validation_all$validation_set$column`
   expect_equivalent(
     validation_all$validation_set$column,
-    c("date_time", "a", "b", "c", "d"))
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
 test_that("Creating a `rows_not_duplicated()` step is possible", {
@@ -1385,7 +1385,7 @@ test_that("Creating a `rows_not_duplicated()` step is possible", {
   # to specific parameters
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_db_type, "local_file")
-  expect_equivalent(validation$focal_col_names, c("date_time", "a", "b", "c", "d"))
+  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_true(is.na(validation$focal_db_cred_file_path))
   expect_true(is.na(validation$focal_init_sql))
   expect_equivalent(validation$validation_set$tbl_name, "small_table")

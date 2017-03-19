@@ -814,4 +814,68 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$n_failed, 0)
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
+  
+  # Use `col_vals_regex()` function to create
+  # a validation step, then, `interrogate()`
+  validation <-
+    create_agent() %>%
+    focus_on(
+      file_name = system.file("extdata", "small_table.csv",
+                              package = "pointblank"),
+      col_types = "TDicidlc") %>%
+    col_vals_regex(column = "b", regex = "[0-9]-[a-z]{3}-[0-9]{3}") %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$validation_set$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$db_type, "local_file")
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_regex")
+  expect_equivalent(validation$validation_set$column, "b")
+  expect_true(is.na(validation$validation_set$value))
+  expect_equivalent(validation$validation_set$regex, "[0-9]-[a-z]{3}-[0-9]{3}")
+  expect_true(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 13)
+  expect_equivalent(validation$validation_set$n_passed, 13)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
+  expect_equivalent(validation$validation_set$report_count, 0)
+  expect_equivalent(validation$validation_set$warn_count, 1)
+  expect_equivalent(validation$validation_set$notify_count, 2)
+  expect_true(is.na(validation$validation_set$init_sql))
+  expect_true(is.na(validation$validation_set$db_cred_file_path))
+  expect_equivalent(
+    validation$validation_set$file_path,
+    system.file("extdata", "small_table.csv", package = "pointblank"))
+  
+  # Expect a single row in `validation$validation_set`
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Use `col_vals_regex()` function to create
+  # a validation step (with a precondition), then,
+  # `interrogate()`
+  validation <-
+    create_agent() %>%
+    focus_on(
+      file_name = system.file("extdata", "small_table.csv",
+                              package = "pointblank"),
+      col_types = "TDicidlc") %>%
+    col_vals_regex(
+      column = "f", regex = "[a-z]{3}",
+      preconditions = "f != 'high'") %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$validation_set$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$db_type, "local_file")
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_regex")
+  expect_equivalent(validation$validation_set$column, "f")
+  expect_true(is.na(validation$validation_set$value))
+  expect_equivalent(validation$validation_set$regex, "[a-z]{3}")
+  expect_true(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 7)
+  expect_equivalent(validation$validation_set$n_passed, 7)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
 })

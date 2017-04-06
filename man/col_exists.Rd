@@ -80,13 +80,9 @@ exist in the target table.
 \examples{
 # Make a simple local table
 tbl_1 <-
-  tribble(
-    ~a,  ~b,  ~c,
-    1,   6,   "h2adb",
-    2,   7,   "h2spb",
-    3,   8,   "h2df",
-    4,   9,   "d3jwb",
-    5,  10,   "h2esf")
+  data.frame(
+    a = c(5, 2, 6, 3),
+    b = c(7, 9, 3, 7))
 
 # Validate that the `a` and `b` columns
 # exist in the `tbl_1` table; do this by

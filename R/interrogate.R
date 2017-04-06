@@ -103,8 +103,11 @@ interrogate <- function(agent) {
       }
     }
     
+    #
     # Judge tables based on assertion types that rely on
     # comparison operators
+    #
+    
     if (agent$validation_set$assertion_type[i] %in%
         c("col_vals_gt", "col_vals_gte",
           "col_vals_lt", "col_vals_lte",
@@ -136,6 +139,11 @@ interrogate <- function(agent) {
             agent$validation_set$value[i]),
           "pb_is_good_"))
     }
+    
+    #
+    # Judge tables based on assertion types that
+    # rely on betweenness checking
+    #
     
     if (agent$validation_set$assertion_type[i] == "col_vals_between") {
       
@@ -172,6 +180,11 @@ interrogate <- function(agent) {
                  " <= ", right, ")"),
           "pb_is_good_"))
     }
+    
+    #
+    # Judge tables based on assertion types that
+    # rely on set membership
+    #
     
     if (agent$validation_set$assertion_type[i] == "col_vals_in_set") {
       
@@ -245,6 +258,39 @@ interrogate <- function(agent) {
                  agent$validation_set$column[i],
                  ")"),
           "pb_is_good_"))
+    }
+    
+    #
+    # Judge tables based on assertion types that
+    # check the table structure
+    #
+    
+    if (agent$validation_set$assertion_type[i] == "col_exists") {
+      
+      # Get the column names for the table
+      column_names <-
+        table %>%
+        dplyr::filter(row_number() == 1) %>%
+        tibble::as_tibble() %>%
+        colnames()
+      
+      judgment <-
+        ifelse(
+          agent$validation_set$column[i] %in% column_names,
+          TRUE, FALSE)
+      
+      agent$validation_set$n[i] <- 1
+      
+      agent$validation_set$n_passed[i] <- 
+        agent$validation_set$f_passed[i] <-
+        ifelse(judgment, 1, 0)
+      
+      agent$validation_set$n_failed[i] <-
+        agent$validation_set$f_failed[i] <-
+        ifelse(judgment, 0, 1)
+      
+      agent$validation_set$all_passed[i] <-
+        ifelse(judgment, TRUE, FALSE)
     }
     
     if (grepl("col_vals.*", agent$validation_set$assertion_type[i])) {

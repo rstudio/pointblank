@@ -52,6 +52,33 @@
 #' date time, \code{t} -> time, \code{?} -> guess, 
 #' or \code{_/-}, which skips the column.
 #' @return an agent object.
+#' @examples 
+#' # Make a simple local table
+#' tbl_1 <-
+#'   tribble(
+#'     ~a,  ~b,  ~c,
+#'     1,   6,   "h2adb",
+#'     2,   7,   "h2spb",
+#'     3,   8,   "h2df",
+#'     4,   9,   "d3jwb",
+#'     5,  10,   "h2esf")
+#' 
+#' # Validate that the `a` and `b` columns
+#' # exist in the `tbl_1` table; do this by
+#' # creating an agent, focussing on that
+#' # table, creating a `col_exists()` step,
+#' # and then interrogating the table
+#' agent <- 
+#'   create_agent() %>%
+#'   focus_on(
+#'     tbl_name = "tbl_1") %>%
+#'   col_exists(column = c("a", "b")) %>%
+#'   interrogate()
+#' 
+#' # Determine if both these column validations
+#' # passed by using `all_passed`
+#' all_passed(agent)
+#' #> [1] TRUE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
 #' @export col_exists

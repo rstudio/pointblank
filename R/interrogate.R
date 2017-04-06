@@ -291,6 +291,12 @@ interrogate <- function(agent) {
       
       agent$validation_set$all_passed[i] <-
         ifelse(judgment, TRUE, FALSE)
+      
+      if (judgment) {
+        n_failed <- false_count <- 0
+      } else {
+        n_failed <- false_count <- 1  
+      }
     }
     
     if (grepl("col_vals.*", agent$validation_set$assertion_type[i])) {

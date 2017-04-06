@@ -2,6 +2,7 @@
 
 export("%>%")
 export(all_cols)
+export(all_passed)
 export(col_exists)
 export(col_is_character)
 export(col_is_date)

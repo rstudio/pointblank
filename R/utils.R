@@ -308,7 +308,8 @@ disconnect_postgres <- function() {
   }
 }
 
-# Add function to generate summary SVG files
+#' Add function to generate summary SVG files
+#' @importFrom stringr str_replace str_replace_all
 generate_img_files <- function(summary) {
   
   for (i in 1:nrow(summary)) {
@@ -330,25 +331,28 @@ generate_img_files <- function(summary) {
       formatC(
         x = summary$n_passed[i],
         flag = " ", width = 12) %>%
-      str_replace_all(" ", "&#160;")
+      stringr::str_replace_all(" ", "&#160;")
     
     fail <- 
       formatC(
         x = summary$n[i] - summary$n_passed[i],
         flag = " ", width = 12) %>%
-      str_replace_all(" ", "&#160;")
+      stringr::str_replace_all(" ", "&#160;")
     
     icon <- paste0(summary$assertion_type[i], "_text.svg")
     
     file.copy(
       from = system.file("icons", icon, package = "pointblank"),
-      to = paste0("./temporary_images/", str_replace_all(index, " ", "0"), ".svg"), overwrite = TRUE)
+      to = paste0("./temporary_images/",
+                  stringr::str_replace_all(index, " ", "0"), ".svg"),
+      overwrite = TRUE)
     
-    readLines(paste0("./temporary_images/", str_replace_all(index, " ", "0"), ".svg"),
+    readLines(paste0("./temporary_images/",
+                     stringr::str_replace_all(index, " ", "0"), ".svg"),
               warn = FALSE) %>%
-      str_replace(">XXXX<", paste0(">", index, "<")) %>%
-      str_replace(">PPPPPPPPPPPP<", paste0(">", pass, "<")) %>%
-      str_replace(">FFFFFFFFFFFF<", paste0(">", fail, "<")) %>%
+      stringr::str_replace(">XXXX<", paste0(">", index, "<")) %>%
+      stringr::str_replace(">PPPPPPPPPPPP<", paste0(">", pass, "<")) %>%
+      stringr::str_replace(">FFFFFFFFFFFF<", paste0(">", fail, "<")) %>%
       cat(file = paste0("./temporary_images/", str_replace_all(index, " ", "0"), "_.svg"))
   }
 }

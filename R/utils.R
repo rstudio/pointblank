@@ -310,6 +310,7 @@ disconnect_postgres <- function() {
 
 #' Add function to generate summary SVG files
 #' @importFrom stringr str_replace str_replace_all
+#' @export generate_img_files
 generate_img_files <- function(summary) {
   
   for (i in 1:nrow(summary)) {

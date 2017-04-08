@@ -307,3 +307,48 @@ disconnect_postgres <- function() {
     DBI::dbDisconnect(con)
   }
 }
+
+# Add function to generate summary SVG files
+generate_img_files <- function(summary) {
+  
+  for (i in 1:nrow(summary)) {
+    
+    if (i == 1) {
+      if (dir.exists("temporary_images") == FALSE) {
+        dir.create("temporary_images")
+      } else {
+        files <- list.files("temporary_images", full.names = TRUE)
+        if (length(files) > 0) {
+          file.remove(files)
+        }
+      }
+    }
+    
+    index <- formatC(x = i, flag = " ", width = 4)
+    
+    pass <- 
+      formatC(
+        x = summary$n_passed[i],
+        flag = " ", width = 12) %>%
+      str_replace_all(" ", "&#160;")
+    
+    fail <- 
+      formatC(
+        x = summary$n[i] - summary$n_passed[i],
+        flag = " ", width = 12) %>%
+      str_replace_all(" ", "&#160;")
+    
+    icon <- paste0(summary$assertion_type[i], "_text.svg")
+    
+    file.copy(
+      from = system.file("icons", icon, package = "pointblank"),
+      to = paste0("./temporary_images/", str_replace_all(index, " ", "0"), ".svg"), overwrite = TRUE)
+    
+    readLines(paste0("./temporary_images/", str_replace_all(index, " ", "0"), ".svg"),
+              warn = FALSE) %>%
+      str_replace(">XXXX<", paste0(">", index, "<")) %>%
+      str_replace(">PPPPPPPPPPPP<", paste0(">", pass, "<")) %>%
+      str_replace(">FFFFFFFFFFFF<", paste0(">", fail, "<")) %>%
+      cat(file = paste0("./temporary_images/", str_replace_all(index, " ", "0"), "_.svg"))
+  }
+}

@@ -1,0 +1,89 @@
+---
+title: "Validation Results"
+output: html_document
+---
+
+```{r include=FALSE}
+library(pointblank)
+library(htmltools)
+```
+
+
+```{r read_summary, include=FALSE}
+summary <- readRDS("summary.rds")
+```
+
+
+```{r generate_img_files, echo=FALSE, out.height='25%'}
+
+# generate_img_files <- function(summary) {
+#   
+#   for (i in 1:nrow(summary)) {
+#     
+#     if (i == 1) {
+#       if (dir.exists("temporary_images") == FALSE) {
+#         dir.create("temporary_images")
+#       } else {
+#         files <- list.files("temporary_images", full.names = TRUE)
+#         if (length(files) > 0) {
+#           file.remove(files)
+#         }
+#       }
+#     }
+#     
+#     index <- formatC(x = i, flag = " ", width = 4)
+#     
+#     pass <- 
+#       formatC(
+#         x = summary$n_passed[i],
+#         flag = " ", width = 12) %>%
+#       stringr::str_replace_all(" ", "&#160;")
+#     
+#     fail <- 
+#       formatC(
+#         x = summary$n[i] - summary$n_passed[i],
+#         flag = " ", width = 12) %>%
+#       stringr::str_replace_all(" ", "&#160;")
+#     
+#     icon <- paste0(summary$assertion_type[i], "_text.svg")
+#     
+#     file.copy(
+#       from = system.file("icons", icon, package = "pointblank"),
+#       to = paste0("./temporary_images/",
+#                   stringr::str_replace_all(index, " ", "0"), ".svg"),
+#       overwrite = TRUE)
+#     
+#     readLines(paste0("./temporary_images/",
+#                      stringr::str_replace_all(index, " ", "0"), ".svg"),
+#               warn = FALSE) %>%
+#       stringr::str_replace(">XXXX<", paste0(">", index, "<")) %>%
+#       stringr::str_replace(">PPPPPPPPPPPP<", paste0(">", pass, "<")) %>%
+#       stringr::str_replace(">FFFFFFFFFFFF<", paste0(">", fail, "<")) %>%
+#       cat(file = paste0("./temporary_images/", str_replace_all(index, " ", "0"), "_.svg"))
+#   }
+# }
+
+generate_img_files(summary = summary)
+
+img_file_list <-
+  list.files(path = "./temporary_images", pattern = ".*_.svg", full.names = TRUE)
+```
+
+
+```{r layout_images, include=FALSE}
+for (i in 1:length(img_file_list)) {
+  
+  if (i == 1) {
+    images <- vector(mode = "character")
+  }
+  
+  images <- 
+    c(images,
+      structure(
+        img(src = img_file_list[i])) %>%
+        as.character())
+}
+
+```
+
+`r paste(images, collapse = "\n")`

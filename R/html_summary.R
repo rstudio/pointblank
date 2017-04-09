@@ -6,7 +6,8 @@
 
 html_summary <- function(reporting_object) {
   
-  saveRDS(report_object, "summary.rds")
+  saveRDS(reporting_object, "summary.rds")
+  
   file.copy(from = system.file("report_rmd", "validation_report.Rmd", package = "pointblank"),
             to = "./validation_report.Rmd")
   

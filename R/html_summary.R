@@ -11,12 +11,15 @@
 
 html_summary <- function(agent) {
   
-  summary <- get_summary(agent)
+  if (!inherits(agent, "ptblank_agent")) {
+    stop("The object provided must be a valid `ptblank_agent` object.")
+  }
   
-  saveRDS(summary, "summary.rds")
+  saveRDS(agent, "agent.rds")
   
   file.copy(from = system.file("report_rmd", "validation_report.Rmd", package = "pointblank"),
-            to = "./validation_report.Rmd")
+            to = "./validation_report.Rmd",
+            overwrite = TRUE)
   
   rmarkdown::render("validation_report.Rmd")
 }

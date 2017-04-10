@@ -4,7 +4,11 @@
 \alias{generate_img_files}
 \title{Add function to generate summary SVG files}
 \usage{
-generate_img_files(summary)
+generate_img_files(agent)
+}
+\arguments{
+\item{agent}{agent an agent object of class
+\code{ptblank_agent}.}
 }
 \description{
 Add function to generate summary SVG files

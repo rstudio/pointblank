@@ -2,13 +2,18 @@
 % Please edit documentation in R/html_summary.R
 \name{html_summary}
 \alias{html_summary}
-\title{Create an HTML summary of the validation}
+\title{Create an HTML summary file for the
+interrogation}
 \usage{
-html_summary(reporting_object)
+html_summary(agent)
 }
 \arguments{
-\item{reporting_object}{a pointblank summary object.}
+\item{agent}{an agent object of class
+\code{ptblank_agent}.}
 }
 \description{
-Create an HTML summary of the validation.
+Get the essential information
+from an agent object after an interrogation
+is complete and then generates an HTML file
+for a visual summary.
 }

@@ -83,6 +83,10 @@ focus_on <- function(agent,
   # is the focus
   if (is.null(file_name) & is.null(db_type) & !is.null(tbl_name)) {
     agent$focal_db_type <- "local_df"
+  } else if (!is.null(db_type)) {
+    if (db_type %in% c("PostgreSQL", "MySQL")) {
+      agent$focal_db_type <- db_type
+    }
   } else if (!is.null(file_name)) {
     agent$focal_db_type <- "local_file"
   }
@@ -112,10 +116,10 @@ focus_on <- function(agent,
     # Infer the file type from the extension
     file_extension <- 
       (agent$focal_file_name %>% 
-      basename() %>% 
-      str_split(pattern = "\\.") %>% 
-      unlist())[2] %>% 
-        tolower()
+         basename() %>% 
+         str_split(pattern = "\\.") %>% 
+         unlist())[2] %>% 
+      tolower()
     
     # Get the file name without the extension
     file_name_no_ext <- 

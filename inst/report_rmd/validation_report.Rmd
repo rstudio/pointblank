@@ -8,13 +8,13 @@ library(pointblank)
 library(htmltools)
 ```
 
-```{r read_summary, include=FALSE}
-summary <- readRDS("summary.rds")
+```{r read_agent, include=FALSE}
+agent <- readRDS("agent.rds")
 ```
 
 ```{r generate_img_files, echo=FALSE, out.height='25%'}
 
-generate_img_files(summary = summary)
+generate_img_files(agent = agent)
 
 img_file_list <-
   list.files(path = "./temporary_images", pattern = ".*_.svg", full.names = TRUE)

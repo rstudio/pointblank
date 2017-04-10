@@ -351,6 +351,22 @@ generate_img_files <- function(agent) {
         flag = " ", width = 12) %>% 
       stringr::str_replace_all(" ", "&#160;")
     
+    
+      if (summary$notify[i] == TRUE) {
+        outline_color <- "#B20000"
+      } else if (summary$notify[i] == FALSE &
+                 summary$warn[i] == TRUE) {
+        outline_color <- "#B7B700"
+      } else if (summary$notify[i] == FALSE &
+                 summary$warn[i] == FALSE &
+                 summary$report[i] == TRUE) {
+        outline_color <- "#979797"
+      }
+    
+      if (summary$all_passed[i] == TRUE) {
+        outline_color <- "#008000"
+      }
+    
     icon <- paste0(summary$assertion_type[i], "_text.svg")
     
     file.copy(
@@ -359,6 +375,7 @@ generate_img_files <- function(agent) {
                   stringr::str_replace_all(index, " ", "0"), ".svg"),
       overwrite = TRUE)
     
+    # Modify the summary numbers
     modified_svg <-
       readLines(
         paste0("./temporary_images/",
@@ -368,6 +385,13 @@ generate_img_files <- function(agent) {
       stringr::str_replace(">XXXX<", paste0(">", index, "<")) %>%
       stringr::str_replace(">PPPPPPPPPPPP<", paste0(">", pass, "<")) %>%
       stringr::str_replace(">FFFFFFFFFFFF<", paste0(">", fail, "<"))
+    
+    # Modify the outline color
+    modified_svg <-
+      modified_svg %>%
+      stringr::str_replace(
+        "(\"function.*? stroke=\")#979797",
+        paste0("\\1", outline_color))
     
     modified_svg %>%
       cat(

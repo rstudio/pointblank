@@ -1,23 +1,52 @@
 ---
-title: "Validation Results"
 output: html_document
 ---
 
 ```{r include=FALSE}
+library(dplyr)
 library(pointblank)
 library(htmltools)
+library(knitr)
+library(lubridate)
 ```
 
 ```{r read_agent, include=FALSE}
 agent <- readRDS("agent.rds")
 ```
 
-```{r generate_img_files, echo=FALSE, out.height='25%'}
+```{r generate_img_files, echo=FALSE}
 
+# Generate the image files in a temporary directory
 generate_img_files(agent = agent)
 
+# Get a vector of these file paths
 img_file_list <-
   list.files(path = "./temporary_images", pattern = ".*_.svg", full.names = TRUE)
+```
+
+## Validation Summary
+
+```{r validation_time, echo=FALSE}
+knitr::kable(
+  dplyr::data_frame(
+    `Validation Name` = "Sample Validation",
+    `Validation Time` = paste(gsub("  ", " ", format(Sys.time(), "%A, %B %d, %Y at %l:%M")), toupper(format(Sys.time(), "%p")), collapse = ""),
+    `Reporting Time` = paste(gsub("  ", " ", format(Sys.time(), "%A, %B %d, %Y at %l:%M")), toupper(format(Sys.time(), "%p")), collapse = ""),
+    `Validation Duration` = "2 minutes, 23 seconds",
+    `All Passed?` = "No"
+    )
+)
+```
+
+
+```{r report_summary_table, echo=FALSE}
+knitr::kable(
+  dplyr::data_frame(
+    `Tables Interrogated` = agent$validation_set %>% select(tbl_name) %>% distinct() %>% .$tbl_name %>% paste(collapse = ", "),
+    `Number of Validations` = nrow(agent$validation_set),
+    `Total Passed` = agent$validation_set %>% filter(all_passed == TRUE) %>% nrow(),
+    `Total Failed` = agent$validation_set %>% filter(all_passed == FALSE) %>% nrow())
+)
 ```
 
 
@@ -37,4 +66,44 @@ for (i in 1:length(img_file_list)) {
 
 ```
 
-`r paste(images, collapse = "\n")`
+## Validation Steps
+
+```{r get_preconditions_chr, include=FALSE}
+
+for (i in 1:nrow(agent$validation_set)) {
+  
+  if (i == 1) preconditions_chr <- vector(mode = "character")
+  
+  preconditions_chr <-
+    c(preconditions_chr,
+      ifelse(inherits(agent$validation_set$preconditions[i], "list"),
+             paste(unlist(agent$validation_set$preconditions[i]), collapse = ", "),
+             paste0("None")))
+  
+  if (i == nrow(agent$validation_set)) {
+    preconditions_chr[which(preconditions_chr == "")] <- "None"
+  }
+}
+```
+
+
+```{r images, echo=FALSE}
+knitr::kable(
+  dplyr::data_frame(
+    ` ` = images,
+    `  ` = paste0(
+      "**table** ", agent$validation_set$tbl_name, " (", agent$validation_set$db_type, ")<br />",
+      "**Assertion type** ", agent$validation_set$assertion_type, "<br />",
+      "**Number of individual validations** ", agent$validation_set$n, "<br />",
+      "**Pass/Fail Percentages** ",
+      paste0(agent$validation_set$f_passed * 100, "%"), " / ",
+      paste0(agent$validation_set$f_failed * 100, "%")),
+    `   ` = paste0(
+      "**column** ", agent$validation_set$column, "<br />",
+      "**value** ", agent$validation_set$value, "<br />",
+      "**preconditions** ", preconditions_chr)
+    )
+  )
+
+```
+

@@ -330,14 +330,14 @@ generate_img_files <- function(summary) {
     
     pass <- 
       formatC(
-        x = summary$n_passed[i],
+        x = summary$n_passed[i] %>% as.integer(),
         flag = " ", width = 12) %>%
       stringr::str_replace_all(" ", "&#160;")
     
     fail <- 
       formatC(
-        x = summary$n[i] - summary$n_passed[i],
-        flag = " ", width = 12) %>%
+        x = (summary$n[i] - summary$n_passed[i]) %>% as.integer(),
+        flag = " ", width = 12) %>% 
       stringr::str_replace_all(" ", "&#160;")
     
     icon <- paste0(summary$assertion_type[i], "_text.svg")

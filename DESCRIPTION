@@ -13,6 +13,7 @@ Imports:
     DBI (>= 0.5),
     dplyr (>= 0.5.0),
     htmltools (>= 0.3.5),
+    knitr (>= 1.15.1),
     lubridate (>= 1.6.0),
     magrittr (>= 1.5),
     purrr (>= 0.2.2),
@@ -25,6 +26,5 @@ Imports:
 URL: https://github.com/rich-iannone/pointblank
 BugReports: https://github.com/rich-iannone/pointblank/issues
 Suggests:
-    knitr,
     testthat
 RoxygenNote: 6.0.1

@@ -309,10 +309,21 @@ disconnect_postgres <- function() {
 }
 
 #' Add function to generate summary SVG files
+#' @param agent agent an agent object of class
+#' \code{ptblank_agent}.
 #' @importFrom stringr str_replace str_replace_all
 #' @export generate_img_files
-generate_img_files <- function(summary) {
+generate_img_files <- function(agent) {
   
+  if (!inherits(agent, "ptblank_agent")) {
+    stop("The object provided must be a valid `ptblank_agent` object.")
+  }
+  
+  # Extract the `validation_set` df from the `agent` object
+  summary <- agent$validation_set
+  
+  # For every row in `summary`, re-work the associated SVG
+  # template object into a finalized graphic
   for (i in 1:nrow(summary)) {
     
     if (i == 1) {
@@ -348,12 +359,21 @@ generate_img_files <- function(summary) {
                   stringr::str_replace_all(index, " ", "0"), ".svg"),
       overwrite = TRUE)
     
-    readLines(paste0("./temporary_images/",
-                     stringr::str_replace_all(index, " ", "0"), ".svg"),
-              warn = FALSE) %>%
+    modified_svg <-
+      readLines(
+        paste0("./temporary_images/",
+               stringr::str_replace_all(index, " ", "0"),
+               ".svg"),
+        warn = FALSE) %>%
       stringr::str_replace(">XXXX<", paste0(">", index, "<")) %>%
       stringr::str_replace(">PPPPPPPPPPPP<", paste0(">", pass, "<")) %>%
-      stringr::str_replace(">FFFFFFFFFFFF<", paste0(">", fail, "<")) %>%
-      cat(file = paste0("./temporary_images/", str_replace_all(index, " ", "0"), "_.svg"))
+      stringr::str_replace(">FFFFFFFFFFFF<", paste0(">", fail, "<"))
+    
+    modified_svg %>%
+      cat(
+        file = paste0(
+          "./temporary_images/",
+          str_replace_all(index, " ", "0"),
+          "_.svg"))
   }
 }

@@ -1,12 +1,19 @@
-#' Create an HTML summary of the validation 
-#' @description Create an HTML summary of the validation.
-#' @param reporting_object a pointblank summary object.
+#' Create an HTML summary file for the
+#' interrogation
+#' @description Get the essential information
+#' from an agent object after an interrogation
+#' is complete and then generates an HTML file
+#' for a visual summary.
+#' @param agent an agent object of class
+#' \code{ptblank_agent}.
 #' @importFrom rmarkdown render
 #' @export html_summary
 
-html_summary <- function(reporting_object) {
+html_summary <- function(agent) {
   
-  saveRDS(reporting_object, "summary.rds")
+  summary <- get_summary(agent)
+  
+  saveRDS(summary, "summary.rds")
   
   file.copy(from = system.file("report_rmd", "validation_report.Rmd", package = "pointblank"),
             to = "./validation_report.Rmd")

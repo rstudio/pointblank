@@ -5,11 +5,26 @@
 \title{Create an HTML summary file for the
 interrogation}
 \usage{
-html_summary(agent)
+html_summary(agent, intro_text = NULL, footer_text = NULL,
+  filename = NULL, output_dir = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
 \code{ptblank_agent}.}
+
+\item{intro_text}{HTML text to be placed at
+the top of the summary.}
+
+\item{footer_text}{HTML text to be placed in
+the footer of the summary.}
+
+\item{filename}{an optional filename to use
+for the output HTML file. If not provided,
+the filename \code{validation_report.html}
+will be used.}
+
+\item{output_dir}{an optional path to place
+the output HTML file.}
 }
 \description{
 Get the essential information

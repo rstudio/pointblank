@@ -1,5 +1,11 @@
 ---
-output: html_document
+output:
+  html_document:
+    theme: cosmo
+    highlight: kate
+    df_print: paged
+    include:
+      after_body: include_footer.html
 ---
 
 ```{r include=FALSE}

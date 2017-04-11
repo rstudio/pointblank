@@ -93,6 +93,24 @@ for (i in 1:nrow(agent$validation_set)) {
 }
 ```
 
+```{r get_value_regex_strings, include=FALSE}
+
+for (i in 1:nrow(agent$validation_set)) {
+  
+  if (i == 1) value_chr <- vector(mode = "character")
+  
+  if (!is.na(agent$validation_set$value[i])) {
+    value_chr_line <- paste0("**value** ", as.character(agent$validation_set$value[i]))
+  } else if (agent$validation_set$assertion_type[i] == "col_vals_regex") {
+    value_chr_line <- paste0("**regex** \"", agent$validation_set$regex[i], "\"")
+  } else if (agent$validation_set$assertion_type[i] %in% c("col_vals_in_set", "col_vals_not_in_set")) {
+    value_chr_line <- paste0("**set** ", paste(unlist(agent$validation_set$set[i]), collapse = ", "))
+  }
+ 
+  value_chr <- c(value_chr, value_chr_line)
+}
+```
+
 
 ```{r images, echo=FALSE}
 knitr::kable(
@@ -109,7 +127,7 @@ knitr::kable(
     `4` = "&nbsp;",
     `5` = paste0(
       "**column** ", agent$validation_set$column, "<br />",
-      "**value** ", agent$validation_set$value, "<br />",
+      value_chr, "<br />",
       "**preconditions** ", preconditions_chr)
     ), padding = 20, col.names = c("&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;")
   )

@@ -105,6 +105,8 @@ for (i in 1:nrow(agent$validation_set)) {
     value_chr_line <- paste0("**regex** \"", agent$validation_set$regex[i], "\"")
   } else if (agent$validation_set$assertion_type[i] %in% c("col_vals_in_set", "col_vals_not_in_set")) {
     value_chr_line <- paste0("**set** ", paste(unlist(agent$validation_set$set[i]), collapse = ", "))
+  } else if (agent$validation_set$assertion_type[i] == "rows_not_duplicated") {
+    value_chr_line <- "**value** None"
   }
  
   value_chr <- c(value_chr, value_chr_line)

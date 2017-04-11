@@ -30,17 +30,19 @@ img_file_list <-
   list.files(path = "./temporary_images", pattern = ".*_.svg", full.names = TRUE)
 ```
 
-## Validation Summary
+## Validation Summary {style="padding-top: 15px"}
+
+`r if (file.exists("include_intro.txt")) { paste(readLines("include_intro.txt", warn = FALSE)) }`
 
 ```{r validation_time, echo=FALSE}
 knitr::kable(
   dplyr::data_frame(
-    `Validation Name` = "Sample Validation",
-    `Validation Time` = paste(gsub("  ", " ", format(Sys.time(), "%A, %B %d, %Y at %l:%M")), toupper(format(Sys.time(), "%p")), collapse = ""),
+    `Validation Name` = "Validation",
+    #`Validation Time` = paste(gsub("  ", " ", format(Sys.time(), "%A, %B %d, %Y at %l:%M")), toupper(format(Sys.time(), "%p")), collapse = ""),
     `Reporting Time` = paste(gsub("  ", " ", format(Sys.time(), "%A, %B %d, %Y at %l:%M")), toupper(format(Sys.time(), "%p")), collapse = ""),
-    `Validation Duration` = "2 minutes, 23 seconds",
+    #`Validation Duration` = "2 minutes, 23 seconds",
     `All Passed?` = "No"
-    )
+    ), padding = 1
 )
 ```
 
@@ -49,9 +51,9 @@ knitr::kable(
 knitr::kable(
   dplyr::data_frame(
     `Tables Interrogated` = agent$validation_set %>% select(tbl_name) %>% distinct() %>% .$tbl_name %>% paste(collapse = ", "),
-    `Number of Validations` = nrow(agent$validation_set),
-    `Total Passed` = agent$validation_set %>% filter(all_passed == TRUE) %>% nrow(),
-    `Total Failed` = agent$validation_set %>% filter(all_passed == FALSE) %>% nrow())
+    `Total Validation Steps` = nrow(agent$validation_set),
+    `Steps Passed` = agent$validation_set %>% filter(all_passed == TRUE) %>% nrow(),
+    `Steps Failed` = agent$validation_set %>% filter(all_passed == FALSE) %>% nrow())
 )
 ```
 
@@ -69,10 +71,9 @@ for (i in 1:length(img_file_list)) {
         img(src = img_file_list[i])) %>%
         as.character())
 }
-
 ```
 
-## Validation Steps
+### Validation Steps {style="padding-bottom: 10px"}
 
 ```{r get_preconditions_chr, include=FALSE}
 
@@ -96,20 +97,21 @@ for (i in 1:nrow(agent$validation_set)) {
 ```{r images, echo=FALSE}
 knitr::kable(
   dplyr::data_frame(
-    ` ` = images,
-    `  ` = paste0(
+    `1` = images,
+    `2` = "&nbsp;",
+    `3` = paste0(
       "**table** ", agent$validation_set$tbl_name, " (", agent$validation_set$db_type, ")<br />",
       "**Assertion type** ", agent$validation_set$assertion_type, "<br />",
       "**Number of individual validations** ", agent$validation_set$n, "<br />",
       "**Pass/Fail Percentages** ",
       paste0(agent$validation_set$f_passed * 100, "%"), " / ",
       paste0(agent$validation_set$f_failed * 100, "%")),
-    `   ` = paste0(
+    `4` = "&nbsp;",
+    `5` = paste0(
       "**column** ", agent$validation_set$column, "<br />",
       "**value** ", agent$validation_set$value, "<br />",
       "**preconditions** ", preconditions_chr)
-    )
+    ), padding = 20, col.names = c("&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;")
   )
-
 ```
 

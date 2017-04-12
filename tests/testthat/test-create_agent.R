@@ -9,7 +9,8 @@ test_that("Creating a valid `agent` object is possible", {
   # prescribed set of names
   expect_true(
     all(names(agent) ==
-          c("focal_tbl_name", "focal_file_name",
+          c("validation_name", "validation_time",
+            "focal_tbl_name", "focal_file_name",
             "focal_db_type", "focal_col_names",
             "focal_col_types",
             "focal_db_cred_file_path",
@@ -24,6 +25,8 @@ test_that("Creating a valid `agent` object is possible", {
   
   # Expect certain classes for the different
   # `agent` components
+  expect_is(agent$validation_name, "character")
+  expect_is(agent$validation_time, "POSIXct")
   expect_is(agent$focal_tbl_name, "character")
   expect_is(agent$focal_file_name, "character")
   expect_is(agent$focal_db_type, "character")
@@ -54,4 +57,6 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$validation_set$db_cred_file_path, "character")
   expect_is(agent$validation_set$file_path, "character")
   expect_is(agent$validation_set$col_types, "character")
+  expect_is(agent$validation_set$time_processed, "POSIXct")
+  expect_is(agent$validation_set$proc_duration_s, "numeric")
 })

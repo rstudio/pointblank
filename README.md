@@ -1,11 +1,9 @@
-----------
-pointblank
-----------
+<img src="inst/graphics/pointblank_logo.png">
 
 [![Travis-CI Build Status](https://travis-ci.org/rich-iannone/pointblank.svg?branch=master)](https://travis-ci.org/rich-iannone/pointblank)
 [![codecov.io](https://codecov.io/github/rich-iannone/pointblank/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/pointblank?branch=master) 
 
-## We all need to validate tabular data sometimes.
+## We all need to validate our data sometimes.
 
 Tables can often be trustworthy. All the data seems to be there and we may feel we can count on these 
 tables to deliver us the info we need. Still, sometimes, the tables we trust are hiding things from
@@ -16,28 +14,21 @@ Sure, we can sit down with a table during a long interrogation session and rough
 
 We need a tool like **pointblank**. It lets us get up close with tables and unleash a fury of validation checks. Are some tables remote? That's no problem, we'll interrogate them from afar. In essence, your DB tables can get the same line of questioning as your local data frames or those innocent-looking tibbles. Trust me, they'll start to talk and then they'll surely reveal what they're hiding after a **pointblank** session.
 
-You don't have to type up a long report either, **pointblank** will take care of the paperwork. At the very least, you'll get a tidy data frame of the essentials. With a little planning, a very informative sitrep can be regularly produced.
+You don't have to type up a long report either, **pointblank** will take care of the paperwork. At the very least, you can get a `yes` or `no` as to whether everything checked out. With a little bit of planning, a very informative validation report can be regularly produced.
 
-## Examples
+### Validating Local Data Frames
 
-Before getting down to it, some preliminaries: ensure you have the dev version of **pointblank**...
+The **pointblank** package can validate data in local data frames, local tibble objects, in CSV and TSV files, and in database tables (**PostgreSQL** and **MySQL**). First, let's look at local tables with...
 
-```r
-devtools::install_github("rich-iannone/pointblank")
-```
+<img src="inst/graphics/example_workflow.png">
 
-...then load the necessary packages
+The above workflow relied on these code blocks:
 
-```r
-library(pointblank)
-library(tibble)
-```
-
-To illustrate a basic use of pointblank, make 2 very simple local tbls:
+  (1) Create 2 very simple **R** **tibble** objects:
 
 ```r
 tbl_1 <-
-  tribble(
+  tibble::tribble(
     ~a, ~b,   ~c,
     1,   6,   "h2adb",
     2,   7,   "h2spb",
@@ -46,7 +37,7 @@ tbl_1 <-
     5,  10,   "h2esf")
 
 tbl_2 <-
-  tribble(
+  tibble::tribble(
     ~d,   ~e,  ~f,
     "a",   0,  32,
     "b",   0,  31,
@@ -55,23 +46,7 @@ tbl_2 <-
     "ae", -1,  39)
 ```
 
-Now, perform a series of steps to validate these tables. Here's each step with some details on what each step does:
-
-1. [new agent] create an agent with `create_agent()`
-2. [new focus] `tbl_1` using `focus_on()`
-3. [add a step] are vals in col `a` > 0?
-4. [add a step] are all rows from `a, b, c` distinct?
-5. [add a step] are vals in `col(a) + col(b)` >= 7?
-6. [add a step] are column vals in `b` <= 10?
-7. [add a step] do all `c` vals match regex `h2.*`?
-8. [add a step] are all `c` substrings part of a set?
-9. [new focus] `tbl_2` using `focus_on()`
-10. [add a step] are all values in `d` part of a set?
-11. [add a step] are all `d` values not part of a set?
-12. [add a step] are column vals in `e` >= 0?
-13. [add a step] are all `f` values `NA`?
-14. [add a step] are all `d` values not `NA`?
-15. [interrogation] perform all checks with `interrogate()`
+  (2) Create a **pointblank** pipeline for validating both the `tbl_1` and `tbl_2` tables (ending with `interrogate()`):
 
 ```r
 agent <- 
@@ -113,62 +88,25 @@ agent <-
   interrogate()                  # (15)
 ```
 
-Get a summary of the interrogations, really just the basics. (Note that much more info is available within the `agent` object.)
+### Function Roundup
 
-```r
-get_summary(agent)
+That last workflow example provided a glimpse of some of the functions available. Just for the sake of completeness, here's the entire set of functions. A veritable smorgasbord of validation functionality, really.
 
-#> # A tibble: 11 × 11
-#>    tbl_name  db_type      assertion_type
-#>       <chr>    <chr>               <chr>
-#> 1     tbl_1 local_df         col_vals_gt
-#> 2     tbl_1 local_df rows_not_duplicated
-#> 3     tbl_1 local_df        col_vals_gte
-#> 4     tbl_1 local_df        col_vals_lte
-#> 5     tbl_1 local_df      col_vals_regex
-#> 6     tbl_1 local_df     col_vals_in_set
-#> 7     tbl_2 local_df     col_vals_in_set
-#> 8     tbl_2 local_df col_vals_not_in_set
-#> 9     tbl_2 local_df        col_vals_gte
-#> 10    tbl_2 local_df       col_vals_null
-#> 11    tbl_2 local_df   col_vals_not_null
+<img src="inst/graphics/pointblank_functions.png">
 
-#> # A tibble: 11 × 11
-#>              column value        set regex 
-#>               <chr> <dbl>     <list> <chr> 
-#> 1                 a     0     <NULL>  <NA> 
-#> 2           a, b, c    NA     <NULL>  <NA> 
-#> 3             a + b     7     <NULL>  <NA> 
-#> 4                 b    10     <NULL>  <NA> 
-#> 5                 c    NA     <NULL>  h2.* 
-#> 6   substr(c, 0, 2)    NA <list [1]>  <NA> 
-#> 7                 d    NA <list [1]>  <NA> 
-#> 8                 d    NA <list [1]>  <NA> 
-#> 9                 e     0     <NULL>  <NA> 
-#> 10                f    NA     <NULL>  <NA> 
-#> 11                d    NA     <NULL>  <NA> 
+### More Specificity in Your Validations
 
-#> # A tibble: 11 × 11
-#>    preconditions all_passed     n n_passed
-#>           <list>      <lgl> <int>    <int>
-#> 1         <NULL>       TRUE     5        5
-#> 2         <NULL>       TRUE     5        5
-#> 3         <NULL>       TRUE     5        5
-#> 4         <NULL>       TRUE     5        5
-#> 5         <NULL>      FALSE     5        4
-#> 6         <NULL>       TRUE     5        5
-#> 7         <NULL>      FALSE     5        4
-#> 8         <NULL>      FALSE     5        1
-#> 9         <NULL>      FALSE     5        4
-#> 10        <NULL>      FALSE     5        0
-#> 11        <NULL>       TRUE     5        5
-```
+Every validation function has a common set of options for constraining validations to certain conditions. This can occur through the use of computed columns and also through preconditions that can allow you to target validations on only those rows that satify one or more conditions. 
 
-To validate tables in a database, first create a credentials RDS file in the working directory.
+<img src="inst/graphics/function_options.png">
+
+### Validating Tables in a Database
+
+To validate tables in a database (PostgreSQL and MySQL), we can first create a credentials file.
 
 ```r
 create_creds_file(
-  file = "pg_redshift_dev.rds",
+  file = "pg_redshift_dev",
   dbname = ***********,
   host = ***********************,
   port = ***,
@@ -176,7 +114,7 @@ create_creds_file(
   password = **************)
 ```
 
-A database table can be treated similarly to a local data frame. We also have the option to add some preparatory **SQL** (as statements following a `SELECT * FROM [table]` **SQL** line)
+A database table can be treated similarly to a local data frame.
 
 ```r
 agent <- 
@@ -184,7 +122,7 @@ agent <-
   focus_on(
     tbl_name = "table_1",
     db_type = "PostgreSQL",
-    creds_file = "pg_redshift_dev.rds",
+    creds_file = "./pg_redshift_dev",
     initial_sql = "WHERE date > '2017-01-15'") %>%
   rows_not_duplicated() %>%
   col_vals_gte(
@@ -195,14 +133,29 @@ agent <-
     left = 50,
     right = 100) %>%
   col_vals_not_null(
-    column = "e") %>%
+    column = "e",
+    preconditions = "is.na(d)") %>%
   interrogate()
 ```
 
-Get a summary of the interrogations  
+Get a summary of the interrogations and then know if something is amiss...
 
 ```r
 get_summary(agent)
 ```
 
-As can be seen, **pointblank** already proves to be an effective tool in finding out whether your local data frames or your database tables have unexpected values.
+...or create a shareable, self-contained HTML report that shows how the validation went.
+
+```r
+html_summary(agent)
+```
+
+## Installation
+
+**pointblank** is used in an **R** environment. If you don't have an **R** installation, it can be obtained from the [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org/).
+
+You can install the development version of **pointblank** from **GitHub** using the **devtools** package.
+
+```r
+devtools::install_github("rich-iannone/pointblank")
+```

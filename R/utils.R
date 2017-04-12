@@ -309,11 +309,12 @@ disconnect_postgres <- function() {
 }
 
 #' Add function to generate summary SVG files
+#' for the results of a validation pipeline
 #' @param agent agent an agent object of class
 #' \code{ptblank_agent}.
 #' @importFrom stringr str_replace str_replace_all
-#' @export generate_img_files
-generate_img_files <- function(agent) {
+#' @export generate_img_files_results
+generate_img_files_results <- function(agent) {
   
   if (!inherits(agent, "ptblank_agent")) {
     stop("The object provided must be a valid `ptblank_agent` object.")
@@ -367,8 +368,10 @@ generate_img_files <- function(agent) {
         outline_color <- "#008000"
       }
     
+    # Construct the filename for the SVG file associated with the function
     icon <- paste0(summary$assertion_type[i], "_text.svg")
     
+    # Copy the text-inclusive SVG file to a temporary directory
     file.copy(
       from = system.file("icons", icon, package = "pointblank"),
       to = paste0("./temporary_images/",
@@ -393,6 +396,7 @@ generate_img_files <- function(agent) {
         "(\"function.*? stroke=\")#979797",
         paste0("\\1", outline_color))
     
+    # Write the modified SVG file to disk
     modified_svg %>%
       cat(
         file = paste0(

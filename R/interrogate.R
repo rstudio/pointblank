@@ -19,6 +19,12 @@
 
 interrogate <- function(agent) {
   
+  # Get the starting time for the interrogation
+  interrogation_start_time <- Sys.time()
+  
+  # Add the starting time to the `agent` object
+  agent$validation_time <- interrogation_start_time
+  
   # Create binding for `pb_is_good_` variable
   pb_is_good_ <- NULL
   
@@ -26,6 +32,9 @@ interrogate <- function(agent) {
   n_validations <- nrow(agent$validation_set)
   
   for (i in 1:n_validations) {
+    
+    # Get the starting time for the validation step
+    validation_start_time <- Sys.time()
     
     if (agent$validation_set$db_type[i] == "local_df") {
       
@@ -514,6 +523,16 @@ interrogate <- function(agent) {
     agent$validation_set$report[i] <- actions$report
     agent$validation_set$notify[i] <- actions$notify
     agent$validation_set$warn[i] <- actions$warn
+    
+    # Get the ending time for the validation step
+    validation_end_time <- Sys.time()
+    
+    # Get the duration for the validation step    
+    time_diff_s <- (validation_end_time - validation_start_time)[[1]] %>% round(4)
+    
+    # Add the timing information to the `agent` object
+    agent$validation_set$time_processed[i] <- validation_start_time
+    agent$validation_set$proc_duration_s[i] <- time_diff_s
   }
   
   # Disconnect any open PostgreSQL connections

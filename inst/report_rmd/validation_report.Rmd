@@ -23,10 +23,10 @@ agent <- readRDS("agent.rds")
 ```{r generate_img_files, echo=FALSE}
 
 # Generate the image files in a temporary directory
-generate_img_files(agent = agent)
+generate_img_files_results(agent = agent)
 
 # Get a vector of these file paths
-img_file_list <-
+img_file_list_results <-
   list.files(path = "./temporary_images", pattern = ".*_.svg", full.names = TRUE)
 ```
 
@@ -83,16 +83,16 @@ knitr::kable(
 
 
 ```{r get_images_vector, include=FALSE}
-for (i in 1:length(img_file_list)) {
+for (i in 1:length(img_file_list_results)) {
   
   if (i == 1) {
-    images <- vector(mode = "character")
+    images_results <- vector(mode = "character")
   }
   
-  images <- 
-    c(images,
+  images_results <- 
+    c(images_results,
       structure(
-        img(src = img_file_list[i])) %>%
+        img(src = img_file_list_results[i])) %>%
         as.character())
 }
 ```
@@ -122,13 +122,13 @@ for (i in 1:nrow(agent$validation_set)) {
   if (i == 1) value_chr <- vector(mode = "character")
   
   if (!is.na(agent$validation_set$value[i])) {
-    value_chr_line <- paste0("**value** ", as.character(agent$validation_set$value[i]))
+    value_chr_line <- paste0("**Value** ", as.character(agent$validation_set$value[i]))
   } else if (agent$validation_set$assertion_type[i] == "col_vals_regex") {
-    value_chr_line <- paste0("**regex** \"", agent$validation_set$regex[i], "\"")
+    value_chr_line <- paste0("**Regex** \"", agent$validation_set$regex[i], "\"")
   } else if (agent$validation_set$assertion_type[i] %in% c("col_vals_in_set", "col_vals_not_in_set")) {
-    value_chr_line <- paste0("**set** ", paste(unlist(agent$validation_set$set[i]), collapse = ", "))
+    value_chr_line <- paste0("**Set** ", paste(unlist(agent$validation_set$set[i]), collapse = ", "))
   } else if (agent$validation_set$assertion_type[i] == "rows_not_duplicated") {
-    value_chr_line <- "**value** None"
+    value_chr_line <- "**Value** None"
   }
  
   value_chr <- c(value_chr, value_chr_line)
@@ -151,10 +151,10 @@ for (i in 1:nrow(agent$validation_set)) {
 
 ### Validation Results
 
-```{r images, echo=FALSE}
+```{r images_results, echo=FALSE}
 knitr::kable(
   dplyr::data_frame(
-    `1` = images,
+    `1` = images_results,
     `2` = "&nbsp;",
     `3` = paste0(
       "**Table** ", agent$validation_set$tbl_name, " (", agent$validation_set$db_type, ")<br />",

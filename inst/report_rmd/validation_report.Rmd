@@ -34,20 +34,45 @@ img_file_list <-
 
 `r if (file.exists("include_intro.txt")) { paste(readLines("include_intro.txt", warn = FALSE)) }`
 
-```{r validation_time, echo=FALSE}
+```{r validation_summary_stats, echo=FALSE}
+if (!is.na(agent$validation_name)) {
+  validation_name <- agent$validation_name[1]
+} else {
+  validation_name <- "Validation"
+}
+
+if (!is.na(agent$validation_time)) {
+  validation_time <- agent$validation_time[1]
+} else {
+  validation_time <- as.POSIXct(NA)
+}
+
+# Get the total validation duration
+validation_duration <-
+  sum(agent$validation_set$proc_duration_s, na.rm = TRUE)
+
+# Did all tests pass?
+if (any(agent$validation_set$all_passed == FALSE)) {
+  all_tests_passed <- "No"
+} else if (all(agent$validation_set$all_passed == TRUE)) {
+  all_tests_passed <- "Yes"
+}
+```
+
+
+```{r validation_summary_1, echo=FALSE}
 knitr::kable(
   dplyr::data_frame(
-    `Validation Name` = "Validation",
-    #`Validation Time` = paste(gsub("  ", " ", format(Sys.time(), "%A, %B %d, %Y at %l:%M")), toupper(format(Sys.time(), "%p")), collapse = ""),
+    `Validation Name` = validation_name,
+    `Validation Time` = paste(gsub("  ", " ", format(validation_time, "%A, %B %d, %Y at %l:%M")), toupper(format(validation_time, "%p")), collapse = ""),
     `Reporting Time` = paste(gsub("  ", " ", format(Sys.time(), "%A, %B %d, %Y at %l:%M")), toupper(format(Sys.time(), "%p")), collapse = ""),
-    #`Validation Duration` = "2 minutes, 23 seconds",
-    `All Passed?` = "No"
-    ), padding = 1
+    `Validation Duration` = paste0(validation_duration, " seconds"),
+    `All Passed?` = all_tests_passed), padding = 1
 )
 ```
 
 
-```{r report_summary_table, echo=FALSE}
+```{r report_summary_2, echo=FALSE}
 knitr::kable(
   dplyr::data_frame(
     `Tables Interrogated` = agent$validation_set %>% select(tbl_name) %>% distinct() %>% .$tbl_name %>% paste(collapse = ", "),
@@ -58,7 +83,7 @@ knitr::kable(
 ```
 
 
-```{r layout_images, include=FALSE}
+```{r get_images_vector, include=FALSE}
 for (i in 1:length(img_file_list)) {
   
   if (i == 1) {

@@ -71,7 +71,6 @@ knitr::kable(
 )
 ```
 
-
 ```{r report_summary_2, echo=FALSE}
 knitr::kable(
   dplyr::data_frame(
@@ -98,8 +97,6 @@ for (i in 1:length(img_file_list)) {
 }
 ```
 
-### Validation Steps {style="padding-bottom: 10px"}
-
 ```{r get_preconditions_chr, include=FALSE}
 
 for (i in 1:nrow(agent$validation_set)) {
@@ -118,7 +115,7 @@ for (i in 1:nrow(agent$validation_set)) {
 }
 ```
 
-```{r get_value_regex_strings, include=FALSE}
+```{r get_value_regex_set_strings, include=FALSE}
 
 for (i in 1:nrow(agent$validation_set)) {
   
@@ -139,6 +136,21 @@ for (i in 1:nrow(agent$validation_set)) {
 ```
 
 
+```{r get_duration_strings, include=FALSE}
+
+for (i in 1:nrow(agent$validation_set)) {
+  
+  if (i == 1) duration_chr <- vector(mode = "character")
+
+  duration_chr <- 
+    c(duration_chr,
+      paste0(as.character(agent$validation_set$proc_duration_s[i]), " s"))
+}
+
+```
+
+### Validation Steps
+
 ```{r images, echo=FALSE}
 knitr::kable(
   dplyr::data_frame(
@@ -155,8 +167,12 @@ knitr::kable(
     `5` = paste0(
       "**column** ", agent$validation_set$column, "<br />",
       value_chr, "<br />",
-      "**preconditions** ", preconditions_chr)
-    ), padding = 20, col.names = c("&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;")
+      "**preconditions** ", preconditions_chr, "<br />",
+      "**duration** ", duration_chr)
+    ), 
+  padding = 20,
+  align = "cclcl",
+  col.names = c("&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;")
   )
 ```
 

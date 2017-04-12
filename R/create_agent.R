@@ -1,14 +1,19 @@
 #' Create an agent object
 #' @description Creates an agent object.
+#' @param name optional name for the agent that
+#' will eventually carry out the interrogation
+#' process.
 #' @return an agent object.
 #' @importFrom dplyr filter
 #' @importFrom tibble tibble as_tibble
 #' @export create_agent
 
-create_agent <- function() {
+create_agent <- function(name = NULL) {
   
   agent <-
     list(
+      validation_name = as.character(NA)[-1],
+      validation_time = as.POSIXct(NA)[-1],
       focal_tbl_name = as.character(NA)[-1],
       focal_file_name = as.character(NA)[-1],
       focal_db_type = as.character(NA)[-1],
@@ -42,8 +47,14 @@ create_agent <- function() {
           init_sql = as.character(NA),
           db_cred_file_path = as.character(NA),
           file_path = as.character(NA),
-          col_types = as.character(NA))
+          col_types = as.character(NA),
+          time_processed = as.POSIXct(NA),
+          proc_duration_s = as.numeric(NA))
     )
+  
+  if (!is.null(name)) {
+    agent$validation_name <- name
+  }
   
   agent$validation_set$set <- tibble::as_tibble(NA)
   

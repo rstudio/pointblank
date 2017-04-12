@@ -157,18 +157,18 @@ knitr::kable(
     `1` = images,
     `2` = "&nbsp;",
     `3` = paste0(
-      "**table** ", agent$validation_set$tbl_name, " (", agent$validation_set$db_type, ")<br />",
-      "**Assertion type** ", agent$validation_set$assertion_type, "<br />",
-      "**Number of individual validations** ", agent$validation_set$n, "<br />",
+      "**Table** ", agent$validation_set$tbl_name, " (", agent$validation_set$db_type, ")<br />",
+      "**Assertion Type** ", agent$validation_set$assertion_type, "<br />",
+      "**Number of Individual Validations** ", agent$validation_set$n, "<br />",
       "**Pass/Fail Percentages** ",
       paste0(agent$validation_set$f_passed * 100, "%"), " / ",
       paste0(agent$validation_set$f_failed * 100, "%")),
     `4` = "&nbsp;",
     `5` = paste0(
-      "**column** ", agent$validation_set$column, "<br />",
+      "**Column** ", agent$validation_set$column, "<br />",
       value_chr, "<br />",
-      "**preconditions** ", preconditions_chr, "<br />",
-      "**duration** ", duration_chr)
+      "**Preconditions** ", preconditions_chr, "<br />",
+      "**Duration** ", duration_chr)
     ), 
   padding = 20,
   align = "cclcl",

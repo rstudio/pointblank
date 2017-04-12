@@ -4,7 +4,12 @@
 \alias{create_agent}
 \title{Create an agent object}
 \usage{
-create_agent()
+create_agent(name = NULL)
+}
+\arguments{
+\item{name}{optional name for the agent that
+will eventually carry out the interrogation
+process.}
 }
 \value{
 an agent object.

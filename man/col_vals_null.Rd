@@ -7,7 +7,7 @@
 col_vals_null(agent, column, report_count = 0, warn_count = 1,
   notify_count = 2, tbl_name = NULL, db_type = NULL, creds_file = NULL,
   initial_sql = NULL, file_path = NULL, col_types = NULL,
-  preconditions = NULL)
+  preconditions = NULL, description = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -77,6 +77,11 @@ or \code{_/-}, which skips the column.}
 \item{preconditions}{a optional vector of filtering
 statements for filtering the table before this
 validation step.}
+
+\item{description}{an optional, text-based
+description for the validation step. Used primarily
+in the Logical Plan section of the report generated
+by the \code{html_summary} function.}
 }
 \value{
 an agent object.

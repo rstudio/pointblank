@@ -5,7 +5,8 @@
 \title{Place certain access details more to the fore}
 \usage{
 focus_on(agent, tbl_name = NULL, file_name = NULL, col_types = NULL,
-  db_type = NULL, creds_file = NULL, initial_sql = NULL)
+  db_type = NULL, creds_file = NULL, initial_sql = NULL,
+  description = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -52,6 +53,11 @@ An entire SQL statement can be provided here, or,
 as a shortcut, the initial \code{SELECT...}
 statement can be omitted for simple queries (e.g.,
 \code{WHERE a > 1 AND b = 'one'}).}
+
+\item{description}{an optional, text-based
+description for the validation step. Used primarily
+in the Logical Plan section of the report generated
+by the \code{html_summary} function.}
 }
 \value{
 an agent object.

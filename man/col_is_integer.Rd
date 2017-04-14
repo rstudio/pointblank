@@ -6,7 +6,8 @@
 \usage{
 col_is_integer(agent, column, report_count = 0, warn_count = 1,
   notify_count = 1, tbl_name = NULL, db_type = NULL, creds_file = NULL,
-  initial_sql = NULL, file_path = NULL, col_types = NULL)
+  initial_sql = NULL, file_path = NULL, col_types = NULL,
+  description = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -69,6 +70,11 @@ integer, \code{n} -> number, \code{d} -> double,
 \code{l} -> logical, \code{D} -> date, \code{T} ->
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
+
+\item{description}{an optional, text-based
+description for the validation step. Used primarily
+in the Logical Plan section of the report generated
+by the \code{html_summary} function.}
 }
 \value{
 an agent object.

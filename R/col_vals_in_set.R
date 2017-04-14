@@ -62,6 +62,10 @@
 #' @param preconditions a optional vector of filtering
 #' statements for filtering the table before this
 #' validation step.
+#' @param description an optional, text-based
+#' description for the validation step. Used primarily
+#' in the Logical Plan section of the report generated
+#' by the \code{html_summary} function.
 #' @return an agent object.
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
@@ -79,7 +83,8 @@ col_vals_in_set <- function(agent,
                             initial_sql = NULL,
                             file_path = NULL,
                             col_types = NULL,
-                            preconditions = NULL) {
+                            preconditions = NULL,
+                            description = NULL) {
   
   assertion_type <- "col_vals_in_set"
   
@@ -111,6 +116,20 @@ col_vals_in_set <- function(agent,
     dplyr::bind_rows(
       agent$validation_set,
       validation_step)
+  
+  # If no `description` provided, set as `NA`
+  if (is.null(description)) {
+    description <- as.character(NA)
+  }
+  
+  # Place the validation step in the logical plan
+  agent$logical_plan <-
+    bind_rows(
+      agent$logical_plan,
+      tibble::tibble(
+        component_name = "col_vals_in_set",
+        parameters = as.character(NA),
+        description = description))
   
   return(agent)
 }

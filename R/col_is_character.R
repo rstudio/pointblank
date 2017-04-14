@@ -52,6 +52,10 @@
 #' \code{l} -> logical, \code{D} -> date, \code{T} ->
 #' date time, \code{t} -> time, \code{?} -> guess, 
 #' or \code{_/-}, which skips the column.
+#' @param description an optional, text-based
+#' description for the validation step. Used primarily
+#' in the Logical Plan section of the report generated
+#' by the \code{html_summary} function.
 #' @return an agent object.
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
@@ -67,7 +71,8 @@ col_is_character <- function(agent,
                              creds_file = NULL,
                              initial_sql = NULL,
                              file_path = NULL,
-                             col_types = NULL) {
+                             col_types = NULL,
+                             description = NULL) {
   
   assertion_type <- "col_is_character"
   
@@ -97,6 +102,20 @@ col_is_character <- function(agent,
     dplyr::bind_rows(
       agent$validation_set,
       validation_step)
+  
+  # If no `description` provided, set as `NA`
+  if (is.null(description)) {
+    description <- as.character(NA)
+  }
+  
+  # Place the validation step in the logical plan
+  agent$logical_plan <-
+    bind_rows(
+      agent$logical_plan,
+      tibble::tibble(
+        component_name = "col_is_character",
+        parameters = as.character(NA),
+        description = description))
   
   return(agent)
 }

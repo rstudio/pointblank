@@ -21,6 +21,11 @@ create_agent <- function(name = NULL) {
       focal_col_types = as.character(NA)[-1],
       focal_db_cred_file_path = as.character(NA)[-1],
       focal_init_sql = as.character(NA)[-1],
+      logical_plan =
+        tibble::tibble(
+          component_name = as.character("create_agent"),
+          parameters = as.character(NA),
+          description = as.character(NA)),
       validation_set =
         tibble::tibble(
           tbl_name = as.character(NA),

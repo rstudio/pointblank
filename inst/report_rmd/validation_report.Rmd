@@ -22,12 +22,19 @@ agent <- readRDS("agent.rds")
 
 ```{r generate_img_files, echo=FALSE}
 
-# Generate the image files in a temporary directory
+# Generate the image files for the results a temporary directory
 generate_img_files_results(agent = agent)
 
 # Get a vector of these file paths
 img_file_list_results <-
   list.files(path = "./temporary_images", pattern = ".*_.svg", full.names = TRUE)
+
+# Generate the image files for the validation plan a temporary directory
+generate_img_files_plan(agent = agent)
+
+# Get a vector of these file paths
+img_file_list_plan <-
+  list.files(path = "./temporary_images_plan", pattern = ".*.svg", full.names = TRUE)
 ```
 
 ## Validation Summary {.tabset .tabset-fade}
@@ -82,7 +89,7 @@ knitr::kable(
 ```
 
 
-```{r get_images_vector, include=FALSE}
+```{r get_images_vectors, include=FALSE}
 for (i in 1:length(img_file_list_results)) {
   
   if (i == 1) {
@@ -93,6 +100,19 @@ for (i in 1:length(img_file_list_results)) {
     c(images_results,
       structure(
         img(src = img_file_list_results[i])) %>%
+        as.character())
+}
+
+for (i in 1:length(img_file_list_plan)) {
+  
+  if (i == 1) {
+    images_plan <- vector(mode = "character")
+  }
+  
+  images_plan <- 
+    c(images_plan,
+      structure(
+        img(src = img_file_list_plan[i])) %>%
         as.character())
 }
 ```
@@ -176,4 +196,17 @@ knitr::kable(
   )
 ```
 
-### Validation Plan
+### Logical Plan
+
+```{r images_plan, echo=FALSE}
+knitr::kable(
+  dplyr::data_frame(
+    `1` = "&nbsp;",
+    `2` = images_plan,
+    `3` = "&nbsp;"), 
+  padding = 20,
+  align = "lcl",
+  col.names = c("&nbsp;", "&nbsp;", "&nbsp;")
+  )
+```
+

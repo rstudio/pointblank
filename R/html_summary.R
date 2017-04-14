@@ -113,6 +113,17 @@ html_summary <- function(agent,
     invisible(file.remove("temporary_images"))
   }
   
+  if (dir.exists("temporary_images_plan")) {
+    temp_images_files <- 
+      list.files(path = "./temporary_images_plan", full.names = TRUE)
+    
+    # Remove the image files
+    invisible(file.remove(temp_images_files))
+    
+    # Remove the empty parent directory
+    invisible(file.remove("temporary_images_plan"))
+  }
+  
   # Save file with a specified file name
   if (!is.null(filename)) {
     if (inherits(filename, "character")) {

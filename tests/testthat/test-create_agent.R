@@ -14,13 +14,18 @@ test_that("Creating a valid `agent` object is possible", {
             "focal_db_type", "focal_col_names",
             "focal_col_types",
             "focal_db_cred_file_path",
-            "focal_init_sql", "validation_set")))
+            "focal_init_sql", 
+            "logical_plan", "validation_set")))
   
   # Expect an agent object of class `dgr_graph`
   expect_is(agent, "ptblank_agent")
   
+  # Expect that the `logical_plan` component is
+  # a `tbl_df`
+  expect_is(agent$logical_plan, "tbl_df")
+  
   # Expect that the `validation_set` component is
-  # a data frame
+  # a `tbl_df`
   expect_is(agent$validation_set, "tbl_df")
   
   # Expect certain classes for the different

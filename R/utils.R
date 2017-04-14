@@ -405,3 +405,48 @@ generate_img_files_results <- function(agent) {
           "_.svg"))
   }
 }
+
+#' Add function to generate SVG files
+#' for the plan of a validation pipeline
+#' @param agent agent an agent object of class
+#' \code{ptblank_agent}.
+#' @importFrom stringr str_replace_all
+#' @export generate_img_files_plan
+generate_img_files_plan <- function(agent) {
+  
+  if (!inherits(agent, "ptblank_agent")) {
+    stop("The object provided must be a valid `ptblank_agent` object.")
+  }
+  
+  # Extract the `logical_plan` df from the `agent` object
+  plan <- agent$logical_plan
+  
+  # For every row in `summary`, re-work the associated SVG
+  # template object into a finalized graphic
+  for (i in 1:nrow(plan)) {
+    
+    if (i == 1) {
+      if (dir.exists("temporary_images_plan") == FALSE) {
+        dir.create("temporary_images_plan")
+      } else {
+        files <- list.files("temporary_images_plan", full.names = TRUE)
+        if (length(files) > 0) {
+          file.remove(files)
+        }
+      }
+    }
+    
+    index <- formatC(x = i, flag = " ", width = 4)
+    
+    # Construct the filename for the SVG file associated with the function
+    icon <- paste0(plan$component_name[i], "_.svg")
+    
+    # Copy the text-inclusive SVG file to a temporary directory
+    file.copy(
+      from = system.file("icons", icon, package = "pointblank"),
+      to = paste0("./temporary_images_plan/",
+                  stringr::str_replace_all(index, " ", "0"), ".svg"),
+      overwrite = TRUE)
+  }
+}
+

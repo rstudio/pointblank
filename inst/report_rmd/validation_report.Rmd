@@ -201,11 +201,11 @@ knitr::kable(
 ```{r images_plan, echo=FALSE}
 knitr::kable(
   dplyr::data_frame(
-    `1` = "&nbsp;",
-    `2` = images_plan,
+    `1` = images_plan,
+    `2` = "&nbsp;",
     `3` = "&nbsp;"), 
   padding = 20,
-  align = "lcl",
+  align = "cll",
   col.names = c("&nbsp;", "&nbsp;", "&nbsp;")
   )
 ```

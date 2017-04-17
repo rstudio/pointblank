@@ -42,12 +42,15 @@ img_file_list_plan <-
 `r if (file.exists("include_intro.txt")) { paste(readLines("include_intro.txt", warn = FALSE)) }`
 
 ```{r validation_summary_stats, echo=FALSE}
+# Get the validation name from `agent`; if none
+# was assigned, simply use `Validation`
 if (length(agent$validation_name) > 0) {
   validation_name <- agent$validation_name[1]
 } else {
   validation_name <- "Validation"
 }
 
+# Get the validation time (starting time)
 if (!is.na(agent$validation_time)) {
   validation_time <- agent$validation_time[1]
 } else {
@@ -166,7 +169,6 @@ for (i in 1:nrow(agent$validation_set)) {
     c(duration_chr,
       paste0(as.character(agent$validation_set$proc_duration_s[i]), " s"))
 }
-
 ```
 
 ### Validation Results

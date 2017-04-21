@@ -3,7 +3,7 @@
 [![Travis-CI Build Status](https://travis-ci.org/rich-iannone/pointblank.svg?branch=master)](https://travis-ci.org/rich-iannone/pointblank)
 [![codecov.io](https://codecov.io/github/rich-iannone/pointblank/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/pointblank?branch=master) 
 
-## We all need to validate our data sometimes.
+## We All Need to Validate our Data Sometimes
 
 Tables can often be trustworthy. All the data seems to be there and we may feel we can count on these 
 tables to deliver us the info we need. Still, sometimes, the tables we trust are hiding things from

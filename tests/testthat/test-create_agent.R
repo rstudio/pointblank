@@ -68,5 +68,5 @@ test_that("Creating a valid `agent` object is possible", {
   # Create an agent with a name
   agent_name <- create_agent(name = "test")
   
-  expect_equal(agent_name$validation_name = "test")
+  expect_equivalent(agent_name$validation_name = "test")
 })

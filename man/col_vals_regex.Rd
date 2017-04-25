@@ -5,8 +5,8 @@
 \title{Verify whether string column data 
 corresponds to a regex matching expression}
 \usage{
-col_vals_regex(agent, column, regex, report_count = 0, warn_count = 1,
-  notify_count = 2, tbl_name = NULL, db_type = NULL, creds_file = NULL,
+col_vals_regex(agent, column, regex, warn_count = 1, notify_count = 2,
+  tbl_name = NULL, db_type = NULL, creds_file = NULL,
   initial_sql = NULL, file_path = NULL, col_types = NULL,
   preconditions = NULL, description = NULL)
 }
@@ -23,10 +23,6 @@ create one or more computed columns (e.g.,
 
 \item{regex}{a regex pattern to test for matching
 strings.}
-
-\item{report_count}{the threshold number for 
-individual validations returning a \code{FALSE}
-result before applying the \code{report} flag.}
 
 \item{warn_count}{the threshold number for 
 individual validations returning a \code{FALSE}

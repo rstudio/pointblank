@@ -4,8 +4,8 @@
 \alias{rows_not_duplicated}
 \title{Verify that row data are not duplicated}
 \usage{
-rows_not_duplicated(agent, cols = NULL, report_count = 0, warn_count = 1,
-  notify_count = 2, tbl_name = NULL, db_type = NULL, creds_file = NULL,
+rows_not_duplicated(agent, cols = NULL, warn_count = 1, notify_count = 2,
+  tbl_name = NULL, db_type = NULL, creds_file = NULL,
   initial_sql = NULL, file_path = NULL, preconditions = NULL,
   description = NULL)
 }
@@ -17,10 +17,6 @@ rows_not_duplicated(agent, cols = NULL, report_count = 0, warn_count = 1,
 to check for duplication. If not provided, the
 validation checks for duplicate records using
 data across all columns.}
-
-\item{report_count}{the threshold number for 
-individual validations returning a \code{FALSE}
-result before applying the \code{report} flag.}
 
 \item{warn_count}{the threshold number for 
 individual validations returning a \code{FALSE}

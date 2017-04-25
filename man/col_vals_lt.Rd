@@ -5,8 +5,8 @@
 \title{Verify whether numerical column data are
 less than a specified value}
 \usage{
-col_vals_lt(agent, column, value, report_count = 0, warn_count = 1,
-  notify_count = 2, tbl_name = NULL, db_type = NULL, creds_file = NULL,
+col_vals_lt(agent, column, value, warn_count = 1, notify_count = 2,
+  tbl_name = NULL, db_type = NULL, creds_file = NULL,
   initial_sql = NULL, file_path = NULL, col_types = NULL,
   preconditions = NULL, description = NULL)
 }
@@ -24,10 +24,6 @@ create one or more computed columns (e.g.,
 \item{value}{a numeric value used for this test.
 Any column values \code{< value} are considered
 passing.}
-
-\item{report_count}{the threshold number for 
-individual validations returning a \code{FALSE}
-result before applying the \code{report} flag.}
 
 \item{warn_count}{the threshold number for 
 individual validations returning a \code{FALSE}

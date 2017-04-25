@@ -4,8 +4,8 @@
 \alias{col_vals_null}
 \title{Verify whether all column values are NULL}
 \usage{
-col_vals_null(agent, column, report_count = 0, warn_count = 1,
-  notify_count = 2, tbl_name = NULL, db_type = NULL, creds_file = NULL,
+col_vals_null(agent, column, warn_count = 1, notify_count = 2,
+  tbl_name = NULL, db_type = NULL, creds_file = NULL,
   initial_sql = NULL, file_path = NULL, col_types = NULL,
   preconditions = NULL, description = NULL)
 }
@@ -19,10 +19,6 @@ validation should be applied. Aside from a single
 column name, column operations can be used to
 create one or more computed columns (e.g., 
 \code{"a + b"} or \code{"a + sum(a)"}).}
-
-\item{report_count}{the threshold number for 
-individual validations returning a \code{FALSE}
-result before applying the \code{report} flag.}
 
 \item{warn_count}{the threshold number for 
 individual validations returning a \code{FALSE}

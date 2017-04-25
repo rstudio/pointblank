@@ -4,8 +4,8 @@
 \alias{col_exists}
 \title{Verify that one or more columns exist}
 \usage{
-col_exists(agent, column, report_count = 0, warn_count = 1,
-  notify_count = 1, tbl_name = NULL, db_type = NULL, creds_file = NULL,
+col_exists(agent, column, warn_count = 1, notify_count = 1,
+  tbl_name = NULL, db_type = NULL, creds_file = NULL,
   initial_sql = NULL, file_path = NULL, col_types = NULL,
   description = NULL)
 }
@@ -15,10 +15,6 @@ col_exists(agent, column, report_count = 0, warn_count = 1,
 
 \item{column}{the name of a single table column
 or multiple columns in the same table.}
-
-\item{report_count}{the threshold number for 
-individual validations returning a \code{FALSE}
-result before applying the \code{report} flag.}
 
 \item{warn_count}{the threshold number for 
 individual validations returning a \code{FALSE}

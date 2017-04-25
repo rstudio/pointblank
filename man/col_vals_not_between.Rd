@@ -4,10 +4,10 @@
 \alias{col_vals_not_between}
 \title{Verify that column data are not between two values}
 \usage{
-col_vals_not_between(agent, column, left, right, report_count = 0,
-  warn_count = 1, notify_count = 2, tbl_name = NULL, db_type = NULL,
-  creds_file = NULL, initial_sql = NULL, file_path = NULL,
-  col_types = NULL, preconditions = NULL, description = NULL)
+col_vals_not_between(agent, column, left, right, warn_count = 1,
+  notify_count = 2, tbl_name = NULL, db_type = NULL, creds_file = NULL,
+  initial_sql = NULL, file_path = NULL, col_types = NULL,
+  preconditions = NULL, description = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -31,10 +31,6 @@ validation includes this bound value in addition
 to values lower than \code{right}. Any values
 \code{<= right} and \code{>= left} will be
 considered as failing.}
-
-\item{report_count}{the threshold number for 
-individual validations returning a \code{FALSE}
-result before applying the \code{report} flag.}
 
 \item{warn_count}{the threshold number for 
 individual validations returning a \code{FALSE}

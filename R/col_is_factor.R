@@ -7,9 +7,6 @@
 #' @param column the name of a single table column,
 #' multiple columns in the same table, or, a helper
 #' function such as \code{all_cols()}.
-#' @param report_count the threshold number for 
-#' individual validations returning a \code{FALSE}
-#' result before applying the \code{report} flag.
 #' @param warn_count the threshold number for 
 #' individual validations returning a \code{FALSE}
 #' result before applying the \code{warn} flag.
@@ -63,7 +60,6 @@
 
 col_is_factor <- function(agent,
                           column,
-                          report_count = 0,
                           warn_count = 1,
                           notify_count = 1,
                           tbl_name = NULL,
@@ -87,7 +83,6 @@ col_is_factor <- function(agent,
       agent = agent,
       assertion_type = assertion_type,
       column = column,
-      report_count = report_count,
       warn_count = warn_count,
       notify_count = notify_count,
       tbl_name = ifelse(is.null(tbl_name), as.character(NA), tbl_name),

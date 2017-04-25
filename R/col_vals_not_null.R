@@ -10,9 +10,6 @@
 #' column name, column operations can be used to
 #' create one or more computed columns (e.g., 
 #' \code{"a + b"} or \code{"a + sum(a)"}).
-#' @param report_count the threshold number for 
-#' individual validations returning a \code{FALSE}
-#' result before applying the \code{report} flag.
 #' @param warn_count the threshold number for 
 #' individual validations returning a \code{FALSE}
 #' result before applying the \code{warn} flag.
@@ -69,7 +66,6 @@
 
 col_vals_not_null <- function(agent,
                               column,
-                              report_count = 0,
                               warn_count = 1,
                               notify_count = 2,
                               tbl_name = NULL,
@@ -94,7 +90,6 @@ col_vals_not_null <- function(agent,
       agent = agent,
       assertion_type = assertion_type,
       column = column,
-      report_count = report_count,
       warn_count = warn_count,
       notify_count = notify_count,
       preconditions = preconditions,

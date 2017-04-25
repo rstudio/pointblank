@@ -13,9 +13,6 @@
 #' \code{"a + b"} or \code{"a + sum(a)"}).
 #' @param value a numeric value used to test for
 #' non-equality.
-#' @param report_count the threshold number for 
-#' individual validations returning a \code{FALSE}
-#' result before applying the \code{report} flag.
 #' @param warn_count the threshold number for 
 #' individual validations returning a \code{FALSE}
 #' result before applying the \code{warn} flag.
@@ -73,7 +70,6 @@
 col_vals_not_equal <- function(agent,
                                column,
                                value,
-                               report_count = 0,
                                warn_count = 1,
                                notify_count = 2,
                                tbl_name = NULL,
@@ -99,7 +95,6 @@ col_vals_not_equal <- function(agent,
       assertion_type = assertion_type,
       column = column,
       value = value,
-      report_count = report_count,
       warn_count = warn_count,
       notify_count = notify_count,
       preconditions = preconditions,

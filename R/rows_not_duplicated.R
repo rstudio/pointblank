@@ -6,10 +6,7 @@
 #' @param cols an optional grouping of columns
 #' to check for duplication. If not provided, the
 #' validation checks for duplicate records using
-#' data across all columns. 
-#' @param report_count the threshold number for 
-#' individual validations returning a \code{FALSE}
-#' result before applying the \code{report} flag.
+#' data across all columns.
 #' @param warn_count the threshold number for 
 #' individual validations returning a \code{FALSE}
 #' result before applying the \code{warn} flag.
@@ -57,7 +54,6 @@
 
 rows_not_duplicated <- function(agent,
                                 cols = NULL,
-                                report_count = 0,
                                 warn_count = 1,
                                 notify_count = 2,
                                 tbl_name = NULL,
@@ -75,7 +71,6 @@ rows_not_duplicated <- function(agent,
       agent = agent,
       assertion_type = assertion_type,
       column = ifelse(is.null(cols), as.character(NA), cols),
-      report_count = report_count,
       warn_count = warn_count,
       notify_count = notify_count,
       preconditions = preconditions,

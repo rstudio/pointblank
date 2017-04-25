@@ -15,9 +15,6 @@
 #' @param right the upper bound for the range. The
 #' validation includes this bound value in addition
 #' to values lower than \code{right}.
-#' @param report_count the threshold number for 
-#' individual validations returning a \code{FALSE}
-#' result before applying the \code{report} flag.
 #' @param warn_count the threshold number for 
 #' individual validations returning a \code{FALSE}
 #' result before applying the \code{warn} flag.
@@ -76,7 +73,6 @@ col_vals_between <- function(agent,
                              column,
                              left,
                              right,
-                             report_count = 0,
                              warn_count = 1,
                              notify_count = 2,
                              tbl_name = NULL,
@@ -102,7 +98,6 @@ col_vals_between <- function(agent,
       assertion_type = assertion_type,
       column = column,
       set = c(left, right),
-      report_count = report_count,
       warn_count = warn_count,
       notify_count = notify_count,
       preconditions = preconditions,

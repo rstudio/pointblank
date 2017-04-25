@@ -10,7 +10,6 @@ create_validation_step <- function(agent,
                                    set = NULL,
                                    regex = NULL,
                                    preconditions = NULL,
-                                   report_count,
                                    warn_count,
                                    notify_count,
                                    tbl_name = as.character(NA),
@@ -33,7 +32,6 @@ create_validation_step <- function(agent,
       regex = ifelse(is.null(regex), as.character(NA), as.character(regex)),
       preconditions = as.numeric(NA),
       all_passed = as.logical(NA),
-      report_count = as.numeric(report_count),
       warn_count = as.numeric(warn_count),
       notify_count = as.numeric(notify_count),
       init_sql = as.character(agent$focal_init_sql),
@@ -260,15 +258,8 @@ get_all_cols <- function(agent) {
 #' judgment, what actions are taken now?
 #' @importFrom tibble tibble
 determine_action <- function(false_count,
-                             report_count,
                              warn_count,
                              notify_count) {
-  
-  if (false_count >= report_count) {
-    report <- TRUE
-  } else {
-    report <- FALSE
-  }
   
   if (false_count >= warn_count) {
     warn <- TRUE
@@ -285,7 +276,6 @@ determine_action <- function(false_count,
   # Generate a tbl with action information
   action_df <-
     tibble::tibble(
-      report = report,
       warn = warn,
       notify = notify)
   
@@ -358,10 +348,6 @@ generate_img_files_results <- function(agent) {
       } else if (summary$notify[i] == FALSE &
                  summary$warn[i] == TRUE) {
         outline_color <- "#B7B700"
-      } else if (summary$notify[i] == FALSE &
-                 summary$warn[i] == FALSE &
-                 summary$report[i] == TRUE) {
-        outline_color <- "#979797"
       }
     
       if (summary$all_passed[i] == TRUE) {

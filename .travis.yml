@@ -1,5 +1,7 @@
 language: r
 
+dist: trusty
+
 warnings_are_errors: false
 sudo: required
 

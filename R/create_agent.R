@@ -3,6 +3,10 @@
 #' @param name optional name for the agent that
 #' will eventually carry out the interrogation
 #' process.
+#' @examples 
+#' # Create an `agent` object in order to begin
+#' # defining validation steps
+#' agent <- create_agent()
 #' @return an agent object.
 #' @importFrom dplyr filter
 #' @importFrom tibble tibble as_tibble

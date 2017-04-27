@@ -10,8 +10,8 @@ create_validation_step <- function(agent,
                                    set = NULL,
                                    regex = NULL,
                                    preconditions = NULL,
-                                   warn_count,
-                                   notify_count,
+                                   warn_count = NULL,
+                                   notify_count = NULL,
                                    tbl_name = as.character(NA),
                                    db_type = as.character(NA),
                                    creds_file = as.character(NA),
@@ -32,8 +32,8 @@ create_validation_step <- function(agent,
       regex = ifelse(is.null(regex), as.character(NA), as.character(regex)),
       preconditions = as.numeric(NA),
       all_passed = as.logical(NA),
-      warn_count = as.numeric(warn_count),
-      notify_count = as.numeric(notify_count),
+      warn_count = ifelse(is.null(warn_count), as.numeric(NA), as.numeric(warn_count)),
+      notify_count = ifelse(is.null(notify_count), as.numeric(NA), as.numeric(notify_count)),
       init_sql = as.character(agent$focal_init_sql),
       db_cred_file_path = as.character(agent$focal_db_cred_file_path),
       file_path = as.character(agent$focal_file_name),
@@ -261,16 +261,24 @@ determine_action <- function(false_count,
                              warn_count,
                              notify_count) {
   
-  if (false_count >= warn_count) {
-    warn <- TRUE
-  } else {
+  if (is.na(warn_count)) {
     warn <- FALSE
+  } else {
+    if (false_count >= warn_count) {
+      warn <- TRUE
+    } else {
+      warn <- FALSE
+    }
   }
   
-  if (false_count >= notify_count) {
-    notify <- TRUE
-  } else {
+  if (is.na(notify_count)) {
     notify <- FALSE
+  } else {
+    if (false_count >= notify_count) {
+      notify <- TRUE
+    } else {
+      notify <- FALSE
+    }
   }
   
   # Generate a tbl with action information
@@ -343,16 +351,16 @@ generate_img_files_results <- function(agent) {
       stringr::str_replace_all(" ", "&#160;")
     
     
-      if (summary$notify[i] == TRUE) {
-        outline_color <- "#B20000"
-      } else if (summary$notify[i] == FALSE &
-                 summary$warn[i] == TRUE) {
-        outline_color <- "#B7B700"
-      }
+    if (summary$notify[i] == TRUE) {
+      outline_color <- "#B20000"
+    } else if (summary$notify[i] == FALSE &
+               summary$warn[i] == TRUE) {
+      outline_color <- "#B7B700"
+    }
     
-      if (summary$all_passed[i] == TRUE) {
-        outline_color <- "#008000"
-      }
+    if (summary$all_passed[i] == TRUE) {
+      outline_color <- "#008000"
+    }
     
     # Construct the filename for the SVG file associated with the function
     icon <- paste0(summary$assertion_type[i], "_text.svg")

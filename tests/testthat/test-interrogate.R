@@ -30,7 +30,7 @@ test_that("Interrogating for column types", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 1)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -65,7 +65,7 @@ test_that("Interrogating for column types", {
   expect_equivalent(validation$validation_set$f_passed, 0)
   expect_equivalent(validation$validation_set$f_failed, 1)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 1)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -101,7 +101,7 @@ test_that("Interrogating for column types", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 1)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -137,7 +137,7 @@ test_that("Interrogating for column types", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 1)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -173,7 +173,7 @@ test_that("Interrogating for column types", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 1)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -208,7 +208,7 @@ test_that("Interrogating for column types", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 1)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -250,7 +250,7 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 0.923)
   expect_equivalent(validation$validation_set$f_failed, 0.077)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 2)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -314,7 +314,7 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 0.692)
   expect_equivalent(validation$validation_set$f_failed, 0.308)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 2)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -378,7 +378,7 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 0.077)
   expect_equivalent(validation$validation_set$f_failed, 0.923)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 2)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -441,7 +441,7 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 0.923)
   expect_equivalent(validation$validation_set$f_failed, 0.077)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 2)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -504,7 +504,7 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 0.846)
   expect_equivalent(validation$validation_set$f_failed, 0.154)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 2)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -592,7 +592,7 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 2)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -627,7 +627,7 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 2)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -663,7 +663,7 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 0)
   expect_equivalent(validation$validation_set$f_failed, 1)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 2)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -698,7 +698,7 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 0.846)
   expect_equivalent(validation$validation_set$f_failed, 0.154)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 2)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -761,7 +761,7 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 0.154)
   expect_equivalent(validation$validation_set$f_failed, 0.846)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 2)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(
@@ -824,7 +824,7 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
   expect_equivalent(validation$validation_set$warn_count, 1)
-  expect_equivalent(validation$validation_set$notify_count, 2)
+  expect_true(is.na(validation$validation_set$notify_count))
   expect_true(is.na(validation$validation_set$init_sql))
   expect_true(is.na(validation$validation_set$db_cred_file_path))
   expect_equivalent(

@@ -54,6 +54,8 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$validation_set$f_failed, "numeric")
   expect_is(agent$validation_set$warn_count, "numeric")
   expect_is(agent$validation_set$notify_count, "numeric")
+  expect_is(agent$validation_set$warn_fraction, "numeric")
+  expect_is(agent$validation_set$notify_fraction, "numeric")
   expect_is(agent$validation_set$warn, "logical")
   expect_is(agent$validation_set$notify, "logical")
   expect_is(agent$validation_set$init_sql, "character")

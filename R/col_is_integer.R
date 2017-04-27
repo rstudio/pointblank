@@ -61,7 +61,7 @@
 col_is_integer <- function(agent,
                            column,
                            warn_count = 1,
-                           notify_count = 1,
+                           notify_count = NULL,
                            tbl_name = NULL,
                            db_type = NULL,
                            creds_file = NULL,

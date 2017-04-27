@@ -67,7 +67,7 @@
 col_vals_null <- function(agent,
                           column,
                           warn_count = 1,
-                          notify_count = 2,
+                          notify_count = NULL,
                           tbl_name = NULL,
                           db_type = NULL,
                           creds_file = NULL,

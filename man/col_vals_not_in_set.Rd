@@ -5,10 +5,11 @@
 \title{Verify that column data are not part of
 a set of values}
 \usage{
-col_vals_not_in_set(agent, column, set, warn_count = 1, notify_count = 2,
-  tbl_name = NULL, db_type = NULL, creds_file = NULL,
-  initial_sql = NULL, file_path = NULL, col_types = NULL,
-  preconditions = NULL, description = NULL)
+col_vals_not_in_set(agent, column, set, warn_count = 1, notify_count = NULL,
+  warn_fraction = NULL, notify_fraction = NULL, tbl_name = NULL,
+  db_type = NULL, creds_file = NULL, initial_sql = NULL,
+  file_path = NULL, col_types = NULL, preconditions = NULL,
+  description = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -32,6 +33,18 @@ result before applying the \code{warn} flag.}
 \item{notify_count}{the threshold number for 
 individual validations returning a \code{FALSE}
 result before applying the \code{notify} flag.}
+
+\item{warn_fraction}{the threshold fraction for 
+individual validations returning a \code{FALSE}
+over all the entire set of individual validations.
+Beyond this threshold, the \code{warn} flag will
+be applied.}
+
+\item{notify_fraction}{the threshold fraction for 
+individual validations returning a \code{FALSE}
+over all the entire set of individual validations.
+Beyond this threshold, the \code{notify} flag will
+be applied.}
 
 \item{tbl_name}{the name of the local or remote
 table.}

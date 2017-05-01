@@ -4,7 +4,7 @@
 \alias{col_is_date}
 \title{Verify that a column contains R Date objects}
 \usage{
-col_is_date(agent, column, warn_count = 1, notify_count = 1,
+col_is_date(agent, column, warn_count = 1, notify_count = NULL,
   tbl_name = NULL, db_type = NULL, creds_file = NULL,
   initial_sql = NULL, file_path = NULL, col_types = NULL,
   description = NULL)

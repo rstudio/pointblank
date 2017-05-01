@@ -6,8 +6,9 @@
 Get a validation step as a tbl row.}
 \usage{
 create_validation_step(agent, assertion_type, column, value = NULL,
-  set = NULL, regex = NULL, preconditions = NULL, warn_count,
-  notify_count, tbl_name = as.character(NA), db_type = as.character(NA),
+  set = NULL, regex = NULL, preconditions = NULL, warn_count = NULL,
+  notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,
+  tbl_name = as.character(NA), db_type = as.character(NA),
   creds_file = as.character(NA), init_sql = as.character(NA),
   file_path = as.character(NA), col_types = as.character(NA))
 }

@@ -6,7 +6,8 @@
 given verification step. Based on a recent
 judgment, what actions are taken now?}
 \usage{
-determine_action(false_count, warn_count, notify_count)
+determine_action(n, false_count, warn_count, notify_count, warn_fraction,
+  notify_fraction)
 }
 \description{
 Determine the course of action for a

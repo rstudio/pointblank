@@ -17,3 +17,8 @@ an agent object.
 \description{
 Creates an agent object.
 }
+\examples{
+# Create an `agent` object in order to begin
+# defining validation steps
+agent <- create_agent()
+}

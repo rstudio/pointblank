@@ -4,7 +4,8 @@
 \alias{rows_not_duplicated}
 \title{Verify that row data are not duplicated}
 \usage{
-rows_not_duplicated(agent, cols = NULL, warn_count = 1, notify_count = 2,
+rows_not_duplicated(agent, cols = NULL, warn_count = 1,
+  notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,
   tbl_name = NULL, db_type = NULL, creds_file = NULL,
   initial_sql = NULL, file_path = NULL, preconditions = NULL,
   description = NULL)
@@ -25,6 +26,18 @@ result before applying the \code{warn} flag.}
 \item{notify_count}{the threshold number for 
 individual validations returning a \code{FALSE}
 result before applying the \code{notify} flag.}
+
+\item{warn_fraction}{the threshold fraction for 
+individual validations returning a \code{FALSE}
+over all the entire set of individual validations.
+Beyond this threshold, the \code{warn} flag will
+be applied.}
+
+\item{notify_fraction}{the threshold fraction for 
+individual validations returning a \code{FALSE}
+over all the entire set of individual validations.
+Beyond this threshold, the \code{notify} flag will
+be applied.}
 
 \item{tbl_name}{the name of the local or remote
 table.}

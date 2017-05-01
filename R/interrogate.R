@@ -513,11 +513,16 @@ interrogate <- function(agent) {
     # for each validation check
     #
     
+    
+    
     actions <-
       determine_action(
+        n = agent$validation_set$n[i],
         false_count = false_count,
         warn_count = agent$validation_set$warn_count[i],
-        notify_count = agent$validation_set$notify_count[i])
+        notify_count = agent$validation_set$notify_count[i],
+        warn_fraction = agent$validation_set$warn_fraction[i],
+        notify_fraction = agent$validation_set$notify_fraction[i])
     
     agent$validation_set$notify[i] <- actions$notify
     agent$validation_set$warn[i] <- actions$warn

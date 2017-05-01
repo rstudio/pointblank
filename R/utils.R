@@ -261,9 +261,12 @@ get_all_cols <- function(agent) {
 #' given verification step. Based on a recent
 #' judgment, what actions are taken now?
 #' @importFrom tibble tibble
-determine_action <- function(false_count,
+determine_action <- function(n,
+                             false_count,
                              warn_count,
-                             notify_count) {
+                             notify_count,
+                             warn_fraction,
+                             notify_fraction) {
   
   if (is.na(warn_count)) {
     warn <- FALSE
@@ -278,6 +281,29 @@ determine_action <- function(false_count,
   if (is.na(notify_count)) {
     notify <- FALSE
   } else {
+    if (false_count >= notify_count) {
+      notify <- TRUE
+    } else {
+      notify <- FALSE
+    }
+  }
+  
+  
+  if (!is.na(warn_fraction)) {
+    
+    warn_count <- round(warn_fraction * n, 0)
+    
+    if (false_count >= warn_count) {
+      warn <- TRUE
+    } else {
+      warn <- FALSE
+    }
+  }
+  
+  if (!is.na(notify_fraction)) {
+    
+    notify_count <- round(notify_fraction * n, 0)
+    
     if (false_count >= notify_count) {
       notify <- TRUE
     } else {

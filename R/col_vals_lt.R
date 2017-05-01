@@ -20,6 +20,16 @@
 #' @param notify_count the threshold number for 
 #' individual validations returning a \code{FALSE}
 #' result before applying the \code{notify} flag.
+#' @param warn_fraction the threshold fraction for 
+#' individual validations returning a \code{FALSE}
+#' over all the entire set of individual validations.
+#' Beyond this threshold, the \code{warn} flag will
+#' be applied.
+#' @param notify_fraction the threshold fraction for 
+#' individual validations returning a \code{FALSE}
+#' over all the entire set of individual validations.
+#' Beyond this threshold, the \code{notify} flag will
+#' be applied.
 #' @param tbl_name the name of the local or remote
 #' table.
 #' @param db_type if the table is located in a

@@ -6,6 +6,10 @@
 \usage{
 is_ptblank_agent(object)
 }
+\arguments{
+\item{object}{the object to test for whether
+it is of class \code{ptblank_agent}.}
+}
 \value{
 an logical value.
 }

@@ -45,8 +45,9 @@
 #' in the Logical Plan section of the report generated
 #' by the \code{html_summary} function.
 #' @return an agent object.
-#' @importFrom dplyr filter
+#' @importFrom dplyr filter bind_rows
 #' @importFrom readr read_csv read_tsv
+#' @importFrom stringr str_split
 #' @importFrom tibble as_tibble
 #' @export focus_on
 
@@ -122,7 +123,7 @@ focus_on <- function(agent,
     file_extension <- 
       (agent$focal_file_name %>% 
          basename() %>% 
-         str_split(pattern = "\\.") %>% 
+         stringr::str_split(pattern = "\\.") %>% 
          unlist())[2] %>% 
       tolower()
     
@@ -130,7 +131,7 @@ focus_on <- function(agent,
     file_name_no_ext <- 
       (agent$focal_file_name %>% 
          basename() %>% 
-         str_split(pattern = "\\.") %>% 
+         stringr::str_split(pattern = "\\.") %>% 
          unlist())[1] %>% 
       tolower()
     
@@ -181,7 +182,7 @@ focus_on <- function(agent,
   
   # Place the validation step in the logical plan
   agent$logical_plan <-
-    bind_rows(
+    dplyr::bind_rows(
       agent$logical_plan,
       tibble::tibble(
         component_name = "focus_on",

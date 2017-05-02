@@ -71,7 +71,7 @@ statement can be omitted for simple queries (e.g.,
 file to be loaded for this verification step. Valid
 types are CSV and TSV files.}
 
-\item{preconditions}{a optional vector of filtering
+\item{preconditions}{an optional vector of filtering
 statements for filtering the table before this
 validation step.}
 

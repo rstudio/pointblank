@@ -91,7 +91,7 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{a optional vector of filtering
+\item{preconditions}{an optional vector of filtering
 statements for filtering the table before this
 validation step.}
 

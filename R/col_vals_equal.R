@@ -65,7 +65,7 @@
 #' \code{l} -> logical, \code{D} -> date, \code{T} ->
 #' date time, \code{t} -> time, \code{?} -> guess, 
 #' or \code{_/-}, which skips the column.
-#' @param preconditions a optional vector of filtering
+#' @param preconditions an optional vector of filtering
 #' statements for filtering the table before this
 #' validation step.
 #' @param description an optional, text-based

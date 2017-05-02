@@ -50,7 +50,7 @@
 #' @param file_path an optional path for a tabular data
 #' file to be loaded for this verification step. Valid
 #' types are CSV and TSV files.
-#' @param preconditions a optional vector of filtering
+#' @param preconditions an optional vector of filtering
 #' statements for filtering the table before this
 #' validation step.
 #' @param description an optional, text-based

@@ -20,8 +20,9 @@ test_that("Getting a validation summary is possible", {
   # Expect that the summary has specific column names
   expect_equivalent(
     colnames(summary),
-    c("tbl_name", "db_type", "assertion_type", "column", "value", "set",
-      "regex", "preconditions", "all_passed", "n", "n_passed"))
+    c("tbl_name", "db_type", "assertion_type", "column", "value",
+      "set", "regex", "preconditions", "all_passed", "n", "n_passed",
+      "f_passed", "action"))
   
   # Expect a single row in this summary
   expect_equivalent(nrow(summary), 1)
@@ -38,6 +39,8 @@ test_that("Getting a validation summary is possible", {
   expect_is(summary$all_passed, "logical")
   expect_is(summary$n, "numeric")
   expect_is(summary$n_passed, "numeric")
+  expect_is(summary$f_passed, "numeric")
+  expect_is(summary$action, "character")
   
   # Expect an error if getting a summary without an interrogation
   expect_error(

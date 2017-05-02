@@ -107,7 +107,7 @@ rows_not_duplicated <- function(agent,
   
   # Place the validation step in the logical plan
   agent$logical_plan <-
-    bind_rows(
+    dplyr::bind_rows(
       agent$logical_plan,
       tibble::tibble(
         component_name = "rows_not_duplicated",

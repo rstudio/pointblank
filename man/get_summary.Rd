@@ -2,8 +2,7 @@
 % Please edit documentation in R/get_summary.R
 \name{get_summary}
 \alias{get_summary}
-\title{Create a simple summary of the
-interrogation}
+\title{Get a simple summary of the interrogation}
 \usage{
 get_summary(agent)
 }

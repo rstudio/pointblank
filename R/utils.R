@@ -317,6 +317,26 @@ get_all_cols <- function(agent) {
 #' Determine the course of action for a
 #' given verification step. Based on a recent
 #' judgment, what actions are taken now?
+#' @param n the total number of validation checks
+#' in the validation step.
+#' @param false_count the number of validation
+#' checks that returned a \code{FALSE} result.
+#' @param warn_count the threshold number for 
+#' individual validations returning a \code{FALSE}
+#' result before applying the \code{warn} flag.
+#' @param notify_count the threshold number for 
+#' individual validations returning a \code{FALSE}
+#' result before applying the \code{notify} flag.
+#' @param warn_fraction the threshold fraction for 
+#' individual validations returning a \code{FALSE}
+#' over all the entire set of individual validations.
+#' Beyond this threshold, the \code{warn} flag will
+#' be applied.
+#' @param notify_fraction the threshold fraction for 
+#' individual validations returning a \code{FALSE}
+#' over all the entire set of individual validations.
+#' Beyond this threshold, the \code{notify} flag will
+#' be applied. 
 #' @importFrom tibble tibble
 determine_action <- function(n,
                              false_count,
@@ -393,8 +413,8 @@ disconnect_postgres <- function() {
   }
 }
 
-#' Add function to generate summary SVG files
-#' for the results of a validation pipeline
+#' Generate summary SVG files for the results of a
+#' validation pipeline
 #' @param agent agent an agent object of class
 #' \code{ptblank_agent}.
 #' @importFrom stringr str_replace str_replace_all
@@ -436,7 +456,6 @@ generate_img_files_results <- function(agent) {
         x = (summary$n[i] - summary$n_passed[i]) %>% as.integer(),
         flag = " ", width = 12) %>% 
       stringr::str_replace_all(" ", "&#160;")
-    
     
     if (summary$notify[i] == TRUE) {
       outline_color <- "#B20000"
@@ -487,8 +506,7 @@ generate_img_files_results <- function(agent) {
   }
 }
 
-#' Add function to generate SVG files
-#' for the plan of a validation pipeline
+#' Generate SVG files for the plan of a validation pipeline
 #' @param agent agent an agent object of class
 #' \code{ptblank_agent}.
 #' @importFrom stringr str_replace_all

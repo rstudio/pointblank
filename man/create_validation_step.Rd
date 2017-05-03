@@ -12,6 +12,81 @@ create_validation_step(agent, assertion_type, column, value = NULL,
   creds_file = as.character(NA), init_sql = as.character(NA),
   file_path = as.character(NA), col_types = as.character(NA))
 }
+\arguments{
+\item{agent}{an agent object of class
+\code{ptblank_agent}.}
+
+\item{assertion_type}{a string providing the
+name of the validation function.}
+
+\item{column}{the column (or a set of columns,
+provided as a character vector) to which this
+validation should be applied. Aside from a single
+column name, column operations can be used to
+create one or more computed columns (e.g., 
+\code{"a + b"} or \code{"a + sum(a)"}).}
+
+\item{value}{a numeric value used for this test.}
+
+\item{set}{a vector of numeric or string-based
+elements.}
+
+\item{regex}{a regex pattern to test for matching
+strings.}
+
+\item{preconditions}{an optional vector of filtering
+statements for filtering the table before this
+validation step.}
+
+\item{warn_count}{the threshold number for 
+individual validations returning a \code{FALSE}
+result before applying the \code{warn} flag.}
+
+\item{notify_count}{the threshold number for 
+individual validations returning a \code{FALSE}
+result before applying the \code{notify} flag.}
+
+\item{warn_fraction}{the threshold fraction for 
+individual validations returning a \code{FALSE}
+over all the entire set of individual validations.
+Beyond this threshold, the \code{warn} flag will
+be applied.}
+
+\item{notify_fraction}{the threshold fraction for 
+individual validations returning a \code{FALSE}
+over all the entire set of individual validations.
+Beyond this threshold, the \code{notify} flag will
+be applied.}
+
+\item{tbl_name}{the name of the local or remote
+table.}
+
+\item{db_type}{if the table is located in a
+database, the type of database is required here.
+Currently, this can be either \code{PostgreSQL}
+or \code{MySQL}.}
+
+\item{creds_file}{a path to a credentials file
+used for establishing a database connection.}
+
+\item{init_sql}{an initally-applied SQL statement
+for transforming tabular data in a database before
+validation occurs.}
+
+\item{file_path}{an optional path for a tabular data
+file to be loaded for this verification step. Valid
+types are CSV and TSV files.}
+
+\item{col_types}{if validating a CSV or TSV file,
+an optional column specification can be provided
+here as a string. This string representation is
+where each character represents one column and the
+mappings are: \code{c} -> character, \code{i} ->
+integer, \code{n} -> number, \code{d} -> double, 
+\code{l} -> logical, \code{D} -> date, \code{T} ->
+date time, \code{t} -> time, \code{?} -> guess, 
+or \code{_/-}, which skips the column.}
+}
 \description{
 Create a properly formatted validation step.
 Get a validation step as a tbl row.

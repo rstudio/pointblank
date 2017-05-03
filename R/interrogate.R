@@ -308,6 +308,9 @@ interrogate <- function(agent) {
       }
     }
     
+    # Determine the `false_count` for all validations that examine
+    # individual rows in one or more table columns
+    
     if (grepl("col_vals.*", agent$validation_set$assertion_type[i])) {
       
       # Get total count of rows
@@ -512,8 +515,6 @@ interrogate <- function(agent) {
     # Determine the course of action
     # for each validation check
     #
-    
-    
     
     actions <-
       determine_action(

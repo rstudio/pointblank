@@ -1,6 +1,6 @@
 #' Create a file with DB access credentials
-#' @description Creates an RDS file with
-#' access credentials for a database.
+#' @description Creates a file containing access
+#' credentials for a database.
 #' @param file a file path for the credentials file
 #' to be stored on disk.
 #' @param dbname the database name.

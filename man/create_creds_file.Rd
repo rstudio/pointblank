@@ -22,6 +22,6 @@ to be stored on disk.}
 \code{user}.}
 }
 \description{
-Creates an RDS file with
-access credentials for a database.
+Creates a file containing access
+credentials for a database.
 }

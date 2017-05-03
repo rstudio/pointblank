@@ -10,6 +10,9 @@
 
 get_summary <- function(agent) {
   
+  # Create bindings for specific variables
+  f_passed <- warn <- notify <- NULL
+  
   if (all(agent$validation_set$all_passed %in% c(TRUE, FALSE))) {
     
     validation_summary <-

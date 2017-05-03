@@ -33,5 +33,5 @@ vignettes/*.pdf
 *.knit.md
 .Rproj.user
 
-# Credentials files
-*creds.rds
+# RDS files
+*.rds

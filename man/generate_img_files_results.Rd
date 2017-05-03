@@ -2,8 +2,8 @@
 % Please edit documentation in R/utils.R
 \name{generate_img_files_results}
 \alias{generate_img_files_results}
-\title{Add function to generate summary SVG files
-for the results of a validation pipeline}
+\title{Generate summary SVG files for the results of a
+validation pipeline}
 \usage{
 generate_img_files_results(agent)
 }
@@ -12,6 +12,6 @@ generate_img_files_results(agent)
 \code{ptblank_agent}.}
 }
 \description{
-Add function to generate summary SVG files
-for the results of a validation pipeline
+Generate summary SVG files for the results of a
+validation pipeline
 }

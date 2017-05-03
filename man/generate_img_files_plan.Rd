@@ -2,8 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{generate_img_files_plan}
 \alias{generate_img_files_plan}
-\title{Add function to generate SVG files
-for the plan of a validation pipeline}
+\title{Generate SVG files for the plan of a validation pipeline}
 \usage{
 generate_img_files_plan(agent)
 }
@@ -12,6 +11,5 @@ generate_img_files_plan(agent)
 \code{ptblank_agent}.}
 }
 \description{
-Add function to generate SVG files
-for the plan of a validation pipeline
+Generate SVG files for the plan of a validation pipeline
 }

@@ -1,6 +1,63 @@
 
 #' Create a properly formatted validation step.
 #' Get a validation step as a tbl row.
+#' @param agent an agent object of class
+#' \code{ptblank_agent}.
+#' @param assertion_type a string providing the
+#' name of the validation function.
+#' @param column the column (or a set of columns,
+#' provided as a character vector) to which this
+#' validation should be applied. Aside from a single
+#' column name, column operations can be used to
+#' create one or more computed columns (e.g., 
+#' \code{"a + b"} or \code{"a + sum(a)"}).
+#' @param value a numeric value used for this test.
+#' @param set a vector of numeric or string-based
+#' elements.
+#' @param regex a regex pattern to test for matching
+#' strings.
+#' @param preconditions an optional vector of filtering
+#' statements for filtering the table before this
+#' validation step.
+#' @param warn_count the threshold number for 
+#' individual validations returning a \code{FALSE}
+#' result before applying the \code{warn} flag.
+#' @param notify_count the threshold number for 
+#' individual validations returning a \code{FALSE}
+#' result before applying the \code{notify} flag.
+#' @param warn_fraction the threshold fraction for 
+#' individual validations returning a \code{FALSE}
+#' over all the entire set of individual validations.
+#' Beyond this threshold, the \code{warn} flag will
+#' be applied.
+#' @param notify_fraction the threshold fraction for 
+#' individual validations returning a \code{FALSE}
+#' over all the entire set of individual validations.
+#' Beyond this threshold, the \code{notify} flag will
+#' be applied.
+#' @param tbl_name the name of the local or remote
+#' table.
+#' @param db_type if the table is located in a
+#' database, the type of database is required here.
+#' Currently, this can be either \code{PostgreSQL}
+#' or \code{MySQL}.
+#' @param creds_file a path to a credentials file
+#' used for establishing a database connection.
+#' @param init_sql an initally-applied SQL statement
+#' for transforming tabular data in a database before
+#' validation occurs.
+#' @param file_path an optional path for a tabular data
+#' file to be loaded for this verification step. Valid
+#' types are CSV and TSV files.
+#' @param col_types if validating a CSV or TSV file,
+#' an optional column specification can be provided
+#' here as a string. This string representation is
+#' where each character represents one column and the
+#' mappings are: \code{c} -> character, \code{i} ->
+#' integer, \code{n} -> number, \code{d} -> double, 
+#' \code{l} -> logical, \code{D} -> date, \code{T} ->
+#' date time, \code{t} -> time, \code{?} -> guess, 
+#' or \code{_/-}, which skips the column.
 #' @importFrom tibble tibble as_tibble
 #' @importFrom tidyr nest_
 create_validation_step <- function(agent,

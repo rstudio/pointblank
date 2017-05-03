@@ -27,6 +27,7 @@ create_creds_file <- function(file,
     user = as.character(user),
     password = as.character(password))
   
+  # Save the credential values as a file
   saveRDS(credentials, file = file)
 }
   

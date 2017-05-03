@@ -20,9 +20,10 @@ get_summary <- function(agent) {
       dplyr::select(1:11, f_passed, warn, notify) %>%
       dplyr::mutate(
         action = dplyr::case_when(
-           .$warn == TRUE ~ "warn",
-           .$notify == TRUE ~ "notify",
-           .$warn == FALSE & .$notify == FALSE ~ as.character(NA))) %>%
+           .$warn == FALSE & .$notify == FALSE ~ as.character(NA),
+           .$warn == TRUE & .$notify == FALSE ~ "warn",
+           .$warn == FALSE & .$notify == TRUE ~ "notify",
+           .$warn == TRUE & .$notify == TRUE ~ "notify")) %>%
       dplyr::select(-warn, -notify)
     
     return(validation_summary)

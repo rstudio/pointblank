@@ -549,3 +549,470 @@ generate_img_files_plan <- function(agent) {
   }
 }
 
+#' Send an email notification
+#' @param agent agent an agent object of class
+#' \code{ptblank_agent}.
+#' @param recipients a vector of email addresses to
+#' which the notification email will be sent.
+#' @param creds_file a path to a credentials file
+#' used for sending an email message.
+#' @importFrom mailR send.mail
+#' @importFrom dplyr filter mutate select rename
+#' @importFrom pixiedust dust sprinkle sprinkle_print_method
+pb_notify <- function(agent,
+                      recipients,
+                      creds_file) {
+  
+  credentials <- readRDS(creds_file)
+  
+  sender <- credentials[1]
+  host <- credentials[2]
+  port <- as.integer(credentials[3])
+  user <- credentials[4]
+  password <- credentials[5]
+  use_ssl <- as.logical(credentials[6])
+  authenticate <- as.logical(credentials[7])
+  
+  # Get the number of validation tests that resulted in a `notify` action
+  number_notify <-
+    agent$validation_set %>%
+    dplyr::filter(notify == TRUE) %>%
+    nrow()
+  
+  # Get the validation time
+  validation_time <- agent$validation_time
+  
+  # Interrogation Date
+  interrogation_date <-
+    paste0(
+      format(validation_time, "%A, %B "),
+      format(validation_time, "%d") %>% as.numeric(),
+      ", ",
+      format(validation_time, "%Y"),
+      " at ",
+      format(validation_time, "%l:%M") %>% trimws(),
+      toupper(format(validation_time, " %p")),
+      format(validation_time, " (%Z)"))
+  
+  # Create the subject line of the email using `number_notify`
+  subject <- 
+    paste0(
+      "pointblank notifier: ",
+      ifelse(number_notify > 1,
+             paste0(number_notify, " tests have execeed their set threshold values. "),
+             paste0(number_notify, " test has exceeded its set threshold value.")))
+  
+  # Generate introductory text for the message body
+  text_1 <-
+    paste0(
+      "For the pointblank interrogation that was conducted on ",
+      interrogation_date,
+      ", ",
+      ifelse(
+        number_notify > 1,
+        paste0(
+          number_notify, " validation steps have resulted in ",
+          "execeedances over their set threshold values."),
+        paste0("a validation step has exceeded its set threshold value.")))
+  
+  # Generate closing text for the message body
+  text_2 <-
+    paste0(
+      "It is hoped that this notification is helpful and won't lead to very ",
+      "much consternation. Yes, the road to completely validated and as-correct-as-possible ",
+      "data is very long but it is a journey worth taking.")
+  
+  # Generate an HTML table with information on the validation
+  # tests that exceeded threshold values
+  table_summary <- 
+    agent$validation_set %>%
+    dplyr::mutate(step = rownames(.) %>% as.integer()) %>%
+    dplyr::filter(notify == TRUE) %>%
+    dplyr::select(
+      step, tbl_name, db_type, assertion_type, column,
+      n, n_passed, n_failed, f_passed, f_failed) %>%
+    dplyr::mutate(f_failed = (f_failed * 100) %>% as.character() %>% paste0(., "%")) %>%
+    dplyr::mutate(f_passed = (f_passed * 100) %>% as.character() %>% paste0(., "%")) %>%
+    dplyr::rename(`Step` = step) %>%
+    dplyr::rename(`Table Name` = tbl_name) %>%
+    dplyr::rename(`Database Type` = db_type) %>%
+    dplyr::rename(`Assertion` = assertion_type) %>%
+    dplyr::rename(`Column` = column) %>%
+    dplyr::rename(`Number Passed` = n_passed) %>%
+    dplyr::rename(`Number Failed` = n_failed) %>%
+    dplyr::rename(` % Passed` = f_passed) %>%
+    dplyr::rename(` % Failed` = f_failed) %>%
+    pixiedust::dust() %>%
+    pixiedust::sprinkle_print_method("html") %>%
+    pixiedust::sprinkle(
+      part = "head",
+      border = "top",
+      border_color = "#979797",
+      border_thickness = 2,
+      pad = 5,
+      font_family = "Helvetica",
+      font_size = 9) %>% 
+    pixiedust::sprinkle(
+      part = "body",
+      pad = 5,
+      font_family = "Monaco",
+      font_size = 9,
+      border = c("top", "bottom"),
+      border_color = "#979797",
+      bg_pattern = c("#F8F8F8", "#FFFFFF")) %>%
+    pixiedust::sprinkle(
+      part = "head",
+      cols = c(1:5),
+      halign = "left") %>%
+    pixiedust::sprinkle(
+      part = "head",
+      cols = c(6:10),
+      halign = "right") %>%
+    pixiedust::sprinkle(
+      part = "body",
+      cols = c(1:5),
+      halign = "left") %>%
+    pixiedust::sprinkle(
+      part = "body",
+      cols = c(6:10),
+      halign = "right") %>%
+    print(asis = FALSE)
+  
+  # Generate the email message body
+  body <-
+    paste0(
+      "<!doctype html>
+      <html>
+      <head>
+      <meta name='viewport' content='width=device-width' />
+      <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+      <title>pointblank Notification Message</title>
+      <style>
+      /* -------------------------------------
+      GLOBAL RESETS
+      ------------------------------------- */
+      img {
+      border: none;
+      -ms-interpolation-mode: bicubic;
+      max-width: 100%; }
+      
+      body {
+      background-color: #f6f6f6;
+      font-family: sans-serif;
+      -webkit-font-smoothing: antialiased;
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 0;
+      padding: 0; 
+      -ms-text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%; }
+      
+      table {
+      border-collapse: separate;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+      width: 100%; }
+      table td {
+      font-family: sans-serif;
+      font-size: 14px;
+      vertical-align: top; }
+      
+      /* -------------------------------------
+      BODY & CONTAINER
+      ------------------------------------- */
+      
+      .body {
+      background-color: #f6f6f6;
+      width: 100%; }
+      
+      .container {
+      display: block;
+      Margin: 0 auto !important;
+      max-width: 620px;
+      padding: 10px;
+      width: 620px; }
+      
+      .content {
+      box-sizing: border-box;
+      display: block;
+      Margin: 0 auto;
+      max-width: 620px;
+      padding: 10px; }
+      
+      /* -------------------------------------
+      HEADER, FOOTER, MAIN
+      ------------------------------------- */
+      .main {
+      background: #fff;
+      border-radius: 3px;
+      width: 100%; }
+      
+      .wrapper {
+      box-sizing: border-box;
+      padding: 20px; }
+      
+      .footer {
+      clear: both;
+      padding-top: 10px;
+      text-align: center;
+      width: 100%; }
+      .footer td,
+      .footer p,
+      .footer span,
+      .footer a {
+      color: #999999;
+      font-size: 12px;
+      text-align: center; }
+      
+      /* -------------------------------------
+      TYPOGRAPHY
+      ------------------------------------- */
+      h1,
+      h2,
+      h3,
+      h4 {
+      color: #000000;
+      font-family: sans-serif;
+      font-weight: 400;
+      line-height: 1.4;
+      margin: 0;
+      Margin-bottom: 30px; }
+      
+      h1 {
+      font-size: 35px;
+      font-weight: 300;
+      text-align: center;
+      text-transform: capitalize; }
+      
+      p,
+      ul,
+      ol {
+      font-family: sans-serif;
+      font-size: 14px;
+      font-weight: normal;
+      margin: 0;
+      Margin-bottom: 15px; }
+      p li,
+      ul li,
+      ol li {
+      list-style-position: inside;
+      margin-left: 5px; }
+      
+      a {
+      color: #3498db;
+      text-decoration: underline; }
+      
+      /* -------------------------------------
+      BUTTONS
+      ------------------------------------- */
+      .btn {
+      box-sizing: border-box;
+      width: 100%; }
+      .btn > tbody > tr > td {
+      padding-bottom: 15px; }
+      .btn table {
+      width: auto; }
+      .btn table td {
+      background-color: #ffffff;
+      border-radius: 5px;
+      text-align: center; }
+      .btn a {
+      background-color: #ffffff;
+      border: solid 1px #3498db;
+      border-radius: 5px;
+      box-sizing: border-box;
+      color: #3498db;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 14px;
+      font-weight: bold;
+      margin: 0;
+      padding: 12px 25px;
+      text-decoration: none;
+      text-transform: capitalize; }
+      
+      .btn-primary table td {
+      background-color: #3498db; }
+      
+      .btn-primary a {
+      background-color: #3498db;
+      border-color: #3498db;
+      color: #ffffff; }
+      
+      /* -------------------------------------
+      OTHER STYLES
+      ------------------------------------- */
+      .last {
+      margin-bottom: 0; }
+      
+      .first {
+      margin-top: 0; }
+      
+      .align-center {
+      text-align: center; }
+      
+      .align-right {
+      text-align: right; }
+      
+      .align-left {
+      text-align: left; }
+      
+      .clear {
+      clear: both; }
+      
+      .mt0 {
+      margin-top: 0; }
+      
+      .mb0 {
+      margin-bottom: 0; }
+      
+      .preheader {
+      color: transparent;
+      display: none;
+      height: 0;
+      max-height: 0;
+      max-width: 0;
+      opacity: 0;
+      overflow: hidden;
+      mso-hide: all;
+      visibility: hidden;
+      width: 0; }
+      
+      .powered-by a {
+      text-decoration: none; }
+      
+      hr {
+      border: 0;
+      border-bottom: 1px solid #f6f6f6;
+      Margin: 20px 0; }
+      
+      /* -------------------------------------
+      RESPONSIVE AND MOBILE FRIENDLY STYLES
+      ------------------------------------- */
+      @media only screen and (max-width: 620px) {
+      table[class=body] h1 {
+      font-size: 28px !important;
+      margin-bottom: 10px !important; }
+      table[class=body] p,
+      table[class=body] ul,
+      table[class=body] ol,
+      table[class=body] td,
+      table[class=body] span,
+      table[class=body] a {
+      font-size: 16px !important; }
+      table[class=body] .wrapper,
+      table[class=body] .article {
+      padding: 10px !important; }
+      table[class=body] .content {
+      padding: 0 !important; }
+      table[class=body] .container {
+      padding: 0 !important;
+      width: 100% !important; }
+      table[class=body] .main {
+      border-left-width: 0 !important;
+      border-radius: 0 !important;
+      border-right-width: 0 !important; }
+      table[class=body] .btn table {
+      width: 100% !important; }
+      table[class=body] .btn a {
+      width: 100% !important; }
+      table[class=body] .img-responsive {
+      height: auto !important;
+      max-width: 100% !important;
+      width: auto !important; }}
+      
+      /* -------------------------------------
+      PRESERVE THESE STYLES IN THE HEAD
+      ------------------------------------- */
+      @media all {
+      .ExternalClass {
+      width: 100%; }
+      .ExternalClass,
+      .ExternalClass p,
+      .ExternalClass span,
+      .ExternalClass font,
+      .ExternalClass td,
+      .ExternalClass div {
+      line-height: 100%; }
+      .apple-link a {
+      color: inherit !important;
+      font-family: inherit !important;
+      font-size: inherit !important;
+      font-weight: inherit !important;
+      line-height: inherit !important;
+      text-decoration: none !important; } 
+      .btn-primary table td:hover {
+      background-color: #34495e !important; }
+      .btn-primary a:hover {
+      background-color: #34495e !important;
+      border-color: #34495e !important; } }
+      
+      </style>
+      </head>
+      <body class=''>
+      <table border='0' cellpadding='0' cellspacing='0' class='body'>
+      <tr>
+      <td>&nbsp;</td>
+      <td class='container'>
+      <div class='content'>
+      
+      <!-- START CENTERED WHITE CONTAINER -->
+      <span class='preheader'>This is preheader text. Some clients will show this text as a preview.</span>
+      <table class='main'>
+      
+      <!-- START MAIN CONTENT AREA -->
+      <tr>
+      <td class='wrapper'>
+      <table border='0' cellpadding='0' cellspacing='0'>
+      <tr>
+      <td>
+      <img src='https://raw.githubusercontent.com/rich-iannone/pointblank/master/inst/graphics/pointblank_logo.png'>
+      <p>Hi there, we've got some unfortunate news...</p>
+      <p>", text_1, "</p>",
+      table_summary,
+      "<p>", text_2, "</p>",
+      "</td>
+      </tr>
+      
+      <!-- END MAIN CONTENT AREA -->
+      </table>
+      
+      <!-- START FOOTER -->
+      <div class='footer'>
+      <table border='0' cellpadding='0' cellspacing='0'>
+      <tr>
+      <td class='content-block powered-by'>
+      Sent by the <a href='https://github.com/rich-iannone/pointblank'>pointblank</a> R package.
+      </td>
+      </tr>
+      </table>
+      </div>
+      <!-- END FOOTER -->
+      
+      <!-- END CENTERED WHITE CONTAINER -->
+      </div>
+      </td>
+      <td>&nbsp;</td>
+      </tr>
+      </table>
+      </body>
+      </html>
+      ")
+  
+  # Send the notification
+  mailR::send.mail(
+    from = sender,
+    to = recipients,
+    subject = subject,
+    body = body,
+    smtp = list(
+      host.name = host,
+      port = port, 
+      user.name = user,            
+      passwd = password,
+      ssl = use_ssl),
+    authenticate = authenticate,
+    send = TRUE,
+    html = TRUE,
+    encoding = "utf-8")
+}

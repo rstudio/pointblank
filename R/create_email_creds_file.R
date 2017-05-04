@@ -16,6 +16,18 @@
 #' @param authenticate an option as to whether to
 #' authenticate; supply a \code{TRUE} or \code{FALSE}
 #' value (\code{TRUE} is the default value).
+#' @examples
+#' \dontrun{
+#' # Create a credentials file for automatic;
+#' # Place in the user's home directory
+#' create_email_creds_file(
+#'   file = "~/.pb_notify",
+#'   sender = "point@blank.org",
+#'   host = "smtp.blank.org",
+#'   port = 465,
+#'   user = "point@blank.org",
+#'   password = "************")
+#' }
 #' @export create_email_creds_file
 
 create_email_creds_file <- function(file,

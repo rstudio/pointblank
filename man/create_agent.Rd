@@ -4,7 +4,8 @@
 \alias{create_agent}
 \title{Create an agent object}
 \usage{
-create_agent(name = NULL)
+create_agent(name = NULL, email_creds_file_path = NULL,
+  notification_recipient_emails = NULL, notification_emails_active = FALSE)
 }
 \arguments{
 \item{name}{optional name for the agent that

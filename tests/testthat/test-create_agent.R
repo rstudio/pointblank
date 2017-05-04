@@ -12,9 +12,9 @@ test_that("Creating a valid `agent` object is possible", {
           c("validation_name", "validation_time",
             "focal_tbl_name", "focal_file_name",
             "focal_db_type", "focal_col_names",
-            "focal_col_types",
-            "focal_db_cred_file_path",
-            "focal_init_sql", 
+            "focal_col_types", "focal_db_cred_file_path",
+            "focal_init_sql", "email_creds_file_path",
+            "notification_recipients", "notification_emails_active",
             "logical_plan", "validation_set")))
   
   # Expect an agent object of class `dgr_graph`
@@ -39,6 +39,9 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$focal_col_types, "character")
   expect_is(agent$focal_db_cred_file_path, "character")
   expect_is(agent$focal_init_sql, "character")
+  expect_is(agent$email_creds_file_path, "character")
+  expect_is(agent$notification_recipients, "character")
+  expect_is(agent$notification_emails_active, "logical")
   expect_is(agent$validation_set$tbl_name, "character")
   expect_is(agent$validation_set$db_type, "character")
   expect_is(agent$validation_set$assertion_type, "character")

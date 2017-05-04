@@ -112,10 +112,9 @@ interrogate <- function(agent) {
       }
     }
     
-    #
+    # ---------------------------------------------------------------
     # Judge tables based on assertion types that rely on
     # comparison operators
-    #
     
     if (agent$validation_set$assertion_type[i] %in%
         c("col_vals_gt", "col_vals_gte",
@@ -149,10 +148,9 @@ interrogate <- function(agent) {
           "pb_is_good_"))
     }
     
-    #
+    # ---------------------------------------------------------------
     # Judge tables based on assertion types that
     # rely on betweenness checking
-    #
     
     if (agent$validation_set$assertion_type[i] == "col_vals_between") {
       
@@ -190,10 +188,9 @@ interrogate <- function(agent) {
           "pb_is_good_"))
     }
     
-    #
+    # ---------------------------------------------------------------
     # Judge tables based on assertion types that
     # rely on set membership
-    #
     
     if (agent$validation_set$assertion_type[i] == "col_vals_in_set") {
       
@@ -269,10 +266,10 @@ interrogate <- function(agent) {
           "pb_is_good_"))
     }
     
-    #
+    # ---------------------------------------------------------------
     # Judge tables based on assertion types that
     # check the table structure
-    #
+    
     
     if (agent$validation_set$assertion_type[i] == "col_exists") {
       
@@ -308,6 +305,7 @@ interrogate <- function(agent) {
       }
     }
     
+    # ---------------------------------------------------------------
     # Determine the `false_count` for all validations that examine
     # individual rows in one or more table columns
     
@@ -511,10 +509,9 @@ interrogate <- function(agent) {
       }
     }
     
-    #
+    # ---------------------------------------------------------------
     # Determine the course of action
     # for each validation check
-    #
     
     actions <-
       determine_action(
@@ -539,7 +536,7 @@ interrogate <- function(agent) {
     agent$validation_set$proc_duration_s[i] <- time_diff_s
   }
   
-  # Disconnect any open PostgreSQL connections
+  # Disconnect any open PostgreSQL connections --------------------
   disconnect_postgres()
   
   # Notification Step ---------------------------------------------

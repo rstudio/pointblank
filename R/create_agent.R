@@ -12,7 +12,10 @@
 #' @importFrom tibble tibble as_tibble
 #' @export create_agent
 
-create_agent <- function(name = NULL) {
+create_agent <- function(name = NULL,
+                         email_creds_file_path = NULL,
+                         notification_recipient_emails = NULL,
+                         notification_emails_active = FALSE) {
   
   agent <-
     list(
@@ -25,6 +28,9 @@ create_agent <- function(name = NULL) {
       focal_col_types = as.character(NA)[-1],
       focal_db_cred_file_path = as.character(NA)[-1],
       focal_init_sql = as.character(NA)[-1],
+      email_creds_file_path = as.character(NA)[-1],
+      notification_recipients = as.character(NA)[-1],
+      notification_emails_active = FALSE,
       logical_plan =
         tibble::tibble(
           component_name = as.character("create_agent"),
@@ -63,6 +69,18 @@ create_agent <- function(name = NULL) {
   
   if (!is.null(name)) {
     agent$validation_name <- name
+  }
+  
+  if (!is.null(email_creds_file_path)) {
+    agent$email_creds_file_path <- email_creds_file_path
+  }
+  
+  if (!is.null(notification_recipient_emails)) {
+    agent$notification_recipients <- notification_recipient_emails
+  }
+  
+  if (notification_emails_active %in% c(TRUE, FALSE)) {
+    agent$notification_emails_active <- notification_emails_active
   }
   
   agent$validation_set$set <- tibble::as_tibble(NA)

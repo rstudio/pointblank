@@ -606,7 +606,8 @@ pb_notify <- function(agent,
       toupper(format(validation_time, " %p")),
       format(validation_time, " (%Z)"))
   
-  # Create the subject line of the email using `number_notify`
+  # Create the subject line of the email
+  # notification message
   subject <- 
     paste0(
       "pointblank notifier: ",
@@ -632,7 +633,7 @@ pb_notify <- function(agent,
     paste0(
       "It is hoped that this notification is helpful and won't lead to very ",
       "much consternation. Yes, the road to completely validated and as-correct-as-possible ",
-      "data is very long but it is a journey worth taking.")
+      "data is quite long but it is a journey worth taking.")
   
   # Generate an HTML table with information on the validation
   # tests that exceeded threshold values
@@ -642,7 +643,22 @@ pb_notify <- function(agent,
     dplyr::filter(notify == TRUE) %>%
     dplyr::select(
       step, tbl_name, db_type, assertion_type, column,
-      n, n_passed, n_failed, f_passed, f_failed) %>%
+      n, n_passed, n_failed, f_passed, f_failed, notify_count, notify_fraction) %>%
+    mutate_when(
+      is.na(notify_count) & !is.na(notify_fraction),
+      list(Threshold = notify_fraction %>% paste0(., "%")),
+      !is.na(notify_count) & is.na(notify_fraction),
+      list(Threshold = notify_count %>% paste0("n = ", .))) %>%
+    select(-notify_count, -notify_fraction) %>%
+    mutate(tbl_name_chars = nchar(tbl_name)) %>%
+    mutate(tbl_name_abbrev = substr(tbl_name, 0, 20)) %>%
+    mutate_when(
+      tbl_name_chars > 20,
+      list(tbl_name = tbl_name %>%
+             paste0(
+               "<span title=\"", ., "\">",
+               tbl_name_abbrev, "...</span>"))) %>%
+    select(-tbl_name_chars, -tbl_name_abbrev) %>%
     dplyr::mutate(f_failed = (f_failed * 100) %>% as.character() %>% paste0(., "%")) %>%
     dplyr::mutate(f_passed = (f_passed * 100) %>% as.character() %>% paste0(., "%")) %>%
     dplyr::rename(`Step` = step) %>%

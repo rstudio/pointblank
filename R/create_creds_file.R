@@ -9,6 +9,20 @@
 #' @param user the username for the database
 #' @param password the password associated with the
 #' \code{user}.
+#' @examples
+#' \dontrun{
+#' # Create a credentials file for access to
+#' # remote databases (where some tables to be
+#' # validated reside); place in the user's
+#' home directory
+#' create_email_creds_file(
+#'   file = "~/.pb_notify",
+#'   sender = "point@blank.org",
+#'   host = "smtp.blank.org",
+#'   port = 465,
+#'   user = "point@blank.org",
+#'   password = "************")
+#' }
 #' @export create_creds_file
 
 create_creds_file <- function(file,

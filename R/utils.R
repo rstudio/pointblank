@@ -679,12 +679,12 @@ pb_notify <- function(agent,
       border_thickness = 2,
       pad = 5,
       font_family = "Helvetica",
-      font_size = 9) %>% 
+      font_size = 8) %>% 
     pixiedust::sprinkle(
       part = "body",
       pad = 5,
       font_family = "Monaco",
-      font_size = 9,
+      font_size = 8,
       border = c("top", "bottom"),
       border_color = "#979797",
       bg_pattern = c("#F8F8F8", "#FFFFFF")) %>%

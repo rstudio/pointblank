@@ -563,8 +563,8 @@ pb_notify <- function(agent,
                       recipients,
                       creds_file) {
   
+  # Read in email credentials from `creds_file`
   credentials <- readRDS(creds_file)
-  
   sender <- credentials[1]
   host <- credentials[2]
   port <- as.integer(credentials[3])
@@ -573,7 +573,19 @@ pb_notify <- function(agent,
   use_ssl <- as.logical(credentials[6])
   authenticate <- as.logical(credentials[7])
   
-  # Get the number of validation tests that resulted in a `notify` action
+  # Create `mutate_when()` function
+  mutate_when <- function(data, ...) {
+    dots <- eval(substitute(alist(...)))
+    for (i in seq(1, length(dots), by = 2)) {
+      condition <- eval(dots[[i]], envir = data)
+      mutations <- eval(dots[[i + 1]], envir = data[condition, ])
+      data[condition, names(mutations)] <- mutations
+    }
+    data
+  }
+  
+  # Get the number of validation tests that
+  # resulted in a `notify` action
   number_notify <-
     agent$validation_set %>%
     dplyr::filter(notify == TRUE) %>%
@@ -582,7 +594,7 @@ pb_notify <- function(agent,
   # Get the validation time
   validation_time <- agent$validation_time
   
-  # Interrogation Date
+  # Get the interrogation date
   interrogation_date <-
     paste0(
       format(validation_time, "%A, %B "),

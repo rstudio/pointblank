@@ -646,7 +646,7 @@ pb_notify <- function(agent,
       n, n_passed, n_failed, f_passed, f_failed, notify_count, notify_fraction) %>%
     mutate_when(
       is.na(notify_count) & !is.na(notify_fraction),
-      list(Threshold = notify_fraction %>% paste0(., "%")),
+      list(Threshold = (notify_fraction * 100) %>% paste0(., "%")),
       !is.na(notify_count) & is.na(notify_fraction),
       list(Threshold = notify_count %>% paste0("n = ", .))) %>%
     select(-notify_count, -notify_fraction) %>%

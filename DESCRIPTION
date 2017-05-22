@@ -16,7 +16,7 @@ Imports:
     Hmisc (>= 4.0-3),
     htmltools (>= 0.3.6),
     knitr (>= 1.15.1),
-    lazyweave (>= 3.0.1),
+    lazyWeave (>= 3.0.1),
     lubridate (>= 1.6.0),
     magrittr (>= 1.5),
     mailR (>= 0.4.1),

@@ -1,6 +1,5 @@
 
-#' Create a properly formatted validation step.
-#' Get a validation step as a tbl row.
+#' Add properly formatted validation steps.
 #' @param agent an agent object of class
 #' \code{ptblank_agent}.
 #' @param assertion_type a string providing the

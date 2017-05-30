@@ -93,16 +93,18 @@ interrogate <- function(agent) {
     }
     
     # Use preconditions to modify the table
-    if (!is.null(agent$validation_set$preconditions[[i]])) {
-      
+    if (!is.na(agent$preconditions[[i, 1]])) {
+
       # Get the preconditions as a character vector
-      preconditions <- 
-        agent$validation_set$preconditions[i][[1]][[1]] %>%
-        purrr::flatten_chr()
-      
+      preconditions <-
+        agent$preconditions[[i, 1]] %>%
+        strsplit(";") %>%
+        unlist() %>%
+        trimws()
+
       if (!is.null(preconditions)) {
         for (j in 1:length(preconditions)) {
-          
+
           # Apply the preconditions to filter the table
           # before any validation occurs
           table <-

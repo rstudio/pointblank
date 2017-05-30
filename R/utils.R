@@ -58,7 +58,9 @@
 #' date time, \code{t} -> time, \code{?} -> guess, 
 #' or \code{_/-}, which skips the column.
 #' @importFrom tibble tibble as_tibble
-#' @importFrom tidyr nest_
+#' @importFrom purrr map_df
+#' @importFrom dplyr select bind_rows
+#' @export create_validation_step
 create_validation_step <- function(agent,
                                    assertion_type,
                                    column,
@@ -77,18 +79,19 @@ create_validation_step <- function(agent,
                                    file_path = as.character(NA),
                                    col_types = as.character(NA)) {
   
+  # Bind variable
+  x <- NULL
+  
   # Create a validation step as a single-row
   # `tbl_df` object
-  validation_step <-
+  validation_step_df <-
     tibble::tibble(
       tbl_name = as.character(agent$focal_tbl_name),
       db_type = as.character(agent$focal_db_type),
       assertion_type = assertion_type,
       column = as.character(column),
       value = ifelse(is.null(value), as.numeric(NA), as.numeric(value)),
-      set = as.numeric(NA),
       regex = ifelse(is.null(regex), as.character(NA), as.character(regex)),
-      preconditions = as.numeric(NA),
       all_passed = as.logical(NA),
       warn_count = ifelse(is.null(warn_count), as.numeric(NA), as.numeric(warn_count)),
       notify_count = ifelse(is.null(notify_count), as.numeric(NA), as.numeric(notify_count)),
@@ -99,57 +102,97 @@ create_validation_step <- function(agent,
       file_path = as.character(agent$focal_file_name),
       col_types = as.character(agent$focal_col_types))
   
-  # If a set has been provided as a vector, include
-  # these values as a nested `df_tbl` object in the
-  # `set` column
-  if (!is.null(set)) {
-    for (i in 1:nrow(validation_step)) {
-      validation_step$set[i] <- 
-        set %>% 
-        tibble::as_tibble() %>%
-        tidyr::nest_(key_col = "set", nest_cols = names(.))
-    }
-  }
-  
-  # If one or more preconditions have been provided
-  # as a vector, include these values as a nested `df_tbl`
-  # object in the `preconditions` column
-  if (!is.null(preconditions)) {
-    for (i in 1:nrow(validation_step)) {
-      validation_step$preconditions[i] <- 
-        preconditions %>% 
-        tibble::as_tibble() %>%
-        tidyr::nest_(key_col = "preconditions", nest_cols = names(.))
-    }
-  }
-  
   # If just `tbl_name` provided, assume it is
   # a local data frame
   if (!is.na(tbl_name)) {
-    validation_step$tbl_name <- tbl_name
+    validation_step_df$tbl_name <- tbl_name
   }
   
   if (!is.na(db_type)) {
-    validation_step$db_type <- db_type
+    validation_step_df$db_type <- db_type
   }
   
   if (!is.na(creds_file)) {
-    validation_step$db_cred_file_path <- creds_file
+    validation_step_df$db_cred_file_path <- creds_file
   }
   
   if (!is.na(init_sql)) {
-    validation_step$init_sql <- init_sql
+    validation_step_df$init_sql <- init_sql
   }
   
   if (!is.na(file_path)) {
-    validation_step$file_path <- file_path
+    validation_step_df$file_path <- file_path
   }
   
   if (!is.na(col_types)) {
-    validation_step$col_types <- col_types
+    validation_step_df$col_types <- col_types
   }
   
-  return(validation_step)
+  # If a set has been provided as a vector, include
+  # these values as a `df_tbl` object
+  if (!is.null(set)) {
+    set_df <-
+      1:nrow(validation_step_df) %>%
+      purrr::map_df(
+        function(x) {
+          tibble::tibble(
+            x = x,
+            set = paste(set, collapse = ","),
+            class = class(set))}) %>%
+      dplyr::select(-x)
+  } else {
+    set_df <-
+      1:nrow(validation_step_df) %>%
+      purrr::map_df(
+        function(x) {
+          tibble::tibble(
+            x = x,
+            set = as.character(NA),
+            class = as.character(NA))}) %>%
+      dplyr::select(-x)
+  }
+  
+  # If preconditions have been provided as a vector, include
+  # these values as a `df_tbl` object
+  if (!is.null(preconditions)) {
+    preconditions_df <-
+      1:nrow(validation_step_df) %>%
+      purrr::map_df(
+        function(x) {
+          tibble::tibble(
+            x = x,
+            precondition = paste(preconditions, collapse = ";"))}) %>%
+      dplyr::select(-x)
+  } else {
+    preconditions_df <-
+      1:nrow(validation_step_df) %>%
+      purrr::map_df(
+        function(x) {
+          tibble::tibble(
+            x = x,
+            precondition = as.character(NA))}) %>%
+      dplyr::select(-x)
+  }
+  
+  # Append `validation_step` to `validation_set`
+  agent$validation_set <-
+    dplyr::bind_rows(
+      agent$validation_set,
+      validation_step_df)
+  
+  # Append `sets`
+  agent$sets <-
+    dplyr::bind_rows(
+      agent$sets,
+      set_df)
+  
+  # Append `preconditions`
+  agent$preconditions <-
+    dplyr::bind_rows(
+      agent$preconditions,
+      preconditions_df)
+  
+  return(agent)
 }
 
 
@@ -182,8 +225,6 @@ create_validation_step <- function(agent,
 #' as a shortcut, the initial \code{SELECT...}
 #' statement can be omitted for simple queries (e.g.,
 #' \code{WHERE a > 1 AND b = 'one'}).
-#' @importFrom DBI dbListConnections dbListResults dbClearResult dbDisconnect
-#' @importFrom RPostgreSQL PostgreSQL
 #' @importFrom dplyr src_postgres src_mysql tbl sql
 set_entry_point <- function(table,
                             db_type = NULL,
@@ -202,9 +243,6 @@ set_entry_point <- function(table,
       
       # Establish a new PostgreSQL connection
       if (!is.null(creds_file)) {
-        
-        # Disconnect any existing PostgreSQL connections
-        disconnect_postgres()
         
         # Serialize the credentials RDS file
         credentials <- readRDS(creds_file)
@@ -396,22 +434,6 @@ determine_action <- function(n,
   return(action_df)
 }
 
-#' Disconnect from any open PostgreSQL connections
-#' @importFrom DBI dbListConnections dbListResults dbClearResult dbDisconnect
-#' @importFrom RPostgreSQL PostgreSQL
-disconnect_postgres <- function() {
-  
-  # Get list of all open PostgreSQL connections
-  cons <- DBI::dbListConnections(RPostgreSQL::PostgreSQL())
-  
-  # Iterate through all open PostgreSQL connections and disconnect
-  for (con in cons) {
-    if (length(DBI::dbListResults(con)) != 0) {
-      DBI::dbClearResult(DBI::dbListResults(con)[[1]])}
-    DBI::dbDisconnect(con)
-  }
-}
-
 #' Generate summary SVG files for the results of a
 #' validation pipeline
 #' @param agent agent an agent object of class
@@ -561,6 +583,12 @@ generate_img_files_plan <- function(agent) {
 pb_notify <- function(agent,
                       recipients,
                       creds_file) {
+  
+  # Create bindings for variables
+  notify <- step <- tbl_name <- db_type <-
+    assertion_type <- notify_count <- notify_fraction <- 
+    tbl_name_chars <- tbl_name_abbrev <- column <-
+    n_passed <- n_failed <- f_passed <- f_failed <- NULL
   
   # Read in email credentials from `creds_file`
   credentials <- readRDS(creds_file)

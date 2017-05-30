@@ -25,8 +25,8 @@ interrogate <- function(agent) {
   # Add the starting time to the `agent` object
   agent$validation_time <- interrogation_start_time
   
-  # Create binding for `pb_is_good_` variable
-  pb_is_good_ <- NULL
+  # Create bindings for variables
+  pb_is_good_ <- set <- NULL
   
   # Get number of rows in `validation_set`
   n_validations <- nrow(agent$validation_set)

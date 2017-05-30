@@ -17,7 +17,7 @@ get_summary <- function(agent) {
     
     validation_summary <-
       agent$validation_set %>%
-      dplyr::select(1:11, f_passed, warn, notify) %>%
+      dplyr::select(1:9, f_passed, warn, notify) %>%
       dplyr::mutate(
         action = dplyr::case_when(
            .$warn == FALSE & .$notify == FALSE ~ as.character(NA),

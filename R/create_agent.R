@@ -3,6 +3,14 @@
 #' @param name optional name for the agent that
 #' will eventually carry out the interrogation
 #' process.
+#' @param email_creds_file_path an optional path
+#' to an email credentials file.
+#' @param notification_recipient_emails an optional
+#' vector of email addresses to which notification
+#' emails should be sent.
+#' @param notification_emails_active an option to
+#' enable notification emails when tests trigger a
+#' \code{notify} status.
 #' @examples 
 #' # Create an `agent` object in order to begin
 #' # defining validation steps

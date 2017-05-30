@@ -16,9 +16,7 @@ library(knitr)
 library(lubridate)
 ```
 
-```{r read_agent, include=FALSE}
-agent <- readRDS("agent.rds")
-```
+
 
 ```{r generate_img_files, echo=FALSE}
 
@@ -37,7 +35,7 @@ img_file_list_plan <-
   list.files(path = "./temporary_images_plan", pattern = ".*.svg", full.names = TRUE)
 ```
 
-## Validation Summary {.tabset .tabset-fade}
+## Validation Summary
 
 `r if (file.exists("include_intro.txt")) { paste(readLines("include_intro.txt", warn = FALSE)) }`
 
@@ -121,21 +119,8 @@ for (i in 1:length(img_file_list_plan)) {
 ```
 
 ```{r get_preconditions_chr, include=FALSE}
-
-for (i in 1:nrow(agent$validation_set)) {
-  
-  if (i == 1) preconditions_chr <- vector(mode = "character")
-  
-  preconditions_chr <-
-    c(preconditions_chr,
-      ifelse(inherits(agent$validation_set$preconditions[i], "list"),
-             paste(unlist(agent$validation_set$preconditions[i]), collapse = ", "),
-             paste0("None")))
-  
-  if (i == nrow(agent$validation_set)) {
-    preconditions_chr[which(preconditions_chr == "")] <- "None"
-  }
-}
+preconditions_chr <- agent$preconditions$precondition
+preconditions_chr[which(is.na(preconditions_chr))] <- "None"
 ```
 
 ```{r get_value_regex_set_strings, include=FALSE}
@@ -149,7 +134,7 @@ for (i in 1:nrow(agent$validation_set)) {
   } else if (agent$validation_set$assertion_type[i] == "col_vals_regex") {
     value_chr_line <- paste0("**Regex** \"", agent$validation_set$regex[i], "\"")
   } else if (agent$validation_set$assertion_type[i] %in% c("col_vals_in_set", "col_vals_not_in_set")) {
-    value_chr_line <- paste0("**Set** ", paste(unlist(agent$validation_set$set[i]), collapse = ", "))
+    value_chr_line <- paste0("**Set** ", agent$sets$set[i])
   } else if (agent$validation_set$assertion_type[i] == "rows_not_duplicated") {
     value_chr_line <- "**Value** None"
   }
@@ -157,7 +142,6 @@ for (i in 1:nrow(agent$validation_set)) {
   value_chr <- c(value_chr, value_chr_line)
 }
 ```
-
 
 ```{r get_duration_strings, include=FALSE}
 
@@ -171,7 +155,6 @@ for (i in 1:nrow(agent$validation_set)) {
 }
 ```
 
-### Validation Results
 
 ```{r images_results, echo=FALSE}
 knitr::kable(
@@ -198,17 +181,17 @@ knitr::kable(
   )
 ```
 
-### Logical Plan
+
 
 ```{r images_plan, echo=FALSE}
-knitr::kable(
-  dplyr::data_frame(
-    `1` = images_plan,
-    `2` = "&nbsp;",
-    `3` = "&nbsp;"), 
-  padding = 20,
-  align = "cll",
-  col.names = c("&nbsp;", "&nbsp;", "&nbsp;")
-  )
+# knitr::kable(
+#   dplyr::data_frame(
+#     `1` = images_plan,
+#     `2` = "&nbsp;",
+#     `3` = "&nbsp;"), 
+#   padding = 20,
+#   align = "cll",
+#   col.names = c("1", "2", "3")
+#   )
 ```
 

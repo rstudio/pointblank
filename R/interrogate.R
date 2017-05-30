@@ -157,8 +157,25 @@ interrogate <- function(agent) {
     if (agent$validation_set$assertion_type[i] == "col_vals_between") {
       
       # Get the `left` and `right` bounding values
-      left <- agent$validation_set$set[[i]][[1]][[1]][1]
-      right <- agent$validation_set$set[[i]][[1]][[1]][2]
+      left <- 
+        agent[["sets"]] %>%
+        dplyr::select(set) %>%
+        purrr::flatten_chr() %>% 
+        .[[i]] %>%
+        strsplit(",") %>%
+        unlist() %>%
+        .[[1]] %>%
+        as.numeric()
+      
+      right <- 
+        agent[["sets"]] %>%
+        dplyr::select(set) %>%
+        purrr::flatten_chr() %>% 
+        .[[i]] %>%
+        strsplit(",") %>%
+        unlist() %>%
+        .[[2]] %>%
+        as.numeric()
       
       # Get the final judgment on the table and the query
       judgment <- 
@@ -175,8 +192,25 @@ interrogate <- function(agent) {
     if (agent$validation_set$assertion_type[i] == "col_vals_not_between") {
       
       # Get the `left` and `right` bounding values
-      left <- agent$validation_set$set[[i]][[1]][[1]][1]
-      right <- agent$validation_set$set[[i]][[1]][[1]][2]
+      left <- 
+        agent[["sets"]] %>%
+        dplyr::select(set) %>%
+        purrr::flatten_chr() %>% 
+        .[[i]] %>%
+        strsplit(",") %>%
+        unlist() %>%
+        .[[1]] %>%
+        as.numeric()
+      
+      right <- 
+        agent[["sets"]] %>%
+        dplyr::select(set) %>%
+        purrr::flatten_chr() %>% 
+        .[[i]] %>%
+        strsplit(",") %>%
+        unlist() %>%
+        .[[2]] %>%
+        as.numeric()
       
       # Get the final judgment on the table and the query
       judgment <- 
@@ -197,7 +231,24 @@ interrogate <- function(agent) {
     if (agent$validation_set$assertion_type[i] == "col_vals_in_set") {
       
       # Get the set values for the expression
-      set <- agent$validation_set$set[[i]][[1]][[1]]
+      set <- 
+        agent[["sets"]] %>%
+        dplyr::select(set) %>%
+        purrr::flatten_chr() %>% 
+        .[[i]] %>%
+        strsplit(",") %>%
+        unlist() %>%
+        trimws()
+      
+      # Get the class of the set components
+      set_class <- 
+        agent[["sets"]] %>%
+        dplyr::select(class) %>%
+        flatten_chr() %>% .[[i]]
+      
+      if (set_class == "numeric") {
+        set <- as.numeric(set)
+      }
       
       # Get the final judgment on the table and the query
       judgment <- 
@@ -214,7 +265,24 @@ interrogate <- function(agent) {
     if (agent$validation_set$assertion_type[i] == "col_vals_not_in_set") {
       
       # Get the set values for the expression
-      set <- agent$validation_set$set[[i]][[1]][[1]]
+      set <- 
+        agent[["sets"]] %>%
+        dplyr::select(set) %>%
+        purrr::flatten_chr() %>% 
+        .[[i]] %>%
+        strsplit(",") %>%
+        unlist() %>%
+        trimws()
+      
+      # Get the class of the set components
+      set_class <- 
+        agent[["sets"]] %>%
+        dplyr::select(class) %>%
+        flatten_chr() %>% .[[i]]
+      
+      if (set_class == "numeric") {
+        set <- as.numeric(set)
+      }
       
       # Get the final judgment on the table and the query
       judgment <- 

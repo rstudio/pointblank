@@ -512,7 +512,9 @@ interrogate <- function(agent) {
       if (!is.na(agent$validation_set$column[i])) {
         if (grepl("(,|&)", agent$validation_set$column[i])) {
           columns <-
-            stringr::str_split(agent$validation_set$column[i], pattern = "(,|&)") %>%
+            stringr::str_split(
+              agent$validation_set$column[i],
+              pattern = "(,|&)") %>%
             purrr::flatten_chr() %>%
             trimws()
         } else {

@@ -13,6 +13,16 @@
 #' @param notify_count the threshold number for 
 #' individual validations returning a \code{FALSE}
 #' result before applying the \code{notify} flag.
+#' @param warn_fraction the threshold fraction for 
+#' individual validations returning a \code{FALSE}
+#' over all the entire set of individual validations.
+#' Beyond this threshold, the \code{warn} flag will
+#' be applied.
+#' @param notify_fraction the threshold fraction for 
+#' individual validations returning a \code{FALSE}
+#' over all the entire set of individual validations.
+#' Beyond this threshold, the \code{notify} flag will
+#' be applied.
 #' @param tbl_name the name of the local or remote
 #' table.
 #' @param db_type if the table is located in a
@@ -49,6 +59,9 @@
 #' \code{l} -> logical, \code{D} -> date, \code{T} ->
 #' date time, \code{t} -> time, \code{?} -> guess, 
 #' or \code{_/-}, which skips the column.
+#' @param preconditions an optional vector of filtering
+#' statements for filtering the table before this
+#' validation step.
 #' @param description an optional, text-based
 #' description for the validation step. Used primarily
 #' in the Logical Plan section of the report generated
@@ -62,15 +75,16 @@ col_is_factor <- function(agent,
                           column,
                           warn_count = 1,
                           notify_count = NULL,
+                          warn_fraction = NULL,
+                          notify_fraction = NULL,
                           tbl_name = NULL,
                           db_type = NULL,
                           creds_file = NULL,
                           initial_sql = NULL,
                           file_path = NULL,
                           col_types = NULL,
+                          preconditions = NULL,
                           description = NULL) {
-  
-  assertion_type <- "col_is_factor"
   
   # If "*" is provided for `column`, select all
   # table columns for this verification
@@ -78,25 +92,23 @@ col_is_factor <- function(agent,
     column <- get_all_cols(agent = agent)
   }
   
-  validation_step <-
+  # Add one or more validation steps
+  agent <-
     create_validation_step(
       agent = agent,
-      assertion_type = assertion_type,
+      assertion_type = "col_is_factor",
       column = column,
       warn_count = warn_count,
       notify_count = notify_count,
+      warn_fraction = warn_fraction,
+      notify_fraction = notify_fraction,
+      preconditions = preconditions,
       tbl_name = ifelse(is.null(tbl_name), as.character(NA), tbl_name),
       db_type = ifelse(is.null(db_type), as.character(NA), db_type),
       creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
       init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
       file_path = ifelse(is.null(file_path), as.character(NA), file_path),
       col_types = ifelse(is.null(col_types), as.character(NA), col_types))
-  
-  # Append `validation_component` to `validation_set`
-  agent$validation_set <-
-    dplyr::bind_rows(
-      agent$validation_set,
-      validation_step)
   
   # If no `description` provided, set as `NA`
   if (is.null(description)) {

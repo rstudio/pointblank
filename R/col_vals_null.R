@@ -89,18 +89,17 @@ col_vals_null <- function(agent,
                           preconditions = NULL,
                           description = NULL) {
   
-  assertion_type <- "col_vals_null"
-  
   # If "*" is provided for `column`, select all
   # table columns for this verification
   if (column[1] == "*") {
     column <- get_all_cols(agent = agent)
   }
   
-  validation_step <-
+  # Add one or more validation steps
+  agent <-
     create_validation_step(
       agent = agent,
-      assertion_type = assertion_type,
+      assertion_type = "col_vals_null",
       column = column,
       warn_count = warn_count,
       notify_count = notify_count,
@@ -113,12 +112,6 @@ col_vals_null <- function(agent,
       init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
       file_path = ifelse(is.null(file_path), as.character(NA), file_path),
       col_types = ifelse(is.null(col_types), as.character(NA), col_types))
-  
-  # Append `validation_component` to `validation_set`
-  agent$validation_set <-
-    dplyr::bind_rows(
-      agent$validation_set,
-      validation_step)
   
   # If no `description` provided, set as `NA`
   if (is.null(description)) {

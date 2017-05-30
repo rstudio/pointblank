@@ -862,3 +862,4 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
 })
+

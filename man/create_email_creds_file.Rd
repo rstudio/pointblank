@@ -37,8 +37,9 @@ emailing notification messages.
 }
 \examples{
 \dontrun{
-# Create a credentials file for automatic;
-# Place in the user's home directory
+# Create a credentials file for automatic
+# email notifications; place in the user's
+# home directory
 create_email_creds_file(
   file = "~/.pb_notify",
   sender = "point@blank.org",

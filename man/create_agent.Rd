@@ -11,6 +11,17 @@ create_agent(name = NULL, email_creds_file_path = NULL,
 \item{name}{optional name for the agent that
 will eventually carry out the interrogation
 process.}
+
+\item{email_creds_file_path}{an optional path
+to an email credentials file.}
+
+\item{notification_recipient_emails}{an optional
+vector of email addresses to which notification
+emails should be sent.}
+
+\item{notification_emails_active}{an option to
+enable notification emails when tests trigger a
+\code{notify} status.}
 }
 \value{
 an agent object.

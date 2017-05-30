@@ -2,8 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{create_validation_step}
 \alias{create_validation_step}
-\title{Create a properly formatted validation step.
-Get a validation step as a tbl row.}
+\title{Add properly formatted validation steps.}
 \usage{
 create_validation_step(agent, assertion_type, column, value = NULL,
   set = NULL, regex = NULL, preconditions = NULL, warn_count = NULL,
@@ -88,6 +87,5 @@ date time, \code{t} -> time, \code{?} -> guess,
 or \code{_/-}, which skips the column.}
 }
 \description{
-Create a properly formatted validation step.
-Get a validation step as a tbl row.
+Add properly formatted validation steps.
 }

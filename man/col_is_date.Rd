@@ -5,8 +5,9 @@
 \title{Verify that a column contains R Date objects}
 \usage{
 col_is_date(agent, column, warn_count = 1, notify_count = NULL,
-  tbl_name = NULL, db_type = NULL, creds_file = NULL,
-  initial_sql = NULL, file_path = NULL, col_types = NULL,
+  warn_fraction = NULL, notify_fraction = NULL, tbl_name = NULL,
+  db_type = NULL, creds_file = NULL, initial_sql = NULL,
+  file_path = NULL, col_types = NULL, preconditions = NULL,
   description = NULL)
 }
 \arguments{
@@ -24,6 +25,18 @@ result before applying the \code{warn} flag.}
 \item{notify_count}{the threshold number for 
 individual validations returning a \code{FALSE}
 result before applying the \code{notify} flag.}
+
+\item{warn_fraction}{the threshold fraction for 
+individual validations returning a \code{FALSE}
+over all the entire set of individual validations.
+Beyond this threshold, the \code{warn} flag will
+be applied.}
+
+\item{notify_fraction}{the threshold fraction for 
+individual validations returning a \code{FALSE}
+over all the entire set of individual validations.
+Beyond this threshold, the \code{notify} flag will
+be applied.}
 
 \item{tbl_name}{the name of the local or remote
 table.}
@@ -66,6 +79,10 @@ integer, \code{n} -> number, \code{d} -> double,
 \code{l} -> logical, \code{D} -> date, \code{T} ->
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
+
+\item{preconditions}{an optional vector of filtering
+statements for filtering the table before this
+validation step.}
 
 \item{description}{an optional, text-based
 description for the validation step. Used primarily

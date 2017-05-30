@@ -607,7 +607,7 @@ interrogate <- function(agent) {
   }
   
   # Disconnect any open PostgreSQL connections --------------------
-  disconnect_postgres()
+  #disconnect_postgres()
   
   # Notification Step ---------------------------------------------
   if (length(agent$email_creds_file_path) > 0 &

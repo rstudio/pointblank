@@ -50,6 +50,15 @@
 #' @param file_path an optional path for a tabular data
 #' file to be loaded for this verification step. Valid
 #' types are CSV and TSV files.
+#' @param col_types if validating a CSV or TSV file,
+#' an optional column specification can be provided
+#' here as a string. This string representation is
+#' where each character represents one column and the
+#' mappings are: \code{c} -> character, \code{i} ->
+#' integer, \code{n} -> number, \code{d} -> double, 
+#' \code{l} -> logical, \code{D} -> date, \code{T} ->
+#' date time, \code{t} -> time, \code{?} -> guess, 
+#' or \code{_/-}, which skips the column.
 #' @param preconditions an optional vector of filtering
 #' statements for filtering the table before this
 #' validation step.
@@ -73,16 +82,17 @@ rows_not_duplicated <- function(agent,
                                 creds_file = NULL,
                                 initial_sql = NULL,
                                 file_path = NULL,
+                                col_types = NULL,
                                 preconditions = NULL,
                                 description = NULL) {
   
-  assertion_type <- "rows_not_duplicated"
-  
-  validation_step <-
+  # Add one or more validation steps
+  agent <-
     create_validation_step(
       agent = agent,
-      assertion_type = assertion_type,
+      assertion_type = "rows_not_duplicated",
       column = ifelse(is.null(cols), as.character(NA), cols),
+      value = NULL,
       warn_count = warn_count,
       notify_count = notify_count,
       warn_fraction = warn_fraction,
@@ -92,13 +102,8 @@ rows_not_duplicated <- function(agent,
       db_type = ifelse(is.null(db_type), as.character(NA), db_type),
       creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
       init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
-      file_path = ifelse(is.null(file_path), as.character(NA), file_path))
-  
-  # Append `validation_component` to `validation_set`
-  agent$validation_set <-
-    dplyr::bind_rows(
-      agent$validation_set,
-      validation_step)
+      file_path = ifelse(is.null(file_path), as.character(NA), file_path),
+      col_types = ifelse(is.null(col_types), as.character(NA), col_types))
   
   # If no `description` provided, set as `NA`
   if (is.null(description)) {

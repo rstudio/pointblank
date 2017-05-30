@@ -51,9 +51,7 @@ create_agent <- function(name = NULL,
           assertion_type = as.character(NA),
           column = as.character(NA),
           value = as.numeric(NA),
-          set = as.numeric(NA),
           regex = as.character(NA),
-          preconditions = as.character(NA),
           all_passed = as.logical(NA),
           n = as.integer(NA),
           n_passed = as.integer(NA),
@@ -72,8 +70,9 @@ create_agent <- function(name = NULL,
           file_path = as.character(NA),
           col_types = as.character(NA),
           time_processed = as.POSIXct(NA),
-          proc_duration_s = as.numeric(NA))
-    )
+          proc_duration_s = as.numeric(NA)),
+      sets = list(),
+      preconditions = list())
   
   if (!is.null(name)) {
     agent$validation_name <- name
@@ -90,10 +89,6 @@ create_agent <- function(name = NULL,
   if (notification_emails_active %in% c(TRUE, FALSE)) {
     agent$notification_emails_active <- notification_emails_active
   }
-  
-  agent$validation_set$set <- tibble::as_tibble(NA)
-  
-  agent$validation_set$preconditions <- tibble::as_tibble(NA)
   
   agent$validation_set <-
     agent$validation_set %>%

@@ -29,8 +29,10 @@ html_summary <- function(agent,
     stop("The object provided must be a valid `ptblank_agent` object.")
   }
   
+  #
   # Clean up remnants of directory before
   # writing any work files
+  #
   
   if (file.exists("validation_report.Rmd")) {
     invisible(file.remove("validation_report.Rmd"))
@@ -104,7 +106,9 @@ html_summary <- function(agent,
   
   if (dir.exists("temporary_images")) {
     temp_images_files <- 
-      list.files(path = "./temporary_images", full.names = TRUE)
+      list.files(
+        path = "./temporary_images",
+        full.names = TRUE)
     
     # Remove the image files
     invisible(file.remove(temp_images_files))
@@ -115,7 +119,9 @@ html_summary <- function(agent,
   
   if (dir.exists("temporary_images_plan")) {
     temp_images_files <- 
-      list.files(path = "./temporary_images_plan", full.names = TRUE)
+      list.files(
+        path = "./temporary_images_plan",
+        full.names = TRUE)
     
     # Remove the image files
     invisible(file.remove(temp_images_files))
@@ -141,8 +147,8 @@ html_summary <- function(agent,
     if (dir.exists(output_dir)) {
       invisible(
         file.copy(
-          from = paste0(getwd(), "/", output_file) %>% gsub("//", "/", .),
-          to = paste0(output_dir, "/", output_file) %>% gsub("//", "/", .),
+          from = gsub("//", "/", paste0(getwd(), "/", output_file)),
+          to = gsub("//", "/", paste0(output_dir, "/", output_file)),
           overwrite = TRUE))
       
       # Remove the file from the working directory

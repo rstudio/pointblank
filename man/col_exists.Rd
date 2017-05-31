@@ -97,22 +97,19 @@ checks whether one or several specified columns
 exist in the target table.
 }
 \examples{
-\dontrun{
-# Make a simple local table
-tbl_1 <-
-  data.frame(
-    a = c(5, 2, 6, 3),
-    b = c(7, 9, 3, 7))
-
 # Validate that the `a` and `b` columns
-# exist in the `tbl_1` table; do this by
-# creating an agent, focussing on that
-# table, creating a `col_exists()` step,
-# and then interrogating the table
-agent <- 
+# exist in the `small_table` CSV file;
+# do this by creating an agent, focussing
+# on that table, creating a `col_exists()`
+# step, and then interrogating the table
+agent <-
   create_agent() \%>\%
   focus_on(
-    tbl_name = "tbl_1") \%>\%
+    file_name = 
+      system.file(
+        "extdata", "small_table.csv",
+        package = "pointblank"),
+    col_types = "TDicidlc") \%>\%
   col_exists(column = c("a", "b")) \%>\%
   interrogate()
 
@@ -120,5 +117,4 @@ agent <-
 # passed by using `all_passed`
 all_passed(agent)
 #> [1] TRUE
-}
 }

@@ -15,6 +15,51 @@
 #' # Create an `agent` object in order to begin
 #' # defining validation steps
 #' agent <- create_agent()
+#' 
+#' \dontrun{
+#' # Should notifications be required through
+#' # email, we first create an email credentials
+#' # file, with `create_email_creds_file()`, and
+#' # then reference that file with `create_agent()`
+#' create_email_creds_file(
+#'   file = "~/.pb_notify",
+#'   sender = "point@blank.org",
+#'   host = "smtp.blank.org",
+#'   port = 465,
+#'   user = "point@blank.org",
+#'   password = "************") 
+#' 
+#' agent_notify <-
+#'   create_agent(
+#'   email_creds_file_path = "~/.pb_notify",
+#'   notification_recipient_emails = 
+#'     c("a@b.net", "c@d.com", "e@f.org"),
+#'   notification_emails_active = TRUE)
+#' }
+#' 
+#' # Then, as with any `ptblank_agent` object,
+#' # we can focus on different table, add
+#' # validation steps, and then eventually use
+#' # `interrogate()` to perform the validations
+#' agent <-
+#'   agent %>%
+#'   focus_on(
+#'     file_name = 
+#'       system.file(
+#'         "extdata", "small_table.csv",
+#'         package = "pointblank"),
+#'     col_types = "TDicidlc") %>%
+#'   col_exists(column = c("a", "b")) %>%
+#'   interrogate()
+#'  
+#' # A basic summary can be produced using
+#' # the `get_summary()` function
+#' get_summary(agent)[, 1:7]
+#' #> # A tibble: 2 x 7
+#' #>      tbl_name    db_type assertion_type column value regex all_passed
+#' #>         <chr>      <chr>          <chr>  <chr> <dbl> <chr>      <lgl>
+#' #> 1 small_table local_file     col_exists      a    NA  <NA>       TRUE
+#' #> 2 small_table local_file     col_exists      b    NA  <NA>       TRUE
 #' @return an agent object.
 #' @importFrom dplyr filter
 #' @importFrom tibble tibble as_tibble

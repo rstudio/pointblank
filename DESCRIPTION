@@ -11,7 +11,7 @@ Description: Check data tables for problems at close range.
 License: MIT + file LICENSE
 Imports:
     digest (>= 0.6.12),
-    dplyr (>= 0.6.0),
+    dplyr (>= 0.5.0),
     Hmisc (>= 4.0-3),
     htmltools (>= 0.3.6),
     knitr (>= 1.15.1),

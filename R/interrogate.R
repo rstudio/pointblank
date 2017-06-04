@@ -11,7 +11,7 @@
 #' @importFrom dplyr group_by group_by_ mutate_ filter filter_ select select_ collect ungroup summarize row_number n
 #' @importFrom tidyr nest_
 #' @importFrom stringr str_split
-#' @importFrom purrr flatten_chr
+#' @importFrom purrr flatten_chr flatten_dbl
 #' @importFrom readr read_csv read_tsv
 #' @importFrom stats setNames
 #' @importFrom utils head
@@ -353,7 +353,7 @@ interrogate <- function(agent) {
         dplyr::group_by() %>%
         dplyr::summarize(row_count = n()) %>%
         tibble::as_tibble() %>%
-        .$row_count
+        purrr::flatten_dbl()
       
       # Get total count of TRUE rows
       n_passed <-
@@ -362,7 +362,7 @@ interrogate <- function(agent) {
         dplyr::group_by() %>%
         dplyr::summarize(row_count = n()) %>%
         tibble::as_tibble() %>%
-        .$row_count
+        purrr::flatten_dbl()
       
       # Get total count of FALSE rows
       n_failed <-
@@ -371,7 +371,7 @@ interrogate <- function(agent) {
         dplyr::group_by() %>%
         dplyr::summarize(row_count = n()) %>%
         tibble::as_tibble() %>%
-        .$row_count
+        purrr::flatten_dbl()
       
       agent$validation_set$n[i] <- row_count
       agent$validation_set$n_passed[i] <- n_passed
@@ -386,7 +386,7 @@ interrogate <- function(agent) {
         dplyr::group_by() %>%
         dplyr::summarize(pb_is_not_good_ = n()) %>%
         tibble::as_tibble() %>%
-        .$pb_is_not_good_
+        purrr::flatten_dbl()
       
       if (false_count > 0) {
         
@@ -404,11 +404,13 @@ interrogate <- function(agent) {
         # Place the sample of problem rows in
         # the `agent$validation_set` tbl_df
         # as a nested tbl_df
+        names_problem_rows <- names(problem_rows)
+        
         agent$validation_set$row_sample[i] <- 
           problem_rows %>%
           tidyr::nest_(
             key_col = "data",
-            nest_cols = names(.))
+            nest_cols = names_problem_rows)
         
       } else if (false_count == 0) {
         agent$validation_set$all_passed[i] <- TRUE
@@ -420,12 +422,11 @@ interrogate <- function(agent) {
       if (inherits(table, "data.frame")) {
         
         column_type <-
-          table %>%
-          dplyr::select_(agent$validation_set$column[i]) %>%
-          dplyr::filter(row_number() == 1) %>%
-          dplyr::collect() %>%
-          as.data.frame(stringsAsFactors = FALSE) %>% 
-          .[1, 1] %>% 
+          (table %>%
+             dplyr::select_(agent$validation_set$column[i]) %>%
+             dplyr::filter(row_number() == 1) %>%
+             dplyr::collect() %>%
+             as.data.frame(stringsAsFactors = FALSE))[1, 1] %>% 
           class()
         
         agent$validation_set$n[i] <- 1
@@ -500,7 +501,7 @@ interrogate <- function(agent) {
         dplyr::group_by() %>%
         dplyr::summarize(row_count = n()) %>%
         tibble::as_tibble() %>%
-        .$row_count
+        purrr::flatten_dbl()
       
       # Get the rows that are duplicate rows, if any
       duplicate_rows <- 
@@ -518,7 +519,7 @@ interrogate <- function(agent) {
             dplyr::group_by() %>%
             dplyr::summarize(row_count = n()) %>%
             tibble::as_tibble() %>%
-            .$row_count == 0, TRUE, FALSE)
+            purrr::flatten_dbl() == 0, TRUE, FALSE)
       
       if (passed == TRUE) {
         n_passed <- row_count
@@ -529,7 +530,7 @@ interrogate <- function(agent) {
           dplyr::group_by() %>%
           dplyr::summarize(row_count = n()) %>%
           tibble::as_tibble() %>%
-          .$row_count
+          purrr::flatten_dbl()
         
         n_passed <- row_count - n_failed
       }

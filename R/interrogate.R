@@ -94,17 +94,17 @@ interrogate <- function(agent) {
     
     # Use preconditions to modify the table
     if (!is.na(agent$preconditions[[i, 1]])) {
-
+      
       # Get the preconditions as a character vector
       preconditions <-
         agent$preconditions[[i, 1]] %>%
         strsplit(";") %>%
         unlist() %>%
         trimws()
-
+      
       if (!is.null(preconditions)) {
         for (j in 1:length(preconditions)) {
-
+          
           # Apply the preconditions to filter the table
           # before any validation occurs
           table <-
@@ -154,146 +154,113 @@ interrogate <- function(agent) {
     # Judge tables based on assertion types that
     # rely on betweenness checking
     
-    if (agent$validation_set$assertion_type[i] == "col_vals_between") {
+    if (agent$validation_set$assertion_type[i] %in%
+        c("col_vals_between", "col_vals_not_between")) {
       
       # Get the `left` and `right` bounding values
       left <- 
-        agent[["sets"]] %>%
-        dplyr::select(set) %>%
-        purrr::flatten_chr() %>% 
-        .[[i]] %>%
-        strsplit(",") %>%
-        unlist() %>%
-        .[[1]] %>%
-        as.numeric()
+        (agent[["sets"]] %>%
+           dplyr::select(set) %>%
+           purrr::flatten_chr())[[i]]
       
-      right <- 
-        agent[["sets"]] %>%
-        dplyr::select(set) %>%
-        purrr::flatten_chr() %>% 
-        .[[i]] %>%
-        strsplit(",") %>%
-        unlist() %>%
-        .[[2]] %>%
-        as.numeric()
-      
-      # Get the final judgment on the table and the query
-      judgment <- 
-        table %>%
-        dplyr::mutate_(.dots = setNames(
-          paste0(
-            agent$validation_set$column[i],
-            " >= ", left, " & ",
-            agent$validation_set$column[i],
-            " <= ", right),
-          "pb_is_good_"))
-    }
-    
-    if (agent$validation_set$assertion_type[i] == "col_vals_not_between") {
-      
-      # Get the `left` and `right` bounding values
       left <- 
-        agent[["sets"]] %>%
-        dplyr::select(set) %>%
-        purrr::flatten_chr() %>% 
-        .[[i]] %>%
-        strsplit(",") %>%
-        unlist() %>%
-        .[[1]] %>%
-        as.numeric()
+        (left %>%
+           strsplit(",") %>%
+           unlist() %>%
+           as.numeric())[[1]]
       
       right <- 
-        agent[["sets"]] %>%
-        dplyr::select(set) %>%
-        purrr::flatten_chr() %>% 
-        .[[i]] %>%
-        strsplit(",") %>%
-        unlist() %>%
-        .[[2]] %>%
-        as.numeric()
+        (agent[["sets"]] %>%
+           dplyr::select(set) %>%
+           purrr::flatten_chr())[[i]]
       
-      # Get the final judgment on the table and the query
-      judgment <- 
-        table %>%
-        dplyr::mutate_(.dots = setNames(
-          paste0("!(",
-                 agent$validation_set$column[i],
-                 " >= ", left, " & ",
-                 agent$validation_set$column[i],
-                 " <= ", right, ")"),
-          "pb_is_good_"))
+      right <- 
+        (right %>%
+           strsplit(",") %>%
+           unlist() %>%
+           as.numeric())[[2]]
+      
+      if (agent$validation_set$assertion_type[i] == "col_vals_between") {
+        # Get the final judgment on the table and the query
+        judgment <- 
+          table %>%
+          dplyr::mutate_(.dots = setNames(
+            paste0(
+              agent$validation_set$column[i],
+              " >= ", left, " & ",
+              agent$validation_set$column[i],
+              " <= ", right),
+            "pb_is_good_"))
+      }
+      
+      if (agent$validation_set$assertion_type[i] == "col_vals_not_between") {
+        # Get the final judgment on the table and the query
+        judgment <- 
+          table %>%
+          dplyr::mutate_(.dots = setNames(
+            paste0("!(",
+                   agent$validation_set$column[i],
+                   " >= ", left, " & ",
+                   agent$validation_set$column[i],
+                   " <= ", right, ")"),
+            "pb_is_good_"))
+      }
     }
     
     # ---------------------------------------------------------------
     # Judge tables based on assertion types that
     # rely on set membership
     
-    if (agent$validation_set$assertion_type[i] == "col_vals_in_set") {
+    if (agent$validation_set$assertion_type[i] %in%
+        c("col_vals_in_set", "col_vals_not_in_set")) {
       
       # Get the set values for the expression
       set <- 
-        agent[["sets"]] %>%
-        dplyr::select(set) %>%
-        purrr::flatten_chr() %>% 
-        .[[i]] %>%
+        (agent[["sets"]] %>%
+           dplyr::select(set) %>%
+           purrr::flatten_chr())[[i]]
+      
+      set <- 
+        set %>%
         strsplit(",") %>%
         unlist() %>%
         trimws()
       
       # Get the class of the set components
       set_class <- 
-        agent[["sets"]] %>%
-        dplyr::select(class) %>%
-        flatten_chr() %>% .[[i]]
+        (agent[["sets"]] %>%
+           dplyr::select(class) %>%
+           purrr::flatten_chr())[[i]]
       
       if (set_class == "numeric") {
         set <- as.numeric(set)
       }
       
-      # Get the final judgment on the table and the query
-      judgment <- 
-        table %>%
-        dplyr::mutate_(.dots = setNames(
-          paste0(
-            agent$validation_set$column[i],
-            " %in% c(",
-            paste(paste0("'", set) %>% paste0("'"),
-                  collapse = ", "), ")"),
-          "pb_is_good_"))
-    }
-    
-    if (agent$validation_set$assertion_type[i] == "col_vals_not_in_set") {
-      
-      # Get the set values for the expression
-      set <- 
-        agent[["sets"]] %>%
-        dplyr::select(set) %>%
-        purrr::flatten_chr() %>% 
-        .[[i]] %>%
-        strsplit(",") %>%
-        unlist() %>%
-        trimws()
-      
-      # Get the class of the set components
-      set_class <- 
-        agent[["sets"]] %>%
-        dplyr::select(class) %>%
-        flatten_chr() %>% .[[i]]
-      
-      if (set_class == "numeric") {
-        set <- as.numeric(set)
+      if (agent$validation_set$assertion_type[i] == "col_vals_in_set") {
+        # Get the final judgment on the table and the query
+        judgment <- 
+          table %>%
+          dplyr::mutate_(.dots = setNames(
+            paste0(
+              agent$validation_set$column[i],
+              " %in% c(",
+              paste(paste0("'", set) %>% paste0("'"),
+                    collapse = ", "), ")"),
+            "pb_is_good_"))
       }
       
-      # Get the final judgment on the table and the query
-      judgment <- 
-        table %>%
-        dplyr::mutate_(.dots = setNames(
-          paste0("!(",
-                 agent$validation_set$column[i],
-                 " %in% c(",
-                 paste(paste0("'", set) %>% paste0("'"),
-                       collapse = ", "), "))"),
-          "pb_is_good_"))
+      if (agent$validation_set$assertion_type[i] == "col_vals_not_in_set") {
+        # Get the final judgment on the table and the query
+        judgment <- 
+          table %>%
+          dplyr::mutate_(.dots = setNames(
+            paste0("!(",
+                   agent$validation_set$column[i],
+                   " %in% c(",
+                   paste(paste0("'", set) %>% paste0("'"),
+                         collapse = ", "), "))"),
+            "pb_is_good_"))
+      }
     }
     
     if (agent$validation_set$assertion_type[i] == "col_vals_regex") {
@@ -339,7 +306,6 @@ interrogate <- function(agent) {
     # ---------------------------------------------------------------
     # Judge tables based on assertion types that
     # check the table structure
-    
     
     if (agent$validation_set$assertion_type[i] == "col_exists") {
       

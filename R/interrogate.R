@@ -115,42 +115,6 @@ interrogate <- function(agent) {
     }
     
     # ---------------------------------------------------------------
-    # Judge tables based on assertion types that rely on
-    # comparison operators
-    
-    if (agent$validation_set$assertion_type[i] %in%
-        c("col_vals_gt", "col_vals_gte",
-          "col_vals_lt", "col_vals_lte",
-          "col_vals_equal", "col_vals_not_equal")) {
-      
-      # Get operator values for all assertion types involving
-      # simple operator comparisons
-      if (agent$validation_set$assertion_type[i] == "col_vals_gt") {
-        operator <- ">"
-      } else if (agent$validation_set$assertion_type[i] == "col_vals_gte") {
-        operator <- ">="
-      } else if (agent$validation_set$assertion_type[i] == "col_vals_lt") {
-        operator <- "<"
-      } else if (agent$validation_set$assertion_type[i] == "col_vals_lte") {
-        operator <- "<="
-      } else if (agent$validation_set$assertion_type[i] == "col_vals_equal") {
-        operator <- "=="
-      } else if (agent$validation_set$assertion_type[i] == "col_vals_not_equal") {
-        operator <- "!="
-      } 
-      
-      # Get the final judgment on the table and the query
-      judgment <- 
-        table %>%
-        dplyr::mutate_(.dots = setNames(
-          paste0(
-            agent$validation_set$column[i],
-            operator,
-            agent$validation_set$value[i]),
-          "pb_is_good_"))
-    }
-    
-    # ---------------------------------------------------------------
     # Judge tables based on assertion types that
     # rely on betweenness checking
     
@@ -339,6 +303,42 @@ interrogate <- function(agent) {
       } else {
         n_failed <- false_count <- 1  
       }
+    }
+    
+    # ---------------------------------------------------------------
+    # Judge tables based on assertion types that rely on
+    # comparison operators
+    
+    if (agent$validation_set$assertion_type[i] %in%
+        c("col_vals_gt", "col_vals_gte",
+          "col_vals_lt", "col_vals_lte",
+          "col_vals_equal", "col_vals_not_equal")) {
+      
+      # Get operator values for all assertion types involving
+      # simple operator comparisons
+      if (agent$validation_set$assertion_type[i] == "col_vals_gt") {
+        operator <- ">"
+      } else if (agent$validation_set$assertion_type[i] == "col_vals_gte") {
+        operator <- ">="
+      } else if (agent$validation_set$assertion_type[i] == "col_vals_lt") {
+        operator <- "<"
+      } else if (agent$validation_set$assertion_type[i] == "col_vals_lte") {
+        operator <- "<="
+      } else if (agent$validation_set$assertion_type[i] == "col_vals_equal") {
+        operator <- "=="
+      } else if (agent$validation_set$assertion_type[i] == "col_vals_not_equal") {
+        operator <- "!="
+      } 
+      
+      # Get the final judgment on the table and the query
+      judgment <- 
+        table %>%
+        dplyr::mutate_(.dots = setNames(
+          paste0(
+            agent$validation_set$column[i],
+            operator,
+            agent$validation_set$value[i]),
+          "pb_is_good_"))
     }
     
     # ---------------------------------------------------------------

@@ -666,28 +666,28 @@ pb_notify <- function(agent,
   # tests that exceeded threshold values
   table_summary <- 
     agent$validation_set %>%
-    dplyr::mutate(step = rownames(.) %>% as.integer()) %>%
+    dplyr::mutate(step = row_number()) %>%
     dplyr::filter(notify == TRUE) %>%
     dplyr::select(
       step, tbl_name, db_type, assertion_type, column,
       n, n_passed, n_failed, f_passed, f_failed, notify_count, notify_fraction) %>%
     mutate_when(
       is.na(notify_count) & !is.na(notify_fraction),
-      list(Threshold = (notify_fraction * 100) %>% paste0(., "%")),
+      list(Threshold = paste0((notify_fraction * 100), "%")),
       !is.na(notify_count) & is.na(notify_fraction),
-      list(Threshold = notify_count %>% paste0("n = ", .))) %>%
+      list(Threshold = paste0("n = ", notify_count))) %>%
     select(-notify_count, -notify_fraction) %>%
     mutate(tbl_name_chars = nchar(tbl_name)) %>%
     mutate(tbl_name_abbrev = substr(tbl_name, 0, 20)) %>%
     mutate_when(
       tbl_name_chars > 20,
-      list(tbl_name = tbl_name %>%
+      list(tbl_name =
              paste0(
-               "<span title=\"", ., "\">",
+               "<span title=\"", tbl_name, "\">",
                tbl_name_abbrev, "...</span>"))) %>%
     select(-tbl_name_chars, -tbl_name_abbrev) %>%
-    dplyr::mutate(f_failed = (f_failed * 100) %>% as.character() %>% paste0(., "%")) %>%
-    dplyr::mutate(f_passed = (f_passed * 100) %>% as.character() %>% paste0(., "%")) %>%
+    dplyr::mutate(f_failed = paste0(as.character(f_failed * 100), "%")) %>%
+    dplyr::mutate(f_passed = paste0(as.character(f_passed * 100), "%")) %>%
     dplyr::rename(`Step` = step) %>%
     dplyr::rename(`Table Name` = tbl_name) %>%
     dplyr::rename(`Database Type` = db_type) %>%

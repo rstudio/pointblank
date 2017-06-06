@@ -67,8 +67,6 @@
 #' in the Logical Plan section of the report generated
 #' by the \code{html_summary} function.
 #' @return an agent object.
-#' @importFrom tibble tibble
-#' @importFrom dplyr bind_rows
 #' @examples
 #' # Validate that the `b` column in the
 #' # `small_table` CSV file is classed as
@@ -88,6 +86,8 @@
 #' # passed by using `all_passed()`
 #' all_passed(agent)
 #' #> [1] TRUE
+#' @importFrom tibble tibble
+#' @importFrom dplyr bind_rows
 #' @export col_is_character
 
 col_is_character <- function(agent,

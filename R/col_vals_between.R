@@ -75,6 +75,28 @@
 #' in the Logical Plan section of the report generated
 #' by the \code{html_summary} function.
 #' @return an agent object.
+#' @examples
+#' # Create a simple data frame with a column
+#' # a numerical values
+#' df <-
+#'   data.frame(
+#'     a = c(5.6, 8.2, 6.3, 7.8, 3.4))
+#' 
+#' # Validate that values in column `a` in
+#' # are all between 1 and 9
+#' agent <-
+#'   create_agent() %>%
+#'   focus_on(tbl_name = "df") %>%
+#'   col_vals_between(
+#'     column = "a",
+#'     left = 1,
+#'     right = 9) %>%
+#'   interrogate()
+#' 
+#' # Determine if this column validation has
+#' # passed by using `all_passed()`
+#' all_passed(agent)
+#' #> [1] TRUE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
 #' @export col_vals_between

@@ -67,6 +67,24 @@
 #' in the Logical Plan section of the report generated
 #' by the \code{html_summary} function.
 #' @return an agent object.
+#' @examples
+#' # Validate that column `d` in the `small_table`
+#' # CSV file is classed as `numeric`
+#' agent <-
+#'   create_agent() %>%
+#'   focus_on(
+#'     file_name = 
+#'       system.file(
+#'         "extdata", "small_table.csv",
+#'         package = "pointblank"),
+#'     col_types = "TDicidlc") %>%
+#'   col_is_numeric(column = "d") %>%
+#'   interrogate()
+#' 
+#' # Determine if this column validation has
+#' # passed by using `all_passed()`
+#' all_passed(agent)
+#' #> [1] TRUE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
 #' @export col_is_numeric

@@ -73,6 +73,30 @@
 #' in the Logical Plan section of the report generated
 #' by the \code{html_summary} function.
 #' @return an agent object.
+#' @examples
+#' # Create a simple data frame with 2 columns
+#' # of numerical values
+#' df <-
+#'   data.frame(
+#'     a = c(1, 1, 1, 2, 2, 2),
+#'     b = c(5, 5, 5, 3, 6, 3))
+#' 
+#' # Validate that values in column `b` are
+#' # equal to 5 when values in column `a` are
+#' # equal to 1 
+#' agent <-
+#'   create_agent() %>%
+#'   focus_on(tbl_name = "df") %>%
+#'   col_vals_equal(
+#'     column = "b",
+#'     value = 5,
+#'     preconditions = "a == 1") %>%
+#'   interrogate()
+#' 
+#' # Determine if this column validation has
+#' # passed by using `all_passed()`
+#' all_passed(agent)
+#' #> [1] TRUE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
 #' @export col_vals_equal

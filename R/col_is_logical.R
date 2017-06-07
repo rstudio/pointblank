@@ -67,6 +67,25 @@
 #' in the Logical Plan section of the report generated
 #' by the \code{html_summary} function.
 #' @return an agent object.
+#' @examples
+#' # Create a simple data frame with a column
+#' # containing data classed as `factor`
+#' df <-
+#'   data.frame(
+#'     a = c(TRUE, FALSE))
+#' 
+#' # Validate that column `a` in the data frame
+#' # is classed as `logical`
+#' agent <-
+#'   create_agent() %>%
+#'   focus_on(tbl_name = "df") %>%
+#'   col_is_logical(column = "a") %>%
+#'   interrogate()
+#' 
+#' # Determine if this column validation has
+#' # passed by using `all_passed()`
+#' all_passed(agent)
+#' #> [1] TRUE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
 #' @export col_is_logical

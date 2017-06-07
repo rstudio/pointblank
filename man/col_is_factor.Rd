@@ -97,3 +97,23 @@ Set a verification step where
 a table column is expected to consist entirely
 of R \code{factor} objects.
 }
+\examples{
+# Create a simple data frame with a column
+# containing data classed as `factor`
+df <-
+  data.frame(
+    a = c("one", "two"))
+
+# Validate that column `a` in the data frame
+# is classed as a factor
+agent <-
+  create_agent() \%>\%
+  focus_on(tbl_name = "df") \%>\%
+  col_is_factor(column = "a") \%>\%
+  interrogate()
+
+# Determine if this column validation has
+# passed by using `all_passed()`
+all_passed(agent)
+#> [1] TRUE
+}

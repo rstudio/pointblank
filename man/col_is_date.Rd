@@ -97,3 +97,23 @@ Set a verification step where
 a table column is expected to consist entirely
 of R \code{Date} objects.
 }
+\examples{
+# Validate that the `date` column in the
+# `small_table` CSV file is classed as
+# `Date`
+agent <-
+  create_agent() \%>\%
+  focus_on(
+    file_name = 
+      system.file(
+        "extdata", "small_table.csv",
+        package = "pointblank"),
+    col_types = "TDicidlc") \%>\%
+  col_is_date(column = "date") \%>\%
+  interrogate()
+
+# Determine if this column validation has
+# passed by using `all_passed()`
+all_passed(agent)
+#> [1] TRUE
+}

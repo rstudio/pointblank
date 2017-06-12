@@ -28,15 +28,15 @@ credentials for a database.
 \examples{
 \dontrun{
 # Create a credentials file for access to
-# remote databases (where some tables to be
+# remote databases (where the tables to be
 # validated reside); place in the user's
-home directory
-create_email_creds_file(
-  file = "~/.pb_notify",
-  sender = "point@blank.org",
-  host = "smtp.blank.org",
-  port = 465,
-  user = "point@blank.org",
-  password = "************")
+# home directory
+create_creds_file(
+  file = "~/.pb_credentials",
+  dbname = "********",
+  host = "**************",
+  port = ***,
+  user = "********",
+  password = "****************")
 }
 }

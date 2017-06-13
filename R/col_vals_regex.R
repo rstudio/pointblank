@@ -73,6 +73,29 @@
 #' in the Logical Plan section of the report generated
 #' by the \code{html_summary} function.
 #' @return an agent object.
+#' @examples
+#' # Create a simple data frame with a column
+#' # containing strings
+#' df <-
+#'   data.frame(
+#'     a = c("series_0131", "series_0231",
+#'           "series_1389", "series_2300"),
+#'     stringsAsFactors = FALSE)
+#' 
+#' # Validate that all string values in
+#' # column `a` match a regex statement
+#' agent <-
+#'   create_agent() %>%
+#'   focus_on(tbl_name = "df") %>%
+#'   col_vals_regex(
+#'     column = "a",
+#'     regex = "^series_[0-9]{4}$") %>%
+#'   interrogate()
+#' 
+#' # Determine if this column validation has
+#' # all passed by using `all_passed()`
+#' all_passed(agent)
+#' #> [1] TRUE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
 #' @export col_vals_regex

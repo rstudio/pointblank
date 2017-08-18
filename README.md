@@ -95,6 +95,8 @@ agent <-
 We can get a detailed a summary of the validations (one validation per row in the output), showing how many individual tests in each validation step had passed or failed. The validations are classified with an `action` which indicates the type of action to perform based on user-defined thresholds.
 
 ```r
+library(pointblank)
+
 get_summary(agent)
 #> # A tibble: 11 x 11
 #>    tbl_name  db_type      assertion_type          column value regex all_passed     n n_passed f_passed action
@@ -115,6 +117,8 @@ get_summary(agent)
 Or a self-contained HTML report can be generated that shows how the validation went.
 
 ```r
+library(pointblank)
+
 html_summary(agent)
 ```
 

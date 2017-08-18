@@ -20,7 +20,7 @@ provided as a character vector) to which this
 validation should be applied. Aside from a single
 column name, column operations can be used to
 create one or more computed columns (e.g., 
-\code{"a + b"} or \code{"a + sum(a)"}).}
+\code{a + b} or \code{a + sum(a)}).}
 
 \item{set}{a vector of numeric or string-based
 elements, where column values found within this
@@ -88,9 +88,9 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{an optional vector of filtering
-statements for filtering the table before this
-validation step.}
+\item{preconditions}{an optional statement of
+filtering conditions that may reduce the number
+of rows for validation.}
 
 \item{description}{an optional, text-based
 description for the validation step. Used primarily
@@ -106,32 +106,35 @@ numeric values in a table column should be
 part of a set of values.
 }
 \examples{
-# Create a simple data frame with 2 columns: one
-# with numerical values and the other with strings
+# Create a simple data frame with
+# 2 columns: one with numerical
+# values and the other with strings
 df <-
   data.frame(
     a = c(1, 2, 3, 4),
     b = c("one", "two", "three", "four"),
     stringsAsFactors = FALSE)
 
-# Validate that all numerical values in
-# column `a` belong to a numerical set, and,
-# create an analogous validation check for
-# column `b` with a set of string values 
+# Validate that all numerical values
+# in column `a` belong to a numerical
+# set, and, create an analogous 
+# validation check for column `b` with
+# a set of string values 
 agent <-
   create_agent() \%>\%
   focus_on(tbl_name = "df") \%>\%
   col_vals_in_set(
-    column = "a",
+    column = a,
     set = 1:4) \%>\%
   col_vals_in_set(
-    column = "b",
+    column = b,
     set = c("one", "two",
             "three", "four")) \%>\%
   interrogate()
 
-# Determine if these column validations have
-# all passed by using `all_passed()`
+# Determine if these column
+# validations have all passed
+# by using `all_passed()`
 all_passed(agent)
 #> [1] TRUE
 }

@@ -20,7 +20,7 @@ provided as a character vector) to which this
 validation should be applied. Aside from a single
 column name, column operations can be used to
 create one or more computed columns (e.g., 
-\code{"a + b"} or \code{"a + sum(a)"}).}
+\code{a + b} or \code{a + sum(a)}).}
 
 \item{value}{a numeric value used to test for
 equality.}
@@ -87,9 +87,9 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{an optional vector of filtering
-statements for filtering the table before this
-validation step.}
+\item{preconditions}{an optional statement of
+filtering conditions that may reduce the number
+of rows for validation.}
 
 \item{description}{an optional, text-based
 description for the validation step. Used primarily
@@ -105,27 +105,28 @@ numeric values in a table column should be
 equal to a specified value.
 }
 \examples{
-# Create a simple data frame with 2 columns
-# of numerical values
+# Create a simple data frame
+# with 2 columns of numerical values
 df <-
   data.frame(
     a = c(1, 1, 1, 2, 2, 2),
     b = c(5, 5, 5, 3, 6, 3))
 
-# Validate that values in column `b` are
-# equal to 5 when values in column `a` are
-# equal to 1 
+# Validate that values in column
+# `b` are equal to 5 when values
+# in column `a` are equal to 1 
 agent <-
   create_agent() \%>\%
   focus_on(tbl_name = "df") \%>\%
   col_vals_equal(
-    column = "b",
+    column = b,
     value = 5,
-    preconditions = "a == 1") \%>\%
+    preconditions = a == 1) \%>\%
   interrogate()
 
-# Determine if this column validation has
-# passed by using `all_passed()`
+# Determine if these column
+# validations have all passed
+# by using `all_passed()`
 all_passed(agent)
 #> [1] TRUE
 }

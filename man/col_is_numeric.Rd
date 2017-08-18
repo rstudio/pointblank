@@ -80,9 +80,9 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{an optional vector of filtering
-statements for filtering the table before this
-validation step.}
+\item{preconditions}{an optional statement of
+filtering conditions that may reduce the number
+of rows for validation.}
 
 \item{description}{an optional, text-based
 description for the validation step. Used primarily
@@ -98,8 +98,9 @@ a table column is expected to consist of
 floating point values.
 }
 \examples{
-# Validate that column `d` in the `small_table`
-# CSV file is classed as `numeric`
+# Validate that column `d` in
+# the `small_table` CSV file
+# is classed as `numeric`
 agent <-
   create_agent() \%>\%
   focus_on(
@@ -108,11 +109,13 @@ agent <-
         "extdata", "small_table.csv",
         package = "pointblank"),
     col_types = "TDicidlc") \%>\%
-  col_is_numeric(column = "d") \%>\%
+  col_is_numeric(
+    column = d) \%>\%
   interrogate()
 
-# Determine if this column validation has
-# passed by using `all_passed()`
+# Determine if this column
+# validation has passed by using
+# `all_passed()`
 all_passed(agent)
 #> [1] TRUE
 }

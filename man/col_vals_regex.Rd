@@ -20,7 +20,7 @@ provided as a character vector) to which this
 validation should be applied. Aside from a single
 column name, column operations can be used to
 create one or more computed columns (e.g., 
-\code{"a + b"} or \code{"a + sum(a)"}).}
+\code{a + b} or \code{a + sum(a)}).}
 
 \item{regex}{a regex pattern to test for matching
 strings.}
@@ -87,9 +87,9 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{an optional vector of filtering
-statements for filtering the table before this
-validation step.}
+\item{preconditions}{an optional statement of
+filtering conditions that may reduce the number
+of rows for validation.}
 
 \item{description}{an optional, text-based
 description for the validation step. Used primarily
@@ -109,8 +109,8 @@ regex matching expression.
 # containing strings
 df <-
   data.frame(
-    a = c("series_0131", "series_0231",
-          "series_1389", "series_2300"),
+    a = c("s_0131", "s_0231",
+          "s_1389", "s_2300"),
     stringsAsFactors = FALSE)
 
 # Validate that all string values in
@@ -119,12 +119,13 @@ agent <-
   create_agent() \%>\%
   focus_on(tbl_name = "df") \%>\%
   col_vals_regex(
-    column = "a",
-    regex = "^series_[0-9]{4}$") \%>\%
+    column = a,
+    regex = "^s_[0-9]{4}$") \%>\%
   interrogate()
 
-# Determine if this column validation has
-# all passed by using `all_passed()`
+# Determine if these column
+# validations have all passed
+# by using `all_passed()`
 all_passed(agent)
 #> [1] TRUE
 }

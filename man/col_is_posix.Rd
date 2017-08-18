@@ -80,9 +80,9 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{an optional vector of filtering
-statements for filtering the table before this
-validation step.}
+\item{preconditions}{an optional statement of
+filtering conditions that may reduce the number
+of rows for validation.}
 
 \item{description}{an optional, text-based
 description for the validation step. Used primarily
@@ -98,8 +98,9 @@ a table column is expected to consist entirely
 of POSIXct dates.
 }
 \examples{
-# Create a simple data frame with a column
-# containing data classed as `POSIXct`
+# Create a simple data frame
+# with a column containing data
+# classed as `POSIXct`
 df <-
   data.frame(
     a = as.POSIXct(
@@ -107,16 +108,18 @@ df <-
         "2011-03-27 01:30:00",
         "\%Y-\%m-\%d \%H:\%M:\%S")))
 
-# Validate that column `a` in the data
-# frame is classed as `POSIXct`
+# Validate that column `a` in
+# the data frame is classed as
+# `POSIXct`
 agent <-
   create_agent() \%>\%
   focus_on(tbl_name = "df") \%>\%
-  col_is_posix(column = "a") \%>\%
+  col_is_posix(column = a) \%>\%
   interrogate()
 
-# Determine if this column validation has
-# passed by using `all_passed()`
+# Determine if this column
+# validation has passed by
+# using `all_passed()`
 all_passed(agent)
 #> [1] TRUE
 }

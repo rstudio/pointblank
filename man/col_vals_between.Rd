@@ -4,11 +4,11 @@
 \alias{col_vals_between}
 \title{Verify whether column data are between two values}
 \usage{
-col_vals_between(agent, column, left, right, warn_count = 1,
-  notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,
-  tbl_name = NULL, db_type = NULL, creds_file = NULL,
-  initial_sql = NULL, file_path = NULL, col_types = NULL,
-  preconditions = NULL, description = NULL)
+col_vals_between(agent, column, left, right, preconditions = NULL,
+  warn_count = 1, notify_count = NULL, warn_fraction = NULL,
+  notify_fraction = NULL, tbl_name = NULL, db_type = NULL,
+  creds_file = NULL, initial_sql = NULL, file_path = NULL,
+  col_types = NULL, description = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -19,7 +19,7 @@ provided as a character vector) to which this
 validation should be applied. Aside from a single
 column name, column operations can be used to
 create one or more computed columns (e.g., 
-\code{"a + b"} or \code{"a + sum(a)"}).}
+\code{a + b} or \code{a + sum(a)}).}
 
 \item{left}{the lower bound for the range. The
 validation includes this bound value in addition
@@ -28,6 +28,10 @@ to values greater than \code{left}.}
 \item{right}{the upper bound for the range. The
 validation includes this bound value in addition
 to values lower than \code{right}.}
+
+\item{preconditions}{an optional statement of
+filtering conditions that may reduce the number
+of rows for validation.}
 
 \item{warn_count}{the threshold number for 
 individual validations returning a \code{FALSE}
@@ -91,10 +95,6 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{an optional vector of filtering
-statements for filtering the table before this
-validation step.}
-
 \item{description}{an optional, text-based
 description for the validation step. Used primarily
 in the Logical Plan section of the report generated
@@ -108,25 +108,28 @@ Set a verification step where
 column data should be between two values.
 }
 \examples{
-# Create a simple data frame with a column
-# a numerical values
+# Create a simple data frame
+# with a column of numerical
+# values
 df <-
   data.frame(
     a = c(5.6, 8.2, 6.3, 7.8, 3.4))
 
-# Validate that values in column `a` in
-# are all between 1 and 9
+# Validate that values in
+# column `a` are all between
+# 1 and 9
 agent <-
   create_agent() \%>\%
   focus_on(tbl_name = "df") \%>\%
   col_vals_between(
-    column = "a",
+    column = a,
     left = 1,
     right = 9) \%>\%
   interrogate()
 
-# Determine if this column validation has
-# passed by using `all_passed()`
+# Determine if this column
+# validation has passed by using
+# `all_passed()`
 all_passed(agent)
 #> [1] TRUE
 }

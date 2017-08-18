@@ -80,9 +80,9 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{an optional vector of filtering
-statements for filtering the table before this
-validation step.}
+\item{preconditions}{an optional statement of
+filtering conditions that may reduce the number
+of rows for validation.}
 
 \item{description}{an optional, text-based
 description for the validation step. Used primarily
@@ -98,9 +98,9 @@ a table column is expected to consist of
 integer values.
 }
 \examples{
-# Validate that the `a` and `c` columns in
-# the `small_table` CSV file are both classed
-# as `integer`
+# Validate that the `a` column in
+# the `small_table` CSV file is
+# classed as `integer`
 agent <-
   create_agent() \%>\%
   focus_on(
@@ -109,11 +109,13 @@ agent <-
         "extdata", "small_table.csv",
         package = "pointblank"),
     col_types = "TDicidlc") \%>\%
-  col_is_integer(column = c("a", "c")) \%>\%
+  col_is_integer(
+    column = a) \%>\%
   interrogate()
 
-# Determine if this column validation has
-# passed by using `all_passed()`
+# Determine if these column
+# validations have all passed
+# by using `all_passed()`
 all_passed(agent)
 #> [1] TRUE
 }

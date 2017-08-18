@@ -80,9 +80,9 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{an optional vector of filtering
-statements for filtering the table before this
-validation step.}
+\item{preconditions}{an optional statement of
+filtering conditions that may reduce the number
+of rows for validation.}
 
 \item{description}{an optional, text-based
 description for the validation step. Used primarily
@@ -109,11 +109,12 @@ agent <-
         "extdata", "small_table.csv",
         package = "pointblank"),
     col_types = "TDicidlc") \%>\%
-  col_is_date(column = "date") \%>\%
+  col_is_date(column = date) \%>\%
   interrogate()
 
-# Determine if this column validation has
-# passed by using `all_passed()`
+# Determine if these column
+# validations have all passed
+# by using `all_passed()`
 all_passed(agent)
 #> [1] TRUE
 }

@@ -4,11 +4,11 @@
 \alias{rows_not_duplicated}
 \title{Verify that row data are not duplicated}
 \usage{
-rows_not_duplicated(agent, cols = NULL, warn_count = 1,
-  notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,
-  tbl_name = NULL, db_type = NULL, creds_file = NULL,
-  initial_sql = NULL, file_path = NULL, col_types = NULL,
-  preconditions = NULL, description = NULL)
+rows_not_duplicated(agent, cols = NULL, preconditions = NULL,
+  warn_count = 1, notify_count = NULL, warn_fraction = NULL,
+  notify_fraction = NULL, tbl_name = NULL, db_type = NULL,
+  creds_file = NULL, initial_sql = NULL, file_path = NULL,
+  col_types = NULL, description = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -18,6 +18,10 @@ rows_not_duplicated(agent, cols = NULL, warn_count = 1,
 to check for duplication. If not provided, the
 validation checks for duplicate records using
 data across all columns.}
+
+\item{preconditions}{an optional statement of
+filtering conditions that may reduce the number
+of rows for validation.}
 
 \item{warn_count}{the threshold number for 
 individual validations returning a \code{FALSE}
@@ -81,10 +85,6 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{an optional vector of filtering
-statements for filtering the table before this
-validation step.}
-
 \item{description}{an optional, text-based
 description for the validation step. Used primarily
 in the Logical Plan section of the report generated
@@ -96,4 +96,28 @@ an agent object.
 \description{
 Set a verification step where
 row data should contain no duplicates.
+}
+\examples{
+# Validate that column `a` exists in
+# the `small_table` CSV file; do this
+# by creating an agent, focussing on
+# that table, creating a `col_exists()`
+# step, and then interrogating the table
+agent <-
+  create_agent() \%>\%
+  focus_on(
+    file_name = 
+      system.file(
+        "extdata", "small_table.csv",
+        package = "pointblank"),
+    col_types = "TDicidlc") \%>\%
+  rows_not_duplicated(
+    cols = a & b) \%>\%
+  interrogate()
+
+# Determine if these column
+# validations have all passed
+# by using `all_passed()`
+all_passed(agent)
+#> [1] FALSE
 }

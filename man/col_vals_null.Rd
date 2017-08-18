@@ -19,7 +19,7 @@ provided as a character vector) to which this
 validation should be applied. Aside from a single
 column name, column operations can be used to
 create one or more computed columns (e.g., 
-\code{"a + b"} or \code{"a + sum(a)"}).}
+\code{a + b} or \code{a + sum(a)}).}
 
 \item{warn_count}{the threshold number for 
 individual validations returning a \code{FALSE}
@@ -83,9 +83,9 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{an optional vector of filtering
-statements for filtering the table before this
-validation step.}
+\item{preconditions}{an optional statement of
+filtering conditions that may reduce the number
+of rows for validation.}
 
 \item{description}{an optional, text-based
 description for the validation step. Used primarily
@@ -99,4 +99,32 @@ an agent object.
 Set a verification step where
 all values in a table column are expected
 to be NULL.
+}
+\examples{
+# Create a simple data frame with
+# 2 columns: one with numerical
+# values and the other with strings
+df <-
+  data.frame(
+    a = c(1, 2, NA, NA),
+    b = c(2, 2, 5, 5),
+    stringsAsFactors = FALSE)
+
+# Validate that all values in
+# column `a` are NULL when
+# values in column `b` are
+# equal to 5
+agent <-
+  create_agent() \%>\%
+  focus_on(tbl_name = "df") \%>\%
+  col_vals_null(
+    column = a,
+    preconditions = b == 5) \%>\%
+  interrogate()
+
+# Determine if these column
+# validations have all passed
+# by using `all_passed()`
+all_passed(agent)
+#> [1] TRUE
 }

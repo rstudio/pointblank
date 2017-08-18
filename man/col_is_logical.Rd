@@ -80,9 +80,9 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{an optional vector of filtering
-statements for filtering the table before this
-validation step.}
+\item{preconditions}{an optional statement of
+filtering conditions that may reduce the number
+of rows for validation.}
 
 \item{description}{an optional, text-based
 description for the validation step. Used primarily
@@ -98,22 +98,25 @@ a table column is expected to consist entirely
 of R \code{logical} objects.
 }
 \examples{
-# Create a simple data frame with a column
-# containing data classed as `factor`
+# Create a simple data frame
+# with a column containing data
+# classed as `logical`
 df <-
   data.frame(
     a = c(TRUE, FALSE))
 
-# Validate that column `a` in the data frame
-# is classed as `logical`
+# Validate that column `a` in
+# the data frame is classed as
+# `logical`
 agent <-
   create_agent() \%>\%
   focus_on(tbl_name = "df") \%>\%
-  col_is_logical(column = "a") \%>\%
+  col_is_logical(column = a) \%>\%
   interrogate()
 
-# Determine if this column validation has
-# passed by using `all_passed()`
+# Determine if this column
+# validation has passed by using
+# `all_passed()`
 all_passed(agent)
 #> [1] TRUE
 }

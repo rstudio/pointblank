@@ -7,8 +7,7 @@
 col_exists(agent, column, warn_count = 1, notify_count = NULL,
   warn_fraction = NULL, notify_fraction = NULL, tbl_name = NULL,
   db_type = NULL, creds_file = NULL, initial_sql = NULL,
-  file_path = NULL, col_types = NULL, preconditions = NULL,
-  description = NULL)
+  file_path = NULL, col_types = NULL, description = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -79,10 +78,6 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{an optional vector of filtering
-statements for filtering the table before this
-validation step.}
-
 \item{description}{an optional, text-based
 description for the validation step. Used primarily
 in the Logical Plan section of the report generated
@@ -97,10 +92,10 @@ checks whether one or several specified columns
 exist in the target table.
 }
 \examples{
-# Validate that the `a` and `b` columns
-# exist in the `small_table` CSV file;
-# do this by creating an agent, focussing
-# on that table, creating a `col_exists()`
+# Validate that column `a` exists in
+# the `small_table` CSV file; do this
+# by creating an agent, focussing on
+# that table, creating a `col_exists()`
 # step, and then interrogating the table
 agent <-
   create_agent() \%>\%
@@ -110,10 +105,10 @@ agent <-
         "extdata", "small_table.csv",
         package = "pointblank"),
     col_types = "TDicidlc") \%>\%
-  col_exists(column = c("a", "b")) \%>\%
+  col_exists(column = a) \%>\%
   interrogate()
 
-# Determine if both these column validations
+# Determine if this column validation
 # passed by using `all_passed()`
 all_passed(agent)
 #> [1] TRUE

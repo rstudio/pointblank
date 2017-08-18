@@ -5,10 +5,10 @@
 \title{Verify whether numerical column data are
 less than a specified value}
 \usage{
-col_vals_lt(agent, column, value, warn_count = 1, notify_count = NULL,
-  warn_fraction = NULL, notify_fraction = NULL, tbl_name = NULL,
-  db_type = NULL, creds_file = NULL, initial_sql = NULL,
-  file_path = NULL, col_types = NULL, preconditions = NULL,
+col_vals_lt(agent, column, value, preconditions = NULL, warn_count = 1,
+  notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,
+  tbl_name = NULL, db_type = NULL, creds_file = NULL,
+  initial_sql = NULL, file_path = NULL, col_types = NULL,
   description = NULL)
 }
 \arguments{
@@ -20,11 +20,15 @@ provided as a character vector) to which this
 validation should be applied. Aside from a single
 column name, column operations can be used to
 create one or more computed columns (e.g., 
-\code{"a + b"} or \code{"a + sum(a)"}).}
+\code{a + b} or \code{a + sum(a)}).}
 
 \item{value}{a numeric value used for this test.
 Any column values \code{< value} are considered
 passing.}
+
+\item{preconditions}{an optional statement of
+filtering conditions that may reduce the number
+of rows for validation.}
 
 \item{warn_count}{the threshold number for 
 individual validations returning a \code{FALSE}
@@ -88,10 +92,6 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{an optional vector of filtering
-statements for filtering the table before this
-validation step.}
-
 \item{description}{an optional, text-based
 description for the validation step. Used primarily
 in the Logical Plan section of the report generated
@@ -106,24 +106,27 @@ numeric values in a table column should be
 less than a specified value.
 }
 \examples{
-# Create a simple data frame with a column
-# of numerical values
+# Create a simple data frame
+# with a column of numerical
+# values
 df <-
   data.frame(
     a = c(5, 4, 3, 5, 1, 2))
 
-# Validate that values in column `a` are
-# always less than 6
+# Validate that values in
+# column `a` are always less
+# than 6
 agent <-
   create_agent() \%>\%
   focus_on(tbl_name = "df") \%>\%
   col_vals_lt(
-    column = "a",
+    column = a,
     value = 6) \%>\%
   interrogate()
 
-# Determine if this column validation has
-# passed by using `all_passed()`
+# Determine if this column 
+# validation has passed by using
+# `all_passed()`
 all_passed(agent)
 #> [1] TRUE
 }

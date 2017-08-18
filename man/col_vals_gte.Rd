@@ -20,7 +20,7 @@ provided as a character vector) to which this
 validation should be applied. Aside from a single
 column name, column operations can be used to
 create one or more computed columns (e.g., 
-\code{"a + b"} or \code{"a + sum(a)"}).}
+\code{a + b} or \code{a + sum(a)}).}
 
 \item{value}{a numeric value used for this test.
 Any column values \code{>= value} are considered
@@ -88,9 +88,9 @@ integer, \code{n} -> number, \code{d} -> double,
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
 
-\item{preconditions}{an optional vector of filtering
-statements for filtering the table before this
-validation step.}
+\item{preconditions}{an optional statement of
+filtering conditions that may reduce the number
+of rows for validation.}
 
 \item{description}{an optional, text-based
 description for the validation step. Used primarily
@@ -106,24 +106,27 @@ numeric values in a table column should be
 greater than or equal to a specified value.
 }
 \examples{
-# Create a simple data frame with a column
-# of numerical values
+# Create a simple data frame
+# with a column of numerical
+# values
 df <-
   data.frame(
     a = c(5, 7, 6, 5, 8, 7))
 
-# Validate that values in column `a` are
-# always greater than or equal to 5
+# Validate that values in column
+# `a` are always greater than or
+# equal to 5
 agent <-
   create_agent() \%>\%
   focus_on(tbl_name = "df") \%>\%
   col_vals_gte(
-    column = "a",
+    column = a,
     value = 5) \%>\%
   interrogate()
 
-# Determine if this column validation has
-# passed by using `all_passed()`
+# Determine if this column
+# validation has passed by using
+# `all_passed()`
 all_passed(agent)
 #> [1] TRUE
 }

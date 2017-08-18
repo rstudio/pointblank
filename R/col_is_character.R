@@ -7,6 +7,9 @@
 #' @param column the name of a single table column,
 #' multiple columns in the same table, or, a helper
 #' function such as \code{all_cols()}.
+#' @param preconditions an optional statement of
+#' filtering conditions that may reduce the number
+#' of rows for validation.
 #' @param warn_count the threshold number for 
 #' individual validations returning a \code{FALSE}
 #' result before applying the \code{warn} flag.
@@ -59,9 +62,6 @@
 #' \code{l} -> logical, \code{D} -> date, \code{T} ->
 #' date time, \code{t} -> time, \code{?} -> guess, 
 #' or \code{_/-}, which skips the column.
-#' @param preconditions an optional vector of filtering
-#' statements for filtering the table before this
-#' validation step.
 #' @param description an optional, text-based
 #' description for the validation step. Used primarily
 #' in the Logical Plan section of the report generated
@@ -79,15 +79,18 @@
 #'         "extdata", "small_table.csv",
 #'         package = "pointblank"),
 #'     col_types = "TDicidlc") %>%
-#'   col_is_character(column = "b") %>%
+#'   col_is_character(
+#'     column = b) %>%
 #'   interrogate()
 #' 
-#' # Determine if this column validation has
-#' # passed by using `all_passed()`
+#' # Determine if these column
+#' # validations have all passed
+#' # by using `all_passed()`
 #' all_passed(agent)
 #' #> [1] TRUE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
+#' @importFrom rlang enquo UQ
 #' @export col_is_character
 
 col_is_character <- function(agent,
@@ -105,9 +108,19 @@ col_is_character <- function(agent,
                              preconditions = NULL,
                              description = NULL) {
   
+  column <- rlang::enquo(column)
+  column <- (rlang::UQ(column) %>% paste())[2]
+  
+  preconditions <- rlang::enquo(preconditions)
+  preconditions <- (rlang::UQ(preconditions) %>% paste())[2]
+  
+  if (preconditions == "NULL") {
+    preconditions <- NULL
+  }
+  
   # If "*" is provided for `column`, select all
   # table columns for this verification
-  if (column[1] == "*") {
+  if (column[1] == "all_cols()") {
     column <- get_all_cols(agent = agent)
   }
   

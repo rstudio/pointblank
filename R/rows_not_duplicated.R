@@ -7,6 +7,9 @@
 #' to check for duplication. If not provided, the
 #' validation checks for duplicate records using
 #' data across all columns.
+#' @param preconditions an optional statement of
+#' filtering conditions that may reduce the number
+#' of rows for validation.
 #' @param warn_count the threshold number for 
 #' individual validations returning a \code{FALSE}
 #' result before applying the \code{warn} flag.
@@ -59,20 +62,43 @@
 #' \code{l} -> logical, \code{D} -> date, \code{T} ->
 #' date time, \code{t} -> time, \code{?} -> guess, 
 #' or \code{_/-}, which skips the column.
-#' @param preconditions an optional vector of filtering
-#' statements for filtering the table before this
-#' validation step.
 #' @param description an optional, text-based
 #' description for the validation step. Used primarily
 #' in the Logical Plan section of the report generated
 #' by the \code{html_summary} function.
 #' @return an agent object.
+#' @examples
+#' # Validate that column `a` exists in
+#' # the `small_table` CSV file; do this
+#' # by creating an agent, focussing on
+#' # that table, creating a `col_exists()`
+#' # step, and then interrogating the table
+#' agent <-
+#'   create_agent() %>%
+#'   focus_on(
+#'     file_name = 
+#'       system.file(
+#'         "extdata", "small_table.csv",
+#'         package = "pointblank"),
+#'     col_types = "TDicidlc") %>%
+#'   rows_not_duplicated(
+#'     cols = a & b) %>%
+#'   interrogate()
+#' 
+#' # Determine if these column
+#' # validations have all passed
+#' # by using `all_passed()`
+#' all_passed(agent)
+#' #> [1] FALSE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
+#' @importFrom stringr str_replace_all
+#' @importFrom rlang enquo UQ
 #' @export rows_not_duplicated
 
 rows_not_duplicated <- function(agent,
                                 cols = NULL,
+                                preconditions = NULL,
                                 warn_count = 1,
                                 notify_count = NULL,
                                 warn_fraction = NULL,
@@ -83,8 +109,27 @@ rows_not_duplicated <- function(agent,
                                 initial_sql = NULL,
                                 file_path = NULL,
                                 col_types = NULL,
-                                preconditions = NULL,
                                 description = NULL) {
+  
+  cols <- rlang::enquo(cols)
+  cols <- (rlang::UQ(cols) %>% paste())[2]
+  
+  if (cols == "NULL") {
+    cols <- NULL
+  } else {
+    cols <- 
+      stringr::str_replace_all(
+        string = cols,
+        pattern = " & ",
+        replacement = ", ")
+  }
+  
+  preconditions <- rlang::enquo(preconditions)
+  preconditions <- (rlang::UQ(preconditions) %>% paste())[2]
+  
+  if (preconditions == "NULL") {
+    preconditions <- NULL
+  }
   
   # Add one or more validation steps
   agent <-

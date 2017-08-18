@@ -10,10 +10,13 @@
 #' validation should be applied. Aside from a single
 #' column name, column operations can be used to
 #' create one or more computed columns (e.g., 
-#' \code{"a + b"} or \code{"a + sum(a)"}).
+#' \code{a + b} or \code{a + sum(a)}).
 #' @param set a vector of numeric or string-based
 #' elements, where column values found within this
 #' \code{set} will be considered as passing.
+#' @param preconditions an optional statement of
+#' filtering conditions that may reduce the number
+#' of rows for validation.
 #' @param warn_count the threshold number for 
 #' individual validations returning a \code{FALSE}
 #' result before applying the \code{warn} flag.
@@ -66,45 +69,46 @@
 #' \code{l} -> logical, \code{D} -> date, \code{T} ->
 #' date time, \code{t} -> time, \code{?} -> guess, 
 #' or \code{_/-}, which skips the column.
-#' @param preconditions an optional vector of filtering
-#' statements for filtering the table before this
-#' validation step.
 #' @param description an optional, text-based
 #' description for the validation step. Used primarily
 #' in the Logical Plan section of the report generated
 #' by the \code{html_summary} function.
 #' @return an agent object.
 #' @examples
-#' # Create a simple data frame with 2 columns: one
-#' # with numerical values and the other with strings
+#' # Create a simple data frame with
+#' # 2 columns: one with numerical
+#' # values and the other with strings
 #' df <-
 #'   data.frame(
 #'     a = c(1, 2, 3, 4),
 #'     b = c("one", "two", "three", "four"),
 #'     stringsAsFactors = FALSE)
 #' 
-#' # Validate that all numerical values in
-#' # column `a` belong to a numerical set, and,
-#' # create an analogous validation check for
-#' # column `b` with a set of string values 
+#' # Validate that all numerical values
+#' # in column `a` belong to a numerical
+#' # set, and, create an analogous 
+#' # validation check for column `b` with
+#' # a set of string values 
 #' agent <-
 #'   create_agent() %>%
 #'   focus_on(tbl_name = "df") %>%
 #'   col_vals_in_set(
-#'     column = "a",
+#'     column = a,
 #'     set = 1:4) %>%
 #'   col_vals_in_set(
-#'     column = "b",
+#'     column = b,
 #'     set = c("one", "two",
 #'             "three", "four")) %>%
 #'   interrogate()
 #' 
-#' # Determine if these column validations have
-#' # all passed by using `all_passed()`
+#' # Determine if these column
+#' # validations have all passed
+#' # by using `all_passed()`
 #' all_passed(agent)
 #' #> [1] TRUE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
+#' @importFrom rlang enquo UQ
 #' @export col_vals_in_set
 
 col_vals_in_set <- function(agent,
@@ -123,9 +127,20 @@ col_vals_in_set <- function(agent,
                             preconditions = NULL,
                             description = NULL) {
   
+
+  column <- rlang::enquo(column)
+  column <- (rlang::UQ(column) %>% paste())[2]
+  
+  preconditions <- rlang::enquo(preconditions)
+  preconditions <- (rlang::UQ(preconditions) %>% paste())[2]
+  
+  if (preconditions == "NULL") {
+    preconditions <- NULL
+  }
+  
   # If "*" is provided for `column`, select all
   # table columns for this verification
-  if (column[1] == "*") {
+  if (column[1] == "all_cols()") {
     column <- get_all_cols(agent = agent)
   }
   

@@ -58,19 +58,16 @@
 #' \code{l} -> logical, \code{D} -> date, \code{T} ->
 #' date time, \code{t} -> time, \code{?} -> guess, 
 #' or \code{_/-}, which skips the column.
-#' @param preconditions an optional vector of filtering
-#' statements for filtering the table before this
-#' validation step.
 #' @param description an optional, text-based
 #' description for the validation step. Used primarily
 #' in the Logical Plan section of the report generated
 #' by the \code{html_summary} function.
 #' @return an agent object.
 #' @examples
-#' # Validate that the `a` and `b` columns
-#' # exist in the `small_table` CSV file;
-#' # do this by creating an agent, focussing
-#' # on that table, creating a `col_exists()`
+#' # Validate that column `a` exists in
+#' # the `small_table` CSV file; do this
+#' # by creating an agent, focussing on
+#' # that table, creating a `col_exists()`
 #' # step, and then interrogating the table
 #' agent <-
 #'   create_agent() %>%
@@ -80,15 +77,16 @@
 #'         "extdata", "small_table.csv",
 #'         package = "pointblank"),
 #'     col_types = "TDicidlc") %>%
-#'   col_exists(column = c("a", "b")) %>%
+#'   col_exists(column = a) %>%
 #'   interrogate()
 #' 
-#' # Determine if both these column validations
+#' # Determine if this column validation
 #' # passed by using `all_passed()`
 #' all_passed(agent)
 #' #> [1] TRUE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
+#' @importFrom rlang enquo UQ
 #' @export col_exists
 
 col_exists <- function(agent,
@@ -103,9 +101,13 @@ col_exists <- function(agent,
                        initial_sql = NULL,
                        file_path = NULL,
                        col_types = NULL,
-                       preconditions = NULL,
                        description = NULL) {
 
+  column <- rlang::enquo(column)
+  column <- (rlang::UQ(column) %>% paste())[2]
+  
+  preconditions <- NULL
+  
   # Add one or more validation steps
   agent <-
     create_validation_step(

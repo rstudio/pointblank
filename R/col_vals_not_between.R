@@ -8,7 +8,7 @@
 #' validation should be applied. Aside from a single
 #' column name, column operations can be used to
 #' create one or more computed columns (e.g., 
-#' \code{"a + b"} or \code{"a + sum(a)"}).
+#' \code{a + b} or \code{a + sum(a)}).
 #' @param left the lower bound for the range. The
 #' validation includes this bound value in addition
 #' to values greater than \code{left}. Any values
@@ -19,6 +19,9 @@
 #' to values lower than \code{right}. Any values
 #' \code{<= right} and \code{>= left} will be
 #' considered as failing.
+#' @param preconditions an optional statement of
+#' filtering conditions that may reduce the number
+#' of rows for validation.
 #' @param warn_count the threshold number for 
 #' individual validations returning a \code{FALSE}
 #' result before applying the \code{warn} flag.
@@ -71,42 +74,42 @@
 #' \code{l} -> logical, \code{D} -> date, \code{T} ->
 #' date time, \code{t} -> time, \code{?} -> guess, 
 #' or \code{_/-}, which skips the column.
-#' @param preconditions an optional vector of filtering
-#' statements for filtering the table before this
-#' validation step.
 #' @param description an optional, text-based
 #' description for the validation step. Used primarily
 #' in the Logical Plan section of the report generated
 #' by the \code{html_summary} function.
 #' @return an agent object.
 #' @examples
-#' # Create a simple data frame with a column
-#' # a numerical values
+#' # Create a simple data frame
+#' # with a column a numerical values
 #' df <-
 #'   data.frame(
 #'     a = c(5.6, 8.2, 6.3, 7.8, 3.4))
 #' 
-#' # Validate that none of the values in column
-#' # `a` are between 9 and 10, or, between 0 and 2
+#' # Validate that none of the values 
+#' # in column `a` are between 9 and 10,
+#' # or, between 0 and 2
 #' agent <-
 #'   create_agent() %>%
 #'   focus_on(tbl_name = "df") %>%
 #'   col_vals_not_between(
-#'     column = "a",
+#'     column = a,
 #'     left = 9,
 #'     right = 10) %>%
 #'   col_vals_not_between(
-#'     column = "a",
+#'     column = a,
 #'     left = 0,
 #'     right = 2) %>%
 #'   interrogate()
 #' 
-#' # Determine if these column validations
-#' # have all passed by using `all_passed()`
+#' # Determine if these column
+#' # validations have all passed by
+#' # using `all_passed()`
 #' all_passed(agent)
 #' #> [1] TRUE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
+#' @importFrom rlang enquo UQ
 #' @export col_vals_not_between
 
 col_vals_not_between <- function(agent,
@@ -126,9 +129,19 @@ col_vals_not_between <- function(agent,
                                  preconditions = NULL,
                                  description = NULL) {
   
+  column <- rlang::enquo(column)
+  column <- (rlang::UQ(column) %>% paste())[2]
+  
+  preconditions <- rlang::enquo(preconditions)
+  preconditions <- (rlang::UQ(preconditions) %>% paste())[2]
+  
+  if (preconditions == "NULL") {
+    preconditions <- NULL
+  }
+  
   # If "*" is provided for `column`, select all
   # table columns for this verification
-  if (column[1] == "*") {
+  if (column[1] == "all_cols()") {
     column <- get_all_cols(agent = agent)
   }
   

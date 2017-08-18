@@ -10,9 +10,12 @@
 #' validation should be applied. Aside from a single
 #' column name, column operations can be used to
 #' create one or more computed columns (e.g., 
-#' \code{"a + b"} or \code{"a + sum(a)"}).
+#' \code{a + b} or \code{a + sum(a)}).
 #' @param regex a regex pattern to test for matching
 #' strings.
+#' @param preconditions an optional statement of
+#' filtering conditions that may reduce the number
+#' of rows for validation.
 #' @param warn_count the threshold number for 
 #' individual validations returning a \code{FALSE}
 #' result before applying the \code{warn} flag.
@@ -65,9 +68,6 @@
 #' \code{l} -> logical, \code{D} -> date, \code{T} ->
 #' date time, \code{t} -> time, \code{?} -> guess, 
 #' or \code{_/-}, which skips the column.
-#' @param preconditions an optional vector of filtering
-#' statements for filtering the table before this
-#' validation step.
 #' @param description an optional, text-based
 #' description for the validation step. Used primarily
 #' in the Logical Plan section of the report generated
@@ -78,8 +78,8 @@
 #' # containing strings
 #' df <-
 #'   data.frame(
-#'     a = c("series_0131", "series_0231",
-#'           "series_1389", "series_2300"),
+#'     a = c("s_0131", "s_0231",
+#'           "s_1389", "s_2300"),
 #'     stringsAsFactors = FALSE)
 #' 
 #' # Validate that all string values in
@@ -88,16 +88,18 @@
 #'   create_agent() %>%
 #'   focus_on(tbl_name = "df") %>%
 #'   col_vals_regex(
-#'     column = "a",
-#'     regex = "^series_[0-9]{4}$") %>%
+#'     column = a,
+#'     regex = "^s_[0-9]{4}$") %>%
 #'   interrogate()
 #' 
-#' # Determine if this column validation has
-#' # all passed by using `all_passed()`
+#' # Determine if these column
+#' # validations have all passed
+#' # by using `all_passed()`
 #' all_passed(agent)
 #' #> [1] TRUE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
+#' @importFrom rlang enquo UQ
 #' @export col_vals_regex
 
 col_vals_regex <- function(agent,
@@ -116,9 +118,19 @@ col_vals_regex <- function(agent,
                            preconditions = NULL,
                            description = NULL) {
   
+  column <- rlang::enquo(column)
+  column <- (rlang::UQ(column) %>% paste())[2]
+  
+  preconditions <- rlang::enquo(preconditions)
+  preconditions <- (rlang::UQ(preconditions) %>% paste())[2]
+  
+  if (preconditions == "NULL") {
+    preconditions <- NULL
+  }
+  
   # If "*" is provided for `column`, select all
   # table columns for this verification
-  if (column[1] == "*") {
+  if (column[1] == "all_cols()") {
     column <- get_all_cols(agent = agent)
   }
   

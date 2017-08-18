@@ -13,7 +13,7 @@ test_that("Interrogating for column types", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    col_is_character(column = "b") %>%
+    col_is_character(column = b) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -48,7 +48,7 @@ test_that("Interrogating for column types", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    col_is_numeric(column = "a") %>%
+    col_is_numeric(column = a) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -84,7 +84,7 @@ test_that("Interrogating for column types", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    col_is_posix(column = "date_time") %>%
+    col_is_posix(column = date_time) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -120,7 +120,7 @@ test_that("Interrogating for column types", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    col_is_date(column = "date") %>%
+    col_is_date(column = date) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -156,7 +156,7 @@ test_that("Interrogating for column types", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"), 
       col_types = "TDicidlc") %>%
-    col_is_integer(column = "a") %>%
+    col_is_integer(column = a) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -191,7 +191,7 @@ test_that("Interrogating for column types", {
     focus_on(
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"), col_types = "TDicidlc") %>%
-    col_is_logical(column = "e") %>%
+    col_is_logical(column = e) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -233,7 +233,10 @@ test_that("Interrogating for valid row values", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    col_vals_between(column = "d", left = 0, right = 5000) %>%
+    col_vals_between(
+      column = d,
+      left = 0,
+      right = 5000) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -270,8 +273,10 @@ test_that("Interrogating for valid row values", {
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
     col_vals_between(
-      column = "d", left = 0, right = 5000,
-      preconditions = "date > '2016-01-04'") %>%
+      column = d,
+      left = 0,
+      right = 5000,
+      preconditions = date > "2016-01-04") %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -297,7 +302,10 @@ test_that("Interrogating for valid row values", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    col_vals_not_between(column = "d", left = 500, right = 1000) %>%
+    col_vals_not_between(
+      column = d,
+      left = 500,
+      right = 1000) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -334,8 +342,10 @@ test_that("Interrogating for valid row values", {
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
     col_vals_not_between(
-      column = "d", left = 500, right = 1000,
-      preconditions = "date > '2016-01-04'") %>%
+      column = d,
+      left = 500,
+      right = 1000,
+      preconditions = date > "2016-01-04") %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -361,7 +371,9 @@ test_that("Interrogating for valid row values", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    col_vals_equal(column = "d", value = 283.94) %>%
+    col_vals_equal(
+      column = d,
+      value = 283.94) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -398,8 +410,9 @@ test_that("Interrogating for valid row values", {
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
     col_vals_equal(
-      column = "d", value = 283.94,
-      preconditions = "date > '2016-01-04'") %>%
+      column = d,
+      value = 283.94,
+      preconditions = date > "2016-01-04") %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -424,7 +437,9 @@ test_that("Interrogating for valid row values", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    col_vals_not_equal(column = "d", value = 283.94) %>%
+    col_vals_not_equal(
+      column = d,
+      value = 283.94) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -461,8 +476,9 @@ test_that("Interrogating for valid row values", {
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
     col_vals_not_equal(
-      column = "d", value = 283.94,
-      preconditions = "date > '2016-01-04'") %>%
+      column = d,
+      value = 283.94,
+      preconditions = date > "2016-01-04") %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -524,7 +540,7 @@ test_that("Interrogating for valid row values", {
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
     rows_not_duplicated(
-      preconditions = "date != '2016-01-20'") %>%
+      preconditions = date != "2016-01-20") %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -550,14 +566,15 @@ test_that("Interrogating for valid row values", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    rows_not_duplicated(cols = "date_time & a") %>%
+    rows_not_duplicated(
+      cols = date_time & a) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
   expect_equivalent(validation$validation_set$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$db_type, "local_file")
   expect_equivalent(validation$validation_set$assertion_type, "rows_not_duplicated")
-  expect_equivalent(validation$validation_set$column, "date_time & a")
+  expect_equivalent(validation$validation_set$column, "date_time, a")
   expect_true(is.na(validation$validation_set$value))
   expect_true(is.na(validation$validation_set$regex))
   expect_false(validation$validation_set$all_passed)
@@ -575,7 +592,9 @@ test_that("Interrogating for valid row values", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    col_vals_in_set(column = "f", set = c("low", "mid", "high")) %>%
+    col_vals_in_set(
+      column = f,
+      set = c("low", "mid", "high")) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -610,7 +629,9 @@ test_that("Interrogating for valid row values", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    col_vals_not_in_set(column = "f", set = c("lower", "higher")) %>%
+    col_vals_not_in_set(
+      column = f,
+      set = c("lower", "higher")) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -646,7 +667,9 @@ test_that("Interrogating for valid row values", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    col_vals_not_in_set(column = "f", set = c("low", "mid", "high")) %>%
+    col_vals_not_in_set(
+      column = f,
+      set = c("low", "mid", "high")) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -681,7 +704,7 @@ test_that("Interrogating for valid row values", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    col_vals_not_null(column = "c") %>%
+    col_vals_not_null(column = c) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -718,8 +741,8 @@ test_that("Interrogating for valid row values", {
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
     col_vals_not_null(
-      column = "c",
-      preconditions = c("date > '2016-01-06'", "date < '2016-01-30'")) %>%
+      column = c,
+      preconditions = date > "2016-01-06" & date < "2016-01-30") %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -744,7 +767,7 @@ test_that("Interrogating for valid row values", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    col_vals_null(column = "c") %>%
+    col_vals_null(column = c) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -781,8 +804,8 @@ test_that("Interrogating for valid row values", {
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
     col_vals_null(
-      column = "c",
-      preconditions = c("date == '2016-01-06' | date == '2016-01-30'")) %>%
+      column = c,
+      preconditions = date == '2016-01-06' | date == '2016-01-30') %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -807,7 +830,9 @@ test_that("Interrogating for valid row values", {
       file_name = system.file("extdata", "small_table.csv",
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
-    col_vals_regex(column = "b", regex = "[0-9]-[a-z]{3}-[0-9]{3}") %>%
+    col_vals_regex(
+      column = b,
+      regex = "[0-9]-[a-z]{3}-[0-9]{3}") %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -844,8 +869,9 @@ test_that("Interrogating for valid row values", {
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
     col_vals_regex(
-      column = "f", regex = "[a-z]{3}",
-      preconditions = "f != 'high'") %>%
+      column = f,
+      regex = "[a-z]{3}",
+      preconditions = f != "high") %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`

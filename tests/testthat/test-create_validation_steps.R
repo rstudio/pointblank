@@ -11,7 +11,7 @@ test_that("Creating a `col_is_character()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_is_character(column = "b")
+    col_is_character(column = b)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -75,7 +75,7 @@ test_that("Creating a `col_is_date()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_is_date(column = "b")
+    col_is_date(column = b)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -139,7 +139,7 @@ test_that("Creating a `col_is_factor()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_is_factor(column = "b")
+    col_is_factor(column = b)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -203,7 +203,7 @@ test_that("Creating a `col_is_integer()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_is_integer(column = "b")
+    col_is_integer(column = b)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -267,7 +267,7 @@ test_that("Creating a `col_is_logical()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_is_logical(column = "b")
+    col_is_logical(column = b)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -331,7 +331,7 @@ test_that("Creating a `col_is_numeric()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_is_numeric(column = "b")
+    col_is_numeric(column = b)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -395,7 +395,7 @@ test_that("Creating a `col_is_posix()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_is_posix(column = "b")
+    col_is_posix(column = b)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -459,7 +459,10 @@ test_that("Creating a `col_vals_between()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_between(column = "b", left = 2, right = 10)
+    col_vals_between(
+      column = b,
+      left = 2,
+      right = 10)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -503,7 +506,10 @@ test_that("Creating a `col_vals_between()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_between(column = all_cols(), left = 2, right = 10)
+    col_vals_between(
+      column = all_cols(),
+      left = 2,
+      right = 10)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -525,7 +531,10 @@ test_that("Creating a `col_vals_not_between()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_not_between(column = "b", left = 2, right = 10)
+    col_vals_not_between(
+      column = b,
+      left = 2,
+      right = 10)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -569,7 +578,10 @@ test_that("Creating a `col_vals_not_between()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_not_between(column = all_cols(), left = 2, right = 10)
+    col_vals_not_between(
+      column = all_cols(),
+      left = 2,
+      right = 10)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -591,7 +603,9 @@ test_that("Creating a `col_vals_equal()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_equal(column = "b", value = 5)
+    col_vals_equal(
+      column = b,
+      value = 5)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -633,7 +647,9 @@ test_that("Creating a `col_vals_equal()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_equal(column = all_cols(), value = 5)
+    col_vals_equal(
+      column = all_cols(),
+      value = 5)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -655,7 +671,9 @@ test_that("Creating a `col_vals_not_equal()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_not_equal(column = "b", value = 5)
+    col_vals_not_equal(
+      column = b,
+      value = 5)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -697,7 +715,9 @@ test_that("Creating a `col_vals_not_equal()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_not_equal(column = all_cols(), value = 5)
+    col_vals_not_equal(
+      column = all_cols(),
+      value = 5)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -719,7 +739,9 @@ test_that("Creating a `col_vals_gt()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_gt(column = "b", value = 5)
+    col_vals_gt(
+      column = b,
+      value = 5)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -761,7 +783,9 @@ test_that("Creating a `col_vals_gt()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_gt(column = all_cols(), value = 5)
+    col_vals_gt(
+      column = all_cols(),
+      value = 5)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -783,7 +807,9 @@ test_that("Creating a `col_vals_gte()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_gte(column = "b", value = 5)
+    col_vals_gte(
+      column = b,
+      value = 5)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -825,7 +851,9 @@ test_that("Creating a `col_vals_gte()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_gte(column = all_cols(), value = 5)
+    col_vals_gte(
+      column = all_cols(),
+      value = 5)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -847,7 +875,9 @@ test_that("Creating a `col_vals_lt()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_lt(column = "b", value = 5)
+    col_vals_lt(
+      column = b,
+      value = 5)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -889,7 +919,9 @@ test_that("Creating a `col_vals_lt()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_lt(column = all_cols(), value = 5)
+    col_vals_lt(
+      column = all_cols(),
+      value = 5)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -911,7 +943,9 @@ test_that("Creating a `col_vals_lte()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_lte(column = "b", value = 5)
+    col_vals_lte(
+      column = b,
+      value = 5)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -953,7 +987,9 @@ test_that("Creating a `col_vals_lte()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_lte(column = all_cols(), value = 5)
+    col_vals_lte(
+      column = all_cols(),
+      value = 5)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -1019,7 +1055,9 @@ test_that("Creating a `col_vals_in_set()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_in_set(column = all_cols(), set = c("1-bcd-345", "5-jdo-903"))
+    col_vals_in_set(
+      column = all_cols(),
+      set = c("1-bcd-345", "5-jdo-903"))
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -1041,7 +1079,9 @@ test_that("Creating a `col_vals_not_in_set()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_not_in_set(column = "b", set = c("1-bcd-345", "5-jdo-903"))
+    col_vals_not_in_set(
+      column = b,
+      set = c("1-bcd-345", "5-jdo-903"))
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -1085,7 +1125,9 @@ test_that("Creating a `col_vals_not_in_set()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_not_in_set(column = all_cols(), set = c("1-bcd-345", "5-jdo-903"))
+    col_vals_not_in_set(
+      column = all_cols(),
+      set = c("1-bcd-345", "5-jdo-903"))
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -1107,7 +1149,9 @@ test_that("Creating a `col_vals_regex()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_regex(column = "b", regex = "[0-9]-.*")
+    col_vals_regex(
+      column = b,
+      regex = "[0-9]-.*")
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -1149,7 +1193,9 @@ test_that("Creating a `col_vals_regex()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_regex(column = all_cols(), regex = "[0-9]-.*")
+    col_vals_regex(
+      column = all_cols(),
+      regex = "[0-9]-.*")
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -1171,7 +1217,7 @@ test_that("Creating a `col_vals_null()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_null(column = "b")
+    col_vals_null(column = b)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -1235,7 +1281,7 @@ test_that("Creating a `col_vals_not_null()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_not_null(column = "b")
+    col_vals_not_null(column = b)
   
   # Expect the class name for the object
   # to be `ptblank_agent`

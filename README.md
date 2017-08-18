@@ -27,6 +27,8 @@ The above workflow relied on these code blocks:
   (1) Create 2 very simple **R** **tibble** objects:
 
 ```r
+library(tibble)
+
 tbl_1 <-
   tibble::tribble(
     ~a, ~b,   ~c,
@@ -49,43 +51,71 @@ tbl_2 <-
   (2) Create a **pointblank** pipeline for validating both the `tbl_1` and `tbl_2` tables (ending with `interrogate()`):
 
 ```r
+library(pointblank)
+
 agent <- 
   create_agent() %>%             # (1)
   focus_on(
     tbl_name = "tbl_1") %>%      # (2)
   col_vals_gt(
-    column = "a",
+    column = a,
     value = 0) %>%               # (3)
   rows_not_duplicated(
-    cols = "a, b, c") %>%        # (4)
+    cols = a & b & c) %>%      # (4)
   col_vals_gte(
-    column = "a + b",
+    column = a + b,
     value = 7) %>%               # (5)
   col_vals_lte(
-    column = "b",
+    column = b,
     value = 10) %>%              # (6)
   col_vals_regex(
-    column = "c",
+    column = c,
     regex = "h2.*") %>%          # (7)
   col_vals_in_set(
-    column = "substr(c, 0, 2)",
+    column = substr(c, 0, 2),
     set = c("h2", "d3")) %>%     # (8)
   focus_on(
     tbl_name = "tbl_2") %>%      # (9)
   col_vals_in_set(
-    column = "d",
+    column = d,
     set = c("a", "b")) %>%       # (10)
   col_vals_not_in_set(
-    column = "d",
+    column = d,
     set = c("a", "b")) %>%       # (11)
   col_vals_gte(
-    column = "e",
+    column = e,
     value = 0) %>%               # (12)
   col_vals_null(
-    column = "f") %>%            # (13)
+    column = f) %>%              # (13)
   col_vals_not_null(
-    column = "d") %>%            # (14)
+    column = d) %>%              # (14)
   interrogate()                  # (15)
+```
+
+We can get a detailed a summary of the validations (one validation per row in the output), showing how many individual tests in each validation step had passed or failed. The validations are classified with an `action` which indicates the type of action to perform based on user-defined thresholds.
+
+```r
+get_summary(agent)
+#> # A tibble: 11 x 11
+#>    tbl_name  db_type      assertion_type          column value regex all_passed     n n_passed f_passed action
+#>       <chr>    <chr>               <chr>           <chr> <dbl> <chr>      <lgl> <dbl>    <dbl>    <dbl>  <chr>
+#>  1    tbl_1 local_df         col_vals_gt               a     0  <NA>       TRUE     5        5      1.0   <NA>
+#>  2    tbl_1 local_df rows_not_duplicated         a, b, c    NA  <NA>       TRUE     5        5      1.0   <NA>
+#>  3    tbl_1 local_df        col_vals_gte           a + b     7  <NA>       TRUE     5        5      1.0   <NA>
+#>  4    tbl_1 local_df        col_vals_lte               b    10  <NA>       TRUE     5        5      1.0   <NA>
+#>  5    tbl_1 local_df      col_vals_regex               c    NA  h2.*      FALSE     5        4      0.8   warn
+#>  6    tbl_1 local_df     col_vals_in_set substr(c, 0, 2)    NA  <NA>       TRUE     5        5      1.0   <NA>
+#>  7    tbl_2 local_df     col_vals_in_set               d    NA  <NA>      FALSE     5        4      0.8   warn
+#>  8    tbl_2 local_df col_vals_not_in_set               d    NA  <NA>      FALSE     5        1      0.2   warn
+#>  9    tbl_2 local_df        col_vals_gte               e     0  <NA>      FALSE     5        4      0.8   warn
+#> 10    tbl_2 local_df       col_vals_null               f    NA  <NA>      FALSE     5        0      0.0   warn
+#> 11    tbl_2 local_df   col_vals_not_null               d    NA  <NA>       TRUE     5        5      1.0   <NA>
+```
+
+Or a self-contained HTML report can be generated that shows how the validation went.
+
+```r
+html_summary(agent)
 ```
 
 ### Function Roundup
@@ -94,7 +124,7 @@ That last workflow example provided a glimpse of some of the functions available
 
 <img src="inst/graphics/pointblank_functions.png">
 
-### More Specificity in Your Validations
+### Constraining Data in Validation Steps
 
 Every validation function has a common set of options for constraining validations to certain conditions. This can occur through the use of computed columns and also through preconditions that can allow you to target validations on only those rows that satify one or more conditions. 
 
@@ -102,11 +132,13 @@ Every validation function has a common set of options for constraining validatio
 
 ### Validating Tables in a Database
 
-To validate tables in a database (PostgreSQL and MySQL), we can first create a credentials file.
+To validate tables in a database (PostgreSQL and MySQL), we can optionally create a credentials file.
 
 ```r
+library(pointblank)
+
 create_creds_file(
-  file = "pg_redshift_dev",
+  file = ".db_creds",
   dbname = ***********,
   host = ***********************,
   port = ***,
@@ -117,37 +149,27 @@ create_creds_file(
 A database table can be treated similarly to a local data frame.
 
 ```r
-agent <- 
+library(pointblank)
+
+agent_db <- 
   create_agent() %>%
   focus_on(
     tbl_name = "table_1",
     db_type = "PostgreSQL",
-    creds_file = "./pg_redshift_dev",
+    creds_file = ".db_creds",
     initial_sql = "WHERE date > '2017-01-15'") %>%
   rows_not_duplicated() %>%
   col_vals_gte(
-    column = "a",
+    column = a,
     value = 2) %>%
   col_vals_between(
-    column = "b + c + d",
+    column = b + c + d,
     left = 50,
     right = 100) %>%
   col_vals_not_null(
-    column = "e",
-    preconditions = "is.na(d)") %>%
+    column = e,
+    preconditions = is.na(d)) %>%
   interrogate()
-```
-
-Get a summary of the interrogations and then know if something is amiss...
-
-```r
-get_summary(agent)
-```
-
-...or create a shareable, self-contained HTML report that shows how the validation went.
-
-```r
-html_summary(agent)
 ```
 
 ## Installation

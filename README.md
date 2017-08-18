@@ -61,7 +61,7 @@ agent <-
     column = a,
     value = 0) %>%               # (3)
   rows_not_duplicated(
-    cols = a & b & c) %>%      # (4)
+    cols = a & b & c) %>%        # (4)
   col_vals_gte(
     column = a + b,
     value = 7) %>%               # (5)
@@ -92,7 +92,7 @@ agent <-
   interrogate()                  # (15)
 ```
 
-We can get a detailed a summary of the validations (one validation per row in the output), showing how many individual tests in each validation step had passed or failed. The validations are classified with an `action` which indicates the type of action to perform based on user-defined thresholds.
+We can get a detailed summary of the interrogation, showing how many individual tests in each validation step (one per row) had passed or failed. The validations are classified with an `action` which indicates the type of action to perform based on user-defined thresholds (thresholds can be set globally, or, for each validation step).
 
 ```r
 library(pointblank)

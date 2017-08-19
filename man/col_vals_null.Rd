@@ -85,7 +85,19 @@ or \code{_/-}, which skips the column.}
 
 \item{preconditions}{an optional statement of
 filtering conditions that may reduce the number
-of rows for validation.}
+of rows for validation for the current
+validation step. The statements are executed
+for every row of the table in focus and are
+often referred as predicate statements (they
+either return \code{TRUE} or \code{FALSE} for
+every row evaluated, where rows evaluated as
+\code{TRUE} are the rows that are retained for
+the validation step). For example, if a table
+has columns \code{a}, \code{b}, and \code{c},
+and, column \code{a} has numerical data, we
+can write a statement \code{a < 5} that filters
+all rows in the table where values in column a
+are less than five.}
 
 \item{description}{an optional, text-based
 description for the validation step. Used primarily

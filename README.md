@@ -186,6 +186,8 @@ You can install the development version of **pointblank** from **GitHub** using 
 devtools::install_github("rich-iannone/pointblank")
 ```
 
+If you encounter a bug, have usage questions, or want to share ideas to make this package better, feel free to file an [issue](https://github.com/rich-iannone/pointblank/issues).
+
 ## Code of Conduct
 
 [Contributor Code of Conduct](https://github.com/rich-iannone/pointblank/blob/master/CONDUCT.md). By participating in this project you agree to abide by its terms.

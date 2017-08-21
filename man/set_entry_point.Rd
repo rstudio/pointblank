@@ -3,10 +3,7 @@
 \name{set_entry_point}
 \alias{set_entry_point}
 \title{Acquire information on the coordinates of
-a remote table. If a table is remote (i.e.,
-in a database), this function will be
-invoked to set an entry point for the
-interrogation query.}
+a remote table.}
 \usage{
 set_entry_point(table, db_type = NULL, creds_file = NULL,
   initial_sql = NULL)
@@ -41,8 +38,7 @@ statement can be omitted for simple queries (e.g.,
 \code{WHERE a > 1 AND b = 'one'}).}
 }
 \description{
-Acquire information on the coordinates of
-a remote table. If a table is remote (i.e.,
+If a table is remote (i.e.,
 in a database), this function will be
 invoked to set an entry point for the
 interrogation query.

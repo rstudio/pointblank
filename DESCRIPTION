@@ -3,10 +3,9 @@ Type: Package
 Title: Validation of local and remote data tables
 Version: 0.1
 Authors@R: person("Rich", "Iannone", email = "riannone@me.com", role = c("aut", "cre"))
-Maintainer: Richard Iannone <riannone@me.com>
 Description: Validate data in local data frames,
-    local tibble objects, in CSV and TSV files, and
-    in database tables (PostgreSQL and MySQL).
+    local tibble objects, in 'CSV' and 'TSV' files,
+    and in database tables ('PostgreSQL' and 'MySQL').
     Validation pipelines can be made using
     easily-readable, consecutive validation steps
     and such pipelines allow for switching of the

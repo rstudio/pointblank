@@ -42,7 +42,7 @@
 #' or \code{MySQL}.
 #' @param creds_file a path to a credentials file
 #' used for establishing a database connection.
-#' @param init_sql an initally-applied SQL statement
+#' @param init_sql an initially-applied SQL statement
 #' for transforming tabular data in a database before
 #' validation occurs.
 #' @param file_path an optional path for a tabular data

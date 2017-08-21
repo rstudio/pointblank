@@ -197,7 +197,8 @@ create_validation_step <- function(agent,
 
 
 #' Acquire information on the coordinates of
-#' a remote table. If a table is remote (i.e.,
+#' a remote table.
+#' @description If a table is remote (i.e.,
 #' in a database), this function will be
 #' invoked to set an entry point for the
 #' interrogation query.

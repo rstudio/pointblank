@@ -190,7 +190,6 @@ devtools::install_github("rich-iannone/pointblank")
 
 [Contributor Code of Conduct](https://github.com/rich-iannone/pointblank/blob/master/CONDUCT.md). By participating in this project you agree to abide by its terms.
 
-
 ## License
 
 MIT &copy; Richard Iannone

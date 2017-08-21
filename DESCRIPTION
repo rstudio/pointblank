@@ -1,10 +1,10 @@
 Package: pointblank
 Type: Package
-Title: Validation of local and remote data tables
+Title: Validation of Local and Remote Data Tables
 Version: 0.1
 Authors@R: person("Rich", "Iannone", email = "riannone@me.com", role = c("aut", "cre"))
 Description: Validate data in local data frames,
-    local tibble objects, in 'CSV' and 'TSV' files,
+    local 'tibble' objects, in 'CSV' and 'TSV' files,
     and in database tables ('PostgreSQL' and 'MySQL').
     Validation pipelines can be made using
     easily-readable, consecutive validation steps

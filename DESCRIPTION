@@ -2,12 +2,21 @@ Package: pointblank
 Type: Package
 Title: Validation of local and remote data tables
 Version: 0.1
-Authors@R: person(
-             "Richard", "Iannone",
-             role = c("aut", "cre"),
-             email = "riannone@me.com")
+Authors@R: person("Rich", "Iannone", email = "riannone@me.com", role = c("aut", "cre"))
 Maintainer: Richard Iannone <riannone@me.com>
-Description: Check data tables for problems at close range.
+Description: Validate data in local data frames,
+    local tibble objects, in CSV and TSV files, and
+    in database tables (PostgreSQL and MySQL).
+    Validation pipelines can be made using
+    easily-readable, consecutive validation steps
+    and such pipelines allow for switching of the
+    data table context. Upon execution of the
+    validation plan, several reporting options are
+    available. User-defined thresholds for failure
+    rates allow for the determination of appropriate
+    reporting actions (e.g., sending email
+    notifications).
+Depends: R (>= 3.4.0)
 License: MIT + file LICENSE
 Imports:
     digest (>= 0.6.12),
@@ -28,8 +37,9 @@ Imports:
     stringr (>= 1.2.0),
     tibble (>= 1.3.3),
     tidyr (>= 0.6.3)
-URL: https://github.com/rich-iannone/pointblank
-BugReports: https://github.com/rich-iannone/pointblank/issues
 Suggests:
     testthat
+URL: https://github.com/rich-iannone/pointblank
+BugReports: https://github.com/rich-iannone/pointblank/issues
+Encoding: UTF-8
 RoxygenNote: 6.0.1

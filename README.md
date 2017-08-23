@@ -180,6 +180,12 @@ agent_db <-
 
 **pointblank** is used in an **R** environment. If you don't have an **R** installation, it can be obtained from the [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org/).
 
+The **CRAN** version of this package can be obtained using the following statement:
+
+```r
+install.packages("pointblank")
+```
+
 You can install the development version of **pointblank** from **GitHub** using the **devtools** package.
 
 ```r

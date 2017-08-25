@@ -5,11 +5,55 @@
 \title{Given an agent that is fully loaded with
 tasks, perform an interrogation}
 \usage{
-interrogate(agent)
+interrogate(agent, get_problem_rows = TRUE, get_first_n = NULL,
+  sample_n = NULL, sample_frac = NULL, sample_limit = 500)
 }
 \arguments{
 \item{agent}{an agent object of class
 \code{ptblank_agent}.}
+
+\item{get_problem_rows}{an option to 
+collect rows that didn't pass a
+particular validation step. The default
+is \code{TRUE} and further options
+allow for fine control of how these
+rows are collected.}
+
+\item{get_first_n}{if the option to
+collect non-passing rows is chosen,
+there is the option here to collect
+the first \code{n} rows here. Supply
+the number of rows to extract from
+the top of the non-passing rows table
+(the ordering of data from the
+original table is retained).}
+
+\item{sample_n}{if the option to
+collect non-passing rows is chosen,
+this option allows for the sampling
+of \code{n} rows. Supply the number
+of rows to sample from the non-passing
+rows table. If \code{n} is greater
+than the number of non-passing rows,
+then all the rows will be returned.}
+
+\item{sample_frac}{if the option to
+collect non-passing rows is chosen,
+this option allows for the sampling
+of a fraction of those rows. Provide a
+number in the range of \code{0} and
+\code{1}. The number of rows to return
+may be extremely large (and this is
+especially when querying remote
+databases), however, the
+\code{sample_limit} option will apply
+a hard limit to the returned rows.}
+
+\item{sample_limit}{a value that
+limits the possible number of rows
+returned when sampling non-passing
+rows using the \code{sample_frac}
+option.}
 }
 \value{
 an agent object.
@@ -19,4 +63,45 @@ The agent has all the
 information on what to do, so now all
 interrogations can proceed efficiently,
 and, according to plan.
+}
+\examples{
+# Create 2 simple data frames
+# with 2 columns of numerical
+# values in each
+df_1 <-
+  data.frame(
+    a = c(5, 7, 6, 5, 8, 7),
+    b = c(7, 1, 0, 0, 0, 3))
+    
+df_2 <-
+  data.frame(
+    c = c(8, 8, 8, 6, 1, 3),
+    d = c(9, 8, 7, 2, 3, 3))
+
+# Validate that values in column
+# `a` from `df_1` are always >= 5,
+# and also validate that, in `df_2`,
+# values in `c` are always == 8
+# when values in `d` are >= 5  
+agent <-
+  create_agent() \%>\%
+  focus_on(tbl_name = "df_1") \%>\%
+  col_vals_gte(
+    column = a,
+    value = 5) \%>\%
+  focus_on(tbl_name = "df_2") \%>\%
+  col_vals_equal(
+    column = c,
+    value = 8,
+    preconditions = d >= 5) \%>\%
+  interrogate()
+  
+# A basic summary can then be
+# produced using `get_summary()`
+get_summary(agent)[, 1:7]
+#> # A tibble: 2 x 7
+#>   tbl_name  db_type assertion_type column value regex all_passed
+#>      <chr>    <chr>          <chr>  <chr> <dbl> <chr>      <lgl>
+#> 1     df_1 local_df   col_vals_gte      a     5  <NA>       TRUE
+#> 2     df_2 local_df col_vals_equal      c     8  <NA>       TRUE
 }

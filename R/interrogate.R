@@ -6,9 +6,87 @@
 #' and, according to plan.
 #' @param agent an agent object of class
 #' \code{ptblank_agent}.
+#' @param get_problem_rows an option to 
+#' collect rows that didn't pass a
+#' particular validation step. The default
+#' is \code{TRUE} and further options
+#' allow for fine control of how these
+#' rows are collected.
+#' @param get_first_n if the option to
+#' collect non-passing rows is chosen,
+#' there is the option here to collect
+#' the first \code{n} rows here. Supply
+#' the number of rows to extract from
+#' the top of the non-passing rows table
+#' (the ordering of data from the
+#' original table is retained).
+#' @param sample_n if the option to
+#' collect non-passing rows is chosen,
+#' this option allows for the sampling
+#' of \code{n} rows. Supply the number
+#' of rows to sample from the non-passing
+#' rows table. If \code{n} is greater
+#' than the number of non-passing rows,
+#' then all the rows will be returned.
+#' @param sample_frac if the option to
+#' collect non-passing rows is chosen,
+#' this option allows for the sampling
+#' of a fraction of those rows. Provide a
+#' number in the range of \code{0} and
+#' \code{1}. The number of rows to return
+#' may be extremely large (and this is
+#' especially when querying remote
+#' databases), however, the
+#' \code{sample_limit} option will apply
+#' a hard limit to the returned rows.
+#' @param sample_limit a value that
+#' limits the possible number of rows
+#' returned when sampling non-passing
+#' rows using the \code{sample_frac}
+#' option.
 #' @return an agent object.
+#' @examples 
+#' # Create 2 simple data frames
+#' # with 2 columns of numerical
+#' # values in each
+#' df_1 <-
+#'   data.frame(
+#'     a = c(5, 7, 6, 5, 8, 7),
+#'     b = c(7, 1, 0, 0, 0, 3))
+#'     
+#' df_2 <-
+#'   data.frame(
+#'     c = c(8, 8, 8, 6, 1, 3),
+#'     d = c(9, 8, 7, 2, 3, 3))
+#' 
+#' # Validate that values in column
+#' # `a` from `df_1` are always >= 5,
+#' # and also validate that, in `df_2`,
+#' # values in `c` are always == 8
+#' # when values in `d` are >= 5  
+#' agent <-
+#'   create_agent() %>%
+#'   focus_on(tbl_name = "df_1") %>%
+#'   col_vals_gte(
+#'     column = a,
+#'     value = 5) %>%
+#'   focus_on(tbl_name = "df_2") %>%
+#'   col_vals_equal(
+#'     column = c,
+#'     value = 8,
+#'     preconditions = d >= 5) %>%
+#'   interrogate()
+#'   
+#' # A basic summary can then be
+#' # produced using `get_summary()`
+#' get_summary(agent)[, 1:7]
+#' #> # A tibble: 2 x 7
+#' #>   tbl_name  db_type assertion_type column value regex all_passed
+#' #>      <chr>    <chr>          <chr>  <chr> <dbl> <chr>      <lgl>
+#' #> 1     df_1 local_df   col_vals_gte      a     5  <NA>       TRUE
+#' #> 2     df_2 local_df col_vals_equal      c     8  <NA>       TRUE
 #' @importFrom tibble tibble as_tibble
-#' @importFrom dplyr group_by group_by_ mutate_ filter filter_ select select_ collect ungroup summarize row_number n
+#' @importFrom dplyr group_by group_by_ mutate_ filter filter_ select select_ collect ungroup summarize row_number n sample_n sample_frac everything
 #' @importFrom tidyr nest_
 #' @importFrom stringr str_split
 #' @importFrom purrr flatten_chr flatten_dbl
@@ -17,7 +95,12 @@
 #' @importFrom utils head
 #' @export interrogate
 
-interrogate <- function(agent) {
+interrogate <- function(agent,
+                        get_problem_rows = TRUE,
+                        get_first_n = NULL,
+                        sample_n = NULL,
+                        sample_frac = NULL,
+                        sample_limit = 500) {
   
   # Get the starting time for the interrogation
   interrogation_start_time <- Sys.time()
@@ -51,7 +134,7 @@ interrogate <- function(agent) {
       file_extension <- 
         (agent$validation_set$file_path[i] %>% 
            basename() %>% 
-           str_split(pattern = "\\.") %>% 
+           stringr::str_split(pattern = "\\.") %>% 
            unlist())[2] %>% 
         tolower()
       
@@ -67,7 +150,7 @@ interrogate <- function(agent) {
         }
       }
       
-      if (!is.na(col_types)){
+      if (!is.na(col_types)) {
         if (file_extension == "csv") {
           table <- 
             suppressMessages(
@@ -393,13 +476,54 @@ interrogate <- function(agent) {
         # State that `all_passed` is FALSE
         agent$validation_set$all_passed[i] <- FALSE
         
-        # Collect up to 5 problem rows 
-        problem_rows <- 
-          judgment %>%
-          dplyr::filter(pb_is_good_ == FALSE) %>%
-          dplyr::select(-pb_is_good_) %>%
-          head(5) %>%
-          tibble::as_tibble()
+        # Collect problem rows if requested
+        
+        if (get_problem_rows) {
+          
+          problem_rows <- 
+            judgment %>%
+            dplyr::filter(pb_is_good_ == FALSE) %>%
+            dplyr::select(-pb_is_good_)
+          
+          if (!is.null(get_first_n)) {
+            
+            problem_rows <-
+              problem_rows %>%
+              head(get_first_n) %>%
+              tibble::as_tibble()
+            
+          } else if (!is.null(sample_n)) {
+            
+            problem_rows <-
+              dplyr::sample_n(
+                tbl = problem_rows,
+                size = sample_n,
+                replace = FALSE) %>%
+              tibble::as_tibble()
+            
+          } else if (!is.null(sample_frac)) {
+            
+            problem_rows <-
+              dplyr::sample_frac(
+                tbl = problem_rows,
+                size = sample_frac,
+                replace = FALSE) %>%
+              tibble::as_tibble() %>%
+              head(sample_limit)
+            
+          } else {
+            
+            problem_rows <-
+              problem_rows %>%
+              head(500) %>%
+              tibble::as_tibble()
+          }
+          
+          problem_rows <-
+            problem_rows %>%
+            mutate(`pb_step_` = i) %>%
+            select(`pb_step_`, everything())
+        }
         
         # Place the sample of problem rows in
         # the `agent$validation_set` tbl_df
@@ -407,13 +531,14 @@ interrogate <- function(agent) {
         names_problem_rows <- names(problem_rows)
         
         agent$validation_set$row_sample[i] <- 
-          problem_rows %>%
           tidyr::nest_(
+            data = problem_rows,
             key_col = "data",
             nest_cols = names_problem_rows)
         
       } else if (false_count == 0) {
         agent$validation_set$all_passed[i] <- TRUE
+        
       }
     }
     

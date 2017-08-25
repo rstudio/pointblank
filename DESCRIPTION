@@ -1,7 +1,7 @@
 Package: pointblank
 Type: Package
 Title: Validation of Local and Remote Data Tables
-Version: 0.1
+Version: 0.2
 Authors@R: person("Rich", "Iannone", email = "riannone@me.com", role = c("aut", "cre"))
 Description: Validate data in local data frames,
     local 'tibble' objects, in 'CSV' and 'TSV' files,

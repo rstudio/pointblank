@@ -689,17 +689,17 @@ pb_notify <- function(agent,
     select(-tbl_name_chars, -tbl_name_abbrev) %>%
     dplyr::mutate(f_failed = paste0(as.character(f_failed * 100), "%")) %>%
     dplyr::mutate(f_passed = paste0(as.character(f_passed * 100), "%")) %>%
-    dplyr::rename(`Step` = step) %>%
-    dplyr::rename(`Table Name` = tbl_name) %>%
-    dplyr::rename(`Database Type` = db_type) %>%
-    dplyr::rename(`Assertion` = assertion_type) %>%
-    dplyr::rename(`Column` = column) %>%
-    dplyr::rename(`Number Passed` = n_passed) %>%
-    dplyr::rename(`Number Failed` = n_failed) %>%
-    dplyr::rename(` % Passed` = f_passed) %>%
-    dplyr::rename(` % Failed` = f_failed) %>%
     pixiedust::dust() %>%
     pixiedust::sprinkle_print_method("html") %>%
+    pixiedust::sprinkle_colnames(step = "Step",
+                                 tbl_name = "Table Name",
+                                 db_type = "Database Type",
+                                 assertion_type = "Assertion",
+                                 column = "Column",
+                                 n_passed = "Number Passed",
+                                 n_failed = "Number Failed",
+                                 f_passed = " % Passed",
+                                 f_failed = " % Failed") %>%
     pixiedust::sprinkle(
       part = "head",
       border = "top",

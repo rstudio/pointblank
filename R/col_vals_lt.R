@@ -139,6 +139,17 @@ col_vals_lt <- function(agent,
     preconditions <- NULL
   }
   
+  if (is.null(brief)) {
+    
+    brief <-
+      create_autobrief(
+        agent = agent,
+        assertion_type = "col_vals_gt",
+        preconditions = preconditions,
+        column = column,
+        value = value)
+  }
+  
   # If "*" is provided for `column`, select all
   # table columns for this verification
   if (column[1] == "all_cols()") {

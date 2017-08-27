@@ -98,8 +98,7 @@
 #'   focus_on(tbl_name = "df") %>%
 #'   col_vals_gt(
 #'     column = a,
-#'     value = 4,
-#'     brief = "Checking for value greater than 4") %>%
+#'     value = 4) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column
@@ -136,6 +135,17 @@ col_vals_gt <- function(agent,
   
   if (preconditions == "NULL") {
     preconditions <- NULL
+  }
+  
+  if (is.null(brief)) {
+    
+    brief <-
+      create_autobrief(
+        agent = agent,
+        assertion_type = "col_vals_gt",
+        preconditions = preconditions,
+        column = column,
+        value = value)
   }
   
   # If "*" is provided for `column`, select all

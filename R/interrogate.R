@@ -77,16 +77,16 @@
 #'     preconditions = d >= 5) %>%
 #'   interrogate()
 #'   
-#' # A basic summary can then be
-#' # produced using `get_summary()`
-#' get_summary(agent)[, 1:7]
+#' # Get a basic summary with
+#' # `get_interrogation_summary()`
+#' get_interrogation_summary(agent)[, 1:7]
 #' #> # A tibble: 2 x 7
 #' #>   tbl_name  db_type assertion_type column value regex all_passed
 #' #>      <chr>    <chr>          <chr>  <chr> <dbl> <chr>      <lgl>
 #' #> 1     df_1 local_df   col_vals_gte      a     5  <NA>       TRUE
 #' #> 2     df_2 local_df col_vals_equal      c     8  <NA>       TRUE
 #' @importFrom tibble tibble as_tibble
-#' @importFrom dplyr group_by group_by_ mutate_ filter filter_ select select_ collect ungroup summarize row_number n sample_n sample_frac everything
+#' @importFrom dplyr group_by group_by_ mutate mutate_ filter filter_ select select_ collect ungroup summarize row_number n sample_n sample_frac everything
 #' @importFrom tidyr nest_
 #' @importFrom stringr str_split
 #' @importFrom purrr flatten_chr flatten_dbl
@@ -109,7 +109,7 @@ interrogate <- function(agent,
   agent$validation_time <- interrogation_start_time
   
   # Create bindings for variables
-  pb_is_good_ <- set <- NULL
+  pb_is_good_ <- set <- pb_step_ <- NULL
   
   # Get number of rows in `validation_set`
   n_validations <- nrow(agent$validation_set)
@@ -521,8 +521,8 @@ interrogate <- function(agent,
           
           problem_rows <-
             problem_rows %>%
-            mutate(`pb_step_` = i) %>%
-            select(`pb_step_`, everything())
+            dplyr::mutate(pb_step_ = i) %>%
+            dplyr::select(pb_step_, dplyr::everything())
         }
         
         # Place the sample of problem rows in

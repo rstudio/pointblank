@@ -716,5 +716,5 @@ interrogate <- function(agent,
       creds_file = agent$email_creds_file_path)
   }
   
-  return(agent)
+  agent
 }

@@ -32,11 +32,11 @@ library(tibble)
 tbl_1 <-
   tibble::tribble(
     ~a, ~b,   ~c,
-    1,   6,   "h2adb",
-    2,   7,   "h2spb",
-    3,   8,   "h2df",
-    4,   9,   "d3jwb",
-    5,  10,   "h2esf")
+    1,   6,   "h2",
+    2,   7,   "h2",
+    3,   8,   "h2",
+    4,   9,   "d3",
+    5,  10,   "h2")
 
 tbl_2 <-
   tibble::tribble(
@@ -70,9 +70,9 @@ agent <-
     value = 10) %>%              # (6)
   col_vals_regex(
     column = c,
-    regex = "h2.*") %>%          # (7)
+    regex = "[a-z][0-9]") %>%    # (7)
   col_vals_in_set(
-    column = substr(c, 0, 2),
+    column = c,
     set = c("h2", "d3")) %>%     # (8)
   focus_on(
     tbl_name = "tbl_2") %>%      # (9)
@@ -92,26 +92,58 @@ agent <-
   interrogate()                  # (15)
 ```
 
-We can get a detailed summary of the interrogation, showing how many individual tests in each validation step (one per row) had passed or failed. The validations are classified with an `action` which indicates the type of action to perform based on user-defined thresholds (thresholds can be set globally, or, for each validation step).
+We can get a detailed summary report of the interrogation, showing how many individual tests in each validation step had passed or failed. The validation steps are classified with an `action` which indicates the type of action to perform based on user-defined thresholds (thresholds can be set globally, or, for each validation step).
 
 ```r
 library(pointblank)
 
-get_interrogation_summary(agent)
-#> # A tibble: 11 x 11
-#>    tbl_name  db_type      assertion_type          column value regex all_passed     n n_passed f_passed action
-#>       <chr>    <chr>               <chr>           <chr> <dbl> <chr>      <lgl> <dbl>    <dbl>    <dbl>  <chr>
-#>  1    tbl_1 local_df         col_vals_gt               a     0  <NA>       TRUE     5        5      1.0   <NA>
-#>  2    tbl_1 local_df rows_not_duplicated         a, b, c    NA  <NA>       TRUE     5        5      1.0   <NA>
-#>  3    tbl_1 local_df        col_vals_gte           a + b     7  <NA>       TRUE     5        5      1.0   <NA>
-#>  4    tbl_1 local_df        col_vals_lte               b    10  <NA>       TRUE     5        5      1.0   <NA>
-#>  5    tbl_1 local_df      col_vals_regex               c    NA  h2.*      FALSE     5        4      0.8   warn
-#>  6    tbl_1 local_df     col_vals_in_set substr(c, 0, 2)    NA  <NA>       TRUE     5        5      1.0   <NA>
-#>  7    tbl_2 local_df     col_vals_in_set               d    NA  <NA>      FALSE     5        4      0.8   warn
-#>  8    tbl_2 local_df col_vals_not_in_set               d    NA  <NA>      FALSE     5        1      0.2   warn
-#>  9    tbl_2 local_df        col_vals_gte               e     0  <NA>      FALSE     5        4      0.8   warn
-#> 10    tbl_2 local_df       col_vals_null               f    NA  <NA>      FALSE     5        0      0.0   warn
-#> 11    tbl_2 local_df   col_vals_not_null               d    NA  <NA>       TRUE     5        5      1.0   <NA>
+get_interrogation_summary(agent)[1:5]
+#> # A tibble: 11 x 5
+#>    tbl_name  db_type      assertion_type  column value
+#>       <chr>    <chr>               <chr>   <chr> <dbl>
+#>  1    tbl_1 local_df         col_vals_gt       a     0
+#>  2    tbl_1 local_df rows_not_duplicated a, b, c    NA
+#>  3    tbl_1 local_df        col_vals_gte   a + b     7
+#>  4    tbl_1 local_df        col_vals_lte       b    10
+#>  5    tbl_1 local_df      col_vals_regex       c    NA
+#>  6    tbl_1 local_df     col_vals_in_set       c    NA
+#>  7    tbl_2 local_df     col_vals_in_set       d    NA
+#>  8    tbl_2 local_df col_vals_not_in_set       d    NA
+#>  9    tbl_2 local_df        col_vals_gte       e     0
+#> 10    tbl_2 local_df       col_vals_null       f    NA
+#> 11    tbl_2 local_df   col_vals_not_null       d    NA
+
+get_interrogation_summary(agent)[6:11]
+#> # A tibble: 11 x 6
+#>         regex all_passed     n n_passed f_passed action
+#>         <chr>      <lgl> <dbl>    <dbl>    <dbl>  <chr>
+#>  1       <NA>       TRUE     5        5      1.0   <NA>
+#>  2       <NA>       TRUE     5        5      1.0   <NA>
+#>  3       <NA>       TRUE     5        5      1.0   <NA>
+#>  4       <NA>       TRUE     5        5      1.0   <NA>
+#>  5 [a-z][0-9]       TRUE     5        5      1.0   <NA>
+#>  6       <NA>       TRUE     5        5      1.0   <NA>
+#>  7       <NA>      FALSE     5        4      0.8   warn
+#>  8       <NA>      FALSE     5        1      0.2   warn
+#>  9       <NA>      FALSE     5        4      0.8   warn
+#> 10       <NA>      FALSE     5        0      0.0   warn
+#> 11       <NA>       TRUE     5        5      1.0   <NA>
+
+get_interrogation_summary(agent)[12]
+#> # A tibble: 11 x 1
+#>                                                                       brief
+#>                                                                       <chr>
+#>  1                                  Expect that values in `a` should be > 0
+#>  2                       Expect that rows from `a, b, c` have no duplicates
+#>  3            Expect that values in `a + b` (computed column) should be > 7
+#>  4                                 Expect that values in `b` should be > 10
+#>  5 Expect that values in `c` should match the regex expression `[a-z][0-9]`
+#>  6                 Expect that values in `c` should be part of set `h2, d3`
+#>  7                   Expect that values in `d` should be part of set `a, b`
+#>  8               Expect that values in `d` should not be part of set `a, b`
+#>  9                                  Expect that values in `e` should be > 0
+#> 10                                 Expect that values in `f` should be NULL
+#> 11                             Expect that values in `d` should not be NULL
 ```
 
 Or a self-contained HTML report can be generated that shows how the validation went.

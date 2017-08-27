@@ -97,7 +97,7 @@ We can get a detailed summary of the interrogation, showing how many individual 
 ```r
 library(pointblank)
 
-get_summary(agent)
+get_interrogation_summary(agent)
 #> # A tibble: 11 x 11
 #>    tbl_name  db_type      assertion_type          column value regex all_passed     n n_passed f_passed action
 #>       <chr>    <chr>               <chr>           <chr> <dbl> <chr>      <lgl> <dbl>    <dbl>    <dbl>  <chr>

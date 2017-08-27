@@ -50,14 +50,24 @@
 
 get_row_sample_info <- function(agent) {
   
-  # Stop function if the agent hasn't
+  # Return NA if the agent hasn't
   # yet performed an interrogation
-  if (agent$validation_time %>% length() == 0) {
+  if (did_agent_interrogate(agent) == FALSE |
+      is.na(did_agent_interrogate(agent))) {
     return(NA)
   }
   
   # Get the number of validation steps
   validation_steps <- nrow(agent$validation_set)
+  
+  # Get the validation set
+  validation_set <- 
+    agent$validation_set %>%
+    mutate(
+      brief =
+        agent$logical_plan %>%
+        filter(!(component_name %in% c("create_agent", "focus_on"))) %>%
+        pull(brief))
   
   # Create a tibble that has the
   # validation step number, the assertion
@@ -69,12 +79,14 @@ get_row_sample_info <- function(agent) {
     1:validation_steps %>%
     purrr::map_df(.f = function(x) {
       
-      if (inherits(agent$validation_set$row_sample[[x]][[1]], "tbl_df")) {
+      if (inherits(validation_set$row_sample[[x]][[1]], "tbl_df")) {
         tibble::tibble(
           step = x,
-          assertion_type = agent$validation_set$assertion_type[x],
-          n_failed = agent$validation_set$n_failed[x],
-          rows_in_sample = nrow(agent$validation_set$row_sample[[x]][[1]]))
+          tbl = validation_set$tbl_name[x],
+          type = validation_set$assertion_type[x],
+          n_fail = validation_set$n_failed[x],
+          n_sampled = nrow(validation_set$row_sample[[x]][[1]]),
+          brief = validation_set$brief)
       }})
   
   # Return the output table if there are

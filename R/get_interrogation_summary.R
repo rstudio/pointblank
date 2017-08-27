@@ -11,7 +11,7 @@
 get_interrogation_summary <- function(agent) {
   
   # Create bindings for specific variables
-  f_passed <- warn <- notify <- component_name <- brief <- NULL
+  f_passed <- warn <- notify <- component_name <- brief <- action <- NULL
   
   if (did_agent_interrogate(agent)) {
     
@@ -33,7 +33,8 @@ get_interrogation_summary <- function(agent) {
            .$warn == TRUE & .$notify == FALSE ~ "warn",
            .$warn == FALSE & .$notify == TRUE ~ "notify",
            .$warn == TRUE & .$notify == TRUE ~ "notify")) %>%
-      dplyr::select(-warn, -notify)
+      dplyr::select(-warn, -notify) %>%
+      dplyr::select(1:10, action, brief)
     
     return(interrogation_summary)
     

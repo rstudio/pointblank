@@ -1,66 +1,8 @@
 
-#' Add properly formatted validation steps.
-#' @param agent an agent object of class
-#' \code{ptblank_agent}.
-#' @param assertion_type a string providing the
-#' name of the validation function.
-#' @param column the column (or a set of columns,
-#' provided as a character vector) to which this
-#' validation should be applied. Aside from a single
-#' column name, column operations can be used to
-#' create one or more computed columns (e.g., 
-#' \code{"a + b"} or \code{"a + sum(a)"}).
-#' @param value a numeric value used for this test.
-#' @param set a vector of numeric or string-based
-#' elements.
-#' @param regex a regex pattern to test for matching
-#' strings.
-#' @param preconditions an optional vector of filtering
-#' statements for filtering the table before this
-#' validation step.
-#' @param warn_count the threshold number for 
-#' individual validations returning a \code{FALSE}
-#' result before applying the \code{warn} flag.
-#' @param notify_count the threshold number for 
-#' individual validations returning a \code{FALSE}
-#' result before applying the \code{notify} flag.
-#' @param warn_fraction the threshold fraction for 
-#' individual validations returning a \code{FALSE}
-#' over all the entire set of individual validations.
-#' Beyond this threshold, the \code{warn} flag will
-#' be applied.
-#' @param notify_fraction the threshold fraction for 
-#' individual validations returning a \code{FALSE}
-#' over all the entire set of individual validations.
-#' Beyond this threshold, the \code{notify} flag will
-#' be applied.
-#' @param tbl_name the name of the local or remote
-#' table.
-#' @param db_type if the table is located in a
-#' database, the type of database is required here.
-#' Currently, this can be either \code{PostgreSQL}
-#' or \code{MySQL}.
-#' @param creds_file a path to a credentials file
-#' used for establishing a database connection.
-#' @param init_sql an initially-applied SQL statement
-#' for transforming tabular data in a database before
-#' validation occurs.
-#' @param file_path an optional path for a tabular data
-#' file to be loaded for this verification step. Valid
-#' types are CSV and TSV files.
-#' @param col_types if validating a CSV or TSV file,
-#' an optional column specification can be provided
-#' here as a string. This string representation is
-#' where each character represents one column and the
-#' mappings are: \code{c} -> character, \code{i} ->
-#' integer, \code{n} -> number, \code{d} -> double, 
-#' \code{l} -> logical, \code{D} -> date, \code{T} ->
-#' date time, \code{t} -> time, \code{?} -> guess, 
-#' or \code{_/-}, which skips the column.
+# Add properly formatted validation steps
 #' @importFrom tibble tibble as_tibble
 #' @importFrom purrr map_df
 #' @importFrom dplyr select bind_rows
-#' @export create_validation_step
 create_validation_step <- function(agent,
                                    assertion_type,
                                    column,
@@ -68,6 +10,7 @@ create_validation_step <- function(agent,
                                    set = NULL,
                                    regex = NULL,
                                    preconditions = NULL,
+                                   brief = NULL,
                                    warn_count = NULL,
                                    notify_count = NULL,
                                    warn_fraction = NULL,
@@ -192,40 +135,15 @@ create_validation_step <- function(agent,
       agent$preconditions,
       preconditions_df)
   
-  return(agent)
+  agent
 }
 
 
-#' Acquire information on the coordinates of
-#' a remote table.
-#' @description If a table is remote (i.e.,
-#' in a database), this function will be
-#' invoked to set an entry point for the
-#' interrogation query.
-#' @param table the table with which an entry point
-#' is required.
-#' @param db_type if the table is located in a
-#' database, the type of database is required here.
-#' Currently, this can be either \code{PostgreSQL}
-#' or \code{MySQL}.
-#' @param creds_file if a connection to a database
-#' is required for reaching the table specified in
-#' \code{tbl_name}, then a path to a credentials file
-#' can be used to establish that connection. The
-#' credentials file is an \code{RDS} containing a
-#' character vector with the following items in the
-#' specified order: (1) database name (\code{dbname}),
-#' (2) the \code{host} name, (3) the \code{port},
-#' (4) the username (\code{user}), and (5) the
-#' \code{password}. This file can be easily created
-#' using the \code{create_creds_file()} function.
-#' @param initial_sql when accessing a remote table,
-#' this provides an option to provide an initial
-#' query component before conducting validations. 
-#' An entire SQL statement can be provided here, or,
-#' as a shortcut, the initial \code{SELECT...}
-#' statement can be omitted for simple queries (e.g.,
-#' \code{WHERE a > 1 AND b = 'one'}).
+# Acquire information on the coordinates
+# of a remote table; if a table is remote
+# (i.e., in a database), this function
+# will be invoked to set an entry point
+# for the interrogation query.
 #' @importFrom dplyr src_postgres src_mysql tbl sql
 set_entry_point <- function(table,
                             db_type = NULL,
@@ -330,51 +248,27 @@ set_entry_point <- function(table,
     }
   }
   
-  invisible(tbl_entry)
+  tbl_entry
 }
 
 
-#' With any `all_cols()` call, return a wildcard operator
-#' @export all_cols
-all_cols <- function() {
-  return("*")
-}
+# With any `all_cols()` call, return a
+# wildcard operator
+all_cols <- function() {"*"}
 
-#' Get all column names from the table currently in focus
-#' @param agent an agent object of class
-#' \code{ptblank_agent}.
+# Get all column names from the table
+# currently in focus
 get_all_cols <- function(agent) {
   
   # Get vector of all columns
   # table currently in focus
-  col_names <- agent$focal_col_names
-  return(col_names)
+  agent$focal_col_names
 }
 
 
-#' Determine the course of action for a
-#' given verification step. Based on a recent
-#' judgment, what actions are taken now?
-#' @param n the total number of validation checks
-#' in the validation step.
-#' @param false_count the number of validation
-#' checks that returned a \code{FALSE} result.
-#' @param warn_count the threshold number for 
-#' individual validations returning a \code{FALSE}
-#' result before applying the \code{warn} flag.
-#' @param notify_count the threshold number for 
-#' individual validations returning a \code{FALSE}
-#' result before applying the \code{notify} flag.
-#' @param warn_fraction the threshold fraction for 
-#' individual validations returning a \code{FALSE}
-#' over all the entire set of individual validations.
-#' Beyond this threshold, the \code{warn} flag will
-#' be applied.
-#' @param notify_fraction the threshold fraction for 
-#' individual validations returning a \code{FALSE}
-#' over all the entire set of individual validations.
-#' Beyond this threshold, the \code{notify} flag will
-#' be applied. 
+# Determine the course of action for a
+# given verification step. Based on a recent
+# judgment, what actions are taken now?
 #' @importFrom tibble tibble
 determine_action <- function(n,
                              false_count,
@@ -403,7 +297,6 @@ determine_action <- function(n,
     }
   }
   
-  
   if (!is.na(warn_fraction)) {
     
     warn_count <- round(warn_fraction * n, 0)
@@ -427,20 +320,14 @@ determine_action <- function(n,
   }
   
   # Generate a tbl with action information
-  action_df <-
-    tibble::tibble(
-      warn = warn,
-      notify = notify)
-  
-  return(action_df)
+  tibble::tibble(
+    warn = warn,
+    notify = notify)
 }
 
-#' Generate summary SVG files for the results of a
-#' validation pipeline
-#' @param agent agent an agent object of class
-#' \code{ptblank_agent}.
+# Generate summary SVG files for the results of a
+# validation pipeline
 #' @importFrom stringr str_replace str_replace_all
-#' @export generate_img_files_results
 generate_img_files_results <- function(agent) {
   
   if (!inherits(agent, "ptblank_agent")) {
@@ -528,11 +415,8 @@ generate_img_files_results <- function(agent) {
   }
 }
 
-#' Generate SVG files for the plan of a validation pipeline
-#' @param agent agent an agent object of class
-#' \code{ptblank_agent}.
+# Generate SVG files for the plan of a validation pipeline
 #' @importFrom stringr str_replace_all
-#' @export generate_img_files_plan
 generate_img_files_plan <- function(agent) {
   
   if (!inherits(agent, "ptblank_agent")) {
@@ -571,13 +455,7 @@ generate_img_files_plan <- function(agent) {
   }
 }
 
-#' Send an email notification
-#' @param agent agent an agent object of class
-#' \code{ptblank_agent}.
-#' @param recipients a vector of email addresses to
-#' which the notification email will be sent.
-#' @param creds_file a path to a credentials file
-#' used for sending an email message.
+# Send an email notification
 #' @importFrom mailR send.mail
 #' @importFrom dplyr filter mutate select rename
 #' @importFrom pixiedust dust sprinkle sprinkle_print_method

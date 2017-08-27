@@ -111,6 +111,15 @@ col_is_posix <- function(agent,
   
   preconditions <- NULL
   
+  if (is.null(brief)) {
+    
+    brief <-
+      create_autobrief(
+        agent = agent,
+        assertion_type = "col_is_posix",
+        column = column)
+  }
+  
   # If "*" is provided for `column`, select all
   # table columns for this verification
   if (column[1] == "all_cols()") {

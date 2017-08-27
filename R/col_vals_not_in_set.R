@@ -147,6 +147,16 @@ col_vals_not_in_set <- function(agent,
     preconditions <- NULL
   }
   
+  if (is.null(brief)) {
+    
+    brief <-
+      create_autobrief(
+        agent = agent,
+        assertion_type = "col_vals_not_in_set",
+        column = column,
+        set = set)
+  }
+  
   # If "*" is provided for `column`, select all
   # table columns for this verification
   if (column[1] == "all_cols()") {

@@ -106,6 +106,15 @@ col_exists <- function(agent,
   
   preconditions <- NULL
   
+  if (is.null(brief)) {
+    
+    brief <-
+      create_autobrief(
+        agent = agent,
+        assertion_type = "col_exists",
+        column = column)
+  }
+  
   # Add one or more validation steps
   agent <-
     create_validation_step(

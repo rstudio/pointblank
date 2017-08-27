@@ -46,9 +46,13 @@
 #' #> 1    1 col_vals_between       65             10
 #' @importFrom tibble tibble
 #' @importFrom purrr map_df
+#' @importFrom dplyr filter pull
 #' @export get_row_sample_info
 
 get_row_sample_info <- function(agent) {
+  
+  # Create bindings for specific variables
+  component_name <- brief <- NULL
   
   # Return NA if the agent hasn't
   # yet performed an interrogation
@@ -66,8 +70,8 @@ get_row_sample_info <- function(agent) {
     mutate(
       brief =
         agent$logical_plan %>%
-        filter(!(component_name %in% c("create_agent", "focus_on"))) %>%
-        pull(brief))
+        dplyr::filter(!(component_name %in% c("create_agent", "focus_on"))) %>%
+        dplyr::pull(brief))
   
   # Create a tibble that has the
   # validation step number, the assertion

@@ -4,12 +4,16 @@
 #' @param x agent an agent object of class
 #' \code{ptblank_agent}.
 #' @keywords internal
+#' @importFrom dplyr mutate select group_by summarize n ungroup transmute pull
 #' @export
 
 print.ptblank_agent <- function(x, ...) {
   
   args <- list(...)
   args <- NULL
+  
+  # Create bindings for specific variables
+  tbl_name <- db_type <- tbl_name_type <- tbl_name_type_n <- NULL
   
   # Get the console width
   console_width <- getOption("width")

@@ -310,6 +310,9 @@ interrogate <- function(agent,
       }
     }
     
+    # ---------------------------------------------------------------
+    # Judge tables based on regex matching
+    
     if (agent$validation_set$assertion_type[i] == "col_vals_regex") {
       
       # Get the regex matching statement
@@ -326,6 +329,10 @@ interrogate <- function(agent,
           "pb_is_good_"))
     }
     
+    # ---------------------------------------------------------------
+    # Judge tables based on the presence
+    # of NULL values
+    
     if (agent$validation_set$assertion_type[i] == "col_vals_null") {
       
       # Get the final judgment on the table and the query
@@ -337,6 +344,10 @@ interrogate <- function(agent,
                  ")"),
           "pb_is_good_"))
     }
+    
+    # ---------------------------------------------------------------
+    # Judge tables based on the absence
+    # of NULL values
     
     if (agent$validation_set$assertion_type[i] == "col_vals_not_null") {
       

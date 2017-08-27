@@ -198,9 +198,14 @@ focus_on <- function(agent,
     tibble::as_tibble() %>%
     names()
   
-  # If no `brief` provided, set as NA
+  # If no `brief` provided, autogenerate one
   if (is.null(brief)) {
-    brief <- as.character(NA)
+    
+    brief <-
+      paste0(
+        "Focus on table `",
+        tbl_name, "` (",
+        agent$focal_db_type, ")")
   }
   
   # Place the validation step in the logical plan

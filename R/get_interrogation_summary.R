@@ -5,13 +5,13 @@
 #' @param agent an agent object of class
 #' \code{ptblank_agent}.
 #' @return an agent object.
-#' @importFrom dplyr select mutate case_when
+#' @importFrom dplyr select mutate case_when filter pull
 #' @export get_interrogation_summary
 
 get_interrogation_summary <- function(agent) {
   
   # Create bindings for specific variables
-  f_passed <- warn <- notify <- NULL
+  f_passed <- warn <- notify <- component_name <- brief <- NULL
   
   if (did_agent_interrogate(agent)) {
     
@@ -21,8 +21,8 @@ get_interrogation_summary <- function(agent) {
       mutate(
         brief =
           agent$logical_plan %>%
-          filter(!(component_name %in% c("create_agent", "focus_on"))) %>%
-          pull(brief))
+          dplyr::filter(!(component_name %in% c("create_agent", "focus_on"))) %>%
+          dplyr::pull(brief))
     
     interrogation_summary <-
       validation_set %>%

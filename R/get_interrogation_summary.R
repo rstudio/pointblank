@@ -6,18 +6,27 @@
 #' \code{ptblank_agent}.
 #' @return an agent object.
 #' @importFrom dplyr select mutate case_when
-#' @export get_summary
+#' @export get_interrogation_summary
 
-get_summary <- function(agent) {
+get_interrogation_summary <- function(agent) {
   
   # Create bindings for specific variables
   f_passed <- warn <- notify <- NULL
   
-  if (all(agent$validation_set$all_passed %in% c(TRUE, FALSE))) {
+  if (did_agent_interrogate(agent)) {
     
-    validation_summary <-
+    # Get validation set
+    validation_set <- 
       agent$validation_set %>%
-      dplyr::select(1:9, f_passed, warn, notify) %>%
+      mutate(
+        brief =
+          agent$logical_plan %>%
+          filter(!(component_name %in% c("create_agent", "focus_on"))) %>%
+          pull(brief))
+    
+    interrogation_summary <-
+      validation_set %>%
+      dplyr::select(1:9, f_passed, warn, notify, brief) %>%
       dplyr::mutate(
         action = dplyr::case_when(
            .$warn == FALSE & .$notify == FALSE ~ as.character(NA),
@@ -26,7 +35,8 @@ get_summary <- function(agent) {
            .$warn == TRUE & .$notify == TRUE ~ "notify")) %>%
       dplyr::select(-warn, -notify)
     
-    return(validation_summary)
+    return(interrogation_summary)
+    
   } else {
     stop("An interrogation hasn't yet occurred.")
   }

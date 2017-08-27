@@ -129,8 +129,7 @@ agent <-
   focus_on(tbl_name = "df") \%>\%
   col_vals_gt(
     column = a,
-    value = 4,
-    brief = "Checking for value greater than 4") \%>\%
+    value = 4) \%>\%
   interrogate()
 
 # Determine if these column

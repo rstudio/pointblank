@@ -15,7 +15,7 @@ and any sample rows from non-passing
 validations could potentially be available
 in the object.}
 
-\item{step_number}{the validation step number,
+\item{step}{the validation step number,
 which is assigned to each validation step in the
 order of definition. To determine which
 validation steps produced sample row data, one

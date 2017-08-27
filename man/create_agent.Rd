@@ -68,15 +68,14 @@ agent <-
         "extdata", "small_table.csv",
         package = "pointblank"),
     col_types = "TDicidlc") \%>\%
-  col_exists(column = c("a", "b")) \%>\%
+  col_exists(column = a) \%>\%
   interrogate()
  
-# A basic summary can be produced using
-# the `get_summary()` function
-get_summary(agent)[, 1:7]
-#> # A tibble: 2 x 7
+# A basic summary can be produced
+# using `get_interrogation_summary()`
+get_interrogation_summary(agent)[, 1:7]
+#> # A tibble: 1 x 7
 #>      tbl_name    db_type assertion_type column value regex all_passed
 #>         <chr>      <chr>          <chr>  <chr> <dbl> <chr>      <lgl>
 #> 1 small_table local_file     col_exists      a    NA  <NA>       TRUE
-#> 2 small_table local_file     col_exists      b    NA  <NA>       TRUE
 }

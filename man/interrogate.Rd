@@ -96,9 +96,9 @@ agent <-
     preconditions = d >= 5) \%>\%
   interrogate()
   
-# A basic summary can then be
-# produced using `get_summary()`
-get_summary(agent)[, 1:7]
+# Get a basic summary with
+# `get_interrogation_summary()`
+get_interrogation_summary(agent)[, 1:7]
 #> # A tibble: 2 x 7
 #>   tbl_name  db_type assertion_type column value regex all_passed
 #>      <chr>    <chr>          <chr>  <chr> <dbl> <chr>      <lgl>

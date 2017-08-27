@@ -40,10 +40,8 @@
 #' as a shortcut, the initial \code{SELECT...}
 #' statement can be omitted for simple queries (e.g.,
 #' \code{WHERE a > 1 AND b = 'one'}).
-#' @param description an optional, text-based
-#' description for the validation step. Used primarily
-#' in the Logical Plan section of the report generated
-#' by the \code{html_summary} function.
+#' @param brief an optional, text-based description
+#' for the new focus.
 #' @return an agent object.
 #' @examples
 #' # Create a simple data frame with a column
@@ -83,7 +81,7 @@ focus_on <- function(agent,
                      db_type = NULL,
                      creds_file = NULL,
                      initial_sql = NULL,
-                     description = NULL) {
+                     brief = NULL) {
   
   if (is.null(tbl_name) & is.null(file_name)) {
     stop("A table name or a file name must be provided.")
@@ -200,9 +198,9 @@ focus_on <- function(agent,
     tibble::as_tibble() %>%
     names()
   
-  # If no `description` provided, set as `NA`
-  if (is.null(description)) {
-    description <- as.character(NA)
+  # If no `brief` provided, set as NA
+  if (is.null(brief)) {
+    brief <- as.character(NA)
   }
   
   # Place the validation step in the logical plan
@@ -212,7 +210,7 @@ focus_on <- function(agent,
       tibble::tibble(
         component_name = "focus_on",
         parameters = as.character(NA),
-        description = description))
+        brief = brief))
   
-  return(agent)
+  agent
 }

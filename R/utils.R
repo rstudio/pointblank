@@ -1010,3 +1010,51 @@ number_of_validation_steps <- function(agent) {
     return(NA)
   }
 }
+
+# How many validation steps are associated
+# with the agent?
+create_autobrief <- function(agent,
+                             assertion_type,
+                             preconditions = NULL,
+                             column = NULL,
+                             value = NULL,
+                             regex = NULL,
+                             set = NULL) {
+  
+  if (assertion_type %in%
+    c("col_vals_gt", "col_vals_gte",
+      "col_vals_lt", "col_vals_lte",
+      "col_vals_equal", "col_vals_not_equal")) {
+    
+    is_column_computed <-
+      ifelse(column %in% agent$focal_col_names, FALSE, TRUE)
+    
+    if (assertion_type == "col_vals_gt") {
+      operator <- ">"
+    } else if (assertion_type == "col_vals_gte") {
+      operator <- ">="
+    } else if (assertion_type == "col_vals_lt") {
+      operator <- "<"
+    } else if (assertion_type == "col_vals_lte") {
+      operator <- "<="
+    } else if (assertion_type == "col_vals_equal") {
+      operator <- "=="
+    } else if (assertion_type == "col_vals_not_equal") {
+      operator <- "!="
+    } 
+    
+    autobrief <-
+      paste0(
+        "Expect that ",
+        ifelse(
+          !is.null(preconditions),
+           paste0("when ", "`", preconditions, "`, "),
+           paste0("")),
+        "values in `",
+        column, "`",
+        ifelse(is_column_computed, " (computed column) ", " "),
+        "should be ", operator, " ", value)
+  }
+  
+  autobrief
+}

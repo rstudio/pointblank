@@ -98,7 +98,7 @@ create_agent <- function(name = NULL,
         tibble::tibble(
           component_name = as.character("create_agent"),
           parameters = as.character(NA),
-          description = as.character(NA)),
+          brief = brief),
       validation_set =
         tibble::tibble(
           tbl_name = as.character(NA),
@@ -129,9 +129,8 @@ create_agent <- function(name = NULL,
       sets = list(),
       preconditions = list())
   
-  if (!is.null(name)) {
-    agent$validation_name <- name
-  }
+  # Add the agent name to the object
+  agent$validation_name <- name
   
   if (!is.null(email_creds_file_path)) {
     agent$email_creds_file_path <- email_creds_file_path
@@ -153,5 +152,5 @@ create_agent <- function(name = NULL,
   # the `agent object`
   attr(agent, "class") <- "ptblank_agent"
   
-  return(agent)
+  agent
 }

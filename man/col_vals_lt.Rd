@@ -5,11 +5,11 @@
 \title{Verify whether numerical column data are
 less than a specified value}
 \usage{
-col_vals_lt(agent, column, value, preconditions = NULL, warn_count = 1,
-  notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,
-  tbl_name = NULL, db_type = NULL, creds_file = NULL,
-  initial_sql = NULL, file_path = NULL, col_types = NULL,
-  description = NULL)
+col_vals_lt(agent, column, value, preconditions = NULL, brief = NULL,
+  warn_count = 1, notify_count = NULL, warn_fraction = NULL,
+  notify_fraction = NULL, tbl_name = NULL, db_type = NULL,
+  creds_file = NULL, initial_sql = NULL, file_path = NULL,
+  col_types = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -41,6 +41,9 @@ and, column \code{a} has numerical data, we
 can write a statement \code{a < 5} that filters
 all rows in the table where values in column a
 are less than five.}
+
+\item{brief}{an optional, text-based description
+for the validation step.}
 
 \item{warn_count}{the threshold number for 
 individual validations returning a \code{FALSE}
@@ -103,11 +106,6 @@ integer, \code{n} -> number, \code{d} -> double,
 \code{l} -> logical, \code{D} -> date, \code{T} ->
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
-
-\item{description}{an optional, text-based
-description for the validation step. Used primarily
-in the Logical Plan section of the report generated
-by the \code{html_summary} function.}
 }
 \value{
 an agent object.

@@ -2,13 +2,12 @@
 % Please edit documentation in R/col_is_logical.R
 \name{col_is_logical}
 \alias{col_is_logical}
-\title{Verify that a column contains R logical objects}
+\title{Verify that a column contains logical values}
 \usage{
-col_is_logical(agent, column, warn_count = 1, notify_count = NULL,
-  warn_fraction = NULL, notify_fraction = NULL, tbl_name = NULL,
-  db_type = NULL, creds_file = NULL, initial_sql = NULL,
-  file_path = NULL, col_types = NULL, preconditions = NULL,
-  description = NULL)
+col_is_logical(agent, column, brief = NULL, warn_count = 1,
+  notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,
+  tbl_name = NULL, db_type = NULL, creds_file = NULL,
+  initial_sql = NULL, file_path = NULL, col_types = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -17,6 +16,9 @@ col_is_logical(agent, column, warn_count = 1, notify_count = NULL,
 \item{column}{the name of a single table column,
 multiple columns in the same table, or, a helper
 function such as \code{all_cols()}.}
+
+\item{brief}{an optional, text-based description
+for the validation step.}
 
 \item{warn_count}{the threshold number for 
 individual validations returning a \code{FALSE}
@@ -79,35 +81,14 @@ integer, \code{n} -> number, \code{d} -> double,
 \code{l} -> logical, \code{D} -> date, \code{T} ->
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
-
-\item{preconditions}{an optional statement of
-filtering conditions that may reduce the number
-of rows for validation for the current
-validation step. The statements are executed
-for every row of the table in focus and are
-often referred as predicate statements (they
-either return \code{TRUE} or \code{FALSE} for
-every row evaluated, where rows evaluated as
-\code{TRUE} are the rows that are retained for
-the validation step). For example, if a table
-has columns \code{a}, \code{b}, and \code{c},
-and, column \code{a} has numerical data, we
-can write a statement \code{a < 5} that filters
-all rows in the table where values in column a
-are less than five.}
-
-\item{description}{an optional, text-based
-description for the validation step. Used primarily
-in the Logical Plan section of the report generated
-by the \code{html_summary} function.}
 }
 \value{
 an agent object.
 }
 \description{
 Set a verification step where
-a table column is expected to consist entirely
-of R \code{logical} objects.
+a table column is expected to consist of
+\code{logical} values.
 }
 \examples{
 # Create a simple data frame

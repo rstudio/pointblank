@@ -4,10 +4,10 @@
 \alias{col_exists}
 \title{Verify that one or more columns exist}
 \usage{
-col_exists(agent, column, warn_count = 1, notify_count = NULL,
-  warn_fraction = NULL, notify_fraction = NULL, tbl_name = NULL,
-  db_type = NULL, creds_file = NULL, initial_sql = NULL,
-  file_path = NULL, col_types = NULL, description = NULL)
+col_exists(agent, column, brief = NULL, warn_count = 1,
+  notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,
+  tbl_name = NULL, db_type = NULL, creds_file = NULL,
+  initial_sql = NULL, file_path = NULL, col_types = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -15,6 +15,9 @@ col_exists(agent, column, warn_count = 1, notify_count = NULL,
 
 \item{column}{the name of a single table column
 or multiple columns in the same table.}
+
+\item{brief}{an optional, text-based description
+for the validation step.}
 
 \item{warn_count}{the threshold number for 
 individual validations returning a \code{FALSE}
@@ -77,11 +80,6 @@ integer, \code{n} -> number, \code{d} -> double,
 \code{l} -> logical, \code{D} -> date, \code{T} ->
 date time, \code{t} -> time, \code{?} -> guess, 
 or \code{_/-}, which skips the column.}
-
-\item{description}{an optional, text-based
-description for the validation step. Used primarily
-in the Logical Plan section of the report generated
-by the \code{html_summary} function.}
 }
 \value{
 an agent object.

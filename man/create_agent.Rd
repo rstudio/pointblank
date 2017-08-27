@@ -10,7 +10,8 @@ create_agent(name = NULL, email_creds_file_path = NULL,
 \arguments{
 \item{name}{optional name for the agent that
 will eventually carry out the interrogation
-process.}
+process. If no value provided, a name will be
+generated based on the current system time.}
 
 \item{email_creds_file_path}{an optional path
 to an email credentials file.}

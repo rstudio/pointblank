@@ -5,8 +5,7 @@
 \title{Place certain access details more to the fore}
 \usage{
 focus_on(agent, tbl_name = NULL, file_name = NULL, col_types = NULL,
-  db_type = NULL, creds_file = NULL, initial_sql = NULL,
-  description = NULL)
+  db_type = NULL, creds_file = NULL, initial_sql = NULL, brief = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -54,10 +53,8 @@ as a shortcut, the initial \code{SELECT...}
 statement can be omitted for simple queries (e.g.,
 \code{WHERE a > 1 AND b = 'one'}).}
 
-\item{description}{an optional, text-based
-description for the validation step. Used primarily
-in the Logical Plan section of the report generated
-by the \code{html_summary} function.}
+\item{brief}{an optional, text-based description
+for the new focus.}
 }
 \value{
 an agent object.

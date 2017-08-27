@@ -35,6 +35,7 @@ create_validation_step <- function(agent,
       column = as.character(column),
       value = ifelse(is.null(value), as.numeric(NA), as.numeric(value)),
       regex = ifelse(is.null(regex), as.character(NA), as.character(regex)),
+      brief = ifelse(is.null(brief), as.character(NA), as.character(brief)),
       all_passed = as.logical(NA),
       warn_count = ifelse(is.null(warn_count), as.numeric(NA), as.numeric(warn_count)),
       notify_count = ifelse(is.null(notify_count), as.numeric(NA), as.numeric(notify_count)),
@@ -949,4 +950,63 @@ pb_notify <- function(agent,
     send = TRUE,
     html = TRUE,
     encoding = "utf-8")
+}
+
+# Does the agent have no validation steps
+# available in the object?
+is_agent_empty <- function(agent) {
+  
+  if (is_ptblank_agent(agent)) {
+    
+    if (nrow(agent$validation_set) == 0 &
+        nrow(agent$logical_plan) == 1 ) {
+      
+      return(TRUE)
+      
+    } else {
+      
+      return(FALSE)
+    }
+    
+  } else {
+    
+    return(FALSE)
+  }
+}
+
+# Did the agent carry out an interrogation?
+did_agent_interrogate <- function(agent) {
+  
+  if (is_ptblank_agent(agent)) {
+    return(ifelse(length(agent$validation_time) > 0, TRUE, FALSE))
+  } else {
+    return(NA)
+  }
+}
+
+# When did the agent carry out an interrogation?
+interrogation_time <- function(agent) {
+  
+  if (is_ptblank_agent(agent)) {
+    if (did_agent_interrogate(agent)) {
+      
+      return(agent$validation_time)
+      
+    } else {
+      return(NA)
+    }
+  } else {
+    return(NA)
+  }
+}
+
+# How many validation steps are associated
+# with the agent?
+number_of_validation_steps <- function(agent) {
+  
+  if (is_ptblank_agent(agent)) {
+    return(agent$validation_set %>% nrow())
+  } else {
+    return(NA)
+  }
 }

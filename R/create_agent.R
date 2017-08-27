@@ -2,7 +2,8 @@
 #' @description Creates an agent object.
 #' @param name optional name for the agent that
 #' will eventually carry out the interrogation
-#' process.
+#' process. If no value provided, a name will be
+#' generated based on the current system time.
 #' @param email_creds_file_path an optional path
 #' to an email credentials file.
 #' @param notification_recipient_emails an optional
@@ -70,6 +71,15 @@ create_agent <- function(name = NULL,
                          notification_recipient_emails = NULL,
                          notification_emails_active = FALSE) {
   
+  # Generate an agent name if none provided
+  if (is.null(name)) {
+    name <- paste0("agent_", gsub(" ", "_", Sys.time() %>% as.character()))
+    brief <- "Create agent with auto-assigned name"
+  } else {
+    brief <- "Create agent with an assigned name"
+  }
+  
+  # Create the agent list object
   agent <-
     list(
       validation_name = as.character(NA)[-1],

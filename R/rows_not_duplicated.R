@@ -141,6 +141,15 @@ rows_not_duplicated <- function(agent,
     preconditions <- NULL
   }
   
+  if (is.null(brief)) {
+    
+    brief <-
+      create_autobrief(
+        agent = agent,
+        assertion_type = "rows_not_duplicated",
+        column = cols)
+  }
+  
   # Add one or more validation steps
   agent <-
     create_validation_step(

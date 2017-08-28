@@ -162,7 +162,7 @@ That last workflow example provided a glimpse of some of the functions available
 
 ### Constraining Data in Validation Steps
 
-Every validation function has a common set of options for constraining validations to certain conditions. This can occur through the use of computed columns and also through preconditions that can allow you to target validations on only those rows that satify one or more conditions. 
+Every validation function has a common set of options for constraining validations to certain conditions. This can occur through the use of computed columns and also through preconditions that can allow you to target validations on only those rows that satisfy one or more conditions. 
 
 <img src="inst/graphics/function_options.png">
 

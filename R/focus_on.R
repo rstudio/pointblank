@@ -71,7 +71,7 @@
 #' @importFrom dplyr filter bind_rows
 #' @importFrom readr read_csv read_tsv
 #' @importFrom stringr str_split
-#' @importFrom tibble as_tibble
+#' @importFrom tibble as_tibble glimpse
 #' @export focus_on
 
 focus_on <- function(agent,
@@ -192,11 +192,12 @@ focus_on <- function(agent,
   }
   
   # Get the column names from the table
-  agent$focal_col_names <-
-    table %>%
-    dplyr::filter(row_number() == 1) %>%
-    tibble::as_tibble() %>%
-    names()
+  captured <- capture.output({
+    table_colnames <- tibble::glimpse(table) %>% names() })
+  
+  agent$focal_col_names <- table_colnames
+  
+  captured <- NULL
   
   # If no `brief` provided, autogenerate one
   if (is.null(brief)) {

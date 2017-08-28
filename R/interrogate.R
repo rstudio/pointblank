@@ -100,7 +100,7 @@ interrogate <- function(agent,
                         get_first_n = NULL,
                         sample_n = NULL,
                         sample_frac = NULL,
-                        sample_limit = 500) {
+                        sample_limit = 5000) {
   
   # Get the starting time for the interrogation
   interrogation_start_time <- Sys.time()
@@ -526,7 +526,7 @@ interrogate <- function(agent,
             
             problem_rows <-
               problem_rows %>%
-              head(500) %>%
+              head(5000) %>%
               tibble::as_tibble()
           }
           

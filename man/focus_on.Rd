@@ -5,7 +5,7 @@
 \title{Place certain access details more to the fore}
 \usage{
 focus_on(agent, tbl_name = NULL, file_name = NULL, col_types = NULL,
-  db_type = NULL, creds_file = NULL, initial_sql = NULL, brief = NULL)
+  db_type = NULL, initial_sql = NULL, brief = NULL, creds_file = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -33,6 +33,17 @@ database, the type of database is required here.
 Currently, this can be either \code{PostgreSQL}
 or \code{MySQL}.}
 
+\item{initial_sql}{when accessing a remote table,
+this provides an option to provide an initial
+query component before conducting validations. 
+An entire SQL statement can be provided here, or,
+as a shortcut, the initial \code{SELECT...}
+statement can be omitted for simple queries (e.g.,
+\code{WHERE a > 1 AND b = 'one'}).}
+
+\item{brief}{an optional, text-based description
+for the new focus.}
+
 \item{creds_file}{if a connection to a database
 is required for reaching the table specified in
 \code{tbl_name}, then a path to a credentials file
@@ -44,17 +55,6 @@ specified order: (1) database name (\code{dbname}),
 (4) the username (\code{user}), and (5) the
 \code{password}. This file can be easily created
 using the \code{create_creds_file()} function.}
-
-\item{initial_sql}{when accessing a remote table,
-this provides an option to provide an initial
-query component before conducting validations. 
-An entire SQL statement can be provided here, or,
-as a shortcut, the initial \code{SELECT...}
-statement can be omitted for simple queries (e.g.,
-\code{WHERE a > 1 AND b = 'one'}).}
-
-\item{brief}{an optional, text-based description
-for the new focus.}
 }
 \value{
 an agent object.

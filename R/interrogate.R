@@ -436,8 +436,8 @@ interrogate <- function(agent,
     }
     
     # ---------------------------------------------------------------
-    # Determine the `false_count` for all validations that examine
-    # individual rows in one or more table columns
+    # Determine the `false_count` for all validations
+    # that validate individual rows in one or more table columns
     
     if (grepl("col_vals.*", agent$validation_set$assertion_type[i])) {
       
@@ -551,9 +551,11 @@ interrogate <- function(agent,
         
       } else if (false_count == 0) {
         agent$validation_set$all_passed[i] <- TRUE
-        
       }
     }
+    
+    # ---------------------------------------------------------------
+    # Judge tables on expected column types
     
     if (grepl("col_is_.*", agent$validation_set$assertion_type[i])) {
       
@@ -608,6 +610,9 @@ interrogate <- function(agent,
         }
       }
     }
+    
+    # ---------------------------------------------------------------
+    # Judge tables on expectation of non-duplicated rows
     
     if (agent$validation_set$assertion_type[i] == "rows_not_duplicated") {
       
@@ -687,8 +692,7 @@ interrogate <- function(agent,
     }
     
     # ---------------------------------------------------------------
-    # Determine the course of action
-    # for each validation check
+    # Determine the course of action for each validation check
     
     actions <-
       determine_action(

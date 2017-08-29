@@ -66,10 +66,15 @@ print.ptblank_agent <- function(x, ...) {
           interrogation_time(x), ") resulted in:", "\n",
           "  - ", 
           ifelse(passing_steps > 0, as.character(passing_steps), "no"),
-          " passing validations", "\n",
+          " passing validation",
+          ifelse(passing_steps == 1, "", "s"),
+          "\n",
           "  - ", 
           ifelse(failing_steps > 0, as.character(failing_steps), "no"),
-          " failing validations   more info: `get_interrogation_summary()`")
+          " failing validation",
+          ifelse(failing_steps == 1, "", "s"),
+          "   ",
+          "more info: `get_interrogation_summary()`")
     }
   }
   

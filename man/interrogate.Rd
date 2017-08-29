@@ -6,7 +6,7 @@
 tasks, perform an interrogation}
 \usage{
 interrogate(agent, get_problem_rows = TRUE, get_first_n = NULL,
-  sample_n = NULL, sample_frac = NULL, sample_limit = 500)
+  sample_n = NULL, sample_frac = NULL, sample_limit = 5000)
 }
 \arguments{
 \item{agent}{an agent object of class

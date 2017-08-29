@@ -500,7 +500,7 @@ interrogate <- function(agent,
             
             problem_rows <-
               problem_rows %>%
-              head(get_first_n) %>%
+              utils::head(get_first_n) %>%
               tibble::as_tibble()
             
           } else if (!is.null(sample_n) &
@@ -522,13 +522,13 @@ interrogate <- function(agent,
                 size = sample_frac,
                 replace = FALSE) %>%
               tibble::as_tibble() %>%
-              head(sample_limit)
+              utils::head(sample_limit)
             
           } else {
             
             problem_rows <-
               problem_rows %>%
-              head(5000) %>%
+              utils::head(5000) %>%
               tibble::as_tibble()
           }
           

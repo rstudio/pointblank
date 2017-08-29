@@ -72,6 +72,7 @@
 #' @importFrom readr read_csv read_tsv
 #' @importFrom stringr str_split
 #' @importFrom tibble as_tibble glimpse
+#' @importFrom utils capture.output
 #' @export focus_on
 
 focus_on <- function(agent,
@@ -192,7 +193,7 @@ focus_on <- function(agent,
   }
   
   # Get the column names from the table
-  captured <- capture.output({
+  captured <- utils::capture.output({
     table_colnames <- tibble::glimpse(table) %>% names() })
   
   agent$focal_col_names <- table_colnames

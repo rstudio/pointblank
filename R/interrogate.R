@@ -470,8 +470,8 @@ interrogate <- function(agent,
       agent$validation_set$n[i] <- row_count
       agent$validation_set$n_passed[i] <- n_passed
       agent$validation_set$n_failed[i] <- n_failed
-      agent$validation_set$f_passed[i] <- round((n_passed / row_count), 3)
-      agent$validation_set$f_failed[i] <- round((n_failed / row_count), 3)
+      agent$validation_set$f_passed[i] <- round((n_passed / row_count), 5)
+      agent$validation_set$f_failed[i] <- round((n_failed / row_count), 5)
       
       # Get count of rows where `pb_is_good_ == FALSE`
       false_count <-
@@ -674,8 +674,8 @@ interrogate <- function(agent,
       agent$validation_set$n[i] <- row_count
       agent$validation_set$n_passed[i] <- n_passed
       agent$validation_set$n_failed[i] <- n_failed
-      agent$validation_set$f_passed[i] <- round((n_passed / row_count), 3)
-      agent$validation_set$f_failed[i] <- round((n_failed / row_count), 3)
+      agent$validation_set$f_passed[i] <- round((n_passed / row_count), 5)
+      agent$validation_set$f_failed[i] <- round((n_failed / row_count), 5)
       
       if (false_count > 0) {
         agent$validation_set$all_passed[i] <- FALSE

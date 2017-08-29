@@ -1,74 +1,51 @@
-#' Create an agent object
+#' Create a pointblank agent object
 #' @description Creates an agent object.
 #' @param name optional name for the agent that
 #' will eventually carry out the interrogation
 #' process. If no value provided, a name will be
 #' generated based on the current system time.
-#' @param email_creds_file_path an optional path
-#' to an email credentials file.
-#' @param notification_recipient_emails an optional
-#' vector of email addresses to which notification
-#' emails should be sent.
-#' @param notification_emails_active an option to
-#' enable notification emails when tests trigger a
-#' \code{notify} status.
 #' @examples 
-#' # Create an `agent` object in order to begin
-#' # defining validation steps
+#' # Create a simple data frame
+#' # with a column of numerical values
+#' df <-
+#'   data.frame(
+#'     a = c(5, 7, 6, 5, 8, 7))
+#' 
+#' # Create a pointblank `agent` object
 #' agent <- create_agent()
-#' 
-#' \dontrun{
-#' # Should notifications be required through
-#' # email, we first create an email credentials
-#' # file, with `create_email_creds_file()`, and
-#' # then reference that file with `create_agent()`
-#' create_email_creds_file(
-#'   file = "~/.pb_notify",
-#'   sender = "point@blank.org",
-#'   host = "smtp.blank.org",
-#'   port = 465,
-#'   user = "point@blank.org",
-#'   password = "************") 
-#' 
-#' agent_notify <-
-#'   create_agent(
-#'   email_creds_file_path = "~/.pb_notify",
-#'   notification_recipient_emails = 
-#'     c("a@b.net", "c@d.com", "e@f.org"),
-#'   notification_emails_active = TRUE)
-#' }
-#' 
-#' # Then, as with any `ptblank_agent` object,
-#' # we can focus on different table, add
-#' # validation steps, and then eventually use
-#' # `interrogate()` to perform the validations
+#'
+#' # Then, as with any `ptblank_agent`
+#' # object, we can focus on a table,
+#' # add validation steps, and then
+#' # eventually use `interrogate()`
+#' # to perform the validations;
+#' # here, in a single validation
+#' # step, we expect that values in
+#' # column `a` are always greater
+#' # than 4
 #' agent <-
 #'   agent %>%
-#'   focus_on(
-#'     file_name = 
-#'       system.file(
-#'         "extdata", "small_table.csv",
-#'         package = "pointblank"),
-#'     col_types = "TDicidlc") %>%
-#'   col_exists(column = a) %>%
+#'   focus_on(tbl_name = "df") %>%
+#'   col_vals_gt(
+#'     column = a,
+#'     value = 4) %>%
 #'   interrogate()
 #'  
-#' # A basic summary can be produced
-#' # using `get_interrogation_summary()`
-#' get_interrogation_summary(agent)[, 1:7]
+#' # A summary can be produced using
+#' # `get_interrogation_summary()`; we
+#' # we just get the first 7 columns
+#' (agent %>%
+#'   get_interrogation_summary())[, 1:7]
 #' #> # A tibble: 1 x 7
-#' #>      tbl_name    db_type assertion_type column value regex all_passed
-#' #>         <chr>      <chr>          <chr>  <chr> <dbl> <chr>      <lgl>
-#' #> 1 small_table local_file     col_exists      a    NA  <NA>       TRUE
+#' #>   tbl_name  db_type assertion_type column value regex all_passed
+#' #>      <chr>    <chr>          <chr>  <chr> <dbl> <chr>      <lgl>
+#' #> 1       df local_df    col_vals_gt      a     4  <NA>       TRUE
 #' @return an agent object.
 #' @importFrom dplyr filter
 #' @importFrom tibble tibble as_tibble
 #' @export create_agent
 
-create_agent <- function(name = NULL,
-                         email_creds_file_path = NULL,
-                         notification_recipient_emails = NULL,
-                         notification_emails_active = FALSE) {
+create_agent <- function(name = NULL) {
   
   # Generate an agent name if none provided
   if (is.null(name)) {
@@ -130,18 +107,6 @@ create_agent <- function(name = NULL,
   
   # Add the agent name to the object
   agent$validation_name <- name
-  
-  if (!is.null(email_creds_file_path)) {
-    agent$email_creds_file_path <- email_creds_file_path
-  }
-  
-  if (!is.null(notification_recipient_emails)) {
-    agent$notification_recipients <- notification_recipient_emails
-  }
-  
-  if (notification_emails_active %in% c(TRUE, FALSE)) {
-    agent$notification_emails_active <- notification_emails_active
-  }
   
   agent$validation_set <-
     agent$validation_set %>%

@@ -503,7 +503,8 @@ interrogate <- function(agent,
               head(get_first_n) %>%
               tibble::as_tibble()
             
-          } else if (!is.null(sample_n)) {
+          } else if (!is.null(sample_n) &
+                     !(agent$validation_set$db_type[i] %in% c("PostgreSQL", "MySQL"))) {
             
             problem_rows <-
               dplyr::sample_n(
@@ -512,7 +513,8 @@ interrogate <- function(agent,
                 replace = FALSE) %>%
               tibble::as_tibble()
             
-          } else if (!is.null(sample_frac)) {
+          } else if (!is.null(sample_frac) &
+                     !(agent$validation_set$db_type[i] %in% c("PostgreSQL", "MySQL"))) {
             
             problem_rows <-
               dplyr::sample_frac(

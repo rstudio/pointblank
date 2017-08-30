@@ -22,13 +22,15 @@
 #' database, the type of database is required here.
 #' Currently, this can be either \code{PostgreSQL}
 #' or \code{MySQL}.
-#' @param initial_sql when accessing a remote table,
-#' this provides an option to provide an initial
-#' query component before conducting validations. 
-#' An entire SQL statement can be provided here, or,
-#' as a shortcut, the initial \code{SELECT...}
-#' statement can be omitted for simple queries (e.g.,
-#' \code{WHERE a > 1 AND b = 'one'}).
+#' @param initial_sql when accessing a table in a
+#' database (MySQL and PostgreSQL), this provides
+#' an option to provide an initial SQL query
+#' that is applied to the table before conducting
+#' validations. An entire SQL statement can be
+#' provided here, or, as a shortcut, the initial
+#' \code{SELECT...} statement can be omitted for
+#' simple queries that filter the table in focus
+#' (e.g., \code{WHERE a > 1 AND b = 'one'}).
 #' @param brief an optional, text-based description
 #' for the new focus.
 #' @param creds_file if a connection to a database
@@ -60,7 +62,7 @@
 #'   create_agent() %>%
 #'   focus_on(tbl_name = "df") %>%
 #'   col_vals_lt(
-#'     column = "a",
+#'     column = a,
 #'     value = 6) %>%
 #'   interrogate()
 #' 

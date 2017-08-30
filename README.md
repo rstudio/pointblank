@@ -154,6 +154,61 @@ library(pointblank)
 html_summary(agent)
 ```
 
+### Validating Tables in a Database
+
+We can easily validate tables in a **PostgreSQL** or **MySQL**. To facilitate access to DB tables, we create a credentials file and supply it to each `focus_on()` step. The `create_creds_file()` allows for the creation of this file.
+
+```r
+library(pointblank)
+
+# Create a credentials file for
+# accessing a database
+create_creds_file(
+  file = ".db_creds",
+  dbname = ***********,
+  host = ***********************,
+  port = ***,
+  user = ********,
+  password = **************)
+```
+
+The functional pipeline to validate database tables is not very different than that for local tables. With database tables, however, we have the additional option to supply an SQL statement (as `initial_sql`) to either the `focus_on()` (applies statement to table for every subsequent validation step) or to a specific validation step (this overrides any SQL supplied in `focus_on()`). For convenience, you can either supply an SQL fragment (usually a single `WHERE` statement), or a full-fledged SQL statement that can more greatly transform the table (e.g., using `GROUP BY`, performing table joins, creating new columns, etc.). Any new columns generated via `initial_sql` can be used as a column to validate. Below is an example of what could be done with a mix of `initial_sql` and `preconditions` on a hypothetical **PostgreSQL** table.
+
+```r
+library(pointblank)
+library(glue)
+library(lubridate)
+
+agent <- 
+  create_agent() %>%
+  focus_on(
+    tbl_name = "table_1",
+    db_type = "PostgreSQL",
+    creds_file = ".db_creds",
+    initial_sql = 
+      glue(
+        "WHERE date > '{date}'",
+        date = today() - days(10))) %>%
+  col_vals_gte(
+    column = a,
+    value = 2) %>%
+  col_vals_between(
+    column = b + c + d,
+    left = 50,
+    right = 100,
+    preconditions = 
+      c > d & !is.na(b)) %>%
+  col_vals_lte(
+    column = sum_c,
+    value = 100,
+    initial_sql = "
+      SELECT date, a, b, SUM(c) AS sum_c
+      FROM table_1
+      WHERE a < 10 AND b IS NOT NULL
+      GROUP BY date, a") %>%
+  interrogate()
+```
+
 ### Functions Available in the Package
 
 That last workflow example provided a glimpse of some of the functions available. For sake of completeness, here's the entire set of functions:
@@ -165,48 +220,6 @@ That last workflow example provided a glimpse of some of the functions available
 Every validation function has a common set of options for constraining validations to certain conditions. This can occur through the use of computed columns and also through preconditions that can allow you to target validations on only those rows that satisfy one or more conditions. 
 
 <img src="inst/graphics/function_options.png">
-
-### Validating Tables in a Database
-
-To validate tables in a database (**PostgreSQL** and **MySQL**), we can optionally create a credentials file.
-
-```r
-library(pointblank)
-
-create_creds_file(
-  file = ".db_creds",
-  dbname = ***********,
-  host = ***********************,
-  port = ***,
-  user = ********,
-  password = **************)
-```
-
-A database table can be treated similarly to a local data frame.
-
-```r
-library(pointblank)
-
-agent_db <- 
-  create_agent() %>%
-  focus_on(
-    tbl_name = "table_1",
-    db_type = "PostgreSQL",
-    creds_file = ".db_creds",
-    initial_sql = "WHERE date > '2017-01-15'") %>%
-  rows_not_duplicated() %>%
-  col_vals_gte(
-    column = a,
-    value = 2) %>%
-  col_vals_between(
-    column = b + c + d,
-    left = 50,
-    right = 100) %>%
-  col_vals_not_null(
-    column = e,
-    preconditions = is.na(d)) %>%
-  interrogate()
-```
 
 ## Installation
 

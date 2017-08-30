@@ -175,11 +175,14 @@ set_entry_point <- function(table,
             port = credentials[3],
             user = credentials[4],
             password = credentials[5])
+        
       } else if (is.null(creds_file)) {
+        
         stop("A credentials RDS file is required.")
       }
       
       if (is.null(initial_sql)) {
+        
         # Create table entry object
         tbl_entry <- dplyr::tbl(src = connection, table)
       }
@@ -224,10 +227,10 @@ set_entry_point <- function(table,
             port = as.integer(credentials[3]),
             user = credentials[4],
             password = credentials[5])
-      } 
       
-      else if (is.null(creds_file)) {
-        stop("A credentials RDS file is required.")
+        } else if (is.null(creds_file)) {
+        
+          stop("A credentials RDS file is required.")
       }
       
       if (is.null(initial_sql)) {

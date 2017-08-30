@@ -217,7 +217,7 @@ agent <-
 
 ### Functions Available in the Package
 
-That last workflow example provided a glimpse of some of the functions available. For sake of completeness, here's the entire set of functions:
+These workflow examples provided a glimpse of some of the functions available. For sake of completeness, here's the entire set of functions:
 
 <img src="inst/graphics/pointblank_functions.png">
 

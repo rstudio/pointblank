@@ -139,32 +139,55 @@ interrogate <- function(agent,
         tolower()
       
       if (is.na(col_types)) {
+        
         if (file_extension == "csv") {
-          table <- 
+        
+            table <- 
             suppressMessages(
-              readr::read_csv(file_path))
+              readr::read_csv(
+                file = file_path))
+          
         } else if (file_extension == "tsv") {
+          
           table <- 
             suppressMessages(
-              readr::read_tsv(file_path))
+              readr::read_tsv(
+                file = file_path))
         }
       }
       
       if (!is.na(col_types)) {
+        
         if (file_extension == "csv") {
+          
           table <- 
             suppressMessages(
-              readr::read_csv(file_path,
-                              col_types = col_types))
+              readr::read_csv(
+                file = file_path,
+                col_types = col_types))
+          
         } else if (file_extension == "tsv") {
+          
           table <- 
             suppressMessages(
-              readr::read_tsv(file_path,
-                              col_types = col_types))
+              readr::read_tsv(
+                file = file_path,
+                col_types = col_types))
         }
       }
-      
     } else if (agent$validation_set$db_type[i] %in% c("PostgreSQL", "MySQL")) {
+      
+      # Determine if there is an initial SQL
+      # statement available as part of the 
+      # table focus (`focal_sql`) or as
+      # part of the validation step (`init_sql`)
+      if (!is.na(agent$validation_set$init_sql[i])) {
+        initial_sql_stmt <- agent$validation_set$init_sql[i]
+      } else if (!is.na(agent$focal_init_sql)) {
+        initial_sql_stmt <- agent$focal_init_sql
+      } else {
+        initial_sql_stmt <- NULL
+      }
       
       # Create `table` object as an SQL entry point for a remote table
       table <- 
@@ -172,7 +195,7 @@ interrogate <- function(agent,
           table = agent$validation_set$tbl_name[i],
           db_type = agent$validation_set$db_type[i],
           creds_file = agent$validation_set$db_cred_file_path[i],
-          initial_sql = agent$validation_set$init_sql[i])
+          initial_sql = initial_sql_stmt)
     }
     
     # Use preconditions to modify the table

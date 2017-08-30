@@ -154,6 +154,12 @@ library(pointblank)
 html_summary(agent)
 ```
 
+### Constraining Data in Validation Steps
+
+Every validation function has a common set of options for constraining validations to certain conditions. This can occur through the use of computed columns (e.g, `column = col_a / col_b`) and also through `preconditions` that can allow you to target validations on only those rows that satisfy one or more conditions (e.g, `preconditions = col_a > 10 & col_b < 200`). 
+
+<img src="inst/graphics/function_options.png">
+
 ### Validating Tables in a Database
 
 We can easily validate tables in a **PostgreSQL** or **MySQL**. To facilitate access to DB tables, we create a credentials file and supply it to each `focus_on()` step. The `create_creds_file()` allows for the creation of this file.
@@ -214,12 +220,6 @@ agent <-
 That last workflow example provided a glimpse of some of the functions available. For sake of completeness, here's the entire set of functions:
 
 <img src="inst/graphics/pointblank_functions.png">
-
-### Constraining Data in Validation Steps
-
-Every validation function has a common set of options for constraining validations to certain conditions. This can occur through the use of computed columns and also through preconditions that can allow you to target validations on only those rows that satisfy one or more conditions. 
-
-<img src="inst/graphics/function_options.png">
 
 ## Installation
 

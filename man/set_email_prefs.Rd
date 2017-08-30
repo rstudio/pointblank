@@ -2,7 +2,7 @@
 % Please edit documentation in R/set_email_prefs.R
 \name{set_email_prefs}
 \alias{set_email_prefs}
-\title{Grant email credentials and enable email reporting}
+\title{Set email credentials and enable email reporting}
 \usage{
 set_email_prefs(agent, notify_active = FALSE, email_recipients = NULL,
   creds_file = NULL)

@@ -215,6 +215,83 @@ agent <-
   interrogate()
 ```
 
+### Creating and Accessing Row Data that Failed Validation
+
+We can collect row data that didn't pass a validation step. The amount of non-passing row data collected can be configured in the `interrogate()` function call. When validating local data (data frames, tibbles, CSVs/TSVs), we can set `get_problem_rows = TRUE` and provide values to either of:
+
+ - `get_first_n`: Get the first `n` non-passing rows from each validation step.
+ - `sample_n`: Sample `n` non-passing rows from each validation step.
+ - `sample_frac`: Sample a fraction of the total non-passing rows from each validation step.
+ 
+For remote tables, we cannot use any of the `sample_*` arguments to collect non-passing rows (only `get_first_n` currently works). In order to avoid sampling more rows than could reasonably be handled with `sample_frac`, the `sample_limit` argument allows us to provide a sensible limit to the number of rows returned.
+
+The amount of row data available depends on both the fraction of rows that didn't pass a validation step and the level of sampling or explicit collection from that set of rows (this is defined within the `interrogate()` call).
+
+Here is an example of how rows that didn't pass a validation step can be collected and accessed:
+
+```r
+library(pointblank)
+
+# Set a seed
+set.seed(23)
+
+# Create a simple data frame with a
+# column of numerical values
+df <-
+  data.frame(
+    a = rnorm(
+      n = 100,
+      mean = 5,
+      sd = 2))
+
+# Create 2 simple validation steps
+# that test values of column `a`
+agent <-
+  create_agent() %>%
+  focus_on(tbl_name = "df") %>%
+  col_vals_between(
+    column = a,
+    left = 4,
+    right = 6) %>%
+  col_vals_lte(
+    column = a,
+    value = 10) %>%
+  interrogate(
+    get_problem_rows = TRUE,
+    get_first_n = 10)
+  
+# Find out which of the two
+# validation steps contain sample
+# row data
+get_row_sample_info(agent)[, 1:5]
+#>   step tbl             type n_fail n_sampled
+#> 1    1  df col_vals_between     65        10
+
+# Get row sample data for those rows
+# in `df` that did not pass the first
+# validation step (where column values
+# for `col_vals_between()` were not
+# between 4 and 6); the leading column,
+# `pb_step_`, has been added to provide
+# context on the validation step for
+# which these rows failed to pass 
+agent %>%
+  get_row_sample_data(step = 1)
+#> # A tibble: 10 x 2
+#>    pb_step_        a
+#>       <int>    <dbl>
+#>  1        1 6.826534
+#>  2        1 8.586776
+#>  3        1 6.993210
+#>  4        1 7.214981
+#>  5        1 7.038411
+#>  6        1 8.151559
+#>  7        1 2.906929
+#>  8        1 2.567247
+#>  9        1 3.959643
+#> 10        1 3.801374
+```
+
 ### Functions Available in the Package
 
 These workflow examples provided a glimpse of some of the functions available. For sake of completeness, here's the entire set of functions:

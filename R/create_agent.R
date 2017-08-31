@@ -33,7 +33,8 @@
 #'  
 #' # A summary can be produced using
 #' # `get_interrogation_summary()`; we
-#' # we just get the first 7 columns
+#' # we will just obtain the first
+#' # 7 columns of its output
 #' (agent %>%
 #'   get_interrogation_summary())[, 1:7]
 #' #> # A tibble: 1 x 7

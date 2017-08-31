@@ -72,7 +72,7 @@
 #' 
 #' # Validate that column `a`
 #' # in the data frame is classed
-#' # as a factor
+#' # as `factor`
 #' agent <-
 #'   create_agent() %>%
 #'   focus_on(tbl_name = "df") %>%

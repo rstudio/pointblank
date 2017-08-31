@@ -262,7 +262,7 @@ agent <-
   
 # Find out which of the two
 # validation steps contain sample
-# row data
+# row data (it is step 1)
 get_row_sample_info(agent)[, 1:5]
 #>   step tbl             type n_fail n_sampled
 #> 1    1  df col_vals_between     65        10

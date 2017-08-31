@@ -91,19 +91,22 @@ a table column is expected to consist of
 floating point values.
 }
 \examples{
-# Validate that column `d` in
-# the `small_table` CSV file
-# is classed as `numeric`
+# Create a simple data frame
+# with a column containing data
+# classed as `numeric`
+df <-
+  data.frame(
+    a = c(5.1, 2.9),
+    stringsAsFactors = FALSE)
+
+# Validate that column `a`
+# in the data frame is classed
+# as `numeric`
 agent <-
   create_agent() \%>\%
-  focus_on(
-    file_name = 
-      system.file(
-        "extdata", "small_table.csv",
-        package = "pointblank"),
-    col_types = "TDicidlc") \%>\%
+  focus_on(tbl_name = "df") \%>\%
   col_is_numeric(
-    column = d) \%>\%
+    column = a) \%>\%
   interrogate()
 
 # Determine if this column

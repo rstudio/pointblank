@@ -91,18 +91,21 @@ a table column is expected to consist entirely
 of R \code{Date} objects.
 }
 \examples{
-# Validate that the `date` column in the
-# `small_table` CSV file is classed as
-# `Date`
+# Create a simple data frame
+# with a column containing data
+# classed as `Date`
+df <-
+  data.frame(
+    a = as.Date("2017-08-15"))
+
+# Validate that column `a`
+# in the data frame is classed
+# as `Date`
 agent <-
   create_agent() \%>\%
-  focus_on(
-    file_name = 
-      system.file(
-        "extdata", "small_table.csv",
-        package = "pointblank"),
-    col_types = "TDicidlc") \%>\%
-  col_is_date(column = date) \%>\%
+  focus_on(tbl_name = "df") \%>\%
+  col_is_date(
+    column = a) \%>\%
   interrogate()
 
 # Determine if these column

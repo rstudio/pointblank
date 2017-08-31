@@ -64,7 +64,8 @@ get_row_sample_info <- function(agent) {
   # Get the number of validation steps
   validation_steps <- nrow(agent$validation_set)
   
-  # Get the validation set
+  # Get the validation set and integrate
+  # the available briefs to it
   validation_set <- 
     agent$validation_set %>%
     mutate(

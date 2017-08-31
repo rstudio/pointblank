@@ -90,7 +90,7 @@ get_row_sample_info <- function(agent) {
           type = validation_set$assertion_type[x],
           n_fail = validation_set$n_failed[x],
           n_sampled = nrow(validation_set$row_sample[[x]][[1]]),
-          brief = validation_set$brief)
+          brief = validation_set$brief[x])
       }})
   
   # Return the output table if there are

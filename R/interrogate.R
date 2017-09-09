@@ -88,7 +88,7 @@
 #' @importFrom tibble tibble as_tibble
 #' @importFrom dplyr group_by group_by_ mutate mutate_ filter filter_ select select_ collect ungroup summarize row_number n sample_n sample_frac everything
 #' @importFrom tidyr nest_
-#' @importFrom stringr str_split
+#' @importFrom stringr str_split str_trim
 #' @importFrom purrr flatten_chr flatten_dbl
 #' @importFrom readr read_csv read_tsv
 #' @importFrom stats setNames
@@ -203,10 +203,10 @@ interrogate <- function(agent,
       
       # Get the preconditions as a character vector
       preconditions <-
-        agent$preconditions[[i, 1]] %>%
-        strsplit(";") %>%
-        unlist() %>%
-        trimws()
+        stringr::str_trim(
+          agent$preconditions[[i, 1]] %>%
+            strsplit(";") %>%
+            unlist())
       
       if (!is.null(preconditions)) {
         for (j in 1:length(preconditions)) {
@@ -291,10 +291,10 @@ interrogate <- function(agent,
            purrr::flatten_chr())[[i]]
       
       set <- 
-        set %>%
-        strsplit(",") %>%
-        unlist() %>%
-        trimws()
+        stringr::str_trim(
+          set %>%
+            strsplit(",") %>%
+            unlist())
       
       # Get the class of the set components
       set_class <- 
@@ -645,11 +645,11 @@ interrogate <- function(agent,
       if (!is.na(agent$validation_set$column[i])) {
         if (grepl("(,|&)", agent$validation_set$column[i])) {
           columns <-
-            stringr::str_split(
-              agent$validation_set$column[i],
-              pattern = "(,|&)") %>%
-            purrr::flatten_chr() %>%
-            trimws()
+            stringr::str_trim(
+              stringr::str_split(
+                agent$validation_set$column[i],
+                pattern = "(,|&)") %>%
+                purrr::flatten_chr())
         } else {
           columns <- agent$validation_set$column[i]
         }

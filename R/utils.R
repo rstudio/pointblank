@@ -462,6 +462,7 @@ generate_img_files_plan <- function(agent) {
 # Send an email notification
 #' @importFrom mailR send.mail
 #' @importFrom dplyr filter mutate select rename
+#' @importFrom stringr str_trim
 #' @importFrom pixiedust dust sprinkle sprinkle_print_method
 pb_notify <- function(agent,
                       recipients,
@@ -512,7 +513,7 @@ pb_notify <- function(agent,
       ", ",
       format(validation_time, "%Y"),
       " at ",
-      format(validation_time, "%l:%M") %>% trimws(),
+      stringr::str_trim(format(validation_time, "%l:%M")),
       toupper(format(validation_time, " %p")),
       format(validation_time, " (%Z)"))
   

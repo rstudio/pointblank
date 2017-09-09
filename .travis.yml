@@ -1,8 +1,12 @@
 language: r
 
-dist: trusty
+r:
+  - oldrel
+  - release
+  - devel
 
 warnings_are_errors: false
+
 sudo: required
 
 r_packages:
@@ -15,8 +19,6 @@ notifications:
     on_success: change
     on_failure: change
 
-r_github_packages:
-  - jimhester/covr
-
 after_success:
-  - Rscript -e 'library(covr);codecov()'
+  - Rscript -e 'covr::codecov()'
+  

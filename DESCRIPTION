@@ -15,7 +15,7 @@ Description: Validate data in local data frames,
     rates allow for the determination of appropriate
     reporting actions (e.g., sending email
     notifications).
-Depends: R (>= 3.4.0)
+Depends: R (>= 3.2.1)
 License: MIT + file LICENSE
 Imports:
     digest (>= 0.6.12),

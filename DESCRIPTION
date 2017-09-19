@@ -22,7 +22,7 @@ Imports:
     dplyr (>= 0.7.2),
     Hmisc (>= 4.0-3),
     htmltools (>= 0.3.6),
-    knitr (>= 1.15.1),
+    knitr (>= 1.17),
     lubridate (>= 1.6.0),
     magrittr (>= 1.5),
     mailR (>= 0.4.1),

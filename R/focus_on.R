@@ -70,7 +70,7 @@
 #' # passed by using `all_passed()`
 #' all_passed(agent)
 #' #> [1] TRUE
-#' @importFrom dplyr filter bind_rows
+#' @importFrom dplyr filter bind_rows group_by filter ungroup collect row_number
 #' @importFrom readr read_csv read_tsv
 #' @importFrom stringr str_split
 #' @importFrom tibble as_tibble glimpse
@@ -143,6 +143,9 @@ focus_on <- function(agent,
     # local `data.frame` or `tbl_df` object
     table <- get(tbl_name)
     
+    agent$focal_col_names <-
+      colnames(table)
+    
   } else if (agent$focal_db_type == "local_file") {
     
     # Infer the file type from the extension
@@ -173,6 +176,9 @@ focus_on <- function(agent,
       agent$focal_tbl_name <- file_name_no_ext
     }
     
+    agent$focal_col_names <-
+      colnames(table)
+    
   } else if (agent$focal_db_type == "PostgreSQL") {
     
     # Create `table` object as an SQL entry point
@@ -183,6 +189,20 @@ focus_on <- function(agent,
         db_type = db_type,
         creds_file = creds_file)
     
+    
+    # Get the column names from the table
+    # captured <- utils::capture.output({
+    #   table_colnames <- tibble::glimpse(table) %>% names() })
+    agent$focal_col_names <-  
+      table %>%
+      dplyr::group_by() %>%
+      dplyr::filter(row_number() == 1) %>%
+      dplyr::ungroup() %>%
+      dplyr::collect() %>%
+      sapply(class) %>%
+      lapply(`[[`, 1) %>%
+      names()
+    
   } else if (agent$focal_db_type == "MySQL") {
     
     # Create `table` object as an SQL entry point
@@ -192,15 +212,18 @@ focus_on <- function(agent,
         table = tbl_name,
         db_type = db_type,
         creds_file = creds_file) 
+    
+    agent$focal_col_names <-  
+      table %>%
+      dplyr::group_by() %>%
+      dplyr::filter(row_number() == 1) %>%
+      dplyr::ungroup() %>%
+      dplyr::collect() %>%
+      sapply(class) %>%
+      lapply(`[[`, 1) %>%
+      names()
   }
   
-  # Get the column names from the table
-  captured <- utils::capture.output({
-    table_colnames <- tibble::glimpse(table) %>% names() })
-  
-  agent$focal_col_names <- table_colnames
-  
-  captured <- NULL
   
   # If no `brief` provided, autogenerate one
   if (is.null(brief)) {

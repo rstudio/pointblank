@@ -8,7 +8,7 @@ output:
       after_body: include_footer.html
 ---
 
-```{r include=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 library(dplyr)
 library(pointblank)
 library(htmltools)
@@ -16,19 +16,17 @@ library(knitr)
 library(lubridate)
 ```
 
-
-
 ```{r generate_img_files, echo=FALSE}
 
 # Generate the image files for the results a temporary directory
-generate_img_files_results(agent = agent)
+pointblank:::generate_img_files_results(agent = agent)
 
 # Get a vector of these file paths
 img_file_list_results <-
   list.files(path = "./temporary_images", pattern = ".*_.svg", full.names = TRUE)
 
 # Generate the image files for the validation plan a temporary directory
-generate_img_files_plan(agent = agent)
+pointblank:::generate_img_files_plan(agent = agent)
 
 # Get a vector of these file paths
 img_file_list_plan <-
@@ -181,8 +179,6 @@ knitr::kable(
   )
 ```
 
-
-
 ```{r images_plan, echo=FALSE}
 # knitr::kable(
 #   dplyr::data_frame(
@@ -194,4 +190,3 @@ knitr::kable(
 #   col.names = c("1", "2", "3")
 #   )
 ```
-

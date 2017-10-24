@@ -750,10 +750,7 @@ interrogate <- function(agent,
       nrow(agent$validation_set) > 0 &
       any(agent$validation_set$notify == TRUE)) {
     
-    pb_notify(
-      agent = agent,
-      recipients = agent$notification_recipients,
-      creds_file = agent$email_creds_file_path)
+    # TODO: perform notification via notification method
   }
   
   agent

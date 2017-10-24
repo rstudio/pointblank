@@ -13,8 +13,7 @@ Description: Validate data in local data frames,
     validation plan, several reporting options are
     available. User-defined thresholds for failure
     rates allow for the determination of appropriate
-    reporting actions (e.g., sending email
-    notifications).
+    reporting actions.
 Depends: R (>= 3.1.2)
 License: MIT + file LICENSE
 Imports:
@@ -25,11 +24,8 @@ Imports:
     knitr (>= 1.17),
     lubridate (>= 1.6.0),
     magrittr (>= 1.5),
-    mailR (>= 0.4.1),
-    pixiedust (>= 0.8.1),
     purrr (>= 0.2.3),
     readr (>= 1.1.1),
-    rJava (>= 0.9-8),
     rlang (>= 0.1.1),
     rmarkdown (>= 1.6),
     stringr (>= 1.2.0),

@@ -84,7 +84,8 @@ focus_on <- function(agent,
                      db_type = NULL,
                      initial_sql = NULL,
                      brief = NULL,
-                     creds_file = NULL) {
+                     creds_file = NULL,
+                     db_creds_env_vars = NULL) {
   
   if (is.null(tbl_name) & is.null(file_name)) {
     stop("A table name or a file name must be provided.")
@@ -129,6 +130,17 @@ focus_on <- function(agent,
     agent$focal_db_cred_file_path <- creds_file
   }
   
+  if (!is.null(db_creds_env_vars)) {
+    if (inherits(db_creds_env_vars, "list")) {
+      
+      agent$focal_db_env_vars <- db_creds_env_vars
+    }
+  }
+  
+  if (is.null(creds_file) & is.null(db_creds_env_vars)) {
+    stop("Environment variables or a credentials file is required to access the database.")
+  }
+  
   if (is.null(initial_sql)) {
     agent$focal_init_sql <- as.character(NA)
   } else if (!is.null(initial_sql)) {
@@ -143,8 +155,7 @@ focus_on <- function(agent,
     # local `data.frame` or `tbl_df` object
     table <- get(tbl_name)
     
-    agent$focal_col_names <-
-      colnames(table)
+    agent$focal_col_names <- colnames(table)
     
   } else if (agent$focal_db_type == "local_file") {
     
@@ -176,19 +187,29 @@ focus_on <- function(agent,
       agent$focal_tbl_name <- file_name_no_ext
     }
     
-    agent$focal_col_names <-
-      colnames(table)
+    agent$focal_col_names <- colnames(table)
     
   } else if (agent$focal_db_type == "PostgreSQL") {
     
     # Create `table` object as an SQL entry point
     # for a remote PostgreSQL table
-    table <- 
-      set_entry_point(
-        table = tbl_name,
-        db_type = db_type,
-        creds_file = creds_file)
     
+    if (!is.null(creds_file)) {
+      
+      table <- 
+        set_entry_point(
+          table = tbl_name,
+          db_type = db_type,
+          creds_file = creds_file)
+      
+    } else if (!is.null(db_creds_env_vars)) {
+      
+      table <-
+        set_entry_point(
+          table = tbl_name,
+          db_type = db_type,
+          db_creds_env_vars = db_creds_env_vars)
+    }
     
     # Get the column names from the table
     # captured <- utils::capture.output({
@@ -207,11 +228,22 @@ focus_on <- function(agent,
     
     # Create `table` object as an SQL entry point
     # for a remote MySQL table
-    table <- 
-      set_entry_point(
-        table = tbl_name,
-        db_type = db_type,
-        creds_file = creds_file) 
+    if (!is.null(creds_file)) {
+      
+      table <- 
+        set_entry_point(
+          table = tbl_name,
+          db_type = db_type,
+          creds_file = creds_file)
+      
+    } else if (!is.null(db_creds_env_vars)) {
+      
+      table <-
+        set_entry_point(
+          table = tbl_name,
+          db_type = db_type,
+          db_creds_env_vars = db_creds_env_vars)
+    }
     
     agent$focal_col_names <-  
       table %>%

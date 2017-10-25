@@ -8,15 +8,16 @@ test_that("Creating a valid `agent` object is possible", {
   # Expect that names in an agent object match a
   # prescribed set of names
   expect_true(
-    all(names(agent) ==
-          c("validation_name", "validation_time",
-            "focal_tbl_name", "focal_file_name",
-            "focal_db_type", "focal_col_names",
-            "focal_col_types", "focal_db_cred_file_path",
-            "focal_init_sql", "email_creds_file_path",
-            "notification_recipients", "notification_emails_active",
-            "logical_plan", "validation_set",
-            "sets", "preconditions")))
+    all(
+      names(agent) ==
+        c("validation_name", "validation_time",
+          "focal_tbl_name", "focal_file_name",
+          "focal_db_type", "focal_col_names",
+          "focal_col_types", "focal_db_cred_file_path",
+          "focal_db_env_vars", "focal_init_sql", "email_creds_file_path",
+          "notification_recipients", "notification_emails_active",
+          "logical_plan", "validation_set",
+          "sets", "preconditions")))
   
   # Expect an agent object of class `dgr_graph`
   expect_is(agent, "ptblank_agent")

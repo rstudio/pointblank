@@ -139,7 +139,6 @@ create_validation_step <- function(agent,
   agent
 }
 
-
 # Acquire information on the coordinates
 # of a remote table; if a table is remote
 # (i.e., in a database), this function
@@ -149,6 +148,7 @@ create_validation_step <- function(agent,
 set_entry_point <- function(table,
                             db_type = NULL,
                             creds_file = NULL,
+                            db_creds_env_vars = NULL,
                             initial_sql = NULL) {
   
   if (is.null(db_type) & inherits(table, "data.frame")) {
@@ -176,9 +176,20 @@ set_entry_point <- function(table,
             user = credentials[4],
             password = credentials[5])
         
+      } else if (!is.null(db_creds_env_vars)) {
+        
+        # Establish the connection with the environment variables
+        connection <-
+          dplyr::src_postgres(
+            dbname = Sys.getenv(db_creds_env_vars[[1]]),
+            host = Sys.getenv(db_creds_env_vars[[2]]),
+            port = Sys.getenv(db_creds_env_vars[[3]]),
+            user = Sys.getenv(db_creds_env_vars[[4]]),
+            password = Sys.getenv(db_creds_env_vars[[5]]))
+        
       } else if (is.null(creds_file)) {
         
-        stop("A credentials RDS file is required.")
+        stop("Environment variables or a credentials file is required to access the database.")
       }
       
       if (is.null(initial_sql)) {

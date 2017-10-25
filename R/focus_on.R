@@ -137,9 +137,9 @@ focus_on <- function(agent,
     }
   }
   
-  if (is.null(creds_file) & is.null(db_creds_env_vars)) {
-    stop("Environment variables or a credentials file is required to access the database.")
-  }
+  # if (is.null(creds_file) & is.null(db_creds_env_vars)) {
+  #   stop("Environment variables or a credentials file is required to access the database.")
+  # }
   
   if (is.null(initial_sql)) {
     agent$focal_init_sql <- as.character(NA)

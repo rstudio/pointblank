@@ -190,12 +190,24 @@ interrogate <- function(agent,
       }
       
       # Create `table` object as an SQL entry point for a remote table
-      table <- 
+      
+      if (!is.na(agent$focal_db_cred_file_path)) {
+      
+        table <- 
         set_entry_point(
           table = agent$validation_set$tbl_name[i],
           db_type = agent$validation_set$db_type[i],
           creds_file = agent$validation_set$db_cred_file_path[i],
           initial_sql = initial_sql_stmt)
+      } else if (length(agent$focal_db_env_vars) != 0) {
+        
+        table <- 
+          set_entry_point(
+            table = agent$validation_set$tbl_name[i],
+            db_type = agent$validation_set$db_type[i],
+            db_creds_env_vars = agent$focal_db_env_vars,
+            initial_sql = initial_sql_stmt)
+      }
     }
     
     # Use preconditions to modify the table

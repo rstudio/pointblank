@@ -17,6 +17,7 @@ Description: Validate data in local data frames,
 Depends: R (>= 3.1.2)
 License: MIT + file LICENSE
 Imports:
+    DBI (>= 0.7),
     digest (>= 0.6.12),
     dplyr (>= 0.7.2),
     Hmisc (>= 4.0-3),

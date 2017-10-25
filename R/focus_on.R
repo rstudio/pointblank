@@ -44,6 +44,19 @@
 #' (4) the username (\code{user}), and (5) the
 #' \code{password}. This file can be easily created
 #' using the \code{create_creds_file()} function.
+#' @param db_creds_env_vars if a connection to a
+#' database is required for reaching the table
+#' specified in \code{tbl_name}, then a set of
+#' environment variables can be used to establish
+#' that connection. Separate environment variables
+#' with the following items should be available:
+#' (1) database name (\code{dbname}),
+#' (2) the \code{host} name, (3) the \code{port},
+#' (4) the username (\code{user}), and (5) the
+#' \code{password}. To pass the names of the
+#' environment variables to the \code{agent}
+#' object, one can use the \code{db_creds_env_vars()}
+#' function directly.
 #' @return an agent object.
 #' @examples
 #' # Create a simple data frame with a column
@@ -136,10 +149,6 @@ focus_on <- function(agent,
       agent$focal_db_env_vars <- db_creds_env_vars
     }
   }
-  
-  # if (is.null(creds_file) & is.null(db_creds_env_vars)) {
-  #   stop("Environment variables or a credentials file is required to access the database.")
-  # }
   
   if (is.null(initial_sql)) {
     agent$focal_init_sql <- as.character(NA)

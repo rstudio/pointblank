@@ -67,6 +67,7 @@ create_agent <- function(name = NULL) {
       focal_col_names = as.character(NA)[-1],
       focal_col_types = as.character(NA)[-1],
       focal_db_cred_file_path = as.character(NA)[-1],
+      focal_db_env_vars = list(),
       focal_init_sql = as.character(NA)[-1],
       email_creds_file_path = as.character(NA)[-1],
       notification_recipients = as.character(NA)[-1],

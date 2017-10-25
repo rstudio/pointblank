@@ -58,6 +58,20 @@ specified order: (1) database name (\code{dbname}),
 (4) the username (\code{user}), and (5) the
 \code{password}. This file can be easily created
 using the \code{create_creds_file()} function.}
+
+\item{db_creds_env_vars}{if a connection to a
+database is required for reaching the table
+specified in \code{tbl_name}, then a set of
+environment variables can be used to establish
+that connection. Separate environment variables
+with the following items should be available:
+(1) database name (\code{dbname}),
+(2) the \code{host} name, (3) the \code{port},
+(4) the username (\code{user}), and (5) the
+\code{password}. To pass the names of the
+environment variables to the \code{agent}
+object, one can use the \code{db_creds_env_vars()}
+function directly.}
 }
 \value{
 an agent object.

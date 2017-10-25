@@ -144,7 +144,10 @@ create_validation_step <- function(agent,
 # (i.e., in a database), this function
 # will be invoked to set an entry point
 # for the interrogation query.
-#' @importFrom dplyr src_postgres src_mysql tbl sql
+#' @importFrom dplyr tbl sql
+#' @importFrom DBI dbConnect
+#' @importFrom RPostgreSQL PostgreSQL
+#' @importFrom RMySQL dbConnect MySQL
 set_entry_point <- function(table,
                             db_type = NULL,
                             creds_file = NULL,
@@ -169,7 +172,8 @@ set_entry_point <- function(table,
         
         # Establish the connection with the serialized RDS object
         connection <-
-          dplyr::src_postgres(
+          DBI::dbConnect(
+            RPostgreSQL::PostgreSQL(max.con = 512),
             dbname = credentials[1],
             host = credentials[2],
             port = credentials[3],
@@ -180,7 +184,8 @@ set_entry_point <- function(table,
         
         # Establish the connection with the environment variables
         connection <-
-          dplyr::src_postgres(
+          DBI::dbConnect(
+            RPostgreSQL::PostgreSQL(max.con = 512),
             dbname = Sys.getenv(db_creds_env_vars[[1]]),
             host = Sys.getenv(db_creds_env_vars[[2]]),
             port = Sys.getenv(db_creds_env_vars[[3]]),
@@ -232,16 +237,29 @@ set_entry_point <- function(table,
         
         # Establish the connection with the serialized RDS object
         connection <-
-          dplyr::src_mysql(
+          RMySQL::dbConnect(
+            RMySQL::MySQL(),
             dbname = credentials[1],
             host = credentials[2],
             port = as.integer(credentials[3]),
             user = credentials[4],
             password = credentials[5])
       
-        } else if (is.null(creds_file)) {
+      } else if (!is.null(db_creds_env_vars)) {
         
-          stop("A credentials RDS file is required.")
+        # Establish the connection with the environment variables
+        connection <-
+          RMySQL::dbConnect(
+            RMySQL::MySQL(),
+            dbname = Sys.getenv(db_creds_env_vars[[1]]),
+            host = Sys.getenv(db_creds_env_vars[[2]]),
+            port = as.integer(Sys.getenv(db_creds_env_vars[[3]])),
+            user = Sys.getenv(db_creds_env_vars[[4]]),
+            password = Sys.getenv(db_creds_env_vars[[5]]))
+        
+      } else if (is.null(creds_file)) {
+        
+        stop("Environment variables or a credentials file is required to access the database.")
       }
       
       if (is.null(initial_sql)) {

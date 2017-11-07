@@ -213,7 +213,7 @@ knitr::kable(
     `4` = row_sample_data_chr
     ), 
   padding = 20,
-  align = "lll",
+  align = "llll",
   col.names = c("Step", "Summary", "&nbsp;", "&nbsp;")
   )
 ```

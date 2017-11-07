@@ -167,7 +167,7 @@ for (i in 1:nrow(agent$validation_set)) {
 
 if (any(!is.na(get_row_sample_info(agent = agent)))) {
   
-  dir.create(path = "row_sample_data")
+  dir.create(path = "_csv_data")
   
   row_sample_data_chr <- vector(mode = "character")
   
@@ -178,12 +178,12 @@ if (any(!is.na(get_row_sample_info(agent = agent)))) {
       readr::write_csv(
         x = get_row_sample_data(agent = agent, step = i) %>%
           dplyr::select(-pb_step_),
-        path = glue::glue("./row_sample_data/step_{i}_sample_data.csv"))
+        path = glue::glue("./_csv_data/step_{i}_sample_data.csv"))
       
       row_sample_data_chr <- 
         c(row_sample_data_chr,
             glue::glue(
-              "<a href=\"row_sample_data/step_{i}_sample_data.csv\">CSV</a>"))
+              "<a href=\"_csv_data/step_{i}_sample_data.csv\">CSV</a>"))
     } else {
       row_sample_data_chr <- 
         c(row_sample_data_chr, "")

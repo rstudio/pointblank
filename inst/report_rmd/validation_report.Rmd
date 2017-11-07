@@ -189,7 +189,9 @@ if (any(!is.na(get_row_sample_info(agent = agent)))) {
         c(row_sample_data_chr, "")
     }
   }
-} 
+} else {
+  row_sample_data_chr <- rep("", nrow(agent$validation_set))
+}
 ```
 
 ```{r images_results, echo=FALSE}

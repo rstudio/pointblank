@@ -132,8 +132,9 @@ for (i in 1:nrow(agent$validation_set)) {
   } else if (agent$validation_set$assertion_type[i] == "col_vals_regex") {
     value_chr_line <- paste0("**Regex** \"", agent$validation_set$regex[i], "\"")
   } else if (agent$validation_set$assertion_type[i] %in% c("col_vals_in_set", "col_vals_not_in_set")) {
-    value_chr_line <- paste0("**Set** ", agent$sets$set[i])
-  } else if (agent$validation_set$assertion_type[i] == "rows_not_duplicated") {
+    value_chr_line <- paste0("**Set** ", gsub(",", ", ", agent$sets$set[i]))
+  } else if (agent$validation_set$assertion_type[i] == "rows_not_duplicated" |
+             is.na(agent$validation_set$value[i])) {
     value_chr_line <- "**Value** None"
   }
  

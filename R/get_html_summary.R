@@ -15,7 +15,9 @@
 #' @param footer_text HTML text to be placed in
 #' the footer of the summary.
 #' @param output_dir an optional path to place
-#' the output HTML file.
+#' the output HTML file and subfolder of CSV
+#' data (if that exists). The path must exist
+#' otherwise no movement of files will occur.
 #' @importFrom rmarkdown render
 #' @export get_html_summary
 

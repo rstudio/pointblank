@@ -57,6 +57,14 @@ if (!is.na(agent$validation_time)) {
 validation_duration <-
   sum(agent$validation_set$proc_duration_s, na.rm = TRUE)
 
+# Apply the appropriate amount of rounding based
+# on the total time taken
+validation_duration <-
+  ifelse(
+    validation_duration > 1,
+    round(validation_duration, 1),
+    round(validation_duration, 2))
+
 # Did all tests pass?
 if (any(agent$validation_set$all_passed == FALSE)) {
   all_tests_passed <- "No"

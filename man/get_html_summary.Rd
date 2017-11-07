@@ -24,7 +24,9 @@ the top of the summary.}
 the footer of the summary.}
 
 \item{output_dir}{an optional path to place
-the output HTML file.}
+the output HTML file and subfolder of CSV
+data (if that exists). The path must exist
+otherwise no movement of files will occur.}
 }
 \description{
 Get the essential information

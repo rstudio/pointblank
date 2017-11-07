@@ -50,6 +50,14 @@ get_html_summary <- function(agent,
     invisible(file.remove("agent.rds"))
   }
   
+  if (dir.exists("_csv_data")) {
+    invisible(
+      unlink(
+        x = "_csv_data",
+        recursive = TRUE,
+        force = TRUE))
+  }
+  
   # Save the `agent` object as an RDS file
   saveRDS(agent, "agent.rds")
   

@@ -320,6 +320,7 @@ interrogate <- function(agent,
       }
       
       if (agent$validation_set$assertion_type[i] == "col_vals_in_set") {
+        
         # Get the final judgment on the table and the query
         judgment <- 
           table %>%
@@ -329,7 +330,8 @@ interrogate <- function(agent,
               " %in% c(",
               paste(paste0("'", set) %>% paste0("'"),
                     collapse = ", "), ")"),
-            "pb_is_good_"))
+            "pb_is_good_")) %>%
+          dplyr::mutate(pb_is_good_ = ifelse(is.na(pb_is_good_), FALSE, TRUE))
       }
       
       if (agent$validation_set$assertion_type[i] == "col_vals_not_in_set") {
@@ -342,7 +344,8 @@ interrogate <- function(agent,
                    " %in% c(",
                    paste(paste0("'", set) %>% paste0("'"),
                          collapse = ", "), "))"),
-            "pb_is_good_"))
+            "pb_is_good_")) %>%
+          dplyr::mutate(pb_is_good_ = ifelse(is.na(pb_is_good_), FALSE, TRUE))
       }
     }
     

@@ -152,6 +152,7 @@ get_html_summary <- function(agent,
   
   # Move file to a specified directory
   if (!is.null(output_dir)) {
+    
     if (dir.exists(output_dir)) {
       invisible(
         file.copy(
@@ -161,6 +162,20 @@ get_html_summary <- function(agent,
       
       # Remove the file from the working directory
       invisible(file.remove(output_file))
+      
+      # Move the subfolder of CSV data if
+      # it has been made
+      if (dir.exists("_csv_data")) {
+        
+        if (!dir.exists(output_dir)) {
+          dir.create(output_dir)
+        }
+        
+        file.rename(
+          from = "_csv_data",
+          to = gsub("//", "/", paste0(output_dir, "/_csv_data")))
+        
+      }
     }
   }
 }

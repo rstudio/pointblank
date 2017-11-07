@@ -20,6 +20,7 @@ Imports:
     DBI (>= 0.7),
     digest (>= 0.6.12),
     dplyr (>= 0.7.2),
+    glue (>= 1.1.1),
     Hmisc (>= 4.0-3),
     htmltools (>= 0.3.6),
     knitr (>= 1.17),

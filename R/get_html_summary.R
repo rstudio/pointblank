@@ -169,10 +169,6 @@ get_html_summary <- function(agent,
       # it has been made
       if (dir.exists("_csv_data")) {
         
-        if (!dir.exists(output_dir)) {
-          dir.create(output_dir)
-        }
-        
         file.rename(
           from = "_csv_data",
           to = gsub("//", "/", paste0(output_dir, "/_csv_data")))

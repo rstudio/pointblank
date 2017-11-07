@@ -14,6 +14,7 @@ library(pointblank)
 library(htmltools)
 library(knitr)
 library(lubridate)
+library(glue)
 ```
 
 ```{r generate_img_files, echo=FALSE}
@@ -162,29 +163,56 @@ for (i in 1:nrow(agent$validation_set)) {
 }
 ```
 
+```{r get_row_sample_data, include=FALSE}
+
+if (any(!is.na(get_row_sample_info(agent = agent)))) {
+  
+  dir.create(path = "row_sample_data")
+  
+  row_sample_data_chr <- vector(mode = "character")
+  
+  for (i in 1:nrow(agent$validation_set)) {
+    
+    if (i %in% get_row_sample_info(agent = agent)$step) {
+      
+      readr::write_csv(
+        x = get_row_sample_data(agent = agent, step = i) %>%
+          dplyr::select(-pb_step_),
+        path = glue::glue("./row_sample_data/step_{i}_sample_data.csv"))
+      
+      row_sample_data_chr <- 
+        c(row_sample_data_chr,
+            glue::glue(
+              "<a href=\"row_sample_data/step_{i}_sample_data.csv\">CSV</a>"))
+    } else {
+      row_sample_data_chr <- 
+        c(row_sample_data_chr, "")
+    }
+  }
+} 
+```
 
 ```{r images_results, echo=FALSE}
 knitr::kable(
   dplyr::data_frame(
     `1` = images_results,
-    `2` = "&nbsp;",
-    `3` = paste0(
+    `2` = paste0(
       "**Table** ", agent$validation_set$tbl_name, " (", agent$validation_set$db_type, ")<br />",
       "**Assertion Type** ", agent$validation_set$assertion_type, "<br />",
       "**Number of Individual Validations** ", agent$validation_set$n, "<br />",
       "**Pass/Fail Percentages** ",
       paste0(agent$validation_set$f_passed * 100, "%"), " / ",
       paste0(agent$validation_set$f_failed * 100, "%")),
-    `4` = "&nbsp;",
-    `5` = paste0(
+    `3` = paste0(
       "**Column** ", agent$validation_set$column, "<br />",
       value_chr, "<br />",
       "**Preconditions** ", preconditions_chr, "<br />",
-      "**Duration** ", duration_chr)
+      "**Duration** ", duration_chr),
+    `4` = row_sample_data_chr
     ), 
   padding = 20,
-  align = "cclcl",
-  col.names = c("&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;", "&nbsp;")
+  align = "lll",
+  col.names = c("Step", "Summary", "&nbsp;", "&nbsp;")
   )
 ```
 

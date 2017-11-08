@@ -79,11 +79,18 @@ if (any(agent$validation_set$all_passed == FALSE)) {
 knitr::kable(
   dplyr::data_frame(
     `Validation Name` = validation_name,
-    `Validation Time` = paste(gsub("  ", " ", format(validation_time, "%A, %B %d, %Y at %l:%M")), toupper(format(validation_time, "%p")), collapse = ""),
-    `Reporting Time` = paste(gsub("  ", " ", format(Sys.time(), "%A, %B %d, %Y at %l:%M")), toupper(format(Sys.time(), "%p")), collapse = ""),
-    `Validation Duration` = paste0(validation_duration, " seconds"),
-    `All Passed?` = all_tests_passed), padding = 1
-)
+    `Validation Time` = 
+      gsub("  ", " ", paste0(
+        format(validation_time, "%A, %B "),
+        format(validation_time, "%d") %>% as.numeric(),
+        ", ",
+        format(validation_time, "%Y"),
+        " at ",
+        format(validation_time, "%l:%M"),
+        toupper(format(validation_time, " %p")),
+        format(validation_time, " (%Z)"))),
+    `Duration` = paste0(validation_duration, " s"),
+    padding = 1)
 ```
 
 ```{r report_summary_2, echo=FALSE}
@@ -92,8 +99,7 @@ knitr::kable(
     `Tables Interrogated` = agent$validation_set %>% select(tbl_name) %>% distinct() %>% .$tbl_name %>% paste(collapse = ", "),
     `Total Validation Steps` = nrow(agent$validation_set),
     `Steps Passed` = agent$validation_set %>% filter(all_passed == TRUE) %>% nrow(),
-    `Steps Failed` = agent$validation_set %>% filter(all_passed == FALSE) %>% nrow())
-)
+    `Steps Failed` = agent$validation_set %>% filter(all_passed == FALSE) %>% nrow()))
 ```
 
 
@@ -159,7 +165,9 @@ for (i in 1:nrow(agent$validation_set)) {
 
   duration_chr <- 
     c(duration_chr,
-      paste0(as.character(agent$validation_set$proc_duration_s[i]), " s"))
+      paste0(
+        as.character(
+          round(agent$validation_set$proc_duration_s[i], 2)), " s"))
 }
 ```
 
@@ -201,8 +209,8 @@ knitr::kable(
     `2` = paste0(
       "**Table** ", agent$validation_set$tbl_name, " (", agent$validation_set$db_type, ")<br />",
       "**Assertion Type** ", agent$validation_set$assertion_type, "<br />",
-      "**Number of Individual Validations** ", agent$validation_set$n, "<br />",
-      "**Pass/Fail Percentages** ",
+      "**n** ", agent$validation_set$n, "<br />",
+      "**Pass/Fail Rate** ",
       paste0(agent$validation_set$f_passed * 100, "%"), " / ",
       paste0(agent$validation_set$f_failed * 100, "%")),
     `3` = paste0(
@@ -210,8 +218,7 @@ knitr::kable(
       value_chr, "<br />",
       "**Preconditions** ", preconditions_chr, "<br />",
       "**Duration** ", duration_chr),
-    `4` = row_sample_data_chr
-    ), 
+    `4` = row_sample_data_chr), 
   padding = 20,
   align = "llll",
   col.names = c("Step", "Summary", "&nbsp;", "&nbsp;")

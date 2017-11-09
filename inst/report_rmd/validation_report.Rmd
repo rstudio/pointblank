@@ -12,7 +12,8 @@ output:
 library(dplyr)
 library(pointblank)
 library(htmltools)
-library(knitr)
+library(commonmark)
+library(pixiedust)
 library(lubridate)
 library(glue)
 ```
@@ -76,7 +77,7 @@ if (any(agent$validation_set$all_passed == FALSE)) {
 
 
 ```{r validation_summary_1, echo=FALSE}
-knitr::kable(
+pixiedust::dust(
   dplyr::data_frame(
     `Validation Name` = validation_name,
     `Validation Time` = 
@@ -89,17 +90,69 @@ knitr::kable(
         format(validation_time, "%l:%M"),
         toupper(format(validation_time, " %p")),
         format(validation_time, " (%Z)"))),
-    `Duration` = paste0(validation_duration, " s")),
-    padding = 1)
+    `Duration` = paste0(validation_duration, " s"))) %>%
+  pixiedust::sprinkle(
+    part = "head",
+    border = "bottom",
+    border_color = "gray85",
+    border_thickness = 2,
+    pad = 5,
+    font_size = 12) %>%
+  pixiedust::sprinkle_table(
+    cols = 1,
+    width = 304,
+    width_units = "px") %>%
+  pixiedust::sprinkle_table(
+    cols = 2,
+    width = 304,
+    width_units = "px") %>%
+  pixiedust::sprinkle_table(
+    cols = 3,
+    width = 304,
+    width_units = "px",
+    halign = "right") %>%
+  pixiedust::sprinkle_table(
+    cols = 1:3,
+    pad = 3)
 ```
 
 ```{r report_summary_2, echo=FALSE}
-knitr::kable(
+
+pixiedust::dust(
   dplyr::data_frame(
     `Tables Interrogated` = agent$validation_set %>% select(tbl_name) %>% distinct() %>% .$tbl_name %>% paste(collapse = ", "),
     `Total Validation Steps` = nrow(agent$validation_set),
     `Steps Passed` = agent$validation_set %>% filter(all_passed == TRUE) %>% nrow(),
-    `Steps Failed` = agent$validation_set %>% filter(all_passed == FALSE) %>% nrow()))
+    `Steps Failed` = agent$validation_set %>% filter(all_passed == FALSE) %>% nrow())) %>%
+  pixiedust::sprinkle(
+    part = "head",
+    border = "bottom",
+    border_color = "gray85",
+    border_thickness = 2,
+    pad = 5,
+    font_size = 12) %>%
+  pixiedust::sprinkle_table(
+    cols = 1,
+    width = 228,
+    width_units = "px") %>%
+  pixiedust::sprinkle_table(
+    cols = 2,
+    width = 228,
+    width_units = "px",
+    halign = "right") %>%
+  pixiedust::sprinkle_table(
+    cols = 3,
+    width = 228,
+    width_units = "px",
+    halign = "right") %>%
+  pixiedust::sprinkle_table(
+    cols = 4,
+    width = 228,
+    width_units = "px",
+    halign = "right") %>%
+  pixiedust::sprinkle_table(
+    cols = 1:4,
+    pad = 3)
 ```
 
 
@@ -132,8 +185,13 @@ for (i in 1:length(img_file_list_plan)) {
 ```
 
 ```{r get_preconditions_chr, include=FALSE}
-preconditions_chr <- agent$preconditions$precondition
-preconditions_chr[which(is.na(preconditions_chr))] <- "None"
+
+preconditions_chr <-
+  agent$preconditions %>%
+  mutate(preconditions_chr = case_when(
+    is.na(precondition) ~ as.character("None"),
+    !is.na(precondition) ~ paste0("<span title=\"", gsub("\"", "", precondition), "\">Yes</span>"))) %>%
+  pull(preconditions_chr)
 ```
 
 ```{r get_value_regex_set_strings, include=FALSE}
@@ -143,14 +201,14 @@ for (i in 1:nrow(agent$validation_set)) {
   if (i == 1) value_chr <- vector(mode = "character")
   
   if (!is.na(agent$validation_set$value[i])) {
-    value_chr_line <- paste0("**Value** ", as.character(agent$validation_set$value[i]))
+    value_chr_line <- paste0("<strong>Value</strong> <code>", as.character(agent$validation_set$value[i]), "</code>")
   } else if (agent$validation_set$assertion_type[i] == "col_vals_regex") {
-    value_chr_line <- paste0("**Regex** \"", agent$validation_set$regex[i], "\"")
+    value_chr_line <- paste0("<strong>Regex</strong> <code>\"", agent$validation_set$regex[i], "\"</code>")
   } else if (agent$validation_set$assertion_type[i] %in% c("col_vals_in_set", "col_vals_not_in_set")) {
-    value_chr_line <- paste0("**Set** ", gsub(",", ", ", agent$sets$set[i]))
+    value_chr_line <- paste0("<strong>Set</strong> ", gsub(",", ", ", agent$sets$set[i]))
   } else if (agent$validation_set$assertion_type[i] == "rows_not_duplicated" |
              is.na(agent$validation_set$value[i])) {
-    value_chr_line <- "**Value** None"
+    value_chr_line <- "<strong>Value</strong> None"
   }
  
   value_chr <- c(value_chr, value_chr_line)
@@ -202,37 +260,93 @@ if (any(!is.na(get_row_sample_info(agent = agent)))) {
 }
 ```
 
+## Results by Validation Step {.tabset .tabset-fade}
+
+### All Steps
+
 ```{r images_results, echo=FALSE}
-knitr::kable(
+
+pixiedust::dust(
   dplyr::data_frame(
     `1` = images_results,
     `2` = paste0(
-      "**Table** ", agent$validation_set$tbl_name, " (", agent$validation_set$db_type, ")<br />",
-      "**Assertion Type** ", agent$validation_set$assertion_type, "<br />",
-      "**n** ", agent$validation_set$n, "<br />",
-      "**Pass/Fail Rate** ",
+      "<strong>Table</strong> <code>", agent$validation_set$tbl_name, "</code> (", agent$validation_set$db_type, ")<br />",
+      "<strong>Assertion Type</strong> <code>", agent$validation_set$assertion_type, "</code><br />",
+      "<strong>n</strong> <code>", agent$validation_set$n, "</code><br />",
+      "<strong>Pass/Fail Rate</strong> ",
       paste0(agent$validation_set$f_passed * 100, "%"), " / ",
       paste0(agent$validation_set$f_failed * 100, "%")),
     `3` = paste0(
-      "**Column** ", agent$validation_set$column, "<br />",
+      "<strong>Column</strong> <code>", agent$validation_set$column, "</code> <br />",
       value_chr, "<br />",
-      "**Preconditions** ", preconditions_chr, "<br />",
-      "**Duration** ", duration_chr),
-    `4` = row_sample_data_chr), 
-  padding = 20,
-  align = "llll",
-  col.names = c("Step", "Summary", "&nbsp;", "&nbsp;")
-  )
+      "<strong>Preconditions</strong> ", preconditions_chr, "<br />",
+      "<strong>Duration</strong> ", duration_chr),
+    `4` = row_sample_data_chr)) %>%
+  pixiedust::sprinkle(
+    part = "head",
+    border = "bottom",
+    border_color = "gray85",
+    border_thickness = 2,
+    pad = 5,
+    font_size = 12) %>%
+  pixiedust::sprinkle_table(
+    cols = 1,
+    width = 22,
+    width_units = "%") %>%
+  pixiedust::sprinkle_table(
+    cols = 2,
+    width = 37,
+    width_units = "%") %>%
+  pixiedust::sprinkle_table(
+    cols = 3,
+    width = 37,
+    width_units = "%") %>%
+  pixiedust::sprinkle_table(
+    cols = 4,
+    width = 4,
+    width_units = "%") %>%
+  pixiedust::sprinkle_table(
+    cols = 1:4,
+    pad = 3) %>%
+  pixiedust::sprinkle_colnames(
+    `1` = "Step",
+    `2` = "Summary",
+    `3` = "", `4` = "")
 ```
 
-```{r images_plan, echo=FALSE}
-# knitr::kable(
-#   dplyr::data_frame(
-#     `1` = images_plan,
-#     `2` = "&nbsp;",
-#     `3` = "&nbsp;"), 
-#   padding = 20,
-#   align = "cll",
-#   col.names = c("1", "2", "3")
-#   )
+### Validation Plan
+
+```{r validation_plan, echo=FALSE}
+
+briefs <-
+  gsub("<p>|</p>", "", strsplit(
+    (agent$validation_set$brief %>% 
+       commonmark::markdown_html()), "\\n") %>% unlist())
+
+pixiedust::dust(
+  dplyr::data_frame(
+    `1` = images_plan,
+    `2` = briefs)) %>%
+  sprinkle(
+    part = "head",
+    border = "bottom",
+    border_color = "gray85",
+    border_thickness = 2,
+    pad = 5,
+    font_size = 12) %>%
+  sprinkle_table(
+    cols = 1,
+    width = 22,
+    width_units = "%") %>%
+  sprinkle_table(
+    cols = 2,
+    width = 78,
+    width_units = "%") %>%
+  sprinkle_table(
+    cols = 1:2,
+    pad = 3) %>%
+  sprinkle_colnames(
+    `1` = "Step",
+    `2` = "Brief")
 ```
+

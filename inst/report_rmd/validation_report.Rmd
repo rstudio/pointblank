@@ -89,7 +89,7 @@ knitr::kable(
         format(validation_time, "%l:%M"),
         toupper(format(validation_time, " %p")),
         format(validation_time, " (%Z)"))),
-    `Duration` = paste0(validation_duration, " s"),
+    `Duration` = paste0(validation_duration, " s")),
     padding = 1)
 ```
 

@@ -271,9 +271,9 @@ results_warn_table <-
         "<strong>Preconditions</strong> ", preconditions_chr, "<br />",
         "<strong>Duration</strong> ", duration_chr),
       `  ` = row_sample_data_chr),
-    agent$validation_set %>% dplyr::select(warn)) %>%
-  dplyr::filter(warn == TRUE) %>%
-  dplyr::select(-warn)
+    agent$validation_set %>% dplyr::select(warn, notify)) %>%
+  dplyr::filter(warn == TRUE & notify == FALSE) %>%
+  dplyr::select(-warn, -notify) 
 
 if (nrow(results_warn_table) > 0) knitr::kable(results_warn_table)
 ```

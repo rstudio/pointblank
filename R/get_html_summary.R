@@ -11,14 +11,17 @@
 #' the filename \code{validation_report.html}
 #' will be used.
 #' @param intro_text HTML text to be placed at
-#' the top of the summary.
+#' the top of the summary. Can be provided
+#' as plaintext or as markdown text.
 #' @param footer_text HTML text to be placed in
-#' the footer of the summary.
+#' the footer of the summary. Can be provided
+#' as plaintext or as markdown text.
 #' @param output_dir an optional path to place
 #' the output HTML file and subfolder of CSV
 #' data (if that exists). The path must exist
 #' otherwise no movement of files will occur.
 #' @importFrom rmarkdown render
+#' @importFrom commonmark markdown_html
 #' @export get_html_summary
 
 get_html_summary <- function(agent,
@@ -74,7 +77,9 @@ get_html_summary <- function(agent,
   # `include_intro.txt` file to the working directory
   if (!is.null(intro_text)) {
     if (inherits(intro_text, "character")) {
-      cat(intro_text, file = "include_intro.txt")
+      cat(
+        commonmark::markdown_html(intro_text),
+        file = "include_intro.txt")
     }
   }
   
@@ -82,7 +87,9 @@ get_html_summary <- function(agent,
   # `include_footer.html` file to the working directory
   if (!is.null(footer_text)) {
     if (inherits(footer_text, "character")) {
-      cat(paste0("<p>", footer_text, "</p>"), file = "include_footer.html")
+      cat(
+        commonmark::markdown_html(footer_text),
+        file = "include_footer.html")
     }
   } else {
     cat(paste0("<p></p>"), file = "include_footer.html")

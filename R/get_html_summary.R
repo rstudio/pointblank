@@ -89,7 +89,10 @@ get_html_summary <- function(agent,
   }
   
   # Render the RMarkdown file to the working directory
-  suppressMessages(rmarkdown::render("validation_report.Rmd"))
+  suppressMessages(
+    rmarkdown::render(
+      input = "validation_report.Rmd",
+      output_format = "html_document"))
   
   # Get the default output filename
   output_file <- "validation_report.html"

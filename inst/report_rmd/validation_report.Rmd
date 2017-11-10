@@ -13,10 +13,15 @@ library(dplyr)
 library(pointblank)
 library(htmltools)
 library(commonmark)
-library(pixiedust)
 library(lubridate)
 library(glue)
 ```
+
+
+```{r read_agent_rds, include=FALSE}
+agent <- readRDS(file = "agent.rds")
+```
+
 
 ```{r generate_img_files, echo=FALSE}
 
@@ -25,14 +30,20 @@ pointblank:::generate_img_files_results(agent = agent)
 
 # Get a vector of these file paths
 img_file_list_results <-
-  list.files(path = "./temporary_images", pattern = ".*_.svg", full.names = TRUE)
+  list.files(
+    path = "./temporary_images",
+    pattern = ".*_.svg",
+    full.names = TRUE)
 
 # Generate the image files for the validation plan a temporary directory
 pointblank:::generate_img_files_plan(agent = agent)
 
 # Get a vector of these file paths
 img_file_list_plan <-
-  list.files(path = "./temporary_images_plan", pattern = ".*.svg", full.names = TRUE)
+  list.files(
+    path = "./temporary_images_plan",
+    pattern = ".*.svg",
+    full.names = TRUE)
 ```
 
 ## Validation Summary
@@ -77,7 +88,8 @@ if (any(agent$validation_set$all_passed == FALSE)) {
 
 
 ```{r validation_summary_1, echo=FALSE}
-pixiedust::dust(
+
+knitr::kable(
   dplyr::data_frame(
     `Validation Name` = validation_name,
     `Validation Time` = 
@@ -90,73 +102,23 @@ pixiedust::dust(
         format(validation_time, "%l:%M"),
         toupper(format(validation_time, " %p")),
         format(validation_time, " (%Z)"))),
-    `Duration` = paste0(validation_duration, " s"))) %>%
-  pixiedust::sprinkle(
-    part = "head",
-    border = "bottom",
-    border_color = "gray85",
-    border_thickness = 2,
-    pad = 5,
-    font_size = 12) %>%
-  pixiedust::sprinkle_table(
-    cols = 1,
-    width = 304,
-    width_units = "px") %>%
-  pixiedust::sprinkle_table(
-    cols = 2,
-    width = 304,
-    width_units = "px") %>%
-  pixiedust::sprinkle_table(
-    cols = 3,
-    width = 304,
-    width_units = "px",
-    halign = "right") %>%
-  pixiedust::sprinkle_table(
-    cols = 1:3,
-    pad = 3)
+    `Duration` = paste0(validation_duration, " s")))
 ```
+
 
 ```{r report_summary_2, echo=FALSE}
 
-pixiedust::dust(
+knitr::kable(
   dplyr::data_frame(
     `Tables Interrogated` = agent$validation_set %>% select(tbl_name) %>% distinct() %>% .$tbl_name %>% paste(collapse = ", "),
     `Total Validation Steps` = nrow(agent$validation_set),
     `Steps Passed` = agent$validation_set %>% filter(all_passed == TRUE) %>% nrow(),
-    `Steps Failed` = agent$validation_set %>% filter(all_passed == FALSE) %>% nrow())) %>%
-  pixiedust::sprinkle(
-    part = "head",
-    border = "bottom",
-    border_color = "gray85",
-    border_thickness = 2,
-    pad = 5,
-    font_size = 12) %>%
-  pixiedust::sprinkle_table(
-    cols = 1,
-    width = 228,
-    width_units = "px") %>%
-  pixiedust::sprinkle_table(
-    cols = 2,
-    width = 228,
-    width_units = "px",
-    halign = "right") %>%
-  pixiedust::sprinkle_table(
-    cols = 3,
-    width = 228,
-    width_units = "px",
-    halign = "right") %>%
-  pixiedust::sprinkle_table(
-    cols = 4,
-    width = 228,
-    width_units = "px",
-    halign = "right") %>%
-  pixiedust::sprinkle_table(
-    cols = 1:4,
-    pad = 3)
+    `Steps Failed` = agent$validation_set %>% filter(all_passed == FALSE) %>% nrow()))
 ```
 
 
 ```{r get_images_vectors, include=FALSE}
+
 for (i in 1:length(img_file_list_results)) {
   
   if (i == 1) {
@@ -166,7 +128,7 @@ for (i in 1:length(img_file_list_results)) {
   images_results <- 
     c(images_results,
       structure(
-        img(src = img_file_list_results[i])) %>%
+        htmltools::img(src = img_file_list_results[i])) %>%
         as.character())
 }
 
@@ -179,20 +141,22 @@ for (i in 1:length(img_file_list_plan)) {
   images_plan <- 
     c(images_plan,
       structure(
-        img(src = img_file_list_plan[i])) %>%
+        htmltools::img(src = img_file_list_plan[i])) %>%
         as.character())
 }
 ```
+
 
 ```{r get_preconditions_chr, include=FALSE}
 
 preconditions_chr <-
   agent$preconditions %>%
-  mutate(preconditions_chr = case_when(
+  dplyr::mutate(preconditions_chr = dplyr::case_when(
     is.na(precondition) ~ as.character("None"),
     !is.na(precondition) ~ paste0("<span title=\"", gsub("\"", "", precondition), "\">Yes</span>"))) %>%
-  pull(preconditions_chr)
+  dplyr::pull(preconditions_chr)
 ```
+
 
 ```{r get_value_regex_set_strings, include=FALSE}
 
@@ -215,6 +179,7 @@ for (i in 1:nrow(agent$validation_set)) {
 }
 ```
 
+
 ```{r get_duration_strings, include=FALSE}
 
 for (i in 1:nrow(agent$validation_set)) {
@@ -229,6 +194,7 @@ for (i in 1:nrow(agent$validation_set)) {
 }
 ```
 
+
 ```{r get_row_sample_data, include=FALSE}
 
 if (any(!is.na(get_row_sample_info(agent = agent)))) {
@@ -239,10 +205,10 @@ if (any(!is.na(get_row_sample_info(agent = agent)))) {
   
   for (i in 1:nrow(agent$validation_set)) {
     
-    if (i %in% get_row_sample_info(agent = agent)$step) {
+    if (i %in% pointblank::get_row_sample_info(agent = agent)$step) {
       
       readr::write_csv(
-        x = get_row_sample_data(agent = agent, step = i) %>%
+        x = pointblank::get_row_sample_data(agent = agent, step = i) %>%
           dplyr::select(-pb_step_),
         path = glue::glue("./_csv_data/step_{i}_sample_data.csv"))
       
@@ -264,54 +230,80 @@ if (any(!is.na(get_row_sample_info(agent = agent)))) {
 
 ### All Steps
 
-```{r images_results, echo=FALSE}
+```{r results_all, echo=FALSE}
 
-pixiedust::dust(
+knitr::kable(
   dplyr::data_frame(
-    `1` = images_results,
-    `2` = paste0(
+    `Summary` = images_results,
+    `Details` = paste0(
       "<strong>Table</strong> <code>", agent$validation_set$tbl_name, "</code> (", agent$validation_set$db_type, ")<br />",
-      "<strong>Assertion Type</strong> <code>", agent$validation_set$assertion_type, "</code><br />",
+      "<strong>Assertion</strong> <code>", agent$validation_set$assertion_type, "</code><br />",
       "<strong>n</strong> <code>", agent$validation_set$n, "</code><br />",
       "<strong>Pass/Fail Rate</strong> ",
       paste0(agent$validation_set$f_passed * 100, "%"), " / ",
       paste0(agent$validation_set$f_failed * 100, "%")),
-    `3` = paste0(
+    ` ` = paste0(
       "<strong>Column</strong> <code>", agent$validation_set$column, "</code> <br />",
       value_chr, "<br />",
       "<strong>Preconditions</strong> ", preconditions_chr, "<br />",
       "<strong>Duration</strong> ", duration_chr),
-    `4` = row_sample_data_chr)) %>%
-  pixiedust::sprinkle(
-    part = "head",
-    border = "bottom",
-    border_color = "gray85",
-    border_thickness = 2,
-    pad = 5,
-    font_size = 12) %>%
-  pixiedust::sprinkle_table(
-    cols = 1,
-    width = 22,
-    width_units = "%") %>%
-  pixiedust::sprinkle_table(
-    cols = 2,
-    width = 37,
-    width_units = "%") %>%
-  pixiedust::sprinkle_table(
-    cols = 3,
-    width = 37,
-    width_units = "%") %>%
-  pixiedust::sprinkle_table(
-    cols = 4,
-    width = 4,
-    width_units = "%") %>%
-  pixiedust::sprinkle_table(
-    cols = 1:4,
-    pad = 3) %>%
-  pixiedust::sprinkle_colnames(
-    `1` = "Step",
-    `2` = "Summary",
-    `3` = "", `4` = "")
+    `  ` = row_sample_data_chr)) 
+```
+
+### Warn
+
+```{r results_warn, echo=FALSE}
+
+results_warn_table <-
+  dplyr::bind_cols(
+    dplyr::data_frame(
+      `Summary` = images_results,
+      `Details` = paste0(
+        "<strong>Table</strong> <code>", agent$validation_set$tbl_name, "</code> (", agent$validation_set$db_type, ")<br />",
+        "<strong>Assertion</strong> <code>", agent$validation_set$assertion_type, "</code><br />",
+        "<strong>n</strong> <code>", agent$validation_set$n, "</code><br />",
+        "<strong>Pass/Fail Rate</strong> ",
+        paste0(agent$validation_set$f_passed * 100, "%"), " / ",
+        paste0(agent$validation_set$f_failed * 100, "%")),
+      ` ` = paste0(
+        "<strong>Column</strong> <code>", agent$validation_set$column, "</code> <br />",
+        value_chr, "<br />",
+        "<strong>Preconditions</strong> ", preconditions_chr, "<br />",
+        "<strong>Duration</strong> ", duration_chr),
+      `  ` = row_sample_data_chr),
+    agent$validation_set %>% dplyr::select(warn)) %>%
+  dplyr::filter(warn == TRUE) %>%
+  dplyr::select(-warn)
+
+if (nrow(results_warn_table) > 0) knitr::kable(results_warn_table)
+```
+
+### Notify
+
+```{r results_notify, echo=FALSE}
+
+results_notify_table <-
+  dplyr::bind_cols(
+    dplyr::data_frame(
+      `Summary` = images_results,
+      `Details` = paste0(
+        "<strong>Table</strong> <code>", agent$validation_set$tbl_name, "</code> (", agent$validation_set$db_type, ")<br />",
+        "<strong>Assertion</strong> <code>", agent$validation_set$assertion_type, "</code><br />",
+        "<strong>n</strong> <code>", agent$validation_set$n, "</code><br />",
+        "<strong>Pass/Fail Rate</strong> ",
+        paste0(agent$validation_set$f_passed * 100, "%"), " / ",
+        paste0(agent$validation_set$f_failed * 100, "%")),
+      ` ` = paste0(
+        "<strong>Column</strong> <code>", agent$validation_set$column, "</code> <br />",
+        value_chr, "<br />",
+        "<strong>Preconditions</strong> ", preconditions_chr, "<br />",
+        "<strong>Duration</strong> ", duration_chr),
+      `  ` = row_sample_data_chr),
+    agent$validation_set %>% dplyr::select(notify)) %>%
+  dplyr::filter(notify == TRUE) %>%
+  dplyr::select(-notify)
+
+if (nrow(results_notify_table) > 0) knitr::kable(results_notify_table)
 ```
 
 ### Validation Plan
@@ -323,30 +315,9 @@ briefs <-
     (agent$validation_set$brief %>% 
        commonmark::markdown_html()), "\\n") %>% unlist())
 
-pixiedust::dust(
+knitr::kable(
   dplyr::data_frame(
-    `1` = images_results,
-    `2` = briefs)) %>%
-  sprinkle(
-    part = "head",
-    border = "bottom",
-    border_color = "gray85",
-    border_thickness = 2,
-    pad = 5,
-    font_size = 12) %>%
-  sprinkle_table(
-    cols = 1,
-    width = 22,
-    width_units = "%") %>%
-  sprinkle_table(
-    cols = 2,
-    width = 78,
-    width_units = "%") %>%
-  sprinkle_table(
-    cols = 1:2,
-    pad = 3) %>%
-  sprinkle_colnames(
-    `1` = "Step",
-    `2` = "Brief")
+    `Summary` = images_results,
+    `Brief` = briefs))
 ```
 

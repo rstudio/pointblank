@@ -27,7 +27,6 @@ Imports:
     knitr (>= 1.17),
     lubridate (>= 1.6.0),
     magrittr (>= 1.5),
-    pixiedust (>= 0.8.1),
     purrr (>= 0.2.3),
     readr (>= 1.1.1),
     rlang (>= 0.1.1),

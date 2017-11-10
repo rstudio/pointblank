@@ -13,6 +13,10 @@
 #' @param intro_text HTML text to be placed at
 #' the top of the summary. Can be provided
 #' as plaintext or as markdown text.
+#' @param pre_results_text HTML text to be
+#' placed just before the tables of validation
+#' results. Can be provided as plaintext or as
+#' markdown text.
 #' @param footer_text HTML text to be placed in
 #' the footer of the summary. Can be provided
 #' as plaintext or as markdown text.
@@ -27,6 +31,7 @@
 get_html_summary <- function(agent,
                              filename = NULL,
                              intro_text = NULL,
+                             pre_results_text = NULL,
                              footer_text = NULL,
                              output_dir = NULL) {
   
@@ -43,8 +48,12 @@ get_html_summary <- function(agent,
     invisible(file.remove("validation_report.Rmd"))
   }
   
-  if (file.exists("include_intro.txt")) {
-    invisible(file.remove("include_intro.txt"))
+  if (file.exists("include_intro.html")) {
+    invisible(file.remove("include_intro.html"))
+  }
+  
+  if (file.exists("include_pre_results.html")) {
+    invisible(file.remove("include_pre_results.html"))
   }
   
   if (file.exists("include_footer.html")) {
@@ -79,7 +88,17 @@ get_html_summary <- function(agent,
     if (inherits(intro_text, "character")) {
       cat(
         commonmark::markdown_html(intro_text),
-        file = "include_intro.txt")
+        file = "include_intro.html")
+    }
+  }
+  
+  # If `pre_results_text` is provided, write the
+  # `include_pre_results.html` file to the working directory
+  if (!is.null(pre_results_text)) {
+    if (inherits(pre_results_text, "character")) {
+      cat(
+        commonmark::markdown_html(pre_results_text),
+        file = "include_pre_results.html")
     }
   }
   
@@ -114,6 +133,10 @@ get_html_summary <- function(agent,
   
   if (file.exists("include_intro.txt")) {
     invisible(file.remove("include_intro.txt"))
+  }
+  
+  if (file.exists("include_pre_results.html")) {
+    invisible(file.remove("include_pre_results.html"))
   }
   
   if (file.exists("include_footer.html")) {

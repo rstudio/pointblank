@@ -6,7 +6,7 @@
 interrogation}
 \usage{
 get_html_summary(agent, filename = NULL, intro_text = NULL,
-  footer_text = NULL, output_dir = NULL)
+  pre_results_text = NULL, footer_text = NULL, output_dir = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -20,6 +20,11 @@ will be used.}
 \item{intro_text}{HTML text to be placed at
 the top of the summary. Can be provided
 as plaintext or as markdown text.}
+
+\item{pre_results_text}{HTML text to be
+placed just before the tables of validation
+results. Can be provided as plaintext or as
+markdown text.}
 
 \item{footer_text}{HTML text to be placed in
 the footer of the summary. Can be provided

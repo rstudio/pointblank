@@ -18,10 +18,12 @@ the filename \code{validation_report.html}
 will be used.}
 
 \item{intro_text}{HTML text to be placed at
-the top of the summary.}
+the top of the summary. Can be provided
+as plaintext or as markdown text.}
 
 \item{footer_text}{HTML text to be placed in
-the footer of the summary.}
+the footer of the summary. Can be provided
+as plaintext or as markdown text.}
 
 \item{output_dir}{an optional path to place
 the output HTML file and subfolder of CSV

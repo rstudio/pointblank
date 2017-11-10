@@ -48,7 +48,7 @@ img_file_list_plan <-
 
 ## Validation Summary
 
-`r if (file.exists("include_intro.txt")) { paste(readLines("include_intro.txt", warn = FALSE)) }`
+`r if (file.exists("include_intro.html")) { paste(readLines("include_intro.html", warn = FALSE)) }`
 
 ```{r validation_summary_stats, echo=FALSE}
 # Get the validation name from `agent`; if none
@@ -227,6 +227,8 @@ if (any(!is.na(get_row_sample_info(agent = agent)))) {
 ```
 
 ## Results by Validation Step {.tabset .tabset-fade}
+
+`r if (file.exists("include_pre_results.html")) { paste(readLines("include_pre_results.html", warn = FALSE)) }`
 
 ### All Steps
 

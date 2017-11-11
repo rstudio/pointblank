@@ -205,6 +205,11 @@ set_entry_point <- function(table,
       
       if (!is.null(initial_sql)) {
         
+        # Remove extra spaces within the SQL string
+        initial_sql <-
+          gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "",
+               initial_sql, perl = TRUE)
+          
         if (grepl("^(SELECT|select)", initial_sql)) {
           
           # If there is a `SELECT` or `select` keyword

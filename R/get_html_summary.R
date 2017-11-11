@@ -131,8 +131,8 @@ get_html_summary <- function(agent,
     invisible(file.remove("validation_report.Rmd"))
   }
   
-  if (file.exists("include_intro.txt")) {
-    invisible(file.remove("include_intro.txt"))
+  if (file.exists("include_intro.html")) {
+    invisible(file.remove("include_intro.html"))
   }
   
   if (file.exists("include_pre_results.html")) {

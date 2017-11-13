@@ -74,11 +74,11 @@ set_email_prefs <- function(agent,
                             creds_file = NULL) {
   
   if (notify_active %in% c(TRUE, FALSE)) {
-    agent$notification_emails_active <- notify_active
+    agent$email_notifications_active <- notify_active
   }
 
   if (!is.null(email_recipients)) {
-    agent$notification_recipients <- email_recipients
+    agent$email_notification_recipients <- email_recipients
   }
   
   if (!is.null(creds_file)) {

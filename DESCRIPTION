@@ -24,6 +24,7 @@ Imports:
     glue (>= 1.1.1),
     Hmisc (>= 4.0-3),
     htmltools (>= 0.3.6),
+    httr (>= 1.3.1),
     knitr (>= 1.17),
     lubridate (>= 1.6.0),
     magrittr (>= 1.5),

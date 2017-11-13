@@ -12,15 +12,19 @@ set_email_prefs(agent, notify_active = FALSE, email_recipients = NULL,
 \code{ptblank_agent}.}
 
 \item{notify_active}{an option to
-enable notification emails when tests trigger a}
+enable notification emails whenever any
+of the validation steps in the
+\code{agent} object have triggered a
+\code{notify} status.}
 
 \item{email_recipients}{an optional
-vector of email addresses to which notification
-emails should be sent.}
+vector of email addresses to which
+notification emails should be sent.}
 
-\item{creds_file}{an optional path to an email
-credentials file. Such a file can be generated
-using the \code{create_email_creds_file()}
+\item{creds_file}{an optional path to
+an email credentials file. Such a file
+can be generated using the
+\code{create_email_creds_file()}
 function.
 \code{notify} status.}
 }
@@ -28,11 +32,12 @@ function.
 an agent object.
 }
 \description{
-Grants email credentials to a
-pointblank agent object and provides an opportunity
-to set email reporting options. This function is to
-be used in a pointblank pipeline any time before
-an \code{interrogate()} call.
+Grants email credentials
+to a pointblank agent object and provides
+an opportunity to set email reporting
+options. This function is to be used in
+a pointblank pipeline any time before an
+\code{interrogate()} call.
 }
 \examples{
 \dontrun{
@@ -57,13 +62,13 @@ df <-
 # set up the email notification
 # preferences, and conduct a
 # simple validation; because
-# `notify_count` in the step
-# where `col_vals_lt()` is called
-# is `1` the `email_recipients`
-# will be notified when there
-# are 1 or more non-passing
-# validations (in this case,
-# non-passing rows)
+# `notify_count` (in the step
+# where `col_vals_lt()` is called)
+# has a value of `1` the
+# `email_recipients` will be
+# notified when there are one or
+# more non-passing validations (in
+# this case, non-passing rows)
 agent <-
   create_agent() \%>\%
   set_email_prefs(

@@ -45,13 +45,13 @@
 #' # set up the email notification
 #' # preferences, and conduct a
 #' # simple validation; because
-#' # `notify_count` in the step
-#' # where `col_vals_lt()` is called
-#' # is `1` the `email_recipients`
-#' # will be notified when there
-#' # are 1 or more non-passing
-#' # validations (in this case,
-#' # non-passing rows)
+#' # `notify_count` (in the step
+#' # where `col_vals_lt()` is called)
+#' # has a value of `1` the
+#' # `email_recipients` will be
+#' # notified when there are one or
+#' # more non-passing validations (in
+#' # this case, non-passing rows)
 #' agent <-
 #'   create_agent() %>%
 #'   set_email_prefs(

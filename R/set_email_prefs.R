@@ -66,8 +66,6 @@
 #'     notify_count = 1) %>%
 #'   interrogate()
 #' }
-#' @importFrom dplyr filter
-#' @importFrom tibble tibble as_tibble
 #' @export set_email_prefs
 
 set_email_prefs <- function(agent,

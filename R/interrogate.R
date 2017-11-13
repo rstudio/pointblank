@@ -761,8 +761,8 @@ interrogate <- function(agent,
   
   # Notification Step ---------------------------------------------
   if (length(agent$email_creds_file_path) > 0 &
-      length(agent$notification_recipients) > 0 & 
-      agent$notification_emails_active == TRUE &
+      length(agent$email_notification_recipients) > 0 & 
+      agent$email_notifications_active == TRUE &
       nrow(agent$validation_set) > 0 &
       any(agent$validation_set$notify == TRUE)) {
     

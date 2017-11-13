@@ -16,8 +16,11 @@ test_that("Creating a valid `agent` object is possible", {
           "focal_col_types", "focal_db_cred_file_path",
           "focal_db_env_vars", "focal_init_sql", "email_creds_file_path",
           "email_notification_recipients", "email_notifications_active",
-          "logical_plan", "validation_set",
-          "sets", "preconditions")))
+          "slack_webhook_url", "slack_channel", "slack_username", 
+          "slack_author_name", "slack_title", "slack_report_url", 
+          "slack_footer_thumb_url", "slack_footer_text", 
+          "slack_notifications_active", "logical_plan",
+          "validation_set", "sets", "preconditions")))
   
   # Expect an agent object of class `dgr_graph`
   expect_is(agent, "ptblank_agent")
@@ -50,6 +53,15 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$email_creds_file_path, "character")
   expect_is(agent$email_notification_recipients, "character")
   expect_is(agent$email_notifications_active, "logical")
+  expect_is(agent$slack_webhook_url, "character")
+  expect_is(agent$slack_channel, "character")
+  expect_is(agent$slack_username, "character")
+  expect_is(agent$slack_author_name, "character")
+  expect_is(agent$slack_title, "character")
+  expect_is(agent$slack_report_url, "character")
+  expect_is(agent$slack_footer_thumb_url, "character")
+  expect_is(agent$slack_footer_text, "character")
+  expect_is(agent$slack_notifications_active, "logical")
   expect_is(agent$validation_set$tbl_name, "character")
   expect_is(agent$validation_set$db_type, "character")
   expect_is(agent$validation_set$assertion_type, "character")

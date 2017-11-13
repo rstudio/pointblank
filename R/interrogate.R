@@ -91,8 +91,10 @@
 #' @importFrom stringr str_split str_trim
 #' @importFrom purrr flatten_chr flatten_dbl
 #' @importFrom readr read_csv read_tsv
+#' @importFrom httr POST add_headers
+#' @importFrom glue glue
 #' @importFrom stats setNames
-#' @importFrom utils head
+#' @importFrom utils head URLencode
 #' @export interrogate
 
 interrogate <- function(agent,
@@ -759,7 +761,7 @@ interrogate <- function(agent,
   # Disconnect any open PostgreSQL connections --------------------
   #disconnect_postgres()
   
-  # Notification Step ---------------------------------------------
+  # Notification Step - email ---------------------------------------------
   if (length(agent$email_creds_file_path) > 0 &
       length(agent$email_notification_recipients) > 0 & 
       agent$email_notifications_active == TRUE &
@@ -767,6 +769,89 @@ interrogate <- function(agent,
       any(agent$validation_set$notify == TRUE)) {
     
     # TODO: perform notification via notification method
+  }
+  
+  # Notification Step - Slack ---------------------------------------------
+  if (length(agent$slack_webhook_url) > 0 & 
+      agent$slack_notifications_active == TRUE &
+      nrow(agent$validation_set) > 0 &
+      any(agent$validation_set$notify == TRUE)) {
+    
+    # TODO: perform notification via notification method
+    notify_count <- 
+      agent$validation_set %>%
+      dplyr::select(notify) %>%
+      dplyr::filter(notify == TRUE) %>%
+      nrow()
+    
+    warning_count <- 
+      agent$validation_set %>%
+      dplyr::select(warn) %>%
+      dplyr::filter(warn == TRUE) %>%
+      nrow()
+    
+    # If a value for `slack_footer_timestamp` is not
+    # provided, use the system time as the timestamp
+    if (is.null(slack_footer_timestamp)) {
+      slack_footer_timestamp <- Sys.time() %>% as.integer()
+    }
+    
+    if (notify_count > 0) {
+      
+      notify_text <-
+        ifelse(
+          notify_count == 1,
+          glue::glue("There is {notify_count} validation step that resulted in significant failures."),
+          glue::glue("There are {notify_count} validation steps that resulted in significant failures."))
+    }
+    
+    if (warning_count > 0) {
+      
+      warning_text <-
+        ifelse(
+          warning_count == 1,
+          glue::glue("There is {warning_count} validation step that issued a warning."),
+          glue::glue("There are {warning_count} validation steps that issued warnings."))
+    }
+    
+    if (notify_count > 0 & warning_count > 0) {
+      notification_text <- paste0(
+        gsub("\\.", "", notify_text),
+        " and ",
+        gsub("There", "there", warning_text))
+    }
+    
+    if (notify_count > 1 & warning_count == 0) {
+      notification_text <- notify_text
+    }
+    
+    slack_footer_timestamp <- Sys.time() %>% as.integer()
+    
+    httr::POST(
+      url = agent$slack_webhook_url,
+      encode = "form",
+      httr::add_headers(
+        `Content-Type` = "application/x-www-form-urlencoded",
+        Accept = "*/*"),
+      body = utils::URLencode(
+        glue::glue(
+          "payload={{
+                   \"channel\": \"{agent$slack_channel}\",
+                   \"username\": \"{agent$slack_username}\",
+                   \"attachments\": [
+                   {{
+                   \"fallback\": \"{agent$slack_title}\",
+                   \"color\": \"danger\",
+                   \"author_name\": \"{agent$slack_author_name}\",
+                   \"title\": \"{agent$slack_title}\",
+                   \"title_link\": \"{agent$slack_report_url}\",
+                   \"text\": \"{notification_text}\",
+                   \"thumb_url\": \"{agent$slack_footer_thumb_url}\",
+                   \"footer\": \"{agent$slack_footer_text}\",
+                   \"ts\": {slack_footer_timestamp}
+                   }}
+                   ]
+                   }}")))
   }
   
   agent

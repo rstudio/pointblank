@@ -199,7 +199,10 @@ for (i in 1:nrow(agent$validation_set)) {
 
 if (any(!is.na(get_row_sample_info(agent = agent)))) {
   
-  dir.create(path = "_csv_data")
+  csv_subfolder_name <-
+    gsub("(-|:)", "_", agent$validation_name)  
+  
+  dir.create(path = csv_subfolder_name)
   
   row_sample_data_chr <- vector(mode = "character")
   
@@ -210,12 +213,12 @@ if (any(!is.na(get_row_sample_info(agent = agent)))) {
       readr::write_csv(
         x = pointblank::get_row_sample_data(agent = agent, step = i) %>%
           dplyr::select(-pb_step_),
-        path = glue::glue("./_csv_data/step_{i}_sample_data.csv"))
+        path = glue::glue("./{csv_subfolder_name}/step_{i}_sample_data.csv"))
       
       row_sample_data_chr <- 
         c(row_sample_data_chr,
             glue::glue(
-              "<a href=\"_csv_data/step_{i}_sample_data.csv\">CSV</a>"))
+              "<a href=\"{csv_subfolder_name}/step_{i}_sample_data.csv\">CSV</a>"))
     } else {
       row_sample_data_chr <- 
         c(row_sample_data_chr, "")

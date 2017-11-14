@@ -87,7 +87,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$validation_set$proc_duration_s, "numeric")
   
   # Create an agent with a name
-  agent_name <- create_agent(name = "test")
+  agent_name <- create_agent(validation_name = "test")
   
   # Expect that the agent name has been set
   expect_equivalent(agent_name$validation_name, "test")

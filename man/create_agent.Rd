@@ -4,13 +4,16 @@
 \alias{create_agent}
 \title{Create a pointblank agent object}
 \usage{
-create_agent(name = NULL)
+create_agent(validation_name = NULL)
 }
 \arguments{
-\item{name}{optional name for the agent that
-will eventually carry out the interrogation
-process. If no value provided, a name will be
-generated based on the current system time.}
+\item{validation_name}{an optional name
+for the validation pipeline that the
+agent will eventually carry out during
+the interrogation process. If no
+value is provided, a name will be
+generated based on the current system
+time.}
 }
 \value{
 an agent object.

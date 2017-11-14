@@ -154,12 +154,12 @@ get_html_summary <- function(agent,
   }
   
   # Render the RMarkdown file to the working directory
-  suppressMessages(
     rmarkdown::render(
       input = "validation_report.Rmd",
       output_format = "html_document",
       output_dir = output_dir,
-      output_file = output_file))
+      output_file = output_file,
+      quiet = TRUE)
   
   #
   # Perform clean up of working directory

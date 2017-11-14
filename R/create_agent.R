@@ -1,9 +1,12 @@
 #' Create a pointblank agent object
 #' @description Creates an agent object.
-#' @param name optional name for the agent that
-#' will eventually carry out the interrogation
-#' process. If no value provided, a name will be
-#' generated based on the current system time.
+#' @param validation_name an optional name
+#' for the validation pipeline that the
+#' agent will eventually carry out during
+#' the interrogation process. If no
+#' value is provided, a name will be
+#' generated based on the current system
+#' time.
 #' @examples 
 #' # Create a simple data frame
 #' # with a column of numerical values
@@ -46,14 +49,14 @@
 #' @importFrom tibble tibble as_tibble
 #' @export create_agent
 
-create_agent <- function(name = NULL) {
+create_agent <- function(validation_name = NULL) {
   
   # Generate an agent name if none provided
-  if (is.null(name)) {
-    name <- paste0("agent_", gsub(" ", "_", Sys.time() %>% as.character()))
-    brief <- "Create agent with auto-assigned name"
+  if (is.null(validation_name)) {
+    validation_name <- paste0("agent_", gsub(" ", "_", Sys.time() %>% as.character()))
+    brief <- "Create agent with auto-assigned validation name"
   } else {
-    brief <- "Create agent with an assigned name"
+    brief <- "Create agent with an assigned validation name"
   }
   
   # Create the agent list object
@@ -117,7 +120,7 @@ create_agent <- function(name = NULL) {
       preconditions = list())
   
   # Add the agent name to the object
-  agent$validation_name <- name
+  agent$validation_name <- validation_name
   
   agent$validation_set <-
     agent$validation_set %>%

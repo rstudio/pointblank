@@ -14,7 +14,7 @@ Sure, we can sit down with a table during a long interrogation session and rough
 
 We need a tool like **pointblank**. It lets us get up close with tables and unleash a fury of validation checks. Are some tables in remote databases? That's no problem, we'll interrogate them from afar. In essence, your DB tables can get the same line of questioning as your local data frames or those innocent-looking tibbles. Trust me, they'll start to talk and then they'll surely reveal what they're hiding after an intense **pointblank** session.
 
-You don't have to type up a long report either, **pointblank** will take care of the paperwork. At the very least, you can get a `yes` or `no` as to whether everything checked out. With a little bit of planning, a very informative validation report can be regularly produced. We can even fire off emails if things get out of hand.
+You don't have to type up a long report either, **pointblank** will take care of the paperwork. At the very least, you can get a `yes` or `no` as to whether everything checked out. With a little bit of planning, a very informative validation report can be regularly produced. We can even fire off emails or send messages to Slack if things get out of hand.
 
 ### Validating Local Data Frames
 

@@ -4,3 +4,4 @@
 ^cran-comments\.md$
 ^codecov\.yml$
 ^CONDUCT\.md$
+^README\.Rmd$

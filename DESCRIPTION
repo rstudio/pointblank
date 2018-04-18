@@ -1,7 +1,7 @@
 Package: pointblank
 Type: Package
 Title: Validation of Local and Remote Data Tables
-Version: 0.2
+Version: 0.2.1
 Authors@R: person("Rich", "Iannone", email = "riannone@me.com", role = c("aut", "cre"))
 Description: Validate data in data frames,
     'tibble' objects, in 'CSV' and 'TSV' files,
@@ -18,25 +18,25 @@ Depends: R (>= 3.1.2)
 License: MIT + file LICENSE
 Imports:
     commonmark (>= 1.4),
-    DBI (>= 0.7),
-    digest (>= 0.6.12),
-    dplyr (>= 0.7.2),
-    glue (>= 1.1.1),
-    Hmisc (>= 4.0-3),
+    DBI (>= 0.8),
+    digest (>= 0.6.15),
+    dplyr (>= 0.7.4),
+    glue (>= 1.2.0),
+    Hmisc (>= 4.1-1),
     htmltools (>= 0.3.6),
     httr (>= 1.3.1),
-    knitr (>= 1.17),
-    lubridate (>= 1.6.0),
+    knitr (>= 1.20),
+    lubridate (>= 1.7.3),
     magrittr (>= 1.5),
-    purrr (>= 0.2.3),
+    purrr (>= 0.2.4),
     readr (>= 1.1.1),
-    rlang (>= 0.1.1),
-    rmarkdown (>= 1.6),
-    RMySQL (>= 0.10.13),
-    RPostgreSQL (>= 0.4-1),
-    stringr (>= 1.2.0),
-    tibble (>= 1.3.4),
-    tidyr (>= 0.7.1)
+    rlang (>= 0.2.0),
+    rmarkdown (>= 1.9.6),
+    RMySQL (>= 0.10.14),
+    RPostgreSQL (>= 0.6-2),
+    stringr (>= 1.3.0),
+    tibble (>= 1.4.2),
+    tidyr (>= 0.8.0)
 Suggests:
     testthat
 URL: https://github.com/rich-iannone/pointblank

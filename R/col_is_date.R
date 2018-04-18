@@ -87,7 +87,7 @@
 #' #> [1] TRUE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
-#' @importFrom rlang enquo UQ
+#' @importFrom rlang enquo get_expr
 #' @export col_is_date
 
 col_is_date <- function(agent,
@@ -104,8 +104,11 @@ col_is_date <- function(agent,
                         file_path = NULL,
                         col_types = NULL) {
   
-  column <- rlang::enquo(column)
-  column <- (rlang::UQ(column) %>% paste())[2]
+  # Get the column name
+  column <- 
+    rlang::enquo(column) %>%
+    rlang::get_expr() %>%
+    as.character()
   
   preconditions <- NULL
   
@@ -120,7 +123,7 @@ col_is_date <- function(agent,
   
   # If "*" is provided for `column`, select all
   # table columns for this verification
-  if (column[1] == "all_cols()") {
+  if (column[1] == "all_cols") {
     column <- get_all_cols(agent = agent)
   }
   

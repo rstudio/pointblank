@@ -103,7 +103,7 @@
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
 #' @importFrom stringr str_replace_all
-#' @importFrom rlang enquo UQ
+#' @importFrom rlang enquo get_expr expr_text
 #' @export rows_not_duplicated
 
 rows_not_duplicated <- function(agent,
@@ -121,23 +121,32 @@ rows_not_duplicated <- function(agent,
                                 file_path = NULL,
                                 col_types = NULL) {
   
-  cols <- rlang::enquo(cols)
-  cols <- (rlang::UQ(cols) %>% paste())[2]
+  # Get the values supplied for `cols`
+  cols <- 
+    rlang::enquo(cols) %>%
+    rlang::get_expr() %>%
+    as.character()
   
-  if (cols == "NULL") {
-    cols <- NULL
-  } else {
+  if (length(cols) > 0) {
+    
     cols <- 
-      stringr::str_replace_all(
-        string = cols,
-        pattern = " & ",
-        replacement = ", ")
+      cols %>%
+      setdiff("&") %>%
+      paste(collapse = ", ")
+    
+  } else {
+    
+    cols <- NULL
   }
   
-  preconditions <- rlang::enquo(preconditions)
-  preconditions <- (rlang::UQ(preconditions) %>% paste())[2]
+  # Get the preconditions
+  preconditions <- 
+    rlang::enquo(preconditions) %>%
+    rlang::expr_text() %>% 
+    gsub("~", "", .) %>%
+    gsub("\"", "'", .)
   
-  if (preconditions == "NULL") {
+  if (length(preconditions) == 0) {
     preconditions <- NULL
   }
   

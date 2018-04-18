@@ -214,7 +214,7 @@ interrogate <- function(agent,
     }
     
     # Use preconditions to modify the table
-    if (!is.na(agent$preconditions[[i, 1]])) {
+    if (!is.na(agent$preconditions[[i, 1]]) && agent$preconditions[[i, 1]] != "NULL") {
       
       # Get the preconditions as a character vector
       preconditions <-

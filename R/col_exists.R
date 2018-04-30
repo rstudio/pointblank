@@ -104,8 +104,9 @@ col_exists <- function(agent,
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
-    rlang::get_expr() %>%
-    as.character()
+    rlang::expr_text() %>% 
+    gsub("~", "", .) %>%
+    gsub("\"", "'", .)
   
   preconditions <- NULL
   

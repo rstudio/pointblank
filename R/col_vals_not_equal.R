@@ -133,8 +133,9 @@ col_vals_not_equal <- function(agent,
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
-    rlang::get_expr() %>%
-    as.character()
+    rlang::expr_text() %>% 
+    gsub("~", "", .) %>%
+    gsub("\"", "'", .)
   
   # Get the preconditions
   preconditions <- 
@@ -160,7 +161,7 @@ col_vals_not_equal <- function(agent,
   
   # If "*" is provided for `column`, select all
   # table columns for this verification
-  if (column[1] == "all_cols") {
+  if (column[1] == "all_cols()") {
     column <- get_all_cols(agent = agent)
   }
   

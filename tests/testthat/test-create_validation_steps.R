@@ -1011,7 +1011,9 @@ test_that("Creating a `col_vals_in_set()` step is possible", {
     create_agent() %>%
     focus_on(
       file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
-    col_vals_in_set(column = "b", set = c("1-bcd-345", "5-jdo-903"))
+    col_vals_in_set(
+      column = b,
+      set = c("1-bcd-345", "5-jdo-903"))
   
   # Expect the class name for the object
   # to be `ptblank_agent`

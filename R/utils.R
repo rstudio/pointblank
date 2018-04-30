@@ -292,6 +292,8 @@ set_entry_point <- function(table,
 
 # With any `all_cols()` call, return a
 # wildcard operator
+#' @noRd
+#' @export
 all_cols <- function() {"*"}
 
 # Get all column names from the table

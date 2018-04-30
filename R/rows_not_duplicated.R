@@ -131,7 +131,7 @@ rows_not_duplicated <- function(agent,
     
     cols <- 
       cols %>%
-      setdiff("&") %>%
+      base::setdiff("&") %>%
       paste(collapse = ", ")
     
   } else {

@@ -102,8 +102,8 @@
 #' #> [1] FALSE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
-#' @importFrom stringr str_replace_all
 #' @importFrom rlang enquo get_expr expr_text
+#' @importFrom stringr str_replace_all
 #' @export rows_not_duplicated
 
 rows_not_duplicated <- function(agent,
@@ -142,9 +142,9 @@ rows_not_duplicated <- function(agent,
   # Get the preconditions
   preconditions <- 
     rlang::enquo(preconditions) %>%
-    rlang::expr_text() %>% 
-    gsub("~", "", .) %>%
-    gsub("\"", "'", .)
+    rlang::expr_text() %>%
+    stringr::str_replace_all("~", "") %>%
+    stringr::str_replace_all("\"", "'")
   
   if (length(preconditions) == 0) {
     preconditions <- NULL

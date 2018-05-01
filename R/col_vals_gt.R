@@ -108,7 +108,8 @@
 #' #> [1] TRUE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
-#' @importFrom rlang enquo get_expr expr_text
+#' @importFrom rlang enquo expr_text
+#' @importFrom stringr str_replace_all
 #' @export col_vals_gt
 
 col_vals_gt <- function(agent,
@@ -130,16 +131,16 @@ col_vals_gt <- function(agent,
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
-    rlang::expr_text() %>% 
-    gsub("~", "", .) %>%
-    gsub("\"", "'", .)
+    rlang::expr_text() %>%
+    stringr::str_replace_all("~", "") %>%
+    stringr::str_replace_all("\"", "'")
   
   # Get the preconditions
   preconditions <- 
     rlang::enquo(preconditions) %>%
-    rlang::expr_text() %>% 
-    gsub("~", "", .) %>%
-    gsub("\"", "'", .)
+    rlang::expr_text() %>%
+    stringr::str_replace_all("~", "") %>%
+    stringr::str_replace_all("\"", "'")
   
   if (length(preconditions) == 0) {
     preconditions <- NULL

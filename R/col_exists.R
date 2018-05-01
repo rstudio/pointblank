@@ -85,6 +85,7 @@
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
 #' @importFrom rlang enquo get_expr
+#' @importFrom stringr str_replace_all
 #' @export col_exists
 
 col_exists <- function(agent,
@@ -104,9 +105,9 @@ col_exists <- function(agent,
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
-    rlang::expr_text() %>% 
-    gsub("~", "", .) %>%
-    gsub("\"", "'", .)
+    rlang::expr_text() %>%
+    stringr::str_replace_all("~", "") %>%
+    stringr::str_replace_all("\"", "'")
   
   preconditions <- NULL
   

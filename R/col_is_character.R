@@ -88,7 +88,8 @@
 #' #> [1] TRUE
 #' @importFrom tibble tibble
 #' @importFrom dplyr bind_rows
-#' @importFrom rlang enquo get_expr
+#' @importFrom rlang enquo expr_text
+#' @importFrom stringr str_replace_all
 #' @export col_is_character
 
 col_is_character <- function(agent,
@@ -108,9 +109,9 @@ col_is_character <- function(agent,
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
-    rlang::expr_text() %>% 
-    gsub("~", "", .) %>%
-    gsub("\"", "'", .)
+    rlang::expr_text() %>%
+    stringr::str_replace_all("~", "") %>%
+    stringr::str_replace_all("\"", "'")
   
   preconditions <- NULL
   

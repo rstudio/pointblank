@@ -20,10 +20,7 @@ knitr::opts_chunk$set(
 
 ## We All Need to Validate our Data Sometimes
 
-Tables can often be trustworthy. All the data seems to be there and we may feel we can count on these 
-tables to deliver us the info we need. Still, sometimes, the tables we trust are hiding things from
-us. Malformed strings, numbers we don't expect, missing values that ought not to be missing. These
-abberations can be hiding almost in plain sight. Such inconsistencies can be downright insidious, and with time all of this makes us ask ourselves, "can we really trust any table?"
+Tables can often be trustworthy. All the data seems to be there and we may feel we can count on these tables to deliver us the info we need. Still, sometimes, the tables we trust are hiding things from us. Malformed strings, numbers we don't expect, missing values that ought not to be missing. These abberations can be hiding almost in plain sight. Such inconsistencies can be downright insidious, and with time all of this makes us ask ourselves, "can we really trust any table?"
 
 Sure, we can sit down with a table during a long interrogation session and rough it up with a little **SQL**. The problem is we have lots of tables, and we usually have a lot of columns in every one of these tables. Makes for long hours with many suspect tables...
 

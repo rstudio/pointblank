@@ -289,13 +289,6 @@ set_entry_point <- function(table,
   tbl_entry
 }
 
-
-# With any `all_cols()` call, return a
-# wildcard operator
-#' @noRd
-#' @export
-all_cols <- function() {"*"}
-
 # Get all column names from the table
 # currently in focus
 get_all_cols <- function(agent) {
@@ -304,7 +297,6 @@ get_all_cols <- function(agent) {
   # table currently in focus
   agent$focal_col_names
 }
-
 
 # Determine the course of action for a
 # given verification step. Based on a recent

@@ -104,6 +104,9 @@ interrogate <- function(agent,
                         sample_frac = NULL,
                         sample_limit = 5000) {
   
+  # Create bindings for global variables
+  notify <- warn <- NULL
+  
   # Get the starting time for the interrogation
   interrogation_start_time <- Sys.time()
   

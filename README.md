@@ -187,7 +187,7 @@ content.
 ``` r
 library(pointblank)
 
-html_summary(agent)
+get_html_summary(agent)
 ```
 
 ### Constraining Data in Validation Steps

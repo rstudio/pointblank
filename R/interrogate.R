@@ -303,26 +303,26 @@ interrogate <- function(agent,
         c("col_vals_in_set", "col_vals_not_in_set")) {
       
       # Get the set values for the expression
-      set <- 
-         (agent[["sets"]] %>%
-            dplyr::select(set) %>%
-            purrr::flatten_chr())[[i]]
-       
-       set <- 
-         stringr::str_trim(
-           set %>%
-             strsplit(",") %>%
-             unlist())
-       
-       # Get the class of the set components
-       set_class <- 
-         (agent[["sets"]] %>%
-            dplyr::select(class) %>%
-            purrr::flatten_chr())[[i]]
-       
-       if (set_class == "numeric") {
-         set <- as.numeric(set)
-       }
+#      set <- 
+#         (agent[["sets"]] %>%
+#            dplyr::select(set) %>%
+#            purrr::flatten_chr())[[i]]
+#       
+#       set <- 
+#         stringr::str_trim(
+#           set %>%
+#             strsplit(",") %>%
+#             unlist())
+#       
+#       # Get the class of the set components
+#       set_class <- 
+#         (agent[["sets"]] %>%
+#            dplyr::select(class) %>%
+#            purrr::flatten_chr())[[i]]
+#       
+#       if (set_class == "numeric") {
+#         set <- as.numeric(set)
+#       }
       #       
       if (agent$validation_set$assertion_type[i] == "col_vals_in_set") {
         

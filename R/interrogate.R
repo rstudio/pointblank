@@ -303,27 +303,27 @@ interrogate <- function(agent,
         c("col_vals_in_set", "col_vals_not_in_set")) {
       
       # Get the set values for the expression
-      set <- 
-        (agent[["sets"]] %>%
-           dplyr::select(set) %>%
-           purrr::flatten_chr())[[i]]
-      
-      set <- 
-        stringr::str_trim(
-          set %>%
-            strsplit(",") %>%
-            unlist())
-      
-      # Get the class of the set components
-      set_class <- 
-        (agent[["sets"]] %>%
-           dplyr::select(class) %>%
-           purrr::flatten_chr())[[i]]
-      
-      if (set_class == "numeric") {
-        set <- as.numeric(set)
-      }
-      
+#      set <- 
+#         (agent[["sets"]] %>%
+#            dplyr::select(set) %>%
+#            purrr::flatten_chr())[[i]]
+#       
+#       set <- 
+#         stringr::str_trim(
+#           set %>%
+#             strsplit(",") %>%
+#             unlist())
+#       
+#       # Get the class of the set components
+#       set_class <- 
+#         (agent[["sets"]] %>%
+#            dplyr::select(class) %>%
+#            purrr::flatten_chr())[[i]]
+#       
+#       if (set_class == "numeric") {
+#         set <- as.numeric(set)
+#       }
+      #       
       if (agent$validation_set$assertion_type[i] == "col_vals_in_set") {
         
         # Get the final judgment on the table and the query
@@ -332,11 +332,10 @@ interrogate <- function(agent,
           dplyr::mutate_(.dots = setNames(
             paste0(
               agent$validation_set$column[i],
-              " %in% c(",
-              paste(paste0("'", set) %>% paste0("'"),
-                    collapse = ", "), ")"),
-            "pb_is_good_")) %>%
-          dplyr::mutate(pb_is_good_ = ifelse(is.na(pb_is_good_), FALSE, TRUE))
+              "%in%",
+              agent$sets[i]),
+            "pb_is_good_"))
+        # }
       }
       
       if (agent$validation_set$assertion_type[i] == "col_vals_not_in_set") {
@@ -796,7 +795,7 @@ interrogate <- function(agent,
     # If a value for `slack_footer_timestamp` is not
     # provided, use the system time as the timestamp
     if (is.null(slack_footer_timestamp)) {
-      slack_footer_timestamp <- Sys.time() %>% as.integer()
+      slack_footer_timestamp <- Sys.time()
     }
     
     if (notify_count > 0) {

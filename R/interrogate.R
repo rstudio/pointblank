@@ -148,8 +148,8 @@ interrogate <- function(agent,
       if (is.na(col_types)) {
         
         if (file_extension == "csv") {
-        
-            table <- 
+          
+          table <- 
             suppressMessages(
               readr::read_csv(
                 file = file_path))
@@ -416,7 +416,7 @@ interrogate <- function(agent,
       column_names <-
         table %>%
         dplyr::filter(row_number() == 1) %>%
-        tibble::as_tibble() %>%
+        dplyr::as_tibble() %>%
         colnames()
       
       judgment <-
@@ -491,7 +491,7 @@ interrogate <- function(agent,
         judgment %>%
         dplyr::group_by() %>%
         dplyr::summarize(row_count = n()) %>%
-        tibble::as_tibble() %>%
+        dplyr::as_tibble() %>%
         purrr::flatten_dbl()
       
       # Get total count of TRUE rows
@@ -500,7 +500,7 @@ interrogate <- function(agent,
         dplyr::filter(pb_is_good_ == TRUE) %>%
         dplyr::group_by() %>%
         dplyr::summarize(row_count = n()) %>%
-        tibble::as_tibble() %>%
+        dplyr::as_tibble() %>%
         purrr::flatten_dbl()
       
       # Get total count of FALSE rows
@@ -509,7 +509,7 @@ interrogate <- function(agent,
         dplyr::filter(pb_is_good_ == FALSE) %>%
         dplyr::group_by() %>%
         dplyr::summarize(row_count = n()) %>%
-        tibble::as_tibble() %>%
+        dplyr::as_tibble() %>%
         purrr::flatten_dbl()
       
       agent$validation_set$n[i] <- row_count
@@ -524,7 +524,7 @@ interrogate <- function(agent,
         dplyr::filter(pb_is_good_ == FALSE) %>%
         dplyr::group_by() %>%
         dplyr::summarize(pb_is_not_good_ = n()) %>%
-        tibble::as_tibble() %>%
+        dplyr::as_tibble() %>%
         purrr::flatten_dbl()
       
       if (false_count > 0) {
@@ -546,7 +546,7 @@ interrogate <- function(agent,
             problem_rows <-
               problem_rows %>%
               utils::head(get_first_n) %>%
-              tibble::as_tibble()
+              dplyr::as_tibble()
             
           } else if (!is.null(sample_n) &
                      !(agent$validation_set$db_type[i] %in% c("PostgreSQL", "MySQL"))) {
@@ -556,7 +556,7 @@ interrogate <- function(agent,
                 tbl = problem_rows,
                 size = sample_n,
                 replace = FALSE) %>%
-              tibble::as_tibble()
+              dplyr::as_tibble()
             
           } else if (!is.null(sample_frac) &
                      !(agent$validation_set$db_type[i] %in% c("PostgreSQL", "MySQL"))) {
@@ -566,7 +566,7 @@ interrogate <- function(agent,
                 tbl = problem_rows,
                 size = sample_frac,
                 replace = FALSE) %>%
-              tibble::as_tibble() %>%
+              dplyr::as_tibble() %>%
               utils::head(sample_limit)
             
           } else {
@@ -574,7 +574,7 @@ interrogate <- function(agent,
             problem_rows <-
               problem_rows %>%
               utils::head(5000) %>%
-              tibble::as_tibble()
+              dplyr::as_tibble()
           }
           
           problem_rows <-
@@ -679,7 +679,7 @@ interrogate <- function(agent,
         columns <-
           table %>%
           dplyr::filter(row_number() == 1) %>%
-          tibble::as_tibble() %>%
+          dplyr::as_tibble() %>%
           names()
       }
       
@@ -688,7 +688,7 @@ interrogate <- function(agent,
         table %>%
         dplyr::group_by() %>%
         dplyr::summarize(row_count = n()) %>%
-        tibble::as_tibble() %>%
+        dplyr::as_tibble() %>%
         purrr::flatten_dbl()
       
       # Get the rows that are duplicate rows, if any
@@ -706,7 +706,7 @@ interrogate <- function(agent,
           duplicate_rows %>%
             dplyr::group_by() %>%
             dplyr::summarize(row_count = n()) %>%
-            tibble::as_tibble() %>%
+            dplyr::as_tibble() %>%
             purrr::flatten_dbl() == 0, TRUE, FALSE)
       
       if (passed == TRUE) {
@@ -717,7 +717,7 @@ interrogate <- function(agent,
           duplicate_rows %>%
           dplyr::group_by() %>%
           dplyr::summarize(row_count = n()) %>%
-          tibble::as_tibble() %>%
+          dplyr::as_tibble() %>%
           purrr::flatten_dbl()
         
         n_passed <- row_count - n_failed

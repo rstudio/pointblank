@@ -669,7 +669,7 @@ test_that("Interrogating for valid row values", {
       col_types = "TDicidlc") %>%
     col_vals_not_in_set(
       column = f,
-      set = c("low", "mid", "high")) %>%
+      set = c("lower", "middle", "higher")) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`

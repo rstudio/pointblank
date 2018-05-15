@@ -1,33 +1,56 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <img src="inst/graphics/pointblank_logo.png">
 
-[![Travis-CI Build Status](https://travis-ci.org/rich-iannone/pointblank.svg?branch=master)](https://travis-ci.org/rich-iannone/pointblank) [![codecov.io](https://codecov.io/github/rich-iannone/pointblank/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/pointblank?branch=master)
+[![Travis-CI Build
+Status](https://travis-ci.org/rich-iannone/pointblank.svg?branch=master)](https://travis-ci.org/rich-iannone/pointblank)
+[![codecov.io](https://codecov.io/github/rich-iannone/pointblank/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/pointblank?branch=master)
 
-We All Need to Validate our Data Sometimes
-------------------------------------------
+## We All Need to Validate our Data Sometimes
 
-Tables can often be trustworthy. All the data seems to be there and we may feel we can count on these tables to deliver us the info we need. Still, sometimes, the tables we trust are hiding things from us. Malformed strings, numbers we don't expect, missing values that ought not to be missing. These abberations can be hiding almost in plain sight. Such inconsistencies can be downright insidious, and with time all of this makes us ask ourselves, "can we really trust any table?"
+Tables can often be trustworthy. All the data seems to be there and we
+may feel we can count on these tables to deliver us the info we need.
+Still, sometimes, the tables we trust are hiding things from us.
+Malformed strings, numbers we don’t expect, missing values that ought
+not to be missing. These abberations can be hiding almost in plain
+sight. Such inconsistencies can be downright insidious, and with time
+all of this makes us ask ourselves, “can we really trust any table?”
 
-Sure, we can sit down with a table during a long interrogation session and rough it up with a little **SQL**. The problem is we have lots of tables, and we usually have a lot of columns in every one of these tables. Makes for long hours with many suspect tables...
+Sure, we can sit down with a table during a long interrogation session
+and rough it up with a little **SQL**. The problem is we have lots of
+tables, and we usually have a lot of columns in every one of these
+tables. Makes for long hours with many suspect tables…
 
-We need a tool like **pointblank**. It lets us get up close with tables and unleash a fury of validation checks. Are some tables in remote databases? That's no problem, we'll interrogate them from afar. In essence, your DB tables can get the same line of questioning as your local data frames or those innocent-looking tibbles. Trust me, they'll start to talk and then they'll surely reveal what they're hiding after an intense **pointblank** session.
+We need a tool like **pointblank**. It lets us get up close with tables
+and unleash a fury of validation checks. Are some tables in remote
+databases? That’s no problem, we’ll interrogate them from afar. In
+essence, your DB tables can get the same line of questioning as your
+local data frames or those innocent-looking tibbles. Trust me, they’ll
+start to talk and then they’ll surely reveal what they’re hiding after
+an intense **pointblank** session.
 
-You don't have to type up a long report either, **pointblank** will take care of the paperwork. At the very least, you can get a `yes` or `no` as to whether everything checked out. With a little bit of planning, a very informative validation report can be regularly produced. We can even fire off emails or send messages to Slack if things get out of hand.
+You don’t have to type up a long report either, **pointblank** will take
+care of the paperwork. At the very least, you can get a `yes` or `no` as
+to whether everything checked out. With a little bit of planning, a very
+informative validation report can be regularly produced. We can even
+fire off emails or send messages to Slack if things get out of hand.
 
 ### Validating Local Data Frames
 
-The **pointblank** package can validate data in local data frames, local tibble objects, in CSV and TSV files, and in database tables (**PostgreSQL** and **MySQL**). First, let's look at local tables with...
+The **pointblank** package can validate data in local data frames, local
+tibble objects, in CSV and TSV files, and in database tables
+(**PostgreSQL** and **MySQL**). First, let’s look at local tables with…
 
 <img src="inst/graphics/example_workflow.png">
 
-The above workflow relied on these code blocks:
+The above workflow relies on these code blocks:
 
 1.  Create 2 very simple **R** **tibble** objects:
-
+    
     ``` r
     library(tibble)
-
+    
     tbl_1 <-
       tibble::tribble(
         ~a, ~b,   ~c,
@@ -36,7 +59,7 @@ The above workflow relied on these code blocks:
         3,   8,   "h2",
         4,   9,   "d3",
         5,  10,   "h2")
-
+    
     tbl_2 <-
       tibble::tribble(
         ~d,   ~e,  ~f,
@@ -47,11 +70,12 @@ The above workflow relied on these code blocks:
         "ae", -1,  39)
     ```
 
-2.  Create a **pointblank** pipeline for validating both the `tbl_1` and `tbl_2` tables (ending with `interrogate()`):
-
+2.  Create a **pointblank** pipeline for validating both the `tbl_1` and
+    `tbl_2` tables (ending with `interrogate()`):
+    
     ``` r
     library(pointblank)
-
+    
     agent <- 
       create_agent() %>%             # (1)
       focus_on(
@@ -91,7 +115,14 @@ The above workflow relied on these code blocks:
       interrogate()                  # (15)
     ```
 
-We can get a detailed summary report of the interrogation, showing how many individual tests in each validation step had passed or failed. The validation steps are classified with an `action` which indicates the type of action to perform based on user-defined thresholds (thresholds can be set globally, or, for each validation step). Each step can be given a `brief`, which is a short description of the validation step. If a `brief` is not provided, it will be autogenerated based on the input parameters.
+We can get a detailed summary report of the interrogation, showing how
+many individual tests in each validation step had passed or failed. The
+validation steps are classified with an `action` which indicates the
+type of action to perform based on user-defined thresholds (thresholds
+can be set globally, or, for each validation step). Each step can be
+given a `brief`, which is a short description of the validation step. If
+a `brief` is not provided, it will be autogenerated based on the input
+parameters.
 
 ``` r
 library(pointblank)
@@ -145,7 +176,9 @@ get_interrogation_summary(agent)[12]
 #> 11                             Expect that values in `d` should not be NULL
 ```
 
-A self-contained HTML report can be generated. It provides detailed information on the validation outcomes and it can be used as web content.
+A self-contained HTML report can be generated. It provides detailed
+information on the validation outcomes and it can be used as web
+content.
 
 ``` r
 library(pointblank)
@@ -155,13 +188,23 @@ get_html_summary(agent)
 
 ### Constraining Data in Validation Steps
 
-Every validation function has a common set of options for constraining validations to certain conditions. This can occur through the use of computed columns (e.g, `column = col_a / col_b`) and also through `preconditions` that can allow you to target validations on only those rows that satisfy one or more conditions (e.g, `preconditions = col_a > 10 & col_b < 200`). When validating database tables, we have the option of modifying the table of focus more radically by supplying an SQL statement to `initial_sql`.
+Every validation function has a common set of options for constraining
+validations to certain conditions. This can occur through the use of
+computed columns (e.g, `column = col_a / col_b`) and also through
+`preconditions` that can allow you to target validations on only those
+rows that satisfy one or more conditions (e.g, `preconditions = col_a
+> 10 & col_b < 200`). When validating database tables, we have the
+option of modifying the table of focus more radically by supplying an
+SQL statement to `initial_sql`.
 
 <img src="inst/graphics/function_options.png">
 
 ### Validating Tables in a Database
 
-We can easily validate tables in a **PostgreSQL** or **MySQL**. To facilitate access to DB tables, we create a credentials file and supply it to each `focus_on()` step. The `create_creds_file()` allows for the creation of this file.
+We can easily validate tables in a **PostgreSQL** or **MySQL**. To
+facilitate access to DB tables, we create a credentials file and supply
+it to each `focus_on()` step. The `create_creds_file()` allows for the
+creation of this file.
 
 ``` r
 library(pointblank)
@@ -177,7 +220,19 @@ create_creds_file(
   password = **************)
 ```
 
-The functional pipeline to validate database tables is not very different than that for local tables. With database tables, however, we have the additional option to supply an SQL statement (as `initial_sql`) to either the `focus_on()` function (this applies the SQL statement to table-in-focus for every subsequent validation step), or, to a specific validation step (this overrides any SQL supplied in `focus_on()`). For convenience, you can either supply an SQL fragment (usually a single `WHERE` statement), or a full-fledged SQL statement that can more greatly transform the table (e.g., using `GROUP BY`, performing table joins, creating new columns, etc.). Any new columns generated via `initial_sql` can be used as a column to validate. Below is an example of what could be done with a mix of `initial_sql` and `preconditions` on a hypothetical **PostgreSQL** table.
+The functional pipeline to validate database tables is not very
+different than that for local tables. With database tables, however, we
+have the additional option to supply an SQL statement (as `initial_sql`)
+to either the `focus_on()` function (this applies the SQL statement to
+table-in-focus for every subsequent validation step), or, to a specific
+validation step (this overrides any SQL supplied in `focus_on()`). For
+convenience, you can either supply an SQL fragment (usually a single
+`WHERE` statement), or a full-fledged SQL statement that can more
+greatly transform the table (e.g., using `GROUP BY`, performing table
+joins, creating new columns, etc.). Any new columns generated via
+`initial_sql` can be used as a column to validate. Below is an example
+of what could be done with a mix of `initial_sql` and `preconditions` on
+a hypothetical **PostgreSQL** table.
 
 ``` r
 library(pointblank)
@@ -216,17 +271,31 @@ agent <-
 
 ### Creating and Accessing Row Data that Failed Validation
 
-We can collect row data that didn't pass a validation step. The amount of non-passing row data collected can be configured in the `interrogate()` function call. When validating local data (data frames, tibbles, CSVs/TSVs), we can set `get_problem_rows = TRUE` and provide values to either of:
+We can collect row data that didn’t pass a validation step. The amount
+of non-passing row data collected can be configured in the
+`interrogate()` function call. When validating local data (data frames,
+tibbles, CSVs/TSVs), we can set `get_problem_rows = TRUE` and provide
+values to either of:
 
--   `get_first_n`: Get the first `n` non-passing rows from each validation step.
--   `sample_n`: Sample `n` non-passing rows from each validation step.
--   `sample_frac`: Sample a fraction of the total non-passing rows from each validation step.
+  - `get_first_n`: Get the first `n` non-passing rows from each
+    validation step.
+  - `sample_n`: Sample `n` non-passing rows from each validation step.
+  - `sample_frac`: Sample a fraction of the total non-passing rows from
+    each validation step.
 
-For remote tables, we cannot use any of the `sample_*` arguments to collect non-passing rows (only `get_first_n` currently works). In order to avoid sampling more rows than could reasonably be handled with `sample_frac`, the `sample_limit` argument allows us to provide a sensible limit to the number of rows returned.
+For remote tables, we cannot use any of the `sample_*` arguments to
+collect non-passing rows (only `get_first_n` currently works). In order
+to avoid sampling more rows than could reasonably be handled with
+`sample_frac`, the `sample_limit` argument allows us to provide a
+sensible limit to the number of rows returned.
 
-The amount of row data available depends on both the fraction of rows that didn't pass a validation step and the level of sampling or explicit collection from that set of rows (this is defined within the `interrogate()` call).
+The amount of row data available depends on both the fraction of rows
+that didn’t pass a validation step and the level of sampling or explicit
+collection from that set of rows (this is defined within the
+`interrogate()` call).
 
-Here is an example of how rows that didn't pass a validation step can be collected and accessed:
+Here is an example of how rows that didn’t pass a validation step can be
+collected and accessed:
 
 ``` r
 library(pointblank)
@@ -293,35 +362,41 @@ agent %>%
 
 ### Functions Available in the Package
 
-These workflow examples provided a glimpse of some of the functions available. For sake of completeness, here's the entire set of functions:
+These workflow examples provided a glimpse of some of the functions
+available. For sake of completeness, here’s the entire set of functions:
 
 <img src="inst/graphics/pointblank_functions.png">
 
-Installation
-------------
+## Installation
 
-**pointblank** is used in an **R** environment. If you don't have an **R** installation, it can be obtained from the [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org/).
+**pointblank** is used in an **R** environment. If you don’t have an
+**R** installation, it can be obtained from the [**Comprehensive R
+Archive Network (CRAN)**](https://cran.r-project.org/).
 
-The **CRAN** version of this package can be obtained using the following statement:
+The **CRAN** version of this package can be obtained using the following
+statement:
 
 ``` r
 install.packages("pointblank")
 ```
 
-You can install the development version of **pointblank** from **GitHub** using the **devtools** package.
+You can install the development version of **pointblank** from
+**GitHub** using the **devtools** package.
 
 ``` r
 devtools::install_github("rich-iannone/pointblank")
 ```
 
-If you encounter a bug, have usage questions, or want to share ideas to make this package better, feel free to file an [issue](https://github.com/rich-iannone/pointblank/issues).
+If you encounter a bug, have usage questions, or want to share ideas to
+make this package better, feel free to file an
+[issue](https://github.com/rich-iannone/pointblank/issues).
 
-Code of Conduct
----------------
+## Code of Conduct
 
-[Contributor Code of Conduct](https://github.com/rich-iannone/pointblank/blob/master/CONDUCT.md). By participating in this project you agree to abide by its terms.
+[Contributor Code of
+Conduct](https://github.com/rich-iannone/pointblank/blob/master/CONDUCT.md).
+By participating in this project you agree to abide by its terms.
 
-License
--------
+## License
 
 MIT © Richard Iannone

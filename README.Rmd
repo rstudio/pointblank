@@ -34,7 +34,7 @@ The **pointblank** package can validate data in local data frames, local tibble 
 
 <img src="inst/graphics/example_workflow.png">
 
-The above workflow relied on these code blocks:
+The above workflow relies on these code blocks:
 
 1. Create 2 very simple **R** **tibble** objects:
 

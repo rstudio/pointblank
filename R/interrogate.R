@@ -326,31 +326,30 @@ interrogate <- function(agent,
       
       if (agent$validation_set$assertion_type[i] == "col_vals_in_set") {
         
+        # Use the column name as an `rlang` symbol
+        column <- rlang::sym(agent$validation_set$column[i])
+        
         # Get the final judgment on the table and the query
-        judgment <- 
+        judgment <-
           table %>%
-          dplyr::mutate_(.dots = setNames(
-            paste0(
-              agent$validation_set$column[i],
-              " %in% c(",
-              paste(paste0("'", set) %>% paste0("'"),
-                    collapse = ", "), ")"),
-            "pb_is_good_")) %>%
-          dplyr::mutate(pb_is_good_ = ifelse(is.na(pb_is_good_), FALSE, TRUE))
+          dplyr::mutate(pb_is_good_ = case_when(
+            rlang::UQ(column) %in% set ~ TRUE,
+            !(rlang::UQ(column) %in% set) ~ FALSE
+          ))
       }
       
       if (agent$validation_set$assertion_type[i] == "col_vals_not_in_set") {
+        
+        # Use the column name as an `rlang` symbol
+        column <- rlang::sym(agent$validation_set$column[i])
+        
         # Get the final judgment on the table and the query
-        judgment <- 
+        judgment <-
           table %>%
-          dplyr::mutate_(.dots = setNames(
-            paste0("!(",
-                   agent$validation_set$column[i],
-                   " %in% c(",
-                   paste(paste0("'", set) %>% paste0("'"),
-                         collapse = ", "), "))"),
-            "pb_is_good_")) %>%
-          dplyr::mutate(pb_is_good_ = ifelse(is.na(pb_is_good_), FALSE, TRUE))
+          dplyr::mutate(pb_is_good_ = case_when(
+            !(rlang::UQ(column) %in% set) ~ TRUE,
+            rlang::UQ(column) %in% set ~ FALSE
+          ))
       }
     }
     

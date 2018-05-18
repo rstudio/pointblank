@@ -219,7 +219,8 @@ interrogate <- function(agent,
     }
     
     # Use preconditions to modify the table
-    if (!is.na(agent$preconditions[[i, 1]]) && agent$preconditions[[i, 1]] != "NULL") {
+    if (!is.na(agent$preconditions[[i, 1]]) &&
+        agent$preconditions[[i, 1]] != "NULL") {
       
       # Get the preconditions as a character vector
       preconditions <-
@@ -248,52 +249,67 @@ interrogate <- function(agent,
         c("col_vals_between", "col_vals_not_between")) {
       
       # Get the `left` and `right` bounding values
-      left <- 
+      bounding_vals <- 
         (agent[["sets"]] %>%
            dplyr::select(set) %>%
            purrr::flatten_chr())[[i]]
       
-      left <- 
-        (left %>%
+      left <-
+        (bounding_vals %>%
            strsplit(",") %>%
            unlist() %>%
            as.numeric())[[1]]
       
-      right <- 
-        (agent[["sets"]] %>%
-           dplyr::select(set) %>%
-           purrr::flatten_chr())[[i]]
-      
-      right <- 
-        (right %>%
+      right <-
+        (bounding_vals %>%
            strsplit(",") %>%
            unlist() %>%
            as.numeric())[[2]]
       
+      incl_na <- 
+        (agent[["sets"]] %>%
+           dplyr::select(incl_na) %>%
+           purrr::flatten_lgl())[[i]]
+      
+      incl_nan <- 
+        (agent[["sets"]] %>%
+           dplyr::select(incl_nan) %>%
+           purrr::flatten_lgl())[[i]]
+      
+      # Use the column name as an `rlang` symbol
+      column <- rlang::sym(agent$validation_set$column[i])
+      
       if (agent$validation_set$assertion_type[i] == "col_vals_between") {
+        
         # Get the final judgment on the table and the query
-        judgment <- 
+        judgment <-
           table %>%
-          dplyr::mutate_(.dots = setNames(
-            paste0(
-              agent$validation_set$column[i],
-              " >= ", left, " & ",
-              agent$validation_set$column[i],
-              " <= ", right),
-            "pb_is_good_"))
+          dplyr::mutate(pb_is_good_ = case_when(
+            rlang::UQ(column) >= left & rlang::UQ(column) <= right ~ TRUE,
+            rlang::UQ(column) < left | rlang::UQ(column) > right ~ FALSE,
+            is.na(rlang::UQ(column)) & incl_na ~ TRUE,
+            is.na(rlang::UQ(column)) & incl_na == FALSE ~ FALSE,
+            is.nan(rlang::UQ(column)) & incl_nan ~ TRUE,
+            is.nan(rlang::UQ(column)) & incl_nan == FALSE ~ FALSE
+          ))
       }
       
       if (agent$validation_set$assertion_type[i] == "col_vals_not_between") {
+        
+        excl_na <- incl_na
+        excl_nan <- incl_nan
+        
         # Get the final judgment on the table and the query
-        judgment <- 
+        judgment <-
           table %>%
-          dplyr::mutate_(.dots = setNames(
-            paste0("!(",
-                   agent$validation_set$column[i],
-                   " >= ", left, " & ",
-                   agent$validation_set$column[i],
-                   " <= ", right, ")"),
-            "pb_is_good_"))
+          dplyr::mutate(pb_is_good_ = case_when(
+            rlang::UQ(column) < left | rlang::UQ(column) > right ~ TRUE,
+            rlang::UQ(column) >= left & rlang::UQ(column) <= right ~ FALSE,
+            is.na(rlang::UQ(column)) & excl_na ~ TRUE,
+            is.na(rlang::UQ(column)) & excl_na == FALSE ~ FALSE,
+            is.nan(rlang::UQ(column)) & excl_nan ~ TRUE,
+            is.nan(rlang::UQ(column)) & excl_nan == FALSE ~ FALSE
+          ))
       }
     }
     

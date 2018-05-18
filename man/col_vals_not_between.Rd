@@ -4,11 +4,11 @@
 \alias{col_vals_not_between}
 \title{Verify that column data are not between two values}
 \usage{
-col_vals_not_between(agent, column, left, right, preconditions = NULL,
-  brief = NULL, warn_count = 1, notify_count = NULL,
-  warn_fraction = NULL, notify_fraction = NULL, tbl_name = NULL,
-  db_type = NULL, creds_file = NULL, initial_sql = NULL,
-  file_path = NULL, col_types = NULL)
+col_vals_not_between(agent, column, left, right, incl_na = TRUE,
+  incl_nan = TRUE, preconditions = NULL, brief = NULL, warn_count = 1,
+  notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,
+  tbl_name = NULL, db_type = NULL, creds_file = NULL,
+  initial_sql = NULL, file_path = NULL, col_types = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class
@@ -32,6 +32,12 @@ validation includes this bound value in addition
 to values lower than \code{right}. Any values
 \code{<= right} and \code{>= left} will be
 considered as failing.}
+
+\item{incl_na}{should \code{NA} values be a part
+of the condition? This is by default \code{TRUE}.}
+
+\item{incl_nan}{should \code{NaN} values be a part
+of the condition? This is by default \code{TRUE}.}
 
 \item{preconditions}{an optional statement of
 filtering conditions that may reduce the number

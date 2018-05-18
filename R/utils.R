@@ -1,4 +1,3 @@
-
 # Add properly formatted validation steps
 #' @importFrom tibble tibble as_tibble
 #' @importFrom purrr map_df
@@ -9,6 +8,8 @@ create_validation_step <- function(agent,
                                    value = NULL,
                                    set = NULL,
                                    regex = NULL,
+                                   incl_na = NULL,
+                                   incl_nan = NULL,
                                    preconditions = NULL,
                                    brief = NULL,
                                    warn_count = NULL,
@@ -75,6 +76,7 @@ create_validation_step <- function(agent,
   # If a set has been provided as a vector, include
   # these values as a `df_tbl` object
   if (!is.null(set)) {
+    
     set_df <-
       1:nrow(validation_step_df) %>%
       purrr::map_df(
@@ -82,9 +84,14 @@ create_validation_step <- function(agent,
           tibble::tibble(
             x = x,
             set = paste(set, collapse = ","),
-            class = class(set))}) %>%
+            class = class(set),
+            incl_na = ifelse(is.null(incl_na), FALSE, incl_na),
+            incl_nan = ifelse(is.null(incl_nan), FALSE, incl_nan))
+          }) %>%
       dplyr::select(-x)
+    
   } else {
+    
     set_df <-
       1:nrow(validation_step_df) %>%
       purrr::map_df(
@@ -92,13 +99,17 @@ create_validation_step <- function(agent,
           tibble::tibble(
             x = x,
             set = as.character(NA),
-            class = as.character(NA))}) %>%
+            class = as.character(NA),
+            incl_na = FALSE,
+            incl_nan = FALSE)
+          }) %>%
       dplyr::select(-x)
   }
   
   # If preconditions have been provided as a vector, include
   # these values as a `df_tbl` object
   if (!is.null(preconditions)) {
+    
     preconditions_df <-
       1:nrow(validation_step_df) %>%
       purrr::map_df(
@@ -107,7 +118,9 @@ create_validation_step <- function(agent,
             x = x,
             precondition = paste(preconditions, collapse = ";"))}) %>%
       dplyr::select(-x)
+    
   } else {
+    
     preconditions_df <-
       1:nrow(validation_step_df) %>%
       purrr::map_df(

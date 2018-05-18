@@ -222,9 +222,6 @@ test_that("Interrogating for column types", {
 
 test_that("Interrogating for valid row values", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_vals_between()` function to create
   # a validation step, then, `interrogate()`
   validation <-

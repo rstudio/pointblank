@@ -1,5 +1,5 @@
-Package: pointblank
 Type: Package
+Package: pointblank
 Title: Validation of Local and Remote Data Tables
 Version: 0.2.0
 Authors@R: 
@@ -16,8 +16,11 @@ Description: Validate data in data frames,
     available. User-defined thresholds for failure
     rates allow for the determination of appropriate
     reporting actions.
-Depends: R (>= 3.1.2)
 License: MIT + file LICENSE
+URL: https://github.com/rich-iannone/pointblank
+BugReports: https://github.com/rich-iannone/pointblank/issues
+Depends: 
+    R (>= 3.1.2)
 Imports:
     commonmark (>= 1.5),
     DBI (>= 0.8),
@@ -36,7 +39,5 @@ Imports:
     tidyr (>= 0.8.0)
 Suggests:
     testthat
-URL: https://github.com/rich-iannone/pointblank
-BugReports: https://github.com/rich-iannone/pointblank/issues
 Encoding: UTF-8
 RoxygenNote: 6.0.1

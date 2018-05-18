@@ -15,6 +15,10 @@
 #' @param right the upper bound for the range. The
 #' validation includes this bound value in addition
 #' to values lower than \code{right}.
+#' @param incl_na should \code{NA} values be a part
+#' of the condition? This is by default \code{FALSE}.
+#' @param incl_nan should \code{NaN} values be a part
+#' of the condition? This is by default \code{FALSE}.
 #' @param preconditions an optional statement of
 #' filtering conditions that may reduce the number
 #' of rows for validation for the current
@@ -114,12 +118,13 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom rlang enquo expr_text
 #' @importFrom stringr str_replace_all
-#' @export col_vals_between
-
+#' @export
 col_vals_between <- function(agent,
                              column,
                              left,
                              right,
+                             incl_na = FALSE,
+                             incl_nan = FALSE,
                              preconditions = NULL,
                              brief = NULL,
                              warn_count = 1,
@@ -175,6 +180,8 @@ col_vals_between <- function(agent,
       assertion_type = "col_vals_between",
       column = column,
       set = c(left, right),
+      incl_na = incl_na,
+      incl_nan = incl_nan,
       preconditions = preconditions,
       brief = brief,
       warn_count = warn_count,

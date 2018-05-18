@@ -19,6 +19,10 @@
 #' to values lower than \code{right}. Any values
 #' \code{<= right} and \code{>= left} will be
 #' considered as failing.
+#' @param incl_na should \code{NA} values be a part
+#' of the condition? This is by default \code{TRUE}.
+#' @param incl_nan should \code{NaN} values be a part
+#' of the condition? This is by default \code{TRUE}.
 #' @param preconditions an optional statement of
 #' filtering conditions that may reduce the number
 #' of rows for validation for the current
@@ -121,12 +125,13 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom rlang enquo expr_text
 #' @importFrom stringr str_replace_all
-#' @export col_vals_not_between
-
+#' @export
 col_vals_not_between <- function(agent,
                                  column,
                                  left,
                                  right,
+                                 incl_na = TRUE,
+                                 incl_nan = TRUE,
                                  preconditions = NULL,
                                  brief = NULL,
                                  warn_count = 1,
@@ -182,6 +187,8 @@ col_vals_not_between <- function(agent,
       assertion_type = "col_vals_not_between",
       column = column,
       set = c(left, right),
+      incl_na = incl_na,
+      incl_nan = incl_nan,
       preconditions = preconditions,
       brief = brief,
       warn_count = warn_count,

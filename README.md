@@ -6,6 +6,8 @@
 [![Travis-CI Build
 Status](https://travis-ci.org/rich-iannone/pointblank.svg?branch=master)](https://travis-ci.org/rich-iannone/pointblank)
 [![codecov.io](https://codecov.io/github/rich-iannone/pointblank/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/pointblank?branch=master)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/pointblank)](https://cran.r-project.org/package=pointblank)
 
 ## We All Need to Validate our Data Sometimes
 

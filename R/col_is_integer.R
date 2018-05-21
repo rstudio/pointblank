@@ -89,8 +89,7 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom rlang enquo expr_text
 #' @importFrom stringr str_replace_all
-#' @export col_is_integer
-
+#' @export
 col_is_integer <- function(agent,
                            column,
                            brief = NULL,

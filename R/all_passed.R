@@ -6,8 +6,7 @@
 #' @param agent an agent object of class
 #' \code{ptblank_agent}.
 #' @return an agent object.
-#' @export all_passed
-
+#' @export
 all_passed <- function(agent) {
   
   if (all(agent$validation_set$all_passed == TRUE)) {

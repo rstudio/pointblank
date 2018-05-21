@@ -111,8 +111,7 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom rlang enquo expr_text
 #' @importFrom stringr str_replace_all
-#' @export col_vals_not_null
-
+#' @export
 col_vals_not_null <- function(agent,
                               column,
                               preconditions = NULL,

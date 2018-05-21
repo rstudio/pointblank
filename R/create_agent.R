@@ -47,8 +47,7 @@
 #' @return an agent object.
 #' @importFrom dplyr filter
 #' @importFrom tibble tibble as_tibble
-#' @export create_agent
-
+#' @export
 create_agent <- function(validation_name = NULL) {
   
   # Generate an agent name if none provided

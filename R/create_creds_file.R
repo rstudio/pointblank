@@ -24,7 +24,6 @@
 #'   password = "****************")
 #' }
 #' @export
-
 create_creds_file <- function(file,
                               dbname,
                               host,

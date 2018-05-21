@@ -29,8 +29,7 @@
 #'   user = "point@blank.org",
 #'   password = "************")
 #' }
-#' @export create_email_creds_file
-
+#' @export
 create_email_creds_file <- function(file,
                                     sender,
                                     host,

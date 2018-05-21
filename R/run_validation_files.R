@@ -23,12 +23,10 @@
 #' are ignored.
 #' @importFrom purrr walk
 #' @importFrom glue glue
-#' @export run_validation_files
-
+#' @export
 run_validation_files <- function(input_dir = NULL,
                                  file_pattern = NULL,
                                  input_files = NULL) {
-  
   
   if (is.null(input_files)) {
     

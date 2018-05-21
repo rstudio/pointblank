@@ -75,8 +75,7 @@
 #'     notify_count = 1) %>%
 #'   interrogate()
 #' }
-#' @export set_slack_prefs
-
+#' @export
 set_slack_prefs <- function(agent,
                             notify_active = FALSE,
                             slack_webhook_url,

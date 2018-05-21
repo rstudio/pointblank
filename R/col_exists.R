@@ -86,8 +86,7 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom rlang enquo get_expr
 #' @importFrom stringr str_replace_all
-#' @export col_exists
-
+#' @export
 col_exists <- function(agent,
                        column,
                        brief = NULL,

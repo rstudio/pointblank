@@ -77,8 +77,7 @@
 #' #>  8        1 2.567247
 #' #>  9        1 3.959643
 #' #> 10        1 3.801374
-#' @export get_row_sample_data
-
+#' @export
 get_row_sample_data <- function(agent,
                                 step) {
   

@@ -47,8 +47,7 @@
 #' @importFrom tibble tibble
 #' @importFrom purrr map_df
 #' @importFrom dplyr filter pull
-#' @export get_row_sample_info
-
+#' @export
 get_row_sample_info <- function(agent) {
   
   # Create bindings for specific variables

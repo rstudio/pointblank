@@ -97,8 +97,7 @@
 #' @importFrom glue glue
 #' @importFrom stats setNames
 #' @importFrom utils head URLencode
-#' @export interrogate
-
+#' @export
 interrogate <- function(agent,
                         get_problem_rows = TRUE,
                         get_first_n = NULL,

@@ -111,8 +111,7 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom rlang enquo expr_text
 #' @importFrom stringr str_replace_all
-#' @export col_vals_regex
-
+#' @export
 col_vals_regex <- function(agent,
                            column,
                            regex,

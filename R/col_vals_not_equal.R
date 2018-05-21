@@ -113,8 +113,7 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom rlang enquo expr_text
 #' @importFrom stringr str_replace_all
-#' @export col_vals_not_equal
-
+#' @export
 col_vals_not_equal <- function(agent,
                                column,
                                value,

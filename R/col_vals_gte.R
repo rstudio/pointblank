@@ -112,8 +112,7 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom rlang enquo expr_text
 #' @importFrom stringr str_replace_all
-#' @export col_vals_gte
-
+#' @export
 col_vals_gte <- function(agent,
                          column,
                          value,

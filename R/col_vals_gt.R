@@ -110,8 +110,7 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom rlang enquo expr_text
 #' @importFrom stringr str_replace_all
-#' @export col_vals_gt
-
+#' @export
 col_vals_gt <- function(agent,
                         column,
                         value,

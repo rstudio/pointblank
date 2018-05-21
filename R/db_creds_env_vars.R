@@ -17,8 +17,7 @@
 #' @param password the name of the environment
 #' variable storing the password associated
 #' with the \code{user}.
-#' @export db_creds_env_vars
-
+#' @export
 db_creds_env_vars <- function(dbname,
                               host,
                               port,

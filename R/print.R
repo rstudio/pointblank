@@ -6,7 +6,6 @@
 #' @keywords internal
 #' @importFrom dplyr mutate select group_by summarize n ungroup transmute pull
 #' @export
-
 print.ptblank_agent <- function(x, ...) {
   
   args <- list(...)

@@ -8,8 +8,7 @@
 #' class \code{ptblank_agent}.
 #' @return a character object with the agent
 #' name.
-#' @export get_validation_name
-
+#' @export
 get_validation_name <- function(agent) {
   
   agent$validation_name

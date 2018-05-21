@@ -35,8 +35,7 @@
 #' @importFrom rmarkdown render
 #' @importFrom stringr str_replace_all str_detect
 #' @importFrom commonmark markdown_html
-#' @export get_html_summary
-
+#' @export
 get_html_summary <- function(agent,
                              output_file = NULL,
                              output_dir = NULL,

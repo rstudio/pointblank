@@ -114,8 +114,7 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom rlang enquo expr_text
 #' @importFrom stringr str_replace_all
-#' @export col_vals_lte
-
+#' @export
 col_vals_lte <- function(agent,
                          column,
                          value,

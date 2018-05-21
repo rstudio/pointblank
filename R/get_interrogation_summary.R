@@ -6,8 +6,7 @@
 #' \code{ptblank_agent}.
 #' @return an agent object.
 #' @importFrom dplyr select mutate case_when filter pull
-#' @export get_interrogation_summary
-
+#' @export
 get_interrogation_summary <- function(agent) {
   
   # Create bindings for specific variables

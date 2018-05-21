@@ -88,8 +88,7 @@
 #' @importFrom stringr str_split
 #' @importFrom tibble as_tibble glimpse
 #' @importFrom utils capture.output
-#' @export focus_on
-
+#' @export
 focus_on <- function(agent,
                      tbl_name = NULL,
                      file_name = NULL,

@@ -104,8 +104,7 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom rlang enquo get_expr expr_text
 #' @importFrom stringr str_replace_all
-#' @export rows_not_duplicated
-
+#' @export
 rows_not_duplicated <- function(agent,
                                 cols = NULL,
                                 preconditions = NULL,

@@ -66,8 +66,7 @@
 #'     notify_count = 1) %>%
 #'   interrogate()
 #' }
-#' @export set_email_prefs
-
+#' @export
 set_email_prefs <- function(agent,
                             notify_active = FALSE,
                             email_recipients = NULL,

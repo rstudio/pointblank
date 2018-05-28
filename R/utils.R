@@ -755,3 +755,180 @@ create_autobrief <- function(agent,
   
   autobrief
 }
+
+# Perform a single column validation that
+# returns a vector of logical values
+#' @importFrom dplyr pull
+evaluate_single <- function(object,
+                            type,
+                            column,
+                            value = NULL,
+                            set = NULL,
+                            regex = NULL,
+                            left = NULL,
+                            right = NULL,
+                            incl_na = NULL,
+                            incl_nan = NULL,
+                            warn_count,
+                            notify_count,
+                            warn_fraction,
+                            notify_fraction) {
+  
+  if (type == "col_vals_equal") {
+    
+    logicals <- 
+      object %>%
+      dplyr::pull(column) == value
+  }
+  
+  if (type == "col_vals_not_equal") {
+    
+    logicals <- 
+      object %>%
+      dplyr::pull(column) != value
+  }
+  
+  if (type == "col_vals_gt") {
+    
+    logicals <- 
+      object %>%
+      dplyr::pull(column) > value
+  }
+  
+  if (type == "col_vals_gte") {
+    
+    logicals <- 
+      object %>%
+      dplyr::pull(column) >= value
+  }
+  
+  if (type == "col_vals_lt") {
+    
+    logicals <- 
+      object %>%
+      dplyr::pull(column) < value
+  }
+  
+  if (type == "col_vals_lte") {
+    
+    logicals <- 
+      object %>%
+      dplyr::pull(column) <= value
+  }
+  
+  if (type == "col_vals_between") {
+    
+    vals <- 
+      object %>%
+      dplyr::pull(column)
+    
+    logicals <- 
+      vals >= left &
+      vals <= right
+    
+    if (incl_na == TRUE) {
+      logicals[which(is.na(logicals))] <- TRUE
+    } else if (incl_na == FALSE) {
+      logicals[which(is.na(logicals))] <- FALSE
+    }
+    
+    if (incl_nan == TRUE) {
+      logicals[which(is.nan(logicals))] <- TRUE
+    } else if (incl_nan == FALSE) {
+      logicals[which(is.nan(logicals))] <- FALSE
+    }
+  }
+  
+  if (type == "col_vals_not_between") {
+    
+    vals <- 
+      object %>%
+      dplyr::pull(column)
+    
+    logicals <- 
+      vals < left |
+      vals > right
+    
+    if (incl_na == TRUE) {
+      logicals[which(is.na(logicals))] <- TRUE
+    } else if (incl_na == FALSE) {
+      logicals[which(is.na(logicals))] <- FALSE
+    }
+    
+    if (incl_nan == TRUE) {
+      logicals[which(is.nan(logicals))] <- TRUE
+    } else if (incl_nan == FALSE) {
+      logicals[which(is.nan(logicals))] <- FALSE
+    }
+  }
+  
+  if (type == "col_vals_in_set") {
+    
+    logicals <- 
+      object %>%
+      dplyr::pull(column) %in% set
+  }
+  
+  if (type == "col_vals_not_in_set") {
+    
+    logicals <- 
+      !(object %>%
+          dplyr::pull(column) %in% set)
+  }
+  
+  if (type == "col_vals_regex") {
+    
+    vals <- 
+      object %>%
+      dplyr::pull(column)
+    
+    logicals <- 
+      grepl(pattern = regex, x = vals)
+  }
+  
+  if (type == "col_vals_not_null") {
+    
+    logicals <- 
+      !is.na(object %>%
+               dplyr::pull(column))
+  }
+  
+  if (type == "col_vals_null") {
+    
+    logicals <- 
+      is.na(object %>%
+              dplyr::pull(column))
+  }
+  
+  logicals[which(is.na(logicals))] <- FALSE
+  
+  total_count <- length(logicals)
+   true_count <- sum(logicals)
+  false_count <- total_count - true_count
+  
+  if (!is.null(notify_count)) {
+    if (false_count >= notify_count) {
+      stop("This validation resulted in an error (`false_count` >= `notify_count`)",
+           call. = FALSE)
+    }
+  } else if (!is.null(notify_fraction)) {
+    if ((false_count/total_count) >= notify_fraction) {
+      stop("This validation resulted in an error (`false_fraction` >= `notify_fraction`)",
+           call. = FALSE)
+    }
+  }
+  
+  if (!is.null(warn_count)) {
+    if (false_count >= warn_count) {
+      warning("This validation resulted in a warning (`false_count` >= `warning_count`)",
+              call. = FALSE)
+    }
+  } else if (!is.null(warn_fraction)) {
+    if ((false_count/total_count) >= warn_fraction) {
+      warning("This validation resulted in a warning (`false_fraction` >= `warn_fraction`)",
+              call. = FALSE)
+    }
+  }
+  
+  logicals
+}

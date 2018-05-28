@@ -94,7 +94,7 @@
 col_is_character <- function(agent,
                              column,
                              brief = NULL,
-                             warn_count = 1,
+                             warn_count = NULL,
                              notify_count = NULL,
                              warn_fraction = NULL,
                              notify_fraction = NULL,

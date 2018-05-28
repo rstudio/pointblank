@@ -1,8 +1,8 @@
 #' Verify whether column data are between two values
 #' @description Set a verification step where
 #' column data should be between two values.
-#' @param agent an agent object of class
-#' \code{ptblank_agent}.
+#' @param ... a data frame, tibble, or an agent
+#' object of class \code{ptblank_agent}.
 #' @param column the column (or a set of columns,
 #' provided as a character vector) to which this
 #' validation should be applied. Aside from a single
@@ -119,7 +119,7 @@
 #' @importFrom rlang enquo expr_text
 #' @importFrom stringr str_replace_all
 #' @export
-col_vals_between <- function(agent,
+col_vals_between <- function(...,
                              column,
                              left,
                              right,
@@ -127,7 +127,7 @@ col_vals_between <- function(agent,
                              incl_nan = FALSE,
                              preconditions = NULL,
                              brief = NULL,
-                             warn_count = 1,
+                             warn_count = NULL,
                              notify_count = NULL,
                              warn_fraction = NULL,
                              notify_fraction = NULL,
@@ -138,12 +138,35 @@ col_vals_between <- function(agent,
                              file_path = NULL,
                              col_types = NULL) {
 
+  # Collect the object provided
+  object <- list(...)
+  
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
     rlang::expr_text() %>%
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
+  
+  if (inherits(object[[1]] , c("data.frame", "tbl_df"))) {
+    
+    return(
+      object[[1]] %>%
+        evaluate_single(
+          type = "col_vals_between",
+          column = column,
+          left = left,
+          right = right,
+          incl_na = incl_na,
+          incl_nan = incl_nan,
+          warn_count = warn_count,
+          notify_count = notify_count,
+          warn_fraction = warn_fraction,
+          notify_fraction = notify_fraction)
+    )
+  }
+  
+  agent <- object[[1]]
   
   # Get the preconditions
   preconditions <- 

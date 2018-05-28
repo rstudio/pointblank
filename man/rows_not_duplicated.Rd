@@ -5,7 +5,7 @@
 \title{Verify that row data are not duplicated}
 \usage{
 rows_not_duplicated(agent, cols = NULL, preconditions = NULL,
-  brief = NULL, warn_count = 1, notify_count = NULL,
+  brief = NULL, warn_count = NULL, notify_count = NULL,
   warn_fraction = NULL, notify_fraction = NULL, tbl_name = NULL,
   db_type = NULL, creds_file = NULL, initial_sql = NULL,
   file_path = NULL, col_types = NULL)

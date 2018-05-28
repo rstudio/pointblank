@@ -31,6 +31,7 @@ Imports:
     purrr (>= 0.2.4),
     readr (>= 1.1.1),
     rlang (>= 0.2.0),
+    messaging (>= 0.1.0),
     rmarkdown (>= 1.9),
     RMySQL (>= 0.10.14),
     RPostgreSQL (>= 0.6-2),

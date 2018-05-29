@@ -905,28 +905,54 @@ evaluate_single <- function(object,
   total_count <- length(logicals)
    true_count <- sum(logicals)
   false_count <- total_count - true_count
+  false_fraction <- false_count / total_count
   
   if (!is.null(notify_count)) {
     if (false_count >= notify_count) {
-      stop("This validation resulted in an error (`false_count` >= `notify_count`)",
-           call. = FALSE)
+      
+      messaging::emit_error(
+        "The validation (`{type}()`) is above the `notify_count` threshold",
+        " * `failing_count` ({false_count}) > `notify_count` ({notify_count})",
+        type = type,
+        false_count = false_count,
+        notify_count = notify_count,
+        .format = "ERROR: {text}")
     }
   } else if (!is.null(notify_fraction)) {
     if ((false_count/total_count) >= notify_fraction) {
-      stop("This validation resulted in an error (`false_fraction` >= `notify_fraction`)",
-           call. = FALSE)
+      
+      messaging::emit_error(
+        "The validation (`{type}()`) is above the `notify_fraction` threshold",
+        " * `failing_fraction` ({false_fraction}) > `notify_fraction` ({notify_fraction})",
+        type = type,
+        false_fraction = false_fraction,
+        notify_fraction = notify_fraction,
+        .format = "ERROR: {text}")
     }
   }
   
   if (!is.null(warn_count)) {
     if (false_count >= warn_count) {
-      warning("This validation resulted in a warning (`false_count` >= `warning_count`)",
-              call. = FALSE)
+      
+      messaging::emit_warning(
+        "The validation (`{type}()`) is above the `warn_count` threshold",
+        " * `failing_count` ({false_count}) > `warn_count` ({warn_count})",
+        type = type,
+        false_count = false_count,
+        warn_count = warn_count,
+        .format = "WARN: {text}")
+
     }
   } else if (!is.null(warn_fraction)) {
     if ((false_count/total_count) >= warn_fraction) {
-      warning("This validation resulted in a warning (`false_fraction` >= `warn_fraction`)",
-              call. = FALSE)
+      
+      messaging::emit_warning(
+        "The validation (`{type}()`) is above the `warn_fraction` threshold",
+        " * `failing_fraction` ({false_fraction}) > `warn_fraction` ({warn_fraction})",
+        type = type,
+        false_fraction = false_fraction,
+        warn_fraction = warn_fraction,
+        .format = "WARN: {text}")
     }
   }
   

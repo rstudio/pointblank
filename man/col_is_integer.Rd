@@ -4,14 +4,14 @@
 \alias{col_is_integer}
 \title{Verify that a column contains integer values}
 \usage{
-col_is_integer(agent, column, brief = NULL, warn_count = NULL,
+col_is_integer(..., column, brief = NULL, warn_count = NULL,
   notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,
   tbl_name = NULL, db_type = NULL, creds_file = NULL,
   initial_sql = NULL, file_path = NULL, col_types = NULL)
 }
 \arguments{
-\item{agent}{an agent object of class
-\code{ptblank_agent}.}
+\item{...}{a data frame, tibble, or an agent
+object of class \code{ptblank_agent}.}
 
 \item{column}{the name of a single table column,
 multiple columns in the same table, or, a helper

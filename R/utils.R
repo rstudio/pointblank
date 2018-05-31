@@ -758,7 +758,7 @@ create_autobrief <- function(agent,
 
 # Perform a single column validation that
 # returns a vector of logical values
-#' @importFrom dplyr pull
+#' @importFrom dplyr pull collect as_tibble
 evaluate_single <- function(object,
                             type,
                             column,
@@ -774,53 +774,56 @@ evaluate_single <- function(object,
                             warn_fraction,
                             notify_fraction) {
   
+  # Get the `column` number
+  col_number <- ((object %>% colnames()) %in% column) %>% which()
+  
   if (type == "col_vals_equal") {
     
     logicals <- 
       object %>%
-      dplyr::pull(column) == value
+      dplyr::pull(col_number) == value
   }
   
   if (type == "col_vals_not_equal") {
     
     logicals <- 
       object %>%
-      dplyr::pull(column) != value
+      dplyr::pull(col_number) != value
   }
   
   if (type == "col_vals_gt") {
     
     logicals <- 
       object %>%
-      dplyr::pull(column) > value
+      dplyr::pull(col_number) > value
   }
   
   if (type == "col_vals_gte") {
     
     logicals <- 
       object %>%
-      dplyr::pull(column) >= value
+      dplyr::pull(col_number) >= value
   }
   
   if (type == "col_vals_lt") {
     
     logicals <- 
       object %>%
-      dplyr::pull(column) < value
+      dplyr::pull(col_number) < value
   }
   
   if (type == "col_vals_lte") {
     
     logicals <- 
       object %>%
-      dplyr::pull(column) <= value
+      dplyr::pull(col_number) <= value
   }
   
   if (type == "col_vals_between") {
     
     vals <- 
       object %>%
-      dplyr::pull(column)
+      dplyr::pull(col_number)
     
     logicals <- 
       vals >= left &
@@ -843,7 +846,7 @@ evaluate_single <- function(object,
     
     vals <- 
       object %>%
-      dplyr::pull(column)
+      dplyr::pull(col_number)
     
     logicals <- 
       vals < left |
@@ -866,21 +869,21 @@ evaluate_single <- function(object,
     
     logicals <- 
       object %>%
-      dplyr::pull(column) %in% set
+      dplyr::pull(col_number) %in% set
   }
   
   if (type == "col_vals_not_in_set") {
     
     logicals <- 
       !(object %>%
-          dplyr::pull(column) %in% set)
+          dplyr::pull(col_number) %in% set)
   }
   
   if (type == "col_vals_regex") {
     
     vals <- 
       object %>%
-      dplyr::pull(column)
+      dplyr::pull(col_number)
     
     logicals <- 
       grepl(pattern = regex, x = vals)
@@ -890,14 +893,55 @@ evaluate_single <- function(object,
     
     logicals <- 
       !is.na(object %>%
-               dplyr::pull(column))
+               dplyr::pull(col_number))
   }
   
   if (type == "col_vals_null") {
     
     logicals <- 
       is.na(object %>%
-              dplyr::pull(column))
+              dplyr::pull(col_number))
+  }
+  
+  if (grepl("col_is_.*", type)) {
+    
+    # Get the column type
+    column_type <-
+      (object %>%
+         dplyr::select(column) %>%
+         head(1) %>%
+         dplyr::collect() %>%
+         as.data.frame(stringsAsFactors = FALSE))[1, 1] %>% 
+      class()
+    
+    if (type == "col_is_numeric") {
+      logicals <- ifelse(column_type[1] == "numeric", TRUE, FALSE)
+    } else if (type == "col_is_integer") {
+      logicals <- ifelse(column_type[1] == "integer", TRUE, FALSE)
+    } else if (type == "col_is_character") {
+      logicals <- ifelse(column_type[1] == "character", TRUE, FALSE)
+    } else if (type == "col_is_logical") {
+      logicals <- ifelse(column_type[1] == "logical", TRUE, FALSE)
+    } else if (type == "col_is_factor") {
+      logicals <- ifelse(column_type[1] == "factor", TRUE, FALSE)
+    } else if (type == "col_is_posix") {
+      logicals <- ifelse(column_type[1] == "POSIXct", TRUE, FALSE)
+    } else if (type == "col_is_date") {
+      logicals <- ifelse(column_type[1] == "Date", TRUE, FALSE)
+    } else {
+      logicals <- FALSE
+    }
+  }
+  
+  if (type == "col_exists") {
+    
+    column_names <-
+      object %>%
+      head(1) %>%
+      dplyr::as_tibble() %>%
+      colnames()
+    
+    logicals <- ifelse(column %in% column_names, TRUE, FALSE)
   }
   
   logicals[which(is.na(logicals))] <- FALSE
@@ -916,7 +960,7 @@ evaluate_single <- function(object,
         type = type,
         false_count = false_count,
         notify_count = notify_count,
-        .format = "ERROR: {text}")
+        .format = "ERROR {text}")
     }
   } else if (!is.null(notify_fraction)) {
     if ((false_count/total_count) >= notify_fraction) {
@@ -927,7 +971,7 @@ evaluate_single <- function(object,
         type = type,
         false_fraction = false_fraction,
         notify_fraction = notify_fraction,
-        .format = "ERROR: {text}")
+        .format = "ERROR {text}")
     }
   }
   
@@ -940,7 +984,7 @@ evaluate_single <- function(object,
         type = type,
         false_count = false_count,
         warn_count = warn_count,
-        .format = "WARN: {text}")
+        .format = "WARN {text}")
 
     }
   } else if (!is.null(warn_fraction)) {
@@ -952,7 +996,7 @@ evaluate_single <- function(object,
         type = type,
         false_fraction = false_fraction,
         warn_fraction = warn_fraction,
-        .format = "WARN: {text}")
+        .format = "WARN {text}")
     }
   }
   

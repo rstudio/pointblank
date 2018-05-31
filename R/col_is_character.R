@@ -2,8 +2,8 @@
 #' @description Set a verification step where
 #' a table column is expected to consist of
 #' string data.
-#' @param agent an agent object of class
-#' \code{ptblank_agent}.
+#' @param ... a data frame, tibble, or an agent
+#' object of class \code{ptblank_agent}.
 #' @param column the name of a single table column,
 #' multiple columns in the same table, or, a helper
 #' function such as \code{all_cols()}.
@@ -91,7 +91,7 @@
 #' @importFrom rlang enquo expr_text
 #' @importFrom stringr str_replace_all
 #' @export
-col_is_character <- function(agent,
+col_is_character <- function(...,
                              column,
                              brief = NULL,
                              warn_count = NULL,
@@ -105,12 +105,32 @@ col_is_character <- function(agent,
                              file_path = NULL,
                              col_types = NULL) {
   
+  # Collect the object provided
+  object <- list(...)
+  
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
     rlang::expr_text() %>%
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
+  
+  if (inherits(object[[1]] , c("data.frame", "tbl_df", "tbl_dbi"))) {
+    
+    return(
+      object[[1]] %>%
+        evaluate_single(
+          type = "col_is_character",
+          column = column,
+          value = value,
+          warn_count = warn_count,
+          notify_count = notify_count,
+          warn_fraction = warn_fraction,
+          notify_fraction = notify_fraction)
+    )
+  }
+  
+  agent <- object[[1]]
   
   preconditions <- NULL
   

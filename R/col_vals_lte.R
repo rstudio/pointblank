@@ -141,7 +141,7 @@ col_vals_lte <- function(...,
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
   
-  if (inherits(object[[1]] , c("data.frame", "tbl_df"))) {
+  if (inherits(object[[1]] , c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
       object[[1]] %>%

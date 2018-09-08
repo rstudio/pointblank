@@ -5,8 +5,8 @@
 \title{Place certain access details more to the fore}
 \usage{
 focus_on(agent, tbl_name = NULL, file_name = NULL, col_types = NULL,
-  db_type = NULL, initial_sql = NULL, brief = NULL, creds_file = NULL,
-  db_creds_env_vars = NULL)
+  db_type = NULL, initial_sql = NULL, brief = NULL,
+  creds_file = NULL, db_creds_env_vars = NULL)
 }
 \arguments{
 \item{agent}{an agent object of class

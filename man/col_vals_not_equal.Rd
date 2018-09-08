@@ -5,11 +5,11 @@
 \title{Verify whether numerical column data are
 not equal to a specified value}
 \usage{
-col_vals_not_equal(..., column, value, preconditions = NULL, brief = NULL,
-  warn_count = NULL, notify_count = NULL, warn_fraction = NULL,
-  notify_fraction = NULL, tbl_name = NULL, db_type = NULL,
-  creds_file = NULL, initial_sql = NULL, file_path = NULL,
-  col_types = NULL)
+col_vals_not_equal(..., column, value, preconditions = NULL,
+  brief = NULL, warn_count = NULL, notify_count = NULL,
+  warn_fraction = NULL, notify_fraction = NULL, tbl_name = NULL,
+  db_type = NULL, creds_file = NULL, initial_sql = NULL,
+  file_path = NULL, col_types = NULL)
 }
 \arguments{
 \item{...}{a data frame, tibble, or an agent

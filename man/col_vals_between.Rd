@@ -12,15 +12,13 @@ col_vals_between(..., column, left, right, incl_na = FALSE,
   col_types = NULL)
 }
 \arguments{
-\item{...}{a data frame, tibble, or an agent
-object of class \code{ptblank_agent}.}
+\item{...}{a data frame, tibble, or an agent object of class
+\code{ptblank_agent}.}
 
-\item{column}{the column (or a set of columns,
-provided as a character vector) to which this
-validation should be applied. Aside from a single
-column name, column operations can be used to
-create one or more computed columns (e.g., 
-\code{a + b} or \code{a + sum(a)}).}
+\item{column}{the column (or a set of columns, provided as a character
+vector) to which this validation should be applied. Aside from a single
+column name, column operations can be used to create one or more computed
+columns (e.g., \code{a + b} or \code{a + sum(a)}).}
 
 \item{left}{the lower bound for the range. The
 validation includes this bound value in addition
@@ -30,92 +28,68 @@ to values greater than \code{left}.}
 validation includes this bound value in addition
 to values lower than \code{right}.}
 
-\item{incl_na}{should \code{NA} values be a part
-of the condition? This is by default \code{FALSE}.}
+\item{incl_na}{should \code{NA} values be a part of the condition? This is by
+default \code{FALSE}.}
 
-\item{incl_nan}{should \code{NaN} values be a part
-of the condition? This is by default \code{FALSE}.}
+\item{incl_nan}{should \code{NaN} values be a part of the condition? This is
+by default \code{FALSE}.}
 
-\item{preconditions}{an optional statement of
-filtering conditions that may reduce the number
-of rows for validation for the current
-validation step. The statements are executed
-for every row of the table in focus and are
-often referred as predicate statements (they
-either return \code{TRUE} or \code{FALSE} for
-every row evaluated, where rows evaluated as
-\code{TRUE} are the rows that are retained for
-the validation step). For example, if a table
-has columns \code{a}, \code{b}, and \code{c},
-and, column \code{a} has numerical data, we
-can write a statement \code{a < 5} that filters
-all rows in the table where values in column a
-are less than five.}
+\item{preconditions}{an optional statement of filtering conditions that may
+reduce the number of rows for validation for the current validation step.
+The statements are executed for every row of the table in focus and are
+often referred as predicate statements (they either return \code{TRUE} or
+\code{FALSE} for every row evaluated, where rows evaluated as \code{TRUE}
+are the rows that are retained for the validation step). For example, if a
+table has columns \code{a}, \code{b}, and \code{c}, and, column \code{a}
+has numerical data, we can write a statement \code{a < 5} that filters all
+rows in the table where values in column a are less than five.}
 
-\item{brief}{an optional, text-based description
-for the validation step.}
+\item{brief}{an optional, text-based description for the validation step.}
 
-\item{warn_count}{the threshold number for 
-individual validations returning a \code{FALSE}
-result before applying the \code{warn} flag.}
+\item{warn_count}{the threshold number for individual validations returning a
+\code{FALSE} result before applying the \code{warn} flag.}
 
-\item{notify_count}{the threshold number for 
-individual validations returning a \code{FALSE}
-result before applying the \code{notify} flag.}
+\item{notify_count}{the threshold number for individual validations returning
+a \code{FALSE} result before applying the \code{notify} flag.}
 
-\item{warn_fraction}{the threshold fraction for 
-individual validations returning a \code{FALSE}
-over all the entire set of individual validations.
-Beyond this threshold, the \code{warn} flag will
-be applied.}
+\item{warn_fraction}{the threshold fraction for individual validations
+returning a \code{FALSE} over all the entire set of individual validations.
+Beyond this threshold, the \code{warn} flag will be applied.}
 
-\item{notify_fraction}{the threshold fraction for 
-individual validations returning a \code{FALSE}
-over all the entire set of individual validations.
-Beyond this threshold, the \code{notify} flag will
-be applied.}
+\item{notify_fraction}{the threshold fraction for individual validations
+returning a \code{FALSE} over all the entire set of individual validations.
+Beyond this threshold, the \code{notify} flag will be applied.}
 
-\item{tbl_name}{the name of the local or remote
-table.}
+\item{tbl_name}{the name of the local or remote table.}
 
-\item{db_type}{if the table is located in a
-database, the type of database is required here.
-Currently, this can be either \code{PostgreSQL}
-or \code{MySQL}.}
+\item{db_type}{if the table is located in a database, the type of database is
+required here. Currently, this can be either \code{PostgreSQL} or
+\code{MySQL}.}
 
-\item{creds_file}{if a connection to a database
-is required for reaching the table specified in
-\code{tbl_name}, then a path to a credentials file
-can be used to establish that connection. The
-credentials file is an \code{RDS} containing a
-character vector with the following items in the
-specified order: (1) database name (\code{dbname}),
-(2) the \code{host} name, (3) the \code{port},
-(4) the username (\code{user}), and (5) the
-\code{password}. This file can be easily created
-using the \code{create_creds_file()} function.}
+\item{creds_file}{if a connection to a database is required for reaching the
+table specified in \code{tbl_name}, then a path to a credentials file can
+be used to establish that connection. The credentials file is an \code{RDS}
+containing a character vector with the following items in the specified
+order: (1) database name (\code{dbname}), (2) the \code{host} name, (3) the
+\code{port}, (4) the username (\code{user}), and (5) the \code{password}.
+This file can be easily created using the \code{create_creds_file()}
+function.}
 
-\item{initial_sql}{when accessing a remote table,
-this provides an option to provide an initial
-query component before conducting validations. 
-An entire SQL statement can be provided here, or,
-as a shortcut, the initial \code{SELECT...}
-statement can be omitted for simple queries (e.g.,
+\item{initial_sql}{when accessing a remote table, this provides an option to
+provide an initial query component before conducting validations. An entire
+SQL statement can be provided here, or, as a shortcut, the initial
+\code{SELECT...} statement can be omitted for simple queries (e.g.,
 \code{WHERE a > 1 AND b = 'one'}).}
 
-\item{file_path}{an optional path for a tabular data
-file to be loaded for this verification step. Valid
-types are CSV and TSV files.}
+\item{file_path}{an optional path for a tabular data file to be loaded for
+this verification step. Valid types are CSV and TSV files.}
 
-\item{col_types}{if validating a CSV or TSV file,
-an optional column specification can be provided
-here as a string. This string representation is
-where each character represents one column and the
-mappings are: \code{c} -> character, \code{i} ->
-integer, \code{n} -> number, \code{d} -> double, 
-\code{l} -> logical, \code{D} -> date, \code{T} ->
-date time, \code{t} -> time, \code{?} -> guess, 
-or \code{_/-}, which skips the column.}
+\item{col_types}{if validating a CSV or TSV file, an optional column
+specification can be provided here as a string. This string representation
+is where each character represents one column and the mappings are:
+\code{c} -> character, \code{i} -> integer, \code{n} -> number, \code{d} ->
+double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
+\code{t} -> time, \code{?} -> guess, or \code{_/-}, which skips the column.}
 }
 \value{
 an agent object.

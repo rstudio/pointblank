@@ -22,6 +22,12 @@ columns (e.g., \code{a + b} or \code{a + sum(a)}).}
 \item{value}{a numeric value used for this test. Any column values
 \code{>value} are considered passing.}
 
+\item{incl_na}{should \code{NA} values be a part of the condition? This is by
+default \code{FALSE}.}
+
+\item{incl_nan}{should \code{NaN} values be a part of the condition? This is
+by default \code{FALSE}.}
+
 \item{preconditions}{an optional statement of filtering conditions that may
 reduce the number of rows for validation for the current validation step.
 The statements are executed for every row of the table in focus and are
@@ -83,8 +89,8 @@ double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
 an agent object.
 }
 \description{
-Set a verification step where numeric values in a table column
-  should be greater than a specified value.
+Set a verification step where numeric values in a table column should be
+greater than a specified value.
 }
 \examples{
 # Create a simple data frame

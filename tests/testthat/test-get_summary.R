@@ -2,9 +2,6 @@ context("Creating a validation summary")
 
 test_that("Getting a validation summary is possible", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_is_character()` function to create
   # a validation step and then `interrogate()`
   agent <-
@@ -48,5 +45,4 @@ test_that("Getting a validation summary is possible", {
         file_name = system.file("extdata", "small_table.csv", package = "pointblank")) %>%
       col_is_character(column = "b") %>%
       get_interrogation_summary())
-  
 })

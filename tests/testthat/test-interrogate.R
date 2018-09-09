@@ -2,9 +2,6 @@ context("Performing interrogations")
 
 test_that("Interrogating for column types", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_is_character()` function to create
   # a validation step, then, `interrogate()`
   validation <-

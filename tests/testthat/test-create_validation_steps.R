@@ -2,9 +2,6 @@ context("Creation of validation steps")
 
 test_that("Creating a `col_is_character()` step is possible", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_is_character()` function to create
   # a validation step
   validation <-
@@ -65,9 +62,6 @@ test_that("Creating a `col_is_character()` step is possible", {
 })
 
 test_that("Creating a `col_is_date()` step is possible", {
-  
-  library(tibble)
-  library(dplyr)
   
   # Use `col_is_date()` function to create
   # a validation step
@@ -130,9 +124,6 @@ test_that("Creating a `col_is_date()` step is possible", {
 
 test_that("Creating a `col_is_factor()` step is possible", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_is_factor()` function to create
   # a validation step
   validation <-
@@ -193,9 +184,6 @@ test_that("Creating a `col_is_factor()` step is possible", {
 })
 
 test_that("Creating a `col_is_integer()` step is possible", {
-  
-  library(tibble)
-  library(dplyr)
   
   # Use `col_is_integer()` function to create
   # a validation step
@@ -258,9 +246,6 @@ test_that("Creating a `col_is_integer()` step is possible", {
 
 test_that("Creating a `col_is_logical()` step is possible", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_is_logical()` function to create
   # a validation step
   validation <-
@@ -321,9 +306,6 @@ test_that("Creating a `col_is_logical()` step is possible", {
 })
 
 test_that("Creating a `col_is_numeric()` step is possible", {
-  
-  library(tibble)
-  library(dplyr)
   
   # Use `col_is_numeric()` function to create
   # a validation step
@@ -386,9 +368,6 @@ test_that("Creating a `col_is_numeric()` step is possible", {
 
 test_that("Creating a `col_is_posix()` step is possible", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_is_posix()` function to create
   # a validation step
   validation <-
@@ -449,9 +428,6 @@ test_that("Creating a `col_is_posix()` step is possible", {
 })
 
 test_that("Creating a `col_vals_between()` step is possible", {
-  
-  library(tibble)
-  library(dplyr)
   
   # Use `col_vals_between()` function to create
   # a validation step
@@ -522,9 +498,6 @@ test_that("Creating a `col_vals_between()` step is possible", {
 
 test_that("Creating a `col_vals_not_between()` step is possible", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_vals_not_between()` function to create
   # a validation step
   validation <-
@@ -594,9 +567,6 @@ test_that("Creating a `col_vals_not_between()` step is possible", {
 
 test_that("Creating a `col_vals_equal()` step is possible", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_vals_equal()` function to create
   # a validation step
   validation <-
@@ -661,9 +631,6 @@ test_that("Creating a `col_vals_equal()` step is possible", {
 })
 
 test_that("Creating a `col_vals_not_equal()` step is possible", {
-  
-  library(tibble)
-  library(dplyr)
   
   # Use `col_vals_not_equal()` function to create
   # a validation step
@@ -730,9 +697,6 @@ test_that("Creating a `col_vals_not_equal()` step is possible", {
 
 test_that("Creating a `col_vals_gt()` step is possible", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_vals_gt()` function to create
   # a validation step
   validation <-
@@ -797,9 +761,6 @@ test_that("Creating a `col_vals_gt()` step is possible", {
 })
 
 test_that("Creating a `col_vals_gte()` step is possible", {
-  
-  library(tibble)
-  library(dplyr)
   
   # Use `col_vals_gte()` function to create
   # a validation step
@@ -866,9 +827,6 @@ test_that("Creating a `col_vals_gte()` step is possible", {
 
 test_that("Creating a `col_vals_lt()` step is possible", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_vals_lt()` function to create
   # a validation step
   validation <-
@@ -934,9 +892,6 @@ test_that("Creating a `col_vals_lt()` step is possible", {
 
 test_that("Creating a `col_vals_lte()` step is possible", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_vals_lte()` function to create
   # a validation step
   validation <-
@@ -1001,9 +956,6 @@ test_that("Creating a `col_vals_lte()` step is possible", {
 })
 
 test_that("Creating a `col_vals_in_set()` step is possible", {
-  
-  library(tibble)
-  library(dplyr)
   
   # Use `col_vals_in_set()` function to create
   # a validation step
@@ -1072,9 +1024,6 @@ test_that("Creating a `col_vals_in_set()` step is possible", {
 
 test_that("Creating a `col_vals_not_in_set()` step is possible", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_vals_not_in_set()` function to create
   # a validation step
   validation <-
@@ -1142,9 +1091,6 @@ test_that("Creating a `col_vals_not_in_set()` step is possible", {
 
 test_that("Creating a `col_vals_regex()` step is possible", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_vals_regex()` function to create
   # a validation step
   validation <-
@@ -1210,9 +1156,6 @@ test_that("Creating a `col_vals_regex()` step is possible", {
 
 test_that("Creating a `col_vals_null()` step is possible", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `col_vals_null()` function to create
   # a validation step
   validation <-
@@ -1273,9 +1216,6 @@ test_that("Creating a `col_vals_null()` step is possible", {
 })
 
 test_that("Creating a `col_vals_not_null()` step is possible", {
-  
-  library(tibble)
-  library(dplyr)
   
   # Use `col_vals_not_null()` function to create
   # a validation step
@@ -1338,9 +1278,6 @@ test_that("Creating a `col_vals_not_null()` step is possible", {
 
 test_that("Creating a `rows_not_duplicated()` step is possible", {
   
-  library(tibble)
-  library(dplyr)
-  
   # Use `rows_not_duplicated()` function to create
   # a validation step
   validation <-
@@ -1383,4 +1320,3 @@ test_that("Creating a `rows_not_duplicated()` step is possible", {
                     system.file("extdata", "small_table.csv",
                                 package = "pointblank"))
 })
-

@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_is_posix.R
 \name{col_is_posix}
 \alias{col_is_posix}
-\title{Verify that a column contains POSIXct dates}
+\title{Do the columns contain POSIXct dates?}
 \usage{
 col_is_posix(..., column, brief = NULL, warn_count = NULL,
   notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,

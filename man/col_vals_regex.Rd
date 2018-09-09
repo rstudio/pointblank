@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_regex.R
 \name{col_vals_regex}
 \alias{col_vals_regex}
-\title{Verify whether string column data corresponds to a regex matching expression}
+\title{Do strings in column data match a regex pattern?}
 \usage{
 col_vals_regex(..., column, regex, preconditions = NULL, brief = NULL,
   warn_count = NULL, notify_count = NULL, warn_fraction = NULL,
@@ -82,8 +82,8 @@ double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
 an agent object.
 }
 \description{
-Set a verification step where string column data should correspond to a regex
-matching expression.
+Set a verification step where string-based column data should correspond to a
+regex matching expression.
 }
 \examples{
 # Create a simple data frame with a column

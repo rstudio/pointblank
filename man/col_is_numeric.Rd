@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_is_numeric.R
 \name{col_is_numeric}
 \alias{col_is_numeric}
-\title{Verify that a column contains numeric values}
+\title{Do the columns contain numeric values?}
 \usage{
 col_is_numeric(..., column, brief = NULL, warn_count = NULL,
   notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,

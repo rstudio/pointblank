@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_not_between.R
 \name{col_vals_not_between}
 \alias{col_vals_not_between}
-\title{Verify that column data are not between two values}
+\title{Are numerical column data not between two specified values?}
 \usage{
 col_vals_not_between(..., column, left, right, incl_na = TRUE,
   incl_nan = TRUE, preconditions = NULL, brief = NULL,

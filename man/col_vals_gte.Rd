@@ -2,8 +2,7 @@
 % Please edit documentation in R/col_vals_gte.R
 \name{col_vals_gte}
 \alias{col_vals_gte}
-\title{Verify whether numerical column data are greater than or equal to a specified
-value}
+\title{Are numerical column data greater than or equal to a specific value?}
 \usage{
 col_vals_gte(..., column, value, preconditions = NULL, brief = NULL,
   warn_count = NULL, notify_count = NULL, warn_fraction = NULL,

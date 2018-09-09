@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_between.R
 \name{col_vals_between}
 \alias{col_vals_between}
-\title{Verify whether column data are between two values}
+\title{Are numerical column data between two specified values?}
 \usage{
 col_vals_between(..., column, left, right, incl_na = FALSE,
   incl_nan = FALSE, preconditions = NULL, brief = NULL,
@@ -20,13 +20,11 @@ vector) to which this validation should be applied. Aside from a single
 column name, column operations can be used to create one or more computed
 columns (e.g., \code{a + b} or \code{a + sum(a)}).}
 
-\item{left}{the lower bound for the range. The
-validation includes this bound value in addition
-to values greater than \code{left}.}
+\item{left}{the lower bound for the range. The validation includes this bound
+value in addition to values greater than \code{left}.}
 
-\item{right}{the upper bound for the range. The
-validation includes this bound value in addition
-to values lower than \code{right}.}
+\item{right}{the upper bound for the range. The validation includes this
+bound value in addition to values lower than \code{right}.}
 
 \item{incl_na}{should \code{NA} values be a part of the condition? This is by
 default \code{FALSE}.}
@@ -95,8 +93,7 @@ double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
 an agent object.
 }
 \description{
-Set a verification step where
-column data should be between two values.
+Set a verification step where column data should be between two values.
 }
 \examples{
 # Create a simple data frame

@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_equal.R
 \name{col_vals_equal}
 \alias{col_vals_equal}
-\title{Verify whether numerical column data are equal to a specified value}
+\title{Are numerical column data equal to a specific value?}
 \usage{
 col_vals_equal(..., column, value, preconditions = NULL, brief = NULL,
   warn_count = NULL, notify_count = NULL, warn_fraction = NULL,

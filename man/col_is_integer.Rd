@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_is_integer.R
 \name{col_is_integer}
 \alias{col_is_integer}
-\title{Verify that a column contains integer values}
+\title{Do the columns contain integer values?}
 \usage{
 col_is_integer(..., column, brief = NULL, warn_count = NULL,
   notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,

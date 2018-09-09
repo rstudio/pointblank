@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_in_set.R
 \name{col_vals_in_set}
 \alias{col_vals_in_set}
-\title{Verify whether column data are part of a set of values}
+\title{Are numerical column data part of a specific set of values?}
 \usage{
 col_vals_in_set(..., column, set, preconditions = NULL, brief = NULL,
   warn_count = NULL, notify_count = NULL, warn_fraction = NULL,

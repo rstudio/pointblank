@@ -2,8 +2,7 @@
 % Please edit documentation in R/col_vals_lte.R
 \name{col_vals_lte}
 \alias{col_vals_lte}
-\title{Verify whether numerical column data are less than or equal to a specified
-value}
+\title{Are numerical column data less than or equal to a specific value?}
 \usage{
 col_vals_lte(..., column, value, preconditions = NULL, brief = NULL,
   warn_count = NULL, notify_count = NULL, warn_fraction = NULL,

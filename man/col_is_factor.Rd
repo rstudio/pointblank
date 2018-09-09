@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_is_factor.R
 \name{col_is_factor}
 \alias{col_is_factor}
-\title{Verify that a column contains R factor objects}
+\title{Do the columns contain R factor objects?}
 \usage{
 col_is_factor(..., column, brief = NULL, warn_count = NULL,
   notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,

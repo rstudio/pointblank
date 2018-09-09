@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_null.R
 \name{col_vals_null}
 \alias{col_vals_null}
-\title{Verify whether all column values are NULL}
+\title{Are numerical column data NULL?}
 \usage{
 col_vals_null(..., column, preconditions = NULL, brief = NULL,
   warn_count = NULL, notify_count = NULL, warn_fraction = NULL,

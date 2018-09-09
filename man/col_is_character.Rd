@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_is_character.R
 \name{col_is_character}
 \alias{col_is_character}
-\title{Verify that a column contains character/string data}
+\title{Do the columns contain character/string data?}
 \usage{
 col_is_character(..., column, brief = NULL, warn_count = NULL,
   notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,

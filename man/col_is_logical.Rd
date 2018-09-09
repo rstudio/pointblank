@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_is_logical.R
 \name{col_is_logical}
 \alias{col_is_logical}
-\title{Verify that a column contains logical values}
+\title{Do the columns contain logical values?}
 \usage{
 col_is_logical(..., column, brief = NULL, warn_count = NULL,
   notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,

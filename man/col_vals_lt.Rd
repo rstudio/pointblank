@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_lt.R
 \name{col_vals_lt}
 \alias{col_vals_lt}
-\title{Verify whether numerical column data are less than a specified value}
+\title{Are numerical column data less than a specific value?}
 \usage{
 col_vals_lt(..., column, value, preconditions = NULL, brief = NULL,
   warn_count = NULL, notify_count = NULL, warn_fraction = NULL,

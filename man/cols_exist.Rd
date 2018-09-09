@@ -2,7 +2,7 @@
 % Please edit documentation in R/cols_exist.R
 \name{cols_exist}
 \alias{cols_exist}
-\title{Verify that one or more columns exist}
+\title{Do one or more columns actually exist?}
 \usage{
 cols_exist(..., cols, brief = NULL, warn_count = NULL,
   notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,

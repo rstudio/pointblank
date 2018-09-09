@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_is_date.R
 \name{col_is_date}
 \alias{col_is_date}
-\title{Verify that a column contains R Date objects}
+\title{Do the columns contain R Date objects?}
 \usage{
 col_is_date(..., column, brief = NULL, warn_count = NULL,
   notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,

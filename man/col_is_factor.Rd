@@ -91,5 +91,4 @@ agent <-
 # validations have all passed
 # by using `all_passed()`
 all_passed(agent)
-#> [1] TRUE
 }

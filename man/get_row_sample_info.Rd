@@ -49,6 +49,4 @@ agent <-
 # Find out which validation steps
 # contain sample row data
 get_row_sample_info(agent)
-#>   step   assertion_type n_failed rows_in_sample
-#> 1    1 col_vals_between       65             10
 }

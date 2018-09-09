@@ -90,5 +90,4 @@ agent <-
 # Determine if this column validation
 # passed by using `all_passed()`
 all_passed(agent)
-#> [1] TRUE
 }

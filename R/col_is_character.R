@@ -1,4 +1,4 @@
-#' Verify that a column contains character/string data
+#' Do the columns contain character/string data?
 #'
 #' Set a verification step where a table column is expected to consist of string
 #' data.

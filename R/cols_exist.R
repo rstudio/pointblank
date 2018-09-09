@@ -1,4 +1,4 @@
-#' Verify that one or more columns exist
+#' Do one or more columns actually exist?
 #'
 #' Set a verification step that checks whether one or several specified columns
 #' exist in the target table.

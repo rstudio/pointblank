@@ -1,4 +1,4 @@
-#' Verify that a column contains numeric values
+#' Do the columns contain numeric values?
 #'
 #' Set a verification step where a table column is expected to consist of
 #' floating point values.

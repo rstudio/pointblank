@@ -1,4 +1,4 @@
-#' Verify that column data are not between two values
+#' Are numerical column data not between two specified values?
 #'
 #' Set a verification step where column data should not be between two values.
 #' @inheritParams col_vals_gt

@@ -1,4 +1,4 @@
-#' Verify that a column contains POSIXct dates
+#' Do the columns contain POSIXct dates?
 #'
 #' Set a verification step where a table column is expected to consist entirely
 #' of POSIXct dates.

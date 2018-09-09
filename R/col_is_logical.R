@@ -1,4 +1,4 @@
-#' Verify that a column contains logical values
+#' Do the columns contain logical values?
 #'
 #' Set a verification step where a table column is expected to consist of
 #' \code{logical} values.

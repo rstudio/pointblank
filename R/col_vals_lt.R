@@ -1,4 +1,4 @@
-#' Verify whether numerical column data are less than a specified value
+#' Are numerical column data less than a specific value?
 #'
 #' Set a verification step where numeric values in a table column should be less
 #' than a specified value.

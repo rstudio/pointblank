@@ -1,4 +1,4 @@
-#' Verify whether numerical column data are equal to a specified value
+#' Are numerical column data equal to a specific value?
 #'
 #' Set a verification step where numeric values in a table column should be
 #' equal to a specified value.

@@ -1,14 +1,11 @@
-#' Verify whether column data are between two values
-#' 
-#' Set a verification step where
-#' column data should be between two values.
+#' Are numerical column data between two specified values?
+#'
+#' Set a verification step where column data should be between two values.
 #' @inheritParams col_vals_gt
-#' @param left the lower bound for the range. The
-#' validation includes this bound value in addition
-#' to values greater than \code{left}.
-#' @param right the upper bound for the range. The
-#' validation includes this bound value in addition
-#' to values lower than \code{right}.
+#' @param left the lower bound for the range. The validation includes this bound
+#'   value in addition to values greater than \code{left}.
+#' @param right the upper bound for the range. The validation includes this
+#'   bound value in addition to values lower than \code{right}.
 #' @return an agent object.
 #' @examples
 #' # Create a simple data frame

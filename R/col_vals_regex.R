@@ -1,7 +1,7 @@
-#' Verify whether string column data corresponds to a regex matching expression
+#' Do strings in column data match a regex pattern?
 #'
-#' Set a verification step where string column data should correspond to a regex
-#' matching expression.
+#' Set a verification step where string-based column data should correspond to a
+#' regex matching expression.
 #' @inheritParams col_vals_gt
 #' @param regex a regex pattern to test for matching strings.
 #' @return an agent object.

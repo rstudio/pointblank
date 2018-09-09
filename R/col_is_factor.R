@@ -1,4 +1,4 @@
-#' Verify that a column contains R factor objects
+#' Do the columns contain R factor objects?
 #'
 #' Set a verification step where a table column is expected to consist entirely
 #' of R \code{factor} objects.

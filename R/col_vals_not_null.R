@@ -1,4 +1,4 @@
-#' Verify whether all column values are not NULL
+#' Are numerical column data not NULL?
 #'
 #' Set a verification step where no values in a table column are expected to be
 #' NULL.

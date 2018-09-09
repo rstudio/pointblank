@@ -1,4 +1,4 @@
-#' Verify whether column data are part of a set of values
+#' Are numerical column data part of a specific set of values?
 #'
 #' Set a verification step where numeric values in a table column should be part
 #'   of a set of values.

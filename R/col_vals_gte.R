@@ -1,5 +1,4 @@
-#' Verify whether numerical column data are greater than or equal to a specified
-#' value
+#' Are numerical column data greater than or equal to a specific value?
 #'
 #' Set a verification step where numeric values in a table column should be
 #'   greater than or equal to a specified value.

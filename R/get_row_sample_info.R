@@ -39,11 +39,8 @@
 #' # Find out which validation steps
 #' # contain sample row data
 #' get_row_sample_info(agent)
-#' #>   step   assertion_type n_failed rows_in_sample
-#' #> 1    1 col_vals_between       65             10
-#' @importFrom tibble tibble
+#' @importFrom dplyr filter pull tibble
 #' @importFrom purrr map_df
-#' @importFrom dplyr filter pull
 #' @export
 get_row_sample_info <- function(agent) {
   
@@ -81,7 +78,7 @@ get_row_sample_info <- function(agent) {
     purrr::map_df(.f = function(x) {
       
       if (inherits(validation_set$row_sample[[x]][[1]], "tbl_df")) {
-        tibble::tibble(
+        dplyr::tibble(
           step = x,
           tbl = validation_set$tbl_name[x],
           type = validation_set$assertion_type[x],

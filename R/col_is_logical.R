@@ -27,9 +27,7 @@
 #' # validation has passed by using
 #' # `all_passed()`
 #' all_passed(agent)
-#' #> [1] TRUE
-#' @importFrom tibble tibble
-#' @importFrom dplyr bind_rows
+#' @importFrom dplyr bind_rows tibble
 #' @importFrom rlang enquo expr_text
 #' @importFrom stringr str_replace_all
 #' @export
@@ -119,7 +117,7 @@ col_is_logical <- function(...,
   agent$logical_plan <-
     dplyr::bind_rows(
       agent$logical_plan,
-      tibble::tibble(
+      dplyr::tibble(
         component_name = "col_is_logical",
         parameters = as.character(NA),
         brief = brief))

@@ -73,9 +73,7 @@
 #' # validations have all passed
 #' # by using `all_passed()`
 #' all_passed(agent)
-#' #> [1] FALSE
-#' @importFrom tibble tibble
-#' @importFrom dplyr bind_rows
+#' @importFrom dplyr bind_rows tibble
 #' @importFrom rlang enquo get_expr expr_text
 #' @importFrom stringr str_replace_all
 #' @export
@@ -161,7 +159,7 @@ rows_not_duplicated <- function(agent,
   agent$logical_plan <-
     dplyr::bind_rows(
       agent$logical_plan,
-      tibble::tibble(
+      dplyr::tibble(
         component_name = "rows_not_duplicated",
         parameters = as.character(NA),
         brief = brief))

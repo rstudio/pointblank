@@ -26,9 +26,7 @@
 #' # Determine if this column validation
 #' # passed by using `all_passed()`
 #' all_passed(agent)
-#' #> [1] TRUE
-#' @importFrom tibble tibble
-#' @importFrom dplyr bind_rows
+#' @importFrom dplyr bind_rows tibble
 #' @importFrom rlang enquo get_expr
 #' @importFrom stringr str_replace_all
 #' @export
@@ -112,7 +110,7 @@ col_exists <- function(...,
   agent$logical_plan <-
     dplyr::bind_rows(
       agent$logical_plan,
-      tibble::tibble(
+      dplyr::tibble(
         component_name = "col_exists",
         parameters = as.character(NA),
         brief = brief))

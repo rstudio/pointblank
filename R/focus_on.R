@@ -63,8 +63,8 @@
 #' # Determine if this column validation has
 #' # passed by using `all_passed()`
 #' all_passed(agent)
-#' #> [1] TRUE
-#' @importFrom dplyr filter bind_rows group_by filter ungroup collect row_number
+#' @importFrom dplyr filter bind_rows group_by filter
+#' @importFrom dplyr ungroup collect row_number tibble
 #' @importFrom readr read_csv read_tsv
 #' @importFrom stringr str_split
 #' @importFrom tibble as_tibble glimpse
@@ -260,7 +260,7 @@ focus_on <- function(agent,
   agent$logical_plan <-
     dplyr::bind_rows(
       agent$logical_plan,
-      tibble::tibble(
+      dplyr::tibble(
         component_name = "focus_on",
         parameters = as.character(NA),
         brief = brief))

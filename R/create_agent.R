@@ -38,13 +38,9 @@
 #' # 7 columns of its output
 #' (agent %>%
 #'   get_interrogation_summary())[, 1:7]
-#' #> # A tibble: 1 x 7
-#' #>   tbl_name  db_type assertion_type column value regex all_passed
-#' #>      <chr>    <chr>          <chr>  <chr> <dbl> <chr>      <lgl>
-#' #> 1       df local_df    col_vals_gt      a     4  <NA>       TRUE
 #' @return an agent object.
-#' @importFrom dplyr filter
-#' @importFrom tibble tibble as_tibble
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr filter tibble
 #' @export
 create_agent <- function(validation_name = NULL) {
   
@@ -82,12 +78,12 @@ create_agent <- function(validation_name = NULL) {
       slack_footer_text = as.character(NA)[-1],
       slack_notifications_active = FALSE,
       logical_plan =
-        tibble::tibble(
+        dplyr::tibble(
           component_name = as.character("create_agent"),
           parameters = as.character(NA),
           brief = brief),
       validation_set =
-        tibble::tibble(
+        dplyr::tibble(
           tbl_name = as.character(NA),
           db_type = as.character(NA),
           assertion_type = as.character(NA),

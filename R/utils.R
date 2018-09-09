@@ -1,7 +1,7 @@
 # Add properly formatted validation steps
-#' @importFrom tibble tibble as_tibble
+#' @importFrom tibble as_tibble
 #' @importFrom purrr map_df
-#' @importFrom dplyr select bind_rows
+#' @importFrom dplyr select bind_rows tibble
 create_validation_step <- function(agent,
                                    assertion_type,
                                    column,
@@ -29,7 +29,7 @@ create_validation_step <- function(agent,
   # Create a validation step as a single-row
   # `tbl_df` object
   validation_step_df <-
-    tibble::tibble(
+    dplyr::tibble(
       tbl_name = as.character(agent$focal_tbl_name),
       db_type = as.character(agent$focal_db_type),
       assertion_type = assertion_type,
@@ -81,7 +81,7 @@ create_validation_step <- function(agent,
       1:nrow(validation_step_df) %>%
       purrr::map_df(
         function(x) {
-          tibble::tibble(
+          dplyr::tibble(
             x = x,
             set = paste(set, collapse = ","),
             class = class(set),
@@ -96,7 +96,7 @@ create_validation_step <- function(agent,
       1:nrow(validation_step_df) %>%
       purrr::map_df(
         function(x) {
-          tibble::tibble(
+          dplyr::tibble(
             x = x,
             set = as.character(NA),
             class = as.character(NA),
@@ -114,7 +114,7 @@ create_validation_step <- function(agent,
       1:nrow(validation_step_df) %>%
       purrr::map_df(
         function(x) {
-          tibble::tibble(
+          dplyr::tibble(
             x = x,
             precondition = paste(preconditions, collapse = ";"))}) %>%
       dplyr::select(-x)
@@ -125,7 +125,7 @@ create_validation_step <- function(agent,
       1:nrow(validation_step_df) %>%
       purrr::map_df(
         function(x) {
-          tibble::tibble(
+          dplyr::tibble(
             x = x,
             precondition = as.character(NA))}) %>%
       dplyr::select(-x)
@@ -365,7 +365,7 @@ determine_action <- function(n,
   }
   
   # Generate a tbl with action information
-  tibble::tibble(
+  dplyr::tibble(
     warn = warn,
     notify = notify)
 }

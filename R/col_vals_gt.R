@@ -1,7 +1,7 @@
 #' Are numerical column data greater than a specific value?
-#' 
-#' Set a verification step where numeric values in a table column
-#'   should be greater than a specified value.
+#'
+#' Set a verification step where numeric values in a table column should be
+#' greater than a specified value.
 #' @param ... a data frame, tibble, or an agent object of class
 #'   \code{ptblank_agent}.
 #' @param column the column (or a set of columns, provided as a character
@@ -10,6 +10,10 @@
 #'   columns (e.g., \code{a + b} or \code{a + sum(a)}).
 #' @param value a numeric value used for this test. Any column values
 #'   \code{>value} are considered passing.
+#' @param incl_na should \code{NA} values be a part of the condition? This is by
+#'   default \code{FALSE}.
+#' @param incl_nan should \code{NaN} values be a part of the condition? This is
+#'   by default \code{FALSE}.
 #' @param preconditions an optional statement of filtering conditions that may
 #'   reduce the number of rows for validation for the current validation step.
 #'   The statements are executed for every row of the table in focus and are

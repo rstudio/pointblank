@@ -153,10 +153,9 @@ Every validation function has a common set of options for constraining
 validations to certain conditions. This can occur through the use of
 computed columns (e.g, `column = col_a / col_b`) and also through
 `preconditions` that can allow you to target validations on only those
-rows that satisfy one or more conditions (e.g, `preconditions = col_a
-> 10 & col_b < 200`). When validating database tables, we have the
-option of modifying the table of focus more radically by supplying an
-SQL statement to `initial_sql`.
+rows that satisfy one or more conditions. When validating database
+tables, we have the option of modifying the table of focus more
+radically by supplying an SQL statement to `initial_sql`.
 
 <img src="man/figures/function_options.png">
 

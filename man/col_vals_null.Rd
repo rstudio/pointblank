@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_null.R
 \name{col_vals_null}
 \alias{col_vals_null}
-\title{Are numerical column data NULL?}
+\title{Are column data NULL?}
 \usage{
 col_vals_null(..., column, preconditions = NULL, brief = NULL,
   warn_count = NULL, notify_count = NULL, warn_fraction = NULL,
@@ -85,8 +85,7 @@ NULL.
 }
 \examples{
 # Create a simple data frame with
-# 2 columns: one with numerical
-# values and the other with strings
+# 2 columns of numerical values
 df <-
   data.frame(
     a = c(1, 2, NA, NA),

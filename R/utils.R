@@ -607,7 +607,7 @@ create_autobrief <- function(agent,
   }
   
   
-  if (assertion_type == "col_exists") {
+  if (assertion_type == "cols_exist") {
     
     autobrief <-
       paste0(
@@ -933,7 +933,7 @@ evaluate_single <- function(object,
     }
   }
   
-  if (type == "col_exists") {
+  if (type == "cols_exist") {
     
     column_names <-
       object %>%

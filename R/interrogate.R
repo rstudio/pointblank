@@ -403,7 +403,7 @@ interrogate <- function(agent,
     # Judge tables based on assertion types that
     # check the table structure
     
-    if (agent$validation_set$assertion_type[i] == "col_exists") {
+    if (agent$validation_set$assertion_type[i] == "cols_exist") {
       
       # Get the column names for the table
       column_names <-

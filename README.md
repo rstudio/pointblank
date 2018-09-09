@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<img src="inst/graphics/pointblank_logo.png">
+<img src="man/figures/pointblank_logo.png">
 
 [![Travis-CI Build
 Status](https://travis-ci.org/rich-iannone/pointblank.svg?branch=master)](https://travis-ci.org/rich-iannone/pointblank)
@@ -44,7 +44,7 @@ The **pointblank** package can validate data in local data frames, local
 tibble objects, in CSV and TSV files, and in database tables
 (**PostgreSQL** and **MySQL**). First, let’s look at local tables with…
 
-<img src="inst/graphics/example_workflow.png">
+<img src="man/figures/example_workflow.png">
 
 The above workflow relies on these code blocks:
 
@@ -199,7 +199,7 @@ rows that satisfy one or more conditions (e.g, `preconditions = col_a
 option of modifying the table of focus more radically by supplying an
 SQL statement to `initial_sql`.
 
-<img src="inst/graphics/function_options.png">
+<img src="man/figures/function_options.png">
 
 ### Validating Tables in a Database
 
@@ -367,7 +367,7 @@ agent %>%
 These workflow examples provided a glimpse of some of the functions
 available. For sake of completeness, here’s the entire set of functions:
 
-<img src="inst/graphics/pointblank_functions.png">
+<img src="man/figures/pointblank_functions.png">
 
 ## Installation
 

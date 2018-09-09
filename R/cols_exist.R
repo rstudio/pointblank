@@ -3,14 +3,15 @@
 #' Set a verification step that checks whether one or several specified columns
 #' exist in the target table.
 #' @inheritParams col_vals_gt
-#' @param column the name of a single table column or multiple columns in the
-#'   same table.
+#' @param cols one or more columns from the table in focus. This can be provided
+#'   as a vector of column names using \code{c()} or bare column names enclosed
+#'   in \code{\link{vars}()}.
 #' @return an agent object.
 #' @examples
-#' # Validate that column `a` exists in
-#' # the `small_table` CSV file; do this
-#' # by creating an agent, focussing on
-#' # that table, creating a `col_exists()`
+#' # Validate that columns `a`, `c`, and
+#' # `f` exist in the `small_table` CSV file;
+#' # do this by creating an agent, focussing
+#' # on that table, creating a `cols_exist()`
 #' # step, and then interrogating the table
 #' agent <-
 #'   create_agent() %>%
@@ -20,18 +21,18 @@
 #'         "extdata", "small_table.csv",
 #'         package = "pointblank"),
 #'     col_types = "TDicidlc") %>%
-#'   col_exists(column = a) %>%
+#'   cols_exist(cols = vars(a, c, f)) %>%
 #'   interrogate()
 #' 
-#' # Determine if this column validation
-#' # passed by using `all_passed()`
+#' # Determine if these three validation
+#' # steps passed by using `all_passed()`
 #' all_passed(agent)
 #' @importFrom dplyr bind_rows tibble
 #' @importFrom rlang enquo get_expr
 #' @importFrom stringr str_replace_all
 #' @export
-col_exists <- function(...,
-                       column,
+cols_exist <- function(...,
+                       cols,
                        brief = NULL,
                        warn_count = NULL,
                        notify_count = NULL,
@@ -47,20 +48,21 @@ col_exists <- function(...,
   # Collect the object provided
   object <- list(...)
   
-  # Get the column name
-  column <- 
-    rlang::enquo(column) %>%
-    rlang::expr_text() %>%
-    stringr::str_replace_all("~", "") %>%
-    stringr::str_replace_all("\"", "'")
+  # Get the column names
+  if (inherits(cols, "quosures")) {
+    
+    cols <- 
+      cols %>% as.character() %>%
+      gsub("~", "", .)
+  }
   
   if (inherits(object[[1]] , c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
       object[[1]] %>%
         evaluate_single(
-          type = "col_exists",
-          column = column,
+          type = "cols_exist",
+          column = cols,
           value = value,
           warn_count = warn_count,
           notify_count = notify_count,
@@ -78,16 +80,16 @@ col_exists <- function(...,
     brief <-
       create_autobrief(
         agent = agent,
-        assertion_type = "col_exists",
-        column = column)
+        assertion_type = "cols_exist",
+        column = cols)
   }
   
   # Add one or more validation steps
   agent <-
     create_validation_step(
       agent = agent,
-      assertion_type = "col_exists",
-      column = column,
+      assertion_type = "cols_exist",
+      column = cols,
       preconditions = preconditions,
       brief = brief,
       warn_count = warn_count,
@@ -111,7 +113,7 @@ col_exists <- function(...,
     dplyr::bind_rows(
       agent$logical_plan,
       dplyr::tibble(
-        component_name = "col_exists",
+        component_name = "cols_exist",
         parameters = as.character(NA),
         brief = brief))
   

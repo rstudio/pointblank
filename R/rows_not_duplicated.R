@@ -55,8 +55,9 @@
 #' # Validate that column `a` exists in
 #' # the `small_table` CSV file; do this
 #' # by creating an agent, focussing on
-#' # that table, creating a `col_exists()`
-#' # step, and then interrogating the table
+#' # that table, creating a
+#' # `rows_not_duplicated()` step, and then
+#' # interrogating the table
 #' agent <-
 #'   create_agent() %>%
 #'   focus_on(

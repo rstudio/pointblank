@@ -1,12 +1,10 @@
 #' Create a pointblank agent object
-#' @description Creates an agent object.
-#' @param validation_name an optional name
-#' for the validation pipeline that the
-#' agent will eventually carry out during
-#' the interrogation process. If no
-#' value is provided, a name will be
-#' generated based on the current system
-#' time.
+#'
+#' Creates an agent object.
+#' @param validation_name an optional name for the validation pipeline that the
+#'   agent will eventually carry out during the interrogation process. If no
+#'   value is provided, a name will be generated based on the current system
+#'   time.
 #' @examples 
 #' # Create a simple data frame
 #' # with a column of numerical values

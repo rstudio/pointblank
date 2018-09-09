@@ -1,42 +1,29 @@
 #' Set Slack credentials and enable Slack notifications
-#' @description Grants Slack credentials
-#' to a pointblank agent object and
-#' provides an opportunity to set Slack
-#' reporting options. This function is to
-#' be used in a pointblank pipeline any
-#' time before an \code{interrogate()} call.
-#' @param agent an agent object of class
-#' \code{ptblank_agent}.
-#' @param notify_active an option to
-#' enable Slack notifications whenever any
-#' of the validation steps in the
-#' \code{agent} object have triggered a
-#' \code{notify} status.
-#' @param slack_webhook_url the URL that is
-#' the endpoint for the API POST request.
-#' @param slack_channel the slack channel
-#' to which the notification message will
-#' be posted.
-#' @param slack_username the custom username
-#' associated with the webhook integration. 
-#' @param slack_author_name an optional
-#' author name for the notification. If not
-#' provided, then \code{pointblank} will be
-#' used as fallback text.
-#' @param slack_title the title text for
-#' the notification. If not provided, the
-#' name of the validation will be used.
-#' @param slack_report_url an optional URL
-#' for a validation report that is associated
-#' with the notification message. The link
-#' is embedded in the \code{slack_title} text.
-#' @param slack_footer_thumb_url an optional
-#' URL that is associated with the thumbnail
-#' image in the notification footer.
-#' @param slack_footer_text an optional
-#' snippet of text that will be part of
-#' the notification footer.
-#' \code{notify} status.
+#'
+#' Grants Slack credentials to a pointblank agent object and provides an
+#' opportunity to set Slack reporting options. This function is to be used in a
+#' pointblank pipeline any time before an \code{interrogate()} call.
+#' @param agent an agent object of class \code{ptblank_agent}.
+#' @param notify_active an option to enable Slack notifications whenever any of
+#'   the validation steps in the \code{agent} object have triggered a
+#'   \code{notify} status.
+#' @param slack_webhook_url the URL that is the endpoint for the API POST
+#'   request.
+#' @param slack_channel the slack channel to which the notification message will
+#'   be posted.
+#' @param slack_username the custom username associated with the webhook
+#'   integration.
+#' @param slack_author_name an optional author name for the notification. If not
+#'   provided, then \code{pointblank} will be used as fallback text.
+#' @param slack_title the title text for the notification. If not provided, the
+#'   name of the validation will be used.
+#' @param slack_report_url an optional URL for a validation report that is
+#'   associated with the notification message. The link is embedded in the
+#'   \code{slack_title} text.
+#' @param slack_footer_thumb_url an optional URL that is associated with the
+#'   thumbnail image in the notification footer.
+#' @param slack_footer_text an optional snippet of text that will be part of the
+#'   notification footer.
 #' @return an agent object.
 #' @examples 
 #' \dontrun{

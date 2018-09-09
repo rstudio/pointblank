@@ -7,8 +7,7 @@
 create_creds_file(file, dbname, host, port, user, password)
 }
 \arguments{
-\item{file}{a file path for the credentials file
-to be stored on disk.}
+\item{file}{a file path for the credentials file to be stored on disk.}
 
 \item{dbname}{the database name.}
 
@@ -18,12 +17,10 @@ to be stored on disk.}
 
 \item{user}{the username for the database}
 
-\item{password}{the password associated with the
-\code{user}.}
+\item{password}{the password associated with the \code{user}.}
 }
 \description{
-Creates a file containing access
-credentials for a database.
+Creates a file containing access credentials for a database.
 }
 \examples{
 \dontrun{

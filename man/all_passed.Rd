@@ -7,15 +7,12 @@
 all_passed(agent)
 }
 \arguments{
-\item{agent}{an agent object of class
-\code{ptblank_agent}.}
+\item{agent}{an agent object of class \code{ptblank_agent}.}
 }
 \value{
 an agent object.
 }
 \description{
-Given a completed validation
-pass, this function will return \code{TRUE}
-or \code{FALSE} on whether all of the
-validations passed without any fails.
+Given a completed validation pass, this function will return \code{TRUE} or
+\code{FALSE} on whether all of the validations passed without any fails.
 }

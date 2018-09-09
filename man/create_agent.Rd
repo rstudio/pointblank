@@ -7,12 +7,9 @@
 create_agent(validation_name = NULL)
 }
 \arguments{
-\item{validation_name}{an optional name
-for the validation pipeline that the
-agent will eventually carry out during
-the interrogation process. If no
-value is provided, a name will be
-generated based on the current system
+\item{validation_name}{an optional name for the validation pipeline that the
+agent will eventually carry out during the interrogation process. If no
+value is provided, a name will be generated based on the current system
 time.}
 }
 \value{

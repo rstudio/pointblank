@@ -2,20 +2,12 @@
 % Please edit documentation in R/all_cols.R
 \name{all_cols}
 \alias{all_cols}
-\title{Perform validations on all table columns
-When used in conjunction with
-the \code{column} argument, the \code{all_cols()}
-helper function will indicate that the
-validation should occur for each and every
-column in the table.}
+\title{Perform validations on all table columns}
 \usage{
 all_cols()
 }
 \description{
-Perform validations on all table columns
-When used in conjunction with
-the \code{column} argument, the \code{all_cols()}
-helper function will indicate that the
-validation should occur for each and every
-column in the table.
+When used in conjunction with the \code{column} argument, the
+\code{all_cols()} helper function will indicate that the validation should
+occur for each and every column in the table.
 }

@@ -8,36 +8,25 @@ set_email_prefs(agent, notify_active = FALSE, email_recipients = NULL,
   creds_file = NULL)
 }
 \arguments{
-\item{agent}{an agent object of class
-\code{ptblank_agent}.}
+\item{agent}{an agent object of class \code{ptblank_agent}.}
 
-\item{notify_active}{an option to
-enable notification emails whenever any
-of the validation steps in the
-\code{agent} object have triggered a
+\item{notify_active}{an option to enable notification emails whenever any of
+the validation steps in the \code{agent} object have triggered a
 \code{notify} status.}
 
-\item{email_recipients}{an optional
-vector of email addresses to which
+\item{email_recipients}{an optional vector of email addresses to which
 notification emails should be sent.}
 
-\item{creds_file}{an optional path to
-an email credentials file. Such a file
-can be generated using the
-\code{create_email_creds_file()}
-function.
-\code{notify} status.}
+\item{creds_file}{an optional path to an email credentials file. Such a file
+can be generated using the \code{create_email_creds_file()} function.}
 }
 \value{
 an agent object.
 }
 \description{
-Grants email credentials
-to a pointblank agent object and provides
-an opportunity to set email reporting
-options. This function is to be used in
-a pointblank pipeline any time before an
-\code{interrogate()} call.
+Grants email credentials to a pointblank agent object and provides an
+opportunity to set email reporting options. This function is to be used in a
+pointblank pipeline any time before an \code{interrogate()} call.
 }
 \examples{
 \dontrun{

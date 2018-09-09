@@ -10,58 +10,44 @@ set_slack_prefs(agent, notify_active = FALSE, slack_webhook_url,
   slack_footer_thumb_url = NULL, slack_footer_text = NULL)
 }
 \arguments{
-\item{agent}{an agent object of class
-\code{ptblank_agent}.}
+\item{agent}{an agent object of class \code{ptblank_agent}.}
 
-\item{notify_active}{an option to
-enable Slack notifications whenever any
-of the validation steps in the
-\code{agent} object have triggered a
+\item{notify_active}{an option to enable Slack notifications whenever any of
+the validation steps in the \code{agent} object have triggered a
 \code{notify} status.}
 
-\item{slack_webhook_url}{the URL that is
-the endpoint for the API POST request.}
+\item{slack_webhook_url}{the URL that is the endpoint for the API POST
+request.}
 
-\item{slack_channel}{the slack channel
-to which the notification message will
+\item{slack_channel}{the slack channel to which the notification message will
 be posted.}
 
-\item{slack_username}{the custom username
-associated with the webhook integration.}
+\item{slack_username}{the custom username associated with the webhook
+integration.}
 
-\item{slack_author_name}{an optional
-author name for the notification. If not
-provided, then \code{pointblank} will be
-used as fallback text.}
+\item{slack_author_name}{an optional author name for the notification. If not
+provided, then \code{pointblank} will be used as fallback text.}
 
-\item{slack_title}{the title text for
-the notification. If not provided, the
+\item{slack_title}{the title text for the notification. If not provided, the
 name of the validation will be used.}
 
-\item{slack_report_url}{an optional URL
-for a validation report that is associated
-with the notification message. The link
-is embedded in the \code{slack_title} text.}
+\item{slack_report_url}{an optional URL for a validation report that is
+associated with the notification message. The link is embedded in the
+\code{slack_title} text.}
 
-\item{slack_footer_thumb_url}{an optional
-URL that is associated with the thumbnail
-image in the notification footer.}
+\item{slack_footer_thumb_url}{an optional URL that is associated with the
+thumbnail image in the notification footer.}
 
-\item{slack_footer_text}{an optional
-snippet of text that will be part of
-the notification footer.
-\code{notify} status.}
+\item{slack_footer_text}{an optional snippet of text that will be part of the
+notification footer.}
 }
 \value{
 an agent object.
 }
 \description{
-Grants Slack credentials
-to a pointblank agent object and
-provides an opportunity to set Slack
-reporting options. This function is to
-be used in a pointblank pipeline any
-time before an \code{interrogate()} call.
+Grants Slack credentials to a pointblank agent object and provides an
+opportunity to set Slack reporting options. This function is to be used in a
+pointblank pipeline any time before an \code{interrogate()} call.
 }
 \examples{
 \dontrun{

@@ -8,8 +8,7 @@ create_email_creds_file(file, sender, host, port, user, password,
   use_ssl = TRUE, authenticate = TRUE)
 }
 \arguments{
-\item{file}{a file path for the credentials file
-to be stored on disk.}
+\item{file}{a file path for the credentials file to be stored on disk.}
 
 \item{sender}{the sender name.}
 
@@ -19,20 +18,16 @@ to be stored on disk.}
 
 \item{user}{the username for the email account.}
 
-\item{password}{the password associated with the
-\code{user}'s email address.}
+\item{password}{the password associated with the \code{user}'s email address.}
 
-\item{use_ssl}{an option as to whether to use
-SSL; supply a \code{TRUE} or \code{FALSE}
-value (\code{TRUE} is the default value).}
+\item{use_ssl}{an option as to whether to use SSL; supply a \code{TRUE} or
+\code{FALSE} value (\code{TRUE} is the default value).}
 
-\item{authenticate}{an option as to whether to
-authenticate; supply a \code{TRUE} or \code{FALSE}
-value (\code{TRUE} is the default value).}
+\item{authenticate}{an option as to whether to authenticate; supply a
+\code{TRUE} or \code{FALSE} value (\code{TRUE} is the default value).}
 }
 \description{
-Creates a file with access
-credentials for the purpose of automatically
+Creates a file with access credentials for the purpose of automatically
 emailing notification messages.
 }
 \examples{

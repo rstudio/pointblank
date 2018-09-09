@@ -7,17 +7,13 @@
 get_validation_name(agent)
 }
 \arguments{
-\item{agent}{an agent object of
-class \code{ptblank_agent}.}
+\item{agent}{an agent object of class \code{ptblank_agent}.}
 }
 \value{
-a character object with the agent
-name.
+a character object with the agent name.
 }
 \description{
-Gets the name of a pointblank
-validation from an agent object. This name
-is optionally assigned during the
-\code{create_agent()} call using the
+Gets the name of a pointblank validation from an agent object. This name is
+optionally assigned during the \code{create_agent()} call using the
 \code{validation_name} argument.
 }

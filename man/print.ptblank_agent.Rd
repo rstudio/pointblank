@@ -7,11 +7,9 @@
 \method{print}{ptblank_agent}(x, ...)
 }
 \arguments{
-\item{x}{agent an agent object of class
-\code{ptblank_agent}.}
+\item{x}{agent an agent object of class \code{ptblank_agent}.}
 }
 \description{
-This function will allow the
-agent to provide a summary report.
+This function will allow the agent to provide a summary report.
 }
 \keyword{internal}

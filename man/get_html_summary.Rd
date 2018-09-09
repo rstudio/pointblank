@@ -2,52 +2,34 @@
 % Please edit documentation in R/get_html_summary.R
 \name{get_html_summary}
 \alias{get_html_summary}
-\title{Create an HTML summary file for the
-interrogation}
+\title{Create an HTML summary file for the interrogation}
 \usage{
 get_html_summary(agent, output_file = NULL, output_dir = NULL,
   intro_text = NULL, pre_results_text = NULL, footer_text = NULL)
 }
 \arguments{
-\item{agent}{an agent object of
-class \code{ptblank_agent}.}
+\item{agent}{an agent object of class \code{ptblank_agent}.}
 
-\item{output_file}{an optional filename
-to use for the output HTML file. If
-not provided, the filename
-\code{validation_report.html} will
-be used.}
+\item{output_file}{an optional filename to use for the output HTML file. If
+not provided, the filename \code{validation_report.html} will be used.}
 
-\item{output_dir}{an optional path
-to place the output HTML file and
-the subfolder of CSV data (if row
-sample data has been collected). If
-the path does not exist, the
-directory will be created.}
+\item{output_dir}{an optional path to place the output HTML file and the
+subfolder of CSV data (if row sample data has been collected). If the path
+does not exist, the directory will be created.}
 
-\item{intro_text}{HTML text to be
-placed at the top of the summary.
-Can be provided as plaintext or as
-markdown text.}
+\item{intro_text}{HTML text to be placed at the top of the summary. Can be
+provided as plaintext or as markdown text.}
 
-\item{pre_results_text}{HTML text
-to be placed just before the tables
-of validation results. Can be
-provided as plaintext or as markdown
-text.}
+\item{pre_results_text}{HTML text to be placed just before the tables of
+validation results. Can be provided as plaintext or as markdown text.}
 
-\item{footer_text}{HTML text to be
-placed in the footer of the summary.
-Can be provided as plaintext or as
-markdown text.}
+\item{footer_text}{HTML text to be placed in the footer of the summary. Can
+be provided as plaintext or as markdown text.}
 }
 \value{
 an agent object.
 }
 \description{
-Get the essential
-information from an agent object
-after an interrogation is complete
-and then generates an HTML file for
-a visual summary.
+Get the essential information from an agent object after an interrogation is
+complete and then generates an HTML file for a visual summary.
 }

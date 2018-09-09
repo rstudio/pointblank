@@ -2,9 +2,11 @@
 % Please edit documentation in R/pipe.R
 \name{\%>\%}
 \alias{\%>\%}
-\title{The magrittr pipe}
-\description{
-pointblank uses the pipe function,
-\code{\%>\%} to turn function composition into a
-series of imperative statements.
+\title{Pipe operator}
+\usage{
+lhs \%>\% rhs
 }
+\description{
+See \code{magrittr::\link[magrittr]{\%>\%}} for details.
+}
+\keyword{internal}

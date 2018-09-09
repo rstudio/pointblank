@@ -7,28 +7,22 @@
 db_creds_env_vars(dbname, host, port, user, password)
 }
 \arguments{
-\item{dbname}{the name of the environment
-variable storing the database name.}
+\item{dbname}{the name of the environment variable storing the database name.}
 
-\item{host}{the name of the environment
-variable storing the \code{host} name.}
+\item{host}{the name of the environment variable storing the \code{host}
+name.}
 
-\item{port}{the name of the environment
-variable storing the port number.}
+\item{port}{the name of the environment variable storing the port number.}
 
-\item{user}{the name of the environment
-variable storing a username for the
+\item{user}{the name of the environment variable storing a username for the
 database.}
 
-\item{password}{the name of the environment
-variable storing the password associated
-with the \code{user}.}
+\item{password}{the name of the environment variable storing the password
+associated with the \code{user}.}
 }
 \description{
-Associates environment variables
-as credentials for a database. Used to
-generate a list of environment variable
-names, which is used as an input value for
-the \code{db_creds_env_vars} argument of the
-\code{focus_on()} function.
+Associates environment variables as credentials for a database. Used to
+generate a list of environment variable names, which is used as an input
+value for the \code{db_creds_env_vars} argument of the \code{focus_on()}
+function.
 }

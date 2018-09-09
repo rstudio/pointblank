@@ -1,4 +1,4 @@
-#' Are numerical column data not NULL?
+#' Are column data not NULL?
 #'
 #' Set a verification step where no values in a table column are expected to be
 #' NULL.
@@ -6,8 +6,7 @@
 #' @return an agent object.
 #' @examples
 #' # Create a simple data frame with
-#' # 2 columns: one with numerical
-#' # values and the other with strings
+#' # 2 columns of numerical values
 #' df <-
 #'   data.frame(
 #'     a = c(1, 2, NA, NA),

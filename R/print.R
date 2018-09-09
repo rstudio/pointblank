@@ -1,8 +1,7 @@
 #' Print the agent to the terminal
-#' @description This function will allow the
-#' agent to provide a summary report.
-#' @param x agent an agent object of class
-#' \code{ptblank_agent}.
+#'
+#' This function will allow the agent to provide a summary report.
+#' @param x agent an agent object of class \code{ptblank_agent}.
 #' @keywords internal
 #' @importFrom dplyr mutate select group_by summarize n ungroup transmute pull
 #' @export

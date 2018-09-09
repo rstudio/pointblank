@@ -1,9 +1,8 @@
 #' Get a simple summary of the interrogation
-#' @description Gets the essential information
-#' from an agent object after an interrogation
-#' is complete.
-#' @param agent an agent object of class
-#' \code{ptblank_agent}.
+#'
+#' Gets the essential information from an agent object after an interrogation is
+#' complete.
+#' @param agent an agent object of class \code{ptblank_agent}.
 #' @return an agent object.
 #' @importFrom dplyr select mutate case_when filter pull
 #' @export

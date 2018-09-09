@@ -1,10 +1,11 @@
-#' The magrittr pipe
+#' Pipe operator
 #'
-#' @description pointblank uses the pipe function,
-#' \code{\%>\%} to turn function composition into a
-#' series of imperative statements.
-#' @importFrom magrittr %>%
+#' See \code{magrittr::\link[magrittr]{\%>\%}} for details.
+#'
 #' @name %>%
 #' @rdname pipe
+#' @keywords internal
 #' @export
+#' @importFrom magrittr %>%
+#' @usage lhs \%>\% rhs
 NULL

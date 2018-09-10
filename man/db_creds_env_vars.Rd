@@ -23,6 +23,6 @@ associated with the \code{user}.}
 \description{
 Associates environment variables as credentials for a database. Used to
 generate a list of environment variable names, which is used as an input
-value for the \code{db_creds_env_vars} argument of the \code{focus_on()}
-function.
+value for the \code{db_creds_env_vars} argument of the
+\code{\link{focus_on}()} function.
 }

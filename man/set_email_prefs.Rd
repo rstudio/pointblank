@@ -18,7 +18,8 @@ the validation steps in the \code{agent} object have triggered a
 notification emails should be sent.}
 
 \item{creds_file}{an optional path to an email credentials file. Such a file
-can be generated using the \code{create_email_creds_file()} function.}
+can be generated using the \code{\link{create_email_creds_file}()}
+function.}
 }
 \value{
 an agent object.
@@ -26,7 +27,7 @@ an agent object.
 \description{
 Grants email credentials to a pointblank agent object and provides an
 opportunity to set email reporting options. This function is to be used in a
-pointblank pipeline any time before an \code{interrogate()} call.
+pointblank pipeline any time before an \code{\link{interrogate}()} call.
 }
 \examples{
 \dontrun{

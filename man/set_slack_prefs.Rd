@@ -47,7 +47,7 @@ an agent object.
 \description{
 Grants Slack credentials to a pointblank agent object and provides an
 opportunity to set Slack reporting options. This function is to be used in a
-pointblank pipeline any time before an \code{interrogate()} call.
+pointblank pipeline any time before an \code{\link{interrogate}()} call.
 }
 \examples{
 \dontrun{

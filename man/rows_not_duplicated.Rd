@@ -11,8 +11,6 @@ rows_not_duplicated(agent, cols = NULL, preconditions = NULL,
   file_path = NULL, col_types = NULL)
 }
 \arguments{
-\item{agent}{an agent object of class \code{ptblank_agent}.}
-
 \item{cols}{an optional grouping of columns to check for duplication. If not
 provided, the validation checks for duplicate records using data across all
 columns.}
@@ -55,7 +53,7 @@ be used to establish that connection. The credentials file is an \code{RDS}
 containing a character vector with the following items in the specified
 order: (1) database name (\code{dbname}), (2) the \code{host} name, (3) the
 \code{port}, (4) the username (\code{user}), and (5) the \code{password}.
-This file can be easily created using the \code{create_creds_file()}
+This file can be easily created using the \code{\link{create_creds_file}()}
 function.}
 
 \item{initial_sql}{when accessing a remote table, this provides an option to

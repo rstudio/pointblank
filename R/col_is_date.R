@@ -4,7 +4,7 @@
 #' of R \code{Date} objects.
 #' @inheritParams col_vals_gt
 #' @param column the name of a single table column, multiple columns in the same
-#'   table, or, a helper function such as \code{all_cols()}.
+#'   table, or, a helper function such as \code{\link{all_cols}()}.
 #' @return an agent object.
 #' @examples
 #' # Create a simple data frame

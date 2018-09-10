@@ -3,9 +3,9 @@
 #' Get information on which validation steps produced sample rows from
 #' non-passing validations.
 #' @param agent an agent object of class \code{ptblank_agent}. It should have
-#'   had \code{interrogate()} called on it, such that the validation steps were
-#'   carried out and any sample rows from non-passing validations could
-#'   potentially be available in the object.
+#'   had \code{\link{interrogate}()} called on it, such that the validation
+#'   steps were carried out and any sample rows from non-passing validations
+#'   could potentially be available in the object.
 #' @examples 
 #' # Set a seed
 #' set.seed(23)

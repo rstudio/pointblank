@@ -2,7 +2,7 @@
 #'
 #' Grants Slack credentials to a pointblank agent object and provides an
 #' opportunity to set Slack reporting options. This function is to be used in a
-#' pointblank pipeline any time before an \code{interrogate()} call.
+#' pointblank pipeline any time before an \code{\link{interrogate}()} call.
 #' @param agent an agent object of class \code{ptblank_agent}.
 #' @param notify_active an option to enable Slack notifications whenever any of
 #'   the validation steps in the \code{agent} object have triggered a

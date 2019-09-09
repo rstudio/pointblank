@@ -1,24 +1,43 @@
-language: r
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-r:
-  - oldrel
-  - release
-  - devel
-
+language: R
+cache: packages
 warnings_are_errors: false
-
-sudo: required
-
-r_packages:
-  - rstudioapi
-  - stringr
-  - shiny
-
-notifications:
-  email:
-    on_success: change
-    on_failure: change
 
 after_success:
   - Rscript -e 'covr::codecov()'
+
+jobs:
+  include:
+    - stage: "R CMD check"
+      r: release
+    - r: devel
+
+    - stage: deploy
+      name: covr
+      r: release
+      r_binary_packages:
+        - covr
+      script:
+        - Rscript -e "covr::codecov()"
+
+    - stage: deploy
+      name: pkgdown
+      r: release
+      if: branch IN (master)
+      script:
+      - Rscript -e "remotes::install_cran(c('pkgdown', 'devtools'))"
+      - Rscript -e "devtools::install()"
+      - Rscript -e "Sys.setenv(FULLNAME = 'Richard Iannone'); pkgdown::build_site()"
+      - Rscript -e "remove.packages(devtools::as.package('.')$package)"
+      deploy:
+        provider: pages
+        script: Rscript -e 'devtools::install()'
+        local-dir: docs
+        skip-cleanup: true
+        keep-history: false
+        on:
+          all_branches: true
+        github-token:
+          secure: "adxZa2h9FQOup+p/QdKUUUREx+0vQS1dh4ZhdXiwG6403N3YUUzyXLlYMEwGM7B5hJ8qXvvlU6nqQ7OW57qWfBjj0GUUkxAxHvg2e5jFDTIWMseqCyI4RgHeeXo9jBdF+dDCaxGJBRbgfDpBkRwIU3eW5gFLTMnywE+2L5Yeb7L7uywOdAMz++PKCFpYWrGd5VEFc/9qXhMsCCJtW1wjMpLH/jr+xx7za5CvmSkM6sChSacaF9JJ1h02cDcuh9rwqEifK3vQ1aSTOI9vEJQ0tC9/BZ7QPQrOtiE744dQXxoZaNXAJ4H12U9EhgB2g81fdcWjH5zaYgzHFnyRil8QNC2B9bcx/wacOZccPMT9R7A0fIH1RCMbAsEsP2Sazdw95eN05eURkPLfe6+HTPlUfssDpZFHSF/PYxQ8j5y870LzzM3JYixlYaeDl81AKxvRM23bxH3QKz+zQcNBo2PmcibTsBButJioh6JgcGWiNdHPS9aMld4YDUGZxtRsT/oLe6VzPUg8LjazMTzEmoCPXdnOpFulTYG6aEg0bRJWh33vquhKyiZRYJo2XWn9iA6Ny+KGnXbParcZnSQhNDTrCL/AJ5KKeSplN6P0TvU/ohQzw6qXmhsIs92yNz6rqxcaCEORBq1zfYVgX7CUTXuPpWBIgbHC+gCqZPag9uxjpOY="
   

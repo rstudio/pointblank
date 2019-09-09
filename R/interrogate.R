@@ -262,12 +262,12 @@ interrogate <- function(agent,
         judgment <-
           table %>%
           dplyr::mutate(pb_is_good_ = case_when(
-            rlang::UQ(column) >= left & rlang::UQ(column) <= right ~ TRUE,
-            rlang::UQ(column) < left | rlang::UQ(column) > right ~ FALSE,
-            is.na(rlang::UQ(column)) & incl_na ~ TRUE,
-            is.na(rlang::UQ(column)) & incl_na == FALSE ~ FALSE,
-            is.nan(rlang::UQ(column)) & incl_nan ~ TRUE,
-            is.nan(rlang::UQ(column)) & incl_nan == FALSE ~ FALSE
+            !!column >= left & !!column <= right ~ TRUE,
+            !!column < left | !!column > right ~ FALSE,
+            is.na(!!column) & incl_na ~ TRUE,
+            is.na(!!column) & incl_na == FALSE ~ FALSE,
+            is.nan(!!column) & incl_nan ~ TRUE,
+            is.nan(!!column) & incl_nan == FALSE ~ FALSE
           ))
       }
       
@@ -280,12 +280,12 @@ interrogate <- function(agent,
         judgment <-
           table %>%
           dplyr::mutate(pb_is_good_ = case_when(
-            rlang::UQ(column) < left | rlang::UQ(column) > right ~ TRUE,
-            rlang::UQ(column) >= left & rlang::UQ(column) <= right ~ FALSE,
-            is.na(rlang::UQ(column)) & excl_na ~ TRUE,
-            is.na(rlang::UQ(column)) & excl_na == FALSE ~ FALSE,
-            is.nan(rlang::UQ(column)) & excl_nan ~ TRUE,
-            is.nan(rlang::UQ(column)) & excl_nan == FALSE ~ FALSE
+            !!column < left | !!column > right ~ TRUE,
+            !!column >= left & !!column <= right ~ FALSE,
+            is.na(!!column) & excl_na ~ TRUE,
+            is.na(!!column) & excl_na == FALSE ~ FALSE,
+            is.nan(!!column) & excl_nan ~ TRUE,
+            is.nan(!!column) & excl_nan == FALSE ~ FALSE
           ))
       }
     }
@@ -328,8 +328,8 @@ interrogate <- function(agent,
         judgment <-
           table %>%
           dplyr::mutate(pb_is_good_ = case_when(
-            rlang::UQ(column) %in% set ~ TRUE,
-            !(rlang::UQ(column) %in% set) ~ FALSE
+            !!column %in% set ~ TRUE,
+            !(!!column %in% set) ~ FALSE
           ))
       }
       
@@ -342,8 +342,8 @@ interrogate <- function(agent,
         judgment <-
           table %>%
           dplyr::mutate(pb_is_good_ = case_when(
-            !(rlang::UQ(column) %in% set) ~ TRUE,
-            rlang::UQ(column) %in% set ~ FALSE
+            !(!!column %in% set) ~ TRUE,
+            !!column %in% set ~ FALSE
           ))
       }
     }

@@ -1,8 +1,22 @@
 utils::globalVariables(
   c(
     ".",
+    "action",
+    "brief",
+    "component_name",
+    "db_type",
+    "f_passed",
     "n",
+    "notify",
+    "pb_is_good_",
+    "pb_step_",
+    "set",
     "sql",
-    "value"
+    "tbl_name",
+    "tbl_name_type",
+    "tbl_name_type_n",
+    "value",
+    "warn",
+    "x"
   )
 )

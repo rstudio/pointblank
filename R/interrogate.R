@@ -63,18 +63,7 @@
 #' #>      <chr>    <chr>          <chr>  <chr> <dbl> <chr>      <lgl>
 #' #> 1     df_1 local_df   col_vals_gte      a     5  <NA>       TRUE
 #' #> 2     df_2 local_df col_vals_equal      c     8  <NA>       TRUE
-#' @importFrom rlang sym UQ
-#' @importFrom dplyr group_by group_by_ mutate mutate_ filter filter_ select
-#' @importFrom dplyr select_ collect ungroup summarize row_number n sample_n
-#' @importFrom dplyr sample_frac everything case_when as_tibble
-#' @importFrom tidyr nest_
-#' @importFrom stringr str_split str_trim
-#' @importFrom purrr flatten_chr flatten_dbl
-#' @importFrom readr read_csv read_tsv
-#' @importFrom httr POST add_headers
-#' @importFrom glue glue
-#' @importFrom stats setNames
-#' @importFrom utils head URLencode
+#' @import rlang
 #' @export
 interrogate <- function(agent,
                         get_problem_rows = TRUE,

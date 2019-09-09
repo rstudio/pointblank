@@ -1,10 +1,12 @@
 #' Create a pointblank agent object
 #'
 #' Creates an agent object.
+#' 
 #' @param validation_name an optional name for the validation pipeline that the
 #'   agent will eventually carry out during the interrogation process. If no
 #'   value is provided, a name will be generated based on the current system
 #'   time.
+#'   
 #' @examples 
 #' # Create a simple data frame
 #' # with a column of numerical values
@@ -38,9 +40,8 @@
 #' # 7 columns of its output
 #' (agent %>%
 #'   get_interrogation_summary())[, 1:7]
+#'   
 #' @return an agent object.
-#' @importFrom tibble as_tibble
-#' @importFrom dplyr filter tibble
 #' @export
 create_agent <- function(validation_name = NULL) {
   

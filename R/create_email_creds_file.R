@@ -2,6 +2,7 @@
 #'
 #' Creates a file with access credentials for the purpose of automatically
 #' emailing notification messages.
+#' 
 #' @param file a file path for the credentials file to be stored on disk.
 #' @param sender the sender name.
 #' @param host the \code{host} name.
@@ -12,6 +13,7 @@
 #'   \code{FALSE} value (\code{TRUE} is the default value).
 #' @param authenticate an option as to whether to authenticate; supply a
 #'   \code{TRUE} or \code{FALSE} value (\code{TRUE} is the default value).
+#'   
 #' @examples
 #' \dontrun{
 #' # Create a credentials file for automatic

@@ -1,12 +1,14 @@
 #' Create a file with DB access credentials
 #'
 #' Creates a file containing access credentials for a database.
+#' 
 #' @param file a file path for the credentials file to be stored on disk.
 #' @param dbname the database name.
 #' @param host the \code{host} name.
 #' @param port the port number.
 #' @param user the username for the database
 #' @param password the password associated with the \code{user}.
+#' 
 #' @examples
 #' \dontrun{
 #' # Create a credentials file for access to
@@ -21,6 +23,7 @@
 #'   user = "********",
 #'   password = "****************")
 #' }
+#' 
 #' @export
 create_creds_file <- function(file,
                               dbname,

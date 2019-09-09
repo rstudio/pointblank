@@ -2,9 +2,10 @@
 #'
 #' Gets the essential information from an agent object after an interrogation is
 #' complete.
+#' 
 #' @param agent an agent object of class \code{ptblank_agent}.
+#' 
 #' @return an agent object.
-#' @importFrom dplyr select mutate case_when filter pull
 #' @export
 get_interrogation_summary <- function(agent) {
   
@@ -16,7 +17,7 @@ get_interrogation_summary <- function(agent) {
     # Get validation set
     validation_set <- 
       agent$validation_set %>%
-      mutate(
+      dplyr::mutate(
         brief =
           agent$logical_plan %>%
           dplyr::filter(!(component_name %in% c("create_agent", "focus_on"))) %>%

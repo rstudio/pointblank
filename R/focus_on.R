@@ -2,6 +2,7 @@
 #'
 #' Allows for a change of the focus on the table name, database type, and the
 #' location of the credentials file.
+#' 
 #' @param agent an agent object of class \code{ptblank_agent}.
 #' @param tbl_name the name of the local or remote table.
 #' @param file_name the name of a file to be loaded as a table. Valid types are
@@ -38,7 +39,7 @@
 #'   username (\code{user}), and (5) the \code{password}. To pass the names of
 #'   the environment variables to the \code{agent} object, one can use the
 #'   \code{\link{db_creds_env_vars}()} function directly.
-#' @return an agent object.
+#'   
 #' @examples
 #' # Create a simple data frame with a column
 #' # of numerical values
@@ -63,12 +64,8 @@
 #' # Determine if this column validation has
 #' # passed by using `all_passed()`
 #' all_passed(agent)
-#' @importFrom dplyr filter bind_rows group_by filter
-#' @importFrom dplyr ungroup collect row_number tibble
-#' @importFrom readr read_csv read_tsv
-#' @importFrom stringr str_split
-#' @importFrom tibble as_tibble glimpse
-#' @importFrom utils capture.output
+#' 
+#' @return an agent object.
 #' @export
 focus_on <- function(agent,
                      tbl_name = NULL,
@@ -206,7 +203,7 @@ focus_on <- function(agent,
     agent$focal_col_names <-  
       table %>%
       dplyr::group_by() %>%
-      dplyr::filter(row_number() == 1) %>%
+      dplyr::filter(dplyr::row_number() == 1) %>%
       dplyr::ungroup() %>%
       dplyr::collect() %>%
       sapply(class) %>%
@@ -237,7 +234,7 @@ focus_on <- function(agent,
     agent$focal_col_names <-  
       table %>%
       dplyr::group_by() %>%
-      dplyr::filter(row_number() == 1) %>%
+      dplyr::filter(dplyr::row_number() == 1) %>%
       dplyr::ungroup() %>%
       dplyr::collect() %>%
       sapply(class) %>%

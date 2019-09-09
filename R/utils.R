@@ -1,7 +1,6 @@
-# Add properly formatted validation steps
-#' @importFrom tibble as_tibble
-#' @importFrom purrr map_df
-#' @importFrom dplyr select bind_rows tibble
+#' Add properly formatted validation steps
+#' 
+#' @noRd
 create_validation_step <- function(agent,
                                    assertion_type,
                                    column,
@@ -152,15 +151,12 @@ create_validation_step <- function(agent,
   agent
 }
 
-# Acquire information on the coordinates
-# of a remote table; if a table is remote
-# (i.e., in a database), this function
-# will be invoked to set an entry point
-# for the interrogation query.
-#' @importFrom dplyr tbl sql
-#' @importFrom DBI dbConnect
-#' @importFrom RPostgreSQL PostgreSQL
-#' @importFrom RMySQL dbConnect MySQL
+#' Acquire information on the coordinates of a remote table
+#' 
+#' If a table is remote (i.e., in a database), this function will be invoked to
+#' set an entry point for the interrogation query.
+#' 
+#' @noRd
 set_entry_point <- function(table,
                             db_type = NULL,
                             creds_file = NULL,
@@ -302,8 +298,9 @@ set_entry_point <- function(table,
   tbl_entry
 }
 
-# Get all column names from the table
-# currently in focus
+#' Get all column names from the table currently in focus
+#' 
+#' @noRd
 get_all_cols <- function(agent) {
   
   # Get vector of all columns
@@ -311,10 +308,9 @@ get_all_cols <- function(agent) {
   agent$focal_col_names
 }
 
-# Determine the course of action for a
-# given verification step. Based on a recent
-# judgment, what actions are taken now?
-#' @importFrom tibble tibble
+#' Determine the course of action for a given verification step
+#' 
+#' @noRd
 determine_action <- function(n,
                              false_count,
                              warn_count,
@@ -370,9 +366,9 @@ determine_action <- function(n,
     notify = notify)
 }
 
-# Generate summary SVG files for the results of a
-# validation pipeline
-#' @importFrom stringr str_replace str_replace_all
+#' Generate summary SVG files for the results of a validation pipeline
+#' 
+#' @noRd
 generate_img_files_results <- function(agent) {
   
   if (!inherits(agent, "ptblank_agent")) {
@@ -460,8 +456,9 @@ generate_img_files_results <- function(agent) {
   }
 }
 
-# Generate SVG files for the plan of a validation pipeline
-#' @importFrom stringr str_replace_all
+#' Generate SVG files for the plan of a validation pipeline
+#'
+#' @noRd
 generate_img_files_plan <- function(agent) {
   
   if (!inherits(agent, "ptblank_agent")) {
@@ -500,8 +497,9 @@ generate_img_files_plan <- function(agent) {
   }
 }
 
-# Does the agent have no validation steps
-# available in the object?
+#' Does the agent have no validation steps available in the object?
+#' 
+#' @noRd
 is_agent_empty <- function(agent) {
   
   if (is_ptblank_agent(agent)) {
@@ -522,7 +520,9 @@ is_agent_empty <- function(agent) {
   }
 }
 
-# Did the agent carry out an interrogation?
+#' Did the agent carry out an interrogation?
+#' 
+#' @noRd
 did_agent_interrogate <- function(agent) {
   
   if (is_ptblank_agent(agent)) {
@@ -532,7 +532,9 @@ did_agent_interrogate <- function(agent) {
   }
 }
 
-# When did the agent carry out an interrogation?
+#' When did the agent carry out an interrogation?
+#' 
+#' @noRd
 interrogation_time <- function(agent) {
   
   if (is_ptblank_agent(agent)) {
@@ -548,8 +550,9 @@ interrogation_time <- function(agent) {
   }
 }
 
-# How many validation steps are associated
-# with the agent?
+#' How many validation steps are associated with the agent?
+#' 
+#' @noRd
 number_of_validation_steps <- function(agent) {
   
   if (is_ptblank_agent(agent)) {
@@ -559,8 +562,9 @@ number_of_validation_steps <- function(agent) {
   }
 }
 
-# How many validation steps are associated
-# with the agent?
+#' How many validation steps are associated with the agent?
+#' 
+#' @noRd
 create_autobrief <- function(agent,
                              assertion_type,
                              preconditions = NULL,
@@ -716,7 +720,6 @@ create_autobrief <- function(agent,
   
   if (grepl("col_is_.*", assertion_type)) {
     
-    
     if (assertion_type %in% 
         c("col_is_numeric", "col_is_integer",
           "col_is_character", "col_is_logical",
@@ -756,9 +759,9 @@ create_autobrief <- function(agent,
   autobrief
 }
 
-# Perform a single column validation that
-# returns a vector of logical values
-#' @importFrom dplyr pull collect as_tibble
+#' Perform a single column validation that can issue warnings
+#' 
+#' @noRd
 evaluate_single <- function(object,
                             type,
                             column,
@@ -909,7 +912,7 @@ evaluate_single <- function(object,
     column_type <-
       (object %>%
          dplyr::select(column) %>%
-         head(1) %>%
+         utils::head(1) %>%
          dplyr::collect() %>%
          as.data.frame(stringsAsFactors = FALSE))[1, 1] %>% 
       class()
@@ -937,7 +940,7 @@ evaluate_single <- function(object,
     
     column_names <-
       object %>%
-      head(1) %>%
+      utils::head(1) %>%
       dplyr::as_tibble() %>%
       colnames()
     
@@ -1000,5 +1003,5 @@ evaluate_single <- function(object,
     }
   }
   
-  logicals
+  object
 }

@@ -4,6 +4,7 @@
 #' available depends on both the fraction of rows that didn't pass a validation
 #' step and the level of sampling or explicit collection from that set of rows
 #' (this is defined within the \code{\link{interrogate}()} call).
+#' 
 #' @param agent an agent object of class \code{ptblank_agent}. It should have
 #'   had \code{\link{interrogate}()} called on it, such that the validation
 #'   steps were carried out and any sample rows from non-passing validations
@@ -13,6 +14,7 @@
 #'   produced sample row data, one can use the
 #'   \code{\link{get_row_sample_info}()} function. The data frame output
 #'   provides the step number and the number of rows in the sample.
+#'   
 #' @examples 
 #' # Set a seed
 #' set.seed(23)
@@ -71,6 +73,7 @@
 #' #>  8        1 2.567247
 #' #>  9        1 3.959643
 #' #> 10        1 3.801374
+#' 
 #' @export
 get_row_sample_data <- function(agent,
                                 step) {

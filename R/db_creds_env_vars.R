@@ -4,6 +4,7 @@
 #' generate a list of environment variable names, which is used as an input
 #' value for the \code{db_creds_env_vars} argument of the
 #' \code{\link{focus_on}()} function.
+#' 
 #' @param dbname the name of the environment variable storing the database name.
 #' @param host the name of the environment variable storing the \code{host}
 #'   name.
@@ -12,6 +13,7 @@
 #'   database.
 #' @param password the name of the environment variable storing the password
 #'   associated with the \code{user}.
+#'   
 #' @export
 db_creds_env_vars <- function(dbname,
                               host,

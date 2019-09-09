@@ -2,6 +2,7 @@
 #'
 #' Get the essential information from an agent object after an interrogation is
 #' complete and then generates an HTML file for a visual summary.
+#' 
 #' @param agent an agent object of class \code{ptblank_agent}.
 #' @param output_file an optional filename to use for the output HTML file. If
 #'   not provided, the filename \code{validation_report.html} will be used.
@@ -14,10 +15,8 @@
 #'   validation results. Can be provided as plaintext or as markdown text.
 #' @param footer_text HTML text to be placed in the footer of the summary. Can
 #'   be provided as plaintext or as markdown text.
+#'   
 #' @return an agent object.
-#' @importFrom rmarkdown render
-#' @importFrom stringr str_replace_all str_detect
-#' @importFrom commonmark markdown_html
 #' @export
 get_html_summary <- function(agent,
                              output_file = NULL,

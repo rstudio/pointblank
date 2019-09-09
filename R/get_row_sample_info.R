@@ -2,10 +2,12 @@
 #'
 #' Get information on which validation steps produced sample rows from
 #' non-passing validations.
+#' 
 #' @param agent an agent object of class \code{ptblank_agent}. It should have
 #'   had \code{\link{interrogate}()} called on it, such that the validation
 #'   steps were carried out and any sample rows from non-passing validations
 #'   could potentially be available in the object.
+#'   
 #' @examples 
 #' # Set a seed
 #' set.seed(23)
@@ -39,8 +41,7 @@
 #' # Find out which validation steps
 #' # contain sample row data
 #' get_row_sample_info(agent)
-#' @importFrom dplyr filter pull tibble
-#' @importFrom purrr map_df
+#' 
 #' @export
 get_row_sample_info <- function(agent) {
   
@@ -61,7 +62,7 @@ get_row_sample_info <- function(agent) {
   # the available briefs to it
   validation_set <- 
     agent$validation_set %>%
-    mutate(
+    dplyr::mutate(
       brief =
         agent$logical_plan %>%
         dplyr::filter(!(component_name %in% c("create_agent", "focus_on"))) %>%

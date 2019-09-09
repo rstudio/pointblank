@@ -1,9 +1,10 @@
 #' Print the agent to the terminal
 #'
 #' This function will allow the agent to provide a summary report.
+#' 
 #' @param x agent an agent object of class \code{ptblank_agent}.
+#' 
 #' @keywords internal
-#' @importFrom dplyr mutate select group_by summarize n ungroup transmute pull
 #' @export
 print.ptblank_agent <- function(x, ...) {
   
@@ -22,7 +23,7 @@ print.ptblank_agent <- function(x, ...) {
     dplyr::mutate(tbl_name_type = paste0(tbl_name, "/", db_type)) %>%
     dplyr::select(tbl_name_type) %>%
     dplyr::group_by(tbl_name_type) %>%
-    dplyr::summarize(n = n()) %>%
+    dplyr::summarize(n = dplyr::n()) %>%
     dplyr::ungroup() %>%
     dplyr::transmute(tbl_name_type_n = paste0(tbl_name_type, " (", n, ")")) %>%
     dplyr::pull(tbl_name_type_n)

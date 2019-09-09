@@ -3,6 +3,7 @@
 #' Grants Slack credentials to a pointblank agent object and provides an
 #' opportunity to set Slack reporting options. This function is to be used in a
 #' pointblank pipeline any time before an \code{\link{interrogate}()} call.
+#' 
 #' @param agent an agent object of class \code{ptblank_agent}.
 #' @param notify_active an option to enable Slack notifications whenever any of
 #'   the validation steps in the \code{agent} object have triggered a
@@ -24,7 +25,7 @@
 #'   thumbnail image in the notification footer.
 #' @param slack_footer_text an optional snippet of text that will be part of the
 #'   notification footer.
-#' @return an agent object.
+#'
 #' @examples 
 #' \dontrun{
 #' # Create a simple data frame
@@ -62,6 +63,8 @@
 #'     notify_count = 1) %>%
 #'   interrogate()
 #' }
+#' 
+#' @return an agent object.
 #' @export
 set_slack_prefs <- function(agent,
                             notify_active = FALSE,

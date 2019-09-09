@@ -8,12 +8,12 @@ get_html_summary(agent, output_file = NULL, output_dir = NULL,
   intro_text = NULL, pre_results_text = NULL, footer_text = NULL)
 }
 \arguments{
-\item{agent}{an agent object of class \code{ptblank_agent}.}
+\item{agent}{An agent object of class \code{ptblank_agent}.}
 
-\item{output_file}{an optional filename to use for the output HTML file. If
+\item{output_file}{An optional filename to use for the output HTML file. If
 not provided, the filename \code{validation_report.html} will be used.}
 
-\item{output_dir}{an optional path to place the output HTML file and the
+\item{output_dir}{An optional path to place the output HTML file and the
 subfolder of CSV data (if row sample data has been collected). If the path
 does not exist, the directory will be created.}
 
@@ -27,7 +27,7 @@ validation results. Can be provided as plaintext or as markdown text.}
 be provided as plaintext or as markdown text.}
 }
 \value{
-an agent object.
+A \pkg{pointblank} agent object.
 }
 \description{
 Get the essential information from an agent object after an interrogation is

@@ -2,43 +2,41 @@
 #'
 #' Allows for a change of the focus on the table name, database type, and the
 #' location of the credentials file.
-#' 
-#' @param agent an agent object of class \code{ptblank_agent}.
-#' @param tbl_name the name of the local or remote table.
-#' @param file_name the name of a file to be loaded as a table. Valid types are
+#'
+#' @param agent An agent object of class `ptblank_agent`.
+#' @param tbl_name The name of the local or remote table.
+#' @param file_name The name of a file to be loaded as a table. Valid types are
 #'   CSV and TSV files.
-#' @param col_types if validating a CSV or TSV file, an optional column
+#' @param col_types If validating a CSV or TSV file, an optional column
 #'   specification can be provided here as a string. This string representation
-#'   is where each character represents one column and the mappings are:
-#'   \code{c} -> character, \code{i} -> integer, \code{n} -> number, \code{d} ->
-#'   double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
-#'   \code{t} -> time, \code{?} -> guess, or \code{_/-}, which skips the column.
-#' @param db_type if the table is located in a database, the type of database is
-#'   required here. Currently, this can be either \code{PostgreSQL} or
-#'   \code{MySQL}.
-#' @param initial_sql when accessing a table in a database (MySQL and
+#'   is where each character represents one column and the mappings are: `c` ->
+#'   character, `i` -> integer, `n` -> number, `d` -> double, `l` -> logical,
+#'   `D` -> date, `T` -> date time, `t` -> time, `?` -> guess, or `_/-`, which
+#'   skips the column.
+#' @param db_type If the table is located in a database, the type of database is
+#'   required here. Currently, this can be either `PostgreSQL` or `MySQL`.
+#' @param initial_sql When accessing a table in a database (MySQL and
 #'   PostgreSQL), this provides an option to provide an initial SQL query that
 #'   is applied to the table before conducting validations. An entire SQL
-#'   statement can be provided here, or, as a shortcut, the initial
-#'   \code{SELECT...} statement can be omitted for simple queries that filter
-#'   the table in focus (e.g., \code{WHERE a > 1 AND b = 'one'}).
-#' @param brief an optional, text-based description for the new focus.
-#' @param creds_file if a connection to a database is required for reaching the
-#'   table specified in \code{tbl_name}, then a path to a credentials file can
-#'   be used to establish that connection. The credentials file is an \code{RDS}
+#'   statement can be provided here, or, as a shortcut, the initial `SELECT...`
+#'   statement can be omitted for simple queries that filter the table in focus
+#'   (e.g., `WHERE a > 1 AND b = 'one'`).
+#' @param brief An optional, text-based description for the new focus.
+#' @param creds_file If a connection to a database is required for reaching the
+#'   table specified in `tbl_name`, then a path to a credentials file can be
+#'   used to establish that connection. The credentials file is an `RDS`
 #'   containing a character vector with the following items in the specified
-#'   order: (1) database name (\code{dbname}), (2) the \code{host} name, (3) the
-#'   \code{port}, (4) the username (\code{user}), and (5) the \code{password}.
-#'   This file can be easily created using the \code{\link{create_creds_file}()}
-#'   function.
-#' @param db_creds_env_vars if a connection to a database is required for
-#'   reaching the table specified in \code{tbl_name}, then a set of environment
+#'   order: (1) database name (`dbname`), (2) the `host` name, (3) the `port`,
+#'   (4) the username (`user`), and (5) the `password`. This file can be easily
+#'   created using the [create_creds_file()] function.
+#' @param db_creds_env_vars If a connection to a database is required for
+#'   reaching the table specified in `tbl_name`, then a set of environment
 #'   variables can be used to establish that connection. Separate environment
 #'   variables with the following items should be available: (1) database name
-#'   (\code{dbname}), (2) the \code{host} name, (3) the \code{port}, (4) the
-#'   username (\code{user}), and (5) the \code{password}. To pass the names of
-#'   the environment variables to the \code{agent} object, one can use the
-#'   \code{\link{db_creds_env_vars}()} function directly.
+#'   (`dbname`), (2) the `host` name, (3) the `port`, (4) the username (`user`),
+#'   and (5) the `password`. To pass the names of the environment variables to
+#'   the `agent` object, one can use the [db_creds_env_vars()] function
+#'   directly.
 #'   
 #' @examples
 #' # Create a simple data frame with a column
@@ -65,7 +63,7 @@
 #' # passed by using `all_passed()`
 #' all_passed(agent)
 #' 
-#' @return an agent object.
+#' @return A \pkg{pointblank} agent object.
 #' @export
 focus_on <- function(agent,
                      tbl_name = NULL,
@@ -250,7 +248,8 @@ focus_on <- function(agent,
       paste0(
         "Focus on table `",
         tbl_name, "` (",
-        agent$focal_db_type, ")")
+        agent$focal_db_type, ")"
+      )
   }
   
   # Place the validation step in the logical plan
@@ -260,7 +259,9 @@ focus_on <- function(agent,
       dplyr::tibble(
         component_name = "focus_on",
         parameters = as.character(NA),
-        brief = brief))
+        brief = brief
+      )
+    )
   
   agent
 }

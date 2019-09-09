@@ -7,10 +7,10 @@
 get_row_sample_info(agent)
 }
 \arguments{
-\item{agent}{an agent object of class \code{ptblank_agent}. It should have
-had \code{\link{interrogate}()} called on it, such that the validation
-steps were carried out and any sample rows from non-passing validations
-could potentially be available in the object.}
+\item{agent}{An agent object of class \code{ptblank_agent}. It should have had
+\code{\link[=interrogate]{interrogate()}} called on it, such that the validation steps were carried
+out and any sample rows from non-passing validations could potentially be
+available in the object.}
 }
 \description{
 Get information on which validation steps produced sample rows from

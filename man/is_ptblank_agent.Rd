@@ -7,11 +7,10 @@
 is_ptblank_agent(object)
 }
 \arguments{
-\item{object}{the object to test for whether it is of class
-\code{ptblank_agent}.}
+\item{object}{The object to test for whether it is of class \code{ptblank_agent}.}
 }
 \value{
-an logical value.
+A logical value.
 }
 \description{
 Determines whether the object is actually a pointbank agent object (i.e., of

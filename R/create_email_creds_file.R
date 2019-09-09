@@ -3,16 +3,16 @@
 #' Creates a file with access credentials for the purpose of automatically
 #' emailing notification messages.
 #' 
-#' @param file a file path for the credentials file to be stored on disk.
-#' @param sender the sender name.
-#' @param host the \code{host} name.
-#' @param port the port number.
-#' @param user the username for the email account.
-#' @param password the password associated with the \code{user}'s email address.
-#' @param use_ssl an option as to whether to use SSL; supply a \code{TRUE} or
-#'   \code{FALSE} value (\code{TRUE} is the default value).
-#' @param authenticate an option as to whether to authenticate; supply a
-#'   \code{TRUE} or \code{FALSE} value (\code{TRUE} is the default value).
+#' @param file A file path for the credentials file to be stored on disk.
+#' @param sender The sender name.
+#' @param host The `host` name.
+#' @param port The port number.
+#' @param user The username for the email account.
+#' @param password The password associated with the `user`'s email address.
+#' @param use_ssl An option as to whether to use SSL; supply a `TRUE` or
+#'   `FALSE` value (`TRUE` is the default value).
+#' @param authenticate An option as to whether to authenticate; supply a
+#'   `TRUE` or `FALSE` value (`TRUE` is the default value).
 #'   
 #' @examples
 #' \dontrun{
@@ -56,7 +56,8 @@ create_email_creds_file <- function(file,
     user = as.character(user),
     password = as.character(password),
     use_ssl = as.character(use_ssl),
-    authenticate = as.character(authenticate))
+    authenticate = as.character(authenticate)
+  )
   
   # Save the credential values as a file
   saveRDS(credentials, file = file)

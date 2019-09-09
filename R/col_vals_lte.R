@@ -1,10 +1,12 @@
 #' Are numerical column data less than or equal to a specific value?
 #'
-#' Verification step where numeric values in a table column should be less
-#' than or equal to a specified value.
+#' Verification step where numeric values in a table column should be less than
+#' or equal to a specified value.
+#' 
 #' @inheritParams col_vals_gt
-#' @param value a numeric value used for this test. Any column values \code{<=
-#'   value} are considered passing.
+#' @param value A numeric value used for this test. Any column values `<= value`
+#'   are considered passing.
+#'   
 #' @examples
 #' # Create a simple data frame
 #' # with a column of numerical
@@ -31,7 +33,8 @@
 #' # `all_passed()`
 #' all_passed(agent)
 #' 
-#' @return an agent object.
+#' @return Either a \pkg{pointblank} agent object or a table object, depending
+#'   on what was passed to `x`.
 #' @import rlang
 #' @export
 col_vals_lte <- function(x,
@@ -94,7 +97,8 @@ col_vals_lte <- function(x,
         assertion_type = "col_vals_gt",
         preconditions = preconditions,
         column = column,
-        value = value)
+        value = value
+      )
   }
   
   # If "*" is provided for `column`, select all
@@ -121,7 +125,8 @@ col_vals_lte <- function(x,
       creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
       init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
       file_path = ifelse(is.null(file_path), as.character(NA), file_path),
-      col_types = ifelse(is.null(col_types), as.character(NA), col_types))
+      col_types = ifelse(is.null(col_types), as.character(NA), col_types)
+    )
   
   # If no `brief` provided, set as NA
   if (is.null(brief)) {
@@ -135,7 +140,9 @@ col_vals_lte <- function(x,
       dplyr::tibble(
         component_name = "col_vals_lte",
         parameters = as.character(NA),
-        brief = brief))
+        brief = brief
+      )
+    )
   
   agent
 }

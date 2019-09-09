@@ -1,15 +1,11 @@
 #' Are numerical column data not between two specified values?
 #'
 #' Verification step where column data should not be between two values.
-#' 
+#'
 #' @inheritParams col_vals_gt
-#' @param left the lower bound for the range. The validation includes this bound
-#'   value in addition to values greater than \code{left}. Any values \code{>=
-#'   left} and \code{<= right} will be considered as failing.
-#' @param right the upper bound for the range. The validation includes this
-#'   bound value in addition to values lower than \code{right}. Any values
-#'   \code{<= right} and \code{>= left} will be considered as failing.
-#' @return an agent object.
+#' @param left,right The lower and uppers bounds for the range. The validation
+#'   Any values `>= left` and `<= right` will be considered as failing.
+#'   
 #' @examples
 #' # Create a simple data frame
 #' # with a column a numerical values
@@ -38,6 +34,8 @@
 #' # using `all_passed()`
 #' all_passed(agent)
 #' 
+#' @return Either a \pkg{pointblank} agent object or a table object, depending
+#'   on what was passed to `x`.
 #' @import rlang
 #' @export
 col_vals_not_between <- function(x,
@@ -106,7 +104,8 @@ col_vals_not_between <- function(x,
         assertion_type = "col_vals_not_between",
         column = column,
         left = left,
-        right = right)
+        right = right
+      )
   }
   
   # If "*" is provided for `column`, select all
@@ -135,7 +134,8 @@ col_vals_not_between <- function(x,
       creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
       init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
       file_path = ifelse(is.null(file_path), as.character(NA), file_path),
-      col_types = ifelse(is.null(col_types), as.character(NA), col_types))
+      col_types = ifelse(is.null(col_types), as.character(NA), col_types)
+    )
   
   # If no `brief` provided, set as NA
   if (is.null(brief)) {
@@ -149,7 +149,9 @@ col_vals_not_between <- function(x,
       dplyr::tibble(
         component_name = "col_vals_not_between",
         parameters = as.character(NA),
-        brief = brief))
+        brief = brief
+      )
+    )
   
   agent
 }

@@ -1,10 +1,10 @@
 #' Are numerical column data equal to a specific value?
 #'
-#' Verification step where numeric values in a table column should be
-#' equal to a specified value.
-#' 
+#' Verification step where numeric values in a table column should be equal to a
+#' specified value.
+#'
 #' @inheritParams col_vals_gt
-#' @param value a numeric value used to test for equality.
+#' @param value A numeric value used to test for equality.
 #' 
 #' @examples
 #' # Create a simple data frame
@@ -31,7 +31,8 @@
 #' # by using `all_passed()`
 #' all_passed(agent)
 #' 
-#' @return an agent object.
+#' @return Either a \pkg{pointblank} agent object or a table object, depending
+#'   on what was passed to `x`.
 #' @import rlang
 #' @export
 col_vals_equal <- function(x,
@@ -68,7 +69,8 @@ col_vals_equal <- function(x,
           warn_count = warn_count,
           notify_count = notify_count,
           warn_fraction = warn_fraction,
-          notify_fraction = notify_fraction)
+          notify_fraction = notify_fraction
+        )
     )
   }
   
@@ -93,7 +95,8 @@ col_vals_equal <- function(x,
         assertion_type = "col_vals_gt",
         preconditions = preconditions,
         column = column,
-        value = value)
+        value = value
+      )
   }
   
   # If "*" is provided for `column`, select all
@@ -120,7 +123,8 @@ col_vals_equal <- function(x,
       creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
       init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
       file_path = ifelse(is.null(file_path), as.character(NA), file_path),
-      col_types = ifelse(is.null(col_types), as.character(NA), col_types))
+      col_types = ifelse(is.null(col_types), as.character(NA), col_types)
+    )
   
   # If no `brief` provided, set as NA
   if (is.null(brief)) {
@@ -134,7 +138,9 @@ col_vals_equal <- function(x,
       dplyr::tibble(
         component_name = "col_vals_equal",
         parameters = as.character(NA),
-        brief = brief))
+        brief = brief
+      )
+    )
   
   agent
 }

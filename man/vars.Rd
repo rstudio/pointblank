@@ -7,9 +7,9 @@
 vars(...)
 }
 \arguments{
-\item{...}{one or more column names. This can be provided as bare column
+\item{...}{One or more column names. This can be provided as bare column
 names or column names as strings enclosed in quotes.}
 }
 \description{
-See \code{dplyr::\link[dplyr]{vars}} for details.
+See \code{dplyr::[vars][dplyr::vars]} for details.
 }

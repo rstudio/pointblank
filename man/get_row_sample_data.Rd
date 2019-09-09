@@ -7,22 +7,22 @@
 get_row_sample_data(agent, step)
 }
 \arguments{
-\item{agent}{an agent object of class \code{ptblank_agent}. It should have
-had \code{\link{interrogate}()} called on it, such that the validation
-steps were carried out and any sample rows from non-passing validations
-could potentially be available in the object.}
+\item{agent}{An agent object of class \code{ptblank_agent}. It should have had
+\code{\link[=interrogate]{interrogate()}} called on it, such that the validation steps were carried
+out and any sample rows from non-passing validations could potentially be
+available in the object.}
 
-\item{step}{the validation step number, which is assigned to each validation
+\item{step}{The validation step number, which is assigned to each validation
 step in the order of definition. To determine which validation steps
-produced sample row data, one can use the
-\code{\link{get_row_sample_info}()} function. The data frame output
-provides the step number and the number of rows in the sample.}
+produced sample row data, one can use the \code{\link[=get_row_sample_info]{get_row_sample_info()}} function.
+The data frame output provides the step number and the number of rows in
+the sample.}
 }
 \description{
 Get row data that didn't pass a validation step. The amount of row data
 available depends on both the fraction of rows that didn't pass a validation
 step and the level of sampling or explicit collection from that set of rows
-(this is defined within the \code{\link{interrogate}()} call).
+(this is defined within the \code{\link[=interrogate]{interrogate()}} call).
 }
 \examples{
 # Set a seed

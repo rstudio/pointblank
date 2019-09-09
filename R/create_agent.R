@@ -1,8 +1,8 @@
 #' Create a pointblank agent object
 #'
 #' Creates an agent object.
-#' 
-#' @param validation_name an optional name for the validation pipeline that the
+#'
+#' @param validation_name An optional name for the validation pipeline that the
 #'   agent will eventually carry out during the interrogation process. If no
 #'   value is provided, a name will be generated based on the current system
 #'   time.
@@ -41,7 +41,7 @@
 #' (agent %>%
 #'   get_interrogation_summary())[, 1:7]
 #'   
-#' @return an agent object.
+#' @return A \pkg{pointblank} agent object.
 #' @export
 create_agent <- function(validation_name = NULL) {
   
@@ -82,7 +82,8 @@ create_agent <- function(validation_name = NULL) {
         dplyr::tibble(
           component_name = as.character("create_agent"),
           parameters = as.character(NA),
-          brief = brief),
+          brief = brief
+        ),
       validation_set =
         dplyr::tibble(
           tbl_name = as.character(NA),
@@ -109,9 +110,11 @@ create_agent <- function(validation_name = NULL) {
           file_path = as.character(NA),
           col_types = as.character(NA),
           time_processed = as.POSIXct(NA),
-          proc_duration_s = as.numeric(NA)),
+          proc_duration_s = as.numeric(NA)
+        ),
       sets = list(),
-      preconditions = list())
+      preconditions = list()
+    )
   
   # Add the agent name to the object
   agent$validation_name <- validation_name

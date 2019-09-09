@@ -2,7 +2,7 @@
 #'
 #' This function will allow the agent to provide a summary report.
 #' 
-#' @param x agent an agent object of class \code{ptblank_agent}.
+#' @param x An agent object of class `ptblank_agent`.
 #' 
 #' @keywords internal
 #' @export
@@ -10,9 +10,6 @@ print.ptblank_agent <- function(x, ...) {
   
   args <- list(...)
   args <- NULL
-  
-  # Create bindings for specific variables
-  tbl_name <- db_type <- tbl_name_type <- tbl_name_type_n <- NULL
   
   # Get the console width
   console_width <- getOption("width")
@@ -36,9 +33,7 @@ print.ptblank_agent <- function(x, ...) {
   # Generate the complete statement for printing
   if (is_agent_empty(x)) {
     
-    print_stmt <-
-      paste0(
-        "pointblank agent // <", x$validation_name, ">")
+    print_stmt <- paste0("pointblank agent // <", x$validation_name, ">")
     
   } else {
     
@@ -48,7 +43,8 @@ print.ptblank_agent <- function(x, ...) {
         "tables of focus: ",
         paste(tables_of_focus, collapse = ", "),
         ".", "\n",
-        "number of validation steps: ", number_of_validation_steps(x), "\n")
+        "number of validation steps: ", number_of_validation_steps(x), "\n"
+      )
     
     if (did_agent_interrogate(x)) {
       
@@ -73,7 +69,8 @@ print.ptblank_agent <- function(x, ...) {
           " failing validation",
           ifelse(failing_steps == 1, "", "s"),
           "   ",
-          "more info: `get_interrogation_summary()`")
+          "more info: `get_interrogation_summary()`"
+        )
     }
   }
   

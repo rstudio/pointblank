@@ -8,34 +8,34 @@ interrogate(agent, get_problem_rows = TRUE, get_first_n = NULL,
   sample_n = NULL, sample_frac = NULL, sample_limit = 5000)
 }
 \arguments{
-\item{agent}{an agent object of class \code{ptblank_agent}.}
+\item{agent}{An agent object of class \code{ptblank_agent}.}
 
-\item{get_problem_rows}{an option to collect rows that didn't pass a
-particular validation step. The default is \code{TRUE} and further options
-allow for fine control of how these rows are collected.}
+\item{get_problem_rows}{An option to collect rows that didn't pass a
+particular validation step. The default is \code{TRUE} and further options allow
+for fine control of how these rows are collected.}
 
-\item{get_first_n}{if the option to collect non-passing rows is chosen, there
-is the option here to collect the first \code{n} rows here. Supply the
-number of rows to extract from the top of the non-passing rows table (the
-ordering of data from the original table is retained).}
+\item{get_first_n}{If the option to collect non-passing rows is chosen, there
+is the option here to collect the first \code{n} rows here. Supply the number of
+rows to extract from the top of the non-passing rows table (the ordering of
+data from the original table is retained).}
 
-\item{sample_n}{if the option to collect non-passing rows is chosen, this
-option allows for the sampling of \code{n} rows. Supply the number of rows
-to sample from the non-passing rows table. If \code{n} is greater than the
-number of non-passing rows, then all the rows will be returned.}
+\item{sample_n}{If the option to collect non-passing rows is chosen, this
+option allows for the sampling of \code{n} rows. Supply the number of rows to
+sample from the non-passing rows table. If \code{n} is greater than the number
+of non-passing rows, then all the rows will be returned.}
 
-\item{sample_frac}{if the option to collect non-passing rows is chosen, this
+\item{sample_frac}{If the option to collect non-passing rows is chosen, this
 option allows for the sampling of a fraction of those rows. Provide a
-number in the range of \code{0} and \code{1}. The number of rows to return
-may be extremely large (and this is especially when querying remote
-databases), however, the \code{sample_limit} option will apply a hard limit
-to the returned rows.}
+number in the range of \code{0} and \code{1}. The number of rows to return may be
+extremely large (and this is especially when querying remote databases),
+however, the \code{sample_limit} option will apply a hard limit to the returned
+rows.}
 
-\item{sample_limit}{a value that limits the possible number of rows returned
+\item{sample_limit}{A value that limits the possible number of rows returned
 when sampling non-passing rows using the \code{sample_frac} option.}
 }
 \value{
-an agent object.
+A \pkg{pointblank} agent object.
 }
 \description{
 The agent has all the information on what to do, so now all interrogations

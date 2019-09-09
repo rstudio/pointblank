@@ -1,10 +1,10 @@
 #' Verify that row data are not duplicated
 #'
 #' Verification step where row data should contain no duplicates.
-#' 
+#'
 #' @inheritParams col_vals_gt
-#' @param x an agent object of class \code{ptblank_agent}.
-#' @param cols an optional grouping of columns to check for duplication. If not
+#' @param x An agent object of class `ptblank_agent`.
+#' @param cols An optional grouping of columns to check for duplication. If not
 #'   provided, the validation checks for duplicate records using data across all
 #'   columns.
 #'   
@@ -32,7 +32,7 @@
 #' # by using `all_passed()`
 #' all_passed(agent)
 #' 
-#' @return an agent object.
+#' @return A \pkg{pointblank} agent object.
 #' @import rlang
 #' @export
 rows_not_duplicated <- function(x,
@@ -87,7 +87,8 @@ rows_not_duplicated <- function(x,
       create_autobrief(
         agent = agent,
         assertion_type = "rows_not_duplicated",
-        column = cols)
+        column = cols
+      )
   }
   
   # Add one or more validation steps

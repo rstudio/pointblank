@@ -2,17 +2,16 @@
 #'
 #' Grants email credentials to a pointblank agent object and provides an
 #' opportunity to set email reporting options. This function is to be used in a
-#' pointblank pipeline any time before an \code{\link{interrogate}()} call.
-#' 
-#' @param agent an agent object of class \code{ptblank_agent}.
-#' @param notify_active an option to enable notification emails whenever any of
-#'   the validation steps in the \code{agent} object have triggered a
-#'   \code{notify} status.
-#' @param email_recipients an optional vector of email addresses to which
+#' pointblank pipeline any time before an [interrogate()] call.
+#'
+#' @param agent An agent object of class `ptblank_agent`.
+#' @param notify_active An option to enable notification emails whenever any of
+#'   the validation steps in the `agent` object have triggered a `notify`
+#'   status.
+#' @param email_recipients An optional vector of email addresses to which
 #'   notification emails should be sent.
-#' @param creds_file an optional path to an email credentials file. Such a file
-#'   can be generated using the \code{\link{create_email_creds_file}()}
-#'   function.
+#' @param creds_file An optional path to an email credentials file. Such a file
+#'   can be generated using the [create_email_creds_file()] function.
 #'   
 #' @examples 
 #' \dontrun{
@@ -59,7 +58,8 @@
 #'   interrogate()
 #' }
 #' 
-#' @return an agent object.
+#' @return Either a \pkg{pointblank} agent object or a table object, depending
+#'   on what was passed to `x`.
 #' @export
 set_email_prefs <- function(agent,
                             notify_active = FALSE,

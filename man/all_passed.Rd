@@ -7,10 +7,10 @@
 all_passed(agent)
 }
 \arguments{
-\item{agent}{an agent object of class \code{ptblank_agent}.}
+\item{agent}{An agent object of class \code{ptblank_agent}.}
 }
 \value{
-an agent object.
+A logical value.
 }
 \description{
 Given a completed validation pass, this function will return \code{TRUE} or

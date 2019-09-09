@@ -8,22 +8,22 @@ create_email_creds_file(file, sender, host, port, user, password,
   use_ssl = TRUE, authenticate = TRUE)
 }
 \arguments{
-\item{file}{a file path for the credentials file to be stored on disk.}
+\item{file}{A file path for the credentials file to be stored on disk.}
 
-\item{sender}{the sender name.}
+\item{sender}{The sender name.}
 
-\item{host}{the \code{host} name.}
+\item{host}{The \code{host} name.}
 
-\item{port}{the port number.}
+\item{port}{The port number.}
 
-\item{user}{the username for the email account.}
+\item{user}{The username for the email account.}
 
-\item{password}{the password associated with the \code{user}'s email address.}
+\item{password}{The password associated with the \code{user}'s email address.}
 
-\item{use_ssl}{an option as to whether to use SSL; supply a \code{TRUE} or
+\item{use_ssl}{An option as to whether to use SSL; supply a \code{TRUE} or
 \code{FALSE} value (\code{TRUE} is the default value).}
 
-\item{authenticate}{an option as to whether to authenticate; supply a
+\item{authenticate}{An option as to whether to authenticate; supply a
 \code{TRUE} or \code{FALSE} value (\code{TRUE} is the default value).}
 }
 \description{

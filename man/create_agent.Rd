@@ -7,13 +7,13 @@
 create_agent(validation_name = NULL)
 }
 \arguments{
-\item{validation_name}{an optional name for the validation pipeline that the
+\item{validation_name}{An optional name for the validation pipeline that the
 agent will eventually carry out during the interrogation process. If no
 value is provided, a name will be generated based on the current system
 time.}
 }
 \value{
-an agent object.
+A \pkg{pointblank} agent object.
 }
 \description{
 Creates an agent object.

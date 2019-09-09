@@ -2,17 +2,15 @@
 #'
 #' Associates environment variables as credentials for a database. Used to
 #' generate a list of environment variable names, which is used as an input
-#' value for the \code{db_creds_env_vars} argument of the
-#' \code{\link{focus_on}()} function.
-#' 
-#' @param dbname the name of the environment variable storing the database name.
-#' @param host the name of the environment variable storing the \code{host}
-#'   name.
-#' @param port the name of the environment variable storing the port number.
-#' @param user the name of the environment variable storing a username for the
+#' value for the `db_creds_env_vars` argument of the [focus_on()] function.
+#'
+#' @param dbname The name of the environment variable storing the database name.
+#' @param host The name of the environment variable storing the `host` name.
+#' @param port The name of the environment variable storing the port number.
+#' @param user The name of the environment variable storing a username for the
 #'   database.
-#' @param password the name of the environment variable storing the password
-#'   associated with the \code{user}.
+#' @param password The name of the environment variable storing the password
+#'   associated with the `user`.
 #'   
 #' @export
 db_creds_env_vars <- function(dbname,

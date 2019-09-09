@@ -1,11 +1,12 @@
 #' Are numerical column data less than a specific value?
 #'
-#' Verification step where numeric values in a table column should be less
-#' than a specified value.
+#' Verification step where numeric values in a table column should be less than
+#' a specified value.
+#' 
 #' @inheritParams col_vals_gt
-#' @param value a numeric value used for this test. Any column values \code{<
-#'   value} are considered passing.
-#' @return an agent object.
+#' @param value A numeric value used for this test. Any column values `< value`
+#'   are considered passing.
+#'   
 #' @examples
 #' # Create a simple data frame
 #' # with a column of numerical
@@ -29,6 +30,9 @@
 #' # validation has passed by using
 #' # `all_passed()`
 #' all_passed(agent)
+#' 
+#' @return Either a \pkg{pointblank} agent object or a table object, depending
+#'   on what was passed to `x`.
 #' @import rlang
 #' @export
 col_vals_lt <- function(x,

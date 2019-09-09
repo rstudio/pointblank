@@ -2,11 +2,11 @@
 #'
 #' Get information on which validation steps produced sample rows from
 #' non-passing validations.
-#' 
-#' @param agent an agent object of class \code{ptblank_agent}. It should have
-#'   had \code{\link{interrogate}()} called on it, such that the validation
-#'   steps were carried out and any sample rows from non-passing validations
-#'   could potentially be available in the object.
+#'
+#' @param agent An agent object of class `ptblank_agent`. It should have had
+#'   [interrogate()] called on it, such that the validation steps were carried
+#'   out and any sample rows from non-passing validations could potentially be
+#'   available in the object.
 #'   
 #' @examples 
 #' # Set a seed
@@ -45,9 +45,6 @@
 #' @export
 get_row_sample_info <- function(agent) {
   
-  # Create bindings for specific variables
-  component_name <- brief <- NULL
-  
   # Return NA if the agent hasn't
   # yet performed an interrogation
   if (did_agent_interrogate(agent) == FALSE |
@@ -66,7 +63,8 @@ get_row_sample_info <- function(agent) {
       brief =
         agent$logical_plan %>%
         dplyr::filter(!(component_name %in% c("create_agent", "focus_on"))) %>%
-        dplyr::pull(brief))
+        dplyr::pull(brief)
+    )
   
   # Create a tibble that has the
   # validation step number, the assertion
@@ -85,8 +83,10 @@ get_row_sample_info <- function(agent) {
           type = validation_set$assertion_type[x],
           n_fail = validation_set$n_failed[x],
           n_sampled = nrow(validation_set$row_sample[[x]][[1]]),
-          brief = validation_set$brief[x])
-      }})
+          brief = validation_set$brief[x]
+        )
+      }
+    })
   
   # Return the output table if there are
   # rows, otherwise return NA

@@ -2,11 +2,11 @@
 #'
 #' Get the essential information from an agent object after an interrogation is
 #' complete and then generates an HTML file for a visual summary.
-#' 
-#' @param agent an agent object of class \code{ptblank_agent}.
-#' @param output_file an optional filename to use for the output HTML file. If
-#'   not provided, the filename \code{validation_report.html} will be used.
-#' @param output_dir an optional path to place the output HTML file and the
+#'
+#' @param agent An agent object of class `ptblank_agent`.
+#' @param output_file An optional filename to use for the output HTML file. If
+#'   not provided, the filename `validation_report.html` will be used.
+#' @param output_dir An optional path to place the output HTML file and the
 #'   subfolder of CSV data (if row sample data has been collected). If the path
 #'   does not exist, the directory will be created.
 #' @param intro_text HTML text to be placed at the top of the summary. Can be
@@ -16,7 +16,7 @@
 #' @param footer_text HTML text to be placed in the footer of the summary. Can
 #'   be provided as plaintext or as markdown text.
 #'   
-#' @return an agent object.
+#' @return A \pkg{pointblank} agent object.
 #' @export
 get_html_summary <- function(agent,
                              output_file = NULL,
@@ -68,11 +68,10 @@ get_html_summary <- function(agent,
   if (stringr::str_detect(string = output_file, pattern = "\\.html$") == FALSE) {
     output_file <- paste0(output_file, ".html")
   }
-    
+  
   # Generate the CSV subfolder name based
   # on `agent$validation_name`
-  csv_subfolder_name <-
-    gsub("(-|:)", "_", agent$validation_name)
+  csv_subfolder_name <- gsub("(-|:)", "_", agent$validation_name)
   
   # Remove any previously generated subfolder
   # directory if one exists
@@ -81,7 +80,9 @@ get_html_summary <- function(agent,
       unlink(
         x = csv_subfolder_name,
         recursive = TRUE,
-        force = TRUE))
+        force = TRUE
+      )
+    )
   }
   
   # Save the `agent` object as an RDS file
@@ -94,7 +95,8 @@ get_html_summary <- function(agent,
       "report_rmd", "validation_report.Rmd",
       package = "pointblank"),
     to = "./validation_report.Rmd",
-    overwrite = TRUE)
+    overwrite = TRUE
+  )
   
   # If `intro_text` is provided, write the
   # `include_intro.txt` file to the working directory
@@ -104,7 +106,8 @@ get_html_summary <- function(agent,
         stringr::str_replace_all(
           commonmark::markdown_html(intro_text),
           "\n", ""),
-        file = "include_intro.html")
+        file = "include_intro.html"
+      )
     }
   }
   
@@ -116,7 +119,8 @@ get_html_summary <- function(agent,
         stringr::str_replace_all(
           commonmark::markdown_html(pre_results_text),
           "\n", ""),
-        file = "include_pre_results.html")
+        file = "include_pre_results.html"
+      )
     }
   }
   
@@ -128,19 +132,21 @@ get_html_summary <- function(agent,
         stringr::str_replace_all(
           commonmark::markdown_html(footer_text),
           "\n", ""),
-        file = "include_footer.html")
+        file = "include_footer.html"
+      )
     }
   } else {
     cat(paste0("<p></p>"), file = "include_footer.html")
   }
   
   # Render the RMarkdown file to the working directory
-    rmarkdown::render(
-      input = "validation_report.Rmd",
-      output_format = "html_document",
-      output_dir = output_dir,
-      output_file = output_file,
-      quiet = TRUE)
+  rmarkdown::render(
+    input = "validation_report.Rmd",
+    output_format = "html_document",
+    output_dir = output_dir,
+    output_file = output_file,
+    quiet = TRUE
+  )
   
   #
   # Perform clean up of working directory
@@ -170,7 +176,8 @@ get_html_summary <- function(agent,
     temp_images_files <- 
       list.files(
         path = "./temporary_images",
-        full.names = TRUE)
+        full.names = TRUE
+      )
     
     # Remove the image files
     invisible(file.remove(temp_images_files))
@@ -183,7 +190,8 @@ get_html_summary <- function(agent,
     temp_images_files <- 
       list.files(
         path = "./temporary_images_plan",
-        full.names = TRUE)
+        full.names = TRUE
+      )
     
     # Remove the image files
     invisible(file.remove(temp_images_files))
@@ -198,7 +206,8 @@ get_html_summary <- function(agent,
     
     file.rename(
       from = csv_subfolder_name,
-      to = gsub("//", "/", paste0(output_dir, "/", csv_subfolder_name)))
+      to = gsub("//", "/", paste0(output_dir, "/", csv_subfolder_name))
+    )
   }
   
   agent

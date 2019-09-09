@@ -1,11 +1,11 @@
 #' Are numerical column data not equal to a specific value?
 #'
-#' Verification step where numeric values in a table column should not be
-#' equal to a specified value.
+#' Verification step where numeric values in a table column should not be equal
+#' to a specified value.
 #' 
 #' @inheritParams col_vals_gt
 #' @param value a numeric value used to test for non-equality.
-#' @return an agent object.
+#' 
 #' @examples
 #' # Create a simple data frame
 #' # with 2 columns of numerical values
@@ -24,13 +24,17 @@
 #'   col_vals_not_equal(
 #'     column = b,
 #'     value = 5,
-#'     preconditions = a == 2) %>%
+#'     preconditions = a == 2
+#'   ) %>%
 #'   interrogate()
 #' 
 #' # Determine if this column
 #' # validation has passed by using
 #' # `all_passed()`
 #' all_passed(agent)
+#' 
+#' @return Either a \pkg{pointblank} agent object or a table object, depending
+#'   on what was passed to `x`.
 #' @export
 col_vals_not_equal <- function(x,
                                column,
@@ -66,7 +70,8 @@ col_vals_not_equal <- function(x,
           warn_count = warn_count,
           notify_count = notify_count,
           warn_fraction = warn_fraction,
-          notify_fraction = notify_fraction)
+          notify_fraction = notify_fraction
+        )
     )
   }
   
@@ -91,7 +96,8 @@ col_vals_not_equal <- function(x,
         assertion_type = "col_vals_gt",
         preconditions = preconditions,
         column = column,
-        value = value)
+        value = value
+      )
   }
   
   # If "*" is provided for `column`, select all
@@ -118,7 +124,8 @@ col_vals_not_equal <- function(x,
       creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
       init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
       file_path = ifelse(is.null(file_path), as.character(NA), file_path),
-      col_types = ifelse(is.null(col_types), as.character(NA), col_types))
+      col_types = ifelse(is.null(col_types), as.character(NA), col_types)
+    )
   
   # If no `brief` provided, set as NA
   if (is.null(brief)) {
@@ -132,7 +139,9 @@ col_vals_not_equal <- function(x,
       dplyr::tibble(
         component_name = "col_vals_not_equal",
         parameters = as.character(NA),
-        brief = brief))
+        brief = brief
+      )
+    )
   
   agent
 }

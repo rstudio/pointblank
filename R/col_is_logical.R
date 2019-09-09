@@ -1,11 +1,11 @@
 #' Do the columns contain logical values?
 #'
-#' Verification step where a table column is expected to consist of
-#' \code{logical} values.
-#' 
+#' Verification step where a table column is expected to consist of `logical`
+#' values.
+#'
 #' @inheritParams col_vals_gt
-#' @param column the name of a single table column, multiple columns in the same
-#'   table, or, a helper function such as \code{\link{all_cols}()}.
+#' @param column The name of a single table column, multiple columns in the same
+#'   table, or, a helper function such as [all_cols()].
 #'   
 #' @examples
 #' # Create a simple data frame
@@ -29,7 +29,8 @@
 #' # `all_passed()`
 #' all_passed(agent)
 #' 
-#' @return an agent object.
+#' @return Either a \pkg{pointblank} agent object or a table object, depending
+#'   on what was passed to `x`.
 #' @import rlang
 #' @export
 col_is_logical <- function(x,
@@ -64,7 +65,8 @@ col_is_logical <- function(x,
           warn_count = warn_count,
           notify_count = notify_count,
           warn_fraction = warn_fraction,
-          notify_fraction = notify_fraction)
+          notify_fraction = notify_fraction
+        )
     )
   }
   
@@ -78,7 +80,8 @@ col_is_logical <- function(x,
       create_autobrief(
         agent = agent,
         assertion_type = "col_is_logical",
-        column = column)
+        column = column
+      )
   }
   
   # If "*" is provided for `column`, select all
@@ -104,7 +107,8 @@ col_is_logical <- function(x,
       creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
       init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
       file_path = ifelse(is.null(file_path), as.character(NA), file_path),
-      col_types = ifelse(is.null(col_types), as.character(NA), col_types))
+      col_types = ifelse(is.null(col_types), as.character(NA), col_types)
+    )
   
   # If no `brief` provided, set as NA
   if (is.null(brief)) {
@@ -118,7 +122,9 @@ col_is_logical <- function(x,
       dplyr::tibble(
         component_name = "col_is_logical",
         parameters = as.character(NA),
-        brief = brief))
+        brief = brief
+      )
+    )
   
   agent
 }

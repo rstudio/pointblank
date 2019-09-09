@@ -1,12 +1,12 @@
 #' Are numerical column data between two specified values?
 #'
 #' Verification step where column data should be between two values.
-#' 
+#'
 #' @inheritParams col_vals_gt
-#' @param left the lower bound for the range. The validation includes this bound
-#'   value in addition to values greater than \code{left}.
-#' @param right the upper bound for the range. The validation includes this
-#'   bound value in addition to values lower than \code{right}.
+#' @param left The lower bound for the range. The validation includes this bound
+#'   value in addition to values greater than `left`.
+#' @param right The upper bound for the range. The validation includes this
+#'   bound value in addition to values lower than `right`.
 #'   
 #' @examples
 #' # Create a simple data frame
@@ -33,7 +33,8 @@
 #' # `all_passed()`
 #' all_passed(agent)
 #' 
-#' @return an agent object.
+#' @return Either a \pkg{pointblank} agent object or a table object, depending
+#'   on what was passed to `x`.
 #' @import rlang
 #' @export
 col_vals_between <- function(x,
@@ -54,7 +55,7 @@ col_vals_between <- function(x,
                              initial_sql = NULL,
                              file_path = NULL,
                              col_types = NULL) {
-
+  
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
@@ -76,7 +77,8 @@ col_vals_between <- function(x,
           warn_count = warn_count,
           notify_count = notify_count,
           warn_fraction = warn_fraction,
-          notify_fraction = notify_fraction)
+          notify_fraction = notify_fraction
+        )
     )
   }
   
@@ -101,7 +103,8 @@ col_vals_between <- function(x,
         assertion_type = "col_vals_between",
         column = column,
         left = left,
-        right = right)
+        right = right
+      )
   }
   
   # If "*" is provided for `column`, select all
@@ -130,7 +133,8 @@ col_vals_between <- function(x,
       creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
       init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
       file_path = ifelse(is.null(file_path), as.character(NA), file_path),
-      col_types = ifelse(is.null(col_types), as.character(NA), col_types))
+      col_types = ifelse(is.null(col_types), as.character(NA), col_types)
+    )
   
   # If no `brief` provided, set as NA
   if (is.null(brief)) {
@@ -144,7 +148,9 @@ col_vals_between <- function(x,
       dplyr::tibble(
         component_name = "col_vals_between",
         parameters = as.character(NA),
-        brief = brief))
+        brief = brief
+      )
+    )
   
   agent
 }

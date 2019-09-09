@@ -7,17 +7,17 @@
 create_creds_file(file, dbname, host, port, user, password)
 }
 \arguments{
-\item{file}{a file path for the credentials file to be stored on disk.}
+\item{file}{A file path for the credentials file to be stored on disk.}
 
-\item{dbname}{the database name.}
+\item{dbname}{The database name.}
 
-\item{host}{the \code{host} name.}
+\item{host}{The \code{host} name.}
 
-\item{port}{the port number.}
+\item{port}{The port number.}
 
-\item{user}{the username for the database}
+\item{user}{The username for the database}
 
-\item{password}{the password associated with the \code{user}.}
+\item{password}{The password associated with the \code{user}.}
 }
 \description{
 Creates a file containing access credentials for a database.

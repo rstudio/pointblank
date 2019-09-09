@@ -1,10 +1,10 @@
 #' Do strings in column data match a regex pattern?
 #'
-#' Verification step where string-based column data should correspond to a
-#' regex matching expression.
-#' 
+#' Verification step where string-based column data should correspond to a regex
+#' matching expression.
+#'
 #' @inheritParams col_vals_gt
-#' @param regex a regex pattern to test for matching strings.
+#' @param regex A regex pattern to test for matching strings.
 #' 
 #' @examples
 #' # Create a simple data frame with a column
@@ -30,7 +30,8 @@
 #' # by using `all_passed()`
 #' all_passed(agent)
 #' 
-#' @return an agent object.
+#' @return Either a \pkg{pointblank} agent object or a table object, depending
+#'   on what was passed to `x`.
 #' @import rlang
 #' @export
 col_vals_regex <- function(x,
@@ -92,7 +93,8 @@ col_vals_regex <- function(x,
         agent = agent,
         assertion_type = "col_vals_regex",
         column = column,
-        regex = regex)
+        regex = regex
+      )
   }
   
   # If "*" is provided for `column`, select all
@@ -119,7 +121,8 @@ col_vals_regex <- function(x,
       creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
       init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
       file_path = ifelse(is.null(file_path), as.character(NA), file_path),
-      col_types = ifelse(is.null(col_types), as.character(NA), col_types))
+      col_types = ifelse(is.null(col_types), as.character(NA), col_types)
+    )
   
   # If no `brief` provided, set as NA
   if (is.null(brief)) {
@@ -133,7 +136,9 @@ col_vals_regex <- function(x,
       dplyr::tibble(
         component_name = "col_vals_regex",
         parameters = as.character(NA),
-        brief = brief))
+        brief = brief
+      )
+    )
   
   agent
 }

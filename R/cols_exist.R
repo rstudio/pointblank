@@ -1,12 +1,12 @@
 #' Do one or more columns actually exist?
 #'
-#' Verification step that checks whether one or several specified columns
-#' exist in the target table.
-#' 
+#' Verification step that checks whether one or several specified columns exist
+#' in the target table.
+#'
 #' @inheritParams col_vals_gt
-#' @param cols one or more columns from the table in focus. This can be provided
-#'   as a vector of column names using \code{c()} or bare column names enclosed
-#'   in \code{\link{vars}()}.
+#' @param cols One or more columns from the table in focus. This can be provided
+#'   as a vector of column names using `c()` or bare column names enclosed in
+#'   [vars()].
 #'   
 #' @examples
 #' # Validate that columns `a`, `c`, and
@@ -29,7 +29,8 @@
 #' # steps passed by using `all_passed()`
 #' all_passed(agent)
 #' 
-#' @return an agent object.
+#' @return Either a \pkg{pointblank} agent object or a table object, depending
+#'   on what was passed to `x`.
 #' @import rlang
 #' @export
 cols_exist <- function(x,
@@ -80,7 +81,8 @@ cols_exist <- function(x,
       create_autobrief(
         agent = agent,
         assertion_type = "cols_exist",
-        column = cols)
+        column = cols
+      )
   }
   
   # Add one or more validation steps
@@ -100,7 +102,8 @@ cols_exist <- function(x,
       creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
       init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
       file_path = ifelse(is.null(file_path), as.character(NA), file_path),
-      col_types = ifelse(is.null(col_types), as.character(NA), col_types))
+      col_types = ifelse(is.null(col_types), as.character(NA), col_types)
+    )
   
   # If no `brief` provided, set as NA
   if (is.null(brief)) {
@@ -114,7 +117,9 @@ cols_exist <- function(x,
       dplyr::tibble(
         component_name = "cols_exist",
         parameters = as.character(NA),
-        brief = brief))
+        brief = brief
+      )
+    )
   
   agent
 }

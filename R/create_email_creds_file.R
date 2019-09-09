@@ -9,10 +9,10 @@
 #' @param port The port number.
 #' @param user The username for the email account.
 #' @param password The password associated with the `user`'s email address.
-#' @param use_ssl An option as to whether to use SSL; supply a `TRUE` or
-#'   `FALSE` value (`TRUE` is the default value).
-#' @param authenticate An option as to whether to authenticate; supply a
-#'   `TRUE` or `FALSE` value (`TRUE` is the default value).
+#' @param use_ssl An option as to whether to use SSL; supply a `TRUE` or `FALSE`
+#'   value (`TRUE` is the default value).
+#' @param authenticate An option as to whether to authenticate; supply a `TRUE`
+#'   or `FALSE` value (`TRUE` is the default value).
 #'   
 #' @examples
 #' \dontrun{
@@ -27,6 +27,7 @@
 #'   user = "point@blank.org",
 #'   password = "************")
 #' }
+#' 
 #' @export
 create_email_creds_file <- function(file,
                                     sender,

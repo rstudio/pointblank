@@ -20,11 +20,11 @@ create_email_creds_file(file, sender, host, port, user, password,
 
 \item{password}{The password associated with the \code{user}'s email address.}
 
-\item{use_ssl}{An option as to whether to use SSL; supply a \code{TRUE} or
-\code{FALSE} value (\code{TRUE} is the default value).}
+\item{use_ssl}{An option as to whether to use SSL; supply a \code{TRUE} or \code{FALSE}
+value (\code{TRUE} is the default value).}
 
-\item{authenticate}{An option as to whether to authenticate; supply a
-\code{TRUE} or \code{FALSE} value (\code{TRUE} is the default value).}
+\item{authenticate}{An option as to whether to authenticate; supply a \code{TRUE}
+or \code{FALSE} value (\code{TRUE} is the default value).}
 }
 \description{
 Creates a file with access credentials for the purpose of automatically
@@ -43,4 +43,5 @@ create_email_creds_file(
   user = "point@blank.org",
   password = "************")
 }
+
 }

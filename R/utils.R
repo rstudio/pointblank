@@ -969,8 +969,8 @@ evaluate_single <- function(object,
     if (false_count >= notify_count) {
       
       messaging::emit_error(
-        "The validation (`{type}()`) is above the `notify_count` threshold",
-        " * `failing_count` ({false_count}) > `notify_count` ({notify_count})",
+        "The validation (`{type}()`) meets or exceeds the `notify_count` threshold",
+        " * `failing_count` ({false_count}) >= `notify_count` ({notify_count})",
         type = type,
         false_count = false_count,
         notify_count = notify_count,
@@ -981,8 +981,8 @@ evaluate_single <- function(object,
     if ((false_count/total_count) >= notify_fraction) {
       
       messaging::emit_error(
-        "The validation (`{type}()`) is above the `notify_fraction` threshold",
-        " * `failing_fraction` ({false_fraction}) > `notify_fraction` ({notify_fraction})",
+        "The validation (`{type}()`) meets or exceeds the `notify_fraction` threshold",
+        " * `failing_fraction` ({false_fraction}) >= `notify_fraction` ({notify_fraction})",
         type = type,
         false_fraction = false_fraction,
         notify_fraction = notify_fraction,
@@ -995,8 +995,8 @@ evaluate_single <- function(object,
     if (false_count >= warn_count) {
       
       messaging::emit_warning(
-        "The validation (`{type}()`) is above the `warn_count` threshold",
-        " * `failing_count` ({false_count}) > `warn_count` ({warn_count})",
+        "The validation (`{type}()`) meets or exceeds the `warn_count` threshold",
+        " * `failing_count` ({false_count}) >= `warn_count` ({warn_count})",
         type = type,
         false_count = false_count,
         warn_count = warn_count,
@@ -1008,8 +1008,8 @@ evaluate_single <- function(object,
     if ((false_count/total_count) >= warn_fraction) {
       
       messaging::emit_warning(
-        "The validation (`{type}()`) is above the `warn_fraction` threshold",
-        " * `failing_fraction` ({false_fraction}) > `warn_fraction` ({warn_fraction})",
+        "The validation (`{type}()`) meets or exceeds the `warn_fraction` threshold",
+        " * `failing_fraction` ({false_fraction}) >= `warn_fraction` ({warn_fraction})",
         type = type,
         false_fraction = false_fraction,
         warn_fraction = warn_fraction,

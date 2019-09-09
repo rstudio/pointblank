@@ -580,12 +580,13 @@ interrogate <- function(agent,
         # the `agent$validation_set` tbl_df
         # as a nested tbl_df
         names_problem_rows <- names(problem_rows)
-        
+
         agent$validation_set$row_sample[i] <- 
-          tidyr::nest_(
+          tidyr::nest(
             data = problem_rows,
-            key_col = "data",
-            nest_cols = names_problem_rows)
+            names_problem_rows,
+            .key = "data"
+          )
         
       } else if (false_count == 0) {
         agent$validation_set$all_passed[i] <- TRUE

@@ -1,8 +1,9 @@
 #' Are numerical column data greater than a specific value?
 #'
-#' Set a verification step where numeric values in a table column should be
+#' Verification step where numeric values in a table column should be
 #' greater than a specified value.
-#' @param ... a data frame, tibble, or an agent object of class
+#' 
+#' @param x a data frame, tibble, or an agent object of class
 #'   \code{ptblank_agent}.
 #' @param column the column (or a set of columns, provided as a character
 #'   vector) to which this validation should be applied. Aside from a single
@@ -59,7 +60,7 @@
 #'   \code{c} -> character, \code{i} -> integer, \code{n} -> number, \code{d} ->
 #'   double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
 #'   \code{t} -> time, \code{?} -> guess, or \code{_/-}, which skips the column.
-#' @return an agent object.
+#'   
 #' @examples
 #' # Create a simple data frame
 #' # with a column of numerical values
@@ -81,11 +82,11 @@
 #' # validations have all passed
 #' # by using `all_passed()`
 #' all_passed(agent)
-#' @importFrom dplyr bind_rows tibble
-#' @importFrom rlang enquo expr_text
-#' @importFrom stringr str_replace_all
+#' 
+#' @return an agent object.
+#' @import rlang
 #' @export
-col_vals_gt <- function(...,
+col_vals_gt <- function(x,
                         column,
                         value,
                         incl_na = FALSE,
@@ -103,9 +104,6 @@ col_vals_gt <- function(...,
                         file_path = NULL,
                         col_types = NULL) {
   
-  # Collect the object provided
-  object <- list(...)
-  
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
@@ -113,10 +111,10 @@ col_vals_gt <- function(...,
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
   
-  if (inherits(object[[1]] , c("data.frame", "tbl_df", "tbl_dbi"))) {
+  if (inherits(x , c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
-      object[[1]] %>%
+      x %>%
         evaluate_single(
           type = "col_vals_gt",
           column = column,
@@ -126,11 +124,12 @@ col_vals_gt <- function(...,
           warn_count = warn_count,
           notify_count = notify_count,
           warn_fraction = warn_fraction,
-          notify_fraction = notify_fraction)
+          notify_fraction = notify_fraction
+        )
     )
   }
   
-  agent <- object[[1]]
+  agent <- x
   
   # Get the preconditions
   preconditions <- 

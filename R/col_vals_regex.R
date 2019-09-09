@@ -1,10 +1,11 @@
 #' Do strings in column data match a regex pattern?
 #'
-#' Set a verification step where string-based column data should correspond to a
+#' Verification step where string-based column data should correspond to a
 #' regex matching expression.
+#' 
 #' @inheritParams col_vals_gt
 #' @param regex a regex pattern to test for matching strings.
-#' @return an agent object.
+#' 
 #' @examples
 #' # Create a simple data frame with a column
 #' # containing strings
@@ -28,11 +29,11 @@
 #' # validations have all passed
 #' # by using `all_passed()`
 #' all_passed(agent)
-#' @importFrom dplyr bind_rows tibble
-#' @importFrom rlang enquo expr_text
-#' @importFrom stringr str_replace_all
+#' 
+#' @return an agent object.
+#' @import rlang
 #' @export
-col_vals_regex <- function(...,
+col_vals_regex <- function(x,
                            column,
                            regex,
                            preconditions = NULL,
@@ -48,9 +49,6 @@ col_vals_regex <- function(...,
                            file_path = NULL,
                            col_types = NULL) {
   
-  # Collect the object provided
-  object <- list(...)
-  
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
@@ -58,10 +56,10 @@ col_vals_regex <- function(...,
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
   
-  if (inherits(object[[1]] , c("data.frame", "tbl_df", "tbl_dbi"))) {
+  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
-      object[[1]] %>%
+      x %>%
         evaluate_single(
           type = "col_vals_regex",
           column = column,
@@ -69,11 +67,12 @@ col_vals_regex <- function(...,
           warn_count = warn_count,
           notify_count = notify_count,
           warn_fraction = warn_fraction,
-          notify_fraction = notify_fraction)
+          notify_fraction = notify_fraction
+        )
     )
   }
   
-  agent <- object[[1]]
+  agent <- x
   
   # Get the preconditions
   preconditions <- 

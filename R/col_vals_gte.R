@@ -1,11 +1,11 @@
 #' Are numerical column data greater than or equal to a specific value?
 #'
-#' Set a verification step where numeric values in a table column should be
+#' Verification step where numeric values in a table column should be
 #'   greater than or equal to a specified value.
+#'   
 #' @inheritParams col_vals_gt
 #' @param value a numeric value used for this test. Any column values \code{>=
 #'   value} are considered passing.
-#' @return an agent object.
 #' @examples
 #' # Create a simple data frame
 #' # with a column of numerical
@@ -29,11 +29,11 @@
 #' # validation has passed by using
 #' # `all_passed()`
 #' all_passed(agent)
-#' @importFrom dplyr bind_rows tibble
-#' @importFrom rlang enquo expr_text
-#' @importFrom stringr str_replace_all
+#' 
+#' @return an agent object.
+#' @import rlang
 #' @export
-col_vals_gte <- function(...,
+col_vals_gte <- function(x,
                          column,
                          value,
                          preconditions = NULL,
@@ -49,9 +49,6 @@ col_vals_gte <- function(...,
                          file_path = NULL,
                          col_types = NULL) {
   
-  # Collect the object provided
-  object <- list(...)
-  
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
@@ -59,10 +56,10 @@ col_vals_gte <- function(...,
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
   
-  if (inherits(object[[1]] , c("data.frame", "tbl_df", "tbl_dbi"))) {
+  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
-      object[[1]] %>%
+      x %>%
         evaluate_single(
           type = "col_vals_gte",
           column = column,
@@ -70,11 +67,12 @@ col_vals_gte <- function(...,
           warn_count = warn_count,
           notify_count = notify_count,
           warn_fraction = warn_fraction,
-          notify_fraction = notify_fraction)
+          notify_fraction = notify_fraction
+        )
     )
   }
   
-  agent <- object[[1]]
+  agent <- x
   
   # Get the preconditions
   preconditions <- 

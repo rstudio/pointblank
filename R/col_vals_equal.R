@@ -1,10 +1,11 @@
 #' Are numerical column data equal to a specific value?
 #'
-#' Set a verification step where numeric values in a table column should be
+#' Verification step where numeric values in a table column should be
 #' equal to a specified value.
+#' 
 #' @inheritParams col_vals_gt
 #' @param value a numeric value used to test for equality.
-#' @return an agent object.
+#' 
 #' @examples
 #' # Create a simple data frame
 #' # with 2 columns of numerical values
@@ -29,11 +30,11 @@
 #' # validations have all passed
 #' # by using `all_passed()`
 #' all_passed(agent)
-#' @importFrom dplyr bind_rows tibble
-#' @importFrom rlang enquo expr_text
-#' @importFrom stringr str_replace_all
+#' 
+#' @return an agent object.
+#' @import rlang
 #' @export
-col_vals_equal <- function(...,
+col_vals_equal <- function(x,
                            column,
                            value,
                            preconditions = NULL,
@@ -49,9 +50,6 @@ col_vals_equal <- function(...,
                            file_path = NULL,
                            col_types = NULL) {
   
-  # Collect the object provided
-  object <- list(...)
-  
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
@@ -59,10 +57,10 @@ col_vals_equal <- function(...,
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
   
-  if (inherits(object[[1]] , c("data.frame", "tbl_df", "tbl_dbi"))) {
+  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
-      object[[1]] %>%
+      x %>%
         evaluate_single(
           type = "col_vals_equal",
           column = column,
@@ -74,7 +72,7 @@ col_vals_equal <- function(...,
     )
   }
   
-  agent <- object[[1]]
+  agent <- x
   
   # Get the preconditions
   preconditions <- 

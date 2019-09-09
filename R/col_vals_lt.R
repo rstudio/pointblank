@@ -1,6 +1,6 @@
 #' Are numerical column data less than a specific value?
 #'
-#' Set a verification step where numeric values in a table column should be less
+#' Verification step where numeric values in a table column should be less
 #' than a specified value.
 #' @inheritParams col_vals_gt
 #' @param value a numeric value used for this test. Any column values \code{<
@@ -33,7 +33,7 @@
 #' @importFrom rlang enquo expr_text
 #' @importFrom stringr str_replace_all
 #' @export
-col_vals_lt <- function(...,
+col_vals_lt <- function(x,
                         column,
                         value,
                         preconditions = NULL,
@@ -49,9 +49,6 @@ col_vals_lt <- function(...,
                         file_path = NULL,
                         col_types = NULL) {
   
-  # Collect the object provided
-  object <- list(...)
-  
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
@@ -59,10 +56,10 @@ col_vals_lt <- function(...,
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
   
-  if (inherits(object[[1]] , c("data.frame", "tbl_df", "tbl_dbi"))) {
+  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
-      object[[1]] %>%
+      x %>%
         evaluate_single(
           type = "col_vals_lt",
           column = column,
@@ -70,11 +67,12 @@ col_vals_lt <- function(...,
           warn_count = warn_count,
           notify_count = notify_count,
           warn_fraction = warn_fraction,
-          notify_fraction = notify_fraction)
+          notify_fraction = notify_fraction
+        )
     )
   }
   
-  agent <- object[[1]]
+  agent <- x
   
   # Get the preconditions
   preconditions <- 

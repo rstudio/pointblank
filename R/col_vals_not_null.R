@@ -1,9 +1,10 @@
 #' Are column data not NULL?
 #'
-#' Set a verification step where no values in a table column are expected to be
+#' Verification step where no values in a table column are expected to be
 #' NULL.
+#' 
 #' @inheritParams col_vals_gt
-#' @return an agent object.
+#' 
 #' @examples
 #' # Create a simple data frame with
 #' # 2 columns of numerical values
@@ -29,11 +30,11 @@
 #' # validations have all passed
 #' # by using `all_passed()`
 #' all_passed(agent)
-#' @importFrom dplyr bind_rows tibble
-#' @importFrom rlang enquo expr_text
-#' @importFrom stringr str_replace_all
+#' 
+#' @return an agent object.
+#' @import rlang
 #' @export
-col_vals_not_null <- function(...,
+col_vals_not_null <- function(x,
                               column,
                               preconditions = NULL,
                               brief = NULL,
@@ -48,9 +49,6 @@ col_vals_not_null <- function(...,
                               file_path = NULL,
                               col_types = NULL) {
   
-  # Collect the object provided
-  object <- list(...)
-  
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
@@ -58,21 +56,22 @@ col_vals_not_null <- function(...,
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
   
-  if (inherits(object[[1]] , c("data.frame", "tbl_df", "tbl_dbi"))) {
+  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
-      object[[1]] %>%
+      x %>%
         evaluate_single(
           type = "col_vals_not_null",
           column = column,
           warn_count = warn_count,
           notify_count = notify_count,
           warn_fraction = warn_fraction,
-          notify_fraction = notify_fraction)
+          notify_fraction = notify_fraction
+        )
     )
   }
   
-  agent <- object[[1]]
+  agent <- x
   
   # Get the preconditions
   preconditions <- 

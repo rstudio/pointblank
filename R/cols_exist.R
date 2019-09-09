@@ -1,12 +1,13 @@
 #' Do one or more columns actually exist?
 #'
-#' Set a verification step that checks whether one or several specified columns
+#' Verification step that checks whether one or several specified columns
 #' exist in the target table.
+#' 
 #' @inheritParams col_vals_gt
 #' @param cols one or more columns from the table in focus. This can be provided
 #'   as a vector of column names using \code{c()} or bare column names enclosed
 #'   in \code{\link{vars}()}.
-#' @return an agent object.
+#'   
 #' @examples
 #' # Validate that columns `a`, `c`, and
 #' # `f` exist in the `small_table` CSV file;
@@ -27,11 +28,11 @@
 #' # Determine if these three validation
 #' # steps passed by using `all_passed()`
 #' all_passed(agent)
-#' @importFrom dplyr bind_rows tibble
-#' @importFrom rlang enquo get_expr
-#' @importFrom stringr str_replace_all
+#' 
+#' @return an agent object.
+#' @import rlang
 #' @export
-cols_exist <- function(...,
+cols_exist <- function(x,
                        cols,
                        brief = NULL,
                        warn_count = NULL,
@@ -44,9 +45,6 @@ cols_exist <- function(...,
                        initial_sql = NULL,
                        file_path = NULL,
                        col_types = NULL) {
-
-  # Collect the object provided
-  object <- list(...)
   
   # Get the column names
   if (inherits(cols, "quosures")) {
@@ -56,10 +54,10 @@ cols_exist <- function(...,
       gsub("~", "", .)
   }
   
-  if (inherits(object[[1]] , c("data.frame", "tbl_df", "tbl_dbi"))) {
+  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
-      object[[1]] %>%
+      x %>%
         evaluate_single(
           type = "cols_exist",
           column = cols,
@@ -67,11 +65,12 @@ cols_exist <- function(...,
           warn_count = warn_count,
           notify_count = notify_count,
           warn_fraction = warn_fraction,
-          notify_fraction = notify_fraction)
+          notify_fraction = notify_fraction
+        )
     )
   }
   
-  agent <- object[[1]]
+  agent <- x
   
   preconditions <- NULL
   

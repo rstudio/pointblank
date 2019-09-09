@@ -1,11 +1,12 @@
 #' Do the columns contain numeric values?
 #'
-#' Set a verification step where a table column is expected to consist of
+#' Verification step where a table column is expected to consist of
 #' floating point values.
+#' 
 #' @inheritParams col_vals_gt
 #' @param column the name of a single table column, multiple columns in the same
 #'   table, or, a helper function such as \code{\link{all_cols}()}.
-#' @return an agent object.
+#'   
 #' @examples
 #' # Create a simple data frame
 #' # with a column containing data
@@ -29,11 +30,11 @@
 #' # validation has passed by using
 #' # `all_passed()`
 #' all_passed(agent)
-#' @importFrom dplyr bind_rows tibble
-#' @importFrom rlang enquo expr_text
-#' @importFrom stringr str_replace_all
+#' 
+#' @return an agent object.
+#' @import rlang
 #' @export
-col_is_numeric <- function(...,
+col_is_numeric <- function(x,
                            column,
                            brief = NULL,
                            warn_count = NULL,
@@ -47,9 +48,6 @@ col_is_numeric <- function(...,
                            file_path = NULL,
                            col_types = NULL) {
   
-  # Collect the object provided
-  object <- list(...)
-  
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
@@ -57,10 +55,10 @@ col_is_numeric <- function(...,
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
   
-  if (inherits(object[[1]] , c("data.frame", "tbl_df", "tbl_dbi"))) {
+  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
-      object[[1]] %>%
+      x %>%
         evaluate_single(
           type = "col_is_numeric",
           column = column,
@@ -72,7 +70,7 @@ col_is_numeric <- function(...,
     )
   }
   
-  agent <- object[[1]]
+  agent <- x
 
   preconditions <- NULL
   

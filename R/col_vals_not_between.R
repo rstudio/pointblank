@@ -1,6 +1,7 @@
 #' Are numerical column data not between two specified values?
 #'
-#' Set a verification step where column data should not be between two values.
+#' Verification step where column data should not be between two values.
+#' 
 #' @inheritParams col_vals_gt
 #' @param left the lower bound for the range. The validation includes this bound
 #'   value in addition to values greater than \code{left}. Any values \code{>=
@@ -40,7 +41,7 @@
 #' @importFrom rlang enquo expr_text
 #' @importFrom stringr str_replace_all
 #' @export
-col_vals_not_between <- function(...,
+col_vals_not_between <- function(x,
                                  column,
                                  left,
                                  right,
@@ -59,9 +60,6 @@ col_vals_not_between <- function(...,
                                  file_path = NULL,
                                  col_types = NULL) {
   
-  # Collect the object provided
-  object <- list(...)
-  
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
@@ -69,10 +67,10 @@ col_vals_not_between <- function(...,
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
   
-  if (inherits(object[[1]] , c("data.frame", "tbl_df", "tbl_dbi"))) {
+  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
-      object[[1]] %>%
+      x %>%
         evaluate_single(
           type = "col_vals_not_between",
           column = column,
@@ -83,11 +81,12 @@ col_vals_not_between <- function(...,
           warn_count = warn_count,
           notify_count = notify_count,
           warn_fraction = warn_fraction,
-          notify_fraction = notify_fraction)
+          notify_fraction = notify_fraction
+        )
     )
   }
   
-  agent <- object[[1]]
+  agent <- x
   
   # Get the preconditions
   preconditions <- 

@@ -1,11 +1,12 @@
 #' Are data not part of a specific set of values?
 #'
-#' Set a verification step where numeric values in a table column should be part
+#' Verification step where numeric values in a table column should be part
 #' of a set of values.
+#' 
 #' @inheritParams col_vals_gt
 #' @param set a vector of numeric or string-based elements, where column values
 #'   found within this \code{set} will be considered as failing.
-#' @return an agent object.
+#'   
 #' @examples 
 #' # Create a simple data frame with 2 columns: one
 #' # with numerical values and the other with strings
@@ -37,11 +38,11 @@
 #' # validations have all passed
 #' # by using `all_passed()`
 #' all_passed(agent)
-#' @importFrom dplyr bind_rows tibble
-#' @importFrom rlang enquo expr_text
-#' @importFrom stringr str_replace_all
+#' 
+#' @return an agent object.
+#' @import rlang
 #' @export
-col_vals_not_in_set <- function(...,
+col_vals_not_in_set <- function(x,
                                 column,
                                 set,
                                 preconditions = NULL,
@@ -57,9 +58,6 @@ col_vals_not_in_set <- function(...,
                                 file_path = NULL,
                                 col_types = NULL) {
   
-  # Collect the object provided
-  object <- list(...)
-  
   # Get the column name
   column <- 
     rlang::enquo(column) %>%
@@ -67,10 +65,10 @@ col_vals_not_in_set <- function(...,
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
   
-  if (inherits(object[[1]] , c("data.frame", "tbl_df", "tbl_dbi"))) {
+  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
-      object[[1]] %>%
+      x %>%
         evaluate_single(
           type = "col_vals_not_in_set",
           column = column,
@@ -82,7 +80,7 @@ col_vals_not_in_set <- function(...,
     )
   }
   
-  agent <- object[[1]]
+  agent <- x
   
   # Get the preconditions
   preconditions <- 

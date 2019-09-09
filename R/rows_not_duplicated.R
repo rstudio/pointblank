@@ -1,11 +1,13 @@
 #' Verify that row data are not duplicated
 #'
-#' Set a verification step where row data should contain no duplicates.
+#' Verification step where row data should contain no duplicates.
+#' 
 #' @inheritParams col_vals_gt
+#' @param x an agent object of class \code{ptblank_agent}.
 #' @param cols an optional grouping of columns to check for duplication. If not
 #'   provided, the validation checks for duplicate records using data across all
 #'   columns.
-#' @return an agent object.
+#'   
 #' @examples
 #' # Validate that column `a` exists in
 #' # the `small_table` CSV file; do this
@@ -29,11 +31,11 @@
 #' # validations have all passed
 #' # by using `all_passed()`
 #' all_passed(agent)
-#' @importFrom dplyr bind_rows tibble
-#' @importFrom rlang enquo get_expr expr_text
-#' @importFrom stringr str_replace_all
+#' 
+#' @return an agent object.
+#' @import rlang
 #' @export
-rows_not_duplicated <- function(agent,
+rows_not_duplicated <- function(x,
                                 cols = NULL,
                                 preconditions = NULL,
                                 brief = NULL,
@@ -47,6 +49,8 @@ rows_not_duplicated <- function(agent,
                                 initial_sql = NULL,
                                 file_path = NULL,
                                 col_types = NULL) {
+  
+  agent <- x
   
   # Get the values supplied for `cols`
   cols <- 
@@ -104,7 +108,8 @@ rows_not_duplicated <- function(agent,
       creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
       init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
       file_path = ifelse(is.null(file_path), as.character(NA), file_path),
-      col_types = ifelse(is.null(col_types), as.character(NA), col_types))
+      col_types = ifelse(is.null(col_types), as.character(NA), col_types)
+    )
   
   # If no `brief` provided, set as NA
   if (is.null(brief)) {
@@ -118,7 +123,9 @@ rows_not_duplicated <- function(agent,
       dplyr::tibble(
         component_name = "rows_not_duplicated",
         parameters = as.character(NA),
-        brief = brief))
+        brief = brief
+      )
+    )
   
   agent
 }

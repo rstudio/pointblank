@@ -5,7 +5,6 @@
 #' @inheritParams col_vals_gt
 #' @param value a numeric value used for this test. Any column values \code{<=
 #'   value} are considered passing.
-#' @return an agent object.
 #' @examples
 #' # Create a simple data frame
 #' # with a column of numerical
@@ -31,9 +30,9 @@
 #' # validation has passed by using
 #' # `all_passed()`
 #' all_passed(agent)
-#' @importFrom dplyr bind_rows tibble
-#' @importFrom rlang enquo expr_text
-#' @importFrom stringr str_replace_all
+#' 
+#' @return an agent object.
+#' @import rlang
 #' @export
 col_vals_lte <- function(x,
                          column,

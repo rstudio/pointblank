@@ -37,9 +37,8 @@
 #' # validations have all passed by
 #' # using `all_passed()`
 #' all_passed(agent)
-#' @importFrom dplyr bind_rows tibble
-#' @importFrom rlang enquo expr_text
-#' @importFrom stringr str_replace_all
+#' 
+#' @import rlang
 #' @export
 col_vals_not_between <- function(x,
                                  column,

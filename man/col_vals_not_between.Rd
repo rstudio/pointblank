@@ -4,7 +4,7 @@
 \alias{col_vals_not_between}
 \title{Are numerical column data not between two specified values?}
 \usage{
-col_vals_not_between(..., column, left, right, incl_na = TRUE,
+col_vals_not_between(x, column, left, right, incl_na = TRUE,
   incl_nan = TRUE, preconditions = NULL, brief = NULL,
   warn_count = NULL, notify_count = NULL, warn_fraction = NULL,
   notify_fraction = NULL, tbl_name = NULL, db_type = NULL,
@@ -12,7 +12,7 @@ col_vals_not_between(..., column, left, right, incl_na = TRUE,
   col_types = NULL)
 }
 \arguments{
-\item{...}{a data frame, tibble, or an agent object of class
+\item{x}{a data frame, tibble, or an agent object of class
 \code{ptblank_agent}.}
 
 \item{column}{the column (or a set of columns, provided as a character
@@ -95,7 +95,7 @@ double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
 an agent object.
 }
 \description{
-Set a verification step where column data should not be between two values.
+Verification step where column data should not be between two values.
 }
 \examples{
 # Create a simple data frame

@@ -4,14 +4,14 @@
 \alias{col_vals_in_set}
 \title{Are column data part of a specific set of values?}
 \usage{
-col_vals_in_set(..., column, set, preconditions = NULL, brief = NULL,
+col_vals_in_set(x, column, set, preconditions = NULL, brief = NULL,
   warn_count = NULL, notify_count = NULL, warn_fraction = NULL,
   notify_fraction = NULL, tbl_name = NULL, db_type = NULL,
   creds_file = NULL, initial_sql = NULL, file_path = NULL,
   col_types = NULL)
 }
 \arguments{
-\item{...}{a data frame, tibble, or an agent object of class
+\item{x}{a data frame, tibble, or an agent object of class
 \code{ptblank_agent}.}
 
 \item{column}{the column (or a set of columns, provided as a character
@@ -83,7 +83,7 @@ double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
 an agent object.
 }
 \description{
-Set a verification step where numeric values in a table column should be part
+Verification step where numeric values in a table column should be part
   of a set of values.
 }
 \examples{
@@ -117,4 +117,5 @@ agent <-
 # validations have all passed
 # by using `all_passed()`
 all_passed(agent)
+
 }

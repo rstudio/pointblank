@@ -4,14 +4,14 @@
 \alias{col_vals_gte}
 \title{Are numerical column data greater than or equal to a specific value?}
 \usage{
-col_vals_gte(..., column, value, preconditions = NULL, brief = NULL,
+col_vals_gte(x, column, value, preconditions = NULL, brief = NULL,
   warn_count = NULL, notify_count = NULL, warn_fraction = NULL,
   notify_fraction = NULL, tbl_name = NULL, db_type = NULL,
   creds_file = NULL, initial_sql = NULL, file_path = NULL,
   col_types = NULL)
 }
 \arguments{
-\item{...}{a data frame, tibble, or an agent object of class
+\item{x}{a data frame, tibble, or an agent object of class
 \code{ptblank_agent}.}
 
 \item{column}{the column (or a set of columns, provided as a character
@@ -83,7 +83,7 @@ double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
 an agent object.
 }
 \description{
-Set a verification step where numeric values in a table column should be
+Verification step where numeric values in a table column should be
   greater than or equal to a specified value.
 }
 \examples{
@@ -109,4 +109,5 @@ agent <-
 # validation has passed by using
 # `all_passed()`
 all_passed(agent)
+
 }

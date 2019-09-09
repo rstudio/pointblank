@@ -4,14 +4,14 @@
 \alias{col_vals_null}
 \title{Are column data NULL?}
 \usage{
-col_vals_null(..., column, preconditions = NULL, brief = NULL,
+col_vals_null(x, column, preconditions = NULL, brief = NULL,
   warn_count = NULL, notify_count = NULL, warn_fraction = NULL,
   notify_fraction = NULL, tbl_name = NULL, db_type = NULL,
   creds_file = NULL, initial_sql = NULL, file_path = NULL,
   col_types = NULL)
 }
 \arguments{
-\item{...}{a data frame, tibble, or an agent object of class
+\item{x}{a data frame, tibble, or an agent object of class
 \code{ptblank_agent}.}
 
 \item{column}{the column (or a set of columns, provided as a character
@@ -80,7 +80,7 @@ double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
 an agent object.
 }
 \description{
-Set a verification step where all values in a table column are expected to be
+Verification step where all values in a table column are expected to be
 NULL.
 }
 \examples{
@@ -108,4 +108,5 @@ agent <-
 # validations have all passed
 # by using `all_passed()`
 all_passed(agent)
+
 }

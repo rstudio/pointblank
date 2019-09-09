@@ -4,13 +4,13 @@
 \alias{col_is_factor}
 \title{Do the columns contain R factor objects?}
 \usage{
-col_is_factor(..., column, brief = NULL, warn_count = NULL,
+col_is_factor(x, column, brief = NULL, warn_count = NULL,
   notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,
   tbl_name = NULL, db_type = NULL, creds_file = NULL,
   initial_sql = NULL, file_path = NULL, col_types = NULL)
 }
 \arguments{
-\item{...}{a data frame, tibble, or an agent object of class
+\item{x}{a data frame, tibble, or an agent object of class
 \code{ptblank_agent}.}
 
 \item{column}{the name of a single table column, multiple columns in the same
@@ -67,7 +67,7 @@ double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
 an agent object.
 }
 \description{
-Set a verification step where a table column is expected to consist entirely
+Verification step where a table column is expected to consist entirely
 of R \code{factor} objects.
 }
 \examples{
@@ -91,4 +91,5 @@ agent <-
 # validations have all passed
 # by using `all_passed()`
 all_passed(agent)
+
 }

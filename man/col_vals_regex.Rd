@@ -4,14 +4,14 @@
 \alias{col_vals_regex}
 \title{Do strings in column data match a regex pattern?}
 \usage{
-col_vals_regex(..., column, regex, preconditions = NULL, brief = NULL,
+col_vals_regex(x, column, regex, preconditions = NULL, brief = NULL,
   warn_count = NULL, notify_count = NULL, warn_fraction = NULL,
   notify_fraction = NULL, tbl_name = NULL, db_type = NULL,
   creds_file = NULL, initial_sql = NULL, file_path = NULL,
   col_types = NULL)
 }
 \arguments{
-\item{...}{a data frame, tibble, or an agent object of class
+\item{x}{a data frame, tibble, or an agent object of class
 \code{ptblank_agent}.}
 
 \item{column}{the column (or a set of columns, provided as a character
@@ -82,7 +82,7 @@ double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
 an agent object.
 }
 \description{
-Set a verification step where string-based column data should correspond to a
+Verification step where string-based column data should correspond to a
 regex matching expression.
 }
 \examples{
@@ -108,4 +108,5 @@ agent <-
 # validations have all passed
 # by using `all_passed()`
 all_passed(agent)
+
 }

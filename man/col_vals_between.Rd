@@ -4,7 +4,7 @@
 \alias{col_vals_between}
 \title{Are numerical column data between two specified values?}
 \usage{
-col_vals_between(..., column, left, right, incl_na = FALSE,
+col_vals_between(x, column, left, right, incl_na = FALSE,
   incl_nan = FALSE, preconditions = NULL, brief = NULL,
   warn_count = NULL, notify_count = NULL, warn_fraction = NULL,
   notify_fraction = NULL, tbl_name = NULL, db_type = NULL,
@@ -12,7 +12,7 @@ col_vals_between(..., column, left, right, incl_na = FALSE,
   col_types = NULL)
 }
 \arguments{
-\item{...}{a data frame, tibble, or an agent object of class
+\item{x}{a data frame, tibble, or an agent object of class
 \code{ptblank_agent}.}
 
 \item{column}{the column (or a set of columns, provided as a character
@@ -93,7 +93,7 @@ double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
 an agent object.
 }
 \description{
-Set a verification step where column data should be between two values.
+Verification step where column data should be between two values.
 }
 \examples{
 # Create a simple data frame
@@ -119,4 +119,5 @@ agent <-
 # validation has passed by using
 # `all_passed()`
 all_passed(agent)
+
 }

@@ -81,4 +81,5 @@ get_interrogation_summary(agent)[, 1:7]
 #>      <chr>    <chr>          <chr>  <chr> <dbl> <chr>      <lgl>
 #> 1     df_1 local_df   col_vals_gte      a     5  <NA>       TRUE
 #> 2     df_2 local_df col_vals_equal      c     8  <NA>       TRUE
+
 }

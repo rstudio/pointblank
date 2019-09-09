@@ -4,13 +4,15 @@
 \alias{rows_not_duplicated}
 \title{Verify that row data are not duplicated}
 \usage{
-rows_not_duplicated(agent, cols = NULL, preconditions = NULL,
+rows_not_duplicated(x, cols = NULL, preconditions = NULL,
   brief = NULL, warn_count = NULL, notify_count = NULL,
   warn_fraction = NULL, notify_fraction = NULL, tbl_name = NULL,
   db_type = NULL, creds_file = NULL, initial_sql = NULL,
   file_path = NULL, col_types = NULL)
 }
 \arguments{
+\item{x}{an agent object of class \code{ptblank_agent}.}
+
 \item{cols}{an optional grouping of columns to check for duplication. If not
 provided, the validation checks for duplicate records using data across all
 columns.}
@@ -76,7 +78,7 @@ double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
 an agent object.
 }
 \description{
-Set a verification step where row data should contain no duplicates.
+Verification step where row data should contain no duplicates.
 }
 \examples{
 # Validate that column `a` exists in
@@ -101,4 +103,5 @@ agent <-
 # validations have all passed
 # by using `all_passed()`
 all_passed(agent)
+
 }

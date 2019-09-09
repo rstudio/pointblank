@@ -51,4 +51,5 @@ agent <-
 # 7 columns of its output
 (agent \%>\%
   get_interrogation_summary())[, 1:7]
+  
 }

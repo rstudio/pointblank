@@ -4,13 +4,13 @@
 \alias{cols_exist}
 \title{Do one or more columns actually exist?}
 \usage{
-cols_exist(..., cols, brief = NULL, warn_count = NULL,
+cols_exist(x, cols, brief = NULL, warn_count = NULL,
   notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,
   tbl_name = NULL, db_type = NULL, creds_file = NULL,
   initial_sql = NULL, file_path = NULL, col_types = NULL)
 }
 \arguments{
-\item{...}{a data frame, tibble, or an agent object of class
+\item{x}{a data frame, tibble, or an agent object of class
 \code{ptblank_agent}.}
 
 \item{cols}{one or more columns from the table in focus. This can be provided
@@ -68,7 +68,7 @@ double, \code{l} -> logical, \code{D} -> date, \code{T} -> date time,
 an agent object.
 }
 \description{
-Set a verification step that checks whether one or several specified columns
+Verification step that checks whether one or several specified columns
 exist in the target table.
 }
 \examples{
@@ -91,4 +91,5 @@ agent <-
 # Determine if these three validation
 # steps passed by using `all_passed()`
 all_passed(agent)
+
 }

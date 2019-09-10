@@ -5,3 +5,4 @@
 ^codecov\.yml$
 ^CONDUCT\.md$
 ^README\.Rmd$
+^revdep$

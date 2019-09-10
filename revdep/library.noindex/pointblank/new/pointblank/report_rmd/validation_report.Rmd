@@ -1,0 +1,328 @@
+---
+output:
+  html_document:
+    theme: cosmo
+    highlight: kate
+    df_print: paged
+    include:
+      after_body: include_footer.html
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(dplyr)
+library(pointblank)
+library(htmltools)
+library(commonmark)
+library(lubridate)
+library(glue)
+```
+
+
+```{r read_agent_rds, include=FALSE}
+agent <- readRDS(file = "agent.rds")
+```
+
+
+```{r generate_img_files, echo=FALSE}
+
+# Generate the image files for the results a temporary directory
+pointblank:::generate_img_files_results(agent = agent)
+
+# Get a vector of these file paths
+img_file_list_results <-
+  list.files(
+    path = "./temporary_images",
+    pattern = ".*_.svg",
+    full.names = TRUE)
+
+# Generate the image files for the validation plan a temporary directory
+pointblank:::generate_img_files_plan(agent = agent)
+
+# Get a vector of these file paths
+img_file_list_plan <-
+  list.files(
+    path = "./temporary_images_plan",
+    pattern = ".*.svg",
+    full.names = TRUE)
+```
+
+## Validation Summary
+
+`r if (file.exists("include_intro.html")) { paste(readLines("include_intro.html", warn = FALSE)) }`
+
+```{r validation_summary_stats, echo=FALSE}
+# Get the validation name from `agent`; if none
+# was assigned, simply use `Validation`
+if (length(agent$validation_name) > 0) {
+  validation_name <- agent$validation_name[1]
+} else {
+  validation_name <- "Validation"
+}
+
+# Get the validation time (starting time)
+if (!is.na(agent$validation_time)) {
+  validation_time <- agent$validation_time[1]
+} else {
+  validation_time <- as.POSIXct(NA)
+}
+
+# Get the total validation duration
+validation_duration <-
+  sum(agent$validation_set$proc_duration_s, na.rm = TRUE)
+
+# Apply the appropriate amount of rounding based
+# on the total time taken
+validation_duration <-
+  ifelse(
+    validation_duration > 1,
+    round(validation_duration, 1),
+    round(validation_duration, 2))
+
+# Did all tests pass?
+if (any(agent$validation_set$all_passed == FALSE)) {
+  all_tests_passed <- "No"
+} else if (all(agent$validation_set$all_passed == TRUE)) {
+  all_tests_passed <- "Yes"
+}
+```
+
+
+```{r validation_summary_1, echo=FALSE}
+
+knitr::kable(
+  dplyr::data_frame(
+    `Validation Name` = validation_name,
+    `Validation Time` = 
+      gsub("  ", " ", paste0(
+        format(validation_time, "%A, %B "),
+        format(validation_time, "%d") %>% as.numeric(),
+        ", ",
+        format(validation_time, "%Y"),
+        " at ",
+        format(validation_time, "%l:%M"),
+        toupper(format(validation_time, " %p")),
+        format(validation_time, " (%Z)"))),
+    `Duration` = paste0(validation_duration, " s")))
+```
+
+
+```{r report_summary_2, echo=FALSE}
+
+knitr::kable(
+  dplyr::data_frame(
+    `Tables Interrogated` = agent$validation_set %>% select(tbl_name) %>% distinct() %>% .$tbl_name %>% paste(collapse = ", "),
+    `Total Validation Steps` = nrow(agent$validation_set),
+    `Steps Passed` = agent$validation_set %>% filter(all_passed == TRUE) %>% nrow(),
+    `Steps Failed` = agent$validation_set %>% filter(all_passed == FALSE) %>% nrow()))
+```
+
+
+```{r get_images_vectors, include=FALSE}
+
+for (i in 1:length(img_file_list_results)) {
+  
+  if (i == 1) {
+    images_results <- vector(mode = "character")
+  }
+  
+  images_results <- 
+    c(images_results,
+      structure(
+        htmltools::img(src = img_file_list_results[i])) %>%
+        as.character())
+}
+
+for (i in 1:length(img_file_list_plan)) {
+  
+  if (i == 1) {
+    images_plan <- vector(mode = "character")
+  }
+  
+  images_plan <- 
+    c(images_plan,
+      structure(
+        htmltools::img(src = img_file_list_plan[i])) %>%
+        as.character())
+}
+```
+
+
+```{r get_preconditions_chr, include=FALSE}
+
+preconditions_chr <-
+  agent$preconditions %>%
+  dplyr::mutate(preconditions_chr = dplyr::case_when(
+    is.na(precondition) ~ as.character("None"),
+    !is.na(precondition) ~ paste0("<span title=\"", gsub("\"", "", precondition), "\">Yes</span>"))) %>%
+  dplyr::pull(preconditions_chr)
+```
+
+
+```{r get_value_regex_set_strings, include=FALSE}
+
+for (i in 1:nrow(agent$validation_set)) {
+  
+  if (i == 1) value_chr <- vector(mode = "character")
+  
+  if (!is.na(agent$validation_set$value[i])) {
+    value_chr_line <- paste0("<strong>Value</strong> <code>", as.character(agent$validation_set$value[i]), "</code>")
+  } else if (agent$validation_set$assertion_type[i] == "col_vals_regex") {
+    value_chr_line <- paste0("<strong>Regex</strong> <code>\"", agent$validation_set$regex[i], "\"</code>")
+  } else if (agent$validation_set$assertion_type[i] %in% c("col_vals_in_set", "col_vals_not_in_set")) {
+    value_chr_line <- paste0("<strong>Set</strong> ", gsub(",", ", ", agent$sets$set[i]))
+  } else if (agent$validation_set$assertion_type[i] == "rows_not_duplicated" |
+             is.na(agent$validation_set$value[i])) {
+    value_chr_line <- "<strong>Value</strong> None"
+  }
+ 
+  value_chr <- c(value_chr, value_chr_line)
+}
+```
+
+
+```{r get_duration_strings, include=FALSE}
+
+for (i in 1:nrow(agent$validation_set)) {
+  
+  if (i == 1) duration_chr <- vector(mode = "character")
+
+  duration_chr <- 
+    c(duration_chr,
+      paste0(
+        as.character(
+          round(agent$validation_set$proc_duration_s[i], 2)), " s"))
+}
+```
+
+
+```{r get_row_sample_data, include=FALSE}
+
+if (any(!is.na(get_row_sample_info(agent = agent)))) {
+  
+  csv_subfolder_name <-
+    gsub("(-|:)", "_", agent$validation_name)  
+  
+  dir.create(path = csv_subfolder_name)
+  
+  row_sample_data_chr <- vector(mode = "character")
+  
+  for (i in 1:nrow(agent$validation_set)) {
+    
+    if (i %in% pointblank::get_row_sample_info(agent = agent)$step) {
+      
+      readr::write_csv(
+        x = pointblank::get_row_sample_data(agent = agent, step = i) %>%
+          dplyr::select(-pb_step_),
+        path = glue::glue("./{csv_subfolder_name}/step_{i}_sample_data.csv"))
+      
+      row_sample_data_chr <- 
+        c(row_sample_data_chr,
+            glue::glue(
+              "<a href=\"{csv_subfolder_name}/step_{i}_sample_data.csv\">CSV</a>"))
+    } else {
+      row_sample_data_chr <- 
+        c(row_sample_data_chr, "")
+    }
+  }
+} else {
+  row_sample_data_chr <- rep("", nrow(agent$validation_set))
+}
+```
+
+## Results by Validation Step {.tabset .tabset-fade}
+
+`r if (file.exists("include_pre_results.html")) { paste(readLines("include_pre_results.html", warn = FALSE)) }`
+
+### All Steps
+
+```{r results_all, echo=FALSE}
+
+knitr::kable(
+  dplyr::data_frame(
+    `Summary` = images_results,
+    `Details` = paste0(
+      "<strong>Table</strong> <code>", agent$validation_set$tbl_name, "</code> (", agent$validation_set$db_type, ")<br />",
+      "<strong>Assertion</strong> <code>", agent$validation_set$assertion_type, "</code><br />",
+      "<strong>n</strong> <code>", agent$validation_set$n, "</code><br />",
+      "<strong>Pass/Fail Rate</strong> ",
+      paste0(agent$validation_set$f_passed * 100, "%"), " / ",
+      paste0(agent$validation_set$f_failed * 100, "%")),
+    ` ` = paste0(
+      "<strong>Column</strong> <code>", agent$validation_set$column, "</code> <br />",
+      value_chr, "<br />",
+      "<strong>Preconditions</strong> ", preconditions_chr, "<br />",
+      "<strong>Duration</strong> ", duration_chr),
+    `  ` = row_sample_data_chr)) 
+```
+
+### Warn
+
+```{r results_warn, echo=FALSE}
+
+results_warn_table <-
+  dplyr::bind_cols(
+    dplyr::data_frame(
+      `Summary` = images_results,
+      `Details` = paste0(
+        "<strong>Table</strong> <code>", agent$validation_set$tbl_name, "</code> (", agent$validation_set$db_type, ")<br />",
+        "<strong>Assertion</strong> <code>", agent$validation_set$assertion_type, "</code><br />",
+        "<strong>n</strong> <code>", agent$validation_set$n, "</code><br />",
+        "<strong>Pass/Fail Rate</strong> ",
+        paste0(agent$validation_set$f_passed * 100, "%"), " / ",
+        paste0(agent$validation_set$f_failed * 100, "%")),
+      ` ` = paste0(
+        "<strong>Column</strong> <code>", agent$validation_set$column, "</code> <br />",
+        value_chr, "<br />",
+        "<strong>Preconditions</strong> ", preconditions_chr, "<br />",
+        "<strong>Duration</strong> ", duration_chr),
+      `  ` = row_sample_data_chr),
+    agent$validation_set %>% dplyr::select(warn, notify)) %>%
+  dplyr::filter(warn == TRUE & notify == FALSE) %>%
+  dplyr::select(-warn, -notify) 
+
+if (nrow(results_warn_table) > 0) knitr::kable(results_warn_table)
+```
+
+### Notify
+
+```{r results_notify, echo=FALSE}
+
+results_notify_table <-
+  dplyr::bind_cols(
+    dplyr::data_frame(
+      `Summary` = images_results,
+      `Details` = paste0(
+        "<strong>Table</strong> <code>", agent$validation_set$tbl_name, "</code> (", agent$validation_set$db_type, ")<br />",
+        "<strong>Assertion</strong> <code>", agent$validation_set$assertion_type, "</code><br />",
+        "<strong>n</strong> <code>", agent$validation_set$n, "</code><br />",
+        "<strong>Pass/Fail Rate</strong> ",
+        paste0(agent$validation_set$f_passed * 100, "%"), " / ",
+        paste0(agent$validation_set$f_failed * 100, "%")),
+      ` ` = paste0(
+        "<strong>Column</strong> <code>", agent$validation_set$column, "</code> <br />",
+        value_chr, "<br />",
+        "<strong>Preconditions</strong> ", preconditions_chr, "<br />",
+        "<strong>Duration</strong> ", duration_chr),
+      `  ` = row_sample_data_chr),
+    agent$validation_set %>% dplyr::select(notify)) %>%
+  dplyr::filter(notify == TRUE) %>%
+  dplyr::select(-notify)
+
+if (nrow(results_notify_table) > 0) knitr::kable(results_notify_table)
+```
+
+### Validation Plan
+
+```{r validation_plan, echo=FALSE}
+
+briefs <-
+  gsub("<p>|</p>", "", strsplit(
+    (agent$validation_set$brief %>% 
+       commonmark::markdown_html()), "\\n") %>% unlist())
+
+knitr::kable(
+  dplyr::data_frame(
+    `Summary` = images_results,
+    `Brief` = briefs))
+```
+

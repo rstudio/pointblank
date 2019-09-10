@@ -1,0 +1,65 @@
+%>%                     The magrittr pipe
+all_cols                Perform validations on all table columns When
+                        used in conjunction with the 'column' argument,
+                        the 'all_cols()' helper function will indicate
+                        that the validation should occur for each and
+                        every column in the table.
+all_passed              Did all of the validations pass?
+col_exists              Verify that one or more columns exist
+col_is_character        Verify that a column contains character/string
+                        data
+col_is_date             Verify that a column contains R Date objects
+col_is_factor           Verify that a column contains R factor objects
+col_is_integer          Verify that a column contains integer values
+col_is_logical          Verify that a column contains logical values
+col_is_numeric          Verify that a column contains numeric values
+col_is_posix            Verify that a column contains POSIXct dates
+col_vals_between        Verify whether column data are between two
+                        values
+col_vals_equal          Verify whether numerical column data are equal
+                        to a specified value
+col_vals_gt             Verify whether numerical column data are
+                        greater than a specified value
+col_vals_gte            Verify whether numerical column data are
+                        greater than or equal to a specified value
+col_vals_in_set         Verify whether column data are part of a set of
+                        values
+col_vals_lt             Verify whether numerical column data are less
+                        than a specified value
+col_vals_lte            Verify whether numerical column data are less
+                        than or equal to a specified value
+col_vals_not_between    Verify that column data are not between two
+                        values
+col_vals_not_equal      Verify whether numerical column data are not
+                        equal to a specified value
+col_vals_not_in_set     Verify that column data are not part of a set
+                        of values
+col_vals_not_null       Verify whether all column values are not NULL
+col_vals_null           Verify whether all column values are NULL
+col_vals_regex          Verify whether string column data corresponds
+                        to a regex matching expression
+create_agent            Create a pointblank agent object
+create_creds_file       Create a file with DB access credentials
+create_email_creds_file
+                        Create a file with email access credentials
+db_creds_env_vars       Bind environment variable names for database
+                        access
+focus_on                Place certain access details more to the fore
+get_html_summary        Create an HTML summary file for the
+                        interrogation
+get_interrogation_summary
+                        Get a simple summary of the interrogation
+get_row_sample_data     Get non-passing sample rows from a validation
+                        step
+get_row_sample_info     Get information on sample rows from non-passing
+                        validations
+get_validation_name     Get the pointblank validation name
+interrogate             Given an agent that is fully loaded with tasks,
+                        perform an interrogation
+is_ptblank_agent        Is the object a pointblank agent?
+rows_not_duplicated     Verify that row data are not duplicated
+run_validation_files    Process multiple validation files
+set_email_prefs         Set email credentials and enable email
+                        reporting
+set_slack_prefs         Set Slack credentials and enable Slack
+                        notifications

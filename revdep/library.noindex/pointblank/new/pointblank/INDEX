@@ -1,0 +1,60 @@
+all_cols                Perform validations on all table columns
+all_passed              Did all of the validations pass?
+col_is_character        Do the columns contain character/string data?
+col_is_date             Do the columns contain R 'Date' objects?
+col_is_factor           Do the columns contain R 'factor' objects?
+col_is_integer          Do the columns contain integer values?
+col_is_logical          Do the columns contain logical values?
+col_is_numeric          Do the columns contain numeric values?
+col_is_posix            Do the columns contain 'POSIXct' dates?
+col_vals_between        Are numerical column data between two specified
+                        values?
+col_vals_equal          Are numerical column data equal to a specific
+                        value?
+col_vals_gt             Are numerical column data greater than a
+                        specific value?
+col_vals_gte            Are numerical column data greater than or equal
+                        to a specific value?
+col_vals_in_set         Are column data part of a specific set of
+                        values?
+col_vals_lt             Are numerical column data less than a specific
+                        value?
+col_vals_lte            Are numerical column data less than or equal to
+                        a specific value?
+col_vals_not_between    Are numerical column data not between two
+                        specified values?
+col_vals_not_equal      Are numerical column data not equal to a
+                        specific value?
+col_vals_not_in_set     Are data not part of a specific set of values?
+col_vals_not_null       Are column data not 'NULL'?
+col_vals_null           Are column data 'NULL'?
+col_vals_regex          Do strings in column data match a regex
+                        pattern?
+cols_exist              Do one or more columns actually exist?
+create_agent            Create a pointblank agent object
+create_creds_file       Create a file with DB access credentials
+create_email_creds_file
+                        Create a file with email access credentials
+db_creds_env_vars       Bind environment variable names for database
+                        access
+focus_on                Place certain access details more to the fore
+get_html_summary        Create an HTML summary file for the
+                        interrogation
+get_interrogation_summary
+                        Get a simple summary of the interrogation
+get_row_sample_data     Get non-passing sample rows from a validation
+                        step
+get_row_sample_info     Get information on sample rows from non-passing
+                        validations
+get_validation_name     Get the pointblank validation name
+interrogate             Given an agent that is fully loaded with tasks,
+                        perform an interrogation
+is_ptblank_agent        Is the object a pointblank agent?
+rows_not_duplicated     Verify that row data are not duplicated
+run_validation_files    Process multiple validation files
+set_email_prefs         Set email credentials and enable email
+                        reporting
+set_slack_prefs         Set Slack credentials and enable Slack
+                        notifications
+vars                    Helper for targeting a series of row labels or
+                        columns

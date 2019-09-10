@@ -59,11 +59,6 @@
 #' # Get a basic summary with
 #' # `get_interrogation_summary()`
 #' get_interrogation_summary(agent)[, 1:7]
-#' #> # A tibble: 2 x 7
-#' #>   tbl_name  db_type assertion_type column value regex all_passed
-#' #>      <chr>    <chr>          <chr>  <chr> <dbl> <chr>      <lgl>
-#' #> 1     df_1 local_df   col_vals_gte      a     5  <NA>       TRUE
-#' #> 2     df_2 local_df col_vals_equal      c     8  <NA>       TRUE
 #' 
 #' @return A \pkg{pointblank} agent object.
 #' @import rlang

@@ -8,7 +8,8 @@
 #'   out and any sample rows from non-passing validations could potentially be
 #'   available in the object.
 #'   
-#' @examples 
+#' @examples
+#' \dontrun{
 #' # Set a seed
 #' set.seed(23)
 #' 
@@ -41,6 +42,7 @@
 #' # Find out which validation steps
 #' # contain sample row data
 #' get_row_sample_info(agent)
+#' }
 #' 
 #' @export
 get_row_sample_info <- function(agent) {

@@ -60,6 +60,7 @@
 #' agent %>%
 #'   get_row_sample_data(step = 1)
 #' }
+#' 
 #' @export
 get_row_sample_data <- function(agent,
                                 step) {

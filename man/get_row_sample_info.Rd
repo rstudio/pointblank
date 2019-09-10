@@ -17,6 +17,7 @@ Get information on which validation steps produced sample rows from
 non-passing validations.
 }
 \examples{
+\dontrun{
 # Set a seed
 set.seed(23)
 
@@ -49,5 +50,6 @@ agent <-
 # Find out which validation steps
 # contain sample row data
 get_row_sample_info(agent)
+}
 
 }

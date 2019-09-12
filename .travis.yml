@@ -24,7 +24,7 @@ jobs:
     - stage: deploy
       name: pkgdown
       r: release
-      if: branch IN (master)
+      if: branch IN (master, travis) AND repo = rich-iannone/pointblank AND type = push
       script:
       - Rscript -e "remotes::install_cran(c('pkgdown', 'devtools'))"
       - Rscript -e "devtools::install()"

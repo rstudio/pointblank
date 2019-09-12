@@ -75,19 +75,26 @@ get_row_sample_info <- function(agent) {
   # and the number of non-passing rows available
   # in the object
   row_sample_info <-
-    1:validation_steps %>%
+    seq_len(validation_steps) %>%
     purrr::map_df(.f = function(x) {
       
-      if (inherits(validation_set$row_sample[[x]][[1]], "tbl_df")) {
-        dplyr::tibble(
-          step = x,
-          tbl = validation_set$tbl_name[x],
-          type = validation_set$assertion_type[x],
-          n_fail = validation_set$n_failed[x],
-          n_sampled = nrow(validation_set$row_sample[[x]][[1]]),
-          brief = validation_set$brief[x]
-        )
+      if (!is.null(agent$row_samples) && x %in% agent$row_samples$pb_step_) {
+        n_sampled <- agent$row_samples %>%
+          dplyr::filter(pb_step_ == x) %>%
+          nrow()
+      } else {
+        n_sampled <- 0
       }
+      
+      dplyr::tibble(
+        step = x,
+        tbl = validation_set$tbl_name[x],
+        type = validation_set$assertion_type[x],
+        n_fail = validation_set$n_failed[x],
+        n_sampled = n_sampled,
+        brief = validation_set$brief[x]
+      )
+      
     })
   
   # Return the output table if there are
@@ -95,6 +102,6 @@ get_row_sample_info <- function(agent) {
   if (nrow(row_sample_info) == 0) {
     return(NA)
   } else if (nrow(row_sample_info > 0)) {
-    return(row_sample_info %>% as.data.frame(stringsAsFactors = FALSE))
+    return(row_sample_info)
   }
 }

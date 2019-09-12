@@ -510,7 +510,7 @@ interrogate <- function(agent,
         
         # Collect problem rows if requested
         
-        if (get_problem_rows) {
+        if (isTRUE(get_problem_rows)) {
           
           problem_rows <- 
             judgment %>%
@@ -558,18 +558,9 @@ interrogate <- function(agent,
             dplyr::mutate(pb_step_ = i) %>%
             dplyr::select(pb_step_, dplyr::everything())
         }
-        
-        # Place the sample of problem rows in
-        # the `agent$validation_set` tbl_df
-        # as a nested tbl_df
-        names_problem_rows <- names(problem_rows)
 
-        agent$validation_set$row_sample[i] <- 
-          tidyr::nest(
-            data = problem_rows,
-            names_problem_rows,
-            .key = "data"
-          )
+        # Place the sample of problem rows in `agent$row_samples`
+        agent$row_samples <- problem_rows
         
       } else if (false_count == 0) {
         agent$validation_set$all_passed[i] <- TRUE

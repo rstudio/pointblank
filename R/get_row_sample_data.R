@@ -82,8 +82,12 @@ get_row_sample_data <- function(agent,
   
   # Extract a tibble of non-passing table
   # rows associated with the step number provided
-  if (inherits(agent$validation_set$row_sample[[step]][[1]], "tbl_df")) {
-    return(agent$validation_set$row_sample[[step]][[1]])
+  if (!is.null(agent$row_samples) && step %in% agent$row_samples$pb_step_) {
+    
+    return(
+      agent$row_samples %>%
+        dplyr::filter(pb_step_ == step)
+      )
   } else {
     return(NA)
   }

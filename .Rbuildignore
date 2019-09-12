@@ -6,3 +6,6 @@
 ^CONDUCT\.md$
 ^README\.Rmd$
 ^revdep$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

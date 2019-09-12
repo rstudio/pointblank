@@ -1,7 +1,7 @@
 Type: Package
 Package: pointblank
 Title: Validation of Local and Remote Data Tables
-Version: 0.2.1
+Version: 0.2.1.9000
 Authors@R: 
     person("Richard", "Iannone", , "riannone@me.com", c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3925-190X"))

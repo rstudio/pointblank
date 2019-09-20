@@ -1,15 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<img src="man/figures/pointblank_logo.png">
+# pointblank <a href='http://rich-iannone.github.io/pointblank/'><img src="man/figures/logo.svg" align="right" height="250px" /></a>
 
-[![Travis-CI Build
-Status](https://travis-ci.org/rich-iannone/pointblank.svg?branch=master)](https://travis-ci.org/rich-iannone/pointblank)
-[![codecov.io](https://codecov.io/github/rich-iannone/pointblank/coverage.svg?branch=master)](https://codecov.io/github/rich-iannone/pointblank?branch=master)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/pointblank)](https://cran.r-project.org/package=pointblank)
+[![Travis-CI Build
+Status](https://travis-ci.org/rich-iannone/pointblank.svg?branch=master)](https://travis-ci.org/rich-iannone/pointblank)
+[![Codecov test
+coverage](https://codecov.io/gh/rich-iannone/pointblank/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/pointblank?branch=master)
 
-## We All Need to Validate our Data Sometimes
+## Overview
 
 Tables can often be trustworthy. All the data seems to be there and we
 may feel we can count on these tables to deliver us the info we need.

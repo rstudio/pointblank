@@ -40,8 +40,10 @@ col_vals_null <- function(x,
                           preconditions = NULL,
                           brief = NULL,
                           warn_count = NULL,
+                          stop_count = NULL,
                           notify_count = NULL,
                           warn_fraction = NULL,
+                          stop_fraction = NULL,
                           notify_fraction = NULL,
                           tbl_name = NULL,
                           db_type = NULL,
@@ -59,14 +61,19 @@ col_vals_null <- function(x,
   
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
+    preconditions <- rlang::enquo(preconditions)
+    
     return(
       x %>%
         evaluate_single(
           type = "col_vals_null",
           column = column,
+          preconditions = preconditions,
           warn_count = warn_count,
+          stop_count = stop_count,
           notify_count = notify_count,
           warn_fraction = warn_fraction,
+          stop_fraction = stop_fraction,
           notify_fraction = notify_fraction
         )
     )
@@ -110,8 +117,10 @@ col_vals_null <- function(x,
       preconditions = preconditions,
       brief = brief,
       warn_count = warn_count,
+      stop_count = stop_count,
       notify_count = notify_count,
       warn_fraction = warn_fraction,
+      stop_fraction = stop_fraction,
       notify_fraction = notify_fraction,
       tbl_name = ifelse(is.null(tbl_name), as.character(NA), tbl_name),
       db_type = ifelse(is.null(db_type), as.character(NA), db_type),

@@ -12,8 +12,10 @@ create_validation_step <- function(agent,
                                    preconditions = NULL,
                                    brief = NULL,
                                    warn_count = NULL,
+                                   stop_count = NULL,
                                    notify_count = NULL,
                                    warn_fraction = NULL,
+                                   stop_fraction = NULL,
                                    notify_fraction = NULL,
                                    tbl_name = as.character(NA),
                                    db_type = as.character(NA),
@@ -35,8 +37,10 @@ create_validation_step <- function(agent,
       brief = ifelse(is.null(brief), as.character(NA), as.character(brief)),
       all_passed = as.logical(NA),
       warn_count = ifelse(is.null(warn_count), as.numeric(NA), as.numeric(warn_count)),
+      stop_count = ifelse(is.null(stop_count), as.numeric(NA), as.numeric(stop_count)),
       notify_count = ifelse(is.null(notify_count), as.numeric(NA), as.numeric(notify_count)),
       warn_fraction = ifelse(is.null(warn_fraction), as.numeric(NA), as.numeric(warn_fraction)),
+      stop_fraction = ifelse(is.null(stop_fraction), as.numeric(NA), as.numeric(stop_fraction)),
       notify_fraction = ifelse(is.null(notify_fraction), as.numeric(NA), as.numeric(notify_fraction)),
       init_sql = as.character(agent$focal_init_sql),
       db_cred_file_path = as.character(agent$focal_db_cred_file_path),
@@ -134,21 +138,14 @@ create_validation_step <- function(agent,
   }
   
   # Append `validation_step` to `validation_set`
-  agent$validation_set <-
-    dplyr::bind_rows(
-      agent$validation_set,
-      validation_step_df
-    )
+  agent$validation_set <- 
+    dplyr::bind_rows(agent$validation_set, validation_step_df)
   
   # Append `sets`
   agent$sets <- dplyr::bind_rows(agent$sets, set_df)
   
   # Append `preconditions`
-  agent$preconditions <-
-    dplyr::bind_rows(
-      agent$preconditions,
-      preconditions_df
-    )
+  agent$preconditions <- dplyr::bind_rows(agent$preconditions, preconditions_df)
   
   agent
 }
@@ -315,12 +312,16 @@ get_all_cols <- function(agent) {
 #' Determine the course of action for a given verification step
 #' 
 #' @noRd
-determine_action <- function(n,
+determine_action <- function(validation_step,
                              false_count,
                              warn_count,
+                             stop_count,
                              notify_count,
                              warn_fraction,
+                             stop_fraction,
                              notify_fraction) {
+  
+  n <- validation_step$n[[1]]
   
   if (is.na(warn_count)) {
     warn <- FALSE
@@ -329,6 +330,28 @@ determine_action <- function(n,
       warn <- TRUE
     } else {
       warn <- FALSE
+    }
+  }
+  
+  if (is.na(stop_count)) {
+    stop <- FALSE
+  } else {
+    
+    if (false_count >= stop_count) {
+      
+      type <- validation_step$assertion_type
+      
+      messaging::emit_error(
+        "The validation (`{type}()`) meets or exceeds the `stop_count` threshold",
+        " * `failing_count` ({false_count}) >= `stop_count` ({stop_count})",
+        type = type,
+        false_count = false_count,
+        stop_count = stop_count,
+        .format = "{text}"
+      )
+      
+    } else {
+      stop <- FALSE
     }
   }
   
@@ -353,6 +376,30 @@ determine_action <- function(n,
     }
   }
   
+  if (!is.na(stop_fraction)) {
+    
+    stop_count <- round(stop_fraction * n, 0)
+    
+    if (false_count >= stop_count) {
+      
+      type <- validation_step$assertion_type
+      
+      false_fraction <- round(false_count / n, 3)
+      
+      messaging::emit_error(
+        "The validation (`{type}()`) meets or exceeds the `stop_fraction` threshold",
+        " * `failing_fraction` ({false_fraction}) >= `stop_fraction` ({stop_fraction})",
+        type = type,
+        false_fraction = false_fraction,
+        stop_fraction = stop_fraction,
+        .format = "{text}"
+      )
+      
+    } else {
+      stop <- FALSE
+    }
+  }
+  
   if (!is.na(notify_fraction)) {
     
     notify_count <- round(notify_fraction * n, 0)
@@ -364,7 +411,7 @@ determine_action <- function(n,
     }
   }
   
-  # Generate a tbl with action information
+  # Generate a tibble with action information
   dplyr::tibble(warn = warn, notify = notify)
 }
 

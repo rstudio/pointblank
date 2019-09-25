@@ -70,8 +70,6 @@ interrogate <- function(agent,
                         sample_frac = NULL,
                         sample_limit = 5000) {
   
-
-  
   # Get the starting time for the interrogation
   interrogation_start_time <- Sys.time()
   
@@ -706,15 +704,17 @@ interrogate <- function(agent,
     
     # ---------------------------------------------------------------
     # Determine the course of action for each validation check
-    
     actions <-
       determine_action(
-        n = agent$validation_set$n[i],
+        validation_step = agent$validation_set[i, ],
         false_count = false_count,
         warn_count = agent$validation_set$warn_count[i],
+        stop_count = agent$validation_set$stop_count[i],
         notify_count = agent$validation_set$notify_count[i],
         warn_fraction = agent$validation_set$warn_fraction[i],
-        notify_fraction = agent$validation_set$notify_fraction[i])
+        stop_fraction = agent$validation_set$stop_fraction[i],
+        notify_fraction = agent$validation_set$notify_fraction[i]
+      )
     
     agent$validation_set$notify[i] <- actions$notify
     agent$validation_set$warn[i] <- actions$warn

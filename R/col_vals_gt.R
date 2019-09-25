@@ -24,16 +24,16 @@
 #'   write a statement `a < 5` that filters all rows in the table where values
 #'   in column a are less than five.
 #' @param brief An optional, text-based description for the validation step.
-#' @param warn_count The threshold number for individual validations returning a
-#'   `FALSE` result before applying the `warn` flag.
-#' @param notify_count The threshold number for individual validations returning
-#'   a `FALSE` result before applying the `notify` flag.
-#' @param warn_fraction The threshold fraction for individual validations
-#'   returning a `FALSE` over all the entire set of individual validations.
-#'   Beyond this threshold, the `warn` flag will be applied.
-#' @param notify_fraction The threshold fraction for individual validations
-#'   returning a `FALSE` over all the entire set of individual validations.
-#'   Beyond this threshold, the `notify` flag will be applied.
+#' @param warn_count,notify_count The threshold number for individual
+#'   validations returning a `FALSE` result before applying the `warn` or
+#'   `notify` flag.
+#' @param warn_fraction,notify_fraction The threshold fraction for individual
+#'   validations returning a `FALSE` over all the entire set of individual
+#'   validations. Beyond this threshold, either the `warn` or `notify` flag will
+#'   be applied.
+#' @param stop_count,stop_fraction The threshold number or fraction of `FALSE`
+#'   validation results before stopping a simple validation or stopping an
+#'   agent-based validation.
 #' @param tbl_name The name of the local or remote table.
 #' @param db_type If the table is located in a database, the type of database is
 #'   required here. Currently, this can be either `PostgreSQL` or `MySQL`.
@@ -92,8 +92,10 @@ col_vals_gt <- function(x,
                         preconditions = NULL,
                         brief = NULL,
                         warn_count = NULL,
+                        stop_count = NULL,
                         notify_count = NULL,
                         warn_fraction = NULL,
+                        stop_fraction = NULL,
                         notify_fraction = NULL,
                         tbl_name = NULL,
                         db_type = NULL,
@@ -111,6 +113,8 @@ col_vals_gt <- function(x,
   
   if (inherits(x , c("data.frame", "tbl_df", "tbl_dbi"))) {
     
+    preconditions <- rlang::enquo(preconditions)
+    
     return(
       x %>%
         evaluate_single(
@@ -119,9 +123,12 @@ col_vals_gt <- function(x,
           value = value,
           incl_na = incl_na,
           incl_nan = incl_nan,
+          preconditions = preconditions,
           warn_count = warn_count,
+          stop_count = stop_count,
           notify_count = notify_count,
           warn_fraction = warn_fraction,
+          stop_fraction = stop_fraction,
           notify_fraction = notify_fraction
         )
     )
@@ -170,8 +177,10 @@ col_vals_gt <- function(x,
       preconditions = preconditions,
       brief = brief,
       warn_count = warn_count,
+      stop_count = stop_count,
       notify_count = notify_count,
       warn_fraction = warn_fraction,
+      stop_fraction = stop_fraction,
       notify_fraction = notify_fraction,
       tbl_name = ifelse(is.null(tbl_name), as.character(NA), tbl_name),
       db_type = ifelse(is.null(db_type), as.character(NA), db_type),

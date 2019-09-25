@@ -6,9 +6,10 @@
 \usage{
 col_vals_gt(x, column, value, incl_na = FALSE, incl_nan = FALSE,
   preconditions = NULL, brief = NULL, warn_count = NULL,
-  notify_count = NULL, warn_fraction = NULL, notify_fraction = NULL,
-  tbl_name = NULL, db_type = NULL, creds_file = NULL,
-  initial_sql = NULL, file_path = NULL, col_types = NULL)
+  stop_count = NULL, notify_count = NULL, warn_fraction = NULL,
+  stop_fraction = NULL, notify_fraction = NULL, tbl_name = NULL,
+  db_type = NULL, creds_file = NULL, initial_sql = NULL,
+  file_path = NULL, col_types = NULL)
 }
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
@@ -39,19 +40,18 @@ in column a are less than five.}
 
 \item{brief}{An optional, text-based description for the validation step.}
 
-\item{warn_count}{The threshold number for individual validations returning a
-\code{FALSE} result before applying the \code{warn} flag.}
+\item{warn_count, notify_count}{The threshold number for individual
+validations returning a \code{FALSE} result before applying the \code{warn} or
+\code{notify} flag.}
 
-\item{notify_count}{The threshold number for individual validations returning
-a \code{FALSE} result before applying the \code{notify} flag.}
+\item{stop_count, stop_fraction}{The threshold number or fraction of \code{FALSE}
+validation results before stopping a simple validation or stopping an
+agent-based validation.}
 
-\item{warn_fraction}{The threshold fraction for individual validations
-returning a \code{FALSE} over all the entire set of individual validations.
-Beyond this threshold, the \code{warn} flag will be applied.}
-
-\item{notify_fraction}{The threshold fraction for individual validations
-returning a \code{FALSE} over all the entire set of individual validations.
-Beyond this threshold, the \code{notify} flag will be applied.}
+\item{warn_fraction, notify_fraction}{The threshold fraction for individual
+validations returning a \code{FALSE} over all the entire set of individual
+validations. Beyond this threshold, either the \code{warn} or \code{notify} flag will
+be applied.}
 
 \item{tbl_name}{The name of the local or remote table.}
 

@@ -819,7 +819,7 @@ create_autobrief <- function(agent,
 #' Perform a single column validation that can issue warnings
 #' 
 #' @noRd
-evaluate_single <- function(object,
+evaluate_single <- function(x,
                             type,
                             column,
                             value = NULL,
@@ -829,60 +829,73 @@ evaluate_single <- function(object,
                             right = NULL,
                             incl_na = NULL,
                             incl_nan = NULL,
+                            preconditions,
                             warn_count,
+                            stop_count,
                             notify_count,
                             warn_fraction,
+                            stop_fraction,
                             notify_fraction) {
   
+  x_ret <- x
+  
   # Get the `column` number
-  col_number <- ((object %>% colnames()) %in% column) %>% which()
+  col_number <- ((x %>% colnames()) %in% column) %>% which()
+  
+  # Apply any preconditions
+  if (!is.null(rlang::get_expr(preconditions))) {
+    
+    x <- 
+      x %>%
+      dplyr::filter(!! preconditions)
+  }
   
   if (type == "col_vals_equal") {
     
     logicals <- 
-      object %>%
+      x %>%
       dplyr::pull(col_number) == value
   }
   
   if (type == "col_vals_not_equal") {
     
     logicals <- 
-      object %>%
+      x %>%
       dplyr::pull(col_number) != value
   }
   
   if (type == "col_vals_gt") {
     
     logicals <- 
-      object %>%
+      x %>%
       dplyr::pull(col_number) > value
   }
   
   if (type == "col_vals_gte") {
     
     logicals <- 
-      object %>%
+      x %>%
       dplyr::pull(col_number) >= value
   }
   
   if (type == "col_vals_lt") {
     
     logicals <- 
-      object %>%
+      x %>%
       dplyr::pull(col_number) < value
   }
   
   if (type == "col_vals_lte") {
     
     logicals <- 
-      object %>%
+      x %>%
       dplyr::pull(col_number) <= value
   }
   
   if (type == "col_vals_between") {
     
     vals <- 
-      object %>%
+      x %>%
       dplyr::pull(col_number)
     
     logicals <- 
@@ -905,7 +918,7 @@ evaluate_single <- function(object,
   if (type == "col_vals_not_between") {
     
     vals <- 
-      object %>%
+      x %>%
       dplyr::pull(col_number)
     
     logicals <- 
@@ -928,21 +941,21 @@ evaluate_single <- function(object,
   if (type == "col_vals_in_set") {
     
     logicals <- 
-      object %>%
+      x %>%
       dplyr::pull(col_number) %in% set
   }
   
   if (type == "col_vals_not_in_set") {
     
     logicals <- 
-      !(object %>%
+      !(x %>%
           dplyr::pull(col_number) %in% set)
   }
   
   if (type == "col_vals_regex") {
     
     vals <- 
-      object %>%
+      x %>%
       dplyr::pull(col_number)
     
     logicals <- 
@@ -952,14 +965,14 @@ evaluate_single <- function(object,
   if (type == "col_vals_not_null") {
     
     logicals <- 
-      !is.na(object %>%
+      !is.na(x %>%
                dplyr::pull(col_number))
   }
   
   if (type == "col_vals_null") {
     
     logicals <- 
-      is.na(object %>%
+      is.na(x %>%
               dplyr::pull(col_number))
   }
   
@@ -967,7 +980,7 @@ evaluate_single <- function(object,
     
     # Get the column type
     column_type <-
-      (object %>%
+      (x %>%
          dplyr::select(column) %>%
          utils::head(1) %>%
          dplyr::collect() %>%
@@ -997,7 +1010,7 @@ evaluate_single <- function(object,
   if (type == "cols_exist") {
     
     column_names <-
-      object %>%
+      x %>%
       utils::head(1) %>%
       dplyr::as_tibble() %>%
       colnames()
@@ -1021,11 +1034,13 @@ evaluate_single <- function(object,
         type = type,
         false_count = false_count,
         notify_count = notify_count,
-        .format = "ERROR {text}"
+        .format = "{text}"
       )
     }
   } else if (!is.null(notify_fraction)) {
     if ((false_count/total_count) >= notify_fraction) {
+      
+      false_fraction <- round(false_fraction, 3)
       
       messaging::emit_error(
         "The validation (`{type}()`) meets or exceeds the `notify_fraction` threshold",
@@ -1033,7 +1048,35 @@ evaluate_single <- function(object,
         type = type,
         false_fraction = false_fraction,
         notify_fraction = notify_fraction,
-        .format = "ERROR {text}"
+        .format = "{text}"
+      )
+    }
+  }
+  
+  if (!is.null(stop_count)) {
+    if (false_count >= stop_count) {
+      
+      messaging::emit_error(
+        "The validation (`{type}()`) meets or exceeds the `stop_count` threshold",
+        " * `failing_count` ({false_count}) >= `stop_count` ({stop_count})",
+        type = type,
+        false_count = false_count,
+        stop_count = stop_count,
+        .format = "{text}"
+      )
+    }
+  } else if (!is.null(stop_fraction)) {
+    if ((false_count/total_count) >= stop_fraction) {
+      
+      false_fraction <- round(false_fraction, 3)
+      
+      messaging::emit_error(
+        "The validation (`{type}()`) meets or exceeds the `stop_fraction` threshold",
+        " * `failing_fraction` ({false_fraction}) >= `stop_fraction` ({stop_fraction})",
+        type = type,
+        false_fraction = false_fraction,
+        stop_fraction = stop_fraction,
+        .format = "{text}"
       )
     }
   }
@@ -1047,7 +1090,7 @@ evaluate_single <- function(object,
         type = type,
         false_count = false_count,
         warn_count = warn_count,
-        .format = "WARN {text}"
+        .format = "{text}"
       )
       
     }
@@ -1060,10 +1103,10 @@ evaluate_single <- function(object,
         type = type,
         false_fraction = false_fraction,
         warn_fraction = warn_fraction,
-        .format = "WARN {text}"
+        .format = "{text}"
       )
     }
   }
   
-  object
+  x_ret
 }

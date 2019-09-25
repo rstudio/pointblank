@@ -1,6 +1,6 @@
-context("Performing interrogations")
+context("Performing interrogations with an agent")
 
-test_that("Interrogating for column types", {
+test_that("Interrogating with an agent yields the correct results", {
   
   # Use `col_is_character()` function to create
   # a validation step, then, `interrogate()`
@@ -882,4 +882,3 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
 })
-

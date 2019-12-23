@@ -4,8 +4,14 @@
 \alias{interrogate}
 \title{Given an agent that is fully loaded with tasks, perform an interrogation}
 \usage{
-interrogate(agent, get_problem_rows = TRUE, get_first_n = NULL,
-  sample_n = NULL, sample_frac = NULL, sample_limit = 5000)
+interrogate(
+  agent,
+  get_problem_rows = TRUE,
+  get_first_n = NULL,
+  sample_n = NULL,
+  sample_frac = NULL,
+  sample_limit = 5000
+)
 }
 \arguments{
 \item{agent}{An agent object of class \code{ptblank_agent}.}

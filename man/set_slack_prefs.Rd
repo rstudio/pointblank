@@ -4,10 +4,18 @@
 \alias{set_slack_prefs}
 \title{Set Slack credentials and enable Slack notifications}
 \usage{
-set_slack_prefs(agent, notify_active = FALSE, slack_webhook_url,
-  slack_channel, slack_username, slack_author_name = NULL,
-  slack_title = NULL, slack_report_url = NULL,
-  slack_footer_thumb_url = NULL, slack_footer_text = NULL)
+set_slack_prefs(
+  agent,
+  notify_active = FALSE,
+  slack_webhook_url,
+  slack_channel,
+  slack_username,
+  slack_author_name = NULL,
+  slack_title = NULL,
+  slack_report_url = NULL,
+  slack_footer_thumb_url = NULL,
+  slack_footer_text = NULL
+)
 }
 \arguments{
 \item{agent}{An agent object of class \code{ptblank_agent}.}

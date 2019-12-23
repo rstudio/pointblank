@@ -4,8 +4,14 @@
 \alias{get_html_summary}
 \title{Create an HTML summary file for the interrogation}
 \usage{
-get_html_summary(agent, output_file = NULL, output_dir = NULL,
-  intro_text = NULL, pre_results_text = NULL, footer_text = NULL)
+get_html_summary(
+  agent,
+  output_file = NULL,
+  output_dir = NULL,
+  intro_text = NULL,
+  pre_results_text = NULL,
+  footer_text = NULL
+)
 }
 \arguments{
 \item{agent}{An agent object of class \code{ptblank_agent}.}

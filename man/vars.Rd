@@ -11,5 +11,5 @@ vars(...)
 names or column names as strings enclosed in quotes.}
 }
 \description{
-See \code{dplyr::[vars][dplyr::vars]} for details.
+See \verb{dplyr::[vars][dplyr::vars]} for details.
 }

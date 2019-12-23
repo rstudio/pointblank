@@ -4,8 +4,7 @@
 \alias{run_validation_files}
 \title{Process multiple validation files}
 \usage{
-run_validation_files(input_dir = NULL, file_pattern = NULL,
-  input_files = NULL)
+run_validation_files(input_dir = NULL, file_pattern = NULL, input_files = NULL)
 }
 \arguments{
 \item{input_dir}{A path to where the validation scripts reside. Any files

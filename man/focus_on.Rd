@@ -4,9 +4,17 @@
 \alias{focus_on}
 \title{Place certain access details more to the fore}
 \usage{
-focus_on(agent, tbl_name = NULL, file_name = NULL, col_types = NULL,
-  db_type = NULL, initial_sql = NULL, brief = NULL,
-  creds_file = NULL, db_creds_env_vars = NULL)
+focus_on(
+  agent,
+  tbl_name = NULL,
+  file_name = NULL,
+  col_types = NULL,
+  db_type = NULL,
+  initial_sql = NULL,
+  brief = NULL,
+  creds_file = NULL,
+  db_creds_env_vars = NULL
+)
 }
 \arguments{
 \item{agent}{An agent object of class \code{ptblank_agent}.}
@@ -20,7 +28,7 @@ CSV and TSV files.}
 specification can be provided here as a string. This string representation
 is where each character represents one column and the mappings are: \code{c} ->
 character, \code{i} -> integer, \code{n} -> number, \code{d} -> double, \code{l} -> logical,
-\code{D} -> date, \code{T} -> date time, \code{t} -> time, \code{?} -> guess, or \code{_/-}, which
+\code{D} -> date, \code{T} -> date time, \code{t} -> time, \verb{?} -> guess, or \verb{_/-}, which
 skips the column.}
 
 \item{db_type}{If the table is located in a database, the type of database is
@@ -31,7 +39,7 @@ PostgreSQL), this provides an option to provide an initial SQL query that
 is applied to the table before conducting validations. An entire SQL
 statement can be provided here, or, as a shortcut, the initial \code{SELECT...}
 statement can be omitted for simple queries that filter the table in focus
-(e.g., \code{WHERE a > 1 AND b = 'one'}).}
+(e.g., \verb{WHERE a > 1 AND b = 'one'}).}
 
 \item{brief}{An optional, text-based description for the new focus.}
 

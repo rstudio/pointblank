@@ -33,6 +33,7 @@ create_validation_step <- function(agent,
       assertion_type = assertion_type,
       column = as.character(column),
       value = ifelse(is.null(value), as.numeric(NA), as.numeric(value)),
+      set = ifelse(is.null(set), list(NULL), list(set)),
       regex = ifelse(is.null(regex), as.character(NA), as.character(regex)),
       brief = ifelse(is.null(brief), as.character(NA), as.character(brief)),
       all_passed = as.logical(NA),
@@ -299,13 +300,152 @@ set_entry_point <- function(table,
   tbl_entry
 }
 
+get_tbl_object <- function(agent, idx) {
+  
+  if (agent$validation_set$db_type[idx] == "local_df") {
+    
+    # Create `table` object as the direct reference to a
+    # local `data.frame` or `tbl_df` object
+    tbl <- get(agent$validation_set$tbl_name[idx])
+    
+  } else if (agent$validation_set$db_type[idx] == "local_file") {
+    
+    file_path <- agent$validation_set$file_path[idx]
+    col_types <- agent$validation_set$col_types[idx]
+    
+    # Infer the file type from the extension
+    file_extension <- 
+      (agent$validation_set$file_path[idx] %>% 
+         basename() %>% 
+         stringr::str_split(pattern = "\\.") %>% 
+         unlist())[2] %>% 
+      tolower()
+    
+    if (is.na(col_types)) {
+      
+      if (file_extension == "csv") {
+        
+        tbl <- 
+          suppressMessages(
+            readr::read_csv(
+              file = file_path))
+        
+      } else if (file_extension == "tsv") {
+        
+        tbl <- 
+          suppressMessages(
+            readr::read_tsv(
+              file = file_path))
+      }
+    }
+    
+    if (!is.na(col_types)) {
+      
+      if (file_extension == "csv") {
+        
+        tbl <- 
+          suppressMessages(
+            readr::read_csv(
+              file = file_path,
+              col_types = col_types))
+        
+      } else if (file_extension == "tsv") {
+        
+        tbl <- 
+          suppressMessages(
+            readr::read_tsv(
+              file = file_path,
+              col_types = col_types))
+      }
+    }
+  } else if (agent$validation_set$db_type[idx] %in% c("PostgreSQL", "MySQL")) {
+    
+    # Determine if there is an initial SQL
+    # statement available as part of the 
+    # table focus (`focal_sql`) or as
+    # part of the validation step (`init_sql`)
+    if (!is.na(agent$validation_set$init_sql[idx])) {
+      initial_sql_stmt <- agent$validation_set$init_sql[idx]
+    } else if (!is.na(agent$focal_init_sql)) {
+      initial_sql_stmt <- agent$focal_init_sql
+    } else {
+      initial_sql_stmt <- NULL
+    }
+    
+    # Create `tbl` object as an SQL entry point for a remote table
+    
+    if (!is.na(agent$focal_db_cred_file_path)) {
+      
+      tbl <- 
+        set_entry_point(
+          table = agent$validation_set$tbl_name[idx],
+          db_type = agent$validation_set$db_type[idx],
+          creds_file = agent$validation_set$db_cred_file_path[idx],
+          initial_sql = initial_sql_stmt)
+      
+    } else if (length(agent$focal_db_env_vars) != 0) {
+      
+      tbl <- 
+        set_entry_point(
+          table = agent$validation_set$tbl_name[idx],
+          db_type = agent$validation_set$db_type[idx],
+          db_creds_env_vars = agent$focal_db_env_vars,
+          initial_sql = initial_sql_stmt)
+    }
+  }
+  
+  tbl
+}
+
+apply_preconditions_to_tbl <- function(agent, idx, tbl) {
+  
+  if (!is.na(agent$preconditions[[idx, 1]]) &&
+      agent$preconditions[[idx, 1]] != "NULL") {
+    
+    # Get the preconditions as a character vector
+    preconditions <-
+      stringr::str_trim(
+        agent$preconditions[[idx, 1]] %>%
+          strsplit(";") %>%
+          unlist())
+    
+    if (!is.null(preconditions)) {
+      for (j in seq(preconditions)) {
+        
+        # Apply the preconditions to filter the table
+        # before any validation occurs
+        tbl <-
+          tbl %>%
+          dplyr::filter_(preconditions[j])
+      }
+    }
+  }
+  
+  tbl
+}
+
+get_assertion_type_at_idx <- function(agent, idx) {
+  agent$validation_set[[idx, "assertion_type"]]
+}
+
+get_column_as_sym_at_idx <- function(agent, idx) {
+  rlang::sym(agent$validation_set[[idx, "column"]])
+}
+
+get_column_set_values_at_idx <- function(agent, idx) {
+  agent$validation_set[[idx, "set"]]
+}
+
+get_column_regex_at_idx <- function(agent, idx) {
+  agent$validation_set[[idx, "regex"]]
+}
+
 #' Get all column names from the table currently in focus
 #' 
 #' @noRd
 get_all_cols <- function(agent) {
   
-  # Get vector of all columns
-  # table currently in focus
+  # Get vector of all columns table currently in focus
   agent$focal_col_names
 }
 

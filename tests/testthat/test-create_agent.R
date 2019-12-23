@@ -14,13 +14,9 @@ test_that("Creating a valid `agent` object is possible", {
           "focal_tbl_name", "focal_file_name",
           "focal_db_type", "focal_col_names",
           "focal_col_types", "focal_db_cred_file_path",
-          "focal_db_env_vars", "focal_init_sql", "email_creds_file_path",
-          "email_notification_recipients", "email_notifications_active",
-          "slack_webhook_url", "slack_channel", "slack_username", 
-          "slack_author_name", "slack_title", "slack_report_url", 
-          "slack_footer_thumb_url", "slack_footer_text", 
-          "slack_notifications_active", "logical_plan",
-          "validation_set", "sets", "preconditions")))
+          "focal_db_env_vars", "focal_init_sql",
+          "email", "slack", "logical_plan",
+          "validation_set", "preconditions")))
   
   # Expect an agent object of class `dgr_graph`
   expect_is(agent, "ptblank_agent")
@@ -32,9 +28,6 @@ test_that("Creating a valid `agent` object is possible", {
   # Expect that the `validation_set` component is
   # a `tbl_df`
   expect_is(agent$validation_set, "tbl_df")
-  
-  # Expect that the `sets` component is a list
-  expect_is(agent$sets, "list")
   
   # Expect that the `preconditions` component is a list
   expect_is(agent$preconditions, "list")
@@ -50,23 +43,14 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$focal_col_types, "character")
   expect_is(agent$focal_db_cred_file_path, "character")
   expect_is(agent$focal_init_sql, "character")
-  expect_is(agent$email_creds_file_path, "character")
-  expect_is(agent$email_notification_recipients, "character")
-  expect_is(agent$email_notifications_active, "logical")
-  expect_is(agent$slack_webhook_url, "character")
-  expect_is(agent$slack_channel, "character")
-  expect_is(agent$slack_username, "character")
-  expect_is(agent$slack_author_name, "character")
-  expect_is(agent$slack_title, "character")
-  expect_is(agent$slack_report_url, "character")
-  expect_is(agent$slack_footer_thumb_url, "character")
-  expect_is(agent$slack_footer_text, "character")
-  expect_is(agent$slack_notifications_active, "logical")
+  expect_is(agent$email, "list")
+  expect_is(agent$slack, "list")
   expect_is(agent$validation_set$tbl_name, "character")
   expect_is(agent$validation_set$db_type, "character")
   expect_is(agent$validation_set$assertion_type, "character")
   expect_is(agent$validation_set$column, "character")
   expect_is(agent$validation_set$value, "numeric")
+  expect_is(agent$validation_set$set, "list")
   expect_is(agent$validation_set$regex, "character")
   expect_is(agent$validation_set$n, "integer")
   expect_is(agent$validation_set$n_passed, "integer")

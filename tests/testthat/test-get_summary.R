@@ -18,7 +18,7 @@ test_that("Getting a validation summary is possible", {
   expect_equivalent(
     colnames(summary),
     c("tbl_name", "db_type", "assertion_type", "column", "value",
-      "regex", "all_passed", "n", "n_passed",
+      "set", "regex", "all_passed", "n", "n_passed",
       "f_passed", "action", "brief"))
   
   # Expect a single row in this summary
@@ -30,6 +30,7 @@ test_that("Getting a validation summary is possible", {
   expect_is(summary$assertion_type, "character")
   expect_is(summary$column, "character")
   expect_is(summary$value, "numeric")
+  expect_is(summary$set, "list")
   expect_is(summary$regex, "character")
   expect_is(summary$all_passed, "logical")
   expect_is(summary$n, "numeric")

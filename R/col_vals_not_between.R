@@ -66,6 +66,9 @@ col_vals_not_between <- function(x,
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
   
+  left <- stats::setNames(left, inclusive[1])
+  right <- stats::setNames(right, inclusive[2])
+  
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     preconditions <- rlang::enquo(preconditions)

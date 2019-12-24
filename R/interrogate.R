@@ -104,17 +104,32 @@ interrogate <- function(agent,
       
       incl_left <- names(set)[1] %>% as.logical()
       incl_right <- names(set)[2] %>% as.logical()
+      incl_str <- paste(ifelse(names(set), "incl", "excl"), collapse = "_")
       
       if (assertion_type == "col_vals_between") {
         
         # Perform rowwise validations for the column
-        tbl_checked <- ib_incl_incl(table = table, column = {{column}}, set = set, incl_na = incl_na)
+        tbl_checked <- 
+          switch(
+            incl_str,
+            "incl_incl" = ib_incl_incl(table, {{column}}, set, incl_na),
+            "excl_incl" = ib_excl_incl(table, {{column}}, set, incl_na),
+            "incl_excl" = ib_incl_excl(table, {{column}}, set, incl_na),
+            "excl_excl" = ib_excl_excl(table, {{column}}, set, incl_na)
+          )
       }
       
       if (assertion_type == "col_vals_not_between") {
         
         # Perform rowwise validations for the column
-        tbl_checked <- nb_incl_incl(table = table, column = {{column}}, set = set, incl_na = incl_na)
+        tbl_checked <- 
+          switch(
+            incl_str,
+            "incl_incl" = nb_incl_incl(table, {{column}}, set, incl_na),
+            "excl_incl" = nb_excl_incl(table, {{column}}, set, incl_na),
+            "incl_excl" = nb_incl_excl(table, {{column}}, set, incl_na),
+            "excl_excl" = nb_excl_excl(table, {{column}}, set, incl_na)
+          )
       }
     }
     

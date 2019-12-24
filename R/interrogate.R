@@ -74,7 +74,7 @@ interrogate <- function(agent,
   agent$validation_time <- Sys.time()
   
   for (i in seq(nrow(agent$validation_set))) {
-    
+
     # Get the starting time for the validation step
     validation_start_time <- Sys.time()
   
@@ -92,69 +92,29 @@ interrogate <- function(agent,
     # rely on betweenness checking
 
     if (assertion_type %in% c("col_vals_between", "col_vals_not_between")) {
+
+      # Get the set values for the expression
+      set <- get_column_set_values_at_idx(agent = agent, idx = i)
       
-      # Get the `left` and `right` bounding values
-      bounding_vals <- 
-        (agent[["sets"]] %>%
-           dplyr::select(set) %>%
-           purrr::flatten_chr())[[i]]
-      
-      left <-
-        (bounding_vals %>%
-           strsplit(",") %>%
-           unlist() %>%
-           as.numeric())[[1]]
-      
-      right <-
-        (bounding_vals %>%
-           strsplit(",") %>%
-           unlist() %>%
-           as.numeric())[[2]]
-      
-      incl_na <- 
-        (agent[["sets"]] %>%
-           dplyr::select(incl_na) %>%
-           purrr::flatten_lgl())[[i]]
-      
-      incl_nan <- 
-        (agent[["sets"]] %>%
-           dplyr::select(incl_nan) %>%
-           purrr::flatten_lgl())[[i]]
+      # Determine whether NAs should be allowed
+      incl_na <- get_column_incl_na_at_idx(agent = agent, idx = i)
 
       # Obtain the target column as a symbol
       column <- get_column_as_sym_at_idx(agent = agent, idx = i)
       
+      incl_left <- names(set)[1] %>% as.logical()
+      incl_right <- names(set)[2] %>% as.logical()
+      
       if (assertion_type == "col_vals_between") {
         
         # Perform rowwise validations for the column
-        judgment <-
-          table %>%
-          dplyr::mutate(pb_is_good_ = dplyr::case_when(
-            {{ column }} >= left & {{ column }} <= right ~ TRUE,
-            {{ column }} < left | {{ column }} > right ~ FALSE,
-            is.na({{ column }}) & incl_na ~ TRUE,
-            is.na({{ column }}) & incl_na == FALSE ~ FALSE,
-            is.nan({{ column }}) & incl_nan ~ TRUE,
-            is.nan({{ column }}) & incl_nan == FALSE ~ FALSE
-          ))
+        tbl_checked <- ib_incl_incl(table = table, column = {{column}}, set = set, incl_na = incl_na)
       }
       
       if (assertion_type == "col_vals_not_between") {
         
-        excl_na <- incl_na
-        excl_nan <- incl_nan
-        
         # Perform rowwise validations for the column
-        judgment <-
-          table %>%
-          dplyr::mutate(pb_is_good_ = dplyr::case_when(
-            {{ column }} < left | {{ column }} > right ~ TRUE,
-            {{ column }} >= left & {{ column }} <= right ~ FALSE,
-            is.na({{ column }}) & excl_na ~ TRUE,
-            is.na({{ column }}) & excl_na == FALSE ~ FALSE,
-            is.nan({{ column }}) & excl_nan ~ TRUE,
-            is.nan({{ column }}) & excl_nan == FALSE ~ FALSE
-          ))
+        tbl_checked <- nb_incl_incl(table = table, column = {{column}}, set = set, incl_na = incl_na)
       }
     }
     
@@ -173,7 +133,7 @@ interrogate <- function(agent,
       if (assertion_type == "col_vals_in_set") {
         
         # Perform rowwise validations for the column
-        judgment <-
+        tbl_checked <-
           table %>%
           dplyr::mutate(pb_is_good_ = dplyr::case_when(
             {{ column }} %in% set ~ TRUE,
@@ -184,7 +144,7 @@ interrogate <- function(agent,
       if (assertion_type == "col_vals_not_in_set") {
         
         # Perform rowwise validations for the column
-        judgment <-
+        tbl_checked <-
           table %>%
           dplyr::mutate(pb_is_good_ = dplyr::case_when(
             !({{ column }} %in% set) ~ TRUE,
@@ -205,7 +165,7 @@ interrogate <- function(agent,
       column <- get_column_as_sym_at_idx(agent = agent, idx = i)
       
       # Perform rowwise validations for the column
-      judgment <- 
+      tbl_checked <- 
         table %>% dplyr::mutate(pb_is_good_ = grepl(regex, {{ column }}))
     }
     
@@ -219,7 +179,7 @@ interrogate <- function(agent,
       column <- get_column_as_sym_at_idx(agent = agent, idx = i)
       
       # Perform rowwise validations for the column
-      judgment <- 
+      tbl_checked <- 
         table %>% dplyr::mutate(pb_is_good_ = is.na({{ column }}))
     }
     
@@ -233,7 +193,7 @@ interrogate <- function(agent,
       column <- get_column_as_sym_at_idx(agent = agent, idx = i)
       
       # Perform rowwise validations for the column
-      judgment <- 
+      tbl_checked <- 
         table %>% dplyr::mutate(pb_is_good_ = !is.na({{ column }}))
     }
     
@@ -250,7 +210,7 @@ interrogate <- function(agent,
         dplyr::as_tibble() %>%
         colnames()
       
-      judgment <-
+      tbl_checked <-
         ifelse(
           agent$validation_set$column[i] %in% column_names,
           TRUE, FALSE)
@@ -259,16 +219,16 @@ interrogate <- function(agent,
       
       agent$validation_set$n_passed[i] <- 
         agent$validation_set$f_passed[i] <-
-        ifelse(judgment, 1, 0)
+        ifelse(tbl_checked, 1, 0)
       
       agent$validation_set$n_failed[i] <-
         agent$validation_set$f_failed[i] <-
-        ifelse(judgment, 0, 1)
+        ifelse(tbl_checked, 0, 1)
       
       agent$validation_set$all_passed[i] <-
-        ifelse(judgment, TRUE, FALSE)
+        ifelse(tbl_checked, TRUE, FALSE)
       
-      if (judgment) {
+      if (tbl_checked) {
         n_failed <- false_count <- 0
       } else {
         n_failed <- false_count <- 1  
@@ -300,8 +260,8 @@ interrogate <- function(agent,
         operator <- "!="
       } 
       
-      # Get the final judgment on the table and the query
-      judgment <- 
+      # Get the final tbl_checked on the table and the query
+      tbl_checked <- 
         table %>%
         dplyr::mutate_(.dots = stats::setNames(
           paste0(
@@ -319,7 +279,7 @@ interrogate <- function(agent,
       
       # Get total count of rows
       row_count <-
-        judgment %>%
+        tbl_checked %>%
         dplyr::group_by() %>%
         dplyr::summarize(row_count = dplyr::n()) %>%
         dplyr::as_tibble() %>%
@@ -327,7 +287,7 @@ interrogate <- function(agent,
       
       # Get total count of TRUE rows
       n_passed <-
-        judgment %>%
+        tbl_checked %>%
         dplyr::filter(pb_is_good_ == TRUE) %>%
         dplyr::group_by() %>%
         dplyr::summarize(row_count = dplyr::n()) %>%
@@ -336,7 +296,7 @@ interrogate <- function(agent,
       
       # Get total count of FALSE rows
       n_failed <-
-        judgment %>%
+        tbl_checked %>%
         dplyr::filter(pb_is_good_ == FALSE) %>%
         dplyr::group_by() %>%
         dplyr::summarize(row_count = dplyr::n()) %>%
@@ -351,7 +311,7 @@ interrogate <- function(agent,
       
       # Get count of rows where `pb_is_good_ == FALSE`
       false_count <-
-        judgment %>%
+        tbl_checked %>%
         dplyr::filter(pb_is_good_ == FALSE) %>%
         dplyr::group_by() %>%
         dplyr::summarize(pb_is_not_good_ = dplyr::n()) %>%
@@ -368,7 +328,7 @@ interrogate <- function(agent,
         if (isTRUE(get_problem_rows)) {
           
           problem_rows <- 
-            judgment %>%
+            tbl_checked %>%
             dplyr::filter(pb_is_good_ == FALSE) %>%
             dplyr::select(-pb_is_good_)
           

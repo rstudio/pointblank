@@ -9,7 +9,6 @@ col_vals_gt(
   column,
   value,
   incl_na = FALSE,
-  incl_nan = FALSE,
   preconditions = NULL,
   brief = NULL,
   warn_count = NULL,
@@ -38,9 +37,6 @@ columns (e.g., \code{a + b} or \code{a + sum(a)}).}
 are considered passing.}
 
 \item{incl_na}{Should \code{NA} values be a part of the condition? This is by
-default \code{FALSE}.}
-
-\item{incl_nan}{Should \code{NaN} values be a part of the condition? This is by
 default \code{FALSE}.}
 
 \item{preconditions}{An optional statement of filtering conditions that may

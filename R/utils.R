@@ -8,7 +8,6 @@ create_validation_step <- function(agent,
                                    set = NULL,
                                    regex = NULL,
                                    incl_na = NULL,
-                                   incl_nan = NULL,
                                    preconditions = NULL,
                                    brief = NULL,
                                    warn_count = NULL,
@@ -34,6 +33,7 @@ create_validation_step <- function(agent,
       column = as.character(column),
       value = ifelse(is.null(value), as.numeric(NA), as.numeric(value)),
       set = ifelse(is.null(set), list(NULL), list(set)),
+      incl_na = ifelse(is.null(incl_na), as.logical(NA), as.logical(incl_na)),
       regex = ifelse(is.null(regex), as.character(NA), as.character(regex)),
       brief = ifelse(is.null(brief), as.character(NA), as.character(brief)),
       all_passed = as.logical(NA),
@@ -87,8 +87,7 @@ create_validation_step <- function(agent,
             x = x,
             set = paste(set, collapse = ","),
             class = class(set),
-            incl_na = ifelse(is.null(incl_na), FALSE, incl_na),
-            incl_nan = ifelse(is.null(incl_nan), FALSE, incl_nan))
+            incl_na = ifelse(is.null(incl_na), FALSE, incl_na))
         }) %>%
       dplyr::select(-x)
     
@@ -102,8 +101,7 @@ create_validation_step <- function(agent,
             x = x,
             set = as.character(NA),
             class = as.character(NA),
-            incl_na = FALSE,
-            incl_nan = FALSE)
+            incl_na = FALSE)
         }) %>%
       dplyr::select(-x)
   }
@@ -301,7 +299,7 @@ set_entry_point <- function(table,
 }
 
 get_tbl_object <- function(agent, idx) {
-  
+
   if (agent$validation_set$db_type[idx] == "local_df") {
     
     # Create `table` object as the direct reference to a
@@ -434,6 +432,10 @@ get_column_as_sym_at_idx <- function(agent, idx) {
 
 get_column_set_values_at_idx <- function(agent, idx) {
   agent$validation_set[[idx, "set"]]
+}
+
+get_column_incl_na_at_idx <- function(agent, idx) {
+  agent$validation_set[[idx, "incl_na"]]
 }
 
 get_column_regex_at_idx <- function(agent, idx) {
@@ -956,6 +958,79 @@ create_autobrief <- function(agent,
   autobrief
 }
 
+ib_incl_incl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} >= set[1] & {{ column }} <= set[2] ~ TRUE,
+      {{ column }} < set[1] | {{ column }} > set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+ib_excl_incl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} > set[1] & {{ column }} <= set[2] ~ TRUE,
+      {{ column }} <= set[1] | {{ column }} > set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+ib_incl_excl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} >= set[1] & {{ column }} < set[2] ~ TRUE,
+      {{ column }} < set[1] | {{ column }} >= set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+ib_excl_excl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} > set[1] & {{ column }} < set[2] ~ TRUE,
+      {{ column }} <= set[1] | {{ column }} >= set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+nb_incl_incl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} < set[1] | {{ column }} > set[2] ~ TRUE,
+      {{ column }} >= set[1] & {{ column }} <= set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+nb_excl_incl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} <= set[1] | {{ column }} > set[2] ~ TRUE,
+      {{ column }} > set[1] & {{ column }} <= set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+nb_incl_excl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} < set[1] | {{ column }} >= set[2] ~ TRUE,
+      {{ column }} >= set[1] & {{ column }} < set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+nb_excl_excl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} <= set[1] | {{ column }} >= set[2] ~ TRUE,
+      {{ column }} > set[1] & {{ column }} < set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+
 #' Perform a single column validation that can issue warnings
 #' 
 #' @noRd
@@ -968,7 +1043,6 @@ evaluate_single <- function(x,
                             left = NULL,
                             right = NULL,
                             incl_na = NULL,
-                            incl_nan = NULL,
                             preconditions,
                             warn_count,
                             stop_count,
@@ -1047,12 +1121,6 @@ evaluate_single <- function(x,
     } else if (incl_na == FALSE) {
       logicals[which(is.na(logicals))] <- FALSE
     }
-    
-    if (incl_nan == TRUE) {
-      logicals[which(is.nan(logicals))] <- TRUE
-    } else if (incl_nan == FALSE) {
-      logicals[which(is.nan(logicals))] <- FALSE
-    }
   }
   
   if (type == "col_vals_not_between") {
@@ -1069,12 +1137,6 @@ evaluate_single <- function(x,
       logicals[which(is.na(logicals))] <- TRUE
     } else if (incl_na == FALSE) {
       logicals[which(is.na(logicals))] <- FALSE
-    }
-    
-    if (incl_nan == TRUE) {
-      logicals[which(is.nan(logicals))] <- TRUE
-    } else if (incl_nan == FALSE) {
-      logicals[which(is.nan(logicals))] <- FALSE
     }
   }
   

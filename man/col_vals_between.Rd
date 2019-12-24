@@ -9,8 +9,8 @@ col_vals_between(
   column,
   left,
   right,
+  inclusive = c(TRUE, TRUE),
   incl_na = FALSE,
-  incl_nan = FALSE,
   preconditions = NULL,
   brief = NULL,
   warn_count = NULL,
@@ -42,9 +42,6 @@ value in addition to values greater than \code{left}.}
 bound value in addition to values lower than \code{right}.}
 
 \item{incl_na}{Should \code{NA} values be a part of the condition? This is by
-default \code{FALSE}.}
-
-\item{incl_nan}{Should \code{NaN} values be a part of the condition? This is by
 default \code{FALSE}.}
 
 \item{preconditions}{An optional statement of filtering conditions that may

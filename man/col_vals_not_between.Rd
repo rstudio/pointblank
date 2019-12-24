@@ -9,8 +9,8 @@ col_vals_not_between(
   column,
   left,
   right,
+  inclusive = c(TRUE, TRUE),
   incl_na = TRUE,
-  incl_nan = TRUE,
   preconditions = NULL,
   brief = NULL,
   warn_count = NULL,
@@ -39,9 +39,6 @@ columns (e.g., \code{a + b} or \code{a + sum(a)}).}
 Any values \verb{>= left} and \verb{<= right} will be considered as failing.}
 
 \item{incl_na}{Should \code{NA} values be a part of the condition? This is by
-default \code{FALSE}.}
-
-\item{incl_nan}{Should \code{NaN} values be a part of the condition? This is by
 default \code{FALSE}.}
 
 \item{preconditions}{An optional statement of filtering conditions that may

@@ -75,37 +75,6 @@ create_validation_step <- function(agent,
     validation_step_df$col_types <- col_types
   }
   
-  # If a set has been provided as a vector, include
-  # these values as a `df_tbl` object
-  if (!is.null(set)) {
-    
-    set_df <-
-      1:nrow(validation_step_df) %>%
-      purrr::map_df(
-        function(x) {
-          dplyr::tibble(
-            x = x,
-            set = paste(set, collapse = ","),
-            class = class(set),
-            incl_na = ifelse(is.null(incl_na), FALSE, incl_na))
-        }) %>%
-      dplyr::select(-x)
-    
-  } else {
-    
-    set_df <-
-      1:nrow(validation_step_df) %>%
-      purrr::map_df(
-        function(x) {
-          dplyr::tibble(
-            x = x,
-            set = as.character(NA),
-            class = as.character(NA),
-            incl_na = FALSE)
-        }) %>%
-      dplyr::select(-x)
-  }
-  
   # If preconditions have been provided as a vector, include
   # these values as a `df_tbl` object
   if (!is.null(preconditions)) {
@@ -139,9 +108,6 @@ create_validation_step <- function(agent,
   # Append `validation_step` to `validation_set`
   agent$validation_set <- 
     dplyr::bind_rows(agent$validation_set, validation_step_df)
-  
-  # Append `sets`
-  agent$sets <- dplyr::bind_rows(agent$sets, set_df)
   
   # Append `preconditions`
   agent$preconditions <- dplyr::bind_rows(agent$preconditions, preconditions_df)

@@ -224,6 +224,7 @@ interrogate <- function(agent,
       # Obtain the target column as a symbol
       column <- get_column_as_sym_at_idx(agent = agent, idx = i)
       
+      # Perform rowwise validations for the column
       tbl_checked <-
         dplyr::tibble(pb_is_good_ = as.character(column) %in% column_names)
     }
@@ -236,34 +237,33 @@ interrogate <- function(agent,
         c("col_vals_gt", "col_vals_gte",
           "col_vals_lt", "col_vals_lte",
           "col_vals_equal", "col_vals_not_equal")) {
-      
+
       # Get the value for the expression
       value <- get_column_value_at_idx(agent = agent, idx = i)
       
       # Obtain the target column as a symbol
-      column <- get_column_as_sym_at_idx(agent = agent, idx = i)
+      column <- get_column_as_sym_at_idx(agent = agent, idx = i) %>% as_label()
       
       # Get operator values for all assertion types involving
       # simple operator comparisons
-      if (assertion_type == "col_vals_gt") {
-        operator <- ">"
-      } else if (assertion_type == "col_vals_gte") {
-        operator <- ">="
-      } else if (assertion_type == "col_vals_lt") {
-        operator <- "<"
-      } else if (assertion_type == "col_vals_lte") {
-        operator <- "<="
-      } else if (assertion_type == "col_vals_equal") {
-        operator <- "=="
-      } else if (assertion_type == "col_vals_not_equal") {
-        operator <- "!="
-      } 
+      operator <- 
+        switch(
+          assertion_type,
+          "col_vals_gt" = ">",
+          "col_vals_gte" = ">=",
+          "col_vals_lt" = "<",
+          "col_vals_lte" = "<=",
+          "col_vals_equal" = "==",
+          "col_vals_not_equal" = "!="
+        )
       
-      # Get the final tbl_checked on the table and the query
-      tbl_checked <- 
+      # Construct a string-based expression for the validation
+      expression <- paste(column, operator, value)
+      
+      # Perform rowwise validations for the column
+      tbl_checked <-
         table %>%
-        dplyr::mutate_(.dots = stats::setNames(
-          paste0(column, operator, value), "pb_is_good_"))
+        dplyr::mutate(pb_is_good_ = !!parse_expr(expression))
     }
     
     # ---------------------------------------------------------------
@@ -295,6 +295,7 @@ interrogate <- function(agent,
           FALSE
         )
       
+      # Perform rowwise validations for the column
       tbl_checked <- dplyr::tibble(pb_is_good_ = validation_res)
     }
     
@@ -352,6 +353,7 @@ interrogate <- function(agent,
       
       validation_res <- ifelse(duplicate_count == 0, TRUE, FALSE)
       
+      # Perform rowwise validations for the column
       tbl_checked <- 
         table %>%
         dplyr::mutate(pb_is_good_ = ifelse(dplyr::row_number() %in% duplicate_row_idx, FALSE, TRUE))

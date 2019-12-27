@@ -25,6 +25,8 @@
 #'   when sampling non-passing rows using the `sample_frac` option.
 #'   
 #' @examples 
+#' library(dplyr)
+#' 
 #' # Create 2 simple data frames
 #' # with 2 columns of numerical
 #' # values in each
@@ -53,7 +55,8 @@
 #'   col_vals_equal(
 #'     column = c,
 #'     value = 8,
-#'     preconditions = d >= 5) %>%
+#'     preconditions = ~ tbl %>% dplyr::filter(d >= 5)
+#'   ) %>%
 #'   interrogate()
 #'   
 #' # Get a basic summary with

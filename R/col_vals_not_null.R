@@ -6,6 +6,8 @@
 #' @inheritParams col_vals_gt
 #' 
 #' @examples
+#' library(dplyr)
+#' 
 #' # Create a simple data frame with
 #' # 2 columns of numerical values
 #' df <-
@@ -23,7 +25,8 @@
 #'   focus_on(tbl_name = "df") %>%
 #'   col_vals_not_null(
 #'     column = a,
-#'     preconditions = b == 2) %>%
+#'     preconditions = ~ tbl %>% dplyr::filter(b == 2)
+#'   ) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column

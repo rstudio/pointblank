@@ -7,6 +7,8 @@
 #' @param value A numeric value used to test for equality.
 #' 
 #' @examples
+#' library(dplyr)
+#' 
 #' # Create a simple data frame
 #' # with 2 columns of numerical values
 #' df <-
@@ -23,7 +25,8 @@
 #'   col_vals_equal(
 #'     column = b,
 #'     value = 5,
-#'     preconditions = a == 1) %>%
+#'     preconditions = ~ tbl %>% dplyr::filter(a == 1)
+#'   ) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column

@@ -7,6 +7,8 @@
 #' @param value a numeric value used to test for non-equality.
 #' 
 #' @examples
+#' library(dplyr)
+#' 
 #' # Create a simple data frame
 #' # with 2 columns of numerical values
 #' df <-
@@ -24,7 +26,7 @@
 #'   col_vals_not_equal(
 #'     column = b,
 #'     value = 5,
-#'     preconditions = a == 2
+#'     preconditions = ~ tbl %>% dplyr::filter(a == 2)
 #'   ) %>%
 #'   interrogate()
 #' 

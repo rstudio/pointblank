@@ -107,6 +107,8 @@ Verification step where numeric values in a table column should not be equal
 to a specified value.
 }
 \examples{
+library(dplyr)
+
 # Create a simple data frame
 # with 2 columns of numerical values
 df <-
@@ -124,7 +126,7 @@ agent <-
   col_vals_not_equal(
     column = b,
     value = 5,
-    preconditions = a == 2
+    preconditions = ~ tbl \%>\% dplyr::filter(a == 2)
   ) \%>\%
   interrogate()
 

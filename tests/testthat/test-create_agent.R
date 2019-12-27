@@ -16,7 +16,7 @@ test_that("Creating a valid `agent` object is possible", {
           "focal_col_types", "focal_db_cred_file_path",
           "focal_db_env_vars", "focal_init_sql",
           "email", "slack", "logical_plan",
-          "validation_set", "preconditions")))
+          "validation_set")))
   
   # Expect an agent object of class `dgr_graph`
   expect_is(agent, "ptblank_agent")
@@ -28,9 +28,6 @@ test_that("Creating a valid `agent` object is possible", {
   # Expect that the `validation_set` component is
   # a `tbl_df`
   expect_is(agent$validation_set, "tbl_df")
-  
-  # Expect that the `preconditions` component is a list
-  expect_is(agent$preconditions, "list")
   
   # Expect certain classes for the different
   # `agent` components
@@ -52,6 +49,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$validation_set$value, "numeric")
   expect_is(agent$validation_set$set, "list")
   expect_is(agent$validation_set$regex, "character")
+  expect_is(agent$validation_set$preconditions, "list")
   expect_is(agent$validation_set$n, "integer")
   expect_is(agent$validation_set$n_passed, "integer")
   expect_is(agent$validation_set$n_failed, "integer")

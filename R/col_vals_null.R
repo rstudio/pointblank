@@ -6,6 +6,8 @@
 #' @inheritParams col_vals_gt
 #'   
 #' @examples
+#' library(dplyr)
+#' 
 #' # Create a simple data frame with
 #' # 2 columns of numerical values
 #' df <-
@@ -23,7 +25,8 @@
 #'   focus_on(tbl_name = "df") %>%
 #'   col_vals_null(
 #'     column = a,
-#'     preconditions = b == 5) %>%
+#'     preconditions = ~ tbl %>% dplyr::filter(b >= 5)
+#'   ) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column
@@ -61,8 +64,6 @@ col_vals_null <- function(x,
   
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
-    preconditions <- rlang::enquo(preconditions)
-    
     return(
       x %>%
         evaluate_single(
@@ -80,17 +81,6 @@ col_vals_null <- function(x,
   }
   
   agent <- x
-  
-  # Get the preconditions
-  preconditions <- 
-    rlang::enquo(preconditions) %>%
-    rlang::expr_text() %>%
-    stringr::str_replace_all("~", "") %>%
-    stringr::str_replace_all("\"", "'")
-  
-  if (length(preconditions) == 0) {
-    preconditions <- NULL
-  }
   
   if (is.null(brief)) {
     

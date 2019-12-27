@@ -99,6 +99,7 @@ create_agent <- function(validation_name = NULL) {
           value = numeric(0),
           set = list(NULL),
           regex = character(0),
+          preconditions = list(NULL),
           all_passed = logical(0),
           n = integer(0),
           n_passed = integer(0),
@@ -120,8 +121,7 @@ create_agent <- function(validation_name = NULL) {
           col_types = character(0),
           time_processed = as.POSIXct(NA)[-1],
           proc_duration_s = numeric(0)
-        ),
-      preconditions = list()
+        )
     )
   
   # Add the agent name to the object

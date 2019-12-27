@@ -270,7 +270,8 @@ test_that("Interrogating for valid row values", {
       column = d,
       left = 0,
       right = 5000,
-      preconditions = date > "2016-01-04") %>%
+      preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-04")
+    )%>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -339,7 +340,8 @@ test_that("Interrogating for valid row values", {
       column = d,
       left = 500,
       right = 1000,
-      preconditions = date > "2016-01-04") %>%
+      preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-04")
+    ) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -406,7 +408,8 @@ test_that("Interrogating for valid row values", {
     col_vals_equal(
       column = d,
       value = 283.94,
-      preconditions = date > "2016-01-04") %>%
+      preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-04")
+    ) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -472,7 +475,8 @@ test_that("Interrogating for valid row values", {
     col_vals_not_equal(
       column = d,
       value = 283.94,
-      preconditions = date > "2016-01-04") %>%
+      preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-04")
+    ) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -534,7 +538,8 @@ test_that("Interrogating for valid row values", {
                               package = "pointblank"),
       col_types = "TDicidlc") %>%
     rows_not_duplicated(
-      preconditions = date != "2016-01-20") %>%
+      preconditions = ~ tbl %>% dplyr::filter(date != "2016-01-20")
+    ) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -736,7 +741,9 @@ test_that("Interrogating for valid row values", {
       col_types = "TDicidlc") %>%
     col_vals_not_null(
       column = c,
-      preconditions = date > "2016-01-06" & date < "2016-01-30") %>%
+      preconditions = ~ tbl %>%
+        dplyr::filter(date > "2016-01-06" & date < "2016-01-30")
+    ) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -799,7 +806,9 @@ test_that("Interrogating for valid row values", {
       col_types = "TDicidlc") %>%
     col_vals_null(
       column = c,
-      preconditions = date == '2016-01-06' | date == '2016-01-30') %>%
+      preconditions = ~ tbl %>%
+        dplyr::filter(date == '2016-01-06' | date == '2016-01-30')
+    ) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -865,7 +874,8 @@ test_that("Interrogating for valid row values", {
     col_vals_regex(
       column = f,
       regex = "[a-z]{3}",
-      preconditions = f != "high") %>%
+      preconditions = ~ tbl %>% dplyr::filter(f != "high")
+    ) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`

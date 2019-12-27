@@ -12,15 +12,13 @@
 #'   are considered passing.
 #' @param incl_na Should `NA` values be a part of the condition? This is by
 #'   default `FALSE`.
-#' @param preconditions An optional statement of filtering conditions that may
-#'   reduce the number of rows for validation for the current validation step.
-#'   The statements are executed for every row of the table in focus and are
-#'   often referred as predicate statements (they either return `TRUE` or
-#'   `FALSE` for every row evaluated, where rows evaluated as `TRUE` are the
-#'   rows that are retained for the validation step). For example, if a table
-#'   has columns `a`, `b`, and `c`, and, column `a` has numerical data, we can
-#'   write a statement `a < 5` that filters all rows in the table where values
-#'   in column a are less than five.
+#' @param preconditions expressions used for mutating the input table before
+#'   proceeding with the validation. This is ideally as a one-sided R formula
+#'   using a leading `~`. In the formula representation, the `tbl` serves as the
+#'   input data table to be transformed (e.g.,
+#'   `~ tbl %>% dplyr::mutate(col = col + 10)`. A series of expressions can be
+#'   used by enclosing the set of statements with `{ }` but note that the `tbl`
+#'   object must be ultimately returned.
 #' @param brief An optional, text-based description for the validation step.
 #' @param warn_count,notify_count The threshold number for individual
 #'   validations returning a `FALSE` result before applying the `warn` or
@@ -108,9 +106,7 @@ col_vals_gt <- function(x,
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
   
-  if (inherits(x , c("data.frame", "tbl_df", "tbl_dbi"))) {
-    
-    preconditions <- rlang::enquo(preconditions)
+  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
       x %>%
@@ -131,18 +127,7 @@ col_vals_gt <- function(x,
   }
   
   agent <- x
-  
-  # Get the preconditions
-  preconditions <- 
-    rlang::enquo(preconditions) %>%
-    rlang::expr_text() %>%
-    stringr::str_replace_all("~", "") %>%
-    stringr::str_replace_all("\"", "'")
-  
-  if (length(preconditions) == 0) {
-    preconditions <- NULL
-  }
-  
+
   if (is.null(brief)) {
     
     brief <-

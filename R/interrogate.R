@@ -25,6 +25,8 @@
 #'   when sampling non-passing rows using the `sample_frac` option.
 #'   
 #' @examples 
+#' library(dplyr)
+#' 
 #' # Create 2 simple data frames
 #' # with 2 columns of numerical
 #' # values in each
@@ -53,7 +55,8 @@
 #'   col_vals_equal(
 #'     column = c,
 #'     value = 8,
-#'     preconditions = d >= 5) %>%
+#'     preconditions = ~ tbl %>% dplyr::filter(d >= 5)
+#'   ) %>%
 #'   interrogate()
 #'   
 #' # Get a basic summary with
@@ -69,7 +72,7 @@ interrogate <- function(agent,
                         sample_n = NULL,
                         sample_frac = NULL,
                         sample_limit = 5000) {
-  
+
   # Add the starting time to the `agent` object
   agent$validation_time <- Sys.time()
   
@@ -83,7 +86,7 @@ interrogate <- function(agent,
     
     # Use preconditions to modify the table
     table <- apply_preconditions_to_tbl(agent, idx = i, tbl = table)
-    
+
     # Get the assertion type for this verification step
     assertion_type <- get_assertion_type_at_idx(agent, idx = i)
     
@@ -291,7 +294,9 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
   value <- get_column_value_at_idx(agent = agent, idx = idx)
   
   # Obtain the target column as a symbol
-  column <- get_column_as_sym_at_idx(agent = agent, idx = idx) %>% as_label()
+  column <- 
+    get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
+    rlang::as_label()
   
   # Get operator values for all assertion types involving
   # simple operator comparisons
@@ -312,7 +317,7 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
   # Perform rowwise validations for the column
   tbl_checked <-
     table %>%
-    dplyr::mutate(pb_is_good_ = !!parse_expr(expression))
+    dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(expression))
   
   tbl_checked
 }
@@ -356,10 +361,13 @@ interrogate_duplicated <- function(agent, idx, table) {
   if (!is.na(agent$validation_set$column[idx])) {
     
     column_names <- 
-      get_column_as_sym_at_idx(agent = agent, idx = idx) %>% as.character()
+      get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
+      as.character()
     
     if (grepl("(,|&)", column_names)) {
-      column_names <- strsplit(split = "(, |,|&)", column_names) %>% unlist()
+      column_names <- 
+        strsplit(split = "(, |,|&)", column_names) %>%
+        unlist()
     }
     
   } else if (is.na(agent$validation_set$column[idx])) {
@@ -403,7 +411,9 @@ interrogate_duplicated <- function(agent, idx, table) {
   # Perform rowwise validations for the column
   tbl_checked <- 
     table %>%
-    dplyr::mutate(pb_is_good_ = ifelse(dplyr::row_number() %in% duplicate_row_idx, FALSE, TRUE))
+    dplyr::mutate(pb_is_good_ = ifelse(
+      dplyr::row_number() %in% duplicate_row_idx, FALSE, TRUE)
+    )
   
   tbl_checked
 }
@@ -455,7 +465,6 @@ add_reporting_data <- function(agent,
     agent$validation_set$all_passed[idx] <- FALSE
     
     # Collect problem rows if requested
-    
     if (isTRUE(get_problem_rows)) {
       
       problem_rows <- 

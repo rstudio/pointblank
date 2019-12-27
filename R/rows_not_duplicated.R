@@ -72,17 +72,6 @@ rows_not_duplicated <- function(x,
     cols <- NULL
   }
   
-  # Get the preconditions
-  preconditions <- 
-    rlang::enquo(preconditions) %>%
-    rlang::expr_text() %>%
-    stringr::str_replace_all("~", "") %>%
-    stringr::str_replace_all("\"", "'")
-  
-  if (length(preconditions) == 0) {
-    preconditions <- NULL
-  }
-  
   if (is.null(brief)) {
     
     brief <-

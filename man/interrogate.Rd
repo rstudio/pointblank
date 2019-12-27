@@ -48,6 +48,8 @@ The agent has all the information on what to do, so now all interrogations
 can proceed efficiently, and, according to plan.
 }
 \examples{
+library(dplyr)
+
 # Create 2 simple data frames
 # with 2 columns of numerical
 # values in each
@@ -76,7 +78,8 @@ agent <-
   col_vals_equal(
     column = c,
     value = 8,
-    preconditions = d >= 5) \%>\%
+    preconditions = ~ tbl \%>\% dplyr::filter(d >= 5)
+  ) \%>\%
   interrogate()
   
 # Get a basic summary with

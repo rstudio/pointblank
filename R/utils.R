@@ -33,8 +33,9 @@ create_validation_step <- function(agent,
       column = as.character(column),
       value = ifelse(is.null(value), as.numeric(NA), as.numeric(value)),
       set = ifelse(is.null(set), list(NULL), list(set)),
-      incl_na = ifelse(is.null(incl_na), as.logical(NA), as.logical(incl_na)),
       regex = ifelse(is.null(regex), as.character(NA), as.character(regex)),
+      incl_na = ifelse(is.null(incl_na), as.logical(NA), as.logical(incl_na)),
+      preconditions = ifelse(is.null(preconditions), list(NULL), list(preconditions)),
       brief = ifelse(is.null(brief), as.character(NA), as.character(brief)),
       all_passed = as.logical(NA),
       warn_count = ifelse(is.null(warn_count), as.numeric(NA), as.numeric(warn_count)),
@@ -75,42 +76,9 @@ create_validation_step <- function(agent,
     validation_step_df$col_types <- col_types
   }
   
-  # If preconditions have been provided as a vector, include
-  # these values as a `df_tbl` object
-  if (!is.null(preconditions)) {
-    
-    preconditions_df <-
-      1:nrow(validation_step_df) %>%
-      purrr::map_df(
-        function(x) {
-          dplyr::tibble(
-            x = x,
-            precondition = paste(preconditions, collapse = ";"))
-        }
-      ) %>%
-      dplyr::select(-x)
-    
-  } else {
-    
-    preconditions_df <-
-      1:nrow(validation_step_df) %>%
-      purrr::map_df(
-        function(x) {
-          dplyr::tibble(
-            x = x,
-            precondition = as.character(NA)
-          )
-        }
-      ) %>%
-      dplyr::select(-x)
-  }
-  
   # Append `validation_step` to `validation_set`
   agent$validation_set <- 
     dplyr::bind_rows(agent$validation_set, validation_step_df)
-  
-  # Append `preconditions`
-  agent$preconditions <- dplyr::bind_rows(agent$preconditions, preconditions_df)
   
   agent
 }
@@ -362,27 +330,15 @@ get_tbl_object <- function(agent, idx) {
 }
 
 apply_preconditions_to_tbl <- function(agent, idx, tbl) {
+
+  preconditions <- agent$validation_set$preconditions[[idx]]
   
-  if (!is.na(agent$preconditions[[idx, 1]]) &&
-      agent$preconditions[[idx, 1]] != "NULL") {
+  if (!is.null(preconditions)) {
     
-    # Get the preconditions as a character vector
-    preconditions <-
-      stringr::str_trim(
-        agent$preconditions[[idx, 1]] %>%
-          strsplit(";") %>%
-          unlist())
-    
-    if (!is.null(preconditions)) {
-      for (j in seq(preconditions)) {
-        
-        # Apply the preconditions to filter the table
-        # before any validation occurs
-        tbl <-
-          tbl %>%
-          dplyr::filter_(preconditions[j])
-      }
-    }
+    tbl <- 
+      preconditions %>%
+      rlang::f_rhs() %>%
+      rlang::eval_tidy()
   }
   
   tbl
@@ -665,13 +621,16 @@ create_autobrief <- function(agent,
     } else if (assertion_type == "col_vals_not_equal") {
       operator <- "!="
     } 
-    
+
     autobrief <-
       paste0(
         "Expect that ",
         ifelse(
           !is.null(preconditions),
-          paste0("when ", "`", preconditions, "`, "),
+          paste0(
+            "when the precondition ", "`",
+            preconditions %>% rlang::f_rhs() %>% rlang::as_label(),
+            "` is applied, "),
           paste0("")),
         "values in `",
         column, "`",
@@ -690,13 +649,16 @@ create_autobrief <- function(agent,
     
     is_column_computed <-
       ifelse(column %in% agent$focal_col_names, FALSE, TRUE)
-    
+
     autobrief <-
       paste0(
         "Expect that ",
         ifelse(
           !is.null(preconditions),
-          paste0("when ", "`", preconditions, "`, "),
+          paste0(
+            "when the precondition ", "`",
+            preconditions %>% rlang::f_rhs() %>% rlang::as_label(),
+            "` is applied, "),
           paste0("")),
         "values in `",
         column, "`",
@@ -716,7 +678,10 @@ create_autobrief <- function(agent,
         "Expect that ",
         ifelse(
           !is.null(preconditions),
-          paste0("when ", "`", preconditions, "`, "),
+          paste0(
+            "when the precondition ", "`",
+            preconditions %>% rlang::f_rhs() %>% rlang::as_label(),
+            "` is applied, "),
           paste0("")),
         "values in `",
         column, "`",
@@ -737,7 +702,10 @@ create_autobrief <- function(agent,
         "Expect that ",
         ifelse(
           !is.null(preconditions),
-          paste0("when ", "`", preconditions, "`, "),
+          paste0(
+            "when the precondition ", "`",
+            preconditions %>% rlang::f_rhs() %>% rlang::as_label(),
+            "` is applied, "),
           paste0("")),
         "values in `",
         column, "`",
@@ -757,7 +725,10 @@ create_autobrief <- function(agent,
         "Expect that ",
         ifelse(
           !is.null(preconditions),
-          paste0("when ", "`", preconditions, "`, "),
+          paste0(
+            "when the precondition ", "`",
+            preconditions %>% rlang::f_rhs() %>% rlang::as_label(),
+            "` is applied, "),
           paste0("")),
         "values in `",
         column, "`",
@@ -776,7 +747,10 @@ create_autobrief <- function(agent,
         "Expect that ",
         ifelse(
           !is.null(preconditions),
-          paste0("when ", "`", preconditions, "`, "),
+          paste0(
+            "when the precondition ", "`",
+            preconditions %>% rlang::f_rhs() %>% rlang::as_label(),
+            "` is applied, "),
           paste0("")),
         "values in `",
         column, "`",
@@ -814,7 +788,10 @@ create_autobrief <- function(agent,
         "Expect that ",
         ifelse(
           !is.null(preconditions),
-          paste0("when ", "`", preconditions, "`, "),
+          paste0(
+            "when the precondition ", "`",
+            preconditions %>% rlang::f_rhs() %>% rlang::as_label(),
+            "` is applied, "),
           paste0("")
         ),
         "rows from `", column, "` ", "have no duplicates"
@@ -918,64 +895,66 @@ evaluate_single <- function(x,
                             notify_fraction) {
   
   x_ret <- x
-  
+  tbl <- x
+
   # Get the `column` number
-  col_number <- ((x %>% colnames()) %in% column) %>% which()
-  
+  col_number <- ((tbl %>% colnames()) %in% column) %>% which()
+
   # Apply any preconditions
-  if (!is.null(rlang::get_expr(preconditions))) {
+  if (!is.null(preconditions)) {
     
-    x <- 
-      x %>%
-      dplyr::filter(!! preconditions)
+    tbl <- 
+      preconditions %>%
+      rlang::f_rhs() %>%
+      rlang::eval_tidy()
   }
   
   if (type == "col_vals_equal") {
     
     logicals <- 
-      x %>%
+      tbl %>%
       dplyr::pull(col_number) == value
   }
   
   if (type == "col_vals_not_equal") {
     
     logicals <- 
-      x %>%
+      tbl %>%
       dplyr::pull(col_number) != value
   }
   
   if (type == "col_vals_gt") {
     
     logicals <- 
-      x %>%
+      tbl %>%
       dplyr::pull(col_number) > value
   }
   
   if (type == "col_vals_gte") {
     
     logicals <- 
-      x %>%
+      tbl %>%
       dplyr::pull(col_number) >= value
   }
   
   if (type == "col_vals_lt") {
     
     logicals <- 
-      x %>%
+      tbl %>%
       dplyr::pull(col_number) < value
   }
   
   if (type == "col_vals_lte") {
     
     logicals <- 
-      x %>%
+      tbl %>%
       dplyr::pull(col_number) <= value
   }
   
   if (type == "col_vals_between") {
     
     vals <- 
-      x %>%
+      tbl %>%
       dplyr::pull(col_number)
     
     logicals <- 
@@ -992,7 +971,7 @@ evaluate_single <- function(x,
   if (type == "col_vals_not_between") {
     
     vals <- 
-      x %>%
+      tbl %>%
       dplyr::pull(col_number)
     
     logicals <- 
@@ -1009,21 +988,21 @@ evaluate_single <- function(x,
   if (type == "col_vals_in_set") {
     
     logicals <- 
-      x %>%
+      tbl %>%
       dplyr::pull(col_number) %in% set
   }
   
   if (type == "col_vals_not_in_set") {
     
     logicals <- 
-      !(x %>%
+      !(tbl %>%
           dplyr::pull(col_number) %in% set)
   }
   
   if (type == "col_vals_regex") {
     
     vals <- 
-      x %>%
+      tbl %>%
       dplyr::pull(col_number)
     
     logicals <- 
@@ -1033,14 +1012,14 @@ evaluate_single <- function(x,
   if (type == "col_vals_not_null") {
     
     logicals <- 
-      !is.na(x %>%
+      !is.na(tbl %>%
                dplyr::pull(col_number))
   }
   
   if (type == "col_vals_null") {
     
     logicals <- 
-      is.na(x %>%
+      is.na(tbl %>%
               dplyr::pull(col_number))
   }
   
@@ -1048,7 +1027,7 @@ evaluate_single <- function(x,
     
     # Get the column type
     column_type <-
-      (x %>%
+      (tbl %>%
          dplyr::select(column) %>%
          utils::head(1) %>%
          dplyr::collect() %>%
@@ -1078,7 +1057,7 @@ evaluate_single <- function(x,
   if (type == "cols_exist") {
     
     column_names <-
-      x %>%
+      tbl %>%
       utils::head(1) %>%
       dplyr::as_tibble() %>%
       colnames()

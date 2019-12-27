@@ -7,6 +7,8 @@
 #' @param value a numeric value used to test for non-equality.
 #' 
 #' @examples
+#' library(dplyr)
+#' 
 #' # Create a simple data frame
 #' # with 2 columns of numerical values
 #' df <-
@@ -24,7 +26,7 @@
 #'   col_vals_not_equal(
 #'     column = b,
 #'     value = 5,
-#'     preconditions = a == 2
+#'     preconditions = ~ tbl %>% dplyr::filter(a == 2)
 #'   ) %>%
 #'   interrogate()
 #' 
@@ -63,8 +65,6 @@ col_vals_not_equal <- function(x,
   
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
-    preconditions <- rlang::enquo(preconditions)
-    
     return(
       x %>%
         evaluate_single(
@@ -83,18 +83,7 @@ col_vals_not_equal <- function(x,
   }
   
   agent <- x
-  
-  # Get the preconditions
-  preconditions <- 
-    rlang::enquo(preconditions) %>%
-    rlang::expr_text() %>%
-    stringr::str_replace_all("~", "") %>%
-    stringr::str_replace_all("\"", "'")
-  
-  if (length(preconditions) == 0) {
-    preconditions <- NULL
-  }
-  
+
   if (is.null(brief)) {
     
     brief <-

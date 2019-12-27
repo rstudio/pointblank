@@ -273,7 +273,7 @@ test_that("Interrogating simply returns the expected results", {
       column = d,
       left = 3000,
       right = 10000,
-      preconditions = date > "2016-01-20",
+      preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-20"),
       warn_count = 1
     )
   
@@ -288,7 +288,7 @@ test_that("Interrogating simply returns the expected results", {
         column = d,
         left = 0,
         right = 3000,
-        preconditions = date > "2016-01-20",
+        preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-20"),
         warn_count = 1
       )
   )
@@ -306,7 +306,7 @@ test_that("Interrogating simply returns the expected results", {
         column = d,
         left = 0,
         right = 3000,
-        preconditions = date > "2016-01-20",
+        preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-20"),
         stop_count = 1
       )
   )
@@ -531,7 +531,7 @@ test_that("Interrogating simply returns the expected results", {
     tbl %>%
     col_vals_null(
       column = c,
-      preconditions = date == "2016-01-06"
+      preconditions = ~ tbl %>% dplyr::filter(date == "2016-01-06")
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -543,7 +543,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_vals_null(
         column = c,
-        preconditions = date != "2016-01-06",
+        preconditions = ~ tbl %>% dplyr::filter(date != "2016-01-06"),
         warn_count = 1
       )
   )
@@ -559,7 +559,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_vals_null(
         column = c,
-        preconditions = date != "2016-01-06",
+        preconditions = ~ tbl %>% dplyr::filter(date != "2016-01-06"),
         stop_count = 1
       )
   )

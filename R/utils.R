@@ -8,7 +8,6 @@ create_validation_step <- function(agent,
                                    set = NULL,
                                    regex = NULL,
                                    incl_na = NULL,
-                                   incl_nan = NULL,
                                    preconditions = NULL,
                                    brief = NULL,
                                    warn_count = NULL,
@@ -33,6 +32,8 @@ create_validation_step <- function(agent,
       assertion_type = assertion_type,
       column = as.character(column),
       value = ifelse(is.null(value), as.numeric(NA), as.numeric(value)),
+      set = ifelse(is.null(set), list(NULL), list(set)),
+      incl_na = ifelse(is.null(incl_na), as.logical(NA), as.logical(incl_na)),
       regex = ifelse(is.null(regex), as.character(NA), as.character(regex)),
       brief = ifelse(is.null(brief), as.character(NA), as.character(brief)),
       all_passed = as.logical(NA),
@@ -74,39 +75,6 @@ create_validation_step <- function(agent,
     validation_step_df$col_types <- col_types
   }
   
-  # If a set has been provided as a vector, include
-  # these values as a `df_tbl` object
-  if (!is.null(set)) {
-    
-    set_df <-
-      1:nrow(validation_step_df) %>%
-      purrr::map_df(
-        function(x) {
-          dplyr::tibble(
-            x = x,
-            set = paste(set, collapse = ","),
-            class = class(set),
-            incl_na = ifelse(is.null(incl_na), FALSE, incl_na),
-            incl_nan = ifelse(is.null(incl_nan), FALSE, incl_nan))
-        }) %>%
-      dplyr::select(-x)
-    
-  } else {
-    
-    set_df <-
-      1:nrow(validation_step_df) %>%
-      purrr::map_df(
-        function(x) {
-          dplyr::tibble(
-            x = x,
-            set = as.character(NA),
-            class = as.character(NA),
-            incl_na = FALSE,
-            incl_nan = FALSE)
-        }) %>%
-      dplyr::select(-x)
-  }
-  
   # If preconditions have been provided as a vector, include
   # these values as a `df_tbl` object
   if (!is.null(preconditions)) {
@@ -140,9 +108,6 @@ create_validation_step <- function(agent,
   # Append `validation_step` to `validation_set`
   agent$validation_set <- 
     dplyr::bind_rows(agent$validation_set, validation_step_df)
-  
-  # Append `sets`
-  agent$sets <- dplyr::bind_rows(agent$sets, set_df)
   
   # Append `preconditions`
   agent$preconditions <- dplyr::bind_rows(agent$preconditions, preconditions_df)
@@ -299,121 +264,164 @@ set_entry_point <- function(table,
   tbl_entry
 }
 
+get_tbl_object <- function(agent, idx) {
+
+  if (agent$validation_set$db_type[idx] == "local_df") {
+    
+    # Create `table` object as the direct reference to a
+    # local `data.frame` or `tbl_df` object
+    tbl <- get(agent$validation_set$tbl_name[idx])
+    
+  } else if (agent$validation_set$db_type[idx] == "local_file") {
+    
+    file_path <- agent$validation_set$file_path[idx]
+    col_types <- agent$validation_set$col_types[idx]
+    
+    # Infer the file type from the extension
+    file_extension <- 
+      (agent$validation_set$file_path[idx] %>% 
+         basename() %>% 
+         stringr::str_split(pattern = "\\.") %>% 
+         unlist())[2] %>% 
+      tolower()
+    
+    if (is.na(col_types)) {
+      
+      if (file_extension == "csv") {
+        
+        tbl <- 
+          suppressMessages(
+            readr::read_csv(
+              file = file_path))
+        
+      } else if (file_extension == "tsv") {
+        
+        tbl <- 
+          suppressMessages(
+            readr::read_tsv(
+              file = file_path))
+      }
+    }
+    
+    if (!is.na(col_types)) {
+      
+      if (file_extension == "csv") {
+        
+        tbl <- 
+          suppressMessages(
+            readr::read_csv(
+              file = file_path,
+              col_types = col_types))
+        
+      } else if (file_extension == "tsv") {
+        
+        tbl <- 
+          suppressMessages(
+            readr::read_tsv(
+              file = file_path,
+              col_types = col_types))
+      }
+    }
+  } else if (agent$validation_set$db_type[idx] %in% c("PostgreSQL", "MySQL")) {
+    
+    # Determine if there is an initial SQL
+    # statement available as part of the 
+    # table focus (`focal_sql`) or as
+    # part of the validation step (`init_sql`)
+    if (!is.na(agent$validation_set$init_sql[idx])) {
+      initial_sql_stmt <- agent$validation_set$init_sql[idx]
+    } else if (!is.na(agent$focal_init_sql)) {
+      initial_sql_stmt <- agent$focal_init_sql
+    } else {
+      initial_sql_stmt <- NULL
+    }
+    
+    # Create `tbl` object as an SQL entry point for a remote table
+    
+    if (!is.na(agent$focal_db_cred_file_path)) {
+      
+      tbl <- 
+        set_entry_point(
+          table = agent$validation_set$tbl_name[idx],
+          db_type = agent$validation_set$db_type[idx],
+          creds_file = agent$validation_set$db_cred_file_path[idx],
+          initial_sql = initial_sql_stmt)
+      
+    } else if (length(agent$focal_db_env_vars) != 0) {
+      
+      tbl <- 
+        set_entry_point(
+          table = agent$validation_set$tbl_name[idx],
+          db_type = agent$validation_set$db_type[idx],
+          db_creds_env_vars = agent$focal_db_env_vars,
+          initial_sql = initial_sql_stmt)
+    }
+  }
+  
+  tbl
+}
+
+apply_preconditions_to_tbl <- function(agent, idx, tbl) {
+  
+  if (!is.na(agent$preconditions[[idx, 1]]) &&
+      agent$preconditions[[idx, 1]] != "NULL") {
+    
+    # Get the preconditions as a character vector
+    preconditions <-
+      stringr::str_trim(
+        agent$preconditions[[idx, 1]] %>%
+          strsplit(";") %>%
+          unlist())
+    
+    if (!is.null(preconditions)) {
+      for (j in seq(preconditions)) {
+        
+        # Apply the preconditions to filter the table
+        # before any validation occurs
+        tbl <-
+          tbl %>%
+          dplyr::filter_(preconditions[j])
+      }
+    }
+  }
+  
+  tbl
+}
+
+get_assertion_type_at_idx <- function(agent, idx) {
+  agent$validation_set[[idx, "assertion_type"]]
+}
+
+get_column_as_sym_at_idx <- function(agent, idx) {
+  rlang::sym(agent$validation_set[[idx, "column"]] %>% gsub("'", "", .))
+}
+
+get_column_value_at_idx <- function(agent, idx) {
+  agent$validation_set[[idx, "value"]]
+}
+
+get_column_set_values_at_idx <- function(agent, idx) {
+  agent$validation_set[[idx, "set"]]
+}
+
+get_column_incl_na_at_idx <- function(agent, idx) {
+  agent$validation_set[[idx, "incl_na"]]
+}
+
+get_column_regex_at_idx <- function(agent, idx) {
+  agent$validation_set[[idx, "regex"]]
+}
+
 #' Get all column names from the table currently in focus
 #' 
 #' @noRd
 get_all_cols <- function(agent) {
   
-  # Get vector of all columns
-  # table currently in focus
+  # Get vector of all columns table currently in focus
   agent$focal_col_names
 }
 
-#' Determine the course of action for a given verification step
-#' 
-#' @noRd
-determine_action <- function(validation_step,
-                             false_count,
-                             warn_count,
-                             stop_count,
-                             notify_count,
-                             warn_fraction,
-                             stop_fraction,
-                             notify_fraction) {
-  
-  n <- validation_step$n[[1]]
-  
-  if (is.na(warn_count)) {
-    warn <- FALSE
-  } else {
-    if (false_count >= warn_count) {
-      warn <- TRUE
-    } else {
-      warn <- FALSE
-    }
-  }
-  
-  if (is.na(stop_count)) {
-    stop <- FALSE
-  } else {
-    
-    if (false_count >= stop_count) {
-      
-      type <- validation_step$assertion_type
-      
-      messaging::emit_error(
-        "The validation (`{type}()`) meets or exceeds the `stop_count` threshold",
-        " * `failing_count` ({false_count}) >= `stop_count` ({stop_count})",
-        type = type,
-        false_count = false_count,
-        stop_count = stop_count,
-        .format = "{text}"
-      )
-      
-    } else {
-      stop <- FALSE
-    }
-  }
-  
-  if (is.na(notify_count)) {
-    notify <- FALSE
-  } else {
-    if (false_count >= notify_count) {
-      notify <- TRUE
-    } else {
-      notify <- FALSE
-    }
-  }
-  
-  if (!is.na(warn_fraction)) {
-    
-    warn_count <- round(warn_fraction * n, 0)
-    
-    if (false_count >= warn_count) {
-      warn <- TRUE
-    } else {
-      warn <- FALSE
-    }
-  }
-  
-  if (!is.na(stop_fraction)) {
-    
-    stop_count <- round(stop_fraction * n, 0)
-    
-    if (false_count >= stop_count) {
-      
-      type <- validation_step$assertion_type
-      
-      false_fraction <- round(false_count / n, 3)
-      
-      messaging::emit_error(
-        "The validation (`{type}()`) meets or exceeds the `stop_fraction` threshold",
-        " * `failing_fraction` ({false_fraction}) >= `stop_fraction` ({stop_fraction})",
-        type = type,
-        false_fraction = false_fraction,
-        stop_fraction = stop_fraction,
-        .format = "{text}"
-      )
-      
-    } else {
-      stop <- FALSE
-    }
-  }
-  
-  if (!is.na(notify_fraction)) {
-    
-    notify_count <- round(notify_fraction * n, 0)
-    
-    if (false_count >= notify_count) {
-      notify <- TRUE
-    } else {
-      notify <- FALSE
-    }
-  }
-  
-  # Generate a tibble with action information
-  dplyr::tibble(warn = warn, notify = notify)
-}
+
 
 #' Generate summary SVG files for the results of a validation pipeline
 #' 
@@ -816,6 +824,79 @@ create_autobrief <- function(agent,
   autobrief
 }
 
+ib_incl_incl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} >= set[1] & {{ column }} <= set[2] ~ TRUE,
+      {{ column }} < set[1] | {{ column }} > set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+ib_excl_incl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} > set[1] & {{ column }} <= set[2] ~ TRUE,
+      {{ column }} <= set[1] | {{ column }} > set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+ib_incl_excl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} >= set[1] & {{ column }} < set[2] ~ TRUE,
+      {{ column }} < set[1] | {{ column }} >= set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+ib_excl_excl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} > set[1] & {{ column }} < set[2] ~ TRUE,
+      {{ column }} <= set[1] | {{ column }} >= set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+nb_incl_incl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} < set[1] | {{ column }} > set[2] ~ TRUE,
+      {{ column }} >= set[1] & {{ column }} <= set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+nb_excl_incl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} <= set[1] | {{ column }} > set[2] ~ TRUE,
+      {{ column }} > set[1] & {{ column }} <= set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+nb_incl_excl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} < set[1] | {{ column }} >= set[2] ~ TRUE,
+      {{ column }} >= set[1] & {{ column }} < set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+nb_excl_excl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} <= set[1] | {{ column }} >= set[2] ~ TRUE,
+      {{ column }} > set[1] & {{ column }} < set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+
 #' Perform a single column validation that can issue warnings
 #' 
 #' @noRd
@@ -828,7 +909,6 @@ evaluate_single <- function(x,
                             left = NULL,
                             right = NULL,
                             incl_na = NULL,
-                            incl_nan = NULL,
                             preconditions,
                             warn_count,
                             stop_count,
@@ -907,12 +987,6 @@ evaluate_single <- function(x,
     } else if (incl_na == FALSE) {
       logicals[which(is.na(logicals))] <- FALSE
     }
-    
-    if (incl_nan == TRUE) {
-      logicals[which(is.nan(logicals))] <- TRUE
-    } else if (incl_nan == FALSE) {
-      logicals[which(is.nan(logicals))] <- FALSE
-    }
   }
   
   if (type == "col_vals_not_between") {
@@ -929,12 +1003,6 @@ evaluate_single <- function(x,
       logicals[which(is.na(logicals))] <- TRUE
     } else if (incl_na == FALSE) {
       logicals[which(is.na(logicals))] <- FALSE
-    }
-    
-    if (incl_nan == TRUE) {
-      logicals[which(is.nan(logicals))] <- TRUE
-    } else if (incl_nan == FALSE) {
-      logicals[which(is.nan(logicals))] <- FALSE
     }
   }
   

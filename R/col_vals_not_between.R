@@ -42,8 +42,8 @@ col_vals_not_between <- function(x,
                                  column,
                                  left,
                                  right,
+                                 inclusive = c(TRUE, TRUE),
                                  incl_na = TRUE,
-                                 incl_nan = TRUE,
                                  preconditions = NULL,
                                  brief = NULL,
                                  warn_count = NULL,
@@ -66,6 +66,9 @@ col_vals_not_between <- function(x,
     stringr::str_replace_all("~", "") %>%
     stringr::str_replace_all("\"", "'")
   
+  left <- stats::setNames(left, inclusive[1])
+  right <- stats::setNames(right, inclusive[2])
+  
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     preconditions <- rlang::enquo(preconditions)
@@ -78,7 +81,6 @@ col_vals_not_between <- function(x,
           left = left,
           right = right,
           incl_na = incl_na,
-          incl_nan = incl_nan,
           preconditions = preconditions,
           warn_count = warn_count,
           stop_count = stop_count,
@@ -129,7 +131,6 @@ col_vals_not_between <- function(x,
       column = column,
       set = c(left, right),
       incl_na = incl_na,
-      incl_nan = incl_nan,
       preconditions = preconditions,
       brief = brief,
       warn_count = warn_count,

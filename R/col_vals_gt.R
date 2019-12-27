@@ -12,8 +12,6 @@
 #'   are considered passing.
 #' @param incl_na Should `NA` values be a part of the condition? This is by
 #'   default `FALSE`.
-#' @param incl_nan Should `NaN` values be a part of the condition? This is by
-#'   default `FALSE`.
 #' @param preconditions An optional statement of filtering conditions that may
 #'   reduce the number of rows for validation for the current validation step.
 #'   The statements are executed for every row of the table in focus and are
@@ -88,7 +86,6 @@ col_vals_gt <- function(x,
                         column,
                         value,
                         incl_na = FALSE,
-                        incl_nan = FALSE,
                         preconditions = NULL,
                         brief = NULL,
                         warn_count = NULL,
@@ -122,7 +119,6 @@ col_vals_gt <- function(x,
           column = column,
           value = value,
           incl_na = incl_na,
-          incl_nan = incl_nan,
           preconditions = preconditions,
           warn_count = warn_count,
           stop_count = stop_count,
@@ -173,7 +169,6 @@ col_vals_gt <- function(x,
       column = column,
       value = value,
       incl_na = incl_na,
-      incl_nan = incl_nan,
       preconditions = preconditions,
       brief = brief,
       warn_count = warn_count,

@@ -4,8 +4,16 @@
 \alias{create_email_creds_file}
 \title{Create a file with email access credentials}
 \usage{
-create_email_creds_file(file, sender, host, port, user, password,
-  use_ssl = TRUE, authenticate = TRUE)
+create_email_creds_file(
+  file,
+  sender,
+  host,
+  port,
+  user,
+  password,
+  use_ssl = TRUE,
+  authenticate = TRUE
+)
 }
 \arguments{
 \item{file}{A file path for the credentials file to be stored on disk.}

@@ -56,28 +56,34 @@ create_agent <- function(validation_name = NULL) {
   # Create the agent list object
   agent <-
     list(
-      validation_name = as.character(NA)[-1],
+      validation_name = character(0),
       validation_time = as.POSIXct(NA)[-1],
-      focal_tbl_name = as.character(NA)[-1],
-      focal_file_name = as.character(NA)[-1],
-      focal_db_type = as.character(NA)[-1],
-      focal_col_names = as.character(NA)[-1],
-      focal_col_types = as.character(NA)[-1],
-      focal_db_cred_file_path = as.character(NA)[-1],
+      focal_tbl_name = character(0),
+      focal_file_name = character(0),
+      focal_db_type = character(0),
+      focal_col_names = character(0),
+      focal_col_types = character(0),
+      focal_db_cred_file_path = character(0),
       focal_db_env_vars = list(),
-      focal_init_sql = as.character(NA)[-1],
-      email_creds_file_path = as.character(NA)[-1],
-      email_notification_recipients = as.character(NA)[-1],
-      email_notifications_active = FALSE,
-      slack_webhook_url = as.character(NA)[-1],
-      slack_channel = as.character(NA)[-1],
-      slack_username = as.character(NA)[-1],
-      slack_author_name = as.character(NA)[-1],
-      slack_title = as.character(NA)[-1],
-      slack_report_url = as.character(NA)[-1],
-      slack_footer_thumb_url = as.character(NA)[-1],
-      slack_footer_text = as.character(NA)[-1],
-      slack_notifications_active = FALSE,
+      focal_init_sql = character(0),
+      email = 
+        list(
+          email_creds_file_path = character(0),
+          email_notification_recipients = character(0),
+          email_notifications_active = FALSE
+        ),
+      slack = 
+        list(
+          slack_webhook_url = character(0),
+          slack_channel = character(0),
+          slack_username = character(0),
+          slack_author_name = character(0),
+          slack_title = character(0),
+          slack_report_url = character(0),
+          slack_footer_thumb_url = character(0),
+          slack_footer_text = character(0),
+          slack_notifications_active = FALSE
+        ),
       logical_plan =
         dplyr::tibble(
           component_name = as.character("create_agent"),
@@ -86,44 +92,40 @@ create_agent <- function(validation_name = NULL) {
         ),
       validation_set =
         dplyr::tibble(
-          tbl_name = as.character(NA),
-          db_type = as.character(NA),
-          assertion_type = as.character(NA),
-          column = as.character(NA),
-          value = as.numeric(NA),
-          regex = as.character(NA),
-          all_passed = as.logical(NA),
-          n = as.integer(NA),
-          n_passed = as.integer(NA),
-          n_failed = as.integer(NA),
-          f_passed = as.numeric(NA),
-          f_failed = as.numeric(NA),
-          warn_count = as.numeric(NA),
-          stop_count = as.numeric(NA),
-          notify_count = as.numeric(NA),
-          warn_fraction = as.numeric(NA),
-          stop_fraction = as.numeric(NA),
-          notify_fraction = as.numeric(NA),
-          warn = as.logical(NA),
-          notify = as.logical(NA),
-          row_sample = as.numeric(NA),
-          init_sql = as.character(NA),
-          db_cred_file_path = as.character(NA),
-          file_path = as.character(NA),
-          col_types = as.character(NA),
-          time_processed = as.POSIXct(NA),
-          proc_duration_s = as.numeric(NA)
+          tbl_name = character(0),
+          db_type = character(0),
+          assertion_type = character(0),
+          column = character(0),
+          value = numeric(0),
+          set = list(NULL),
+          regex = character(0),
+          all_passed = logical(0),
+          n = integer(0),
+          n_passed = integer(0),
+          n_failed = integer(0),
+          f_passed = numeric(0),
+          f_failed = numeric(0),
+          warn_count = numeric(0),
+          stop_count = numeric(0),
+          notify_count = numeric(0),
+          warn_fraction = numeric(0),
+          stop_fraction = numeric(0),
+          notify_fraction = numeric(0),
+          warn = logical(0),
+          notify = logical(0),
+          row_sample = numeric(0),
+          init_sql = character(0),
+          db_cred_file_path = character(0),
+          file_path = character(0),
+          col_types = character(0),
+          time_processed = as.POSIXct(NA)[-1],
+          proc_duration_s = numeric(0)
         ),
-      sets = list(),
       preconditions = list()
     )
   
   # Add the agent name to the object
   agent$validation_name <- validation_name
-  
-  agent$validation_set <-
-    agent$validation_set %>%
-    dplyr::filter(n == 1)
   
   # Assign the class attribute value `ptblank_agent` to
   # the `agent object`

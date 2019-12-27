@@ -4,8 +4,12 @@
 \alias{set_email_prefs}
 \title{Set email credentials and enable email reporting}
 \usage{
-set_email_prefs(agent, notify_active = FALSE, email_recipients = NULL,
-  creds_file = NULL)
+set_email_prefs(
+  agent,
+  notify_active = FALSE,
+  email_recipients = NULL,
+  creds_file = NULL
+)
 }
 \arguments{
 \item{agent}{An agent object of class \code{ptblank_agent}.}

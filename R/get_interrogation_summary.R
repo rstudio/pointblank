@@ -24,7 +24,7 @@ get_interrogation_summary <- function(agent) {
     
     interrogation_summary <-
       validation_set %>%
-      dplyr::select(1:9, f_passed, warn, notify, brief) %>%
+      dplyr::select(1:10, f_passed, warn, notify, brief) %>%
       dplyr::mutate(
         action = dplyr::case_when(
           .$warn == FALSE & .$notify == FALSE ~ as.character(NA),
@@ -32,11 +32,11 @@ get_interrogation_summary <- function(agent) {
           .$warn == FALSE & .$notify == TRUE ~ "notify",
           .$warn == TRUE & .$notify == TRUE ~ "notify")) %>%
       dplyr::select(-warn, -notify) %>%
-      dplyr::select(1:10, action, brief)
+      dplyr::select(1:11, action, brief)
     
     return(interrogation_summary)
     
   } else {
-    stop("An interrogation hasn't yet occurred.")
+    stop("An interrogation hasn't yet occurred.", call. = FALSE)
   }
 }

@@ -18,8 +18,8 @@ test_that("Getting a validation summary is possible", {
   expect_equivalent(
     colnames(summary),
     c("tbl_name", "db_type", "assertion_type", "column", "value",
-      "set", "regex", "all_passed", "n", "n_passed",
-      "f_passed", "action", "brief"))
+      "set", "regex", "preconditions", "all_passed", "n", "f_passed", "n_passed",
+      "action", "brief"))
   
   # Expect a single row in this summary
   expect_equivalent(nrow(summary), 1)

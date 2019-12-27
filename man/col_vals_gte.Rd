@@ -34,15 +34,13 @@ columns (e.g., \code{a + b} or \code{a + sum(a)}).}
 
 \item{value}{A numeric value used for this test. Any column values \verb{>= value} are considered passing.}
 
-\item{preconditions}{An optional statement of filtering conditions that may
-reduce the number of rows for validation for the current validation step.
-The statements are executed for every row of the table in focus and are
-often referred as predicate statements (they either return \code{TRUE} or
-\code{FALSE} for every row evaluated, where rows evaluated as \code{TRUE} are the
-rows that are retained for the validation step). For example, if a table
-has columns \code{a}, \code{b}, and \code{c}, and, column \code{a} has numerical data, we can
-write a statement \code{a < 5} that filters all rows in the table where values
-in column a are less than five.}
+\item{preconditions}{expressions used for mutating the input table before
+proceeding with the validation. This is ideally as a one-sided R formula
+using a leading \code{~}. In the formula representation, the \code{tbl} serves as the
+input data table to be transformed (e.g.,
+\code{~ tbl \%>\% dplyr::mutate(col = col + 10)}. A series of expressions can be
+used by enclosing the set of statements with \code{{ }} but note that the \code{tbl}
+object must be ultimately returned.}
 
 \item{brief}{An optional, text-based description for the validation step.}
 

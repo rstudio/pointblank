@@ -62,8 +62,6 @@ col_vals_lt <- function(x,
   
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
-    preconditions <- rlang::enquo(preconditions)
-    
     return(
       x %>%
         evaluate_single(
@@ -82,17 +80,6 @@ col_vals_lt <- function(x,
   }
   
   agent <- x
-  
-  # Get the preconditions
-  preconditions <- 
-    rlang::enquo(preconditions) %>%
-    rlang::expr_text() %>%
-    stringr::str_replace_all("~", "") %>%
-    stringr::str_replace_all("\"", "'")
-  
-  if (length(preconditions) == 0) {
-    preconditions <- NULL
-  }
   
   if (is.null(brief)) {
     

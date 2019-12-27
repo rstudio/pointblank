@@ -21,18 +21,26 @@ get_interrogation_summary <- function(agent) {
           dplyr::filter(!(component_name %in% c("create_agent", "focus_on"))) %>%
           dplyr::pull(brief)
       )
-    
+
     interrogation_summary <-
       validation_set %>%
-      dplyr::select(1:10, f_passed, warn, notify, brief) %>%
+      dplyr::select(
+        tbl_name, db_type, assertion_type, column, value, set, regex,
+        preconditions, all_passed, n, f_passed, n_passed, f_passed,
+        warn, notify, brief
+      ) %>%
       dplyr::mutate(
         action = dplyr::case_when(
           .$warn == FALSE & .$notify == FALSE ~ as.character(NA),
           .$warn == TRUE & .$notify == FALSE ~ "warn",
           .$warn == FALSE & .$notify == TRUE ~ "notify",
-          .$warn == TRUE & .$notify == TRUE ~ "notify")) %>%
-      dplyr::select(-warn, -notify) %>%
-      dplyr::select(1:11, action, brief)
+          .$warn == TRUE & .$notify == TRUE ~ "notify")
+      ) %>%
+      dplyr::select(
+        tbl_name, db_type, assertion_type, column, value, set, regex,
+        preconditions, all_passed, n, f_passed, n_passed, f_passed,
+        action, brief
+      )
     
     return(interrogation_summary)
     

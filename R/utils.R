@@ -430,7 +430,6 @@ determine_action <- function(validation_step,
                              stop_count,
                              notify_count,
                              warn_fraction,
-                             stop_fraction,
                              notify_fraction) {
   
   n <- validation_step$n[[1]]

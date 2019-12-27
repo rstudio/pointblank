@@ -13,13 +13,7 @@ col_is_date(
   notify_count = NULL,
   warn_fraction = NULL,
   stop_fraction = NULL,
-  notify_fraction = NULL,
-  tbl_name = NULL,
-  db_type = NULL,
-  creds_file = NULL,
-  initial_sql = NULL,
-  file_path = NULL,
-  col_types = NULL
+  notify_fraction = NULL
 )
 }
 \arguments{
@@ -55,34 +49,6 @@ agent-based validation.}
 validations returning a \code{FALSE} over all the entire set of individual
 validations. Beyond this threshold, either the \code{warn} or \code{notify} flag will
 be applied.}
-
-\item{tbl_name}{The name of the local or remote table.}
-
-\item{db_type}{If the table is located in a database, the type of database is
-required here. Currently, this can be either \code{PostgreSQL} or \code{MySQL}.}
-
-\item{creds_file}{If a connection to a database is required for reaching the
-table specified in \code{tbl_name}, then a path to a credentials file can be
-used to establish that connection. The credentials file is an \code{RDS}
-containing a character vector with the following items in the specified
-order: (1) database name (\code{dbname}), (2) the \code{host} name, (3) the \code{port},
-(4) the username (\code{user}), and (5) the \code{password}. This file can be easily
-created using the \code{\link[=create_creds_file]{create_creds_file()}} function.}
-
-\item{initial_sql}{When accessing a remote table, this provides an option to
-provide an initial query component before conducting validations. An entire
-SQL statement can be provided here, or, as a shortcut, the initial
-\code{SELECT...} statement can be omitted for simple queries (e.g., \verb{WHERE a > 1 AND b = 'one'}).}
-
-\item{file_path}{An optional path for a tabular data file to be loaded for
-this verification step. Valid types are CSV and TSV files.}
-
-\item{col_types}{If validating a CSV or TSV file, an optional column
-specification can be provided here as a string. This string representation
-is where each character represents one column and the mappings are: \code{c} ->
-character, \code{i} -> integer, \code{n} -> number, \code{d} -> double, \code{l} -> logical,
-\code{D} -> date, \code{T} -> date time, \code{t} -> time, \verb{?} -> guess, or \verb{_/-}, which
-skips the column.}
 }
 \value{
 Either a \pkg{pointblank} agent object or a table object, depending
@@ -98,16 +64,15 @@ Verification step where a table column is expected to consist entirely of R
 # classed as `Date`
 df <-
   data.frame(
-    a = as.Date("2017-08-15"))
+    a = as.Date("2017-08-15")
+  )
 
 # Validate that column `a`
 # in the data frame is classed
 # as `Date`
 agent <-
-  create_agent() \%>\%
-  focus_on(tbl_name = "df") \%>\%
-  col_is_date(
-    column = a) \%>\%
+  create_agent(tbl = df) \%>\%
+  col_is_date(column = a) \%>\%
   interrogate()
 
 # Determine if these column

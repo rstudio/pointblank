@@ -2,20 +2,22 @@
 #'
 #' Creates an agent object.
 #'
-#' @param validation_name An optional name for the validation pipeline that the
-#'   agent will eventually carry out during the interrogation process. If no
-#'   value is provided, a name will be generated based on the current system
-#'   time.
+#' @param tbl The input table that will be the focus of the validation. This can
+#'   be a data frame, a tibble, or a `tbl_dbi` object.
+#' @param name An optional name for the validation pipeline that the agent will
+#'   eventually carry out during the interrogation process. If no value is
+#'   provided, a name will be generated based on the current system time.
 #'   
 #' @examples 
 #' # Create a simple data frame
 #' # with a column of numerical values
 #' df <-
 #'   data.frame(
-#'     a = c(5, 7, 6, 5, 8, 7))
+#'     a = c(5, 7, 6, 5, 8, 7)
+#'   )
 #' 
 #' # Create a pointblank `agent` object
-#' agent <- create_agent()
+#' agent <- create_agent(tbl = df)
 #'
 #' # Then, as with any `ptblank_agent`
 #' # object, we can focus on a table,
@@ -28,10 +30,10 @@
 #' # than 4
 #' agent <-
 #'   agent %>%
-#'   focus_on(tbl_name = "df") %>%
 #'   col_vals_gt(
 #'     column = a,
-#'     value = 4) %>%
+#'     value = 4
+#'   ) %>%
 #'   interrogate()
 #'  
 #' # A summary can be produced using
@@ -43,29 +45,46 @@
 #'   
 #' @return A \pkg{pointblank} agent object.
 #' @export
-create_agent <- function(validation_name = NULL) {
-  
+create_agent <- function(tbl,
+                         name = NULL) {
+
   # Generate an agent name if none provided
-  if (is.null(validation_name)) {
-    validation_name <- paste0("agent_", gsub(" ", "_", Sys.time() %>% as.character()))
+  if (is.null(name)) {
+    name <- paste0("agent_", gsub(" ", "_", Sys.time() %>% as.character()))
     brief <- "Create agent with auto-assigned validation name"
   } else {
     brief <- "Create agent with an assigned validation name"
   }
+
+  tbl_name <- deparse(match.call()$tbl)
+  
+  if (tbl_name == ".") {
+    tbl_name <- "table"
+  }
+  
+  column_names_types <- 
+    tbl %>%
+    dplyr::group_by() %>%
+    dplyr::filter(dplyr::row_number() == 1) %>%
+    dplyr::ungroup() %>%
+    dplyr::collect() %>%
+    sapply(class) %>%
+    lapply(`[[`, 1)
+  
+  column_names <- names(column_names_types)
+  column_types <- unname(unlist(column_names_types))
+
   
   # Create the agent list object
   agent <-
     list(
-      validation_name = character(0),
+      validation_name = name,
       validation_time = as.POSIXct(NA)[-1],
-      focal_tbl_name = character(0),
-      focal_file_name = character(0),
-      focal_db_type = character(0),
-      focal_col_names = character(0),
-      focal_col_types = character(0),
-      focal_db_cred_file_path = character(0),
-      focal_db_env_vars = list(),
-      focal_init_sql = character(0),
+      focal_tbl = tbl,
+      focal_tbl_name = tbl_name,
+      focal_tbl_src = character(0),
+      focal_col_names = column_names,
+      focal_col_types = column_types,
       email = 
         list(
           email_creds_file_path = character(0),
@@ -92,14 +111,14 @@ create_agent <- function(validation_name = NULL) {
         ),
       validation_set =
         dplyr::tibble(
-          tbl_name = character(0),
-          db_type = character(0),
           assertion_type = character(0),
           column = character(0),
           value = numeric(0),
           set = list(NULL),
           regex = character(0),
+          incl_na = logical(0),
           preconditions = list(NULL),
+          brief = character(0),
           all_passed = logical(0),
           n = integer(0),
           n_passed = integer(0),
@@ -115,17 +134,10 @@ create_agent <- function(validation_name = NULL) {
           warn = logical(0),
           notify = logical(0),
           row_sample = numeric(0),
-          init_sql = character(0),
-          db_cred_file_path = character(0),
-          file_path = character(0),
-          col_types = character(0),
           time_processed = as.POSIXct(NA)[-1],
           proc_duration_s = numeric(0)
         )
     )
-  
-  # Add the agent name to the object
-  agent$validation_name <- validation_name
   
   # Assign the class attribute value `ptblank_agent` to
   # the `agent object`

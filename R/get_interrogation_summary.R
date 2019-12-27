@@ -9,7 +9,7 @@
 #'   on what was passed to `x`.
 #' @export
 get_interrogation_summary <- function(agent) {
-  
+
   if (did_agent_interrogate(agent)) {
     
     # Get validation set
@@ -25,7 +25,7 @@ get_interrogation_summary <- function(agent) {
     interrogation_summary <-
       validation_set %>%
       dplyr::select(
-        tbl_name, db_type, assertion_type, column, value, set, regex,
+        assertion_type, column, value, set, regex,
         preconditions, all_passed, n, f_passed, n_passed, f_passed,
         warn, notify, brief
       ) %>%
@@ -37,7 +37,7 @@ get_interrogation_summary <- function(agent) {
           .$warn == TRUE & .$notify == TRUE ~ "notify")
       ) %>%
       dplyr::select(
-        tbl_name, db_type, assertion_type, column, value, set, regex,
+        assertion_type, column, value, set, regex,
         preconditions, all_passed, n, f_passed, n_passed, f_passed,
         action, brief
       )

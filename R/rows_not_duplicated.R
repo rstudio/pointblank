@@ -9,22 +9,24 @@
 #'   columns.
 #'   
 #' @examples
-#' # Validate that column `a` exists in
-#' # the `small_table` CSV file; do this
-#' # by creating an agent, focussing on
-#' # that table, creating a
-#' # `rows_not_duplicated()` step, and then
-#' # interrogating the table
+#' # Create a simple data frame
+#' # with three columns of numerical values
+#' df <-
+#'   data.frame(
+#'     a = c(5, 7, 6, 5, 8, 7),
+#'     b = c(7, 1, 0, 0, 8, 3),
+#'     c = c(1, 1, 1, 3, 3, 3)
+#'   )
+#' 
+#' # Validate that when considering only
+#' # data in columns `a` and `b`, there
+#' # are no duplicate rows (i.e., all
+#' # rows are distinct)
 #' agent <-
-#'   create_agent() %>%
-#'   focus_on(
-#'     file_name = 
-#'       system.file(
-#'         "extdata", "small_table.csv",
-#'         package = "pointblank"),
-#'     col_types = "TDicidlc") %>%
+#'   create_agent(tbl = df) %>%
 #'   rows_not_duplicated(
-#'     cols = a & b) %>%
+#'     cols = a & b
+#'   ) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column
@@ -44,14 +46,8 @@ rows_not_duplicated <- function(x,
                                 notify_count = NULL,
                                 warn_fraction = NULL,
                                 stop_fraction = NULL,
-                                notify_fraction = NULL,
-                                tbl_name = NULL,
-                                db_type = NULL,
-                                creds_file = NULL,
-                                initial_sql = NULL,
-                                file_path = NULL,
-                                col_types = NULL) {
-  
+                                notify_fraction = NULL) {
+
   agent <- x
   
   # Get the values supplied for `cols`
@@ -96,13 +92,7 @@ rows_not_duplicated <- function(x,
       notify_count = notify_count,
       warn_fraction = warn_fraction,
       stop_fraction = stop_fraction,
-      notify_fraction = notify_fraction,
-      tbl_name = ifelse(is.null(tbl_name), as.character(NA), tbl_name),
-      db_type = ifelse(is.null(db_type), as.character(NA), db_type),
-      creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
-      init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
-      file_path = ifelse(is.null(file_path), as.character(NA), file_path),
-      col_types = ifelse(is.null(col_types), as.character(NA), col_types)
+      notify_fraction = notify_fraction
     )
   
   # If no `brief` provided, set as NA

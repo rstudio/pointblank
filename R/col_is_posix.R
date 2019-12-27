@@ -16,14 +16,15 @@
 #'     a = as.POSIXct(
 #'       strptime(
 #'         "2011-03-27 01:30:00",
-#'         "%Y-%m-%d %H:%M:%S")))
+#'         "%Y-%m-%d %H:%M:%S")
+#'       )
+#'   )
 #' 
 #' # Validate that column `a` in
 #' # the data frame is classed as
 #' # `POSIXct`
 #' agent <-
-#'   create_agent() %>%
-#'   focus_on(tbl_name = "df") %>%
+#'   create_agent(tbl = df) %>%
 #'   col_is_posix(column = a) %>%
 #'   interrogate()
 #' 
@@ -44,13 +45,7 @@ col_is_posix <- function(x,
                          notify_count = NULL,
                          warn_fraction = NULL,
                          stop_fraction = NULL,
-                         notify_fraction = NULL,
-                         tbl_name = NULL,
-                         db_type = NULL,
-                         creds_file = NULL,
-                         initial_sql = NULL,
-                         file_path = NULL,
-                         col_types = NULL) {
+                         notify_fraction = NULL) {
   
   # Get the column name
   column <- 
@@ -111,13 +106,7 @@ col_is_posix <- function(x,
       notify_count = notify_count,
       warn_fraction = warn_fraction,
       stop_fraction = stop_fraction,
-      notify_fraction = notify_fraction,
-      tbl_name = ifelse(is.null(tbl_name), as.character(NA), tbl_name),
-      db_type = ifelse(is.null(db_type), as.character(NA), db_type),
-      creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
-      init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
-      file_path = ifelse(is.null(file_path), as.character(NA), file_path),
-      col_types = ifelse(is.null(col_types), as.character(NA), col_types)
+      notify_fraction = notify_fraction
     )
   
   # If no `brief` provided, set as NA

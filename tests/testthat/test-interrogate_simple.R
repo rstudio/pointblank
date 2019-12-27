@@ -1,11 +1,9 @@
 context("Performing simple interrogations")
 
 tbl <- 
-  system.file(
-    "extdata", "small_table.csv",
-    package = "pointblank"
-  ) %>%
-  readr::read_csv(col_types = "TDicidlc")
+  readr::read_csv(
+    system.file("extdata", "small_table.csv", package = "pointblank"),
+    col_types = "TDicddlc")
 
 test_that("Interrogating simply returns the expected results", {
   

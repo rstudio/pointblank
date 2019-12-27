@@ -2,8 +2,13 @@ context("Creation of `agent` objects")
 
 test_that("Creating a valid `agent` object is possible", {
   
+  df <-
+    data.frame(
+      a = c(1, 1, 1, 2, 2, 2),
+      b = c(5, 5, 5, 3, 6, 3))
+  
   # Create an agent object
-  agent <- create_agent()
+  agent <- create_agent(tbl = df)
   
   # Expect that names in an agent object match a
   # prescribed set of names
@@ -11,12 +16,11 @@ test_that("Creating a valid `agent` object is possible", {
     all(
       names(agent) ==
         c("validation_name", "validation_time",
-          "focal_tbl_name", "focal_file_name",
-          "focal_db_type", "focal_col_names",
-          "focal_col_types", "focal_db_cred_file_path",
-          "focal_db_env_vars", "focal_init_sql",
-          "email", "slack", "logical_plan",
-          "validation_set")))
+          "focal_tbl", "focal_tbl_name", "focal_tbl_src",
+          "focal_col_names", "focal_col_types",
+          "email", "slack", "logical_plan", "validation_set")
+    )
+  )
   
   # Expect an agent object of class `dgr_graph`
   expect_is(agent, "ptblank_agent")
@@ -33,17 +37,13 @@ test_that("Creating a valid `agent` object is possible", {
   # `agent` components
   expect_is(agent$validation_name, "character")
   expect_is(agent$validation_time, "POSIXct")
+  expect_is(agent$focal_tbl, "data.frame")
   expect_is(agent$focal_tbl_name, "character")
-  expect_is(agent$focal_file_name, "character")
-  expect_is(agent$focal_db_type, "character")
+  expect_is(agent$focal_tbl_src, "character")
   expect_is(agent$focal_col_names, "character")
   expect_is(agent$focal_col_types, "character")
-  expect_is(agent$focal_db_cred_file_path, "character")
-  expect_is(agent$focal_init_sql, "character")
   expect_is(agent$email, "list")
   expect_is(agent$slack, "list")
-  expect_is(agent$validation_set$tbl_name, "character")
-  expect_is(agent$validation_set$db_type, "character")
   expect_is(agent$validation_set$assertion_type, "character")
   expect_is(agent$validation_set$column, "character")
   expect_is(agent$validation_set$value, "numeric")
@@ -61,15 +61,11 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$validation_set$notify_fraction, "numeric")
   expect_is(agent$validation_set$warn, "logical")
   expect_is(agent$validation_set$notify, "logical")
-  expect_is(agent$validation_set$init_sql, "character")
-  expect_is(agent$validation_set$db_cred_file_path, "character")
-  expect_is(agent$validation_set$file_path, "character")
-  expect_is(agent$validation_set$col_types, "character")
   expect_is(agent$validation_set$time_processed, "POSIXct")
   expect_is(agent$validation_set$proc_duration_s, "numeric")
   
   # Create an agent with a name
-  agent_name <- create_agent(validation_name = "test")
+  agent_name <- create_agent(tbl = df, name = "test")
   
   # Expect that the agent name has been set
   expect_equivalent(agent_name$validation_name, "test")

@@ -5,28 +5,31 @@
 #' @inheritParams col_vals_gt
 #' @param left,right The lower and uppers bounds for the range. The validation
 #'   Any values `>= left` and `<= right` will be considered as failing.
+#' @inheritParams col_vals_between
 #'   
 #' @examples
 #' # Create a simple data frame
 #' # with a column a numerical values
 #' df <-
 #'   data.frame(
-#'     a = c(5.6, 8.2, 6.3, 7.8, 3.4))
+#'     a = c(5.6, 8.2, 6.3, 7.8, 3.4)
+#'   )
 #' 
 #' # Validate that none of the values 
 #' # in column `a` are between 9 and 10,
 #' # or, between 0 and 2
 #' agent <-
-#'   create_agent() %>%
-#'   focus_on(tbl_name = "df") %>%
+#'   create_agent(tbl = df) %>%
 #'   col_vals_not_between(
 #'     column = a,
 #'     left = 9,
-#'     right = 10) %>%
+#'     right = 10
+#'   ) %>%
 #'   col_vals_not_between(
 #'     column = a,
 #'     left = 0,
-#'     right = 2) %>%
+#'     right = 2
+#'   ) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column
@@ -51,13 +54,7 @@ col_vals_not_between <- function(x,
                                  notify_count = NULL,
                                  warn_fraction = NULL,
                                  stop_fraction = NULL,
-                                 notify_fraction = NULL,
-                                 tbl_name = NULL,
-                                 db_type = NULL,
-                                 creds_file = NULL,
-                                 initial_sql = NULL,
-                                 file_path = NULL,
-                                 col_types = NULL) {
+                                 notify_fraction = NULL) {
   
   # Get the column name
   column <- 
@@ -125,13 +122,7 @@ col_vals_not_between <- function(x,
       notify_count = notify_count,
       warn_fraction = warn_fraction,
       stop_fraction = stop_fraction,
-      notify_fraction = notify_fraction,
-      tbl_name = ifelse(is.null(tbl_name), as.character(NA), tbl_name),
-      db_type = ifelse(is.null(db_type), as.character(NA), db_type),
-      creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
-      init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
-      file_path = ifelse(is.null(file_path), as.character(NA), file_path),
-      col_types = ifelse(is.null(col_types), as.character(NA), col_types)
+      notify_fraction = notify_fraction
     )
   
   # If no `brief` provided, set as NA

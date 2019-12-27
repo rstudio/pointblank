@@ -48,37 +48,24 @@ The agent has all the information on what to do, so now all interrogations
 can proceed efficiently, and, according to plan.
 }
 \examples{
-library(dplyr)
-
-# Create 2 simple data frames
-# with 2 columns of numerical
-# values in each
-df_1 <-
+# Create a simple data frame
+# with two columns of numerical values
+df <-
   data.frame(
     a = c(5, 7, 6, 5, 8, 7),
-    b = c(7, 1, 0, 0, 0, 3))
+    b = c(7, 1, 0, 0, 0, 3)
+  )
     
-df_2 <-
-  data.frame(
-    c = c(8, 8, 8, 6, 1, 3),
-    d = c(9, 8, 7, 2, 3, 3))
 
 # Validate that values in column
-# `a` from `df_1` are always >= 5,
-# and also validate that, in `df_2`,
-# values in `c` are always == 8
-# when values in `d` are >= 5  
+# `a` from `df` are always > 5,
+# using `interrogate()` completes
+# the process
 agent <-
-  create_agent() \%>\%
-  focus_on(tbl_name = "df_1") \%>\%
-  col_vals_gte(
+  create_agent(tbl = df) \%>\%
+  col_vals_gt(
     column = a,
-    value = 5) \%>\%
-  focus_on(tbl_name = "df_2") \%>\%
-  col_vals_equal(
-    column = c,
-    value = 8,
-    preconditions = ~ tbl \%>\% dplyr::filter(d >= 5)
+    value = 5
   ) \%>\%
   interrogate()
   

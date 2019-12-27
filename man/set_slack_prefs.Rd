@@ -63,7 +63,8 @@ pointblank pipeline any time before an \code{\link[=interrogate]{interrogate()}}
 # with a column of numerical values
 df <-
   data.frame(
-    a = c(5, 7, 6, 5, 8, 7))
+    a = c(5, 7, 6, 5, 8, 7)
+  )
 
 # Create a pointblank `agent`,
 # set up the Slack notification
@@ -77,7 +78,7 @@ df <-
 # more non-passing validations (in
 # this case, non-passing rows)
 agent <-
-  create_agent() \%>\%
+  create_agent(tbl = df) \%>\%
   set_slack_prefs(
     notify_active = TRUE,
     slack_webhook_url = 
@@ -87,11 +88,11 @@ agent <-
     slack_username = "table_validator",
     slack_report_url = 
       "https:://my.company.com/reports/df_validation") \%>\%
-  focus_on(tbl_name = "df") \%>\%
   col_vals_lt(
     column = a,
     value = 6,
-    notify_count = 1) \%>\%
+    notify_count = 1
+  ) \%>\%
   interrogate()
 }
 

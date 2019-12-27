@@ -4,13 +4,15 @@
 \alias{create_agent}
 \title{Create a pointblank agent object}
 \usage{
-create_agent(validation_name = NULL)
+create_agent(tbl, name = NULL)
 }
 \arguments{
-\item{validation_name}{An optional name for the validation pipeline that the
-agent will eventually carry out during the interrogation process. If no
-value is provided, a name will be generated based on the current system
-time.}
+\item{tbl}{The input table that will be the focus of the validation. This can
+be a data frame, a tibble, or a \code{tbl_dbi} object.}
+
+\item{name}{An optional name for the validation pipeline that the agent will
+eventually carry out during the interrogation process. If no value is
+provided, a name will be generated based on the current system time.}
 }
 \value{
 A \pkg{pointblank} agent object.
@@ -23,10 +25,11 @@ Creates an agent object.
 # with a column of numerical values
 df <-
   data.frame(
-    a = c(5, 7, 6, 5, 8, 7))
+    a = c(5, 7, 6, 5, 8, 7)
+  )
 
 # Create a pointblank `agent` object
-agent <- create_agent()
+agent <- create_agent(tbl = df)
 
 # Then, as with any `ptblank_agent`
 # object, we can focus on a table,
@@ -39,10 +42,10 @@ agent <- create_agent()
 # than 4
 agent <-
   agent \%>\%
-  focus_on(tbl_name = "df") \%>\%
   col_vals_gt(
     column = a,
-    value = 4) \%>\%
+    value = 4
+  ) \%>\%
   interrogate()
  
 # A summary can be produced using

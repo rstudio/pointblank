@@ -30,45 +30,20 @@
 #' @param stop_count,stop_fraction The threshold number or fraction of `FALSE`
 #'   validation results before stopping a simple validation or stopping an
 #'   agent-based validation.
-#' @param tbl_name The name of the local or remote table.
-#' @param db_type If the table is located in a database, the type of database is
-#'   required here. Currently, this can be either `PostgreSQL` or `MySQL`.
-#' @param creds_file If a connection to a database is required for reaching the
-#'   table specified in `tbl_name`, then a path to a credentials file can be
-#'   used to establish that connection. The credentials file is an `RDS`
-#'   containing a character vector with the following items in the specified
-#'   order: (1) database name (`dbname`), (2) the `host` name, (3) the `port`,
-#'   (4) the username (`user`), and (5) the `password`. This file can be easily
-#'   created using the [create_creds_file()] function.
-#' @param initial_sql When accessing a remote table, this provides an option to
-#'   provide an initial query component before conducting validations. An entire
-#'   SQL statement can be provided here, or, as a shortcut, the initial
-#'   `SELECT...` statement can be omitted for simple queries (e.g., `WHERE a > 1
-#'   AND b = 'one'`).
-#' @param file_path An optional path for a tabular data file to be loaded for
-#'   this verification step. Valid types are CSV and TSV files.
-#' @param col_types If validating a CSV or TSV file, an optional column
-#'   specification can be provided here as a string. This string representation
-#'   is where each character represents one column and the mappings are: `c` ->
-#'   character, `i` -> integer, `n` -> number, `d` -> double, `l` -> logical,
-#'   `D` -> date, `T` -> date time, `t` -> time, `?` -> guess, or `_/-`, which
-#'   skips the column.
 #'   
 #' @examples
 #' # Create a simple data frame
 #' # with a column of numerical values
 #' df <-
 #'   data.frame(
-#'     a = c(5, 7, 6, 5, 8, 7))
+#'     a = c(5, 7, 6, 5, 8, 7)
+#'   )
 #' 
 #' # Validate that values in column
 #' # `a` are always greater than 4
 #' agent <-
-#'   create_agent() %>%
-#'   focus_on(tbl_name = "df") %>%
-#'   col_vals_gt(
-#'     column = a,
-#'     value = 4) %>%
+#'   create_agent(tbl = df) %>%
+#'   col_vals_gt(column = a, value = 4) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column
@@ -91,13 +66,7 @@ col_vals_gt <- function(x,
                         notify_count = NULL,
                         warn_fraction = NULL,
                         stop_fraction = NULL,
-                        notify_fraction = NULL,
-                        tbl_name = NULL,
-                        db_type = NULL,
-                        creds_file = NULL,
-                        initial_sql = NULL,
-                        file_path = NULL,
-                        col_types = NULL) {
+                        notify_fraction = NULL) {
   
   # Get the column name
   column <- 
@@ -161,13 +130,7 @@ col_vals_gt <- function(x,
       notify_count = notify_count,
       warn_fraction = warn_fraction,
       stop_fraction = stop_fraction,
-      notify_fraction = notify_fraction,
-      tbl_name = ifelse(is.null(tbl_name), as.character(NA), tbl_name),
-      db_type = ifelse(is.null(db_type), as.character(NA), db_type),
-      creds_file = ifelse(is.null(creds_file), as.character(NA), creds_file),
-      init_sql = ifelse(is.null(initial_sql), as.character(NA), initial_sql),
-      file_path = ifelse(is.null(file_path), as.character(NA), file_path),
-      col_types = ifelse(is.null(col_types), as.character(NA), col_types)
+      notify_fraction = notify_fraction
     )
   
   # If no `brief` provided, set as NA

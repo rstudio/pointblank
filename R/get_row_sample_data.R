@@ -24,27 +24,27 @@
 #' # column of numerical values
 #' df <-
 #'   data.frame(
-#'     a = rnorm(
-#'       n = 100,
-#'       mean = 5,
-#'       sd = 2))
+#'     a = rnorm(100, 5, 2)
+#'   )
 #' 
 #' # Create 2 simple validation steps
 #' # that test whether values within
 #' # column `a`
 #' agent <-
-#'   create_agent() %>%
-#'   focus_on(tbl_name = "df") %>%
+#'   create_agent(tbl = df) %>%
 #'   col_vals_between(
 #'     column = a,
 #'     left = 4,
-#'     right = 6) %>%
+#'     right = 6
+#'   ) %>%
 #'   col_vals_lte(
 #'     column = a,
-#'     value = 10) %>%
+#'     value = 10
+#'   ) %>%
 #'   interrogate(
 #'     get_problem_rows = TRUE,
-#'     get_first_n = 10)
+#'     get_first_n = 10
+#'   )
 #'   
 #' # Find out which validation steps
 #' # contain sample row data
@@ -57,8 +57,7 @@
 #' # applied to provide context on the
 #' # validation step for which these rows
 #' # failed to pass 
-#' agent %>%
-#'   get_row_sample_data(step = 1)
+#' agent %>% get_row_sample_data(step = 1)
 #' }
 #' 
 #' @export

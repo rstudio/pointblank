@@ -25,37 +25,24 @@
 #'   when sampling non-passing rows using the `sample_frac` option.
 #'   
 #' @examples 
-#' library(dplyr)
-#' 
-#' # Create 2 simple data frames
-#' # with 2 columns of numerical
-#' # values in each
-#' df_1 <-
+#' # Create a simple data frame
+#' # with two columns of numerical values
+#' df <-
 #'   data.frame(
 #'     a = c(5, 7, 6, 5, 8, 7),
-#'     b = c(7, 1, 0, 0, 0, 3))
+#'     b = c(7, 1, 0, 0, 0, 3)
+#'   )
 #'     
-#' df_2 <-
-#'   data.frame(
-#'     c = c(8, 8, 8, 6, 1, 3),
-#'     d = c(9, 8, 7, 2, 3, 3))
 #' 
 #' # Validate that values in column
-#' # `a` from `df_1` are always >= 5,
-#' # and also validate that, in `df_2`,
-#' # values in `c` are always == 8
-#' # when values in `d` are >= 5  
+#' # `a` from `df` are always > 5,
+#' # using `interrogate()` completes
+#' # the process
 #' agent <-
-#'   create_agent() %>%
-#'   focus_on(tbl_name = "df_1") %>%
-#'   col_vals_gte(
+#'   create_agent(tbl = df) %>%
+#'   col_vals_gt(
 #'     column = a,
-#'     value = 5) %>%
-#'   focus_on(tbl_name = "df_2") %>%
-#'   col_vals_equal(
-#'     column = c,
-#'     value = 8,
-#'     preconditions = ~ tbl %>% dplyr::filter(d >= 5)
+#'     value = 5
 #'   ) %>%
 #'   interrogate()
 #'   
@@ -64,7 +51,7 @@
 #' get_interrogation_summary(agent)[, 1:7]
 #' 
 #' @return A \pkg{pointblank} agent object.
-#' @import rlang
+#' 
 #' @export
 interrogate <- function(agent,
                         get_problem_rows = TRUE,
@@ -76,13 +63,14 @@ interrogate <- function(agent,
   # Add the starting time to the `agent` object
   agent$validation_time <- Sys.time()
   
-  for (i in seq(nrow(agent$validation_set))) {
+  for (i in seq_len(nrow(agent$validation_set))) {
     
     # Get the starting time for the validation step
     validation_start_time <- Sys.time()
     
     # Get the table object for interrogation  
-    table <- get_tbl_object(agent, idx = i)
+    # table <- get_tbl_object(agent, idx = i)
+    table <- get_focal_tbl_object(agent)
     
     # Use preconditions to modify the table
     table <- apply_preconditions_to_tbl(agent, idx = i, tbl = table)
@@ -426,7 +414,7 @@ add_reporting_data <- function(agent,
                                sample_n,
                                sample_frac,
                                sample_limit) {
-  
+
   # Get total count of rows
   row_count <-
     tbl_checked %>%
@@ -466,6 +454,8 @@ add_reporting_data <- function(agent,
     
     # Collect problem rows if requested
     if (isTRUE(get_problem_rows)) {
+
+      tbl_type <- tbl_checked %>% class()
       
       problem_rows <- 
         tbl_checked %>%
@@ -479,8 +469,8 @@ add_reporting_data <- function(agent,
           utils::head(get_first_n) %>%
           dplyr::as_tibble()
         
-      } else if (!is.null(sample_n) &
-                 !(agent$validation_set$db_type[idx] %in% c("PostgreSQL", "MySQL"))) {
+      } else if (all(!is.null(sample_n) &
+                 tbl_type %in% c("data.frame", "tbl_df"))) {
         
         problem_rows <-
           dplyr::sample_n(
@@ -489,8 +479,8 @@ add_reporting_data <- function(agent,
             replace = FALSE) %>%
           dplyr::as_tibble()
         
-      } else if (!is.null(sample_frac) &
-                 !(agent$validation_set$db_type[idx] %in% c("PostgreSQL", "MySQL"))) {
+      } else if (all(!is.null(sample_frac) &
+                 tbl_type %in% c("data.frame", "tbl_df"))) {
         
         problem_rows <-
           dplyr::sample_frac(

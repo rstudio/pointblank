@@ -10,8 +10,7 @@
 #'   status.
 #' @param email_recipients An optional vector of email addresses to which
 #'   notification emails should be sent.
-#' @param creds_file An optional path to an email credentials file. Such a file
-#'   can be generated using the [create_email_creds_file()] function.
+#' @param creds_file An optional path to an email credentials file.
 #'   
 #' @examples 
 #' \dontrun{
@@ -30,7 +29,8 @@
 #' # with a column of numerical values
 #' df <-
 #'   data.frame(
-#'     a = c(5, 7, 6, 5, 8, 7))
+#'     a = c(5, 7, 6, 5, 8, 7)
+#'   )
 #' 
 #' # Create a pointblank `agent`,
 #' # set up the email notification
@@ -44,17 +44,17 @@
 #' # more non-passing validations (in
 #' # this case, non-passing rows)
 #' agent <-
-#'   create_agent() %>%
+#'   create_agent(tbl = df) %>%
 #'   set_email_prefs(
 #'     notify_active = TRUE,
 #'     email_recipients = 
 #'       c("a@b.net", "c@d.com"),
 #'     creds_file = "~/.pb_email") %>%
-#'   focus_on(tbl_name = "df") %>%
 #'   col_vals_lt(
 #'     column = a,
 #'     value = 6,
-#'     notify_count = 1) %>%
+#'     notify_count = 1
+#'   ) %>%
 #'   interrogate()
 #' }
 #' 

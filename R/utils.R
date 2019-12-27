@@ -15,66 +15,33 @@ create_validation_step <- function(agent,
                                    notify_count = NULL,
                                    warn_fraction = NULL,
                                    stop_fraction = NULL,
-                                   notify_fraction = NULL,
-                                   tbl_name = as.character(NA),
-                                   db_type = as.character(NA),
-                                   creds_file = as.character(NA),
-                                   init_sql = as.character(NA),
-                                   file_path = as.character(NA),
-                                   col_types = as.character(NA)) {
+                                   notify_fraction = NULL) {
   
   # Create a validation step as a single-row
   # `tbl_df` object
   validation_step_df <-
     dplyr::tibble(
-      tbl_name = as.character(agent$focal_tbl_name),
-      db_type = as.character(agent$focal_db_type),
       assertion_type = assertion_type,
       column = as.character(column),
-      value = ifelse(is.null(value), as.numeric(NA), as.numeric(value)),
+      value = ifelse(is.null(value), NA_real_, as.numeric(value)),
       set = ifelse(is.null(set), list(NULL), list(set)),
-      regex = ifelse(is.null(regex), as.character(NA), as.character(regex)),
+      regex = ifelse(is.null(regex), NA_character_, as.character(regex)),
       incl_na = ifelse(is.null(incl_na), as.logical(NA), as.logical(incl_na)),
       preconditions = ifelse(is.null(preconditions), list(NULL), list(preconditions)),
-      brief = ifelse(is.null(brief), as.character(NA), as.character(brief)),
+      brief = ifelse(is.null(brief), NA_character_, as.character(brief)),
       all_passed = as.logical(NA),
-      warn_count = ifelse(is.null(warn_count), as.numeric(NA), as.numeric(warn_count)),
-      stop_count = ifelse(is.null(stop_count), as.numeric(NA), as.numeric(stop_count)),
-      notify_count = ifelse(is.null(notify_count), as.numeric(NA), as.numeric(notify_count)),
-      warn_fraction = ifelse(is.null(warn_fraction), as.numeric(NA), as.numeric(warn_fraction)),
-      stop_fraction = ifelse(is.null(stop_fraction), as.numeric(NA), as.numeric(stop_fraction)),
-      notify_fraction = ifelse(is.null(notify_fraction), as.numeric(NA), as.numeric(notify_fraction)),
-      init_sql = as.character(agent$focal_init_sql),
-      db_cred_file_path = as.character(agent$focal_db_cred_file_path),
-      file_path = as.character(agent$focal_file_name),
-      col_types = as.character(agent$focal_col_types)
+      n = NA_integer_,
+      n_passed = NA_integer_,
+      n_failed = NA_integer_,
+      f_passed = NA_real_,
+      f_failed = NA_real_,
+      warn_count = ifelse(is.null(warn_count), NA_real_, as.numeric(warn_count)),
+      stop_count = ifelse(is.null(stop_count), NA_real_, as.numeric(stop_count)),
+      notify_count = ifelse(is.null(notify_count), NA_real_, as.numeric(notify_count)),
+      warn_fraction = ifelse(is.null(warn_fraction), NA_real_, as.numeric(warn_fraction)),
+      stop_fraction = ifelse(is.null(stop_fraction), NA_real_, as.numeric(stop_fraction)),
+      notify_fraction = ifelse(is.null(notify_fraction), NA_real_, as.numeric(notify_fraction))
     )
-  
-  # If just `tbl_name` provided, assume it is
-  # a local data frame
-  if (!is.na(tbl_name)) {
-    validation_step_df$tbl_name <- tbl_name
-  }
-  
-  if (!is.na(db_type)) {
-    validation_step_df$db_type <- db_type
-  }
-  
-  if (!is.na(creds_file)) {
-    validation_step_df$db_cred_file_path <- creds_file
-  }
-  
-  if (!is.na(init_sql)) {
-    validation_step_df$init_sql <- init_sql
-  }
-  
-  if (!is.na(file_path)) {
-    validation_step_df$file_path <- file_path
-  }
-  
-  if (!is.na(col_types)) {
-    validation_step_df$col_types <- col_types
-  }
   
   # Append `validation_step` to `validation_set`
   agent$validation_set <- 
@@ -342,6 +309,10 @@ apply_preconditions_to_tbl <- function(agent, idx, tbl) {
   }
   
   tbl
+}
+
+get_focal_tbl_object <- function(agent) {
+  agent$focal_tbl
 }
 
 get_assertion_type_at_idx <- function(agent, idx) {

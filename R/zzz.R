@@ -17,7 +17,6 @@ utils::globalVariables(
     "preconditions",
     "regex",
     "set",
-    "sql",
     "tbl_name",
     "tbl_name_type",
     "tbl_name_type_n",

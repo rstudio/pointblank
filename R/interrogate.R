@@ -68,8 +68,7 @@ interrogate <- function(agent,
     # Get the starting time for the validation step
     validation_start_time <- Sys.time()
     
-    # Get the table object for interrogation  
-    # table <- get_tbl_object(agent, idx = i)
+    # Get the table object for interrogation 
     table <- get_focal_tbl_object(agent)
     
     # Use preconditions to modify the table

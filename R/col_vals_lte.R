@@ -26,7 +26,7 @@
 #' agent <-
 #'   create_agent(tbl = df) %>%
 #'   col_vals_lte(
-#'     column = vars(a_b),
+#'     columns = vars(a_b),
 #'     value = 10,
 #'     preconditions = ~ {
 #'       tbl %>% dplyr::mutate(a_b = a + b)
@@ -42,7 +42,7 @@
 #' @import rlang
 #' @export
 col_vals_lte <- function(x,
-                         column,
+                         columns,
                          value,
                          preconditions = NULL,
                          brief = NULL,
@@ -53,11 +53,11 @@ col_vals_lte <- function(x,
                          stop_fraction = NULL,
                          notify_fraction = NULL) {
   
-  # Capture the `column` expression
-  column <- rlang::enquo(column)
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
   
   # Resolve the columns based on the expression
-  column <- resolve_columns(x = x, var_expr = column, preconditions)
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
@@ -65,7 +65,7 @@ col_vals_lte <- function(x,
       x %>%
         evaluate_single(
           type = "col_vals_lte",
-          column = column,
+          column = columns,
           value = value,
           preconditions = preconditions,
           warn_count = warn_count,
@@ -87,20 +87,20 @@ col_vals_lte <- function(x,
         agent = agent,
         assertion_type = "col_vals_gt",
         preconditions = preconditions,
-        column = column,
+        column = columns,
         value = value
       )
   }
   
   # Add one or more validation steps based on the
   # length of the `column` variable
-  for (col in column) {
+  for (column in columns) {
     
     agent <-
       create_validation_step(
         agent = agent,
         assertion_type = "col_vals_lte",
-        column = col,
+        column = column,
         value = value,
         preconditions = preconditions,
         brief = brief,

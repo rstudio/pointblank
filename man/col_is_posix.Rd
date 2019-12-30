@@ -6,7 +6,7 @@
 \usage{
 col_is_posix(
   x,
-  column,
+  columns,
   brief = NULL,
   warn_count = NULL,
   stop_count = NULL,
@@ -19,7 +19,7 @@ col_is_posix(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The column (or a set of columns, provided as a character
+\item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
 \item{brief}{An optional, text-based description for the validation step.}
@@ -74,7 +74,7 @@ df <-
 # data frame is classed as `POSIXct`
 agent <-
   create_agent(tbl = df) \%>\%
-  col_is_posix(column = vars(a)) \%>\%
+  col_is_posix(columns = vars(a)) \%>\%
   interrogate()
 
 # Determine if this column

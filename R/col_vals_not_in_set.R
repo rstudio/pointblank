@@ -30,11 +30,11 @@
 #' agent <-
 #'   create_agent(tbl = df) %>%
 #'   col_vals_not_in_set(
-#'     column = vars(a),
+#'     columns = vars(a),
 #'     set = 7:10
 #'   ) %>%
 #'   col_vals_not_in_set(
-#'     column = vars(b),
+#'     columns = vars(b),
 #'     set = c("seven", "eight",
 #'             "nine", "ten")
 #'   ) %>%
@@ -48,7 +48,7 @@
 #' @import rlang
 #' @export
 col_vals_not_in_set <- function(x,
-                                column,
+                                columns,
                                 set,
                                 preconditions = NULL,
                                 brief = NULL,
@@ -59,11 +59,11 @@ col_vals_not_in_set <- function(x,
                                 stop_fraction = NULL,
                                 notify_fraction = NULL) {
   
-  # Capture the `column` expression
-  column <- rlang::enquo(column)
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
   
   # Resolve the columns based on the expression
-  column <- resolve_columns(x = x, var_expr = column, preconditions)
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
@@ -71,7 +71,7 @@ col_vals_not_in_set <- function(x,
       x %>%
         evaluate_single(
           type = "col_vals_not_in_set",
-          column = column,
+          column = columns,
           set = set,
           preconditions = preconditions,
           warn_count = warn_count,
@@ -92,20 +92,20 @@ col_vals_not_in_set <- function(x,
       create_autobrief(
         agent = agent,
         assertion_type = "col_vals_not_in_set",
-        column = column,
+        column = columns,
         set = set
       )
   }
   
   # Add one or more validation steps based on the
-  # length of the `column` variable
-  for (col in column) {
+  # length of the `columns` variable
+  for (column in columns) {
     
     agent <-
       create_validation_step(
         agent = agent,
         assertion_type = "col_vals_not_in_set",
-        column = col,
+        column = column,
         set = set,
         preconditions = preconditions,
         brief = brief,

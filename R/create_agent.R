@@ -32,7 +32,7 @@
 #' # than 4
 #' agent <-
 #'   agent %>%
-#'   col_vals_gt(column = vars(a), value = 4) %>%
+#'   col_vals_gt(columns = vars(a), value = 4) %>%
 #'   interrogate()
 #'  
 #' # A summary can be produced using

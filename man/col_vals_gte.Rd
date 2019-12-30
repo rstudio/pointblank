@@ -6,7 +6,7 @@
 \usage{
 col_vals_gte(
   x,
-  column,
+  columns,
   value,
   preconditions = NULL,
   brief = NULL,
@@ -21,7 +21,7 @@ col_vals_gte(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The column (or a set of columns, provided as a character
+\item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
 \item{value}{A numeric value used for this test. Any column values \verb{>= value} are considered passing.}
@@ -83,7 +83,7 @@ df <-
 # equal to `5`
 agent <-
   create_agent(tbl = df) \%>\%
-  col_vals_gte(column = vars(a), value = 5) \%>\%
+  col_vals_gte(columns = vars(a), value = 5) \%>\%
   interrogate()
 
 # Determine if this column

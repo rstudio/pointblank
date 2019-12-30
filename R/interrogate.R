@@ -41,7 +41,7 @@
 #' # the process
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   col_vals_gt(column = vars(a), value = 5) %>%
+#'   col_vals_gt(columns = vars(a), value = 5) %>%
 #'   interrogate()
 #'   
 #' # Get a basic summary with

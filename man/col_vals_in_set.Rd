@@ -6,7 +6,7 @@
 \usage{
 col_vals_in_set(
   x,
-  column,
+  columns,
   set,
   preconditions = NULL,
   brief = NULL,
@@ -21,7 +21,7 @@ col_vals_in_set(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The column (or a set of columns, provided as a character
+\item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
 \item{set}{A vector of numeric or string-based elements, where column values
@@ -90,11 +90,11 @@ df <-
 agent <-
   create_agent(tbl = df) \%>\%
   col_vals_in_set(
-    column = vars(a),
+    columns = vars(a),
     set = 1:4
   ) \%>\%
   col_vals_in_set(
-    column = vars(b),
+    columns = vars(b),
     set = c("one", "two",
             "three", "four")
   ) \%>\%

@@ -4,9 +4,6 @@
 #'
 #' @inheritParams col_vals_gt
 #' @param x An agent object of class `ptblank_agent`.
-#' @param cols An optional column expression to check for duplication across
-#'   select columns. If not provided, the validation checks for duplicate
-#'   records using data across all columns.
 #'   
 #' @return A `ptblank_agent` object.
 #'   
@@ -26,7 +23,7 @@
 #' # rows are distinct)
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   rows_not_duplicated(cols = vars(a, b)) %>%
+#'   rows_not_duplicated(columns = vars(a, b)) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column
@@ -37,7 +34,7 @@
 #' @import rlang
 #' @export
 rows_not_duplicated <- function(x,
-                                cols = NULL,
+                                columns = NULL,
                                 preconditions = NULL,
                                 brief = NULL,
                                 warn_count = NULL,
@@ -49,19 +46,19 @@ rows_not_duplicated <- function(x,
 
   agent <- x
   
-  # Capture the `column` expression
-  cols <- rlang::enquo(cols)
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
   
   # Resolve the columns based on the expression
-  cols <- resolve_columns(x = x, var_expr = cols, preconditions)
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
-  if (length(cols) > 0) {
+  if (length(columns) > 0) {
     
-    cols <- paste(cols, collapse = ", ")
+    columns <- paste(columns, collapse = ", ")
     
   } else {
     
-    cols <- NULL
+    columns <- NULL
   }
   
   if (is.null(brief)) {
@@ -70,7 +67,7 @@ rows_not_duplicated <- function(x,
       create_autobrief(
         agent = agent,
         assertion_type = "rows_not_duplicated",
-        column = cols
+        column = columns
       )
   }
   
@@ -79,7 +76,7 @@ rows_not_duplicated <- function(x,
     create_validation_step(
       agent = agent,
       assertion_type = "rows_not_duplicated",
-      column = list(ifelse(is.null(cols), as.character(NA), cols)),
+      column = list(ifelse(is.null(columns), as.character(NA), columns)),
       value = NULL,
       preconditions = preconditions,
       brief = brief,

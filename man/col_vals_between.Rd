@@ -6,7 +6,7 @@
 \usage{
 col_vals_between(
   x,
-  column,
+  columns,
   left,
   right,
   inclusive = c(TRUE, TRUE),
@@ -24,7 +24,7 @@ col_vals_between(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The column (or a set of columns, provided as a character
+\item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
 \item{left}{The lower bound for the range. The validation includes this bound
@@ -97,7 +97,7 @@ df <-
 agent <-
   create_agent(tbl = df) \%>\%
   col_vals_between(
-    column = vars(a),
+    columns = vars(a),
     left = 1, right = 9
   ) \%>\%
   interrogate()

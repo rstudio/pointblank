@@ -24,7 +24,7 @@
 #' agent <-
 #'   create_agent(tbl = df) %>%
 #'   col_vals_regex(
-#'     column = vars(a),
+#'     columns = vars(a),
 #'     regex = "^s_[0-9]{4}$"
 #'   ) %>%
 #'   interrogate()
@@ -37,7 +37,7 @@
 #' @import rlang
 #' @export
 col_vals_regex <- function(x,
-                           column,
+                           columns,
                            regex,
                            preconditions = NULL,
                            brief = NULL,
@@ -48,11 +48,11 @@ col_vals_regex <- function(x,
                            stop_fraction = NULL,
                            notify_fraction = NULL) {
   
-  # Capture the `column` expression
-  column <- rlang::enquo(column)
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
   
   # Resolve the columns based on the expression
-  column <- resolve_columns(x = x, var_expr = column, preconditions)
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
@@ -60,7 +60,7 @@ col_vals_regex <- function(x,
       x %>%
         evaluate_single(
           type = "col_vals_regex",
-          column = column,
+          column = columns,
           regex = regex,
           preconditions = preconditions,
           warn_count = warn_count,
@@ -81,20 +81,20 @@ col_vals_regex <- function(x,
       create_autobrief(
         agent = agent,
         assertion_type = "col_vals_regex",
-        column = column,
+        column = columns,
         regex = regex
       )
   }
   
   # Add one or more validation steps based on the
-  # length of the `column` variable
-  for (col in column) {
+  # length of the `columns` variable
+  for (column in columns) {
     
     agent <-
       create_validation_step(
         agent = agent,
         assertion_type = "col_vals_regex",
-        column = col,
+        column = column,
         regex = regex,
         preconditions = preconditions,
         brief = brief,

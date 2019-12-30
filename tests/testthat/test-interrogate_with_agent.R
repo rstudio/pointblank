@@ -11,7 +11,7 @@ test_that("Interrogating with an agent yields the correct results", {
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    col_is_character(column = b) %>%
+    col_is_character(columns = vars(b)) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -36,7 +36,7 @@ test_that("Interrogating with an agent yields the correct results", {
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    col_is_numeric(column = a) %>%
+    col_is_numeric(columns = vars(a)) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -62,7 +62,7 @@ test_that("Interrogating with an agent yields the correct results", {
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    col_is_posix(column = date_time) %>%
+    col_is_posix(columns = vars(date_time)) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -88,7 +88,7 @@ test_that("Interrogating with an agent yields the correct results", {
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    col_is_date(column = date) %>%
+    col_is_date(columns = vars(date)) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -114,7 +114,7 @@ test_that("Interrogating with an agent yields the correct results", {
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    col_is_integer(column = a) %>%
+    col_is_integer(columns = vars(a)) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -140,7 +140,7 @@ test_that("Interrogating with an agent yields the correct results", {
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    col_is_logical(column = e) %>%
+    col_is_logical(columns = vars(e)) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -162,7 +162,6 @@ test_that("Interrogating with an agent yields the correct results", {
   expect_equivalent(nrow(validation$validation_set), 1)
 })
 
-
 test_that("Interrogating for valid row values", {
   
   # Use `col_vals_between()` function to create
@@ -170,9 +169,9 @@ test_that("Interrogating for valid row values", {
   validation <-
     create_agent(tbl = small_table) %>%
     col_vals_between(
-      column = d,
-      left = 0,
-      right = 5000) %>%
+      columns = vars(d),
+      left = 0, right = 5000
+    ) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -199,11 +198,10 @@ test_that("Interrogating for valid row values", {
   validation <-
     create_agent(tbl = small_table) %>%
     col_vals_between(
-      column = d,
-      left = 0,
-      right = 5000,
+      columns = vars(d),
+      left = 0, right = 5000,
       preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-04")
-    )%>%
+    ) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -224,9 +222,9 @@ test_that("Interrogating for valid row values", {
   validation <-
     create_agent(tbl = small_table) %>%
     col_vals_not_between(
-      column = d,
-      left = 500,
-      right = 1000) %>%
+      columns = vars(d),
+      left = 500, right = 1000
+    ) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -253,9 +251,8 @@ test_that("Interrogating for valid row values", {
   validation <-
     create_agent(tbl = small_table) %>%
     col_vals_not_between(
-      column = d,
-      left = 500,
-      right = 1000,
+      columns = vars(d),
+      left = 500, right = 1000,
       preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-04")
     ) %>%
     interrogate()
@@ -278,9 +275,7 @@ test_that("Interrogating for valid row values", {
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_equal(
-      column = d,
-      value = 283.94) %>%
+    col_vals_equal(columns = vars(d), value = 283.94) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -307,7 +302,7 @@ test_that("Interrogating for valid row values", {
   validation <-
     create_agent(tbl = small_table) %>%
     col_vals_equal(
-      column = d,
+      columns = vars(d),
       value = 283.94,
       preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-04")
     ) %>%
@@ -330,9 +325,7 @@ test_that("Interrogating for valid row values", {
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_not_equal(
-      column = d,
-      value = 283.94) %>%
+    col_vals_not_equal(columns = vars(d), value = 283.94) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -359,7 +352,7 @@ test_that("Interrogating for valid row values", {
   validation <-
     create_agent(tbl = small_table) %>%
     col_vals_not_equal(
-      column = d,
+      columns = vars(d),
       value = 283.94,
       preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-04")
     ) %>%
@@ -431,7 +424,7 @@ test_that("Interrogating for valid row values", {
   # `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    rows_not_duplicated(cols = vars(date_time, a)) %>%
+    rows_not_duplicated(columns = vars(date_time, a)) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -451,9 +444,7 @@ test_that("Interrogating for valid row values", {
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_in_set(
-      column = f,
-      set = c("low", "mid", "high")) %>%
+    col_vals_in_set(columns = vars(f), set = c("low", "mid", "high")) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -478,9 +469,7 @@ test_that("Interrogating for valid row values", {
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_not_in_set(
-      column = f,
-      set = c("lower", "higher")) %>%
+    col_vals_not_in_set(columns = vars(f), set = c("lower", "higher")) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -506,9 +495,7 @@ test_that("Interrogating for valid row values", {
   # interrogation that fails every row
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_not_in_set(
-      column = f,
-      set = c("lower", "middle", "higher")) %>%
+    col_vals_not_in_set(columns = vars(f), set = c("lower", "middle", "higher")) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -533,7 +520,7 @@ test_that("Interrogating for valid row values", {
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_not_null(column = c) %>%
+    col_vals_not_null(columns = vars(c)) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -560,7 +547,7 @@ test_that("Interrogating for valid row values", {
   validation <-
     create_agent(tbl = small_table) %>%
     col_vals_not_null(
-      column = c,
+      columns = vars(c),
       preconditions = ~ tbl %>%
         dplyr::filter(date > "2016-01-06" & date < "2016-01-30")
     ) %>%
@@ -583,7 +570,7 @@ test_that("Interrogating for valid row values", {
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_null(column = c) %>%
+    col_vals_null(columns = vars(c)) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -610,7 +597,7 @@ test_that("Interrogating for valid row values", {
   validation <-
     create_agent(tbl = small_table) %>%
     col_vals_null(
-      column = c,
+      columns = vars(c),
       preconditions = ~ tbl %>%
         dplyr::filter(date == '2016-01-06' | date == '2016-01-30')
     ) %>%
@@ -634,8 +621,9 @@ test_that("Interrogating for valid row values", {
   validation <-
     create_agent(tbl = small_table) %>%
     col_vals_regex(
-      column = b,
-      regex = "[0-9]-[a-z]{3}-[0-9]{3}") %>%
+      columns = vars(b),
+      regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+    ) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
@@ -662,7 +650,7 @@ test_that("Interrogating for valid row values", {
   validation <-
     create_agent(tbl = small_table) %>%
     col_vals_regex(
-      column = f,
+      columns = vars(f),
       regex = "[a-z]{3}",
       preconditions = ~ tbl %>% dplyr::filter(f != "high")
     ) %>%

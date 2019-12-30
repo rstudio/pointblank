@@ -6,7 +6,7 @@
 \usage{
 col_vals_not_null(
   x,
-  column,
+  columns,
   preconditions = NULL,
   brief = NULL,
   warn_count = NULL,
@@ -20,7 +20,7 @@ col_vals_not_null(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The column (or a set of columns, provided as a character
+\item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
 \item{preconditions}{expressions used for mutating the input table before
@@ -86,7 +86,7 @@ df <-
 agent <-
   create_agent(tbl = df) \%>\%
   col_vals_not_null(
-    column = vars(a),
+    columns = vars(a),
     preconditions = ~ tbl \%>\% dplyr::filter(b == 2)
   ) \%>\%
   interrogate()

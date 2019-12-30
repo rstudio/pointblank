@@ -6,7 +6,7 @@
 \usage{
 col_vals_regex(
   x,
-  column,
+  columns,
   regex,
   preconditions = NULL,
   brief = NULL,
@@ -21,7 +21,7 @@ col_vals_regex(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The column (or a set of columns, provided as a character
+\item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
 \item{regex}{A regex pattern to test for matching strings.}
@@ -85,7 +85,7 @@ df <-
 agent <-
   create_agent(tbl = df) \%>\%
   col_vals_regex(
-    column = vars(a),
+    columns = vars(a),
     regex = "^s_[0-9]{4}$"
   ) \%>\%
   interrogate()

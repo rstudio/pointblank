@@ -6,7 +6,7 @@
 \usage{
 col_vals_not_between(
   x,
-  column,
+  columns,
   left,
   right,
   inclusive = c(TRUE, TRUE),
@@ -24,7 +24,7 @@ col_vals_not_between(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The column (or a set of columns, provided as a character
+\item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
 \item{left, right}{The lower and uppers bounds for the range. The validation
@@ -94,11 +94,11 @@ df <-
 agent <-
   create_agent(tbl = df) \%>\%
   col_vals_not_between(
-    column = vars(a),
+    columns = vars(a),
     left = 9, right = 10
   ) \%>\%
   col_vals_not_between(
-    column = vars(a),
+    columns = vars(a),
     left = 0, right = 2
   ) \%>\%
   interrogate()

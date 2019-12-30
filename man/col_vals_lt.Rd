@@ -6,7 +6,7 @@
 \usage{
 col_vals_lt(
   x,
-  column,
+  columns,
   value,
   preconditions = NULL,
   brief = NULL,
@@ -21,7 +21,7 @@ col_vals_lt(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The column (or a set of columns, provided as a character
+\item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
 \item{value}{A numeric value used for this test. Any column values \verb{< value}
@@ -84,7 +84,7 @@ df <-
 # than 6
 agent <-
   create_agent(tbl = df) \%>\%
-  col_vals_lt(column = vars(a), value = 6) \%>\%
+  col_vals_lt(columns = vars(a), value = 6) \%>\%
   interrogate()
 
 # Determine if this column 

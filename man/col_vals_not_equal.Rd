@@ -6,7 +6,7 @@
 \usage{
 col_vals_not_equal(
   x,
-  column,
+  columns,
   value,
   preconditions = NULL,
   brief = NULL,
@@ -21,7 +21,7 @@ col_vals_not_equal(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The column (or a set of columns, provided as a character
+\item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
 \item{value}{a numeric value used to test for non-equality.}
@@ -88,7 +88,7 @@ df <-
 agent <-
   create_agent(tbl = df) \%>\%
   col_vals_not_equal(
-    column = vars(b),
+    columns = vars(b),
     value = 5,
     preconditions = ~ tbl \%>\% dplyr::filter(a == 2)
   ) \%>\%

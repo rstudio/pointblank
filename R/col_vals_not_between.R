@@ -24,11 +24,11 @@
 #' agent <-
 #'   create_agent(tbl = df) %>%
 #'   col_vals_not_between(
-#'     column = vars(a),
+#'     columns = vars(a),
 #'     left = 9, right = 10
 #'   ) %>%
 #'   col_vals_not_between(
-#'     column = vars(a),
+#'     columns = vars(a),
 #'     left = 0, right = 2
 #'   ) %>%
 #'   interrogate()
@@ -41,7 +41,7 @@
 #' @import rlang
 #' @export
 col_vals_not_between <- function(x,
-                                 column,
+                                 columns,
                                  left,
                                  right,
                                  inclusive = c(TRUE, TRUE),
@@ -55,11 +55,11 @@ col_vals_not_between <- function(x,
                                  stop_fraction = NULL,
                                  notify_fraction = NULL) {
   
-  # Capture the `column` expression
-  column <- rlang::enquo(column)
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
   
   # Resolve the columns based on the expression
-  column <- resolve_columns(x = x, var_expr = column, preconditions)
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
   left <- stats::setNames(left, inclusive[1])
   right <- stats::setNames(right, inclusive[2])
@@ -70,7 +70,7 @@ col_vals_not_between <- function(x,
       x %>%
         evaluate_single(
           type = "col_vals_not_between",
-          column = column,
+          column = columns,
           left = left,
           right = right,
           incl_na = incl_na,
@@ -93,21 +93,21 @@ col_vals_not_between <- function(x,
       create_autobrief(
         agent = agent,
         assertion_type = "col_vals_not_between",
-        column = column,
+        column = columns,
         left = left,
         right = right
       )
   }
   
   # Add one or more validation steps based on the
-  # length of the `column` variable
-  for (col in column) {
+  # length of the `columns` variable
+  for (column in columns) {
     
     agent <-
       create_validation_step(
         agent = agent,
         assertion_type = "col_vals_not_between",
-        column = col,
+        column = column,
         set = c(left, right),
         incl_na = incl_na,
         preconditions = preconditions,

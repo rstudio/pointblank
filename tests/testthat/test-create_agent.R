@@ -5,7 +5,8 @@ test_that("Creating a valid `agent` object is possible", {
   df <-
     data.frame(
       a = c(1, 1, 1, 2, 2, 2),
-      b = c(5, 5, 5, 3, 6, 3))
+      b = c(5, 5, 5, 3, 6, 3)
+    )
   
   # Create an agent object
   agent <- create_agent(tbl = df)
@@ -25,12 +26,10 @@ test_that("Creating a valid `agent` object is possible", {
   # Expect an agent object of class `ptblank_agent`
   expect_is(agent, "ptblank_agent")
   
-  # Expect that the `validation_set` component is
-  # a `tbl_df`
+  # Expect that the `validation_set` component is a `tbl_df`
   expect_is(agent$validation_set, "tbl_df")
   
-  # Expect certain classes for the different
-  # `agent` components
+  # Expect certain classes for the different `ptblank_agent` components
   expect_is(agent$validation_name, "character")
   expect_is(agent$validation_time, "POSIXct")
   expect_is(agent$focal_tbl, "data.frame")

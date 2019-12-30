@@ -42,7 +42,7 @@
 #'       c("a@example.com", "c@example.com")
 #'   ) %>%
 #'   col_vals_lt(
-#'     column = vars(a), value = 6,
+#'     columns = vars(a), value = 6,
 #'     notify_count = 1
 #'   ) %>%
 #'   interrogate()

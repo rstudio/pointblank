@@ -43,7 +43,7 @@ col_exists <- function(x,
                        stop_fraction = NULL,
                        notify_fraction = NULL) {
   
-  # Capture the `column` expression
+  # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   
   # Resolve the columns based on the expression
@@ -83,7 +83,7 @@ col_exists <- function(x,
   }
   
   # Add one or more validation steps based on the
-  # length of the `column` variable
+  # length of the `columns` variable
   for (column in columns) {
     
     agent <-

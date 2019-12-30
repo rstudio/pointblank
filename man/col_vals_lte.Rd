@@ -6,7 +6,7 @@
 \usage{
 col_vals_lte(
   x,
-  column,
+  columns,
   value,
   preconditions = NULL,
   brief = NULL,
@@ -21,7 +21,7 @@ col_vals_lte(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The column (or a set of columns, provided as a character
+\item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
 \item{value}{A numeric value used for this test. Any column values \verb{<= value}
@@ -87,7 +87,7 @@ df <-
 agent <-
   create_agent(tbl = df) \%>\%
   col_vals_lte(
-    column = vars(a_b),
+    columns = vars(a_b),
     value = 10,
     preconditions = ~ {
       tbl \%>\% dplyr::mutate(a_b = a + b)

@@ -24,7 +24,7 @@
 #' # data frame is classed as `POSIXct`
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   col_is_posix(column = vars(a)) %>%
+#'   col_is_posix(columns = vars(a)) %>%
 #'   interrogate()
 #' 
 #' # Determine if this column
@@ -35,7 +35,7 @@
 #' @import rlang
 #' @export
 col_is_posix <- function(x,
-                         column,
+                         columns,
                          brief = NULL,
                          warn_count = NULL,
                          stop_count = NULL,
@@ -44,11 +44,11 @@ col_is_posix <- function(x,
                          stop_fraction = NULL,
                          notify_fraction = NULL) {
   
-  # Capture the `column` expression
-  column <- rlang::enquo(column)
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
   
   # Resolve the columns based on the expression
-  column <- resolve_columns(x = x, var_expr = column, preconditions = NULL)
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
   
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
@@ -56,7 +56,7 @@ col_is_posix <- function(x,
       x %>%
         evaluate_single(
           type = "col_is_posix",
-          column = column,
+          column = columns,
           value = value,
           preconditions = NULL,
           warn_count = warn_count,
@@ -79,19 +79,19 @@ col_is_posix <- function(x,
       create_autobrief(
         agent = agent,
         assertion_type = "col_is_posix",
-        column = column
+        column = columns
       )
   }
   
   # Add one or more validation steps based on the
   # length of the `column` variable
-  for (col in column) {
+  for (column in columns) {
     
     agent <-
       create_validation_step(
         agent = agent,
         assertion_type = "col_is_posix",
-        column = col,
+        column = column,
         preconditions = preconditions,
         brief = brief,
         warn_count = warn_count,

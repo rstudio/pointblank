@@ -6,7 +6,7 @@
 \usage{
 col_vals_gt(
   x,
-  column,
+  columns,
   value,
   incl_na = FALSE,
   preconditions = NULL,
@@ -22,7 +22,7 @@ col_vals_gt(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The column (or a set of columns, provided as a character
+\item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
 \item{value}{A numeric value used for this test. Any column values \verb{>value}
@@ -74,7 +74,7 @@ df <-
 # `a` are always greater than 4
 agent <-
   create_agent(tbl = df) \%>\%
-  col_vals_gt(column = vars(a), value = 4) \%>\%
+  col_vals_gt(columns = vars(a), value = 4) \%>\%
   interrogate()
 
 # Determine if these column

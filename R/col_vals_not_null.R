@@ -27,7 +27,7 @@
 #' agent <-
 #'   create_agent(tbl = df) %>%
 #'   col_vals_not_null(
-#'     column = vars(a),
+#'     columns = vars(a),
 #'     preconditions = ~ tbl %>% dplyr::filter(b == 2)
 #'   ) %>%
 #'   interrogate()
@@ -40,7 +40,7 @@
 #' @import rlang
 #' @export
 col_vals_not_null <- function(x,
-                              column,
+                              columns,
                               preconditions = NULL,
                               brief = NULL,
                               warn_count = NULL,
@@ -50,11 +50,11 @@ col_vals_not_null <- function(x,
                               stop_fraction = NULL,
                               notify_fraction = NULL) {
   
-  # Capture the `column` expression
-  column <- rlang::enquo(column)
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
   
   # Resolve the columns based on the expression
-  column <- resolve_columns(x = x, var_expr = column, preconditions)
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
@@ -62,7 +62,7 @@ col_vals_not_null <- function(x,
       x %>%
         evaluate_single(
           type = "col_vals_not_null",
-          column = column,
+          column = columns,
           preconditions = preconditions,
           warn_count = warn_count,
           stop_count = stop_count,
@@ -82,19 +82,19 @@ col_vals_not_null <- function(x,
       create_autobrief(
         agent = agent,
         assertion_type = "col_vals_not_null",
-        column = column
+        column = columns
       )
   }
   
   # Add one or more validation steps based on the
-  # length of the `column` variable
-  for (col in column) {
+  # length of the `columns` variable
+  for (column in columns) {
     
     agent <-
       create_validation_step(
         agent = agent,
         assertion_type = "col_vals_not_null",
-        column = col,
+        column = column,
         preconditions = preconditions,
         brief = brief,
         warn_count = warn_count,

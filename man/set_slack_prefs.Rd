@@ -92,7 +92,7 @@ agent <-
       "https://my.company.com/reports/df_validation"
   ) \%>\%
   col_vals_lt(
-    column = vars(a), value = 6,
+    columns = vars(a), value = 6,
     notify_count = 1
   ) \%>\%
   interrogate()

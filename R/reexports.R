@@ -1,11 +1,27 @@
-#' Helper for targeting a series of row labels or columns
-#'
-#' See `dplyr::[vars][dplyr::vars]` for details.
-#'
-#' @name vars
 #' @importFrom dplyr vars
-#' @usage vars(...)
-#' @param ... One or more column names. This can be provided as bare column
-#' names or column names as strings enclosed in quotes.
 #' @export
-NULL
+dplyr::vars
+
+#' @importFrom tidyselect starts_with
+#' @export
+tidyselect::starts_with
+
+#' @importFrom tidyselect ends_with
+#' @export
+tidyselect::ends_with
+
+#' @importFrom tidyselect contains
+#' @export
+tidyselect::contains
+
+#' @importFrom tidyselect matches
+#' @export
+tidyselect::matches
+
+#' @importFrom tidyselect one_of
+#' @export
+tidyselect::one_of
+
+#' @importFrom tidyselect everything
+#' @export
+tidyselect::everything

@@ -25,11 +25,13 @@
 #'   thumbnail image in the notification footer.
 #' @param slack_footer_text An optional snippet of text that will be part of the
 #'   notification footer.
+#'   
+#' @return A `ptblank_agent` object.
 #'
 #' @examples 
 #' \dontrun{
-#' # Create a simple data frame
-#' # with a column of numerical values
+#' # Create a simple data frame with
+#' # a column of numerical values
 #' df <-
 #'   data.frame(
 #'     a = c(5, 7, 6, 5, 8, 7)
@@ -56,10 +58,10 @@
 #'       "#table-validation",
 #'     slack_username = "table_validator",
 #'     slack_report_url = 
-#'       "https:://my.company.com/reports/df_validation") %>%
+#'       "https://my.company.com/reports/df_validation"
+#'   ) %>%
 #'   col_vals_lt(
-#'     column = a,
-#'     value = 6,
+#'     column = vars(a), value = 6,
 #'     notify_count = 1
 #'   ) %>%
 #'   interrogate()

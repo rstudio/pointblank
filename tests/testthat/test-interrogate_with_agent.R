@@ -388,7 +388,7 @@ test_that("Interrogating for valid row values", {
   # Expect certain values in `validation$validation_set`
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "rows_not_duplicated")
-  expect_true(is.na(validation$validation_set$column))
+  expect_true(is.na(validation$validation_set$column %>% unlist()))
   expect_true(is.na(validation$validation_set$value))
   expect_true(is.na(validation$validation_set$regex))
   expect_false(validation$validation_set$all_passed)
@@ -416,7 +416,7 @@ test_that("Interrogating for valid row values", {
   # Expect certain values in `validation$validation_set`
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "rows_not_duplicated")
-  expect_true(is.na(validation$validation_set$column))
+  expect_true(is.na(validation$validation_set$column %>% unlist()))
   expect_true(is.na(validation$validation_set$value))
   expect_true(is.na(validation$validation_set$regex))
   expect_true(validation$validation_set$all_passed)
@@ -431,13 +431,13 @@ test_that("Interrogating for valid row values", {
   # `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    rows_not_duplicated(cols = date_time & a) %>%
+    rows_not_duplicated(cols = vars(date_time, a)) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "rows_not_duplicated")
-  expect_equivalent(validation$validation_set$column, "date_time, a")
+  expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, a")
   expect_true(is.na(validation$validation_set$value))
   expect_true(is.na(validation$validation_set$regex))
   expect_false(validation$validation_set$all_passed)

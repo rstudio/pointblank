@@ -24,8 +24,7 @@ notification emails should be sent.}
 \item{creds_file}{An optional path to an email credentials file.}
 }
 \value{
-Either a \pkg{pointblank} agent object or a table object, depending
-on what was passed to \code{x}.
+A \code{ptblank_agent} object.
 }
 \description{
 Grants email credentials to a pointblank agent object and provides an
@@ -34,17 +33,6 @@ pointblank pipeline any time before an \code{\link[=interrogate]{interrogate()}}
 }
 \examples{
 \dontrun{
-# Generate an email credentials
-# file using the function
-# `create_email_creds_file()`
-create_email_creds_file(
-  file = "~/.pb_email",
-  sender = "point@blank.org",
-  host = "smtp.blank.org",
-  port = 465,
-  user = "point@blank.org",
-  password = "************") 
-
 # Create a simple data frame
 # with a column of numerical values
 df <-
@@ -68,11 +56,10 @@ agent <-
   set_email_prefs(
     notify_active = TRUE,
     email_recipients = 
-      c("a@b.net", "c@d.com"),
-    creds_file = "~/.pb_email") \%>\%
+      c("a@example.com", "c@example.com")
+  ) \%>\%
   col_vals_lt(
-    column = a,
-    value = 6,
+    column = vars(a), value = 6,
     notify_count = 1
   ) \%>\%
   interrogate()

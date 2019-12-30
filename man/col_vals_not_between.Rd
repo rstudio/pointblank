@@ -25,9 +25,7 @@ col_vals_not_between(
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
 \item{column}{The column (or a set of columns, provided as a character
-vector) to which this validation should be applied. Aside from a single
-column name, column operations can be used to create one or more computed
-columns (e.g., \code{a + b} or \code{a + sum(a)}).}
+vector) to which this validation should be applied.}
 
 \item{left, right}{The lower and uppers bounds for the range. The validation
 Any values \verb{>= left} and \verb{<= right} will be considered as failing.}
@@ -76,15 +74,15 @@ validations. Beyond this threshold, either the \code{warn} or \code{notify} flag
 be applied.}
 }
 \value{
-Either a \pkg{pointblank} agent object or a table object, depending
-on what was passed to \code{x}.
+Either a \code{ptblank_agent} object or a table object, depending on what
+was passed to \code{x}.
 }
 \description{
 Verification step where column data should not be between two values.
 }
 \examples{
-# Create a simple data frame
-# with a column a numerical values
+# Create a simple data frame with
+# a column of numerical values
 df <-
   data.frame(
     a = c(5.6, 8.2, 6.3, 7.8, 3.4)
@@ -96,14 +94,12 @@ df <-
 agent <-
   create_agent(tbl = df) \%>\%
   col_vals_not_between(
-    column = a,
-    left = 9,
-    right = 10
+    column = vars(a),
+    left = 9, right = 10
   ) \%>\%
   col_vals_not_between(
-    column = a,
-    left = 0,
-    right = 2
+    column = vars(a),
+    left = 0, right = 2
   ) \%>\%
   interrogate()
 

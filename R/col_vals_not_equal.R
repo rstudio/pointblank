@@ -6,11 +6,14 @@
 #' @inheritParams col_vals_gt
 #' @param value a numeric value used to test for non-equality.
 #' 
+#' @return Either a `ptblank_agent` object or a table object, depending on what
+#'   was passed to `x`. 
+#'
 #' @examples
 #' library(dplyr)
 #' 
-#' # Create a simple data frame
-#' # with 2 columns of numerical values
+#' # Create a simple data frame with
+#' # two columns of numerical values
 #' df <-
 #'   data.frame(
 #'     a = c(1, 1, 1, 2, 2, 2),
@@ -24,7 +27,7 @@
 #' agent <-
 #'   create_agent(tbl = df) %>%
 #'   col_vals_not_equal(
-#'     column = b,
+#'     column = vars(b),
 #'     value = 5,
 #'     preconditions = ~ tbl %>% dplyr::filter(a == 2)
 #'   ) %>%
@@ -35,8 +38,6 @@
 #' # `all_passed()`
 #' all_passed(agent)
 #' 
-#' @return Either a \pkg{pointblank} agent object or a table object, depending
-#'   on what was passed to `x`.
 #' @export
 col_vals_not_equal <- function(x,
                                column,
@@ -50,12 +51,11 @@ col_vals_not_equal <- function(x,
                                stop_fraction = NULL,
                                notify_fraction = NULL) {
   
-  # Get the column name
-  column <- 
-    rlang::enquo(column) %>%
-    rlang::expr_text() %>%
-    stringr::str_replace_all("~", "") %>%
-    stringr::str_replace_all("\"", "'")
+  # Capture the `column` expression
+  column <- rlang::enquo(column)
+  
+  # Resolve the columns based on the expression
+  column <- resolve_columns(x = x, var_expr = column, preconditions)
   
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
@@ -90,44 +90,26 @@ col_vals_not_equal <- function(x,
       )
   }
   
-  # If "*" is provided for `column`, select all
-  # table columns for this verification
-  if (column[1] == "all_cols()") {
-    column <- get_all_cols(agent = agent)
-  }
-  
-  # Add one or more validation steps
-  agent <-
-    create_validation_step(
-      agent = agent,
-      assertion_type = "col_vals_not_equal",
-      column = column,
-      value = value,
-      preconditions = preconditions,
-      brief = brief,
-      warn_count = warn_count,
-      stop_count = stop_count,
-      notify_count = notify_count,
-      warn_fraction = warn_fraction,
-      stop_fraction = stop_fraction,
-      notify_fraction = notify_fraction
-    )
-  
-  # If no `brief` provided, set as NA
-  if (is.null(brief)) {
-    brief <- as.character(NA)
-  }
-  
-  # Place the validation step in the logical plan
-  agent$logical_plan <-
-    dplyr::bind_rows(
-      agent$logical_plan,
-      dplyr::tibble(
-        component_name = "col_vals_not_equal",
-        parameters = as.character(NA),
-        brief = brief
+  # Add one or more validation steps based on the
+  # length of the `column` variable
+  for (col in column) {
+    
+    agent <-
+      create_validation_step(
+        agent = agent,
+        assertion_type = "col_vals_not_equal",
+        column = col,
+        value = value,
+        preconditions = preconditions,
+        brief = brief,
+        warn_count = warn_count,
+        stop_count = stop_count,
+        notify_count = notify_count,
+        warn_fraction = warn_fraction,
+        stop_fraction = stop_fraction,
+        notify_fraction = notify_fraction
       )
-    )
-  
+  }
+
   agent
 }

@@ -22,9 +22,7 @@ col_vals_not_in_set(
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
 \item{column}{The column (or a set of columns, provided as a character
-vector) to which this validation should be applied. Aside from a single
-column name, column operations can be used to create one or more computed
-columns (e.g., \code{a + b} or \code{a + sum(a)}).}
+vector) to which this validation should be applied.}
 
 \item{set}{A vector of numeric or string-based elements, where column values
 found within this \code{set} will be considered as failing.}
@@ -66,16 +64,17 @@ validations. Beyond this threshold, either the \code{warn} or \code{notify} flag
 be applied.}
 }
 \value{
-Either a \pkg{pointblank} agent object or a table object, depending
-on what was passed to \code{x}.
+Either a \code{ptblank_agent} object or a table object, depending on what
+was passed to \code{x}.
 }
 \description{
 Verification step where numeric values in a table column should be part
 of a set of values.
 }
 \examples{
-# Create a simple data frame with 2 columns: one
-# with numerical values and the other with strings
+# Create a simple data frame with 2
+# columns: one with numerical values
+# and the other with strings
 df <-
   data.frame(
     a = c(1, 2, 3, 4),
@@ -92,11 +91,11 @@ df <-
 agent <-
   create_agent(tbl = df) \%>\%
   col_vals_not_in_set(
-    column = a,
+    column = vars(a),
     set = 7:10
   ) \%>\%
   col_vals_not_in_set(
-    column = b,
+    column = vars(b),
     set = c("seven", "eight",
             "nine", "ten")
   ) \%>\%

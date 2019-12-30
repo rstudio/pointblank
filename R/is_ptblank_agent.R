@@ -6,6 +6,7 @@
 #' @param object The object to test for whether it is of class `ptblank_agent`.
 #'   
 #' @return A logical value.
+#' 
 #' @export
 is_ptblank_agent <- function(object) {
   

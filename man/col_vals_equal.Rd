@@ -22,9 +22,7 @@ col_vals_equal(
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
 \item{column}{The column (or a set of columns, provided as a character
-vector) to which this validation should be applied. Aside from a single
-column name, column operations can be used to create one or more computed
-columns (e.g., \code{a + b} or \code{a + sum(a)}).}
+vector) to which this validation should be applied.}
 
 \item{value}{A numeric value used to test for equality.}
 
@@ -65,18 +63,16 @@ validations. Beyond this threshold, either the \code{warn} or \code{notify} flag
 be applied.}
 }
 \value{
-Either a \pkg{pointblank} agent object or a table object, depending
-on what was passed to \code{x}.
+Either a \code{ptblank_agent} object or a table object, depending on what
+was passed to \code{x}.
 }
 \description{
 Verification step where numeric values in a table column should be equal to a
 specified value.
 }
 \examples{
-library(dplyr)
-
-# Create a simple data frame
-# with 2 columns of numerical values
+# Create a simple data frame with
+# two columns of numerical values
 df <-
   data.frame(
     a = c(1, 1, 1, 2, 2, 2),
@@ -89,8 +85,7 @@ df <-
 agent <-
   create_agent(tbl = df) \%>\%
   col_vals_equal(
-    column = b,
-    value = 5,
+    column = vars(b), value = 5,
     preconditions = ~ tbl \%>\% dplyr::filter(a == 1)
   ) \%>\%
   interrogate()

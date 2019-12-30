@@ -29,7 +29,7 @@ test_that("Getting a validation summary is possible", {
   
   # Expect certain column types for this summary
   expect_is(summary$assertion_type, "character")
-  expect_is(summary$column, "character")
+  expect_is(summary$column, "list")
   expect_is(summary$value, "numeric")
   expect_is(summary$set, "list")
   expect_is(summary$regex, "character")

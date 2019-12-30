@@ -15,7 +15,7 @@ eventually carry out during the interrogation process. If no value is
 provided, a name will be generated based on the current system time.}
 }
 \value{
-A \pkg{pointblank} agent object.
+A \code{ptblank_agent} object.
 }
 \description{
 Creates an agent object.
@@ -42,10 +42,7 @@ agent <- create_agent(tbl = df)
 # than 4
 agent <-
   agent \%>\%
-  col_vals_gt(
-    column = a,
-    value = 4
-  ) \%>\%
+  col_vals_gt(column = vars(a), value = 4) \%>\%
   interrogate()
  
 # A summary can be produced using

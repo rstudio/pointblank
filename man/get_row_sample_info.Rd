@@ -34,13 +34,11 @@ df <-
 agent <-
   create_agent(tbl = df) \%>\%
   col_vals_between(
-    column = a,
-    left = 4,
-    right = 6
+    column = vars(a),
+    left = 4, right = 6
   ) \%>\%
   col_vals_lte(
-    column = a,
-    value = 10
+    column = vars(a), value = 10
   ) \%>\%
   interrogate(
     get_problem_rows = TRUE,

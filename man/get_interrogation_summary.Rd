@@ -10,8 +10,7 @@ get_interrogation_summary(agent)
 \item{agent}{An agent object of class \code{ptblank_agent}.}
 }
 \value{
-Either a \pkg{pointblank} agent object or a table object, depending
-on what was passed to \code{x}.
+A tibble.
 }
 \description{
 Gets the essential information from an agent object after an interrogation is

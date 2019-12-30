@@ -26,13 +26,11 @@
 #' agent <-
 #'   create_agent(tbl = df) %>%
 #'   col_vals_between(
-#'     column = a,
-#'     left = 4,
-#'     right = 6
+#'     column = vars(a),
+#'     left = 4, right = 6
 #'   ) %>%
 #'   col_vals_lte(
-#'     column = a,
-#'     value = 10
+#'     column = vars(a), value = 10
 #'   ) %>%
 #'   interrogate(
 #'     get_problem_rows = TRUE,
@@ -54,19 +52,11 @@ get_row_sample_info <- function(agent) {
     return(NA)
   }
   
-  # Get the number of validation steps
-  validation_steps <- nrow(agent$validation_set)
+  # Get the validation set
+  validation_set <- agent$validation_set
   
-  # Get the validation set and integrate
-  # the available briefs to it
-  validation_set <- 
-    agent$validation_set %>%
-    dplyr::mutate(
-      brief =
-        agent$logical_plan %>%
-        dplyr::filter(!(component_name %in% c("create_agent", "focus_on"))) %>%
-        dplyr::pull(brief)
-    )
+  # Get the number of validation steps
+  validation_steps <- nrow(validation_set)
   
   # Create a tibble that has the
   # validation step number, the assertion

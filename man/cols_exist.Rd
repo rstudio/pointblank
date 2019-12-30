@@ -52,16 +52,16 @@ validations. Beyond this threshold, either the \code{warn} or \code{notify} flag
 be applied.}
 }
 \value{
-Either a \pkg{pointblank} agent object or a table object, depending
-on what was passed to \code{x}.
+Either a \code{ptblank_agent} object or a table object, depending on what
+was passed to \code{x}.
 }
 \description{
 Verification step that checks whether one or several specified columns exist
 in the target table.
 }
 \examples{
-# Create a simple data frame
-# with two columns of numerical values
+# Create a simple data frame with
+# two columns of numerical values
 df <-
   data.frame(
     a = c(5, 7, 6, 5, 8, 7),

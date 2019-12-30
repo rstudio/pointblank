@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.R
 \name{print.ptblank_agent}
 \alias{print.ptblank_agent}
-\title{Print the agent to the terminal}
+\title{Print the agent information to the console}
 \usage{
 \method{print}{ptblank_agent}(x, ...)
 }

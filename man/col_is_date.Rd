@@ -19,8 +19,8 @@ col_is_date(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The name of a single table column, multiple columns in the same
-table, or, a helper function such as \code{\link[=all_cols]{all_cols()}}.}
+\item{column}{The column (or a set of columns, provided as a character
+vector) to which this validation should be applied.}
 
 \item{brief}{An optional, text-based description for the validation step.}
 
@@ -51,28 +51,26 @@ validations. Beyond this threshold, either the \code{warn} or \code{notify} flag
 be applied.}
 }
 \value{
-Either a \pkg{pointblank} agent object or a table object, depending
-on what was passed to \code{x}.
+Either a \code{ptblank_agent} object or a table object, depending on what
+was passed to \code{x}.
 }
 \description{
 Verification step where a table column is expected to consist entirely of R
 \code{Date} objects.
 }
 \examples{
-# Create a simple data frame
-# with a column containing data
-# classed as `Date`
+# Create a simple data frame with
+# a column of `Date` values
 df <-
   data.frame(
     a = as.Date("2017-08-15")
   )
 
-# Validate that column `a`
-# in the data frame is classed
-# as `Date`
+# Validate that column `a` in the
+# data frame is classed as `Date`
 agent <-
   create_agent(tbl = df) \%>\%
-  col_is_date(column = a) \%>\%
+  col_is_date(column = vars(a)) \%>\%
   interrogate()
 
 # Determine if these column

@@ -212,7 +212,7 @@ create_autobrief <- function(agent,
   }
   
   
-  if (assertion_type == "cols_exist") {
+  if (assertion_type == "col_exists") {
     
     autobrief <- paste0("Expect that column `", column, "` exists")
   }
@@ -626,7 +626,7 @@ evaluate_single <- function(x,
     }
   }
   
-  if (type == "cols_exist") {
+  if (type == "col_exists") {
     
     column_names <-
       tbl %>%

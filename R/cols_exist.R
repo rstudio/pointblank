@@ -4,7 +4,7 @@
 #' in the target table.
 #'
 #' @inheritParams col_vals_gt
-#' @param cols One or more columns from the table in focus. This can be provided
+#' @param columns One or more columns from the table in focus. This can be provided
 #'   as a vector of column names using `c()` or bare column names enclosed in
 #'   [vars()].
 #'   
@@ -24,7 +24,7 @@
 #' # exist in the `df` table
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   cols_exist(cols = vars(a, b)) %>%
+#'   col_exists(columns = vars(a, b)) %>%
 #'   interrogate()
 #' 
 #' # Determine if these three validation
@@ -33,8 +33,8 @@
 #' 
 #' @import rlang
 #' @export
-cols_exist <- function(x,
-                       cols,
+col_exists <- function(x,
+                       columns,
                        brief = NULL,
                        warn_count = NULL,
                        stop_count = NULL,
@@ -44,18 +44,18 @@ cols_exist <- function(x,
                        notify_fraction = NULL) {
   
   # Capture the `column` expression
-  cols <- rlang::enquo(cols)
+  columns <- rlang::enquo(columns)
   
   # Resolve the columns based on the expression
-  cols <- resolve_columns(x = x, var_expr = cols, preconditions = NULL)
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
   
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
       x %>%
         evaluate_single(
-          type = "cols_exist",
-          column = cols,
+          type = "col_exists",
+          column = columns,
           value = value,
           preconditions = NULL,
           warn_count = warn_count,
@@ -77,20 +77,20 @@ cols_exist <- function(x,
     brief <-
       create_autobrief(
         agent = agent,
-        assertion_type = "cols_exist",
-        column = cols
+        assertion_type = "col_exists",
+        column = columns
       )
   }
   
   # Add one or more validation steps based on the
   # length of the `column` variable
-  for (col in cols) {
+  for (column in columns) {
     
     agent <-
       create_validation_step(
         agent = agent,
-        assertion_type = "cols_exist",
-        column = col,
+        assertion_type = "col_exists",
+        column = column,
         preconditions = preconditions,
         brief = brief,
         warn_count = warn_count,

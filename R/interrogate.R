@@ -84,7 +84,7 @@ interrogate <- function(agent,
         "col_vals_regex" = interrogate_regex(agent, idx = i, table),
         "col_vals_null" = interrogate_null(agent, idx = i, table),
         "col_vals_not_null" = interrogate_not_null(agent, idx = i, table),
-        "cols_exist" = interrogate_cols_exist(agent, idx = i, table),
+        "col_exists" = interrogate_col_exists(agent, idx = i, table),
         "col_vals_gt" =,
         "col_vals_gte" =,
         "col_vals_lt" =,
@@ -256,7 +256,7 @@ interrogate_not_null <- function(agent, idx, table) {
   tbl_checked
 }
 
-interrogate_cols_exist <- function(agent, idx, table) {
+interrogate_col_exists <- function(agent, idx, table) {
   
   # Get the column names for the table
   column_names <- get_all_cols(agent = agent)

@@ -59,15 +59,17 @@ create_agent <- function(tbl,
   if (tbl_name == ".") {
     tbl_name <- "table"
   }
-  
-  column_names_types <- 
-    tbl %>%
-    dplyr::group_by() %>%
-    dplyr::filter(dplyr::row_number() == 1) %>%
-    dplyr::ungroup() %>%
-    dplyr::collect() %>%
-    sapply(class) %>%
-    lapply(`[[`, 1)
+
+  suppressWarnings(
+    column_names_types <-
+      tbl %>%
+      dplyr::filter(dplyr::row_number() == 1L) %>%
+      dplyr::collect() %>%
+      vapply(
+        FUN.VALUE = character(1),
+        FUN = function(x) class(x)[1]
+      )
+  )
   
   column_names <- names(column_names_types)
   column_types <- unname(unlist(column_names_types))

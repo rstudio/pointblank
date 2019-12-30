@@ -13,10 +13,10 @@ list for processing.}
 
 \item{file_pattern}{A file pattern to distinguish which files are to be
 included in the file list for processing. If no pattern is provided, the
-default pattern will caputure any R script files in \code{input_dir}.}
+default pattern will capture any R script files in \code{input_dir}.}
 
 \item{input_files}{A vector of input files that are to be processed. If
-filenames are provided here, any values provided to \code{input_dir} and
+file names are provided here, any values provided to \code{input_dir} and
 \code{file_pattern} are ignored.}
 }
 \description{

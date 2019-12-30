@@ -6,9 +6,12 @@
 #' @inheritParams col_vals_gt
 #' @param regex A regex pattern to test for matching strings.
 #' 
+#' @return Either a `ptblank_agent` object or a table object, depending on what
+#'   was passed to `x`.
+#' 
 #' @examples
-#' # Create a simple data frame with a column
-#' # containing strings
+#' # Create a simple data frame
+#' # with a column containing strings
 #' df <-
 #'   data.frame(
 #'     a = c("s_0131", "s_0231",
@@ -21,7 +24,7 @@
 #' agent <-
 #'   create_agent(tbl = df) %>%
 #'   col_vals_regex(
-#'     column = a,
+#'     columns = vars(a),
 #'     regex = "^s_[0-9]{4}$"
 #'   ) %>%
 #'   interrogate()
@@ -31,12 +34,10 @@
 #' # by using `all_passed()`
 #' all_passed(agent)
 #' 
-#' @return Either a \pkg{pointblank} agent object or a table object, depending
-#'   on what was passed to `x`.
 #' @import rlang
 #' @export
 col_vals_regex <- function(x,
-                           column,
+                           columns,
                            regex,
                            preconditions = NULL,
                            brief = NULL,
@@ -47,12 +48,11 @@ col_vals_regex <- function(x,
                            stop_fraction = NULL,
                            notify_fraction = NULL) {
   
-  # Get the column name
-  column <- 
-    rlang::enquo(column) %>%
-    rlang::expr_text() %>%
-    stringr::str_replace_all("~", "") %>%
-    stringr::str_replace_all("\"", "'")
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
+  
+  # Resolve the columns based on the expression
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
@@ -60,7 +60,7 @@ col_vals_regex <- function(x,
       x %>%
         evaluate_single(
           type = "col_vals_regex",
-          column = column,
+          column = columns,
           regex = regex,
           preconditions = preconditions,
           warn_count = warn_count,
@@ -81,49 +81,31 @@ col_vals_regex <- function(x,
       create_autobrief(
         agent = agent,
         assertion_type = "col_vals_regex",
-        column = column,
+        column = columns,
         regex = regex
       )
   }
   
-  # If "*" is provided for `column`, select all
-  # table columns for this verification
-  if (column[1] == "all_cols()") {
-    column <- get_all_cols(agent = agent)
-  }
-  
-  # Add one or more validation steps
-  agent <-
-    create_validation_step(
-      agent = agent,
-      assertion_type = "col_vals_regex",
-      column = column,
-      regex = regex,
-      preconditions = preconditions,
-      brief = brief,
-      warn_count = warn_count,
-      stop_count = stop_count,
-      notify_count = notify_count,
-      warn_fraction = warn_fraction,
-      stop_fraction = stop_fraction,
-      notify_fraction = notify_fraction
-    )
-  
-  # If no `brief` provided, set as NA
-  if (is.null(brief)) {
-    brief <- as.character(NA)
-  }
-  
-  # Place the validation step in the logical plan
-  agent$logical_plan <-
-    dplyr::bind_rows(
-      agent$logical_plan,
-      dplyr::tibble(
-        component_name = "col_vals_regex",
-        parameters = as.character(NA),
-        brief = brief
+  # Add one or more validation steps based on the
+  # length of the `columns` variable
+  for (column in columns) {
+    
+    agent <-
+      create_validation_step(
+        agent = agent,
+        assertion_type = "col_vals_regex",
+        column = column,
+        regex = regex,
+        preconditions = preconditions,
+        brief = brief,
+        warn_count = warn_count,
+        stop_count = stop_count,
+        notify_count = notify_count,
+        warn_fraction = warn_fraction,
+        stop_fraction = stop_fraction,
+        notify_fraction = notify_fraction
       )
-    )
-  
+  }
+
   agent
 }

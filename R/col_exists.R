@@ -4,13 +4,16 @@
 #' in the target table.
 #'
 #' @inheritParams col_vals_gt
-#' @param cols One or more columns from the table in focus. This can be provided
+#' @param columns One or more columns from the table in focus. This can be provided
 #'   as a vector of column names using `c()` or bare column names enclosed in
 #'   [vars()].
 #'   
+#' @return Either a `ptblank_agent` object or a table object, depending on what
+#'   was passed to `x`.
+#'   
 #' @examples
-#' # Create a simple data frame
-#' # with two columns of numerical values
+#' # Create a simple data frame with
+#' # two columns of numerical values
 #' df <-
 #'   data.frame(
 #'     a = c(5, 7, 6, 5, 8, 7),
@@ -21,19 +24,17 @@
 #' # exist in the `df` table
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   cols_exist(cols = vars(a, b)) %>%
+#'   col_exists(columns = vars(a, b)) %>%
 #'   interrogate()
 #' 
 #' # Determine if these three validation
 #' # steps passed by using `all_passed()`
 #' all_passed(agent)
 #' 
-#' @return Either a \pkg{pointblank} agent object or a table object, depending
-#'   on what was passed to `x`.
 #' @import rlang
 #' @export
-cols_exist <- function(x,
-                       cols,
+col_exists <- function(x,
+                       columns,
                        brief = NULL,
                        warn_count = NULL,
                        stop_count = NULL,
@@ -42,21 +43,19 @@ cols_exist <- function(x,
                        stop_fraction = NULL,
                        notify_fraction = NULL) {
   
-  # Get the column names
-  if (inherits(cols, "quosures")) {
-    
-    cols <- 
-      cols %>% as.character() %>%
-      gsub("~", "", .)
-  }
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
+  
+  # Resolve the columns based on the expression
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
   
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
     return(
       x %>%
         evaluate_single(
-          type = "cols_exist",
-          column = cols,
+          type = "col_exists",
+          column = columns,
           value = value,
           preconditions = NULL,
           warn_count = warn_count,
@@ -78,42 +77,30 @@ cols_exist <- function(x,
     brief <-
       create_autobrief(
         agent = agent,
-        assertion_type = "cols_exist",
-        column = cols
+        assertion_type = "col_exists",
+        column = columns
       )
   }
   
-  # Add one or more validation steps
-  agent <-
-    create_validation_step(
-      agent = agent,
-      assertion_type = "cols_exist",
-      column = cols,
-      preconditions = preconditions,
-      brief = brief,
-      warn_count = warn_count,
-      stop_count = stop_count,
-      notify_count = notify_count,
-      warn_fraction = warn_fraction,
-      stop_fraction = stop_fraction,
-      notify_fraction = notify_fraction
-    )
-  
-  # If no `brief` provided, set as NA
-  if (is.null(brief)) {
-    brief <- as.character(NA)
-  }
-  
-  # Place the validation step in the logical plan
-  agent$logical_plan <-
-    dplyr::bind_rows(
-      agent$logical_plan,
-      dplyr::tibble(
-        component_name = "cols_exist",
-        parameters = as.character(NA),
-        brief = brief
+  # Add one or more validation steps based on the
+  # length of the `columns` variable
+  for (column in columns) {
+    
+    agent <-
+      create_validation_step(
+        agent = agent,
+        assertion_type = "col_exists",
+        column = column,
+        preconditions = preconditions,
+        brief = brief,
+        warn_count = warn_count,
+        stop_count = stop_count,
+        notify_count = notify_count,
+        warn_fraction = warn_fraction,
+        stop_fraction = stop_fraction,
+        notify_fraction = notify_fraction
       )
-    )
-  
+  }
+
   agent
 }

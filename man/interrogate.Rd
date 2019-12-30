@@ -41,21 +41,20 @@ rows.}
 when sampling non-passing rows using the \code{sample_frac} option.}
 }
 \value{
-A \pkg{pointblank} agent object.
+A \code{ptblank_agent} object.
 }
 \description{
 The agent has all the information on what to do, so now all interrogations
 can proceed efficiently, and, according to plan.
 }
 \examples{
-# Create a simple data frame
-# with two columns of numerical values
+# Create a simple data frame with
+# two columns of numerical values
 df <-
   data.frame(
     a = c(5, 7, 6, 5, 8, 7),
     b = c(7, 1, 0, 0, 0, 3)
   )
-    
 
 # Validate that values in column
 # `a` from `df` are always > 5,
@@ -63,10 +62,7 @@ df <-
 # the process
 agent <-
   create_agent(tbl = df) \%>\%
-  col_vals_gt(
-    column = a,
-    value = 5
-  ) \%>\%
+  col_vals_gt(columns = vars(a), value = 5) \%>\%
   interrogate()
   
 # Get a basic summary with

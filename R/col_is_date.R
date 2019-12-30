@@ -4,24 +4,23 @@
 #' `Date` objects.
 #'
 #' @inheritParams col_vals_gt
-#' @param column The name of a single table column, multiple columns in the same
-#'   table, or, a helper function such as [all_cols()].
+#' 
+#' @return Either a `ptblank_agent` object or a table object, depending on what
+#'   was passed to `x`.
 #'   
 #' @examples
-#' # Create a simple data frame
-#' # with a column containing data
-#' # classed as `Date`
+#' # Create a simple data frame with
+#' # a column of `Date` values
 #' df <-
 #'   data.frame(
 #'     a = as.Date("2017-08-15")
 #'   )
 #' 
-#' # Validate that column `a`
-#' # in the data frame is classed
-#' # as `Date`
+#' # Validate that column `a` in the
+#' # data frame is classed as `Date`
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   col_is_date(column = a) %>%
+#'   col_is_date(columns = vars(a)) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column
@@ -29,12 +28,10 @@
 #' # by using `all_passed()`
 #' all_passed(agent)
 #' 
-#' @return Either a \pkg{pointblank} agent object or a table object, depending
-#'   on what was passed to `x`.
 #' @import rlang
 #' @export
 col_is_date <- function(x,
-                        column,
+                        columns,
                         brief = NULL,
                         warn_count = NULL,
                         stop_count = NULL,
@@ -43,12 +40,11 @@ col_is_date <- function(x,
                         stop_fraction = NULL,
                         notify_fraction = NULL) {
   
-  # Get the column name
-  column <- 
-    rlang::enquo(column) %>%
-    rlang::expr_text() %>%
-    stringr::str_replace_all("~", "") %>%
-    stringr::str_replace_all("\"", "'")
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
+  
+  # Resolve the columns based on the expression
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
   
   if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
     
@@ -56,7 +52,7 @@ col_is_date <- function(x,
       x %>%
         evaluate_single(
           type = "col_is_date",
-          column = column,
+          column = columns,
           value = value,
           preconditions = NULL,
           warn_count = warn_count,
@@ -79,47 +75,29 @@ col_is_date <- function(x,
       create_autobrief(
         agent = agent,
         assertion_type = "col_is_date",
-        column = column
+        column = columns
       )
   }
   
-  # If "*" is provided for `column`, select all
-  # table columns for this verification
-  if (column[1] == "all_cols()") {
-    column <- get_all_cols(agent = agent)
-  }
-  
-  # Add one or more validation steps
-  agent <-
-    create_validation_step(
-      agent = agent,
-      assertion_type = "col_is_date",
-      column = column,
-      preconditions = preconditions,
-      brief = brief,
-      warn_count = warn_count,
-      stop_count = stop_count,
-      notify_count = notify_count,
-      warn_fraction = warn_fraction,
-      stop_fraction = stop_fraction,
-      notify_fraction = notify_fraction
-    )
-  
-  # If no `brief` provided, set as NA
-  if (is.null(brief)) {
-    brief <- as.character(NA)
-  }
-  
-  # Place the validation step in the logical plan
-  agent$logical_plan <-
-    dplyr::bind_rows(
-      agent$logical_plan,
-      dplyr::tibble(
-        component_name = "col_is_date",
-        parameters = as.character(NA),
-        brief = brief
+  # Add one or more validation steps based on the
+  # length of the `columns` variable
+  for (column in columns) {
+    
+    agent <-
+      create_validation_step(
+        agent = agent,
+        assertion_type = "col_is_date",
+        column = column,
+        preconditions = preconditions,
+        brief = brief,
+        warn_count = warn_count,
+        stop_count = stop_count,
+        notify_count = notify_count,
+        warn_fraction = warn_fraction,
+        stop_fraction = stop_fraction,
+        notify_fraction = notify_fraction
       )
-    )
-  
+  }
+
   agent
 }

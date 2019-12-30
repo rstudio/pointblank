@@ -8,6 +8,8 @@
 #'   eventually carry out during the interrogation process. If no value is
 #'   provided, a name will be generated based on the current system time.
 #'   
+#' @return A `ptblank_agent` object.
+#'   
 #' @examples 
 #' # Create a simple data frame
 #' # with a column of numerical values
@@ -30,10 +32,7 @@
 #' # than 4
 #' agent <-
 #'   agent %>%
-#'   col_vals_gt(
-#'     column = a,
-#'     value = 4
-#'   ) %>%
+#'   col_vals_gt(columns = vars(a), value = 4) %>%
 #'   interrogate()
 #'  
 #' # A summary can be produced using
@@ -43,7 +42,6 @@
 #' (agent %>%
 #'   get_interrogation_summary())[, 1:7]
 #'   
-#' @return A \pkg{pointblank} agent object.
 #' @export
 create_agent <- function(tbl,
                          name = NULL) {
@@ -61,20 +59,21 @@ create_agent <- function(tbl,
   if (tbl_name == ".") {
     tbl_name <- "table"
   }
-  
-  column_names_types <- 
-    tbl %>%
-    dplyr::group_by() %>%
-    dplyr::filter(dplyr::row_number() == 1) %>%
-    dplyr::ungroup() %>%
-    dplyr::collect() %>%
-    sapply(class) %>%
-    lapply(`[[`, 1)
+
+  suppressWarnings(
+    column_names_types <-
+      tbl %>%
+      dplyr::filter(dplyr::row_number() == 1L) %>%
+      dplyr::collect() %>%
+      vapply(
+        FUN.VALUE = character(1),
+        FUN = function(x) class(x)[1]
+      )
+  )
   
   column_names <- names(column_names_types)
   column_types <- unname(unlist(column_names_types))
 
-  
   # Create the agent list object
   agent <-
     list(
@@ -103,16 +102,10 @@ create_agent <- function(tbl,
           slack_footer_text = character(0),
           slack_notifications_active = FALSE
         ),
-      logical_plan =
-        dplyr::tibble(
-          component_name = as.character("create_agent"),
-          parameters = as.character(NA),
-          brief = brief
-        ),
       validation_set =
         dplyr::tibble(
           assertion_type = character(0),
-          column = character(0),
+          column = list(NULL),
           value = numeric(0),
           set = list(NULL),
           regex = character(0),

@@ -7,7 +7,7 @@
 get_validation_name(agent)
 }
 \arguments{
-\item{agent}{An agent object of class \code{ptblank_agent}.}
+\item{agent}{An object of class \code{ptblank_agent}.}
 }
 \value{
 A character object with the agent name.

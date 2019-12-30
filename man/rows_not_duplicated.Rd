@@ -6,7 +6,7 @@
 \usage{
 rows_not_duplicated(
   x,
-  cols = NULL,
+  columns = NULL,
   preconditions = NULL,
   brief = NULL,
   warn_count = NULL,
@@ -20,9 +20,8 @@ rows_not_duplicated(
 \arguments{
 \item{x}{An agent object of class \code{ptblank_agent}.}
 
-\item{cols}{An optional grouping of columns to check for duplication. If not
-provided, the validation checks for duplicate records using data across all
-columns.}
+\item{columns}{The column (or a set of columns, provided as a character
+vector) to which this validation should be applied.}
 
 \item{preconditions}{expressions used for mutating the input table before
 proceeding with the validation. This is ideally as a one-sided R formula
@@ -61,14 +60,14 @@ validations. Beyond this threshold, either the \code{warn} or \code{notify} flag
 be applied.}
 }
 \value{
-A \pkg{pointblank} agent object.
+A \code{ptblank_agent} object.
 }
 \description{
 Verification step where row data should contain no duplicates.
 }
 \examples{
-# Create a simple data frame
-# with three columns of numerical values
+# Create a simple data frame with
+# three columns of numerical values
 df <-
   data.frame(
     a = c(5, 7, 6, 5, 8, 7),
@@ -82,9 +81,7 @@ df <-
 # rows are distinct)
 agent <-
   create_agent(tbl = df) \%>\%
-  rows_not_duplicated(
-    cols = a & b
-  ) \%>\%
+  rows_not_duplicated(columns = vars(a, b)) \%>\%
   interrogate()
 
 # Determine if these column

@@ -11,7 +11,7 @@ test_that("Creating a `col_is_character()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_is_character(column = b)
+    col_is_character(columns = vars(b))
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -38,10 +38,10 @@ test_that("Creating a `col_is_character()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_is_character(column = all_cols())
+    col_is_character(columns = everything())
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -58,7 +58,7 @@ test_that("Creating a `col_is_date()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_is_date(column = b)
+    col_is_date(columns = vars(b))
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -85,10 +85,10 @@ test_that("Creating a `col_is_date()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_is_date(column = all_cols())
+    col_is_date(columns = everything())
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -105,7 +105,7 @@ test_that("Creating a `col_is_factor()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_is_factor(column = b)
+    col_is_factor(columns = vars(b))
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -132,10 +132,10 @@ test_that("Creating a `col_is_factor()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_is_factor(column = all_cols())
+    col_is_factor(columns = everything())
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -152,7 +152,7 @@ test_that("Creating a `col_is_integer()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_is_integer(column = b)
+    col_is_integer(columns = vars(b))
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -179,10 +179,10 @@ test_that("Creating a `col_is_integer()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_is_integer(column = all_cols())
+    col_is_integer(columns = everything())
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -199,7 +199,7 @@ test_that("Creating a `col_is_logical()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_is_logical(column = b)
+    col_is_logical(columns = vars(b))
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -226,10 +226,10 @@ test_that("Creating a `col_is_logical()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_is_logical(column = all_cols())
+    col_is_logical(columns = everything())
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -246,7 +246,7 @@ test_that("Creating a `col_is_numeric()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_is_numeric(column = b)
+    col_is_numeric(columns = vars(b))
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -273,10 +273,10 @@ test_that("Creating a `col_is_numeric()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_is_numeric(column = all_cols())
+    col_is_numeric(columns = everything())
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -293,7 +293,7 @@ test_that("Creating a `col_is_posix()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_is_posix(column = b)
+    col_is_posix(columns = vars(b))
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -320,10 +320,10 @@ test_that("Creating a `col_is_posix()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_is_posix(column = all_cols())
+    col_is_posix(columns = everything())
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -340,7 +340,7 @@ test_that("Creating a `col_vals_between()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_between(column = b, left = 2, right = 10)
+    col_vals_between(columns = vars(b), left = 2, right = 10)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -368,10 +368,10 @@ test_that("Creating a `col_vals_between()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_between(column = all_cols(), left = 2, right = 10)
+    col_vals_between(columns = everything(), left = 2, right = 10)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -388,7 +388,7 @@ test_that("Creating a `col_vals_not_between()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_not_between(column = b, left = 2, right = 10)
+    col_vals_not_between(columns = vars(b), left = 2, right = 10)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -416,10 +416,10 @@ test_that("Creating a `col_vals_not_between()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_not_between(column = all_cols(), left = 2, right = 10)
+    col_vals_not_between(columns = everything(), left = 2, right = 10)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -436,7 +436,7 @@ test_that("Creating a `col_vals_equal()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_equal(column = b, value = 5)
+    col_vals_equal(columns = vars(b), value = 5)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -463,10 +463,10 @@ test_that("Creating a `col_vals_equal()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_equal(column = all_cols(), value = 5)
+    col_vals_equal(columns = everything(), value = 5)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -483,7 +483,7 @@ test_that("Creating a `col_vals_not_equal()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_not_equal(column = b, value = 5)
+    col_vals_not_equal(columns = vars(b), value = 5)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -510,10 +510,10 @@ test_that("Creating a `col_vals_not_equal()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_not_equal(column = all_cols(), value = 5)
+    col_vals_not_equal(columns = everything(), value = 5)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -530,7 +530,7 @@ test_that("Creating a `col_vals_gt()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_gt(column = b, value = 5)
+    col_vals_gt(columns = vars(b), value = 5)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -557,10 +557,10 @@ test_that("Creating a `col_vals_gt()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` select function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_gt(column = all_cols(), value = 5)
+    col_vals_gt(columns = everything(), value = 5)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -577,7 +577,7 @@ test_that("Creating a `col_vals_gte()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_gte(column = b, value = 5)
+    col_vals_gte(columns = vars(b), value = 5)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -604,10 +604,10 @@ test_that("Creating a `col_vals_gte()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_gte(column = all_cols(), value = 5)
+    col_vals_gte(columns = everything(), value = 5)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -624,7 +624,7 @@ test_that("Creating a `col_vals_lt()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_lt(column = b, value = 5)
+    col_vals_lt(columns = vars(b), value = 5)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -651,10 +651,10 @@ test_that("Creating a `col_vals_lt()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_lt(column = all_cols(), value = 5)
+    col_vals_lt(columns = everything(), value = 5)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -671,7 +671,7 @@ test_that("Creating a `col_vals_lte()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_lte(column = b, value = 5)
+    col_vals_lte(columns = vars(b), value = 5)
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -698,10 +698,10 @@ test_that("Creating a `col_vals_lte()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_lte(column = all_cols(), value = 5)
+    col_vals_lte(columns = everything(), value = 5)
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -718,7 +718,7 @@ test_that("Creating a `col_vals_in_set()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_in_set(column = b, set = c("1-bcd-345", "5-jdo-903"))
+    col_vals_in_set(columns = vars(b), set = c("1-bcd-345", "5-jdo-903"))
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -746,10 +746,10 @@ test_that("Creating a `col_vals_in_set()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_in_set(column = all_cols(), set = c("1-bcd-345", "5-jdo-903"))
+    col_vals_in_set(columns = everything(), set = c("1-bcd-345", "5-jdo-903"))
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -766,7 +766,7 @@ test_that("Creating a `col_vals_not_in_set()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_not_in_set(column = b, set = c("1-bcd-345", "5-jdo-903"))
+    col_vals_not_in_set(columns = vars(b), set = c("1-bcd-345", "5-jdo-903"))
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -794,10 +794,10 @@ test_that("Creating a `col_vals_not_in_set()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_not_in_set(column = all_cols(), set = c("1-bcd-345", "5-jdo-903"))
+    col_vals_not_in_set(columns = everything(), set = c("1-bcd-345", "5-jdo-903"))
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -814,7 +814,7 @@ test_that("Creating a `col_vals_regex()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_regex(column = b, regex = "[0-9]-.*")
+    col_vals_regex(columns = vars(b), regex = "[0-9]-.*")
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -841,10 +841,10 @@ test_that("Creating a `col_vals_regex()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_regex(column = all_cols(), regex = "[0-9]-.*")
+    col_vals_regex(columns = everything(), regex = "[0-9]-.*")
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -861,7 +861,7 @@ test_that("Creating a `col_vals_null()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_null(column = b)
+    col_vals_null(columns = vars(b))
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -888,10 +888,10 @@ test_that("Creating a `col_vals_null()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_null(column = all_cols())
+    col_vals_null(columns = everything())
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -908,7 +908,7 @@ test_that("Creating a `col_vals_not_null()` step is possible", {
   # a validation step
   validation <-
     create_agent(tbl = small_table) %>%
-    col_vals_not_null(column = b)
+    col_vals_not_null(columns = vars(b))
   
   # Expect the class name for the object
   # to be `ptblank_agent`
@@ -935,10 +935,10 @@ test_that("Creating a `col_vals_not_null()` step is possible", {
   expect_true(is.na(validation$validation_set$row_sample))
   
   # Validate all available columns using the
-  # `all_cols()` helper function
+  # `everything()` helper function
   validation_all <-
     create_agent(tbl = small_table) %>%
-    col_vals_not_null(column = all_cols())
+    col_vals_not_null(columns = everything())
   
   # Expect 8 rows in the `validation_all$validation_set` object
   expect_equivalent(nrow(validation_all$validation_set), 8)
@@ -966,7 +966,7 @@ test_that("Creating a `rows_not_duplicated()` step is possible", {
   expect_equivalent(validation$focal_tbl_name, "small_table")
   expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "rows_not_duplicated")
-  expect_true(is.na(validation$validation_set$column))
+  expect_true(is.na(validation$validation_set$column %>% .[[1]] %>% .[[1]]))
   expect_true(is.na(validation$validation_set$value))
   expect_true(is.na(validation$validation_set$regex))
   expect_true(is.na(validation$validation_set$all_passed))

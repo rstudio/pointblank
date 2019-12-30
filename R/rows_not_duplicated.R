@@ -4,13 +4,12 @@
 #'
 #' @inheritParams col_vals_gt
 #' @param x An agent object of class `ptblank_agent`.
-#' @param cols An optional grouping of columns to check for duplication. If not
-#'   provided, the validation checks for duplicate records using data across all
-#'   columns.
+#'   
+#' @return A `ptblank_agent` object.
 #'   
 #' @examples
-#' # Create a simple data frame
-#' # with three columns of numerical values
+#' # Create a simple data frame with
+#' # three columns of numerical values
 #' df <-
 #'   data.frame(
 #'     a = c(5, 7, 6, 5, 8, 7),
@@ -24,9 +23,7 @@
 #' # rows are distinct)
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   rows_not_duplicated(
-#'     cols = a & b
-#'   ) %>%
+#'   rows_not_duplicated(columns = vars(a, b)) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column
@@ -34,11 +31,10 @@
 #' # by using `all_passed()`
 #' all_passed(agent)
 #' 
-#' @return A \pkg{pointblank} agent object.
 #' @import rlang
 #' @export
 rows_not_duplicated <- function(x,
-                                cols = NULL,
+                                columns = NULL,
                                 preconditions = NULL,
                                 brief = NULL,
                                 warn_count = NULL,
@@ -50,22 +46,19 @@ rows_not_duplicated <- function(x,
 
   agent <- x
   
-  # Get the values supplied for `cols`
-  cols <- 
-    rlang::enquo(cols) %>%
-    rlang::get_expr() %>%
-    as.character()
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
   
-  if (length(cols) > 0) {
+  # Resolve the columns based on the expression
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions)
+  
+  if (length(columns) > 0) {
     
-    cols <- 
-      cols %>%
-      base::setdiff("&") %>%
-      paste(collapse = ", ")
+    columns <- paste(columns, collapse = ", ")
     
   } else {
     
-    cols <- NULL
+    columns <- NULL
   }
   
   if (is.null(brief)) {
@@ -74,7 +67,7 @@ rows_not_duplicated <- function(x,
       create_autobrief(
         agent = agent,
         assertion_type = "rows_not_duplicated",
-        column = cols
+        column = columns
       )
   }
   
@@ -83,7 +76,7 @@ rows_not_duplicated <- function(x,
     create_validation_step(
       agent = agent,
       assertion_type = "rows_not_duplicated",
-      column = ifelse(is.null(cols), as.character(NA), cols),
+      column = list(ifelse(is.null(columns), as.character(NA), columns)),
       value = NULL,
       preconditions = preconditions,
       brief = brief,
@@ -94,22 +87,6 @@ rows_not_duplicated <- function(x,
       stop_fraction = stop_fraction,
       notify_fraction = notify_fraction
     )
-  
-  # If no `brief` provided, set as NA
-  if (is.null(brief)) {
-    brief <- as.character(NA)
-  }
-  
-  # Place the validation step in the logical plan
-  agent$logical_plan <-
-    dplyr::bind_rows(
-      agent$logical_plan,
-      dplyr::tibble(
-        component_name = "rows_not_duplicated",
-        parameters = as.character(NA),
-        brief = brief
-      )
-    )
-  
+
   agent
 }

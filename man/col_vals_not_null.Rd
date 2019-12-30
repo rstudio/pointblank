@@ -6,7 +6,7 @@
 \usage{
 col_vals_not_null(
   x,
-  column,
+  columns,
   preconditions = NULL,
   brief = NULL,
   warn_count = NULL,
@@ -20,10 +20,8 @@ col_vals_not_null(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The column (or a set of columns, provided as a character
-vector) to which this validation should be applied. Aside from a single
-column name, column operations can be used to create one or more computed
-columns (e.g., \code{a + b} or \code{a + sum(a)}).}
+\item{columns}{The column (or a set of columns, provided as a character
+vector) to which this validation should be applied.}
 
 \item{preconditions}{expressions used for mutating the input table before
 proceeding with the validation. This is ideally as a one-sided R formula
@@ -62,8 +60,8 @@ validations. Beyond this threshold, either the \code{warn} or \code{notify} flag
 be applied.}
 }
 \value{
-Either a \pkg{pointblank} agent object or a table object, depending
-on what was passed to \code{x}.
+Either a \code{ptblank_agent} object or a table object, depending on what
+was passed to \code{x}.
 }
 \description{
 Verification step where no values in a table column are expected to be
@@ -73,7 +71,7 @@ Verification step where no values in a table column are expected to be
 library(dplyr)
 
 # Create a simple data frame with
-# 2 columns of numerical values
+# two columns of numerical values
 df <-
   data.frame(
     a = c(1, 2, NA, NA),
@@ -88,7 +86,7 @@ df <-
 agent <-
   create_agent(tbl = df) \%>\%
   col_vals_not_null(
-    column = a,
+    columns = vars(a),
     preconditions = ~ tbl \%>\% dplyr::filter(b == 2)
   ) \%>\%
   interrogate()

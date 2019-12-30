@@ -5,7 +5,8 @@ test_that("Creating a valid `agent` object is possible", {
   df <-
     data.frame(
       a = c(1, 1, 1, 2, 2, 2),
-      b = c(5, 5, 5, 3, 6, 3))
+      b = c(5, 5, 5, 3, 6, 3)
+    )
   
   # Create an agent object
   agent <- create_agent(tbl = df)
@@ -18,23 +19,17 @@ test_that("Creating a valid `agent` object is possible", {
         c("validation_name", "validation_time",
           "focal_tbl", "focal_tbl_name", "focal_tbl_src",
           "focal_col_names", "focal_col_types",
-          "email", "slack", "logical_plan", "validation_set")
+          "email", "slack", "validation_set")
     )
   )
   
-  # Expect an agent object of class `dgr_graph`
+  # Expect an agent object of class `ptblank_agent`
   expect_is(agent, "ptblank_agent")
   
-  # Expect that the `logical_plan` component is
-  # a `tbl_df`
-  expect_is(agent$logical_plan, "tbl_df")
-  
-  # Expect that the `validation_set` component is
-  # a `tbl_df`
+  # Expect that the `validation_set` component is a `tbl_df`
   expect_is(agent$validation_set, "tbl_df")
   
-  # Expect certain classes for the different
-  # `agent` components
+  # Expect certain classes for the different `ptblank_agent` components
   expect_is(agent$validation_name, "character")
   expect_is(agent$validation_time, "POSIXct")
   expect_is(agent$focal_tbl, "data.frame")
@@ -45,7 +40,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$email, "list")
   expect_is(agent$slack, "list")
   expect_is(agent$validation_set$assertion_type, "character")
-  expect_is(agent$validation_set$column, "character")
+  expect_is(agent$validation_set$column, "list")
   expect_is(agent$validation_set$value, "numeric")
   expect_is(agent$validation_set$set, "list")
   expect_is(agent$validation_set$regex, "character")

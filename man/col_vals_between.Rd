@@ -6,7 +6,7 @@
 \usage{
 col_vals_between(
   x,
-  column,
+  columns,
   left,
   right,
   inclusive = c(TRUE, TRUE),
@@ -24,10 +24,8 @@ col_vals_between(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The column (or a set of columns, provided as a character
-vector) to which this validation should be applied. Aside from a single
-column name, column operations can be used to create one or more computed
-columns (e.g., \code{a + b} or \code{a + sum(a)}).}
+\item{columns}{The column (or a set of columns, provided as a character
+vector) to which this validation should be applied.}
 
 \item{left}{The lower bound for the range. The validation includes this bound
 value in addition to values greater than \code{left}.}
@@ -79,16 +77,15 @@ validations. Beyond this threshold, either the \code{warn} or \code{notify} flag
 be applied.}
 }
 \value{
-Either a \pkg{pointblank} agent object or a table object, depending
-on what was passed to \code{x}.
+Either a \code{ptblank_agent} object or a table object, depending on what
+was passed to \code{x}.
 }
 \description{
 Verification step where column data should be between two values.
 }
 \examples{
-# Create a simple data frame
-# with a column of numerical
-# values
+# Create a simple data frame with
+# a column of numerical values
 df <-
   data.frame(
     a = c(5.6, 8.2, 6.3, 7.8, 3.4)
@@ -100,9 +97,8 @@ df <-
 agent <-
   create_agent(tbl = df) \%>\%
   col_vals_between(
-    column = a,
-    left = 1,
-    right = 9
+    columns = vars(a),
+    left = 1, right = 9
   ) \%>\%
   interrogate()
 

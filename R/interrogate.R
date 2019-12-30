@@ -24,15 +24,16 @@
 #' @param sample_limit A value that limits the possible number of rows returned
 #'   when sampling non-passing rows using the `sample_frac` option.
 #'   
+#' @return A `ptblank_agent` object.
+#'   
 #' @examples 
-#' # Create a simple data frame
-#' # with two columns of numerical values
+#' # Create a simple data frame with
+#' # two columns of numerical values
 #' df <-
 #'   data.frame(
 #'     a = c(5, 7, 6, 5, 8, 7),
 #'     b = c(7, 1, 0, 0, 0, 3)
 #'   )
-#'     
 #' 
 #' # Validate that values in column
 #' # `a` from `df` are always > 5,
@@ -40,17 +41,12 @@
 #' # the process
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   col_vals_gt(
-#'     column = a,
-#'     value = 5
-#'   ) %>%
+#'   col_vals_gt(columns = vars(a), value = 5) %>%
 #'   interrogate()
 #'   
 #' # Get a basic summary with
 #' # `get_interrogation_summary()`
 #' get_interrogation_summary(agent)[, 1:7]
-#' 
-#' @return A \pkg{pointblank} agent object.
 #' 
 #' @export
 interrogate <- function(agent,
@@ -88,7 +84,7 @@ interrogate <- function(agent,
         "col_vals_regex" = interrogate_regex(agent, idx = i, table),
         "col_vals_null" = interrogate_null(agent, idx = i, table),
         "col_vals_not_null" = interrogate_not_null(agent, idx = i, table),
-        "cols_exist" = interrogate_cols_exist(agent, idx = i, table),
+        "col_exists" = interrogate_col_exists(agent, idx = i, table),
         "col_vals_gt" =,
         "col_vals_gte" =,
         "col_vals_lt" =,
@@ -260,7 +256,7 @@ interrogate_not_null <- function(agent, idx, table) {
   tbl_checked
 }
 
-interrogate_cols_exist <- function(agent, idx, table) {
+interrogate_col_exists <- function(agent, idx, table) {
   
   # Get the column names for the table
   column_names <- get_all_cols(agent = agent)
@@ -342,10 +338,10 @@ interrogate_col_type <- function(agent, idx, table, assertion_type) {
 }
 
 interrogate_duplicated <- function(agent, idx, table) {
-  
+
   # Determine if grouping columns are provided in the test
   # for distinct rows and parse the column names
-  if (!is.na(agent$validation_set$column[idx])) {
+  if (!is.na(agent$validation_set$column[idx] %>% unlist())) {
     
     column_names <- 
       get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
@@ -357,7 +353,7 @@ interrogate_duplicated <- function(agent, idx, table) {
         unlist()
     }
     
-  } else if (is.na(agent$validation_set$column[idx])) {
+  } else if (is.na(agent$validation_set$column[idx] %>% unlist())) {
     column_names <- get_all_cols(agent = agent)
   }
   

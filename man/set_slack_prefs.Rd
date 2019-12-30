@@ -50,6 +50,8 @@ thumbnail image in the notification footer.}
 notification footer.}
 }
 \value{
+A \code{ptblank_agent} object.
+
 A \pkg{pointblank} agent object.
 }
 \description{
@@ -59,8 +61,8 @@ pointblank pipeline any time before an \code{\link[=interrogate]{interrogate()}}
 }
 \examples{
 \dontrun{
-# Create a simple data frame
-# with a column of numerical values
+# Create a simple data frame with
+# a column of numerical values
 df <-
   data.frame(
     a = c(5, 7, 6, 5, 8, 7)
@@ -87,10 +89,10 @@ agent <-
       "#table-validation",
     slack_username = "table_validator",
     slack_report_url = 
-      "https:://my.company.com/reports/df_validation") \%>\%
+      "https://my.company.com/reports/df_validation"
+  ) \%>\%
   col_vals_lt(
-    column = a,
-    value = 6,
+    columns = vars(a), value = 6,
     notify_count = 1
   ) \%>\%
   interrogate()

@@ -11,7 +11,7 @@ test_that("Getting a validation summary is possible", {
   # a validation step and then `interrogate()`
   agent <-
     create_agent(tbl = small_table) %>%
-    col_is_character(column = "b") %>%
+    col_is_character(columns = "b") %>%
     interrogate()
   
   # Get a summary of the interrogation
@@ -29,7 +29,7 @@ test_that("Getting a validation summary is possible", {
   
   # Expect certain column types for this summary
   expect_is(summary$assertion_type, "character")
-  expect_is(summary$column, "character")
+  expect_is(summary$column, "list")
   expect_is(summary$value, "numeric")
   expect_is(summary$set, "list")
   expect_is(summary$regex, "character")
@@ -44,7 +44,7 @@ test_that("Getting a validation summary is possible", {
   # Expect an error if getting a summary without an interrogation
   expect_error(
     create_agent(tbl = small_table) %>%
-      col_is_character(column = "b") %>%
+      col_is_character(columns = "b") %>%
       get_interrogation_summary()
   )
 })

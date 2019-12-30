@@ -6,7 +6,7 @@
 \usage{
 col_vals_gt(
   x,
-  column,
+  columns,
   value,
   incl_na = FALSE,
   preconditions = NULL,
@@ -22,10 +22,8 @@ col_vals_gt(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The column (or a set of columns, provided as a character
-vector) to which this validation should be applied. Aside from a single
-column name, column operations can be used to create one or more computed
-columns (e.g., \code{a + b} or \code{a + sum(a)}).}
+\item{columns}{The column (or a set of columns, provided as a character
+vector) to which this validation should be applied.}
 
 \item{value}{A numeric value used for this test. Any column values \verb{>value}
 are considered passing.}
@@ -57,16 +55,16 @@ validations. Beyond this threshold, either the \code{warn} or \code{notify} flag
 be applied.}
 }
 \value{
-Either a \pkg{pointblank} agent object or a table object, depending
-on what was passed to \code{x}.
+Either a \code{ptblank_agent} object or a table object, depending on what
+was passed to \code{x}.
 }
 \description{
 Verification step where numeric values in a table column should be greater
 than a specified value.
 }
 \examples{
-# Create a simple data frame
-# with a column of numerical values
+# Create a simple data frame with
+# a column of numerical values
 df <-
   data.frame(
     a = c(5, 7, 6, 5, 8, 7)
@@ -76,7 +74,7 @@ df <-
 # `a` are always greater than 4
 agent <-
   create_agent(tbl = df) \%>\%
-  col_vals_gt(column = a, value = 4) \%>\%
+  col_vals_gt(columns = vars(a), value = 4) \%>\%
   interrogate()
 
 # Determine if these column

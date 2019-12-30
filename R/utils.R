@@ -17,12 +17,11 @@ create_validation_step <- function(agent,
                                    stop_fraction = NULL,
                                    notify_fraction = NULL) {
   
-  # Create a validation step as a single-row
-  # `tbl_df` object
+  # Create a validation step as a single-row `tbl_df` object
   validation_step_df <-
     dplyr::tibble(
       assertion_type = assertion_type,
-      column = as.character(column),
+      column = list(column),
       value = ifelse(is.null(value), NA_real_, as.numeric(value)),
       set = ifelse(is.null(set), list(NULL), list(set)),
       regex = ifelse(is.null(regex), NA_character_, as.character(regex)),
@@ -102,150 +101,6 @@ get_all_cols <- function(agent) {
   agent$focal_col_names
 }
 
-#' Generate summary SVG files for the results of a validation pipeline
-#' 
-#' @noRd
-generate_img_files_results <- function(agent) {
-  
-  if (!inherits(agent, "ptblank_agent")) {
-    stop("The object provided must be a valid `ptblank_agent` object.")
-  }
-  
-  # Extract the `validation_set` df from the `agent` object
-  summary <- agent$validation_set
-  
-  # For every row in `summary`, re-work the associated SVG
-  # template object into a finalized graphic
-  for (i in 1:nrow(summary)) {
-    
-    if (i == 1) {
-      if (dir.exists("temporary_images") == FALSE) {
-        dir.create("temporary_images")
-      } else {
-        files <- list.files("temporary_images", full.names = TRUE)
-        if (length(files) > 0) {
-          file.remove(files)
-        }
-      }
-    }
-    
-    index <- formatC(x = i, flag = " ", width = 4)
-    
-    pass <- 
-      formatC(
-        x = summary$n_passed[i] %>% as.integer(),
-        flag = " ", width = 12
-      ) %>%
-      stringr::str_replace_all(" ", "&#160;")
-    
-    fail <- 
-      formatC(
-        x = (summary$n[i] - summary$n_passed[i]) %>% as.integer(),
-        flag = " ", width = 12
-      ) %>% 
-      stringr::str_replace_all(" ", "&#160;")
-    
-    if (summary$notify[i] == TRUE) {
-      outline_color <- "#B20000"
-    } else if (summary$notify[i] == FALSE & summary$warn[i] == TRUE) {
-      outline_color <- "#B7B700"
-    }
-    
-    if (summary$all_passed[i] == TRUE) {
-      outline_color <- "#008000"
-    }
-    
-    # Construct the filename for the SVG file associated with the function
-    icon <- paste0(summary$assertion_type[i], "_text.svg")
-    
-    # Copy the text-inclusive SVG file to a temporary directory
-    file.copy(
-      from = system.file("icons", icon, package = "pointblank"),
-      to = paste0(
-        "./temporary_images/",
-        stringr::str_replace_all(index, " ", "0"), ".svg"
-      ),
-      overwrite = TRUE
-    )
-    
-    # Modify the summary numbers
-    modified_svg <-
-      readLines(
-        paste0(
-          "./temporary_images/",
-          stringr::str_replace_all(index, " ", "0"),
-          ".svg"
-        ),
-        warn = FALSE
-      ) %>%
-      stringr::str_replace(">XXXX<", paste0(">", index, "<")) %>%
-      stringr::str_replace(">PPPPPPPPPPPP<", paste0(">", pass, "<")) %>%
-      stringr::str_replace(">FFFFFFFFFFFF<", paste0(">", fail, "<"))
-    
-    # Modify the outline color
-    modified_svg <-
-      modified_svg %>%
-      stringr::str_replace(
-        "(\"function.*? stroke=\")#979797",
-        paste0("\\1", outline_color)
-      )
-    
-    # Write the modified SVG file to disk
-    modified_svg %>%
-      cat(
-        file = paste0(
-          "./temporary_images/",
-          stringr::str_replace_all(index, " ", "0"),
-          "_.svg"
-        )
-      )
-  }
-}
-
-#' Generate SVG files for the plan of a validation pipeline
-#'
-#' @noRd
-generate_img_files_plan <- function(agent) {
-  
-  if (!inherits(agent, "ptblank_agent")) {
-    stop("The object provided must be a valid `ptblank_agent` object.")
-  }
-  
-  # Extract the `logical_plan` df from the `agent` object
-  plan <- agent$logical_plan
-  
-  # For every row in `summary`, re-work the associated SVG
-  # template object into a finalized graphic
-  for (i in 1:nrow(plan)) {
-    
-    if (i == 1) {
-      if (dir.exists("temporary_images_plan") == FALSE) {
-        dir.create("temporary_images_plan")
-      } else {
-        files <- list.files("temporary_images_plan", full.names = TRUE)
-        if (length(files) > 0) {
-          file.remove(files)
-        }
-      }
-    }
-    
-    index <- formatC(x = i, flag = " ", width = 4)
-    
-    # Construct the filename for the SVG file associated with the function
-    icon <- paste0(plan$component_name[i], "_.svg")
-    
-    # Copy the text-inclusive SVG file to a temporary directory
-    file.copy(
-      from = system.file("icons", icon, package = "pointblank"),
-      to = paste0(
-        "./temporary_images_plan/",
-        stringr::str_replace_all(index, " ", "0"), ".svg"
-      ),
-      overwrite = TRUE
-    )
-  }
-}
-
 #' Does the agent have no validation steps available in the object?
 #' 
 #' @noRd
@@ -253,18 +108,12 @@ is_agent_empty <- function(agent) {
   
   if (is_ptblank_agent(agent)) {
     
-    if (nrow(agent$validation_set) == 0 &
-        nrow(agent$logical_plan) == 1 ) {
-      
+    if (nrow(agent$validation_set) == 0) {
       return(TRUE)
-      
     } else {
-      
       return(FALSE)
     }
-    
   } else {
-    
     return(FALSE)
   }
 }
@@ -363,7 +212,7 @@ create_autobrief <- function(agent,
   }
   
   
-  if (assertion_type == "cols_exist") {
+  if (assertion_type == "col_exists") {
     
     autobrief <- paste0("Expect that column `", column, "` exists")
   }
@@ -616,12 +465,9 @@ evaluate_single <- function(x,
                             warn_fraction,
                             stop_fraction,
                             notify_fraction) {
-  
+
   x_ret <- x
   tbl <- x
-
-  # Get the `column` number
-  col_number <- ((tbl %>% colnames()) %in% column) %>% which()
 
   # Apply any preconditions
   if (!is.null(preconditions)) {
@@ -631,6 +477,9 @@ evaluate_single <- function(x,
       rlang::f_rhs() %>%
       rlang::eval_tidy()
   }
+  
+  # Get the `column` number
+  col_number <- ((tbl %>% colnames()) %in% column) %>% which()
   
   if (type == "col_vals_equal") {
     
@@ -777,7 +626,7 @@ evaluate_single <- function(x,
     }
   }
   
-  if (type == "cols_exist") {
+  if (type == "col_exists") {
     
     column_names <-
       tbl %>%

@@ -6,7 +6,7 @@
 \usage{
 col_is_factor(
   x,
-  column,
+  columns,
   brief = NULL,
   warn_count = NULL,
   stop_count = NULL,
@@ -19,8 +19,8 @@ col_is_factor(
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{column}{The name of a single table column, multiple columns in the same
-table, or, a helper function such as \code{\link[=all_cols]{all_cols()}}.}
+\item{columns}{The column (or a set of columns, provided as a character
+vector) to which this validation should be applied.}
 
 \item{brief}{An optional, text-based description for the validation step.}
 
@@ -51,17 +51,16 @@ validations. Beyond this threshold, either the \code{warn} or \code{notify} flag
 be applied.}
 }
 \value{
-Either a \pkg{pointblank} agent object or a table object, depending
-on what was passed to \code{x}.
+Either a \code{ptblank_agent} object or a table object, depending on what
+was passed to \code{x}.
 }
 \description{
 Verification step where a table column is expected to consist entirely of R
 \code{factor} objects.
 }
 \examples{
-# Create a simple data frame
-# with a column containing data
-# classed as `factor`
+# Create a simple data frame with
+# a column of `factor` values
 df <-
   data.frame(
     a = c("one", "two")
@@ -72,7 +71,7 @@ df <-
 # as `factor`
 agent <-
   create_agent(tbl = df) \%>\%
-  col_is_factor(column = a) \%>\%
+  col_is_factor(columns = vars(a)) \%>\%
   interrogate()
 
 # Determine if these column

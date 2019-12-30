@@ -11,20 +11,11 @@
 #' @param email_recipients An optional vector of email addresses to which
 #'   notification emails should be sent.
 #' @param creds_file An optional path to an email credentials file.
+#' 
+#' @return A `ptblank_agent` object.
 #'   
 #' @examples 
 #' \dontrun{
-#' # Generate an email credentials
-#' # file using the function
-#' # `create_email_creds_file()`
-#' create_email_creds_file(
-#'   file = "~/.pb_email",
-#'   sender = "point@blank.org",
-#'   host = "smtp.blank.org",
-#'   port = 465,
-#'   user = "point@blank.org",
-#'   password = "************") 
-#' 
 #' # Create a simple data frame
 #' # with a column of numerical values
 #' df <-
@@ -48,18 +39,15 @@
 #'   set_email_prefs(
 #'     notify_active = TRUE,
 #'     email_recipients = 
-#'       c("a@b.net", "c@d.com"),
-#'     creds_file = "~/.pb_email") %>%
+#'       c("a@example.com", "c@example.com")
+#'   ) %>%
 #'   col_vals_lt(
-#'     column = a,
-#'     value = 6,
+#'     columns = vars(a), value = 6,
 #'     notify_count = 1
 #'   ) %>%
 #'   interrogate()
 #' }
-#' 
-#' @return Either a \pkg{pointblank} agent object or a table object, depending
-#'   on what was passed to `x`.
+#'
 #' @export
 set_email_prefs <- function(agent,
                             notify_active = FALSE,

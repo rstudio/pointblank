@@ -16,9 +16,8 @@ test_that("Creating a valid `agent` object is possible", {
   expect_true(
     all(
       names(agent) ==
-        c("validation_name", "validation_time",
-          "focal_tbl", "focal_tbl_name", "focal_tbl_src",
-          "focal_col_names", "focal_col_types", "validation_set")
+        c("name", "time", "tbl", "tbl_name", "tbl_src",
+          "col_names", "col_types", "validation_set")
     )
   )
   
@@ -29,13 +28,13 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$validation_set, "tbl_df")
   
   # Expect certain classes for the different `ptblank_agent` components
-  expect_is(agent$validation_name, "character")
-  expect_is(agent$validation_time, "POSIXct")
-  expect_is(agent$focal_tbl, "data.frame")
-  expect_is(agent$focal_tbl_name, "character")
-  expect_is(agent$focal_tbl_src, "character")
-  expect_is(agent$focal_col_names, "character")
-  expect_is(agent$focal_col_types, "character")
+  expect_is(agent$name, "character")
+  expect_is(agent$time, "POSIXct")
+  expect_is(agent$tbl, "data.frame")
+  expect_is(agent$tbl_name, "character")
+  expect_is(agent$tbl_src, "character")
+  expect_is(agent$col_names, "character")
+  expect_is(agent$col_types, "character")
   expect_is(agent$validation_set$assertion_type, "character")
   expect_is(agent$validation_set$column, "list")
   expect_is(agent$validation_set$value, "numeric")
@@ -60,5 +59,5 @@ test_that("Creating a valid `agent` object is possible", {
   agent_name <- create_agent(tbl = df, name = "test")
   
   # Expect that the agent name has been set
-  expect_equivalent(agent_name$validation_name, "test")
+  expect_equivalent(agent_name$name, "test")
 })

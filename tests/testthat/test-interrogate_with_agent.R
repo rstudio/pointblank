@@ -15,7 +15,7 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_exists")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -41,7 +41,7 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_exists")
   expect_equivalent(validation$validation_set$column, "g")
   expect_true(is.na(validation$validation_set$value))
@@ -66,7 +66,7 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_is_character")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -91,7 +91,7 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_is_numeric")
   expect_equivalent(validation$validation_set$column, "a")
   expect_true(is.na(validation$validation_set$value))
@@ -116,7 +116,7 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_is_posix")
   expect_equivalent(validation$validation_set$column, "date_time")
   expect_true(is.na(validation$validation_set$value))
@@ -141,7 +141,7 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_is_date")
   expect_equivalent(validation$validation_set$column, "date")
   expect_true(is.na(validation$validation_set$value))
@@ -166,7 +166,7 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_is_integer")
   expect_equivalent(validation$validation_set$column, "a")
   expect_true(is.na(validation$validation_set$value))
@@ -191,7 +191,7 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_is_logical")
   expect_equivalent(validation$validation_set$column, "e")
   expect_true(is.na(validation$validation_set$value))
@@ -222,7 +222,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_between")
   expect_equivalent(validation$validation_set$column, "d")
   expect_true(is.na(validation$validation_set$value))
@@ -252,7 +252,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_between")
   expect_equivalent(validation$validation_set$column, "d")
   expect_true(is.na(validation$validation_set$value))
@@ -275,7 +275,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_between")
   expect_equivalent(validation$validation_set$column, "d")
   expect_true(is.na(validation$validation_set$value))
@@ -305,7 +305,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_between")
   expect_equivalent(validation$validation_set$column, "d")
   expect_true(is.na(validation$validation_set$value))
@@ -325,7 +325,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_equal")
   expect_equivalent(validation$validation_set$column, "d")
   expect_equivalent(validation$validation_set$value, 283.94)
@@ -355,7 +355,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_equal")
   expect_equivalent(validation$validation_set$column, "d")
   expect_equivalent(validation$validation_set$value, 283.94)
@@ -375,7 +375,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_equal")
   expect_equivalent(validation$validation_set$column, "d")
   expect_equivalent(validation$validation_set$value, 283.94)
@@ -405,7 +405,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_equal")
   expect_equivalent(validation$validation_set$column, "d")
   expect_equivalent(validation$validation_set$value, 283.94)
@@ -425,7 +425,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "rows_not_duplicated")
   expect_true(is.na(validation$validation_set$column %>% unlist()))
   expect_true(is.na(validation$validation_set$value))
@@ -453,7 +453,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "rows_not_duplicated")
   expect_true(is.na(validation$validation_set$column %>% unlist()))
   expect_true(is.na(validation$validation_set$value))
@@ -474,7 +474,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "rows_not_duplicated")
   expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, a")
   expect_true(is.na(validation$validation_set$value))
@@ -494,7 +494,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_in_set")
   expect_equivalent(validation$validation_set$column, "f")
   expect_true(is.na(validation$validation_set$value))
@@ -519,7 +519,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_in_set")
   expect_equivalent(validation$validation_set$column, "f")
   expect_true(is.na(validation$validation_set$value))
@@ -545,7 +545,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_in_set")
   expect_equivalent(validation$validation_set$column, "f")
   expect_true(is.na(validation$validation_set$value))
@@ -570,7 +570,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_null")
   expect_equivalent(validation$validation_set$column, "c")
   expect_true(is.na(validation$validation_set$value))
@@ -600,7 +600,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_null")
   expect_equivalent(validation$validation_set$column, "c")
   expect_true(is.na(validation$validation_set$value))
@@ -620,7 +620,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_null")
   expect_equivalent(validation$validation_set$column, "c")
   expect_true(is.na(validation$validation_set$value))
@@ -650,7 +650,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_null")
   expect_equivalent(validation$validation_set$column, "c")
   expect_true(is.na(validation$validation_set$value))
@@ -673,7 +673,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_regex")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -703,7 +703,7 @@ test_that("Interrogating for valid row values", {
     interrogate()
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$focal_tbl_name, "small_table")
+  expect_equivalent(validation$tbl_name, "small_table")
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_regex")
   expect_equivalent(validation$validation_set$column, "f")
   expect_true(is.na(validation$validation_set$value))

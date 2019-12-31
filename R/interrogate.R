@@ -57,7 +57,7 @@ interrogate <- function(agent,
                         sample_limit = 5000) {
 
   # Add the starting time to the `agent` object
-  agent$validation_time <- Sys.time()
+  agent$time <- Sys.time()
   
   for (i in seq_len(nrow(agent$validation_set))) {
     
@@ -65,7 +65,7 @@ interrogate <- function(agent,
     validation_start_time <- Sys.time()
     
     # Get the table object for interrogation 
-    table <- get_focal_tbl_object(agent)
+    table <- get_tbl_object(agent)
     
     # Use preconditions to modify the table
     table <- apply_preconditions_to_tbl(agent, idx = i, tbl = table)

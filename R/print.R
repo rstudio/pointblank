@@ -17,13 +17,13 @@ print.ptblank_agent <- function(x, ...) {
   # Generate the complete statement for printing
   if (is_agent_empty(x)) {
     
-    print_stmt <- paste0("pointblank agent // <", x$validation_name, ">")
+    print_stmt <- paste0("pointblank agent // <", x$name, ">")
     
   } else {
     
     print_stmt <-
       paste0(
-        "pointblank agent // <", x$validation_name, ">", "\n", "\n",
+        "pointblank agent // <", x$name, ">", "\n", "\n",
         "number of validation steps: ", number_of_validation_steps(x), "\n"
       )
     

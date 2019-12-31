@@ -62,7 +62,7 @@ get_row_sample_data <- function(agent,
   
   # Stop function if the agent hasn't
   # yet performed an interrogation
-  if (agent$validation_time %>% length() == 0) {
+  if (agent$time %>% length() == 0) {
     return(NA)
   }
   

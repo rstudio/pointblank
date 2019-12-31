@@ -64,8 +64,12 @@ apply_preconditions_to_tbl <- function(agent, idx, tbl) {
   tbl
 }
 
-get_focal_tbl_object <- function(agent) {
-  agent$focal_tbl
+get_tbl_object <- function(agent) {
+  agent$tbl
+}
+
+is_ptblank_agent <- function(object) {
+  inherits(object, "ptblank_agent")
 }
 
 get_assertion_type_at_idx <- function(agent, idx) {
@@ -92,13 +96,8 @@ get_column_regex_at_idx <- function(agent, idx) {
   agent$validation_set[[idx, "regex"]]
 }
 
-#' Get all column names from the table currently in focus
-#' 
-#' @noRd
 get_all_cols <- function(agent) {
-  
-  # Get vector of all columns table currently in focus
-  agent$focal_col_names
+  agent$col_names
 }
 
 #' Does the agent have no validation steps available in the object?
@@ -124,7 +123,7 @@ is_agent_empty <- function(agent) {
 did_agent_interrogate <- function(agent) {
   
   if (is_ptblank_agent(agent)) {
-    return(ifelse(length(agent$validation_time) > 0, TRUE, FALSE))
+    return(ifelse(length(agent$time) > 0, TRUE, FALSE))
   } else {
     return(NA)
   }
@@ -137,9 +136,7 @@ interrogation_time <- function(agent) {
   
   if (is_ptblank_agent(agent)) {
     if (did_agent_interrogate(agent)) {
-      
-      return(agent$validation_time)
-      
+      return(agent$time)
     } else {
       return(NA)
     }
@@ -178,7 +175,7 @@ create_autobrief <- function(agent,
         "col_vals_lt", "col_vals_lte",
         "col_vals_equal", "col_vals_not_equal")) {
     
-    is_column_computed <- ifelse(column %in% agent$focal_col_names, FALSE, TRUE)
+    is_column_computed <- ifelse(column %in% agent$col_names, FALSE, TRUE)
     
     if (assertion_type == "col_vals_gt") {
       operator <- ">"
@@ -220,7 +217,7 @@ create_autobrief <- function(agent,
   if (assertion_type %in% c("col_vals_in_set", "col_vals_not_in_set")) {
     
     is_column_computed <-
-      ifelse(column %in% agent$focal_col_names, FALSE, TRUE)
+      ifelse(column %in% agent$col_names, FALSE, TRUE)
 
     autobrief <-
       paste0(
@@ -243,7 +240,7 @@ create_autobrief <- function(agent,
   
   if (assertion_type %in% c("col_vals_in_set", "col_vals_not_in_set")) {
     
-    is_column_computed <- ifelse(column %in% agent$focal_col_names, FALSE, TRUE)
+    is_column_computed <- ifelse(column %in% agent$col_names, FALSE, TRUE)
     
     autobrief <-
       paste0(
@@ -267,7 +264,7 @@ create_autobrief <- function(agent,
   if (assertion_type %in%
       c("col_vals_between", "col_vals_not_between")) {
     
-    is_column_computed <- ifelse(column %in% agent$focal_col_names, FALSE, TRUE)
+    is_column_computed <- ifelse(column %in% agent$col_names, FALSE, TRUE)
     
     autobrief <-
       paste0(
@@ -290,7 +287,7 @@ create_autobrief <- function(agent,
   
   if (assertion_type == "col_vals_regex") {
     
-    is_column_computed <- ifelse(column %in% agent$focal_col_names, FALSE, TRUE)
+    is_column_computed <- ifelse(column %in% agent$col_names, FALSE, TRUE)
     
     autobrief <-
       paste0(
@@ -312,7 +309,7 @@ create_autobrief <- function(agent,
   
   if (assertion_type %in% c("col_vals_null", "col_vals_not_null")) {
     
-    is_column_computed <- ifelse(column %in% agent$focal_col_names, FALSE, TRUE)
+    is_column_computed <- ifelse(column %in% agent$col_names, FALSE, TRUE)
     
     autobrief <-
       paste0(
@@ -353,7 +350,7 @@ create_autobrief <- function(agent,
   
   if (assertion_type == "rows_not_duplicated") {
     
-    is_column_computed <- ifelse(column %in% agent$focal_col_names, FALSE, TRUE)
+    is_column_computed <- ifelse(column %in% agent$col_names, FALSE, TRUE)
     
     autobrief <-
       paste0(
@@ -728,7 +725,7 @@ resolve_columns <- function(x, var_expr, preconditions) {
       
     } else if (inherits(x, ("ptblank_agent"))) {
       
-      tbl <- get_focal_tbl_object(agent = x)
+      tbl <- get_tbl_object(agent = x)
       column <- resolve_expr_to_cols(tbl = tbl, var_expr = !!var_expr)
     }
     
@@ -748,7 +745,7 @@ resolve_columns <- function(x, var_expr, preconditions) {
       
     } else if (inherits(x, ("ptblank_agent"))) {
       
-      tbl <- get_focal_tbl_object(agent = x)
+      tbl <- get_tbl_object(agent = x)
       
       tbl <- 
         preconditions %>%

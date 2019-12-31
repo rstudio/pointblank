@@ -77,13 +77,13 @@ create_agent <- function(tbl,
   # Create the agent list object
   agent <-
     list(
-      validation_name = name,
-      validation_time = as.POSIXct(NA)[-1],
-      focal_tbl = tbl,
-      focal_tbl_name = tbl_name,
-      focal_tbl_src = character(0),
-      focal_col_names = column_names,
-      focal_col_types = column_types,
+      name = name,
+      time = as.POSIXct(NA)[-1],
+      tbl = tbl,
+      tbl_name = tbl_name,
+      tbl_src = character(0),
+      col_names = column_names,
+      col_types = column_types,
       validation_set =
         dplyr::tibble(
           assertion_type = character(0),

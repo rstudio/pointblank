@@ -19,8 +19,8 @@ test_that("Creating a `col_is_character()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_is_character")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -66,8 +66,8 @@ test_that("Creating a `col_is_date()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name,  "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name,  "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_is_date")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -113,8 +113,8 @@ test_that("Creating a `col_is_factor()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_is_factor")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -160,8 +160,8 @@ test_that("Creating a `col_is_integer()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_is_integer")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -207,8 +207,8 @@ test_that("Creating a `col_is_logical()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_is_logical")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -254,8 +254,8 @@ test_that("Creating a `col_is_numeric()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_is_numeric")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -301,8 +301,8 @@ test_that("Creating a `col_is_posix()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_is_posix")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -348,8 +348,8 @@ test_that("Creating a `col_vals_between()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_between")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -396,8 +396,8 @@ test_that("Creating a `col_vals_not_between()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_between")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -444,8 +444,8 @@ test_that("Creating a `col_vals_equal()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_equal")
   expect_equivalent(validation$validation_set$column, "b")
   expect_equivalent(validation$validation_set$value, 5)
@@ -491,8 +491,8 @@ test_that("Creating a `col_vals_not_equal()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_equal")
   expect_equivalent(validation$validation_set$column, "b")
   expect_equivalent(validation$validation_set$value, 5)
@@ -538,8 +538,8 @@ test_that("Creating a `col_vals_gt()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_gt")
   expect_equivalent(validation$validation_set$column, "b")
   expect_equivalent(validation$validation_set$value, 5)
@@ -585,8 +585,8 @@ test_that("Creating a `col_vals_gte()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_gte")
   expect_equivalent(validation$validation_set$column, "b")
   expect_equivalent(validation$validation_set$value, 5)
@@ -632,8 +632,8 @@ test_that("Creating a `col_vals_lt()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_lt")
   expect_equivalent(validation$validation_set$column, "b")
   expect_equivalent(validation$validation_set$value, 5)
@@ -679,8 +679,8 @@ test_that("Creating a `col_vals_lte()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_lte")
   expect_equivalent(validation$validation_set$column, "b")
   expect_equivalent(validation$validation_set$value, 5)
@@ -726,8 +726,8 @@ test_that("Creating a `col_vals_in_set()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_in_set")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -774,8 +774,8 @@ test_that("Creating a `col_vals_not_in_set()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_in_set")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -822,8 +822,8 @@ test_that("Creating a `col_vals_regex()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_regex")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -869,8 +869,8 @@ test_that("Creating a `col_vals_null()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_null")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -916,8 +916,8 @@ test_that("Creating a `col_vals_not_null()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_null")
   expect_equivalent(validation$validation_set$column, "b")
   expect_true(is.na(validation$validation_set$value))
@@ -963,8 +963,8 @@ test_that("Creating a `rows_not_duplicated()` step is possible", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equivalent(validation$focal_tbl_name, "small_table")
-  expect_equivalent(validation$focal_col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
   expect_equivalent(validation$validation_set$assertion_type, "rows_not_duplicated")
   expect_true(is.na(validation$validation_set$column %>% .[[1]] %>% .[[1]]))
   expect_true(is.na(validation$validation_set$value))

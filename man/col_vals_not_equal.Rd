@@ -8,6 +8,7 @@ col_vals_not_equal(
   x,
   columns,
   value,
+  incl_na = FALSE,
   preconditions = NULL,
   brief = NULL,
   warn_count = NULL,
@@ -25,6 +26,9 @@ col_vals_not_equal(
 vector) to which this validation should be applied.}
 
 \item{value}{a numeric value used to test for non-equality.}
+
+\item{incl_na}{Should \code{NA} values be a part of the condition? This is by
+default \code{FALSE}.}
 
 \item{preconditions}{expressions used for mutating the input table before
 proceeding with the validation. This is ideally as a one-sided R formula

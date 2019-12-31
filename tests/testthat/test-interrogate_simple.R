@@ -3,9 +3,35 @@ context("Performing simple interrogations")
 tbl <- 
   readr::read_csv(
     system.file("extdata", "small_table.csv", package = "pointblank"),
-    col_types = "TDicddlc")
+    col_types = "TDicddlc") %>%
+  dplyr::mutate(g = as.factor(f))
 
 test_that("Interrogating simply returns the expected results", {
+  
+  # Use the `col_exists()` function to perform
+  # a simple validation step
+  tbl_result <- tbl %>% col_exists(columns = vars(g))
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- tbl %>% col_exists(columns = vars(h), warn_count = 1)
+  )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- tbl %>% col_exists(columns = vars(h), stop_count = 1)
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
   
   # Use the `col_is_character()` function to perform
   # a simple validation step
@@ -16,7 +42,57 @@ test_that("Interrogating simply returns the expected results", {
   
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- tbl %>% col_is_character(columns = a, warn_count = 1)
+    tbl_result <- tbl %>% col_is_character(columns = vars(a), warn_count = 1)
+  )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- tbl %>% col_is_character(columns = vars(a), stop_count = 1)
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
+  
+  # Use the `col_is_factor()` function to perform
+  # a simple validation step
+  tbl_result <- tbl %>% col_is_factor(columns = vars(g))
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- tbl %>% col_is_factor(columns = vars(a), warn_count = 1)
+  )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- tbl %>% col_is_factor(columns = vars(a), stop_count = 1)
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
+  
+  # Use the `col_is_character()` function to perform
+  # a simple validation step
+  tbl_result <- tbl %>% col_is_character(columns = vars(b))
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- tbl %>% col_is_character(columns = vars(a), warn_count = 1)
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -544,4 +620,232 @@ test_that("Interrogating simply returns the expected results", {
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
+})
+
+test_that("Interrogating simply incorporates the `incl_na` option", {
+  
+  # Use the `col_vals_equal()` function to perform
+  # simple validation steps with NAs, switching the
+  # value of the `incl_na` option
+  expect_warning(
+    regexp = NULL,
+    dplyr::tibble(a = c(1.5, 1.5, 1.5, NA)) %>%
+      col_vals_equal(
+        columns = vars(a),
+        value = 1.5,
+        incl_na = FALSE,
+        warn_count = 1
+      )
+  )
+  
+  expect_warning(
+    regexp = NA,
+    dplyr::tibble(a = c(1.5, 1.5, 1.5, NA)) %>%
+      col_vals_equal(
+        columns = vars(a),
+        value = 1.5,
+        incl_na = TRUE,
+        warn_count = 1
+      )
+  )
+  
+  # Use the `col_vals_not_equal()` function to perform
+  # simple validation steps with NAs, switching the
+  # value of the `incl_na` option
+  expect_warning(
+    regexp = NULL,
+    dplyr::tibble(a = c(1.5, 1.5, 1.5, NA)) %>%
+      col_vals_not_equal(
+        columns = vars(a),
+        value = 2.0,
+        incl_na = FALSE,
+        warn_count = 1
+      )
+  )
+  
+  expect_warning(
+    regexp = NA,
+    dplyr::tibble(a = c(1.5, 1.5, 1.5, NA)) %>%
+      col_vals_not_equal(
+        columns = vars(a),
+        value = 2.0,
+        incl_na = TRUE,
+        warn_count = 1
+      )
+  )
+  
+  # Use the `col_vals_gt()` function to perform
+  # simple validation steps with NAs, switching the
+  # value of the `incl_na` option
+  expect_warning(
+    regexp = NULL,
+    dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
+      col_vals_gt(
+        columns = vars(a),
+        value = 0.5,
+        incl_na = FALSE,
+        warn_count = 1
+      )
+  )
+  
+  expect_warning(
+    regexp = NA,
+    dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
+      col_vals_gt(
+        columns = vars(a),
+        value = 0.5,
+        incl_na = TRUE,
+        warn_count = 1
+      )
+  )
+  
+  # Use the `col_vals_gte()` function to perform
+  # simple validation steps with NAs, switching the
+  # value of the `incl_na` option
+  expect_warning(
+    regexp = NULL,
+    dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
+      col_vals_gte(
+        columns = vars(a),
+        value = 1.0,
+        incl_na = FALSE,
+        warn_count = 1
+      )
+  )
+  
+  expect_warning(
+    regexp = NA,
+    dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
+      col_vals_gte(
+        columns = vars(a),
+        value = 1.0,
+        incl_na = TRUE,
+        warn_count = 1
+      )
+  )
+  
+  # Use the `col_vals_lt()` function to perform
+  # simple validation steps with NAs, switching the
+  # value of the `incl_na` option
+  expect_warning(
+    regexp = NULL,
+    dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
+      col_vals_lt(
+        columns = vars(a),
+        value = 3.0,
+        incl_na = FALSE,
+        warn_count = 1
+      )
+  )
+  
+  expect_warning(
+    regexp = NA,
+    dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
+      col_vals_lt(
+        columns = vars(a),
+        value = 3.0,
+        incl_na = TRUE,
+        warn_count = 1
+      )
+  )
+  
+  # Use the `col_vals_lte()` function to perform
+  # simple validation steps with NAs, switching the
+  # value of the `incl_na` option
+  expect_warning(
+    regexp = NULL,
+    dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
+      col_vals_lte(
+        columns = vars(a),
+        value = 2.5,
+        incl_na = FALSE,
+        warn_count = 1
+      )
+  )
+  
+  expect_warning(
+    regexp = NA,
+    dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
+      col_vals_lte(
+        columns = vars(a),
+        value = 2.5,
+        incl_na = TRUE,
+        warn_count = 1
+      )
+  )
+  
+  # Use the `col_vals_between()` function to perform
+  # simple validation steps with NAs, switching the
+  # value of the `incl_na` option
+  expect_warning(
+    regexp = NULL,
+    dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
+      col_vals_between(
+        columns = vars(a),
+        left = 0, right = 3.0,
+        incl_na = FALSE,
+        warn_count = 1
+      )
+  )
+  
+  expect_warning(
+    regexp = NA,
+    dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
+      col_vals_between(
+        columns = vars(a),
+        left = 0, right = 3.0,
+        incl_na = TRUE,
+        warn_count = 1
+      )
+  )
+  
+  # Use the `col_vals_not_between()` function to perform
+  # simple validation steps with NAs, switching the
+  # value of the `incl_na` option
+  expect_warning(
+    regexp = NULL,
+    dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
+      col_vals_not_between(
+        columns = vars(a),
+        left = 3.0, right = 4.5,
+        incl_na = FALSE,
+        warn_count = 1
+      )
+  )
+  
+  expect_warning(
+    regexp = NA,
+    dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
+      col_vals_not_between(
+        columns = vars(a),
+        left = 3.0, right = 4.5,
+        incl_na = TRUE,
+        warn_count = 1
+      )
+  )
+  
+  # Use the `col_vals_regex()` function to perform
+  # simple validation steps with NAs, switching the
+  # value of the `incl_na` option
+  expect_warning(
+    regexp = NULL,
+    dplyr::tibble(a = c("1-bcd-345", "3-ldm-038", NA)) %>%
+      col_vals_regex(
+        columns = vars(a),
+        regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+        incl_na = FALSE,
+        warn_count = 1
+      )
+  )
+  
+  expect_warning(
+    regexp = NA,
+    dplyr::tibble(a = c("1-bcd-345", "3-ldm-038", NA)) %>%
+      col_vals_regex(
+        columns = vars(a),
+        regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+        incl_na = TRUE,
+        warn_count = 1
+      )
+  )
 })

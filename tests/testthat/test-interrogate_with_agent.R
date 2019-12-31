@@ -961,3 +961,54 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
     all_passed() %>%
     expect_true()
 })
+
+test_that("The validations with sets can include NA values", {
+  
+  # Use the `col_vals_in_set()` function to perform
+  # a validation step with NAs
+  dplyr::tibble(a = c("one", "two", "three", NA)) %>%
+    create_agent() %>%
+    col_vals_in_set(
+      columns = vars(a),
+      set = c("one", "two", "three", "four", "five"),
+      warn_count = 1
+    ) %>%
+    interrogate() %>%
+    all_passed() %>%
+    expect_false()
+  
+  dplyr::tibble(a = c("one", "two", "three", NA)) %>%
+    create_agent() %>%
+    col_vals_in_set(
+      columns = vars(a),
+      set = c("one", "two", "three", "four", "five", NA),
+      warn_count = 1
+    ) %>%
+    interrogate() %>%
+    all_passed() %>%
+    expect_true()
+  
+  # Use the `col_vals_not_in_set()` function to perform
+  # a validation step with NAs
+  dplyr::tibble(a = c("one", "two", "three", NA)) %>%
+    create_agent() %>%
+    col_vals_not_in_set(
+      columns = vars(a),
+      set = c("four", "five", "six", NA),
+      warn_count = 1
+    ) %>%
+    interrogate() %>%
+    all_passed() %>%
+    expect_false()
+  
+  dplyr::tibble(a = c("one", "two", "three", NA)) %>%
+    create_agent() %>%
+    col_vals_not_in_set(
+      columns = vars(a),
+      set = c("four", "five", "six"),
+      warn_count = 1
+    ) %>%
+    interrogate() %>%
+    all_passed() %>%
+    expect_true()
+})

@@ -18,8 +18,7 @@ test_that("Creating a valid `agent` object is possible", {
       names(agent) ==
         c("validation_name", "validation_time",
           "focal_tbl", "focal_tbl_name", "focal_tbl_src",
-          "focal_col_names", "focal_col_types",
-          "email", "slack", "validation_set")
+          "focal_col_names", "focal_col_types", "validation_set")
     )
   )
   
@@ -37,8 +36,6 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$focal_tbl_src, "character")
   expect_is(agent$focal_col_names, "character")
   expect_is(agent$focal_col_types, "character")
-  expect_is(agent$email, "list")
-  expect_is(agent$slack, "list")
   expect_is(agent$validation_set$assertion_type, "character")
   expect_is(agent$validation_set$column, "list")
   expect_is(agent$validation_set$value, "numeric")

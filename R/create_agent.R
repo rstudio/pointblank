@@ -84,24 +84,6 @@ create_agent <- function(tbl,
       focal_tbl_src = character(0),
       focal_col_names = column_names,
       focal_col_types = column_types,
-      email = 
-        list(
-          email_creds_file_path = character(0),
-          email_notification_recipients = character(0),
-          email_notifications_active = FALSE
-        ),
-      slack = 
-        list(
-          slack_webhook_url = character(0),
-          slack_channel = character(0),
-          slack_username = character(0),
-          slack_author_name = character(0),
-          slack_title = character(0),
-          slack_report_url = character(0),
-          slack_footer_thumb_url = character(0),
-          slack_footer_text = character(0),
-          slack_notifications_active = FALSE
-        ),
       validation_set =
         dplyr::tibble(
           assertion_type = character(0),

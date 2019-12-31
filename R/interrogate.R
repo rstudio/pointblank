@@ -124,16 +124,6 @@ interrogate <- function(agent,
     agent$validation_set$proc_duration_s[i] <- time_diff_s
   }
   
-  # Notification Step - email ---------------------------------------------
-  if (should_notify_through_email(agent = agent)) {
-    # TODO: perform notification via notification method
-  }
-  
-  # Notification Step - Slack ---------------------------------------------
-  if (should_notify_through_slack(agent = agent)) {
-    notify_via_slack(agent = agent)
-  }
-
   agent
 }
 
@@ -643,93 +633,4 @@ determine_action <- function(validation_step,
   
   # Generate a tibble with action information
   dplyr::tibble(warn = warn, notify = notify)
-}
-
-should_notify_through_email <- function(agent) {
-  
-  nrow(agent$validation_set) > 0 &&
-    agent$email$email_notifications_active == TRUE &&
-    length(agent$email$email_creds_file_path) > 0 &&
-    length(agent$email$email_notification_recipients) > 0 && 
-    any(agent$validation_set$notify == TRUE)
-}
-
-should_notify_through_slack <- function(agent) {
-  
-  nrow(agent$validation_set) > 0 &&
-    agent$slack$slack_notifications_active == TRUE &&
-    length(agent$slack$slack_webhook_url) > 0 &&
-    any(agent$validation_set$notify == TRUE)
-}
-
-notify_via_slack <- function(agent) {
-  
-  notify_count <- 
-    agent$validation_set %>%
-    dplyr::select(notify) %>%
-    dplyr::filter(notify == TRUE) %>%
-    nrow()
-  
-  warning_count <- 
-    agent$validation_set %>%
-    dplyr::select(warn) %>%
-    dplyr::filter(warn == TRUE) %>%
-    nrow()
-  
-  if (notify_count > 0) {
-    
-    notify_text <-
-      ifelse(
-        notify_count == 1,
-        glue::glue("There is {notify_count} validation step that resulted in significant failures."),
-        glue::glue("There are {notify_count} validation steps that resulted in significant failures."))
-  }
-  
-  if (warning_count > 0) {
-    
-    warning_text <-
-      ifelse(
-        warning_count == 1,
-        glue::glue("There is {warning_count} validation step that issued a warning."),
-        glue::glue("There are {warning_count} validation steps that issued warnings."))
-  }
-  
-  if (notify_count > 0 & warning_count > 0) {
-    notification_text <- paste0(
-      gsub("\\.", "", notify_text),
-      " and ",
-      gsub("There", "there", warning_text))
-  }
-  
-  if (notify_count > 1 & warning_count == 0) {
-    notification_text <- notify_text
-  }
-  
-  slack_footer_timestamp <- Sys.time() %>% as.integer()
-  
-  httr::POST(
-    url = agent$slack_webhook_url,
-    encode = "form",
-    httr::add_headers(
-      `Content-Type` = "application/x-www-form-urlencoded",
-      Accept = "*/*"),
-    body = utils::URLencode(
-      glue::glue(
-        "payload={{
-                   \"channel\": \"{agent$slack$slack_channel}\",
-                   \"username\": \"{agent$slack$slack_username}\",
-                   \"attachments\": [
-                   {{
-                   \"fallback\": \"{agent$slack$slack_title}\",
-                   \"color\": \"danger\",
-                   \"author_name\": \"{agent$slack$slack_author_name}\",
-                   \"title\": \"{agent$slack_title}\",
-                   \"title_link\": \"{agent$slack$slack_report_url}\",
-                   \"text\": \"{notification_text}\",
-                   \"thumb_url\": \"{agent$slack$slack_footer_thumb_url}\",
-                   \"footer\": \"{agent$slack$slack_footer_text}\",
-                   \"ts\": {slack_footer_timestamp}
-                   }}
-                   ]
-                   }}")))
 }

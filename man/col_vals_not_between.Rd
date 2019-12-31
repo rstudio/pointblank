@@ -10,7 +10,7 @@ col_vals_not_between(
   left,
   right,
   inclusive = c(TRUE, TRUE),
-  incl_na = TRUE,
+  incl_na = FALSE,
   preconditions = NULL,
   brief = NULL,
   warn_count = NULL,

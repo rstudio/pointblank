@@ -77,20 +77,20 @@ interrogate <- function(agent,
     tbl_checked <-
       switch(
         assertion_type,
-        "col_vals_between" =,
-        "col_vals_not_between" = interrogate_between(agent, idx = i, table, assertion_type),
-        "col_vals_in_set" =,
-        "col_vals_not_in_set" = interrogate_set(agent, idx = i, table, assertion_type),
-        "col_vals_regex" = interrogate_regex(agent, idx = i, table),
-        "col_vals_null" = interrogate_null(agent, idx = i, table),
-        "col_vals_not_null" = interrogate_not_null(agent, idx = i, table),
-        "col_exists" = interrogate_col_exists(agent, idx = i, table),
         "col_vals_gt" =,
         "col_vals_gte" =,
         "col_vals_lt" =,
         "col_vals_lte" =,
         "col_vals_equal" =,
         "col_vals_not_equal" = interrogate_comparison(agent, idx = i, table, assertion_type),
+        "col_vals_between" =,
+        "col_vals_not_between" = interrogate_between(agent, idx = i, table, assertion_type),
+        "col_vals_in_set" =,
+        "col_vals_not_in_set" = interrogate_set(agent, idx = i, table, assertion_type),
+        "col_vals_null" = interrogate_null(agent, idx = i, table),
+        "col_vals_not_null" = interrogate_not_null(agent, idx = i, table),
+        "col_vals_regex" = interrogate_regex(agent, idx = i, table),
+        "col_exists" = interrogate_col_exists(agent, idx = i, table),
         "col_is_numeric" =,
         "col_is_integer" =,
         "col_is_character" =,
@@ -135,6 +135,47 @@ interrogate <- function(agent,
   }
 
   agent
+}
+
+interrogate_comparison <- function(agent, idx, table, assertion_type) {
+  
+  # Get the value for the expression
+  value <- get_column_value_at_idx(agent = agent, idx = idx)
+  
+  # Obtain the target column as a symbol
+  column <- 
+    get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
+    rlang::as_label()
+  
+  # Determine whether NAs should be allowed
+  incl_na <- get_column_incl_na_at_idx(agent = agent, idx = idx)
+  
+  # Get operator values for all assertion types involving
+  # simple operator comparisons
+  operator <- 
+    switch(
+      assertion_type,
+      "col_vals_gt" = ">",
+      "col_vals_gte" = ">=",
+      "col_vals_lt" = "<",
+      "col_vals_lte" = "<=",
+      "col_vals_equal" = "==",
+      "col_vals_not_equal" = "!="
+    )
+  
+  # Construct a string-based expression for the validation
+  expression <- paste(column, operator, value)
+  
+  # Perform rowwise validations for the column
+  tbl_checked <-
+    table %>%
+    dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(expression)) %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      is.na(pb_is_good_) ~ incl_na,
+      TRUE ~ pb_is_good_
+    ))
+  
+  tbl_checked
 }
 
 interrogate_between <- function(agent, idx, table, assertion_type) {
@@ -214,22 +255,6 @@ interrogate_set <- function(agent, idx, table, assertion_type) {
   tbl_checked
 }
 
-interrogate_regex <- function(agent, idx, table) {
-  
-  # Get the regex matching statement
-  regex <- agent$validation_set$regex[idx]
-  
-  # Obtain the target column as a symbol
-  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
-  
-  # Perform rowwise validations for the column
-  tbl_checked <- 
-    table %>% 
-    dplyr::mutate(pb_is_good_ = grepl(regex, {{ column }}))
-  
-  tbl_checked
-}
-
 interrogate_null <- function(agent, idx, table) {
   
   # Obtain the target column as a symbol
@@ -256,6 +281,29 @@ interrogate_not_null <- function(agent, idx, table) {
   tbl_checked
 }
 
+interrogate_regex <- function(agent, idx, table) {
+  
+  # Get the regex matching statement
+  regex <- agent$validation_set$regex[idx]
+  
+  # Obtain the target column as a symbol
+  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
+  
+  # Determine whether NAs should be allowed
+  incl_na <- get_column_incl_na_at_idx(agent = agent, idx = idx)
+  
+  # Perform rowwise validations for the column
+  tbl_checked <- 
+    table %>% 
+    dplyr::mutate(pb_is_good_ = ifelse(!is.na({{ column }}), grepl(regex, {{ column }}), NA)) %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      is.na(pb_is_good_) ~ incl_na,
+      TRUE ~ pb_is_good_
+    ))
+  
+  tbl_checked
+}
+
 interrogate_col_exists <- function(agent, idx, table) {
   
   # Get the column names for the table
@@ -267,40 +315,6 @@ interrogate_col_exists <- function(agent, idx, table) {
   # Perform rowwise validations for the column
   tbl_checked <-
     dplyr::tibble(pb_is_good_ = as.character(column) %in% column_names)
-  
-  tbl_checked
-}
-
-interrogate_comparison <- function(agent, idx, table, assertion_type) {
-  
-  # Get the value for the expression
-  value <- get_column_value_at_idx(agent = agent, idx = idx)
-  
-  # Obtain the target column as a symbol
-  column <- 
-    get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
-    rlang::as_label()
-  
-  # Get operator values for all assertion types involving
-  # simple operator comparisons
-  operator <- 
-    switch(
-      assertion_type,
-      "col_vals_gt" = ">",
-      "col_vals_gte" = ">=",
-      "col_vals_lt" = "<",
-      "col_vals_lte" = "<=",
-      "col_vals_equal" = "==",
-      "col_vals_not_equal" = "!="
-    )
-  
-  # Construct a string-based expression for the validation
-  expression <- paste(column, operator, value)
-  
-  # Perform rowwise validations for the column
-  tbl_checked <-
-    table %>%
-    dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(expression))
   
   tbl_checked
 }

@@ -8,6 +8,7 @@ col_vals_gte(
   x,
   columns,
   value,
+  incl_na = FALSE,
   preconditions = NULL,
   brief = NULL,
   warn_count = NULL,
@@ -25,6 +26,9 @@ col_vals_gte(
 vector) to which this validation should be applied.}
 
 \item{value}{A numeric value used for this test. Any column values \verb{>= value} are considered passing.}
+
+\item{incl_na}{Should \code{NA} values be a part of the condition? This is by
+default \code{FALSE}.}
 
 \item{preconditions}{expressions used for mutating the input table before
 proceeding with the validation. This is ideally as a one-sided R formula

@@ -466,6 +466,7 @@ evaluate_single <- function(x,
                             stop_fraction,
                             notify_fraction) {
 
+  column <- column[1]
   x_ret <- x
   tbl <- x
 
@@ -483,116 +484,83 @@ evaluate_single <- function(x,
   
   if (type == "col_vals_equal") {
     
-    logicals <- 
-      tbl %>%
-      dplyr::pull(col_number) == value
+    logicals <- (tbl %>% dplyr::pull(col_number)) == value
+    logicals[is.na(logicals)] <- incl_na
   }
   
   if (type == "col_vals_not_equal") {
     
-    logicals <- 
-      tbl %>%
-      dplyr::pull(col_number) != value
+    logicals <- (tbl %>% dplyr::pull(col_number)) != value
+    logicals[is.na(logicals)] <- incl_na
   }
   
   if (type == "col_vals_gt") {
     
-    logicals <- 
-      tbl %>%
-      dplyr::pull(col_number) > value
+    logicals <- (tbl %>% dplyr::pull(col_number)) > value
+    logicals[is.na(logicals)] <- incl_na
   }
   
   if (type == "col_vals_gte") {
     
-    logicals <- 
-      tbl %>%
-      dplyr::pull(col_number) >= value
+    logicals <- (tbl %>% dplyr::pull(col_number)) >= value
+    logicals[is.na(logicals)] <- incl_na
   }
   
   if (type == "col_vals_lt") {
     
-    logicals <- 
-      tbl %>%
-      dplyr::pull(col_number) < value
+    logicals <- (tbl %>% dplyr::pull(col_number)) < value
+    logicals[is.na(logicals)] <- incl_na
   }
   
   if (type == "col_vals_lte") {
     
-    logicals <- 
-      tbl %>%
-      dplyr::pull(col_number) <= value
+    logicals <- (tbl %>% dplyr::pull(col_number)) <= value
+    logicals[is.na(logicals)] <- incl_na
   }
   
   if (type == "col_vals_between") {
     
-    vals <- 
-      tbl %>%
-      dplyr::pull(col_number)
+    vals <- tbl %>% dplyr::pull(col_number)
     
-    logicals <- 
-      vals >= left &
-      vals <= right
-    
-    if (incl_na == TRUE) {
-      logicals[which(is.na(logicals))] <- TRUE
-    } else if (incl_na == FALSE) {
-      logicals[which(is.na(logicals))] <- FALSE
-    }
+    logicals <- vals >= left & vals <= right
+    logicals[is.na(logicals)] <- incl_na
   }
   
   if (type == "col_vals_not_between") {
+
+    vals <- tbl %>% dplyr::pull(col_number)
     
-    vals <- 
-      tbl %>%
-      dplyr::pull(col_number)
-    
-    logicals <- 
-      vals < left |
-      vals > right
-    
-    if (incl_na == TRUE) {
-      logicals[which(is.na(logicals))] <- TRUE
-    } else if (incl_na == FALSE) {
-      logicals[which(is.na(logicals))] <- FALSE
-    }
+    logicals <- vals < left | vals > right
+    logicals[is.na(logicals)] <- incl_na
   }
   
   if (type == "col_vals_in_set") {
-    
-    logicals <- 
-      tbl %>%
-      dplyr::pull(col_number) %in% set
+
+    logicals <- (tbl %>% dplyr::pull(col_number)) %in% set
   }
   
   if (type == "col_vals_not_in_set") {
     
-    logicals <- 
-      !(tbl %>%
-          dplyr::pull(col_number) %in% set)
+    logicals <- !(tbl %>% dplyr::pull(col_number) %in% set)
   }
   
   if (type == "col_vals_regex") {
+
+    vals <- tbl %>% dplyr::pull(col_number)
+    na_vals <- is.na(vals)
     
-    vals <- 
-      tbl %>%
-      dplyr::pull(col_number)
-    
-    logicals <- 
-      grepl(pattern = regex, x = vals)
+    logicals <- grepl(pattern = regex, x = vals)
+    logicals[na_vals] <- incl_na
   }
   
   if (type == "col_vals_not_null") {
     
-    logicals <- 
-      !is.na(tbl %>%
-               dplyr::pull(col_number))
+    logicals <- !is.na(tbl %>% dplyr::pull(col_number))
   }
   
   if (type == "col_vals_null") {
     
-    logicals <- 
-      is.na(tbl %>%
-              dplyr::pull(col_number))
+    logicals <- is.na(tbl %>% dplyr::pull(col_number))
   }
   
   if (grepl("col_is_.*", type)) {
@@ -600,8 +568,8 @@ evaluate_single <- function(x,
     # Get the column type
     column_type <-
       (tbl %>%
-         dplyr::select(column) %>%
-         utils::head(1) %>%
+         dplyr::select({{ column }}) %>%
+         dplyr::filter(dplyr::row_number() == 1L) %>%
          dplyr::collect() %>%
          as.data.frame(stringsAsFactors = FALSE)
       )[1, 1] %>% 
@@ -630,7 +598,7 @@ evaluate_single <- function(x,
     
     column_names <-
       tbl %>%
-      utils::head(1) %>%
+      dplyr::filter(dplyr::row_number() == 1L) %>%
       dplyr::as_tibble() %>%
       colnames()
     

@@ -12,8 +12,12 @@ get_row_extracts(agent, i = NULL)
 out and any sample rows from non-passing validations could potentially be
 available in the object.}
 
-\item{i}{The validation step index, which is assigned to each validation
+\item{i}{The validation step number, which is assigned to each validation
 step in the order of definition.}
+}
+\value{
+A list of tibbles if \code{i} is not provided, or, a tibble if \code{i} is
+given.
 }
 \description{
 Get row data that didn't pass a validation step. The amount of row data
@@ -47,18 +51,10 @@ agent <-
     extract_failed = TRUE,
     get_first_n = 10
   )
-  
-# Find out which validation steps
-# contain sample row data
-get_interrogation_summary(agent)
 
 # Get row sample data for those rows
 # in `df` that did not pass the first
-# validation step (`col_vals_between`);
-# the leading column `pb_step_` is
-# applied to provide context on the
-# validation step for which these rows
-# failed to pass 
+# validation step (`col_vals_between`)
 agent \%>\% get_row_extracts(step = 1)
 }
 

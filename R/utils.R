@@ -124,13 +124,9 @@ is_agent_empty <- function(agent) {
 #' Did the agent carry out an interrogation?
 #' 
 #' @noRd
-did_agent_interrogate <- function(agent) {
+has_agent_intel <- function(agent) {
   
-  if (is_ptblank_agent(agent)) {
-    return(ifelse(length(agent$time) > 0, TRUE, FALSE))
-  } else {
-    return(NA)
-  }
+  inherits(agent, "has_intel")
 }
 
 #' When did the agent carry out an interrogation?
@@ -138,12 +134,8 @@ did_agent_interrogate <- function(agent) {
 #' @noRd
 interrogation_time <- function(agent) {
   
-  if (is_ptblank_agent(agent)) {
-    if (did_agent_interrogate(agent)) {
-      return(agent$time)
-    } else {
-      return(NA)
-    }
+  if (has_agent_intel(agent)) {
+    return(agent$time)
   } else {
     return(NA)
   }

@@ -8,11 +8,7 @@
 #' @return A tibble.
 #'   
 #' @export
-get_interrogation_summary <- function(agent) {
-  
-  if (!did_agent_interrogate(agent)) {
-    stop("An interrogation hasn't yet occurred.", call. = FALSE)
-  }
+get_agent_report <- function(agent) {
   
   validation_set <- agent$validation_set
   
@@ -47,14 +43,20 @@ get_interrogation_summary <- function(agent) {
       } 
     )
   
-  has_preconditions <-
+  has_preconds <-
     validation_set$preconditions %>%
     vapply(
       FUN.VALUE = logical(1),
       USE.NAMES = FALSE,
       FUN = function(x) if (is.null(x)) FALSE else TRUE
     )
-  
+
+  if (!has_agent_intel(agent)) {
+    has_extract <- rep(NA, nrow(validation_set))
+  } else {
+    has_extract <- as.character(validation_set[["i"]]) %in% names(agent$extracts)
+  }
+
   state <-
     validation_set %>%
     dplyr::select(warn, notify) %>%
@@ -66,17 +68,17 @@ get_interrogation_summary <- function(agent) {
     )) %>%
     dplyr::pull(state)
   
-  
   dplyr::tibble(
     type = validation_set$assertion_type,
     columns = columns,
     value = validation_set$value,
     set = set,
     regex = validation_set$regex,
-    precond = has_preconditions,
+    preconds = has_preconds,
     units = validation_set$n,
     n_pass = validation_set$n_passed,
     f_pass = validation_set$f_passed,
-    state = state
+    state = state,
+    extract = has_extract
   )
 }

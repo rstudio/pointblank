@@ -9,9 +9,12 @@
 #'   [interrogate()] called on it, such that the validation steps were carried
 #'   out and any sample rows from non-passing validations could potentially be
 #'   available in the object.
-#' @param i The validation step index, which is assigned to each validation
+#' @param i The validation step number, which is assigned to each validation
 #'   step in the order of definition.
-#'   
+#' 
+#' @return A list of tibbles if `i` is not provided, or, a tibble if `i` is
+#'   given.
+#' 
 #' @examples
 #' \dontrun{
 #' # Set a seed
@@ -38,18 +41,10 @@
 #'     extract_failed = TRUE,
 #'     get_first_n = 10
 #'   )
-#'   
-#' # Find out which validation steps
-#' # contain sample row data
-#' get_interrogation_summary(agent)
 #' 
 #' # Get row sample data for those rows
 #' # in `df` that did not pass the first
-#' # validation step (`col_vals_between`);
-#' # the leading column `pb_step_` is
-#' # applied to provide context on the
-#' # validation step for which these rows
-#' # failed to pass 
+#' # validation step (`col_vals_between`)
 #' agent %>% get_row_extracts(step = 1)
 #' }
 #' 

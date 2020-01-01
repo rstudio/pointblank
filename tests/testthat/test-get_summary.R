@@ -15,13 +15,13 @@ test_that("Getting a validation summary is possible", {
     interrogate()
   
   # Get a summary of the interrogation
-  summary <- get_interrogation_summary(agent)
+  summary <- get_agent_report(agent)
   
   # Expect that the summary has specific column names
   expect_equivalent(
     colnames(summary),
-    c("type", "columns", "value", "set", "regex",
-      "precond", "units", "n_pass", "f_pass", "state")
+    c("type", "columns", "value", "set", "regex", "preconds",
+      "units", "n_pass", "f_pass", "state", "extract")
   )
   
   # Expect a single row in this summary
@@ -33,16 +33,10 @@ test_that("Getting a validation summary is possible", {
   expect_is(summary$value, "numeric")
   expect_is(summary$set, "character")
   expect_is(summary$regex, "character")
-  expect_is(summary$precond, "logical")
+  expect_is(summary$preconds, "logical")
   expect_is(summary$units, "integer")
   expect_is(summary$n_pass, "integer")
   expect_is(summary$f_pass, "numeric")
   expect_is(summary$state, "character")
-
-  # Expect an error if getting a summary without an interrogation
-  expect_error(
-    create_agent(tbl = small_table) %>%
-      col_is_character(columns = "b") %>%
-      get_interrogation_summary()
-  )
+  expect_is(summary$extract, "logical")
 })

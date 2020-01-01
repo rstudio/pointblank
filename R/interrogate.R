@@ -128,6 +128,8 @@ interrogate <- function(agent,
     agent$validation_set$proc_duration_s[i] <- time_diff_s
   }
   
+  class(agent) <- c("has_intel", "ptblank_agent")
+  
   agent
 }
 

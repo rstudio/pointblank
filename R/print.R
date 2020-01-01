@@ -27,7 +27,7 @@ print.ptblank_agent <- function(x, ...) {
         "number of validation steps: ", number_of_validation_steps(x), "\n"
       )
     
-    if (did_agent_interrogate(x)) {
+    if (has_agent_intel(x)) {
       
       passing_steps <-
         length(which(x$validation_set$all_passed == TRUE))

@@ -15,7 +15,7 @@ val <-
 
 
 val_summary <-
-  val %>% get_interrogation_summary()
+  val %>% get_agent_report()
 
 
 val %>% get_row_extracts(1)

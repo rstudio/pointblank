@@ -2,7 +2,7 @@
 % Please edit documentation in R/interrogate.R
 \name{interrogate}
 \alias{interrogate}
-\title{Given an agent that is fully loaded with tasks, perform an interrogation}
+\title{Given an agent that has a validation plan, perform an interrogation}
 \usage{
 interrogate(
   agent,
@@ -44,8 +44,8 @@ when sampling non-passing rows using the \code{sample_frac} option.}
 A \code{ptblank_agent} object.
 }
 \description{
-The agent has all the information on what to do, so now all interrogations
-can proceed efficiently, and, according to plan.
+The agent has all the information on what to do, so now the interrogation
+process can occur according its plan.
 }
 \examples{
 # Create a simple data frame with

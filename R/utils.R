@@ -344,7 +344,7 @@ create_autobrief <- function(agent,
       paste0("Expect that column `", column, "` is `", col_type, "`-based")
   }
   
-  if (assertion_type == "rows_not_duplicated") {
+  if (assertion_type == "rows_distinct") {
     
     is_column_computed <- ifelse(column %in% agent$col_names, FALSE, TRUE)
     

@@ -1,9 +1,10 @@
-#' Get non-passing sample rows from a validation step
+#' Collect data extracts from a validation step
 #'
-#' Get row data that didn't pass a validation step. The amount of row data
-#' available depends on both the fraction of rows that didn't pass a validation
-#' step and the level of sampling or explicit collection from that set of rows
-#' (this is defined within the [interrogate()] call).
+#' Get data that didn't pass a validation step. The amount of data available in
+#' a particular extract depends on both the fraction of validation units that
+#' didn't pass a validation step and the level of sampling or explicit
+#' collection from that set of units (this is defined within the [interrogate()]
+#' call).
 #'
 #' @param agent An agent object of class `ptblank_agent`. It should have had
 #'   [interrogate()] called on it, such that the validation steps were carried
@@ -45,12 +46,12 @@
 #' # Get row sample data for those rows
 #' # in `df` that did not pass the first
 #' # validation step (`col_vals_between`)
-#' agent %>% get_row_extracts(step = 1)
+#' agent %>% get_data_extracts(step = 1)
 #' }
 #' 
 #' @export
-get_row_extracts <- function(agent,
-                             i = NULL) {
+get_data_extracts <- function(agent,
+                              i = NULL) {
 
   # Stop function if the agent hasn't
   # yet performed an interrogation

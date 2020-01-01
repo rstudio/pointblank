@@ -1,6 +1,7 @@
-#' Verify that row data are not duplicated
+#' Verify that row data are distinct
 #'
-#' Verification step where row data should contain no duplicates.
+#' Verification step where the combination of row data across selected columns
+#' should be distinct, or, contain no duplicates.
 #'
 #' @inheritParams col_vals_gt
 #' @param x An agent object of class `ptblank_agent`.
@@ -23,7 +24,7 @@
 #' # rows are distinct)
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   rows_not_duplicated(columns = vars(a, b)) %>%
+#'   rows_distinct(columns = vars(a, b)) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column
@@ -33,16 +34,16 @@
 #' 
 #' @import rlang
 #' @export
-rows_not_duplicated <- function(x,
-                                columns = NULL,
-                                preconditions = NULL,
-                                brief = NULL,
-                                warn_count = NULL,
-                                stop_count = NULL,
-                                notify_count = NULL,
-                                warn_fraction = NULL,
-                                stop_fraction = NULL,
-                                notify_fraction = NULL) {
+rows_distinct <- function(x,
+                          columns = NULL,
+                          preconditions = NULL,
+                          brief = NULL,
+                          warn_count = NULL,
+                          stop_count = NULL,
+                          notify_count = NULL,
+                          warn_fraction = NULL,
+                          stop_fraction = NULL,
+                          notify_fraction = NULL) {
 
   agent <- x
   
@@ -66,7 +67,7 @@ rows_not_duplicated <- function(x,
     brief <-
       create_autobrief(
         agent = agent,
-        assertion_type = "rows_not_duplicated",
+        assertion_type = "rows_distinct",
         column = columns
       )
   }
@@ -75,7 +76,7 @@ rows_not_duplicated <- function(x,
   agent <-
     create_validation_step(
       agent = agent,
-      assertion_type = "rows_not_duplicated",
+      assertion_type = "rows_distinct",
       column = list(ifelse(is.null(columns), as.character(NA), columns)),
       value = NULL,
       preconditions = preconditions,
@@ -90,3 +91,41 @@ rows_not_duplicated <- function(x,
 
   agent
 }
+
+#' Verify that row data are not duplicated (deprecated)
+#'
+#' @inheritParams col_vals_gt
+#' @param x An agent object of class `ptblank_agent`.
+#'   
+#' @return A `ptblank_agent` object.
+#'
+#' @export
+rows_not_duplicated <- function(x,
+                                columns = NULL,
+                                preconditions = NULL,
+                                brief = NULL,
+                                warn_count = NULL,
+                                stop_count = NULL,
+                                notify_count = NULL,
+                                warn_fraction = NULL,
+                                stop_fraction = NULL,
+                                notify_fraction = NULL) {
+  
+  warning("The `rows_not_duplicated()` function is deprecated and will soon be removed\n",
+          " * Use the `rows_distinct()` function instead",
+          call. = FALSE)
+  
+  rows_distinct(
+    x = x,
+    columns = {{ columns }},
+    preconditions = preconditions,
+    brief = brief,
+    warn_count = warn_count,
+    stop_count = stop_count,
+    notify_count = notify_count,
+    warn_fraction = warn_fraction,
+    stop_fraction = stop_fraction,
+    notify_fraction = notify_fraction
+  )
+}
+

@@ -417,16 +417,16 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 0.90909)
   expect_equivalent(validation$validation_set$f_failed, 0.09091)
   
-  # Use the `rows_not_duplicated()` function to create
+  # Use the `rows_distinct()` function to create
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    rows_not_duplicated() %>%
+    rows_distinct() %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
   expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "rows_not_duplicated")
+  expect_equivalent(validation$validation_set$assertion_type, "rows_distinct")
   expect_true(is.na(validation$validation_set$column %>% unlist()))
   expect_true(is.na(validation$validation_set$value))
   expect_true(is.na(validation$validation_set$regex))
@@ -447,14 +447,14 @@ test_that("Interrogating for valid row values", {
   # `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    rows_not_duplicated(
+    rows_distinct(
       preconditions = ~ tbl %>% dplyr::filter(date != "2016-01-20")
     ) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
   expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "rows_not_duplicated")
+  expect_equivalent(validation$validation_set$assertion_type, "rows_distinct")
   expect_true(is.na(validation$validation_set$column %>% unlist()))
   expect_true(is.na(validation$validation_set$value))
   expect_true(is.na(validation$validation_set$regex))
@@ -470,12 +470,12 @@ test_that("Interrogating for valid row values", {
   # `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
-    rows_not_duplicated(columns = vars(date_time, a)) %>%
+    rows_distinct(columns = vars(date_time, a)) %>%
     interrogate()
   
   # Expect certain values in `validation$validation_set`
   expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "rows_not_duplicated")
+  expect_equivalent(validation$validation_set$assertion_type, "rows_distinct")
   expect_equivalent(validation$validation_set$column %>% unlist(), "date_time, a")
   expect_true(is.na(validation$validation_set$value))
   expect_true(is.na(validation$validation_set$regex))

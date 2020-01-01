@@ -1,7 +1,7 @@
-#' Given an agent that is fully loaded with tasks, perform an interrogation
+#' Given an agent that has a validation plan, perform an interrogation
 #'
-#' The agent has all the information on what to do, so now all interrogations
-#' can proceed efficiently, and, according to plan.
+#' The agent has all the information on what to do, so now the interrogation
+#' process can occur according its plan.
 #'
 #' @param agent An agent object of class `ptblank_agent`.
 #' @param extract_failed An option to collect rows that didn't pass a particular
@@ -99,7 +99,7 @@ interrogate <- function(agent,
         "col_is_posix" =,
         "col_is_date" =,
         "col_is_factor" = interrogate_col_type(agent, idx = i, table, assertion_type),
-        "rows_not_duplicated" = interrogate_duplicated(agent, idx = i, table)
+        "rows_distinct" = interrogate_distinct(agent, idx = i, table)
       )
     
     # Add in the necessary reporting data for the validation
@@ -348,7 +348,7 @@ interrogate_col_type <- function(agent, idx, table, assertion_type) {
   tbl_checked
 }
 
-interrogate_duplicated <- function(agent, idx, table) {
+interrogate_distinct <- function(agent, idx, table) {
 
   # Determine if grouping columns are provided in the test
   # for distinct rows and parse the column names

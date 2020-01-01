@@ -1,1 +1,64 @@
 destination: docs
+
+home:
+  strip_header: true
+
+reference:
+  - title: Create an Agent
+    desc: >
+      It all starts with a plan (and an *agent* to carry out that plan). The
+      `create_agent()` function should be used before anything else. The agent
+      here is told which table is the target. After this, we devise a stepwise
+      validation plan with validation step functions.
+    contents:
+    - create_agent
+
+  - title: Validation Step Functions
+    desc: >
+      Validation steps are either used with an **agent** object or, more simply,
+      just with the table of interest. When used with an *agent*, each step
+      function called works to build up a validation plan (which is executed
+      with the `interrogate()` function). If used directly on data, then the
+      data is checked and passed through. However, if we (1) set `warn_*` and/or
+      `stop_*` thresholds and (2) the level of failed validation units exceeds
+      those, then we'll get either a warning or a stop.
+    contents:
+    - col_vals_lt
+    - col_vals_lte
+    - col_vals_equal
+    - col_vals_not_equal
+    - col_vals_gte
+    - col_vals_gt
+    - col_vals_between
+    - col_vals_not_between
+    - col_vals_in_set
+    - col_vals_not_in_set
+    - col_vals_null
+    - col_vals_not_null
+    - col_vals_regex
+    - rows_distinct
+    - col_is_character
+    - col_is_numeric
+    - col_is_integer
+    - col_is_logical
+    - col_is_posix
+    - col_is_factor
+    - col_is_date
+    - col_exists
+    
+  - title: Interrogate and Get Info
+    desc: >
+      If we have an **agent** object that has a plan (i.e., validation steps),
+      the `interrogate()` function instructs the *agent* to interrogate the
+      `tbl` data. Once that is carried out, we can determine whether all
+      validation steps have passed with flying colors (`all_passed()`), get a
+      simple, table-based report of the interrogation (`get_agent_report()), or,
+      examine the data units that didn't pass a particular validation step
+      (`get_data_extracts()`).
+    contents:
+    - interrogate
+    - all_passed
+    - get_agent_report
+    - get_data_extracts
+
+  

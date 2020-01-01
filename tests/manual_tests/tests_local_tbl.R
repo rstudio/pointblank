@@ -8,11 +8,14 @@ small_table <-
 
 val <-
   create_agent(tbl = small_table) %>%
-  col_vals_gt(vars(d), 100) %>%
   rows_not_duplicated(vars(d, e)) %>%
+  rows_not_duplicated(vars(a, f)) %>%
+  col_vals_gt(vars(d), 100) %>%
   interrogate()
 
 
 val_summary <-
   val %>% get_interrogation_summary()
 
+
+val %>% get_row_extracts(1)

@@ -17,9 +17,13 @@ create_validation_step <- function(agent,
                                    stop_fraction = NULL,
                                    notify_fraction = NULL) {
   
+  # Get the next step number (i)
+  i <- nrow(agent$validation_set) + 1L
+  
   # Create a validation step as a single-row `tbl_df` object
   validation_step_df <-
     dplyr::tibble(
+      i = i,
       assertion_type = assertion_type,
       column = list(column),
       value = ifelse(is.null(value), NA_real_, as.numeric(value)),

@@ -6,7 +6,7 @@
 \usage{
 interrogate(
   agent,
-  get_problem_rows = TRUE,
+  extract_failed = TRUE,
   get_first_n = NULL,
   sample_n = NULL,
   sample_frac = NULL,
@@ -16,7 +16,7 @@ interrogate(
 \arguments{
 \item{agent}{An agent object of class \code{ptblank_agent}.}
 
-\item{get_problem_rows}{An option to collect rows that didn't pass a
+\item{extract_failed}{An option to collect rows that didn't pass a
 particular validation step. The default is \code{TRUE} and further options allow
 for fine control of how these rows are collected.}
 

@@ -9,11 +9,8 @@
 #'   [interrogate()] called on it, such that the validation steps were carried
 #'   out and any sample rows from non-passing validations could potentially be
 #'   available in the object.
-#' @param step The validation step number, which is assigned to each validation
-#'   step in the order of definition. To determine which validation steps
-#'   produced sample row data, one can use the [get_row_sample_info()] function.
-#'   The data frame output provides the step number and the number of rows in
-#'   the sample.
+#' @param i The validation step index, which is assigned to each validation
+#'   step in the order of definition.
 #'   
 #' @examples
 #' \dontrun{
@@ -38,13 +35,13 @@
 #'   ) %>%
 #'   col_vals_lte(columns = vars(a), value = 10) %>%
 #'   interrogate(
-#'     get_problem_rows = TRUE,
+#'     extract_failed = TRUE,
 #'     get_first_n = 10
 #'   )
 #'   
 #' # Find out which validation steps
 #' # contain sample row data
-#' get_row_sample_info(agent)
+#' get_interrogation_summary(agent)
 #' 
 #' # Get row sample data for those rows
 #' # in `df` that did not pass the first
@@ -53,13 +50,13 @@
 #' # applied to provide context on the
 #' # validation step for which these rows
 #' # failed to pass 
-#' agent %>% get_row_sample_data(step = 1)
+#' agent %>% get_row_extracts(step = 1)
 #' }
 #' 
 #' @export
-get_row_sample_data <- function(agent,
-                                step) {
-  
+get_row_extracts <- function(agent,
+                             i = NULL) {
+
   # Stop function if the agent hasn't
   # yet performed an interrogation
   if (agent$time %>% length() == 0) {
@@ -69,21 +66,24 @@ get_row_sample_data <- function(agent,
   # Get the number of validation steps
   validation_steps <- nrow(agent$validation_set)
   
-  # Stop function if the step number
-  # does not exist in `agent`
-  if (!(step %in% 1:validation_steps)) {
-    stop("The provided step number does not exist in this `agent` object.")
+  if (is.null(i)) {
+    return(agent$extracts)
   }
   
-  # Extract a tibble of non-passing table
-  # rows associated with the step number provided
-  if (!is.null(agent$row_samples) && step %in% agent$row_samples$pb_step_) {
-    
-    return(
-      agent$row_samples %>%
-        dplyr::filter(pb_step_ == step)
-      )
-  } else {
-    return(NA)
+  # Stop function if the `i`th step does not exist in `agent`
+  if (!(i %in% seq_len(validation_steps))) {
+    stop("The provided step number does not exist.", call. = FALSE)
   }
+  
+  # Get the names of the extracts
+  extract_names <- names(agent$extracts)
+  
+  # Stop function if the `i`th step does not have an extract available
+  if (!(as.character(i) %in% extract_names)) {
+    stop("The provided step number does not have an associated extract.",
+         call. = FALSE)
+  }
+  
+  # Get the data extract
+  agent$extracts[[as.character(i)]]
 }

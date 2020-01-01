@@ -4,7 +4,7 @@
 #' can proceed efficiently, and, according to plan.
 #'
 #' @param agent An agent object of class `ptblank_agent`.
-#' @param get_problem_rows An option to collect rows that didn't pass a
+#' @param extract_failed An option to collect rows that didn't pass a
 #'   particular validation step. The default is `TRUE` and further options allow
 #'   for fine control of how these rows are collected.
 #' @param get_first_n If the option to collect non-passing rows is chosen, there
@@ -50,7 +50,7 @@
 #' 
 #' @export
 interrogate <- function(agent,
-                        get_problem_rows = TRUE,
+                        extract_failed = TRUE,
                         get_first_n = NULL,
                         sample_n = NULL,
                         sample_frac = NULL,
@@ -102,11 +102,15 @@ interrogate <- function(agent,
       )
     
     # Add in the necessary reporting data for the validation
+    agent <-  add_reporting_data(agent, idx = i, tbl_checked = tbl_checked)
+
+    # Add extracts of failed rows if `extract_failed` is TRUE
     agent <- 
-      add_reporting_data(
-        agent, idx = i,
+      add_table_extract(
+        agent = agent,
+        idx = i,
         tbl_checked = tbl_checked,
-        get_problem_rows = get_problem_rows,
+        extract_failed = extract_failed,
         get_first_n = get_first_n,
         sample_n = sample_n,
         sample_frac = sample_frac,
@@ -407,12 +411,7 @@ interrogate_duplicated <- function(agent, idx, table) {
 
 add_reporting_data <- function(agent,
                                idx,
-                               tbl_checked,
-                               get_problem_rows,
-                               get_first_n,
-                               sample_n,
-                               sample_frac,
-                               sample_limit) {
+                               tbl_checked) {
 
   # Get total count of rows
   row_count <-
@@ -447,67 +446,8 @@ add_reporting_data <- function(agent,
   agent$validation_set$f_failed[idx] <- round((n_failed / row_count), 5)
   
   if (n_failed > 0) {
-    
-    # State that `all_passed` is FALSE
     agent$validation_set$all_passed[idx] <- FALSE
-    
-    # Collect problem rows if requested
-    if (isTRUE(get_problem_rows)) {
-
-      tbl_type <- tbl_checked %>% class()
-      
-      problem_rows <- 
-        tbl_checked %>%
-        dplyr::filter(pb_is_good_ == FALSE) %>%
-        dplyr::select(-pb_is_good_)
-      
-      if (!is.null(get_first_n)) {
-        
-        problem_rows <-
-          problem_rows %>%
-          utils::head(get_first_n) %>%
-          dplyr::as_tibble()
-        
-      } else if (all(!is.null(sample_n) &
-                 tbl_type %in% c("data.frame", "tbl_df"))) {
-        
-        problem_rows <-
-          dplyr::sample_n(
-            tbl = problem_rows,
-            size = sample_n,
-            replace = FALSE) %>%
-          dplyr::as_tibble()
-        
-      } else if (all(!is.null(sample_frac) &
-                 tbl_type %in% c("data.frame", "tbl_df"))) {
-        
-        problem_rows <-
-          dplyr::sample_frac(
-            tbl = problem_rows,
-            size = sample_frac,
-            replace = FALSE) %>%
-          dplyr::as_tibble() %>%
-          utils::head(sample_limit)
-        
-      } else {
-        
-        problem_rows <-
-          problem_rows %>%
-          utils::head(5000) %>%
-          dplyr::as_tibble()
-      }
-      
-      problem_rows <-
-        problem_rows %>%
-        dplyr::mutate(pb_step_ = idx) %>%
-        dplyr::select(pb_step_, dplyr::everything())
-    }
-    
-    # TODO: Make this a list object
-    # Place the sample of problem rows in `agent$row_samples`
-    agent$row_samples <- problem_rows
-    
-  } else if (n_failed == 0) {
+  } else {
     agent$validation_set$all_passed[idx] <- TRUE
   }
   
@@ -525,6 +465,74 @@ add_reporting_data <- function(agent,
   
   agent$validation_set$notify[idx] <- actions$notify
   agent$validation_set$warn[idx] <- actions$warn
+  
+  agent
+}
+
+add_table_extract <- function(agent,
+                              idx,
+                              tbl_checked,
+                              extract_failed,
+                              get_first_n,
+                              sample_n,
+                              sample_frac,
+                              sample_limit) {
+  
+  if (!extract_failed) {
+    return(agent)
+  }
+  
+  tbl_type <- tbl_checked %>% class()
+  
+  problem_rows <- 
+    tbl_checked %>%
+    dplyr::filter(pb_is_good_ == FALSE) %>%
+    dplyr::select(-pb_is_good_)
+  
+  if (!is.null(get_first_n)) {
+    
+    problem_rows <-
+      problem_rows %>%
+      utils::head(get_first_n) %>%
+      dplyr::as_tibble()
+    
+  } else if (all(!is.null(sample_n) & ("data.frame" %in% tbl_type || "tbl_df" %in% tbl_type))) {
+    
+    problem_rows <-
+      dplyr::sample_n(
+        tbl = problem_rows,
+        size = sample_n,
+        replace = FALSE) %>%
+      dplyr::as_tibble()
+    
+  } else if (all(!is.null(sample_frac) & ("data.frame" %in% tbl_type || "tbl_df" %in% tbl_type))) {
+    
+    problem_rows <-
+      dplyr::sample_frac(
+        tbl = problem_rows,
+        size = sample_frac,
+        replace = FALSE) %>%
+      dplyr::as_tibble() %>%
+      utils::head(sample_limit)
+    
+  } else {
+    
+    problem_rows <-
+      problem_rows %>%
+      utils::head(5000) %>%
+      dplyr::as_tibble()
+  }
+  
+  # TODO: Make this a list object
+  # Place the sample of problem rows in `agent$row_samples`
+  
+  if (nrow(problem_rows) > 0) {
+    
+    list_i <- list(problem_rows)
+    list_i <- rlang::set_names(list_i, idx)
+    
+    agent$extracts <- c(agent$extracts, list_i)
+  }
   
   agent
 }

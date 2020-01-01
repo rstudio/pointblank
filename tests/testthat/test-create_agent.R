@@ -17,7 +17,7 @@ test_that("Creating a valid `agent` object is possible", {
     all(
       names(agent) ==
         c("name", "time", "tbl", "tbl_name", "tbl_src",
-          "col_names", "col_types", "validation_set")
+          "col_names", "col_types", "validation_set", "extracts")
     )
   )
   
@@ -35,6 +35,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$tbl_src, "character")
   expect_is(agent$col_names, "character")
   expect_is(agent$col_types, "character")
+  expect_is(agent$validation_set$i, "integer")
   expect_is(agent$validation_set$assertion_type, "character")
   expect_is(agent$validation_set$column, "list")
   expect_is(agent$validation_set$value, "numeric")
@@ -54,6 +55,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$validation_set$notify, "logical")
   expect_is(agent$validation_set$time_processed, "POSIXct")
   expect_is(agent$validation_set$proc_duration_s, "numeric")
+  expect_is(agent$extracts, "list")
   
   # Create an agent with a name
   agent_name <- create_agent(tbl = df, name = "test")

@@ -41,7 +41,7 @@ agent <-
     columns = vars(a), value = 10
   ) \%>\%
   interrogate(
-    get_problem_rows = TRUE,
+    extract_failed = TRUE,
     get_first_n = 10
   )
   

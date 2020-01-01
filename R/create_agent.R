@@ -86,6 +86,7 @@ create_agent <- function(tbl,
       col_types = column_types,
       validation_set =
         dplyr::tibble(
+          i = integer(0),
           assertion_type = character(0),
           column = list(NULL),
           value = numeric(0),
@@ -111,7 +112,8 @@ create_agent <- function(tbl,
           row_sample = numeric(0),
           time_processed = as.POSIXct(NA)[-1],
           proc_duration_s = numeric(0)
-        )
+        ),
+      extracts = list()
     )
   
   # Assign the class attribute value `ptblank_agent` to

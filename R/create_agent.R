@@ -4,7 +4,7 @@
 #'
 #' @param tbl The input table that will be the focus of the validation. This can
 #'   be a data frame, a tibble, or a `tbl_dbi` object.
-#' @param name An optional name for the validation pipeline that the agent will
+#' @param name An optional name for the validation plan that the agent will
 #'   eventually carry out during the interrogation process. If no value is
 #'   provided, a name will be generated based on the current system time.
 #'   
@@ -22,25 +22,21 @@
 #' agent <- create_agent(tbl = df)
 #'
 #' # Then, as with any `ptblank_agent`
-#' # object, we can focus on a table,
-#' # add validation steps, and then
+#' # object, we can add validation steps
+#' # to the validation plan and then
 #' # eventually use `interrogate()`
-#' # to perform the validations;
-#' # here, in a single validation
-#' # step, we expect that values in
-#' # column `a` are always greater
-#' # than 4
+#' # to perform the validations; here,
+#' # with a single validation step, we
+#' # expect that values in column `a`
+#' # are always greater than 4
 #' agent <-
 #'   agent %>%
 #'   col_vals_gt(columns = vars(a), value = 4) %>%
 #'   interrogate()
 #'  
-#' # A summary can be produced using
-#' # `get_interrogation_summary()`; we
-#' # we will just obtain the first
-#' # 7 columns of its output
-#' (agent %>%
-#'   get_interrogation_summary())[, 1:7]
+#' # A summary tibble can be produced
+#' # using `get_agent_report()`
+#' get_agent_report(agent)
 #'   
 #' @export
 create_agent <- function(tbl,

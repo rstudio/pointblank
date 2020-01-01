@@ -16,9 +16,9 @@ interrogate(
 \arguments{
 \item{agent}{An agent object of class \code{ptblank_agent}.}
 
-\item{extract_failed}{An option to collect rows that didn't pass a
-particular validation step. The default is \code{TRUE} and further options allow
-for fine control of how these rows are collected.}
+\item{extract_failed}{An option to collect rows that didn't pass a particular
+validation step. The default is \code{TRUE} and further options allow for fine
+control of how these rows are collected.}
 
 \item{get_first_n}{If the option to collect non-passing rows is chosen, there
 is the option here to collect the first \code{n} rows here. Supply the number of
@@ -58,15 +58,16 @@ df <-
 
 # Validate that values in column
 # `a` from `df` are always > 5,
-# using `interrogate()` completes
-# the process
+# using `interrogate()` carries out
+# the validation plan and completes
+# the whole process
 agent <-
   create_agent(tbl = df) \%>\%
   col_vals_gt(columns = vars(a), value = 5) \%>\%
   interrogate()
   
-# Get a basic summary with
-# `get_interrogation_summary()`
-get_interrogation_summary(agent)[, 1:7]
+# A summary tibble can be produced
+# using `get_agent_report()`
+get_agent_report(agent)
 
 }

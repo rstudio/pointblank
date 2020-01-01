@@ -4,9 +4,9 @@
 #' can proceed efficiently, and, according to plan.
 #'
 #' @param agent An agent object of class `ptblank_agent`.
-#' @param extract_failed An option to collect rows that didn't pass a
-#'   particular validation step. The default is `TRUE` and further options allow
-#'   for fine control of how these rows are collected.
+#' @param extract_failed An option to collect rows that didn't pass a particular
+#'   validation step. The default is `TRUE` and further options allow for fine
+#'   control of how these rows are collected.
 #' @param get_first_n If the option to collect non-passing rows is chosen, there
 #'   is the option here to collect the first `n` rows here. Supply the number of
 #'   rows to extract from the top of the non-passing rows table (the ordering of
@@ -37,16 +37,17 @@
 #' 
 #' # Validate that values in column
 #' # `a` from `df` are always > 5,
-#' # using `interrogate()` completes
-#' # the process
+#' # using `interrogate()` carries out
+#' # the validation plan and completes
+#' # the whole process
 #' agent <-
 #'   create_agent(tbl = df) %>%
 #'   col_vals_gt(columns = vars(a), value = 5) %>%
 #'   interrogate()
 #'   
-#' # Get a basic summary with
-#' # `get_interrogation_summary()`
-#' get_interrogation_summary(agent)[, 1:7]
+#' # A summary tibble can be produced
+#' # using `get_agent_report()`
+#' get_agent_report(agent)
 #' 
 #' @export
 interrogate <- function(agent,

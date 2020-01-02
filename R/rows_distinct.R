@@ -38,12 +38,7 @@ rows_distinct <- function(x,
                           columns = NULL,
                           preconditions = NULL,
                           brief = NULL,
-                          warn_count = NULL,
-                          stop_count = NULL,
-                          notify_count = NULL,
-                          warn_fraction = NULL,
-                          stop_fraction = NULL,
-                          notify_fraction = NULL) {
+                          actions = NULL) {
 
   agent <- x
   
@@ -80,13 +75,8 @@ rows_distinct <- function(x,
       column = list(ifelse(is.null(columns), as.character(NA), columns)),
       value = NULL,
       preconditions = preconditions,
-      brief = brief,
-      warn_count = warn_count,
-      stop_count = stop_count,
-      notify_count = notify_count,
-      warn_fraction = warn_fraction,
-      stop_fraction = stop_fraction,
-      notify_fraction = notify_fraction
+      actions = actions,
+      brief = brief
     )
 
   agent
@@ -104,12 +94,7 @@ rows_not_duplicated <- function(x,
                                 columns = NULL,
                                 preconditions = NULL,
                                 brief = NULL,
-                                warn_count = NULL,
-                                stop_count = NULL,
-                                notify_count = NULL,
-                                warn_fraction = NULL,
-                                stop_fraction = NULL,
-                                notify_fraction = NULL) {
+                                actions = NULL) {
   
   warning("The `rows_not_duplicated()` function is deprecated and will soon be removed\n",
           " * Use the `rows_distinct()` function instead",
@@ -120,12 +105,7 @@ rows_not_duplicated <- function(x,
     columns = {{ columns }},
     preconditions = preconditions,
     brief = brief,
-    warn_count = warn_count,
-    stop_count = stop_count,
-    notify_count = notify_count,
-    warn_fraction = warn_fraction,
-    stop_fraction = stop_fraction,
-    notify_fraction = notify_fraction
+    actions = actions
   )
 }
 

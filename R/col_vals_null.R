@@ -43,12 +43,7 @@ col_vals_null <- function(x,
                           columns,
                           preconditions = NULL,
                           brief = NULL,
-                          warn_count = NULL,
-                          stop_count = NULL,
-                          notify_count = NULL,
-                          warn_fraction = NULL,
-                          stop_fraction = NULL,
-                          notify_fraction = NULL) {
+                          actions = NULL) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -64,12 +59,7 @@ col_vals_null <- function(x,
           type = "col_vals_null",
           column = columns,
           preconditions = preconditions,
-          warn_count = warn_count,
-          stop_count = stop_count,
-          notify_count = notify_count,
-          warn_fraction = warn_fraction,
-          stop_fraction = stop_fraction,
-          notify_fraction = notify_fraction
+          actions = actions
         )
     )
   }
@@ -96,13 +86,8 @@ col_vals_null <- function(x,
         assertion_type = "col_vals_null",
         column = column,
         preconditions = preconditions,
-        brief = brief,
-        warn_count = warn_count,
-        stop_count = stop_count,
-        notify_count = notify_count,
-        warn_fraction = warn_fraction,
-        stop_fraction = stop_fraction,
-        notify_fraction = notify_fraction
+        actions = actions,
+        brief = brief
       )
   }
 

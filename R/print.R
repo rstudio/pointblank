@@ -8,6 +8,8 @@
 #' @export
 print.ptblank_agent <- function(x, ...) {
   
+  # nocov start 
+  
   args <- list(...)
   args <- NULL
   
@@ -56,4 +58,6 @@ print.ptblank_agent <- function(x, ...) {
   }
   
   cat(print_stmt)
+  
+  # nocov end 
 }

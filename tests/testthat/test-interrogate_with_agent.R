@@ -26,9 +26,7 @@ test_that("Interrogating with an agent yields the correct results", {
   expect_equivalent(validation$validation_set$n_failed, 0)
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
-  
+
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
   
@@ -52,8 +50,6 @@ test_that("Interrogating with an agent yields the correct results", {
   expect_equivalent(validation$validation_set$n_failed, 1)
   expect_equivalent(validation$validation_set$f_passed, 0)
   expect_equivalent(validation$validation_set$f_failed, 1)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -77,8 +73,6 @@ test_that("Interrogating with an agent yields the correct results", {
   expect_equivalent(validation$validation_set$n_failed, 0)
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -102,8 +96,6 @@ test_that("Interrogating with an agent yields the correct results", {
   expect_equivalent(validation$validation_set$n_failed, 1)
   expect_equivalent(validation$validation_set$f_passed, 0)
   expect_equivalent(validation$validation_set$f_failed, 1)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -127,8 +119,6 @@ test_that("Interrogating with an agent yields the correct results", {
   expect_equivalent(validation$validation_set$n_failed, 0)
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -152,8 +142,6 @@ test_that("Interrogating with an agent yields the correct results", {
   expect_equivalent(validation$validation_set$n_failed, 0)
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -177,8 +165,6 @@ test_that("Interrogating with an agent yields the correct results", {
   expect_equivalent(validation$validation_set$n_failed, 0)
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -202,8 +188,6 @@ test_that("Interrogating with an agent yields the correct results", {
   expect_equivalent(validation$validation_set$n_failed, 0)
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -233,8 +217,6 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$n_failed, 1)
   expect_equivalent(validation$validation_set$f_passed, 0.92308)
   expect_equivalent(validation$validation_set$f_failed, 0.07692)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -286,8 +268,6 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$n_failed, 4)
   expect_equivalent(validation$validation_set$f_passed, 0.69231)
   expect_equivalent(validation$validation_set$f_failed, 0.30769)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -336,8 +316,6 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$n_failed, 12)
   expect_equivalent(validation$validation_set$f_passed, 0.07692)
   expect_equivalent(validation$validation_set$f_failed, 0.92308)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -386,8 +364,6 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$n_failed, 1)
   expect_equivalent(validation$validation_set$f_passed, 0.92308)
   expect_equivalent(validation$validation_set$f_failed, 0.07692)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -436,8 +412,6 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$n_failed, 2)
   expect_equivalent(validation$validation_set$f_passed, 0.84615)
   expect_equivalent(validation$validation_set$f_failed, 0.15385)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -505,8 +479,6 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$n_failed, 0)
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -530,8 +502,6 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$n_failed, 0)
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -556,8 +526,6 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$n_failed, 0)
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -581,8 +549,6 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$n_failed, 2)
   expect_equivalent(validation$validation_set$f_passed, 0.84615)
   expect_equivalent(validation$validation_set$f_failed, 0.15385)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -631,8 +597,6 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$n_failed, 11)
   expect_equivalent(validation$validation_set$f_passed, 0.15385)
   expect_equivalent(validation$validation_set$f_failed, 0.84615)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -684,8 +648,6 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$n_failed, 0)
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
-  expect_true(is.na(validation$validation_set$warn_count))
-  expect_true(is.na(validation$validation_set$notify_count))
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -727,7 +689,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       value = 1.5,
       incl_na = FALSE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -739,7 +701,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       value = 1.5,
       incl_na = TRUE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -754,7 +716,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       value = 2.0,
       incl_na = FALSE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -766,7 +728,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       value = 2.0,
       incl_na = TRUE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -781,7 +743,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       value = 0.5,
       incl_na = FALSE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -793,7 +755,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       value = 0.5,
       incl_na = TRUE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -808,7 +770,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       value = 1.0,
       incl_na = FALSE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -820,7 +782,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       value = 1.0,
       incl_na = TRUE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -835,7 +797,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       value = 3.0,
       incl_na = FALSE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -847,7 +809,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       value = 3.0,
       incl_na = TRUE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -862,7 +824,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       value = 2.5,
       incl_na = FALSE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -874,7 +836,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       value = 2.5,
       incl_na = TRUE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -889,7 +851,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       left = 0, right = 3.0,
       incl_na = FALSE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -901,7 +863,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       left = 0, right = 3.0,
       incl_na = TRUE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -916,7 +878,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       left = 3.0, right = 4.5,
       incl_na = FALSE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -928,7 +890,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       left = 3.0, right = 4.5,
       incl_na = TRUE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -943,7 +905,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       regex = "[0-9]-[a-z]{3}-[0-9]{3}",
       incl_na = FALSE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -955,7 +917,7 @@ test_that("Interrogating with an agent incorporates the `incl_na` option", {
       columns = vars(a),
       regex = "[0-9]-[a-z]{3}-[0-9]{3}",
       incl_na = TRUE,
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -971,7 +933,7 @@ test_that("The validations with sets can include NA values", {
     col_vals_in_set(
       columns = vars(a),
       set = c("one", "two", "three", "four", "five"),
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -982,7 +944,7 @@ test_that("The validations with sets can include NA values", {
     col_vals_in_set(
       columns = vars(a),
       set = c("one", "two", "three", "four", "five", NA),
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -995,7 +957,7 @@ test_that("The validations with sets can include NA values", {
     col_vals_not_in_set(
       columns = vars(a),
       set = c("four", "five", "six", NA),
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%
@@ -1006,7 +968,7 @@ test_that("The validations with sets can include NA values", {
     col_vals_not_in_set(
       columns = vars(a),
       set = c("four", "five", "six"),
-      warn_count = 1
+      actions = action_levels(warn_at = 1)
     ) %>%
     interrogate() %>%
     all_passed() %>%

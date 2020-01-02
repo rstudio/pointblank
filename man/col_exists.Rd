@@ -4,17 +4,7 @@
 \alias{col_exists}
 \title{Do one or more columns actually exist?}
 \usage{
-col_exists(
-  x,
-  columns,
-  brief = NULL,
-  warn_count = NULL,
-  stop_count = NULL,
-  notify_count = NULL,
-  warn_fraction = NULL,
-  stop_fraction = NULL,
-  notify_fraction = NULL
-)
+col_exists(x, columns, brief = NULL, actions = NULL)
 }
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
@@ -25,31 +15,9 @@ as a vector of column names using \code{c()} or bare column names enclosed in
 
 \item{brief}{An optional, text-based description for the validation step.}
 
-\item{warn_count}{The threshold number for individual
-validations returning a \code{FALSE} result before applying the \code{warn} or
-\code{notify} flag.}
-
-\item{stop_count}{The threshold number or fraction of \code{FALSE}
-validation results before stopping a simple validation or stopping an
-agent-based validation.}
-
-\item{notify_count}{The threshold number for individual
-validations returning a \code{FALSE} result before applying the \code{warn} or
-\code{notify} flag.}
-
-\item{warn_fraction}{The threshold fraction for individual
-validations returning a \code{FALSE} over all the entire set of individual
-validations. Beyond this threshold, either the \code{warn} or \code{notify} flag will
-be applied.}
-
-\item{stop_fraction}{The threshold number or fraction of \code{FALSE}
-validation results before stopping a simple validation or stopping an
-agent-based validation.}
-
-\item{notify_fraction}{The threshold fraction for individual
-validations returning a \code{FALSE} over all the entire set of individual
-validations. Beyond this threshold, either the \code{warn} or \code{notify} flag will
-be applied.}
+\item{actions}{A list containing threshold levels so that the validation step
+can react accordingly when exceeding the set levels. This is to be created
+with the \code{\link[=action_levels]{action_levels()}} helper function.}
 }
 \value{
 Either a \code{ptblank_agent} object or a table object, depending on what

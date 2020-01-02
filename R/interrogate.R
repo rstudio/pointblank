@@ -103,7 +103,7 @@ interrogate <- function(agent,
       )
     
     # Add in the necessary reporting data for the validation
-    agent <-  add_reporting_data(agent, idx = i, tbl_checked = tbl_checked)
+    agent <- add_reporting_data(agent, idx = i, tbl_checked = tbl_checked)
 
     # Add extracts of failed rows if `extract_failed` is TRUE
     agent <- 
@@ -453,14 +453,9 @@ add_reporting_data <- function(agent,
   
   actions <-
     determine_action(
-      validation_step = agent$validation_set[idx, ],
-      false_count = n_failed,
-      warn_count = agent$validation_set$warn_count[idx],
-      stop_count = agent$validation_set$stop_count[idx],
-      notify_count = agent$validation_set$notify_count[idx],
-      warn_fraction = agent$validation_set$warn_fraction[idx],
-      stop_fraction = agent$validation_set$stop_fraction[idx],
-      notify_fraction = agent$validation_set$notify_fraction[idx]
+      agent = agent,
+      idx = idx,
+      false_count = n_failed
     )
   
   agent$validation_set$notify[idx] <- actions$notify
@@ -540,32 +535,29 @@ add_table_extract <- function(agent,
 #' Determine the course of action for a given verification step
 #' 
 #' @noRd
-determine_action <- function(validation_step,
-                             false_count,
-                             warn_count,
-                             stop_count,
-                             notify_count,
-                             warn_fraction,
-                             stop_fraction,
-                             notify_fraction) {
+determine_action <- function(agent,
+                             idx,
+                             false_count) {
   
-  n <- validation_step$n[[1]]
+  actions_list <- agent$validation_set[[idx, "actions"]]
+  n <- agent$validation_set[[idx, "n"]]
+  type <- agent$validation_set[[idx, "assertion_type"]]
   
-  if (is.na(warn_count)) {
+  if (is.null(actions_list$warn_count)) {
     warn <- FALSE
   } else {
-    if (false_count >= warn_count) {
+    if (false_count >= actions_list$warn_count) {
       warn <- TRUE
     } else {
       warn <- FALSE
     }
   }
   
-  if (is.na(stop_count)) {
+  if (is.null(actions_list$stop_count)) {
     stop <- FALSE
   } else {
     
-    if (false_count >= stop_count) {
+    if (false_count >= actions_list$stop_count) {
       
       type <- validation_step$assertion_type
       
@@ -574,7 +566,7 @@ determine_action <- function(validation_step,
         " * `failing_count` ({false_count}) >= `stop_count` ({stop_count})",
         type = type,
         false_count = false_count,
-        stop_count = stop_count,
+        stop_count = actions_list$stop_count,
         .format = "{text}"
       )
       
@@ -583,19 +575,19 @@ determine_action <- function(validation_step,
     }
   }
   
-  if (is.na(notify_count)) {
+  if (is.null(actions_list$notify_count)) {
     notify <- FALSE
   } else {
-    if (false_count >= notify_count) {
+    if (false_count >= actions_list$notify_count) {
       notify <- TRUE
     } else {
       notify <- FALSE
     }
   }
   
-  if (!is.na(warn_fraction)) {
+  if (!is.null(actions_list$warn_fraction)) {
     
-    warn_count <- round(warn_fraction * n, 0)
+    warn_count <- round(actions_list$warn_fraction * n, 0)
     
     if (false_count >= warn_count) {
       warn <- TRUE
@@ -604,9 +596,9 @@ determine_action <- function(validation_step,
     }
   }
   
-  if (!is.na(stop_fraction)) {
+  if (!is.null(actions_list$stop_fraction)) {
     
-    stop_count <- round(stop_fraction * n, 0)
+    stop_count <- round(actions_list$stop_fraction * n, 0)
     
     if (false_count >= stop_count) {
       
@@ -619,7 +611,7 @@ determine_action <- function(validation_step,
         " * `failing_fraction` ({false_fraction}) >= `stop_fraction` ({stop_fraction})",
         type = type,
         false_fraction = false_fraction,
-        stop_fraction = stop_fraction,
+        stop_fraction = actions_list$stop_fraction,
         .format = "{text}"
       )
       
@@ -628,9 +620,9 @@ determine_action <- function(validation_step,
     }
   }
   
-  if (!is.na(notify_fraction)) {
+  if (!is.null(actions_list$notify_fraction)) {
     
-    notify_count <- round(notify_fraction * n, 0)
+    notify_count <- round(actions_list$notify_fraction * n, 0)
     
     if (false_count >= notify_count) {
       notify <- TRUE

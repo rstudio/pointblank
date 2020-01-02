@@ -324,7 +324,7 @@ interrogate_col_type <- function(agent, idx, table, assertion_type) {
   column_class <-
     table %>%
     dplyr::select({{ column }}) %>%
-    dplyr::filter(dplyr::row_number() == 1) %>%
+    head(1) %>%
     dplyr::as_tibble() %>%
     dplyr::pull({{ column }}) %>%
     class()
@@ -417,30 +417,27 @@ add_reporting_data <- function(agent,
                                tbl_checked) {
 
   # Get total count of rows
-  row_count <-
+  row_count <- 
     tbl_checked %>%
-    dplyr::group_by() %>%
-    dplyr::summarize(row_count = dplyr::n()) %>%
-    dplyr::as_tibble() %>%
-    dplyr::pull(row_count)
+    dplyr::summarize(n = dplyr::n()) %>%
+    dplyr::pull(n) %>%
+    as.numeric()
   
   # Get total count of TRUE rows
   n_passed <-
     tbl_checked %>%
     dplyr::filter(pb_is_good_ == TRUE) %>%
-    dplyr::group_by() %>%
-    dplyr::summarize(row_count = dplyr::n()) %>%
-    dplyr::as_tibble() %>%
-    dplyr::pull(row_count)
+    dplyr::summarize(n = dplyr::n()) %>%
+    dplyr::pull(n) %>%
+    as.numeric()
   
   # Get total count of FALSE rows
   n_failed <-
     tbl_checked %>%
     dplyr::filter(pb_is_good_ == FALSE) %>%
-    dplyr::group_by() %>%
-    dplyr::summarize(row_count = dplyr::n()) %>%
-    dplyr::as_tibble() %>%
-    dplyr::pull(row_count)
+    dplyr::summarize(n = dplyr::n()) %>%
+    dplyr::pull(n) %>%
+    as.numeric()
   
   agent$validation_set$n[idx] <- row_count
   agent$validation_set$n_passed[idx] <- n_passed

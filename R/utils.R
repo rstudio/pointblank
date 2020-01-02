@@ -562,7 +562,7 @@ evaluate_single <- function(x,
     column_type <-
       (tbl %>%
          dplyr::select({{ column }}) %>%
-         dplyr::filter(dplyr::row_number() == 1L) %>%
+         head(1) %>%
          dplyr::collect() %>%
          as.data.frame(stringsAsFactors = FALSE)
       )[1, 1] %>% 
@@ -591,7 +591,7 @@ evaluate_single <- function(x,
     
     column_names <-
       tbl %>%
-      dplyr::filter(dplyr::row_number() == 1L) %>%
+      head(1) %>%
       dplyr::as_tibble() %>%
       colnames()
     

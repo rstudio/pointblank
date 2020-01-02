@@ -33,7 +33,7 @@ create_validation_step <- function(agent,
       n_passed = NA_integer_,
       n_failed = NA_integer_,
       f_passed = NA_real_,
-      f_failed = NA_real_,
+      f_failed = NA_real_
     )
   
   # Append `validation_step` to `validation_set`

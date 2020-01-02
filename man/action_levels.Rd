@@ -4,7 +4,7 @@
 \alias{action_levels}
 \title{Set action levels for reacting to exceeding thresholds}
 \usage{
-action_levels(warn_at = NULL, stop_at = NULL, notify_at = NULL)
+action_levels(warn_at = NULL, stop_at = NULL, notify_at = NULL, fns = NULL)
 }
 \arguments{
 \item{warn_at, stop_at, notify_at}{The threshold number for validation units

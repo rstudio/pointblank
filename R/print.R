@@ -8,6 +8,8 @@
 #' @export
 print.ptblank_agent <- function(x, ...) {
   
+  # nocov start 
+  
   args <- list(...)
   args <- NULL
   
@@ -50,10 +52,12 @@ print.ptblank_agent <- function(x, ...) {
           " failing validation",
           ifelse(failing_steps == 1, "", "s"),
           "   ",
-          "more info: `get_interrogation_summary()`"
+          "more info: `get_interrogation_summary()`\n"
         )
     }
   }
   
   cat(print_stmt)
+  
+  # nocov end 
 }

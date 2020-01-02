@@ -2,6 +2,7 @@
 
 S3method(print,ptblank_agent)
 export("%>%")
+export(action_levels)
 export(all_passed)
 export(col_exists)
 export(col_is_character)

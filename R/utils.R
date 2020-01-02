@@ -9,13 +9,8 @@ create_validation_step <- function(agent,
                                    regex = NULL,
                                    incl_na = NULL,
                                    preconditions = NULL,
-                                   brief = NULL,
-                                   warn_count = NULL,
-                                   stop_count = NULL,
-                                   notify_count = NULL,
-                                   warn_fraction = NULL,
-                                   stop_fraction = NULL,
-                                   notify_fraction = NULL) {
+                                   actions = NULL,
+                                   brief = NULL) {
   
   # Get the next step number (i)
   i <- nrow(agent$validation_set) + 1L
@@ -31,19 +26,14 @@ create_validation_step <- function(agent,
       regex = ifelse(is.null(regex), NA_character_, as.character(regex)),
       incl_na = ifelse(is.null(incl_na), as.logical(NA), as.logical(incl_na)),
       preconditions = ifelse(is.null(preconditions), list(NULL), list(preconditions)),
+      actions = ifelse(is.null(actions), list(NULL), list(actions)),
       brief = ifelse(is.null(brief), NA_character_, as.character(brief)),
       all_passed = as.logical(NA),
       n = NA_integer_,
       n_passed = NA_integer_,
       n_failed = NA_integer_,
       f_passed = NA_real_,
-      f_failed = NA_real_,
-      warn_count = ifelse(is.null(warn_count), NA_real_, as.numeric(warn_count)),
-      stop_count = ifelse(is.null(stop_count), NA_real_, as.numeric(stop_count)),
-      notify_count = ifelse(is.null(notify_count), NA_real_, as.numeric(notify_count)),
-      warn_fraction = ifelse(is.null(warn_fraction), NA_real_, as.numeric(warn_fraction)),
-      stop_fraction = ifelse(is.null(stop_fraction), NA_real_, as.numeric(stop_fraction)),
-      notify_fraction = ifelse(is.null(notify_fraction), NA_real_, as.numeric(notify_fraction))
+      f_failed = NA_real_
     )
   
   # Append `validation_step` to `validation_set`
@@ -452,12 +442,7 @@ evaluate_single <- function(x,
                             right = NULL,
                             incl_na = NULL,
                             preconditions,
-                            warn_count,
-                            stop_count,
-                            notify_count,
-                            warn_fraction,
-                            stop_fraction,
-                            notify_fraction) {
+                            actions) {
 
   column <- column[1]
   x_ret <- x
@@ -605,20 +590,20 @@ evaluate_single <- function(x,
   false_count <- total_count - true_count
   false_fraction <- false_count / total_count
   
-  if (!is.null(notify_count)) {
-    if (false_count >= notify_count) {
+  if (!is.null(actions$notify_count)) {
+    if (false_count >= actions$notify_count) {
       
       messaging::emit_error(
         "The validation (`{type}()`) meets or exceeds the `notify_count` threshold",
         " * `failing_count` ({false_count}) >= `notify_count` ({notify_count})",
         type = type,
         false_count = false_count,
-        notify_count = notify_count,
+        notify_count = actions$notify_count,
         .format = "{text}"
       )
     }
-  } else if (!is.null(notify_fraction)) {
-    if ((false_count/total_count) >= notify_fraction) {
+  } else if (!is.null(actions$notify_fraction)) {
+    if ((false_count/total_count) >= actions$notify_fraction) {
       
       false_fraction <- round(false_fraction, 3)
       
@@ -627,26 +612,26 @@ evaluate_single <- function(x,
         " * `failing_fraction` ({false_fraction}) >= `notify_fraction` ({notify_fraction})",
         type = type,
         false_fraction = false_fraction,
-        notify_fraction = notify_fraction,
+        notify_fraction = actions$notify_fraction,
         .format = "{text}"
       )
     }
   }
   
-  if (!is.null(stop_count)) {
-    if (false_count >= stop_count) {
+  if (!is.null(actions$stop_count)) {
+    if (false_count >= actions$stop_count) {
       
       messaging::emit_error(
         "The validation (`{type}()`) meets or exceeds the `stop_count` threshold",
         " * `failing_count` ({false_count}) >= `stop_count` ({stop_count})",
         type = type,
         false_count = false_count,
-        stop_count = stop_count,
+        stop_count = actions$stop_count,
         .format = "{text}"
       )
     }
-  } else if (!is.null(stop_fraction)) {
-    if ((false_count/total_count) >= stop_fraction) {
+  } else if (!is.null(actions$stop_fraction)) {
+    if ((false_count/total_count) >= actions$stop_fraction) {
       
       false_fraction <- round(false_fraction, 3)
       
@@ -655,34 +640,34 @@ evaluate_single <- function(x,
         " * `failing_fraction` ({false_fraction}) >= `stop_fraction` ({stop_fraction})",
         type = type,
         false_fraction = false_fraction,
-        stop_fraction = stop_fraction,
+        stop_fraction = actions$stop_fraction,
         .format = "{text}"
       )
     }
   }
   
-  if (!is.null(warn_count)) {
-    if (false_count >= warn_count) {
+  if (!is.null(actions$warn_count)) {
+    if (false_count >= actions$warn_count) {
       
       messaging::emit_warning(
         "The validation (`{type}()`) meets or exceeds the `warn_count` threshold",
         " * `failing_count` ({false_count}) >= `warn_count` ({warn_count})",
         type = type,
         false_count = false_count,
-        warn_count = warn_count,
+        warn_count = actions$warn_count,
         .format = "{text}"
       )
       
     }
-  } else if (!is.null(warn_fraction)) {
-    if ((false_count/total_count) >= warn_fraction) {
+  } else if (!is.null(actions$warn_fraction)) {
+    if ((false_count/total_count) >= actions$warn_fraction) {
       
       messaging::emit_warning(
         "The validation (`{type}()`) meets or exceeds the `warn_fraction` threshold",
         " * `failing_fraction` ({false_fraction}) >= `warn_fraction` ({warn_fraction})",
         type = type,
         false_fraction = false_fraction,
-        warn_fraction = warn_fraction,
+        warn_fraction = actions$warn_fraction,
         .format = "{text}"
       )
     }

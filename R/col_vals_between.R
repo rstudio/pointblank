@@ -48,12 +48,7 @@ col_vals_between <- function(x,
                              incl_na = FALSE,
                              preconditions = NULL,
                              brief = NULL,
-                             warn_count = NULL,
-                             stop_count = NULL,
-                             notify_count = NULL,
-                             warn_fraction = NULL,
-                             stop_fraction = NULL,
-                             notify_fraction = NULL) {
+                             actions = NULL) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -75,12 +70,7 @@ col_vals_between <- function(x,
           right = right,
           incl_na = incl_na,
           preconditions = preconditions,
-          warn_count = warn_count,
-          stop_count = stop_count,
-          notify_count = notify_count,
-          warn_fraction = warn_fraction,
-          stop_fraction = stop_fraction,
-          notify_fraction = notify_fraction
+          actions = actions
         )
     )
   }
@@ -111,13 +101,8 @@ col_vals_between <- function(x,
         set = c(left, right),
         incl_na = incl_na,
         preconditions = preconditions,
-        brief = brief,
-        warn_count = warn_count,
-        stop_count = stop_count,
-        notify_count = notify_count,
-        warn_fraction = warn_fraction,
-        stop_fraction = stop_fraction,
-        notify_fraction = notify_fraction
+        actions = actions,
+        brief = brief
       )
   }
 

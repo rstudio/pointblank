@@ -18,16 +18,9 @@
 #'   used by enclosing the set of statements with `{ }` but note that the `tbl`
 #'   object must be ultimately returned.
 #' @param brief An optional, text-based description for the validation step.
-#' @param warn_count,notify_count The threshold number for individual
-#'   validations returning a `FALSE` result before applying the `warn` or
-#'   `notify` flag.
-#' @param warn_fraction,notify_fraction The threshold fraction for individual
-#'   validations returning a `FALSE` over all the entire set of individual
-#'   validations. Beyond this threshold, either the `warn` or `notify` flag will
-#'   be applied.
-#' @param stop_count,stop_fraction The threshold number or fraction of `FALSE`
-#'   validation results before stopping a simple validation or stopping an
-#'   agent-based validation.
+#' @param actions A list containing threshold levels so that the validation step
+#'   can react accordingly when exceeding the set levels. This is to be created
+#'   with the [action_levels()] helper function.
 #'   
 #' @return Either a `ptblank_agent` object or a table object, depending on what
 #'   was passed to `x`.
@@ -60,12 +53,7 @@ col_vals_gt <- function(x,
                         incl_na = FALSE,
                         preconditions = NULL,
                         brief = NULL,
-                        warn_count = NULL,
-                        stop_count = NULL,
-                        notify_count = NULL,
-                        warn_fraction = NULL,
-                        stop_fraction = NULL,
-                        notify_fraction = NULL) {
+                        actions = NULL) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -83,12 +71,7 @@ col_vals_gt <- function(x,
           value = value,
           incl_na = incl_na,
           preconditions = preconditions,
-          warn_count = warn_count,
-          stop_count = stop_count,
-          notify_count = notify_count,
-          warn_fraction = warn_fraction,
-          stop_fraction = stop_fraction,
-          notify_fraction = notify_fraction
+          actions = actions
         )
     )
   }
@@ -119,13 +102,8 @@ col_vals_gt <- function(x,
         value = value,
         incl_na = incl_na,
         preconditions = preconditions,
-        brief = brief,
-        warn_count = warn_count,
-        stop_count = stop_count,
-        notify_count = notify_count,
-        warn_fraction = warn_fraction,
-        stop_fraction = stop_fraction,
-        notify_fraction = notify_fraction
+        actions = actions,
+        brief = brief
       )
   }
 

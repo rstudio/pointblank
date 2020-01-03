@@ -18,8 +18,8 @@ conjointly(
 
 \item{...}{a collection one-sided formulas that consist of validation step
 functions that validate row units. Specifically, these functions should be
-those with the naming pattern \verb{col_vals_*()} (e.g,
-\code{~ col_vals_gte(., columns = vars(a), value = 5.5)}).}
+those with the naming pattern \verb{col_vals_*()}. An example of this is
+\verb{~ col_vals_gte(., columns = vars(a), value = 5.5), ~ col_vals_not_null(., columns = vars(b)}).}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 

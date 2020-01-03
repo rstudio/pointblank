@@ -3,8 +3,8 @@
 #' @inheritParams col_vals_gt
 #' @param ... a collection one-sided formulas that consist of validation step
 #' functions that validate row units. Specifically, these functions should be
-#' those with the naming pattern `col_vals_*()` (e.g,
-#' `~ col_vals_gte(., columns = vars(a), value = 5.5)`).
+#' those with the naming pattern `col_vals_*()`. An example of this is
+#' `~ col_vals_gte(., columns = vars(a), value = 5.5), ~ col_vals_not_null(., columns = vars(b)`).
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #'
 #' @examples

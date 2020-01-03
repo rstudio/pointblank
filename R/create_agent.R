@@ -83,6 +83,7 @@ create_agent <- function(tbl,
       validation_set =
         dplyr::tibble(
           i = integer(0),
+          j = integer(0),
           assertion_type = character(0),
           column = list(NULL),
           value = numeric(0),

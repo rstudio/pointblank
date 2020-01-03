@@ -55,12 +55,12 @@ get_data_extracts <- function(agent,
 
   # Stop function if the agent hasn't
   # yet performed an interrogation
-  if (agent$time %>% length() == 0) {
+  if (!inherits(agent, "has_intel")) {
     return(NA)
   }
   
   # Get the number of validation steps
-  validation_steps <- nrow(agent$validation_set)
+  validation_steps <- unique(agent$validation_set$i)
   
   if (is.null(i)) {
     return(agent$extracts)

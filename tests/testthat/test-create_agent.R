@@ -36,6 +36,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$col_names, "character")
   expect_is(agent$col_types, "character")
   expect_is(agent$validation_set$i, "integer")
+  expect_is(agent$validation_set$j, "integer")
   expect_is(agent$validation_set$assertion_type, "character")
   expect_is(agent$validation_set$column, "list")
   expect_is(agent$validation_set$value, "numeric")

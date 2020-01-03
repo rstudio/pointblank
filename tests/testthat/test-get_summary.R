@@ -20,7 +20,7 @@ test_that("Getting a validation summary is possible", {
   # Expect that the summary has specific column names
   expect_equivalent(
     colnames(summary),
-    c("type", "columns", "value", "set", "regex", "preconds",
+    c("i", "j", "type", "columns", "value", "set", "regex", "preconds",
       "units", "n_pass", "f_pass", "state", "extract")
   )
   

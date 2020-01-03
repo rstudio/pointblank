@@ -3,7 +3,7 @@
 #' @noRd
 create_validation_step <- function(agent,
                                    assertion_type,
-                                   column,
+                                   column = NULL,
                                    value = NULL,
                                    set = NULL,
                                    regex = NULL,
@@ -11,16 +11,21 @@ create_validation_step <- function(agent,
                                    preconditions = NULL,
                                    actions = NULL,
                                    brief = NULL) {
-  
+
   # Get the next step number (i)
-  i <- nrow(agent$validation_set) + 1L
+  if (nrow(agent$validation_set) == 0) {
+    i <- 1L
+  } else {
+    i <- max(agent$validation_set$i) + 1L
+  }
   
   # Create a validation step as a single-row `tbl_df` object
   validation_step_df <-
     dplyr::tibble(
       i = i,
+      j = NA_integer_,
       assertion_type = assertion_type,
-      column = list(column),
+      column = ifelse(is.null(column), list(NULL), list(column)),
       value = ifelse(is.null(value), NA_real_, as.numeric(value)),
       set = ifelse(is.null(set), list(NULL), list(set)),
       regex = ifelse(is.null(regex), NA_character_, as.character(regex)),
@@ -35,7 +40,7 @@ create_validation_step <- function(agent,
       f_passed = NA_real_,
       f_failed = NA_real_
     )
-  
+
   # Append `validation_step` to `validation_set`
   agent$validation_set <- 
     dplyr::bind_rows(agent$validation_set, validation_step_df)
@@ -68,6 +73,10 @@ is_ptblank_agent <- function(object) {
 
 get_assertion_type_at_idx <- function(agent, idx) {
   agent$validation_set[[idx, "assertion_type"]]
+}
+
+get_jth_assertion_type_in_validation_set <- function(validation_set, j) {
+  validation_set[[j, "assertion_type"]]
 }
 
 get_column_as_sym_at_idx <- function(agent, idx) {
@@ -740,3 +749,7 @@ resolve_columns <- function(x, var_expr, preconditions) {
   column
 }
 
+tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
+  
+  gsub(pattern, replacement, x, fixed = fixed)
+}

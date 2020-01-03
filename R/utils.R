@@ -23,7 +23,6 @@ create_validation_step <- function(agent,
   validation_step_df <-
     dplyr::tibble(
       i = i,
-      j = NA_integer_,
       assertion_type = assertion_type,
       column = ifelse(is.null(column), list(NULL), list(column)),
       value = ifelse(is.null(value), NA_real_, as.numeric(value)),
@@ -556,7 +555,7 @@ evaluate_single <- function(x,
     column_type <-
       (tbl %>%
          dplyr::select({{ column }}) %>%
-         head(1) %>%
+         utils::head(1) %>%
          dplyr::collect() %>%
          as.data.frame(stringsAsFactors = FALSE)
       )[1, 1] %>% 
@@ -585,7 +584,7 @@ evaluate_single <- function(x,
     
     column_names <-
       tbl %>%
-      head(1) %>%
+      utils::head(1) %>%
       dplyr::as_tibble() %>%
       colnames()
     

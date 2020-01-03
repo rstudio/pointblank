@@ -10,6 +10,8 @@ action_levels(warn_at = NULL, stop_at = NULL, notify_at = NULL, fns = NULL)
 \item{warn_at, stop_at, notify_at}{The threshold number for validation units
 returning a \code{FALSE} result before applying the \code{warn}, \code{stop}, or \code{notify}
 flags.}
+
+\item{fns}{A named list of functions that can be used with each action type.}
 }
 \description{
 This helper function works with the \code{actions} argument that is present in

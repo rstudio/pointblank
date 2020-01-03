@@ -64,8 +64,6 @@ interrogate <- function(agent,
   
   for (i in validation_steps) {
     
-    idx_row <- min(which(agent$validation_set$i == i))
-    
     # Get the starting time for the validation step
     validation_start_time <- Sys.time()
     
@@ -73,10 +71,10 @@ interrogate <- function(agent,
     table <- get_tbl_object(agent)
     
     # Use preconditions to modify the table
-    table <- apply_preconditions_to_tbl(agent, idx = idx_row, tbl = table)
+    table <- apply_preconditions_to_tbl(agent, idx = i, tbl = table)
 
     # Get the assertion type for this verification step
-    assertion_type <- get_assertion_type_at_idx(agent, idx = idx_row)
+    assertion_type <- get_assertion_type_at_idx(agent, idx = i)
 
     if (assertion_type != "conjointly") {
       
@@ -84,21 +82,35 @@ interrogate <- function(agent,
       tbl_checked <- check_table_with_assertion(agent, idx = i, table, assertion_type)
       
     } else if (assertion_type == "conjointly") {
-
-      # Get index of validation substeps
-      validation_set_i <- subset(agent$validation_set, i == idx_row)
-      validation_set_ij <- subset(validation_set_i, !is.na(j))
       
-      substep_indices <- validation_set_ij$j
+      validation_formulas <- agent$validation_set[[i, "set"]]
+      validation_n <- length(validation_formulas)
       
-      double_agent <- 
-        list(validation_set = validation_set_ij %>% dplyr::mutate(i = substep_indices)) 
+      # Create a double agent
+      double_agent <- create_agent(tbl = agent$tbl)
+      
+      for (formula in validation_formulas) {
+        
+        double_agent <-
+          eval(
+            expr = parse(
+              text =
+                formula %>%
+                rlang::f_rhs() %>%
+                rlang::expr_deparse() %>%
+                tidy_gsub("(.", "(double_agent", fixed = TRUE)
+            ),
+            envir = NULL
+          )
+      }
       
       tbl_checked <- table
       
-      for (j in substep_indices) {
+      for (j in seq(nrow(double_agent$validation_set))) {
         
-        assertion_type <- get_jth_assertion_type_in_validation_set(validation_set_ij, j)
+        # Get the assertion type for this verification step
+        assertion_type <- 
+          get_assertion_type_at_idx(agent = double_agent, idx = j)
         
         tbl_checked <- 
           dplyr::bind_cols(
@@ -119,7 +131,7 @@ interrogate <- function(agent,
         dplyr::mutate(pb_sum = rowSums(dplyr::select(., dplyr::everything()))) %>%
         dplyr::select(pb_is_good_ = pb_sum) %>%
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
-          pb_is_good_ == max(substep_indices) ~ TRUE,
+          pb_is_good_ == validation_n ~ TRUE,
           TRUE ~ FALSE
         ))
       
@@ -196,18 +208,16 @@ check_table_with_assertion <- function(agent, idx, table, assertion_type) {
 
 interrogate_comparison <- function(agent, idx, table, assertion_type) {
   
-  idx_row <- min(which(agent$validation_set$i == idx))
-  
   # Get the value for the expression
-  value <- get_column_value_at_idx(agent = agent, idx = idx_row)
+  value <- get_column_value_at_idx(agent = agent, idx = idx)
   
   # Obtain the target column as a label
   column <- 
-    get_column_as_sym_at_idx(agent = agent, idx = idx_row) %>%
+    get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
     rlang::as_label()
   
   # Determine whether NAs should be allowed
-  incl_na <- get_column_incl_na_at_idx(agent = agent, idx = idx_row)
+  incl_na <- get_column_incl_na_at_idx(agent = agent, idx = idx)
   
   # Get operator values for all assertion types involving
   # simple operator comparisons
@@ -239,16 +249,14 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
 
 interrogate_between <- function(agent, idx, table, assertion_type) {
   
-  idx_row <- min(which(agent$validation_set$i == idx))
-  
   # Get the set values for the expression
-  set <- get_column_set_values_at_idx(agent = agent, idx = idx_row)
+  set <- get_column_set_values_at_idx(agent = agent, idx = idx)
   
   # Determine whether NAs should be allowed
-  incl_na <- get_column_incl_na_at_idx(agent = agent, idx = idx_row)
+  incl_na <- get_column_incl_na_at_idx(agent = agent, idx = idx)
   
   # Obtain the target column as a symbol
-  column <- get_column_as_sym_at_idx(agent = agent, idx = idx_row)
+  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
   incl_left <- names(set)[1] %>% as.logical()
   incl_right <- names(set)[2] %>% as.logical()
@@ -285,13 +293,11 @@ interrogate_between <- function(agent, idx, table, assertion_type) {
 
 interrogate_set <- function(agent, idx, table, assertion_type) {
   
-  idx_row <- min(which(agent$validation_set$i == idx))
-  
   # Get the set values for the expression
-  set <- get_column_set_values_at_idx(agent = agent, idx = idx_row)
+  set <- get_column_set_values_at_idx(agent = agent, idx = idx)
   
   # Obtain the target column as a symbol
-  column <- get_column_as_sym_at_idx(agent = agent, idx = idx_row)
+  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
   if (assertion_type == "col_vals_in_set") {
     
@@ -320,10 +326,8 @@ interrogate_set <- function(agent, idx, table, assertion_type) {
 
 interrogate_null <- function(agent, idx, table) {
   
-  idx_row <- min(which(agent$validation_set$i == idx))
-  
   # Obtain the target column as a symbol
-  column <- get_column_as_sym_at_idx(agent = agent, idx = idx_row)
+  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
   # Perform rowwise validations for the column
   tbl_checked <- 
@@ -334,11 +338,9 @@ interrogate_null <- function(agent, idx, table) {
 }
 
 interrogate_not_null <- function(agent, idx, table) {
-  
-  idx_row <- min(which(agent$validation_set$i == idx))
-  
+
   # Obtain the target column as a symbol
-  column <- get_column_as_sym_at_idx(agent = agent, idx = idx_row)
+  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
   # Perform rowwise validations for the column
   tbl_checked <- 
@@ -350,16 +352,14 @@ interrogate_not_null <- function(agent, idx, table) {
 
 interrogate_regex <- function(agent, idx, table) {
   
-  idx_row <- min(which(agent$validation_set$i == idx))
-  
   # Get the regex matching statement
-  regex <- agent$validation_set$regex[idx_row]
+  regex <- agent$validation_set$regex[idx]
   
   # Obtain the target column as a symbol
-  column <- get_column_as_sym_at_idx(agent = agent, idx = idx_row)
+  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
   # Determine whether NAs should be allowed
-  incl_na <- get_column_incl_na_at_idx(agent = agent, idx = idx_row)
+  incl_na <- get_column_incl_na_at_idx(agent = agent, idx = idx)
   
   # Perform rowwise validations for the column
   tbl_checked <- 
@@ -374,14 +374,12 @@ interrogate_regex <- function(agent, idx, table) {
 }
 
 interrogate_col_exists <- function(agent, idx, table) {
-  
-  idx_row <- min(which(agent$validation_set$i == idx))
-  
+
   # Get the column names for the table
   column_names <- get_all_cols(agent = agent)
   
   # Obtain the target column as a symbol
-  column <- get_column_as_sym_at_idx(agent = agent, idx = idx_row)
+  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
   # Perform rowwise validations for the column
   tbl_checked <-
@@ -392,15 +390,13 @@ interrogate_col_exists <- function(agent, idx, table) {
 
 interrogate_col_type <- function(agent, idx, table, assertion_type) {
   
-  idx_row <- min(which(agent$validation_set$i == idx))
-  
   # Obtain the target column as a symbol
-  column <- get_column_as_sym_at_idx(agent = agent, idx = idx_row)
+  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
   column_class <-
     table %>%
     dplyr::select({{ column }}) %>%
-    head(1) %>%
+    utils::head(1) %>%
     dplyr::as_tibble() %>%
     dplyr::pull({{ column }}) %>%
     class()
@@ -426,14 +422,12 @@ interrogate_col_type <- function(agent, idx, table, assertion_type) {
 
 interrogate_distinct <- function(agent, idx, table) {
 
-  idx_row <- min(which(agent$validation_set$i == idx))
-  
   # Determine if grouping columns are provided in the test
   # for distinct rows and parse the column names
-  if (!is.na(agent$validation_set$column[idx_row] %>% unlist())) {
+  if (!is.na(agent$validation_set$column[idx] %>% unlist())) {
     
     column_names <- 
-      get_column_as_sym_at_idx(agent = agent, idx = idx_row) %>%
+      get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
       as.character()
     
     if (grepl("(,|&)", column_names)) {
@@ -442,7 +436,7 @@ interrogate_distinct <- function(agent, idx, table) {
         unlist()
     }
     
-  } else if (is.na(agent$validation_set$column[idx_row] %>% unlist())) {
+  } else if (is.na(agent$validation_set$column[idx] %>% unlist())) {
     column_names <- get_all_cols(agent = agent)
   }
   
@@ -492,8 +486,6 @@ interrogate_distinct <- function(agent, idx, table) {
 
 add_reporting_data <- function(agent, idx, tbl_checked) {
 
-  idx_row <- min(which(agent$validation_set$i == idx))
-  
   # Get total count of rows
   row_count <- 
     tbl_checked %>%
@@ -520,16 +512,16 @@ add_reporting_data <- function(agent, idx, tbl_checked) {
   # If it is necessary, stop the function here
   stop_if_necessary(agent, idx, false_count = n_failed)
   
-  agent$validation_set$n[idx_row] <- row_count
-  agent$validation_set$n_passed[idx_row] <- n_passed
-  agent$validation_set$n_failed[idx_row] <- n_failed
-  agent$validation_set$f_passed[idx_row] <- round((n_passed / row_count), 5)
-  agent$validation_set$f_failed[idx_row] <- round((n_failed / row_count), 5)
+  agent$validation_set$n[idx] <- row_count
+  agent$validation_set$n_passed[idx] <- n_passed
+  agent$validation_set$n_failed[idx] <- n_failed
+  agent$validation_set$f_passed[idx] <- round((n_passed / row_count), 5)
+  agent$validation_set$f_failed[idx] <- round((n_failed / row_count), 5)
   
   if (n_failed > 0) {
-    agent$validation_set$all_passed[idx_row] <- FALSE
+    agent$validation_set$all_passed[idx] <- FALSE
   } else {
-    agent$validation_set$all_passed[idx_row] <- TRUE
+    agent$validation_set$all_passed[idx] <- TRUE
   }
   
   agent <-
@@ -544,12 +536,10 @@ add_reporting_data <- function(agent, idx, tbl_checked) {
 
 perform_action <- function(agent, idx, type) {
 
-  idx_row <- min(which(agent$validation_set$i == idx))
+  actions <- agent$validation_set[[idx, "actions"]]
   
-  actions <- agent$validation_set[[idx_row, "actions"]]
-  
-  .warn <- agent$validation_set[[idx_row, "warn"]]
-  .notify <- agent$validation_set[[idx_row, "notify"]]
+  .warn <- agent$validation_set[[idx, "warn"]]
+  .notify <- agent$validation_set[[idx, "notify"]]
   
   .name <- agent$name
   .time <- agent$time
@@ -559,17 +549,17 @@ perform_action <- function(agent, idx, type) {
   .col_types <- agent$col_types
   
   .i <- idx
-  .type <- agent$validation_set[[idx_row, "assertion_type"]]
-  .column <- agent$validation_set[[idx_row, "column"]] %>% unlist()
-  .value <- agent$validation_set[[idx_row, "value"]]
-  .set <- agent$validation_set[[idx_row, "set"]] %>% unlist()
-  .regex <- agent$validation_set[[idx_row, "regex"]]
-  .brief <- agent$validation_set[[idx_row, "brief"]]
-  .n <- agent$validation_set[[idx_row, "n"]]
-  .n_passed <- agent$validation_set[[idx_row, "n_passed"]]
-  .n_failed <- agent$validation_set[[idx_row, "n_failed"]]
-  .f_passed <- agent$validation_set[[idx_row, "f_passed"]]
-  .f_failed <- agent$validation_set[[idx_row, "f_failed"]]
+  .type <- agent$validation_set[[idx, "assertion_type"]]
+  .column <- agent$validation_set[[idx, "column"]] %>% unlist()
+  .value <- agent$validation_set[[idx, "value"]]
+  .set <- agent$validation_set[[idx, "set"]] %>% unlist()
+  .regex <- agent$validation_set[[idx, "regex"]]
+  .brief <- agent$validation_set[[idx, "brief"]]
+  .n <- agent$validation_set[[idx, "n"]]
+  .n_passed <- agent$validation_set[[idx, "n_passed"]]
+  .n_failed <- agent$validation_set[[idx, "n_failed"]]
+  .f_passed <- agent$validation_set[[idx, "f_passed"]]
+  .f_failed <- agent$validation_set[[idx, "f_failed"]]
   
   # Have the local vars packaged in a list to make creating
   # custom functions more convenient

@@ -70,7 +70,6 @@ get_agent_report <- function(agent) {
   
   dplyr::tibble(
     i = validation_set$i,
-    j = validation_set$j,
     type = validation_set$assertion_type,
     columns = columns,
     value = validation_set$value,

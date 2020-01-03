@@ -60,39 +60,13 @@ conjointly <- function(x,
       assertion_type = "conjointly",
       column = NULL,
       value = NULL,
-      set = NULL,
+      set = validation_formulas,
       regex = NULL,
       incl_na = NULL,
       preconditions = preconditions,
       actions = actions,
       brief = brief
     )
-  
-  # Get the current step
-  current_step <- (agent$validation_set %>% nrow())
-  
-  for (formula in validation_formulas) {
-    
-    agent <-
-      eval(
-        expr = parse(
-          text =
-            formula %>%
-            rlang::f_rhs() %>%
-            rlang::expr_deparse() %>%
-            tidy_gsub("(.", "(agent", fixed = TRUE)
-        ),
-        envir = NULL
-      )
-  }
-  
-  joint_rows <- (current_step + 1):(agent$validation_set %>% nrow())
-  
-  agent$validation_set[joint_rows, "i"] <- current_step
-  agent$validation_set[current_step, "j"] <- NA_integer_
-  # agent$validation_set[joint_rows, "preconditions"] <- preconditions
-  # agent$validation_set[joint_rows, "actions"] <- list(actions)
-  agent$validation_set[joint_rows, "j"] <- seq(joint_rows)
   
   agent
 }  

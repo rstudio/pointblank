@@ -59,7 +59,7 @@ create_agent <- function(tbl,
   suppressWarnings(
     column_names_types <-
       tbl %>%
-      head(1) %>%
+      utils::head(1) %>%
       dplyr::collect() %>%
       vapply(
         FUN.VALUE = character(1),
@@ -83,7 +83,6 @@ create_agent <- function(tbl,
       validation_set =
         dplyr::tibble(
           i = integer(0),
-          j = integer(0),
           assertion_type = character(0),
           column = list(NULL),
           value = numeric(0),

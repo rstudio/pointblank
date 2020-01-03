@@ -6,6 +6,7 @@
 #' @param warn_at,stop_at,notify_at The threshold number for validation units
 #'   returning a `FALSE` result before applying the `warn`, `stop`, or `notify`
 #'   flags.
+#' @param fns A named list of functions that can be used with each action type.
 #'
 #' @export
 action_levels <- function(warn_at = NULL,

@@ -59,7 +59,7 @@ create_agent <- function(tbl,
   suppressWarnings(
     column_names_types <-
       tbl %>%
-      head(1) %>%
+      utils::head(1) %>%
       dplyr::collect() %>%
       vapply(
         FUN.VALUE = character(1),

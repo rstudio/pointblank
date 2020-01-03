@@ -60,7 +60,9 @@ interrogate <- function(agent,
   # Add the starting time to the `agent` object
   agent$time <- Sys.time()
   
-  for (i in seq_len(nrow(agent$validation_set))) {
+  validation_steps <- unique(agent$validation_set$i)
+  
+  for (i in validation_steps) {
     
     # Get the starting time for the validation step
     validation_start_time <- Sys.time()
@@ -73,35 +75,69 @@ interrogate <- function(agent,
 
     # Get the assertion type for this verification step
     assertion_type <- get_assertion_type_at_idx(agent, idx = i)
-    
-    # Perform table checking based on assertion type
-    tbl_checked <-
-      switch(
-        assertion_type,
-        "col_vals_gt" =,
-        "col_vals_gte" =,
-        "col_vals_lt" =,
-        "col_vals_lte" =,
-        "col_vals_equal" =,
-        "col_vals_not_equal" = interrogate_comparison(agent, idx = i, table, assertion_type),
-        "col_vals_between" =,
-        "col_vals_not_between" = interrogate_between(agent, idx = i, table, assertion_type),
-        "col_vals_in_set" =,
-        "col_vals_not_in_set" = interrogate_set(agent, idx = i, table, assertion_type),
-        "col_vals_null" = interrogate_null(agent, idx = i, table),
-        "col_vals_not_null" = interrogate_not_null(agent, idx = i, table),
-        "col_vals_regex" = interrogate_regex(agent, idx = i, table),
-        "col_exists" = interrogate_col_exists(agent, idx = i, table),
-        "col_is_numeric" =,
-        "col_is_integer" =,
-        "col_is_character" =,
-        "col_is_logical" =,
-        "col_is_posix" =,
-        "col_is_date" =,
-        "col_is_factor" = interrogate_col_type(agent, idx = i, table, assertion_type),
-        "rows_distinct" = interrogate_distinct(agent, idx = i, table)
-      )
-    
+
+    if (assertion_type != "conjointly") {
+      
+      # Perform table checking based on assertion type
+      tbl_checked <- check_table_with_assertion(agent, idx = i, table, assertion_type)
+      
+    } else if (assertion_type == "conjointly") {
+      
+      validation_formulas <- agent$validation_set[[i, "set"]]
+      validation_n <- length(validation_formulas)
+      
+      # Create a double agent
+      double_agent <- create_agent(tbl = agent$tbl)
+      
+      for (formula in validation_formulas) {
+        
+        double_agent <-
+          eval(
+            expr = parse(
+              text =
+                formula %>%
+                rlang::f_rhs() %>%
+                rlang::expr_deparse() %>%
+                tidy_gsub("(.", "(double_agent", fixed = TRUE)
+            ),
+            envir = NULL
+          )
+      }
+      
+      tbl_checked <- table
+      
+      for (j in seq(nrow(double_agent$validation_set))) {
+        
+        # Get the assertion type for this verification step
+        assertion_type <- 
+          get_assertion_type_at_idx(agent = double_agent, idx = j)
+        
+        tbl_checked <- 
+          dplyr::bind_cols(
+            tbl_checked,
+            check_table_with_assertion(
+              agent = double_agent,
+              idx = j,
+              table,
+              assertion_type
+            )
+          )
+      }
+      
+      tbl_checked <-
+        tbl_checked %>%
+        dplyr::select(dplyr::starts_with("pb_is_good_")) %>%
+        dplyr::mutate_all(as.numeric) %>%
+        dplyr::mutate(pb_sum = rowSums(dplyr::select(., dplyr::everything()))) %>%
+        dplyr::select(pb_is_good_ = pb_sum) %>%
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          pb_is_good_ == validation_n ~ TRUE,
+          TRUE ~ FALSE
+        ))
+      
+      tbl_checked <- dplyr::bind_cols(table, tbl_checked)
+    }
+
     # Add in the necessary reporting data for the validation
     agent <- add_reporting_data(agent, idx = i, tbl_checked = tbl_checked)
     
@@ -138,12 +174,44 @@ interrogate <- function(agent,
   agent
 }
 
+check_table_with_assertion <- function(agent, idx, table, assertion_type) {
+  
+  tbl_checked <-
+    switch(
+      assertion_type,
+      "col_vals_gt" =,
+      "col_vals_gte" =,
+      "col_vals_lt" =,
+      "col_vals_lte" =,
+      "col_vals_equal" =,
+      "col_vals_not_equal" = interrogate_comparison(agent, idx, table, assertion_type),
+      "col_vals_between" =,
+      "col_vals_not_between" = interrogate_between(agent, idx, table, assertion_type),
+      "col_vals_in_set" =,
+      "col_vals_not_in_set" = interrogate_set(agent, idx, table, assertion_type),
+      "col_vals_null" = interrogate_null(agent, idx, table),
+      "col_vals_not_null" = interrogate_not_null(agent, idx, table),
+      "col_vals_regex" = interrogate_regex(agent, idx, table),
+      "col_exists" = interrogate_col_exists(agent, idx, table),
+      "col_is_numeric" =,
+      "col_is_integer" =,
+      "col_is_character" =,
+      "col_is_logical" =,
+      "col_is_posix" =,
+      "col_is_date" =,
+      "col_is_factor" = interrogate_col_type(agent, idx, table, assertion_type),
+      "rows_distinct" = interrogate_distinct(agent, idx, table)
+    )
+  
+  tbl_checked
+}
+
 interrogate_comparison <- function(agent, idx, table, assertion_type) {
   
   # Get the value for the expression
   value <- get_column_value_at_idx(agent = agent, idx = idx)
   
-  # Obtain the target column as a symbol
+  # Obtain the target column as a label
   column <- 
     get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
     rlang::as_label()
@@ -270,7 +338,7 @@ interrogate_null <- function(agent, idx, table) {
 }
 
 interrogate_not_null <- function(agent, idx, table) {
-  
+
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
@@ -306,7 +374,7 @@ interrogate_regex <- function(agent, idx, table) {
 }
 
 interrogate_col_exists <- function(agent, idx, table) {
-  
+
   # Get the column names for the table
   column_names <- get_all_cols(agent = agent)
   
@@ -328,7 +396,7 @@ interrogate_col_type <- function(agent, idx, table, assertion_type) {
   column_class <-
     table %>%
     dplyr::select({{ column }}) %>%
-    head(1) %>%
+    utils::head(1) %>%
     dplyr::as_tibble() %>%
     dplyr::pull({{ column }}) %>%
     class()
@@ -552,11 +620,11 @@ add_table_extract <- function(agent,
                               sample_n,
                               sample_frac,
                               sample_limit) {
-  
+
   if (!extract_failed) {
     return(agent)
   }
-  
+
   tbl_type <- tbl_checked %>% class()
   
   problem_rows <- 
@@ -571,7 +639,8 @@ add_table_extract <- function(agent,
       utils::head(get_first_n) %>%
       dplyr::as_tibble()
     
-  } else if (all(!is.null(sample_n) & ("data.frame" %in% tbl_type || "tbl_df" %in% tbl_type))) {
+  } else if (all(!is.null(sample_n) & 
+                 ("data.frame" %in% tbl_type || "tbl_df" %in% tbl_type))) {
     
     problem_rows <-
       dplyr::sample_n(
@@ -580,7 +649,8 @@ add_table_extract <- function(agent,
         replace = FALSE) %>%
       dplyr::as_tibble()
     
-  } else if (all(!is.null(sample_frac) & ("data.frame" %in% tbl_type || "tbl_df" %in% tbl_type))) {
+  } else if (all(!is.null(sample_frac) & 
+                 ("data.frame" %in% tbl_type || "tbl_df" %in% tbl_type))) {
     
     problem_rows <-
       dplyr::sample_frac(
@@ -611,6 +681,8 @@ add_table_extract <- function(agent,
 }
 
 stop_if_necessary <- function(agent, idx, false_count) {
+  
+  idx <- min(which(agent$validation_set$i == idx))
   
   actions_list <- agent$validation_set[[idx, "actions"]]
   n <- agent$validation_set[[idx, "n"]]
@@ -659,6 +731,8 @@ stop_if_necessary <- function(agent, idx, false_count) {
 }
 
 determine_action <- function(agent, idx, false_count) {
+  
+  idx <- min(which(agent$validation_set$i == idx))
   
   actions_list <- agent$validation_set[[idx, "actions"]]
   n <- agent$validation_set[[idx, "n"]]

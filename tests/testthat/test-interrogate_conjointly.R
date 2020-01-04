@@ -1,0 +1,165 @@
+context("Performing conjoint interrogations with an agent")
+
+test_that("Interrogating conjointly with an agent yields the correct results", {
+  
+  df <-
+    data.frame(
+      a = c(5, 7, 6,  5, 8,  7),
+      b = c(3, 4, 6,  8, 9, 11),
+      c = c(2, 6, 8, NA, 3,  8)
+    )
+  
+  # Use three validation step functions in a single
+  # `conjointly()` validation step, then, `interrogate()`
+  validation <-
+    create_agent(tbl = df) %>%
+    conjointly(
+      ~ col_vals_gt(., columns = vars(a), value = 4),
+      ~ col_vals_lt(., columns = vars(b), value = 10),
+      ~ col_vals_not_null(., columns = vars(c))
+    ) %>%
+    interrogate()
+  
+  # Expect a single row in `validation$validation_set`
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "df")
+  expect_equivalent(validation$validation_set$i, 1)
+  expect_equivalent(validation$validation_set$assertion_type, "conjointly")
+  expect_true(is.list(validation$validation_set$column))
+  expect_true(is.na(validation$validation_set$value))
+  expect_true(is.list(validation$validation_set$set))
+  expect_true(is.na(validation$validation_set$regex))
+  expect_true(is.na(validation$validation_set$incl_na))
+  expect_true(is.list(validation$validation_set$preconditions))
+  expect_true(is.list(validation$validation_set$actions))
+  expect_false(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 6)
+  expect_equivalent(validation$validation_set$n_passed, 4)
+  expect_equivalent(validation$validation_set$n_failed, 2)
+  expect_equivalent(validation$validation_set$f_passed, 0.66667)
+  expect_equivalent(validation$validation_set$f_failed, 0.33333)
+  
+  validation$validation_set[["set"]] %>% unlist() %>% length() %>%
+    expect_equal(3)
+  
+  expect_is(validation$validation_set[["set"]] %>% unlist() %>% .[[1]], "formula")
+  expect_is(validation$validation_set[["set"]] %>% unlist() %>% .[[2]], "formula")
+  expect_is(validation$validation_set[["set"]] %>% unlist() %>% .[[3]], "formula")
+  
+  validation$validation_set[["set"]] %>% unlist() %>% .[[1]] %>% as.character() %>%
+    expect_equal(c("~", "col_vals_gt(., columns = vars(a), value = 4)"))
+  validation$validation_set[["set"]] %>% unlist() %>% .[[2]] %>% as.character() %>%
+    expect_equal(c("~", "col_vals_lt(., columns = vars(b), value = 10)"))
+  validation$validation_set[["set"]] %>% unlist() %>% .[[3]] %>% as.character() %>%
+    expect_equal(c("~", "col_vals_not_null(., columns = vars(c))"))
+  
+  validation$validation_set[["preconditions"]] %>% unlist() %>% length() %>%
+    expect_equal(0)
+  
+  
+  # Use three validation step functions in a single
+  # `conjointly()` validation step, then, `interrogate()`;
+  # use `preconditions` to mutate the `tbl` beforehand
+  validation <-
+    create_agent(tbl = df) %>%
+    conjointly(
+      ~ col_vals_gt(., columns = vars(a), value = 4),
+      ~ col_vals_lt(., columns = vars(b), value = 10),
+      ~ col_vals_not_null(., columns = vars(c)),
+      preconditions = ~ tbl %>% head(2)
+    ) %>%
+    interrogate()
+  
+  # Expect a single row in `validation$validation_set`
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "df")
+  expect_equivalent(validation$validation_set$i, 1)
+  expect_equivalent(validation$validation_set$assertion_type, "conjointly")
+  expect_true(is.list(validation$validation_set$column))
+  expect_true(is.na(validation$validation_set$value))
+  expect_true(is.list(validation$validation_set$set))
+  expect_true(is.na(validation$validation_set$regex))
+  expect_true(is.na(validation$validation_set$incl_na))
+  expect_true(is.list(validation$validation_set$preconditions))
+  expect_true(is.list(validation$validation_set$actions))
+  expect_true(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 2)
+  expect_equivalent(validation$validation_set$n_passed, 2)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
+  
+  validation$validation_set[["set"]] %>% unlist() %>% length() %>%
+    expect_equal(3)
+  
+  validation$validation_set[["preconditions"]] %>% unlist() %>% length() %>%
+    expect_equal(1)
+  
+  expect_is(validation$validation_set[["set"]] %>% unlist() %>% .[[1]], "formula")
+  expect_is(validation$validation_set[["set"]] %>% unlist() %>% .[[2]], "formula")
+  expect_is(validation$validation_set[["set"]] %>% unlist() %>% .[[3]], "formula")
+  
+  validation$validation_set[["set"]] %>% unlist() %>% .[[1]] %>% as.character() %>%
+    expect_equal(c("~", "col_vals_gt(., columns = vars(a), value = 4)"))
+  validation$validation_set[["set"]] %>% unlist() %>% .[[2]] %>% as.character() %>%
+    expect_equal(c("~", "col_vals_lt(., columns = vars(b), value = 10)"))
+  validation$validation_set[["set"]] %>% unlist() %>% .[[3]] %>% as.character() %>%
+    expect_equal(c("~", "col_vals_not_null(., columns = vars(c))"))
+  
+  validation$validation_set[["preconditions"]] %>% unlist() %>% .[[1]] %>% as.character() %>%
+    expect_equal(c("~", "tbl %>% head(2)"))
+  
+  # Use a single validation step function in a single
+  # `conjointly()` validation step, then, `interrogate()`
+  validation <-
+    create_agent(tbl = df) %>%
+    conjointly(
+      ~ col_vals_gt(., columns = vars(a), value = 2)
+    ) %>%
+    interrogate()
+  
+  # Expect a single row in `validation$validation_set`
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "df")
+  expect_equivalent(validation$validation_set$i, 1)
+  expect_equivalent(validation$validation_set$assertion_type, "conjointly")
+  expect_true(is.list(validation$validation_set$column))
+  expect_true(is.na(validation$validation_set$value))
+  expect_true(is.list(validation$validation_set$set))
+  expect_true(is.na(validation$validation_set$regex))
+  expect_true(is.na(validation$validation_set$incl_na))
+  expect_true(is.list(validation$validation_set$preconditions))
+  expect_true(is.list(validation$validation_set$actions))
+  expect_true(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 6)
+  expect_equivalent(validation$validation_set$n_passed, 6)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
+  
+  validation$validation_set[["set"]] %>% unlist() %>% length() %>%
+    expect_equal(1)
+  
+  validation$validation_set[["preconditions"]] %>% unlist() %>% length() %>%
+    expect_equal(0)
+  
+  expect_is(validation$validation_set[["set"]] %>% unlist() %>% .[[1]], "formula")
+  
+  validation$validation_set[["set"]] %>% unlist() %>% .[[1]] %>% as.character() %>%
+    expect_equal(c("~", "col_vals_gt(., columns = vars(a), value = 2)"))
+  
+  
+  # Expect an error if there are no validation
+  # step functions supplied to `conjointly()`
+  expect_error(
+    create_agent(tbl = df) %>%
+      conjointly() %>%
+      interrogate()
+  )
+})

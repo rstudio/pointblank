@@ -896,3 +896,115 @@ test_that("Interrogating simply incorporates the `incl_na` option", {
       )
   )
 })
+
+
+test_that("The inclusivity options work well for the range-based validations", {
+
+  simple_tbl <- dplyr::tibble(a = 1:10)
+  
+  expect_warning(
+    regexp = NA,
+    simple_tbl %>%
+      col_vals_between(
+        columns = vars(a), left = 1, right = 10,
+        inclusive = c(TRUE, TRUE),
+        actions = action_levels(warn_at = 1)
+      )
+  )
+  
+  expect_warning(
+    regexp = NULL,
+    simple_tbl %>%
+      col_vals_between(
+        columns = vars(a), left = 1, right = 10,
+        inclusive = c(FALSE, TRUE),
+        actions = action_levels(warn_at = 1)
+      )
+  )
+  
+  expect_warning(
+    regexp = NULL,
+    simple_tbl %>%
+      col_vals_between(
+        columns = vars(a), left = 1, right = 10,
+        inclusive = c(TRUE, FALSE),
+        actions = action_levels(warn_at = 1)
+      )
+  )
+  
+  expect_warning(
+    regexp = NA,
+    simple_tbl %>%
+      col_vals_between(
+        columns = vars(a), left = 1, right = 10,
+        inclusive = c(FALSE, FALSE),
+        actions = action_levels(warn_at = 3)
+      )
+  )
+  expect_warning(
+    regexp = NULL,
+    simple_tbl %>%
+      col_vals_between(
+        columns = vars(a), left = 1, right = 10,
+        inclusive = c(FALSE, FALSE),
+        actions = action_levels(warn_at = 2)
+      )
+  )
+  
+  expect_warning(
+    regexp = NULL,
+    simple_tbl %>%
+      col_vals_not_between(
+        columns = vars(a), left = 10, right = 12,
+        inclusive = c(TRUE, TRUE),
+        actions = action_levels(warn_at = 1)
+      )
+  )
+  expect_warning(
+    regexp = NA,
+    simple_tbl %>%
+      col_vals_not_between(
+        columns = vars(a), left = 10, right = 12,
+        inclusive = c(FALSE, TRUE),
+        actions = action_levels(warn_at = 1)
+      )
+  )
+  expect_warning(
+    regexp = NA,
+    simple_tbl %>%
+      col_vals_not_between(
+        columns = vars(a), left = 10, right = 12,
+        inclusive = c(FALSE, FALSE),
+        actions = action_levels(warn_at = 1)
+      )
+  )
+  
+  
+  expect_warning(
+    regexp = NULL,
+    simple_tbl %>%
+      col_vals_not_between(
+        columns = vars(a), left = -2, right = 1,
+        inclusive = c(TRUE, TRUE),
+        actions = action_levels(warn_at = 1)
+      )
+  )
+  expect_warning(
+    regexp = NA,
+    simple_tbl %>%
+      col_vals_not_between(
+        columns = vars(a), left = -2, right = 1,
+        inclusive = c(TRUE, FALSE),
+        actions = action_levels(warn_at = 1)
+      )
+  )
+  expect_warning(
+    regexp = NA,
+    simple_tbl %>%
+      col_vals_not_between(
+        columns = vars(a), left = -2, right = 1,
+        inclusive = c(FALSE, FALSE),
+        actions = action_levels(warn_at = 1)
+      )
+  )
+})

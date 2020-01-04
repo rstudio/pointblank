@@ -56,7 +56,7 @@ get_data_extracts <- function(agent,
   # Stop function if the agent hasn't
   # yet performed an interrogation
   if (!inherits(agent, "has_intel")) {
-    return(NA)
+    stop("The `agent` has not yet performed an interrogation.", call. = FALSE)
   }
   
   # Get the number of validation steps

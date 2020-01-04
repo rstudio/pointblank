@@ -1,11 +1,11 @@
 context("Getting data extracts")
 
+small_table <-
+  readr::read_csv(
+    system.file("extdata", "small_table.csv", package = "pointblank"),
+    col_types = "TDicddlc")
+
 test_that("Getting data extracts is possible", {
-  
-  small_table <-
-    readr::read_csv(
-      system.file("extdata", "small_table.csv", package = "pointblank"),
-      col_types = "TDicddlc")
   
   # Use two validation step functions to create
   # two validation steps and then `interrogate()`
@@ -34,7 +34,6 @@ test_that("Getting data extracts is possible", {
     ) %>%
     expect_equal(rep("tbl_df", 2))
   
-  
   # Expect that using `get_data_extracts()` when
   # specifying `i` gives us the data extracts as a tbl
   get_data_extracts(agent, i = 1) %>% expect_is("tbl_df")
@@ -43,7 +42,6 @@ test_that("Getting data extracts is possible", {
   # Expect an error if the `i` value isn't valid
   expect_error(get_data_extracts(agent, i = 3))
 
-  
   # Use a single validation step function that doesn't
   # produce a data extract during `interrogate()`
   agent <-
@@ -74,4 +72,186 @@ test_that("Getting data extracts is possible", {
       col_vals_lt(columns = vars(d), value = 1000) %>%
       get_data_extracts()
   )
+})
+
+test_that("Data extracts of different sizes are possible to create", {
+  
+  # Get only the first data extract value
+  agent <-
+    create_agent(tbl = small_table) %>%
+    col_vals_gt(columns = vars(c), value = 5) %>%
+    col_vals_lt(columns = vars(d), value = 1000) %>%
+    interrogate(get_first_n = 1)
+
+  # Get a summary of the interrogation
+  summary <- get_agent_report(agent)
+  
+  # Expect that the summary shows there are
+  # two data extracts available
+  expect_equal(summary$extract, c(TRUE, TRUE))
+  
+  # Expect that using `get_data_extracts()` without
+  # specifying `i` gives us a list of all data extracts
+  get_data_extracts(agent) %>% expect_is("list")
+  get_data_extracts(agent) %>% names() %>% expect_equal(as.character(1:2))
+  get_data_extracts(agent) %>% length() %>% expect_equal(2)
+  get_data_extracts(agent) %>% 
+    vapply(
+      FUN.VALUE = character(1), USE.NAMES = FALSE,
+      FUN = function(x) class(x)[1]
+    ) %>%
+    expect_equal(rep("tbl_df", 2))
+  
+  # Expect that using `get_data_extracts()` when
+  # specifying `i` gives us the data extracts as a tbl
+  get_data_extracts(agent, i = 1) %>% expect_is("tbl_df")
+  get_data_extracts(agent, i = 2) %>% expect_is("tbl_df")
+  
+  # Expect only single rows in each of the extracts
+  get_data_extracts(agent, i = 1) %>% nrow() %>% expect_equal(1)
+  get_data_extracts(agent, i = 2) %>% nrow() %>% expect_equal(1)
+  
+  # Impose an overall sample row limit on each data extract;
+  # this won't have any effect by itself
+  agent <-
+    create_agent(tbl = small_table) %>%
+    col_vals_gt(columns = vars(c), value = 5) %>%
+    col_vals_lt(columns = vars(d), value = 1000) %>%
+    interrogate(sample_limit = 2)
+  
+  # Get a summary of the interrogation
+  summary <- get_agent_report(agent)
+  
+  # Expect that the summary shows there are
+  # two data extracts available
+  expect_equal(summary$extract, c(TRUE, TRUE))
+  
+  # Expect that using `get_data_extracts()` without
+  # specifying `i` gives us a list of all data extracts
+  get_data_extracts(agent) %>% expect_is("list")
+  get_data_extracts(agent) %>% names() %>% expect_equal(as.character(1:2))
+  get_data_extracts(agent) %>% length() %>% expect_equal(2)
+  get_data_extracts(agent) %>% 
+    vapply(
+      FUN.VALUE = character(1), USE.NAMES = FALSE,
+      FUN = function(x) class(x)[1]
+    ) %>%
+    expect_equal(rep("tbl_df", 2))
+  
+  # Expect that using `get_data_extracts()` when
+  # specifying `i` gives us the data extracts as a tbl
+  get_data_extracts(agent, i = 1) %>% expect_is("tbl_df")
+  get_data_extracts(agent, i = 2) %>% expect_is("tbl_df")
+  
+  # Expect seven rows in each of the extracts
+  get_data_extracts(agent, i = 1) %>% nrow() %>% expect_equal(7)
+  get_data_extracts(agent, i = 2) %>% nrow() %>% expect_equal(7)
+  
+  # Use the `sample_n` option for each data extract,
+  # expect that the `sample_limit` won't have any effect
+  agent <-
+    create_agent(tbl = small_table) %>%
+    col_vals_gt(columns = vars(c), value = 5) %>%
+    col_vals_lt(columns = vars(d), value = 1000) %>%
+    interrogate(sample_n = 5, sample_limit = 2)
+  
+  # Get a summary of the interrogation
+  summary <- get_agent_report(agent)
+  
+  # Expect that the summary shows there are
+  # two data extracts available
+  expect_equal(summary$extract, c(TRUE, TRUE))
+  
+  # Expect that using `get_data_extracts()` without
+  # specifying `i` gives us a list of all data extracts
+  get_data_extracts(agent) %>% expect_is("list")
+  get_data_extracts(agent) %>% names() %>% expect_equal(as.character(1:2))
+  get_data_extracts(agent) %>% length() %>% expect_equal(2)
+  get_data_extracts(agent) %>% 
+    vapply(
+      FUN.VALUE = character(1), USE.NAMES = FALSE,
+      FUN = function(x) class(x)[1]
+    ) %>%
+    expect_equal(rep("tbl_df", 2))
+  
+  # Expect that using `get_data_extracts()` when
+  # specifying `i` gives us the data extracts as a tbl
+  get_data_extracts(agent, i = 1) %>% expect_is("tbl_df")
+  get_data_extracts(agent, i = 2) %>% expect_is("tbl_df")
+  
+  # Expect seven rows in each of the extracts
+  get_data_extracts(agent, i = 1) %>% nrow() %>% expect_equal(5)
+  get_data_extracts(agent, i = 2) %>% nrow() %>% expect_equal(5)
+  
+  # Use the `sample_frac` option for each data extract,
+  # expect that the `sample_limit` will impose a limit
+  agent <-
+    create_agent(tbl = small_table) %>%
+    col_vals_gt(columns = vars(c), value = 5) %>%
+    col_vals_lt(columns = vars(d), value = 1000) %>%
+    interrogate(sample_frac = 0.75, sample_limit = 3)
+  
+  # Get a summary of the interrogation
+  summary <- get_agent_report(agent)
+  
+  # Expect that the summary shows there are
+  # two data extracts available
+  expect_equal(summary$extract, c(TRUE, TRUE))
+  
+  # Expect that using `get_data_extracts()` without
+  # specifying `i` gives us a list of all data extracts
+  get_data_extracts(agent) %>% expect_is("list")
+  get_data_extracts(agent) %>% names() %>% expect_equal(as.character(1:2))
+  get_data_extracts(agent) %>% length() %>% expect_equal(2)
+  get_data_extracts(agent) %>% 
+    vapply(
+      FUN.VALUE = character(1), USE.NAMES = FALSE,
+      FUN = function(x) class(x)[1]
+    ) %>%
+    expect_equal(rep("tbl_df", 2))
+  
+  # Expect that using `get_data_extracts()` when
+  # specifying `i` gives us the data extracts as a tbl
+  get_data_extracts(agent, i = 1) %>% expect_is("tbl_df")
+  get_data_extracts(agent, i = 2) %>% expect_is("tbl_df")
+  
+  # Expect seven rows in each of the extracts
+  get_data_extracts(agent, i = 1) %>% nrow() %>% expect_equal(3)
+  get_data_extracts(agent, i = 2) %>% nrow() %>% expect_equal(3)
+  
+  # Use the `sample_frac` option for each data extract
+  # with the default `sample_limit` value of 5000
+  agent <-
+    create_agent(tbl = small_table) %>%
+    col_vals_gt(columns = vars(c), value = 5) %>%
+    col_vals_lt(columns = vars(d), value = 1000) %>%
+    interrogate(sample_frac = 0.75)
+  
+  # Get a summary of the interrogation
+  summary <- get_agent_report(agent)
+  
+  # Expect that the summary shows there are
+  # two data extracts available
+  expect_equal(summary$extract, c(TRUE, TRUE))
+  
+  # Expect that using `get_data_extracts()` without
+  # specifying `i` gives us a list of all data extracts
+  get_data_extracts(agent) %>% expect_is("list")
+  get_data_extracts(agent) %>% names() %>% expect_equal(as.character(1:2))
+  get_data_extracts(agent) %>% length() %>% expect_equal(2)
+  get_data_extracts(agent) %>% 
+    vapply(
+      FUN.VALUE = character(1), USE.NAMES = FALSE,
+      FUN = function(x) class(x)[1]
+    ) %>%
+    expect_equal(rep("tbl_df", 2))
+  
+  # Expect that using `get_data_extracts()` when
+  # specifying `i` gives us the data extracts as a tbl
+  get_data_extracts(agent, i = 1) %>% expect_is("tbl_df")
+  get_data_extracts(agent, i = 2) %>% expect_is("tbl_df")
+  
+  # Expect seven rows in each of the extracts
+  get_data_extracts(agent, i = 1) %>% nrow() %>% expect_equal(5)
+  get_data_extracts(agent, i = 2) %>% nrow() %>% expect_equal(5)
 })

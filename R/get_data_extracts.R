@@ -67,7 +67,7 @@ get_data_extracts <- function(agent,
   }
   
   # Stop function if the `i`th step does not exist in `agent`
-  if (!(i %in% seq_len(validation_steps))) {
+  if (!(i %in% seq(validation_steps))) {
     stop("The provided step number does not exist.", call. = FALSE)
   }
   

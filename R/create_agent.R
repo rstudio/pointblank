@@ -100,6 +100,7 @@ create_agent <- function(tbl,
           f_failed = numeric(0),
           warn = logical(0),
           notify = logical(0),
+          stop = logical(0),
           row_sample = numeric(0),
           time_processed = as.POSIXct(NA)[-1],
           proc_duration_s = numeric(0)

@@ -55,19 +55,19 @@ col_vals_lte <- function(x,
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
-  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
+  if (is_a_table_object(x)) {
     
-    return(
-      x %>%
-        evaluate_single(
-          type = "col_vals_lte",
-          column = columns,
-          value = value,
-          incl_na = incl_na,
-          preconditions = preconditions,
-          actions = actions
-        )
-    )
+    secret_agent <- create_agent(x) %>%
+      col_vals_lte(
+        columns = columns,
+        value = value,
+        incl_na = incl_na,
+        preconditions = preconditions,
+        brief = brief,
+        actions = prime_actions(actions)
+      ) %>% interrogate()
+    
+    return(x)
   }
   
   agent <- x
@@ -77,7 +77,7 @@ col_vals_lte <- function(x,
     brief <-
       create_autobrief(
         agent = agent,
-        assertion_type = "col_vals_gt",
+        assertion_type = "col_vals_lte",
         preconditions = preconditions,
         column = columns,
         value = value

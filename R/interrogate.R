@@ -144,6 +144,7 @@ interrogate <- function(agent,
     # Perform any necessary actions if threshold levels are exceeded
     perform_action(agent, idx = i, type = "warn")
     perform_action(agent, idx = i, type = "notify")
+    perform_action(agent, idx = i, type = "stop")
 
     # Add extracts of failed rows if `extract_failed` is TRUE
     agent <- 
@@ -509,9 +510,6 @@ add_reporting_data <- function(agent, idx, tbl_checked) {
     dplyr::pull(n) %>%
     as.numeric()
   
-  # If it is necessary, stop the function here
-  stop_if_necessary(agent, idx, false_count = n_failed)
-  
   agent$validation_set$n[idx] <- row_count
   agent$validation_set$n_passed[idx] <- n_passed
   agent$validation_set$n_failed[idx] <- n_failed
@@ -613,6 +611,7 @@ perform_action <- function(agent, idx, type) {
   
   .warn <- agent$validation_set[[idx, "warn"]]
   .notify <- agent$validation_set[[idx, "notify"]]
+  .stop <- agent$validation_set[[idx, "stop"]]
   
   .name <- agent$name
   .time <- agent$time
@@ -640,6 +639,7 @@ perform_action <- function(agent, idx, type) {
     list(
       warn = .warn,
       notify = .notify,
+      stop = .stop,
       name = .name,
       time = .time,
       tbl = .tbl,
@@ -664,7 +664,7 @@ perform_action <- function(agent, idx, type) {
     
     if (.warn) {
       if ("warn" %in% names(actions$fns) && !is.null(actions$fns$warn)) {
-        
+ 
         actions$fns$warn %>%
           rlang::f_rhs() %>%
           rlang::eval_tidy()
@@ -676,6 +676,16 @@ perform_action <- function(agent, idx, type) {
       if ("notify" %in% names(actions$fns) && !is.null(actions$fns$notify)) {
         
         actions$fns$notify %>%
+          rlang::f_rhs() %>%
+          rlang::eval_tidy()
+      }
+    }
+  } else if (type == "stop") {
+
+    if (.stop) {
+      if ("stop" %in% names(actions$fns) && !is.null(actions$fns$stop)) {
+        
+        actions$fns$stop %>%
           rlang::f_rhs() %>%
           rlang::eval_tidy()
       }
@@ -753,56 +763,6 @@ add_table_extract <- function(agent,
   agent
 }
 
-stop_if_necessary <- function(agent, idx, false_count) {
-  
-  idx <- min(which(agent$validation_set$i == idx))
-  
-  actions_list <- agent$validation_set[[idx, "actions"]]
-  n <- agent$validation_set[[idx, "n"]]
-  type <- agent$validation_set[[idx, "assertion_type"]]
-  
-  if (false_count == 0 ||
-      is.null(actions_list$stop_count) ||
-      is.null(actions_list$stop_fraction)) {
-    
-    return(NULL)
-  } 
-  
-  if (!is.null(actions_list$stop_count)) {
-    
-    if (false_count >= actions_list$stop_count) {
-      
-      messaging::emit_error(
-        "The validation (`{type}()`) meets or exceeds the `stop_count` threshold",
-        " * `failing_count` ({false_count}) >= `stop_count` ({stop_count})",
-        type = type,
-        false_count = false_count,
-        stop_count = actions_list$stop_count,
-        .format = "{text}"
-      )
-    }
-  }
-  
-  if (!is.null(actions_list$stop_fraction)) {
-    
-    stop_count <- round(actions_list$stop_fraction * n, 0)
-    
-    if (false_count >= stop_count) {
-      
-      false_fraction <- round(false_count / n, 3)
-      
-      messaging::emit_error(
-        "The validation (`{type}()`) meets or exceeds the `stop_fraction` threshold",
-        " * `failing_fraction` ({false_fraction}) >= `stop_fraction` ({stop_fraction})",
-        type = type,
-        false_fraction = false_fraction,
-        stop_fraction = actions_list$stop_fraction,
-        .format = "{text}"
-      )
-    }
-  }
-}
-
 determine_action <- function(agent, idx, false_count) {
   
   idx <- min(which(agent$validation_set$i == idx))
@@ -811,24 +771,24 @@ determine_action <- function(agent, idx, false_count) {
   n <- agent$validation_set[[idx, "n"]]
   type <- agent$validation_set[[idx, "assertion_type"]]
   
+  warn <- notify <- stop <- FALSE
+  
   if (is.null(actions_list$warn_count)) {
     warn <- FALSE
-  } else {
-    if (false_count >= actions_list$warn_count) {
-      warn <- TRUE
-    } else {
-      warn <- FALSE
-    }
+  } else if (false_count >= actions_list$warn_count) {
+    warn <- TRUE
   }
   
   if (is.null(actions_list$notify_count)) {
     notify <- FALSE
-  } else {
-    if (false_count >= actions_list$notify_count) {
-      notify <- TRUE
-    } else {
-      notify <- FALSE
-    }
+  } else if (false_count >= actions_list$notify_count) {
+    notify <- TRUE
+  }
+  
+  if (is.null(actions_list$stop_count)) {
+    stop <- FALSE
+  } else if (false_count >= actions_list$stop_count) {
+    stop <- TRUE
   }
   
   if (!is.null(actions_list$warn_fraction)) {
@@ -837,8 +797,6 @@ determine_action <- function(agent, idx, false_count) {
     
     if (false_count >= warn_count) {
       warn <- TRUE
-    } else {
-      warn <- FALSE
     }
   }
   
@@ -848,13 +806,21 @@ determine_action <- function(agent, idx, false_count) {
     
     if (false_count >= notify_count) {
       notify <- TRUE
-    } else {
-      notify <- FALSE
+    }
+  }
+  
+  if (!is.null(actions_list$stop_fraction)) {
+    
+    stop_count <- round(actions_list$stop_fraction * n, 0)
+    
+    if (false_count >= stop_count) {
+      stop <- TRUE
     }
   }
   
   agent$validation_set[[idx, "warn"]] <- warn
   agent$validation_set[[idx, "notify"]] <- notify
+  agent$validation_set[[idx, "stop"]] <- stop
   
   agent
 }

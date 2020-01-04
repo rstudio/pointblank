@@ -44,23 +44,15 @@ col_exists <- function(x,
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
   
-  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
+  if (is_a_table_object(x)) {
+
+    warning("The `col_exists()` function is not compatible with a table object",
+            call. = FALSE)
     
-    return(
-      x %>%
-        evaluate_single(
-          type = "col_exists",
-          column = columns,
-          value = value,
-          preconditions = NULL,
-          actions = actions
-        )
-    )
+    return(x)
   }
   
   agent <- x
-  
-  preconditions <- NULL
   
   if (is.null(brief)) {
     
@@ -81,7 +73,7 @@ col_exists <- function(x,
         agent = agent,
         assertion_type = "col_exists",
         column = column,
-        preconditions = preconditions,
+        preconditions = NULL,
         actions = actions,
         brief = brief
       )

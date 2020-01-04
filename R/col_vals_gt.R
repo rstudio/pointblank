@@ -61,19 +61,19 @@ col_vals_gt <- function(x,
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)
 
-  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
+  if (is_a_table_object(x)) {
+
+    secret_agent <- create_agent(x) %>%
+      col_vals_gt(
+        columns = columns,
+        value = value,
+        incl_na = incl_na,
+        preconditions = preconditions,
+        brief = brief,
+        actions = prime_actions(actions)
+      ) %>% interrogate()
     
-    return(
-      x %>%
-        evaluate_single(
-          type = "col_vals_gt",
-          column = columns,
-          value = value,
-          incl_na = incl_na,
-          preconditions = preconditions,
-          actions = actions
-        )
-    )
+    return(x)
   }
   
   agent <- x

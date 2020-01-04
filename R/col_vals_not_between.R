@@ -59,20 +59,21 @@ col_vals_not_between <- function(x,
   left <- stats::setNames(left, inclusive[1])
   right <- stats::setNames(right, inclusive[2])
   
-  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
-
-    return(
-      x %>%
-        evaluate_single(
-          type = "col_vals_not_between",
-          column = columns,
-          left = left,
-          right = right,
-          incl_na = incl_na,
-          preconditions = preconditions,
-          actions = actions
-        )
-    )
+  if (is_a_table_object(x)) {
+    
+    secret_agent <- create_agent(x) %>%
+      col_vals_not_between(
+        columns = columns,
+        left = left,
+        right = right,
+        inclusive = inclusive,
+        incl_na = incl_na,
+        preconditions = preconditions,
+        brief = brief,
+        actions = prime_actions(actions)
+      ) %>% interrogate()
+    
+    return(x)
   }
   
   agent <- x

@@ -621,9 +621,48 @@ test_that("Interrogating simply returns the expected results", {
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
   
-
+  # Use the `conjointly()` function to perform
+  # a conjoint validation validation step directly
+  # on the `tbl` object
+  tbl_result <- 
+    tbl %>%
+    conjointly(
+      ~ col_vals_gt(., columns = vars(d), value = 200),
+      ~ col_vals_lt(., columns = vars(c), value = 10)
+    )
+    
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
   
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- 
+      tbl %>%
+      conjointly(
+        ~ col_vals_gt(., columns = vars(d), value = 200),
+        ~ col_vals_lt(., columns = vars(c), value = 10),
+        actions = action_levels(warn_at = 1)
+      )
+  )
   
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- 
+      tbl %>%
+      conjointly(
+        ~ col_vals_gt(., columns = vars(d), value = 200),
+        ~ col_vals_lt(., columns = vars(c), value = 10),
+        actions = action_levels(stop_at = 1)
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
   
   # Using the `col_exists()` function to perform
   # a simple validation step results in a warning

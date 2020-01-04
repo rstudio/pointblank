@@ -52,6 +52,19 @@ conjointly <- function(x,
       )
     ]
   
+  if (is_a_table_object(x)) {
+    
+    secret_agent <- create_agent(x) %>%
+      conjointly(
+        .list = .list,
+        preconditions = preconditions,
+        brief = brief,
+        actions = prime_actions(actions)
+      ) %>% interrogate()
+    
+    return(x)
+  }
+  
   agent <- x
   
   agent <-

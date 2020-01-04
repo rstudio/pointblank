@@ -14,9 +14,8 @@ test_that("Utility functions won't fail us", {
     col_vals_gt(columns = vars(c), value = 5) %>%
     col_vals_lt(columns = vars(d), value = 1000)
   
-  
-  is_ptblank_agent(object = agent) %>% expect_true()
-  is_ptblank_agent(object = small_table) %>% expect_false()
+  is_ptblank_agent(x = agent) %>% expect_true()
+  is_ptblank_agent(x = small_table) %>% expect_false()
   
   agent %>% get_tbl_object() %>% expect_is("tbl_df")
   agent %>% get_tbl_object() %>% expect_equivalent(small_table)

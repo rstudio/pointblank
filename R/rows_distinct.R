@@ -40,13 +40,26 @@ rows_distinct <- function(x,
                           brief = NULL,
                           actions = NULL) {
 
-  agent <- x
-  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)
+  
+  if (is_a_table_object(x)) {
+    
+    secret_agent <- create_agent(x) %>%
+      rows_distinct(
+        columns = columns,
+        preconditions = preconditions,
+        brief = brief,
+        actions = prime_actions(actions)
+      ) %>% interrogate()
+    
+    return(x)
+  }
+  
+  agent <- x
   
   if (length(columns) > 0) {
     

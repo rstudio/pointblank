@@ -8,16 +8,16 @@ tbl <-
 
 test_that("Interrogating simply returns the expected results", {
   
-  # Use the `col_exists()` function to perform
+  # Use the `rows_distinct()` function to perform
   # a simple validation step
-  tbl_result <- tbl %>% col_exists(columns = vars(g))
+  tbl_result <- tbl[1:2, ] %>% rows_distinct()
   
-  # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  # Expect that `tbl_result` is equivalent to `tbl[1:2, ]`
+  expect_equivalent(tbl[1:2, ], tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- tbl %>% col_exists(columns = vars(h), actions = action_levels(warn_at = 1))
+    tbl_result <- tbl %>% rows_distinct(actions = action_levels(warn_at = 1))
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -27,7 +27,7 @@ test_that("Interrogating simply returns the expected results", {
   
   # Perform a simple validation step that results in stopping
   expect_error(
-    tbl_result <- tbl %>% col_exists(columns = vars(h), actions = action_levels(stop_at = 1))
+    tbl_result <- tbl %>% rows_distinct(actions = action_levels(stop_at = 1))
   )
   
   # Expect that `tbl_result` is never created
@@ -620,6 +620,14 @@ test_that("Interrogating simply returns the expected results", {
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
+  
+
+  
+  
+  
+  # Using the `col_exists()` function to perform
+  # a simple validation step results in a warning
+  expect_warning(tbl %>% col_exists(columns = vars(g)))
 })
 
 test_that("Interrogating simply incorporates the `incl_na` option", {

@@ -50,19 +50,19 @@ col_vals_regex <- function(x,
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
-  if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
+  if (is_a_table_object(x)) {
     
-    return(
-      x %>%
-        evaluate_single(
-          type = "col_vals_regex",
-          column = columns,
-          regex = regex,
-          incl_na = incl_na,
-          preconditions = preconditions,
-          actions = actions
-        )
-    )
+    secret_agent <- create_agent(x) %>%
+      col_vals_regex(
+        columns = columns,
+        regex = regex,
+        incl_na = incl_na,
+        preconditions = preconditions,
+        brief = brief,
+        actions = prime_actions(actions)
+      ) %>% interrogate()
+    
+    return(x)
   }
   
   agent <- x

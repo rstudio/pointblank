@@ -96,6 +96,8 @@ rows_not_duplicated <- function(x,
                                 brief = NULL,
                                 actions = NULL) {
   
+  # nocov start
+
   warning("The `rows_not_duplicated()` function is deprecated and will soon be removed\n",
           " * Use the `rows_distinct()` function instead",
           call. = FALSE)
@@ -107,5 +109,7 @@ rows_not_duplicated <- function(x,
     brief = brief,
     actions = actions
   )
+
+  # nocov end
 }
 

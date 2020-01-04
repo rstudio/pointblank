@@ -74,10 +74,6 @@ get_assertion_type_at_idx <- function(agent, idx) {
   agent$validation_set[[idx, "assertion_type"]]
 }
 
-get_jth_assertion_type_in_validation_set <- function(validation_set, j) {
-  validation_set[[j, "assertion_type"]]
-}
-
 get_column_as_sym_at_idx <- function(agent, idx) {
   rlang::sym(agent$validation_set[[idx, "column"]] %>% gsub("'", "", .))
 }
@@ -102,9 +98,6 @@ get_all_cols <- function(agent) {
   agent$col_names
 }
 
-#' Does the agent have no validation steps available in the object?
-#' 
-#' @noRd
 is_agent_empty <- function(agent) {
   
   if (is_ptblank_agent(agent)) {
@@ -119,17 +112,11 @@ is_agent_empty <- function(agent) {
   }
 }
 
-#' Did the agent carry out an interrogation?
-#' 
-#' @noRd
 has_agent_intel <- function(agent) {
   
   inherits(agent, "has_intel")
 }
 
-#' When did the agent carry out an interrogation?
-#' 
-#' @noRd
 interrogation_time <- function(agent) {
   
   if (has_agent_intel(agent)) {
@@ -139,9 +126,6 @@ interrogation_time <- function(agent) {
   }
 }
 
-#' How many validation steps are associated with the agent?
-#' 
-#' @noRd
 number_of_validation_steps <- function(agent) {
   
   if (is_ptblank_agent(agent)) {
@@ -151,9 +135,6 @@ number_of_validation_steps <- function(agent) {
   }
 }
 
-#' How many validation steps are associated with the agent?
-#' 
-#' @noRd
 create_autobrief <- function(agent,
                              assertion_type,
                              preconditions = NULL,

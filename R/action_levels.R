@@ -20,16 +20,15 @@ action_levels <- function(warn_at = NULL,
   stop_list <- normalize_fraction_count(stop_at)
   notify_list <- normalize_fraction_count(notify_at)
   
-  action_levels_list <-
-    list(
-      warn_fraction = warn_list$fraction,
-      warn_count = warn_list$count,
-      stop_fraction = stop_list$fraction,
-      stop_count = stop_list$count,
-      notify_fraction = notify_list$fraction,
-      notify_count = notify_list$count,
-      fns = fns
-    )
+  list(
+    warn_fraction = warn_list$fraction,
+    warn_count = warn_list$count,
+    stop_fraction = stop_list$fraction,
+    stop_count = stop_list$count,
+    notify_fraction = notify_list$fraction,
+    notify_count = notify_list$count,
+    fns = fns
+  )
 }
 
 normalize_fns_list <- function(fns) {
@@ -52,7 +51,7 @@ normalize_fns_list <- function(fns) {
   if ("" %in% names(fns)) {
     stop("The `fns` list must be fully named.", call. = FALSE)
   }
-
+  
   if (!all(names(fns) %in% c("warn", "stop", "notify"))) {
     stop("All names in the `fns` list must be one of `warn`, `stop`, or `notify`.",
          call. = FALSE)
@@ -62,7 +61,7 @@ normalize_fns_list <- function(fns) {
 }
 
 normalize_fraction_count <- function(x) {
-
+  
   if (!is.null(x) && !any(c(inherits(x, "numeric"), inherits(x, "integer")))) {
     stop("All values provided to `action_levels()` must be either `numeric` or `integer` types.",
          call. = FALSE)

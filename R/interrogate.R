@@ -534,6 +534,79 @@ add_reporting_data <- function(agent, idx, tbl_checked) {
   agent
 }
 
+ib_incl_incl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} >= set[1] & {{ column }} <= set[2] ~ TRUE,
+      {{ column }} < set[1] | {{ column }} > set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+ib_excl_incl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} > set[1] & {{ column }} <= set[2] ~ TRUE,
+      {{ column }} <= set[1] | {{ column }} > set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+ib_incl_excl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} >= set[1] & {{ column }} < set[2] ~ TRUE,
+      {{ column }} < set[1] | {{ column }} >= set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+ib_excl_excl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} > set[1] & {{ column }} < set[2] ~ TRUE,
+      {{ column }} <= set[1] | {{ column }} >= set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+nb_incl_incl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} < set[1] | {{ column }} > set[2] ~ TRUE,
+      {{ column }} >= set[1] & {{ column }} <= set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+nb_excl_incl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} <= set[1] | {{ column }} > set[2] ~ TRUE,
+      {{ column }} > set[1] & {{ column }} <= set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+nb_incl_excl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} < set[1] | {{ column }} >= set[2] ~ TRUE,
+      {{ column }} >= set[1] & {{ column }} < set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+nb_excl_excl <- function(table, column, set, incl_na) {
+  table %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      {{ column }} <= set[1] | {{ column }} >= set[2] ~ TRUE,
+      {{ column }} > set[1] & {{ column }} < set[2] ~ FALSE,
+      is.na({{ column }}) & incl_na ~ TRUE,
+      is.na({{ column }}) & incl_na == FALSE ~ FALSE
+    ))
+}
+
 perform_action <- function(agent, idx, type) {
 
   actions <- agent$validation_set[[idx, "actions"]]

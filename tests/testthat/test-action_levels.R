@@ -156,50 +156,50 @@ test_that("The appropriate actions occur when using `action_levels()`", {
     create_agent(tbl = small_table, name = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
-      actions = action_levels(warn_at = 3, fns = list(warn = ~print("warning"))
+      actions = action_levels(warn_at = 3, fns = list(warn = ~"warning")
       )
     ) %>%
     col_vals_in_set(
       vars(f), c("low", "high"),
-      actions = action_levels(warn_at = 0.1, fns = list(warn = ~print("warning"))
+      actions = action_levels(warn_at = 0.1, fns = list(warn = ~"warning")
       )
     ) %>%
     interrogate()
   
   agent_report <- get_agent_report(agent)
-  agent_report$state %>% expect_equal(rep("WARN", 2))
+  agent_report$W %>% expect_equal(rep(TRUE, 2))
   
   agent <-
     create_agent(tbl = small_table, name = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
-      actions = action_levels(notify_at = 3, fns = list(warn = ~print("notify"))
+      actions = action_levels(notify_at = 3, fns = list(warn = ~"notify")
       )
     ) %>%
     col_vals_in_set(
       vars(f), c("low", "high"),
-      actions = action_levels(notify_at = 0.1, fns = list(warn = ~print("notify"))
+      actions = action_levels(notify_at = 0.1, fns = list(warn = ~"notify")
       )
     ) %>%
     interrogate()
   
   agent_report <- get_agent_report(agent)
-  agent_report$state %>% expect_equal(rep("NOTIFY", 2))
+  agent_report$N %>% expect_equal(rep(TRUE, 2))
   
   agent <-
     create_agent(tbl = small_table, name = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
-      actions = action_levels(stop_at = 3, fns = list(warn = ~print("stop"))
+      actions = action_levels(stop_at = 3, fns = list(warn = ~"stop")
       )
     ) %>%
     col_vals_in_set(
       vars(f), c("low", "high"),
-      actions = action_levels(stop_at = 0.1, fns = list(warn = ~print("stop"))
+      actions = action_levels(stop_at = 0.1, fns = list(warn = ~"stop")
       )
     ) %>%
     interrogate()
   
   agent_report <- get_agent_report(agent)
-  agent_report$state %>% expect_equal(rep("OK", 2))
+  agent_report$S %>% expect_equal(rep(TRUE, 2))
 })

@@ -254,4 +254,24 @@ test_that("Data extracts of different sizes are possible to create", {
   # Expect seven rows in each of the extracts
   get_data_extracts(agent, i = 1) %>% nrow() %>% expect_equal(5)
   get_data_extracts(agent, i = 2) %>% nrow() %>% expect_equal(5)
+  
+  # Get no extracts (using `extract_failed = FALSE`)
+  agent <-
+    create_agent(tbl = small_table) %>%
+    col_vals_gt(columns = vars(c), value = 5) %>%
+    col_vals_lt(columns = vars(d), value = 1000) %>%
+    interrogate(extract_failed = FALSE)
+  
+  # Get a summary of the interrogation
+  summary <- get_agent_report(agent)
+  
+  # Expect that the summary shows there are
+  # two data extracts available
+  expect_equal(summary$extract, c(FALSE, FALSE))
+  
+  # Expect that using `get_data_extracts()` without
+  # specifying `i` gives us a list of all data extracts
+  get_data_extracts(agent) %>% expect_is("list")
+  get_data_extracts(agent) %>% names() %>% expect_null()
+  get_data_extracts(agent) %>% length() %>% expect_equal(0)
 })

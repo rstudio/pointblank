@@ -42,9 +42,9 @@ reference:
     - col_is_numeric
     - col_is_integer
     - col_is_logical
+    - col_is_date
     - col_is_posix
     - col_is_factor
-    - col_is_date
     - col_exists
     
   - title: Interrogate and Get Info

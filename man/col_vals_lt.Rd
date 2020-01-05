@@ -8,7 +8,7 @@ col_vals_lt(
   x,
   columns,
   value,
-  incl_na = FALSE,
+  na_pass = FALSE,
   preconditions = NULL,
   brief = NULL,
   actions = NULL
@@ -23,8 +23,9 @@ vector) to which this validation should be applied.}
 \item{value}{A numeric value used for this test. Any column values \verb{< value}
 are considered passing.}
 
-\item{incl_na}{Should \code{NA} values be a part of the condition? This is by
-default \code{FALSE}.}
+\item{na_pass}{Should any encountered \code{NA} values be allowed to pass a
+validation unit? This is by default \code{FALSE}. Set to \code{TRUE} to give \code{NA}s
+a pass.}
 
 \item{preconditions}{expressions used for mutating the input table before
 proceeding with the validation. This is ideally as a one-sided R formula

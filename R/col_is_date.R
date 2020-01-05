@@ -1,7 +1,38 @@
 #' Do the columns contain R `Date` objects?
 #'
-#' Verification step where a table column is expected to consist entirely of R
-#' `Date` objects.
+#' The `col_is_date()` validation step function checks whether one or more
+#' columns is of the **R** `Date` type. Like many of the `col_is_*()`-type
+#' functions in **pointblank**, the only requirement is a specification of the
+#' column names. This function can be used directly on a data table or with an
+#' *agent* object (technically, a `ptblank_agent` object). Each validation step
+#' will operate over a single test unit, which is whether the column is a
+#' `Date`-type column or not.
+#' 
+#' If providing multiple column names, the result will be an expansion of
+#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
+#' will result in the entry of two validation steps). Aside from column names
+#' in quotes and in `vars()`, **tidyselect** helper functions are available for
+#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, `one_of()`, and `everything()`.
+#' 
+#' Often, we will want to specify `actions` for the validation. This argument,
+#' present in every validation step function, takes a specially-crafted list
+#' object that is best produced by the [action_levels()] function. Read that
+#' function's documentation for the lowdown on how to create reactions to
+#' above-threshold failure levels in validation. The basic gist is that you'll
+#' want at least a single threshold level (specified as either the fraction test
+#' units failed, or, an absolute value), often using the `warn_at` argument.
+#' This is especially true when `x` is a table object because, otherwise,
+#' nothing happens. For the `col_is_*()`-type functions, using 
+#' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
+#' depending on the situation (the first produces a warning, the other
+#' `stop()`s).
+#' 
+#' Want to describe this validation step in some detail? Keep in mind that this
+#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
+#' with some text that fits. Don't worry if you don't want to do it. The
+#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
+#' then be automatically generated.
 #'
 #' @inheritParams col_vals_gt
 #' 

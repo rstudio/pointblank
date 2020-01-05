@@ -23,8 +23,40 @@ Either a \code{ptblank_agent} object or a table object, depending on what
 was passed to \code{x}.
 }
 \description{
-Verification step where a table column is expected to consist entirely of R
-\code{factor} objects.
+The \code{col_is_factor()} validation step function checks whether one or more
+columns is of the factor type. Like many of the \verb{col_is_*()}-type functions
+in \strong{pointblank}, the only requirement is a specification of the column
+names. This function can be used directly on a data table or with an \emph{agent}
+object (technically, a \code{ptblank_agent} object). Each validation step will
+operate over a single test unit, which is whether the column is a factor-type
+column or not.
+}
+\details{
+If providing multiple column names, the result will be an expansion of
+validation steps to that number of column names (e.g., \code{vars(col_a, col_b)}
+will result in the entry of two validation steps). Aside from column names
+in quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
+specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{contains()},
+\code{matches()}, \code{one_of()}, and \code{everything()}.
+
+Often, we will want to specify \code{actions} for the validation. This argument,
+present in every validation step function, takes a specially-crafted list
+object that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that
+function's documentation for the lowdown on how to create reactions to
+above-threshold failure levels in validation. The basic gist is that you'll
+want at least a single threshold level (specified as either the fraction test
+units failed, or, an absolute value), often using the \code{warn_at} argument.
+This is especially true when \code{x} is a table object because, otherwise,
+nothing happens. For the \verb{col_is_*()}-type functions, using
+\code{action_levels(warn_at = 1)} or \code{action_levels(stop_at = 1)} are good choices
+depending on the situation (the first produces a warning, the other
+\code{stop()}s).
+
+Want to describe this validation step in some detail? Keep in mind that this
+is only useful if \code{x} is an \emph{agent}. If that's the case, \code{brief} the agent
+with some text that fits. Don't worry if you don't want to do it. The
+\emph{autobrief} protocol is kicked in when \code{brief = NULL} and a simple brief will
+then be automatically generated.
 }
 \examples{
 # Create a simple data frame with

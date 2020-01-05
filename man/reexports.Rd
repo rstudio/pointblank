@@ -8,7 +8,6 @@
 \alias{ends_with}
 \alias{contains}
 \alias{matches}
-\alias{one_of}
 \alias{everything}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -19,6 +18,6 @@ below to see their documentation.
 \describe{
   \item{dplyr}{\code{\link[dplyr]{vars}}}
 
-  \item{tidyselect}{\code{\link[tidyselect]{contains}}, \code{\link[tidyselect]{ends_with}}, \code{\link[tidyselect]{everything}}, \code{\link[tidyselect]{matches}}, \code{\link[tidyselect]{one_of}}, \code{\link[tidyselect]{starts_with}}}
+  \item{tidyselect}{\code{\link[tidyselect]{contains}}, \code{\link[tidyselect]{ends_with}}, \code{\link[tidyselect]{everything}}, \code{\link[tidyselect]{matches}}, \code{\link[tidyselect]{starts_with}}}
 }}
 

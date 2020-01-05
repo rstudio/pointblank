@@ -57,17 +57,6 @@ get_agent_report <- function(agent) {
     has_extract <- as.character(validation_set[["i"]]) %in% names(agent$extracts)
   }
 
-  state <-
-    validation_set %>%
-    dplyr::select(warn, notify) %>%
-    dplyr::mutate(state = dplyr::case_when(
-      warn == FALSE & notify == FALSE ~ "OK",
-      warn == TRUE  & notify == FALSE ~ "WARN",
-      warn == FALSE & notify == TRUE  ~ "NOTIFY",
-      warn == TRUE  & notify == TRUE  ~ "NOTIFY"
-    )) %>%
-    dplyr::pull(state)
-  
   dplyr::tibble(
     i = validation_set$i,
     type = validation_set$assertion_type,
@@ -79,7 +68,9 @@ get_agent_report <- function(agent) {
     units = validation_set$n,
     n_pass = validation_set$n_passed,
     f_pass = validation_set$f_passed,
-    state = state,
+    W = validation_set$warn,
+    S = validation_set$stop,
+    N = validation_set$notify,
     extract = has_extract
   )
 }

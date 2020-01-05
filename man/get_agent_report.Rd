@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_agent_report.R
 \name{get_agent_report}
 \alias{get_agent_report}
-\title{Get a simple summary of the interrogation}
+\title{Get a simple report from an agent}
 \usage{
 get_agent_report(agent)
 }
@@ -13,6 +13,45 @@ get_agent_report(agent)
 A tibble.
 }
 \description{
-Gets the essential information from an agent object after an interrogation is
-complete.
+We can get the essential information from an agent by using the
+\code{get_agent_report()} function. The amount of fields with intel is different
+depending on whether or not the agent performed an interrogation (with
+\code{interrogate()}). The tibble that is returned has the following columns:
+\itemize{
+\item i: the validation step number
+\item type: the validation type, which mirrors the name of the validation
+step function
+\item columns: the names of the columns used in the validation step
+\item value: the numeric value used in the validation step, where applicable
+\item set: the set values used in the validation step; for a \code{conjointly()}
+validation step, this is a listing of all sub-validations
+\item regex: the regex used for a \code{col_vals_regex()} validation step
+\item preconds: a logical value indicating whether any preconditions where
+applied before interrogation
+\item units: the total number of validation units for the validation step
+\item n_pass: the number of validation units that received a \emph{pass}
+\item f_pass: the fraction of validation units that received a \emph{pass}
+\item W: a logical value stating whether the \code{warn} state was entered
+\item S: a logical value stating whether the \code{stop} state was entered
+\item N: a logical value stating whether the \code{notify} state was entered
+\item extract: a logical value that indicates whether a data extract is
+available for the validation step
+}
+}
+\examples{
+# Create a simple data frame with
+# a column of numerical values
+df <- data.frame(a = c(5, 7, 8, 5))
+
+# Validate that values in column
+# `a` are always greater than 4
+agent <-
+  create_agent(tbl = df) \%>\%
+  col_vals_gt(vars(a), 4) \%>\%
+  interrogate()
+
+# Get a report from the agent by
+# using `get_agent_report()`
+get_agent_report(agent)
+  
 }

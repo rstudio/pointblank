@@ -7,13 +7,47 @@
 action_levels(warn_at = NULL, stop_at = NULL, notify_at = NULL, fns = NULL)
 }
 \arguments{
-\item{warn_at, stop_at, notify_at}{The threshold number for validation units
-returning a \code{FALSE} result before applying the \code{warn}, \code{stop}, or \code{notify}
-flags.}
+\item{warn_at, stop_at, notify_at}{The threshold number or fraction of
+validation units that can provide a \emph{fail} result before entering the
+\code{warn}, \code{stop}, or \code{notify} states.}
 
-\item{fns}{A named list of functions that can be used with each action type.}
+\item{fns}{A named list of functions that can be used with each action type.
+The syntax for this list involves using names from the set of \code{warn},
+\code{stop}, and \code{notify}. The functions corresponding to the states are
+provided as formulas (e.g., \code{list(warn = ~ warning("Too many failures."))}.
+A series of expressions for each named state can be used by enclosing the
+set of statements with \code{{ }}.}
 }
 \description{
 This helper function works with the \code{actions} argument that is present in
-every validation step function.
+every validation step function. With it, we can provide threshold \emph{fail}
+levels for any combination of \code{warn}, \code{stop}, or \code{notify} states. We can
+react to any entrance of a state by supplying corresponding functions to the
+\code{fns} argument. They will undergo evaluation at the time when the matching
+state is entered.
+}
+\examples{
+# Create a simple data frame with
+# a column of numerical values
+df <- data.frame(a = c(5, 7, 8, 5))
+
+# Create an `action_levels()` list
+# with fractional values for the
+# `warn`, `stop`, and `notify` states
+al <- action_levels(warn_at = 0.2, stop_at = 0.8, notify_at = 0.345)
+
+# Validate that values in column
+# `a` are always greater than 7 and
+# apply the list of action levels
+agent <-
+  create_agent(tbl = df) \%>\%
+  col_vals_gt(vars(a), 7, actions = al) \%>\%
+  interrogate()
+
+# The report from the agent will
+# show that the `warn` state has
+# been entered for the first and
+# only validation step
+get_agent_report(agent)
+  
 }

@@ -9,9 +9,9 @@ col_exists(x, columns, actions = NULL, brief = NULL)
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
-\item{columns}{One or more columns from the table in focus. This can be provided
-as a vector of column names using \code{c()} or bare column names enclosed in
-\code{\link[=vars]{vars()}}.}
+\item{columns}{One or more columns from the table in focus. This can be
+provided as a vector of column names using \code{c()} or bare column names
+enclosed in \code{\link[=vars]{vars()}}.}
 
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
@@ -67,7 +67,7 @@ df <-
 # exist in the `df` table
 agent <-
   create_agent(tbl = df) \%>\%
-  col_exists(columns = vars(a, b)) \%>\%
+  col_exists(vars(a, b)) \%>\%
   interrogate()
 
 # Determine if these three validation

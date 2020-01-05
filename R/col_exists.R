@@ -30,9 +30,9 @@
 #' then be automatically generated.
 #'
 #' @inheritParams col_vals_gt
-#' @param columns One or more columns from the table in focus. This can be provided
-#'   as a vector of column names using `c()` or bare column names enclosed in
-#'   [vars()].
+#' @param columns One or more columns from the table in focus. This can be
+#'   provided as a vector of column names using `c()` or bare column names
+#'   enclosed in [vars()].
 #'   
 #' @return Either a `ptblank_agent` object or a table object, depending on what
 #'   was passed to `x`.
@@ -50,7 +50,7 @@
 #' # exist in the `df` table
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   col_exists(columns = vars(a, b)) %>%
+#'   col_exists(vars(a, b)) %>%
 #'   interrogate()
 #' 
 #' # Determine if these three validation

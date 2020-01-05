@@ -1,7 +1,10 @@
 #' Given an agent that has a validation plan, perform an interrogation
 #'
-#' The agent has all the information on what to do, so now the interrogation
-#' process can occur according its plan.
+#' When the agent has all the information on what to do (i.e., a validation plan
+#' which is a series of validation steps), the interrogation process can occur
+#' according its plan. After that, the agent will have gathered intel, and we
+#' can use functions like [get_agent_report()] and [all_passed()] to understand
+#' how the interrogation went down.
 #'
 #' @param agent An agent object of class `ptblank_agent`.
 #' @param extract_failed An option to collect rows that didn't pass a particular
@@ -42,7 +45,7 @@
 #' # the whole process
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   col_vals_gt(columns = vars(a), value = 5) %>%
+#'   col_vals_gt(vars(a), 5) %>%
 #'   interrogate()
 #'   
 #' # A summary tibble can be produced

@@ -23,10 +23,7 @@ Creates an agent object.
 \examples{
 # Create a simple data frame
 # with a column of numerical values
-df <-
-  data.frame(
-    a = c(5, 7, 6, 5, 8, 7)
-  )
+df <- data.frame(a = c(5, 7, 8, 7))
 
 # Create a pointblank `agent` object
 agent <- create_agent(tbl = df)
@@ -41,7 +38,7 @@ agent <- create_agent(tbl = df)
 # are always greater than 4
 agent <-
   agent \%>\%
-  col_vals_gt(columns = vars(a), value = 4) \%>\%
+  col_vals_gt(vars(a), 4) \%>\%
   interrogate()
  
 # A summary tibble can be produced

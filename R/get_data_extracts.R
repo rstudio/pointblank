@@ -23,21 +23,15 @@
 #' 
 #' # Create a simple data frame with a
 #' # column of numerical values
-#' df <-
-#'   data.frame(
-#'     a = rnorm(100, 5, 2)
-#'   )
+#' df <- data.frame(a = rnorm(100, 5, 2))
 #' 
 #' # Create 2 simple validation steps
 #' # that test whether values within
 #' # column `a`
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   col_vals_between(
-#'     columns = vars(a),
-#'     left = 4, right = 6
-#'   ) %>%
-#'   col_vals_lte(columns = vars(a), value = 10) %>%
+#'   col_vals_between(vars(a), 4, 6) %>%
+#'   col_vals_lte(vars(a), 10) %>%
 #'   interrogate(
 #'     extract_failed = TRUE,
 #'     get_first_n = 10

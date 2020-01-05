@@ -53,6 +53,17 @@ in quotes and in \code{vars()}, \strong{tidyselect} helper functions are availab
 specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{contains()},
 \code{matches()}, and \code{everything()}.
 
+Having table \code{preconditions} means \strong{pointblank} will mutate the table just
+before interrogation. It's isolated to the validation steps produced by this
+validation step function. Using \strong{dplyr} code is suggested here since the
+statements can be translated to SQL if necessary. The code is to be supplied
+as a one-sided \strong{R} formula (using a leading \code{~}). In the formula
+representation, the obligatory \code{tbl} variable will serve as the input
+data table to be transformed (e.g.,
+\code{~ tbl \%>\% dplyr::mutate(col_a = col_b + 10)}. A series of expressions can be
+used by enclosing the set of statements with \code{{ }} but note that the \code{tbl}
+variable must be ultimately returned.
+
 Often, we will want to specify \code{actions} for the validation. This argument,
 present in every validation step function, takes a specially-crafted list
 object that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that
@@ -66,17 +77,6 @@ nothing happens. For the \verb{col_vals_*()}-type functions, using
 choices depending on the situation (the first produces a warning when a
 quarter of the total test units fails, the other \code{stop()}s at the same
 threshold level).
-
-Having table \code{preconditions} means \strong{pointblank} will mutate the table just
-before interrogation. It's isolated to the validation steps produced by this
-validation step function. Using \strong{dplyr} code is suggested here since the
-statements can be translated to SQL if necessary. The code is to be supplied
-as a one-sided \strong{R} formula (using a leading \code{~}). In the formula
-representation, the obligatory \code{tbl} variable will serve as the input
-data table to be transformed (e.g.,
-\code{~ tbl \%>\% dplyr::mutate(col_a = col_b + 10)}. A series of expressions can be
-used by enclosing the set of statements with \code{{ }} but note that the \code{tbl}
-variable must be ultimately returned.
 
 Want to describe this validation step in some detail? Keep in mind that this
 is only useful if \code{x} is an \emph{agent}. If that's the case, \code{brief} the agent

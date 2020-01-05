@@ -664,7 +664,6 @@ perform_action <- function(agent, idx, type) {
     )
   
   if (type == "warn") {
-    
     if (.warn) {
       if ("warn" %in% names(actions$fns) && !is.null(actions$fns$warn)) {
  
@@ -674,7 +673,6 @@ perform_action <- function(agent, idx, type) {
       }
     }
   } else if (type == "notify") {
-    
     if (.notify) {
       if ("notify" %in% names(actions$fns) && !is.null(actions$fns$notify)) {
         
@@ -684,7 +682,6 @@ perform_action <- function(agent, idx, type) {
       }
     }
   } else if (type == "stop") {
-
     if (.stop) {
       if ("stop" %in% names(actions$fns) && !is.null(actions$fns$stop)) {
         

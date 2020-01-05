@@ -9,7 +9,7 @@
 #' reported a *pass* for the same test units. In practice, an example of a
 #' joint validation is testing whether values for column `a` are greater than
 #' a specific value while values for column `b` lie within a specified range.
-#' The validation step functions to be part of the conjoint valdiation are to be
+#' The validation step functions to be part of the conjoint validation are to be
 #' supplied as one-sided **R** formulas (using a leading `~`, and having a `.`
 #' stand in as the data object). This function can be used directly on a data
 #' table or with an *agent* object (technically, a `ptblank_agent` object).

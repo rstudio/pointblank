@@ -180,7 +180,6 @@ interrogate <- function(agent,
 
 check_table_with_assertion <- function(agent, idx, table, assertion_type) {
   
-  tbl_checked <-
     switch(
       assertion_type,
       "col_vals_gt" =,
@@ -206,8 +205,6 @@ check_table_with_assertion <- function(agent, idx, table, assertion_type) {
       "col_is_factor" = interrogate_col_type(agent, idx, table, assertion_type),
       "rows_distinct" = interrogate_distinct(agent, idx, table)
     )
-  
-  tbl_checked
 }
 
 interrogate_comparison <- function(agent, idx, table, assertion_type) {
@@ -240,15 +237,12 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
   expression <- paste(column, operator, value)
   
   # Perform rowwise validations for the column
-  tbl_checked <-
-    table %>%
+  table %>%
     dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(expression)) %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
       is.na(pb_is_good_) ~ na_pass,
       TRUE ~ pb_is_good_
     ))
-  
-  tbl_checked
 }
 
 interrogate_between <- function(agent, idx, table, assertion_type) {
@@ -334,11 +328,7 @@ interrogate_null <- function(agent, idx, table) {
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
   # Perform rowwise validations for the column
-  tbl_checked <- 
-    table %>%
-    dplyr::mutate(pb_is_good_ = is.na({{ column }}))
-  
-  tbl_checked
+  table %>% dplyr::mutate(pb_is_good_ = is.na({{ column }}))
 }
 
 interrogate_not_null <- function(agent, idx, table) {
@@ -347,11 +337,7 @@ interrogate_not_null <- function(agent, idx, table) {
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
   # Perform rowwise validations for the column
-  tbl_checked <- 
-    table %>%
-    dplyr::mutate(pb_is_good_ = !is.na({{ column }}))
-  
-  tbl_checked
+  table %>% dplyr::mutate(pb_is_good_ = !is.na({{ column }}))
 }
 
 interrogate_regex <- function(agent, idx, table) {
@@ -366,15 +352,12 @@ interrogate_regex <- function(agent, idx, table) {
   na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
   
   # Perform rowwise validations for the column
-  tbl_checked <- 
-    table %>% 
+  table %>% 
     dplyr::mutate(pb_is_good_ = ifelse(!is.na({{ column }}), grepl(regex, {{ column }}), NA)) %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
       is.na(pb_is_good_) ~ na_pass,
       TRUE ~ pb_is_good_
     ))
-  
-  tbl_checked
 }
 
 interrogate_col_exists <- function(agent, idx, table) {
@@ -385,11 +368,7 @@ interrogate_col_exists <- function(agent, idx, table) {
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
-  # Perform rowwise validations for the column
-  tbl_checked <-
-    dplyr::tibble(pb_is_good_ = as.character(column) %in% column_names)
-  
-  tbl_checked
+  dplyr::tibble(pb_is_good_ = as.character(column) %in% column_names)
 }
 
 interrogate_col_type <- function(agent, idx, table, assertion_type) {
@@ -418,10 +397,7 @@ interrogate_col_type <- function(agent, idx, table, assertion_type) {
       FALSE
     )
   
-  # Perform rowwise validations for the column
-  tbl_checked <- dplyr::tibble(pb_is_good_ = validation_res)
-  
-  tbl_checked
+  dplyr::tibble(pb_is_good_ = validation_res)
 }
 
 interrogate_distinct <- function(agent, idx, table) {
@@ -479,13 +455,10 @@ interrogate_distinct <- function(agent, idx, table) {
   validation_res <- ifelse(duplicate_count == 0, TRUE, FALSE)
   
   # Perform rowwise validations for the column
-  tbl_checked <- 
-    table %>%
+  table %>%
     dplyr::mutate(pb_is_good_ = ifelse(
       dplyr::row_number() %in% duplicate_row_idx, FALSE, TRUE)
     )
-  
-  tbl_checked
 }
 
 add_reporting_data <- function(agent, idx, tbl_checked) {
@@ -524,15 +497,8 @@ add_reporting_data <- function(agent, idx, tbl_checked) {
   } else {
     agent$validation_set$all_passed[idx] <- TRUE
   }
-  
-  agent <-
-    determine_action(
-      agent = agent,
-      idx = idx,
-      false_count = n_failed
-    )
-  
-  agent
+
+  determine_action(agent, idx, false_count = n_failed)
 }
 
 ib_incl_incl <- function(table, column, set, na_pass) {
@@ -667,27 +633,21 @@ perform_action <- function(agent, idx, type) {
     if (.warn) {
       if ("warn" %in% names(actions$fns) && !is.null(actions$fns$warn)) {
  
-        actions$fns$warn %>%
-          rlang::f_rhs() %>%
-          rlang::eval_tidy()
+        actions$fns$warn %>% rlang::f_rhs() %>% rlang::eval_tidy()
       }
     }
   } else if (type == "notify") {
     if (.notify) {
       if ("notify" %in% names(actions$fns) && !is.null(actions$fns$notify)) {
         
-        actions$fns$notify %>%
-          rlang::f_rhs() %>%
-          rlang::eval_tidy()
+        actions$fns$notify %>% rlang::f_rhs() %>% rlang::eval_tidy()
       }
     }
   } else if (type == "stop") {
     if (.stop) {
       if ("stop" %in% names(actions$fns) && !is.null(actions$fns$stop)) {
         
-        actions$fns$stop %>%
-          rlang::f_rhs() %>%
-          rlang::eval_tidy()
+        actions$fns$stop %>% rlang::f_rhs() %>% rlang::eval_tidy()
       }
     }
   }
@@ -765,11 +725,8 @@ add_table_extract <- function(agent,
 
 determine_action <- function(agent, idx, false_count) {
   
-  idx <- min(which(agent$validation_set$i == idx))
-  
   actions_list <- agent$validation_set[[idx, "actions"]]
   n <- agent$validation_set[[idx, "n"]]
-  type <- agent$validation_set[[idx, "assertion_type"]]
   
   warn <- notify <- stop <- FALSE
   
@@ -792,30 +749,18 @@ determine_action <- function(agent, idx, false_count) {
   }
   
   if (!is.null(actions_list$warn_fraction)) {
-    
     warn_count <- round(actions_list$warn_fraction * n, 0)
-    
-    if (false_count >= warn_count) {
-      warn <- TRUE
-    }
+    if (false_count >= warn_count) warn <- TRUE
   }
   
   if (!is.null(actions_list$notify_fraction)) {
-    
     notify_count <- round(actions_list$notify_fraction * n, 0)
-    
-    if (false_count >= notify_count) {
-      notify <- TRUE
-    }
+    if (false_count >= notify_count) notify <- TRUE
   }
   
   if (!is.null(actions_list$stop_fraction)) {
-    
     stop_count <- round(actions_list$stop_fraction * n, 0)
-    
-    if (false_count >= stop_count) {
-      stop <- TRUE
-    }
+    if (false_count >= stop_count) stop <- TRUE
   }
   
   agent$validation_set[[idx, "warn"]] <- warn

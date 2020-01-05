@@ -46,16 +46,69 @@ Either a \code{ptblank_agent} object or a table object, depending on what
 was passed to \code{x}.
 }
 \description{
-Verification step where numeric values in a table column should be less than
-or equal to a specified value.
+The \code{col_vals_lte()} validation step function checks whether column values
+(in any number of specified \code{columns}) are \emph{less than or equal to} a
+specified \code{value} (the exact comparison used in this function is
+\code{col_val <= value}). This function can be used directly on a data table or
+with an \emph{agent} object (technically, a \code{ptblank_agent} object). Each
+validation step will operate over the number of test units that is equal to
+the number of rows in the table (after any \code{preconditions} have been
+applied).
+}
+\details{
+If providing multiple column names, the result will be an expansion of
+validation steps to that number of column names (e.g., \code{vars(col_a, col_b)}
+will result in the entry of two validation steps). Aside from column names
+in quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
+specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{contains()},
+\code{matches()}, \code{one_of()}, and \code{everything()}.
+
+This validation step function supports special handling of \code{NA} values. The
+\code{na_pass} argument will determine whether an \code{NA} value appearing in a test
+unit should be counted as a \emph{pass} or a \emph{fail}. The default of
+\code{na_pass = FALSE} means that any \code{NA}s encountered will accumulate failing
+test units.
+
+Often, we will want to specify \code{actions} for the validation. This argument,
+present in every validation step function, takes a specially-crafted list
+object that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that
+function's documentation for the lowdown on how to create reactions to
+above-threshold failure levels in validation. The basic gist is that you'll
+want at least a single threshold level (specified as either the fraction test
+units failed, or, an absolute value), often using the \code{warn_at} argument.
+This is especially true when \code{x} is a table object because, otherwise,
+nothing happens. For the \verb{col_vals_*()}-type functions, using
+\code{action_levels(warn_at = 0.25)} or \code{action_levels(stop_at = 0.25)} are good
+choices depending on the situation (the first produces a warning when a
+quarter of the total test units fails, the other \code{stop()}s at the same
+threshold level).
+
+Having table \code{preconditions} means \strong{pointblank} will mutate the table just
+before interrogation. It's isolated to the validation steps produced by this
+validation step function. Using \strong{dplyr} code is suggested here since the
+statements can be translated to SQL if necessary. The code is to be supplied
+as a one-sided \strong{R} formula (using a leading \code{~}). In the formula
+representation, the obligatory \code{tbl} variable will serve as the input
+data table to be transformed (e.g.,
+\code{~ tbl \%>\% dplyr::mutate(col_a = col_b + 10)}. A series of expressions can be
+used by enclosing the set of statements with \code{{ }} but note that the \code{tbl}
+variable must be ultimately returned.
+
+Want to describe this validation step in some detail? Keep in mind that this
+is only useful if \code{x} is an \emph{agent}. If that's the case, \code{brief} the agent
+with some text that fits. Don't worry if you don't want to do it. The
+\emph{autobrief} protocol is kicked in when \code{brief = NULL} and a simple brief will
+then be automatically generated.
 }
 \examples{
+library(dplyr)
+
 # Create a simple data frame with
 # a column of numerical values
 df <-
   data.frame(
-    a = c(5, 4, 3, 5, 1, 2),
-    b = c(3, 2, 4, 3, 5, 6)
+    a = c(5, 4, 1, 2),
+    b = c(3, 2, 5, 6)
   )
 
 # Validate that the sum of
@@ -64,9 +117,7 @@ df <-
 # than or equal to 10
 agent <-
   create_agent(tbl = df) \%>\%
-  col_vals_lte(
-    columns = vars(a_b),
-    value = 10,
+  col_vals_lte(vars(a_b), 10,
     preconditions = ~ {
       tbl \%>\% dplyr::mutate(a_b = a + b)
     }
@@ -78,4 +129,7 @@ agent <-
 # `all_passed()`
 all_passed(agent)
 
+}
+\seealso{
+The analogous function with a right-open bound: \code{\link[=col_vals_lt]{col_vals_lt()}}.
 }

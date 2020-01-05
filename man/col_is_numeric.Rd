@@ -68,7 +68,7 @@ df <- data.frame(a = c(5.1, 2.9))
 # as `numeric`
 agent <-
   create_agent(tbl = df) \%>\%
-  col_is_numeric(columns = vars(a)) \%>\%
+  col_is_numeric(vars(a)) \%>\%
   interrogate()
 
 # Determine if this column

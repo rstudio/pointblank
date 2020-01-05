@@ -58,7 +58,7 @@
 #' # data frame is classed as `POSIXct`
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   col_is_posix(columns = vars(a)) %>%
+#'   col_is_posix(vars(a)) %>%
 #'   interrogate()
 #' 
 #' # Determine if this column

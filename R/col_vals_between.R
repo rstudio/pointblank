@@ -81,9 +81,7 @@
 #' # 1 and 9
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   col_vals_between(vars(a),
-#'     left = 1, right = 9
-#'   ) %>%
+#'   col_vals_between(vars(a), 1, 9) %>%
 #'   interrogate()
 #' 
 #' # Determine if this column

@@ -61,16 +61,13 @@ then be automatically generated.
 \examples{
 # Create a simple data frame with
 # a column of `Date` values
-df <-
-  data.frame(
-    a = as.Date("2017-08-15")
-  )
+df <- data.frame(a = as.Date("2017-08-15"))
 
 # Validate that column `a` in the
 # data frame is classed as `Date`
 agent <-
   create_agent(tbl = df) \%>\%
-  col_is_date(columns = vars(a)) \%>\%
+  col_is_date(vars(a)) \%>\%
   interrogate()
 
 # Determine if these column

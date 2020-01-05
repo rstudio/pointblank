@@ -72,7 +72,7 @@ df <-
 # as `character`
 agent <-
   create_agent(tbl = df) \%>\%
-  col_is_character(columns = vars(a)) \%>\%
+  col_is_character(vars(a)) \%>\%
   interrogate()
 
 # Determine if these column

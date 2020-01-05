@@ -42,17 +42,14 @@
 #' @examples
 #' # Create a simple data frame with
 #' # a column of `factor` values
-#' df <-
-#'   data.frame(
-#'     a = c("one", "two")
-#'   )
+#' df <- data.frame(a = c("one", "two"))
 #' 
 #' # Validate that column `a`
 #' # in the data frame is classed
 #' # as `factor`
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   col_is_factor(columns = vars(a)) %>%
+#'   col_is_factor(vars(a)) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column

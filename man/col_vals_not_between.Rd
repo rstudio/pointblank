@@ -54,27 +54,78 @@ was passed to \code{x}.
 \description{
 Verification step where column data should not be between two values.
 }
+\details{
+The \code{col_vals_not_between()} validation step function checks whether column
+values (in any number of specified \code{columns}) \emph{do not} fall within a range.
+The range specified with three arguments: \code{left}, \code{right}, and \code{inclusive}.
+The \code{left} and \code{right} values specify the lower and upper numeric bounds. The
+\code{inclusive} argument, as a vector of two logical values relating to \code{left}
+and \code{right}, states whether each bound is inclusive or not. The default is
+\code{c(TRUE, TRUE)}, where both endpoints are inclusive (i.e., \verb{[left, right]}).
+For partially-unbounded versions of this function, we can use the
+\code{\link[=col_vals_lt]{col_vals_lt()}}, \code{\link[=col_vals_lte]{col_vals_lte()}}, \code{\link[=col_vals_gt]{col_vals_gt()}}, or \code{\link[=col_vals_gte]{col_vals_gte()}}
+validation step functions. This function can be used directly on a data table
+or with an \emph{agent} object (technically, a \code{ptblank_agent} object). Each
+validation step will operate over the number of test units that is equal to
+the number of rows in the table (after any \code{preconditions} have been
+applied).
+
+If providing multiple column names, the result will be an expansion of
+validation steps to that number of column names (e.g., \code{vars(col_a, col_b)}
+will result in the entry of two validation steps). Aside from column names
+in quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
+specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{contains()},
+\code{matches()}, \code{one_of()}, and \code{everything()}.
+
+This validation step function supports special handling of \code{NA} values. The
+\code{na_pass} argument will determine whether an \code{NA} value appearing in a test
+unit should be counted as a \emph{pass} or a \emph{fail}. The default of
+\code{na_pass = FALSE} means that any \code{NA}s encountered will accumulate failing
+test units.
+
+Often, we will want to specify \code{actions} for the validation. This argument,
+present in every validation step function, takes a specially-crafted list
+object that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that
+function's documentation for the lowdown on how to create reactions to
+above-threshold failure levels in validation. The basic gist is that you'll
+want at least a single threshold level (specified as either the fraction test
+units failed, or, an absolute value), often using the \code{warn_at} argument.
+This is especially true when \code{x} is a table object because, otherwise,
+nothing happens. For the \verb{col_vals_*()}-type functions, using
+\code{action_levels(warn_at = 0.25)} or \code{action_levels(stop_at = 0.25)} are good
+choices depending on the situation (the first produces a warning when a
+quarter of the total test units fails, the other \code{stop()}s at the same
+threshold level).
+
+Having table \code{preconditions} means \strong{pointblank} will mutate the table just
+before interrogation. It's isolated to the validation steps produced by this
+validation step function. Using \strong{dplyr} code is suggested here since the
+statements can be translated to SQL if necessary. The code is to be supplied
+as a one-sided \strong{R} formula (using a leading \code{~}). In the formula
+representation, the obligatory \code{tbl} variable will serve as the input
+data table to be transformed (e.g.,
+\code{~ tbl \%>\% dplyr::mutate(col_a = col_b + 10)}. A series of expressions can be
+used by enclosing the set of statements with \code{{ }} but note that the \code{tbl}
+variable must be ultimately returned.
+
+Want to describe this validation step in some detail? Keep in mind that this
+is only useful if \code{x} is an \emph{agent}. If that's the case, \code{brief} the agent
+with some text that fits. Don't worry if you don't want to do it. The
+\emph{autobrief} protocol is kicked in when \code{brief = NULL} and a simple brief will
+then be automatically generated.
+}
 \examples{
 # Create a simple data frame with
 # a column of numerical values
-df <-
-  data.frame(
-    a = c(5.6, 8.2, 6.3, 7.8, 3.4)
-  )
+df <- data.frame(a = c(5.6, 7.8, 3.4))
 
 # Validate that none of the values 
 # in column `a` are between 9 and 10,
 # or, between 0 and 2
 agent <-
   create_agent(tbl = df) \%>\%
-  col_vals_not_between(
-    columns = vars(a),
-    left = 9, right = 10
-  ) \%>\%
-  col_vals_not_between(
-    columns = vars(a),
-    left = 0, right = 2
-  ) \%>\%
+  col_vals_not_between(vars(a), 9, 10) \%>\%
+  col_vals_not_between(vars(a), 0, 2) \%>\%
   interrogate()
 
 # Determine if these column
@@ -82,4 +133,7 @@ agent <-
 # using `all_passed()`
 all_passed(agent)
 
+}
+\seealso{
+The analogue to this function: \code{\link[=col_vals_between]{col_vals_between()}}.
 }

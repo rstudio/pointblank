@@ -9,8 +9,8 @@ conjointly(
   ...,
   .list = list2(...),
   preconditions = NULL,
-  brief = NULL,
-  actions = NULL
+  actions = NULL,
+  brief = NULL
 )
 }
 \arguments{
@@ -19,7 +19,7 @@ conjointly(
 \item{...}{a collection one-sided formulas that consist of validation step
 functions that validate row units. Specifically, these functions should be
 those with the naming pattern \verb{col_vals_*()}. An example of this is
-\verb{~ col_vals_gte(., columns = vars(a), value = 5.5), ~ col_vals_not_null(., columns = vars(b)}).}
+\verb{~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(., vars(b)}).}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
@@ -31,14 +31,65 @@ input data table to be transformed (e.g.,
 used by enclosing the set of statements with \code{{ }} but note that the \code{tbl}
 object must be ultimately returned.}
 
-\item{brief}{An optional, text-based description for the validation step.}
-
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
 with the \code{\link[=action_levels]{action_levels()}} helper function.}
+
+\item{brief}{An optional, text-based description for the validation step.}
 }
 \description{
-Perform multiple rowwise validations for joint validity
+The \code{conjointly()} validation step function checks whether the same test
+units all pass multiple validations with \verb{col_vals_*()}-type functions.
+Because of the imposed constraint on the allowed validation step functions,
+all test units are rows of the table (after any common \code{preconditions} have
+been applied). This validation step function (internally composed of multiple
+steps) ultimately performs a rowwise test of whether all sub-validations
+reported a \emph{pass} for the same test units. In practice, an example of a
+joint validation is testing whether values for column \code{a} are greater than
+a specific value while values for column \code{b} lie within a specified range.
+The validation step functions to be part of the conjoint valdiation are to be
+supplied as one-sided \strong{R} formulas (using a leading \code{~}, and having a \code{.}
+stand in as the data object). This function can be used directly on a data
+table or with an \emph{agent} object (technically, a \code{ptblank_agent} object).
+}
+\details{
+If providing multiple column names in any of the supplied validation step
+functions, the result will be an expansion of sub-validation steps to that
+number of column names. Aside from column names in quotes and in \code{vars()},
+\strong{tidyselect} helper functions are available for specifying columns. They
+are: \code{starts_with()}, \code{ends_with()}, \code{contains()}, \code{matches()}, and
+\code{everything()}.
+
+Often, we will want to specify \code{actions} for the validation. This argument,
+present in every validation step function, takes a specially-crafted list
+object that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that
+function's documentation for the lowdown on how to create reactions to
+above-threshold failure levels in validation. The basic gist is that you'll
+want at least a single threshold level (specified as either the fraction test
+units failed, or, an absolute value), often using the \code{warn_at} argument.
+This is especially true when \code{x} is a table object because, otherwise,
+nothing happens. For the \verb{col_vals_*()}-type functions, using
+\code{action_levels(warn_at = 0.25)} or \code{action_levels(stop_at = 0.25)} are good
+choices depending on the situation (the first produces a warning when a
+quarter of the total test units fails, the other \code{stop()}s at the same
+threshold level).
+
+Having table \code{preconditions} means \strong{pointblank} will mutate the table just
+before interrogation. It's isolated to the validation steps produced by this
+validation step function. Using \strong{dplyr} code is suggested here since the
+statements can be translated to SQL if necessary. The code is to be supplied
+as a one-sided \strong{R} formula (using a leading \code{~}). In the formula
+representation, the obligatory \code{tbl} variable will serve as the input
+data table to be transformed (e.g.,
+\code{~ tbl \%>\% dplyr::mutate(col_a = col_b + 10)}. A series of expressions can be
+used by enclosing the set of statements with \code{{ }} but note that the \code{tbl}
+variable must be ultimately returned.
+
+Want to describe this validation step in some detail? Keep in mind that this
+is only useful if \code{x} is an \emph{agent}. If that's the case, \code{brief} the agent
+with some text that fits. Don't worry if you don't want to do it. The
+\emph{autobrief} protocol is kicked in when \code{brief = NULL} and a simple brief will
+then be automatically generated.
 }
 \examples{
 # Create a simple data frame with
@@ -55,9 +106,9 @@ df <-
 agent <-
   create_agent(tbl = df) \%>\%
   conjointly(
-    ~ col_vals_gt(., columns = vars(a), value = 6),
-    ~ col_vals_lt(., columns = vars(b), value = 10),
-    ~ col_vals_not_null(., columns = vars(c))
+    ~ col_vals_gt(., vars(a), 6),
+    ~ col_vals_lt(., vars(b), 10),
+    ~ col_vals_not_null(., vars(c))
     ) \%>\%
   interrogate()
 

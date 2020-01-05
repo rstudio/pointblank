@@ -61,17 +61,14 @@ then be automatically generated.
 \examples{
 # Create a simple data frame with
 # a column of `logical` values
-df <-
-  data.frame(
-    a = c(TRUE, FALSE)
-  )
+df <- data.frame(a = c(TRUE, FALSE))
 
 # Validate that column `a` in
 # the data frame is classed as
 # `logical`
 agent <-
   create_agent(tbl = df) \%>\%
-  col_is_logical(columns = vars(a)) \%>\%
+  col_is_logical(vars(a)) \%>\%
   interrogate()
 
 # Determine if this column

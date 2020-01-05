@@ -173,12 +173,12 @@ test_that("The appropriate actions occur when using `action_levels()`", {
     create_agent(tbl = small_table, name = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
-      actions = action_levels(notify_at = 3, fns = list(warn = ~"notify")
+      actions = action_levels(notify_at = 3, fns = list(notify = ~"notify")
       )
     ) %>%
     col_vals_in_set(
       vars(f), c("low", "high"),
-      actions = action_levels(notify_at = 0.1, fns = list(warn = ~"notify")
+      actions = action_levels(notify_at = 0.1, fns = list(notify = ~"notify")
       )
     ) %>%
     interrogate()
@@ -190,12 +190,12 @@ test_that("The appropriate actions occur when using `action_levels()`", {
     create_agent(tbl = small_table, name = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
-      actions = action_levels(stop_at = 3, fns = list(warn = ~"stop")
+      actions = action_levels(stop_at = 3, fns = list(stop = ~"stop")
       )
     ) %>%
     col_vals_in_set(
       vars(f), c("low", "high"),
-      actions = action_levels(stop_at = 0.1, fns = list(warn = ~"stop")
+      actions = action_levels(stop_at = 0.1, fns = list(stop = ~"stop")
       )
     ) %>%
     interrogate()

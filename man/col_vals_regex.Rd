@@ -59,7 +59,7 @@ validation steps to that number of column names (e.g., \code{vars(col_a, col_b)}
 will result in the entry of two validation steps). Aside from column names
 in quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
 specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{contains()},
-\code{matches()}, \code{one_of()}, and \code{everything()}.
+\code{matches()}, and \code{everything()}.
 
 This validation step function supports special handling of \code{NA} values. The
 \code{na_pass} argument will determine whether an \code{NA} value appearing in a test

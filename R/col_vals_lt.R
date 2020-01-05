@@ -13,7 +13,7 @@
 #' will result in the entry of two validation steps). Aside from column names
 #' in quotes and in `vars()`, **tidyselect** helper functions are available for
 #' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, `one_of()`, and `everything()`.
+#' `matches()`, and `everything()`.
 #' 
 #' This validation step function supports special handling of `NA` values. The
 #' `na_pass` argument will determine whether an `NA` value appearing in a test

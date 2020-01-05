@@ -18,10 +18,6 @@ tidyselect::contains
 #' @export
 tidyselect::matches
 
-#' @importFrom tidyselect one_of
-#' @export
-tidyselect::one_of
-
 #' @importFrom tidyselect everything
 #' @export
 tidyselect::everything

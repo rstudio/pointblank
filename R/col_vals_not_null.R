@@ -42,8 +42,8 @@
 col_vals_not_null <- function(x,
                               columns,
                               preconditions = NULL,
-                              brief = NULL,
-                              actions = NULL) {
+                              actions = NULL,
+                              brief = NULL) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)

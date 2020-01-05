@@ -64,8 +64,8 @@
 #' @export
 col_is_integer <- function(x,
                            columns,
-                           brief = NULL,
-                           actions = NULL) {
+                           actions = NULL,
+                           brief = NULL) {
   
   # Capture the `column` expression
   columns <- rlang::enquo(columns)

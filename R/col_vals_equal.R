@@ -41,8 +41,8 @@ col_vals_equal <- function(x,
                            value,
                            na_pass = FALSE,
                            preconditions = NULL,
-                           brief = NULL,
-                           actions = NULL) {
+                           actions = NULL,
+                           brief = NULL) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)

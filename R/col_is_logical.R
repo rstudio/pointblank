@@ -64,8 +64,8 @@
 #' @export
 col_is_logical <- function(x,
                            columns,
-                           brief = NULL,
-                           actions = NULL) {
+                           actions = NULL,
+                           brief = NULL) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)

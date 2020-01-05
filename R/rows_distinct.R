@@ -37,8 +37,8 @@
 rows_distinct <- function(x,
                           columns = NULL,
                           preconditions = NULL,
-                          brief = NULL,
-                          actions = NULL) {
+                          actions = NULL,
+                          brief = NULL) {
 
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)

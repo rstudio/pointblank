@@ -91,6 +91,11 @@ with some text that fits. Don't worry if you don't want to do it. The
 \emph{autobrief} protocol is kicked in when \code{brief = NULL} and a simple brief will
 then be automatically generated.
 }
+\section{Function ID}{
+
+2-14
+}
+
 \examples{
 # Create a simple data frame with
 # three columns of numerical values
@@ -113,3 +118,29 @@ agent <-
   interrogate()
 
 }
+\seealso{
+Other Validation Step Functions: 
+\code{\link{col_exists}()},
+\code{\link{col_is_character}()},
+\code{\link{col_is_date}()},
+\code{\link{col_is_factor}()},
+\code{\link{col_is_integer}()},
+\code{\link{col_is_logical}()},
+\code{\link{col_is_numeric}()},
+\code{\link{col_is_posix}()},
+\code{\link{col_vals_between}()},
+\code{\link{col_vals_equal}()},
+\code{\link{col_vals_gte}()},
+\code{\link{col_vals_gt}()},
+\code{\link{col_vals_in_set}()},
+\code{\link{col_vals_lte}()},
+\code{\link{col_vals_lt}()},
+\code{\link{col_vals_not_between}()},
+\code{\link{col_vals_not_equal}()},
+\code{\link{col_vals_not_in_set}()},
+\code{\link{col_vals_not_null}()},
+\code{\link{col_vals_null}()},
+\code{\link{col_vals_regex}()},
+\code{\link{rows_distinct}()}
+}
+\concept{Validation Step Functions}

@@ -44,7 +44,11 @@
 #' # Get a report from the agent by
 #' # using `get_agent_report()`
 #' get_agent_report(agent)
-#'   
+#' 
+#' @family Interrogate and Get Info
+#' @section Function ID:
+#' 3-3
+#' 
 #' @export
 get_agent_report <- function(agent) {
   

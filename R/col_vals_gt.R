@@ -92,6 +92,10 @@
 #' # by using `all_passed()`
 #' all_passed(agent)
 #' 
+#' @family Validation Step Functions
+#' @section Function ID:
+#' 2-6
+#' 
 #' @seealso The analogous function with a left-closed bound: [col_vals_gte()].
 #' 
 #' @import rlang

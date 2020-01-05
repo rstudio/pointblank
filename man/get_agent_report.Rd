@@ -38,6 +38,11 @@ applied before interrogation
 available for the validation step
 }
 }
+\section{Function ID}{
+
+3-3
+}
+
 \examples{
 # Create a simple data frame with
 # a column of numerical values
@@ -53,5 +58,12 @@ agent <-
 # Get a report from the agent by
 # using `get_agent_report()`
 get_agent_report(agent)
-  
+
 }
+\seealso{
+Other Interrogate and Get Info: 
+\code{\link{all_passed}()},
+\code{\link{get_data_extracts}()},
+\code{\link{interrogate}()}
+}
+\concept{Interrogate and Get Info}

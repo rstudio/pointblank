@@ -34,6 +34,10 @@
 #' # A summary tibble can be produced
 #' # using `get_agent_report()`
 #' get_agent_report(agent)
+#' 
+#' @family Create an Agent
+#' @section Function ID:
+#' 1-1
 #'   
 #' @export
 create_agent <- function(tbl,

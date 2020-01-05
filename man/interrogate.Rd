@@ -50,6 +50,11 @@ according its plan. After that, the agent will have gathered intel, and we
 can use functions like \code{\link[=get_agent_report]{get_agent_report()}} and \code{\link[=all_passed]{all_passed()}} to understand
 how the interrogation went down.
 }
+\section{Function ID}{
+
+3-1
+}
+
 \examples{
 # Create a simple data frame with
 # two columns of numerical values
@@ -74,3 +79,10 @@ agent <-
 get_agent_report(agent)
 
 }
+\seealso{
+Other Interrogate and Get Info: 
+\code{\link{all_passed}()},
+\code{\link{get_agent_report}()},
+\code{\link{get_data_extracts}()}
+}
+\concept{Interrogate and Get Info}

@@ -56,6 +56,10 @@
 #' # by using `all_passed()`
 #' all_passed(agent)
 #' 
+#' @family Validation Step Functions
+#' @section Function ID:
+#' 2-20
+#' 
 #' @import rlang
 #' @export
 col_is_date <- function(x,

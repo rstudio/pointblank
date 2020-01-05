@@ -72,6 +72,10 @@
 #' # by using `all_passed()`
 #' all_passed(agent)
 #' 
+#' @family Validation Step Functions
+#' @section Function ID:
+#' 2-15
+#' 
 #' @import rlang
 #' @export
 rows_distinct <- function(x,

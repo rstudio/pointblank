@@ -89,6 +89,10 @@
 #' # `all_passed()`
 #' all_passed(agent)
 #' 
+#' @family Validation Step Functions
+#' @section Function ID:
+#' 2-7
+#' 
 #' @seealso The analogue to this function: [col_vals_not_between()].
 #' 
 #' @import rlang

@@ -18,6 +18,11 @@ Given an agent's validation plan that had undergone interrogation via
 levels? Using the \code{all_passed()} function will let us know whether that's
 \code{TRUE} or not.
 }
+\section{Function ID}{
+
+3-2
+}
+
 \examples{
 # Create a simple data frame with
 # a column of numerical values
@@ -36,3 +41,10 @@ agent <-
 all_passed(agent)
 
 }
+\seealso{
+Other Interrogate and Get Info: 
+\code{\link{get_agent_report}()},
+\code{\link{get_data_extracts}()},
+\code{\link{interrogate}()}
+}
+\concept{Interrogate and Get Info}

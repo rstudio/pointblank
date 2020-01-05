@@ -57,6 +57,10 @@
 #' # `all_passed()`
 #' all_passed(agent)
 #' 
+#' @family Validation Step Functions
+#' @section Function ID:
+#' 2-19
+#' 
 #' @import rlang
 #' @export
 col_is_logical <- function(x,

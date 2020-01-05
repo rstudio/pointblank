@@ -26,6 +26,10 @@
 #' # by using `all_passed()`
 #' all_passed(agent)
 #' 
+#' @family Interrogate and Get Info
+#' @section Function ID:
+#' 3-2
+#' 
 #' @export
 all_passed <- function(agent) {
   

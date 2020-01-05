@@ -61,6 +61,11 @@ then be automatically generated.
 Verification step where a table column is expected to consist entirely of
 R \code{POSIXct} dates.
 }
+\section{Function ID}{
+
+2-18
+}
+
 \examples{
 # Create a simple data frame with a
 # column of `POSIXct` values
@@ -86,3 +91,29 @@ agent <-
 all_passed(agent)
 
 }
+\seealso{
+Other Validation Step Functions: 
+\code{\link{col_exists}()},
+\code{\link{col_is_character}()},
+\code{\link{col_is_date}()},
+\code{\link{col_is_factor}()},
+\code{\link{col_is_integer}()},
+\code{\link{col_is_logical}()},
+\code{\link{col_is_numeric}()},
+\code{\link{col_vals_between}()},
+\code{\link{col_vals_equal}()},
+\code{\link{col_vals_gte}()},
+\code{\link{col_vals_gt}()},
+\code{\link{col_vals_in_set}()},
+\code{\link{col_vals_lte}()},
+\code{\link{col_vals_lt}()},
+\code{\link{col_vals_not_between}()},
+\code{\link{col_vals_not_equal}()},
+\code{\link{col_vals_not_in_set}()},
+\code{\link{col_vals_not_null}()},
+\code{\link{col_vals_null}()},
+\code{\link{col_vals_regex}()},
+\code{\link{conjointly}()},
+\code{\link{rows_distinct}()}
+}
+\concept{Validation Step Functions}

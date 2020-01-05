@@ -26,6 +26,11 @@ didn't pass a validation step and the level of sampling or explicit
 collection from that set of units (this is defined within the \code{\link[=interrogate]{interrogate()}}
 call).
 }
+\section{Function ID}{
+
+3-4
+}
+
 \examples{
 \dontrun{
 # Set a seed
@@ -54,3 +59,10 @@ agent \%>\% get_data_extracts(step = 1)
 }
 
 }
+\seealso{
+Other Interrogate and Get Info: 
+\code{\link{all_passed}()},
+\code{\link{get_agent_report}()},
+\code{\link{interrogate}()}
+}
+\concept{Interrogate and Get Info}

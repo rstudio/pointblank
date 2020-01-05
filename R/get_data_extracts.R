@@ -43,6 +43,10 @@
 #' agent %>% get_data_extracts(step = 1)
 #' }
 #' 
+#' @family Interrogate and Get Info
+#' @section Function ID:
+#' 3-4
+#' 
 #' @export
 get_data_extracts <- function(agent,
                               i = NULL) {

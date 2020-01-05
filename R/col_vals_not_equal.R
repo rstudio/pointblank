@@ -84,6 +84,10 @@
 #' # `all_passed()`
 #' all_passed(agent)
 #' 
+#' @family Validation Step Functions
+#' @section Function ID:
+#' 2-4
+#' 
 #' @seealso The analogue to this function: [col_vals_equal()].
 #' 
 #' @import rlang

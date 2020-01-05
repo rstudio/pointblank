@@ -80,6 +80,10 @@
 #'     ) %>%
 #'   interrogate()
 #'
+#' @family Validation Step Functions
+#' @section Function ID:
+#' 2-14
+#'
 #' @import rlang
 #' @export
 conjointly <- function(x,

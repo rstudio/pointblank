@@ -20,6 +20,11 @@ A \code{ptblank_agent} object.
 \description{
 Creates an agent object.
 }
+\section{Function ID}{
+
+1-1
+}
+
 \examples{
 # Create a simple data frame
 # with a column of numerical values
@@ -44,5 +49,6 @@ agent <-
 # A summary tibble can be produced
 # using `get_agent_report()`
 get_agent_report(agent)
-  
+
 }
+\concept{Create an Agent}

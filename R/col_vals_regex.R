@@ -79,6 +79,10 @@
 #' # by using `all_passed()`
 #' all_passed(agent)
 #' 
+#' @family Validation Step Functions
+#' @section Function ID:
+#' 2-13
+#' 
 #' @import rlang
 #' @export
 col_vals_regex <- function(x,

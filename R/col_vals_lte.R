@@ -89,6 +89,10 @@
 #' # `all_passed()`
 #' all_passed(agent)
 #' 
+#' @family Validation Step Functions
+#' @section Function ID:
+#' 2-2
+#' 
 #' @seealso The analogous function with a right-open bound: [col_vals_lt()].
 #' 
 #' @import rlang

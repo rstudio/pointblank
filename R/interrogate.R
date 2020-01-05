@@ -52,6 +52,10 @@
 #' # using `get_agent_report()`
 #' get_agent_report(agent)
 #' 
+#' @family Interrogate and Get Info
+#' @section Function ID:
+#' 3-1
+#' 
 #' @export
 interrogate <- function(agent,
                         extract_failed = TRUE,

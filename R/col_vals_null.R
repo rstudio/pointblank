@@ -79,6 +79,10 @@
 #' # by using `all_passed()`
 #' all_passed(agent)
 #' 
+#' @family Validation Step Functions
+#' @section Function ID:
+#' 2-11
+#' 
 #' @seealso The analogue to this function: [col_vals_not_null()].
 #' 
 #' @import rlang

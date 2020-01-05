@@ -8,8 +8,9 @@
 #'   vector) to which this validation should be applied.
 #' @param value A numeric value used for this test. Any column values `>value`
 #'   are considered passing.
-#' @param incl_na Should `NA` values be a part of the condition? This is by
-#'   default `FALSE`.
+#' @param na_pass Should any encountered `NA` values be allowed to pass a
+#'   validation unit? This is by default `FALSE`. Set to `TRUE` to give `NA`s
+#'   a pass.
 #' @param preconditions expressions used for mutating the input table before
 #'   proceeding with the validation. This is ideally as a one-sided R formula
 #'   using a leading `~`. In the formula representation, the `tbl` serves as the
@@ -50,7 +51,7 @@
 col_vals_gt <- function(x,
                         columns,
                         value,
-                        incl_na = FALSE,
+                        na_pass = FALSE,
                         preconditions = NULL,
                         brief = NULL,
                         actions = NULL) {
@@ -67,7 +68,7 @@ col_vals_gt <- function(x,
       col_vals_gt(
         columns = columns,
         value = value,
-        incl_na = incl_na,
+        na_pass = na_pass,
         preconditions = preconditions,
         brief = brief,
         actions = prime_actions(actions)
@@ -100,7 +101,7 @@ col_vals_gt <- function(x,
         assertion_type = "col_vals_gt",
         column = column,
         value = value,
-        incl_na = incl_na,
+        na_pass = na_pass,
         preconditions = preconditions,
         actions = actions,
         brief = brief

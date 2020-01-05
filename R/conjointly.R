@@ -75,7 +75,7 @@ conjointly <- function(x,
       value = NULL,
       set = validation_formulas,
       regex = NULL,
-      incl_na = NULL,
+      na_pass = NULL,
       preconditions = preconditions,
       actions = actions,
       brief = brief

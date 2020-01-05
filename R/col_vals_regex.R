@@ -39,7 +39,7 @@
 col_vals_regex <- function(x,
                            columns,
                            regex,
-                           incl_na = FALSE,
+                           na_pass = FALSE,
                            preconditions = NULL,
                            brief = NULL,
                            actions = NULL) {
@@ -56,7 +56,7 @@ col_vals_regex <- function(x,
       col_vals_regex(
         columns = columns,
         regex = regex,
-        incl_na = incl_na,
+        na_pass = na_pass,
         preconditions = preconditions,
         brief = brief,
         actions = prime_actions(actions)
@@ -88,7 +88,7 @@ col_vals_regex <- function(x,
         assertion_type = "col_vals_regex",
         column = column,
         regex = regex,
-        incl_na = incl_na,
+        na_pass = na_pass,
         preconditions = preconditions,
         actions = actions,
         brief = brief

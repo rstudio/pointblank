@@ -43,8 +43,8 @@ get_column_set_values_at_idx <- function(agent, idx) {
   agent$validation_set[[idx, "set"]]
 }
 
-get_column_incl_na_at_idx <- function(agent, idx) {
-  agent$validation_set[[idx, "incl_na"]]
+get_column_na_pass_at_idx <- function(agent, idx) {
+  agent$validation_set[[idx, "na_pass"]]
 }
 
 get_column_regex_at_idx <- function(agent, idx) {

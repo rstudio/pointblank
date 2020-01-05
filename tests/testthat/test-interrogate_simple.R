@@ -669,18 +669,18 @@ test_that("Interrogating simply returns the expected results", {
   expect_warning(tbl %>% col_exists(columns = vars(g)))
 })
 
-test_that("Interrogating simply incorporates the `incl_na` option", {
+test_that("Interrogating simply incorporates the `na_pass` option", {
   
   # Use the `col_vals_equal()` function to perform
   # simple validation steps with NAs, switching the
-  # value of the `incl_na` option
+  # value of the `na_pass` option
   expect_warning(
     regexp = NULL,
     dplyr::tibble(a = c(1.5, 1.5, 1.5, NA)) %>%
       col_vals_equal(
         columns = vars(a),
         value = 1.5,
-        incl_na = FALSE,
+        na_pass = FALSE,
         actions = action_levels(warn_at = 1)
       )
   )
@@ -691,21 +691,21 @@ test_that("Interrogating simply incorporates the `incl_na` option", {
       col_vals_equal(
         columns = vars(a),
         value = 1.5,
-        incl_na = TRUE,
+        na_pass = TRUE,
         actions = action_levels(warn_at = 1)
       )
   )
   
   # Use the `col_vals_not_equal()` function to perform
   # simple validation steps with NAs, switching the
-  # value of the `incl_na` option
+  # value of the `na_pass` option
   expect_warning(
     regexp = NULL,
     dplyr::tibble(a = c(1.5, 1.5, 1.5, NA)) %>%
       col_vals_not_equal(
         columns = vars(a),
         value = 2.0,
-        incl_na = FALSE,
+        na_pass = FALSE,
         actions = action_levels(warn_at = 1)
       )
   )
@@ -716,21 +716,21 @@ test_that("Interrogating simply incorporates the `incl_na` option", {
       col_vals_not_equal(
         columns = vars(a),
         value = 2.0,
-        incl_na = TRUE,
+        na_pass = TRUE,
         actions = action_levels(warn_at = 1)
       )
   )
   
   # Use the `col_vals_gt()` function to perform
   # simple validation steps with NAs, switching the
-  # value of the `incl_na` option
+  # value of the `na_pass` option
   expect_warning(
     regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_gt(
         columns = vars(a),
         value = 0.5,
-        incl_na = FALSE,
+        na_pass = FALSE,
         actions = action_levels(warn_at = 1)
       )
   )
@@ -741,21 +741,21 @@ test_that("Interrogating simply incorporates the `incl_na` option", {
       col_vals_gt(
         columns = vars(a),
         value = 0.5,
-        incl_na = TRUE,
+        na_pass = TRUE,
         actions = action_levels(warn_at = 1)
       )
   )
   
   # Use the `col_vals_gte()` function to perform
   # simple validation steps with NAs, switching the
-  # value of the `incl_na` option
+  # value of the `na_pass` option
   expect_warning(
     regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_gte(
         columns = vars(a),
         value = 1.0,
-        incl_na = FALSE,
+        na_pass = FALSE,
         actions = action_levels(warn_at = 1)
       )
   )
@@ -766,21 +766,21 @@ test_that("Interrogating simply incorporates the `incl_na` option", {
       col_vals_gte(
         columns = vars(a),
         value = 1.0,
-        incl_na = TRUE,
+        na_pass = TRUE,
         actions = action_levels(warn_at = 1)
       )
   )
   
   # Use the `col_vals_lt()` function to perform
   # simple validation steps with NAs, switching the
-  # value of the `incl_na` option
+  # value of the `na_pass` option
   expect_warning(
     regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_lt(
         columns = vars(a),
         value = 3.0,
-        incl_na = FALSE,
+        na_pass = FALSE,
         actions = action_levels(warn_at = 1)
       )
   )
@@ -791,21 +791,21 @@ test_that("Interrogating simply incorporates the `incl_na` option", {
       col_vals_lt(
         columns = vars(a),
         value = 3.0,
-        incl_na = TRUE,
+        na_pass = TRUE,
         actions = action_levels(warn_at = 1)
       )
   )
   
   # Use the `col_vals_lte()` function to perform
   # simple validation steps with NAs, switching the
-  # value of the `incl_na` option
+  # value of the `na_pass` option
   expect_warning(
     regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_lte(
         columns = vars(a),
         value = 2.5,
-        incl_na = FALSE,
+        na_pass = FALSE,
         actions = action_levels(warn_at = 1)
       )
   )
@@ -816,21 +816,21 @@ test_that("Interrogating simply incorporates the `incl_na` option", {
       col_vals_lte(
         columns = vars(a),
         value = 2.5,
-        incl_na = TRUE,
+        na_pass = TRUE,
         actions = action_levels(warn_at = 1)
       )
   )
   
   # Use the `col_vals_between()` function to perform
   # simple validation steps with NAs, switching the
-  # value of the `incl_na` option
+  # value of the `na_pass` option
   expect_warning(
     regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_between(
         columns = vars(a),
         left = 0, right = 3.0,
-        incl_na = FALSE,
+        na_pass = FALSE,
         actions = action_levels(warn_at = 1)
       )
   )
@@ -841,21 +841,21 @@ test_that("Interrogating simply incorporates the `incl_na` option", {
       col_vals_between(
         columns = vars(a),
         left = 0, right = 3.0,
-        incl_na = TRUE,
+        na_pass = TRUE,
         actions = action_levels(warn_at = 1)
       )
   )
   
   # Use the `col_vals_not_between()` function to perform
   # simple validation steps with NAs, switching the
-  # value of the `incl_na` option
+  # value of the `na_pass` option
   expect_warning(
     regexp = NULL,
     dplyr::tibble(a = c(1.0, 1.5, 2.5, NA)) %>%
       col_vals_not_between(
         columns = vars(a),
         left = 3.0, right = 4.5,
-        incl_na = FALSE,
+        na_pass = FALSE,
         actions = action_levels(warn_at = 1)
       )
   )
@@ -866,21 +866,21 @@ test_that("Interrogating simply incorporates the `incl_na` option", {
       col_vals_not_between(
         columns = vars(a),
         left = 3.0, right = 4.5,
-        incl_na = TRUE,
+        na_pass = TRUE,
         actions = action_levels(warn_at = 1)
       )
   )
   
   # Use the `col_vals_regex()` function to perform
   # simple validation steps with NAs, switching the
-  # value of the `incl_na` option
+  # value of the `na_pass` option
   expect_warning(
     regexp = NULL,
     dplyr::tibble(a = c("1-bcd-345", "3-ldm-038", NA)) %>%
       col_vals_regex(
         columns = vars(a),
         regex = "[0-9]-[a-z]{3}-[0-9]{3}",
-        incl_na = FALSE,
+        na_pass = FALSE,
         actions = action_levels(warn_at = 1)
       )
   )
@@ -891,12 +891,11 @@ test_that("Interrogating simply incorporates the `incl_na` option", {
       col_vals_regex(
         columns = vars(a),
         regex = "[0-9]-[a-z]{3}-[0-9]{3}",
-        incl_na = TRUE,
+        na_pass = TRUE,
         actions = action_levels(warn_at = 1)
       )
   )
 })
-
 
 test_that("The inclusivity options work well for the range-based validations", {
 

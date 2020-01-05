@@ -76,11 +76,11 @@ test_that("Utility functions won't fail us", {
   # an agent with two validation steps 
   agent <-
     create_agent(tbl = small_table) %>%
-    col_vals_between(columns = vars(c), left = 2, right = 5, incl_na = TRUE) %>%
-    col_vals_not_between(columns = vars(c), left = 2, right = 5, incl_na = FALSE)
+    col_vals_between(columns = vars(c), left = 2, right = 5, na_pass = TRUE) %>%
+    col_vals_not_between(columns = vars(c), left = 2, right = 5, na_pass = FALSE)
   
-  agent %>% get_column_incl_na_at_idx(idx = 1) %>% expect_is("logical")
-  agent %>% get_column_incl_na_at_idx(idx = 1) %>% expect_equal(TRUE)
-  agent %>% get_column_incl_na_at_idx(idx = 2) %>% expect_is("logical")
-  agent %>% get_column_incl_na_at_idx(idx = 2) %>% expect_equal(FALSE)
+  agent %>% get_column_na_pass_at_idx(idx = 1) %>% expect_is("logical")
+  agent %>% get_column_na_pass_at_idx(idx = 1) %>% expect_equal(TRUE)
+  agent %>% get_column_na_pass_at_idx(idx = 2) %>% expect_is("logical")
+  agent %>% get_column_na_pass_at_idx(idx = 2) %>% expect_equal(FALSE)
 })

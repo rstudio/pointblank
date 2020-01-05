@@ -21,7 +21,7 @@ test_that("Getting an agent report is possible", {
   expect_equivalent(
     colnames(report),
     c("i", "type", "columns", "value", "set", "regex", "preconds",
-      "units", "n_pass", "f_pass", "state", "extract")
+      "units", "n_pass", "f_pass", "W", "S", "N", "extract")
   )
   
   # Expect a single row in this report
@@ -37,7 +37,9 @@ test_that("Getting an agent report is possible", {
   expect_is(report$units, "numeric")
   expect_is(report$n_pass, "numeric")
   expect_is(report$f_pass, "numeric")
-  expect_is(report$state, "character")
+  expect_is(report$W, "logical")
+  expect_is(report$S, "logical")
+  expect_is(report$N, "logical")
   expect_is(report$extract, "logical")
   
   
@@ -56,6 +58,8 @@ test_that("Getting an agent report is possible", {
   expect_equal(agent_report_empty$units, NA_integer_)
   expect_equal(agent_report_empty$n_pass, NA_integer_)
   expect_equal(agent_report_empty$f_pass, NA_real_)
-  expect_equal(agent_report_empty$state, NA_character_)
+  expect_equal(agent_report_empty$W, NA)
+  expect_equal(agent_report_empty$S, NA)
+  expect_equal(agent_report_empty$N, NA)
   expect_equal(agent_report_empty$extract, NA)
 })

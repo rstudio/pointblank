@@ -1,11 +1,11 @@
 context("Creating an agent report")
 
+small_table <-
+  readr::read_csv(
+    system.file("extdata", "small_table.csv", package = "pointblank"),
+    col_types = "TDicddlc")
+
 test_that("Getting an agent report is possible", {
-  
-  small_table <-
-    readr::read_csv(
-      system.file("extdata", "small_table.csv", package = "pointblank"),
-      col_types = "TDicddlc")
   
   # Use `col_is_character()` function to create
   # a validation step and then `interrogate()`
@@ -62,4 +62,30 @@ test_that("Getting an agent report is possible", {
   expect_equal(agent_report_empty$S, NA)
   expect_equal(agent_report_empty$N, NA)
   expect_equal(agent_report_empty$extract, NA)
+})
+
+test_that("The `all_passed()` function works", {
+  
+  agent <-
+    create_agent(tbl = small_table) %>%
+    col_is_character(columns = "b") %>%
+    col_vals_gt(vars(c), 1, na_pass = TRUE) %>%
+    interrogate()
+  
+  agent %>% all_passed() %>% expect_true()
+  
+  agent <-
+    create_agent(tbl = small_table) %>%
+    col_is_character(columns = "b") %>%
+    col_vals_gt(vars(c), 1, na_pass = FALSE) %>%
+    interrogate()
+  
+  agent %>% all_passed() %>% expect_false()
+  
+  expect_error(
+    create_agent(tbl = small_table) %>%
+      col_is_character(columns = "b") %>%
+      col_vals_gt(vars(c), 1, na_pass = FALSE) %>%
+      all_passed()
+  )
 })

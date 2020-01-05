@@ -4,7 +4,7 @@
 \alias{col_vals_null}
 \title{Are column data \code{NULL}?}
 \usage{
-col_vals_null(x, columns, preconditions = NULL, brief = NULL, actions = NULL)
+col_vals_null(x, columns, preconditions = NULL, actions = NULL, brief = NULL)
 }
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
@@ -20,11 +20,11 @@ input data table to be transformed (e.g.,
 used by enclosing the set of statements with \code{{ }} but note that the \code{tbl}
 object must be ultimately returned.}
 
-\item{brief}{An optional, text-based description for the validation step.}
-
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
 with the \code{\link[=action_levels]{action_levels()}} helper function.}
+
+\item{brief}{An optional, text-based description for the validation step.}
 }
 \value{
 Either a \code{ptblank_agent} object or a table object, depending on what

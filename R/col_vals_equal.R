@@ -23,8 +23,7 @@
 #' # in column `a` are equal to 1 
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   col_vals_equal(
-#'     columns = vars(b), value = 5,
+#'   col_vals_equal(vars(b), 5,
 #'     preconditions = ~ tbl %>% dplyr::filter(a == 1)
 #'   ) %>%
 #'   interrogate()

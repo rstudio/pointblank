@@ -24,7 +24,7 @@
 #' # rows are distinct)
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   rows_distinct(columns = vars(a, b)) %>%
+#'   rows_distinct(vars(a, b)) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column

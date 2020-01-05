@@ -13,17 +13,14 @@
 #' @examples
 #' # Create a simple data frame with
 #' # a column of numerical values
-#' df <-
-#'   data.frame(
-#'     a = c(5, 7, 6, 5, 8, 7)
-#'   )
+#' df <- data.frame(a = c(5, 7, 8, 5))
 #' 
 #' # Validate that values in column
 #' # `a` are always greater than or
 #' # equal to `5`
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   col_vals_gte(columns = vars(a), value = 5) %>%
+#'   col_vals_gte(vars(a), 5) %>%
 #'   interrogate()
 #' 
 #' # Determine if this column

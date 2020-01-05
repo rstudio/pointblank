@@ -10,8 +10,8 @@ col_vals_equal(
   value,
   na_pass = FALSE,
   preconditions = NULL,
-  brief = NULL,
-  actions = NULL
+  actions = NULL,
+  brief = NULL
 )
 }
 \arguments{
@@ -34,11 +34,11 @@ input data table to be transformed (e.g.,
 used by enclosing the set of statements with \code{{ }} but note that the \code{tbl}
 object must be ultimately returned.}
 
-\item{brief}{An optional, text-based description for the validation step.}
-
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
 with the \code{\link[=action_levels]{action_levels()}} helper function.}
+
+\item{brief}{An optional, text-based description for the validation step.}
 }
 \value{
 Either a \code{ptblank_agent} object or a table object, depending on what
@@ -62,8 +62,7 @@ df <-
 # in column `a` are equal to 1 
 agent <-
   create_agent(tbl = df) \%>\%
-  col_vals_equal(
-    columns = vars(b), value = 5,
+  col_vals_equal(vars(b), 5,
     preconditions = ~ tbl \%>\% dplyr::filter(a == 1)
   ) \%>\%
   interrogate()

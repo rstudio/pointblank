@@ -4,7 +4,7 @@
 \alias{col_is_numeric}
 \title{Do the columns contain numeric values?}
 \usage{
-col_is_numeric(x, columns, brief = NULL, actions = NULL)
+col_is_numeric(x, columns, actions = NULL, brief = NULL)
 }
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
@@ -12,11 +12,11 @@ col_is_numeric(x, columns, brief = NULL, actions = NULL)
 \item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
-\item{brief}{An optional, text-based description for the validation step.}
-
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
 with the \code{\link[=action_levels]{action_levels()}} helper function.}
+
+\item{brief}{An optional, text-based description for the validation step.}
 }
 \value{
 Either a \code{ptblank_agent} object or a table object, depending on what

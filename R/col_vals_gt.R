@@ -18,10 +18,10 @@
 #'   `~ tbl %>% dplyr::mutate(col = col + 10)`. A series of expressions can be
 #'   used by enclosing the set of statements with `{ }` but note that the `tbl`
 #'   object must be ultimately returned.
-#' @param brief An optional, text-based description for the validation step.
 #' @param actions A list containing threshold levels so that the validation step
 #'   can react accordingly when exceeding the set levels. This is to be created
 #'   with the [action_levels()] helper function.
+#' @param brief An optional, text-based description for the validation step.
 #'   
 #' @return Either a `ptblank_agent` object or a table object, depending on what
 #'   was passed to `x`.
@@ -29,16 +29,13 @@
 #' @examples
 #' # Create a simple data frame with
 #' # a column of numerical values
-#' df <-
-#'   data.frame(
-#'     a = c(5, 7, 6, 5, 8, 7)
-#'   )
+#' df <- data.frame(a = c(5, 7, 8, 5))
 #' 
 #' # Validate that values in column
 #' # `a` are always greater than 4
 #' agent <-
 #'   create_agent(tbl = df) %>%
-#'   col_vals_gt(columns = vars(a), value = 4) %>%
+#'   col_vals_gt(vars(a), 4) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column

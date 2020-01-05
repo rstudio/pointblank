@@ -10,8 +10,8 @@ col_vals_gt(
   value,
   na_pass = FALSE,
   preconditions = NULL,
-  brief = NULL,
-  actions = NULL
+  actions = NULL,
+  brief = NULL
 )
 }
 \arguments{
@@ -35,11 +35,11 @@ input data table to be transformed (e.g.,
 used by enclosing the set of statements with \code{{ }} but note that the \code{tbl}
 object must be ultimately returned.}
 
-\item{brief}{An optional, text-based description for the validation step.}
-
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
 with the \code{\link[=action_levels]{action_levels()}} helper function.}
+
+\item{brief}{An optional, text-based description for the validation step.}
 }
 \value{
 Either a \code{ptblank_agent} object or a table object, depending on what
@@ -52,16 +52,13 @@ than a specified value.
 \examples{
 # Create a simple data frame with
 # a column of numerical values
-df <-
-  data.frame(
-    a = c(5, 7, 6, 5, 8, 7)
-  )
+df <- data.frame(a = c(5, 7, 8, 5))
 
 # Validate that values in column
 # `a` are always greater than 4
 agent <-
   create_agent(tbl = df) \%>\%
-  col_vals_gt(columns = vars(a), value = 4) \%>\%
+  col_vals_gt(vars(a), 4) \%>\%
   interrogate()
 
 # Determine if these column

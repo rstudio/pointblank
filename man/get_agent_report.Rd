@@ -4,10 +4,15 @@
 \alias{get_agent_report}
 \title{Get a simple report from an agent}
 \usage{
-get_agent_report(agent)
+get_agent_report(agent, display_table = TRUE)
 }
 \arguments{
 \item{agent}{An agent object of class \code{ptblank_agent}.}
+
+\item{display_table}{Should a display table be generated? If \code{TRUE}, and if
+the \strong{gt} package is installed, a display table for the report will be
+shown in the Viewer. If \code{FALSE}, or if \strong{gt} is not available, then a
+tibble will be returned.}
 }
 \value{
 A tibble.
@@ -37,6 +42,8 @@ applied before interrogation
 \item extract: a logical value that indicates whether a data extract is
 available for the validation step
 }
+If the \strong{gt} package is installed (and if \code{display_table = TRUE}) then a
+\strong{gt} table will be displayed with the same information.
 }
 \section{Function ID}{
 
@@ -55,9 +62,10 @@ agent <-
   col_vals_gt(vars(a), 4) \%>\%
   interrogate()
 
-# Get a report from the agent by
-# using `get_agent_report()`
-get_agent_report(agent)
+# Get a tibble-based report from the
+# agent by using `get_agent_report()`
+agent \%>\%
+  get_agent_report(display_table = FALSE)
 
 }
 \seealso{

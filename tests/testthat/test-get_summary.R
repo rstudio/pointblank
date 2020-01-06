@@ -15,7 +15,7 @@ test_that("Getting an agent report is possible", {
     interrogate()
   
   # Get a report of the interrogation
-  report <- get_agent_report(agent)
+  report <- get_agent_report(agent, display_table = FALSE)
   
   # Expect that the report has specific column names
   expect_equivalent(
@@ -46,7 +46,7 @@ test_that("Getting an agent report is possible", {
   agent_report_empty <-
     create_agent(tbl = small_table) %>%
     col_is_character(columns = "b") %>%
-    get_agent_report()
+    get_agent_report(display_table = FALSE)
   
   # Expect certain values in the single row report
   expect_equal(agent_report_empty$type, "col_is_character")

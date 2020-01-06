@@ -48,9 +48,10 @@
 #'   col_vals_gt(vars(a), 5) %>%
 #'   interrogate()
 #'   
-#' # A summary tibble can be produced
-#' # using `get_agent_report()`
-#' get_agent_report(agent)
+#' # Get a tibble-based report from the
+#' # agent by using `get_agent_report()`
+#' agent %>%
+#'   get_agent_report(display_table = FALSE)
 #' 
 #' @family Interrogate and Get Info
 #' @section Function ID:

@@ -39,7 +39,8 @@
 #' # show that the `warn` state has
 #' # been entered for the first and
 #' # only validation step
-#' get_agent_report(agent)
+#' agent %>%
+#'   get_agent_report(display_table = FALSE)
 #'   
 #' @export
 action_levels <- function(warn_at = NULL,

@@ -30,6 +30,8 @@ Suggests:
     RSQLite,
     testthat,
     covr
+Enhances:
+    gt (>= 0.1.0)
 Encoding: UTF-8
 RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)

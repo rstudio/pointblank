@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Keyshape -->
 <svg xmlns="http://www.w3.org/2000/svg" width="736px" height="849px" viewBox="0 0 736 849">
     <defs>
         <linearGradient id="Gradient-0" x1="15" y1="0" x2="15" y2="10.1961" gradientUnits="userSpaceOnUse">
@@ -8,368 +7,282 @@
         </linearGradient>
     </defs>
     <style>
-@keyframes a0_o { 0% { opacity: 0; } 40.6667% { opacity: 0; } 42% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a1_o { 0% { opacity: 0; } 51.3333% { opacity: 0; } 52.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a2_o { 0% { opacity: 0; } 51.3333% { opacity: 0; } 52.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a3_o { 0% { opacity: 0; } 59.3333% { opacity: 0; } 60.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a4_o { 0% { opacity: 0; } 62.6667% { opacity: 0; } 64% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a5_o { 0% { opacity: 0; } 62.6667% { opacity: 0; } 64% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a6_o { 0% { opacity: 0; } 56% { opacity: 0; } 57.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a7_o { 0% { opacity: 0; } 46% { opacity: 0; } 47.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a8_o { 0% { opacity: 0; } 44% { opacity: 0; } 45.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a9_o { 0% { opacity: 0; } 60.6667% { opacity: 0; } 62% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a10_o { 0% { opacity: 0; } 60.6667% { opacity: 0; } 62% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a11_o { 0% { opacity: 0; } 51.3333% { opacity: 0; } 52.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a12_o { 0% { opacity: 0; } 32% { opacity: 0; } 33.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a13_o { 0% { opacity: 0; } 32% { opacity: 0; } 33.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a14_o { 0% { opacity: 0; } 29.3333% { opacity: 0; } 30.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a15_o { 0% { opacity: 0; } 31.3333% { opacity: 0; } 32% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a16_o { 0% { opacity: 0; } 22.6667% { opacity: 0; } 24% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a17_o { 0% { opacity: 0; } 18% { opacity: 0; } 19.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a18_o { 0% { opacity: 0; } 16% { opacity: 0; } 17.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a19_o { 0% { opacity: 0; } 10.6667% { opacity: 0; } 12% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a20_o { 0% { opacity: 0; } 10.6667% { opacity: 0; } 12% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a21_o { 0% { opacity: 0; } 19.3333% { opacity: 0; } 20% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a22_o { 0% { opacity: 0; } 20% { opacity: 0; } 21.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a23_o { 0% { opacity: 0; } 16% { opacity: 0; } 17.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a24_o { 0% { opacity: 0; } 29.3333% { opacity: 0; } 30.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a25_o { 0% { opacity: 0; } 21.3333% { opacity: 0; } 22.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a26_o { 0% { opacity: 0; } 30% { opacity: 0; } 31.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a27_o { 0% { opacity: 0; } 24.6667% { opacity: 0; } 26% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a28_o { 0% { opacity: 0; } 30% { opacity: 0; } 31.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a29_o { 0% { opacity: 0; } 29.3333% { opacity: 0; } 30.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a30_o { 0% { opacity: 0; } 28% { opacity: 0; } 28.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a31_o { 0% { opacity: 0; } 24.6667% { opacity: 0; } 26% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a32_o { 0% { opacity: 0; } 32.6667% { opacity: 0; } 34% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a33_o { 0% { opacity: 0; } 24.6667% { opacity: 0; } 26% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a34_o { 0% { opacity: 0; } 20% { opacity: 0; } 21.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a35_o { 0% { opacity: 0; } 18% { opacity: 0; } 19.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a36_o { 0% { opacity: 0; } 26.6667% { opacity: 0; } 28% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a37_o { 0% { opacity: 0; } 25.3333% { opacity: 0; } 26.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a38_o { 0% { opacity: 0; } 24.6667% { opacity: 0; } 26% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a39_o { 0% { opacity: 0; } 25.3333% { opacity: 0; } 26.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a40_o { 0% { opacity: 0; } 26% { opacity: 0; } 27.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a41_o { 0% { opacity: 0; } 26.6667% { opacity: 0; } 28% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a42_o { 0% { opacity: 0; } 40% { opacity: 0; } 41.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a43_o { 0% { opacity: 0; } 40% { opacity: 0; } 40.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a44_o { 0% { opacity: 0; } 40.6667% { opacity: 0; } 42% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a45_o { 0% { opacity: 0; } 38.6667% { opacity: 0; } 40% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a46_o { 0% { opacity: 0; } 41.3333% { opacity: 0; } 42.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a47_o { 0% { opacity: 0; } 42% { opacity: 0; } 43.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a48_o { 0% { opacity: 0; } 42% { opacity: 0; } 43.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a49_o { 0% { opacity: 0; } 29.3333% { opacity: 0; } 30.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a50_o { 0% { opacity: 0; } 10% { opacity: 0; } 11.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a51_o { 0% { opacity: 0; } 4.6667% { opacity: 0; } 5.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a52_o { 0% { opacity: 0; } 4.6667% { opacity: 0; } 5.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a53_o { 0% { opacity: 0; } 4.6667% { opacity: 0; } 5.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a54_o { 0% { opacity: 0; } 2.6667% { opacity: 0; } 3.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a55_o { 0% { opacity: 0; } 16% { opacity: 0; } 16.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a56_o { 0% { opacity: 0; } 16% { opacity: 0; } 16.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a57_o { 0% { opacity: 0; } 14% { opacity: 0; } 15.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a58_o { 0% { opacity: 0; } 16% { opacity: 0; } 16.8667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a59_o { 0% { opacity: 0; } 16% { opacity: 0; } 16.8667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a60_o { 0% { opacity: 0; } 10% { opacity: 0; } 10.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a61_o { 0% { opacity: 0; } 10.6667% { opacity: 0; } 11.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a62_o { 0% { opacity: 0; } 11.3333% { opacity: 0; } 12% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a63_o { 0% { opacity: 0; } 14% { opacity: 0; } 15.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a64_o { 0% { opacity: 0; } 26% { opacity: 0; } 27.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a65_o { 0% { opacity: 0; } 34% { opacity: 0; } 35.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a66_o { 0% { opacity: 0; } 42.6667% { opacity: 0; } 44% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a67_o { 0% { opacity: 0; } 51.3333% { opacity: 0; } 52.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a68_o { 0% { opacity: 0; } 54% { opacity: 0; } 55.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a69_o { 0% { opacity: 0; } 45.3333% { opacity: 0; } 46.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a70_o { 0% { opacity: 0; } 42% { opacity: 0; } 43.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a71_o { 0% { opacity: 0; } 38.6667% { opacity: 0; } 40% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a72_o { 0% { opacity: 0; } 40.6667% { opacity: 0; } 42% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a73_o { 0% { opacity: 0; } 42.6667% { opacity: 0; } 44% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a74_o { 0% { opacity: 0; } 54% { opacity: 0; } 55.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a75_o { 0% { opacity: 0; } 52.6667% { opacity: 0; } 54% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a76_o { 0% { opacity: 0; } 54% { opacity: 0; } 55.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a77_o { 0% { opacity: 0; } 54% { opacity: 0; } 55.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a78_o { 0% { opacity: 0; } 56% { opacity: 0; } 57.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a79_o { 0% { opacity: 0; } 54% { opacity: 0; } 55.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a80_o { 0% { opacity: 0; } 49.3333% { opacity: 0; } 50.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a81_o { 0% { opacity: 0; } 50% { opacity: 0; } 51.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a82_o { 0% { opacity: 0; } 56.6667% { opacity: 0; } 58% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a83_o { 0% { opacity: 0; } 49.3333% { opacity: 0; } 50.6667% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a84_o { 0% { opacity: 0; } 28.6667% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 30% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a85_o { 0% { opacity: 0; } 38.6667% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 40% { opacity: 1; } 100% { opacity: 0; } }
-@keyframes a86_o { 0% { opacity: 0; } 36.6667% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 37.3333% { opacity: 1; } 100% { opacity: 0; } }
-@keyframes a87_o { 0% { opacity: 0; } 46% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 47.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a88_o { 0% { opacity: 0; } 46% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 47.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a89_o { 0% { opacity: 0; } 48% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 49.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a90_o { 0% { opacity: 0; } 48% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 49.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a91_o { 0% { opacity: 0; } 46% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 47.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes a92_o { 0% { opacity: 0; } 46.6667% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 47.3333% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
-@keyframes sweeper_t { 0% { transform: translate(353px,11px); } 17.3333% { transform: translate(4px,215.97682px); } 50% { transform: translate(4px,625.540999px); } 66.6666% { transform: translate(359px,830.420676px); } 100% { transform: translate(359px,830.420676px); } }
-@keyframes sweeper_w { 0% { width: 30px; } 17.3333% { width: 728px; } 50% { width: 728px; } 66.6667% { width: 18px; } 100% { width: 18px; } }
-@keyframes sweeper-4_t { 0% { transform: translate(353px,14px); } 17.3333% { transform: translate(4px,218.979996px); } 50% { transform: translate(4px,626.540016px); } 66.6666% { transform: translate(359px,833.419984px); } 100% { transform: translate(359px,833.419984px); } }
-@keyframes sweeper-4_w { 0% { width: 30px; } 17.3333% { width: 728px; } 50% { width: 728px; } 66.6667% { width: 18px; } 100% { width: 18px; } }
-@keyframes sweeper-2_t { 0% { transform: translate(-15px,-5px); } 17.3333% { transform: translate(-364px,-5.098039px); } 50% { transform: translate(-355px,-5.098039px); } 66.6666% { transform: translate(-9px,-5.098039px); } 100% { transform: translate(-9px,-5.098039px); } }
-@keyframes sweeper-2_mo { 0% { offset-distance: 0%; animation-timing-function: cubic-bezier(0,0,1,1); } 17.3333% { offset-distance: 25.014%; } 50% { offset-distance: 74.984%; } 66.6667% { offset-distance: 100%; } 100% { offset-distance: 100%; } }
-@keyframes sweeper-3_t { 0% { transform: translate(-15px,-5px); animation-timing-function: cubic-bezier(0,0,1,1); } 17.3333% { transform: translate(-364px,-5.098039px); } 50% { transform: translate(-355px,-5.098039px); } 66.6666% { transform: translate(-9px,-5.098039px); } 100% { transform: translate(-9px,-5.098039px); } }
-@keyframes sweeper-3_w { 0% { width: 30px; } 17.3333% { width: 728px; } 50% { width: 728px; } 66.6667% { width: 18px; } 100% { width: 18px; } }
-@keyframes sweeper-3_mo { 0% { offset-distance: 0%; animation-timing-function: cubic-bezier(0,0,1,1); } 17.3333% { offset-distance: 25.048%; animation-timing-function: cubic-bezier(0,0,1,1); } 50% { offset-distance: 74.893%; animation-timing-function: cubic-bezier(0,0,1,1); } 66.6667% { offset-distance: 100%; } 100% { offset-distance: 100%; } }
+@keyframes a0_o { 0% { opacity: 0; } 39.4737% { opacity: 0; } 40.7895% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a1_o { 0% { opacity: 0; } 50% { opacity: 0; } 51.3158% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a2_o { 0% { opacity: 0; } 50% { opacity: 0; } 51.3158% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a3_o { 0% { opacity: 0; } 57.8947% { opacity: 0; } 59.2105% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a4_o { 0% { opacity: 0; } 61.1842% { opacity: 0; } 62.5% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a5_o { 0% { opacity: 0; } 61.1842% { opacity: 0; } 62.5% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a6_o { 0% { opacity: 0; } 54.6053% { opacity: 0; } 55.9211% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.0263% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a7_o { 0% { opacity: 0; } 44.7368% { opacity: 0; } 46.0526% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a8_o { 0% { opacity: 0; } 42.7632% { opacity: 0; } 44.0789% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a9_o { 0% { opacity: 0; } 59.8684% { opacity: 0; } 61.1842% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a10_o { 0% { opacity: 0; } 59.8684% { opacity: 0; } 61.1842% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a11_o { 0% { opacity: 0; } 50% { opacity: 0; } 51.3158% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a12_o { 0% { opacity: 0; } 30.9211% { opacity: 0; } 32.2368% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a13_o { 0% { opacity: 0; } 30.9211% { opacity: 0; } 32.2368% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a14_o { 0% { opacity: 0; } 28.2895% { opacity: 0; } 29.6053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a15_o { 0% { opacity: 0; } 29.6053% { opacity: 0; } 30.9211% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a16_o { 0% { opacity: 0; } 21.7105% { opacity: 0; } 23.0263% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a17_o { 0% { opacity: 0; } 18.4211% { opacity: 0; } 19.7368% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a18_o { 0% { opacity: 0; } 15.7895% { opacity: 0; } 17.1053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a19_o { 0% { opacity: 0; } 11.8421% { opacity: 0; } 13.1579% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 100% { opacity: 0; } }
+@keyframes a20_o { 0% { opacity: 0; } 10.5263% { opacity: 0; } 11.8421% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a21_o { 0% { opacity: 0; } 18.4211% { opacity: 0; } 19.7368% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a22_o { 0% { opacity: 0; } 18.4211% { opacity: 0; } 19.7368% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a23_o { 0% { opacity: 0; } 15.7895% { opacity: 0; } 17.1053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a24_o { 0% { opacity: 0; } 28.2895% { opacity: 0; } 29.6053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a25_o { 0% { opacity: 0; } 21.7105% { opacity: 0; } 23.0263% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a26_o { 0% { opacity: 0; } 29.6053% { opacity: 0; } 30.9211% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a27_o { 0% { opacity: 0; } 25% { opacity: 0; } 26.3158% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a28_o { 0% { opacity: 0; } 29.6053% { opacity: 0; } 30.9211% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a29_o { 0% { opacity: 0; } 28.2895% { opacity: 0; } 29.6053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a30_o { 0% { opacity: 0; } 27.6316% { opacity: 0; } 28.2895% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a31_o { 0% { opacity: 0; } 23.6842% { opacity: 0; } 25% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a32_o { 0% { opacity: 0; } 32.8947% { opacity: 0; } 34.2105% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a33_o { 0% { opacity: 0; } 23.6842% { opacity: 0; } 25% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a34_o { 0% { opacity: 0; } 20.3947% { opacity: 0; } 21.7105% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a35_o { 0% { opacity: 0; } 17.7632% { opacity: 0; } 19.0789% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a36_o { 0% { opacity: 0; } 26.3158% { opacity: 0; } 27.6316% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a37_o { 0% { opacity: 0; } 25% { opacity: 0; } 26.3158% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a38_o { 0% { opacity: 0; } 23.6842% { opacity: 0; } 25% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a39_o { 0% { opacity: 0; } 25% { opacity: 0; } 26.3158% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a40_o { 0% { opacity: 0; } 26.3158% { opacity: 0; } 27.6316% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a41_o { 0% { opacity: 0; } 27.6316% { opacity: 0; } 28.9474% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a42_o { 0% { opacity: 0; } 38.8158% { opacity: 0; } 40.1316% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a43_o { 0% { opacity: 0; } 38.8158% { opacity: 0; } 40.1316% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a44_o { 0% { opacity: 0; } 38.8158% { opacity: 0; } 40.1316% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a45_o { 0% { opacity: 0; } 37.5% { opacity: 0; } 38.8158% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a46_o { 0% { opacity: 0; } 40.7895% { opacity: 0; } 42.1053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a47_o { 0% { opacity: 0; } 40.7895% { opacity: 0; } 42.1053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a48_o { 0% { opacity: 0; } 40.7895% { opacity: 0; } 42.1053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a49_o { 0% { opacity: 0; } 29.6053% { opacity: 0; } 30.9211% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a50_o { 0% { opacity: 0; } 9.8684% { opacity: 0; } 11.1842% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a51_o { 0% { opacity: 0; } 5.2632% { opacity: 0; } 5.9211% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a52_o { 0% { opacity: 0; } 4.6053% { opacity: 0; } 5.2632% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a53_o { 0% { opacity: 0; } 4.6053% { opacity: 0; } 5.2632% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a54_o { 0% { opacity: 0; } 2.6316% { opacity: 0; } 3.2895% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a55_o { 0% { opacity: 0; } 15.7895% { opacity: 0; } 16.4474% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a56_o { 0% { opacity: 0; } 15.7895% { opacity: 0; } 16.4474% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a57_o { 0% { opacity: 0; } 13.8158% { opacity: 0; } 15.1316% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a58_o { 0% { opacity: 0; } 15.7895% { opacity: 0; } 16.6447% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a59_o { 0% { opacity: 0; } 17.1053% { opacity: 0; } 17.7632% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a60_o { 0% { opacity: 0; } 9.8684% { opacity: 0; } 10.5263% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a61_o { 0% { opacity: 0; } 10.5263% { opacity: 0; } 11.1842% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a62_o { 0% { opacity: 0; } 11.1842% { opacity: 0; } 11.8421% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a63_o { 0% { opacity: 0; } 13.8158% { opacity: 0; } 15.1316% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a64_o { 0% { opacity: 0; } 25% { opacity: 0; } 26.3158% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a65_o { 0% { opacity: 0; } 32.8947% { opacity: 0; } 34.2105% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a66_o { 0% { opacity: 0; } 42.1053% { opacity: 0; } 43.4211% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a67_o { 0% { opacity: 0; } 50% { opacity: 0; } 51.3158% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a68_o { 0% { opacity: 0; } 53.2895% { opacity: 0; } 54.6053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a69_o { 0% { opacity: 0; } 43.4211% { opacity: 0; } 44.7368% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a70_o { 0% { opacity: 0; } 40.7895% { opacity: 0; } 42.1053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a71_o { 0% { opacity: 0; } 37.5% { opacity: 0; } 38.8158% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a72_o { 0% { opacity: 0; } 39.4737% { opacity: 0; } 40.7895% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a73_o { 0% { opacity: 0; } 42.1053% { opacity: 0; } 43.4211% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a74_o { 0% { opacity: 0; } 53.2895% { opacity: 0; } 54.6053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a75_o { 0% { opacity: 0; } 51.3158% { opacity: 0; } 52.6316% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a76_o { 0% { opacity: 0; } 53.2895% { opacity: 0; } 54.6053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a77_o { 0% { opacity: 0; } 53.2895% { opacity: 0; } 54.6053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a78_o { 0% { opacity: 0; } 54.6053% { opacity: 0; } 55.9211% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a79_o { 0% { opacity: 0; } 53.2895% { opacity: 0; } 54.6053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a80_o { 0% { opacity: 0; } 48.6842% { opacity: 0; } 50% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a81_o { 0% { opacity: 0; } 48.6842% { opacity: 0; } 50% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a82_o { 0% { opacity: 0; } 54.6053% { opacity: 0; } 55.9211% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a83_o { 0% { opacity: 0; } 48.6842% { opacity: 0; } 50% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a84_o { 0% { opacity: 0; } 28.2895% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 29.6053% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a85_o { 0% { opacity: 0; } 37.5% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 38.8158% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a86_o { 0% { opacity: 0; } 35.5263% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 36.8421% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a87_o { 0% { opacity: 0; } 44.7368% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 46.0526% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a88_o { 0% { opacity: 0; } 44.7368% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 46.0526% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a89_o { 0% { opacity: 0; } 46.7105% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 48.0263% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a90_o { 0% { opacity: 0; } 46.7105% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 48.0263% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a91_o { 0% { opacity: 0; } 44.7368% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 46.0526% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes a92_o { 0% { opacity: 0; } 44.7368% { opacity: 0; animation-timing-function: cubic-bezier(0.42,0,1,1); } 46.0526% { opacity: 1; animation-timing-function: cubic-bezier(0.42,0,1,1); } 98.6842% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes sweeper-4_t { 0% { transform: translate(353px,14px); } 17.1052% { transform: translate(4px,218.979961px); } 49.3421% { transform: translate(4px,626.539961px); } 65.7894% { transform: translate(359px,833.419961px); } 100% { transform: translate(359px,833.419961px); } }
+@keyframes sweeper-4_w { 0% { width: 30px; } 17.1053% { width: 728px; } 49.3421% { width: 728px; } 65.7895% { width: 18px; } 100% { width: 18px; } }
+@keyframes sweeper-3_t { 0% { transform: translate(-15px,-5px); animation-timing-function: cubic-bezier(0,0,1,1); } 17.1052% { transform: translate(-364px,-5.098039px); } 49.3421% { transform: translate(-355px,-5.098039px); } 65.7894% { transform: translate(-9px,-5.098039px); } 100% { transform: translate(-9px,-5.098039px); } }
+@keyframes sweeper-3_w { 0% { width: 30px; } 17.1053% { width: 728px; } 49.3421% { width: 728px; } 65.7895% { width: 18px; } 100% { width: 18px; } }
+@keyframes sweeper-3_mo { 0% { offset-distance: 0%; animation-timing-function: cubic-bezier(0,0,1,1); } 17.1053% { offset-distance: 25.048%; animation-timing-function: cubic-bezier(0,0,1,1); } 49.3421% { offset-distance: 74.893%; animation-timing-function: cubic-bezier(0,0,1,1); } 65.7895% { offset-distance: 100%; } 100% { offset-distance: 100%; } }
     </style>
     <title>pointblank</title>
     <desc>Created with Sketch.</desc>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(398,519.819) translate(-5,-5)" style="animation: 15s linear infinite both a0_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(458,660) translate(-5,-5)" style="animation: 15s linear infinite both a1_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(468,660) translate(-5,-5)" style="animation: 15s linear infinite both a2_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(418,750) translate(-5,-5)" style="animation: 15s linear infinite both a3_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(358,800.204) translate(-5,-5)" style="animation: 15s linear infinite both a4_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(328,800.204) translate(-5,-5)" style="animation: 15s linear infinite both a5_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(358,710) translate(-5,-5)" style="animation: 15s linear infinite both a6_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(408,590) translate(-5,-5)" style="animation: 15s linear infinite both a7_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(258,560) translate(-5,-5)" style="animation: 15s linear infinite both a8_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(428,770) translate(-5,-5)" style="animation: 15s linear infinite both a9_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(458,770) translate(-5,-5)" style="animation: 15s linear infinite both a10_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(478,660) translate(-5,-5)" style="animation: 15s linear infinite both a11_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(648,410) translate(-5,-5)" style="animation: 15s linear infinite both a12_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(608,410) translate(-5,-5)" style="animation: 15s linear infinite both a13_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(638,380) translate(-5,-5)" style="animation: 15s linear infinite both a14_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(648,400) translate(-5,-5)" style="animation: 15s linear infinite both a15_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(668,300) translate(-5,-5)" style="animation: 15s linear infinite both a16_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(468,240) translate(-5,-5)" style="animation: 15s linear infinite both a17_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(508,210) translate(-5,-5)" style="animation: 15s linear infinite both a18_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(558,150) translate(-5,-5)" style="animation: 15s linear infinite both a19_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(588,150) translate(-5,-5)" style="animation: 15s linear infinite both a20_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(638,250) translate(-5,-5)" style="animation: 15s linear infinite both a21_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(528,260) translate(-5,-5)" style="animation: 15s linear infinite both a22_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(638,220) translate(-5,-5)" style="animation: 15s linear infinite both a23_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(708,380) translate(-5,-5)" style="animation: 15s linear infinite both a24_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(318,280) translate(-5,-5)" style="animation: 15s linear infinite both a25_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(378,390) translate(-5,-5)" style="animation: 15s linear infinite both a26_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(328,320) translate(-5,-5)" style="animation: 15s linear infinite both a27_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(408,390) translate(-5,-5)" style="animation: 15s linear infinite both a28_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(538,380) translate(-5,-5)" style="animation: 15s linear infinite both a29_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(248,360) translate(-5,-5)" style="animation: 15s linear infinite both a30_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(138,320) translate(-5,-5)" style="animation: 15s linear infinite both a31_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(158,420) translate(-5,-5)" style="animation: 15s linear infinite both a32_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(108,320) translate(-5,-5)" style="animation: 15s linear infinite both a33_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(78,260) translate(-5,-5)" style="animation: 15s linear infinite both a34_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(68,240) translate(-5,-5)" style="animation: 15s linear infinite both a35_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(88,350) translate(-5,-5)" style="animation: 15s linear infinite both a36_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(188,330) translate(-5,-5)" style="animation: 15s linear infinite both a37_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(458,320) translate(-5,-5)" style="animation: 15s linear infinite both a38_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(458,330) translate(-5,-5)" style="animation: 15s linear infinite both a39_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(458,340) translate(-5,-5)" style="animation: 15s linear infinite both a40_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(448,350) translate(-5,-5)" style="animation: 15s linear infinite both a41_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(488,510) translate(-5,-5)" style="animation: 15s linear infinite both a42_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(508,510) translate(-5,-5)" style="animation: 15s linear infinite both a43_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(458,520) translate(-5,-5)" style="animation: 15s linear infinite both a44_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(468,500) translate(-5,-5)" style="animation: 15s linear infinite both a45_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(638,530) translate(-5,-5)" style="animation: 15s linear infinite both a46_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(688,540) translate(-5,-5)" style="animation: 15s linear infinite both a47_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(538,540) translate(-5,-5)" style="animation: 15s linear infinite both a48_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(248,380) translate(-5,-5)" style="animation: 15s linear infinite both a49_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(188,140) translate(-5,-5)" style="animation: 15s linear infinite both a50_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(338,80) translate(-5,-5)" style="animation: 15s linear infinite both a51_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(298,70) translate(-5,-5)" style="animation: 15s linear infinite both a52_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(418,70) translate(-5,-5)" style="animation: 15s linear infinite both a53_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(318,50) translate(-5,-5)" style="animation: 15s linear infinite both a54_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(38,210) translate(-5,-5)" style="animation: 15s linear infinite both a55_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(188,210) translate(-5,-5)" style="animation: 15s linear infinite both a56_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(208,190) translate(-5,-5)" style="animation: 15s linear infinite both a57_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(118,220) translate(-5,-5)" style="animation: 15s linear infinite both a58_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(288,220) translate(-5,-5)" style="animation: 15s linear infinite both a59_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(378,140) translate(-5,-5)" style="animation: 15s linear infinite both a60_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(368.01,150) translate(-5,-5)" style="animation: 15s linear infinite both a61_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(448,150) translate(-5,-5)" style="animation: 15s linear infinite both a62_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(408,190) translate(-5,-5)" style="animation: 15s linear infinite both a63_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(528,340) translate(-5,-5)" style="animation: 15s linear infinite both a64_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(58,440) translate(-5,-5)" style="animation: 15s linear infinite both a65_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(68,550) translate(-5,-5)" style="animation: 15s linear infinite both a66_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(98,660) translate(-5,-5)" style="animation: 15s linear infinite both a67_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(128,690) translate(-5,-5)" style="animation: 15s linear infinite both a68_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(38,580) translate(-5,-5)" style="animation: 15s linear infinite both a69_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(18,540) translate(-5,-5)" style="animation: 15s linear infinite both a70_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(178,500) translate(-5,-5)" style="animation: 15s linear infinite both a71_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(188,520) translate(-5,-5)" style="animation: 15s linear infinite both a72_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(168,550) translate(-5,-5)" style="animation: 15s linear infinite both a73_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(298,690) translate(-5,-5)" style="animation: 15s linear infinite both a74_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(318,670) translate(-5,-5)" style="animation: 15s linear infinite both a75_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(328,690) translate(-5,-5)" style="animation: 15s linear infinite both a76_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(308,690) translate(-5,-5)" style="animation: 15s linear infinite both a77_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(288,710) translate(-5,-5)" style="animation: 15s linear infinite both a78_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(268,690) translate(-5,-5)" style="animation: 15s linear infinite both a79_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(208,630) translate(-5,-5)" style="animation: 15s linear infinite both a80_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(188,640) translate(-5,-5)" style="animation: 15s linear infinite both a81_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(188,720) translate(-5,-5)" style="animation: 15s linear infinite both a82_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(278,630) translate(-5,-5)" style="animation: 15s linear infinite both a83_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(18,370) translate(-5,-5)" style="animation: 15s linear infinite both a84_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(278,500) translate(-5,-5)" style="animation: 15s linear infinite both a85_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(268,470) translate(-5,-5)" style="animation: 15s linear infinite both a86_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(498,590) translate(-5,-5)" style="animation: 15s linear infinite both a87_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(638,590) translate(-5,-5)" style="animation: 15s linear infinite both a88_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(618,610) translate(-5,-5)" style="animation: 15s linear infinite both a89_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(578,610) translate(-5,-5)" style="animation: 15s linear infinite both a90_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(708,590) translate(-5,-5)" style="animation: 15s linear infinite both a91_o;"/>
-    <rect width="10" height="10" fill="#ff0000" stroke="none" opacity="0" transform="translate(718,590) translate(-5,-5)" style="animation: 15s linear infinite both a92_o;"/>
-    <rect id="sweeper" width="30" height="10.1961" fill="url(#Gradient-0)" stroke="none" transform="translate(368,16) translate(-15,-5)" style="animation: 15s linear infinite both sweeper_t, 15s linear infinite both sweeper_w;"/>
-    <rect id="sweeper-4" width="30" height="10.1961" fill="url(#Gradient-0)" stroke="none" transform="translate(368,19) translate(-15,-5)" style="animation: 15s linear infinite both sweeper-4_t, 15s linear infinite both sweeper-4_w;"/>
-    <path id="sweeper-2" fill="url(#Gradient-0)" stroke="none" d="M0,0L30,0L30,0L30,10.1961L0,10.1961Z" transform=" translate(-15,-5)" style="animation: 15s linear infinite both sweeper-2_t, 15s linear infinite both sweeper-2_mo; offset-path: path('M368,16C368,84.3583,368,152.717,368,221.075L359,630.639L368,835.519L368,835.519'); offset-rotate: 0deg;"/>
-    <rect id="sweeper-3" width="30" height="2.80392" fill="#00e200" stroke="none" transform=" translate(-15,-5)" style="animation: 15s linear infinite both sweeper-3_t, 15s linear infinite both sweeper-3_w, 15s linear infinite both sweeper-3_mo; offset-path: path('M368,23C368,89.3583,368,162.24,368,228.598C365.223,365.125,362.114,501.12,359,637.639C361.752,705.946,364.623,775.24,368,843.518L368,843.518'); offset-rotate: 0deg;"/>
+    <rect width="19.819" height="19.819" fill="#ff0000" stroke="none" opacity="0" transform="translate(383,510) translate(-5,-5)" style="animation: 15.2s linear infinite both a0_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(443,650) translate(-5,-5)" style="animation: 15.2s linear infinite both a1_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(463,650) translate(-5,-5)" style="animation: 15.2s linear infinite both a2_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(403,750) translate(-5,-5)" style="animation: 15.2s linear infinite both a3_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(363,790.204) translate(-5,-5)" style="animation: 15.2s linear infinite both a4_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(323,790.204) translate(-5,-5)" style="animation: 15.2s linear infinite both a5_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(363.238,710) translate(-5,-5)" style="animation: 15.2s linear infinite both a6_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(403,590) translate(-5,-5)" style="animation: 15.2s linear infinite both a7_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(243,550) translate(-5,-5)" style="animation: 15.2s linear infinite both a8_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(423,770) translate(-5,-5)" style="animation: 15.2s linear infinite both a9_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(463,770) translate(-5,-5)" style="animation: 15.2s linear infinite both a10_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(483,650) translate(-5,-5)" style="animation: 15.2s linear infinite both a11_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(643.185,410) translate(-5,-5)" style="animation: 15.2s linear infinite both a12_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(603,410) translate(-5,-5)" style="animation: 15.2s linear infinite both a13_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(623,370) translate(-5,-5)" style="animation: 15.2s linear infinite both a14_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(643,390) translate(-5,-5)" style="animation: 15.2s linear infinite both a15_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(663,290) translate(-5,-5)" style="animation: 15.2s linear infinite both a16_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(463,250) translate(-5,-5)" style="animation: 15.2s linear infinite both a17_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(503,210) translate(-5,-5)" style="animation: 15.2s linear infinite both a18_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(543,150) translate(-5,-5)" style="animation: 15.2s linear infinite both a19_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(583,150) translate(-5,-5)" style="animation: 15.2s linear infinite both a20_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(643,250) translate(-5,-5)" style="animation: 15.2s linear infinite both a21_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(523,250) translate(-5,-5)" style="animation: 15.2s linear infinite both a22_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(623,210) translate(-5,-5)" style="animation: 15.2s linear infinite both a23_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(703,370) translate(-5,-5)" style="animation: 15.2s linear infinite both a24_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(323,290) translate(-5,-5)" style="animation: 15.2s linear infinite both a25_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(363.238,390) translate(-5,-5)" style="animation: 15.2s linear infinite both a26_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(323,330) translate(-5,-5)" style="animation: 15.2s linear infinite both a27_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(403,390) translate(-5,-5)" style="animation: 15.2s linear infinite both a28_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(543,370) translate(-5,-5)" style="animation: 15.2s linear infinite both a29_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(243,370) translate(-5,-5)" style="animation: 15.2s linear infinite both a30_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(143,310) translate(-5,-5)" style="animation: 15.2s linear infinite both a31_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(163,430) translate(-5,-5)" style="animation: 15.2s linear infinite both a32_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(103,310) translate(-5,-5)" style="animation: 15.2s linear infinite both a33_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(83,270) translate(-5,-5)" style="animation: 15.2s linear infinite both a34_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(63,230) translate(-5,-5)" style="animation: 15.2s linear infinite both a35_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(83,350) translate(-5,-5)" style="animation: 15.2s linear infinite both a36_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(183,330) translate(-5,-5)" style="animation: 15.2s linear infinite both a37_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(463,310) translate(-5,-5)" style="animation: 15.2s linear infinite both a38_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(463,330) translate(-5,-5)" style="animation: 15.2s linear infinite both a39_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(463,350) translate(-5,-5)" style="animation: 15.2s linear infinite both a40_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(443,370) translate(-5,-5)" style="animation: 15.2s linear infinite both a41_o;"/>
+    <rect width="19.819" height="19.819" fill="#ff0000" stroke="none" opacity="0" transform="translate(483,510) translate(-5,-5)" style="animation: 15.2s linear infinite both a42_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(503,510) translate(-5,-5)" style="animation: 15.2s linear infinite both a43_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(443.4,510) translate(-5,-5)" style="animation: 15.2s linear infinite both a44_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(463,490) translate(-5,-5)" style="animation: 15.2s linear infinite both a45_o;"/>
+    <rect width="19.618" height="19.618" fill="#ff0000" stroke="none" opacity="0" transform="translate(643,530) translate(-5,-5)" style="animation: 15.2s linear infinite both a46_o;"/>
+    <rect width="19.618" height="19.618" fill="#ff0000" stroke="none" opacity="0" transform="translate(683,530) translate(-5,-5)" style="animation: 15.2s linear infinite both a47_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(543,530) translate(-5,-5)" style="animation: 15.2s linear infinite both a48_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(243,390) translate(-5,-5)" style="animation: 15.2s linear infinite both a49_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(183,150) translate(-5,-5)" style="animation: 15.2s linear infinite both a50_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(343,90) translate(-5,-5)" style="animation: 15.2s linear infinite both a51_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(303,70) translate(-5,-5)" style="animation: 15.2s linear infinite both a52_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(403,70) translate(-5,-5)" style="animation: 15.2s linear infinite both a53_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(323,50) translate(-5,-5)" style="animation: 15.2s linear infinite both a54_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(43,210) translate(-5,-5)" style="animation: 15.2s linear infinite both a55_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(183,210) translate(-5,-5)" style="animation: 15.2s linear infinite both a56_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(203,190) translate(-5,-5)" style="animation: 15.2s linear infinite both a57_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(123,210) translate(-5,-5)" style="animation: 15.2s linear infinite both a58_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(283,230) translate(-5,-5)" style="animation: 15.2s linear infinite both a59_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(383,130) translate(-5,-5)" style="animation: 15.2s linear infinite both a60_o;"/>
+    <rect width="19.9895" height="19.9895" fill="#ff0000" stroke="none" opacity="0" transform="translate(363.01,150) translate(-5,-5)" style="animation: 15.2s linear infinite both a61_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(443,150) translate(-5,-5)" style="animation: 15.2s linear infinite both a62_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(403,190) translate(-5,-5)" style="animation: 15.2s linear infinite both a63_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(523,330) translate(-5,-5)" style="animation: 15.2s linear infinite both a64_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(63,430) translate(-5,-5)" style="animation: 15.2s linear infinite both a65_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(63,550) translate(-5,-5)" style="animation: 15.2s linear infinite both a66_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(83,650) translate(-5,-5)" style="animation: 15.2s linear infinite both a67_o;"/>
+    <rect width="17.599" height="17.599" fill="#ff0000" stroke="none" opacity="0" transform="translate(123,690) translate(-2.599,-5)" style="animation: 15.2s linear infinite both a68_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(43,570) translate(-5,-5)" style="animation: 15.2s linear infinite both a69_o;"/>
+    <rect width="18" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(25,530) translate(-5,-5)" style="animation: 15.2s linear infinite both a70_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(163,490) translate(-5,-5)" style="animation: 15.2s linear infinite both a71_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(183,510) translate(-5,-5)" style="animation: 15.2s linear infinite both a72_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(163,550) translate(-5,-5)" style="animation: 15.2s linear infinite both a73_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(303,690) translate(-5,-5)" style="animation: 15.2s linear infinite both a74_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(323,670) translate(-5,-5)" style="animation: 15.2s linear infinite both a75_o;"/>
+    <rect width="19.432" height="19.432" fill="#ff0000" stroke="none" opacity="0" transform="translate(343,690.568) translate(-5,-5)" style="animation: 15.2s linear infinite both a76_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(323,690) translate(-5,-5)" style="animation: 15.2s linear infinite both a77_o;"/>
+    <rect width="19.535" height="19.535" fill="#ff0000" stroke="none" opacity="0" transform="translate(283,710) translate(-5,-5)" style="animation: 15.2s linear infinite both a78_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(263,690) translate(-5,-5)" style="animation: 15.2s linear infinite both a79_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(203,630) translate(-5,-5)" style="animation: 15.2s linear infinite both a80_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(183,630) translate(-5,-5)" style="animation: 15.2s linear infinite both a81_o;"/>
+    <rect width="19.535" height="19.535" fill="#ff0000" stroke="none" opacity="0" transform="translate(183,710) translate(-5,-5)" style="animation: 15.2s linear infinite both a82_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(283,630) translate(-5,-5)" style="animation: 15.2s linear infinite both a83_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(25,370) translate(-7,-5)" style="animation: 15.2s linear infinite both a84_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(283,490) translate(-5,-5)" style="animation: 15.2s linear infinite both a85_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(263,470) translate(-5,-5)" style="animation: 15.2s linear infinite both a86_o;"/>
+    <rect width="19.618" height="19.618" fill="#ff0000" stroke="none" opacity="0" transform="translate(503,590) translate(-5,-5)" style="animation: 15.2s linear infinite both a87_o;"/>
+    <rect width="19.618" height="19.618" fill="#ff0000" stroke="none" opacity="0" transform="translate(643,590) translate(-5,-5)" style="animation: 15.2s linear infinite both a88_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(603,610) translate(-5,-5)" style="animation: 15.2s linear infinite both a89_o;"/>
+    <rect width="20" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(563,610) translate(-5,-5)" style="animation: 15.2s linear infinite both a90_o;"/>
+    <rect width="19.618" height="19.618" fill="#ff0000" stroke="none" opacity="0" transform="translate(683.382,590) translate(-5,-5)" style="animation: 15.2s linear infinite both a91_o;"/>
+    <rect width="18.298" height="20" fill="#ff0000" stroke="none" opacity="0" transform="translate(703,590) translate(-5,-5)" style="animation: 15.2s linear infinite both a92_o;"/>
+    <rect id="sweeper-4" width="30" height="10.1961" fill="url(#Gradient-0)" stroke="none" transform="translate(368,19) translate(-15,-5)" style="animation: 15.2s linear infinite both sweeper-4_t, 15.2s linear infinite both sweeper-4_w;"/>
+    <rect id="sweeper-3" width="30" height="2.80392" fill="#00e200" stroke="none" style="transform: translate(-15px,-5px); animation: 15.2s linear infinite both sweeper-3_t, 15.2s linear infinite both sweeper-3_w, 15.2s linear infinite both sweeper-3_mo; offset-path: path('M368,23C368,89.3583,368,162.24,368,228.598C365.223,365.125,362.114,501.12,359,637.639C361.752,705.946,364.623,775.24,368,843.518L368,843.518'); offset-rotate: 0deg;"/>
     <g id="pointblank" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g>
             <g id="vertical" stroke="#4A4A4A" stroke-linecap="square" transform="translate(12,9)">
-                <path id="v_072" d="M711,202.465L711,629.503"/>
-                <path id="v_071" d="M701,199L701,635.503"/>
-                <path id="v_070" d="M691,190.466L691,640.534"/>
-                <path id="v_069" d="M681,184.453L681,647.5"/>
-                <path id="v_068" d="M671,179.4L671,652.507"/>
-                <path id="v_067" d="M661,173.454L661,658.531"/>
-                <path id="v_066" d="M651,168.422L651,664.633"/>
-                <path id="v_065" d="M641,162.404L641,670.506"/>
-                <path id="v_064" d="M631,155.336L631,675.5"/>
-                <path id="v_063" d="M621,150.479L621,681.553"/>
-                <path id="v_062" d="M611,144.544L611,687.567"/>
-                <path id="v_061" d="M601,138.428L601,693.538"/>
-                <path id="v_060" d="M591,132.946L591,698.537"/>
-                <path id="v_059" d="M581,126.578L581,704.614"/>
-                <path id="v_058" d="M571,121.004L571,710.633"/>
-                <path id="v_057" d="M561,115.712L561,716.592"/>
-                <path id="v_056" d="M551,110.077L551,721.649"/>
-                <path id="v_055" d="M541,104.303L541,727.558"/>
-                <path id="v_054" d="M531,97.8903L531,732.533"/>
-                <path id="v_053" d="M521,92.5786L521,739.368"/>
-                <path id="v_052" d="M511,87.0349L511,744.994"/>
-                <path id="v_051" d="M501,81.9972L501,750.108"/>
-                <path id="v_050" d="M491,75.7687L491,755.326"/>
-                <path id="v_049" d="M481,70.7235L481,761.866"/>
-                <path id="v_048" d="M471,63.8335L471,767"/>
-                <path id="v_047" d="M461,57.7916L461,774.38"/>
-                <path id="v_046" d="M451,52.2847L451,779.5"/>
-                <path id="v_045" d="M441,46.0674L441,785.502"/>
-                <path id="v_044" d="M431,40.2968L431,791.204"/>
-                <path id="v_043" d="M421,34.4444L421,797.11"/>
-                <path id="v_042" d="M411,29.5105L411,803.142"/>
-                <path id="v_041" d="M401,23.3501L401,809.092"/>
-                <path id="v_040" d="M391,17.2921L391,814.01"/>
-                <path id="v_039" d="M381,11.1103L381,820.556"/>
-                <path id="v_038" d="M371,7.01919L371,826.504"/>
-                <path id="v_037" d="M361,0.609902L361,831.5"/>
-                <path id="v_036" d="M351,0.984109L351,831.554"/>
-                <path id="v_035" d="M341,6.187L341,825.501"/>
-                <path id="v_034" d="M331,11.4424L331,819.519"/>
-                <path id="v_033" d="M321,17.1048L321,814.651"/>
-                <path id="v_032" d="M311,23.3992L311,808.527"/>
-                <path id="v_031" d="M301,29.0371L301,801.655"/>
-                <path id="v_030" d="M291,35.5223L291,796.547"/>
-                <path id="v_029" d="M281,40.9051L281,790.548"/>
-                <path id="v_028" d="M271,46.0282L271,785.731"/>
-                <path id="v_027" d="M261,52.4946L261,779.591"/>
-                <path id="v_026" d="M251,57.6931L251,774.504"/>
-                <path id="v_025" d="M241,63.8335L241,768.502"/>
-                <path id="v_024" d="M231,70.1255L231,762.721"/>
-                <path id="v_023" d="M221,75.4898L221,756.14"/>
-                <path id="v_022" d="M211,81.2216L211,750.845"/>
-                <path id="v_021" d="M201,87.0349L201,745.555"/>
-                <path id="v_020" d="M191,92.5786L191,739.533"/>
-                <path id="v_019" d="M181,97.8903L181,733.587"/>
-                <path id="v_018" d="M171,103.301L171,727.505"/>
-                <path id="v_017" d="M161,109.373L161,721.502"/>
-                <path id="v_016" d="M151,115.393L151,715.535"/>
-                <path id="v_015" d="M141,121.488L141,710.51"/>
-                <path id="v_014" d="M131,127.444L131,704.511"/>
-                <path id="v_013" d="M121,133.498L121,698.55"/>
-                <path id="v_012" d="M111,139.5L111,693.599"/>
-                <path id="v_011" d="M101,145.498L101,686.694"/>
-                <path id="v_010" d="M91,150.498L91,681.568"/>
-                <path id="v_009" d="M81,156.336L81,675.52"/>
-                <path id="v_008" d="M71,162.498L71,669.506"/>
-                <path id="v_007" d="M61,168.493L61,663.512"/>
-                <path id="v_006" d="M51,174.329L51,658.513"/>
-                <path id="v_005" d="M41,181.42L41,652.521"/>
-                <path id="v_004" d="M31,187.452L31,647.522"/>
-                <path id="v_003" d="M21,192.436L21,641.523"/>
-                <path id="v_002" d="M11,197.486L11,635.535"/>
-                <path id="v_001" d="M1,203.476L1,629.55"/>
+                <path id="v_070" d="M691,190.466L691,640.534" transform="translate(-5,0)"/>
+                <path id="v_068" d="M671,179.4L671,652.507" transform="translate(-5,0)"/>
+                <path id="v_066" d="M651,168.422L651,664.633" transform="translate(-5,0)"/>
+                <path id="v_064" d="M631,155.336L631,675.5" transform="translate(-5,0)"/>
+                <path id="v_062" d="M611,144.544L611,687.567" transform="translate(-5,0)"/>
+                <path id="v_060" d="M591,132.946L591,698.537" transform="translate(-5,0)"/>
+                <path id="v_058" d="M571,121.004L571,710.633" transform="translate(-5,0)"/>
+                <path id="v_056" d="M551,110.077L551,721.649" transform="translate(-5,0)"/>
+                <path id="v_054" d="M531,97.8903L531,732.533" transform="translate(-5,0)"/>
+                <path id="v_052" d="M511,87.0349L511,744.994" transform="translate(-5,0)"/>
+                <path id="v_050" d="M491,75.7687L491,755.326" transform="translate(-5,0)"/>
+                <path id="v_048" d="M471,63.8335L471,767" transform="translate(-5,0)"/>
+                <path id="v_046" d="M451,52.2847L451,779.5" transform="translate(-5,0)"/>
+                <path id="v_044" d="M431,40.2968L431,791.204" transform="translate(-5,0)"/>
+                <path id="v_042" d="M411,29.5105L411,803.142" transform="translate(-5,0)"/>
+                <path id="v_040" d="M391,17.2921L391,814.01" transform="translate(-5,0)"/>
+                <path id="v_038" d="M371,7.01919L371,826.504" transform="translate(-5,0)"/>
+                <path id="v_036" d="M351,0.984109L351,831.554" transform="translate(-5,0)"/>
+                <path id="v_034" d="M331,11.4424L331,819.519" transform="translate(-5,0)"/>
+                <path id="v_032" d="M311,23.3992L311,808.527" transform="translate(-5,0)"/>
+                <path id="v_030" d="M291,35.5223L291,796.547" transform="translate(-5,0)"/>
+                <path id="v_028" d="M271,46.0282L271,785.731" transform="translate(-5,0)"/>
+                <path id="v_026" d="M251,57.6931L251,774.504" transform="translate(-5,0)"/>
+                <path id="v_024" d="M231,70.1255L231,762.721" transform="translate(-5,0)"/>
+                <path id="v_022" d="M211,81.2216L211,750.845" transform="translate(-5,0)"/>
+                <path id="v_020" d="M191,92.5786L191,739.533" transform="translate(-5,0)"/>
+                <path id="v_018" d="M171,103.301L171,727.505" transform="translate(-5,0)"/>
+                <path id="v_016" d="M151,115.393L151,715.535" transform="translate(-5,0)"/>
+                <path id="v_014" d="M131,127.444L131,704.511" transform="translate(-5,0)"/>
+                <path id="v_012" d="M111,139.5L111,693.599" transform="translate(-5,0)"/>
+                <path id="v_010" d="M91,150.498L91,681.568" transform="translate(-5,0)"/>
+                <path id="v_008" d="M71,162.498L71,669.506" transform="translate(-5,0)"/>
+                <path id="v_006" d="M51,174.329L51,658.513" transform="translate(-5,0)"/>
+                <path id="v_004" d="M31,187.452L31,647.522" transform="translate(-5,0)"/>
             </g>
             <g id="horizontal" stroke="#4A4A4A" stroke-linecap="square" transform="translate(4,14)">
                 <path id="h_083" d="M363.5,505.993L363.5,917.015" transform="translate(364,711.5) rotate(-270) translate(-364,-711.5)"/>
-                <path id="h_082" d="M364,532.5L364,910.556" transform="translate(364.5,721.5) rotate(-270) translate(-364.5,-721.5)"/>
                 <path id="h_081" d="M363.5,559.992L363.5,903.03" transform="translate(364,731.5) rotate(-270) translate(-364,-731.5)"/>
-                <path id="h_080" d="M363,587.483L363,895.617" transform="translate(363.5,741.5) rotate(-270) translate(-363.5,-741.5)"/>
                 <path id="h_079" d="M363.5,614.982L363.5,888.103" transform="translate(364,751.5) rotate(-270) translate(-364,-751.5)"/>
-                <path id="h_078" d="M363,642.491L363,880.589" transform="translate(363.5,761.5) rotate(-270) translate(-363.5,-761.5)"/>
                 <path id="h_077" d="M362.5,668.968L362.5,874.03" transform="translate(363,771.5) rotate(-270) translate(-363,-771.5)"/>
-                <path id="h_076" d="M363.5,697.966L363.5,865.33" transform="translate(364,781.5) rotate(-270) translate(-364,-781.5)"/>
                 <path id="h_075" d="M363.5,723.978L363.5,859.023" transform="translate(364,791.5) rotate(-270) translate(-364,-791.5)"/>
-                <path id="h_074" d="M362.5,750.977L362.5,852.011" transform="translate(363,801.5) rotate(-270) translate(-363,-801.5)"/>
-                <path id="h_073" d="M363,778.475L363,844.517" transform="translate(363.5,811.5) rotate(-270) translate(-363.5,-811.5)"/>
-                <path id="h_072" d="M363.5,806.986L363.5,836.719" transform="translate(364,821.5) rotate(-270) translate(-364,-821.5)"/>
-                <path id="h_071" d="M363,479.497L363,923.503" transform="translate(363.5,701.5) rotate(-270) translate(-363.5,-701.5)"/>
+                <path id="h_072" d="M363.5,806.986L363.5,836.719" transform="translate(364,810.5) rotate(-270) translate(-364,-821.5)"/>
                 <path id="h_070" d="M363,451.487L363,931.5" transform="translate(363.5,691.5) rotate(-270) translate(-363.5,-691.5)"/>
-                <path id="h_069" d="M363.5,423.926L363.5,939.012" transform="translate(364,681.5) rotate(-270) translate(-364,-681.5)"/>
                 <path id="h_068" d="M363.5,396.97L363.5,946.018" transform="translate(364,671.5) rotate(-270) translate(-364,-671.5)"/>
-                <path id="h_067" d="M363.5,369.876L363.5,953.026" transform="translate(364,661.5) rotate(-270) translate(-364,-661.5)"/>
                 <path id="h_066" d="M363.5,342.881L363.5,960.01" transform="translate(364,651.5) rotate(-270) translate(-364,-651.5)"/>
-                <path id="h_065" d="M363.5,314.865L363.5,968.023" transform="translate(364,641.5) rotate(-270) translate(-364,-641.5)"/>
                 <path id="h_064" d="M363.5,287.953L363.5,975.08" transform="translate(364,631.5) rotate(-270) translate(-364,-631.5)"/>
-                <path id="h_063" d="M363.5,260.755L363.5,982.008" transform="translate(364,621.5) rotate(-270) translate(-364,-621.5)"/>
                 <path id="h_062" d="M363.5,248.834L363.5,974.014" transform="translate(364,611.5) rotate(-270) translate(-364,-611.5)"/>
-                <path id="h_061" d="M363.5,238.956L363.5,964.05" transform="translate(364,601.5) rotate(-270) translate(-364,-601.5)"/>
                 <path id="h_060" d="M363.5,229L363.5,954.039" transform="translate(364,591.5) rotate(-270) translate(-364,-591.5)"/>
-                <path id="h_059" d="M363.5,219L363.5,944.062" transform="translate(364,581.5) rotate(-270) translate(-364,-581.5)"/>
                 <path id="h_058" d="M363.5,208.945L363.5,934.05" transform="translate(364,571.5) rotate(-270) translate(-364,-571.5)"/>
-                <path id="h_057" d="M363.5,198.968L363.5,924.076" transform="translate(364,561.5) rotate(-270) translate(-364,-561.5)"/>
                 <path id="h_056" d="M363.5,188.991L363.5,914.039" transform="translate(364,551.5) rotate(-270) translate(-364,-551.5)"/>
-                <path id="h_055" d="M363.5,178.946L363.5,904.05" transform="translate(364,541.5) rotate(-270) translate(-364,-541.5)"/>
                 <path id="h_054" d="M363.5,168.991L363.5,894.039" transform="translate(364,531.5) rotate(-270) translate(-364,-531.5)"/>
-                <path id="h_053" d="M363.5,158.969L363.5,884.039" transform="translate(364,521.5) rotate(-270) translate(-364,-521.5)"/>
                 <path id="h_052" d="M363.5,148.978L363.5,874.039" transform="translate(364,511.5) rotate(-270) translate(-364,-511.5)"/>
-                <path id="h_051" d="M363.5,138.991L363.5,864.008" transform="translate(364,501.5) rotate(-270) translate(-364,-501.5)"/>
                 <path id="h_050" d="M363.5,128.97L363.5,854.039" transform="translate(364,491.5) rotate(-270) translate(-364,-491.5)"/>
-                <path id="h_049" d="M363.5,118.996L363.5,844.021" transform="translate(364,481.5) rotate(-270) translate(-364,-481.5)"/>
                 <path id="h_048" d="M363.5,108.986L363.5,834.014" transform="translate(364,471.5) rotate(-270) translate(-364,-471.5)"/>
-                <path id="h_047" d="M363.5,98.9915L363.5,824.004" transform="translate(364,461.5) rotate(-270) translate(-364,-461.5)"/>
                 <path id="h_046" d="M363.5,88.9916L363.5,814.002" transform="translate(364,451.5) rotate(-270) translate(-364,-451.5)"/>
-                <path id="h_045" d="M363.5,78.9916L363.5,804.029" transform="translate(364,441.5) rotate(-270) translate(-364,-441.5)"/>
                 <path id="h_044" d="M363.5,68.9795L363.5,794.021" transform="translate(364,431.5) rotate(-270) translate(-364,-431.5)"/>
-                <path id="h_043" d="M363.5,58.9716L363.5,784.039" transform="translate(364,421.5) rotate(-270) translate(-364,-421.5)"/>
                 <path id="h_042" d="M363.5,48.9958L363.5,620.061L363.5,774.108" transform="translate(364,411.5) rotate(-270) translate(-364,-411.5)"/>
-                <path id="h_041" d="M363.5,38.9628L363.5,764.062" transform="translate(364,401.5) rotate(-270) translate(-364,-401.5)"/>
                 <path id="h_040" d="M363.5,28.9919L363.5,754.108" transform="translate(364,391.5) rotate(-270) translate(-364,-391.5)"/>
-                <path id="h_039" d="M363.5,18.9724L363.5,744.062" transform="translate(364,381.5) rotate(-270) translate(-364,-381.5)"/>
                 <path id="h_038" d="M363.5,8.95324L363.5,734.145" transform="translate(364,371.5) rotate(-270) translate(-364,-371.5)"/>
-                <path id="h_037" d="M363.5,-1.00788L363.5,724.029" transform="translate(364,361.5) rotate(-270) translate(-364,-361.5)"/>
                 <path id="h_036" d="M363.5,-11.0465L363.5,714.108" transform="translate(364,351.5) rotate(-270) translate(-364,-351.5)"/>
-                <path id="h_035" d="M363.5,-21.0585L363.5,704.062" transform="translate(364,341.5) rotate(-270) translate(-364,-341.5)"/>
                 <path id="h_034" d="M363.5,-31.0276L363.5,694.039" transform="translate(364,331.5) rotate(-270) translate(-364,-331.5)"/>
-                <path id="h_033" d="M363.5,-41.0278L363.5,684.039" transform="translate(364,321.5) rotate(-270) translate(-364,-321.5)"/>
                 <path id="h_032" d="M363.5,-51.0134L363.5,674.039" transform="translate(364,311.5) rotate(-270) translate(-364,-311.5)"/>
-                <path id="h_031" d="M363.5,-61.0002L363.5,664.021" transform="translate(364,301.5) rotate(-270) translate(-364,-301.5)"/>
                 <path id="h_030" d="M363.5,-71.0002L363.5,654.008" transform="translate(364,291.5) rotate(-270) translate(-364,-291.5)"/>
-                <path id="h_029" d="M363.5,-81.0083L363.5,644.05" transform="translate(364,281.5) rotate(-270) translate(-364,-281.5)"/>
                 <path id="h_028" d="M363,-90.5084L363,633.521" transform="translate(363.5,271.5) rotate(-270) translate(-363.5,-271.5)"/>
-                <path id="h_027" d="M363,-100.508L363,623.504" transform="translate(363.5,261.5) rotate(-270) translate(-363.5,-261.5)"/>
                 <path id="h_026" d="M363,-110.509L363,613.504" transform="translate(363.5,251.5) rotate(-270) translate(-363.5,-251.5)"/>
-                <path id="h_025" d="M363,-120.514L363,603.529" transform="translate(363.5,241.5) rotate(-270) translate(-363.5,-241.5)"/>
                 <path id="h_024" d="M363,-130.54L363,593.529" transform="translate(363.5,231.5) rotate(-270) translate(-363.5,-231.5)"/>
-                <path id="h_023" d="M363,-140.564L363,583.55" transform="translate(363.5,221.5) rotate(-270) translate(-363.5,-221.5)"/>
                 <path id="h_022" d="M363,-150.673L363,573.529" transform="translate(363.5,211.5) rotate(-270) translate(-363.5,-211.5)"/>
-                <path id="h_021" d="M364.5,-158.152L364.5,561.014" transform="translate(365,201.5) rotate(-270) translate(-365,-201.5)"/>
                 <path id="h_020" d="M364,-150.583L364,533.505" transform="translate(364.5,191.5) rotate(-270) translate(-364.5,-191.5)"/>
-                <path id="h_019" d="M365,-144.544L365,507.505" transform="translate(365.5,181.5) rotate(-270) translate(-365.5,-181.5)"/>
                 <path id="h_018" d="M364.5,-138.024L364.5,481.002" transform="translate(365,171.5) rotate(-270) translate(-365,-171.5)"/>
-                <path id="h_017" d="M364,-131.56L364,454.5" transform="translate(364.5,161.5) rotate(-270) translate(-364.5,-161.5)"/>
                 <path id="h_016" d="M363.5,-123.063L363.5,426.066" transform="translate(364,151.5) rotate(-270) translate(-364,-151.5)"/>
-                <path id="h_015" d="M363,-115.527L363,398.555" transform="translate(363.5,141.5) rotate(-270) translate(-363.5,-141.5)"/>
                 <path id="h_014" d="M361,-106.529L361,369.616" transform="translate(361.5,131.5) rotate(-270) translate(-361.5,-131.5)"/>
-                <path id="h_013" d="M362.5,-101.006L362.5,344.034" transform="translate(363,121.5) rotate(-270) translate(-363,-121.5)"/>
                 <path id="h_012" d="M363.5,-94.137L363.5,317.088" transform="translate(364,111.5) rotate(-270) translate(-364,-111.5)"/>
-                <path id="h_011" d="M364,-86.5984L364,289.596" transform="translate(364.5,101.5) rotate(-270) translate(-364.5,-101.5)"/>
                 <path id="h_010" d="M363,-80.0808L363,262.661" transform="translate(363.5,91.5) rotate(-270) translate(-363.5,-91.5)"/>
-                <path id="h_009" d="M363,-72.5876L363,235.533" transform="translate(363.5,81.5) rotate(-270) translate(-363.5,-81.5)"/>
                 <path id="h_008" d="M363,-63.539L363,206.537" transform="translate(363.5,71.5) rotate(-270) translate(-363.5,-71.5)"/>
-                <path id="h_007" d="M363,-57.7875L363,180.505" transform="translate(363.5,61.5) rotate(-270) translate(-363.5,-61.5)"/>
                 <path id="h_006" d="M363,-49.728L363,152.515" transform="translate(363.5,51.5) rotate(-270) translate(-363.5,-51.5)"/>
-                <path id="h_005" d="M362,-42.9271L362,125.56" transform="translate(362.5,41.5) rotate(-270) translate(-362.5,-41.5)"/>
                 <path id="h_004" d="M363,-34.9048L363,97.9985" transform="translate(363.5,31.5) rotate(-270) translate(-363.5,-31.5)"/>
-                <path id="h_003" d="M362,-26.5115L362,69.7925" transform="translate(362.5,21.5) rotate(-270) translate(-362.5,-21.5)"/>
                 <path id="h_002" d="M362.5,-19.3141L362.5,42.002" transform="translate(363,11.5) rotate(-270) translate(-363,-11.5)"/>
-                <path id="h_001" d="M364,-13.334L364,16.0199" transform="translate(364.5,1.5) rotate(-270) translate(-364.5,-1.5)"/>
             </g>
             <path id="hex_outline" d="M706.338,195.45L735.638,212.35L735.638,636.65L706.338,653.55L425.138,815.95L368.238,848.75L311.338,815.95L30.1376,653.55L0.837612,636.65L0.837612,212.35L30.1376,195.45L307.938,35.05L368.238,0.25L428.538,35.05L706.338,195.45ZM716.434,626.581L716.434,224.419L368.238,23.3899L20.0409,224.419L20.0409,626.581L368.238,827.61L716.434,626.581Z" fill="#000000"/>
         </g>

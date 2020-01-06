@@ -16,7 +16,7 @@ test_that("Getting data extracts is possible", {
     interrogate()
   
   # Get a summary of the interrogation
-  summary <- get_agent_report(agent)
+  summary <- get_agent_report(agent, display_table = FALSE)
   
   # Expect that the summary shows there are
   # two data extracts available
@@ -50,7 +50,7 @@ test_that("Getting data extracts is possible", {
     interrogate()
   
   # Get a summary of the interrogation
-  summary <- get_agent_report(agent)
+  summary <- get_agent_report(agent, display_table = FALSE)
   
   # Expect that the summary shows there are
   # no data extracts available
@@ -84,7 +84,7 @@ test_that("Data extracts of different sizes are possible to create", {
     interrogate(get_first_n = 1)
 
   # Get a summary of the interrogation
-  summary <- get_agent_report(agent)
+  summary <- get_agent_report(agent, display_table = FALSE)
   
   # Expect that the summary shows there are
   # two data extracts available
@@ -120,7 +120,7 @@ test_that("Data extracts of different sizes are possible to create", {
     interrogate(sample_limit = 2)
   
   # Get a summary of the interrogation
-  summary <- get_agent_report(agent)
+  summary <- get_agent_report(agent, display_table = FALSE)
   
   # Expect that the summary shows there are
   # two data extracts available
@@ -156,7 +156,7 @@ test_that("Data extracts of different sizes are possible to create", {
     interrogate(sample_n = 5, sample_limit = 2)
   
   # Get a summary of the interrogation
-  summary <- get_agent_report(agent)
+  summary <- get_agent_report(agent, display_table = FALSE)
   
   # Expect that the summary shows there are
   # two data extracts available
@@ -192,7 +192,7 @@ test_that("Data extracts of different sizes are possible to create", {
     interrogate(sample_frac = 0.75, sample_limit = 3)
   
   # Get a summary of the interrogation
-  summary <- get_agent_report(agent)
+  summary <- get_agent_report(agent, display_table = FALSE)
   
   # Expect that the summary shows there are
   # two data extracts available
@@ -228,7 +228,7 @@ test_that("Data extracts of different sizes are possible to create", {
     interrogate(sample_frac = 0.75)
   
   # Get a summary of the interrogation
-  summary <- get_agent_report(agent)
+  summary <- get_agent_report(agent, display_table = FALSE)
   
   # Expect that the summary shows there are
   # two data extracts available
@@ -263,7 +263,7 @@ test_that("Data extracts of different sizes are possible to create", {
     interrogate(extract_failed = FALSE)
   
   # Get a summary of the interrogation
-  summary <- get_agent_report(agent)
+  summary <- get_agent_report(agent, display_table = FALSE)
   
   # Expect that the summary shows there are
   # two data extracts available

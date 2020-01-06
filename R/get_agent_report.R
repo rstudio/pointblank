@@ -24,8 +24,14 @@
 #' \item extract: a logical value that indicates whether a data extract is
 #' available for the validation step
 #' }
+#' If the **gt** package is installed (and if `display_table = TRUE`) then a
+#' **gt** table will be displayed with the same information.
 #' 
 #' @param agent An agent object of class `ptblank_agent`.
+#' @param display_table Should a display table be generated? If `TRUE`, and if
+#'   the **gt** package is installed, a display table for the report will be
+#'   shown in the Viewer. If `FALSE`, or if **gt** is not available, then a
+#'   tibble will be returned.
 #' 
 #' @return A tibble.
 #' 
@@ -41,18 +47,23 @@
 #'   col_vals_gt(vars(a), 4) %>%
 #'   interrogate()
 #' 
-#' # Get a report from the agent by
-#' # using `get_agent_report()`
-#' get_agent_report(agent)
+#' # Get a tibble-based report from the
+#' # agent by using `get_agent_report()`
+#' agent %>%
+#'   get_agent_report(display_table = FALSE)
 #' 
 #' @family Interrogate and Get Info
 #' @section Function ID:
 #' 3-3
 #' 
 #' @export
-get_agent_report <- function(agent) {
+get_agent_report <- function(agent,
+                             display_table = TRUE) {
   
   validation_set <- agent$validation_set
+  
+  agent_name <- agent$name
+  agent_time <- agent$time
   
   columns <- 
     validation_set$column %>%
@@ -99,20 +110,85 @@ get_agent_report <- function(agent) {
     has_extract <- as.character(validation_set[["i"]]) %in% names(agent$extracts)
   }
 
-  dplyr::tibble(
-    i = validation_set$i,
-    type = validation_set$assertion_type,
-    columns = columns,
-    value = validation_set$value,
-    set = set,
-    regex = validation_set$regex,
-    preconds = has_preconds,
-    units = validation_set$n,
-    n_pass = validation_set$n_passed,
-    f_pass = validation_set$f_passed,
-    W = validation_set$warn,
-    S = validation_set$stop,
-    N = validation_set$notify,
-    extract = has_extract
-  )
+  report_tbl <- 
+    dplyr::tibble(
+      i = validation_set$i,
+      type = validation_set$assertion_type,
+      columns = columns,
+      value = validation_set$value,
+      set = set,
+      regex = validation_set$regex,
+      preconds = has_preconds,
+      units = validation_set$n,
+      n_pass = validation_set$n_passed,
+      f_pass = validation_set$f_passed,
+      W = validation_set$warn,
+      S = validation_set$stop,
+      N = validation_set$notify,
+      extract = has_extract
+    )
+  
+  # nocov start
+  
+  if (requireNamespace("gt", quietly = TRUE) && display_table) {
+      
+    gt_agent_report <- 
+      report_tbl %>%
+      gt::gt(rowname_col = "i") %>%
+      gt::fmt_number(columns = vars(f_pass), drop_trailing_zeros = TRUE) %>%
+      gt::cols_label(
+        type = "Validation Type",
+        columns = "Cols",
+        value = "Value",
+        set = "Set", regex = "Regex",
+        preconds = "Preconditions?",
+        units = "Units",
+        extract = "Extract?"
+      ) %>%
+      gt::fmt_missing(columns = everything()) %>%
+      gt::tab_header(
+        title = "Pointblank Validation",
+        subtitle = gt::md(paste0("`", agent_name, " (", agent_time, ")`<br><br>"))
+      ) %>%
+      gt::tab_options(
+        table.font.size = gt::pct(90),
+        row.striping.include_table_body = FALSE
+      ) %>%
+      gt::text_transform(
+        locations = gt::cells_body(columns = vars(W, S, N)),
+        fn = function(x) {
+          dplyr::case_when(
+            x == "TRUE"  ~ "&check;",
+            x == "FALSE" ~ "&cross;")
+        }
+      ) %>%
+      gt::text_transform(
+        locations = gt::cells_body(columns = vars(preconds, extract)),
+        fn = function(x) {
+          dplyr::case_when(
+            x == "TRUE"  ~ "Yes",
+            x == "FALSE" ~ "No")
+        }
+      ) %>%
+      gt::text_transform(
+        locations = gt::cells_body(columns = vars(type)),
+        fn = function(x) {
+          paste0("<code style=\"font-size:85%;\">", x, "()</code>")
+        }
+      ) %>%
+      gt::tab_style(
+        style = gt::cell_text(align = "left", indent = gt::px(5)),
+        locations = gt::cells_title("title")
+      ) %>%
+      gt::tab_style(
+        style = gt::cell_text(align = "left", indent = gt::px(5)),
+        locations = gt::cells_title("subtitle")
+      )
+    
+    return(gt_agent_report)
+  }
+  
+  # nocov end
+  
+  report_tbl
 }

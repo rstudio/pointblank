@@ -635,23 +635,20 @@ perform_action <- function(agent, idx, type) {
     )
   
   if (type == "warn") {
-    if (.warn) {
+    if (!is.na(.warn) && .warn) {
       if ("warn" %in% names(actions$fns) && !is.null(actions$fns$warn)) {
- 
         actions$fns$warn %>% rlang::f_rhs() %>% rlang::eval_tidy()
       }
     }
   } else if (type == "notify") {
-    if (.notify) {
+    if (!is.na(.notify) && .notify) {
       if ("notify" %in% names(actions$fns) && !is.null(actions$fns$notify)) {
-        
         actions$fns$notify %>% rlang::f_rhs() %>% rlang::eval_tidy()
       }
     }
   } else if (type == "stop") {
-    if (.stop) {
+    if (!is.na(.stop) && .stop) {
       if ("stop" %in% names(actions$fns) && !is.null(actions$fns$stop)) {
-        
         actions$fns$stop %>% rlang::f_rhs() %>% rlang::eval_tidy()
       }
     }
@@ -730,42 +727,64 @@ add_table_extract <- function(agent,
 
 determine_action <- function(agent, idx, false_count) {
   
-  actions_list <- agent$validation_set[[idx, "actions"]]
+  al <- agent$validation_set[[idx, "actions"]]
   n <- agent$validation_set[[idx, "n"]]
+
+  warn <- stop <- notify <- FALSE
   
-  warn <- notify <- stop <- FALSE
-  
-  if (is.null(actions_list$warn_count)) {
-    warn <- FALSE
-  } else if (false_count >= actions_list$warn_count) {
-    warn <- TRUE
+  if (is.null(al$warn_count) && is.null(al$warn_fraction)) {
+    warn <- NA
+  }
+  if (is.null(al$stop_count) && is.null(al$stop_fraction)) {
+    stop <- NA
+  }
+  if (is.null(al$notify_count) && is.null(al$notify_fraction)) {
+    notify <- NA
+  }
+
+  if (!is.na(warn)) {
+    if (is.null(al$warn_count)) {
+      warn <- FALSE
+    } else if (false_count >= al$warn_count) {
+      warn <- TRUE
+    }
   }
   
-  if (is.null(actions_list$notify_count)) {
-    notify <- FALSE
-  } else if (false_count >= actions_list$notify_count) {
-    notify <- TRUE
+  if (!is.na(stop)) {
+    if (is.null(al$stop_count)) {
+      stop <- FALSE
+    } else if (false_count >= al$stop_count) {
+      stop <- TRUE
+    }
   }
   
-  if (is.null(actions_list$stop_count)) {
-    stop <- FALSE
-  } else if (false_count >= actions_list$stop_count) {
-    stop <- TRUE
+  if (!is.na(notify)) {
+    if (is.null(al$notify_count)) {
+      notify <- FALSE
+    } else if (false_count >= al$notify_count) {
+      notify <- TRUE
+    }
   }
   
-  if (!is.null(actions_list$warn_fraction)) {
-    warn_count <- round(actions_list$warn_fraction * n, 0)
-    if (false_count >= warn_count) warn <- TRUE
+  if (!is.na(warn)) {
+    if (!is.null(al$warn_fraction)) {
+      warn_count <- round(al$warn_fraction * n, 0)
+      if (false_count >= warn_count) warn <- TRUE
+    }
   }
   
-  if (!is.null(actions_list$notify_fraction)) {
-    notify_count <- round(actions_list$notify_fraction * n, 0)
-    if (false_count >= notify_count) notify <- TRUE
+  if (!is.na(stop)) {
+    if (!is.null(al$stop_fraction)) {
+      stop_count <- round(al$stop_fraction * n, 0)
+      if (false_count >= stop_count) stop <- TRUE
+    }
   }
   
-  if (!is.null(actions_list$stop_fraction)) {
-    stop_count <- round(actions_list$stop_fraction * n, 0)
-    if (false_count >= stop_count) stop <- TRUE
+  if (!is.na(notify)) {
+    if (!is.null(al$notify_fraction)) {
+      notify_count <- round(al$notify_fraction * n, 0)
+      if (false_count >= notify_count) notify <- TRUE
+    }
   }
   
   agent$validation_set[[idx, "warn"]] <- warn

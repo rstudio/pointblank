@@ -7,6 +7,20 @@
 #' `fns` argument. They will undergo evaluation at the time when the matching
 #' state is entered.
 #' 
+#' The output of the `action_levels()` call in `actions` will be interpreted
+#' slightly different if using an *agent* or using a validation step function
+#' directly on a data table. For convenience, when working directly on data 
+#' any values supplied to `warn_at` or `stop_at` will be automatically given a
+#' stock `warning()` or `stop()` function. If you were to supply those manually
+#' then the stock functions would be overridden. In the that interactive data
+#' case there is no automatic reaction function given for the `notify` state (as
+#' that state is less commonly used and should instead be intended for custom
+#' reporting functions).
+#' 
+#' When using an *agent*, we often opt to not use any functions in `fns` as the
+#' `warn`, `stop`, and `notify` states will be reported on when using
+#' `create_agent_report()` (and, usually that's sufficient).
+#' 
 #' @param warn_at,stop_at,notify_at The threshold number or fraction of
 #'   validation units that can provide a *fail* result before entering the
 #'   `warn`, `stop`, or `notify` states.
@@ -18,9 +32,11 @@
 #'   set of statements with `{ }`.
 #' 
 #' @examples 
+#' library(dplyr)
+#' 
 #' # Create a simple data frame with
 #' # a column of numerical values
-#' df <- data.frame(a = c(5, 7, 8, 5))
+#' tbl <- tibble(a = c(5, 7, 8, 5))
 #' 
 #' # Create an `action_levels()` list
 #' # with fractional values for the
@@ -36,16 +52,23 @@
 #' # `a` are always greater than 7 and
 #' # apply the list of action levels
 #' agent <-
-#'   create_agent(tbl = df) %>%
+#'   create_agent(tbl = tbl) %>%
 #'   col_vals_gt(vars(a), 7, actions = al) %>%
 #'   interrogate()
 #'
-#' # The report from the agent will
-#' # show that the `warn` state has
-#' # been entered for the first and
-#' # only validation step
+#' # The report from the agent will show
+#' # that the `warn` state has been entered
+#' # for the first and only validation step.
 #' agent %>%
 #'   get_agent_report(display_table = FALSE)
+#'   
+#' # In the context of using validation
+#' # stop functions directly on data, their
+#' # use is commonly to trigger warnings
+#' # and raise errors. The following will
+#' # provide a warning.
+#' tbl %>%
+#'   col_vals_gt(vars(a), 5, actions = al)
 #'   
 #' @export
 action_levels <- function(warn_at = NULL,

@@ -17,31 +17,28 @@
 #'   given.
 #' 
 #' @examples
-#' \dontrun{
-#' # Set a seed
-#' set.seed(23)
+#' library(dplyr)
 #' 
-#' # Create a simple data frame with a
-#' # column of numerical values
-#' df <- data.frame(a = rnorm(100, 5, 2))
+#' # Create a simple data frame with
+#' # a column of numerical values
+#' tbl <- tibble(a = c(5, 7, 8, 5))
 #' 
 #' # Create 2 simple validation steps
 #' # that test whether values within
 #' # column `a`
 #' agent <-
-#'   create_agent(tbl = df) %>%
+#'   create_agent(tbl = tbl) %>%
 #'   col_vals_between(vars(a), 4, 6) %>%
-#'   col_vals_lte(vars(a), 10) %>%
+#'   col_vals_lte(vars(a), 7) %>%
 #'   interrogate(
 #'     extract_failed = TRUE,
 #'     get_first_n = 10
 #'   )
 #' 
 #' # Get row sample data for those rows
-#' # in `df` that did not pass the first
+#' # in `tbl` that did not pass the first
 #' # validation step (`col_vals_between`)
-#' agent %>% get_data_extracts(step = 1)
-#' }
+#' agent %>% get_data_extracts(i = 1)
 #' 
 #' @family Interrogate and Get Info
 #' @section Function ID:

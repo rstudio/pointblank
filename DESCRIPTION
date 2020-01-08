@@ -36,4 +36,5 @@ Suggests:
     covr
 Enhances:
     gt (>= 0.1.0)
+Additional_repositories: http://ddsjoberg.github.io/drat
 Roxygen: list(markdown = TRUE)

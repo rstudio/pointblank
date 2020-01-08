@@ -1,4 +1,4 @@
-# pointblank (development version)
+# pointblank 0.3.0
 
 The pointblank package has been changed significantly from the previous version in favor of consistency and simplicity, better reporting, and increased power. The internals have been extensively refactored and the API has accordingly gone through revisions.
 

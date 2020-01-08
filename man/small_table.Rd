@@ -4,20 +4,26 @@
 \name{small_table}
 \alias{small_table}
 \title{A small table that useful for testing}
-\format{A tibble with 12470 rows and 5 variables:
+\format{A tibble with 13 rows and 8 variables:
 \describe{
-\item{country_name}{Name of the country}
-\item{country_code_2}{The 2-letter ISO 3166-1 country code}
-\item{country_code_3}{The 3-letter ISO 3166-1 country code}
-\item{year}{The year for the population estimate}
-\item{population}{The population estimate, midway through the year}
+\item{date_time}{A date-time column (of the \code{POSIXct} class) with dates that
+correspond exactly to those in the \code{date} column. Time values are somewhat
+randomized but all 'seconds' values are \code{00}.}
+\item{date}{A \code{Date} column with dates from \code{2016-01-04} to \code{2016-01-30}.}
+\item{a}{An \code{integer} column with values ranging from \code{1} to \code{8}.}
+\item{b}{A \code{character} column with values that adhere to a common pattern.}
+\item{c}{An \code{integer} column with values ranging from \code{2} to \code{9}. Contains two \code{NA} values.}
+\item{d}{A numeric column with values ranging from \code{108} to \code{10000}.}
+\item{e}{A \code{logical} column.}
+\item{f}{A \code{character} column with \code{"low"}, \code{"mid"}, and \code{"high"} values.}
 }}
 \usage{
 small_table
 }
 \description{
 This is a small table with a few different types of columns. It's probably
-just useful when testing the functions from \strong{pointblank}.
+just useful when testing the functions from \strong{pointblank}. Rows 9 and 10 are
+exact duplicates. The \code{c} column contains two \code{NA} values.
 }
 \section{Function ID}{
 

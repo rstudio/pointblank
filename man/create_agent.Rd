@@ -26,12 +26,14 @@ Creates an agent object.
 }
 
 \examples{
-# Create a simple data frame
-# with a column of numerical values
-df <- data.frame(a = c(5, 7, 8, 7))
+library(dplyr)
+
+# Create a simple table with a
+# column of numerical values
+tbl <- tibble(a = c(5, 7, 8, 7))
 
 # Create a pointblank `agent` object
-agent <- create_agent(tbl = df)
+agent <- create_agent(tbl = tbl)
 
 # Then, as with any `ptblank_agent`
 # object, we can add validation steps

@@ -29,22 +29,24 @@
 #'   
 #' @return A `ptblank_agent` object.
 #'   
-#' @examples 
-#' # Create a simple data frame with
-#' # two columns of numerical values
-#' df <-
-#'   data.frame(
+#' @examples
+#' library(dplyr)
+#' 
+#' # Create a simple table with two
+#' # columns of numerical values
+#' tbl <-
+#'   tibble(
 #'     a = c(5, 7, 6, 5, 8, 7),
 #'     b = c(7, 1, 0, 0, 0, 3)
 #'   )
 #' 
 #' # Validate that values in column
-#' # `a` from `df` are always > 5,
+#' # `a` from `tbl` are always > 5,
 #' # using `interrogate()` carries out
 #' # the validation plan and completes
 #' # the whole process
 #' agent <-
-#'   create_agent(tbl = df) %>%
+#'   create_agent(tbl = tbl) %>%
 #'   col_vals_gt(vars(a), 5) %>%
 #'   interrogate()
 #'   

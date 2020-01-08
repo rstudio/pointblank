@@ -40,19 +40,16 @@
 #'   was passed to `x`.
 #'   
 #' @examples
-#' # Create a simple data frame with
-#' # a column of `character` values
-#' df <-
-#'   data.frame(
-#'     a = c("one", "two"),
-#'     stringsAsFactors = FALSE
-#'   )
+#' library(dplyr)
 #' 
-#' # Validate that column `a`
-#' # in the data frame is classed
-#' # as `character`
+#' # Create a simple table with
+#' # a column of `character` values
+#' tbl <- tibble(a = c("one", "two"))
+#' 
+#' # Validate that column `a` in the
+#' # table is classed as `character`
 #' agent <-
-#'   create_agent(tbl = df) %>%
+#'   create_agent(tbl = tbl) %>%
 #'   col_is_character(vars(a)) %>%
 #'   interrogate()
 #' 

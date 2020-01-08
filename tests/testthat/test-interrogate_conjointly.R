@@ -2,8 +2,8 @@ context("Performing conjoint interrogations with an agent")
 
 test_that("Interrogating conjointly with an agent yields the correct results", {
   
-  df <-
-    data.frame(
+  tbl <-
+    dplyr::tibble(
       a = c(5, 7, 6,  5, 8,  7),
       b = c(3, 4, 6,  8, 9, 11),
       c = c(2, 6, 8, NA, 3,  8)
@@ -12,7 +12,7 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
   # Use three validation step functions in a single
   # `conjointly()` validation step, then, `interrogate()`
   validation <-
-    create_agent(tbl = df) %>%
+    create_agent(tbl = tbl) %>%
     conjointly(
       ~ col_vals_gt(., columns = vars(a), value = 4),
       ~ col_vals_lt(., columns = vars(b), value = 10),
@@ -24,7 +24,7 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
   expect_equivalent(nrow(validation$validation_set), 1)
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "df")
+  expect_equivalent(validation$tbl_name, "tbl")
   expect_equivalent(validation$validation_set$i, 1)
   expect_equivalent(validation$validation_set$assertion_type, "conjointly")
   expect_true(is.list(validation$validation_set$column))
@@ -63,7 +63,7 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
   # `conjointly()` validation step, then, `interrogate()`;
   # use `preconditions` to mutate the `tbl` beforehand
   validation <-
-    create_agent(tbl = df) %>%
+    create_agent(tbl = tbl) %>%
     conjointly(
       ~ col_vals_gt(., columns = vars(a), value = 4),
       ~ col_vals_lt(., columns = vars(b), value = 10),
@@ -76,7 +76,7 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
   expect_equivalent(nrow(validation$validation_set), 1)
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "df")
+  expect_equivalent(validation$tbl_name, "tbl")
   expect_equivalent(validation$validation_set$i, 1)
   expect_equivalent(validation$validation_set$assertion_type, "conjointly")
   expect_true(is.list(validation$validation_set$column))
@@ -116,7 +116,7 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
   # Use a single validation step function in a single
   # `conjointly()` validation step, then, `interrogate()`
   validation <-
-    create_agent(tbl = df) %>%
+    create_agent(tbl = tbl) %>%
     conjointly(
       ~ col_vals_gt(., columns = vars(a), value = 2)
     ) %>%
@@ -126,7 +126,7 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
   expect_equivalent(nrow(validation$validation_set), 1)
   
   # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "df")
+  expect_equivalent(validation$tbl_name, "tbl")
   expect_equivalent(validation$validation_set$i, 1)
   expect_equivalent(validation$validation_set$assertion_type, "conjointly")
   expect_true(is.list(validation$validation_set$column))
@@ -158,7 +158,7 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
   # Expect an error if there are no validation
   # step functions supplied to `conjointly()`
   expect_error(
-    create_agent(tbl = df) %>%
+    create_agent(tbl = tbl) %>%
       conjointly() %>%
       interrogate()
   )

@@ -63,10 +63,10 @@
 #' @examples
 #' library(dplyr)
 #' 
-#' # Create a simple data frame with
-#' # a column of numerical values
-#' df <-
-#'   data.frame(
+#' # Create a simple table with a
+#' # column of numerical values
+#' tbl <-
+#'   tibble(
 #'     a = c(5, 4, 1, 2),
 #'     b = c(3, 2, 5, 6)
 #'   )
@@ -76,7 +76,7 @@
 #' # and `b` are always less
 #' # than or equal to 10
 #' agent <-
-#'   create_agent(tbl = df) %>%
+#'   create_agent(tbl = tbl) %>%
 #'   col_vals_lte(vars(a_b), 10,
 #'     preconditions = ~ {
 #'       tbl %>% dplyr::mutate(a_b = a + b)

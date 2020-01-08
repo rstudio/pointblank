@@ -64,15 +64,14 @@ then be automatically generated.
 }
 
 \examples{
-# Create a simple data frame with
+# Create a simple table with
 # a column of `factor` values
-df <- data.frame(a = c("one", "two"))
+tbl <- tibble(a = factor(c("one", "two")))
 
-# Validate that column `a`
-# in the data frame is classed
-# as `factor`
+# Validate that column `a` in the
+# table is classed as `factor`
 agent <-
-  create_agent(tbl = df) \%>\%
+  create_agent(tbl = tbl) \%>\%
   col_is_factor(vars(a)) \%>\%
   interrogate()
 

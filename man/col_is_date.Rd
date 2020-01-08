@@ -64,14 +64,16 @@ then be automatically generated.
 }
 
 \examples{
-# Create a simple data frame with
+library(dplyr)
+
+# Create a simple table with
 # a column of `Date` values
-df <- data.frame(a = as.Date("2017-08-15"))
+tbl <- tibble(a = as.Date("2017-08-15"))
 
 # Validate that column `a` in the
-# data frame is classed as `Date`
+# table is classed as `Date`
 agent <-
-  create_agent(tbl = df) \%>\%
+  create_agent(tbl = tbl) \%>\%
   col_is_date(vars(a)) \%>\%
   interrogate()
 

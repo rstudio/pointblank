@@ -53,14 +53,15 @@
 #'   was passed to `x`.
 #'   
 #' @examples
-#' # Create a simple data frame with
-#' # 2 columns: one with numerical
-#' # values and the other with strings
-#' df <-
-#'   data.frame(
+#' library(dplyr)
+#' 
+#' # Create a simple table with 2
+#' # columns: one with numerical
+#' # values, the other with strings
+#' tbl <-
+#'   tibble(
 #'     a = c(1, 2, 3, 4),
-#'     b = c("one", "two"),
-#'     stringsAsFactors = FALSE
+#'     b = rep(c("one", "two"), 2)
 #'   )
 #' 
 #' # Validate that all numerical values
@@ -69,7 +70,7 @@
 #' # validation check for column `b` with
 #' # a set of string values 
 #' agent <-
-#'   create_agent(tbl = df) %>%
+#'   create_agent(tbl = tbl) %>%
 #'   col_vals_in_set(vars(a), 1:4) %>%
 #'   col_vals_in_set(vars(b), c("one", "two")) %>%
 #'   interrogate()

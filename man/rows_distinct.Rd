@@ -13,7 +13,7 @@ rows_distinct(
 )
 }
 \arguments{
-\item{x}{An agent object of class \code{ptblank_agent}.}
+\item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
 
 \item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
@@ -33,7 +33,8 @@ with the \code{\link[=action_levels]{action_levels()}} helper function.}
 \item{brief}{An optional, text-based description for the validation step.}
 }
 \value{
-A \code{ptblank_agent} object.
+Either a \code{ptblank_agent} object or a table object, depending on what
+was passed to \code{x}.
 }
 \description{
 The \code{rows_distinct()} validation step function checks whether row values
@@ -86,10 +87,12 @@ then be automatically generated.
 }
 
 \examples{
-# Create a simple data frame with
-# three columns of numerical values
-df <-
-  data.frame(
+library(dplyr)
+
+# Create a simple table with three
+# columns of numerical values
+tbl <-
+  tibble(
     a = c(5, 7, 6, 5, 8, 7),
     b = c(7, 1, 0, 0, 8, 3),
     c = c(1, 1, 1, 3, 3, 3)
@@ -100,7 +103,7 @@ df <-
 # are no duplicate rows (i.e., all
 # rows are distinct)
 agent <-
-  create_agent(tbl = df) \%>\%
+  create_agent(tbl = tbl) \%>\%
   rows_distinct(vars(a, b)) \%>\%
   interrogate()
 

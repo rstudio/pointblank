@@ -44,15 +44,17 @@
 #' then be automatically generated.
 #'
 #' @inheritParams col_vals_gt
-#' @param x An agent object of class `ptblank_agent`.
 #'   
-#' @return A `ptblank_agent` object.
+#' @return Either a `ptblank_agent` object or a table object, depending on what
+#'   was passed to `x`.
 #'   
 #' @examples
-#' # Create a simple data frame with
-#' # three columns of numerical values
-#' df <-
-#'   data.frame(
+#' library(dplyr)
+#' 
+#' # Create a simple table with three
+#' # columns of numerical values
+#' tbl <-
+#'   tibble(
 #'     a = c(5, 7, 6, 5, 8, 7),
 #'     b = c(7, 1, 0, 0, 8, 3),
 #'     c = c(1, 1, 1, 3, 3, 3)
@@ -63,7 +65,7 @@
 #' # are no duplicate rows (i.e., all
 #' # rows are distinct)
 #' agent <-
-#'   create_agent(tbl = df) %>%
+#'   create_agent(tbl = tbl) %>%
 #'   rows_distinct(vars(a, b)) %>%
 #'   interrogate()
 #' 

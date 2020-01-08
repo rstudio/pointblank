@@ -40,15 +40,16 @@
 #'   was passed to `x`.
 #'   
 #' @examples
-#' # Create a simple data frame
-#' # with a column containing data
-#' # classed as `integer`
-#' df <- data.frame(a = as.integer(c(5, 9, 3)))
+#' library(dplyr)
+#' 
+#' # Create a simple table with a
+#' # column of `integer` values
+#' tbl <- tibble(a = c(5L, 9L, 3L))
 #' 
 #' # Validate that column `a` in the
-#' # data frame is an `integer`
+#' # table is classed as `integer`
 #' agent <-
-#'   create_agent(tbl = df) %>%
+#'   create_agent(tbl = tbl) %>%
 #'   col_is_integer(vars(a)) %>%
 #'   interrogate()
 #' 

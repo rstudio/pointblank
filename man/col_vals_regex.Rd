@@ -104,18 +104,16 @@ then be automatically generated.
 }
 
 \examples{
-# Create a simple data frame
-# with a column containing strings
-df <-
-  data.frame(
-    a = c("s_0131", "s_0231"),
-    stringsAsFactors = FALSE
-  )
+library(dplyr)
+
+# Create a simple table with a
+# column containing strings
+tbl <- tibble(a = c("s_0131", "s_0231"))
 
 # Validate that all string values in
 # column `a` match a regex statement
 agent <-
-  create_agent(tbl = df) \%>\%
+  create_agent(tbl = tbl) \%>\%
   col_vals_regex(vars(a), "^s_[0-9]{4}$") \%>\%
   interrogate()
 

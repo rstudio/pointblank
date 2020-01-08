@@ -121,15 +121,17 @@ then be automatically generated.
 }
 
 \examples{
-# Create a simple data frame with
+library(dplyr)
+
+# Create a simple table with
 # a column of numerical values
-df <- data.frame(a = c(5.6, 8.2, 7.8))
+tbl <- tibble(a = c(5.6, 8.2, 7.8))
 
 # Validate that values in
 # column `a` are all between
 # 1 and 9
 agent <-
-  create_agent(tbl = df) \%>\%
+  create_agent(tbl = tbl) \%>\%
   col_vals_between(vars(a), 1, 9) \%>\%
   interrogate()
 

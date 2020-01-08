@@ -97,10 +97,12 @@ then be automatically generated.
 }
 
 \examples{
-# Create a simple data frame with
-# three columns of numerical values
-df <-
-  data.frame(
+library(dplyr)
+
+# Create a simple table with three
+# columns of numerical values
+tbl <-
+  tibble(
     a = c(5, 7, 6, 5, 8, 7),
     b = c(3, 4, 6, 8, 9, 11),
     c = c(2, 6, 8, NA, 3, 8)
@@ -109,7 +111,7 @@ df <-
 # Validate that values in column
 # `a` are always greater than 4
 agent <-
-  create_agent(tbl = df) \%>\%
+  create_agent(tbl = tbl) \%>\%
   conjointly(
     ~ col_vals_gt(., vars(a), 6),
     ~ col_vals_lt(., vars(b), 10),

@@ -1,6 +1,6 @@
 #' Print the agent information to the console
 #'
-#' This function will allow the agent to provide a summary report.
+#' This function will allow the agent to provide a short message in the console.
 #' 
 #' @param x An agent object of class `ptblank_agent`.
 #' 

@@ -60,10 +60,10 @@
 #' @examples
 #' library(dplyr)
 #' 
-#' # Create a simple data frame with
-#' # two columns of numerical values
-#' df <-
-#'   data.frame(
+#' # Create a simple table with two
+#' # columns of numerical values
+#' tbl <-
+#'   tibble(
 #'     a = c(1, 1, 1, 2, 2, 2),
 #'     b = c(5, 5, 5, 3, 6, 3)
 #'   )
@@ -72,7 +72,7 @@
 #' # `b` are equal to 5 when values
 #' # in column `a` are equal to 1 
 #' agent <-
-#'   create_agent(tbl = df) %>%
+#'   create_agent(tbl = tbl) %>%
 #'   col_vals_equal(vars(b), 5,
 #'     preconditions = ~ tbl %>% dplyr::filter(a == 1)
 #'   ) %>%

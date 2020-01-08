@@ -64,15 +64,16 @@ then be automatically generated.
 }
 
 \examples{
-# Create a simple data frame with
-# a column of `logical` values
-df <- data.frame(a = c(TRUE, FALSE))
+library(dplyr)
 
-# Validate that column `a` in
-# the data frame is classed as
-# `logical`
+# Create a simple table with a
+# column of `logical` values
+tbl <- tibble(a = c(TRUE, FALSE))
+
+# Validate that column `a` in the
+# table is classed as `logical`
 agent <-
-  create_agent(tbl = df) \%>\%
+  create_agent(tbl = tbl) \%>\%
   col_is_logical(vars(a)) \%>\%
   interrogate()
 

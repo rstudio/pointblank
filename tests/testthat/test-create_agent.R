@@ -2,14 +2,14 @@ context("Creation of `agent` objects")
 
 test_that("Creating a valid `agent` object is possible", {
   
-  df <-
-    data.frame(
+  tbl <-
+    dplyr::tibble(
       a = c(1, 1, 1, 2, 2, 2),
       b = c(5, 5, 5, 3, 6, 3)
     )
   
   # Create an agent object
-  agent <- create_agent(tbl = df)
+  agent <- create_agent(tbl = tbl)
   
   # Expect that names in an agent object match a
   # prescribed set of names
@@ -30,7 +30,7 @@ test_that("Creating a valid `agent` object is possible", {
   # Expect certain classes for the different `ptblank_agent` components
   expect_is(agent$name, "character")
   expect_is(agent$time, "POSIXct")
-  expect_is(agent$tbl, class(df))
+  expect_is(agent$tbl, class(tbl))
   expect_is(agent$tbl_name, "character")
   expect_is(agent$tbl_src, "character")
   expect_is(agent$col_names, "character")
@@ -58,7 +58,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$extracts, "list")
   
   # Create an agent with a name
-  agent_name <- create_agent(tbl = df, name = "test")
+  agent_name <- create_agent(tbl = tbl, name = "test")
   
   # Expect that the agent name has been set
   expect_equivalent(agent_name$name, "test")

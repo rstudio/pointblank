@@ -19,6 +19,8 @@
 #' }
 #'
 #' @examples
+#' library(dplyr)
+#' 
 #' # Here is a glimpse at the data
 #' # available in `small_table`
 #' dplyr::glimpse(small_table)

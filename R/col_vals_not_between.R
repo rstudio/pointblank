@@ -70,15 +70,17 @@
 #'   was passed to `x`.
 #'   
 #' @examples
-#' # Create a simple data frame with
-#' # a column of numerical values
-#' df <- data.frame(a = c(5.6, 7.8, 3.4))
+#' library(dplyr)
+#' 
+#' # Create a simple table with a
+#' # column of numerical values
+#' tbl <- tibble(a = c(5.6, 7.8, 3.4))
 #' 
 #' # Validate that none of the values 
 #' # in column `a` are between 9 and 10,
 #' # or, between 0 and 2
 #' agent <-
-#'   create_agent(tbl = df) %>%
+#'   create_agent(tbl = tbl) %>%
 #'   col_vals_not_between(vars(a), 9, 10) %>%
 #'   col_vals_not_between(vars(a), 0, 2) %>%
 #'   interrogate()

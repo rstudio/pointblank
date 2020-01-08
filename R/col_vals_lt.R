@@ -60,15 +60,17 @@
 #'   was passed to `x`.
 #'   
 #' @examples
-#' # Create a simple data frame with
-#' # a column of numerical values
-#' df <- data.frame(a = c(5, 4, 1, 2))
+#' library(dplyr)
+#' 
+#' # Create a simple table with a
+#' # column of numerical values
+#' tbl <- tibble(a = c(5, 4, 1, 2))
 #' 
 #' # Validate that values in
 #' # column `a` are always less
 #' # than 6
 #' agent <-
-#'   create_agent(tbl = df) %>%
+#'   create_agent(tbl = tbl) %>%
 #'   col_vals_lt(vars(a), 6) %>%
 #'   interrogate()
 #' 

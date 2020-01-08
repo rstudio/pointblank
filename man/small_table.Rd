@@ -31,6 +31,8 @@ exact duplicates. The \code{c} column contains two \code{NA} values.
 }
 
 \examples{
+library(dplyr)
+
 # Here is a glimpse at the data
 # available in `small_table`
 dplyr::glimpse(small_table)

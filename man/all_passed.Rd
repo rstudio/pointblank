@@ -24,14 +24,16 @@ levels? Using the \code{all_passed()} function will let us know whether that's
 }
 
 \examples{
-# Create a simple data frame with
+library(dplyr)
+
+# Create a simple table with
 # a column of numerical values
-df <- data.frame(a = c(5, 7, 8, 5))
+tbl <- tibble(a = c(5, 7, 8, 5))
 
 # Validate that values in column
 # `a` are always greater than 4
 agent <-
-  create_agent(tbl = df) \%>\%
+  create_agent(tbl = tbl) \%>\%
   col_vals_gt(vars(a), 4) \%>\%
   interrogate()
 

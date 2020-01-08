@@ -60,18 +60,20 @@ then be automatically generated.
 }
 
 \examples{
-# Create a simple data frame with
+library(dplyr)
+
+# Create a simple table with
 # two columns of numerical values
-df <-
-  data.frame(
+tbl <-
+  tibble(
     a = c(5, 7, 6, 5, 8, 7),
     b = c(7, 1, 0, 0, 0, 3)
   )
 
 # Validate that columns `a` and `b`
-# exist in the `df` table
+# exist in the `tbl` table
 agent <-
-  create_agent(tbl = df) \%>\%
+  create_agent(tbl = tbl) \%>\%
   col_exists(vars(a, b)) \%>\%
   interrogate()
 

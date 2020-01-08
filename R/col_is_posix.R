@@ -43,10 +43,12 @@
 #'   was passed to `x`.
 #'   
 #' @examples
-#' # Create a simple data frame with a
+#' library(dplyr)
+#' 
+#' # Create a simple table with a
 #' # column of `POSIXct` values
-#' df <-
-#'   data.frame(
+#' tbl <-
+#'   tibble(
 #'     a = as.POSIXct(
 #'       strptime(
 #'         "2011-03-27 01:30:00",
@@ -55,9 +57,9 @@
 #'   )
 #' 
 #' # Validate that column `a` in the
-#' # data frame is classed as `POSIXct`
+#' # table is classed as `POSIXct`
 #' agent <-
-#'   create_agent(tbl = df) %>%
+#'   create_agent(tbl = tbl) %>%
 #'   col_is_posix(vars(a)) %>%
 #'   interrogate()
 #' 

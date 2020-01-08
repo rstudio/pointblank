@@ -92,13 +92,12 @@ then be automatically generated.
 \examples{
 library(dplyr)
 
-# Create a simple data frame with
-# two columns of numerical values
-df <-
-  data.frame(
+# Create a simple table with two
+# columns of numerical values
+tbl <-
+  tibble(
     a = c(1, 2, NA, NA),
-    b = c(2, 2, 5, 5),
-    stringsAsFactors = FALSE
+    b = c(2, 2, 5, 5)
   )
 
 # Validate that all values in
@@ -106,7 +105,7 @@ df <-
 # values in column `b` are equal
 # to 2
 agent <-
-  create_agent(tbl = df) \%>\%
+  create_agent(tbl = tbl) \%>\%
   col_vals_not_null(vars(a),
     preconditions = ~ tbl \%>\% dplyr::filter(b == 2)
   ) \%>\%

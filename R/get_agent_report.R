@@ -145,7 +145,6 @@ get_agent_report <- function(agent,
         units = "Units",
         extract = "Extract?"
       ) %>%
-      gt::fmt_missing(columns = everything()) %>%
       gt::tab_header(
         title = "Pointblank Validation",
         subtitle = gt::md(paste0("`", agent_name, " (", agent_time, ")`<br><br>"))
@@ -154,12 +153,32 @@ get_agent_report <- function(agent,
         table.font.size = gt::pct(90),
         row.striping.include_table_body = FALSE
       ) %>%
+      gt::fmt_missing(columns = everything()) %>%
       gt::text_transform(
-        locations = gt::cells_body(columns = vars(W, S, N)),
+        locations = gt::cells_body(columns = vars(W)),
         fn = function(x) {
           dplyr::case_when(
-            x == "TRUE"  ~ "&check;",
-            x == "FALSE" ~ "&cross;")
+            x == "TRUE"  ~ "<span style=\"color: #FFBF00;\">&#9679;</span>",
+            x == "FALSE" ~ "<span style=\"color: #FFBF00;\">&cir;</span>",
+            TRUE ~ "&mdash;")
+        }
+      ) %>%
+      gt::text_transform(
+        locations = gt::cells_body(columns = vars(S)),
+        fn = function(x) {
+          dplyr::case_when(
+            x == "TRUE"  ~ "<span style=\"color: #CF142B;\">&#9679;</span>",
+            x == "FALSE" ~ "<span style=\"color: #CF142B;\">&cir;</span>",
+            TRUE ~ "&mdash;")
+        }
+      ) %>%
+      gt::text_transform(
+        locations = gt::cells_body(columns = vars(N)),
+        fn = function(x) {
+          dplyr::case_when(
+            x == "TRUE"  ~ "<span style=\"color: #439CFE;\">&#9679;</span>",
+            x == "FALSE" ~ "<span style=\"color: #439CFE;\">&cir;</span>",
+            TRUE ~ "&mdash;")
         }
       ) %>%
       gt::text_transform(

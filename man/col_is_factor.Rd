@@ -64,6 +64,8 @@ then be automatically generated.
 }
 
 \examples{
+library(dplyr)
+
 # Create a simple table with
 # a column of `factor` values
 tbl <- tibble(a = factor(c("one", "two")))

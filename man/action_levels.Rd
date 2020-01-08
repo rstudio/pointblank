@@ -76,8 +76,11 @@ agent \%>\%
 # stop functions directly on data, their
 # use is commonly to trigger warnings
 # and raise errors. The following will
-# provide a warning.
-tbl \%>\%
-  col_vals_gt(vars(a), 5, actions = al)
+# provide a warning (but that's suppressed
+# here).
+suppressWarnings(
+  tbl \%>\%
+    col_vals_gt(vars(a), 5, actions = al)
+)
   
 }

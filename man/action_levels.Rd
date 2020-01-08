@@ -34,7 +34,12 @@ df <- data.frame(a = c(5, 7, 8, 5))
 # Create an `action_levels()` list
 # with fractional values for the
 # `warn`, `stop`, and `notify` states
-al <- action_levels(warn_at = 0.2, stop_at = 0.8, notify_at = 0.345)
+al <- 
+  action_levels(
+    warn_at = 0.2,
+    stop_at = 0.8,
+    notify_at = 0.345
+  )
 
 # Validate that values in column
 # `a` are always greater than 7 and

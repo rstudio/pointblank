@@ -1,9 +1,7 @@
 context("Performing simple interrogations")
 
 tbl <- 
-  readr::read_csv(
-    system.file("extdata", "small_table.csv", package = "pointblank"),
-    col_types = "TDicddlc") %>%
+  small_table %>%
   dplyr::mutate(g = as.factor(f))
 
 test_that("Interrogating simply returns the expected results", {

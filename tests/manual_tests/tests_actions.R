@@ -2,12 +2,6 @@ library(pointblank)
 library(tidyverse)
 library(log4r)
 
-# Read in the `small_table` object from the package
-small_table <-
-  readr::read_csv(
-    system.file("extdata", "small_table.csv", package = "pointblank"),
-    col_types = "TDicddlc")
-
 # Create a log4r `logger` object
 logger <- logger("WARN", appenders = file_appender("log_file"))
 

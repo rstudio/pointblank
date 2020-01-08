@@ -1,10 +1,5 @@
 context("Performing interrogations with an agent")
 
-small_table <-
-  readr::read_csv(
-    system.file("extdata", "small_table.csv", package = "pointblank"),
-    col_types = "TDicddlc")
-
 test_that("Interrogating with an agent yields the correct results", {
   
   # Use the `col_exists()` function to create

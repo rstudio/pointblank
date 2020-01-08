@@ -147,11 +147,6 @@ test_that("The `action_levels()` helper function works as expected", {
 
 test_that("The appropriate actions occur when using `action_levels()`", {
   
-  small_table <-
-    readr::read_csv(
-      system.file("extdata", "small_table.csv", package = "pointblank"),
-      col_types = "TDicddlc")
-  
   agent <-
     create_agent(tbl = small_table, name = "small_table_tests") %>%
     col_vals_gt(

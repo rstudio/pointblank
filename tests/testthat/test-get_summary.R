@@ -1,10 +1,5 @@
 context("Creating an agent report")
 
-small_table <-
-  readr::read_csv(
-    system.file("extdata", "small_table.csv", package = "pointblank"),
-    col_types = "TDicddlc")
-
 test_that("Getting an agent report is possible", {
   
   # Use `col_is_character()` function to create

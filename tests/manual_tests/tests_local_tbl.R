@@ -1,11 +1,6 @@
 library(pointblank)
 library(tidyverse)
 
-small_table <-
-  readr::read_csv(
-    system.file("extdata", "small_table.csv", package = "pointblank"),
-    col_types = "TDicddlc")
-
 agent_plan <-
   create_agent(tbl = small_table) %>%
   rows_distinct(vars(d, e)) %>%

@@ -2,11 +2,6 @@ context("The utility functions work as expected")
 
 test_that("Utility functions won't fail us", {
   
-  small_table <-
-    readr::read_csv(
-      system.file("extdata", "small_table.csv", package = "pointblank"),
-      col_types = "TDicddlc")
-  
   # Use two validation step functions to create
   # an agent with two validation steps 
   agent <-

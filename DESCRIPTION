@@ -1,19 +1,23 @@
 Type: Package
 Package: pointblank
-Title: Validation of Local and Remote Data Tables
 Version: 0.2.1.9000
-Authors@R: 
-    person("Richard", "Iannone", , "riannone@me.com", c("aut", "cre"),
-           comment = c(ORCID = "0000-0003-3925-190X"))
+Title: Validation of Local and Remote Data Tables
 Description: Validate data in data frames, 'tibble' objects, and in database
     tables (e.g., 'PostgreSQL' and 'MySQL'). Validation pipelines can be made
     using easily-readable, consecutive validation steps. Upon execution of the
     validation plan, several reporting options are available. User-defined
     thresholds for failure rates allow for the determination of appropriate
     reporting actions.
+Authors@R: 
+    person("Richard", "Iannone", , "riannone@me.com", c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-3925-190X"))
 License: MIT + file LICENSE
 URL: https://github.com/rich-iannone/pointblank
 BugReports: https://github.com/rich-iannone/pointblank/issues
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+RoxygenNote: 7.0.2
 Depends: 
     R (>= 3.5.0)
 Imports:
@@ -32,6 +36,4 @@ Suggests:
     covr
 Enhances:
     gt (>= 0.1.0)
-Encoding: UTF-8
-RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)

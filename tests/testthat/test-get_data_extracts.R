@@ -1,10 +1,5 @@
 context("Getting data extracts")
 
-small_table <-
-  readr::read_csv(
-    system.file("extdata", "small_table.csv", package = "pointblank"),
-    col_types = "TDicddlc")
-
 test_that("Getting data extracts is possible", {
   
   # Use two validation step functions to create

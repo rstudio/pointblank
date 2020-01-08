@@ -1,10 +1,5 @@
 context("Creation of validation steps")
 
-small_table <-
-  readr::read_csv(
-    system.file("extdata", "small_table.csv", package = "pointblank"),
-    col_types = "TDicddlc")
-
 test_that("Creating a `col_is_character()` step is possible", {
   
   # Use `col_is_character()` function to create

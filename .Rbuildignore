@@ -10,3 +10,4 @@
 ^docs$
 ^pkgdown$
 ^CRAN-RELEASE$
+^data-raw$

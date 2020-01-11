@@ -35,3 +35,4 @@ vignettes/*.pdf
 
 # RDS files
 *.rds
+inst/doc

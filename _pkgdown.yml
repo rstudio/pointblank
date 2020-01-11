@@ -63,4 +63,4 @@ reference:
     - get_data_extracts
 
 development:
-  mode: unreleased
+  mode: release

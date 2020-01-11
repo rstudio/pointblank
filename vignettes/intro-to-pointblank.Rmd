@@ -1,0 +1,104 @@
+---
+title: "Introduction to pointblank"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Intro to pointblank}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r options, message=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(pointblank)
+library(tidyverse)
+```
+
+The **pointblank** package is, at it's very core, a thing to validate your data. The data, specifically, needs to be tabular data but could be in the form of **R** data frames and tibbles, or, database tables (`tbl_dbi` objects).
+
+There are two basic workflows, and they have names to distinguish them: (1) *data quality reporting* and (2) *pipeline-based data validation*. The first aims to make a complete reporting of target table with as many validation functions as the user wishes to write to get validation coverage on that table. The second workflow is more ideal in an pipeline involving tabular data. The principal mode of operation there is to use validation functions to either warn the user of unforeseen data integrity problems or stop the pipeline dead so that dependent, downstream processes are not initiated. Both workflows use a common set of validation step functions, action levels (i.e., failure thresholds) can be set in a stepwise manner, and all side effects and reporting behaviors can be defined using **R** functions.
+
+### A Walkthrough of **pointblank** in the Data Quality Reporting Workflow
+
+When trying to assess the state of data quality for any tabular object, we want to perform a full accounting of assertions on the data without stoppage at any point. We use something called an *agent* to collect our validation instructions, perform the interrogation, and then serve as an artifact for reporting. The *agent* is created with the `create_agent()` function. We give that agent the name of the target table which, again, can be data frame, tibble (`tbl_df`), or, any flavor of database `tbl` object (`tbl_dbi`).
+
+The agent naturally needs directives on what to do with the table, so, we invoke validation step functions. There are lots of them. Some check for the existence or type of column (`col_exists()` or the group of `col_is_*()` functions). Others check each cell in a column for satisfying a specific condition (the `col_vals_*()` functions). We can use as many of these as necessary for satisfactory validation testing of the table in question.
+
+The final function that needs to be called is the `interrogate()` function. You see, the validation step functions, when called on an *agent* object don't do anything with the data. They are instructions. With `interrogate()` those instructions turn into actions, with the agent dutifully carrying out the interrogation plan.
+
+For our examples going forward, we'll use the `small_table` dataset. It's included in the **pointblank** package. It isn't very large, which makes it great for simple examples. Here it is in its entirety:
+
+```{r small_table, paged.print=FALSE}
+small_table
+```
+
+What follows is a very simple validation plan for a very simple table. We will test that:
+
+1. the `date_time` column is indeed a date-time column
+2. column `f` only has the values `"low"`, `"mid"`, and `"high"`
+3. the values in column `a` are all less than `10`
+4. The strings in column `b` fit a particular regex pattern (`"^[0-9]-[a-z]{3}-[0-9]{3}$"`)
+5. column `d` has values in the range of `0` to `5000` (this is not entirely true!)
+
+```{r agent_small_table}
+agent <- 
+  small_table %>%
+  create_agent() %>%
+  col_is_posix(vars(date_time)) %>%
+  col_vals_in_set(vars(f), set = c("low", "mid", "high")) %>%
+  col_vals_lt(vars(a), value = 10) %>%
+  col_vals_regex(vars(b), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") %>%
+  col_vals_between(vars(d), left = 0, right = 5000) %>%
+  interrogate()
+```
+
+The `agent` object gives us a little bit of information about how the interrogation went.
+
+```{r, print_agent}
+agent
+```
+
+The `4 passing validations` means that all of the individual validations in each of those four validation steps passed without any errors. While the one validation that failed could mean that a single test unit failed (each cell tested == 1 test unit), or, all of them failed. We have a reporting option available that breaks this down a bit more and it's suggested in the printout: `get_agent_report()`. Let's try that.
+
+```{r get_agent_report}
+get_agent_report(agent)
+```
+
+The report is a **gt** table, which is printed by default if we have the **gt** package installed (use `remotes::install_github("rstudio/gt")` to install that package). The first five columns echo our parameters for each of the (numbered) validation steps. What is `preconditions`? That indicates whether the table was mutated just before interrogation in that validation step. The total number of test units is provided next, then the number of passing test units, and then the fraction of passing test units. The `W`, `S`, `N` indicators tell us whether we have entered either of the `WARN`, `STOP`, or `NOTIFY` states for these validation steps. Because we didn't set any threshold levels for these states, they are irrelevant for this report. Finally, the `Extract` indicator tells us whether there are data extracts available for failed test units. For *step 5*, the `col_vals_between()` validation step, there is a data extract available. We can examine that extract with the `get_data_extracts()` function:
+
+```{r get_data_extracts, paged.print=FALSE}
+get_data_extracts(agent, i = 5)
+```
+
+Recall that validation *step 5* asserted that all values in column `d` should be between `0` and `5000`, however, this extract of `small_table` shows that column `d` has a value of `10000` which lies outside the specified range.
+
+This short demo shows some of the salient features of defining validation steps and interpreting the report. There are many more things you can do. Have a look at the documentation for some of the validation step functions for further examples.
+
+### A Walkthrough of **pointblank** in the Pipeline-based Data Validation Workflow
+
+The second workflow, *pipeline-based data validations*, somewhat simplifies the process for checking data directly. There is no *agent* involved here and we instead call validation step functions directly on the data table objects. Because no *agent*, there is no report, and the idea is that the side effects are most important here. We can trigger warnings, raise errors, or write out logs when exceeding specified failure thresholds. The data just passes through the validation functions (some data in, same data out). Where would we do this? When importing data, for instance, pass that data through a few validation step functions with *warn_at* and *stop_at* threshold levels set. Use a set of validation step functions on tabular data that was transformed as a QA/QC measure. If bad data quality might be ruinous for a downstream report (especially in an automated context), it's better to stop the process through **pointblank** validation tests and get to the heart of the matter.
+
+Let's adapt the previous example to optimize it to the pipeline-based data validation workflow:
+
+```{r pipeline_small_table, eval=FALSE, paged.print=FALSE}
+
+# Create an `action_levels` object, stopping the pipeline
+# if we get a single failing test unit
+al <- action_levels(stop_at = 1)
+
+small_table %>%
+  col_is_posix(vars(date_time), actions = al) %>%
+  col_vals_in_set(vars(f), set = c("low", "mid", "high"), actions = al) %>%
+  col_vals_lt(vars(a), value = 10, actions = al) %>%
+  col_vals_regex(vars(b), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$", actions = al) %>%
+  col_vals_between(vars(d), left = 0, right = 5000, actions = al)
+```
+
+```
+Error: The validation (`col_vals_between()`) meets or exceeds the stop threshold
+```
+
+Great! This stringent threshold setting stopped the evaluation of the pipeline and, in turns, stops the running script if it's deployed and automatically running on the regular. The `action_levels()` function is quite powerful and it allows us to define custom functions to react to entering each of the three states. In this type of workflow we don't need to define those functions, **pointblank** will automatically do the sensible thing and provide a stock `warning()` or `stop()` message.

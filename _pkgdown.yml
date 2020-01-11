@@ -46,6 +46,7 @@ reference:
     - col_is_posix
     - col_is_factor
     - col_exists
+    - action_levels
     
   - title: Interrogate and Get Info
     desc: >
@@ -61,6 +62,19 @@ reference:
     - all_passed
     - get_agent_report
     - get_data_extracts
+    
+navbar:
+  type: default
+  left:
+  - text: Intro
+    href: articles/intro-to-pointblank.html
+  - text: Reference
+    href: reference/index.html
+  - text: News
+    href: news/index.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/rich-iannone/pointblank
 
 development:
   mode: release

@@ -14,7 +14,6 @@ knitr::opts_chunk$set(
 )
 
 library(pointblank)
-library(tidyverse)
 ```
 
 The **pointblank** package is, at it's very core, a thing to validate your data. The data, specifically, needs to be tabular data but could be in the form of **R** data frames and tibbles, or, database tables (`tbl_dbi` objects).

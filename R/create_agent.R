@@ -1,9 +1,21 @@
 #' Create a pointblank agent object
 #'
-#' Creates an agent object.
+#' Creates an *agent* object, which is used in a *data quality reporting*
+#' workflow. The overall aim of this workflow is to generate some reporting on
+#' the state of data quality for a target table. We can supply as many
+#' validation step functions as the user wishes to write to get validation
+#' coverage on that table. We supply a single table to `create_agent()`, which
+#' becomes the sole focus of the data quality analysis. After application of
+#' one or more validation step functions, we need to use the [interrogate()]
+#' function to complete the process; the validation step functions, when called
+#' on an agent, are merely instructions up to that point. The *agent* then has
+#' information on how the interrogation went. Reporting of the interrogation can
+#' be performed with the [get_agent_report()] function. If we just need to know
+#' whether all validations completely passed (i.e., all steps had no failing
+#' test units), the [all_passed()] function should be used.
 #'
-#' @param tbl The input table that will be the focus of the validation. This can
-#'   be a data frame, a tibble, or a `tbl_dbi` object.
+#' @param tbl The input table. This can be a data frame, a tibble, or a
+#'   `tbl_dbi` object.
 #' @param name An optional name for the validation plan that the agent will
 #'   eventually carry out during the interrogation process. If no value is
 #'   provided, a name will be generated based on the current system time.

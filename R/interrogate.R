@@ -263,8 +263,8 @@ interrogate_between <- function(agent, idx, table, assertion_type) {
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
-  incl_left <- names(set)[1] %>% as.logical()
-  incl_right <- names(set)[2] %>% as.logical()
+  left <- set[[1]]
+  right <- set[[2]]
   incl_str <- paste(ifelse(names(set), "incl", "excl"), collapse = "_")
   
   if (assertion_type == "col_vals_between") {
@@ -273,10 +273,10 @@ interrogate_between <- function(agent, idx, table, assertion_type) {
     tbl_checked <- 
       switch(
         incl_str,
-        "incl_incl" = ib_incl_incl(table, {{column}}, set, na_pass),
-        "excl_incl" = ib_excl_incl(table, {{column}}, set, na_pass),
-        "incl_excl" = ib_incl_excl(table, {{column}}, set, na_pass),
-        "excl_excl" = ib_excl_excl(table, {{column}}, set, na_pass)
+        "incl_incl" = ib_incl_incl(table, {{column}}, left, right, na_pass),
+        "excl_incl" = ib_excl_incl(table, {{column}}, left, right, na_pass),
+        "incl_excl" = ib_incl_excl(table, {{column}}, left, right, na_pass),
+        "excl_excl" = ib_excl_excl(table, {{column}}, left, right, na_pass)
       )
   }
   
@@ -286,10 +286,10 @@ interrogate_between <- function(agent, idx, table, assertion_type) {
     tbl_checked <- 
       switch(
         incl_str,
-        "incl_incl" = nb_incl_incl(table, {{column}}, set, na_pass),
-        "excl_incl" = nb_excl_incl(table, {{column}}, set, na_pass),
-        "incl_excl" = nb_incl_excl(table, {{column}}, set, na_pass),
-        "excl_excl" = nb_excl_excl(table, {{column}}, set, na_pass)
+        "incl_incl" = nb_incl_incl(table, {{column}}, left, right, na_pass),
+        "excl_incl" = nb_excl_incl(table, {{column}}, left, right, na_pass),
+        "incl_excl" = nb_incl_excl(table, {{column}}, left, right, na_pass),
+        "excl_excl" = nb_excl_excl(table, {{column}}, left, right, na_pass)
       )
   }
   
@@ -508,74 +508,74 @@ add_reporting_data <- function(agent, idx, tbl_checked) {
   determine_action(agent, idx, false_count = n_failed)
 }
 
-ib_incl_incl <- function(table, column, set, na_pass) {
+ib_incl_incl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} >= set[1] & {{ column }} <= set[2] ~ TRUE,
-      {{ column }} < set[1] | {{ column }} > set[2] ~ FALSE,
+      {{ column }} >= left & {{ column }} <= right ~ TRUE,
+      {{ column }} < left | {{ column }} > right ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))
 }
-ib_excl_incl <- function(table, column, set, na_pass) {
+ib_excl_incl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} > set[1] & {{ column }} <= set[2] ~ TRUE,
-      {{ column }} <= set[1] | {{ column }} > set[2] ~ FALSE,
+      {{ column }} > left & {{ column }} <= right ~ TRUE,
+      {{ column }} <= left | {{ column }} > right ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))
 }
-ib_incl_excl <- function(table, column, set, na_pass) {
+ib_incl_excl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} >= set[1] & {{ column }} < set[2] ~ TRUE,
-      {{ column }} < set[1] | {{ column }} >= set[2] ~ FALSE,
+      {{ column }} >= left & {{ column }} < right ~ TRUE,
+      {{ column }} < left | {{ column }} >= right ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))
 }
-ib_excl_excl <- function(table, column, set, na_pass) {
+ib_excl_excl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} > set[1] & {{ column }} < set[2] ~ TRUE,
-      {{ column }} <= set[1] | {{ column }} >= set[2] ~ FALSE,
+      {{ column }} > left & {{ column }} < right ~ TRUE,
+      {{ column }} <= left | {{ column }} >= right ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))
 }
-nb_incl_incl <- function(table, column, set, na_pass) {
+nb_incl_incl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} < set[1] | {{ column }} > set[2] ~ TRUE,
-      {{ column }} >= set[1] & {{ column }} <= set[2] ~ FALSE,
+      {{ column }} < left | {{ column }} > right ~ TRUE,
+      {{ column }} >= left & {{ column }} <= right ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))
 }
-nb_excl_incl <- function(table, column, set, na_pass) {
+nb_excl_incl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} <= set[1] | {{ column }} > set[2] ~ TRUE,
-      {{ column }} > set[1] & {{ column }} <= set[2] ~ FALSE,
+      {{ column }} <= left | {{ column }} > right ~ TRUE,
+      {{ column }} > left & {{ column }} <= right ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))
 }
-nb_incl_excl <- function(table, column, set, na_pass) {
+nb_incl_excl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} < set[1] | {{ column }} >= set[2] ~ TRUE,
-      {{ column }} >= set[1] & {{ column }} < set[2] ~ FALSE,
+      {{ column }} < left | {{ column }} >= right ~ TRUE,
+      {{ column }} >= left & {{ column }} < right ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))
 }
-nb_excl_excl <- function(table, column, set, na_pass) {
+nb_excl_excl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} <= set[1] | {{ column }} >= set[2] ~ TRUE,
-      {{ column }} > set[1] & {{ column }} < set[2] ~ FALSE,
+      {{ column }} <= left | {{ column }} >= right ~ TRUE,
+      {{ column }} > left & {{ column }} < right ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))

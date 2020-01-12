@@ -18,6 +18,8 @@ library(pointblank)
 
 The **pointblank** package is, at its very core, a thing to validate your data. The data specifically needs to be tabular data but could be in the form of **R** data frames and tibbles, or, database tables (`tbl_dbi` objects).
 
+<img src="images/two_different_workflows.png" width=100%>
+
 There are two basic workflows, and they have names to distinguish them: (1) *data quality reporting* and (2) *pipeline-based data validation*. The first aims to make a complete reporting of target table with as many validation functions as the user wishes to write to get validation coverage on that table. The second workflow is more ideal in an pipeline involving tabular data. The principal mode of operation there is to use validation functions to either warn the user of unforeseen data integrity problems or stop the pipeline dead so that dependent, downstream processes are not initiated. Both workflows use a common set of validation step functions, action levels (i.e., failure thresholds) can be set in a stepwise manner, and all side effects and reporting behaviors can be defined using **R** functions.
 
 ### A Walkthrough of **pointblank** in the Data Quality Reporting Workflow

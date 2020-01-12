@@ -1,5 +1,7 @@
 # pointblank (development version)
 
+* Fixed implementation of the `col_vals_between()` and `col_vals_not_between()` step functions to work with `tbl_dbi` objects
+
 # pointblank 0.3.0
 
 The pointblank package has been changed significantly from the previous version in favor of consistency and simplicity, better reporting, and increased power. The internals have been extensively refactored and the API has accordingly gone through revisions.

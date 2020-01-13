@@ -119,6 +119,15 @@ resolve_columns <- function(x, var_expr, preconditions) {
   column
 }
 
+get_tbl_dbi_src_info <- function(tbl) {
+  utils::capture.output(tbl %>% unclass() %>% .$src)
+}
+
+get_tbl_dbi_src_details <- function(tbl) {
+  tbl_src_info <- get_tbl_dbi_src_info(tbl)
+  tbl_src_info[grepl("^src:", tbl_src_info)] %>% gsub("src:\\s*", "", .)
+}
+
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
   
   gsub(pattern, replacement, x, fixed = fixed)

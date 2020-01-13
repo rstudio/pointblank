@@ -33,10 +33,10 @@ agent <-
   col_is_integer(vars(e)) %>%
   col_exists(vars(date_time, date, a)) %>%
   #col_vals_regex(vars(b), "[0-9]-[a-z]{3}-[0-9]{3}") %>%
-  # conjointly(
-  #   ~ col_vals_gt(., vars(d), 100),
-  #   ~ col_vals_gte(., vars(c), 2, na_pass = TRUE)
-  # ) %>%
+  conjointly(
+    ~ col_vals_gt(., vars(d), 100),
+    ~ col_vals_gte(., vars(c), 2, na_pass = TRUE)
+  ) %>%
   interrogate()
 
 get_agent_report(agent)

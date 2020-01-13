@@ -16,7 +16,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_true(
     all(
       names(agent) ==
-        c("name", "time", "tbl", "tbl_name", "tbl_src",
+        c("name", "time", "tbl", "tbl_name", "tbl_src", "tbl_src_details",
           "col_names", "col_types", "validation_set", "extracts")
     )
   )
@@ -33,6 +33,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$tbl, class(tbl))
   expect_is(agent$tbl_name, "character")
   expect_is(agent$tbl_src, "character")
+  expect_is(agent$tbl_src_details, "character")
   expect_is(agent$col_names, "character")
   expect_is(agent$col_types, "character")
   expect_is(agent$validation_set$i, "integer")

@@ -85,6 +85,17 @@ create_agent <- function(tbl,
   
   column_names <- names(column_names_types)
   column_types <- unname(unlist(column_names_types))
+  
+  tbl_src <- character(0)
+  tbl_src_details <- character(0)
+  
+  if (inherits(tbl, "tbl_df")) {
+    tbl_src <- "tbl_df"
+  } else if (inherits(tbl, "tbl_dbi") && inherits(tbl, "tbl_SQLiteConnection")) {
+    tbl_src_info <- capture.output(tbl %>% unclass() %>% .$src)
+    tbl_src <- "sqlite"
+    tbl_src_details <- tbl_src_info[grepl("^src:", tbl_src_info)] %>% gsub("src:\\s*", "", .)
+  }
 
   # Create the agent list object
   agent <-
@@ -93,7 +104,8 @@ create_agent <- function(tbl,
       time = as.POSIXct(NA)[-1],
       tbl = tbl,
       tbl_name = tbl_name,
-      tbl_src = character(0),
+      tbl_src = tbl_src,
+      tbl_src_details = tbl_src_details,
       col_names = column_names,
       col_types = column_types,
       validation_set =

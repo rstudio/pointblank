@@ -100,7 +100,6 @@ interrogate <- function(agent,
       double_agent <- create_agent(tbl = agent$tbl)
       
       for (formula in validation_formulas) {
-        
         double_agent <-
           eval(
             expr = parse(
@@ -122,30 +121,29 @@ interrogate <- function(agent,
         assertion_type <- 
           get_assertion_type_at_idx(agent = double_agent, idx = j)
         
+        new_col <- paste0("pb_is_good_", j)
+        
         tbl_checked <- 
-          dplyr::bind_cols(
-            tbl_checked,
-            check_table_with_assertion(
-              agent = double_agent,
-              idx = j,
-              table,
-              assertion_type
-            )
-          )
+          check_table_with_assertion(
+            agent = double_agent,
+            idx = j,
+            table = tbl_checked,
+            assertion_type
+          ) %>%
+          dplyr::rename(!!new_col := pb_is_good_)
       }
+      
+      columns_str_vec <- paste0("pb_is_good_", seq(j))
+      columns_str_add <- paste0("pb_is_good_", seq(j), collapse = " + ")
       
       tbl_checked <-
         tbl_checked %>%
-        dplyr::select(dplyr::starts_with("pb_is_good_")) %>%
-        dplyr::mutate_all(as.numeric) %>%
-        dplyr::mutate(pb_sum = rowSums(dplyr::select(., dplyr::everything()))) %>%
-        dplyr::select(pb_is_good_ = pb_sum) %>%
+        dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(columns_str_add)) %>%
+        dplyr::select(-dplyr::one_of(columns_str_vec)) %>%
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           pb_is_good_ == validation_n ~ TRUE,
           TRUE ~ FALSE
         ))
-      
-      tbl_checked <- dplyr::bind_cols(table, tbl_checked)
     }
 
     # Add in the necessary reporting data for the validation
@@ -593,6 +591,8 @@ perform_action <- function(agent, idx, type) {
   .time <- agent$time
   .tbl <- agent$tbl
   .tbl_name <- agent$tbl_name
+  .tbl_src <- agent$tbl_src
+  .tbl_src_details <- agent$tbl_src_details
   .col_names <- agent$col_names
   .col_types <- agent$col_types
   
@@ -620,6 +620,8 @@ perform_action <- function(agent, idx, type) {
       time = .time,
       tbl = .tbl,
       tbl_name = .tbl_name,
+      tbl_src = .tbl_src,
+      tbl_src_details = .tbl_src_details,
       col_names = .col_names,
       col_types = .col_types,
       i = .i,

@@ -64,9 +64,11 @@ agent
 
 The `4 passing validations` means that all of the individual validations in each of those four validation steps passed without any errors. While the one validation that failed could mean that a single test unit failed (each cell tested == 1 test unit), or, all of them failed. We have a reporting option available that breaks this down a bit more and it's suggested in the printout: `get_agent_report()`. Let's try that.
 
-```{r get_agent_report}
+```{r get_agent_report, eval=FALSE}
 get_agent_report(agent)
 ```
+
+<img src="images/agent_report.png" width=100%>
 
 The report is a **gt** table, which is printed by default if we have the **gt** package installed (use `remotes::install_github("rstudio/gt")` to install that package). The first five columns echo our parameters for each of the (numbered) validation steps. What is `preconditions`? That indicates whether the table was mutated just before interrogation in that validation step. The total number of test units is provided next, then the number of passing test units, and then the fraction of passing test units. The `W`, `S`, `N` indicators tell us whether we have entered either of the `WARN`, `STOP`, or `NOTIFY` states for these validation steps. Because we didn't set any threshold levels for these states, they are irrelevant for this report. Finally, the `Extract` indicator tells us whether there are data extracts available for failed test units. For *step 5*, the `col_vals_between()` validation step, there is a data extract available. We can examine that extract with the `get_data_extracts()` function:
 

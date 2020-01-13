@@ -44,4 +44,3 @@ get_agent_report(agent)
 # TODO the following step functions have problems
 # - rows_distinct()
 # - col_vals_regex()
-# - conjointly()

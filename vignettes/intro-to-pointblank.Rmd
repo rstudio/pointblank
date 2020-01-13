@@ -104,4 +104,4 @@ small_table %>%
 Error: The validation (`col_vals_between()`) meets or exceeds the stop threshold
 ```
 
-Great! This stringent threshold setting stopped the evaluation of the pipeline and, in turns, stops the running script if it's deployed and automatically running on the regular. The `action_levels()` function is quite powerful and it allows us to define custom functions to react to entering each of the three states. In this type of workflow we don't need to define those functions, **pointblank** will automatically do the sensible thing and provide a stock `warning()` or `stop()` message.
+Great! This stringent threshold setting stopped the evaluation of the pipeline and, in turn, stops the running script if it's deployed and automatically running on the regular. The `action_levels()` function is quite powerful and it allows us to define custom functions to react to entering each of the three states. In this type of workflow we don't need to define those functions, **pointblank** will automatically do the sensible thing and provide a stock `warning()` or `stop()` message.

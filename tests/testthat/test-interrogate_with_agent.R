@@ -411,7 +411,7 @@ test_that("Interrogating for valid row values", {
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
   
-  # Use the `col_vals_equal()` function to create
+  # Use the `rows_distinct()` function to create
   # a validation step (with a precondition), then,
   # `interrogate()`
   validation <-
@@ -434,7 +434,7 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
   
-  # Use the `col_vals_equal()` function to create
+  # Use the `rows_distinct()` function to create
   # a validation step for selected columns, then,
   # `interrogate()`
   validation <-

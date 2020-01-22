@@ -299,6 +299,9 @@ interrogate_set <- function(agent, idx, table, assertion_type) {
   # Get the set values for the expression
   set <- get_column_set_values_at_idx(agent = agent, idx = idx)
   
+  # Determine if an NA value is part of the set
+  na_pass <- any(is.na(set))
+  
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
@@ -310,6 +313,10 @@ interrogate_set <- function(agent, idx, table, assertion_type) {
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         {{ column }} %in% set ~ TRUE,
         !({{ column }} %in% set) ~ FALSE
+      )) %>%
+      dplyr::mutate(pb_is_good_ = dplyr::case_when(
+        is.na(pb_is_good_) ~ na_pass,
+        TRUE ~ pb_is_good_
       ))
   }
   
@@ -321,6 +328,10 @@ interrogate_set <- function(agent, idx, table, assertion_type) {
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         !({{ column }} %in% set) ~ TRUE,
         {{ column }} %in% set ~ FALSE
+      )) %>%
+      dplyr::mutate(pb_is_good_ = dplyr::case_when(
+        is.na(pb_is_good_) ~ !na_pass,
+        TRUE ~ pb_is_good_
       ))
   }
   
@@ -427,43 +438,11 @@ interrogate_distinct <- function(agent, idx, table) {
   
   col_syms <- rlang::syms(column_names)
   
-  # Get total count of rows
-  row_count <-
-    table %>%
-    dplyr::group_by() %>%
-    dplyr::summarize(row_count = dplyr::n()) %>%
-    dplyr::as_tibble() %>%
-    dplyr::pull(row_count)
-  
-  # Get the rows that are duplicate rows, if any
-  duplicate_rows <- 
-    table %>%
-    dplyr::select({{ column_names }}) %>%
-    dplyr::mutate(`__pb_index__` = seq(row_count)) %>%
-    dplyr::group_by(!!!col_syms) %>%
-    dplyr::filter(dplyr::n() > 1) %>%
-    dplyr::ungroup()
-  
-  duplicate_row_idx <-
-    duplicate_rows %>%
-    dplyr::pull(`__pb_index__`)
-  
-  # Determine whether the test for duplicated passed
-  # (no duplicates) or failed (one or more duplicates)
-  duplicate_count <-
-    duplicate_rows %>%
-    dplyr::group_by() %>%
-    dplyr::summarize(row_count = dplyr::n()) %>%
-    dplyr::as_tibble() %>%
-    dplyr::pull(row_count)
-  
-  validation_res <- ifelse(duplicate_count == 0, TRUE, FALSE)
-  
-  # Perform rowwise validations for the column
   table %>%
-    dplyr::mutate(pb_is_good_ = ifelse(
-      dplyr::row_number() %in% duplicate_row_idx, FALSE, TRUE)
-    )
+    dplyr::select({{ column_names }}) %>%
+    dplyr::group_by(!!!col_syms) %>%
+    dplyr::mutate(`pb_is_good_` = ifelse(dplyr::n() == 1, TRUE, FALSE)) %>%
+    dplyr::ungroup()  
 }
 
 add_reporting_data <- function(agent, idx, tbl_checked) {

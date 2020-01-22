@@ -25,11 +25,13 @@ Imports:
     magrittr,
     rlang (>= 0.4.2),
     tidyselect (>= 0.2.5)
-Suggests: 
-    readr,
-    testthat,
+Suggests:
     covr,
+    DBI,
     knitr,
+    RSQLite,
+    testthat,
+    readr,
     rmarkdown
 Enhances:
     gt (>= 0.1.0)

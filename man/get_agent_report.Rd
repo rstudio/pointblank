@@ -27,9 +27,8 @@ depending on whether or not the agent performed an interrogation (with
 \item type: the validation type, which mirrors the name of the validation
 step function
 \item columns: the names of the columns used in the validation step
-\item value: the numeric value used in the validation step, where applicable
-\item set: the set values used in the validation step; for a \code{conjointly()}
-validation step, this is a listing of all sub-validations
+\item values: the values used in the validation step, where applicable; for
+a \code{conjointly()} validation step, this is a listing of all sub-validations
 \item regex: the regex used for a \code{col_vals_regex()} validation step
 \item preconds: a logical value indicating whether any preconditions where
 applied before interrogation

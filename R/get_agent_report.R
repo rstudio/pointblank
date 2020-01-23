@@ -72,14 +72,7 @@ get_agent_report <- function(agent,
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        if (is.null(x)) {
-          x <- NA_character_
-        } else if (!is.list(x) && !is.na(x)) {
-          x <- paste(paste_around(x, "`"), collapse = ", ")
-        } else {
-          x <- NA_character_
-        }
-        x
+        ifelse(is.null(x), NA_character_, paste(paste_around(x, "`"), collapse = ", "))
       }
     )
   
@@ -89,11 +82,7 @@ get_agent_report <- function(agent,
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        if (is.null(x)) {
-          NA_character_
-        } else {
-          paste(paste_around(x, "`"), collapse = ", ")
-        }
+        ifelse(is.null(x), NA_character_, paste(paste_around(x, "`"), collapse = ", "))
       } 
     )
 
@@ -103,11 +92,7 @@ get_agent_report <- function(agent,
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        if (is.null(x)) {
-          NA_character_ 
-        } else {
-          paste_around(x %>% rlang::as_function() %>% length(), "`")
-        }
+        ifelse(is.null(x), NA_character_, paste_around(x %>% rlang::as_function() %>% length(), "`"))
       }
     )
 

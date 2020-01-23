@@ -130,7 +130,7 @@ col_vals_equal <- function(x,
         assertion_type = "col_vals_equal",
         preconditions = preconditions,
         column = columns,
-        value = value
+        values = value
       )
   }
   
@@ -143,7 +143,7 @@ col_vals_equal <- function(x,
         agent = agent,
         assertion_type = "col_vals_equal",
         column = column,
-        value = value,
+        values = value,
         na_pass = na_pass,
         preconditions = preconditions,
         actions = actions,

@@ -125,7 +125,7 @@ col_vals_not_in_set <- function(x,
         agent = agent,
         assertion_type = "col_vals_not_in_set",
         column = columns,
-        set = set
+        values = set
       )
   }
   
@@ -138,7 +138,7 @@ col_vals_not_in_set <- function(x,
         agent = agent,
         assertion_type = "col_vals_not_in_set",
         column = column,
-        set = set,
+        values = set,
         preconditions = preconditions,
         actions = actions,
         brief = brief

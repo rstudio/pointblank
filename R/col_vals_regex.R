@@ -121,7 +121,7 @@ col_vals_regex <- function(x,
         agent = agent,
         assertion_type = "col_vals_regex",
         column = columns,
-        regex = regex
+        values = regex
       )
   }
   
@@ -134,7 +134,7 @@ col_vals_regex <- function(x,
         agent = agent,
         assertion_type = "col_vals_regex",
         column = column,
-        regex = regex,
+        values = regex,
         na_pass = na_pass,
         preconditions = preconditions,
         actions = actions,

@@ -126,7 +126,7 @@ col_vals_lt <- function(x,
         assertion_type = "col_vals_lt",
         preconditions = preconditions,
         column = columns,
-        value = value)
+        values = value)
   }
   
   # Add one or more validation steps based on the
@@ -138,7 +138,7 @@ col_vals_lt <- function(x,
         agent = agent,
         assertion_type = "col_vals_lt",
         column = column,
-        value = value,
+        values = value,
         na_pass = na_pass,
         preconditions = preconditions,
         actions = actions,

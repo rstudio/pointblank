@@ -35,20 +35,12 @@ get_column_as_sym_at_idx <- function(agent, idx) {
   rlang::sym(agent$validation_set[[idx, "column"]] %>% gsub("'", "", .))
 }
 
-get_column_value_at_idx <- function(agent, idx) {
-  agent$validation_set[[idx, "value"]]
-}
-
-get_column_set_values_at_idx <- function(agent, idx) {
-  agent$validation_set[[idx, "set"]]
+get_values_at_idx <- function(agent, idx) {
+  agent$validation_set[[idx, "values"]]
 }
 
 get_column_na_pass_at_idx <- function(agent, idx) {
   agent$validation_set[[idx, "na_pass"]]
-}
-
-get_column_regex_at_idx <- function(agent, idx) {
-  agent$validation_set[[idx, "regex"]]
 }
 
 get_all_cols <- function(agent) {
@@ -128,7 +120,12 @@ get_tbl_dbi_src_details <- function(tbl) {
   tbl_src_info[grepl("^src:", tbl_src_info)] %>% gsub("src:\\s*", "", .)
 }
 
+paste_around <- function(x, string) {
+  x <- paste0(string, x)
+  x <- paste0(x, string)
+  x
+}
+
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
-  
   gsub(pattern, replacement, x, fixed = fixed)
 }

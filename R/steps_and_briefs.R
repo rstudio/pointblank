@@ -1,9 +1,7 @@
 create_validation_step <- function(agent,
                                    assertion_type,
                                    column = NULL,
-                                   value = NULL,
-                                   set = NULL,
-                                   regex = NULL,
+                                   values = NULL,
                                    na_pass = NULL,
                                    preconditions = NULL,
                                    actions = NULL,
@@ -22,9 +20,7 @@ create_validation_step <- function(agent,
       i = i,
       assertion_type = assertion_type,
       column = ifelse(is.null(column), list(NULL), list(column)),
-      value = ifelse(is.null(value), NA_real_, as.numeric(value)),
-      set = ifelse(is.null(set), list(NULL), list(set)),
-      regex = ifelse(is.null(regex), NA_character_, as.character(regex)),
+      values = ifelse(is.null(values), list(NULL), list(values)),
       na_pass = ifelse(is.null(na_pass), as.logical(NA), as.logical(na_pass)),
       preconditions = ifelse(is.null(preconditions), list(NULL), list(preconditions)),
       actions = ifelse(is.null(actions), list(NULL), list(actions)),
@@ -63,11 +59,7 @@ create_autobrief <- function(agent,
                              assertion_type,
                              preconditions = NULL,
                              column = NULL,
-                             value = NULL,
-                             regex = NULL,
-                             set = NULL,
-                             left = NULL,
-                             right = NULL) {
+                             values = NULL) {
   
   if (assertion_type %in%
       c("col_vals_gt", "col_vals_gte",
@@ -103,38 +95,13 @@ create_autobrief <- function(agent,
         "values in `",
         column, "`",
         ifelse(is_column_computed, " (computed column) ", " "),
-        "should be ", operator, " ", value
+        "should be ", operator, " ", values
       )
   }
   
   
   if (assertion_type == "col_exists") {
-    
     autobrief <- paste0("Expect that column `", column, "` exists")
-  }
-  
-  if (assertion_type %in% c("col_vals_in_set", "col_vals_not_in_set")) {
-    
-    is_column_computed <-
-      ifelse(column %in% agent$col_names, FALSE, TRUE)
-    
-    autobrief <-
-      paste0(
-        "Expect that ",
-        ifelse(
-          !is.null(preconditions),
-          paste0(
-            "when the precondition ", "`",
-            preconditions %>% rlang::f_rhs() %>% rlang::as_label(),
-            "` is applied, "),
-          paste0("")),
-        "values in `",
-        column, "`",
-        ifelse(is_column_computed, " (computed column) ", " "),
-        "should ",
-        ifelse(assertion_type == "col_vals_not_in_set", "not ", ""),
-        "be part of set `", paste(set, collapse = ", "), "`"
-      )
   }
   
   if (assertion_type %in% c("col_vals_in_set", "col_vals_not_in_set")) {
@@ -156,12 +123,11 @@ create_autobrief <- function(agent,
         ifelse(is_column_computed, " (computed column) ", " "),
         "should ",
         ifelse(assertion_type == "col_vals_not_in_set", "not ", ""),
-        "be part of set `", paste(set, collapse = ", "), "`"
+        "be part of set `", paste(values, collapse = ", "), "`"
       )
   }
   
-  if (assertion_type %in%
-      c("col_vals_between", "col_vals_not_between")) {
+  if (assertion_type %in% c("col_vals_between", "col_vals_not_between")) {
     
     is_column_computed <- ifelse(column %in% agent$col_names, FALSE, TRUE)
     
@@ -180,7 +146,7 @@ create_autobrief <- function(agent,
         ifelse(is_column_computed, " (computed column) ", " "),
         "should ",
         ifelse(assertion_type == "col_vals_not_between", "not ", ""),
-        "be between `", left, "` and `", right, "`"
+        "be between `", values[1], "` and `", values[2], "`"
       )
   }
   
@@ -202,7 +168,7 @@ create_autobrief <- function(agent,
         column, "`",
         ifelse(is_column_computed, " (computed column) ", " "),
         "should match the regex expression `",
-        regex, "`"
+        values, "`"
       )
   }
   

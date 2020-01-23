@@ -93,7 +93,7 @@ interrogate <- function(agent,
       
     } else if (assertion_type == "conjointly") {
       
-      validation_formulas <- agent$validation_set[[i, "set"]]
+      validation_formulas <- get_values_at_idx(agent = agent, idx = i)
       validation_n <- length(validation_formulas)
       
       # Create a double agent
@@ -215,7 +215,7 @@ check_table_with_assertion <- function(agent, idx, table, assertion_type) {
 interrogate_comparison <- function(agent, idx, table, assertion_type) {
   
   # Get the value for the expression
-  value <- get_column_value_at_idx(agent = agent, idx = idx)
+  value <- get_values_at_idx(agent = agent, idx = idx)
   
   # Obtain the target column as a label
   column <- 
@@ -253,7 +253,7 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
 interrogate_between <- function(agent, idx, table, assertion_type) {
   
   # Get the set values for the expression
-  set <- get_column_set_values_at_idx(agent = agent, idx = idx)
+  set <- get_values_at_idx(agent = agent, idx = idx)
   
   # Determine whether NAs should be allowed
   na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
@@ -297,7 +297,7 @@ interrogate_between <- function(agent, idx, table, assertion_type) {
 interrogate_set <- function(agent, idx, table, assertion_type) {
   
   # Get the set values for the expression
-  set <- get_column_set_values_at_idx(agent = agent, idx = idx)
+  set <- get_values_at_idx(agent = agent, idx = idx)
   
   # Determine if an NA value is part of the set
   na_pass <- any(is.na(set))
@@ -338,6 +338,26 @@ interrogate_set <- function(agent, idx, table, assertion_type) {
   tbl_checked
 }
 
+interrogate_regex <- function(agent, idx, table) {
+  
+  # Get the regex matching statement
+  regex <- get_values_at_idx(agent = agent, idx = idx)
+  
+  # Obtain the target column as a symbol
+  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
+  
+  # Determine whether NAs should be allowed
+  na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
+  
+  # Perform rowwise validations for the column
+  table %>% 
+    dplyr::mutate(pb_is_good_ = ifelse(!is.na({{ column }}), grepl(regex, {{ column }}), NA)) %>%
+    dplyr::mutate(pb_is_good_ = dplyr::case_when(
+      is.na(pb_is_good_) ~ na_pass,
+      TRUE ~ pb_is_good_
+    ))
+}
+
 interrogate_null <- function(agent, idx, table) {
   
   # Obtain the target column as a symbol
@@ -354,26 +374,6 @@ interrogate_not_null <- function(agent, idx, table) {
   
   # Perform rowwise validations for the column
   table %>% dplyr::mutate(pb_is_good_ = !is.na({{ column }}))
-}
-
-interrogate_regex <- function(agent, idx, table) {
-  
-  # Get the regex matching statement
-  regex <- agent$validation_set$regex[idx]
-  
-  # Obtain the target column as a symbol
-  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
-  
-  # Determine whether NAs should be allowed
-  na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
-  
-  # Perform rowwise validations for the column
-  table %>% 
-    dplyr::mutate(pb_is_good_ = ifelse(!is.na({{ column }}), grepl(regex, {{ column }}), NA)) %>%
-    dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      is.na(pb_is_good_) ~ na_pass,
-      TRUE ~ pb_is_good_
-    ))
 }
 
 interrogate_col_exists <- function(agent, idx, table) {
@@ -578,9 +578,7 @@ perform_action <- function(agent, idx, type) {
   .i <- idx
   .type <- agent$validation_set[[idx, "assertion_type"]]
   .column <- agent$validation_set[[idx, "column"]] %>% unlist()
-  .value <- agent$validation_set[[idx, "value"]]
-  .set <- agent$validation_set[[idx, "set"]] %>% unlist()
-  .regex <- agent$validation_set[[idx, "regex"]]
+  .values <- agent$validation_set[[idx, "values"]] %>% unlist()
   .brief <- agent$validation_set[[idx, "brief"]]
   .n <- agent$validation_set[[idx, "n"]]
   .n_passed <- agent$validation_set[[idx, "n_passed"]]
@@ -606,9 +604,7 @@ perform_action <- function(agent, idx, type) {
       i = .i,
       type = .type,
       column = .column,
-      value = .value,
-      set = .set,
-      regex = .regex,
+      values = .values,
       brief = .brief,
       n = .n,
       n_passed = .n_passed,

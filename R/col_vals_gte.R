@@ -127,7 +127,7 @@ col_vals_gte <- function(x,
         assertion_type = "col_vals_gte",
         preconditions = preconditions,
         column = columns,
-        value = value
+        values = value
       )
   }
   
@@ -140,7 +140,7 @@ col_vals_gte <- function(x,
         agent = agent,
         assertion_type = "col_vals_gte",
         column = column,
-        value = value,
+        values = value,
         na_pass = na_pass,
         preconditions = preconditions,
         actions = actions,

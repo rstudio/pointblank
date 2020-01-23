@@ -144,8 +144,7 @@ col_vals_between <- function(x,
         agent = agent,
         assertion_type = "col_vals_between",
         column = columns,
-        left = left,
-        right = right
+        values = c(left, right)
       )
   }
   
@@ -158,7 +157,7 @@ col_vals_between <- function(x,
         agent = agent,
         assertion_type = "col_vals_between",
         column = column,
-        set = c(left, right),
+        values = c(left, right),
         na_pass = na_pass,
         preconditions = preconditions,
         actions = actions,

@@ -141,7 +141,7 @@ col_vals_gt <- function(x,
         assertion_type = "col_vals_gt",
         preconditions = preconditions,
         column = columns,
-        value = value
+        values = value
       )
   }
   
@@ -154,7 +154,7 @@ col_vals_gt <- function(x,
         agent = agent,
         assertion_type = "col_vals_gt",
         column = column,
-        value = value,
+        values = value,
         na_pass = na_pass,
         preconditions = preconditions,
         actions = actions,

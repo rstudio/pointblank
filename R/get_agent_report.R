@@ -9,9 +9,8 @@
 #' \item type: the validation type, which mirrors the name of the validation
 #' step function
 #' \item columns: the names of the columns used in the validation step
-#' \item value: the numeric value used in the validation step, where applicable
-#' \item set: the set values used in the validation step; for a `conjointly()`
-#' validation step, this is a listing of all sub-validations
+#' \item values: the values used in the validation step, where applicable; for
+#' a `conjointly()` validation step, this is a listing of all sub-validations
 #' \item regex: the regex used for a `col_vals_regex()` validation step
 #' \item preconds: a logical value indicating whether any preconditions where
 #' applied before interrogation
@@ -72,44 +71,59 @@ get_agent_report <- function(agent,
     vapply(
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
-      FUN = function(x) paste(x, collapse = ", ")
+      FUN = function(x) {
+        if (is.null(x)) {
+          x <- NA_character_
+        } else if (!is.list(x) && !is.na(x)) {
+          x <- paste(paste_around(x, "`"), collapse = ", ")
+        } else {
+          x <- NA_character_
+        }
+        x
+      }
     )
   
-  value <- 
-    validation_set$value %>%
-    vapply(
-      FUN.VALUE = character(1),
-      USE.NAMES = FALSE,
-      FUN = as.character
-    )
-  
-  set <- 
-    validation_set$set %>%
+  values <- 
+    validation_set$values %>%
     vapply(
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        
         if (is.null(x)) {
           NA_character_
         } else {
-          paste(x, collapse = ", ")
+          paste(paste_around(x, "`"), collapse = ", ")
         }
       } 
     )
-  
-  has_preconds <-
+
+  precon_count <-
     validation_set$preconditions %>%
     vapply(
-      FUN.VALUE = logical(1),
+      FUN.VALUE = character(1),
       USE.NAMES = FALSE,
-      FUN = function(x) if (is.null(x)) FALSE else TRUE
+      FUN = function(x) {
+        if (is.null(x)) {
+          NA_character_ 
+        } else {
+          paste_around(x %>% rlang::as_function() %>% length(), "`")
+        }
+      }
     )
 
   if (!has_agent_intel(agent)) {
-    has_extract <- rep(NA, nrow(validation_set))
+    extract_count <- rep(NA, nrow(validation_set))
   } else {
-    has_extract <- as.character(validation_set[["i"]]) %in% names(agent$extracts)
+    
+    extract_count <- as.character(validation_set[["i"]]) %in% names(agent$extracts)
+    extract_count[extract_count == FALSE] <- NA_integer_
+    extract_count[!is.na(extract_count)] <- 
+      vapply(
+        agent$extracts,
+        FUN.VALUE = integer(1),
+        USE.NAMES = FALSE,
+        FUN = nrow
+      )
   }
 
   report_tbl <- 
@@ -117,35 +131,37 @@ get_agent_report <- function(agent,
       i = validation_set$i,
       type = validation_set$assertion_type,
       columns = columns,
-      value = validation_set$value,
-      set = set,
-      regex = validation_set$regex,
-      preconds = has_preconds,
+      values = values,
+      precon = precon_count,
       units = validation_set$n,
       n_pass = validation_set$n_passed,
       f_pass = validation_set$f_passed,
       W = validation_set$warn,
       S = validation_set$stop,
       N = validation_set$notify,
-      extract = has_extract
+      extract = extract_count
     )
   
   # nocov start
   
   if (requireNamespace("gt", quietly = TRUE) && display_table) {
-      
+
     gt_agent_report <- 
       report_tbl %>%
+      dplyr::mutate(
+        units = paste_around(units, "`"),
+        n_pass = paste_around(n_pass, "`"),
+        f_pass = paste_around(f_pass, "`"),
+        extract = paste_around(extract, "`")
+      ) %>%
       gt::gt(rowname_col = "i") %>%
-      gt::fmt_number(columns = vars(f_pass), drop_trailing_zeros = TRUE) %>%
       gt::cols_label(
         type = "Validation Type",
         columns = "Cols",
-        value = "Value",
-        set = "Set", regex = "Regex",
-        preconds = "Preconditions?",
+        values = "Values",
+        precon = "Precon",
         units = "Units",
-        extract = "Extract?"
+        extract = "Extracts"
       ) %>%
       gt::tab_header(
         title = "Pointblank Validation",
@@ -155,6 +171,7 @@ get_agent_report <- function(agent,
         table.font.size = gt::pct(90),
         row.striping.include_table_body = FALSE
       ) %>%
+      gt::fmt_markdown(columns = vars(columns, values, precon, units, n_pass, f_pass, extract)) %>%
       gt::fmt_missing(columns = everything()) %>%
       gt::text_transform(
         locations = gt::cells_body(columns = vars(W)),
@@ -181,14 +198,6 @@ get_agent_report <- function(agent,
             x == "TRUE"  ~ "<span style=\"color: #439CFE;\">&#9679;</span>",
             x == "FALSE" ~ "<span style=\"color: #439CFE;\">&cir;</span>",
             TRUE ~ "&mdash;")
-        }
-      ) %>%
-      gt::text_transform(
-        locations = gt::cells_body(columns = vars(preconds, extract)),
-        fn = function(x) {
-          dplyr::case_when(
-            x == "TRUE"  ~ "Yes",
-            x == "FALSE" ~ "No")
         }
       ) %>%
       gt::text_transform(

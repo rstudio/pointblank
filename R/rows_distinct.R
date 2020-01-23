@@ -80,6 +80,7 @@
 #' 
 #' @import rlang
 #' @export
+
 rows_distinct <- function(x,
                           columns = NULL,
                           preconditions = NULL,
@@ -131,8 +132,8 @@ rows_distinct <- function(x,
     create_validation_step(
       agent = agent,
       assertion_type = "rows_distinct",
-      column = list(ifelse(is.null(columns), as.character(NA), columns)),
-      value = NULL,
+      column = list(ifelse(is.null(columns), NA_character_, columns)),
+      values = NULL,
       preconditions = preconditions,
       actions = actions,
       brief = brief

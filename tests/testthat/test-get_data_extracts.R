@@ -15,7 +15,7 @@ test_that("Getting data extracts is possible", {
   
   # Expect that the summary shows there are
   # two data extracts available
-  expect_equal(summary$extract, c(TRUE, TRUE))
+  expect_equal(summary$extract, c(7, 7))
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us a list of all data extracts
@@ -49,7 +49,7 @@ test_that("Getting data extracts is possible", {
   
   # Expect that the summary shows there are
   # no data extracts available
-  expect_equal(summary$extract, FALSE)
+  expect_equal(summary$extract, NA_integer_)
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us an empty list in this case
@@ -83,7 +83,7 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that the summary shows there are
   # two data extracts available
-  expect_equal(summary$extract, c(TRUE, TRUE))
+  expect_equal(summary$extract, c(1, 1))
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us a list of all data extracts
@@ -119,7 +119,7 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that the summary shows there are
   # two data extracts available
-  expect_equal(summary$extract, c(TRUE, TRUE))
+  expect_equal(summary$extract, c(7, 7))
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us a list of all data extracts
@@ -155,7 +155,7 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that the summary shows there are
   # two data extracts available
-  expect_equal(summary$extract, c(TRUE, TRUE))
+  expect_equal(summary$extract, c(5, 5))
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us a list of all data extracts
@@ -191,7 +191,7 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that the summary shows there are
   # two data extracts available
-  expect_equal(summary$extract, c(TRUE, TRUE))
+  expect_equal(summary$extract, c(3, 3))
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us a list of all data extracts
@@ -227,7 +227,7 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that the summary shows there are
   # two data extracts available
-  expect_equal(summary$extract, c(TRUE, TRUE))
+  expect_equal(summary$extract, c(5, 5))
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us a list of all data extracts
@@ -262,7 +262,7 @@ test_that("Data extracts of different sizes are possible to create", {
   
   # Expect that the summary shows there are
   # two data extracts available
-  expect_equal(summary$extract, c(FALSE, FALSE))
+  expect_equal(summary$extract, c(NA_integer_, NA_integer_))
   
   # Expect that using `get_data_extracts()` without
   # specifying `i` gives us a list of all data extracts

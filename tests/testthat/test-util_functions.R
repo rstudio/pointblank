@@ -37,10 +37,10 @@ test_that("Utility functions won't fail us", {
   agent %>% get_column_as_sym_at_idx(idx = 2) %>% expect_is("name")
   agent %>% get_column_as_sym_at_idx(idx = 2) %>% as.character() %>% expect_equal("d")
   
-  agent %>% get_column_value_at_idx(idx = 1) %>% expect_is("numeric")
-  agent %>% get_column_value_at_idx(idx = 1) %>% expect_equal(5)
-  agent %>% get_column_value_at_idx(idx = 2) %>% expect_is("numeric")
-  agent %>% get_column_value_at_idx(idx = 2) %>% expect_equal(1000)
+  agent %>% get_values_at_idx(idx = 1) %>% expect_is("numeric")
+  agent %>% get_values_at_idx(idx = 1) %>% expect_equal(5)
+  agent %>% get_values_at_idx(idx = 2) %>% expect_is("numeric")
+  agent %>% get_values_at_idx(idx = 2) %>% expect_equal(1000)
   
   agent %>% get_all_cols() %>% expect_is("character")
   agent %>% get_all_cols() %>%
@@ -53,10 +53,10 @@ test_that("Utility functions won't fail us", {
     col_vals_in_set(columns = vars(e), set = c(TRUE, FALSE)) %>%
     col_vals_not_in_set(columns = vars(f), set = c("medium", "floor"))
   
-  agent %>% get_column_set_values_at_idx(idx = 1) %>% expect_is("logical")
-  agent %>% get_column_set_values_at_idx(idx = 1) %>% expect_equal(c(TRUE, FALSE))
-  agent %>% get_column_set_values_at_idx(idx = 2) %>% expect_is("character")
-  agent %>% get_column_set_values_at_idx(idx = 2) %>% expect_equal(c("medium", "floor"))
+  agent %>% get_values_at_idx(idx = 1) %>% expect_is("logical")
+  agent %>% get_values_at_idx(idx = 1) %>% expect_equal(c(TRUE, FALSE))
+  agent %>% get_values_at_idx(idx = 2) %>% expect_is("character")
+  agent %>% get_values_at_idx(idx = 2) %>% expect_equal(c("medium", "floor"))
   
   # Use the `col_vals_regex()` validation step
   # function to create an agent with one validation step 
@@ -64,8 +64,8 @@ test_that("Utility functions won't fail us", {
     create_agent(tbl = small_table) %>%
     col_vals_regex(columns = vars(b), regex = "[0-9]-[a-z]*?-[0-9]*?")
   
-  agent %>% get_column_regex_at_idx(idx = 1) %>% expect_is("character")
-  agent %>% get_column_regex_at_idx(idx = 1) %>% expect_equal("[0-9]-[a-z]*?-[0-9]*?")
+  agent %>% get_values_at_idx(idx = 1) %>% expect_is("character")
+  agent %>% get_values_at_idx(idx = 1) %>% expect_equal("[0-9]-[a-z]*?-[0-9]*?")
   
   # Use range-based validation step functions to create
   # an agent with two validation steps 

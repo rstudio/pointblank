@@ -214,17 +214,6 @@ check_table_with_assertion <- function(agent, idx, table, assertion_type) {
 
 interrogate_comparison <- function(agent, idx, table, assertion_type) {
   
-  # Get the value for the expression
-  value <- get_values_at_idx(agent = agent, idx = idx)
-  
-  # Obtain the target column as a label
-  column <- 
-    get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
-    rlang::as_label()
-  
-  # Determine whether NAs should be allowed
-  na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
-  
   # Get operator values for all assertion types involving
   # simple operator comparisons
   operator <- 
@@ -237,6 +226,22 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
       "col_vals_equal" = "==",
       "col_vals_not_equal" = "!="
     )
+  
+  # Get the value for the expression
+  value <- get_values_at_idx(agent = agent, idx = idx)
+
+  # Normalize a column in `vars()` to a `name` object
+  if (inherits(value, "quosures")) {
+    value <- value[[1]] %>% rlang::get_expr()
+  }
+  
+  # Obtain the target column as a label
+  column <- 
+    get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
+    rlang::as_label()
+  
+  # Determine whether NAs should be allowed
+  na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
   
   # Construct a string-based expression for the validation
   expression <- paste(column, operator, value)
@@ -251,7 +256,7 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
 }
 
 interrogate_between <- function(agent, idx, table, assertion_type) {
-  
+
   # Get the set values for the expression
   set <- get_values_at_idx(agent = agent, idx = idx)
   
@@ -263,18 +268,28 @@ interrogate_between <- function(agent, idx, table, assertion_type) {
   
   left <- set[[1]]
   right <- set[[2]]
-  incl_str <- paste(ifelse(names(set), "incl", "excl"), collapse = "_")
   
+  # Normalize `left` and `right` to `name` objects
+  # (if they are given as columns in `vars()`)
+  if (inherits(left, "quosure")) {
+    left <- left %>% rlang::get_expr()
+  }
+  if (inherits(right, "quosure")) {
+    right <- right %>% rlang::get_expr()
+  }
+  
+  incl_str <- paste(ifelse(names(set) %>% as.logical(), "incl", "excl"), collapse = "_")
+
   if (assertion_type == "col_vals_between") {
     
     # Perform rowwise validations for the column
     tbl_checked <- 
       switch(
         incl_str,
-        "incl_incl" = ib_incl_incl(table, {{column}}, left, right, na_pass),
-        "excl_incl" = ib_excl_incl(table, {{column}}, left, right, na_pass),
-        "incl_excl" = ib_incl_excl(table, {{column}}, left, right, na_pass),
-        "excl_excl" = ib_excl_excl(table, {{column}}, left, right, na_pass)
+        "incl_incl" = ib_incl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass),
+        "excl_incl" = ib_excl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass),
+        "incl_excl" = ib_incl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass),
+        "excl_excl" = ib_excl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)
       )
   }
   
@@ -284,10 +299,10 @@ interrogate_between <- function(agent, idx, table, assertion_type) {
     tbl_checked <- 
       switch(
         incl_str,
-        "incl_incl" = nb_incl_incl(table, {{column}}, left, right, na_pass),
-        "excl_incl" = nb_excl_incl(table, {{column}}, left, right, na_pass),
-        "incl_excl" = nb_incl_excl(table, {{column}}, left, right, na_pass),
-        "excl_excl" = nb_excl_excl(table, {{column}}, left, right, na_pass)
+        "incl_incl" = nb_incl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass),
+        "excl_incl" = nb_excl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass),
+        "incl_excl" = nb_incl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass),
+        "excl_excl" = nb_excl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)
       )
   }
   
@@ -488,8 +503,8 @@ add_reporting_data <- function(agent, idx, tbl_checked) {
 ib_incl_incl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} >= left & {{ column }} <= right ~ TRUE,
-      {{ column }} < left | {{ column }} > right ~ FALSE,
+      {{ column }} >= {{ left }} & {{ column }} <= {{ right }} ~ TRUE,
+      {{ column }} < {{ left }} | {{ column }} > {{ right }} ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))
@@ -497,8 +512,8 @@ ib_incl_incl <- function(table, column, left, right, na_pass) {
 ib_excl_incl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} > left & {{ column }} <= right ~ TRUE,
-      {{ column }} <= left | {{ column }} > right ~ FALSE,
+      {{ column }} > {{ left }} & {{ column }} <= {{ right }} ~ TRUE,
+      {{ column }} <= {{ left }} | {{ column }} > {{ right }} ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))
@@ -506,8 +521,8 @@ ib_excl_incl <- function(table, column, left, right, na_pass) {
 ib_incl_excl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} >= left & {{ column }} < right ~ TRUE,
-      {{ column }} < left | {{ column }} >= right ~ FALSE,
+      {{ column }} >= {{ left }} & {{ column }} < {{ right }} ~ TRUE,
+      {{ column }} < {{ left }} | {{ column }} >= {{ right }} ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))
@@ -515,8 +530,8 @@ ib_incl_excl <- function(table, column, left, right, na_pass) {
 ib_excl_excl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} > left & {{ column }} < right ~ TRUE,
-      {{ column }} <= left | {{ column }} >= right ~ FALSE,
+      {{ column }} > {{ left }} & {{ column }} < {{ right }} ~ TRUE,
+      {{ column }} <= {{ left }} | {{ column }} >= {{ right }} ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))
@@ -524,8 +539,8 @@ ib_excl_excl <- function(table, column, left, right, na_pass) {
 nb_incl_incl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} < left | {{ column }} > right ~ TRUE,
-      {{ column }} >= left & {{ column }} <= right ~ FALSE,
+      {{ column }} < {{ left }} | {{ column }} > {{ right }} ~ TRUE,
+      {{ column }} >= {{ left }} & {{ column }} <= {{ right }} ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))
@@ -533,8 +548,8 @@ nb_incl_incl <- function(table, column, left, right, na_pass) {
 nb_excl_incl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} <= left | {{ column }} > right ~ TRUE,
-      {{ column }} > left & {{ column }} <= right ~ FALSE,
+      {{ column }} <= {{ left }} | {{ column }} > {{ right }} ~ TRUE,
+      {{ column }} > {{ left }} & {{ column }} <= {{ right }} ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))
@@ -542,8 +557,8 @@ nb_excl_incl <- function(table, column, left, right, na_pass) {
 nb_incl_excl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} < left | {{ column }} >= right ~ TRUE,
-      {{ column }} >= left & {{ column }} < right ~ FALSE,
+      {{ column }} < {{ left }} | {{ column }} >= {{ right }} ~ TRUE,
+      {{ column }} >= {{ left }} & {{ column }} < {{ right }} ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))
@@ -551,8 +566,8 @@ nb_incl_excl <- function(table, column, left, right, na_pass) {
 nb_excl_excl <- function(table, column, left, right, na_pass) {
   table %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} <= left | {{ column }} >= right ~ TRUE,
-      {{ column }} > left & {{ column }} < right ~ FALSE,
+      {{ column }} <= {{ left }} | {{ column }} >= {{ right }} ~ TRUE,
+      {{ column }} > {{ left }} & {{ column }} < {{ right }} ~ FALSE,
       is.na({{ column }}) & na_pass ~ TRUE,
       is.na({{ column }}) & na_pass == FALSE ~ FALSE
     ))

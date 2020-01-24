@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_between.R
 \name{col_vals_between}
 \alias{col_vals_between}
-\title{Are numerical column data between two specified values?}
+\title{Are column data between two specified values?}
 \usage{
 col_vals_between(
   x,
@@ -23,10 +23,14 @@ col_vals_between(
 vector) to which this validation should be applied.}
 
 \item{left}{The lower bound for the range. The validation includes this bound
-value in addition to values greater than \code{left}.}
+value (if the first element in \code{inclusive} is \code{TRUE}) in addition to values
+greater than \code{left}. This can be a single value or a compatible column
+given in \code{vars()}.}
 
 \item{right}{The upper bound for the range. The validation includes this
-bound value in addition to values lower than \code{right}.}
+bound value (if the second element in \code{inclusive} is \code{TRUE}) in addition to
+values lower than \code{right}. This can be a single value or a compatible
+column given in \code{vars()}.}
 
 \item{inclusive}{A two-element logical value that indicates whether the
 \code{left} and \code{right} bounds should be inclusive. By default, both bounds
@@ -58,7 +62,8 @@ was passed to \code{x}.
 The \code{col_vals_between()} validation step function checks whether column
 values (in any number of specified \code{columns}) fall within a range. The range
 specified with three arguments: \code{left}, \code{right}, and \code{inclusive}. The \code{left}
-and \code{right} values specify the lower and upper numeric bounds. The
+and \code{right} values specify the lower and upper bounds. The bounds can be
+specified as single, literal values or as column names given in \code{vars()}. The
 \code{inclusive} argument, as a vector of two logical values relating to \code{left}
 and \code{right}, states whether each bound is inclusive or not. The default is
 \code{c(TRUE, TRUE)}, where both endpoints are inclusive (i.e., \verb{[left, right]}).
@@ -71,12 +76,12 @@ the number of rows in the table (after any \code{preconditions} have been
 applied).
 }
 \details{
-If providing multiple column names, the result will be an expansion of
-validation steps to that number of column names (e.g., \code{vars(col_a, col_b)}
-will result in the entry of two validation steps). Aside from column names
-in quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
-specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{contains()},
-\code{matches()}, and \code{everything()}.
+If providing multiple column names to \code{columns}, the result will be an
+expansion of validation steps to that number of column names (e.g.,
+\code{vars(col_a, col_b)} will result in the entry of two validation steps). Aside
+from column names in quotes and in \code{vars()}, \strong{tidyselect} helper functions
+are available for specifying columns. They are: \code{starts_with()},
+\code{ends_with()}, \code{contains()}, \code{matches()}, and \code{everything()}.
 
 This validation step function supports special handling of \code{NA} values. The
 \code{na_pass} argument will determine whether an \code{NA} value appearing in a test

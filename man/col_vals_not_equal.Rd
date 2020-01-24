@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_not_equal.R
 \name{col_vals_not_equal}
 \alias{col_vals_not_equal}
-\title{Are numerical column data not equal to a specific value?}
+\title{Are column data not equal to a specific value?}
 \usage{
 col_vals_not_equal(
   x,

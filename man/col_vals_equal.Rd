@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_equal.R
 \name{col_vals_equal}
 \alias{col_vals_equal}
-\title{Are numerical column data equal to a specific value?}
+\title{Are column data equal to a specific value?}
 \usage{
 col_vals_equal(
   x,
@@ -46,19 +46,20 @@ was passed to \code{x}.
 }
 \description{
 The \code{col_vals_equal()} validation step function checks whether column values
-(in any number of specified \code{columns}) are equal to a specified \code{value}.
-This function can be used directly on a data table or with an \emph{agent} object
-(technically, a \code{ptblank_agent} object). Each validation step will operate
-over the number of test units that is equal to the number of rows in the
-table (after any \code{preconditions} have been applied).
+(in any number of specified \code{columns}) are equal to a specified \code{value}. The
+\code{value} can be specified as a single, literal value or as a column name given
+in \code{vars()}. This function can be used directly on a data table or with an
+\emph{agent} object (technically, a \code{ptblank_agent} object). Each validation step
+will operate over the number of test units that is equal to the number of
+rows in the table (after any \code{preconditions} have been applied).
 }
 \details{
-If providing multiple column names, the result will be an expansion of
-validation steps to that number of column names (e.g., \code{vars(col_a, col_b)}
-will result in the entry of two validation steps). Aside from column names
-in quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
-specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{contains()},
-\code{matches()}, and \code{everything()}.
+If providing multiple column names to \code{columns}, the result will be an
+expansion of validation steps to that number of column names (e.g.,
+\code{vars(col_a, col_b)} will result in the entry of two validation steps). Aside
+from column names in quotes and in \code{vars()}, \strong{tidyselect} helper functions
+are available for specifying columns. They are: \code{starts_with()},
+\code{ends_with()}, \code{contains()}, \code{matches()}, and \code{everything()}.
 
 This validation step function supports special handling of \code{NA} values. The
 \code{na_pass} argument will determine whether an \code{NA} value appearing in a test

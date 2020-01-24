@@ -200,6 +200,58 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
   
+  # Use the `col_vals_between()` function to create
+  # a validation step, then, `interrogate()`; using
+  # column names for `left` and `right`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_vals_between(
+      columns = vars(c),
+      left = vars(a), right = vars(d)
+    ) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_between")
+  expect_equivalent(validation$validation_set$column, "c")
+  expect_true(is.list(validation$validation_set[["values"]]))
+  expect_false(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 13)
+  expect_equivalent(validation$validation_set$n_passed, 7)
+  expect_equivalent(validation$validation_set$n_failed, 6)
+  expect_equivalent(validation$validation_set$f_passed, 0.53846)
+  expect_equivalent(validation$validation_set$f_failed, 0.46154)
+  
+  # Expect a single row in `validation$validation_set`
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Use the `col_vals_between()` function to create
+  # a validation step, then, `interrogate()`; using
+  # a column name for `right`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_vals_between(
+      columns = vars(c),
+      left = 0, right = vars(d)
+    ) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_between")
+  expect_equivalent(validation$validation_set$column, "c")
+  expect_true(is.list(validation$validation_set[["values"]]))
+  expect_false(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 13)
+  expect_equivalent(validation$validation_set$n_passed, 11)
+  expect_equivalent(validation$validation_set$n_failed, 2)
+  expect_equivalent(validation$validation_set$f_passed, 0.84615)
+  expect_equivalent(validation$validation_set$f_failed, 0.15385)
+  
+  # Expect a single row in `validation$validation_set`
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
   # Use the `col_vals_not_between()` function to create
   # a validation step, then, `interrogate()`
   validation <-

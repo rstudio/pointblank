@@ -102,6 +102,7 @@ test_that("Interrogating with an agent yields the correct results", {
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
   
+  # TODO: this validation step function should be disallowed for SQLite
   # Use the `col_is_posix()` function to create
   # a validation step, then, `interrogate()`
   validation <-
@@ -110,15 +111,12 @@ test_that("Interrogating with an agent yields the correct results", {
     interrogate()
   
   # TODO: this validation step function should be disallowed for SQLite
-  
   # Use the `col_is_date()` function to create
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
     col_is_date(columns = vars(date)) %>%
     interrogate()
-  
-  # TODO: this validation step function should be disallowed for SQLite
   
   # Use the `col_is_integer()` function to create
   # a validation step, then, `interrogate()`
@@ -142,14 +140,13 @@ test_that("Interrogating with an agent yields the correct results", {
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
   
+  # TODO: this validation step function should be disallowed for SQLite
   # Use the `col_is_logical()` function to create
   # a validation step, then, `interrogate()`
   validation <-
     create_agent(tbl = small_table) %>%
     col_is_logical(columns = vars(e)) %>%
     interrogate()
-  
-  # TODO: this validation step function should be disallowed for SQLite
 })
 
 test_that("Interrogating for valid row values", {
@@ -567,17 +564,15 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
   
-  # Use the `col_vals_regex()` function to create
-  # a validation step, then, `interrogate()`
-  # validation <-
-  #   create_agent(tbl = small_table) %>%
-  #   col_vals_regex(
-  #     columns = vars(b),
-  #     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-  #   ) %>%
-  #   interrogate()
-  
-  # TODO: this validation step function should be disallowed for SQLite
+  # Expect an error when using the `col_vals_regex()` function
+  # to create with a `tbl_dbi` table object
+  expect_error(
+    create_agent(tbl = small_table) %>%
+      col_vals_regex(
+        columns = vars(b),
+        regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+      )
+  )
 })
 
 test_that("Interrogating with an agent incorporates the `na_pass` option", {

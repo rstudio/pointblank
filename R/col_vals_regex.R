@@ -91,6 +91,14 @@ col_vals_regex <- function(x,
                            actions = NULL,
                            brief = NULL) {
   
+  # Stop function if `col_vals_regex()` is to be used with a database table
+  if (is_ptblank_agent(x)) {
+    if (inherits(x$tbl, "tbl_dbi")) {
+      stop("The `col_vals_regex()` step function cannot be used with `tbl_dbi` objects.",
+           call. = FALSE)
+    }
+  }
+  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   

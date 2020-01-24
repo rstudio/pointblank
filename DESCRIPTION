@@ -30,6 +30,7 @@ Suggests:
     covr,
     DBI,
     knitr,
+    lubridate,
     RSQLite,
     testthat,
     readr,

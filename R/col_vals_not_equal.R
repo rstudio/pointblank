@@ -1,4 +1,4 @@
-#' Are numerical column data not equal to a specific value?
+#' Are column data not equal to a specific value?
 #' 
 #' The `col_vals_not_equal()` validation step function checks whether column
 #' values (in any number of specified `columns`) *are not* equal to a specified

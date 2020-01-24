@@ -1,9 +1,10 @@
-#' Are numerical column data between two specified values?
+#' Are column data between two specified values?
 #'
 #' The `col_vals_between()` validation step function checks whether column
 #' values (in any number of specified `columns`) fall within a range. The range
 #' specified with three arguments: `left`, `right`, and `inclusive`. The `left`
-#' and `right` values specify the lower and upper numeric bounds. The
+#' and `right` values specify the lower and upper bounds. The bounds can be
+#' specified as single, literal values or as column names given in `vars()`. The
 #' `inclusive` argument, as a vector of two logical values relating to `left`
 #' and `right`, states whether each bound is inclusive or not. The default is
 #' `c(TRUE, TRUE)`, where both endpoints are inclusive (i.e., `[left, right]`).
@@ -15,12 +16,12 @@
 #' the number of rows in the table (after any `preconditions` have been
 #' applied).
 #' 
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names
-#' in quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' If providing multiple column names to `columns`, the result will be an
+#' expansion of validation steps to that number of column names (e.g.,
+#' `vars(col_a, col_b)` will result in the entry of two validation steps). Aside
+#' from column names in quotes and in `vars()`, **tidyselect** helper functions
+#' are available for specifying columns. They are: `starts_with()`,
+#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
 #' 
 #' This validation step function supports special handling of `NA` values. The
 #' `na_pass` argument will determine whether an `NA` value appearing in a test
@@ -61,9 +62,13 @@
 #'
 #' @inheritParams col_vals_gt
 #' @param left The lower bound for the range. The validation includes this bound
-#'   value in addition to values greater than `left`.
+#'   value (if the first element in `inclusive` is `TRUE`) in addition to values
+#'   greater than `left`. This can be a single value or a compatible column
+#'   given in `vars()`.
 #' @param right The upper bound for the range. The validation includes this
-#'   bound value in addition to values lower than `right`.
+#'   bound value (if the second element in `inclusive` is `TRUE`) in addition to
+#'   values lower than `right`. This can be a single value or a compatible
+#'   column given in `vars()`.
 #' @param inclusive A two-element logical value that indicates whether the
 #'   `left` and `right` bounds should be inclusive. By default, both bounds
 #'   are inclusive.

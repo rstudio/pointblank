@@ -759,6 +759,11 @@ perform_action <- function(agent, idx, type) {
   .column <- agent$validation_set[[idx, "column"]] %>% unlist()
   .values <- agent$validation_set[[idx, "values"]] %>% unlist()
   .brief <- agent$validation_set[[idx, "brief"]]
+  
+  .eval_error <- agent$validation_set[[idx, "eval_error"]]
+  .eval_warning <- agent$validation_set[[idx, "eval_warning"]]
+  .capture_stack <- agent$validation_set[[idx, "capture_stack"]]
+  
   .n <- agent$validation_set[[idx, "n"]]
   .n_passed <- agent$validation_set[[idx, "n_passed"]]
   .n_failed <- agent$validation_set[[idx, "n_failed"]]
@@ -785,6 +790,9 @@ perform_action <- function(agent, idx, type) {
       column = .column,
       values = .values,
       brief = .brief,
+      eval_error = .eval_error,
+      eval_warning = .eval_warning,
+      capture_stack = .capture_stack,
       n = .n,
       n_passed = .n_passed,
       n_failed = .n_failed,

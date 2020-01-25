@@ -113,7 +113,8 @@ get_agent_report <- function(agent,
         ifelse(
           is.null(x),
           NA_character_,
-          paste_around(x %>% rlang::as_function() %>% length(), "`"))
+          x %>% rlang::as_function() %>% length() %>% as.character()
+        )
       }
     )
 

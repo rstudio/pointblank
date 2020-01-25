@@ -112,7 +112,7 @@ interrogate <- function(agent,
             envir = NULL
           )
       }
-      
+
       tbl_checked <- table
       
       for (j in seq(nrow(double_agent$validation_set))) {
@@ -122,28 +122,51 @@ interrogate <- function(agent,
           get_assertion_type_at_idx(agent = double_agent, idx = j)
         
         new_col <- paste0("pb_is_good_", j)
-        
+
         tbl_checked <- 
           check_table_with_assertion(
             agent = double_agent,
             idx = j,
             table = tbl_checked,
             assertion_type
-          ) %>%
+          )
+        
+        if (inherits(tbl_checked, "table_eval")) {
+          type <- tbl_checked$type
+          capture_stack <- tbl_checked$capture_stack
+          tbl_checked <- tbl_checked$out
+        }
+        
+        tbl_checked <-
+          tbl_checked %>%
           dplyr::rename(!!new_col := pb_is_good_)
       }
       
       columns_str_vec <- paste0("pb_is_good_", seq(j))
       columns_str_add <- paste0("pb_is_good_", seq(j), collapse = " + ")
-      
-      tbl_checked <-
+
+      # Create function for validating step functions conjointly
+      tbl_val_conjointly <- function(table,
+                                     columns_str_add,
+                                     columns_str_vec,
+                                     validation_n) {
+        
         tbl_checked %>%
-        dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(columns_str_add)) %>%
-        dplyr::select(-dplyr::one_of(columns_str_vec)) %>%
-        dplyr::mutate(pb_is_good_ = dplyr::case_when(
-          pb_is_good_ == validation_n ~ TRUE,
-          TRUE ~ FALSE
-        ))
+          dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(columns_str_add)) %>%
+          dplyr::select(-dplyr::one_of(columns_str_vec)) %>%
+          dplyr::mutate(pb_is_good_ = dplyr::case_when(
+            pb_is_good_ == validation_n ~ TRUE,
+            TRUE ~ FALSE
+          ))
+      }
+      
+      # Perform rowwise validations for the column
+      tbl_checked <-
+        tbl_eval(
+          tbl_val_conjointly(
+            table, columns_str_add, columns_str_vec, validation_n
+          )
+        )
     }
 
     # Add in the necessary reporting data for the validation
@@ -246,13 +269,19 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
   # Construct a string-based expression for the validation
   expression <- paste(column, operator, value)
   
+  # Create function for validating comparison step functions
+  tbl_val_comparison <- function(table, expression, na_pass) {
+    
+    table %>%
+      dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(expression)) %>%
+      dplyr::mutate(pb_is_good_ = dplyr::case_when(
+        is.na(pb_is_good_) ~ na_pass,
+        TRUE ~ pb_is_good_
+      ))
+  }
+  
   # Perform rowwise validations for the column
-  table %>%
-    dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(expression)) %>%
-    dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      is.na(pb_is_good_) ~ na_pass,
-      TRUE ~ pb_is_good_
-    ))
+  tbl_eval(tbl_val_comparison(table, expression, na_pass))
 }
 
 interrogate_between <- function(agent, idx, table, assertion_type) {
@@ -283,30 +312,38 @@ interrogate_between <- function(agent, idx, table, assertion_type) {
   if (assertion_type == "col_vals_between") {
     
     # Perform rowwise validations for the column
-    tbl_checked <- 
+    tbl_evaled <- 
       switch(
         incl_str,
-        "incl_incl" = ib_incl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass),
-        "excl_incl" = ib_excl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass),
-        "incl_excl" = ib_incl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass),
-        "excl_excl" = ib_excl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)
+        "incl_incl" = 
+          tbl_eval(ib_incl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
+        "excl_incl" = 
+          tbl_eval(ib_excl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
+        "incl_excl" = 
+          tbl_eval(ib_incl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
+        "excl_excl" = 
+          tbl_eval(ib_excl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass))
       )
   }
   
   if (assertion_type == "col_vals_not_between") {
     
     # Perform rowwise validations for the column
-    tbl_checked <- 
+    tbl_evaled <- 
       switch(
         incl_str,
-        "incl_incl" = nb_incl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass),
-        "excl_incl" = nb_excl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass),
-        "incl_excl" = nb_incl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass),
-        "excl_excl" = nb_excl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)
+        "incl_incl" = 
+          tbl_eval(nb_incl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
+        "excl_incl" = 
+          tbl_eval(nb_excl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
+        "incl_excl" = 
+          tbl_eval(nb_incl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
+        "excl_excl" = 
+          tbl_eval(nb_excl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass))
       )
   }
   
-  tbl_checked
+  tbl_evaled
 }
 
 interrogate_set <- function(agent, idx, table, assertion_type) {
@@ -322,35 +359,45 @@ interrogate_set <- function(agent, idx, table, assertion_type) {
   
   if (assertion_type == "col_vals_in_set") {
     
-    # Perform rowwise validations for the column
-    tbl_checked <-
+    # Create function for validating the `col_vals_in_set()` step function
+    tbl_val_in_set <- function(table, column, na_pass) {
+      
       table %>%
-      dplyr::mutate(pb_is_good_ = dplyr::case_when(
-        {{ column }} %in% set ~ TRUE,
-        !({{ column }} %in% set) ~ FALSE
-      )) %>%
-      dplyr::mutate(pb_is_good_ = dplyr::case_when(
-        is.na(pb_is_good_) ~ na_pass,
-        TRUE ~ pb_is_good_
-      ))
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          {{ column }} %in% set ~ TRUE,
+          !({{ column }} %in% set) ~ FALSE
+        )) %>%
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          is.na(pb_is_good_) ~ na_pass,
+          TRUE ~ pb_is_good_
+        ))
+    }
+    
+    # Perform rowwise validations for the column
+    tbl_evaled <- tbl_eval(tbl_val_in_set(table, {{ column }}, na_pass))
   }
   
   if (assertion_type == "col_vals_not_in_set") {
     
-    # Perform rowwise validations for the column
-    tbl_checked <-
+    # Create function for validating the `col_vals_not_in_set()` step function
+    tbl_val_not_in_set <- function(table, column, na_pass) {
+      
       table %>%
-      dplyr::mutate(pb_is_good_ = dplyr::case_when(
-        !({{ column }} %in% set) ~ TRUE,
-        {{ column }} %in% set ~ FALSE
-      )) %>%
-      dplyr::mutate(pb_is_good_ = dplyr::case_when(
-        is.na(pb_is_good_) ~ !na_pass,
-        TRUE ~ pb_is_good_
-      ))
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          !({{ column }} %in% set) ~ TRUE,
+          {{ column }} %in% set ~ FALSE
+        )) %>%
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          is.na(pb_is_good_) ~ !na_pass,
+          TRUE ~ pb_is_good_
+        ))
+    }
+  
+    # Perform rowwise validations for the column
+    tbl_evaled <- tbl_eval(tbl_val_not_in_set(table, {{ column }}, na_pass))
   }
   
-  tbl_checked
+  tbl_evaled
 }
 
 interrogate_regex <- function(agent, idx, table) {
@@ -358,19 +405,25 @@ interrogate_regex <- function(agent, idx, table) {
   # Get the regex matching statement
   regex <- get_values_at_idx(agent = agent, idx = idx)
   
-  # Obtain the target column as a symbol
-  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
-  
   # Determine whether NAs should be allowed
   na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
   
+  # Obtain the target column as a symbol
+  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
+  
+  # Create function for validating the `col_vals_regex()` step function
+  tbl_val_regex <- function(table, column, regex, na_pass) {
+    
+    table %>% 
+      dplyr::mutate(pb_is_good_ = ifelse(!is.na({{ column }}), grepl(regex, {{ column }}), NA)) %>%
+      dplyr::mutate(pb_is_good_ = dplyr::case_when(
+        is.na(pb_is_good_) ~ na_pass,
+        TRUE ~ pb_is_good_
+      ))
+  }
+  
   # Perform rowwise validations for the column
-  table %>% 
-    dplyr::mutate(pb_is_good_ = ifelse(!is.na({{ column }}), grepl(regex, {{ column }}), NA)) %>%
-    dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      is.na(pb_is_good_) ~ na_pass,
-      TRUE ~ pb_is_good_
-    ))
+  tbl_eval(tbl_val_regex(table, {{ column }}, regex, na_pass))
 }
 
 interrogate_null <- function(agent, idx, table) {
@@ -378,17 +431,27 @@ interrogate_null <- function(agent, idx, table) {
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
+  # Create function for validating the `col_vals_null()` step function
+  tbl_val_null <- function(table, column) {
+    table %>% dplyr::mutate(pb_is_good_ = is.na({{ column }}))
+  }
+  
   # Perform rowwise validations for the column
-  table %>% dplyr::mutate(pb_is_good_ = is.na({{ column }}))
+  tbl_eval(tbl_val_null(table, {{ column }}))
 }
 
 interrogate_not_null <- function(agent, idx, table) {
 
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
+
+  # Create function for validating the `col_vals_null()` step function
+  tbl_val_not_null <- function(table, column) {
+    table %>% dplyr::mutate(pb_is_good_ = !is.na({{ column }}))
+  }
   
   # Perform rowwise validations for the column
-  table %>% dplyr::mutate(pb_is_good_ = !is.na({{ column }}))
+  tbl_eval(tbl_val_not_null(table, {{ column }}))
 }
 
 interrogate_col_exists <- function(agent, idx, table) {
@@ -399,7 +462,13 @@ interrogate_col_exists <- function(agent, idx, table) {
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
-  dplyr::tibble(pb_is_good_ = as.character(column) %in% column_names)
+  # Create function for validating the `col_exists()` step function
+  tbl_col_exists <- function(table, column, column_names) {
+    dplyr::tibble(pb_is_good_ = as.character(column) %in% column_names)
+  }
+  
+  # Perform the validation of the column
+  tbl_eval(tbl_col_exists(table, {{ column }}, column_names))
 }
 
 interrogate_col_type <- function(agent, idx, table, assertion_type) {
@@ -407,28 +476,35 @@ interrogate_col_type <- function(agent, idx, table, assertion_type) {
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
-  column_class <-
-    table %>%
-    dplyr::select({{ column }}) %>%
-    utils::head(1) %>%
-    dplyr::as_tibble() %>%
-    dplyr::pull({{ column }}) %>%
-    class()
+  # Create function for validating the `col_is_*()` step functions
+  tbl_col_is <- function(table, column, assertion_type) {
+    
+    column_class <-
+      table %>%
+      dplyr::select({{ column }}) %>%
+      utils::head(1) %>%
+      dplyr::as_tibble() %>%
+      dplyr::pull({{ column }}) %>%
+      class()
+    
+    validation_res <- 
+      switch(
+        column_class[1],
+        "numeric" = ifelse(assertion_type == "col_is_numeric", TRUE, FALSE),
+        "integer" = ifelse(assertion_type == "col_is_integer", TRUE, FALSE),
+        "character" = ifelse(assertion_type == "col_is_character", TRUE, FALSE),
+        "logical" = ifelse(assertion_type == "col_is_logical", TRUE, FALSE),
+        "factor" = ifelse(assertion_type == "col_is_factor", TRUE, FALSE),
+        "POSIXct" = ifelse(assertion_type == "col_is_posix", TRUE, FALSE),
+        "Date" = ifelse(assertion_type == "col_is_date", TRUE, FALSE),
+        FALSE
+      )
+    
+    dplyr::tibble(pb_is_good_ = validation_res)
+  }
   
-  validation_res <- 
-    switch(
-      column_class[1],
-      "numeric" = ifelse(assertion_type == "col_is_numeric", TRUE, FALSE),
-      "integer" = ifelse(assertion_type == "col_is_integer", TRUE, FALSE),
-      "character" = ifelse(assertion_type == "col_is_character", TRUE, FALSE),
-      "logical" = ifelse(assertion_type == "col_is_logical", TRUE, FALSE),
-      "factor" = ifelse(assertion_type == "col_is_factor", TRUE, FALSE),
-      "POSIXct" = ifelse(assertion_type == "col_is_posix", TRUE, FALSE),
-      "Date" = ifelse(assertion_type == "col_is_date", TRUE, FALSE),
-      FALSE
-    )
-  
-  dplyr::tibble(pb_is_good_ = validation_res)
+  # Perform the validation of the column
+  tbl_eval(tbl_col_is(table, {{ column }}, assertion_type))
 }
 
 interrogate_distinct <- function(agent, idx, table) {
@@ -453,14 +529,102 @@ interrogate_distinct <- function(agent, idx, table) {
   
   col_syms <- rlang::syms(column_names)
   
-  table %>%
-    dplyr::select({{ column_names }}) %>%
-    dplyr::group_by(!!!col_syms) %>%
-    dplyr::mutate(`pb_is_good_` = ifelse(dplyr::n() == 1, TRUE, FALSE)) %>%
-    dplyr::ungroup()  
+  # Create function for validating the `rows_distinct()` step function
+  tbl_rows_distinct <- function(table, column_names, col_syms) {
+    
+    table %>%
+      dplyr::select({{ column_names }}) %>%
+      dplyr::group_by(!!!col_syms) %>%
+      dplyr::mutate(`pb_is_good_` = ifelse(dplyr::n() == 1, TRUE, FALSE)) %>%
+      dplyr::ungroup()
+  }
+  
+  # Perform the validation of the table
+  tbl_eval(tbl_rows_distinct(table, {{ column_names }}, col_syms))
+}
+
+tbl_eval <- function(fn, env = new_environment()) {
+
+  table_eval_list <- 
+    tryCatch(
+      fn,
+      error = function(c) {
+        structure(
+          list(
+            type = "error",
+            out = table,
+            capture_stack = 
+              evaluate::try_capture_stack(
+                fn,
+                env = env
+              )
+          ),
+          class = "table_eval"
+        )
+      },
+      warning = function(c) {
+        structure(
+          list(
+            type = "warning",
+            out = table,
+            capture_stack = 
+              evaluate::try_capture_stack(
+                fn,
+                env = env
+              ),
+            class = "table_eval"
+          )
+        )
+      }
+    )
+  
+  if (!inherits(table_eval_list, "table_eval")) {
+    table_eval_list <-
+      structure(
+        list(
+          type = "OK",
+          out = table_eval_list,
+          capture_stack = NULL
+        ),
+        class = "table_eval"
+      )
+  }
+  
+  table_eval_list
 }
 
 add_reporting_data <- function(agent, idx, tbl_checked) {
+
+  if (!inherits(tbl_checked, "table_eval")) {
+    stop("The validated table must be of class `table_eval`.")
+  }
+  
+  if (inherits(tbl_checked, "table_eval")) {
+    
+    type <- tbl_checked[["type"]]
+    
+    suppressWarnings(
+      if (!inherits(tbl_checked, "list") && 
+          !is.null(tbl_checked$out$type)) {
+        type <- tbl_checked$out$type
+      }
+    )
+    
+    capture_stack <- tbl_checked$capture_stack
+    tbl_checked <- tbl_checked$out
+    
+  } else {
+    type <- "OK"
+    capture_stack <- NULL
+  }
+
+  agent$validation_set$eval_error[idx] <- ifelse(type == "error", TRUE, FALSE)
+  agent$validation_set$eval_warning[idx] <- ifelse(type == "warning", TRUE, FALSE)
+  agent$validation_set$capture_stack[idx] <- list(capture_stack)
+  
+  if (type != "OK") {
+    return(agent)
+  }
 
   # Get total count of rows
   row_count <- 
@@ -496,7 +660,7 @@ add_reporting_data <- function(agent, idx, tbl_checked) {
   } else {
     agent$validation_set$all_passed[idx] <- TRUE
   }
-
+    
   determine_action(agent, idx, false_count = n_failed)
 }
 
@@ -663,7 +827,18 @@ add_table_extract <- function(agent,
   if (!extract_failed) {
     return(agent)
   }
-
+  
+  if (agent$validation_set$eval_error[idx] == TRUE ||
+      agent$validation_set$eval_warning[idx] == TRUE) {
+    return(agent)
+  }
+  
+  if (inherits(tbl_checked, "table_eval")) {
+    type <- tbl_checked$type
+    capture_stack <- tbl_checked$capture_stack
+    tbl_checked <- tbl_checked$out
+  }
+  
   tbl_type <- tbl_checked %>% class()
   
   problem_rows <- 
@@ -720,7 +895,7 @@ add_table_extract <- function(agent,
 }
 
 determine_action <- function(agent, idx, false_count) {
-  
+
   al <- agent$validation_set[[idx, "actions"]]
   n <- agent$validation_set[[idx, "n"]]
 

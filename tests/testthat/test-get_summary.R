@@ -15,7 +15,7 @@ test_that("Getting an agent report is possible", {
   # Expect that the report has specific column names
   expect_equivalent(
     colnames(report),
-    c("i", "type", "columns", "values", "precon",
+    c("i", "type", "columns", "values", "precon", "eval",
       "units", "n_pass", "f_pass", "W", "S", "N", "extract")
   )
   
@@ -43,7 +43,7 @@ test_that("Getting an agent report is possible", {
   
   # Expect certain values in the single row report
   expect_equal(agent_report_empty$type, "col_is_character")
-  expect_equal(agent_report_empty$columns, "&#8643;`b`")
+  expect_equal(agent_report_empty$columns, "b")
   expect_equal(agent_report_empty$values, NA_character_)
   expect_equal(agent_report_empty$precon, NA_character_)
   expect_equal(agent_report_empty$units, NA_integer_)

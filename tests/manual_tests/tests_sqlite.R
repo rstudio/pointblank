@@ -19,7 +19,6 @@ tbl_sqlite <- dplyr::tbl(con, "small_table")
 agent <-
   create_agent(tbl = tbl_sqlite) %>%
   col_vals_gt(vars(d), 100) %>%
-  col_vals_regex(vars(b), regex = ".*") %>%
   col_vals_gte(vars(c), 2, na_pass = TRUE) %>%
   col_vals_equal(vars(e), 1, preconditions = ~tbl %>% dplyr::filter(e == 1)) %>%
   col_vals_not_equal(vars(e), 0) %>%

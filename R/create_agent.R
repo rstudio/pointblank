@@ -55,6 +55,7 @@
 #' 1-1
 #'   
 #' @export
+
 create_agent <- function(tbl,
                          name = NULL) {
 
@@ -118,6 +119,9 @@ create_agent <- function(tbl,
           preconditions = list(NULL),
           actions = list(NULL),
           brief = character(0),
+          eval_error = logical(0),
+          eval_warning = logical(0),
+          capture_stack = list(NULL),
           all_passed = logical(0),
           n = integer(0),
           n_passed = integer(0),

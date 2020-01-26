@@ -60,12 +60,23 @@
 #' @export
 get_agent_report <- function(agent,
                              display_table = TRUE) {
-  
+
   validation_set <- agent$validation_set
   
   agent_name <- agent$name
   agent_time <- agent$time
   
+  eval <- 
+    validation_set %>%
+    dplyr::select(eval_error, eval_warning) %>%
+    dplyr::mutate(condition = dplyr::case_when(
+      !eval_error & !eval_warning ~ "OK",
+      eval_error & eval_warning ~ "W + E",
+      eval_error ~ "ERROR",
+      eval_warning ~ "WARNING"
+    )) %>%
+    dplyr::pull(condition)
+
   columns <- 
     validation_set$column %>%
     vapply(
@@ -75,11 +86,7 @@ get_agent_report <- function(agent,
         ifelse(
           is.null(x),
           NA_character_,
-          paste(
-            x %>% unlist() %>% strsplit(", ") %>% unlist() %>%
-              paste_around(., "`") %>% paste0("&#8643;", .) %>%
-              paste(collapse = " ")
-          )
+          unlist(x)
         )
       }
     )
@@ -93,7 +100,7 @@ get_agent_report <- function(agent,
         ifelse(
           is.null(x),
           NA_character_,
-          paste(paste_around(x, "`") %>% gsub("`~", "&#8643;`", .), collapse = ", ")
+          paste(x %>% gsub("~", "", .), collapse = ", ")
         )
       } 
     )
@@ -107,16 +114,21 @@ get_agent_report <- function(agent,
         ifelse(
           is.null(x),
           NA_character_,
-          paste_around(x %>% rlang::as_function() %>% length(), "`"))
+          x %>% rlang::as_function() %>% length() %>% as.character()
+        )
       }
     )
 
   if (!has_agent_intel(agent)) {
+    
     extract_count <- rep(NA, nrow(validation_set))
+    
   } else {
     
     extract_count <- as.character(validation_set[["i"]]) %in% names(agent$extracts)
+    
     extract_count[extract_count == FALSE] <- NA_integer_
+    
     extract_count[!is.na(extract_count)] <- 
       vapply(
         agent$extracts,
@@ -133,6 +145,7 @@ get_agent_report <- function(agent,
       columns = columns,
       values = values,
       precon = precon_count,
+      eval = eval,
       units = validation_set$n,
       n_pass = validation_set$n_passed,
       f_pass = validation_set$f_passed,
@@ -146,13 +159,57 @@ get_agent_report <- function(agent,
   
   if (requireNamespace("gt", quietly = TRUE) && display_table) {
 
+    # Reformat `columns`
+    columns_upd <- 
+      validation_set$column %>%
+      vapply(
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          ifelse(
+            is.null(x),
+            NA_character_,
+            paste(
+              x %>% unlist() %>% strsplit(", ") %>% unlist() %>%
+                paste_around(., "`") %>% paste0("&#8643;", .) %>%
+                paste(collapse = " ")
+            )
+          )
+        }
+      )
+    
+    # Reformat `values`
+    values_upd <- 
+      validation_set$values %>%
+      vapply(
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          ifelse(
+            is.null(x),
+            NA_character_,
+            paste(paste_around(x, "`") %>% gsub("`~", "&#8643;`", .), collapse = ", ")
+          )
+        } 
+      )
+
     gt_agent_report <- 
       report_tbl %>%
       dplyr::mutate(
-        units = paste_around(units, "`"),
-        n_pass = paste_around(n_pass, "`"),
-        f_pass = paste_around(f_pass, "`"),
-        extract = paste_around(extract, "`")
+        eval = dplyr::case_when(
+          eval == "OK" ~ "&#10004;",
+          eval == "W + E" ~ "&#9888; + &#128165;",
+          eval == "WARNING" ~ "&#9888;",
+          eval == "ERROR" ~ "&#128165;"
+        )
+      ) %>%
+      dplyr::mutate(
+        columns = columns_upd,
+        values = values_upd,
+        units = units,
+        n_pass = n_pass,
+        f_pass = f_pass,
+        extract = extract
       ) %>%
       gt::gt(rowname_col = "i") %>%
       gt::cols_label(
@@ -160,6 +217,7 @@ get_agent_report <- function(agent,
         columns = "Cols",
         values = "Values",
         precon = "Precon",
+        eval = "EVAL",
         units = "Units",
         extract = "Extracts"
       ) %>%
@@ -171,7 +229,9 @@ get_agent_report <- function(agent,
         table.font.size = gt::pct(90),
         row.striping.include_table_body = FALSE
       ) %>%
-      gt::fmt_markdown(columns = vars(columns, values, precon, units, n_pass, f_pass, extract)) %>%
+      gt::cols_align(align = "center", columns = gt::vars(eval)) %>%
+      gt::fmt_number(columns = gt::vars(f_pass), decimals = 2) %>%
+      gt::fmt_markdown(columns = gt::vars(columns, values, eval)) %>%
       gt::fmt_missing(columns = everything()) %>%
       gt::text_transform(
         locations = gt::cells_body(columns = vars(W)),
@@ -179,7 +239,8 @@ get_agent_report <- function(agent,
           dplyr::case_when(
             x == "TRUE"  ~ "<span style=\"color: #FFBF00;\">&#9679;</span>",
             x == "FALSE" ~ "<span style=\"color: #FFBF00;\">&cir;</span>",
-            TRUE ~ "&mdash;")
+            TRUE ~ "&mdash;"
+            )
         }
       ) %>%
       gt::text_transform(
@@ -188,7 +249,8 @@ get_agent_report <- function(agent,
           dplyr::case_when(
             x == "TRUE"  ~ "<span style=\"color: #CF142B;\">&#9679;</span>",
             x == "FALSE" ~ "<span style=\"color: #CF142B;\">&cir;</span>",
-            TRUE ~ "&mdash;")
+            TRUE ~ "&mdash;"
+            )
         }
       ) %>%
       gt::text_transform(
@@ -203,7 +265,7 @@ get_agent_report <- function(agent,
       gt::text_transform(
         locations = gt::cells_body(columns = vars(type)),
         fn = function(x) {
-          paste0("<code style=\"font-size:85%;\">", x, "()</code>")
+          paste0("<code>", x, "()</code>")
         }
       ) %>%
       gt::tab_style(
@@ -214,7 +276,7 @@ get_agent_report <- function(agent,
         style = gt::cell_text(align = "left", indent = gt::px(5)),
         locations = gt::cells_title("subtitle")
       )
-    
+
     return(gt_agent_report)
   }
   

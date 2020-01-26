@@ -23,7 +23,6 @@ Depends:
 Imports:
     dplyr (>= 0.8.3),
     dbplyr (>= 1.4.2),
-    evaluate (>= 0.14),
     magrittr,
     rlang (>= 0.4.2),
     tidyselect (>= 0.2.5)

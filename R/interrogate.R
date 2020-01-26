@@ -131,11 +131,7 @@ interrogate <- function(agent,
             assertion_type
           )
         
-        if (inherits(tbl_checked, "table_eval")) {
-          type <- tbl_checked$type
-          capture_stack <- tbl_checked$capture_stack
-          tbl_checked <- tbl_checked$out
-        }
+        tbl_checked <- tbl_checked$value
         
         tbl_checked <-
           tbl_checked %>%
@@ -162,7 +158,7 @@ interrogate <- function(agent,
       
       # Perform rowwise validations for the column
       tbl_checked <-
-        tbl_eval(
+        pointblank_try_catch(
           tbl_val_conjointly(
             table, columns_str_add, columns_str_vec, validation_n
           )
@@ -266,11 +262,23 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
   # Determine whether NAs should be allowed
   na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
   
-  # Construct a string-based expression for the validation
-  expression <- paste(column, operator, value)
-  
   # Create function for validating comparison step functions
-  tbl_val_comparison <- function(table, expression, na_pass) {
+  tbl_val_comparison <- function(table, column, operator, value, na_pass) {
+
+    table_colnames <- colnames(table)
+
+    if (!(column %in% table_colnames)) {
+      stop("The value for `column` doesn't correspond to a column name.")
+    }
+    
+    if (inherits(value, "name")) {
+      if (!(as.character(value) %in% table_colnames)) {
+        stop("The column supplied as the `value` doesn't correspond to a column name.")
+      }
+    }
+
+    # Construct a string-based expression for the validation
+    expression <- paste(column, operator, value)
     
     table %>%
       dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(expression)) %>%
@@ -281,7 +289,7 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
   }
   
   # Perform rowwise validations for the column
-  tbl_eval(tbl_val_comparison(table, expression, na_pass))
+  pointblank_try_catch(tbl_val_comparison(table, column, operator, value, na_pass))
 }
 
 interrogate_between <- function(agent, idx, table, assertion_type) {
@@ -316,13 +324,13 @@ interrogate_between <- function(agent, idx, table, assertion_type) {
       switch(
         incl_str,
         "incl_incl" = 
-          tbl_eval(ib_incl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
+          pointblank_try_catch(ib_incl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
         "excl_incl" = 
-          tbl_eval(ib_excl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
+          pointblank_try_catch(ib_excl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
         "incl_excl" = 
-          tbl_eval(ib_incl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
+          pointblank_try_catch(ib_incl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
         "excl_excl" = 
-          tbl_eval(ib_excl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass))
+          pointblank_try_catch(ib_excl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass))
       )
   }
   
@@ -333,13 +341,13 @@ interrogate_between <- function(agent, idx, table, assertion_type) {
       switch(
         incl_str,
         "incl_incl" = 
-          tbl_eval(nb_incl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
+          pointblank_try_catch(nb_incl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
         "excl_incl" = 
-          tbl_eval(nb_excl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
+          pointblank_try_catch(nb_excl_incl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
         "incl_excl" = 
-          tbl_eval(nb_incl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
+          pointblank_try_catch(nb_incl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass)),
         "excl_excl" = 
-          tbl_eval(nb_excl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass))
+          pointblank_try_catch(nb_excl_excl(table, {{ column }}, {{ left }}, {{ right }}, na_pass))
       )
   }
   
@@ -374,7 +382,7 @@ interrogate_set <- function(agent, idx, table, assertion_type) {
     }
     
     # Perform rowwise validations for the column
-    tbl_evaled <- tbl_eval(tbl_val_in_set(table, {{ column }}, na_pass))
+    tbl_evaled <- pointblank_try_catch(tbl_val_in_set(table, {{ column }}, na_pass))
   }
   
   if (assertion_type == "col_vals_not_in_set") {
@@ -394,7 +402,7 @@ interrogate_set <- function(agent, idx, table, assertion_type) {
     }
   
     # Perform rowwise validations for the column
-    tbl_evaled <- tbl_eval(tbl_val_not_in_set(table, {{ column }}, na_pass))
+    tbl_evaled <- pointblank_try_catch(tbl_val_not_in_set(table, {{ column }}, na_pass))
   }
   
   tbl_evaled
@@ -423,7 +431,7 @@ interrogate_regex <- function(agent, idx, table) {
   }
   
   # Perform rowwise validations for the column
-  tbl_eval(tbl_val_regex(table, {{ column }}, regex, na_pass))
+  pointblank_try_catch(tbl_val_regex(table, {{ column }}, regex, na_pass))
 }
 
 interrogate_null <- function(agent, idx, table) {
@@ -437,7 +445,7 @@ interrogate_null <- function(agent, idx, table) {
   }
   
   # Perform rowwise validations for the column
-  tbl_eval(tbl_val_null(table, {{ column }}))
+  pointblank_try_catch(tbl_val_null(table, {{ column }}))
 }
 
 interrogate_not_null <- function(agent, idx, table) {
@@ -451,7 +459,7 @@ interrogate_not_null <- function(agent, idx, table) {
   }
   
   # Perform rowwise validations for the column
-  tbl_eval(tbl_val_not_null(table, {{ column }}))
+  pointblank_try_catch(tbl_val_not_null(table, {{ column }}))
 }
 
 interrogate_col_exists <- function(agent, idx, table) {
@@ -468,7 +476,7 @@ interrogate_col_exists <- function(agent, idx, table) {
   }
   
   # Perform the validation of the column
-  tbl_eval(tbl_col_exists(table, {{ column }}, column_names))
+  pointblank_try_catch(tbl_col_exists(table, {{ column }}, column_names))
 }
 
 interrogate_col_type <- function(agent, idx, table, assertion_type) {
@@ -504,7 +512,7 @@ interrogate_col_type <- function(agent, idx, table, assertion_type) {
   }
   
   # Perform the validation of the column
-  tbl_eval(tbl_col_is(table, {{ column }}, assertion_type))
+  pointblank_try_catch(tbl_col_is(table, {{ column }}, assertion_type))
 }
 
 interrogate_distinct <- function(agent, idx, table) {
@@ -540,57 +548,28 @@ interrogate_distinct <- function(agent, idx, table) {
   }
   
   # Perform the validation of the table
-  tbl_eval(tbl_rows_distinct(table, {{ column_names }}, col_syms))
+  pointblank_try_catch(tbl_rows_distinct(table, {{ column_names }}, col_syms))
 }
 
-tbl_eval <- function(fn, env = new_environment()) {
-
-  table_eval_list <- 
-    tryCatch(
-      fn,
-      error = function(c) {
-        structure(
-          list(
-            type = "error",
-            out = table,
-            capture_stack = 
-              evaluate::try_capture_stack(
-                fn,
-                env = env
-              )
-          ),
-          class = "table_eval"
-        )
-      },
-      warning = function(c) {
-        structure(
-          list(
-            type = "warning",
-            out = table,
-            capture_stack = 
-              evaluate::try_capture_stack(
-                fn,
-                env = env
-              ),
-            class = "table_eval"
-          )
-        )
-      }
-    )
+pointblank_try_catch <- function(expr) {
   
-  if (!inherits(table_eval_list, "table_eval")) {
-    table_eval_list <-
-      structure(
-        list(
-          type = "OK",
-          out = table_eval_list,
-          capture_stack = NULL
-        ),
-        class = "table_eval"
-      )
-  }
+  warn <- err <- NULL
   
-  table_eval_list
+  value <- 
+    withCallingHandlers(
+      tryCatch(expr, error = function(e) {
+        err <<- e
+        NULL
+      }), warning = function(w) {
+        warn <<- w
+        invokeRestart("muffleWarning")
+      })
+  
+  eval_list <- 
+    list(value = value, warning = warn, error = err)
+  
+  class(eval_list) <- "table_eval"
+  eval_list
 }
 
 add_reporting_data <- function(agent, idx, tbl_checked) {
@@ -599,32 +578,20 @@ add_reporting_data <- function(agent, idx, tbl_checked) {
     stop("The validated table must be of class `table_eval`.")
   }
   
-  if (inherits(tbl_checked, "table_eval")) {
-    
-    type <- tbl_checked[["type"]]
-    
-    suppressWarnings(
-      if (!inherits(tbl_checked, "list") && 
-          !is.null(tbl_checked$out$type)) {
-        type <- tbl_checked$out$type
-      }
-    )
-    
-    capture_stack <- tbl_checked$capture_stack
-    tbl_checked <- tbl_checked$out
-    
-  } else {
-    type <- "OK"
-    capture_stack <- NULL
-  }
+  has_warnings <- !is.null(tbl_checked$warning)
+  has_error <- !is.null(tbl_checked$error)
 
-  agent$validation_set$eval_error[idx] <- ifelse(type == "error", TRUE, FALSE)
-  agent$validation_set$eval_warning[idx] <- ifelse(type == "warning", TRUE, FALSE)
-  agent$validation_set$capture_stack[idx] <- list(capture_stack)
+  capture_stack <- tbl_checked[c("warning", "error")]
   
-  if (type != "OK") {
+  agent$validation_set$eval_warning[idx] <- has_warnings
+  agent$validation_set$eval_error[idx] <- has_error
+  agent$validation_set$capture_stack[idx] <- list(tbl_checked[c("warning", "error")])
+  
+  if (is.null(tbl_checked$value)) {
     return(agent)
   }
+  
+  tbl_checked <- tbl_checked$value
 
   # Get total count of rows
   row_count <- 
@@ -835,17 +802,12 @@ add_table_extract <- function(agent,
   if (!extract_failed) {
     return(agent)
   }
-  
-  if (agent$validation_set$eval_error[idx] == TRUE ||
-      agent$validation_set$eval_warning[idx] == TRUE) {
+
+  if (is.null(tbl_checked$value)) {
     return(agent)
   }
   
-  if (inherits(tbl_checked, "table_eval")) {
-    type <- tbl_checked$type
-    capture_stack <- tbl_checked$capture_stack
-    tbl_checked <- tbl_checked$out
-  }
+  tbl_checked <- tbl_checked$value
   
   tbl_type <- tbl_checked %>% class()
   

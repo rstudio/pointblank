@@ -198,6 +198,7 @@ get_agent_report <- function(agent,
       dplyr::mutate(
         eval = dplyr::case_when(
           eval == "OK" ~ "&#10004;",
+          eval == "W + E" ~ "&#9888; + &#128165;",
           eval == "WARNING" ~ "&#9888;",
           eval == "ERROR" ~ "&#128165;"
         )

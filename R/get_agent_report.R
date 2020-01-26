@@ -71,6 +71,7 @@ get_agent_report <- function(agent,
     dplyr::select(eval_error, eval_warning) %>%
     dplyr::mutate(condition = dplyr::case_when(
       !eval_error & !eval_warning ~ "OK",
+      eval_error & eval_warning ~ "W + E",
       eval_error ~ "ERROR",
       eval_warning ~ "WARNING"
     )) %>%

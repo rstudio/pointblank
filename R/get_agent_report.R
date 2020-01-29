@@ -244,6 +244,15 @@ get_agent_report <- function(agent,
       gt::gt() %>%
       gt::cols_merge(columns = vars(n_pass, f_pass), hide_columns = vars(f_pass)) %>%
       gt::cols_merge(columns = vars(n_fail, f_fail), hide_columns = vars(f_fail)) %>%
+      gt::text_transform(
+        locations = gt::cells_body(columns = vars(n_pass, n_fail)),
+        fn = function(x) {
+          dplyr::case_when(
+            x == "NA NA"  ~ "&mdash;",
+            TRUE ~ paste0("<code>", x, "</code>")
+          )
+        }
+      ) %>%
       gt::cols_label(
         i = "",
         type = "STEP FN",
@@ -264,11 +273,11 @@ get_agent_report <- function(agent,
         table.font.size = gt::pct(90),
         row.striping.include_table_body = FALSE
       ) %>%
-      gt::cols_align(align = "center", columns = gt::vars(eval, precon)) %>%
-      gt::fmt_number(columns = gt::vars(units, n_pass, n_fail, f_pass, f_fail), decimals = 0, suffixing = TRUE) %>%
+      gt::cols_align(align = "center", columns = gt::vars(precon, eval, W, S, N, extract)) %>%
+      gt::fmt_number(columns = gt::vars(units, n_pass, n_fail, f_pass, f_fail), decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE) %>%
       gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2) %>%
       gt::fmt_markdown(columns = gt::vars(columns, values, eval, precon)) %>%
-      gt::fmt_missing(columns = everything()) %>%
+      gt::fmt_missing(columns = vars(units, W, S, N, extract)) %>%
       gt::text_transform(
         locations = gt::cells_body(columns = vars(W)),
         fn = function(x) {
@@ -305,9 +314,12 @@ get_agent_report <- function(agent,
         }
       ) %>%
       gt::text_transform(
-        locations = gt::cells_body(columns = vars(units, n_pass, n_fail, extract)),
+        locations = gt::cells_body(columns = vars(units, extract)),
         fn = function(x) {
-          paste0("<code>", x, "</code>")
+          dplyr::case_when(
+            x == "&mdash;" ~ x,
+            TRUE ~ paste0("<code>", x, "</code>")
+          )
         }
       ) %>%
       gt::tab_style(
@@ -324,6 +336,7 @@ get_agent_report <- function(agent,
         vars(columns) ~ px(120),
         vars(values) ~ px(120),
         vars(precon) ~ px(30),
+        vars(extract) ~ px(75),
         everything() ~ px(50)
       )
     

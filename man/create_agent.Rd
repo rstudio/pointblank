@@ -4,7 +4,7 @@
 \alias{create_agent}
 \title{Create a pointblank agent object}
 \usage{
-create_agent(tbl, name = NULL)
+create_agent(tbl, name = NULL, actions = NULL)
 }
 \arguments{
 \item{tbl}{The input table. This can be a data frame, a tibble, or a
@@ -13,6 +13,12 @@ create_agent(tbl, name = NULL)
 \item{name}{An optional name for the validation plan that the agent will
 eventually carry out during the interrogation process. If no value is
 provided, a name will be generated based on the current system time.}
+
+\item{actions}{A list containing threshold levels so that all validation
+steps can react accordingly when exceeding the set levels. This is to be
+created with the \code{\link[=action_levels]{action_levels()}} helper function. Should an action levels
+list be used for specific validation step, any default set here will be
+overridden.}
 }
 \value{
 A \code{ptblank_agent} object.

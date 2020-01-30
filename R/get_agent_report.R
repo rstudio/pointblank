@@ -166,15 +166,14 @@ get_agent_report <- function(agent,
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
         FUN = function(x) {
-          ifelse(
-            is.null(x),
-            NA_character_,
-            paste(
-              x %>% unlist() %>% strsplit(", ") %>% unlist() %>%
-                paste_around(., "`") %>% paste0("&#8643;", .) %>%
-                paste(collapse = " ")
-            )
-          )
+          if (is.null(x)) {
+            x <- NA_character_
+          } else {
+            x <- x %>% unlist() %>% strsplit(", ") %>% unlist()
+            x <- paste(paste0("&#8643;", x), collapse = ", ")
+            x <- paste0("<code>", x, "</code>")
+          }
+          x
         }
       )
     
@@ -185,11 +184,16 @@ get_agent_report <- function(agent,
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
         FUN = function(x) {
-          ifelse(
-            is.null(x),
-            NA_character_,
-            paste(paste_around(x, "`") %>% gsub("`~", "&#8643;`", .), collapse = ", ")
-          )
+          if (is.null(x)) {
+            x <- NA_character_
+          } else {
+            x <- x %>% gsub("~", "&#8643;", .)
+            x <- paste(x, collapse = ", ")
+            x <- ifelse(nchar(x) > 18, paste0(substr(x, 1, 15), "..."), x)
+            x <- gsub(" ", "&nbsp;", x)
+            x <- paste0("<code>", x, "</code>")
+          }
+          x
         } 
       )
     
@@ -263,7 +267,7 @@ get_agent_report <- function(agent,
         units = "UNITS",
         n_pass = "PASS",
         n_fail = "FAIL",
-        extract = "EXTR"
+        extract = "EXTRACT"
       ) %>%
       gt::tab_header(
         title = "Pointblank Validation",
@@ -277,7 +281,7 @@ get_agent_report <- function(agent,
       gt::fmt_number(columns = gt::vars(units, n_pass, n_fail, f_pass, f_fail), decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE) %>%
       gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2) %>%
       gt::fmt_markdown(columns = gt::vars(columns, values, eval, precon)) %>%
-      gt::fmt_missing(columns = vars(units, W, S, N, extract)) %>%
+      gt::fmt_missing(columns = vars(units, values, W, S, N, extract)) %>%
       gt::text_transform(
         locations = gt::cells_body(columns = vars(W)),
         fn = function(x) {
@@ -330,11 +334,19 @@ get_agent_report <- function(agent,
         style = gt::cell_text(align = "left", indent = gt::px(5)),
         locations = gt::cells_title("subtitle")
       ) %>%
+      gt::tab_style(
+        style = gt::cell_text(weight = "bold", color = "#666666"),
+        locations = gt::cells_column_labels(columns = TRUE)
+      ) %>%
+      gt::tab_style(
+        style = gt::cell_text(weight = "bold", color = "#666666"),
+        locations = gt::cells_body(columns = vars(i))
+      ) %>%
       gt::cols_width(
         vars(i) ~ px(50),
         vars(type) ~ px(170),
         vars(columns) ~ px(120),
-        vars(values) ~ px(120),
+        vars(values) ~ px(140),
         vars(precon) ~ px(30),
         vars(extract) ~ px(75),
         everything() ~ px(50)

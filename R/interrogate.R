@@ -82,7 +82,7 @@ interrogate <- function(agent,
 
     # Use the default `action_levels` list if it exists and
     # only if it isn't set for this validation step
-    if (!is.null(agent$actions) & is.null(agent$validation_set[i, ]["actions"])) {
+    if (!is.null(agent$actions[[1]]) & is.null(agent$validation_set$actions[i][[1]])) {
       agent$validation_set[[i, "actions"]] <- agent$actions %>% unlist(recursive = FALSE)
     }
     

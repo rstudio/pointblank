@@ -19,6 +19,11 @@
 #' @param name An optional name for the validation plan that the agent will
 #'   eventually carry out during the interrogation process. If no value is
 #'   provided, a name will be generated based on the current system time.
+#' @param actions A list containing threshold levels so that all validation
+#'   steps can react accordingly when exceeding the set levels. This is to be
+#'   created with the [action_levels()] helper function. Should an action levels
+#'   list be used for specific validation step, any default set here will be
+#'   overridden.
 #'   
 #' @return A `ptblank_agent` object.
 #'   
@@ -57,7 +62,8 @@
 #' @export
 
 create_agent <- function(tbl,
-                         name = NULL) {
+                         name = NULL,
+                         actions = NULL) {
 
   # Generate an agent name if none provided
   if (is.null(name)) {
@@ -109,6 +115,7 @@ create_agent <- function(tbl,
       tbl_src_details = tbl_src_details,
       col_names = column_names,
       col_types = column_types,
+      actions = list(actions),
       validation_set =
         dplyr::tibble(
           i = integer(0),

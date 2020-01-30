@@ -60,7 +60,7 @@
 #' @export
 get_agent_report <- function(agent,
                              display_table = TRUE) {
-
+  
   validation_set <- agent$validation_set
   
   agent_name <- agent$name
@@ -76,7 +76,7 @@ get_agent_report <- function(agent,
       eval_warning ~ "WARNING"
     )) %>%
     dplyr::pull(condition)
-
+  
   columns <- 
     validation_set$column %>%
     vapply(
@@ -104,7 +104,7 @@ get_agent_report <- function(agent,
         )
       } 
     )
-
+  
   precon_count <-
     validation_set$preconditions %>%
     vapply(
@@ -118,7 +118,7 @@ get_agent_report <- function(agent,
         )
       }
     )
-
+  
   if (!has_agent_intel(agent)) {
     
     extract_count <- rep(NA, nrow(validation_set))
@@ -137,7 +137,7 @@ get_agent_report <- function(agent,
         FUN = nrow
       )
   }
-
+  
   report_tbl <- 
     dplyr::tibble(
       i = validation_set$i,
@@ -158,7 +158,7 @@ get_agent_report <- function(agent,
   # nocov start
   
   if (requireNamespace("gt", quietly = TRUE) && display_table) {
-
+    
     # Reformat `columns`
     columns_upd <- 
       validation_set$column %>%
@@ -166,15 +166,14 @@ get_agent_report <- function(agent,
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
         FUN = function(x) {
-          ifelse(
-            is.null(x),
-            NA_character_,
-            paste(
-              x %>% unlist() %>% strsplit(", ") %>% unlist() %>%
-                paste_around(., "`") %>% paste0("&#8643;", .) %>%
-                paste(collapse = " ")
-            )
-          )
+          if (is.null(x)) {
+            x <- NA_character_
+          } else {
+            x <- x %>% unlist() %>% strsplit(", ") %>% unlist()
+            x <- paste(paste0("&#8643;", x), collapse = ", ")
+            x <- paste0("<code>", x, "</code>")
+          }
+          x
         }
       )
     
@@ -185,14 +184,42 @@ get_agent_report <- function(agent,
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
         FUN = function(x) {
-          ifelse(
-            is.null(x),
-            NA_character_,
-            paste(paste_around(x, "`") %>% gsub("`~", "&#8643;`", .), collapse = ", ")
-          )
+          if (is.null(x)) {
+            x <- NA_character_
+          } else {
+            x <- x %>% gsub("~", "&#8643;", .)
+            x <- paste(x, collapse = ", ")
+            x <- ifelse(nchar(x) > 18, paste0(substr(x, 1, 15), "..."), x)
+            x <- gsub(" ", "&nbsp;", x)
+            x <- paste0("<code>", x, "</code>")
+          }
+          x
         } 
       )
-
+    
+    # Reformat `precon`
+    precon_upd <- 
+      validation_set$preconditions %>%
+      vapply(
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          if (is.null(x)) {
+            x <- paste0(
+              "<button style=\"background: #FFFFFF; padding: 5px 5px; color: #333333; font-size: 15px; border: none;\"><code>",
+              "I", "</code></button>"
+            )
+          } else {
+            x <- x %>% as.character() %>% base::setdiff("~")
+            x <- paste0(
+              "<button style=\"background: #67C2DC; padding: 3px 3px; color: #FFFFFF; font-size: 15px; border: none;\"><code>",
+              length(x), "</code></button>"
+            )
+            x
+          }
+        } 
+      )
+    
     gt_agent_report <- 
       report_tbl %>%
       dplyr::mutate(
@@ -206,20 +233,41 @@ get_agent_report <- function(agent,
       dplyr::mutate(
         columns = columns_upd,
         values = values_upd,
+        precon = precon_upd,
         units = units,
         n_pass = n_pass,
+        n_fail = units - n_pass,
         f_pass = f_pass,
+        f_fail = 1 - f_pass,
         extract = extract
       ) %>%
-      gt::gt(rowname_col = "i") %>%
+      dplyr::select(
+        i, type, columns, values, precon, eval, units,
+        n_pass, f_pass, n_fail, f_fail, W, S, N, extract
+      ) %>%
+      gt::gt() %>%
+      gt::cols_merge(columns = vars(n_pass, f_pass), hide_columns = vars(f_pass)) %>%
+      gt::cols_merge(columns = vars(n_fail, f_fail), hide_columns = vars(f_fail)) %>%
+      gt::text_transform(
+        locations = gt::cells_body(columns = vars(n_pass, n_fail)),
+        fn = function(x) {
+          dplyr::case_when(
+            x == "NA NA"  ~ "&mdash;",
+            TRUE ~ paste0("<code>", x, "</code>")
+          )
+        }
+      ) %>%
       gt::cols_label(
-        type = "Validation Type",
-        columns = "Cols",
-        values = "Values",
-        precon = "Precon",
+        i = "",
+        type = "STEP FN",
+        columns = "COLUMNS",
+        values = "VALUES",
+        precon = "TBL",
         eval = "EVAL",
-        units = "Units",
-        extract = "Extracts"
+        units = "UNITS",
+        n_pass = "PASS",
+        n_fail = "FAIL",
+        extract = "EXTRACT"
       ) %>%
       gt::tab_header(
         title = "Pointblank Validation",
@@ -229,10 +277,11 @@ get_agent_report <- function(agent,
         table.font.size = gt::pct(90),
         row.striping.include_table_body = FALSE
       ) %>%
-      gt::cols_align(align = "center", columns = gt::vars(eval)) %>%
-      gt::fmt_number(columns = gt::vars(f_pass), decimals = 2) %>%
-      gt::fmt_markdown(columns = gt::vars(columns, values, eval)) %>%
-      gt::fmt_missing(columns = everything()) %>%
+      gt::cols_align(align = "center", columns = gt::vars(precon, eval, W, S, N, extract)) %>%
+      gt::fmt_number(columns = gt::vars(units, n_pass, n_fail, f_pass, f_fail), decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE) %>%
+      gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2) %>%
+      gt::fmt_markdown(columns = gt::vars(columns, values, eval, precon)) %>%
+      gt::fmt_missing(columns = vars(units, values, W, S, N, extract)) %>%
       gt::text_transform(
         locations = gt::cells_body(columns = vars(W)),
         fn = function(x) {
@@ -240,7 +289,7 @@ get_agent_report <- function(agent,
             x == "TRUE"  ~ "<span style=\"color: #FFBF00;\">&#9679;</span>",
             x == "FALSE" ~ "<span style=\"color: #FFBF00;\">&cir;</span>",
             TRUE ~ "&mdash;"
-            )
+          )
         }
       ) %>%
       gt::text_transform(
@@ -250,7 +299,7 @@ get_agent_report <- function(agent,
             x == "TRUE"  ~ "<span style=\"color: #CF142B;\">&#9679;</span>",
             x == "FALSE" ~ "<span style=\"color: #CF142B;\">&cir;</span>",
             TRUE ~ "&mdash;"
-            )
+          )
         }
       ) %>%
       gt::text_transform(
@@ -268,6 +317,15 @@ get_agent_report <- function(agent,
           paste0("<code>", x, "()</code>")
         }
       ) %>%
+      gt::text_transform(
+        locations = gt::cells_body(columns = vars(units, extract)),
+        fn = function(x) {
+          dplyr::case_when(
+            x == "&mdash;" ~ x,
+            TRUE ~ paste0("<code>", x, "</code>")
+          )
+        }
+      ) %>%
       gt::tab_style(
         style = gt::cell_text(align = "left", indent = gt::px(5)),
         locations = gt::cells_title("title")
@@ -275,8 +333,25 @@ get_agent_report <- function(agent,
       gt::tab_style(
         style = gt::cell_text(align = "left", indent = gt::px(5)),
         locations = gt::cells_title("subtitle")
+      ) %>%
+      gt::tab_style(
+        style = gt::cell_text(weight = "bold", color = "#666666"),
+        locations = gt::cells_column_labels(columns = TRUE)
+      ) %>%
+      gt::tab_style(
+        style = gt::cell_text(weight = "bold", color = "#666666"),
+        locations = gt::cells_body(columns = vars(i))
+      ) %>%
+      gt::cols_width(
+        vars(i) ~ px(50),
+        vars(type) ~ px(170),
+        vars(columns) ~ px(120),
+        vars(values) ~ px(140),
+        vars(precon) ~ px(30),
+        vars(extract) ~ px(75),
+        everything() ~ px(50)
       )
-
+    
     return(gt_agent_report)
   }
   

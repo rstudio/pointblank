@@ -539,12 +539,20 @@ interrogate_distinct <- function(agent, idx, table) {
   
   # Create function for validating the `rows_distinct()` step function
   tbl_rows_distinct <- function(table, column_names, col_syms) {
-    
-    table %>%
+
+    unduplicated <- 
+      table %>%
       dplyr::select({{ column_names }}) %>%
       dplyr::group_by(!!!col_syms) %>%
-      dplyr::mutate(`pb_is_good_` = ifelse(dplyr::n() == 1, TRUE, FALSE)) %>%
-      dplyr::ungroup()
+      dplyr::summarize(`pb_is_good_` = dplyr::n()) %>%
+      dplyr::ungroup() %>%
+      dplyr::mutate(`pb_is_good_` = ifelse(`pb_is_good_` == 1, TRUE, FALSE)) %>%
+      dplyr::filter(`pb_is_good_` == TRUE)
+
+    table %>%
+      dplyr::select({{ column_names }}) %>%
+      dplyr::left_join(unduplicated, by = column_names) %>%
+      dplyr::mutate(`pb_is_good_` = ifelse(is.na(`pb_is_good_`), FALSE, TRUE))
   }
   
   # Perform the validation of the table

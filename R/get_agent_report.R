@@ -219,6 +219,14 @@ get_agent_report <- function(agent,
           }
         } 
       )
+
+    f_pass_val <- report_tbl$f_pass
+    f_pass_val <- ifelse(f_pass_val > 0 & f_pass_val < 0.01, 0.01, f_pass_val)
+    f_pass_val <- ifelse(f_pass_val < 1 & f_pass_val > 0.99, 0.99, f_pass_val)
+    
+    f_fail_val <- 1 - report_tbl$f_pass
+    f_fail_val <- ifelse(f_fail_val > 0 & f_fail_val < 0.01, 0.01, f_fail_val)
+    f_fail_val <- ifelse(f_fail_val < 1 & f_fail_val > 0.99, 0.99, f_fail_val)
     
     gt_agent_report <- 
       report_tbl %>%
@@ -237,8 +245,8 @@ get_agent_report <- function(agent,
         units = units,
         n_pass = n_pass,
         n_fail = units - n_pass,
-        f_pass = f_pass,
-        f_fail = 1 - f_pass,
+        f_pass = f_pass_val,
+        f_fail = f_fail_val,
         extract = extract
       ) %>%
       dplyr::select(

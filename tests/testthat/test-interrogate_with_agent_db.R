@@ -407,10 +407,10 @@ test_that("Interrogating for valid row values", {
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
   expect_false(validation$validation_set$all_passed)
   expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 9)
-  expect_equivalent(validation$validation_set$n_failed, 4)
-  expect_equivalent(validation$validation_set$f_passed, 0.69231)
-  expect_equivalent(validation$validation_set$f_failed, 0.30769)
+  expect_equivalent(validation$validation_set$n_passed, 11)
+  expect_equivalent(validation$validation_set$n_failed, 2)
+  expect_equivalent(validation$validation_set$f_passed, 0.84615)
+  expect_equivalent(validation$validation_set$f_failed, 0.15385)
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
@@ -430,12 +430,12 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$assertion_type, "rows_distinct")
   expect_true(is.na(validation$validation_set$column %>% unlist()))
   expect_true(is.null(validation$validation_set[["values"]][[1]]))
-  expect_false(validation$validation_set$all_passed)
+  expect_true(validation$validation_set$all_passed)
   expect_equivalent(validation$validation_set$n, 11)
-  expect_equivalent(validation$validation_set$n_passed, 9)
-  expect_equivalent(validation$validation_set$n_failed, 2)
-  expect_equivalent(validation$validation_set$f_passed, 0.81818)
-  expect_equivalent(validation$validation_set$f_failed, 0.18182)
+  expect_equivalent(validation$validation_set$n_passed, 11)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
   
   # Use the `rows_distinct()` function to create
   # a validation step for selected columns, then,

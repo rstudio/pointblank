@@ -545,6 +545,16 @@ interrogate_distinct <- function(agent, idx, table) {
   
   # Create function for validating the `rows_distinct()` step function
   tbl_rows_distinct <- function(table, column_names, col_syms) {
+    
+    table %>%
+      dplyr::select({{ column_names }}) %>%
+      dplyr::group_by(!!!col_syms) %>%
+      dplyr::mutate(`pb_is_good_` = ifelse(dplyr::n() == 1, TRUE, FALSE)) %>%
+      dplyr::ungroup()
+  }
+  
+  # Create another variation of `tbl_rows_distinct_1()` that works for MySQL
+  tbl_rows_distinct_mysql <- function(table, column_names, col_syms) {
 
     unduplicated <- 
       table %>%
@@ -562,7 +572,11 @@ interrogate_distinct <- function(agent, idx, table) {
   }
   
   # Perform the validation of the table
-  pointblank_try_catch(tbl_rows_distinct(table, {{ column_names }}, col_syms))
+  if (agent$tbl_src == "mysql") {
+    pointblank_try_catch(tbl_rows_distinct_mysql(table, {{ column_names }}, col_syms))
+  } else {
+    pointblank_try_catch(tbl_rows_distinct(table, {{ column_names }}, col_syms))
+  }
 }
 
 pointblank_try_catch <- function(expr) {

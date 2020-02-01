@@ -872,13 +872,13 @@ perform_end_action <- function(agent) {
   .report_object <- agent$reporting$report_object
   .report_object_email <- agent$reporting$report_object_email
   
-  if (!is.null(.report_object)) {
+  if (requireNamespace("gt", quietly = TRUE) && !is.null(.report_object)) {
     .report_html <- gt::as_raw_html(.report_object, inline_css = FALSE)
   } else {
     .report_html <- NULL
   }
   
-  if (!is.null(.report_object_email)) {
+  if (requireNamespace("gt", quietly = TRUE) && !is.null(.report_object_email)) {
     .report_html_email <- gt::as_raw_html(.report_object_email, inline_css = TRUE)
   } else {
     .report_html_email <- NULL

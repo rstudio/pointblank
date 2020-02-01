@@ -112,6 +112,12 @@ create_agent <- function(tbl,
     tbl_src_details <- get_tbl_dbi_src_details(tbl)
     tbl_src <- gsub("^([a-z]*).*", "\\1", tbl_src_details)
   }
+  
+  # If any `end_fns` are specified we always attempt to
+  # embed the validation report
+  if (!is.null(end_fns)) {
+    embed_report <- TRUE
+  }
 
   # Create the agent list object
   agent <-

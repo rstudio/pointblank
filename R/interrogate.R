@@ -834,6 +834,97 @@ perform_action <- function(agent, idx, type) {
   return(NULL)
 }
 
+perform_end_action <- function(agent) {
+  
+  actions <- agent$end_fns %>% unlist()
+
+  .warn <- agent$validation_set$warn
+  .notify <- agent$validation_set$notify
+  .stop <- agent$validation_set$stop
+  
+  .name <- agent$name
+  .time <- agent$time
+  .tbl <- agent$tbl
+  .tbl_name <- agent$tbl_name
+  .tbl_src <- agent$tbl_src
+  .tbl_src_details <- agent$tbl_src_details
+  .col_names <- agent$col_names
+  .col_types <- agent$col_types
+  
+  .i <- agent$validation_set$i
+  .type <- agent$validation_set$assertion_type
+  .column <- agent$validation_set$column
+  .values <- agent$validation_set$values
+  .brief <- agent$validation_set$brief
+  
+  .eval_error <- agent$validation_set$eval_error
+  .eval_warning <- agent$validation_set$eval_warning
+  .capture_stack <- agent$validation_set$capture_stack
+  
+  .n <- agent$validation_set$n
+  .n_passed <- agent$validation_set$n_passed
+  .n_failed <- agent$validation_set$n_failed
+  .f_passed <- agent$validation_set$f_passed
+  .f_failed <- agent$validation_set$f_failed
+  
+  .validation_set <- agent$validation_set
+  
+  .report_object <- agent$reporting$report_object
+  .report_object_email <- agent$reporting$report_object_email
+  
+  if (!is.null(.report_object)) {
+    .report_html <- gt::as_raw_html(.report_object, inline_css = FALSE)
+  } else {
+    .report_html <- NULL
+  }
+  
+  if (!is.null(.report_object_email)) {
+    .report_html_email <- gt::as_raw_html(.report_object_email, inline_css = TRUE)
+  } else {
+    .report_html_email <- NULL
+  }
+
+  # Have the local vars packaged in a list to make creating
+  # custom functions more convenient
+  .vars_list <-
+    list(
+      warn = .warn,
+      notify = .notify,
+      stop = .stop,
+      name = .name,
+      time = .time,
+      tbl = .tbl,
+      tbl_name = .tbl_name,
+      tbl_src = .tbl_src,
+      tbl_src_details = .tbl_src_details,
+      col_names = .col_names,
+      col_types = .col_types,
+      i = .i,
+      type = .type,
+      column = .column,
+      values = .values,
+      brief = .brief,
+      eval_error = .eval_error,
+      eval_warning = .eval_warning,
+      capture_stack = .capture_stack,
+      n = .n,
+      n_passed = .n_passed,
+      n_failed = .n_failed,
+      f_passed = .f_passed,
+      f_failed = .f_failed,
+      validation_set = .validation_set,
+      report_object = .report_object,
+      report_html = .report_html,
+      report_html_email = .report_html_email
+    )
+  
+  lapply(actions, function(x) {
+    x %>% rlang::f_rhs() %>% rlang::eval_tidy()
+  })
+  
+  return(NULL)
+}
+
 add_table_extract <- function(agent,
                               idx,
                               tbl_checked,

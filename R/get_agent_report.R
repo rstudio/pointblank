@@ -220,13 +220,17 @@ get_agent_report <- function(agent,
         FUN = function(x) {
           if (is.null(x)) {
             x <- paste0(
-              "<button style=\"background: #FFFFFF; padding: 5px 5px; color: #333333; font-size: 15px; border: none;\"><code>",
-              "I", "</code></button>"
+              "<button style=\"background: #FFFFFF; padding: ",
+              5 * scale, "px ", 5 * scale, "px; ",
+              "color: #333333; font-size: ", 15 * scale, "px; border: none;\">",
+              "<code>I</code></button>"
             )
           } else {
             x <- x %>% as.character() %>% base::setdiff("~")
             x <- paste0(
-              "<button style=\"background: #67C2DC; padding: 3px 3px; color: #FFFFFF; font-size: 15px; border: none;\"><code>",
+              "<button style=\"background: #67C2DC; padding: ",
+              3 * scale ,"px ", 3 * scale, "px; color: #FFFFFF; ",
+              "font-size: ", 15 * scale, "px; border: none;\"><code>",
               length(x), "</code></button>"
             )
             x
@@ -296,10 +300,11 @@ get_agent_report <- function(agent,
         subtitle = gt::md(paste0("`", agent_name, " (", agent_time, ")`<br><br>"))
       ) %>%
       gt::tab_options(
-        table.font.size = gt::pct(90),
+        table.font.size = gt::pct(95 * scale),
         row.striping.include_table_body = FALSE
       ) %>%
       gt::cols_align(align = "center", columns = gt::vars(precon, eval, W, S, N, extract)) %>%
+      gt::cols_align(align = "center", columns = gt::vars(f_pass, f_fail)) %>%
       gt::fmt_number(columns = gt::vars(units, n_pass, n_fail, f_pass, f_fail), decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE) %>%
       gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2) %>%
       gt::fmt_markdown(columns = gt::vars(columns, values, eval, precon)) %>%
@@ -358,22 +363,49 @@ get_agent_report <- function(agent,
       ) %>%
       gt::tab_style(
         style = gt::cell_text(weight = "bold", color = "#666666"),
-        locations = gt::cells_column_labels(columns = TRUE)
-      ) %>%
-      gt::tab_style(
-        style = gt::cell_text(weight = "bold", color = "#666666"),
         locations = gt::cells_body(columns = vars(i))
-      ) %>%
-      gt::cols_width(
-        vars(i) ~ px(50),
-        vars(type) ~ px(170),
-        vars(columns) ~ px(120),
-        vars(values) ~ px(140),
-        vars(precon) ~ px(30),
-        vars(extract) ~ px(75),
-        everything() ~ px(50)
       )
     
+    
+    if (email_table) {
+      
+      gt_agent_report <- 
+        gt_agent_report %>%
+        gt::cols_width(
+          vars(i) ~ gt::px(28),
+          vars(type) ~ gt::px(105),
+          vars(columns) ~ gt::px(75),
+          vars(values) ~ gt::px(74),
+          vars(precon) ~ gt::px(22),
+          vars(units) ~ gt::px(33),
+          vars(extract) ~ gt::px(48),
+          everything() ~ gt::px(26)
+        ) %>%
+        gt::tab_options(data_row.padding = gt::px(4)) %>%
+        gt::tab_style(
+          style = gt::cell_text(size = gt::px(6), weight = "bold", color = "#666666"),
+          locations = gt::cells_column_labels(columns = TRUE)
+        )
+      
+    } else {
+      
+      gt_agent_report <- 
+        gt_agent_report %>%
+        gt::cols_width(
+          vars(i) ~ gt::px(50),
+          vars(type) ~ gt::px(170),
+          vars(columns) ~ gt::px(120),
+          vars(values) ~ gt::px(140),
+          vars(precon) ~ gt::px(30),
+          vars(extract) ~ gt::px(75),
+          everything() ~ gt::px(50)
+        ) %>%
+        gt::tab_style(
+          style = gt::cell_text(weight = "bold", color = "#666666"),
+          locations = gt::cells_column_labels(columns = TRUE)
+        )
+    }
+
     return(gt_agent_report)
   }
   

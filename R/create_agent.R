@@ -66,10 +66,8 @@
 #' 1-1
 #'   
 #' @export
-
 create_agent <- function(tbl,
                          name = NULL,
-                         actions = NULL) {
                          actions = NULL,
                          end_fns = NULL,
                          embed_report = FALSE) {
@@ -131,6 +129,9 @@ create_agent <- function(tbl,
       col_names = column_names,
       col_types = column_types,
       actions = list(actions),
+      end_fns = list(end_fns),
+      embed_report = embed_report,
+      reporting = NULL,
       validation_set =
         dplyr::tibble(
           i = integer(0),

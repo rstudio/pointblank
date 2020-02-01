@@ -24,6 +24,12 @@
 #'   created with the [action_levels()] helper function. Should an action levels
 #'   list be used for specific validation step, any default set here will be
 #'   overridden.
+#' @param end_fns A list of functions that should be performed at the end of an
+#'   interrogation.
+#' @param embed_report An option to embed a **gt**-based validation report into
+#'   the `ptblank_agent` object. If `FALSE` (the default) then the table object
+#'   will be not generated and available with the agent upon returning from the
+#'   interrogation.
 #'   
 #' @return A `ptblank_agent` object.
 #'   
@@ -64,6 +70,9 @@
 create_agent <- function(tbl,
                          name = NULL,
                          actions = NULL) {
+                         actions = NULL,
+                         end_fns = NULL,
+                         embed_report = FALSE) {
 
   # Generate an agent name if none provided
   if (is.null(name)) {

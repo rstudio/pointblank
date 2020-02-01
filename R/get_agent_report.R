@@ -31,6 +31,7 @@
 #'   default), and if the **gt** package is installed, a display table for the
 #'   report will be shown in the Viewer. If `FALSE`, or if **gt** is not
 #'   available, then a tibble will be returned.
+#' @param ... Additional options passed to downstream functions.
 #' 
 #' @return A tibble.
 #' 
@@ -59,7 +60,8 @@
 #' 
 #' @export
 get_agent_report <- function(agent,
-                             display_table = TRUE) {
+                             display_table = TRUE,
+                             ...) {
   
   validation_set <- agent$validation_set
   

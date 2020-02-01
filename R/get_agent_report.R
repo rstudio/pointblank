@@ -27,10 +27,10 @@
 #' **gt** table will be displayed with the same information.
 #' 
 #' @param agent An agent object of class `ptblank_agent`.
-#' @param display_table Should a display table be generated? If `TRUE`, and if
-#'   the **gt** package is installed, a display table for the report will be
-#'   shown in the Viewer. If `FALSE`, or if **gt** is not available, then a
-#'   tibble will be returned.
+#' @param display_table Should a display table be generated? If `TRUE` (the
+#'   default), and if the **gt** package is installed, a display table for the
+#'   report will be shown in the Viewer. If `FALSE`, or if **gt** is not
+#'   available, then a tibble will be returned.
 #' 
 #' @return A tibble.
 #' 

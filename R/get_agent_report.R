@@ -161,6 +161,18 @@ get_agent_report <- function(agent,
   
   if (requireNamespace("gt", quietly = TRUE) && display_table) {
     
+    x_list <- list(...)
+
+    if (length(x_list) > 0) {
+      if (x_list$size == "small") {
+        scale <- 0.45
+        email_table <- TRUE
+      }
+    } else {
+      scale <- 1.0
+      email_table <- FALSE
+    }
+  
     # Reformat `columns`
     columns_upd <- 
       validation_set$column %>%

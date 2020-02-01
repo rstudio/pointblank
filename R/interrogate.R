@@ -203,6 +203,18 @@ interrogate <- function(agent,
     agent$validation_set$proc_duration_s[i] <- time_diff_s
   }
   
+  # Generate gt reporting objects if the gt package is available
+  if (requireNamespace("gt", quietly = TRUE) & agent$embed_report) {
+    
+    gt_agent_report <- get_agent_report(agent)
+    gt_agent_report_email <- get_agent_report(agent, size = "small")
+    
+    agent$reporting <-
+      list(
+        report_object = gt_agent_report,
+        report_object_email = gt_agent_report_email
+      )
+  }
   class(agent) <- c("has_intel", "ptblank_agent")
   
   agent

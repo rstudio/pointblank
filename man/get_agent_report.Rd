@@ -4,7 +4,7 @@
 \alias{get_agent_report}
 \title{Get a simple report from an agent}
 \usage{
-get_agent_report(agent, display_table = TRUE)
+get_agent_report(agent, display_table = TRUE, ...)
 }
 \arguments{
 \item{agent}{An agent object of class \code{ptblank_agent}.}
@@ -13,6 +13,8 @@ get_agent_report(agent, display_table = TRUE)
 the \strong{gt} package is installed, a display table for the report will be
 shown in the Viewer. If \code{FALSE}, or if \strong{gt} is not available, then a
 tibble will be returned.}
+
+\item{...}{Additional options passed to downstream functions.}
 }
 \value{
 A tibble.

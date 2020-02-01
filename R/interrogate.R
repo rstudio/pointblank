@@ -215,6 +215,10 @@ interrogate <- function(agent,
         report_object_email = gt_agent_report_email
       )
   }
+  
+  # Perform any necessary end actions
+  perform_end_action(agent)
+  
   class(agent) <- c("has_intel", "ptblank_agent")
   
   agent

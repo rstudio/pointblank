@@ -4,7 +4,13 @@
 \alias{create_agent}
 \title{Create a pointblank agent object}
 \usage{
-create_agent(tbl, name = NULL, actions = NULL)
+create_agent(
+  tbl,
+  name = NULL,
+  actions = NULL,
+  end_fns = NULL,
+  embed_report = FALSE
+)
 }
 \arguments{
 \item{tbl}{The input table. This can be a data frame, a tibble, or a
@@ -19,6 +25,14 @@ steps can react accordingly when exceeding the set levels. This is to be
 created with the \code{\link[=action_levels]{action_levels()}} helper function. Should an action levels
 list be used for specific validation step, any default set here will be
 overridden.}
+
+\item{end_fns}{A list of functions that should be performed at the end of an
+interrogation.}
+
+\item{embed_report}{An option to embed a \strong{gt}-based validation report into
+the \code{ptblank_agent} object. If \code{FALSE} (the default) then the table object
+will be not generated and available with the agent upon returning from the
+interrogation.}
 }
 \value{
 A \code{ptblank_agent} object.

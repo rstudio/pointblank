@@ -9,10 +9,10 @@ get_agent_report(agent, display_table = TRUE, ...)
 \arguments{
 \item{agent}{An agent object of class \code{ptblank_agent}.}
 
-\item{display_table}{Should a display table be generated? If \code{TRUE}, and if
-the \strong{gt} package is installed, a display table for the report will be
-shown in the Viewer. If \code{FALSE}, or if \strong{gt} is not available, then a
-tibble will be returned.}
+\item{display_table}{Should a display table be generated? If \code{TRUE} (the
+default), and if the \strong{gt} package is installed, a display table for the
+report will be shown in the Viewer. If \code{FALSE}, or if \strong{gt} is not
+available, then a tibble will be returned.}
 
 \item{...}{Additional options passed to downstream functions.}
 }

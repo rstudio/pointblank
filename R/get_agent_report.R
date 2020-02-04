@@ -165,7 +165,7 @@ get_agent_report <- function(agent,
 
     if (length(x_list) > 0) {
       if (x_list$size == "small") {
-        scale <- 0.45
+        scale <- 1.0
         email_table <- TRUE
       }
     } else {
@@ -339,10 +339,10 @@ get_agent_report <- function(agent,
         n_pass, f_pass, n_fail, f_fail, W, S, N, extract
       ) %>%
       gt::gt() %>%
-      gt::cols_merge(columns = vars(n_pass, f_pass), hide_columns = vars(f_pass)) %>%
-      gt::cols_merge(columns = vars(n_fail, f_fail), hide_columns = vars(f_fail)) %>%
+      gt::cols_merge(columns = gt::vars(n_pass, f_pass), hide_columns = gt::vars(f_pass)) %>%
+      gt::cols_merge(columns = gt::vars(n_fail, f_fail), hide_columns = gt::vars(f_fail)) %>%
       gt::text_transform(
-        locations = gt::cells_body(columns = vars(n_pass, n_fail)),
+        locations = gt::cells_body(columns = gt::vars(n_pass, n_fail)),
         fn = function(x) {
           dplyr::case_when(
             x == "NA NA"  ~ "&mdash;",
@@ -379,7 +379,7 @@ get_agent_report <- function(agent,
       gt::text_transform(
         locations = gt::cells_body(columns = vars(type)),
         fn = function(x) {
-          paste0("<code>", x, "()</code>")
+          paste0("<code>", x, "</code>")
         }
       ) %>%
       gt::text_transform(
@@ -409,25 +409,22 @@ get_agent_report <- function(agent,
 
       gt_agent_report <- 
         gt_agent_report %>%
+        gt::cols_hide(gt::vars(columns, values, precon, extract)) %>%
         gt::cols_width(
-          gt::vars(i) ~ gt::px(25),
-          gt::vars(type) ~ gt::px(105),
-          gt::vars(columns) ~ gt::px(75),
-          gt::vars(values) ~ gt::px(74),
-          gt::vars(precon) ~ gt::px(25),
-          gt::vars(eval) ~ gt::px(28),
-          gt::vars(units) ~ gt::px(33),
-          gt::vars(n_pass) ~ gt::px(33),
-          gt::vars(n_fail) ~ gt::px(33),
-          gt::vars(W) ~ gt::px(20),
-          gt::vars(S) ~ gt::px(20),
-          gt::vars(N) ~ gt::px(20),
-          gt::vars(extract) ~ gt::px(48),
+          gt::vars(i) ~ gt::px(30),
+          gt::vars(type) ~ gt::px(170),
+          gt::vars(eval) ~ gt::px(40),
+          gt::vars(units) ~ gt::px(50),
+          gt::vars(n_pass) ~ gt::px(50),
+          gt::vars(n_fail) ~ gt::px(50),
+          gt::vars(W) ~ gt::px(30),
+          gt::vars(S) ~ gt::px(30),
+          gt::vars(N) ~ gt::px(30),
           TRUE ~ gt::px(20)
         ) %>%
         gt::tab_options(data_row.padding = gt::px(4)) %>%
         gt::tab_style(
-          style = gt::cell_text(size = gt::px(6), weight = "bold", color = "#666666"),
+          style = gt::cell_text(size = gt::px(10), weight = "bold", color = "#666666"),
           locations = gt::cells_column_labels(columns = TRUE)
         )
       
@@ -442,6 +439,9 @@ get_agent_report <- function(agent,
           gt::vars(values) ~ gt::px(140),
           gt::vars(precon) ~ gt::px(30),
           gt::vars(extract) ~ gt::px(75),
+          gt::vars(W) ~ gt::px(30),
+          gt::vars(S) ~ gt::px(30),
+          gt::vars(N) ~ gt::px(30),
           TRUE ~ gt::px(50)
         ) %>%
         gt::tab_style(

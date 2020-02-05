@@ -111,6 +111,26 @@ resolve_columns <- function(x, var_expr, preconditions) {
   column
 }
 
+row_based_step_fns_vector <- function() {
+  
+  c(
+    "col_vals_gt",
+    "col_vals_gte",
+    "col_vals_lt",
+    "col_vals_lte",
+    "col_vals_equal",
+    "col_vals_not_equal",
+    "col_vals_between",
+    "col_vals_not_between",
+    "col_vals_in_set",
+    "col_vals_not_in_set",
+    "col_vals_null",
+    "col_vals_not_null",
+    "col_vals_regex",
+    "conjointly"
+  )
+}
+
 get_tbl_dbi_src_info <- function(tbl) {
   utils::capture.output(tbl %>% unclass() %>% .$src)
 }

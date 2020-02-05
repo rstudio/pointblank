@@ -100,7 +100,12 @@ create_agent <- function(tbl,
   column_names <- names(column_names_types)
   column_types <- unname(unlist(column_names_types))
   
-  if (inherits(tbl, "tbl_df")) {
+  if (inherits(tbl, "data.frame")) {
+    
+    tbl_src <- "data.frame"
+    tbl_src_details <- character(0)
+    
+  } else if (inherits(tbl, "tbl_df")) {
     
     tbl_src <- "tbl_df"
     tbl_src_details <- character(0)
@@ -155,6 +160,7 @@ create_agent <- function(tbl,
           notify = logical(0),
           stop = logical(0),
           row_sample = numeric(0),
+          tbl_checked = list(NULL),
           time_processed = as.POSIXct(NA)[-1],
           proc_duration_s = numeric(0)
         ),

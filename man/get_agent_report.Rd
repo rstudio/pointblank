@@ -75,6 +75,7 @@ agent \%>\%
 Other Interrogate and Get Info: 
 \code{\link{all_passed}()},
 \code{\link{get_data_extracts}()},
+\code{\link{get_sundered_data}()},
 \code{\link{interrogate}()}
 }
 \concept{Interrogate and Get Info}

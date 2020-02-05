@@ -634,7 +634,10 @@ add_reporting_data <- function(agent, idx, tbl_checked) {
   if (is.null(tbl_checked$value)) {
     return(agent)
   }
-  
+
+  # Store the `tbl_checked$value` tbl
+  agent$validation_set$tbl_checked[[idx]] <- list(tbl_checked$value)
+
   tbl_checked <- tbl_checked$value
 
   # Get total count of rows

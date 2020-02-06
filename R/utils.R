@@ -140,10 +140,6 @@ get_tbl_dbi_src_details <- function(tbl) {
   tbl_src_info[grepl("^src:", tbl_src_info)] %>% gsub("src:\\s*", "", .)
 }
 
-paste_around <- function(x, string) {
-  x <- paste0(string, x)
-  x <- paste0(x, string)
-  x
 }
 
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {

@@ -43,7 +43,7 @@
 #' 
 #' # Get the sundered data piece that
 #' # contains only rows that passed all
-#' # validation steps
+#' # validation steps (the default piece)
 #' agent %>% get_sundered_data()
 #' 
 #' @family Interrogate and Get Info
@@ -61,37 +61,29 @@ get_sundered_data <- function(agent,
     stop("The `agent` has not yet performed an interrogation.", call. = FALSE)
   }
   
-  if (is.null(id_cols) && agent$tbl_src %in% c("tbl_df", "data.frame")) {
-    
-    input_tbl <- agent$tbl
-    
-  } else {
-    
-    input_tbl <- agent$tbl
-    
-    # Get the row count of the input table
-    row_count_input_tbl <- 
-      input_tbl %>%
-      dplyr::summarize(n = dplyr::n()) %>%
-      dplyr::pull(n) %>%
-      as.numeric()
-    
-    # Get the row count of the input table after using
-    # `dplyr::distinct()`
-    row_count_input_tbl_distinct <- 
-      input_tbl %>%
-      dplyr::distinct() %>%
-      dplyr::summarize(n = dplyr::n()) %>%
-      dplyr::pull(n) %>%
-      as.numeric()
-    
-    if (row_count_input_tbl_distinct < row_count_input_tbl) {
-      warning("The table contains duplicate rows, which makes sundering difficult:\n",
-              " * if possible, deduplicate the input data\n",
-              " * and, specifying `id_cols` can help speed up this process",
-              call. = FALSE)
-    }
+  input_tbl <- agent$tbl
+  tbl_src <- agent$tbl_src
+  
+  if (!(tbl_src %in% c("tbl_df", "data.frame")) && is.null(id_cols)) {
+    stop("This table needs to have `id_cols` specified, otherwise sundering cannot be done",
+         call. = FALSE)
   }
+  
+  # Get the row count of the input table
+  row_count_input_tbl <- 
+    input_tbl %>%
+    dplyr::summarize(n = dplyr::n()) %>%
+    dplyr::pull(n) %>%
+    as.numeric()
+  
+  # Get the row count of the input table after using
+  # `dplyr::distinct()`
+  row_count_input_tbl_distinct <- 
+    input_tbl %>%
+    dplyr::distinct() %>%
+    dplyr::summarize(n = dplyr::n()) %>%
+    dplyr::pull(n) %>%
+    as.numeric()
   
   # Get the validation steps that are row-based, and,
   # did not result in evaluation errors
@@ -118,19 +110,38 @@ get_sundered_data <- function(agent,
         tbl_check_obj[[i]][[1]] %>%
         dplyr::rename(!!new_col_i := pb_is_good_)
       
-      if (is.null(id_cols) && agent$tbl_src %in% c("tbl_df", "data.frame")) {
+      if (agent$tbl_src %in% c("tbl_df", "data.frame")) {
         
         tbl_check_join <- 
           tbl_check_join %>%
           tibble::rowid_to_column(var = "__pb_rowid__")
       }
     }
-
+    
     new_col_ii <- paste0("pb_is_good_", i + 1)
     
     tbl_check_join_r <- tbl_check_obj[[i + 1]][[1]]
     
-    if (is.null(id_cols) && agent$tbl_src %in% c("tbl_df", "data.frame")) {
+    if (!(agent$tbl_src %in% c("tbl_df", "data.frame"))) {
+      
+      by_cols <- id_cols
+      
+      tbl_check_join <- 
+        tbl_check_join %>%
+        dplyr::select(dplyr::one_of(by_cols), dplyr::starts_with("pb_is_good_")) %>%
+        dplyr::left_join(
+          tbl_check_join_r %>%
+            dplyr::rename(!!new_col_ii := pb_is_good_) %>%
+            dplyr::select(dplyr::one_of(by_cols), dplyr::starts_with("pb_is_good_")),
+          by = by_cols
+        ) %>%
+        dplyr::left_join(
+          tbl_check_join %>% 
+            dplyr::select(-dplyr::starts_with("pb_is_good_")),
+          by = by_cols
+        )
+      
+    } else if (agent$tbl_src %in% c("tbl_df", "data.frame")) {
       
       tbl_check_join_r <- 
         tbl_check_join_r %>%
@@ -138,18 +149,15 @@ get_sundered_data <- function(agent,
       
       by_cols <- c("__pb_rowid__", agent$col_names)
       
-    } else {
-      by_cols <- agent$col_names
+      tbl_check_join <- 
+        tbl_check_join %>%
+        dplyr::left_join(
+          tbl_check_join_r %>%
+            dplyr::rename(!!new_col_ii := pb_is_good_),
+          by = by_cols
+        )
     }
-    
-    tbl_check_join <- 
-      tbl_check_join %>%
-      dplyr::left_join(
-        tbl_check_join_r %>%
-          dplyr::rename(!!new_col_ii := pb_is_good_),
-        by = by_cols
-      )
-    
+
     if (i == (max(seq(tbl_check_obj)) - 1)) break
   }
   

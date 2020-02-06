@@ -47,6 +47,7 @@ all_passed(agent)
 Other Interrogate and Get Info: 
 \code{\link{get_agent_report}()},
 \code{\link{get_data_extracts}()},
+\code{\link{get_sundered_data}()},
 \code{\link{interrogate}()}
 }
 \concept{Interrogate and Get Info}

@@ -63,6 +63,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$validation_set$notify, "logical")
   expect_is(agent$validation_set$stop, "logical")
   expect_is(agent$validation_set$row_sample, "numeric")
+  expect_is(agent$validation_set$tbl_checked, "list")
   expect_is(agent$validation_set$time_processed, "POSIXct")
   expect_is(agent$validation_set$proc_duration_s, "numeric")
   expect_is(agent$extracts, "list")

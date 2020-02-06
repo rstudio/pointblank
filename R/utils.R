@@ -111,6 +111,26 @@ resolve_columns <- function(x, var_expr, preconditions) {
   column
 }
 
+row_based_step_fns_vector <- function() {
+  
+  c(
+    "col_vals_gt",
+    "col_vals_gte",
+    "col_vals_lt",
+    "col_vals_lte",
+    "col_vals_equal",
+    "col_vals_not_equal",
+    "col_vals_between",
+    "col_vals_not_between",
+    "col_vals_in_set",
+    "col_vals_not_in_set",
+    "col_vals_null",
+    "col_vals_not_null",
+    "col_vals_regex",
+    "conjointly"
+  )
+}
+
 get_tbl_dbi_src_info <- function(tbl) {
   utils::capture.output(tbl %>% unclass() %>% .$src)
 }
@@ -120,10 +140,39 @@ get_tbl_dbi_src_details <- function(tbl) {
   tbl_src_info[grepl("^src:", tbl_src_info)] %>% gsub("src:\\s*", "", .)
 }
 
-paste_around <- function(x, string) {
-  x <- paste0(string, x)
-  x <- paste0(x, string)
-  x
+get_tbl_information <- function(tbl) {
+  
+  if (inherits(tbl, "data.frame")) {
+    
+    return(
+      list(
+        tbl_src = "data.frame",
+        tbl_src_details = character(0)
+      )
+    )
+    
+  } else if (inherits(tbl, "tbl_df")) {
+    
+    return(
+      list(
+        tbl_src = "tbl_df",
+        tbl_src_details = character(0)
+      )
+    )
+    
+  } else if (inherits(tbl, "tbl_dbi")) {
+    
+    return(
+      list(
+        tbl_src_details = get_tbl_dbi_src_details(tbl),
+        tbl_src = gsub("^([a-z]*).*", "\\1", get_tbl_dbi_src_details(tbl))
+      )
+    )
+    
+  } else {
+    warning("Information on this table type cannot be obtained at present.",
+            call. = FALSE)
+  } 
 }
 
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {

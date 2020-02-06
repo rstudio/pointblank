@@ -99,17 +99,7 @@ create_agent <- function(tbl,
   
   column_names <- names(column_names_types)
   column_types <- unname(unlist(column_names_types))
-  
-  if (inherits(tbl, "tbl_df")) {
-    
-    tbl_src <- "tbl_df"
-    tbl_src_details <- character(0)
-    
-  } else if (inherits(tbl, "tbl_dbi")) {
-    
-    tbl_src_details <- get_tbl_dbi_src_details(tbl)
-    tbl_src <- gsub("^([a-z]*).*", "\\1", tbl_src_details)
-  }
+  tbl_information <- get_tbl_information(tbl = tbl)
   
   # If any `end_fns` are specified we always attempt to
   # embed the validation report
@@ -124,8 +114,8 @@ create_agent <- function(tbl,
       time = as.POSIXct(NA)[-1],
       tbl = tbl,
       tbl_name = tbl_name,
-      tbl_src = tbl_src,
-      tbl_src_details = tbl_src_details,
+      tbl_src = tbl_information$tbl_src,
+      tbl_src_details = tbl_information$tbl_src_details,
       col_names = column_names,
       col_types = column_types,
       actions = list(actions),
@@ -155,6 +145,7 @@ create_agent <- function(tbl,
           notify = logical(0),
           stop = logical(0),
           row_sample = numeric(0),
+          tbl_checked = list(NULL),
           time_processed = as.POSIXct(NA)[-1],
           proc_duration_s = numeric(0)
         ),

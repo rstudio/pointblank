@@ -59,7 +59,7 @@ agent <-
 
 # Get the sundered data piece that
 # contains only rows that passed all
-# validation steps
+# validation steps (the default piece)
 agent \%>\% get_sundered_data()
 
 }

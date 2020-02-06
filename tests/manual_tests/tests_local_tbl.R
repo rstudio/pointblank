@@ -1,7 +1,7 @@
 library(pointblank)
 library(tidyverse)
 
-agent_plan <-
+agent <-
   create_agent(tbl = small_table) %>%
   col_vals_gt(vars(date_time), vars(date), na_pass = TRUE) %>%
   col_vals_gt(vars(b), vars(g), na_pass = TRUE) %>%
@@ -11,16 +11,12 @@ agent_plan <-
   col_vals_equal(vars(d), vars(d), na_pass = TRUE) %>%
   col_vals_between(vars(c), left = vars(a), right = vars(d), na_pass = TRUE)
 
-agent_plan %>% get_agent_report()
+agent <- agent %>% interrogate()
 
-agent_intel <- agent_plan %>% interrogate()
+report <- agent %>% get_agent_report()
+report
 
-agent_intel
+extract_3 <- agent_intel %>% get_data_extracts(i = 3)
+extract_3
 
-agent_report <- agent_intel %>% get_agent_report()
-
-agent_report
-
-extract_1 <- agent_intel %>% get_data_extracts(i = 1)
-
-extract_1
+agent %>% get_sundered_data()

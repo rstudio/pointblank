@@ -1068,3 +1068,176 @@ test_that("The validations with sets can include NA values", {
     all_passed() %>%
     expect_true()
 })
+
+test_that("Select validation steps can be `active` or not", {
+  
+  # Perform validation with default of `active = TRUE` in
+  # each validation step
+  validation_all_active <-
+    create_agent(tbl = small_table) %>%
+    col_exists(columns = vars(b)) %>%
+    col_is_character(columns = vars(b)) %>%
+    col_is_numeric(columns = vars(a)) %>%
+    col_is_posix(columns = vars(date_time)) %>%
+    col_is_date(columns = vars(date)) %>%
+    col_is_integer(columns = vars(a)) %>%
+    col_is_logical(columns = vars(e)) %>%
+    col_vals_between(columns = vars(d), left = 0, right = 5000) %>%
+    col_vals_equal(columns = vars(d), value = 283.94) %>%
+    col_vals_gt(columns = vars(date_time), value = vars(date)) %>%
+    col_vals_gte(columns = vars(date_time), value = vars(date)) %>%
+    col_vals_lt(columns = vars(date_time), value = vars(date)) %>%
+    col_vals_lte(columns = vars(date_time), value = vars(date)) %>%
+    col_vals_in_set(columns = vars(f), set = c("low", "mid", "high")) %>%
+    col_vals_not_between(columns = vars(d), left = 500, right = 1000) %>%
+    col_vals_not_equal(columns = vars(d), value = 283.94) %>%
+    col_vals_not_in_set(columns = vars(f), set = c("lower", "middle", "higher")) %>%
+    col_vals_not_null(columns = vars(c)) %>%
+    col_vals_null(columns = vars(b)) %>%
+    col_vals_regex(columns = vars(f), regex = "[a-z]{3}") %>%
+    rows_distinct() %>%
+    conjointly(
+      ~ col_vals_gt(., columns = vars(a), value = 1),
+      ~ col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
+      ~ col_vals_not_null(., columns = vars(d))
+    ) %>%
+    interrogate()
+  
+  # Expect the `active` parameter in each validation step
+  # to be set as `TRUE`
+  expect_true(all(validation_all_active$validation_set$active))
+  
+  # Expect validation results to be available in all of the columns
+  # where those values are reported
+  expect_true(all(!is.na(validation_all_active$validation_set$eval_error)))
+  expect_true(all(!is.na(validation_all_active$validation_set$eval_warning)))
+  expect_true(all(!is.na(validation_all_active$validation_set$all_passed)))
+  expect_true(all(!is.na(validation_all_active$validation_set$n)))
+  expect_true(all(!is.na(validation_all_active$validation_set$n_passed)))
+  expect_true(all(!is.na(validation_all_active$validation_set$n_failed)))
+  expect_true(all(!is.na(validation_all_active$validation_set$f_passed)))
+  expect_true(all(!is.na(validation_all_active$validation_set$f_failed)))
+  expect_true(all(!is.na(validation_all_active$validation_set$time_processed)))
+  expect_true(all(!is.na(validation_all_active$validation_set$proc_duration_s)))
+  
+  # Perform validation with `active = FALSE` for all of the
+  # validation steps
+  validation_all_not_active <-
+    create_agent(tbl = small_table) %>%
+    col_exists(columns = vars(b), active = FALSE) %>%
+    col_is_character(columns = vars(b), active = FALSE) %>%
+    col_is_numeric(columns = vars(a), active = FALSE) %>%
+    col_is_posix(columns = vars(date_time), active = FALSE) %>%
+    col_is_date(columns = vars(date), active = FALSE) %>%
+    col_is_integer(columns = vars(a), active = FALSE) %>%
+    col_is_logical(columns = vars(e), active = FALSE) %>%
+    col_vals_between(columns = vars(d), left = 0, right = 5000, active = FALSE) %>%
+    col_vals_equal(columns = vars(d), value = 283.94, active = FALSE) %>%
+    col_vals_gt(columns = vars(date_time), value = vars(date), active = FALSE) %>%
+    col_vals_gte(columns = vars(date_time), value = vars(date), active = FALSE) %>%
+    col_vals_lt(columns = vars(date_time), value = vars(date), active = FALSE) %>%
+    col_vals_lte(columns = vars(date_time), value = vars(date), active = FALSE) %>%
+    col_vals_in_set(columns = vars(f), set = c("low", "mid", "high"), active = FALSE) %>%
+    col_vals_not_between(columns = vars(d), left = 500, right = 1000, active = FALSE) %>%
+    col_vals_not_equal(columns = vars(d), value = 283.94, active = FALSE) %>%
+    col_vals_not_in_set(columns = vars(f), set = c("lower", "middle", "higher"), active = FALSE) %>%
+    col_vals_not_null(columns = vars(c), active = FALSE) %>%
+    col_vals_null(columns = vars(b), active = FALSE) %>%
+    col_vals_regex(columns = vars(f), regex = "[a-z]{3}", active = FALSE) %>%
+    rows_distinct(active = FALSE) %>%
+    conjointly(
+      ~ col_vals_gt(., columns = vars(a), value = 1),
+      ~ col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
+      ~ col_vals_not_null(., columns = vars(d)),
+      active = FALSE
+    ) %>%
+    interrogate()
+  
+  # Expect the `active` parameter in each validation step
+  # to be set as `FALSE`
+  expect_true(!all(validation_all_not_active$validation_set$active))
+  
+  # Expect no validation results to be available in any of the columns
+  # where those values are normally reported (this is because no interrogations
+  # had occurred at any of the validation steps)
+  expect_true(!all(!is.na(validation_all_not_active$validation_set$eval_error)))
+  expect_true(!all(!is.na(validation_all_not_active$validation_set$eval_warning)))
+  expect_true(!all(!is.na(validation_all_not_active$validation_set$all_passed)))
+  expect_true(!all(!is.na(validation_all_not_active$validation_set$n)))
+  expect_true(!all(!is.na(validation_all_not_active$validation_set$n_passed)))
+  expect_true(!all(!is.na(validation_all_not_active$validation_set$n_failed)))
+  expect_true(!all(!is.na(validation_all_not_active$validation_set$f_passed)))
+  expect_true(!all(!is.na(validation_all_not_active$validation_set$f_failed)))
+  expect_true(!all(!is.na(validation_all_not_active$validation_set$time_processed)))
+  expect_true(!all(!is.na(validation_all_not_active$validation_set$proc_duration_s)))
+  
+  # Perform validation directly on data with `active = TRUE`
+  # for all of the validation steps; set action levels to
+  # warn when there is a single unit failing in each step
+  al <- action_levels(warn_at = 1)
+  
+  expect_warning(
+    small_table %>%
+      col_is_character(columns = vars(b), actions = al) %>%
+      col_is_numeric(columns = vars(a), actions = al) %>%
+      col_is_posix(columns = vars(date_time), actions = al) %>%
+      col_is_date(columns = vars(date), actions = al) %>%
+      col_is_integer(columns = vars(a), actions = al) %>%
+      col_is_logical(columns = vars(e), actions = al) %>%
+      col_vals_between(columns = vars(d), left = 0, right = 5000, actions = al) %>%
+      col_vals_equal(columns = vars(d), value = 283.94, actions = al) %>%
+      col_vals_gt(columns = vars(date_time), value = vars(date), actions = al) %>%
+      col_vals_gte(columns = vars(date_time), value = vars(date), actions = al) %>%
+      col_vals_lt(columns = vars(date_time), value = vars(date), actions = al) %>%
+      col_vals_lte(columns = vars(date_time), value = vars(date), actions = al) %>%
+      col_vals_in_set(columns = vars(f), set = c("low", "mid", "high"), actions = al) %>%
+      col_vals_not_between(columns = vars(d), left = 500, right = 1000, actions = al) %>%
+      col_vals_not_equal(columns = vars(d), value = 283.94, actions = al) %>%
+      col_vals_not_in_set(columns = vars(f), set = c("lower", "middle", "higher"), actions = al) %>%
+      col_vals_not_null(columns = vars(c), actions = al) %>%
+      col_vals_null(columns = vars(b), actions = al) %>%
+      col_vals_regex(columns = vars(f), regex = "[a-z]{3}", actions = al) %>%
+      rows_distinct(actions = al) %>%
+      conjointly(
+        ~ col_vals_gt(., columns = vars(a), value = 1),
+        ~ col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
+        ~ col_vals_not_null(., columns = vars(d)),
+        actions = al
+      )
+  )
+  
+  # Perform validation directly on data with `active = FALSE`
+  # for all of the validation steps; using the same action levels
+  # to potentially warn when there is a single unit failing in each step
+  # (however this won't happen because `active = FALSE` means that an
+  # interrogation isn't even performed)
+  expect_warning(regexp = NA,
+    small_table %>%
+      col_is_character(columns = vars(b), actions = al, active = FALSE) %>%
+      col_is_numeric(columns = vars(a), actions = al, active = FALSE) %>%
+      col_is_posix(columns = vars(date_time), actions = al, active = FALSE) %>%
+      col_is_date(columns = vars(date), actions = al, active = FALSE) %>%
+      col_is_integer(columns = vars(a), actions = al, active = FALSE) %>%
+      col_is_logical(columns = vars(e), actions = al, active = FALSE) %>%
+      col_vals_between(columns = vars(d), left = 0, right = 5000, actions = al, active = FALSE) %>%
+      col_vals_equal(columns = vars(d), value = 283.94, actions = al, active = FALSE) %>%
+      col_vals_gt(columns = vars(date_time), value = vars(date), actions = al, active = FALSE) %>%
+      col_vals_gte(columns = vars(date_time), value = vars(date), actions = al, active = FALSE) %>%
+      col_vals_lt(columns = vars(date_time), value = vars(date), actions = al, active = FALSE) %>%
+      col_vals_lte(columns = vars(date_time), value = vars(date), actions = al, active = FALSE) %>%
+      col_vals_in_set(columns = vars(f), set = c("low", "mid", "high"), actions = al, active = FALSE) %>%
+      col_vals_not_between(columns = vars(d), left = 500, right = 1000, actions = al, active = FALSE) %>%
+      col_vals_not_equal(columns = vars(d), value = 283.94, actions = al, active = FALSE) %>%
+      col_vals_not_in_set(columns = vars(f), set = c("lower", "middle", "higher"), actions = al, active = FALSE) %>%
+      col_vals_not_null(columns = vars(c), actions = al, active = FALSE) %>%
+      col_vals_null(columns = vars(b), actions = al, active = FALSE) %>%
+      col_vals_regex(columns = vars(f), regex = "[a-z]{3}", actions = al, active = FALSE) %>%
+      rows_distinct(actions = al, active = FALSE) %>%
+      conjointly(
+        ~ col_vals_gt(., columns = vars(a), value = 1),
+        ~ col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
+        ~ col_vals_not_null(., columns = vars(d)),
+        actions = al, active = FALSE
+      )
+  )
+})

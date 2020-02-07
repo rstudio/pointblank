@@ -67,7 +67,8 @@
 col_is_numeric <- function(x,
                            columns,
                            actions = NULL,
-                           brief = NULL) {
+                           brief = NULL,
+                           active = TRUE) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -81,7 +82,8 @@ col_is_numeric <- function(x,
       col_is_numeric(
         columns = columns,
         brief = brief,
-        actions = prime_actions(actions)
+        actions = prime_actions(actions),
+        active = active
       ) %>% interrogate()
     
     return(x)
@@ -110,7 +112,8 @@ col_is_numeric <- function(x,
         column = column,
         preconditions = NULL,
         actions = actions,
-        brief = brief
+        brief = brief,
+        active = active
       )
   }
 

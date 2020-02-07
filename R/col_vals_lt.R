@@ -94,7 +94,8 @@ col_vals_lt <- function(x,
                         na_pass = FALSE,
                         preconditions = NULL,
                         actions = NULL,
-                        brief = NULL) {
+                        brief = NULL,
+                        active = TRUE) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -111,7 +112,8 @@ col_vals_lt <- function(x,
         na_pass = na_pass,
         preconditions = preconditions,
         brief = brief,
-        actions = prime_actions(actions)
+        actions = prime_actions(actions),
+        active = active
       ) %>% interrogate()
     
     return(x)
@@ -143,7 +145,8 @@ col_vals_lt <- function(x,
         na_pass = na_pass,
         preconditions = preconditions,
         actions = actions,
-        brief = brief
+        brief = brief,
+        active = active
       )
   }
 

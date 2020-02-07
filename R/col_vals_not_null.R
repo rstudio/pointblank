@@ -90,7 +90,8 @@ col_vals_not_null <- function(x,
                               columns,
                               preconditions = NULL,
                               actions = NULL,
-                              brief = NULL) {
+                              brief = NULL,
+                              active = TRUE) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -105,7 +106,8 @@ col_vals_not_null <- function(x,
         columns = columns,
         preconditions = preconditions,
         brief = brief,
-        actions = prime_actions(actions)
+        actions = prime_actions(actions),
+        active = active
       ) %>% interrogate()
     
     return(x)
@@ -134,7 +136,8 @@ col_vals_not_null <- function(x,
         column = column,
         preconditions = preconditions,
         actions = actions,
-        brief = brief
+        brief = brief,
+        active = active
       )
   }
 

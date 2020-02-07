@@ -85,7 +85,8 @@ rows_distinct <- function(x,
                           columns = NULL,
                           preconditions = NULL,
                           actions = NULL,
-                          brief = NULL) {
+                          brief = NULL,
+                          active = TRUE) {
 
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -100,7 +101,8 @@ rows_distinct <- function(x,
         columns = columns,
         preconditions = preconditions,
         brief = brief,
-        actions = prime_actions(actions)
+        actions = prime_actions(actions),
+        active = active
       ) %>% interrogate()
     
     return(x)
@@ -136,7 +138,8 @@ rows_distinct <- function(x,
       values = NULL,
       preconditions = preconditions,
       actions = actions,
-      brief = brief
+      brief = brief,
+      active = active
     )
 
   agent
@@ -154,7 +157,8 @@ rows_not_duplicated <- function(x,
                                 columns = NULL,
                                 preconditions = NULL,
                                 brief = NULL,
-                                actions = NULL) {
+                                actions = NULL,
+                                active = TRUE) {
   
   # nocov start
 
@@ -166,8 +170,9 @@ rows_not_duplicated <- function(x,
     x = x,
     columns = {{ columns }},
     preconditions = preconditions,
+    actions = actions,
     brief = brief,
-    actions = actions
+    active = active
   )
 
   # nocov end

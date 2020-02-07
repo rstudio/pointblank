@@ -72,6 +72,12 @@
 #'   can react accordingly when exceeding the set levels. This is to be created
 #'   with the [action_levels()] helper function.
 #' @param brief An optional, text-based description for the validation step.
+#' @param active A logical value indicating whether the validation step should
+#'   be active. If the step function is working with an agent, `FALSE` will make
+#'   the validation step inactive (still reporting its presence and keeping
+#'   indexes for the steps unchanged). If the step function will be operating
+#'   directly on data, then any step with `active = FALSE` will simply pass the
+#'   data through with no validation whatsoever. The default for this is `TRUE`.
 #'   
 #' @return Either a `ptblank_agent` object or a table object, depending on what
 #'   was passed to `x`.
@@ -109,7 +115,8 @@ col_vals_gt <- function(x,
                         na_pass = FALSE,
                         preconditions = NULL,
                         actions = NULL,
-                        brief = NULL) {
+                        brief = NULL,
+                        active = TRUE) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -126,7 +133,8 @@ col_vals_gt <- function(x,
         na_pass = na_pass,
         preconditions = preconditions,
         brief = brief,
-        actions = prime_actions(actions)
+        actions = prime_actions(actions),
+        active = active
       ) %>% interrogate()
     
     return(x)
@@ -159,7 +167,8 @@ col_vals_gt <- function(x,
         na_pass = na_pass,
         preconditions = preconditions,
         actions = actions,
-        brief = brief
+        brief = brief,
+        active = active
       )
   }
 

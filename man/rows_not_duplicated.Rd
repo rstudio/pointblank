@@ -9,7 +9,8 @@ rows_not_duplicated(
   columns = NULL,
   preconditions = NULL,
   brief = NULL,
-  actions = NULL
+  actions = NULL,
+  active = TRUE
 )
 }
 \arguments{
@@ -31,6 +32,13 @@ object must be ultimately returned.}
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
 with the \code{\link[=action_levels]{action_levels()}} helper function.}
+
+\item{active}{A logical value indicating whether the validation step should
+be active. If the step function is working with an agent, \code{FALSE} will make
+the validation step inactive (still reporting its presence and keeping
+indexes for the steps unchanged). If the step function will be operating
+directly on data, then any step with \code{active = FALSE} will simply pass the
+data through with no validation whatsoever. The default for this is \code{TRUE}.}
 }
 \value{
 A \code{ptblank_agent} object.

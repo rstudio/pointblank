@@ -4,7 +4,14 @@
 \alias{col_vals_null}
 \title{Are column data \code{NULL}/\code{NA}?}
 \usage{
-col_vals_null(x, columns, preconditions = NULL, actions = NULL, brief = NULL)
+col_vals_null(
+  x,
+  columns,
+  preconditions = NULL,
+  actions = NULL,
+  brief = NULL,
+  active = TRUE
+)
 }
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
@@ -25,6 +32,13 @@ can react accordingly when exceeding the set levels. This is to be created
 with the \code{\link[=action_levels]{action_levels()}} helper function.}
 
 \item{brief}{An optional, text-based description for the validation step.}
+
+\item{active}{A logical value indicating whether the validation step should
+be active. If the step function is working with an agent, \code{FALSE} will make
+the validation step inactive (still reporting its presence and keeping
+indexes for the steps unchanged). If the step function will be operating
+directly on data, then any step with \code{active = FALSE} will simply pass the
+data through with no validation whatsoever. The default for this is \code{TRUE}.}
 }
 \value{
 Either a \code{ptblank_agent} object or a table object, depending on what

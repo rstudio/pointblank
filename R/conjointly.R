@@ -93,7 +93,8 @@ conjointly <- function(x,
                        .list = list2(...),
                        preconditions = NULL,
                        actions = NULL,
-                       brief = NULL) {
+                       brief = NULL,
+                       active = TRUE) {
 
   # Obtain all of the group's elements
   list_elements <- .list
@@ -117,7 +118,8 @@ conjointly <- function(x,
         .list = .list,
         preconditions = preconditions,
         actions = prime_actions(actions),
-        brief = brief
+        brief = brief,
+        active = active
       ) %>% interrogate()
     
     return(x)
@@ -134,7 +136,8 @@ conjointly <- function(x,
       na_pass = NULL,
       preconditions = preconditions,
       actions = actions,
-      brief = brief
+      brief = brief,
+      active = active
     )
   
   agent

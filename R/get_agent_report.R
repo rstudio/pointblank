@@ -305,10 +305,12 @@ get_agent_report <- function(agent,
     f_pass_val <- report_tbl$f_pass
     f_pass_val <- ifelse(f_pass_val > 0 & f_pass_val < 0.01, 0.01, f_pass_val)
     f_pass_val <- ifelse(f_pass_val < 1 & f_pass_val > 0.99, 0.99, f_pass_val)
+    f_pass_val <- as.numeric(f_pass_val)
     
     f_fail_val <- 1 - report_tbl$f_pass
     f_fail_val <- ifelse(f_fail_val > 0 & f_fail_val < 0.01, 0.01, f_fail_val)
     f_fail_val <- ifelse(f_fail_val < 1 & f_fail_val > 0.99, 0.99, f_fail_val)
+    f_fail_val <- as.numeric(f_fail_val)
 
     gt_agent_report <- 
       report_tbl %>%
@@ -317,7 +319,8 @@ get_agent_report <- function(agent,
           eval == "OK" ~ "&#10004;",
           eval == "W + E" ~ "&#9888; + &#128165;",
           eval == "WARNING" ~ "&#9888;",
-          eval == "ERROR" ~ "&#128165;"
+          eval == "ERROR" ~ "&#128165;",
+          is.na(eval) ~ "&mdash;"
         )
       ) %>%
       dplyr::mutate(
@@ -370,9 +373,18 @@ get_agent_report <- function(agent,
         table.font.size = gt::pct(90 * scale),
         row.striping.include_table_body = FALSE
       ) %>%
-      gt::cols_align(align = "center", columns = gt::vars(precon, eval, W, S, N, extract)) %>%
-      gt::cols_align(align = "center", columns = gt::vars(f_pass, f_fail)) %>%
-      gt::fmt_number(columns = gt::vars(units, n_pass, n_fail, f_pass, f_fail), decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE) %>%
+      gt::cols_align(
+        align = "center",
+        columns = gt::vars(precon, eval, W, S, N, extract)
+      ) %>%
+      gt::cols_align(
+        align = "center",
+        columns = gt::vars(f_pass, f_fail)
+      ) %>%
+      gt::fmt_number(
+        columns = gt::vars(units, n_pass, n_fail, f_pass, f_fail),
+        decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE
+      ) %>%
       gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2) %>%
       gt::fmt_markdown(columns = gt::vars(columns, values, eval, precon, W, S, N)) %>%
       gt::fmt_missing(columns = gt::vars(units, values, extract)) %>%

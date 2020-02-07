@@ -50,6 +50,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$validation_set$preconditions, "list")
   expect_is(agent$validation_set$actions, "list")
   expect_is(agent$validation_set$brief, "character")
+  expect_is(agent$validation_set$active, "logical")
   expect_is(agent$validation_set$eval_error, "logical")
   expect_is(agent$validation_set$eval_warning, "logical")
   expect_is(agent$validation_set$capture_stack, "list")

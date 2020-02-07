@@ -94,7 +94,8 @@ col_vals_not_in_set <- function(x,
                                 set,
                                 preconditions = NULL,
                                 actions = NULL,
-                                brief = NULL) {
+                                brief = NULL,
+                                active = TRUE) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -110,7 +111,8 @@ col_vals_not_in_set <- function(x,
         set = set,
         preconditions = preconditions,
         brief = brief,
-        actions = prime_actions(actions)
+        actions = prime_actions(actions),
+        active = active
       ) %>% interrogate()
     
     return(x)
@@ -141,7 +143,8 @@ col_vals_not_in_set <- function(x,
         values = set,
         preconditions = preconditions,
         actions = actions,
-        brief = brief
+        brief = brief,
+        active = active
       )
   }
   

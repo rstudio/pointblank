@@ -68,7 +68,8 @@
 col_exists <- function(x,
                        columns,
                        actions = NULL,
-                       brief = NULL) {
+                       brief = NULL,
+                       active = TRUE) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -107,7 +108,8 @@ col_exists <- function(x,
         column = column,
         preconditions = NULL,
         actions = actions,
-        brief = brief
+        brief = brief,
+        active = active
       )
   }
 

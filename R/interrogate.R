@@ -73,6 +73,11 @@ interrogate <- function(agent,
   validation_steps <- unique(agent$validation_set$i)
   
   for (i in validation_steps) {
+
+    # Skip the validation step if `active = FALSE`
+    if (!agent$validation_set[[i, "active"]]) {
+      next
+    }
     
     # Get the starting time for the validation step
     validation_start_time <- Sys.time()
@@ -203,6 +208,8 @@ interrogate <- function(agent,
     agent$validation_set$proc_duration_s[i] <- time_diff_s
   }
   
+  # nocov start
+  
   # Generate gt reporting objects if the gt package is available
   if (requireNamespace("gt", quietly = TRUE) & agent$embed_report) {
     
@@ -215,6 +222,8 @@ interrogate <- function(agent,
         report_object_email = gt_agent_report_email
       )
   }
+  
+  # nocov end
   
   # Perform any necessary end actions
   perform_end_action(agent)

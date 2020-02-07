@@ -5,7 +5,8 @@ create_validation_step <- function(agent,
                                    na_pass = NULL,
                                    preconditions = NULL,
                                    actions = NULL,
-                                   brief = NULL) {
+                                   brief = NULL,
+                                   active = NULL) {
   
   # Get the next step number (i)
   if (nrow(agent$validation_set) == 0) {
@@ -25,6 +26,7 @@ create_validation_step <- function(agent,
       preconditions = ifelse(is.null(preconditions), list(NULL), list(preconditions)),
       actions = ifelse(is.null(actions), list(NULL), list(actions)),
       brief = ifelse(is.null(brief), NA_character_, as.character(brief)),
+      active = ifelse(is.null(active), NA, active),
       eval_error = NA,
       eval_warning = NA,
       capture_stack = list(NULL),

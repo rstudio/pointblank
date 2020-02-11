@@ -349,7 +349,9 @@ get_agent_report <- function(agent,
         fn = function(x) {
           dplyr::case_when(
             x == "NA NA"  ~ "&mdash;",
-            TRUE ~ paste0("<code>", x, "</code>")
+            TRUE ~ x %>%
+              tidy_gsub(" ", "</code><br><code>") %>%
+              paste0("<code>", ., "</code>")
           )
         }
       ) %>%

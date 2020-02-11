@@ -16,7 +16,7 @@ agent <- agent %>% interrogate()
 report <- agent %>% get_agent_report()
 report
 
-extract_3 <- agent_intel %>% get_data_extracts(i = 3)
+extract_3 <- agent %>% get_data_extracts(i = 3)
 extract_3
 
 agent %>% get_sundered_data()

@@ -27,6 +27,6 @@
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 4-1
+#' 5-1
 #'
 "small_table"

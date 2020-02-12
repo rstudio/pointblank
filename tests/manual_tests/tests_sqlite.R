@@ -39,4 +39,4 @@ agent <-
   ) %>%
   interrogate()
 
-get_agent_report(agent)
+agent

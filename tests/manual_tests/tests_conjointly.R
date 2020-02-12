@@ -24,7 +24,7 @@ agent <-
   ) %>%
   interrogate()
 
-get_agent_report(agent)
+agent
 
 get_data_extracts(agent)
 
@@ -40,5 +40,4 @@ create_agent(tbl = tbl) %>%
   conjointly(
     ~ col_vals_not_null(., columns = vars(a, b, c)),
   ) %>%
-  interrogate() %>%
-  get_agent_report()
+  interrogate()

@@ -31,9 +31,12 @@ step function
 \item columns: the names of the columns used in the validation step
 \item values: the values used in the validation step, where applicable; for
 a \code{conjointly()} validation step, this is a listing of all sub-validations
-\item regex: the regex used for a \code{col_vals_regex()} validation step
-\item preconds: a logical value indicating whether any preconditions where
-applied before interrogation
+\item precon: indicates whether any there are any preconditions to apply
+before interrogation and, if so, the number of statements used
+\item active: a logical value that indicates whether a validation step is
+set to 'active' during an interrogation
+\item eval: a character value that denotes the result of each validation
+step functions' evaluation during interrogation
 \item units: the total number of validation units for the validation step
 \item n_pass: the number of validation units that received a \emph{pass}
 \item f_pass: the fraction of validation units that received a \emph{pass}
@@ -43,8 +46,8 @@ applied before interrogation
 \item extract: a logical value that indicates whether a data extract is
 available for the validation step
 }
-If the \strong{gt} package is installed (and if \code{display_table = TRUE}) then a
-\strong{gt} table will be displayed with the same information.
+If the \strong{gt} package is installed (and if \code{display_table = TRUE}, which is
+the default) then a \strong{gt} table will be displayed with the same information.
 }
 \section{Function ID}{
 

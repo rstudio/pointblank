@@ -1,4 +1,4 @@
-#' A small table that useful for testing
+#' A small table that is useful for testing
 #'
 #' This is a small table with a few different types of columns. It's probably
 #' just useful when testing the functions from **pointblank**. Rows 9 and 10 are

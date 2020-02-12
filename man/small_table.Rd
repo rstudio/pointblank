@@ -3,7 +3,7 @@
 \docType{data}
 \name{small_table}
 \alias{small_table}
-\title{A small table that useful for testing}
+\title{A small table that is useful for testing}
 \format{A tibble with 13 rows and 8 variables:
 \describe{
 \item{date_time}{A date-time column (of the \code{POSIXct} class) with dates that

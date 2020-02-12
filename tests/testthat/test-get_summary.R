@@ -15,7 +15,7 @@ test_that("Getting an agent report is possible", {
   # Expect that the report has specific column names
   expect_equivalent(
     colnames(report),
-    c("i", "type", "columns", "values", "precon", "eval",
+    c("i", "type", "columns", "values", "precon", "active", "eval",
       "units", "n_pass", "f_pass", "W", "S", "N", "extract")
   )
   

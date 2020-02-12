@@ -28,24 +28,26 @@ validation checks.
 <img src="man/figures/data_quality_reporting_workflow.png">
 
 The first workflow, *data quality reporting* allows for the easy
-creation of a DQ analysis report. This is most useful in a
+creation of a data quality analysis report. This is most useful in a
 non-interactive mode where data quality for database tables and on-disk
 data files must be periodically checked. The reporting component
 (through a **pointblank** agent) allows for the collection of detailed
 validation measures for each validation step, the optional extraction of
 data rows that failed validation (with options on limits), and custom
-actions that are triggered by exceeding threshold failure rates.
+functions that are invoked by exceeding set threshold failure rates.
+Want to email the report regularly (or, only if certain conditions are
+met)? Yep, you can do all that.
 
 <hr>
 
 <img src="man/figures/pipeline_based_data_validations.png">
 
 The second workflow, *pipeline-based data validations* gives us a
-simpler validation scheme that is valuable for data validation checks
+different validation scheme that is valuable for data validation checks
 during an ETL process. With **pointblank**’s validation step functions,
-we directly operate on data and trigger warnings, raise errors, or write
-out logs when exceeding specified failure thresholds. We can perform
-checks on import of the data, and at key points during the
+we can directly operate on data and trigger warnings, raise errors, or
+write out logs when exceeding specified failure thresholds. It’s a cinch
+to perform checks on import of the data and at key points during the
 transformation process, perhaps stopping everything if things are
 exceptionally bad with regard to data quality.
 

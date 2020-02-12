@@ -8,8 +8,10 @@
 }
 \arguments{
 \item{x}{An agent object of class \code{ptblank_agent}.}
+
+\item{...}{Any additional parameters.}
 }
 \description{
-This function will allow the agent to provide a short message in the console.
+This function will allow the agent to print a useful report.
 }
 \keyword{internal}

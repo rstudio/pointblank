@@ -78,7 +78,7 @@ Beyond this simple example, there are many functions available in **pointblank**
 
 <p align="center"><img src="man/figures/pointblank_function_reference.png" width="100%"></p>
 
-Want to try this out? The **pointblank** package is available on CRAN:
+Want to try this out? The **pointblank** package is available on **CRAN**:
 
 ```{r install_cran, eval=FALSE}
 install.packages("pointblank")

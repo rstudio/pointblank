@@ -98,7 +98,8 @@ Beyond this simple example, there are many functions available in
 
 </p>
 
-Want to try this out? The **pointblank** package is available on CRAN:
+Want to try this out? The **pointblank** package is available on
+**CRAN**:
 
 ``` r
 install.packages("pointblank")

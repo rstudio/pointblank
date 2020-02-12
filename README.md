@@ -18,9 +18,10 @@ with data in local data tables and with data in databases.
 The two dominant workflows that **pointblank** enables are *data quality
 reporting* and *pipeline-based data validations*. Both workflows make
 use of a large collection of simple validation step functions (e.g., are
-values in a specific column greater than a fixed, numerical value?),
-and, both allow for stepwise, temporary mutation/alteration of the input
-table to enable more sophisticated validation checks.
+values in a specific column greater than those in another column or some
+fixed value?), and, both allow for stepwise, temporary
+mutation/alteration of the input table to enable more sophisticated
+validation checks.
 
 <hr>
 
@@ -83,7 +84,7 @@ agent <-
 Because an *agent* was used, we can get a report from it.
 
 ``` r
-get_agent_report(agent)
+agent
 ```
 
 <img src="man/figures/agent_report.png">
@@ -97,8 +98,14 @@ Beyond this simple example, there are many functions available in
 
 </p>
 
-Want to try this out? You can install the development version of
-**pointblank** from **GitHub**:
+Want to try this out? The **pointblank** package is available on CRAN:
+
+``` r
+install.packages("pointblank")
+```
+
+You can also install the development version of **pointblank** from
+**GitHub**:
 
 ``` r
 remotes::install_github("rich-iannone/pointblank")

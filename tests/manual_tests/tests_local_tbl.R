@@ -13,8 +13,7 @@ agent <-
 
 agent <- agent %>% interrogate()
 
-report <- agent %>% get_agent_report()
-report
+agent
 
 extract_3 <- agent %>% get_data_extracts(i = 3)
 extract_3

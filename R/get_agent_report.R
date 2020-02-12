@@ -65,7 +65,7 @@
 get_agent_report <- function(agent,
                              display_table = TRUE,
                              ...) {
-  
+
   validation_set <- agent$validation_set
   
   agent_name <- agent$name
@@ -150,6 +150,7 @@ get_agent_report <- function(agent,
       columns = columns,
       values = values,
       precon = precon_count,
+      active = validation_set$active,
       eval = eval,
       units = validation_set$n,
       n_pass = validation_set$n_passed,
@@ -384,7 +385,8 @@ get_agent_report <- function(agent,
       ) %>%
       dplyr::select(
         i, type, columns, values, precon, eval_sym, units,
-        n_pass, f_pass, n_fail, f_fail, W, S, N, extract, W_val, S_val, N_val, eval
+        n_pass, f_pass, n_fail, f_fail, W, S, N, extract,
+        W_val, S_val, N_val, eval, active
       ) %>%
       gt::gt() %>%
       gt::cols_merge(columns = gt::vars(n_pass, f_pass), hide_columns = gt::vars(f_pass)) %>%
@@ -435,7 +437,7 @@ get_agent_report <- function(agent,
       gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2) %>%
       gt::fmt_markdown(columns = gt::vars(columns, values, eval_sym, precon, W, S, N)) %>%
       gt::fmt_missing(columns = gt::vars(columns, values, units, extract)) %>%
-      gt::cols_hide(columns = gt::vars(W_val, S_val, N_val, eval)) %>%
+      gt::cols_hide(columns = gt::vars(W_val, S_val, N_val, eval, active)) %>%
       gt::text_transform(
         locations = gt::cells_body(columns = gt::vars(type)),
         fn = function(x) {
@@ -464,7 +466,17 @@ get_agent_report <- function(agent,
         locations = gt::cells_body(columns = gt::vars(i))
       ) %>%
       gt::tab_style(
-        style = gt::cell_fill(color = "#FFC1C1", alpha = 0.7),
+        style = list(
+          gt::cell_fill(color = "#F2F2F2", alpha = 0.75),
+          gt::cell_text(color = "#8B8B8B")
+        ),
+        locations = gt::cells_body(
+          columns = TRUE,
+          rows = active == FALSE
+        )
+      ) %>%
+      gt::tab_style(
+        style = gt::cell_fill(color = "#FFC1C1", alpha = 0.35),
         locations = gt::cells_body(
           columns = TRUE,
           rows = eval == "ERROR"

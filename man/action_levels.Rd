@@ -2,45 +2,62 @@
 % Please edit documentation in R/action_levels.R
 \name{action_levels}
 \alias{action_levels}
-\title{Set action levels for reacting to exceeding thresholds}
+\title{Set action levels: failure thresholds and functions to invoke}
 \usage{
 action_levels(warn_at = NULL, stop_at = NULL, notify_at = NULL, fns = NULL)
 }
 \arguments{
 \item{warn_at, stop_at, notify_at}{The threshold number or fraction of
 validation units that can provide a \emph{fail} result before entering the
-\code{warn}, \code{stop}, or \code{notify} states.}
+\code{warn}, \code{stop}, or \code{notify} failure states. If this a decimal value between
+\code{0} and \code{1} then it's a proportional failure threshold (e.g., \code{0.15}
+indicates that if 15\% percent of the validation units are found to \emph{fail},
+then the designated failure state is entered). Absolute values starting
+from \code{1} can be used instead, and this constitutes an absolute failure
+threshold (e.g., \code{10} means that if 10 of the validation units are found to
+\emph{fail}, the failure state is entered).}
 
-\item{fns}{A named list of functions that can be used with each action type.
-The syntax for this list involves using names from the set of \code{warn},
-\code{stop}, and \code{notify}. The functions corresponding to the states are
-provided as formulas (e.g., \code{list(warn = ~ warning("Too many failures."))}.
-A series of expressions for each named state can be used by enclosing the
-set of statements with \code{{ }}.}
+\item{fns}{A named list of functions that is to be paired with the
+appropriate failure states. The syntax for this list involves using failure
+state names from the set of \code{warn}, \code{stop}, and \code{notify}. The functions
+corresponding to the failure states are provided as formulas (e.g.,
+\code{list(warn = ~ warning("Too many failures."))}. A series of expressions for
+each named state can be used by enclosing the set of statements with \code{{ }}.}
 }
 \description{
-This helper function works with the \code{actions} argument that is present in
-every validation step function. With it, we can provide threshold \emph{fail}
-levels for any combination of \code{warn}, \code{stop}, or \code{notify} states. We can
-react to any entrance of a state by supplying corresponding functions to the
-\code{fns} argument. They will undergo evaluation at the time when the matching
-state is entered.
+This helper function works with the \code{actions} argument that is present in the
+\code{\link[=create_agent]{create_agent()}} function and in every validation step function. With it, we
+can provide threshold \emph{fail} levels for any combination of \code{warn}, \code{stop}, or
+\code{notify} states. We can react to any entrance of a state by supplying
+corresponding functions to the \code{fns} argument. They will undergo evaluation
+at the time when the matching state is entered. If provided to
+\code{\link[=create_agent]{create_agent()}} then the policies will be applied to every validation step,
+acting as a default for the validation as a whole. Calls of \code{action_levels()}
+could also be applied directly to any validation step and this will act as an
+override if set also in \code{\link[=create_agent]{create_agent()}}. Usage of \code{action_levels()} is
+required to have any useful side effects (i.e., warnings, throwing errors) in
+the case of validation step functions operating directly on data.
 }
 \details{
 The output of the \code{action_levels()} call in \code{actions} will be interpreted
-slightly different if using an \emph{agent} or using a validation step function
-directly on a data table. For convenience, when working directly on data
-any values supplied to \code{warn_at} or \code{stop_at} will be automatically given a
-stock \code{warning()} or \code{stop()} function. If you were to supply those manually
-then the stock functions would be overridden. In the that interactive data
-case there is no automatic reaction function given for the \code{notify} state (as
-that state is less commonly used and should instead be intended for custom
-reporting functions).
+slightly different if using an \emph{agent} or using validation step functions
+directly on a data table. For convenience when working directly on data, any
+values supplied to \code{warn_at} or \code{stop_at} will be automatically given a stock
+\code{warning()} or \code{stop()} function. If you were to supply those manually then
+the stock functions would be overridden. In this interactive data case there
+is no stock function given for the \code{notify_at} (as the \code{notify} failure state
+is less commonly used in this workflow and should instead be reserved for
+custom reporting functions).
 
 When using an \emph{agent}, we often opt to not use any functions in \code{fns} as the
-\code{warn}, \code{stop}, and \code{notify} states will be reported on when using
+\code{warn}, \code{stop}, and \code{notify} failure states will be reported on when using
 \code{create_agent_report()} (and, usually that's sufficient).
 }
+\section{Function ID}{
+
+4-1
+}
+
 \examples{
 library(dplyr)
 
@@ -82,5 +99,6 @@ suppressWarnings(
   tbl \%>\%
     col_vals_gt(vars(a), 5, actions = al)
 )
-  
+
 }
+\concept{Helper Functions}

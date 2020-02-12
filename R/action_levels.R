@@ -1,35 +1,47 @@
-#' Set action levels for reacting to exceeding thresholds
+#' Set action levels: failure thresholds and functions to invoke
 #' 
-#' This helper function works with the `actions` argument that is present in
-#' every validation step function. With it, we can provide threshold *fail*
-#' levels for any combination of `warn`, `stop`, or `notify` states. We can
-#' react to any entrance of a state by supplying corresponding functions to the
-#' `fns` argument. They will undergo evaluation at the time when the matching
-#' state is entered.
-#' 
+#' This helper function works with the `actions` argument that is present in the
+#' [create_agent()] function and in every validation step function. With it, we
+#' can provide threshold *fail* levels for any combination of `warn`, `stop`, or
+#' `notify` states. We can react to any entrance of a state by supplying
+#' corresponding functions to the `fns` argument. They will undergo evaluation
+#' at the time when the matching state is entered. If provided to
+#' [create_agent()] then the policies will be applied to every validation step,
+#' acting as a default for the validation as a whole. Calls of `action_levels()`
+#' could also be applied directly to any validation step and this will act as an
+#' override if set also in [create_agent()]. Usage of `action_levels()` is
+#' required to have any useful side effects (i.e., warnings, throwing errors) in
+#' the case of validation step functions operating directly on data.
+#'
 #' The output of the `action_levels()` call in `actions` will be interpreted
-#' slightly different if using an *agent* or using a validation step function
-#' directly on a data table. For convenience, when working directly on data 
-#' any values supplied to `warn_at` or `stop_at` will be automatically given a
-#' stock `warning()` or `stop()` function. If you were to supply those manually
-#' then the stock functions would be overridden. In the that interactive data
-#' case there is no automatic reaction function given for the `notify` state (as
-#' that state is less commonly used and should instead be intended for custom
-#' reporting functions).
+#' slightly different if using an *agent* or using validation step functions
+#' directly on a data table. For convenience when working directly on data, any
+#' values supplied to `warn_at` or `stop_at` will be automatically given a stock
+#' `warning()` or `stop()` function. If you were to supply those manually then
+#' the stock functions would be overridden. In this interactive data case there
+#' is no stock function given for the `notify_at` (as the `notify` failure state
+#' is less commonly used in this workflow and should instead be reserved for
+#' custom reporting functions).
 #' 
 #' When using an *agent*, we often opt to not use any functions in `fns` as the
-#' `warn`, `stop`, and `notify` states will be reported on when using
+#' `warn`, `stop`, and `notify` failure states will be reported on when using
 #' `create_agent_report()` (and, usually that's sufficient).
 #' 
 #' @param warn_at,stop_at,notify_at The threshold number or fraction of
 #'   validation units that can provide a *fail* result before entering the
-#'   `warn`, `stop`, or `notify` states.
-#' @param fns A named list of functions that can be used with each action type.
-#'   The syntax for this list involves using names from the set of `warn`,
-#'   `stop`, and `notify`. The functions corresponding to the states are
-#'   provided as formulas (e.g., `list(warn = ~ warning("Too many failures."))`.
-#'   A series of expressions for each named state can be used by enclosing the
-#'   set of statements with `{ }`.
+#'   `warn`, `stop`, or `notify` failure states. If this a decimal value between
+#'   `0` and `1` then it's a proportional failure threshold (e.g., `0.15`
+#'   indicates that if 15% percent of the validation units are found to *fail*,
+#'   then the designated failure state is entered). Absolute values starting
+#'   from `1` can be used instead, and this constitutes an absolute failure
+#'   threshold (e.g., `10` means that if 10 of the validation units are found to
+#'   *fail*, the failure state is entered).
+#' @param fns A named list of functions that is to be paired with the
+#'   appropriate failure states. The syntax for this list involves using failure
+#'   state names from the set of `warn`, `stop`, and `notify`. The functions
+#'   corresponding to the failure states are provided as formulas (e.g.,
+#'   `list(warn = ~ warning("Too many failures."))`. A series of expressions for
+#'   each named state can be used by enclosing the set of statements with `{ }`.
 #' 
 #' @examples 
 #' library(dplyr)
@@ -72,6 +84,10 @@
 #'   tbl %>%
 #'     col_vals_gt(vars(a), 5, actions = al)
 #' )
+#' 
+#' @family Helper Functions
+#' @section Function ID:
+#' 4-1
 #'   
 #' @export
 action_levels <- function(warn_at = NULL,

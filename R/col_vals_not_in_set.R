@@ -1,4 +1,4 @@
-#' Are data not part of a specific set of values?
+#' Are data not part of a specified set of values?
 #'
 #' The `col_vals_not_in_set()` validation step function checks whether column
 #' values (in any number of specified `columns`) *are not part* of a specified

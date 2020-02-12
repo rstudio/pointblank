@@ -1,4 +1,4 @@
-#' Are column data part of a specific set of values?
+#' Are column data part of a specified set of values?
 #'
 #' The `col_vals_in_set()` validation step function checks whether column values
 #' (in any number of specified `columns`) are part of a specified `set` of

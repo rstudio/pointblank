@@ -1,4 +1,4 @@
-#' Are column data less than or equal to a specific value?
+#' Are column data less than or equal to a specified value?
 #'
 #' The `col_vals_lte()` validation step function checks whether column values
 #' (in any number of specified `columns`) are *less than or equal to* a

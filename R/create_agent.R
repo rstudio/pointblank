@@ -56,9 +56,6 @@
 #'   col_vals_gt(vars(a), 4) %>%
 #'   interrogate()
 #'  
-#' # Get a report from the agent
-#' agent
-#'  
 #' @family Create an Agent
 #' @section Function ID:
 #' 1-1

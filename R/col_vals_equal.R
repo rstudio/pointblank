@@ -1,4 +1,4 @@
-#' Are column data equal to a specific value?
+#' Are column data equal to a specified value?
 #' 
 #' The `col_vals_equal()` validation step function checks whether column values
 #' (in any number of specified `columns`) are equal to a specified `value`. The

@@ -49,11 +49,6 @@
 #'   create_agent(tbl = tbl) %>%
 #'   col_vals_gt(vars(a), 5) %>%
 #'   interrogate()
-#'   
-#' # Get a tibble-based report from the
-#' # agent by using `get_agent_report()`
-#' agent %>%
-#'   get_agent_report(display_table = FALSE)
 #' 
 #' @family Interrogate and Get Info
 #' @section Function ID:

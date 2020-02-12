@@ -1,4 +1,4 @@
-#' Are column data greater than or equal to a specific value?
+#' Are column data greater than or equal to a specified value?
 #'
 #' The `col_vals_gte()` validation step function checks whether column values
 #' (in any number of specified `columns`) are *greater than or equal to* a

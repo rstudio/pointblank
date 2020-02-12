@@ -371,6 +371,9 @@ get_agent_report <- function(agent,
         n_fail = units - n_pass,
         f_pass = f_pass_val,
         f_fail = f_fail_val,
+        W_val = W,
+        S_val = S,
+        N_val = N,
         W = W_upd,
         S = S_upd,
         N = N_upd,
@@ -378,7 +381,7 @@ get_agent_report <- function(agent,
       ) %>%
       dplyr::select(
         i, type, columns, values, precon, eval, units,
-        n_pass, f_pass, n_fail, f_fail, W, S, N, extract
+        n_pass, f_pass, n_fail, f_fail, W, S, N, extract, W_val, S_val, N_val
       ) %>%
       gt::gt() %>%
       gt::cols_merge(columns = gt::vars(n_pass, f_pass), hide_columns = gt::vars(f_pass)) %>%
@@ -429,6 +432,7 @@ get_agent_report <- function(agent,
       gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2) %>%
       gt::fmt_markdown(columns = gt::vars(columns, values, eval, precon, W, S, N)) %>%
       gt::fmt_missing(columns = gt::vars(columns, values, units, extract)) %>%
+      gt::cols_hide(columns = gt::vars(W_val, S_val, N_val)) %>%
       gt::text_transform(
         locations = gt::cells_body(columns = vars(type)),
         fn = function(x) {
@@ -455,8 +459,51 @@ get_agent_report <- function(agent,
       gt::tab_style(
         style = gt::cell_text(weight = "bold", color = "#666666"),
         locations = gt::cells_body(columns = vars(i))
+      ) %>%
+      gt::tab_style(
+        style = gt::cell_borders(
+          sides = "left",
+          color = "#4CA64C",
+          weight = gt::px(7)
+        ),
+        locations = gt::cells_body(
+          columns = vars(i),
+          rows = units == n_pass
+        )
+      ) %>%
+      gt::tab_style(
+        style = gt::cell_borders(
+          sides = "left",
+          color = "#FFBF00",
+          weight = gt::px(7)
+        ),
+        locations = gt::cells_body(
+          columns = vars(i),
+          rows = W_val
+        )
+      ) %>%
+      gt::tab_style(
+        style = gt::cell_borders(
+          sides = "left",
+          color = "#CF142B",
+          weight = gt::px(7)
+        ),
+        locations = gt::cells_body(
+          columns = vars(i),
+          rows = S_val
+        )
+      ) %>%
+      gt::tab_style(
+        style = gt::cell_borders(
+          sides = "left",
+          color = "#4CA64C66",
+          weight = gt::px(5)
+        ),
+        locations = gt::cells_body(
+          columns = vars(i),
+          rows = units != n_pass & (W_val == FALSE & S_val == FALSE)
+        )
       )
-    
     
     if (email_table) {
 

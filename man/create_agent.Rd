@@ -80,8 +80,5 @@ agent <-
   col_vals_gt(vars(a), 4) \%>\%
   interrogate()
  
-# Get a report from the agent
-agent
- 
 }
 \concept{Create an Agent}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_equal.R
 \name{col_vals_equal}
 \alias{col_vals_equal}
-\title{Are column data equal to a specific value?}
+\title{Are column data equal to a specified value?}
 \usage{
 col_vals_equal(
   x,

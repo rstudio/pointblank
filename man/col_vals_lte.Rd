@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_lte.R
 \name{col_vals_lte}
 \alias{col_vals_lte}
-\title{Are column data less than or equal to a specific value?}
+\title{Are column data less than or equal to a specified value?}
 \usage{
 col_vals_lte(
   x,

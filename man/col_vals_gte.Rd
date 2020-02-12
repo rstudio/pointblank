@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_gte.R
 \name{col_vals_gte}
 \alias{col_vals_gte}
-\title{Are column data greater than or equal to a specific value?}
+\title{Are column data greater than or equal to a specified value?}
 \usage{
 col_vals_gte(
   x,

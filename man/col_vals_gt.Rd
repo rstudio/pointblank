@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_gt.R
 \name{col_vals_gt}
 \alias{col_vals_gt}
-\title{Are column data greater than a specific value?}
+\title{Are column data greater than a specified value?}
 \usage{
 col_vals_gt(
   x,

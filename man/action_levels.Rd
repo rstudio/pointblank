@@ -69,8 +69,8 @@ agent <-
 # The report from the agent will show
 # that the `warn` state has been entered
 # for the first and only validation step.
-agent \%>\%
-  get_agent_report(display_table = FALSE)
+
+# agent
   
 # In the context of using validation
 # stop functions directly on data, their

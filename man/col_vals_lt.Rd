@@ -2,7 +2,7 @@
 % Please edit documentation in R/col_vals_lt.R
 \name{col_vals_lt}
 \alias{col_vals_lt}
-\title{Are column data less than a specific value?}
+\title{Are column data less than a specified value?}
 \usage{
 col_vals_lt(
   x,

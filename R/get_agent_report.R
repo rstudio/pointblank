@@ -554,7 +554,7 @@ get_agent_report <- function(agent,
           )
         ) %>%
         gt::tab_header(
-          title = md(
+          title = gt::md(
             paste0(
               "<div>",
               "<span style=\"float: left;\">Pointblank Validation Plan</span>",

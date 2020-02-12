@@ -11,9 +11,12 @@
 #' \item columns: the names of the columns used in the validation step
 #' \item values: the values used in the validation step, where applicable; for
 #' a `conjointly()` validation step, this is a listing of all sub-validations
-#' \item regex: the regex used for a `col_vals_regex()` validation step
-#' \item preconds: a logical value indicating whether any preconditions where
-#' applied before interrogation
+#' \item precon: indicates whether any there are any preconditions to apply
+#' before interrogation and, if so, the number of statements used
+#' \item active: a logical value that indicates whether a validation step is
+#' set to 'active' during an interrogation
+#' \item eval: a character value that denotes the result of each validation
+#' step functions' evaluation during interrogation
 #' \item units: the total number of validation units for the validation step
 #' \item n_pass: the number of validation units that received a *pass*
 #' \item f_pass: the fraction of validation units that received a *pass*
@@ -23,8 +26,8 @@
 #' \item extract: a logical value that indicates whether a data extract is
 #' available for the validation step
 #' }
-#' If the **gt** package is installed (and if `display_table = TRUE`) then a
-#' **gt** table will be displayed with the same information.
+#' If the **gt** package is installed (and if `display_table = TRUE`, which is
+#' the default) then a **gt** table will be displayed with the same information.
 #' 
 #' @param agent An agent object of class `ptblank_agent`.
 #' @param display_table Should a display table be generated? If `TRUE` (the

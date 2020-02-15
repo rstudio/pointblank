@@ -1,5 +1,3 @@
-# nocov start
-
 #' Send email at a step or at the end of an interrogation
 #' 
 #' The `email_blast()` function is useful for sending an email message that
@@ -27,6 +25,10 @@
 #' @param send_condition An expression that should evaluate to a logical vector
 #'   of length 1. If `TRUE` then the email will be sent, if `FALSE` then that
 #'   won't happen.
+#'   
+#' @family Emailing
+#' @section Function ID:
+#' 3-1
 #' 
 #' @export 
 email_blast <- function(x,
@@ -39,6 +41,8 @@ email_blast <- function(x,
                         msg_footer = stock_msg_footer(),
                         send_condition = ~TRUE %in% x$notify) {
 
+  # nocov start
+  
   # Evaluate condition for sending email
   condition_result <- rlang::f_rhs(send_condition) %>% rlang::eval_tidy()
   
@@ -102,6 +106,10 @@ email_blast <- function(x,
 #'   
 #' @return A **blastula** `email_message` object.
 #' 
+#' @family Emailing
+#' @section Function ID:
+#' 3-2
+#' 
 #' @export 
 email_blast_preview <- function(x,
                                 msg_header = NULL,
@@ -140,21 +148,19 @@ check_msg_components_all_null <- function(msg_header, msg_body, msg_footer) {
   }
 }
 
-# nocov end
-
-
-#' Provide simple email message body components
+#' Provide simple email message body components: body
 #' 
-#' The `stock_msg_body()` and `stock_msg_footer()` functions simply provide some
-#' stock text for an email message sent via [email_blast()] or previewed through
+#' The `stock_msg_body()` function simply provides some stock text for an email
+#' message sent via [email_blast()] or previewed through
 #' [email_blast_preview()].
+#'
+#' @return Text suitable for the `msg_body` arguments of [email_blast()] and
+#'   [email_blast_preview()].
 #' 
-#' @name stock_msg_parts
-#' @return Text suitable for the `msg_body` and `msg_footer` arguments of
-#' [email_blast()] and [email_blast_preview()].
-NULL
-
-#' @rdname stock_msg_parts
+#' @family Emailing
+#' @section Function ID:
+#' 3-3
+#' 
 #' @export
 stock_msg_body <- function() {
   "
@@ -164,7 +170,19 @@ Here is **pointblank** validation report that was initiated at {x$time}.
 "
 }
 
-#' @rdname stock_msg_parts
+#' Provide simple email message body components: footer
+#' 
+#' The `stock_msg_footer()` functions simply provide some stock text for an
+#' email message sent via [email_blast()] or previewed through
+#' [email_blast_preview()].
+#'
+#' @return Text suitable for the `msg_footer` argument of [email_blast()] and
+#'   [email_blast_preview()].
+#' 
+#' @family Emailing
+#' @section Function ID:
+#' 3-4
+#' 
 #' @export
 stock_msg_footer <- function() {
   "
@@ -173,3 +191,6 @@ Validation performed via the `pointblank` **R** package.
 [Information and package documentation](https://rich-iannone.github.io/pointblank/)
 "
 }
+
+# nocov end
+

@@ -30,3 +30,32 @@
 #' 5-1
 #'
 "small_table"
+
+#' A SQLite version of the `small_table` dataset
+#' 
+#' The `small_table_sqlite()` function creates a SQLite, `tbl_dbi` version of
+#' the `small_table` dataset. A requirement is the availability of the **DBI**
+#' and **RSQLite** packages. These packages can be installed by using 
+#' `install.packages("DBI")` and `install.packages("RSQLite")`.
+#' 
+#' @examples
+#' # Use `small_table_sqlite()` to
+#' # create a SQLite version of the
+#' # `small_table` table
+#' #
+#' # small_table_sqlite <- small_table_sqlite()
+#' 
+#' @export
+small_table_sqlite <- function() {
+
+  if (!requireNamespace("DBI", quietly = TRUE) &&
+      !requireNamespace("RSQLite", quietly = TRUE)) {
+    
+    stop("Creating the SQLite table object requires both the DBI and RSQLite packages:\n",
+         " * Install them with `install.packages(\"DBI\")` and `install.packages(\"RSQLite\")`.",
+         call. = FALSE)
+  }
+  
+  con <- DBI::dbConnect(RSQLite::SQLite(), dbname = "inst/small_table.db")
+  dplyr::tbl(con, "small_table")
+}

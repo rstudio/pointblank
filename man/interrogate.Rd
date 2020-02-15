@@ -52,7 +52,7 @@ how the interrogation went down.
 }
 \section{Function ID}{
 
-3-1
+4-1
 }
 
 \examples{
@@ -77,11 +77,4 @@ agent <-
   interrogate()
 
 }
-\seealso{
-Other Interrogate and Get Info: 
-\code{\link{all_passed}()},
-\code{\link{get_agent_report}()},
-\code{\link{get_data_extracts}()},
-\code{\link{get_sundered_data}()}
-}
-\concept{Interrogate and Get Info}
+\concept{Interrogate}

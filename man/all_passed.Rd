@@ -20,7 +20,7 @@ levels? Using the \code{all_passed()} function will let us know whether that's
 }
 \section{Function ID}{
 
-3-2
+5-5
 }
 
 \examples{
@@ -44,10 +44,10 @@ all_passed(agent)
 
 }
 \seealso{
-Other Interrogate and Get Info: 
+Other Post-interrogation: 
 \code{\link{get_agent_report}()},
+\code{\link{get_agent_x_list}()},
 \code{\link{get_data_extracts}()},
-\code{\link{get_sundered_data}()},
-\code{\link{interrogate}()}
+\code{\link{get_sundered_data}()}
 }
-\concept{Interrogate and Get Info}
+\concept{Post-interrogation}

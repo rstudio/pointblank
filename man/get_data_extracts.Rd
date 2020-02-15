@@ -29,7 +29,7 @@ call).
 }
 \section{Function ID}{
 
-3-4
+5-3
 }
 
 \examples{
@@ -58,10 +58,10 @@ agent \%>\% get_data_extracts(i = 1)
 
 }
 \seealso{
-Other Interrogate and Get Info: 
+Other Post-interrogation: 
 \code{\link{all_passed}()},
 \code{\link{get_agent_report}()},
-\code{\link{get_sundered_data}()},
-\code{\link{interrogate}()}
+\code{\link{get_agent_x_list}()},
+\code{\link{get_sundered_data}()}
 }
-\concept{Interrogate and Get Info}
+\concept{Post-interrogation}

@@ -30,3 +30,16 @@ can get the complete information by leaving \code{i} unspecified. The x-list is
 indeed an R \code{list} object that contains a veritable cornucopia of
 information.
 }
+\section{Function ID}{
+
+5-2
+}
+
+\seealso{
+Other Post-interrogation: 
+\code{\link{all_passed}()},
+\code{\link{get_agent_report}()},
+\code{\link{get_data_extracts}()},
+\code{\link{get_sundered_data}()}
+}
+\concept{Post-interrogation}

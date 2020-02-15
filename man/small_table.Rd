@@ -27,7 +27,7 @@ exact duplicates. The \code{c} column contains two \code{NA} values.
 }
 \section{Function ID}{
 
-5-1
+6-1
 }
 
 \examples{
@@ -37,6 +37,10 @@ library(dplyr)
 # available in `small_table`
 dplyr::glimpse(small_table)
 
+}
+\seealso{
+Other Datasets: 
+\code{\link{small_table_sqlite}()}
 }
 \concept{Datasets}
 \keyword{datasets}

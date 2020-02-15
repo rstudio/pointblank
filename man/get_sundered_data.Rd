@@ -36,7 +36,7 @@ and \code{\link[=conjointly]{conjointly()}}).
 }
 \section{Function ID}{
 
-3-5
+5-4
 }
 
 \examples{
@@ -64,10 +64,10 @@ agent \%>\% get_sundered_data()
 
 }
 \seealso{
-Other Interrogate and Get Info: 
+Other Post-interrogation: 
 \code{\link{all_passed}()},
 \code{\link{get_agent_report}()},
-\code{\link{get_data_extracts}()},
-\code{\link{interrogate}()}
+\code{\link{get_agent_x_list}()},
+\code{\link{get_data_extracts}()}
 }
-\concept{Interrogate and Get Info}
+\concept{Post-interrogation}

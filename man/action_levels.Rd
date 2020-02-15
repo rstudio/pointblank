@@ -25,22 +25,23 @@ corresponding to the failure states are provided as formulas (e.g.,
 each named state can be used by enclosing the set of statements with \code{{ }}.}
 }
 \description{
-This helper function works with the \code{actions} argument that is present in the
-\code{\link[=create_agent]{create_agent()}} function and in every validation step function. With it, we
-can provide threshold \emph{fail} levels for any combination of \code{warn}, \code{stop}, or
-\code{notify} states. We can react to any entrance of a state by supplying
-corresponding functions to the \code{fns} argument. They will undergo evaluation
-at the time when the matching state is entered. If provided to
-\code{\link[=create_agent]{create_agent()}} then the policies will be applied to every validation step,
-acting as a default for the validation as a whole. Calls of \code{action_levels()}
-could also be applied directly to any validation step and this will act as an
-override if set also in \code{\link[=create_agent]{create_agent()}}. Usage of \code{action_levels()} is
-required to have any useful side effects (i.e., warnings, throwing errors) in
-the case of validation step functions operating directly on data.
+The \code{action_levels()} function works with the \code{actions} argument that is
+present in the \code{\link[=create_agent]{create_agent()}} function and in every validation step
+function. With it, we can provide threshold \emph{fail} levels for any combination
+of \code{warn}, \code{stop}, or \code{notify} states. We can react to any entrance of a
+state by supplying corresponding functions to the \code{fns} argument. They will
+undergo evaluation at the time when the matching state is entered. If
+provided to \code{\link[=create_agent]{create_agent()}} then the policies will be applied to every
+validation step, acting as a default for the validation as a whole. Calls of
+\code{action_levels()} could also be applied directly to any validation step and
+this will act as an override if set also in \code{\link[=create_agent]{create_agent()}}. Usage of
+\code{action_levels()} is required to have any useful side effects (i.e.,
+warnings, throwing errors) in the case of validation step functions operating
+directly on data.
 }
 \details{
 The output of the \code{action_levels()} call in \code{actions} will be interpreted
-slightly different if using an \emph{agent} or using validation step functions
+slightly differently if using an \emph{agent} or using validation step functions
 directly on a data table. For convenience when working directly on data, any
 values supplied to \code{warn_at} or \code{stop_at} will be automatically given a stock
 \code{warning()} or \code{stop()} function. If you were to supply those manually then
@@ -55,7 +56,7 @@ When using an \emph{agent}, we often opt to not use any functions in \code{fns} 
 }
 \section{Function ID}{
 
-4-1
+1-2
 }
 
 \examples{
@@ -101,4 +102,8 @@ suppressWarnings(
 )
 
 }
-\concept{Helper Functions}
+\seealso{
+Other Planning and Prep: 
+\code{\link{create_agent}()}
+}
+\concept{Planning and Prep}

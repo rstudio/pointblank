@@ -51,7 +51,7 @@ the default) then a \strong{gt} table will be displayed with the same informatio
 }
 \section{Function ID}{
 
-3-3
+5-1
 }
 
 \examples{
@@ -75,10 +75,10 @@ agent \%>\%
 
 }
 \seealso{
-Other Interrogate and Get Info: 
+Other Post-interrogation: 
 \code{\link{all_passed}()},
+\code{\link{get_agent_x_list}()},
 \code{\link{get_data_extracts}()},
-\code{\link{get_sundered_data}()},
-\code{\link{interrogate}()}
+\code{\link{get_sundered_data}()}
 }
-\concept{Interrogate and Get Info}
+\concept{Post-interrogation}

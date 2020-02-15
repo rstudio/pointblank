@@ -12,6 +12,11 @@ the \code{small_table} dataset. A requirement is the availability of the \strong
 and \strong{RSQLite} packages. These packages can be installed by using
 \code{install.packages("DBI")} and \code{install.packages("RSQLite")}.
 }
+\section{Function ID}{
+
+6-2
+}
+
 \examples{
 # Use `small_table_sqlite()` to
 # create a SQLite version of the
@@ -20,3 +25,8 @@ and \strong{RSQLite} packages. These packages can be installed by using
 # small_table_sqlite <- small_table_sqlite()
 
 }
+\seealso{
+Other Datasets: 
+\code{\link{small_table}}
+}
+\concept{Datasets}

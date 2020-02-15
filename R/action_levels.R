@@ -172,22 +172,22 @@ prime_actions <- function(actions) {
   
   if (!is.null(actions)) {
     if (is.null(actions$fns$warn)) {
-      actions$fns$warn <- ~ stock_warning(vl = .vars_list)
+      actions$fns$warn <- ~ stock_warning(x = x)
     }
     if (is.null(actions$fns$stop)) {
-      actions$fns$stop <- ~ stock_stoppage(vl = .vars_list)
+      actions$fns$stop <- ~ stock_stoppage(x = x)
     }
   }
   
   actions
 }
 
-stock_stoppage <- function(vl) {
-  stop("The validation (`", vl$type, "()`) meets or exceeds the stop threshold",
+stock_stoppage <- function(x) {
+  stop("The validation (`", x$type, "()`) meets or exceeds the stop threshold",
        call. = FALSE)
 }
 
-stock_warning <- function(vl) {
-  warning("The validation (`", vl$type, "()`) meets or exceeds the warn threshold",
+stock_warning <- function(x) {
+  warning("The validation (`", x$type, "()`) meets or exceeds the warn threshold",
           call. = FALSE)
 }

@@ -203,6 +203,8 @@ interrogate <- function(agent,
     agent$validation_set$proc_duration_s[i] <- time_diff_s
   }
   
+  class(agent) <- c("has_intel", "ptblank_agent")
+  
   # nocov start
   
   # Generate gt reporting objects if the gt package is available
@@ -222,8 +224,6 @@ interrogate <- function(agent,
   
   # Perform any necessary end actions
   perform_end_action(agent)
-  
-  class(agent) <- c("has_intel", "ptblank_agent")
   
   agent
 }
@@ -790,7 +790,7 @@ perform_action <- function(agent, idx, type) {
   
   # Have the local vars packaged in a list to make creating
   # custom functions more convenient
-  .vars_list <-
+  x <-
     list(
       warn = .warn,
       notify = .notify,
@@ -817,7 +817,7 @@ perform_action <- function(agent, idx, type) {
       f_passed = .f_passed,
       f_failed = .f_failed
     )
-  
+
   if (type == "warn") {
     if (!is.na(.warn) && .warn) {
       if ("warn" %in% names(actions$fns) && !is.null(actions$fns$warn)) {
@@ -842,7 +842,7 @@ perform_action <- function(agent, idx, type) {
 }
 
 perform_end_action <- function(agent) {
-  
+
   actions <- agent$end_fns %>% unlist()
 
   .warn <- agent$validation_set$warn
@@ -893,7 +893,7 @@ perform_end_action <- function(agent) {
 
   # Have the local vars packaged in a list to make creating
   # custom functions more convenient
-  .vars_list <-
+  x <-
     list(
       warn = .warn,
       notify = .notify,
@@ -924,9 +924,9 @@ perform_end_action <- function(agent) {
       report_html = .report_html,
       report_html_email = .report_html_email
     )
-  
-  lapply(actions, function(x) {
-    x %>% rlang::f_rhs() %>% rlang::eval_tidy()
+
+  lapply(actions, function(y) {
+    y %>% rlang::f_rhs() %>% rlang::eval_tidy()
   })
   
   return(NULL)

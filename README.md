@@ -10,7 +10,7 @@ Status](https://travis-ci.org/rich-iannone/pointblank.svg?branch=master)](https:
 [![Coverage
 status](https://codecov.io/gh/rich-iannone/pointblank/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/pointblank?branch=master)
 
-With the **pointblank** package, it’s really easy to validate your data
+With the **pointblank** package it’s really easy to validate your data
 with workflows attuned to your data quality needs. The **pointblank**
 philosophy: a set of validation step functions should work seamlessly
 with data in local data tables and with data in databases.

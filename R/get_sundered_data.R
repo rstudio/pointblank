@@ -94,6 +94,26 @@ get_sundered_data <- function(agent,
     dplyr::filter(vapply(preconditions, FUN = is.null, FUN.VALUE = logical(1))) %>%
     dplyr::pull(i)
   
+  if (length(validation_steps_i) == 0) {
+    
+    if (!is.null(type) && type == "pass") {
+      return(input_tbl)
+    }
+    
+    if (!is.null(type) && type == "fail") {
+      return(input_tbl[0, ])
+    }
+    
+    if (is.null(type)) {
+      return(
+        list(
+          pass = input_tbl,
+          fail = input_tbl[0, ]
+        )
+      )
+    }
+  }
+  
   # Get the stored `tbl_check` objects for `validation_steps_i`
   tbl_check_obj <-
     agent$validation_set %>%

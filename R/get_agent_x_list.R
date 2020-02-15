@@ -19,6 +19,10 @@
 #' 
 #' @return A `list` object.
 #' 
+#' @family Post-interrogation
+#' @section Function ID:
+#' 5-2
+#' 
 #' @export
 get_agent_x_list <- function(agent,
                              i = NULL,

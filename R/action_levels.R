@@ -1,20 +1,21 @@
 #' Set action levels: failure thresholds and functions to invoke
 #' 
-#' This helper function works with the `actions` argument that is present in the
-#' [create_agent()] function and in every validation step function. With it, we
-#' can provide threshold *fail* levels for any combination of `warn`, `stop`, or
-#' `notify` states. We can react to any entrance of a state by supplying
-#' corresponding functions to the `fns` argument. They will undergo evaluation
-#' at the time when the matching state is entered. If provided to
-#' [create_agent()] then the policies will be applied to every validation step,
-#' acting as a default for the validation as a whole. Calls of `action_levels()`
-#' could also be applied directly to any validation step and this will act as an
-#' override if set also in [create_agent()]. Usage of `action_levels()` is
-#' required to have any useful side effects (i.e., warnings, throwing errors) in
-#' the case of validation step functions operating directly on data.
+#' The `action_levels()` function works with the `actions` argument that is
+#' present in the [create_agent()] function and in every validation step
+#' function. With it, we can provide threshold *fail* levels for any combination
+#' of `warn`, `stop`, or `notify` states. We can react to any entrance of a
+#' state by supplying corresponding functions to the `fns` argument. They will
+#' undergo evaluation at the time when the matching state is entered. If
+#' provided to [create_agent()] then the policies will be applied to every
+#' validation step, acting as a default for the validation as a whole. Calls of
+#' `action_levels()` could also be applied directly to any validation step and
+#' this will act as an override if set also in [create_agent()]. Usage of
+#' `action_levels()` is required to have any useful side effects (i.e.,
+#' warnings, throwing errors) in the case of validation step functions operating
+#' directly on data.
 #'
 #' The output of the `action_levels()` call in `actions` will be interpreted
-#' slightly different if using an *agent* or using validation step functions
+#' slightly differently if using an *agent* or using validation step functions
 #' directly on a data table. For convenience when working directly on data, any
 #' values supplied to `warn_at` or `stop_at` will be automatically given a stock
 #' `warning()` or `stop()` function. If you were to supply those manually then
@@ -85,9 +86,9 @@
 #'     col_vals_gt(vars(a), 5, actions = al)
 #' )
 #' 
-#' @family Helper Functions
+#' @family Planning and Prep
 #' @section Function ID:
-#' 4-1
+#' 1-2
 #'   
 #' @export
 action_levels <- function(warn_at = NULL,

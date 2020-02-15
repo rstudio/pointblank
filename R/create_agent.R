@@ -56,7 +56,7 @@
 #'   col_vals_gt(vars(a), 4) %>%
 #'   interrogate()
 #'  
-#' @family Create an Agent
+#' @family Planning and Prep
 #' @section Function ID:
 #' 1-1
 #'   

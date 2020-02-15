@@ -57,9 +57,9 @@
 #' agent %>%
 #'   get_agent_report(display_table = FALSE)
 #' 
-#' @family Interrogate and Get Info
+#' @family Post-interrogation
 #' @section Function ID:
-#' 3-3
+#' 5-1
 #' 
 #' @export
 get_agent_report <- function(agent,

@@ -41,9 +41,9 @@
 #' # validation step (`col_vals_between`)
 #' agent %>% get_data_extracts(i = 1)
 #' 
-#' @family Interrogate and Get Info
+#' @family Post-interrogation
 #' @section Function ID:
-#' 3-4
+#' 5-3
 #' 
 #' @export
 get_data_extracts <- function(agent,

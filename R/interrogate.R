@@ -50,9 +50,9 @@
 #'   col_vals_gt(vars(a), 5) %>%
 #'   interrogate()
 #' 
-#' @family Interrogate and Get Info
+#' @family Interrogate
 #' @section Function ID:
-#' 3-1
+#' 4-1
 #' 
 #' @export
 interrogate <- function(agent,

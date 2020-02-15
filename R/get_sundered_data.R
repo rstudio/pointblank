@@ -46,9 +46,9 @@
 #' # validation steps (the default piece)
 #' agent %>% get_sundered_data()
 #' 
-#' @family Interrogate and Get Info
+#' @family Post-interrogation
 #' @section Function ID:
-#' 3-5
+#' 5-4
 #' 
 #' @export
 get_sundered_data <- function(agent,

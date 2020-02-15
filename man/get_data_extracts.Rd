@@ -13,11 +13,12 @@ out and any sample rows from non-passing validations could potentially be
 available in the object.}
 
 \item{i}{The validation step number, which is assigned to each validation
-step in the order of definition.}
+step in the order of definition. If \code{NULL} (the default), all data extract
+tables will be provided in a list object.}
 }
 \value{
-A list of tibbles if \code{i} is not provided, or, a tibble if \code{i} is
-given.
+A list of tables if \code{i} is not provided, or, a standalone table if
+\code{i} is given.
 }
 \description{
 Get data that didn't pass a validation step. The amount of data available in

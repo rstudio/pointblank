@@ -48,6 +48,8 @@
 #' @export
 small_table_sqlite <- function() {
 
+  # nocov start
+  
   if (!requireNamespace("DBI", quietly = TRUE) &&
       !requireNamespace("RSQLite", quietly = TRUE)) {
     
@@ -58,4 +60,6 @@ small_table_sqlite <- function() {
   
   con <- DBI::dbConnect(RSQLite::SQLite(), dbname = "inst/small_table.db")
   dplyr::tbl(con, "small_table")
+  
+  # nocov end
 }

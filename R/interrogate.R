@@ -68,7 +68,7 @@ interrogate <- function(agent,
   validation_steps <- unique(agent$validation_set$i)
   
   # Add heading for interrogation console status
-  cli::cli_h1("Interrogation Started -- {max(validation_steps)} Steps in Total")
+  cli::cli_h1("Interrogation Started - {max(validation_steps)} Steps in Total")
   
   for (i in validation_steps) {
 

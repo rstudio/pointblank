@@ -88,7 +88,7 @@ col_is_posix <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x) %>%
+    secret_agent <- create_agent(x, name = "::QUIET::") %>%
       col_is_posix(
         columns = columns,
         brief = brief,

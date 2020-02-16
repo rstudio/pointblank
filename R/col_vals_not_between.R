@@ -119,7 +119,7 @@ col_vals_not_between <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x) %>%
+    secret_agent <- create_agent(x, name = "::QUIET::") %>%
       col_vals_not_between(
         columns = columns,
         left = left,

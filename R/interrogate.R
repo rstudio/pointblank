@@ -65,10 +65,16 @@ interrogate <- function(agent,
   # Add the starting time to the `agent` object
   agent$time <- Sys.time()
   
+  if (agent$name == "::QUIET::") {
+    quiet <- TRUE
+  } else {
+    quiet <- FALSE
+  }
+  
   validation_steps <- unique(agent$validation_set$i)
   
-  # Add heading for interrogation console status
-  cli::cli_h1("Interrogation Started - {max(validation_steps)} Steps in Total")
+  # Add start of interrogation console status
+  create_cli_header(validation_steps, quiet)
   
   for (i in validation_steps) {
 
@@ -206,7 +212,7 @@ interrogate <- function(agent,
     agent$validation_set$time_processed[i] <- validation_start_time
     agent$validation_set$proc_duration_s[i] <- time_diff_s
     
-    create_post_step_cli_output(agent, i, time_diff_s)
+    create_post_step_cli_output(agent, i, time_diff_s, quiet)
   }
   
   class(agent) <- c("has_intel", "ptblank_agent")
@@ -231,12 +237,31 @@ interrogate <- function(agent,
   # Perform any necessary end actions
   perform_end_action(agent)
   
-  cli::cli_h1("Interrogation Completed")
+  # Add closing rule of interrogation console status
+  create_cli_footer(quiet)
   
   agent
 }
 
-create_post_step_cli_output <- function(agent, i, time_diff_s) {
+# nocov start
+
+create_cli_header <- function(validation_steps, quiet) {
+  
+  if (quiet) return()
+  
+  cli::cli_h1("Interrogation Started - {max(validation_steps)} Steps in Total")
+}
+
+create_cli_footer <- function(quiet) {
+  
+  if (quiet) return()
+  
+  cli::cli_h1("Interrogation Completed")
+}
+
+create_post_step_cli_output <- function(agent, i, time_diff_s, quiet) {
+  
+  if (quiet) return()
   
   interrogation_evaluation <- 
     agent$validation_set[i, ] %>%
@@ -331,6 +356,8 @@ create_post_step_cli_output <- function(agent, i, time_diff_s) {
   }
   cli::cli_end()
 }
+
+# nocov end
 
 check_table_with_assertion <- function(agent, idx, table, assertion_type) {
   

@@ -78,7 +78,7 @@ col_is_date <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x) %>%
+    secret_agent <- create_agent(x, name = "::QUIET::") %>%
       col_is_date(
         columns = columns,
         brief = brief,

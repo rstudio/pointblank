@@ -115,7 +115,7 @@ col_vals_lte <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x) %>%
+    secret_agent <- create_agent(x, name = "::QUIET::") %>%
       col_vals_lte(
         columns = columns,
         value = value,

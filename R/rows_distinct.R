@@ -96,7 +96,7 @@ rows_distinct <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x) %>%
+    secret_agent <- create_agent(x, name = "::QUIET::") %>%
       rows_distinct(
         columns = columns,
         preconditions = preconditions,

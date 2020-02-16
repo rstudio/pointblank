@@ -22,6 +22,7 @@ Depends:
     R (>= 3.5.0)
 Imports:
     blastula (>= 0.3.1),
+    cli (>= 2.0.1),
     dplyr (>= 0.8.3),
     dbplyr (>= 1.4.2),
     glue (>= 1.3.1),

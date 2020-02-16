@@ -67,10 +67,14 @@ interrogate <- function(agent,
   
   validation_steps <- unique(agent$validation_set$i)
   
+  # Add heading for interrogation console status
+  cli::cli_h1("Interrogation Started -- {max(validation_steps)} Steps in Total")
+  
   for (i in validation_steps) {
 
     # Skip the validation step if `active = FALSE`
     if (!agent$validation_set[[i, "active"]]) {
+      cli::cli_alert_info("Step {.field {i}} is not set as {.field active}. Skipping.")
       next
     }
     
@@ -201,6 +205,8 @@ interrogate <- function(agent,
     # Add the timing information to the `agent` object
     agent$validation_set$time_processed[i] <- validation_start_time
     agent$validation_set$proc_duration_s[i] <- time_diff_s
+    
+    create_post_step_cli_output(agent, i, time_diff_s)
   }
   
   class(agent) <- c("has_intel", "ptblank_agent")
@@ -225,7 +231,105 @@ interrogate <- function(agent,
   # Perform any necessary end actions
   perform_end_action(agent)
   
+  cli::cli_h1("Interrogation Completed")
+  
   agent
+}
+
+create_post_step_cli_output <- function(agent, i, time_diff_s) {
+  
+  interrogation_evaluation <- 
+    agent$validation_set[i, ] %>%
+    dplyr::select(eval_error, eval_warning) %>%
+    dplyr::mutate(condition = dplyr::case_when(
+      !eval_error & !eval_warning ~ "OK",
+      eval_error & eval_warning ~ "{.yellow WARNING} + {.red ERROR}",
+      eval_error ~ "{.red ERROR}",
+      eval_warning ~ "{.yellow WARNING}"
+    )) %>%
+    dplyr::pull(condition)
+  
+  validation_condition <-
+    agent$validation_set[i, ] %>%
+    dplyr::select(warn, stop) %>%
+    dplyr::mutate(condition = dplyr::case_when(
+      is.na(warn) & is.na(stop) ~ "NONE",
+      !is.na(stop) && stop ~ "STOP",
+      !is.na(warn) && warn ~ "WARN",
+      TRUE ~ "NONE"
+    )) %>% 
+    dplyr::pull(condition)
+  
+  notify_condition <-
+    agent$validation_set[i, ] %>%
+    dplyr::select(notify) %>%
+    dplyr::mutate(condition = dplyr::case_when(
+      !is.na(notify) && notify ~ "NOTIFY",
+      TRUE ~ "NONE"
+    )) %>% 
+    dplyr::pull(condition)
+  
+  print_time <- function(time_diff_s) {
+    if (time_diff_s < 1) {
+      return("")
+    } else {
+      return(
+        paste0(
+          " {.time_taken (",
+          round(time_diff_s, 1) %>%
+            formatC(format = "f", drop0trailing = FALSE, digits = 1),
+          " s)}"
+        )
+      )
+    }
+  }
+  
+  cli::cli_div(
+    theme = list(
+      span.green = list(color = "green"),
+      span.red = list(color = "red"),
+      span.yellow = list(color = "yellow"),
+      span.blue = list(color = "blue"),
+      span.time_taken = list(color = "magenta")
+    )
+  )
+  if (interrogation_evaluation != "OK") {
+    cli::cli_alert_info(
+      c("Step {.field {i}}: an evaluation issue requires attention ",
+        "(", interrogation_evaluation, ").",
+        print_time(time_diff_s)
+      )
+    )
+  } else if (validation_condition == "NONE" & notify_condition == "NONE") {
+    cli::cli_alert_success(
+      c("Step {.field {i}}: {.green OK}.", print_time(time_diff_s))
+    )
+  } else if (validation_condition != "NONE" & notify_condition == "NONE") {
+    if (validation_condition == "STOP") {
+      cli::cli_alert_danger(
+        c("Step {.field {i}}: {.red STOP} condition met.", print_time(time_diff_s))
+      )
+    } else {
+      cli::cli_alert_warning(
+        c("Step {.field {i}}: {.yellow WARNING} condition met.", print_time(time_diff_s))
+      )
+    }
+  } else if (validation_condition != "NONE" & notify_condition != "NONE") {
+    if (validation_condition == "STOP") {
+      cli::cli_alert_danger(
+        c("Step {.field {i}}: {.red STOP} and {.blue NOTIFY} conditions met.", print_time(time_diff_s))
+      )
+    } else {
+      cli::cli_alert_warning(
+        c("Step {.field {i}}: {.yellow WARNING} and {.blue NOTIFY} conditions met.", print_time(time_diff_s))
+      )
+    }
+  } else if (validation_condition == "NONE" & notify_condition != "NONE") {
+    cli::cli_alert_warning(
+      c("Step {.field {i}}: {.blue NOTIFY} condition met.", print_time(time_diff_s))
+    )
+  }
+  cli::cli_end()
 }
 
 check_table_with_assertion <- function(agent, idx, table, assertion_type) {

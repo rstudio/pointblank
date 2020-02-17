@@ -30,6 +30,12 @@
 #' the default) then a **gt** table will be displayed with the same information.
 #' 
 #' @param agent An agent object of class `ptblank_agent`.
+#' @param arrange_by A choice to arrange the report table rows by the validation
+#'   step number (`"i"`, the default), or, to arrange in descending order by
+#'   severity of the failure state (with `"severity"`).
+#' @param keep An option to keep `"all"` of the report's table rows (the
+#'   default), or, keep only those rows that reflect one or more
+#'   `"fail_states"`.
 #' @param display_table Should a display table be generated? If `TRUE` (the
 #'   default), and if the **gt** package is installed, a display table for the
 #'   report will be shown in the Viewer. If `FALSE`, or if **gt** is not
@@ -63,9 +69,14 @@
 #' 
 #' @export
 get_agent_report <- function(agent,
+                             arrange_by = c("i", "severity"),
+                             keep = c("all", "fail_states"),
                              display_table = TRUE,
                              ...) {
 
+  arrange_by <- match.arg(arrange_by)
+  keep <- match.arg(keep)
+  
   validation_set <- agent$validation_set
   
   agent_name <- agent$name
@@ -142,7 +153,7 @@ get_agent_report <- function(agent,
         FUN = nrow
       )
   }
-  
+
   report_tbl <- 
     dplyr::tibble(
       i = validation_set$i,
@@ -160,6 +171,30 @@ get_agent_report <- function(agent,
       N = validation_set$notify,
       extract = extract_count
     )
+  
+  report_tbl <-
+    report_tbl %>%
+    dplyr::mutate(
+      eval_pts = ifelse(eval != "OK", 10, 0),
+      N_pts = ifelse(!is.na(N) & N, 3, 0),
+      S_pts = ifelse(!is.na(S) & S, 2, 0),
+      W_pts = ifelse(!is.na(W) & W, 1, 0),
+      total_pts = eval_pts + N_pts + S_pts + W_pts
+    )
+  
+  if (arrange_by == "severity") {
+    report_tbl <-
+      report_tbl %>%
+      dplyr::arrange(dplyr::desc(total_pts))
+  }
+  
+  if (keep == "fail_states") {
+    report_tbl <- report_tbl %>% dplyr::filter(total_pts > 0)
+  }
+
+  report_tbl <-
+    report_tbl %>%
+    dplyr::select(-dplyr::ends_with("pts"))
   
   # nocov start
   
@@ -186,6 +221,8 @@ get_agent_report <- function(agent,
         x, "</button>"
       )
     }
+    
+    validation_set <- validation_set[report_tbl$i, ]
   
     # Reformat `columns`
     columns_upd <- 

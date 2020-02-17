@@ -15,6 +15,15 @@ agent <-
 agent <- agent %>% interrogate()
 agent
 
+report_all <- get_agent_report(agent)
+report_all
+
+report_severe <- get_agent_report(agent, arrange_by = "severity")
+report_severe
+
+report_severe_trunc <- get_agent_report(agent, arrange_by = "severity", keep = "fail_states")
+report_severe_trunc
+
 extracts <- agent %>% get_data_extracts()
 extracts
 

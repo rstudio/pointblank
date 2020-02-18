@@ -4,10 +4,24 @@
 \alias{get_agent_report}
 \title{Get a simple report from an agent}
 \usage{
-get_agent_report(agent, display_table = TRUE, ...)
+get_agent_report(
+  agent,
+  arrange_by = c("i", "severity"),
+  keep = c("all", "fail_states"),
+  display_table = TRUE,
+  ...
+)
 }
 \arguments{
 \item{agent}{An agent object of class \code{ptblank_agent}.}
+
+\item{arrange_by}{A choice to arrange the report table rows by the validation
+step number (\code{"i"}, the default), or, to arrange in descending order by
+severity of the failure state (with \code{"severity"}).}
+
+\item{keep}{An option to keep \code{"all"} of the report's table rows (the
+default), or, keep only those rows that reflect one or more
+\code{"fail_states"}.}
 
 \item{display_table}{Should a display table be generated? If \code{TRUE} (the
 default), and if the \strong{gt} package is installed, a display table for the

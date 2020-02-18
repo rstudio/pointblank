@@ -65,7 +65,7 @@ library(tidyverse)
 
 # Generate a simple `action_levels` object to
 # set the `warn` state if a validation step
-# has a single fail unit
+# has a single 'fail' unit
 al <- action_levels(warn_at = 1)
 
 # Create a pointblank `agent` object, with the
@@ -77,11 +77,18 @@ agent <-
     a = c(5, 7, 6, 5, NA, 7),
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
-  create_agent(name = "simple_tibble") %>%
-  col_vals_between(vars(a), 1, 9, na_pass = TRUE, actions = al) %>%
-  col_vals_lt(vars(c), 12, preconditions = ~tbl %>% dplyr::mutate(c = a + b), actions = al) %>%
+  create_agent(name = "simple_tibble", actions = al) %>%
+  col_vals_between(vars(a), 1, 9, na_pass = TRUE) %>%
+  col_vals_lt(vars(c), 12, preconditions = ~tbl %>% dplyr::mutate(c = a + b)) %>%
   interrogate()
 ```
+
+    #> 
+    #> ── Interrogation Started - 2 Steps in Total ───────────────────────────────────────────────────────────
+    #> ✓ Step 1: OK.
+    #> ! Step 2: WARNING condition met.
+    #> 
+    #> ── Interrogation Completed ────────────────────────────────────────────────────────────────────────────
 
 Because an *agent* was used, we can get a report from it.
 

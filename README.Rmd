@@ -43,9 +43,6 @@ The second workflow, *pipeline-based data validations* gives us a different vali
 The **pointblank** package is designed to be both straightforward yet powerful. And fast! All validation checks on remote tables are done entirely in-database so we can add dozens or hundreds of validation steps without any long waits for reporting. Here is a brief example of how to use **pointblank** to validate a local table with an agent.
 
 ```{r simple_tibble_example, eval = FALSE}
-library(pointblank)
-library(tidyverse)
-
 # Generate a simple `action_levels` object to
 # set the `warn` state if a validation step
 # has a single 'fail' unit
@@ -86,7 +83,22 @@ agent
 
 <img src="man/figures/agent_report.png">
 
-Beyond this simple example, there are many functions available in **pointblank** for making comprehensive table validations.
+Here's another example that follows the second, *agent*-less workflow (validation step functions operating directly on data).
+
+```{r example_workflow_two, paged.print=FALSE}
+# Use the same two validation step functions as before
+# but, this time, use them directly on the data! By
+# default, warnings are given with 1 'fail' unit
+# (can be customized using the `action_levels()` function)
+dplyr::tibble(
+    a = c(5, 7, 6, 5, NA, 7),
+    b = c(6, 1, 0, 6,  0, 7)
+  ) %>%
+  col_vals_between(vars(a), 1, 9, na_pass = TRUE) %>%
+  col_vals_lt(vars(c), 12, preconditions = ~tbl %>% dplyr::mutate(c = a + b))
+```
+
+Beyond these simple examples, there are many functions available in **pointblank** for making comprehensive table validations.
 
 <p align="center"><img src="man/figures/pointblank_function_reference.png" width="100%"></p>
 

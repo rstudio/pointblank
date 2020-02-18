@@ -70,45 +70,62 @@ col_exists <- function(x,
                        actions = NULL,
                        brief = NULL,
                        active = TRUE) {
-  
-  # Capture the `columns` expression
-  columns <- rlang::enquo(columns)
-  
-  # Resolve the columns based on the expression
-  columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
-  
-  if (is_a_table_object(x)) {
 
-    warning("The `col_exists()` function is not compatible with a table object",
-            call. = FALSE)
+  # Normalize the `columns` expression
+  if (inherits(columns, "quosures")) {
+    
+    columns <- 
+      vapply(
+        columns,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) as.character(rlang::get_expr(x))
+      )
+  }
+
+  if (is_a_table_object(x)) {
+    
+    secret_agent <- create_agent(x, name = "::QUIET::") %>%
+      col_exists(
+        columns = columns,
+        actions = prime_actions(actions),
+        brief = brief,
+        active = active
+      ) %>% interrogate()
     
     return(x)
   }
   
   agent <- x
-  
+
   if (is.null(brief)) {
     
     brief <-
-      create_autobrief(
-        agent = agent,
-        assertion_type = "col_exists",
-        column = columns
+      vapply(
+        columns,
+        USE.NAMES = FALSE,
+        FUN.VALUE = character(1),
+        FUN = function(x)
+          create_autobrief(
+            agent = agent,
+            assertion_type = "col_exists",
+            column = x
+          )
       )
   }
   
   # Add one or more validation steps based on the
   # length of the `columns` variable
-  for (column in columns) {
+  for (i in seq(columns)) {
     
     agent <-
       create_validation_step(
         agent = agent,
         assertion_type = "col_exists",
-        column = column,
+        column = columns[i],
         preconditions = NULL,
         actions = actions,
-        brief = brief,
+        brief = brief[i],
         active = active
       )
   }

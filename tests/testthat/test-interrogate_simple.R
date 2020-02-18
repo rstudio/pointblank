@@ -108,7 +108,7 @@ test_that("Interrogating simply returns the expected results", {
   
   # Use the `col_is_numeric()` function to perform
   # a simple validation step
-  tbl_result <- tbl %>% col_is_numeric(columns = vars(a))
+  suppressWarnings(tbl_result <- tbl %>% col_is_numeric(columns = vars(a)))
   
   # Expect that `tbl_result` is equivalent to `tbl`
   expect_equivalent(tbl, tbl_result)
@@ -363,9 +363,11 @@ test_that("Interrogating simply returns the expected results", {
   
   # Use the `col_vals_equal()` function to perform
   # a simple validation step
-  tbl_result <- 
-    tbl %>%
-    col_vals_equal(columns = vars(d), value = 283.94)
+  suppressWarnings(
+    tbl_result <- 
+      tbl %>%
+      col_vals_equal(columns = vars(d), value = 283.94)
+  )
   
   # Expect that `tbl_result` is equivalent to `tbl`
   expect_equivalent(tbl, tbl_result)
@@ -374,7 +376,16 @@ test_that("Interrogating simply returns the expected results", {
   expect_warning(
     tbl_result <- 
       tbl %>%
-      col_vals_equal(columns = vars(d), value = 283.94, actions = action_levels(warn_at = 1))
+      col_vals_equal(
+        columns = vars(d), value = 283.94,
+        actions = action_levels(warn_at = 1)
+      )
+  )
+  
+  expect_warning(
+    tbl_result <- 
+      tbl %>%
+      col_vals_equal(columns = vars(d), value = 283.94)
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -394,9 +405,11 @@ test_that("Interrogating simply returns the expected results", {
   
   # Use the `col_vals_not_equal()` function to perform
   # a simple validation step
-  tbl_result <- 
-    tbl %>%
-    col_vals_not_equal(columns = vars(d), value = 283.94)
+  suppressWarnings(
+    tbl_result <- 
+      tbl %>%
+      col_vals_not_equal(columns = vars(d), value = 283.94)
+  )
   
   # Expect that `tbl_result` is equivalent to `tbl`
   expect_equivalent(tbl, tbl_result)
@@ -622,12 +635,14 @@ test_that("Interrogating simply returns the expected results", {
   # Use the `conjointly()` function to perform
   # a conjoint validation validation step directly
   # on the `tbl` object
-  tbl_result <- 
-    tbl %>%
-    conjointly(
-      ~ col_vals_gt(., columns = vars(d), value = 200),
-      ~ col_vals_lt(., columns = vars(c), value = 10)
-    )
+  suppressWarnings(
+    tbl_result <- 
+      tbl %>%
+      conjointly(
+        ~ col_vals_gt(., columns = vars(d), value = 200),
+        ~ col_vals_lt(., columns = vars(c), value = 10)
+      )
+  )
     
   # Expect that `tbl_result` is equivalent to `tbl`
   expect_equivalent(tbl, tbl_result)
@@ -640,6 +655,14 @@ test_that("Interrogating simply returns the expected results", {
         ~ col_vals_gt(., columns = vars(d), value = 200),
         ~ col_vals_lt(., columns = vars(c), value = 10),
         actions = action_levels(warn_at = 1)
+      )
+  )
+  expect_warning(
+    tbl_result <- 
+      tbl %>%
+      conjointly(
+        ~ col_vals_gt(., columns = vars(d), value = 200),
+        ~ col_vals_lt(., columns = vars(c), value = 10)
       )
   )
   
@@ -664,7 +687,41 @@ test_that("Interrogating simply returns the expected results", {
   
   # Using the `col_exists()` function to perform
   # a simple validation step results in a warning
-  expect_warning(tbl %>% col_exists(columns = vars(g)))
+  expect_warning(
+    tbl %>% col_exists(columns = vars(h), actions = action_levels(warn_at = 1))
+  )
+  expect_warning(
+    tbl %>% col_exists(columns = "h", actions = action_levels(warn_at = 1))
+  )
+  expect_warning(
+    tbl %>% col_exists(columns = vars(a, h), actions = action_levels(warn_at = 1))
+  )
+  expect_warning(
+    tbl %>% col_exists(columns = c("a", "h"), actions = action_levels(warn_at = 1))
+  )
+  
+  # Using the `col_exists()` function to perform
+  # a simple validation step results in an error
+  expect_error(
+    tbl %>% col_exists(columns = vars(h), actions = action_levels(stop_at = 1))
+  )
+  expect_error(
+    tbl %>% col_exists(columns = "h", actions = action_levels(stop_at = 1))
+  )
+  expect_error(
+    tbl %>% col_exists(columns = vars(a, h), actions = action_levels(stop_at = 1))
+  )
+  expect_error(
+    tbl %>% col_exists(columns = c("a", "h"), actions = action_levels(stop_at = 1))
+  )
+  
+  # Expect no warning or error if all column names are correct
+  expect_warning(regexp = NA,
+    tbl %>% col_exists(columns = colnames(tbl), actions = action_levels(warn_at = 1))
+  )
+  expect_error(regexp = NA,
+    tbl %>% col_exists(columns = colnames(tbl), actions = action_levels(stop_at = 1))
+  )
 })
 
 test_that("Interrogating simply incorporates the `na_pass` option", {

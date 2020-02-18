@@ -89,10 +89,24 @@ rows_distinct <- function(x,
                           active = TRUE) {
 
   # Capture the `columns` expression
-  columns <- rlang::enquo(columns)
+  #columns <- rlang::enquo(columns)
   
+  # Normalize the `columns` expression
+  if (inherits(columns, "quosures")) {
+    
+    columns <- 
+      vapply(
+        columns,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) as.character(rlang::get_expr(x))
+      )
+  }
+
   # Resolve the columns based on the expression
-  columns <- resolve_columns(x = x, var_expr = columns, preconditions)
+  if (!is.null(columns)) {
+    columns <- resolve_columns(x = x, var_expr = columns, preconditions)
+  }
   
   if (is_a_table_object(x)) {
     
@@ -111,11 +125,10 @@ rows_distinct <- function(x,
   agent <- x
   
   if (length(columns) > 0) {
-    
     columns <- paste(columns, collapse = ", ")
-    
+  } else if (length(columns) == 1) {
+    columns <- columns
   } else {
-    
     columns <- NULL
   }
   
@@ -128,7 +141,7 @@ rows_distinct <- function(x,
         column = columns
       )
   }
-  
+
   # Add one or more validation steps
   agent <-
     create_validation_step(

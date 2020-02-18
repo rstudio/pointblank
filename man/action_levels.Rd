@@ -45,10 +45,12 @@ slightly differently if using an \emph{agent} or using validation step functions
 directly on a data table. For convenience when working directly on data, any
 values supplied to \code{warn_at} or \code{stop_at} will be automatically given a stock
 \code{warning()} or \code{stop()} function. If you were to supply those manually then
-the stock functions would be overridden. In this interactive data case there
-is no stock function given for the \code{notify_at} (as the \code{notify} failure state
-is less commonly used in this workflow and should instead be reserved for
-custom reporting functions).
+the stock functions would be overridden. Furthermore, if \code{actions} is NULL in
+this workflow, \strong{pointblank} will use a \code{warn_at} value of \code{1} (providing a
+warning if there are any \emph{fail} units). We can absolutely suppress this
+automatic warning behavior by at each validation step by setting \code{active = FALSE}. In this interactive data case there is no stock function given for
+the \code{notify_at}. The \code{notify} failure state is less commonly used in this
+workflow as it is in the \emph{agent}-based one.
 
 When using an \emph{agent}, we often opt to not use any functions in \code{fns} as the
 \code{warn}, \code{stop}, and \code{notify} failure states will be reported on when using

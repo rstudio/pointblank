@@ -81,11 +81,11 @@ agent <-
 ```
 
     #> 
-    #> ── Interrogation Started - 2 Steps in Total ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    #> ── Interrogation Started - 2 Steps in Total ────────────────────────────────────────────────────────────
     #> ✓ Step 1: OK.
     #> ! Step 2: WARNING condition met.
     #> 
-    #> ── Interrogation Completed ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    #> ── Interrogation Completed ─────────────────────────────────────────────────────────────────────────────
 
 Because an *agent* was used, we can get a report from it.
 
@@ -109,18 +109,22 @@ dplyr::tibble(
   ) %>%
   col_vals_between(vars(a), 1, 9, na_pass = TRUE) %>%
   col_vals_lt(vars(c), 12, preconditions = ~tbl %>% dplyr::mutate(c = a + b))
-#> Warning: The validation (`col_vals_lt()`) meets or exceeds the warn threshold
-#>  * VIOLATION: Expect that when the precondition `tbl %>% dplyr::mutate(c = a + b)` is applied, values in `c` (computed column) should be < 12
-#> # A tibble: 6 x 2
-#>       a     b
-#>   <dbl> <dbl>
-#> 1     5     6
-#> 2     7     1
-#> 3     6     0
-#> 4     5     6
-#> 5    NA     0
-#> 6     7     7
 ```
+
+    Warning message:
+    The validation (`col_vals_lt()`) meets or exceeds the warn threshold
+     * VIOLATION: Expect that when the precondition `tbl %>% dplyr::mutate(c = a + b)`
+    is applied, values in `c` (computed column) should be < 12
+
+    #> # A tibble: 6 x 2
+    #>       a     b
+    #>   <dbl> <dbl>
+    #> 1     5     6
+    #> 2     7     1
+    #> 3     6     0
+    #> 4     5     6
+    #> 5    NA     0
+    #> 6     7     7
 
 Beyond these simple examples, there are many functions available in
 **pointblank** for making comprehensive table validations.

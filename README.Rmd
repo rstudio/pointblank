@@ -85,7 +85,7 @@ agent
 
 Here's another example that follows the second, *agent*-less workflow (validation step functions operating directly on data).
 
-```{r example_workflow_two, paged.print=FALSE}
+```{r example_workflow_two, eval=FALSE}
 # Use the same two validation step functions as before
 # but, this time, use them directly on the data! By
 # default, warnings are given with 1 'fail' unit
@@ -96,6 +96,19 @@ dplyr::tibble(
   ) %>%
   col_vals_between(vars(a), 1, 9, na_pass = TRUE) %>%
   col_vals_lt(vars(c), 12, preconditions = ~tbl %>% dplyr::mutate(c = a + b))
+```
+
+```
+Warning message:
+The validation (`col_vals_lt()`) meets or exceeds the warn threshold
+ * VIOLATION: Expect that when the precondition `tbl %>% dplyr::mutate(c = a + b)`
+is applied, values in `c` (computed column) should be < 12
+```
+```{r tibble_print, echo=FALSE, paged.print=FALSE}
+dplyr::tibble(
+    a = c(5, 7, 6, 5, NA, 7),
+    b = c(6, 1, 0, 6,  0, 7)
+  )
 ```
 
 Beyond these simple examples, there are many functions available in **pointblank** for making comprehensive table validations.

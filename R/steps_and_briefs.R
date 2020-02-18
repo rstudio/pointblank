@@ -220,8 +220,6 @@ create_autobrief <- function(agent,
   
   if (assertion_type == "rows_distinct") {
     
-    is_column_computed <- ifelse(column %in% agent$col_names, FALSE, TRUE)
-    
     autobrief <-
       paste0(
         "Expect that ",

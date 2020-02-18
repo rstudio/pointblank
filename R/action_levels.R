@@ -19,10 +19,13 @@
 #' directly on a data table. For convenience when working directly on data, any
 #' values supplied to `warn_at` or `stop_at` will be automatically given a stock
 #' `warning()` or `stop()` function. If you were to supply those manually then
-#' the stock functions would be overridden. In this interactive data case there
-#' is no stock function given for the `notify_at` (as the `notify` failure state
-#' is less commonly used in this workflow and should instead be reserved for
-#' custom reporting functions).
+#' the stock functions would be overridden. Furthermore, if `actions` is NULL in
+#' this workflow, **pointblank** will use a `warn_at` value of `1` (providing a
+#' warning if there are any *fail* units). We can absolutely suppress this
+#' automatic warning behavior by at each validation step by setting `active =
+#' FALSE`. In this interactive data case there is no stock function given for
+#' the `notify_at`. The `notify` failure state is less commonly used in this
+#' workflow as it is in the *agent*-based one.
 #' 
 #' When using an *agent*, we often opt to not use any functions in `fns` as the
 #' `warn`, `stop`, and `notify` failure states will be reported on when using
@@ -170,14 +173,16 @@ normalize_fraction_count <- function(x) {
 }
 
 prime_actions <- function(actions) {
-  
+
   if (!is.null(actions)) {
     if (is.null(actions$fns$warn)) {
-      actions$fns$warn <- ~ stock_warning(x = x)
+      actions$fns$warn <- ~stock_warning(x = x)
     }
     if (is.null(actions$fns$stop)) {
-      actions$fns$stop <- ~ stock_stoppage(x = x)
+      actions$fns$stop <- ~stock_stoppage(x = x)
     }
+  } else {
+    actions <- action_levels(warn_at = 1, fns = list(warn = ~stock_warning(x = x)))
   }
   
   actions

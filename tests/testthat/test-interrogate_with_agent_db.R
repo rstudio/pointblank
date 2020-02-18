@@ -11,6 +11,8 @@ con <-
 
 small_table <- dplyr::tbl(con, "small_table")
 
+on.exit(DBI::dbDisconnect(conn = con))
+
 test_that("Interrogating with an agent yields the correct results", {
   
   # Use the `col_exists()` function to create

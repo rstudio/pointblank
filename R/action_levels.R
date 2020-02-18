@@ -189,11 +189,13 @@ prime_actions <- function(actions) {
 }
 
 stock_stoppage <- function(x) {
-  stop("The validation (`", x$type, "()`) meets or exceeds the stop threshold",
+  stop("The validation (`", x$type, "()`) meets or exceeds the stop threshold\n",
+       " * VIOLATION: ", x$brief,
        call. = FALSE)
 }
 
 stock_warning <- function(x) {
-  warning("The validation (`", x$type, "()`) meets or exceeds the warn threshold",
+  warning("The validation (`", x$type, "()`) meets or exceeds the warn threshold\n",
+          " * VIOLATION: ", x$brief,
           call. = FALSE)
 }

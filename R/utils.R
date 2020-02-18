@@ -73,7 +73,6 @@ resolve_columns <- function(x, var_expr, preconditions) {
     if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
       
       column <- resolve_expr_to_cols(tbl = x, var_expr = !!var_expr)
-      column <- column[1]
       
     } else if (inherits(x, ("ptblank_agent"))) {
       
@@ -93,7 +92,6 @@ resolve_columns <- function(x, var_expr, preconditions) {
         rlang::eval_tidy()
       
       column <- resolve_expr_to_cols(tbl = tbl, var_expr = !!var_expr)
-      column <- column[1]
       
     } else if (inherits(x, ("ptblank_agent"))) {
       

@@ -113,7 +113,7 @@ conjointly <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x) %>%
+    secret_agent <- create_agent(x, name = "::QUIET::") %>%
       conjointly(
         .list = .list,
         preconditions = preconditions,

@@ -86,6 +86,8 @@ get_agent_x_list <- function(agent,
         f_passed = .f_passed,
         f_failed = .f_failed
       )
+    
+    class(x) <- c("x_list_i", "x_list")
   }
   
   if (is.null(i)) {
@@ -167,6 +169,8 @@ get_agent_x_list <- function(agent,
         report_html = .report_html,
         report_html_email = .report_html_email
       )
+    
+    class(x) <- c("x_list_n", "x_list")
   }
   
   x

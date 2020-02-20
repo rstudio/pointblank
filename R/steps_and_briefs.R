@@ -65,7 +65,7 @@ create_autobrief <- function(agent,
                              preconditions = NULL,
                              column = NULL,
                              values = NULL) {
-  
+
   precondition_text <- prep_precondition_text(preconditions)
   column_computed_text <- prep_column_computed_text(agent, column)
   column_text <- prep_column_text(column)
@@ -325,4 +325,21 @@ prep_row_distinct_expectation_str <- function(column_text) {
 
 prep_conjointly_expectation_str <- function(values_text) {
   glue::glue("Expect conjoint 'pass' units across the following expressions: {values_text}.")
+}
+
+generate_autobriefs <- function(agent, columns, preconditions, values, assertion_type) {
+  
+  vapply(
+    columns,
+    USE.NAMES = FALSE,
+    FUN.VALUE = character(1),
+    FUN = function(x)
+      create_autobrief(
+        agent = agent,
+        assertion_type = assertion_type,
+        preconditions = preconditions,
+        column = x,
+        values = values
+      )
+  )
 }

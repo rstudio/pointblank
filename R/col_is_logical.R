@@ -70,6 +70,9 @@ col_is_logical <- function(x,
                            brief = NULL,
                            active = TRUE) {
   
+  preconditions <- NULL
+  values <- NULL
+  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   
@@ -92,27 +95,21 @@ col_is_logical <- function(x,
   agent <- x
 
   if (is.null(brief)) {
-    
-    brief <-
-      create_autobrief(
-        agent = agent,
-        assertion_type = "col_is_logical",
-        column = columns
-      )
+    brief <- generate_autobriefs(agent, columns, preconditions, values, "col_is_logical")
   }
   
   # Add one or more validation steps based on the
   # length of the `columns` variable
-  for (column in columns) {
+  for (i in seq(columns)) {
     
     agent <-
       create_validation_step(
         agent = agent,
         assertion_type = "col_is_logical",
-        column = column,
+        column = columns[i],
         preconditions = NULL,
         actions = actions,
-        brief = brief,
+        brief = brief[i],
         active = active
       )
   }

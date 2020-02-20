@@ -71,6 +71,9 @@ col_exists <- function(x,
                        brief = NULL,
                        active = TRUE) {
 
+  preconditions <- NULL
+  values <- NULL
+  
   # Normalize the `columns` expression
   if (inherits(columns, "quosures")) {
     
@@ -99,19 +102,7 @@ col_exists <- function(x,
   agent <- x
 
   if (is.null(brief)) {
-    
-    brief <-
-      vapply(
-        columns,
-        USE.NAMES = FALSE,
-        FUN.VALUE = character(1),
-        FUN = function(x)
-          create_autobrief(
-            agent = agent,
-            assertion_type = "col_exists",
-            column = x
-          )
-      )
+    brief <- generate_autobriefs(agent, columns, preconditions, values, "col_exists")
   }
   
   # Add one or more validation steps based on the

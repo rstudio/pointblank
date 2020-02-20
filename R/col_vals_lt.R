@@ -122,30 +122,23 @@ col_vals_lt <- function(x,
   agent <- x
   
   if (is.null(brief)) {
-    
-    brief <-
-      create_autobrief(
-        agent = agent,
-        assertion_type = "col_vals_lt",
-        preconditions = preconditions,
-        column = columns,
-        values = value)
+    brief <- generate_autobriefs(agent, columns, preconditions, values = value, "col_vals_lt")
   }
   
   # Add one or more validation steps based on the
   # length of the `column` variable
-  for (column in columns) {
+  for (i in seq(columns)) {
     
     agent <-
       create_validation_step(
         agent = agent,
         assertion_type = "col_vals_lt",
-        column = column,
+        column = columns[i],
         values = value,
         na_pass = na_pass,
         preconditions = preconditions,
         actions = actions,
-        brief = brief,
+        brief = brief[i],
         active = active
       )
   }

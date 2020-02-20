@@ -145,30 +145,23 @@ col_vals_between <- function(x,
   agent <- x
   
   if (is.null(brief)) {
-    
-    brief <-
-      create_autobrief(
-        agent = agent,
-        assertion_type = "col_vals_between",
-        column = columns,
-        values = c(left, right)
-      )
+    brief <- generate_autobriefs(agent, columns, preconditions, values = c(left, right), "col_vals_between")
   }
   
   # Add one or more validation steps based on the
   # length of the `columns` variable
-  for (column in columns) {
+  for (i in seq(columns)) {
     
     agent <-
       create_validation_step(
         agent = agent,
         assertion_type = "col_vals_between",
-        column = column,
+        column = columns[i],
         values = c(left, right),
         na_pass = na_pass,
         preconditions = preconditions,
         actions = actions,
-        brief = brief,
+        brief = brief[i],
         active = active
       )
   }

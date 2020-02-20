@@ -4,7 +4,7 @@ library(tidyverse)
 al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 
 agent <-
-  create_agent(tbl = small_table, actions = al) %>%
+  create_agent(tbl = small_table, actions = al, reporting_lang = "it") %>%
   col_vals_gt(vars(g), 100, preconditions = ~tbl %>% dplyr::mutate(g = a + 95)) %>%
   col_vals_lt(vars(c), vars(d), preconditions = ~tbl %>% dplyr::mutate(d = d - 200)) %>%
   col_vals_in_set(vars(f), c("low", "mid", "high", "higher")) %>%

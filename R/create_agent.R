@@ -30,6 +30,10 @@
 #'   the `ptblank_agent` object. If `FALSE` (the default) then the table object
 #'   will be not generated and available with the agent upon returning from the
 #'   interrogation.
+#' @param reporting_lang The language to use for automatic creation of briefs
+#'   (short descriptions for each validation step). By default, `NULL` will
+#'   create English (`"en"`) text. Other options include French (`"fr"`),
+#'   German (`"de"`), Italian (`"it"`), and Spanish (`"es"`).
 #'   
 #' @return A `ptblank_agent` object.
 #'   
@@ -65,7 +69,8 @@ create_agent <- function(tbl,
                          name = NULL,
                          actions = NULL,
                          end_fns = NULL,
-                         embed_report = FALSE) {
+                         embed_report = FALSE,
+                         reporting_lang = NULL) {
 
   # Generate an agent name if none provided
   if (is.null(name)) {
@@ -74,6 +79,9 @@ create_agent <- function(tbl,
   } else {
     brief <- "Create agent with an assigned validation name"
   }
+  
+  # Normalize the reporting language identifer and stop if necessary
+  reporting_lang <- normalize_reporting_language(reporting_lang)
 
   tbl_name <- deparse(match.call()$tbl)
   
@@ -117,6 +125,7 @@ create_agent <- function(tbl,
       end_fns = list(end_fns),
       embed_report = embed_report,
       reporting = NULL,
+      reporting_lang = reporting_lang,
       validation_set =
         dplyr::tibble(
           i = integer(0),

@@ -82,6 +82,8 @@ get_agent_report <- function(agent,
   agent_name <- agent$name
   agent_time <- agent$time
   
+  lang <- agent$reporting_lang
+  
   eval <- 
     validation_set %>%
     dplyr::select(eval_error, eval_warning) %>%
@@ -441,9 +443,9 @@ get_agent_report <- function(agent,
       ) %>%
       gt::cols_label(
         i = "",
-        type = "STEP FN",
-        columns = "COLUMNS",
-        values = "VALUES",
+        type = report_col_step[lang],
+        columns = report_col_columns[lang],
+        values = report_col_values[lang],
         precon = "TBL",
         eval_sym = "EVAL",
         units = "UNITS",
@@ -452,7 +454,7 @@ get_agent_report <- function(agent,
         extract = "EXTRACT"
       ) %>%
       gt::tab_header(
-        title = "Pointblank Validation",
+        title = pointblank_validation_title_text[lang],
         subtitle = gt::md(paste0("`", agent_name, " (", agent_time, ")`<br><br>"))
       ) %>%
       gt::tab_options(
@@ -594,11 +596,11 @@ get_agent_report <- function(agent,
           title = gt::md(
             paste0(
               "<div>",
-              "<span style=\"float: left;\">Pointblank Validation Plan</span>",
+              "<span style=\"float: left;\">", pointblank_validation_plan_text[lang], "</span>",
               "<span style=\"float: right; text-decoration-line: underline; ",
               "font-size: 16px; text-decoration-color: #008B8B;",
               "padding-top: 0.1em; padding-right: 0.4em;\">",
-              "No Interrogation Performed</span>",
+              no_interrogation_performed_text[lang], "</span>",
               "</div>"
             )
           ),

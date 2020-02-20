@@ -66,10 +66,11 @@ create_autobrief <- function(agent,
                              column = NULL,
                              values = NULL) {
 
-  precondition_text <- prep_precondition_text(preconditions)
-  column_computed_text <- prep_column_computed_text(agent, column)
+  lang <- agent$reporting_lang
+  precondition_text <- prep_precondition_text(preconditions, lang = lang)
+  column_computed_text <- prep_column_computed_text(agent, column, lang = lang)
+  values_text <- prep_values_text(values, lang = lang)
   column_text <- prep_column_text(column)
-  values_text <- prep_values_text(values)
   
   if (assertion_type %in%
       c("col_vals_gt", "col_vals_gte",
@@ -87,48 +88,51 @@ create_autobrief <- function(agent,
         "col_vals_not_equal" = "!="
       )
     
-    expectation_str <- 
-      prep_compare_expectation_str(
+    expectation_text <- 
+      prep_compare_expectation_text(
         column_text,
         column_computed_text,
         operator,
-        values_text
+        values_text,
+        lang = lang
       )
     
-    autobrief <- finalize_autobrief(expectation_str, precondition_text)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
   if (assertion_type == "col_exists") {
     
     autobrief <- 
-      prep_col_exists_expectation_str(column_text) %>%
+      prep_col_exists_expectation_text(column_text, lang = lang) %>%
       as.character() %>%
       tidy_gsub("\\s{2,}", " ")
   }
   
   if (assertion_type %in% c("col_vals_in_set", "col_vals_not_in_set")) {
     
-    expectation_str <- 
-      prep_in_set_expectation_str(
+    expectation_text <- 
+      prep_in_set_expectation_text(
         column_text,
         column_computed_text,
         values_text,
-        not = grepl("not", assertion_type)
+        not = grepl("not", assertion_type),
+        lang = lang
       )
     
-    autobrief <- finalize_autobrief(expectation_str, precondition_text)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
   if (assertion_type %in% c("col_vals_null", "col_vals_not_null")) {
     
-    expectation_str <- 
-      prep_null_expectation_str(
+    expectation_text <- 
+      prep_null_expectation_text(
         column_text,
         column_computed_text,
-        not = grepl("not", assertion_type)
+        not = grepl("not", assertion_type),
+        lang = lang
       )
     
-    autobrief <- finalize_autobrief(expectation_str, precondition_text)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
   if (assertion_type %in% c("col_vals_between", "col_vals_not_between")) {
@@ -136,28 +140,30 @@ create_autobrief <- function(agent,
     value_1 <- strsplit(values_text, ", ") %>% unlist() %>% .[1]
     value_2 <- strsplit(values_text, ", ") %>% unlist() %>% .[2]
     
-    expectation_str <- 
-      prep_between_expectation_str(
+    expectation_text <- 
+      prep_between_expectation_text(
         column_text,
         column_computed_text,
         value_1,
         value_2,
-        not = grepl("not", assertion_type)
+        not = grepl("not", assertion_type),
+        lang = lang
       )
     
-    autobrief <- finalize_autobrief(expectation_str, precondition_text)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
   if (assertion_type == "col_vals_regex") {
     
-    expectation_str <- 
-      prep_regex_expectation_str(
+    expectation_text <- 
+      prep_regex_expectation_text(
         column_text,
         column_computed_text,
-        values_text
+        values_text,
+        lang = lang
       )
     
-    autobrief <- finalize_autobrief(expectation_str, precondition_text)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
   if (grepl("col_is_.*", assertion_type)) {
@@ -172,159 +178,31 @@ create_autobrief <- function(agent,
       col_type <- "Date"
     }
     
-    expectation_str <- prep_col_is_expectation_str(column_text, col_type)
-    autobrief <- finalize_autobrief(expectation_str, precondition_text)
+    expectation_text <- prep_col_is_expectation_text(column_text, col_type, lang = lang)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
   if (assertion_type == "rows_distinct") {
 
-    expectation_str <- prep_row_distinct_expectation_str(column_text)
-    autobrief <- finalize_autobrief(expectation_str, precondition_text)
+    expectation_text <- prep_row_distinct_expectation_text(column_text, lang = lang)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
   if (assertion_type == "conjointly") {
 
     values_text <- values_text %>% tidy_gsub("\"", "'")
-    expectation_str <- prep_conjointly_expectation_str(values_text)
-    autobrief <- finalize_autobrief(expectation_str, precondition_text)
+    expectation_text <- prep_conjointly_expectation_text(values_text, lang = lang)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
   autobrief
 }
 
-prep_precondition_text <- function(preconditions) {
+finalize_autobrief <- function(expectation_text, precondition_text) {
   
-  if (is.null(preconditions)) return("")
-  
-  precondition_label <- preconditions %>% rlang::f_rhs() %>% rlang::as_label()
-  
-  paste0("Precondition applied", ": `", precondition_label, "`.")
-}
-
-prep_column_computed_text <- function(agent, column) {
-  
-  if (is.null(column)) return("")
-  
-  column_is_computed <- ifelse(column %in% agent$col_names, FALSE, TRUE)
-  
-  if (!column_is_computed) return("")
-  
-  parens <- c("(", ")")
-  
-  paste0(parens[1], "computed column", parens[2])
-}
-
-prep_column_text <- function(column) {
-  paste0("`", column, "`")
-}
-
-prep_values_text <- function(values, limit = 3) {
-  
-  # Normalize the `columns` expression enclosed in `vars()`
-  if (inherits(values, "quosures")) {
-    
-    values <- 
-      vapply(
-        values,
-        FUN.VALUE = character(1),
-        USE.NAMES = FALSE,
-        FUN = function(x) as.character(rlang::get_expr(x))
-      )
-  }
-  
-  if (!is.null(limit) && length(values) > limit) {
-    num_omitted <- length(values) - limit
-    values_text <- paste0("`", values[seq_len(limit)], "`", collapse = ", ")
-    additional_text <- glue::glue("(", "and {num_omitted} more", ")")
-    values_text <- paste0(values_text, " ", additional_text)
-  } else {
-    values_text <- paste0("`", values, "`", collapse = ", ")
-  }
-
-  values_text
-}
-
-finalize_autobrief <- function(expectation_str, precondition_text) {
-  
-  glue::glue("{expectation_str} {precondition_text}") %>%
+  glue::glue("{expectation_text} {precondition_text}") %>%
     as.character() %>%
     tidy_gsub("\\s{2,}", " ")
-}
-
-prep_compare_expectation_str <- function(column_text,
-                                         column_computed_text,
-                                         operator,
-                                         values_text) {
-  
-  glue::glue(
-    "Expect that values in {column_text} {column_computed_text} should be {operator} {values_text}."
-  )
-}
-
-prep_in_set_expectation_str <- function(column_text,
-                                        column_computed_text,
-                                        values_text,
-                                        not = FALSE) {
-  
-  if (!not) {
-    glue::glue("Expect that values in {column_text} {column_computed_text} should be in the set of {values_text}.")
-  } else {
-    glue::glue("Expect that values in {column_text} {column_computed_text} should not be in the set of {values_text}.")
-  }
-}
-
-prep_between_expectation_str <- function(column_text,
-                                         column_computed_text,
-                                         value_1,
-                                         value_2,
-                                         not = FALSE) {
-  
-  if (!not) {
-    glue::glue("Expect that values in {column_text} {column_computed_text} should be between {value_1} and {value_2}.")
-  } else {
-    glue::glue("Expect that values in {column_text} {column_computed_text} should not be between {value_1} and {value_2}.")
-  }
-}
-
-prep_null_expectation_str <- function(column_text,
-                                      column_computed_text,
-                                      not = FALSE) {
-  
-  if (!not) {
-    glue::glue("Expect that all values in {column_text} {column_computed_text} should be NULL.")
-  } else {
-    glue::glue("Expect that all values in {column_text} {column_computed_text} should not be NULL.")
-  }
-}
-
-prep_regex_expectation_str <- function(column_text,
-                                       column_computed_text,
-                                       values_text) {
-  
-  glue::glue(
-    "Expect that values in {column_text} {column_computed_text} should match the regular expression: {values_text}."
-  )
-}
-
-prep_col_exists_expectation_str <- function(column_text) {
-  glue::glue("Expect that column {column_text} exists.")
-}
-
-prep_col_is_expectation_str <- function(column_text, col_type) {
-  glue::glue("Expect that column {column_text} is of type: {col_type}.")
-}
-
-prep_row_distinct_expectation_str <- function(column_text) {
-
-  if (column_text == "``") {
-    glue::glue("Expect entirely distinct rows across all columns.")
-  } else {
-    glue::glue("Expect entirely distinct rows across {column_text}.")
-  }
-}
-
-prep_conjointly_expectation_str <- function(values_text) {
-  glue::glue("Expect conjoint 'pass' units across the following expressions: {values_text}.")
 }
 
 generate_autobriefs <- function(agent, columns, preconditions, values, assertion_type) {
@@ -342,4 +220,136 @@ generate_autobriefs <- function(agent, columns, preconditions, values, assertion
         values = values
       )
   )
+}
+
+prep_precondition_text <- function(preconditions, lang) {
+  
+  if (is.null(preconditions)) return("")
+  
+  precondition_label <- preconditions %>% rlang::f_rhs() %>% rlang::as_label()
+  
+  paste0(precondition_text[lang], ": `", precondition_label, "`.")
+}
+
+prep_column_computed_text <- function(agent, column, lang) {
+  
+  if (is.null(column)) return("")
+  
+  column_is_computed <- ifelse(column %in% agent$col_names, FALSE, TRUE)
+  
+  if (!column_is_computed) return("")
+  
+  parens <- c("(", ")")
+  
+  paste0(parens[1], column_computed_text[lang], parens[2])
+}
+
+prep_column_text <- function(column) {
+  paste0("`", column, "`")
+}
+
+prep_values_text <- function(values, limit = 3, lang) {
+  
+  # Normalize the `columns` expression enclosed in `vars()`
+  if (inherits(values, "quosures")) {
+    
+    values <- 
+      vapply(
+        values,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) as.character(rlang::get_expr(x))
+      )
+  }
+
+  if (!is.null(limit) && length(values) > limit) {
+    num_omitted <- length(values) - limit
+    values_str <- paste0("`", values[seq_len(limit)], "`", collapse = ", ")
+    additional_text <- glue::glue(glue::glue("(", values_text[lang], ")"))
+    values_str <- paste0(values_str, " ", additional_text)
+  } else {
+    values_str <- paste0("`", values, "`", collapse = ", ")
+  }
+
+  values_str
+}
+
+prep_compare_expectation_text <- function(column_text,
+                                          column_computed_text,
+                                          operator,
+                                          values_text,
+                                          lang) {
+  
+  glue::glue(compare_expectation_text[lang])
+}
+
+prep_in_set_expectation_text <- function(column_text,
+                                         column_computed_text,
+                                         values_text,
+                                         not = FALSE,
+                                         lang) {
+  
+  if (!not) {
+    glue::glue(in_set_expectation_text[lang])
+  } else {
+    glue::glue(not_in_set_expectation_text[lang])
+  }
+}
+
+prep_between_expectation_text <- function(column_text,
+                                          column_computed_text,
+                                          value_1,
+                                          value_2,
+                                          not = FALSE,
+                                          lang) {
+  
+  if (!not) {
+    glue::glue(between_expectation_text[lang])
+  } else {
+    glue::glue(not_between_expectation_text[lang])
+  }
+}
+
+prep_null_expectation_text <- function(column_text,
+                                       column_computed_text,
+                                       not = FALSE,
+                                       lang) {
+  
+  if (!not) {
+    glue::glue(null_expectation_text[lang])
+  } else {
+    glue::glue(not_null_expectation_text[lang])
+  }
+}
+
+prep_regex_expectation_text <- function(column_text,
+                                        column_computed_text,
+                                        values_text,
+                                        lang) {
+
+  glue::glue(regex_expectation_text[lang])
+}
+
+prep_conjointly_expectation_text <- function(values_text, lang) {
+  
+  glue::glue(conjointly_expectation_text[lang])
+}
+
+prep_col_exists_expectation_text <- function(column_text,lang) {
+  
+  glue::glue(col_exists_expectation_text[lang])
+}
+
+prep_col_is_expectation_text <- function(column_text, col_type, lang) {
+  
+  glue::glue(col_is_expectation_text[lang])
+}
+
+prep_row_distinct_expectation_text <- function(column_text, lang) {
+
+  if (column_text == "``") {
+    glue::glue(all_row_distinct_expectation_text[lang])
+  } else {
+    glue::glue(across_row_distinct_expectation_text[lang])
+  }
 }

@@ -9,7 +9,8 @@ create_agent(
   name = NULL,
   actions = NULL,
   end_fns = NULL,
-  embed_report = FALSE
+  embed_report = FALSE,
+  reporting_lang = NULL
 )
 }
 \arguments{
@@ -33,6 +34,11 @@ interrogation.}
 the \code{ptblank_agent} object. If \code{FALSE} (the default) then the table object
 will be not generated and available with the agent upon returning from the
 interrogation.}
+
+\item{reporting_lang}{The language to use for automatic creation of briefs
+(short descriptions for each validation step). By default, \code{NULL} will
+create English (\code{"en"}) text. Other options include French (\code{"fr"}),
+German (\code{"de"}), Italian (\code{"it"}), and Spanish (\code{"es"}).}
 }
 \value{
 A \code{ptblank_agent} object.

@@ -127,6 +127,17 @@ conjointly <- function(x,
   
   agent <- x
   
+  if (is.null(brief)) {
+    
+    brief <-
+      create_autobrief(
+        agent = agent,
+        assertion_type = "conjointly",
+        preconditions = preconditions,
+        values = validation_formulas
+      )
+  }
+  
   agent <-
     create_validation_step(
       agent = agent,

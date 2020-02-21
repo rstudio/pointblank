@@ -1,0 +1,330 @@
+context("An x-list has the correct components")
+
+al <- action_levels(warn_at = 0.1, stop_at = 0.2)
+
+agent <-
+  create_agent(tbl = small_table, actions = al) %>%
+  col_vals_gt(vars(g), 100, preconditions = ~tbl %>% dplyr::mutate(g = a + 95)) %>%
+  col_vals_lt(vars(c), vars(d), preconditions = ~tbl %>% dplyr::mutate(d = d - 200)) %>%
+  col_vals_in_set(vars(f), c("low", "mid", "high", "higher"))
+
+test_that("An x-list for a step is structurally correct", {
+  
+  # Get an x-list at step 1 before interrogation
+  x_list_before <- 
+    agent %>%
+    get_agent_x_list(i = 1)
+  
+  # Expect the class names for the object to be `x_list`
+  # and `x_list_i`
+  expect_is(x_list_before, "x_list")
+  expect_is(x_list_before, "x_list_i")
+  
+  # Expect elements of the object to be equivalent
+  # to specific parameters
+  expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_before$name))
+  expect_equal(length(x_list_before$time), 0)
+  expect_is(x_list_before$time, "POSIXct")
+  expect_is(x_list_before$tbl_name, "character")
+  expect_equal(x_list_before$tbl_name, "small_table")
+  expect_is(x_list_before$tbl_src, "character")
+  expect_equal(x_list_before$tbl_src, "data.frame")
+  expect_is(x_list_before$tbl, "tbl_df")
+  expect_equivalent(x_list_before$tbl, small_table)
+  expect_is(x_list_before$tbl_src_details, "character")
+  expect_true(length(x_list_before$tbl_src_details) == 0)
+  expect_is(x_list_before$col_names, "character")
+  expect_equal(x_list_before$col_names, colnames(small_table))
+  expect_is(x_list_before$col_types, "character")
+  expect_equal(
+    x_list_before$col_types,
+    c("POSIXct", "Date", "integer", "character", "numeric", "numeric", 
+      "logical", "character")
+  )
+  expect_is(x_list_before$i, "numeric")
+  expect_equal(x_list_before$i, 1)
+  expect_is(x_list_before$type, "character")
+  expect_equal(x_list_before$type, "col_vals_gt")
+  expect_is(x_list_before$column, "character")
+  expect_equal(x_list_before$column, "g")
+  expect_is(x_list_before$values, "numeric")
+  expect_equal(x_list_before$values, 100)
+  expect_is(x_list_before$values, "numeric")
+  expect_equal(x_list_before$values, 100)
+  expect_is(x_list_before$brief, "character")
+  expect_equal(
+    x_list_before$brief, 
+    paste0(
+      "Expect that values in `g` (computed column) should be > `100`. ",
+      "Precondition applied: `tbl %>% dplyr::mutate(g = a + 95)`."
+      )
+  )
+  expect_is(x_list_before$eval_error, "logical")
+  expect_equal(x_list_before$eval_error, NA)
+  expect_is(x_list_before$eval_warning, "logical")
+  expect_equal(x_list_before$eval_warning, NA)
+  expect_null(x_list_before$capture_stack)
+  expect_is(x_list_before$n, "integer")
+  expect_equal(x_list_before$n, NA_integer_)
+  expect_is(x_list_before$n_passed, "integer")
+  expect_equal(x_list_before$n_passed, NA_integer_)
+  expect_is(x_list_before$n_failed, "integer")
+  expect_equal(x_list_before$n_failed, NA_integer_)
+  expect_is(x_list_before$f_passed, "numeric")
+  expect_equal(x_list_before$f_passed, NA_real_)
+  expect_is(x_list_before$f_failed, "numeric")
+  expect_equal(x_list_before$f_failed, NA_real_)
+  expect_is(x_list_before$warn, "logical")
+  expect_equal(x_list_before$warn, NA)
+  expect_is(x_list_before$notify, "logical")
+  expect_equal(x_list_before$notify, NA)
+  expect_is(x_list_before$stop, "logical")
+  expect_equal(x_list_before$stop, NA)
+  
+  # Get an x-list at step 1 after interrogation
+  x_list_after <- 
+    agent %>%
+    interrogate() %>%
+    get_agent_x_list(i = 1)
+  
+  # Expect the class names for the object to be `x_list`
+  # and `x_list_i`
+  expect_is(x_list_after, "x_list")
+  expect_is(x_list_after, "x_list_i")
+  
+  # Expect elements of the object to be equivalent
+  # to specific parameters
+  expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_after$name))
+  expect_equal(length(x_list_after$time), 1)
+  expect_is(x_list_after$time, "POSIXct")
+  expect_is(x_list_after$tbl_name, "character")
+  expect_equal(x_list_after$tbl_name, "small_table")
+  expect_is(x_list_after$tbl_src, "character")
+  expect_equal(x_list_after$tbl_src, "data.frame")
+  expect_is(x_list_after$tbl, "tbl_df")
+  expect_equivalent(x_list_after$tbl, small_table)
+  expect_is(x_list_after$tbl_src_details, "character")
+  expect_true(length(x_list_after$tbl_src_details) == 0)
+  expect_is(x_list_after$col_names, "character")
+  expect_equal(x_list_after$col_names, colnames(small_table))
+  expect_is(x_list_after$col_types, "character")
+  expect_equal(
+    x_list_after$col_types,
+    c("POSIXct", "Date", "integer", "character", "numeric", "numeric", 
+      "logical", "character")
+  )
+  expect_is(x_list_after$i, "numeric")
+  expect_equal(x_list_after$i, 1)
+  expect_is(x_list_after$type, "character")
+  expect_equal(x_list_after$type, "col_vals_gt")
+  expect_is(x_list_after$column, "character")
+  expect_equal(x_list_after$column, "g")
+  expect_is(x_list_after$values, "numeric")
+  expect_equal(x_list_after$values, 100)
+  expect_is(x_list_after$values, "numeric")
+  expect_equal(x_list_after$values, 100)
+  expect_is(x_list_after$brief, "character")
+  expect_equal(
+    x_list_after$brief, 
+    paste0(
+      "Expect that values in `g` (computed column) should be > `100`. ",
+      "Precondition applied: `tbl %>% dplyr::mutate(g = a + 95)`."
+    )
+  )
+  expect_is(x_list_after$eval_error, "logical")
+  expect_equal(x_list_after$eval_error, FALSE)
+  expect_is(x_list_after$eval_warning, "logical")
+  expect_equal(x_list_after$eval_warning, FALSE)
+  expect_is(x_list_after$capture_stack, "list")
+  expect_equal(length(x_list_after$capture_stack), 2)
+  expect_equal(names(x_list_after$capture_stack), c("warning", "error"))
+  expect_is(x_list_after$n, "numeric")
+  expect_equal(x_list_after$n, 13)
+  expect_is(x_list_after$n_passed, "numeric")
+  expect_equal(x_list_after$n_passed, 3)
+  expect_is(x_list_after$n_failed, "numeric")
+  expect_equal(x_list_after$n_failed, 10)
+  expect_is(x_list_after$f_passed, "numeric")
+  expect_equal(x_list_after$f_passed, 0.23077)
+  expect_is(x_list_after$f_failed, "numeric")
+  expect_equal(x_list_after$f_failed, 0.76923)
+  expect_is(x_list_after$warn, "logical")
+  expect_equal(x_list_after$warn, TRUE)
+  expect_is(x_list_after$notify, "logical")
+  expect_equal(x_list_after$notify, NA)
+  expect_is(x_list_after$stop, "logical")
+  expect_equal(x_list_after$stop, TRUE)
+})
+
+
+test_that("A complete x-list is structurally correct", {
+  
+  # Get an x-list at step 1 before interrogation
+  x_list_before <- 
+    agent %>%
+    get_agent_x_list()
+  
+  # Expect the class names for the object to be `x_list`
+  # and `x_list_i`
+  expect_is(x_list_before, "x_list")
+  expect_is(x_list_before, "x_list_n")
+  
+  # Expect elements of the object to be equivalent
+  # to specific parameters
+  expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_before$name))
+  expect_equal(length(x_list_before$time), 0)
+  expect_is(x_list_before$time, "POSIXct")
+  expect_is(x_list_before$tbl_name, "character")
+  expect_equal(x_list_before$tbl_name, "small_table")
+  expect_is(x_list_before$tbl_src, "character")
+  expect_equal(x_list_before$tbl_src, "data.frame")
+  expect_is(x_list_before$tbl, "tbl_df")
+  expect_equivalent(x_list_before$tbl, small_table)
+  expect_is(x_list_before$tbl_src_details, "character")
+  expect_true(length(x_list_before$tbl_src_details) == 0)
+  expect_is(x_list_before$col_names, "character")
+  expect_equal(x_list_before$col_names, colnames(small_table))
+  expect_is(x_list_before$col_types, "character")
+  expect_equal(
+    x_list_before$col_types,
+    c("POSIXct", "Date", "integer", "character", "numeric", "numeric", 
+      "logical", "character")
+  )
+  expect_is(x_list_before$i, "integer")
+  expect_equal(x_list_before$i, 1:3)
+  expect_is(x_list_before$type, "character")
+  expect_equal(x_list_before$type, c("col_vals_gt", "col_vals_lt", "col_vals_in_set"))
+  expect_is(x_list_before$column, "list")
+  expect_equal(length(x_list_before$column), 3)
+  expect_equal(x_list_before$column %>% unlist(), c("g", "c", "f"))
+  expect_is(x_list_before$values, "list")
+  expect_equal(length(x_list_before$values), 3)
+  expect_equal(unlist(x_list_before$values[1]), 100)
+  expect_is(unlist(x_list_before$values[2]), "list")
+  expect_is(unlist(x_list_before$values[2])[[1]], "quosure")
+  expect_equal(unlist(x_list_before$values[3]), c("low", "mid", "high", "higher"))
+  expect_is(x_list_before$brief, "character")
+  expect_equal(
+    x_list_before$brief,
+    c(
+      paste0(
+        "Expect that values in `g` (computed column) should be > `100`. ",
+        "Precondition applied: `tbl %>% dplyr::mutate(g = a + 95)`."
+      ),
+      paste0(
+        "Expect that values in `c` should be < `d`. Precondition applied: ",
+        "`tbl %>% dplyr::mutate(d = d - 200)`."
+      ),
+      paste0(
+        "Expect that values in `f` should be in the set of `low`, `mid`, ",
+        "`high` (and 1 more). "
+      )
+    )
+  )
+  expect_is(x_list_before$eval_error, "logical")
+  expect_equal(x_list_before$eval_error, rep(NA, 3))
+  expect_is(x_list_before$eval_warning, "logical")
+  expect_equal(x_list_before$eval_warning, rep(NA, 3))
+  expect_is(x_list_before$capture_stack, "list")
+  expect_is(x_list_before$n, "integer")
+  expect_equal(x_list_before$n, rep(NA_integer_, 3))
+  expect_is(x_list_before$n_passed, "integer")
+  expect_equal(x_list_before$n_passed, rep(NA_integer_, 3))
+  expect_is(x_list_before$n_failed, "integer")
+  expect_equal(x_list_before$n_failed, rep(NA_integer_, 3))
+  expect_is(x_list_before$f_passed, "numeric")
+  expect_equal(x_list_before$f_passed, rep(NA_real_, 3))
+  expect_is(x_list_before$f_failed, "numeric")
+  expect_equal(x_list_before$f_failed, rep(NA_real_, 3))
+  expect_is(x_list_before$warn, "logical")
+  expect_equal(x_list_before$warn, rep(NA, 3))
+  expect_is(x_list_before$notify, "logical")
+  expect_equal(x_list_before$notify, rep(NA, 3))
+  expect_is(x_list_before$stop, "logical")
+  expect_equal(x_list_before$stop, rep(NA, 3))
+  
+  # Get an x-list at step 1 after interrogation
+  x_list_after <- 
+    agent %>%
+    interrogate() %>%
+    get_agent_x_list()
+  
+  # Expect the class names for the object to be `x_list`
+  # and `x_list_i`
+  expect_is(x_list_after, "x_list")
+  expect_is(x_list_after, "x_list_n")
+  
+  # Expect elements of the object to be equivalent
+  # to specific parameters
+  expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_after$name))
+  expect_equal(length(x_list_after$time), 1)
+  expect_is(x_list_after$time, "POSIXct")
+  expect_is(x_list_after$tbl_name, "character")
+  expect_equal(x_list_after$tbl_name, "small_table")
+  expect_is(x_list_after$tbl_src, "character")
+  expect_equal(x_list_after$tbl_src, "data.frame")
+  expect_is(x_list_after$tbl, "tbl_df")
+  expect_equivalent(x_list_after$tbl, small_table)
+  expect_is(x_list_after$tbl_src_details, "character")
+  expect_true(length(x_list_after$tbl_src_details) == 0)
+  expect_is(x_list_after$col_names, "character")
+  expect_equal(x_list_after$col_names, colnames(small_table))
+  expect_is(x_list_after$col_types, "character")
+  expect_equal(
+    x_list_after$col_types,
+    c("POSIXct", "Date", "integer", "character", "numeric", "numeric", 
+      "logical", "character")
+  )
+  expect_is(x_list_after$i, "integer")
+  expect_equal(x_list_after$i, 1:3)
+  expect_is(x_list_after$type, "character")
+  expect_equal(x_list_after$type, c("col_vals_gt", "col_vals_lt", "col_vals_in_set"))
+  expect_is(x_list_after$column, "list")
+  expect_equal(length(x_list_after$column), 3)
+  expect_equal(x_list_after$column %>% unlist(), c("g", "c", "f"))
+  expect_is(x_list_after$values, "list")
+  expect_equal(length(x_list_after$values), 3)
+  expect_equal(unlist(x_list_after$values[1]), 100)
+  expect_is(unlist(x_list_after$values[2]), "list")
+  expect_is(unlist(x_list_after$values[2])[[1]], "quosure")
+  expect_equal(unlist(x_list_after$values[3]), c("low", "mid", "high", "higher"))
+  expect_is(x_list_after$brief, "character")
+  expect_equal(
+    x_list_after$brief,
+    c(
+      paste0(
+        "Expect that values in `g` (computed column) should be > `100`. ",
+        "Precondition applied: `tbl %>% dplyr::mutate(g = a + 95)`."
+      ),
+      paste0(
+        "Expect that values in `c` should be < `d`. Precondition applied: ",
+        "`tbl %>% dplyr::mutate(d = d - 200)`."
+      ),
+      paste0(
+        "Expect that values in `f` should be in the set of `low`, `mid`, ",
+        "`high` (and 1 more). "
+      )
+    )
+  )
+  expect_is(x_list_after$eval_error, "logical")
+  expect_equal(x_list_after$eval_error, rep(FALSE, 3))
+  expect_is(x_list_after$eval_warning, "logical")
+  expect_equal(x_list_after$eval_warning, rep(FALSE, 3))
+  expect_is(x_list_after$capture_stack, "list")
+  expect_is(x_list_after$n, "numeric")
+  expect_equal(x_list_after$n, rep(13, 3))
+  expect_is(x_list_after$n_passed, "numeric")
+  expect_equal(x_list_after$n_passed, c(3, 10, 13))
+  expect_is(x_list_after$n_failed, "numeric")
+  expect_equal(x_list_after$n_failed, c(10, 3, 0))
+  expect_is(x_list_after$f_passed, "numeric")
+  expect_equal(x_list_after$f_passed, c(0.23077, 0.76923, 1))
+  expect_is(x_list_after$f_failed, "numeric")
+  expect_equal(x_list_after$f_failed, c(0.76923, 0.23077, 0))
+  expect_is(x_list_after$warn, "logical")
+  expect_equal(x_list_after$warn, c(TRUE, TRUE, FALSE))
+  expect_is(x_list_after$notify, "logical")
+  expect_equal(x_list_after$notify, rep(NA, 3))
+  expect_is(x_list_after$stop, "logical")
+  expect_equal(x_list_after$stop, c(TRUE, TRUE, FALSE))
+})

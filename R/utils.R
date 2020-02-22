@@ -138,32 +138,88 @@ get_tbl_dbi_src_details <- function(tbl) {
   tbl_src_info[grepl("^src:", tbl_src_info)] %>% gsub("src:\\s*", "", .)
 }
 
+get_r_column_names_types <- function(tbl) {
+  
+  suppressWarnings(
+    column_names_types <-
+      tbl %>%
+      utils::head(1) %>%
+      dplyr::collect() %>%
+      vapply(
+        FUN.VALUE = character(1),
+        FUN = function(x) class(x)[1]
+      )
+  )
+  
+  list(
+    col_names = names(column_names_types),
+    r_col_types = unname(unlist(column_names_types))
+  )
+}
+
 get_tbl_information <- function(tbl) {
   
   if (inherits(tbl, "data.frame")) {
     
+    r_column_names_types <- get_r_column_names_types(tbl)
+    
     return(
       list(
         tbl_src = "data.frame",
-        tbl_src_details = character(0)
+        tbl_src_details = NA_character_,
+        db_tbl_name = NA_character_,
+        col_names = r_column_names_types$col_names,
+        r_col_types = r_column_names_types$r_col_types,
+        db_col_types = NA_character_
       )
     )
     
   } else if (inherits(tbl, "tbl_df")) {
+
+    r_column_names_types <- get_r_column_names_types(tbl)
     
     return(
       list(
         tbl_src = "tbl_df",
-        tbl_src_details = character(0)
+        tbl_src_details = NA_character_,
+        db_tbl_name = NA_character_,
+        col_names = r_column_names_types$col_names,
+        r_col_types = r_column_names_types$r_col_types,
+        db_col_types = NA_character_
       )
     )
     
   } else if (inherits(tbl, "tbl_dbi")) {
     
+    tbl_src <- gsub("^([a-z]*).*", "\\1", get_tbl_dbi_src_details(tbl))
+    
+    r_column_names_types <- get_r_column_names_types(tbl)
+    
+    tbl_connection <- tbl %>% .$src %>% .$con
+    
+    db_tbl_name <- dbplyr::remote_name(tbl) %>% as.character()
+    
+    q_types <- 
+      glue::glue(
+        "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}'"
+      )
+    
+    if (tbl_src != "sqlite") {
+      db_col_types <- 
+        DBI::dbGetQuery(tbl_connection, q_types) %>%
+        dplyr::pull(DATA_TYPE)
+    } else {
+      db_col_types <- NA_character_
+    }
+    
     return(
       list(
+        tbl_src = tbl_src,
         tbl_src_details = get_tbl_dbi_src_details(tbl),
-        tbl_src = gsub("^([a-z]*).*", "\\1", get_tbl_dbi_src_details(tbl))
+        db_tbl_name = db_tbl_name,
+        col_names = r_column_names_types$col_names,
+        r_col_types = r_column_names_types$r_col_types,
+        db_col_types = db_col_types
       )
     )
     

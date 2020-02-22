@@ -80,7 +80,7 @@ create_agent <- function(tbl,
     brief <- "Create agent with an assigned validation name"
   }
   
-  # Normalize the reporting language identifer and stop if necessary
+  # Normalize the reporting language identifier and stop if necessary
   reporting_lang <- normalize_reporting_language(reporting_lang)
 
   tbl_name <- deparse(match.call()$tbl)
@@ -88,22 +88,9 @@ create_agent <- function(tbl,
   if (tbl_name == ".") {
     tbl_name <- "table"
   }
-
-  suppressWarnings(
-    column_names_types <-
-      tbl %>%
-      utils::head(1) %>%
-      dplyr::collect() %>%
-      vapply(
-        FUN.VALUE = character(1),
-        FUN = function(x) class(x)[1]
-      )
-  )
   
-  column_names <- names(column_names_types)
-  column_types <- unname(unlist(column_names_types))
   tbl_information <- get_tbl_information(tbl = tbl)
-  
+
   # If any `end_fns` are specified we always attempt to
   # embed the validation report
   if (!is.null(end_fns)) {
@@ -117,10 +104,12 @@ create_agent <- function(tbl,
       time = as.POSIXct(NA)[-1],
       tbl = tbl,
       tbl_name = tbl_name,
+      db_tbl_name = tbl_information$db_tbl_name,
       tbl_src = tbl_information$tbl_src,
       tbl_src_details = tbl_information$tbl_src_details,
-      col_names = column_names,
-      col_types = column_types,
+      col_names = tbl_information$col_names,
+      col_types = tbl_information$r_col_types,
+      db_col_types = tbl_information$db_col_types,
       actions = list(actions),
       end_fns = list(end_fns),
       embed_report = embed_report,

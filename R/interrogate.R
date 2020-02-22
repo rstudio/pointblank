@@ -384,7 +384,8 @@ check_table_with_assertion <- function(agent, idx, table, assertion_type) {
       "col_is_posix" =,
       "col_is_date" =,
       "col_is_factor" = interrogate_col_type(agent, idx, table, assertion_type),
-      "rows_distinct" = interrogate_distinct(agent, idx, table)
+      "rows_distinct" = interrogate_distinct(agent, idx, table),
+      "col_schema_match" = interrogate_col_schema_match(agent, idx, table)
     )
 }
 
@@ -728,6 +729,36 @@ interrogate_distinct <- function(agent, idx, table) {
   } else {
     pointblank_try_catch(tbl_rows_distinct(table, {{ column_names }}, col_syms))
   }
+}
+
+interrogate_col_schema_match <- function(agent, idx, table) {
+
+  # Get the reference `col_schema` object
+  table_schema_y <- agent$validation_set$values[[idx]]
+  
+  # Get the `table` `col_schema` object
+  if (inherits(table, "tbl_dbi")) {
+    if (inherits(table_schema_y, "sql_type")) {
+      table_schema_x <- col_schema(.tbl = table, .db_col_types = "sql")
+    } else if (inherits(table_schema_y, "r_type")) {
+      table_schema_x <- col_schema(.tbl = table, .db_col_types = "r")
+    }
+  } else {
+    table_schema_x <- col_schema(.tbl = table)
+  }
+  
+  # Create function for validating the `col_schema_match()` step function
+  tbl_col_schema_match <- function(table, schema) {
+    
+    if (identical(table_schema_x, table_schema_y)) {
+      dplyr::tibble(pb_is_good_ = TRUE)
+    } else {
+      dplyr::tibble(pb_is_good_ = FALSE)
+    }
+  }
+  
+  # Perform the validation of the table 
+  pointblank_try_catch(tbl_col_schema_match(table, schema))
 }
 
 pointblank_try_catch <- function(expr) {

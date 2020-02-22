@@ -29,6 +29,7 @@ utils::globalVariables(
     "precon",
     "preconditions",
     "S",
+    "schema",
     "S_pts",
     "S_val",
     "tbl_checked",

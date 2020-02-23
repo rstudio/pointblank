@@ -144,6 +144,15 @@ across_row_distinct_expectation_text <-
     "es" = "Espere filas completamente distintas en {column_text}."
   )
 
+col_schema_match_expectation_text <-
+  c(
+    "en" = "Expect that column schemas match.",
+    "fr" = "Attendez-vous \u00E0 ce que les sch\u00E9mas de colonnes correspondent.",
+    "de" = "Erwarten Sie, dass die Spaltenschemata \u00FCbereinstimmen.",
+    "it" = "Aspettati che gli schemi di colonna corrispondano.",
+    "es" = "Espere que los esquemas de columna coincidan."
+  )
+
 
 # Text for agent report
 
@@ -179,8 +188,17 @@ report_col_step <-
     "en" = "STEP",
     "fr" = "\u00C9TAPE",
     "de" = "SCHRITT",
-    "it" = "PASSAGGIO",
-    "es" = "PASO"
+    "it" = "INDICI",
+    "es" = "\u00CDNDICE"
+  )
+
+report_col_steps <-
+  c(
+    "en" = "STEPS",
+    "fr" = "\u00C9TAPES",
+    "de" = "SCHRITTE",
+    "it" = "INDICE",
+    "es" = "\u00CDNDICES"
   )
 
 report_col_columns <-
@@ -199,6 +217,33 @@ report_col_values <-
     "de" = "WERTE",
     "it" = "VALORI",
     "es" = "VALORES"
+  )
+
+report_column_schema <-
+  c(
+    "en" = "SCHEMA",
+    "fr" = "SCH\u00C9MA",
+    "de" = "SCHEMA",
+    "it" = "SCHEMA",
+    "es" = "ESQUEMA"
+  )
+
+report_r_col_types <-
+  c(
+    "en" = "R TYPES",
+    "fr" = "TYPES R",
+    "de" = "R-TYPEN",
+    "it" = "TIPI R",
+    "es" = "TIPOS R"
+  )
+
+report_r_sql_types <-
+  c(
+    "en" = "SQL TYPES",
+    "fr" = "TYPES SQL",
+    "de" = "SQL-TYPEN",
+    "it" = "TIPI SQL",
+    "es" = "TIPOS SQL"
   )
 
 reporting_languages <- c("en", "fr", "de", "it", "es")

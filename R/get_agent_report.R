@@ -233,7 +233,10 @@ get_agent_report <- function(agent,
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
         FUN = function(x) {
+
           if (is.null(x) | (is.list(x) && is.na(unlist(x)))) {
+            x <- NA_character_
+          } else if (is.na(x)) {
             x <- NA_character_
           } else {
             text <- x %>% unlist() %>% strsplit(", ") %>% unlist()
@@ -258,7 +261,7 @@ get_agent_report <- function(agent,
           x
         }
       )
-    
+
     # Reformat `values`
     values_upd <- 
       validation_set$values %>%
@@ -266,18 +269,50 @@ get_agent_report <- function(agent,
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
         FUN = function(x) {
-          if (is.list(x) && length(x) > 0 && !inherits(x, "quosures")) {
-            text <- paste0(length(x), ifelse(length(x) > 1, " STEPS", " STEP"))
+
+          if (is.list(x) && length(x) > 0 && inherits(x, "col_schema")) {
+            
+            column_schema_text <- report_column_schema[lang]
+            column_schema_type_text <- 
+              if (inherits(x, "r_type")) {
+                report_r_col_types[lang]
+              } else {
+                report_r_sql_types[lang]
+              }
+            
+            x <- 
+              paste0(
+                "<div>",
+                "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "font-size: 0.75rem;\">", column_schema_text, "</p>",
+                "<p style=\"margin-top: 2px; margin-bottom: 0px; ",
+                "font-size: 0.65rem;\">", column_schema_type_text, "</p>",
+                "</div>"
+              )
+            
+          } else if (is.list(x) && length(x) > 0 && !inherits(x, "quosures")) {
+            
+            steptext <- paste0(length(x), ifelse(length(x) > 1, " STEPS", " STEP"))
+            
+            step_text <- 
+              if (length(x) > 1) {
+                paste0(length(x), " ", report_col_step[lang])
+              } else {
+                paste0(length(x), " ", report_col_steps[lang])
+              }
             
             x <- 
               paste0(
                 "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
-                "font-size: 0.75rem;\">", text, "</p></div>"
+                "font-size: 0.75rem;\">", step_text, "</p></div>"
               )
             
           } else if (is.null(x)) {
+            
             x <- NA_character_
+            
           } else {
+            
             text <-
               x %>%
               tidy_gsub(

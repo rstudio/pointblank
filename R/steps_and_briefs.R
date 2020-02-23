@@ -188,6 +188,12 @@ create_autobrief <- function(agent,
     autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
+  if (assertion_type == "col_schema_match") {
+    
+    expectation_text <- prep_col_schema_match_expectation_text(lang = lang)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
+  }
+  
   if (assertion_type == "conjointly") {
 
     values_text <- values_text %>% tidy_gsub("\"", "'")
@@ -352,4 +358,9 @@ prep_row_distinct_expectation_text <- function(column_text, lang) {
   } else {
     glue::glue(across_row_distinct_expectation_text[lang])
   }
+}
+
+prep_col_schema_match_expectation_text <- function(lang) {
+  
+  glue::glue(col_schema_match_expectation_text[lang])
 }

@@ -54,6 +54,8 @@
 #' all_passed(agent)
 #' 
 #' @family Validation Step Functions
+#' @section Function ID:
+#' 2-24
 #' 
 #' @export
 col_schema_match <- function(x,
@@ -109,6 +111,10 @@ col_schema_match <- function(x,
 #'   provided then any values provided to `...` will be ignored.
 #' @param .db_col_types Determines whether the column types refer to R column
 #'   types (`"r"`) or SQL column types (`"sql"`).
+#'   
+#' @family Planning and Prep
+#' @section Function ID:
+#' 1-3
 #' 
 #' @export
 col_schema <- function(...,

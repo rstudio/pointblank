@@ -13,6 +13,7 @@ reference:
     contents:
     - create_agent
     - action_levels
+    - col_schema
 
   - title: Validation Step Functions
     desc: >
@@ -48,6 +49,7 @@ reference:
     - col_is_posix
     - col_is_factor
     - col_exists
+    - col_schema_match
     
   - title: Emailing
     desc: >

@@ -81,11 +81,11 @@ agent <-
 ```
 
     #> 
-    #> ── Interrogation Started - 2 Steps in Total ────────────────────────────────────────────────────────────
+    #> ── Interrogation Started - 2 Steps in Total ────────────────────────────────────────
     #> ✓ Step 1: OK.
     #> ! Step 2: WARNING condition met.
     #> 
-    #> ── Interrogation Completed ─────────────────────────────────────────────────────────────────────────────
+    #> ── Interrogation Completed ─────────────────────────────────────────────────────────
 
 Because an *agent* was used, we can get a report from it.
 
@@ -96,7 +96,7 @@ agent
 <img src="man/figures/agent_report.png">
 
 Here’s another example that follows the second, *agent*-less workflow
-(validation step functions operating directly on data).
+(where validation step functions operate directly on data).
 
 ``` r
 # Use the same two validation step functions as before

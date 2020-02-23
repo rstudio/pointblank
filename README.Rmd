@@ -83,7 +83,7 @@ agent
 
 <img src="man/figures/agent_report.png">
 
-Here's another example that follows the second, *agent*-less workflow (validation step functions operating directly on data).
+Here's another example that follows the second, *agent*-less workflow (where validation step functions operate directly on data).
 
 ```{r example_workflow_two, eval=FALSE}
 # Use the same two validation step functions as before

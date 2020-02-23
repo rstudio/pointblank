@@ -19,3 +19,14 @@ types (\code{"r"}) or SQL column types (\code{"sql"}).}
 \description{
 Generate a table column schema manually or with a reference table
 }
+\section{Function ID}{
+
+1-3
+}
+
+\seealso{
+Other Planning and Prep: 
+\code{\link{action_levels}()},
+\code{\link{create_agent}()}
+}
+\concept{Planning and Prep}

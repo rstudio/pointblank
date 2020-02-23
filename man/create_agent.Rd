@@ -89,6 +89,7 @@ agent <-
 }
 \seealso{
 Other Planning and Prep: 
-\code{\link{action_levels}()}
+\code{\link{action_levels}()},
+\code{\link{col_schema}()}
 }
 \concept{Planning and Prep}

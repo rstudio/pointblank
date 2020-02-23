@@ -106,6 +106,7 @@ suppressWarnings(
 }
 \seealso{
 Other Planning and Prep: 
+\code{\link{col_schema}()},
 \code{\link{create_agent}()}
 }
 \concept{Planning and Prep}

@@ -50,6 +50,11 @@ with some text that fits. Don't worry if you don't want to do it. The
 \emph{autobrief} protocol is kicked in when \code{brief = NULL} and a simple brief will
 then be automatically generated.
 }
+\section{Function ID}{
+
+2-24
+}
+
 \examples{
 # Create a simple table with
 # two columns: one `integer` and

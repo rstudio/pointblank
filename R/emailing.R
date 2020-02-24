@@ -26,6 +26,75 @@
 #'   of length 1. If `TRUE` then the email will be sent, if `FALSE` then that
 #'   won't happen.
 #'   
+#' @examples
+#' library(dplyr)
+#' 
+#' # Create a simple table with two
+#' # columns of numerical values
+#' tbl <-
+#'   tibble(
+#'     a = c(5, 7, 6, 5, 8, 7),
+#'     b = c(7, 1, 0, 0, 0, 3)
+#'   )
+#'
+#' # Create an `action_levels()` list
+#' # with absolute values for the
+#' # `warn`, and `notify` states (with
+#' # thresholds of 1 and 2 'fail' units)
+#' al <- 
+#'   action_levels(
+#'     warn_at = 1,
+#'     notify_at = 2
+#'   )
+#' 
+#' # Validate that values in column
+#' # `a` from `tbl` are always > 5 and
+#' # that `b` values are always < 5;
+#' # first, apply the `actions_levels()`
+#' # directive to `actions` and set up
+#' # an `email_blast()` as one of the
+#' # `end_fns` (by default, the email
+#' # will be sent if there is a single
+#' # 'notify' state across all
+#' # validation steps)
+#' # agent <-
+#' #   create_agent(
+#' #     tbl = tbl,
+#' #     actions = al,
+#' #     end_fns = list(
+#' #       ~ email_blast(
+#' #         x,
+#' #         to = "joe_public@example.com",
+#' #         from = "pb_notif@example.com",
+#' #         msg_subject = "Table Validation",
+#' #         credentials = blastula::creds_key(
+#' #           id = "gmail"
+#' #         ),
+#' #       )
+#' #     )
+#' #   ) %>%
+#' #   col_vals_gt(vars(a), 5) %>%
+#' #   col_vals_lt(vars(b), 5) %>%
+#' #   interrogate()
+#' 
+#' # This example was intentionally
+#' # not run because email credentials
+#' # aren't available and the `to`
+#' # and `from` email addressed are
+#' # nonexistent; to look at the email
+#' # message before sending anything of
+#' # the like, we can use the 
+#' # `email_blast_preview()` function
+#' email_object <-
+#'   create_agent(
+#'     tbl = tbl,
+#'     actions = al
+#'   ) %>%
+#'     col_vals_gt(vars(a), 5) %>%
+#'     col_vals_lt(vars(b), 5) %>%
+#'     interrogate() %>%
+#'     email_blast_preview()
+#'   
 #' @family Emailing
 #' @section Function ID:
 #' 3-1
@@ -105,6 +174,64 @@ email_blast <- function(x,
 #'   footer components of the HTML email message.
 #'   
 #' @return A **blastula** `email_message` object.
+#' 
+#' @examples
+#' library(dplyr)
+#' 
+#' # Create a simple table with two
+#' # columns of numerical values
+#' tbl <-
+#'   tibble(
+#'     a = c(5, 7, 6, 5, 8, 7),
+#'     b = c(7, 1, 0, 0, 0, 3)
+#'   )
+#'
+#' # Create an `action_levels()` list
+#' # with absolute values for the
+#' # `warn`, and `notify` states (with
+#' # thresholds of 1 and 2 'fail' units)
+#' al <- 
+#'   action_levels(
+#'     warn_at = 1,
+#'     notify_at = 2
+#'   )
+#' 
+#' # In a workflow that involves an
+#' # `agent` object, we can set up a
+#' # series of `end_fns` and have report
+#' # emailing with `email_blast()` but,
+#' # first, we can look at the email
+#' # message object beforehand by using
+#' # the `email_blast_preview()` function
+#' # on an `agent` object
+#' email_object <-
+#'   create_agent(
+#'     tbl = tbl,
+#'     actions = al
+#'   ) %>%
+#'     col_vals_gt(vars(a), 5) %>%
+#'     col_vals_lt(vars(b), 5) %>%
+#'     interrogate() %>%
+#'     email_blast_preview()
+#' 
+#' # The `email_blast_preview()`
+#' # function can also be used on an
+#' # agent x-list to get the same
+#' # email message object
+#' email_object <-
+#'   create_agent(
+#'     tbl = tbl,
+#'     actions = al
+#'   ) %>%
+#'     col_vals_gt(vars(a), 5) %>%
+#'     col_vals_lt(vars(b), 5) %>%
+#'     interrogate() %>%
+#'     get_agent_x_list() %>%
+#'     email_blast_preview()
+#' 
+#' # We can view the HTML email just
+#' # by printing `email_object`; it
+#' # should appear in the Viewer
 #' 
 #' @family Emailing
 #' @section Function ID:

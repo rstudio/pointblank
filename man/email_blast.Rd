@@ -35,7 +35,12 @@ footer components of the HTML email message.}
 
 \item{send_condition}{An expression that should evaluate to a logical vector
 of length 1. If \code{TRUE} then the email will be sent, if \code{FALSE} then that
-won't happen.}
+won't happen. The expression can use x-list variables (e.g., \code{x$notify},
+\code{x$type}, etc.) and all of those variables can be viewed using the
+\code{\link[=get_agent_x_list]{get_agent_x_list()}} function. The default expression is \code{~TRUE \%in\% x$notify},
+which results in \code{TRUE} if there are any \code{TRUE} values in the \code{x$notify}
+logical vector (i.e., any validation step results in a 'notify'
+condition).}
 }
 \description{
 The \code{email_blast()} function is useful for sending an email message that
@@ -44,8 +49,10 @@ explains the result of a \strong{pointblank} validation. It is powered by the
 \code{install.packages()}). This function should be invoked as part of the
 \code{end_fns} argument of \code{\link[=create_agent]{create_agent()}}. It's also possible to invoke
 \code{email_blast()} as part of the \code{fns} argument of the \code{\link[=action_levels]{action_levels()}}
-function (to possibly send an email message at one or more steps). To better
-get a handle on emailing with \code{email_blast()}, the analogous
+function (to possibly send an email message at one or more steps).
+}
+\details{
+To better get a handle on emailing with \code{email_blast()}, the analogous
 \code{\link[=email_blast_preview]{email_blast_preview()}} can be used with a \strong{pointblank} agent object or the
 output obtained from using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function.
 }
@@ -108,7 +115,7 @@ al <-
 # This example was intentionally
 # not run because email credentials
 # aren't available and the `to`
-# and `from` email addressed are
+# and `from` email addresses are
 # nonexistent; to look at the email
 # message before sending anything of
 # the like, we can use the 

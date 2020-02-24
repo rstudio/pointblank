@@ -14,12 +14,12 @@
 #' @param x A reference to list object prepared by the agent. It's only
 #'   available in an internal evaluation context.
 #' @param to,from The email addresses for the recipients and the sender.
-#' @param subject The subject line of the email message.
 #' @param credentials A credentials list object that is produced by either of
 #'   the [blastula::creds()], [blastula::creds_anonymous()],
 #'   [blastula::creds_key()], or [blastula::creds_file()] functions. Please
 #'   refer to the **blastula** documentation for details on each of these helper
 #'   functions.
+#' @param msg_subject The subject line of the email message.
 #' @param msg_header,msg_body,msg_footer Content for the header, body, and
 #'   footer components of the HTML email message.
 #' @param send_condition An expression that should evaluate to a logical vector
@@ -34,8 +34,8 @@
 email_blast <- function(x,
                         to,
                         from,
-                        subject = NULL,
                         credentials = NULL,
+                        msg_subject = NULL,
                         msg_header = NULL,
                         msg_body = stock_msg_body(),
                         msg_footer = stock_msg_footer(),
@@ -81,7 +81,7 @@ email_blast <- function(x,
         email = blastula_message,
         to = to,
         from = from,
-        subject = subject,
+        subject = msg_subject,
         credentials = credentials
       )
     }
@@ -193,4 +193,3 @@ Validation performed via the `pointblank` **R** package.
 }
 
 # nocov end
-

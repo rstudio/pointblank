@@ -8,8 +8,8 @@ email_blast(
   x,
   to,
   from,
-  subject = NULL,
   credentials = NULL,
+  msg_subject = NULL,
   msg_header = NULL,
   msg_body = stock_msg_body(),
   msg_footer = stock_msg_footer(),
@@ -22,13 +22,13 @@ available in an internal evaluation context.}
 
 \item{to, from}{The email addresses for the recipients and the sender.}
 
-\item{subject}{The subject line of the email message.}
-
 \item{credentials}{A credentials list object that is produced by either of
 the \code{\link[blastula:creds]{blastula::creds()}}, \code{\link[blastula:creds_anonymous]{blastula::creds_anonymous()}},
 \code{\link[blastula:creds_key]{blastula::creds_key()}}, or \code{\link[blastula:creds_file]{blastula::creds_file()}} functions. Please
 refer to the \strong{blastula} documentation for details on each of these helper
 functions.}
+
+\item{msg_subject}{The subject line of the email message.}
 
 \item{msg_header, msg_body, msg_footer}{Content for the header, body, and
 footer components of the HTML email message.}
@@ -54,6 +54,76 @@ output obtained from using the \code{\link[=get_agent_x_list]{get_agent_x_list()
 3-1
 }
 
+\examples{
+library(dplyr)
+
+# Create a simple table with two
+# columns of numerical values
+tbl <-
+  tibble(
+    a = c(5, 7, 6, 5, 8, 7),
+    b = c(7, 1, 0, 0, 0, 3)
+  )
+
+# Create an `action_levels()` list
+# with absolute values for the
+# `warn`, and `notify` states (with
+# thresholds of 1 and 2 'fail' units)
+al <- 
+  action_levels(
+    warn_at = 1,
+    notify_at = 2
+  )
+
+# Validate that values in column
+# `a` from `tbl` are always > 5 and
+# that `b` values are always < 5;
+# first, apply the `actions_levels()`
+# directive to `actions` and set up
+# an `email_blast()` as one of the
+# `end_fns` (by default, the email
+# will be sent if there is a single
+# 'notify' state across all
+# validation steps)
+# agent <-
+#   create_agent(
+#     tbl = tbl,
+#     actions = al,
+#     end_fns = list(
+#       ~ email_blast(
+#         x,
+#         to = "joe_public@example.com",
+#         from = "pb_notif@example.com",
+#         msg_subject = "Table Validation",
+#         credentials = blastula::creds_key(
+#           id = "gmail"
+#         ),
+#       )
+#     )
+#   ) \%>\%
+#   col_vals_gt(vars(a), 5) \%>\%
+#   col_vals_lt(vars(b), 5) \%>\%
+#   interrogate()
+
+# This example was intentionally
+# not run because email credentials
+# aren't available and the `to`
+# and `from` email addressed are
+# nonexistent; to look at the email
+# message before sending anything of
+# the like, we can use the 
+# `email_blast_preview()` function
+email_object <-
+  create_agent(
+    tbl = tbl,
+    actions = al
+  ) \%>\%
+    col_vals_gt(vars(a), 5) \%>\%
+    col_vals_lt(vars(b), 5) \%>\%
+    interrogate() \%>\%
+    email_blast_preview()
+  
+}
 \seealso{
 Other Emailing: 
 \code{\link{email_blast_preview}()},

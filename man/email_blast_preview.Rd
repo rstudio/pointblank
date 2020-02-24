@@ -36,6 +36,65 @@ cases, the email message with appear in the Viewer and a \strong{blastula}
 3-2
 }
 
+\examples{
+library(dplyr)
+
+# Create a simple table with two
+# columns of numerical values
+tbl <-
+  tibble(
+    a = c(5, 7, 6, 5, 8, 7),
+    b = c(7, 1, 0, 0, 0, 3)
+  )
+
+# Create an `action_levels()` list
+# with absolute values for the
+# `warn`, and `notify` states (with
+# thresholds of 1 and 2 'fail' units)
+al <- 
+  action_levels(
+    warn_at = 1,
+    notify_at = 2
+  )
+
+# In a workflow that involves an
+# `agent` object, we can set up a
+# series of `end_fns` and have report
+# emailing with `email_blast()` but,
+# first, we can look at the email
+# message object beforehand by using
+# the `email_blast_preview()` function
+# on an `agent` object
+email_object <-
+  create_agent(
+    tbl = tbl,
+    actions = al
+  ) \%>\%
+    col_vals_gt(vars(a), 5) \%>\%
+    col_vals_lt(vars(b), 5) \%>\%
+    interrogate() \%>\%
+    email_blast_preview()
+
+# The `email_blast_preview()`
+# function can also be used on an
+# agent x-list to get the same
+# email message object
+email_object <-
+  create_agent(
+    tbl = tbl,
+    actions = al
+  ) \%>\%
+    col_vals_gt(vars(a), 5) \%>\%
+    col_vals_lt(vars(b), 5) \%>\%
+    interrogate() \%>\%
+    get_agent_x_list() \%>\%
+    email_blast_preview()
+
+# We can view the HTML email just
+# by printing `email_object`; it
+# should appear in the Viewer
+
+}
 \seealso{
 Other Emailing: 
 \code{\link{email_blast}()},

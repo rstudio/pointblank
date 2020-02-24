@@ -1,10 +1,14 @@
 #' Do columns in the table (and their types) match a predefined schema?
-#' 
+#'
 #' The `col_schema_match()` validation step function works in conjunction with a
 #' `col_schema` object (generated through the [col_schema()] function) to
 #' determine whether the expected schema matches the target table. This
 #' validation step operates over a single test unit, which is whether the schema
-#' exactly matches that of the table.
+#' exactly matches that of the table. If the target table is a `tbl_sql` object,
+#' we can choose to validate the column schema that is based on R column types
+#' (e.g., `"numeric"`, `"character"`, etc.), or, SQL column types (e.g.,
+#' `"double"`, `"varchar"`, etc.). That option is defined in the [col_schema()]
+#' function (with the `.db_col_types` argument).
 #' 
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation step function, takes a specially-crafted list
@@ -37,8 +41,15 @@
 #'     b = letters[1:5]
 #'   )
 #' 
-#' col_schema_tbl <- 
-#'   col_schema(a = "integer", b = "character")
+#' # Create a column schema object
+#' # that describes the columns and
+#' # their types (in the expected
+#' # order)
+#' schema_obj <- 
+#'   col_schema(
+#'     a = "integer",
+#'     b = "character"
+#'   )
 #' 
 #' # Validate that the schema object
 #' # `col_schema_x` exactly defines
@@ -46,7 +57,7 @@
 #' # of the `tbl_x` table
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   col_schema_match(schema = col_schema_tbl) %>%
+#'   col_schema_match(schema_obj) %>%
 #'   interrogate()
 #' 
 #' # Determine if these three validation
@@ -105,12 +116,76 @@ col_schema_match <- function(x,
 
 #' Generate a table column schema manually or with a reference table
 #' 
+#' A table column schema object, as can be created by `col_schema()`, is
+#' necessary when using the [col_schema_match()] validation step function (which
+#' checks whether the table object under study matches a known column schema).
+#' The `col_schema` object can be made by carefully supplying the column names
+#' and their types as a set of named arguments, or, we could provide a table
+#' object, which could by of the `data.frame`, `tbl_df`, or `tbl_dbi` varieties.
+#' There's an additional option, which is just for validating the schema of a
+#' `tbl_dbi` object: we can validate the schema based on R column types (e.g.,
+#' `"numeric"`, `"character"`, etc.), or, SQL column types (e.g., `"double"`,
+#' `"varchar"`, etc.). This is great if we want to validate table column schemas
+#' both on the server side and when tabular data is collected and loaded into R.
+#' 
 #' @param ... A set of named arguments where the names refer to column names and
 #'   the values are one or more column types.
 #' @param .tbl An option to use a table object to define the schema. If this is
 #'   provided then any values provided to `...` will be ignored.
 #' @param .db_col_types Determines whether the column types refer to R column
 #'   types (`"r"`) or SQL column types (`"sql"`).
+#'   
+#' @examples 
+#' # Create a simple table with two
+#' # columns: one `integer` and the
+#' # other `character`
+#' tbl <- 
+#'   dplyr::tibble(
+#'     a = 1:5,
+#'     b = letters[1:5]
+#'   )
+#' 
+#' # Create a column schema object
+#' # that describes the columns and
+#' # their types (in the expected
+#' # order)
+#' schema_obj <- 
+#'   col_schema(
+#'     a = "integer",
+#'     b = "character"
+#'   )
+#' 
+#' # Validate that the schema object
+#' # `col_schema_x` exactly defines
+#' # the column names and column types
+#' # of the `tbl_x` table
+#' agent <-
+#'   create_agent(tbl = tbl) %>%
+#'   col_schema_match(schema_obj) %>%
+#'   interrogate()
+#' 
+#' # Determine if these three validation
+#' # steps passed by using `all_passed()`
+#' all_passed(agent)
+#' 
+#' # We can alternatively create
+#' # a column schema object from a
+#' # `tbl_df` object
+#' schema_obj <-
+#'   col_schema(
+#'     .tbl = dplyr::tibble(
+#'       a = integer(0),
+#'       b = character(0)
+#'     )
+#'   )
+#'
+#' # This should provide the same
+#' # interrogation results as in the
+#' # previous example
+#' create_agent(tbl = tbl) %>%
+#'   col_schema_match(schema_obj) %>%
+#'   interrogate() %>%
+#'   all_passed()
 #'   
 #' @family Planning and Prep
 #' @section Function ID:

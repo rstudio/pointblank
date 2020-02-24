@@ -6,8 +6,9 @@
 #' `install.packages()`). This function should be invoked as part of the
 #' `end_fns` argument of [create_agent()]. It's also possible to invoke
 #' `email_blast()` as part of the `fns` argument of the [action_levels()]
-#' function (to possibly send an email message at one or more steps). To better
-#' get a handle on emailing with `email_blast()`, the analogous
+#' function (to possibly send an email message at one or more steps).
+#'
+#' To better get a handle on emailing with `email_blast()`, the analogous
 #' [email_blast_preview()] can be used with a **pointblank** agent object or the
 #' output obtained from using the [get_agent_x_list()] function.
 #' 
@@ -24,7 +25,12 @@
 #'   footer components of the HTML email message.
 #' @param send_condition An expression that should evaluate to a logical vector
 #'   of length 1. If `TRUE` then the email will be sent, if `FALSE` then that
-#'   won't happen.
+#'   won't happen. The expression can use x-list variables (e.g., `x$notify`,
+#'   `x$type`, etc.) and all of those variables can be viewed using the
+#'   [get_agent_x_list()] function. The default expression is `~TRUE %in% x$notify`,
+#'   which results in `TRUE` if there are any `TRUE` values in the `x$notify`
+#'   logical vector (i.e., any validation step results in a 'notify'
+#'   condition).
 #'   
 #' @examples
 #' library(dplyr)
@@ -80,7 +86,7 @@
 #' # This example was intentionally
 #' # not run because email credentials
 #' # aren't available and the `to`
-#' # and `from` email addressed are
+#' # and `from` email addresses are
 #' # nonexistent; to look at the email
 #' # message before sending anything of
 #' # the like, we can use the 

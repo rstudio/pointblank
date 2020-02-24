@@ -17,13 +17,76 @@ provided then any values provided to \code{...} will be ignored.}
 types (\code{"r"}) or SQL column types (\code{"sql"}).}
 }
 \description{
-Generate a table column schema manually or with a reference table
+A table column schema object, as can be created by \code{col_schema()}, is
+necessary when using the \code{\link[=col_schema_match]{col_schema_match()}} validation step function (which
+checks whether the table object under study matches a known column schema).
+The \code{col_schema} object can be made by carefully supplying the column names
+and their types as a set of named arguments, or, we could provide a table
+object, which could by of the \code{data.frame}, \code{tbl_df}, or \code{tbl_dbi} varieties.
+There's an additional option, which is just for validating the schema of a
+\code{tbl_dbi} object: we can validate the schema based on R column types (e.g.,
+\code{"numeric"}, \code{"character"}, etc.), or, SQL column types (e.g., \code{"double"},
+\code{"varchar"}, etc.). This is great if we want to validate table column schemas
+both on the server side and when tabular data is collected and loaded into R.
 }
 \section{Function ID}{
 
 1-3
 }
 
+\examples{
+# Create a simple table with two
+# columns: one `integer` and the
+# other `character`
+tbl <- 
+  dplyr::tibble(
+    a = 1:5,
+    b = letters[1:5]
+  )
+
+# Create a column schema object
+# that describes the columns and
+# their types (in the expected
+# order)
+schema_obj <- 
+  col_schema(
+    a = "integer",
+    b = "character"
+  )
+
+# Validate that the schema object
+# `col_schema_x` exactly defines
+# the column names and column types
+# of the `tbl_x` table
+agent <-
+  create_agent(tbl = tbl) \%>\%
+  col_schema_match(schema_obj) \%>\%
+  interrogate()
+
+# Determine if these three validation
+# steps passed by using `all_passed()`
+all_passed(agent)
+
+# We can alternatively create
+# a column schema object from a
+# `tbl_df` object
+schema_obj <-
+  col_schema(
+    .tbl = dplyr::tibble(
+      a = integer(0),
+      b = character(0)
+    )
+  )
+
+# This should provide the same
+# interrogation results as in the
+# previous example
+create_agent(tbl = tbl) \%>\%
+  col_schema_match(schema_obj) \%>\%
+  interrogate() \%>\%
+  all_passed()
+  
+}
 \seealso{
 Other Planning and Prep: 
 \code{\link{action_levels}()},

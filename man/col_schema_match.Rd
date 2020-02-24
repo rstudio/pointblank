@@ -30,7 +30,11 @@ The \code{col_schema_match()} validation step function works in conjunction with
 \code{col_schema} object (generated through the \code{\link[=col_schema]{col_schema()}} function) to
 determine whether the expected schema matches the target table. This
 validation step operates over a single test unit, which is whether the schema
-exactly matches that of the table.
+exactly matches that of the table. If the target table is a \code{tbl_sql} object,
+we can choose to validate the column schema that is based on R column types
+(e.g., \code{"numeric"}, \code{"character"}, etc.), or, SQL column types (e.g.,
+\code{"double"}, \code{"varchar"}, etc.). That option is defined in the \code{\link[=col_schema]{col_schema()}}
+function (with the \code{.db_col_types} argument).
 }
 \details{
 Often, we will want to specify \code{actions} for the validation. This argument,
@@ -65,8 +69,15 @@ tbl <-
     b = letters[1:5]
   )
 
-col_schema_tbl <- 
-  col_schema(a = "integer", b = "character")
+# Create a column schema object
+# that describes the columns and
+# their types (in the expected
+# order)
+schema_obj <- 
+  col_schema(
+    a = "integer",
+    b = "character"
+  )
 
 # Validate that the schema object
 # `col_schema_x` exactly defines
@@ -74,7 +85,7 @@ col_schema_tbl <-
 # of the `tbl_x` table
 agent <-
   create_agent(tbl = tbl) \%>\%
-  col_schema_match(schema = col_schema_tbl) \%>\%
+  col_schema_match(schema_obj) \%>\%
   interrogate()
 
 # Determine if these three validation

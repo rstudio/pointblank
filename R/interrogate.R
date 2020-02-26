@@ -249,14 +249,28 @@ create_cli_header <- function(validation_steps, quiet) {
   
   if (quiet) return()
   
-  cli::cli_h1("Interrogation Started - {max(validation_steps)} Steps in Total")
+  if (length(validation_steps) < 1) {
+    interrogation_progress_header <- 
+      "Interrogation Started - there are no validation steps"
+  } else if (length(validation_steps) == 1) {
+    interrogation_progress_header <- 
+      "Interrogation Started - there is a single validation step"
+  } else {
+    num_validation_steps <- max(validation_steps)
+    interrogation_progress_header <- 
+      "Interrogation Started - there are {num_validation_steps} steps"
+  }
+  
+  cli::cli_h1(interrogation_progress_header)
 }
 
 create_cli_footer <- function(quiet) {
   
   if (quiet) return()
   
-  cli::cli_h1("Interrogation Completed")
+  interrogation_progress_footer <- "Interrogation Completed"
+  
+  cli::cli_h1(interrogation_progress_footer)
 }
 
 create_post_step_cli_output <- function(agent, i, time_diff_s, quiet) {

@@ -229,6 +229,18 @@ get_tbl_information <- function(tbl) {
   } 
 }
 
+normalize_reporting_language <- function(reporting_lang) {
+  
+  if (is.null(reporting_lang)) return("en")
+  
+  if (!(tolower(reporting_lang) %in%  reporting_languages)) {
+    stop("The text ", reporting_lang, " doesn't correspond to a pointblank reporting language",
+         call. = FALSE)
+  }
+  
+  tolower(reporting_lang)
+}
+
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
   gsub(pattern, replacement, x, fixed = fixed)
 }

@@ -1,4 +1,8 @@
+reporting_languages <- c("en", "fr", "de", "it", "es")
+
+#
 # Text for autobriefs
+#
 
 precondition_text <- 
   c(
@@ -153,8 +157,9 @@ col_schema_match_expectation_text <-
     "es" = "Espere que los esquemas de columna coincidan."
   )
 
-
+#
 # Text for agent report
+#
 
 pointblank_validation_title_text <-
   c(
@@ -245,17 +250,3 @@ report_r_sql_types <-
     "it" = "TIPI SQL",
     "es" = "TIPOS SQL"
   )
-
-reporting_languages <- c("en", "fr", "de", "it", "es")
-
-normalize_reporting_language <- function(reporting_lang) {
-  
-  if (is.null(reporting_lang)) return("en")
-  
-  if (!(tolower(reporting_lang) %in%  reporting_languages)) {
-    stop("The text ", reporting_lang, " doesn't correspond to a pointblank reporting language",
-         call. = FALSE)
-  }
-  
-  tolower(reporting_lang)
-}

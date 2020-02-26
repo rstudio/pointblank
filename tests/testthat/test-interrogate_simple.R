@@ -4,7 +4,59 @@ tbl <-
   small_table %>%
   dplyr::mutate(g = as.factor(f))
 
+schema_incorrect <- 
+  col_schema(
+    date_time = "POSIXct", date = "Date", 
+    a = "integer", b = "character", c = "numeric", d = "numeric", 
+    e = "logical", f = "character", g = "factor"
+  )
+
+schema_correct <- 
+  schema <- 
+  col_schema(
+    date_time = c("POSIXct", "POSIXt"), date = "Date", 
+    a = "integer", b = "character", c = "numeric", d = "numeric", 
+    e = "logical", f = "character", g = "factor"
+  )
+
 test_that("Interrogating simply returns the expected results", {
+  
+
+  # Use the `col_schema_match()` function to perform
+  # a simple validation step
+  tbl_result <- tbl[1:2, ] %>% col_schema_match(schema = col_schema(.tbl = tbl))
+  
+  # Expect that `tbl_result` is equivalent to `tbl[1:2, ]`
+  expect_equivalent(tbl[1:2, ], tbl_result)
+  
+  # Use the `col_schema_match()` function to perform
+  # another simple validation step
+  tbl_result <- tbl[1:2, ] %>% col_schema_match(schema = schema_correct)
+  
+  # Expect that `tbl_result` is equivalent to `tbl[1:2, ]`
+  expect_equivalent(tbl[1:2, ], tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- tbl %>% col_schema_match(schema = schema_incorrect)
+  )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- tbl %>% 
+      col_schema_match(
+        schema = schema_incorrect,
+        actions = action_levels(stop_at = 1)
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
   
   # Use the `rows_distinct()` function to perform
   # a simple validation step

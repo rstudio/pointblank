@@ -16,6 +16,11 @@ agent <-
   col_vals_between(vars(c), left = vars(a), right = vars(d), na_pass = TRUE) %>%
   interrogate()
 
+# Create an agent with no validation steps, perform interrogation
+agent_zero <-
+  create_agent(tbl = small_table) %>%
+  interrogate()
+
 # Create an in-memory SQLite database and connection
 con <- DBI::dbConnect(RSQLite::SQLite(), dbname = ":memory:")
 
@@ -85,8 +90,7 @@ test_that("sundered data can be generated and retrieved with a `tbl_df`", {
   
   # Expect a list of data pieces if `NULL` provided
   # to the `type` argument
-  data_tbl_list <- 
-    get_sundered_data(agent, type = NULL)
+  data_tbl_list <- get_sundered_data(agent, type = NULL)
   
   # Expect the resulting list to hold the
   # same two data pieces as before
@@ -121,9 +125,72 @@ test_that("sundered data can be generated and retrieved with a `tbl_df`", {
   )
 })
 
+test_that("sundered data from an agent is effectively all the data", {
+  
+  # Get the 'pass' data piece using `get_sundered_data()`
+  pass_data_tbl <- agent_zero %>% get_sundered_data(type = "pass")
+  
+  # Get the 'fail' data piece using `get_sundered_data()`
+  fail_data_tbl <- agent_zero %>% get_sundered_data(type = "fail")
+  
+  # Expect that both tables are of the same type as the
+  # input data
+  expect_is(small_table, "tbl_df")
+  expect_is(pass_data_tbl, "tbl_df")
+  expect_is(fail_data_tbl, "tbl_df")
+  
+  # Expect certain dimensions for each table
+  expect_equal(dim(pass_data_tbl %>% dplyr::collect()), c(13, 8))
+  expect_equal(dim(fail_data_tbl %>% dplyr::collect()), c(0, 8))
+  
+  # Expect that the sum of rows from each data piece
+  # should equal the number of rows in the input table
+  expect_equal(nrow(pass_data_tbl) + nrow(fail_data_tbl), nrow(small_table))
+  
+  # Expect no common rows between the two
+  # data pieces
+  pass_data_tbl %>%
+    dplyr::semi_join(
+      fail_data_tbl,
+      by = c("date_time", "date", "a", "b", "c", "d", "e", "f")
+    ) %>%
+    nrow() %>%
+    expect_equal(0L)
+  
+  # Expect all column names to be the same between the
+  # input table and the two data pieces
+  expect_equal(
+    colnames(small_table),
+    colnames(pass_data_tbl),
+    colnames(fail_data_tbl)
+  )
+  
+  # Expect a list of data pieces if `NULL` provided
+  # to the `type` argument
+  data_tbl_list <- get_sundered_data(agent_zero, type = NULL)
+  
+  # Expect the resulting list to hold the
+  # same two data pieces as before
+  expect_is(data_tbl_list, "list")
+  expect_equal(names(data_tbl_list), c("pass", "fail"))
+  expect_equal(length(data_tbl_list), 2)
+  expect_equal(data_tbl_list$pass, pass_data_tbl)
+  expect_equal(data_tbl_list$fail, fail_data_tbl)
+  
+  # Expect no common rows between the two
+  # data pieces in the list object
+  data_tbl_list$pass %>%
+    dplyr::semi_join(
+      data_tbl_list$fail,
+      by = c("date_time", "date", "a", "b", "c", "d", "e", "f")
+    ) %>%
+    nrow() %>%
+    expect_equal(0L)
+})
+
 test_that("sundered data can be generated and retrieved with a `tbl_dbi` (SQLite)", {
   
-  # # Get the 'pass' data piece using `get_sundered_data()`
+  # Get the 'pass' data piece using `get_sundered_data()`
   pass_data_tbl <-
     get_sundered_data(agent_sqlite_no_id, type = "pass", id_cols = "date_time")
 

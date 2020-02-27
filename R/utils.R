@@ -163,24 +163,14 @@ get_tbl_information <- function(tbl) {
     
     r_column_names_types <- get_r_column_names_types(tbl)
     
-    return(
-      list(
-        tbl_src = "data.frame",
-        tbl_src_details = NA_character_,
-        db_tbl_name = NA_character_,
-        col_names = r_column_names_types$col_names,
-        r_col_types = r_column_names_types$r_col_types,
-        db_col_types = NA_character_
-      )
-    )
-    
-  } else if (inherits(tbl, "tbl_df")) {
-
-    r_column_names_types <- get_r_column_names_types(tbl)
+    tbl_src <- "data.frame"
+    if (inherits(tbl, "tbl_df")) {
+      tbl_src <- "tbl_df"
+    } 
     
     return(
       list(
-        tbl_src = "tbl_df",
+        tbl_src = tbl_src,
         tbl_src_details = NA_character_,
         db_tbl_name = NA_character_,
         col_names = r_column_names_types$col_names,

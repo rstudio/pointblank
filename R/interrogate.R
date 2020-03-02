@@ -762,7 +762,7 @@ interrogate_col_schema_match <- function(agent, idx, table) {
   }
   
   # Create function for validating the `col_schema_match()` step function
-  tbl_col_schema_match <- function(table, schema) {
+  tbl_col_schema_match <- function(table, table_schema_x, table_schema_y) {
     
     if (identical(table_schema_x, table_schema_y)) {
       dplyr::tibble(pb_is_good_ = TRUE)
@@ -770,9 +770,9 @@ interrogate_col_schema_match <- function(agent, idx, table) {
       dplyr::tibble(pb_is_good_ = FALSE)
     }
   }
-  
+
   # Perform the validation of the table 
-  pointblank_try_catch(tbl_col_schema_match(table, schema))
+  pointblank_try_catch(tbl_col_schema_match(table, table_schema_x, table_schema_y))
 }
 
 pointblank_try_catch <- function(expr) {

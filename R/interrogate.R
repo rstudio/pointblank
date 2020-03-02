@@ -762,7 +762,7 @@ interrogate_col_schema_match <- function(agent, idx, table) {
   }
   
   # Create function for validating the `col_schema_match()` step function
-  tbl_col_schema_match <- function(table, schema) {
+  tbl_col_schema_match <- function(table, table_schema_x, table_schema_y) {
     
     if (identical(table_schema_x, table_schema_y)) {
       dplyr::tibble(pb_is_good_ = TRUE)
@@ -770,9 +770,9 @@ interrogate_col_schema_match <- function(agent, idx, table) {
       dplyr::tibble(pb_is_good_ = FALSE)
     }
   }
-  
+
   # Perform the validation of the table 
-  pointblank_try_catch(tbl_col_schema_match(table, schema))
+  pointblank_try_catch(tbl_col_schema_match(table, table_schema_x, table_schema_y))
 }
 
 pointblank_try_catch <- function(expr) {
@@ -801,7 +801,7 @@ add_reporting_data <- function(agent, idx, tbl_checked) {
   if (!inherits(tbl_checked, "table_eval")) {
     stop("The validated table must be of class `table_eval`.")
   }
-  
+
   has_warnings <- !is.null(tbl_checked$warning)
   has_error <- !is.null(tbl_checked$error)
 
@@ -1226,21 +1226,21 @@ determine_action <- function(agent, idx, false_count) {
   if (!is.na(warn)) {
     if (!is.null(al$warn_fraction)) {
       warn_count <- round(al$warn_fraction * n, 0)
-      if (false_count >= warn_count) warn <- TRUE
+      if (false_count > 0 && false_count >= warn_count) warn <- TRUE
     }
   }
   
   if (!is.na(stop)) {
     if (!is.null(al$stop_fraction)) {
       stop_count <- round(al$stop_fraction * n, 0)
-      if (false_count >= stop_count) stop <- TRUE
+      if (false_count > 0 && false_count >= stop_count) stop <- TRUE
     }
   }
   
   if (!is.na(notify)) {
     if (!is.null(al$notify_fraction)) {
       notify_count <- round(al$notify_fraction * n, 0)
-      if (false_count >= notify_count) notify <- TRUE
+      if (false_count > 0 && false_count >= notify_count) notify <- TRUE
     }
   }
   

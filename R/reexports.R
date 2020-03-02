@@ -21,3 +21,19 @@ tidyselect::matches
 #' @importFrom tidyselect everything
 #' @export
 tidyselect::everything
+
+#' @importFrom blastula creds
+#' @export
+blastula::creds
+
+#' @importFrom blastula creds_anonymous
+#' @export
+blastula::creds_anonymous
+
+#' @importFrom blastula creds_key
+#' @export
+blastula::creds_key
+
+#' @importFrom blastula creds_file
+#' @export
+blastula::creds_file

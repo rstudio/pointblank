@@ -180,7 +180,7 @@ get_tbl_information <- function(tbl) {
     )
     
   } else if (inherits(tbl, "tbl_dbi")) {
-    
+
     tbl_src <- gsub("^([a-z]*).*", "\\1", get_tbl_dbi_src_details(tbl))
     
     r_column_names_types <- get_r_column_names_types(tbl)
@@ -197,9 +197,33 @@ get_tbl_information <- function(tbl) {
       )
     
     if (tbl_src != "sqlite") {
+      
       db_col_types <- 
         DBI::dbGetQuery(tbl_connection, q_types) %>%
-        dplyr::pull(DATA_TYPE)
+        dplyr::pull(DATA_TYPE) %>%
+        tolower()
+      
+    } else if (tbl_src == "sqlite") {
+      
+      db_col_types <-
+        vapply(
+          r_column_names_types$col_names,
+          FUN.VALUE = character(1),
+          USE.NAMES = FALSE,
+          FUN = function(x) {
+            
+            DBI::dbDataType(
+              tbl_connection,
+              tbl %>%
+                dplyr::select(x) %>%
+                utils::head(1) %>%
+                dplyr::collect() %>%
+                dplyr::pull(x)
+            )
+          }
+        ) %>%
+        tolower()
+      
     } else {
       db_col_types <- NA_character_
     }

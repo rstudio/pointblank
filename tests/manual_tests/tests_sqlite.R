@@ -37,6 +37,19 @@ agent <-
     ~ col_vals_gt(., vars(d), 100),
     ~ col_vals_gte(., vars(c), 2, na_pass = TRUE)
   ) %>%
+  col_schema_match(
+    schema = col_schema(
+      date_time = "real",
+      date = "real",
+      a = "integer",
+      b = "text",
+      c = "real",
+      d = "real",
+      e = "integer",
+      f = "text",
+      .db_col_types = "sql"
+    )
+  ) %>%
   interrogate()
 
 agent

@@ -189,9 +189,11 @@ get_tbl_information <- function(tbl) {
     
     db_tbl_name <- dbplyr::remote_name(tbl) %>% as.character()
     
+    n_cols <- length(r_column_names_types$col_names)
+    
     q_types <- 
       glue::glue(
-        "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}'"
+        "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}' LIMIT {n_cols}"
       )
     
     if (tbl_src != "sqlite") {

@@ -58,14 +58,14 @@ reference:
       function can be used within the `end_fns` argument of `create_agent()`,
       giving us options to send a customizable message only if specified
       conditions are met. To gain some practice with email customization, the
-      `email_blast_preview()` function is handy (it can be used directly on an
+      `email_preview()` function is handy (it can be used directly on an
       `agent` object or an agent x-list object). The `stock_msg_body()` and
       `stock_msg_footer()` functions give us reasonable defaults for the HTML
       message itself, incorporating an emailable version of the validation
       report.
     contents:
     - email_blast
-    - email_blast_preview
+    - email_preview
     - stock_msg_body
     - stock_msg_footer
     

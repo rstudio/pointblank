@@ -8,12 +8,11 @@ stock_msg_body()
 }
 \value{
 Text suitable for the \code{msg_body} arguments of \code{\link[=email_blast]{email_blast()}} and
-\code{\link[=email_blast_preview]{email_blast_preview()}}.
+\code{\link[=email_preview]{email_preview()}}.
 }
 \description{
 The \code{stock_msg_body()} function simply provides some stock text for an email
-message sent via \code{\link[=email_blast]{email_blast()}} or previewed through
-\code{\link[=email_blast_preview]{email_blast_preview()}}.
+message sent via \code{\link[=email_blast]{email_blast()}} or previewed through \code{\link[=email_preview]{email_preview()}}.
 }
 \section{Function ID}{
 
@@ -22,8 +21,8 @@ message sent via \code{\link[=email_blast]{email_blast()}} or previewed through
 
 \seealso{
 Other Emailing: 
-\code{\link{email_blast_preview}()},
 \code{\link{email_blast}()},
+\code{\link{email_preview}()},
 \code{\link{stock_msg_footer}()}
 }
 \concept{Emailing}

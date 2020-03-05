@@ -53,7 +53,7 @@ function (to possibly send an email message at one or more steps).
 }
 \details{
 To better get a handle on emailing with \code{email_blast()}, the analogous
-\code{\link[=email_blast_preview]{email_blast_preview()}} can be used with a \strong{pointblank} agent object or the
+\code{\link[=email_preview]{email_preview()}} can be used with a \strong{pointblank} agent object or the
 output obtained from using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function.
 }
 \section{Function ID}{
@@ -119,7 +119,7 @@ al <-
 # nonexistent; to look at the email
 # message before sending anything of
 # the like, we can use the 
-# `email_blast_preview()` function
+# `email_preview()` function
 email_object <-
   create_agent(
     tbl = tbl,
@@ -128,12 +128,12 @@ email_object <-
     col_vals_gt(vars(a), 5) \%>\%
     col_vals_lt(vars(b), 5) \%>\%
     interrogate() \%>\%
-    email_blast_preview()
+    email_preview()
   
 }
 \seealso{
 Other Emailing: 
-\code{\link{email_blast_preview}()},
+\code{\link{email_preview}()},
 \code{\link{stock_msg_body}()},
 \code{\link{stock_msg_footer}()}
 }

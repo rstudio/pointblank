@@ -40,4 +40,4 @@ extracts
 x_list <- get_agent_x_list(agent)
 x_list
 
-email_blast_preview(agent)
+email_preview(agent)

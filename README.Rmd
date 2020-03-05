@@ -24,7 +24,7 @@ library(dplyr)
 
 With the **pointblank** package it's really easy to validate your data with workflows attuned to your data quality needs. The **pointblank** philosophy: a set of validation step functions should work seamlessly with data in local data tables and with data in databases.
 
-The two dominant workflows that **pointblank** enables are *data quality reporting* and *pipeline-based data validations*. Both workflows make use of a large collection of simple validation step functions (e.g., are values in a specific column greater than those in another column or some fixed value?), and, both allow for stepwise, temporary mutation/alteration of the input table to enable more sophisticated validation checks.
+The two dominant workflows that **pointblank** enables are *data quality reporting* and *pipeline-based data validations*. Both workflows make use of a large collection of simple validation step functions (e.g., are values in a specific column greater than those in another column or some fixed value?), and, both allow for stepwise, temporary mutation/alteration of the input table to enable much more sophisticated validation checks.
 
 <hr>
 

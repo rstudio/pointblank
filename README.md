@@ -20,7 +20,7 @@ reporting* and *pipeline-based data validations*. Both workflows make
 use of a large collection of simple validation step functions (e.g., are
 values in a specific column greater than those in another column or some
 fixed value?), and, both allow for stepwise, temporary
-mutation/alteration of the input table to enable more sophisticated
+mutation/alteration of the input table to enable much more sophisticated
 validation checks.
 
 <hr>
@@ -81,11 +81,11 @@ agent <-
 ```
 
     #> 
-    #> ── Interrogation Started - 2 Steps in Total ────────────────────────────────────────
+    #> ── Interrogation Started - there are 2 steps ────────────────────────
     #> ✓ Step 1: OK.
     #> ! Step 2: WARNING condition met.
     #> 
-    #> ── Interrogation Completed ─────────────────────────────────────────────────────────
+    #> ── Interrogation Completed ──────────────────────────────────────────
 
 Because an *agent* was used, we can get a report from it.
 

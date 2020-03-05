@@ -9,7 +9,7 @@
 #' function (to possibly send an email message at one or more steps).
 #'
 #' To better get a handle on emailing with `email_blast()`, the analogous
-#' [email_blast_preview()] can be used with a **pointblank** agent object or the
+#' [email_preview()] can be used with a **pointblank** agent object or the
 #' output obtained from using the [get_agent_x_list()] function.
 #' 
 #' @param x A reference to list object prepared by the agent. It's only
@@ -90,7 +90,7 @@
 #' # nonexistent; to look at the email
 #' # message before sending anything of
 #' # the like, we can use the 
-#' # `email_blast_preview()` function
+#' # `email_preview()` function
 #' email_object <-
 #'   create_agent(
 #'     tbl = tbl,
@@ -99,7 +99,7 @@
 #'     col_vals_gt(vars(a), 5) %>%
 #'     col_vals_lt(vars(b), 5) %>%
 #'     interrogate() %>%
-#'     email_blast_preview()
+#'     email_preview()
 #'   
 #' @family Emailing
 #' @section Function ID:
@@ -165,9 +165,9 @@ email_blast <- function(x,
 
 #' Get a preview of an email before actually sending that email
 #' 
-#' The `email_blast_preview()` function provides a preview of an email that
-#' would normally be produced and sent through the [email_blast()] function. The
-#' `x` that we need for this is the agent x-list that is produced by the
+#' The `email_preview()` function provides a preview of an email that would
+#' normally be produced and sent through the [email_blast()] function. The `x`
+#' that we need for this is the agent x-list that is produced by the
 #' [get_agent_x_list()] function. Or, we can supply an agent object. In both
 #' cases, the email message with appear in the Viewer and a **blastula**
 #' `email_message` object will be returned.
@@ -208,7 +208,7 @@ email_blast <- function(x,
 #' # emailing with `email_blast()` but,
 #' # first, we can look at the email
 #' # message object beforehand by using
-#' # the `email_blast_preview()` function
+#' # the `email_preview()` function
 #' # on an `agent` object
 #' email_object <-
 #'   create_agent(
@@ -218,12 +218,11 @@ email_blast <- function(x,
 #'     col_vals_gt(vars(a), 5) %>%
 #'     col_vals_lt(vars(b), 5) %>%
 #'     interrogate() %>%
-#'     email_blast_preview()
+#'     email_preview()
 #' 
-#' # The `email_blast_preview()`
-#' # function can also be used on an
-#' # agent x-list to get the same
-#' # email message object
+#' # The `email_preview()` function can
+#' # also be used on an agent x-list to
+#' # get the same email message object
 #' email_object <-
 #'   create_agent(
 #'     tbl = tbl,
@@ -233,7 +232,7 @@ email_blast <- function(x,
 #'     col_vals_lt(vars(b), 5) %>%
 #'     interrogate() %>%
 #'     get_agent_x_list() %>%
-#'     email_blast_preview()
+#'     email_preview()
 #' 
 #' # We can view the HTML email just
 #' # by printing `email_object`; it
@@ -244,10 +243,10 @@ email_blast <- function(x,
 #' 3-2
 #' 
 #' @export 
-email_blast_preview <- function(x,
-                                msg_header = NULL,
-                                msg_body = stock_msg_body(),
-                                msg_footer = stock_msg_footer()) {
+email_preview <- function(x,
+                          msg_header = NULL,
+                          msg_body = stock_msg_body(),
+                          msg_footer = stock_msg_footer()) {
   
   if (inherits(x, "ptblank_agent")) {
     x <- get_agent_x_list(agent = x)
@@ -284,11 +283,10 @@ check_msg_components_all_null <- function(msg_header, msg_body, msg_footer) {
 #' Provide simple email message body components: body
 #' 
 #' The `stock_msg_body()` function simply provides some stock text for an email
-#' message sent via [email_blast()] or previewed through
-#' [email_blast_preview()].
+#' message sent via [email_blast()] or previewed through [email_preview()].
 #'
 #' @return Text suitable for the `msg_body` arguments of [email_blast()] and
-#'   [email_blast_preview()].
+#'   [email_preview()].
 #' 
 #' @family Emailing
 #' @section Function ID:
@@ -307,10 +305,10 @@ Here is **pointblank** validation report that was initiated at {x$time}.
 #' 
 #' The `stock_msg_footer()` functions simply provide some stock text for an
 #' email message sent via [email_blast()] or previewed through
-#' [email_blast_preview()].
+#' [email_preview()].
 #'
 #' @return Text suitable for the `msg_footer` argument of [email_blast()] and
-#'   [email_blast_preview()].
+#'   [email_preview()].
 #' 
 #' @family Emailing
 #' @section Function ID:

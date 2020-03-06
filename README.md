@@ -131,7 +131,7 @@ Beyond these simple examples, there are many functions available in
 
 <p align="center">
 
-<img src="man/figures/pointblank_function_reference.png" width="100%">
+<img src="man/figures/pointblank_functions_30s.svg" width="80%">
 
 </p>
 

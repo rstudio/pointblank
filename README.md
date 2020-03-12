@@ -81,11 +81,11 @@ agent <-
 ```
 
     #> 
-    #> ── Interrogation Started - there are 2 steps ────────────────────────
+    #> ── Interrogation Started - there are 2 steps ──────────────────────────────────────
     #> ✓ Step 1: OK.
     #> ! Step 2: WARNING condition met.
     #> 
-    #> ── Interrogation Completed ──────────────────────────────────────────
+    #> ── Interrogation Completed ────────────────────────────────────────────────────────
 
 Because an *agent* was used, we can get a report from it.
 
@@ -155,8 +155,9 @@ make this package better, feel free to file an
 
 ## Code of Conduct
 
-[Contributor Code of
-Conduct](https://github.com/rich-iannone/pointblank/blob/master/CONDUCT.md).<br>By
+Please note that the pointblank project is released with a [Contributor
+Code of
+Conduct](https://www.contributor-covenant.org/version/1/0/0/code-of-conduct/).<br>By
 participating in this project you agree to abide by its terms.
 
 ## License

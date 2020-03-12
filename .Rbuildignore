@@ -1,9 +1,9 @@
 ^.*\.Rproj$
+^\.github$
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^cran-comments\.md$
 ^codecov\.yml$
-^CONDUCT\.md$
 ^README\.Rmd$
 ^revdep$
 ^_pkgdown\.yml$

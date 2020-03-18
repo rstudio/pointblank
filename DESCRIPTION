@@ -17,7 +17,7 @@ BugReports: https://github.com/rich-iannone/pointblank/issues
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Depends: 
     R (>= 3.5.0)
 Imports:
@@ -27,6 +27,7 @@ Imports:
     dplyr (>= 0.8.3),
     dbplyr (>= 1.4.2),
     glue (>= 1.3.1),
+    htmltools (>= 0.4.0),
     magrittr,
     rlang (>= 0.4.2),
     tibble (>= 2.1.3),

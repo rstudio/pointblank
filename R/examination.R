@@ -69,7 +69,7 @@ probe_overview_stats <- function(data) {
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
-      table.width = "80%"
+      table.width = "100%"
     )
   
   r_col_types_gt <-
@@ -83,7 +83,7 @@ probe_overview_stats <- function(data) {
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
-      table.width = "80%"
+      table.width = "100%"
     )
   
   list(
@@ -247,14 +247,14 @@ probe_columns_posix <- function(data, column, n_rows) {
 #probe_missing_heatmap
 
 
-probe_samples <- function(data) {
+probe_sample <- function(data) {
   
-  probe_samples <-
+  probe_sample <-
     data %>%
     gt::gt_preview(top_n = 5, bottom_n = 5) %>%
-    gt::tab_options(table.width = "80%")
+    gt::tab_options(table.width = "100%")
   
-  list(probe_samples = probe_samples)
+  list(probe_sample = probe_sample)
 }
 
 bootstrap_lib <- function() {
@@ -308,12 +308,15 @@ build_examination_page <- function(data) {
         htmltools::tags$a(
           class = "anchor-pos", id = "top"
         ),
+        navbar(),
         htmltools::tags$div(
           class = "content",
           htmltools::tags$div(
             class = "container",
             # Use `probe_*()` functions to generate row headers and section items
-            probe_overview_stats_assemble(data = data))
+            probe_overview_stats_assemble(data = data),
+            probe_sample_assemble(data = data)
+          )
         ),
         htmltools::tags$footer(
           
@@ -360,9 +363,14 @@ probe_overview_stats_assemble <- function(data) {
             active = TRUE,
             panel_component_list = list(
               panel_component(
-                size = 12,
+                size = 6,
                 title = NULL,
                 content = overview_stats$data_overview_gt
+              ),
+              panel_component(
+                size = 6,
+                title = NULL,
+                content = overview_stats$r_col_types_gt
               )
             )
           ),
@@ -394,8 +402,106 @@ probe_overview_stats_assemble <- function(data) {
   )
 }
 
+probe_sample_assemble <- function(data) {
+  
+  row_header <- row_header(id = "sample", header = "Sample")
+  
+  sample_data <- probe_sample(data = data)
 
+  htmltools::tagList(
+    row_header,
+    htmltools::tags$div(
+      class = "section-items",
+      htmltools::tags$div(
+        class = "row spacing",
+        htmltools::tags$div(
+          id = "sample-container",
+          class = "col-sm-12",
+          sample_data$probe_sample
+        )
+      )
+    )
+  )
+}
 
+navbar <- function() {
+  
+  htmltools::tags$nav(
+    class = "navbar navbar-default navbar-fixed-top",
+    htmltools::tags$div(
+      class = "container-fluid",
+      htmltools::tags$div(
+        class = "navbar-header",
+        htmltools::tags$button(
+          type = "button",
+          class = "navbar-toggle collapsed",
+          `data-toggle` = "collapse",
+          `data-target` = "#navbar",
+          `aria-expanded` = "false",
+          `aria-controls` = "navbar",
+          htmltools::tags$span(class = "sr-only", "Toggle navigation"),
+          htmltools::tags$span(class = "icon-bar"),
+          htmltools::tags$span(class = "icon-bar"),
+          htmltools::tags$span(class = "icon-bar")
+        ),
+        htmltools::tags$a(
+          class = "navbar-brand anchor",
+          href = "#top",
+          "Examination"
+        ),
+      ),
+      htmltools::tags$div(
+        id = "navbar",
+        class = "navbar-collapse collapse",
+        htmltools::tags$ul(
+          class = "nav navbar-nav navbar-right",
+          htmltools::tags$li(
+            htmltools::tags$a(
+              class = "anchor",
+              href = "#overview",
+              "Overview"
+            )
+          ),
+          htmltools::tags$li(
+            htmltools::tags$a(
+              class = "anchor",
+              href = "#variables",
+              "Variables"
+            )
+          ),
+          htmltools::tags$li(
+            htmltools::tags$a(
+              class = "anchor",
+              href = "#interactions",
+              "Interactions"
+            )
+          ),
+          htmltools::tags$li(
+            htmltools::tags$a(
+              class = "anchor",
+              href = "#correlations",
+              "Correlations"
+            )
+          ),
+          htmltools::tags$li(
+            htmltools::tags$a(
+              class = "anchor",
+              href = "#missing",
+              "Missing values"
+            )
+          ),
+          htmltools::tags$li(
+            htmltools::tags$a(
+              class = "anchor",
+              href = "#sample",
+              "Sample"
+            )
+          )
+        )
+      )
+    )
+  )
+}
 
 tab_panel <- function(id, panel_component_list, active = FALSE) {
   
@@ -457,4 +563,3 @@ nav_pill_li <- function(label, id, active = FALSE) {
 pb_glue_data <- function(.x, ...) {
   glue::glue_data(.x, ..., .transformer = get, .envir = emptyenv())
 }
-

@@ -339,8 +339,77 @@ probe_columns_posix <- function(data, column, n_rows) {
   )
 }
 
-# TODO:
-# probe_interactions
+probe_interactions <- function(data) {
+  
+  category_cutoff <- 5
+  max_dim <- 8
+  
+  tbl_info <- get_tbl_information(tbl = data)
+  
+  col_names <- tbl_info$col_names
+  col_types <- tbl_info$r_col_types
+  
+  columns_char <- col_names[col_types == "character"]
+  columns_numeric <- col_names[col_types %in% c("integer", "numeric")]
+  
+  col_names <- c(columns_char, columns_numeric)
+  
+  columns_char_distinct_count <- 
+    vapply(
+      columns_char, FUN.VALUE = integer(1), USE.NAMES = FALSE,
+      FUN = function(x) {
+        data %>%
+          dplyr::select(gt::one_of(x)) %>%
+          dplyr::distinct() %>%
+          dplyr::count() %>%
+          dplyr::pull(n)
+      }
+    )
+  
+  # Remove the character-based columns from the vector of
+  # `col_names` if there are too many categories
+  col_names <- 
+    col_names %>% 
+    base::setdiff(columns_char[columns_char_distinct_count > category_cutoff])
+  
+  plot_matrix <-
+    data %>%
+    dplyr::select(gt::one_of(col_names)) %>%
+    ggplot2::ggplot(ggplot2::aes(x = .panel_x, y = .panel_y)) + 
+    ggplot2::geom_point(alpha = 0.50, shape = 16, size = 1) + 
+    ggforce::geom_autodensity() +
+    ggplot2::geom_density2d() +
+    ggforce::facet_matrix(
+      rows = gt::vars(gt::everything()), layer.diag = 2, layer.upper = 3, 
+      grid.y.diag = FALSE) +
+    ggplot2::theme_minimal()
+  
+  # Save PNG file to disk
+  ggplot2::ggsave(
+    filename = "temp_ggplot.png",
+    plot = plot_matrix,
+    device = "png",
+    dpi = 300,
+    width = 5,
+    height = 5
+  )
+  
+  # Wait longer for file to be written on async filesystems
+  Sys.sleep(1)
+  
+  image_html <- 
+    htmltools::tags$div(
+      style = "text-align: center",
+      htmltools::HTML(gt::local_image(filename = "temp_ggplot.png", height = "500px"))
+    )
+  
+  file.remove("temp_ggplot.png")
+  
+  list(
+    probe_interactions = image_html
+  )
+}
+
 
 probe_correlations <- function(data) {
   
@@ -463,7 +532,7 @@ get_corr_matrix_legend <- function() {
     gt::gt() %>%
     gt::tab_style(
       locations = gt::cells_body(columns = TRUE),
-      style = gt::cell_text(size = px(10))
+      style = gt::cell_text(size = gt::px(10))
     ) %>%
     gt::data_color(
       columns = gt::vars(color),
@@ -639,6 +708,7 @@ build_examination_page <- function(data) {
               # Use `probe_*()` functions to generate row headers and section items
               probe_overview_stats_assemble(data = data),
               probe_columns_assemble(data = data),
+              probe_interactions_assemble(data = data),
               probe_correlations_assemble(data = data),
               probe_missing_assemble(data = data),
               probe_sample_assemble(data = data)
@@ -816,6 +886,29 @@ probe_columns_assemble <- function(data) {
     htmltools::tags$div(
       class = "section-items",
       columns_tagLists
+    )
+  )
+}
+
+
+probe_interactions_assemble <- function(data) {
+  
+  row_header <- row_header(id = "interactions", header = "Interactions")
+  
+  interactions_data <- probe_interactions(data = data)
+  
+  htmltools::tagList(
+    row_header,
+    htmltools::tags$div(
+      class = "section-items",
+      htmltools::tags$div(
+        class = "row spacing",
+        htmltools::tags$div(
+          id = "sample-container",
+          class = "col-sm-12",
+          interactions_data$probe_interactions
+        )
+      )
     )
   )
 }

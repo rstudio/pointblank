@@ -714,7 +714,25 @@ build_examination_page <- function(data) {
             )
           ),
           htmltools::tags$footer(
-            
+            htmltools::tags$div(
+              class = "container-fluid",
+              htmltools::tags$div(
+                class = "row center-block footer-text",
+                htmltools::tags$p(
+                  class = "text-muted text-center",
+                  htmltools::HTML(
+                    paste0(
+                      "Table scan generated with ",
+                      htmltools::tags$a(
+                        href = "https://www.github.com/rich-iannone/pointblank",
+                        "pointblank"
+                      ),
+                      "."
+                    )
+                  )
+                )
+              )
+            )
           ),
           htmltools::HTML(
             "<script>\n",

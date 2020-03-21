@@ -410,7 +410,6 @@ probe_interactions <- function(data) {
   )
 }
 
-
 probe_correlations <- function(data) {
   
   tbl_info <- get_tbl_information(tbl = data)
@@ -435,9 +434,9 @@ probe_correlations <- function(data) {
     data %>%
     dplyr::select(dplyr::one_of(columns_numeric))
   
-  corr_pearson <- stats::cor(data_corr, method = "pearson")
-  corr_kendall <- stats::cor(data_corr, method = "kendall")
-  corr_spearman <- stats::cor(data_corr, method = "spearman")
+  corr_pearson <- stats::cor(data_corr, method = "pearson", use = "pairwise.complete.obs")
+  corr_kendall <- stats::cor(data_corr, method = "kendall", use = "pairwise.complete.obs")
+  corr_spearman <- stats::cor(data_corr, method = "spearman", use = "pairwise.complete.obs")
   
   labels_vec <- seq_along(columns_numeric)
   names(labels_vec) <- columns_numeric

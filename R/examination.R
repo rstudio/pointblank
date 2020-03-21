@@ -4,14 +4,19 @@ probe_overview_stats <- function(data) {
   
   n_cols <- ncol(data)
   n_rows <- nrow(data)
+
+  na_cells_1 <- data %>% dplyr::select_if(function(x) any(is.na(x)))
   
-  na_cells <- 
-    data %>%
-    dplyr::select_if(function(x) any(is.na(x))) %>% 
-    dplyr::summarise_each(~ sum(is.na(.))) %>%
-    dplyr::mutate(`::all_na::` = sum(.)) %>%
-    dplyr::pull(`::all_na::`) %>%
-    as.integer()
+  if (ncol(na_cells_1) > 0) {
+    na_cells <-
+      na_cells_1 %>%
+      dplyr::summarise_each(~ sum(is.na(.))) %>%
+      dplyr::mutate(`::all_na::` = sum(.)) %>%
+      dplyr::pull(`::all_na::`) %>%
+      as.integer()
+  } else {
+    na_cells <- 0L
+  }
   
   duplicate_rows <- 
     suppressMessages(
@@ -96,7 +101,7 @@ probe_overview_stats <- function(data) {
 #probe_overview_vital
 
 probe_columns <- function(data) {
-  
+
   n_cols <- ncol(data)
   n_rows <- nrow(data)
   
@@ -120,7 +125,8 @@ probe_columns <- function(data) {
           factor = probe_columns_factor(data = data, column = col_name, n_rows = n_rows),
           integer = probe_columns_integer(data = data, column = col_name, n_rows = n_rows),
           logical = probe_columns_logical(data = data, column = col_name, n_rows = n_rows),
-          numeric = probe_columns_numeric(data = data, column = col_name, n_rows = n_rows)
+          numeric = probe_columns_numeric(data = data, column = col_name, n_rows = n_rows),
+          POSIXct = probe_columns_posix(data = data, column = col_name, n_rows = n_rows)
         )
       })
     
@@ -157,11 +163,25 @@ get_column_description_gt <- function(data_column, n_rows) {
       ((na_cells / n_rows) * 100) %>% round(1) %>% as.character() %>% paste0("(", ., "%)")
     }
   
+  inf_cells <-
+    data_column %>%
+    dplyr::summarize_each(~ sum(is.infinite(.))) %>%
+    dplyr::pull(1) %>%
+    as.integer()
+  
+  inf_cells_pct <- 
+    if (inf_cells == 0) {
+      ""
+    } else {
+      ((inf_cells / n_rows) * 100) %>% round(1) %>% as.character() %>% paste0("(", ., "%)")
+    }
+  
   column_description_tbl <-
     dplyr::tribble(
       ~label,              ~value,
       "Distinct Units",    glue::glue("<code>{distinct_count} {distinct_pct}</code>", .transformer = get),
       "<code>NA</code>s",  glue::glue("<code>{na_cells} {na_cells_pct}</code>", .transformer = get),
+      "<code>Inf</code>/<code>-Inf</code>", glue::glue("<code>{inf_cells} {inf_cells_pct}</code>", .transformer = get),
     )
   
   column_description_gt <-
@@ -170,82 +190,384 @@ get_column_description_gt <- function(data_column, n_rows) {
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
-      table.width = "80%"
+      table.width = "100%"
     )
   
   column_description_gt
 }
 
-probe_columns_character <- function(data, column, n_rows) {
-
-  data_column <- data %>% dplyr::select({{ column }})
-  column_description_gt <- get_column_description_gt(data_column = data_column, n_rows = n_rows)
+get_numeric_stats_gt <- function(data_column) {
   
-  list(column_description_gt = column_description_gt)
+  summary_stats <- 
+    data_column %>%
+    dplyr::summarize_all(
+      .funs = list(
+        ~ mean(., na.rm = TRUE),
+        ~ min(., na.rm = TRUE),
+        ~ max(., na.rm = TRUE)
+      )
+    ) %>%
+    dplyr::summarize_all(~ round(., 2))
+  
+  mean <- summary_stats$mean
+  min <- summary_stats$min
+  max <- summary_stats$max
+  
+  column_stats_tbl <-
+    dplyr::tribble(
+      ~label,   ~value,
+      "Mean",   glue::glue("<code>{mean}</code>", .transformer = get),
+      "Min",    glue::glue("<code>{min}</code>", .transformer = get),
+      "Max",    glue::glue("<code>{max}</code>", .transformer = get),
+    )
+  
+  column_stats_gt <-
+    gt::gt(column_stats_tbl) %>%
+    gt::fmt_markdown(columns = TRUE) %>%
+    gt::tab_options(
+      column_labels.hidden = TRUE,
+      table.border.top.style = "none",
+      table.width = "100%"
+    )
+  
+  column_stats_gt
+}
+
+probe_columns_character <- function(data, column, n_rows) {
+  
+  data_column <- data %>% dplyr::select({{ column }})
+  
+  column_description_gt <- 
+    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+  
+  list(
+    column_name = column,
+    column_type = "character",
+    column_description_gt = column_description_gt
+  )
 }
 
 probe_columns_date <- function(data, column, n_rows) {
   
   data_column <- data %>% dplyr::select({{ column }})
-  column_description_gt <- get_column_description_gt(data_column = data_column, n_rows = n_rows)
   
-  list(column_description_gt = column_description_gt)
+  column_description_gt <- 
+    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+  
+  list(
+    column_name = column,
+    column_type = "date",
+    column_description_gt = column_description_gt
+  )
 }
 
 probe_columns_factor <- function(data, column, n_rows) {
   
   data_column <- data %>% dplyr::select({{ column }})
-  column_description_gt <- get_column_description_gt(data_column = data_column, n_rows = n_rows)
   
-  list(column_description_gt = column_description_gt)
+  column_description_gt <- 
+    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+  
+  list(
+    column_name = column,
+    column_type = "factor",
+    column_description_gt = column_description_gt
+  )
 }
 
 probe_columns_integer <- function(data, column, n_rows) {
   
   data_column <- data %>% dplyr::select({{ column }})
-  column_description_gt <- get_column_description_gt(data_column = data_column, n_rows = n_rows)
   
-  list(column_description_gt = column_description_gt)
+  column_description_gt <- 
+    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+  
+  column_numeric_stats_gt <-
+    get_numeric_stats_gt(data_column = data_column)
+  
+  list(
+    column_name = column,
+    column_type = "integer",
+    column_description_gt = column_description_gt,
+    column_stats_gt = column_numeric_stats_gt
+  )
 }
 
 probe_columns_logical <- function(data, column, n_rows) {
   
   data_column <- data %>% dplyr::select({{ column }})
-  column_description_gt <- get_column_description_gt(data_column = data_column, n_rows = n_rows)
   
-  list(column_description_gt = column_description_gt)
+  column_description_gt <- 
+    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+  
+  list(
+    column_name = column,
+    column_type = "logical",
+    column_description_gt = column_description_gt
+  )
 }
 
 probe_columns_numeric <- function(data, column, n_rows) {
   
   data_column <- data %>% dplyr::select({{ column }})
-  column_description_gt <- get_column_description_gt(data_column = data_column, n_rows = n_rows)
   
-  list(column_description_gt = column_description_gt)
+  column_description_gt <- 
+    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+  
+  column_numeric_stats_gt <-
+    get_numeric_stats_gt(data_column = data_column)
+  
+  list(
+    column_name = column,
+    column_type = "numeric",
+    column_description_gt = column_description_gt,
+    column_stats_gt = column_numeric_stats_gt
+  )
 }
 
 probe_columns_posix <- function(data, column, n_rows) {
   
   data_column <- data %>% dplyr::select({{ column }})
-  column_description_gt <- get_column_description_gt(data_column = data_column, n_rows = n_rows)
+
+  column_description_gt <- 
+    get_column_description_gt(data_column = data_column, n_rows = n_rows)
   
-  list(column_description_gt = column_description_gt)
+  list(
+    column_name = column,
+    column_type = "datetime",
+    column_description_gt = column_description_gt
+  )
 }
 
+# TODO:
+# probe_interactions
 
+probe_correlations <- function(data) {
+  
+  tbl_info <- get_tbl_information(tbl = data)
+  
+  col_names <- tbl_info$col_names
+  col_types <- tbl_info$r_col_types
+  
+  columns_numeric <- col_names[col_types %in% c("integer", "numeric")]
+  
+  if (length(columns_numeric) < 3) {
+    
+    return(
+      list(
+        probe_corr_pearson = NULL,
+        probe_corr_kendall = NULL,
+        probe_corr_spearman = NULL
+      )
+    )
+  }
+    
+  data_corr <- 
+    data %>%
+    dplyr::select(dplyr::one_of(columns_numeric))
+  
+  corr_pearson <- stats::cor(data_corr, method = "pearson")
+  corr_kendall <- stats::cor(data_corr, method = "kendall")
+  corr_spearman <- stats::cor(data_corr, method = "spearman")
+  
+  labels_vec <- seq_along(columns_numeric)
+  names(labels_vec) <- columns_numeric
+  labels_list <- as.list(labels_vec)
+  
+  labels_notes <- 
+    paste(
+      paste0("**", seq_along(columns_numeric), ":**&nbsp;<code>", columns_numeric, "</code>"),
+      collapse = ", "
+    )
+  
+  probe_corr_pearson <- 
+    get_corr_matrix_gt_tbl(
+      corr_mat = corr_pearson,
+      labels_vec = labels_vec,
+      labels_list = labels_list,
+      labels_notes = labels_notes
+    )
+  
+  probe_corr_kendall <-
+    get_corr_matrix_gt_tbl(
+      corr_mat = corr_kendall,
+      labels_vec = labels_vec,
+      labels_list = labels_list,
+      labels_notes = labels_notes
+    )
+  
+  probe_corr_spearman <-
+    get_corr_matrix_gt_tbl(
+      corr_mat = corr_spearman,
+      labels_vec = labels_vec,
+      labels_list = labels_list,
+      labels_notes = labels_notes
+    )
+    
+  list(
+    probe_corr_pearson  = probe_corr_pearson,
+    probe_corr_kendall  = probe_corr_kendall, 
+    probe_corr_spearman = probe_corr_spearman
+  )
+}
 
-#probe_interactions
+get_corr_matrix_gt_tbl <- function(corr_mat,
+                                   labels_vec,
+                                   labels_list,
+                                   labels_notes) {
+  
+  corr_mat %>%
+    dplyr::as_tibble() %>%
+    dplyr::mutate(`::labels::` = labels_vec) %>%
+    dplyr::select(`::labels::`, dplyr::everything()) %>%
+    gt::gt() %>%
+    gt::cols_label(
+      .list = labels_list
+    ) %>%
+    gt::cols_label(
+      `::labels::` = ""
+    ) %>%
+    gt::cols_align(align = "center") %>%
+    gt::data_color(
+      columns = gt::one_of(names(labels_vec)),
+      colors = scales::col_numeric(
+        palette = c("blue", "white", "red"),
+        domain = c(-1, 1))
+    ) %>%
+    gt::text_transform(
+      locations = gt::cells_body(columns = gt::one_of(names(labels_vec))),
+      fn = function(x) "<br>"
+    ) %>%
+    gt::text_transform(
+      locations = gt::cells_body(columns = 1),
+      fn = function(x) paste0(x, "&nbsp;")
+    ) %>%
+    gt::opt_table_lines("none") %>%
+    gt::tab_style(
+      style = gt::cell_text(size = "x-small", align = "right", weight = "bold"),
+      locations = gt::cells_body(columns = 1)
+    ) %>%
+    gt::tab_style(
+      style = gt::cell_text(size = "x-small", weight = "bold"),
+      locations = gt::cells_column_labels(columns = TRUE)
+    ) %>%
+    gt::tab_source_note(source_note = gt::md(labels_notes)) %>%
+    gt::cols_width(
+      gt::everything() ~ gt::px(35)
+    )
+}
 
-#probe_correlations
-#probe_correlations_pearson
-#probe_correlations_spearman
-#probe_correlations_cramer
-#probe_correlations_kendall
+get_corr_matrix_legend <- function() {
+  
+  dplyr::tibble(color = seq(1, -1, by = -0.25),) %>%
+    gt::gt() %>%
+    gt::tab_style(
+      locations = gt::cells_body(columns = TRUE),
+      style = gt::cell_text(size = px(10))
+    ) %>%
+    gt::data_color(
+      columns = gt::vars(color),
+      colors = scales::col_numeric(
+        palette = c("blue", "white", "red"),
+        domain = c(-1, 1))
+    ) %>%
+    gt::opt_table_lines("none") %>%
+    gt::tab_options(column_labels.hidden = TRUE) %>%
+    gt::cols_width(
+      gt::everything() ~ gt::px(40)
+    ) %>%
+    gt::opt_table_lines(extent = "all") %>%
+    gt::text_transform(
+      locations = gt::cells_body(columns = TRUE),
+      fn = function(x) {
+        gsub("-", "&ndash;", x)
+      }
+    )
+}
 
-#probe_missing
-#probe_missing_matrix
-#probe_missing_heatmap
+# TODO: missing_matrix, missing_heatmap
+# TODO: report missing values based on user input (e.g., "9999", empty strings)
 
+probe_missing <- function(data) {
+  
+  n_cols <- ncol(data)
+  n_rows <- nrow(data)
+  
+  col_names <- colnames(data)
+
+  missing <- 
+    data %>% 
+    dplyr::mutate(`::cut_group::` = cut(seq(nrow(data)), breaks = 20)) %>% 
+    dplyr::group_by(`::cut_group::`) %>% 
+    dplyr::summarize_all(~ sum(is.na(.))) %>%
+    dplyr::select(-1)
+  
+  cols_any_missing <-
+    col_names[
+      missing %>%
+        dplyr::group_by() %>%
+        dplyr::summarize_all(~ sum(.)) %>%
+        dplyr::mutate_all(~ . > 0) %>%
+        t() %>% .[, 1]
+    ]
+  
+  data_vals_per_bin <- (n_rows / 20) %>% floor()
+    
+  probe_missing <-
+    missing %>%
+    gt::gt() %>%
+    gt::data_color(
+      columns = TRUE,
+      colors = scales::col_numeric(
+        palette = c("lightblue", "gray35", "black"),
+        domain = c(0, 1, data_vals_per_bin))
+    ) %>%
+    gt::text_transform(
+      locations = gt::cells_body(),
+      fn = function(x) ""
+    ) %>%
+    gt::tab_options(
+      table_body.vlines.style = "solid",
+      column_labels.vlines.style = "dotted",
+      table_body.hlines.style = "none") %>%
+    gt::summary_rows(
+      columns = TRUE,
+      fns = list(
+        F = ~ sum(.) / n_rows
+      ),
+      formatter = gt::fmt_percent,
+      decimals = 1
+    ) %>%
+    gt::tab_stubhead(label = gt::md(paste0(n_rows, "<br>ROWS"))) %>%
+    gt::tab_style(
+      locations = gt::cells_stubhead(),
+      style = gt::cell_text(
+        transform = "capitalize",
+        align = "right",
+        size = "x-small"
+      )
+    ) %>%
+    gt::tab_style(
+      locations = gt::cells_stub(), 
+      style = gt::cell_borders(
+        sides = c("left", "right", "top"),
+        style = "solid",
+        color = "white"
+      ) 
+    )
+  
+  if (length(cols_any_missing) > 0) {
+    
+    probe_missing <-
+      probe_missing %>%
+      gt::tab_style(
+        locations = gt::cells_body(columns = cols_any_missing, rows = 1), 
+        style = gt::cell_borders(sides = "top", color = "red", weight = gt::px(2))
+      )
+  }
+
+  list(probe_missing = probe_missing)
+}
 
 probe_sample <- function(data) {
   
@@ -288,52 +610,59 @@ build_examination_page <- function(data) {
   extra_js <- readr::read_file(file = file.path("inst", "javascript", "toggle_anchor.js"))
   extra_css <- readr::read_file(file = file.path("inst", "css", "extra.css"))
   
-  htmltools::tagList(
-    htmltools::HTML("<!doctype html>"),
-    htmltools::tags$html(
-      lang = "en",
-      htmltools::HTML(
-        "<head>\n",
-        "   <meta charset=\"utf-8\">\n",
-        "   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n",
-        "   <style>\n",
-        "     ", bootstrap_lib, "\n",
-        "   </style>\n",
-        "   <style>\n",
-        "     ", extra_css, "\n",
-        "   </style>\n",
-        " </head>"
-        ),
-      htmltools::tags$body(
-        htmltools::tags$a(
-          class = "anchor-pos", id = "top"
-        ),
-        navbar(),
-        htmltools::tags$div(
-          class = "content",
-          htmltools::tags$div(
-            class = "container",
-            # Use `probe_*()` functions to generate row headers and section items
-            probe_overview_stats_assemble(data = data),
-            probe_sample_assemble(data = data)
-          )
-        ),
-        htmltools::tags$footer(
-          
-        ),
+  examination_page <- 
+    htmltools::tagList(
+      htmltools::HTML("<!doctype html>"),
+      htmltools::tags$html(
+        lang = "en",
         htmltools::HTML(
-          "<script>\n",
-          jquery_lib, "\n",
-          "</script>"
+          "<head>\n",
+          "   <meta charset=\"utf-8\">\n",
+          "   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n",
+          "   <style>\n",
+          "     ", bootstrap_lib, "\n",
+          "   </style>\n",
+          "   <style>\n",
+          "     ", extra_css, "\n",
+          "   </style>\n",
+          " </head>"
         ),
-        htmltools::tags$script(
-          "<script>\n",
-          extra_js, "\n",
-          "</script>"
+        htmltools::tags$body(
+          htmltools::tags$a(
+            class = "anchor-pos", id = "top"
+          ),
+          navbar(),
+          htmltools::tags$div(
+            class = "content",
+            htmltools::tags$div(
+              class = "container",
+              # Use `probe_*()` functions to generate row headers and section items
+              probe_overview_stats_assemble(data = data),
+              probe_columns_assemble(data = data),
+              probe_correlations_assemble(data = data),
+              probe_missing_assemble(data = data),
+              probe_sample_assemble(data = data)
+            )
+          ),
+          htmltools::tags$footer(
+            
+          ),
+          htmltools::HTML(
+            "<script>\n",
+            jquery_lib, "\n",
+            "</script>"
+          ),
+          htmltools::tags$script(
+            "<script>\n",
+            extra_js, "\n",
+            "</script>"
+          )
         )
       )
     )
-  )
+  
+  class(examination_page) <- "examination_page"
+  examination_page
 }
 
 probe_overview_stats_assemble <- function(data) {
@@ -402,12 +731,200 @@ probe_overview_stats_assemble <- function(data) {
   )
 }
 
+probe_columns_assemble <- function(data) {
+  
+  row_header <- row_header(id = "variables", header = "Variables")
+  
+  columns_data <- probe_columns(data = data)
+  
+  columns_tagLists <- 
+    lapply(
+      columns_data, 
+      function(x) {
+        
+        id_val <- gt::random_id()
+        
+        if (x$column_type %in% c("numeric", "integer")) {
+          
+          htmltools::tagList(
+            htmltools::tags$div(
+              class = "row spacing",
+              htmltools::tags$a(
+                class = "anchor-pos anchor-pos-variable",
+                id = paste0("pp_var_", id_val),
+                htmltools::tags$div(
+                  class = "variable",
+                  htmltools::tags$div(
+                    class = "col-sm-3",
+                    htmltools::tags$p(
+                      class = "h4",
+                      title = x$column_name,
+                      htmltools::tags$a(
+                        href = paste0("#pp_var_", id_val),
+                        x$column_name
+                      )
+                    )
+                  ),
+                  htmltools::tags$div(
+                    class = "col-sm-5",
+                    x$column_description_gt
+                  ),
+                  htmltools::tags$div(
+                    class = "col-sm-4",
+                    x$column_stats_gt
+                  )
+                )
+              )
+            )
+          )
+          
+        } else {
+          
+          htmltools::tagList(
+            htmltools::tags$div(
+              class = "row spacing",
+              htmltools::tags$a(
+                class = "anchor-pos anchor-pos-variable",
+                id = paste0("pp_var_", id_val),
+                htmltools::tags$div(
+                  class = "variable",
+                  htmltools::tags$div(
+                    class = "col-sm-3",
+                    htmltools::tags$p(
+                      class = "h4",
+                      title = x$column_name,
+                      htmltools::tags$a(
+                        href = paste0("#pp_var_", id_val),
+                        x$column_name
+                      )
+                    )
+                  ),
+                  htmltools::tags$div(
+                    class = "col-sm-9",
+                    x$column_description_gt
+                  )
+                )
+              )
+            )
+          )
+        }
+      }
+    )
+  
+  htmltools::tagList(
+    row_header,
+    htmltools::tags$div(
+      class = "section-items",
+      columns_tagLists
+    )
+  )
+}
+
+
+probe_correlations_assemble <- function(data) {
+  
+  row_header <- row_header(id = "correlations", header = "Correlations")
+  
+  correlations_data <- probe_correlations(data = data)
+  
+  htmltools::tagList(
+    row_header,
+    htmltools::tags$div(
+      class = "section-items",
+      htmltools::tags$div(
+        class = "row spacing",
+        htmltools::tags$ul(
+          class = "nav nav-pills",
+          role = "tablist",
+          nav_pill_li(label = "Pearson", id = "correlations-pearson", active = TRUE),
+          nav_pill_li(label = "Kendall", id = "correlations-kendall", active = FALSE),
+          nav_pill_li(label = "Spearman", id = "correlations-spearman", active = FALSE),
+        ),
+        htmltools::tags$div(
+          class = "tab-content",
+          style = "padding-top: 10px;",
+          tab_panel(
+            id = "correlations-pearson",
+            active = TRUE,
+            panel_component_list = list(
+              panel_component(
+                size = 10,
+                title = NULL,
+                content = correlations_data$probe_corr_pearson
+              ),
+              panel_component(
+                size = 2,
+                title = NULL,
+                content = get_corr_matrix_legend()
+              )
+            )
+          ),
+          tab_panel(
+            id = "correlations-kendall",
+            active = FALSE,
+            panel_component_list = list(
+              panel_component(
+                size = 10,
+                title = NULL,
+                content = correlations_data$probe_corr_kendall
+              ),
+              panel_component(
+                size = 2,
+                title = NULL,
+                content = get_corr_matrix_legend()
+              )
+            )
+          ),
+          tab_panel(
+            id = "correlations-spearman",
+            active = FALSE,
+            panel_component_list = list(
+              panel_component(
+                size = 10,
+                title = NULL,
+                content = correlations_data$probe_corr_spearman
+              ),
+              panel_component(
+                size = 2,
+                title = NULL,
+                content = get_corr_matrix_legend()
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+}
+
+probe_missing_assemble <- function(data) {
+  
+  row_header <- row_header(id = "missing", header = "Missing Values")
+  
+  missing_data <- probe_missing(data = data)
+  
+  htmltools::tagList(
+    row_header,
+    htmltools::tags$div(
+      class = "section-items",
+      htmltools::tags$div(
+        class = "row spacing",
+        htmltools::tags$div(
+          id = "sample-container",
+          class = "col-sm-12",
+          missing_data$probe_missing
+        )
+      )
+    )
+  )
+}
+
 probe_sample_assemble <- function(data) {
   
   row_header <- row_header(id = "sample", header = "Sample")
   
   sample_data <- probe_sample(data = data)
-
+  
   htmltools::tagList(
     row_header,
     htmltools::tags$div(
@@ -423,6 +940,10 @@ probe_sample_assemble <- function(data) {
     )
   )
 }
+
+#
+# Components of the page
+#
 
 navbar <- function() {
   
@@ -447,7 +968,7 @@ navbar <- function() {
         htmltools::tags$a(
           class = "navbar-brand anchor",
           href = "#top",
-          "Examination"
+          "Table Scan"
         ),
       ),
       htmltools::tags$div(
@@ -487,7 +1008,7 @@ navbar <- function() {
             htmltools::tags$a(
               class = "anchor",
               href = "#missing",
-              "Missing values"
+              "Missing Values"
             )
           ),
           htmltools::tags$li(

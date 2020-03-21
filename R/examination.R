@@ -916,7 +916,7 @@ probe_interactions_assemble <- function(data) {
   
   row_header <- row_header(id = "interactions", header = "Interactions")
   
-  interactions_data <- probe_interactions(data = data)
+  interactions_data <- suppressWarnings(probe_interactions(data = data))
   
   htmltools::tagList(
     row_header,

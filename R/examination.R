@@ -386,11 +386,19 @@ probe_columns_numeric <- function(data, column, n_rows) {
   column_numeric_stats_gt <-
     get_numeric_stats_gt(data_column = data_column)
   
+  column_quantile_stats_gt <-
+    get_quantile_stats_gt(data_column = data_column)
+  
+  column_descriptive_stats_gt <-
+    get_descriptive_stats_gt(data_column = data_column)
+  
   list(
     column_name = column,
     column_type = "numeric",
     column_description_gt = column_description_gt,
-    column_stats_gt = column_numeric_stats_gt
+    column_stats_gt = column_numeric_stats_gt,
+    column_quantile_gt = column_quantile_stats_gt,
+    column_descriptive_gt = column_descriptive_stats_gt
   )
 }
 

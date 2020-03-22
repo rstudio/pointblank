@@ -390,8 +390,8 @@ probe_interactions <- function(data) {
     plot = plot_matrix,
     device = "png",
     dpi = 300,
-    width = 5,
-    height = 5
+    width = length(col_names),
+    height = length(col_names)
   )
   
   # Wait longer for file to be written on async filesystems

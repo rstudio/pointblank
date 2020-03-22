@@ -886,7 +886,11 @@ probe_columns_assemble <- function(data) {
                       title = x$column_name,
                       htmltools::tags$a(
                         href = paste0("#pp_var_", id_val),
-                        x$column_name
+                        x$column_name,
+                        htmltools::tags$br(),
+                        htmltools::tags$small(
+                          htmltools::tags$code(x$column_type)
+                        )
                       )
                     )
                   ),

@@ -601,7 +601,7 @@ probe_missing <- function(data) {
     gt::summary_rows(
       columns = TRUE,
       fns = list(
-        F = ~ sum(.) / n_rows
+        PCT = ~ sum(.) / n_rows
       ),
       formatter = gt::fmt_percent,
       decimals = 1

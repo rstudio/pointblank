@@ -91,14 +91,32 @@ probe_overview_stats <- function(data) {
       table.width = "100%"
     )
   
+  # Reproducibility Summary
+  reproducibility_gt <-
+    dplyr::tribble(
+      ~label,                     ~value,
+      "Scan Build Time",          paste0("`", Sys.time() %>% as.character(), "`"),
+      "**pointblank** Version",   paste0("`", utils::packageVersion("pointblank") %>% as.character(), "`"),
+      "**R** Version",            paste0(R.version$version.string, "<br><span style=\"font-size: smaller;\"><em>", R.version$nickname, "</em></span>") %>% gsub("-", "&ndash;", .),
+      "System OS",                paste0("`", R.version$platform, "`")
+    ) %>%
+    gt::gt() %>%
+    gt::fmt_markdown(columns = vars(label)) %>%
+    gt::fmt_markdown(columns = TRUE) %>%
+    gt::tab_header(title = gt::md("**Reproducibility Information**")) %>%
+    gt::opt_align_table_header(align = "left") %>%
+    gt::tab_options(
+      column_labels.hidden = TRUE,
+      table.border.top.style = "none",
+      table.width = "100%"
+    )
+    
   list(
     data_overview_gt = data_overview_gt,
-    r_col_types_gt = r_col_types_gt
+    r_col_types_gt = r_col_types_gt,
+    reproducibility_gt = reproducibility_gt
   )
 }
-
-#probe_overview_repro
-#probe_overview_vital
 
 probe_columns <- function(data) {
 
@@ -310,8 +328,8 @@ get_descriptive_stats_gt <- function(data_column) {
       # "Skewness",                   paste0("`", descriptive_stats$max, "`"),
     )
   
-  descriptive_stats_gt <-
-    gt::gt(descriptive_stats_tbl) %>%
+  descriptive_stats_tbl %>%
+    gt::gt() %>%
     gt::fmt_markdown(columns = TRUE) %>%
     gt::tab_options(
       column_labels.hidden = TRUE,
@@ -934,8 +952,7 @@ probe_overview_stats_assemble <- function(data) {
           class = "nav nav-pills",
           role = "tablist",
           nav_pill_li(label = "Overview", id = "overview-dataset_overview", active = TRUE),
-          nav_pill_li(label = "Reproduction", id = "overview-reproduction", active = FALSE),
-          nav_pill_li(label = "Warnings", id = "overview-warnings", active = FALSE),
+          nav_pill_li(label = "Reproducibility", id = "overview-reproducibility", active = FALSE)
         ),
         htmltools::tags$div(
           class = "tab-content",
@@ -957,24 +974,13 @@ probe_overview_stats_assemble <- function(data) {
             )
           ),
           tab_panel(
-            id = "overview-reproduction",
+            id = "overview-reproducibility",
             active = FALSE,
             panel_component_list = list(
               panel_component(
                 size = 12,
                 title = NULL,
-                content = overview_stats$r_col_types_gt
-              )
-            )
-          ),
-          tab_panel(
-            id = "overview-warnings",
-            active = FALSE,
-            panel_component_list = list(
-              panel_component(
-                size = 12,
-                title = NULL,
-                content = overview_stats$data_overview_gt
+                content = overview_stats$reproducibility_gt
               )
             )
           )
@@ -1063,6 +1069,18 @@ probe_columns_assemble <- function(data) {
                             role = "tab",
                             `data-toggle` = "tab",
                             "Statistics"
+                          )
+                        ),
+                        htmltools::tags$li(
+                          role = "presentation",
+                          class = "",
+                          style = "padding-top: 5px;",
+                          htmltools::tags$a(
+                            href = paste0("#", id_val, "bottom-", id_val, "common_values"),
+                            `aria-controls` = paste0(id_val, "bottom-", id_val, "common_values"),
+                            role = "tab",
+                            `data-toggle` = "tab",
+                            "Common Values"
                           )
                         )
                       ),

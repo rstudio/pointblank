@@ -233,6 +233,50 @@ get_numeric_stats_gt <- function(data_column) {
   column_stats_gt
 }
 
+get_quantile_stats_gt <- function(data_column) {
+  
+  quantile_stats <- 
+    data_column %>%
+    dplyr::summarize_all(
+      .funs = list(
+        min = ~ min(., na.rm = TRUE),
+        p05 = ~ stats::quantile(., probs = 0.05, na.rm = TRUE),
+        q_1 = ~ stats::quantile(., probs = 0.25, na.rm = TRUE),
+        med = ~ stats::median(., na.rm = TRUE),
+        q_3 = ~ stats::quantile(., probs = 0.75, na.rm = TRUE),
+        p95 = ~ stats::quantile(., probs = 0.95, na.rm = TRUE),
+        max = ~ max(., na.rm = TRUE),
+        iqr = ~ stats::IQR(., na.rm = TRUE)
+      )
+    ) %>%
+    dplyr::mutate(range = max - min) %>%
+    dplyr::summarize_all(~ round(., 2)) %>%
+    as.list()
+  
+  quantile_stats_tbl <-
+    dplyr::tribble(
+      ~label,              ~value,
+      "Min",               paste0("`", quantile_stats$min, "`"),
+      "5th Percentile",    paste0("`", quantile_stats$p05, "`"),
+      "Q1",                paste0("`", quantile_stats$q_1, "`"),
+      "Median",            paste0("`", quantile_stats$med, "`"),
+      "Q3",                paste0("`", quantile_stats$q_3, "`"),
+      "95th Percentile",   paste0("`", quantile_stats$p95, "`"),
+      "Max",               paste0("`", quantile_stats$max, "`"),
+      "Range",             paste0("`", quantile_stats$range, "`"),
+      "IQR",               paste0("`", quantile_stats$iqr, "`")
+    )
+  
+  quantile_stats_gt <-
+    gt::gt(quantile_stats_tbl) %>%
+    gt::fmt_markdown(columns = TRUE) %>%
+    gt::tab_options(
+      column_labels.hidden = TRUE,
+      table.border.top.style = "none",
+      table.width = "100%"
+    )
+}
+
 probe_columns_character <- function(data, column, n_rows) {
   
   data_column <- data %>% dplyr::select({{ column }})

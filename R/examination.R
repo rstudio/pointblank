@@ -919,7 +919,7 @@ probe_columns_assemble <- function(data) {
         id_val <- gt::random_id()
         
         if (x$column_type %in% c("numeric", "integer")) {
-          
+
           htmltools::tagList(
             htmltools::tags$div(
               class = "row spacing",
@@ -950,6 +950,68 @@ probe_columns_assemble <- function(data) {
                   htmltools::tags$div(
                     class = "col-sm-4",
                     x$column_stats_gt
+                  ),
+                  htmltools::tags$div(
+                    class = "col-sm-12 text-left",
+                    htmltools::tags$button(
+                      class = "btn btn-default btn-sm",
+                      `data-toggle` = "collapse",
+                      `data-target` = paste0(
+                        "#bottom-", id_val, ", #minifreqtable", id_val
+                      ),
+                      `aria-expanded` = "true",
+                      `aria-controls` = "collapseExample",
+                      "Toggle details"
+                    )
+                  ),
+                  htmltools::tags$div(
+                    id = paste0("bottom-", id_val),
+                    class = "collapse",
+                    `aria-expanded` = "false",
+                    style = "height: 5px;",
+                    htmltools::tags$div(
+                      class = "row spacing",
+                      htmltools::tags$ul(
+                        class = "nav nav-tabs",
+                        role = "tablist",
+                        htmltools::tags$li(
+                          role = "presentation",
+                          class = "active",
+                          style = "padding-top: 5px;",
+                          htmltools::tags$a(
+                            href = paste0("#", id_val, "bottom-", id_val, "statistics"),
+                            `aria-controls` = paste0(id_val, "bottom-", id_val, "statistics"),
+                            role = "tab",
+                            `data-toggle` = "tab",
+                            "Statistics"
+                          )
+                        )
+                      ),
+                      htmltools::tags$div(
+                        class = "tab-content",
+                        htmltools::tags$div(
+                          role = "tabpanel",
+                          class = "tab-pane col-sm-12 active",
+                          id = paste0(id_val, "bottom-", id_val, "statistics"),
+                          htmltools::tags$div(
+                            class = "col-sm-6",
+                            htmltools::tags$p(
+                              class = "h4",
+                              "Quantile Statistics"
+                            ),
+                            x$column_quantile_gt
+                          ),
+                          htmltools::tags$div(
+                            class = "col-sm-6",
+                            htmltools::tags$p(
+                              class = "h4",
+                              "Descriptive Statistics"
+                            ),
+                            x$column_descriptive_gt
+                          )
+                        )
+                      )
+                    )
                   )
                 )
               )

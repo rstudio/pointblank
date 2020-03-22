@@ -277,6 +277,49 @@ get_quantile_stats_gt <- function(data_column) {
     )
 }
 
+get_descriptive_stats_gt <- function(data_column) {
+  
+  # Create simple function to obtain the coefficient of variation
+  cv <- function(x) sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
+  
+  descriptive_stats <- 
+    data_column %>%
+    dplyr::summarize_all(
+      .funs = list(
+        mean = ~ mean(., na.rm = TRUE),
+        variance = ~ stats::var(., na.rm = TRUE),
+        sd = ~ stats::sd(., na.rm = TRUE),
+        cv = ~ cv(.)#,
+        #mad = ~ stats::quantile(., probs = 0.75, na.rm = TRUE),
+        #kur = ~ stats::quantile(., probs = 0.95, na.rm = TRUE),
+        #skwns = ~ max(., na.rm = TRUE)
+      )
+    ) %>%
+    dplyr::summarize_all(~ round(., 2)) %>%
+    as.list()
+  
+  descriptive_stats_tbl <-
+    dplyr::tribble(
+      ~label,                       ~value,
+      "Mean",                       paste0("`", descriptive_stats$mean, "`"),
+      "Variance",                   paste0("`", descriptive_stats$variance, "`"),
+      "Standard Deviation",         paste0("`", descriptive_stats$sd, "`"),
+      "Coefficient of Variation",   paste0("`", descriptive_stats$cv, "`"),
+      # "Median Absolute Deviation",  paste0("`", descriptive_stats$q_3, "`"),
+      # "Kurtosis",                   paste0("`", descriptive_stats$p95, "`"),
+      # "Skewness",                   paste0("`", descriptive_stats$max, "`"),
+    )
+  
+  descriptive_stats_gt <-
+    gt::gt(descriptive_stats_tbl) %>%
+    gt::fmt_markdown(columns = TRUE) %>%
+    gt::tab_options(
+      column_labels.hidden = TRUE,
+      table.border.top.style = "none",
+      table.width = "100%"
+    )
+}
+
 probe_columns_character <- function(data, column, n_rows) {
   
   data_column <- data %>% dplyr::select({{ column }})

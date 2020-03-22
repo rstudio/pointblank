@@ -1110,7 +1110,7 @@ probe_columns_assemble <- function(data) {
                         
                         htmltools::tags$div(
                           role = "tabpanel",
-                          class = "tab-pane col-sm-12 active",
+                          class = "tab-pane col-sm-12",
                           id = paste0(id_val, "bottom-", id_val, "common_values"),
                           htmltools::tags$div(
                             class = "col-sm-12",

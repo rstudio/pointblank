@@ -362,24 +362,6 @@ probe_columns_factor <- function(data, column, n_rows) {
   )
 }
 
-probe_columns_integer <- function(data, column, n_rows) {
-  
-  data_column <- data %>% dplyr::select({{ column }})
-  
-  column_description_gt <- 
-    get_column_description_gt(data_column = data_column, n_rows = n_rows)
-  
-  column_numeric_stats_gt <-
-    get_numeric_stats_gt(data_column = data_column)
-  
-  list(
-    column_name = column,
-    column_type = "integer",
-    column_description_gt = column_description_gt,
-    column_stats_gt = column_numeric_stats_gt
-  )
-}
-
 probe_columns_logical <- function(data, column, n_rows) {
   
   data_column <- data %>% dplyr::select({{ column }})
@@ -410,6 +392,16 @@ probe_columns_numeric <- function(data, column, n_rows) {
     column_description_gt = column_description_gt,
     column_stats_gt = column_numeric_stats_gt
   )
+}
+
+probe_columns_integer <- function(data, column, n_rows) {
+  
+  probe_columns_integer_list <- 
+    probe_columns_numeric(data = data, column = column, n_rows = n_rows)
+  
+  probe_columns_integer_list$column_type <- "integer"
+  
+  probe_columns_integer_list
 }
 
 probe_columns_posix <- function(data, column, n_rows) {

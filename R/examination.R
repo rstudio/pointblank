@@ -54,10 +54,10 @@ probe_overview_stats <- function(data) {
   data_overview_tbl <-
     dplyr::tribble(
       ~label,              ~value,
-      "Columns",           glue::glue("<code>{n_cols}</code>", .transformer = get),
-      "Rows",              glue::glue("<code>{n_rows}</code>", .transformer = get),
-      "<code>NA</code>s",  glue::glue("<code>{na_cells} {na_cells_pct}</code>", .transformer = get),
-      "Duplicate Rows",    glue::glue("<code>{duplicate_rows} {duplicate_rows_pct}</code>", .transformer = get),
+      "Columns",           n_cols,
+      "Rows",              n_rows,
+      "<code>NA</code>s",  glue::glue("{na_cells} {na_cells_pct}", .transformer = get),
+      "Duplicate Rows",    glue::glue("{duplicate_rows} {duplicate_rows_pct}", .transformer = get),
     )
   
   r_col_types_tbl <- 
@@ -77,8 +77,6 @@ probe_overview_stats <- function(data) {
   
   r_col_types_gt <-
     r_col_types_tbl %>%
-    dplyr::mutate(r_col_types = paste0("<code>", r_col_types, "</code>")) %>%
-    dplyr::mutate(count = paste0("<code>", count, "</code>")) %>%
     gt::gt(r_col_types_tbl) %>%
     gt::fmt_markdown(columns = TRUE) %>%
     gt::tab_options(
@@ -191,9 +189,9 @@ get_column_description_gt <- function(data_column, n_rows) {
   column_description_tbl <-
     dplyr::tribble(
       ~label,              ~value,
-      "Distinct Units",    glue::glue("<code>{distinct_count} {distinct_pct}</code>", .transformer = get),
-      "<code>NA</code>s",  glue::glue("<code>{na_cells} {na_cells_pct}</code>", .transformer = get),
-      "<code>Inf</code>/<code>-Inf</code>", glue::glue("<code>{inf_cells} {inf_cells_pct}</code>", .transformer = get),
+      "Distinct Units",    glue::glue("{distinct_count} {distinct_pct}", .transformer = get),
+      "<code>NA</code>s",  glue::glue("{na_cells} {na_cells_pct}", .transformer = get),
+      "<code>Inf</code>/<code>-Inf</code>", glue::glue("{inf_cells} {inf_cells_pct}", .transformer = get),
     )
   
   column_description_gt <-
@@ -228,9 +226,9 @@ get_numeric_stats_gt <- function(data_column) {
   column_stats_tbl <-
     dplyr::tribble(
       ~label,   ~value,
-      "Mean",   glue::glue("<code>{mean}</code>", .transformer = get),
-      "Min",    glue::glue("<code>{min}</code>", .transformer = get),
-      "Max",    glue::glue("<code>{max}</code>", .transformer = get),
+      "Mean",   mean,
+      "Min",    min,
+      "Max",    max
     )
   
   column_stats_gt <-
@@ -268,15 +266,15 @@ get_quantile_stats_gt <- function(data_column) {
   quantile_stats_tbl <-
     dplyr::tribble(
       ~label,              ~value,
-      "Min",               paste0("`", quantile_stats$min, "`"),
-      "5th Percentile",    paste0("`", quantile_stats$p05, "`"),
-      "Q1",                paste0("`", quantile_stats$q_1, "`"),
-      "Median",            paste0("`", quantile_stats$med, "`"),
-      "Q3",                paste0("`", quantile_stats$q_3, "`"),
-      "95th Percentile",   paste0("`", quantile_stats$p95, "`"),
-      "Max",               paste0("`", quantile_stats$max, "`"),
-      "Range",             paste0("`", quantile_stats$range, "`"),
-      "IQR",               paste0("`", quantile_stats$iqr, "`")
+      "Min",               quantile_stats$min,
+      "5th Percentile",    quantile_stats$p05,
+      "Q1",                quantile_stats$q_1,
+      "Median",            quantile_stats$med,
+      "Q3",                quantile_stats$q_3,
+      "95th Percentile",   quantile_stats$p95,
+      "Max",               quantile_stats$max,
+      "Range",             quantile_stats$range,
+      "IQR",               quantile_stats$iqr
     )
   
   quantile_stats_gt <-
@@ -302,9 +300,9 @@ get_descriptive_stats_gt <- function(data_column) {
         variance = ~ stats::var(., na.rm = TRUE),
         sd = ~ stats::sd(., na.rm = TRUE),
         cv = ~ cv(.)#,
-        #mad = ~ stats::quantile(., probs = 0.75, na.rm = TRUE),
-        #kur = ~ stats::quantile(., probs = 0.95, na.rm = TRUE),
-        #skwns = ~ max(., na.rm = TRUE)
+        #mad = ,
+        #kur = ,
+        #skwns = 
       )
     ) %>%
     dplyr::summarize_all(~ round(., 2)) %>%
@@ -313,13 +311,13 @@ get_descriptive_stats_gt <- function(data_column) {
   descriptive_stats_tbl <-
     dplyr::tribble(
       ~label,                       ~value,
-      "Mean",                       paste0("`", descriptive_stats$mean, "`"),
-      "Variance",                   paste0("`", descriptive_stats$variance, "`"),
-      "Standard Deviation",         paste0("`", descriptive_stats$sd, "`"),
-      "Coefficient of Variation",   paste0("`", descriptive_stats$cv, "`"),
-      # "Median Absolute Deviation",  paste0("`", descriptive_stats$q_3, "`"),
-      # "Kurtosis",                   paste0("`", descriptive_stats$p95, "`"),
-      # "Skewness",                   paste0("`", descriptive_stats$max, "`"),
+      "Mean",                       descriptive_stats$mean,
+      "Variance",                   descriptive_stats$variance,
+      "Standard Deviation",         descriptive_stats$sd,
+      "Coefficient of Variation",   descriptive_stats$cv,
+      # "Median Absolute Deviation",,
+      # "Kurtosis",                 ,
+      # "Skewness",                 ,
     )
   
   descriptive_stats_tbl %>%
@@ -359,7 +357,7 @@ get_common_values_gt <- function(data_column) {
     common_values_gt <-
       dplyr::bind_rows(
         common_values_tbl %>%
-          dplyr::slice(1:10) %>%
+          dplyr::slice(1:9) %>%
           dplyr::mutate(frequency = n / n_rows) %>%
           dplyr::rename(value = 1) %>%
           dplyr::mutate(value = as.character(value)),

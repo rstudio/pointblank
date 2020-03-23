@@ -338,7 +338,6 @@ get_descriptive_stats_gt <- function(data_column) {
     )
 }
 
-
 get_common_values_gt <- function(data_column) {
   
   n_rows <- nrow(data_column)
@@ -411,6 +410,53 @@ get_common_values_gt <- function(data_column) {
   }
   
   common_values_gt
+}
+
+get_head_tail_slices <- function(data_column) {
+  
+  head_tail_slices <- probe_sample(data = data_column)
+  
+  head_tail_slices$probe_sample
+}
+
+get_top_bottom_slice <- function(data_column) {
+  
+  n_rows <- nrow(data_column)
+  
+  data_column_freq <-
+    data_column %>%
+    dplyr::group_by_at(1) %>%
+    dplyr::count(name = "Count") %>%
+    dplyr::rename("Value" = 1) %>%
+    dplyr::ungroup()
+  
+  data_column_top_n <-
+    data_column_freq %>%
+    dplyr::arrange_at(1, .funs = list(~ dplyr::desc(.))) %>%
+    dplyr::slice(1:10) %>%
+    dplyr::mutate(Frequency = Count / n_rows)
+  
+  data_column_bottom_n <- 
+    data_column_freq %>%
+    dplyr::arrange_at(1) %>%
+    dplyr::slice(1:10) %>%
+    dplyr::mutate(Frequency = Count / n_rows)
+  
+  get_slice_gt <- function(data_column, slice = "max") {
+    
+    data_column %>%
+      gt::gt() %>%
+      gt::fmt_percent(columns = vars(Frequency)) %>%
+      gt::tab_options(
+        table.border.top.style = "none",
+        table.width = "100%"
+      )
+  }
+  
+  list(
+    top_slice = get_slice_gt(data_column = data_column_top_n),
+    bottom_slice = get_slice_gt(data_column = data_column_bottom_n)
+  )
 }
 
 probe_columns_character <- function(data, column, n_rows) {
@@ -488,6 +534,9 @@ probe_columns_numeric <- function(data, column, n_rows) {
   column_common_values_gt <- 
     get_common_values_gt(data_column = data_column)
   
+  top_bottom_slices_gt <-
+    get_top_bottom_slice(data_column = data_column)
+  
   list(
     column_name = column,
     column_type = "numeric",
@@ -495,7 +544,9 @@ probe_columns_numeric <- function(data, column, n_rows) {
     column_stats_gt = column_numeric_stats_gt,
     column_quantile_gt = column_quantile_stats_gt,
     column_descriptive_gt = column_descriptive_stats_gt,
-    column_common_gt = column_common_values_gt
+    column_common_gt = column_common_values_gt,
+    column_top_slice_gt = top_bottom_slices_gt$top_slice,
+    column_bottom_slice_gt = top_bottom_slices_gt$bottom_slice
   )
 }
 
@@ -1056,9 +1107,11 @@ probe_columns_assemble <- function(data) {
                     style = "height: 5px;",
                     htmltools::tags$div(
                       class = "row spacing",
+                      
                       htmltools::tags$ul(
                         class = "nav nav-tabs",
                         role = "tablist",
+                        
                         htmltools::tags$li(
                           role = "presentation",
                           class = "active",
@@ -1082,10 +1135,23 @@ probe_columns_assemble <- function(data) {
                             `data-toggle` = "tab",
                             "Common Values"
                           )
+                        ),
+                        htmltools::tags$li(
+                          role = "presentation",
+                          class = "",
+                          style = "padding-top: 5px;",
+                          htmltools::tags$a(
+                            href = paste0("#", id_val, "bottom-", id_val, "max_min_slices"),
+                            `aria-controls` = paste0(id_val, "bottom-", id_val, "max_min_slices"),
+                            role = "tab",
+                            `data-toggle` = "tab",
+                            "Max/Min Slices"
+                          )
                         )
                       ),
                       htmltools::tags$div(
                         class = "tab-content",
+                        
                         htmltools::tags$div(
                           role = "tabpanel",
                           class = "tab-pane col-sm-12 active",
@@ -1120,7 +1186,30 @@ probe_columns_assemble <- function(data) {
                             ),
                             x$column_common_gt
                           )
+                        ),
+                        
+                        htmltools::tags$div(
+                          role = "tabpanel",
+                          class = "tab-pane col-sm-12",
+                          id = paste0(id_val, "bottom-", id_val, "max_min_slices"),
+                          htmltools::tags$div(
+                            class = "col-sm-6",
+                            htmltools::tags$p(
+                              class = "h4",
+                              "Maximum Values"
+                            ),
+                            x$column_top_slice_gt
+                          ),
+                          htmltools::tags$div(
+                            class = "col-sm-6",
+                            htmltools::tags$p(
+                              class = "h4",
+                              "Minimum Values"
+                            ),
+                            x$column_bottom_slice_gt
+                          )
                         )
+                        
                       )
                     )
                   )

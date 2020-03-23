@@ -69,8 +69,6 @@ probe_overview_stats <- function(data) {
   data_overview_gt <-
     gt::gt(data_overview_tbl) %>%
     gt::fmt_markdown(columns = TRUE) %>%
-    gt::tab_header(title = gt::md("**Table Overview**")) %>%
-    gt::opt_align_table_header(align = "left") %>%
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -83,8 +81,6 @@ probe_overview_stats <- function(data) {
     dplyr::mutate(count = paste0("<code>", count, "</code>")) %>%
     gt::gt(r_col_types_tbl) %>%
     gt::fmt_markdown(columns = TRUE) %>%
-    gt::tab_header(title = gt::md("**Column Types**")) %>%
-    gt::opt_align_table_header(align = "left") %>%
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -103,8 +99,6 @@ probe_overview_stats <- function(data) {
     gt::gt() %>%
     gt::fmt_markdown(columns = vars(label)) %>%
     gt::fmt_markdown(columns = TRUE) %>%
-    gt::tab_header(title = gt::md("**Reproducibility Information**")) %>%
-    gt::opt_align_table_header(align = "left") %>%
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -1014,12 +1008,12 @@ probe_overview_stats_assemble <- function(data) {
             panel_component_list = list(
               panel_component(
                 size = 6,
-                title = NULL,
+                title = "Table Overview",
                 content = overview_stats$data_overview_gt
               ),
               panel_component(
                 size = 6,
-                title = NULL,
+                title = "Column Types",
                 content = overview_stats$r_col_types_gt
               )
             )
@@ -1030,7 +1024,7 @@ probe_overview_stats_assemble <- function(data) {
             panel_component_list = list(
               panel_component(
                 size = 12,
-                title = NULL,
+                title = "Reproducibility Information",
                 content = overview_stats$reproducibility_gt
               )
             )

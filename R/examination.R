@@ -664,16 +664,13 @@ probe_columns_other <- function(data, column, n_rows) {
 probe_interactions <- function(data) {
   
   category_cutoff <- 5
-  max_dim <- 8
+  #max_dim <- 8
   
   tbl_info <- get_tbl_information(tbl = data)
-  
   col_names <- tbl_info$col_names
   col_types <- tbl_info$r_col_types
-  
   columns_char <- col_names[col_types == "character"]
   columns_numeric <- col_names[col_types %in% c("integer", "numeric")]
-  
   col_names <- c(columns_char, columns_numeric)
   
   columns_char_distinct_count <- 
@@ -693,7 +690,8 @@ probe_interactions <- function(data) {
   col_names <- 
     col_names %>% 
     base::setdiff(columns_char[columns_char_distinct_count > category_cutoff])
-  
+
+  # Create a ggplot2 plot matrix with the data
   plot_matrix <-
     data %>%
     dplyr::select(gt::one_of(col_names)) %>%
@@ -704,7 +702,11 @@ probe_interactions <- function(data) {
     ggforce::facet_matrix(
       rows = gt::vars(gt::everything()), layer.diag = 2, layer.upper = 3, 
       grid.y.diag = FALSE) +
-    ggplot2::theme_minimal()
+    ggplot2::theme_minimal() + 
+    ggplot2::theme(
+      axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1, size = 8),
+      axis.text.y = ggplot2::element_text(size = 8)
+    )
   
   # Save PNG file to disk
   ggplot2::ggsave(

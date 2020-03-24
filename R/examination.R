@@ -451,6 +451,76 @@ get_top_bottom_slice <- function(data_column) {
   )
 }
 
+get_character_nchar_stats_gt <- function(data_column) {
+  
+  character_nchar_stats <- 
+    data_column %>%
+    dplyr::mutate_all(.funs = nchar) %>%
+    dplyr::rename(nchar = 1) %>%
+    dplyr::summarize_all(
+      .funs = list(
+        mean = ~ mean(., na.rm = TRUE),
+        min = ~min(., na.rm = TRUE),
+        max = ~max(., na.rm = TRUE)
+      )
+    ) %>%
+    as.list()
+  
+  dplyr::tribble(
+    ~label,  ~value,
+    "Mean",  character_nchar_stats$mean,
+    "Min",   character_nchar_stats$min,
+    "Max",   character_nchar_stats$max
+  ) %>%
+    gt::gt() %>%
+    gt::fmt_number(columns = vars(value), decimals = 1) %>%
+    gt::tab_options(
+      column_labels.hidden = TRUE,
+      table.border.top.style = "none",
+      table.width = "100%"
+    )
+}
+
+get_character_nchar_histogram <- function(data_column) {
+  
+  suppressWarnings(
+    plot_histogram <- 
+      data_column %>%
+      dplyr::mutate_all(.funs = nchar) %>%
+      dplyr::rename(nchar = 1) %>%
+      ggplot2::ggplot(ggplot2::aes(nchar)) +
+      ggplot2::geom_histogram(stat = "count", bins = 10, fill = "steelblue") +
+      ggplot2::labs(x = "String Length", y = "Count") +
+      ggplot2::theme_minimal()
+  )
+  
+  # Save PNG file to disk
+  ggplot2::ggsave(
+    filename = "temp_histogram_ggplot.png",
+    plot = plot_histogram,
+    device = "png",
+    dpi = 300,
+    width = 5,
+    height = 3
+  )
+  
+  # Wait longer for file to be written on async filesystems
+  Sys.sleep(0.5)
+  
+  image_html <- 
+    htmltools::tags$div(
+      style = "text-align: center",
+      htmltools::HTML(
+        gt::local_image(filename = "temp_histogram_ggplot.png", height = "500px") %>%
+          gsub("height:500px", "width: 100%", .)
+      )
+    )
+  
+  file.remove("temp_histogram_ggplot.png")
+  
+  image_html
+}
+
 probe_columns_character <- function(data, column, n_rows) {
   
   data_column <- data %>% dplyr::select({{ column }})
@@ -458,10 +528,22 @@ probe_columns_character <- function(data, column, n_rows) {
   column_description_gt <- 
     get_column_description_gt(data_column = data_column, n_rows = n_rows)
   
+  column_common_values_gt <- 
+    get_common_values_gt(data_column = data_column)
+  
+  column_nchar_stats_gt <-
+    get_character_nchar_stats_gt(data_column = data_column)
+  
+  column_nchar_plot <- 
+    get_character_nchar_histogram(data_column = data_column)
+  
   list(
     column_name = column,
     column_type = "character",
-    column_description_gt = column_description_gt
+    column_description_gt = column_description_gt,
+    column_common_gt = column_common_values_gt,
+    column_nchar_gt = column_nchar_stats_gt,
+    column_nchar_plot = column_nchar_plot
   )
 }
 
@@ -613,7 +695,7 @@ probe_interactions <- function(data) {
   
   # Save PNG file to disk
   ggplot2::ggsave(
-    filename = "temp_ggplot.png",
+    filename = "temp_matrix_ggplot.png",
     plot = plot_matrix,
     device = "png",
     dpi = 300,
@@ -622,15 +704,18 @@ probe_interactions <- function(data) {
   )
   
   # Wait longer for file to be written on async filesystems
-  Sys.sleep(1)
-  
+  Sys.sleep(0.5)
+
   image_html <- 
     htmltools::tags$div(
       style = "text-align: center",
-      htmltools::HTML(gt::local_image(filename = "temp_ggplot.png", height = "500px"))
+      htmltools::HTML(
+        gt::local_image(filename = "temp_matrix_ggplot.png", height = "500px") %>%
+          gsub("height:500px", "width: 100%", .)
+      )
     )
   
-  file.remove("temp_ggplot.png")
+  file.remove("temp_matrix_ggplot.png")
   
   list(
     probe_interactions = image_html
@@ -1210,6 +1295,139 @@ probe_columns_assemble <- function(data) {
             )
           )
           
+        } else if (x$column_type == "character") {
+          
+          htmltools::tagList(
+            htmltools::tags$div(
+              class = "row spacing",
+              htmltools::tags$a(
+                class = "anchor-pos anchor-pos-variable",
+                id = paste0("pp_var_", id_val),
+                htmltools::tags$div(
+                  class = "variable",
+                  htmltools::tags$div(
+                    class = "col-sm-3",
+                    htmltools::tags$p(
+                      class = "h4",
+                      title = x$column_name,
+                      htmltools::tags$a(
+                        href = paste0("#pp_var_", id_val),
+                        x$column_name,
+                        htmltools::tags$br(),
+                        htmltools::tags$small(
+                          htmltools::tags$code(x$column_type)
+                        )
+                      )
+                    )
+                  ),
+                  htmltools::tags$div(
+                    class = "col-sm-5",
+                    x$column_description_gt
+                  ),
+                  htmltools::tags$div(
+                    class = "col-sm-4",
+                    " "
+                  ),
+                  htmltools::tags$div(
+                    class = "col-sm-12 text-left",
+                    htmltools::tags$button(
+                      class = "btn btn-default btn-sm",
+                      `data-toggle` = "collapse",
+                      `data-target` = paste0(
+                        "#bottom-", id_val, ", #minifreqtable", id_val
+                      ),
+                      `aria-expanded` = "true",
+                      `aria-controls` = "collapseExample",
+                      "Toggle details"
+                    )
+                  ),
+                  htmltools::tags$div(
+                    id = paste0("bottom-", id_val),
+                    class = "collapse",
+                    `aria-expanded` = "false",
+                    style = "height: 5px;",
+                    htmltools::tags$div(
+                      class = "row spacing",
+                      
+                      htmltools::tags$ul(
+                        class = "nav nav-tabs",
+                        role = "tablist",
+                        
+                        htmltools::tags$li(
+                          role = "presentation",
+                          class = "active",
+                          style = "padding-top: 5px;",
+                          htmltools::tags$a(
+                            href = paste0("#", id_val, "bottom-", id_val, "common_values"),
+                            `aria-controls` = paste0(id_val, "bottom-", id_val, "common_values"),
+                            role = "tab",
+                            `data-toggle` = "tab",
+                            "Common Values"
+                          )
+                        ),
+                        
+                        htmltools::tags$li(
+                          role = "presentation",
+                          class = "",
+                          style = "padding-top: 5px;",
+                          htmltools::tags$a(
+                            href = paste0("#", id_val, "bottom-", id_val, "lengths"),
+                            `aria-controls` = paste0(id_val, "bottom-", id_val, "lengths"),
+                            role = "tab",
+                            `data-toggle` = "tab",
+                            "String Lengths"
+                          )
+                        ),
+                        
+                      ),
+                      htmltools::tags$div(
+                        class = "tab-content",
+                        
+                        htmltools::tags$div(
+                          role = "tabpanel",
+                          class = "tab-pane col-sm-12 active",
+                          id = paste0(id_val, "bottom-", id_val, "common_values"),
+                          htmltools::tags$div(
+                            class = "col-sm-12",
+                            htmltools::tags$p(
+                              class = "h4",
+                              "Common Values"
+                            ),
+                            x$column_common_gt
+                          )
+                        ),
+                        
+                        htmltools::tags$div(
+                          role = "tabpanel",
+                          class = "tab-pane col-sm-12",
+                          id = paste0(id_val, "bottom-", id_val, "lengths"),
+                          htmltools::tags$div(
+                            class = "col-sm-4",
+                            htmltools::tags$p(
+                              class = "h4",
+                              "String Lengths"
+                            ),
+                            x$column_nchar_gt
+                          ),
+                          htmltools::tags$div(
+                            class = "col-sm-8",
+                            htmltools::tags$p(
+                              class = "h4",
+                              "Histogram"
+                            ),
+                            x$column_nchar_plot
+                          )
+                        ),
+                        
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+          
+          
         } else {
           
           htmltools::tagList(
@@ -1236,9 +1454,13 @@ probe_columns_assemble <- function(data) {
                     )
                   ),
                   htmltools::tags$div(
-                    class = "col-sm-9",
+                    class = "col-sm-5",
                     x$column_description_gt
-                  )
+                  ),
+                  htmltools::tags$div(
+                    class = "col-sm-4",
+                    " "
+                  ),
                 )
               )
             )

@@ -4,12 +4,14 @@
 \alias{print.examination_page}
 \title{Print the reporting produced by \code{\link[=scan_data]{scan_data()}}}
 \usage{
-\method{print}{examination_page}(x, ...)
+\method{print}{examination_page}(x, ..., view = interactive())
 }
 \arguments{
 \item{x}{An object of class \code{examination_page}.}
 
 \item{...}{Any additional parameters.}
+
+\item{view}{The value for \code{print()}s \code{browse} argument.}
 }
 \description{
 This facilitates printing of the HTML report to the R console.

@@ -58,7 +58,7 @@ When using an \emph{agent}, we often opt to not use any functions in \code{fns} 
 }
 \section{Function ID}{
 
-1-2
+1-3
 }
 
 \examples{
@@ -107,6 +107,7 @@ suppressWarnings(
 \seealso{
 Other Planning and Prep: 
 \code{\link{col_schema}()},
-\code{\link{create_agent}()}
+\code{\link{create_agent}()},
+\code{\link{scan_data}()}
 }
 \concept{Planning and Prep}

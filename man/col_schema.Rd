@@ -31,7 +31,7 @@ both on the server side and when tabular data is collected and loaded into R.
 }
 \section{Function ID}{
 
-1-3
+1-4
 }
 
 \examples{
@@ -90,6 +90,7 @@ create_agent(tbl = tbl) \%>\%
 \seealso{
 Other Planning and Prep: 
 \code{\link{action_levels}()},
-\code{\link{create_agent}()}
+\code{\link{create_agent}()},
+\code{\link{scan_data}()}
 }
 \concept{Planning and Prep}

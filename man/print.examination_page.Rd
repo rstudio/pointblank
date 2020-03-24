@@ -4,7 +4,7 @@
 \alias{print.examination_page}
 \title{Print the reporting produced by \code{\link[=scan_data]{scan_data()}}}
 \usage{
-\method{print}{examination_page}(x, ..., view = interactive())
+\method{print}{examination_page}(x)
 }
 \arguments{
 \item{x}{An object of class \code{examination_page}.}

@@ -11,5 +11,28 @@ scan_data(tbl)
 \code{tbl_dbi} object.}
 }
 \description{
-Thoroughly scan the table data so as to understand it better
+Generates an HTML report that scours the input table data. Before calling up
+an \emph{agent} to validate the data, it's a good idea to understand the data with
+some level of precision. Make this the initial step of a well-balanced \emph{data
+quality reporting} workflow. The reporting output contains several sections
+to make everything more digestible.
 }
+\section{Function ID}{
+
+1-1
+}
+
+\examples{
+# Get an HTML report that describes
+# all of the data in the `dplyr::storms`
+# dataset
+# scan_data(dplyr::storms)
+
+}
+\seealso{
+Other Planning and Prep: 
+\code{\link{action_levels}()},
+\code{\link{col_schema}()},
+\code{\link{create_agent}()}
+}
+\concept{Planning and Prep}

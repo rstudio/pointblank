@@ -60,7 +60,7 @@ test units), the \code{\link[=all_passed]{all_passed()}} function should be used
 }
 \section{Function ID}{
 
-1-1
+1-2
 }
 
 \examples{
@@ -90,6 +90,7 @@ agent <-
 \seealso{
 Other Planning and Prep: 
 \code{\link{action_levels}()},
-\code{\link{col_schema}()}
+\code{\link{col_schema}()},
+\code{\link{scan_data}()}
 }
 \concept{Planning and Prep}

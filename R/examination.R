@@ -1,7 +1,7 @@
 
 
 probe_overview_stats <- function(data) {
-  
+
   n_cols <- ncol(data)
   n_rows <- nrow(data)
 
@@ -18,9 +18,14 @@ probe_overview_stats <- function(data) {
     na_cells <- 0L
   }
   
+  tbl_info <- get_tbl_information(tbl = data)
+  
+  tbl_src <- tbl_info$tbl_src
+  r_col_types <- tbl_info$r_col_types
+  
   duplicate_rows <- 
     suppressMessages(
-      create_agent(tbl = data) %>%
+      create_agent(tbl = data %>% dplyr::select_at(which(r_col_types != "list"))) %>%
         rows_distinct() %>%
         interrogate() %>%
         unclass() %>%
@@ -45,11 +50,6 @@ probe_overview_stats <- function(data) {
     } else {
       ((duplicate_rows / n_rows) * 100) %>% round(1) %>% as.character() %>% paste0("(", ., "%)")
     }
-  
-  tbl_info <- get_tbl_information(tbl = data)
-  
-  tbl_src <- tbl_info$tbl_src
-  r_col_types <- tbl_info$r_col_types
   
   data_overview_tbl <-
     dplyr::tribble(
@@ -136,7 +136,8 @@ probe_columns <- function(data) {
           integer = probe_columns_integer(data = data, column = col_name, n_rows = n_rows),
           logical = probe_columns_logical(data = data, column = col_name, n_rows = n_rows),
           numeric = probe_columns_numeric(data = data, column = col_name, n_rows = n_rows),
-          POSIXct = probe_columns_posix(data = data, column = col_name, n_rows = n_rows)
+          POSIXct = probe_columns_posix(data = data, column = col_name, n_rows = n_rows),
+          probe_columns_other(data = data, column = col_name, n_rows = n_rows)
         )
       })
     
@@ -521,74 +522,6 @@ get_character_nchar_histogram <- function(data_column) {
   image_html
 }
 
-probe_columns_character <- function(data, column, n_rows) {
-  
-  data_column <- data %>% dplyr::select({{ column }})
-  
-  column_description_gt <- 
-    get_column_description_gt(data_column = data_column, n_rows = n_rows)
-  
-  column_common_values_gt <- 
-    get_common_values_gt(data_column = data_column)
-  
-  column_nchar_stats_gt <-
-    get_character_nchar_stats_gt(data_column = data_column)
-  
-  column_nchar_plot <- 
-    get_character_nchar_histogram(data_column = data_column)
-  
-  list(
-    column_name = column,
-    column_type = "character",
-    column_description_gt = column_description_gt,
-    column_common_gt = column_common_values_gt,
-    column_nchar_gt = column_nchar_stats_gt,
-    column_nchar_plot = column_nchar_plot
-  )
-}
-
-probe_columns_date <- function(data, column, n_rows) {
-  
-  data_column <- data %>% dplyr::select({{ column }})
-  
-  column_description_gt <- 
-    get_column_description_gt(data_column = data_column, n_rows = n_rows)
-  
-  list(
-    column_name = column,
-    column_type = "date",
-    column_description_gt = column_description_gt
-  )
-}
-
-probe_columns_factor <- function(data, column, n_rows) {
-  
-  data_column <- data %>% dplyr::select({{ column }})
-  
-  column_description_gt <- 
-    get_column_description_gt(data_column = data_column, n_rows = n_rows)
-  
-  list(
-    column_name = column,
-    column_type = "factor",
-    column_description_gt = column_description_gt
-  )
-}
-
-probe_columns_logical <- function(data, column, n_rows) {
-  
-  data_column <- data %>% dplyr::select({{ column }})
-  
-  column_description_gt <- 
-    get_column_description_gt(data_column = data_column, n_rows = n_rows)
-  
-  list(
-    column_name = column,
-    column_type = "logical",
-    column_description_gt = column_description_gt
-  )
-}
-
 probe_columns_numeric <- function(data, column, n_rows) {
   
   data_column <- data %>% dplyr::select({{ column }})
@@ -634,6 +567,74 @@ probe_columns_integer <- function(data, column, n_rows) {
   probe_columns_integer_list
 }
 
+probe_columns_character <- function(data, column, n_rows) {
+  
+  data_column <- data %>% dplyr::select({{ column }})
+  
+  column_description_gt <- 
+    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+  
+  column_common_values_gt <- 
+    get_common_values_gt(data_column = data_column)
+  
+  column_nchar_stats_gt <-
+    get_character_nchar_stats_gt(data_column = data_column)
+  
+  column_nchar_plot <- 
+    get_character_nchar_histogram(data_column = data_column)
+  
+  list(
+    column_name = column,
+    column_type = "character",
+    column_description_gt = column_description_gt,
+    column_common_gt = column_common_values_gt,
+    column_nchar_gt = column_nchar_stats_gt,
+    column_nchar_plot = column_nchar_plot
+  )
+}
+
+probe_columns_logical <- function(data, column, n_rows) {
+  
+  data_column <- data %>% dplyr::select({{ column }})
+  
+  column_description_gt <- 
+    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+  
+  list(
+    column_name = column,
+    column_type = "logical",
+    column_description_gt = column_description_gt
+  )
+}
+
+probe_columns_factor <- function(data, column, n_rows) {
+  
+  data_column <- data %>% dplyr::select({{ column }})
+  
+  column_description_gt <- 
+    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+  
+  list(
+    column_name = column,
+    column_type = "factor",
+    column_description_gt = column_description_gt
+  )
+}
+
+probe_columns_date <- function(data, column, n_rows) {
+  
+  data_column <- data %>% dplyr::select({{ column }})
+  
+  column_description_gt <- 
+    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+  
+  list(
+    column_name = column,
+    column_type = "date",
+    column_description_gt = column_description_gt
+  )
+}
+
 probe_columns_posix <- function(data, column, n_rows) {
   
   data_column <- data %>% dplyr::select({{ column }})
@@ -645,6 +646,18 @@ probe_columns_posix <- function(data, column, n_rows) {
     column_name = column,
     column_type = "datetime",
     column_description_gt = column_description_gt
+  )
+}
+
+probe_columns_other <- function(data, column, n_rows) {
+  
+  data_column <- data %>% dplyr::select({{ column }})
+  
+  column_classes <- paste(class(data_column), collapse = ", ")
+  
+  list(
+    column_name = column,
+    column_type = column_classes
   )
 }
 
@@ -1427,8 +1440,7 @@ probe_columns_assemble <- function(data) {
             )
           )
           
-          
-        } else {
+        } else if (x$column_type %in% c("logical", "factor", "date", "datetime")) {
           
           htmltools::tagList(
             htmltools::tags$div(
@@ -1461,6 +1473,35 @@ probe_columns_assemble <- function(data) {
                     class = "col-sm-4",
                     " "
                   ),
+                )
+              )
+            )
+          )
+        } else {
+
+          htmltools::tagList(
+            htmltools::tags$div(
+              class = "row spacing",
+              htmltools::tags$a(
+                class = "anchor-pos anchor-pos-variable",
+                id = paste0("pp_var_", id_val),
+                htmltools::tags$div(
+                  class = "variable",
+                  htmltools::tags$div(
+                    class = "col-sm-12",
+                    htmltools::tags$p(
+                      class = "h4",
+                      title = x$column_name,
+                      htmltools::tags$a(
+                        href = paste0("#pp_var_", id_val),
+                        x$column_name,
+                        htmltools::tags$br(),
+                        htmltools::tags$small(
+                          htmltools::tags$code(x$column_type)
+                        )
+                      )
+                    )
+                  )
                 )
               )
             )

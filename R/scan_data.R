@@ -8,6 +8,16 @@
 #' 
 #' @inheritParams create_agent
 #' 
+#' @examples
+#' # Get an HTML report that describes
+#' # all of the data in the `dplyr::storms`
+#' # dataset
+#' # scan_data(dplyr::storms)
+#' 
+#' @family Planning and Prep
+#' @section Function ID:
+#' 1-1
+#' 
 #' @export
 scan_data <- function(tbl) {
   

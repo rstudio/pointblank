@@ -4,15 +4,26 @@
 #' an *agent* to validate the data, it's a good idea to understand the data with
 #' some level of precision. Make this the initial step of a well-balanced *data
 #' quality reporting* workflow. The reporting output contains several sections
-#' to make everything more digestible.
+#' to make everything more digestible, and these are:
+#' \describe{
+#' \item{Overview}{Table dimensions, duplicate row count, column types, and
+#' reproducibility information}
+#' \item{Variables}{A summary for each table variable and further statistics and
+#' summaries depending on the variable type}
+#' \item{Interactions}{A matrix plot that shows interactions between variables}
+#' \item{Correlations}{A set of correlation matrix plots for numerical
+#' variables}
+#' \item{Missing Values}{A summary figure that shows the degree of missingness
+#' across variables}
+#' \item{Sample}{A table that provides the head and tail rows of the dataset}
+#' }
 #' 
 #' @inheritParams create_agent
 #' 
 #' @examples
-#' # Get an HTML report that describes
-#' # all of the data in the `dplyr::storms`
-#' # dataset
-#' # scan_data(dplyr::storms)
+#' # Get an HTML report that describes all of
+#' # the data in the `dplyr::storms` dataset
+#' # scan_data(tbl = dplyr::storms)
 #' 
 #' @family Planning and Prep
 #' @section Function ID:

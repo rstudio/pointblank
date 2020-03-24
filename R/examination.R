@@ -907,7 +907,7 @@ probe_missing <- function(data) {
     ]
   
   data_vals_per_bin <- (n_rows / 20) %>% floor()
-    
+
   probe_missing <-
     missing %>%
     gt::gt() %>%
@@ -915,7 +915,8 @@ probe_missing <- function(data) {
       columns = TRUE,
       colors = scales::col_numeric(
         palette = c("lightblue", "gray35", "black"),
-        domain = c(0, 1, data_vals_per_bin))
+        domain = c(0, 1, data_vals_per_bin + 2)
+      )
     ) %>%
     gt::text_transform(
       locations = gt::cells_body(),

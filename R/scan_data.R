@@ -10,9 +10,19 @@
 #' 
 #' @export
 scan_data <- function(tbl) {
-
-  examination_page_html <- build_examination_page(data = tbl)
-  examination_page_html
+  
+  if (inherits(tbl, "tbl_dbi")) {
+    stop("Tables of class `tbl_dbi` aren't supported in `scan_data()`")
+  }
+  
+  if (!requireNamespace("gt", quietly = TRUE)) {
+    
+    stop("Creating an HTML report with `scan_data()` requires the gt package:\n",
+         " * Install gt with `devtools::install_github(\"rstudio/gt\")`.",
+         call. = FALSE)
+  }
+  
+  build_examination_page(data = tbl)
 }
 
 #' Print the reporting produced by [scan_data()]

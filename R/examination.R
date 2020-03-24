@@ -95,7 +95,7 @@ probe_overview_stats <- function(data) {
       "System OS",                paste0("`", R.version$platform, "`")
     ) %>%
     gt::gt() %>%
-    gt::fmt_markdown(columns = vars(label)) %>%
+    gt::fmt_markdown(columns = gt::vars(label)) %>%
     gt::fmt_markdown(columns = TRUE) %>%
     gt::tab_options(
       column_labels.hidden = TRUE,
@@ -291,7 +291,7 @@ get_quantile_stats_gt <- function(data_column) {
 get_descriptive_stats_gt <- function(data_column) {
   
   # Create simple function to obtain the coefficient of variation
-  cv <- function(x) sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
+  cv <- function(x) stats::sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
   
   descriptive_stats <- 
     data_column %>%
@@ -374,8 +374,8 @@ get_common_values_gt <- function(data_column) {
         n = "Count",
         frequency = "Frequency",
       ) %>%
-      gt::fmt_percent(columns = vars(frequency), decimals = 1) %>%
-      gt::fmt_markdown(columns = vars(value)) %>%
+      gt::fmt_percent(columns = gt::vars(frequency), decimals = 1) %>%
+      gt::fmt_markdown(columns = gt::vars(value)) %>%
       gt::tab_options(
         table.border.top.style = "none",
         table.width = "100%"
@@ -394,8 +394,8 @@ get_common_values_gt <- function(data_column) {
         n = "Count",
         frequency = "Frequency",
       ) %>%
-      gt::fmt_percent(columns = vars(frequency), decimals = 1) %>%
-      gt::fmt_markdown(columns = vars(value)) %>%
+      gt::fmt_percent(columns = gt::vars(frequency), decimals = 1) %>%
+      gt::fmt_markdown(columns = gt::vars(value)) %>%
       gt::tab_options(
         table.border.top.style = "none",
         table.width = "100%"
@@ -439,7 +439,7 @@ get_top_bottom_slice <- function(data_column) {
     
     data_column %>%
       gt::gt() %>%
-      gt::fmt_percent(columns = vars(Frequency)) %>%
+      gt::fmt_percent(columns = gt::vars(Frequency)) %>%
       gt::tab_options(
         table.border.top.style = "none",
         table.width = "100%"
@@ -474,7 +474,7 @@ get_character_nchar_stats_gt <- function(data_column) {
     "Max",   character_nchar_stats$max
   ) %>%
     gt::gt() %>%
-    gt::fmt_number(columns = vars(value), decimals = 1) %>%
+    gt::fmt_number(columns = gt::vars(value), decimals = 1) %>%
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",

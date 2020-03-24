@@ -985,7 +985,8 @@ bootstrap_lib <- function() {
   )
 }
 
-build_examination_page <- function(data) {
+build_examination_page <- function(data,
+                                   tbl_name) {
   
   # htmltools::attachDependencies(
   #   htmltools::tags$html(
@@ -1030,7 +1031,7 @@ build_examination_page <- function(data) {
             htmltools::tags$div(
               class = "container",
               # Use `probe_*()` functions to generate row headers and section items
-              probe_overview_stats_assemble(data = data),
+              probe_overview_stats_assemble(data = data, tbl_name = tbl_name),
               probe_columns_assemble(data = data),
               probe_interactions_assemble(data = data),
               probe_correlations_assemble(data = data),
@@ -1077,9 +1078,11 @@ build_examination_page <- function(data) {
   examination_page
 }
 
-probe_overview_stats_assemble <- function(data) {
+probe_overview_stats_assemble <- function(data, tbl_name) {
  
-  row_header <- row_header(id = "overview", header = "Overview")
+  header <- if (is.na(tbl_name)) "Overview" else paste0("Overview of <code>", tbl_name, "</code>")
+  
+  row_header <- row_header(id = "overview", header = htmltools::HTML(header))
   
   overview_stats <- probe_overview_stats(data = data)
   

@@ -32,7 +32,16 @@ scan_data <- function(tbl) {
          call. = FALSE)
   }
   
-  build_examination_page(data = tbl)
+  # Attempt to get the table name through `match.call()` and `deparse()`
+  tbl_name <- deparse(match.call()$tbl)
+  
+  # In the case where the table is piped in a `"."` is the
+  # result; since it's unknown, we treat it as NA
+  if (tbl_name == ".") {
+    tbl_name <- NA
+  }
+  
+  build_examination_page(data = tbl, tbl_name = tbl_name)
 }
 
 #' Print the reporting produced by [scan_data()]

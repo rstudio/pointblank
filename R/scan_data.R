@@ -41,12 +41,11 @@ scan_data <- function(tbl) {
 #'
 #' @param x An object of class `examination_page`.
 #' @param ... Any additional parameters.
-#' @param view The value for `print()`s `browse` argument.
 #'
 #' @keywords internal
 #'
 #' @export
-print.examination_page <- function(x) {
+print.examination_page <- function(x, ...) {
   
   # Use `html_print()` to print to the console
   htmltools::html_print(x)

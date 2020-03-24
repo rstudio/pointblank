@@ -50,14 +50,16 @@ scan_data <- function(tbl) {
 #'
 #' @param x An object of class `examination_page`.
 #' @param ... Any additional parameters.
+#' @param view The value for `print()`s `browse` argument.
 #'
 #' @keywords internal
 #'
 #' @export
-print.examination_page <- function(x, ...) {
-  
-  # Use `html_print()` to print to the console
-  htmltools::html_print(x)
+print.examination_page <- function(x, ..., view = interactive()) {
+
+  class(x) <- c("shiny.tag.list", "list")
+
+  print(x, browse = view, ...)
 }
 
 #' Knit print the reporting produced by [scan_data()] 
@@ -70,6 +72,8 @@ print.examination_page <- function(x, ...) {
 #' @keywords internal
 #' @noRd
 knit_print.examination_page <- function(x, ...) {
+  
+  class(x) <- c("shiny.tag.list", "list")
   
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(x, ...)

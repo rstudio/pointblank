@@ -1073,8 +1073,8 @@ build_examination_page <- function(data,
         )
       )
     )
-  
-  class(examination_page) <- "examination_page"
+
+  class(examination_page) <- c("examination_page", class(examination_page))
   examination_page
 }
 

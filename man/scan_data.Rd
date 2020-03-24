@@ -28,6 +28,11 @@ variables}
 across variables}
 \item{Sample}{A table that provides the head and tail rows of the dataset}
 }
+The output HTML report is viewable in the RStudio Viewer and can also be
+integrated in R Markdown HTML reports. If you need the output HTML as a
+string, it's possible to get that by using \code{as.character()} (e.g.,
+\code{scan_data(tbl = iris) \%>\% as.character()}). The resulting HTML string is a
+complete HTML document where Bootstrap and jQuery are embedded within.
 }
 \section{Function ID}{
 

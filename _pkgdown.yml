@@ -6,11 +6,14 @@ home:
 reference:
   - title: Planning and Prep
     desc: >
-      It all starts with a plan (and an *agent* to carry out that plan). The
-      `create_agent()` function should be used before anything else. The agent
-      here is told which table is the target. After this, we devise a stepwise
-      validation plan with validation step functions.
+      Should you need to understand your data a bit more, use the `scan_data()`
+      function. It provides a comprehensive report on the data you might be
+      planning on validating. If going down the road of preparing a data quality
+      analysis, call on an *agent* to carry out that eventual plan with
+      `create_agent()`. The agent here is to be told which table is the target,
+      and, we devise a stepwise validation plan with validation step functions.
     contents:
+    - scan_data
     - create_agent
     - action_levels
     - col_schema

@@ -685,7 +685,7 @@ probe_interactions <- function(data) {
       columns_char, FUN.VALUE = integer(1), USE.NAMES = FALSE,
       FUN = function(x) {
         data %>%
-          dplyr::select(gt::one_of(x)) %>%
+          dplyr::select(dplyr::one_of(x)) %>%
           dplyr::distinct() %>%
           dplyr::count() %>%
           dplyr::pull(n)
@@ -701,7 +701,7 @@ probe_interactions <- function(data) {
   # Create a ggplot2 plot matrix with the data
   plot_matrix <-
     data %>%
-    dplyr::select(gt::one_of(col_names)) %>%
+    dplyr::select(dplyr::one_of(col_names)) %>%
     ggplot2::ggplot(ggplot2::aes(x = .panel_x, y = .panel_y)) + 
     ggplot2::geom_point(alpha = 0.50, shape = 16, size = 1) + 
     ggforce::geom_autodensity() +
@@ -907,7 +907,7 @@ probe_missing <- function(data) {
       col_names,
       FUN = function(x) {
         data %>% 
-          dplyr::select(one_of(x)) %>%
+          dplyr::select(dplyr::one_of(x)) %>%
           dplyr::group_by() %>% 
           dplyr::summarize_all(~ sum(is.na(.)) / dplyr::n()) %>%
           dplyr::mutate(col_num = which(col_names %in% x)) %>%

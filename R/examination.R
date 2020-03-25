@@ -884,85 +884,120 @@ get_corr_matrix_legend <- function() {
 # TODO: report missing values based on user input (e.g., "9999", empty strings)
 
 probe_missing <- function(data) {
-  
+
   n_cols <- ncol(data)
   n_rows <- nrow(data)
   
   col_names <- colnames(data)
-
-  missing <- 
-    data %>% 
-    dplyr::mutate(`::cut_group::` = cut(seq(nrow(data)), breaks = 20)) %>% 
-    dplyr::group_by(`::cut_group::`) %>% 
-    dplyr::summarize_all(~ sum(is.na(.))) %>%
-    dplyr::select(-1)
   
-  cols_any_missing <-
-    col_names[
-      missing %>%
-        dplyr::group_by() %>%
-        dplyr::summarize_all(~ sum(.)) %>%
-        dplyr::mutate_all(~ . > 0) %>%
-        t() %>% .[, 1]
-    ]
+  frequency_tbl <- 
+    lapply(
+      col_names,
+      FUN = function(x) {
+        
+        data %>%
+          dplyr::select(dplyr::one_of(x)) %>%
+          dplyr::mutate(`::cut_group::` = cut(seq(nrow(data)), breaks = 20)) %>%
+          dplyr::group_by(`::cut_group::`) %>% 
+          dplyr::summarize_all(~ sum(is.na(.)) / dplyr::n()) %>%
+          dplyr::select(-1) %>%
+          dplyr::mutate(col_num = which(col_names %in% x)) %>%
+          dplyr::mutate(bin_num = 1:20) %>%
+          dplyr::mutate(col_name = x) %>%
+          dplyr::rename(value = 1)
+      }) %>%
+    dplyr::bind_rows() %>%
+    dplyr::mutate(value = ifelse(value == 0, NA_real_, value)) %>%
+    dplyr::mutate(col_name = factor(col_name, levels = names(data)))
   
-  data_vals_per_bin <- (n_rows / 20) %>% floor()
-
-  probe_missing <-
-    missing %>%
-    gt::gt() %>%
-    gt::data_color(
-      columns = TRUE,
-      colors = scales::col_numeric(
-        palette = c("lightblue", "gray35", "black"),
-        domain = c(0, 1, data_vals_per_bin + 2)
-      )
-    ) %>%
-    gt::text_transform(
-      locations = gt::cells_body(),
-      fn = function(x) ""
-    ) %>%
-    gt::tab_options(
-      table_body.vlines.style = "solid",
-      column_labels.vlines.style = "dotted",
-      table_body.hlines.style = "none") %>%
-    gt::summary_rows(
-      columns = TRUE,
-      fns = list(
-        PCT = ~ sum(.) / n_rows
+  
+  missing_tbl <- 
+    lapply(
+      col_names,
+      FUN = function(x) {
+        data %>% 
+          dplyr::select(one_of(x)) %>%
+          dplyr::group_by() %>% 
+          dplyr::summarize_all(~ sum(is.na(.)) / dplyr::n()) %>%
+          dplyr::mutate(col_num = which(col_names %in% x)) %>%
+          dplyr::mutate(col_name = x) %>%
+          dplyr::rename(value = 1)
+      }) %>%
+    dplyr::bind_rows() %>%
+    dplyr::mutate(value = round(value, 2)) %>%
+    dplyr::mutate(col_name = factor(col_name, levels = names(data)))
+  
+  # cols_any_missing <-
+  #   col_names[
+  #     missing_tbl %>%
+  #       dplyr::group_by() %>%
+  #       dplyr::summarize_all(~ sum(.)) %>%
+  #       dplyr::mutate_all(~ . > 0) %>%
+  #       t() %>% .[, 1]
+  #   ]
+  
+  plot_missing <- 
+    frequency_tbl %>%
+    ggplot2::ggplot(ggplot2::aes(x = col_name, y = bin_num, fill = value)) +
+    ggplot2::geom_tile(color = "white", linejoin = "bevel") +
+    ggplot2::scale_fill_gradientn(
+      colours = c("gray85", "black"),
+      na.value = "#A1C1E5",
+      limits = c(0, 1)
+    ) +
+    ggplot2::scale_y_continuous(
+      breaks = c(0, 1, 20),
+      labels = c("", as.character(n_rows), "0")
+    ) +
+    ggplot2::geom_label(
+      data = missing_tbl,
+      mapping = ggplot2::aes(x = col_name, y = -0.2, label = value, color = value),
+      fill = "white",
+      show.legend = FALSE
+    ) +
+    ggplot2::labs(x = "", y = "") + 
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      axis.text.x = ggplot2::element_text(
+        angle = 90, vjust = 0.5, hjust = 1, size = 10, margin = margin(t = -1)
       ),
-      formatter = gt::fmt_percent,
-      decimals = 1
-    ) %>%
-    gt::tab_stubhead(label = gt::md(paste0(n_rows, "<br>ROWS"))) %>%
-    gt::tab_style(
-      locations = gt::cells_stubhead(),
-      style = gt::cell_text(
-        transform = "capitalize",
-        align = "right",
-        size = "x-small"
-      )
-    ) %>%
-    gt::tab_style(
-      locations = gt::cells_stub(), 
-      style = gt::cell_borders(
-        sides = c("left", "right", "top"),
-        style = "solid",
-        color = "white"
-      ) 
+      axis.text.y = ggplot2::element_text(
+        angle = 90, hjust = 0, margin = margin(r = -3)
+      ),
+      panel.grid = ggplot2::element_blank(),
+      legend.direction = "horizontal",
+      legend.title = ggplot2::element_blank(),
+      legend.position = c(0.5, 1.0),
+      plot.margin = unit(c(1, 0.5, 0, 0), "cm"),
+      legend.key.width = unit(2.0, "cm"),
+      legend.key.height = unit(3.0, "mm")
     )
   
-  if (length(cols_any_missing) > 0) {
-    
-    probe_missing <-
-      probe_missing %>%
-      gt::tab_style(
-        locations = gt::cells_body(columns = cols_any_missing, rows = 1), 
-        style = gt::cell_borders(sides = "top", color = "red", weight = gt::px(2))
+  # Save PNG file to disk
+  ggplot2::ggsave(
+    filename = "temp_missing_ggplot.png",
+    plot = plot_missing,
+    device = "png",
+    dpi = 300,
+    width = length(col_names) * 0.8,
+    height = 6
+  )
+  
+  # Wait longer for file to be written on async filesystems
+  Sys.sleep(0.5)
+  
+  image_html <- 
+    htmltools::tags$div(
+      style = "text-align: center",
+      htmltools::HTML(
+        gt::local_image(filename = "temp_missing_ggplot.png", height = "500px") %>%
+          gsub("height:500px", "width: 100%", .)
       )
-  }
-
-  list(probe_missing = probe_missing)
+    )
+  
+  file.remove("temp_missing_ggplot.png")
+    
+  list(probe_missing = image_html)
 }
 
 probe_sample <- function(data) {

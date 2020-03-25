@@ -1,0 +1,14 @@
+test_that("Using `scan_data()` results in an HTML document", {
+  
+  scan_data_html <- 
+    scan_data(tbl = datasets::airquality) %>% as.character()
+  
+  expect_equal(length(scan_data_html), 1)
+  
+  expect_true(
+    grepl(
+      "^<!doctype html>.*</body>.*?</html>$",
+      scan_data_html
+    )
+  )
+})

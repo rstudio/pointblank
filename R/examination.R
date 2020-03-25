@@ -1033,10 +1033,10 @@ build_examination_page <- function(data,
   #   bootstrap_lib()
   # )
   
-  bootstrap_lib <- readr::read_file(file = file.path("inst", "lib", "bootstrap", "css", "bootstrap.min.css"))
-  jquery_lib <- readr::read_file(file = file.path("inst", "lib", "jquery", "jquery-1.12.4.min.js"))
-  extra_js <- readr::read_file(file = file.path("inst", "javascript", "toggle_anchor.js"))
-  extra_css <- readr::read_file(file = file.path("inst", "css", "extra.css"))
+  bootstrap_lib <- readr::read_file(file = system.file("lib", "bootstrap", "css", "bootstrap.min.css", package = "pointblank"))
+  jquery_lib <- readr::read_file(file = system.file("lib", "jquery", "jquery-1.12.4.min.js", package = "pointblank"))
+  extra_js <- readr::read_file(file = system.file("javascript", "toggle_anchor.js", package = "pointblank"))
+  extra_css <- readr::read_file(file = system.file("css", "extra.css", package = "pointblank"))
   
   examination_page <- 
     htmltools::tagList(

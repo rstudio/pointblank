@@ -1,5 +1,7 @@
 test_that("Using `scan_data()` results in an HTML document", {
   
+  if (requireNamespace("gt", quietly = TRUE)) {
+
   scan_data_html <- 
     scan_data(tbl = datasets::airquality) %>% as.character()
   
@@ -11,4 +13,5 @@ test_that("Using `scan_data()` results in an HTML document", {
       scan_data_html
     )
   )
+  }
 })

@@ -69,6 +69,7 @@ probe_overview_stats <- function(data) {
   data_overview_gt <-
     gt::gt(data_overview_tbl) %>%
     gt::fmt_markdown(columns = TRUE) %>%
+    gt::cols_align(align = "right", columns = gt::vars(value)) %>%
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -198,6 +199,7 @@ get_column_description_gt <- function(data_column, n_rows) {
   column_description_gt <-
     gt::gt(column_description_tbl) %>%
     gt::fmt_markdown(columns = TRUE) %>%
+    gt::cols_align(align = "right", columns = gt::vars(value)) %>%
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -354,7 +356,7 @@ get_common_values_gt <- function(data_column) {
       dplyr::summarize(sum = sum(n, na.rm = TRUE)) %>%
       dplyr::ungroup() %>%
       dplyr::pull(sum)
-    
+
     common_values_gt <-
       dplyr::bind_rows(
         common_values_tbl %>%
@@ -373,6 +375,11 @@ get_common_values_gt <- function(data_column) {
         value = "Value",
         n = "Count",
         frequency = "Frequency",
+      ) %>%
+      gt::fmt_missing(columns = gt::vars(value), missing_text = "**NA**") %>%
+      gt::text_transform(
+        locations = gt::cells_body(columns = gt::vars(value)),
+        fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
       ) %>%
       gt::fmt_percent(columns = gt::vars(frequency), decimals = 1) %>%
       gt::fmt_markdown(columns = gt::vars(value)) %>%
@@ -436,7 +443,7 @@ get_top_bottom_slice <- function(data_column) {
     dplyr::mutate(Frequency = Count / n_rows)
   
   get_slice_gt <- function(data_column, slice = "max") {
-    
+
     data_column %>%
       gt::gt() %>%
       gt::fmt_percent(columns = gt::vars(Frequency)) %>%
@@ -767,7 +774,6 @@ probe_correlations <- function(data) {
   
   labels_vec <- seq_along(columns_numeric)
   names(labels_vec) <- columns_numeric
-  labels_list <- as.list(labels_vec)
   
   labels_notes <- 
     paste(
@@ -776,27 +782,21 @@ probe_correlations <- function(data) {
     )
   
   probe_corr_pearson <- 
-    get_corr_matrix_gt_tbl(
+    get_corr_matrix_plot(
       corr_mat = corr_pearson,
-      labels_vec = labels_vec,
-      labels_list = labels_list,
-      labels_notes = labels_notes
+      labels_vec = labels_vec
     )
   
   probe_corr_kendall <-
-    get_corr_matrix_gt_tbl(
+    get_corr_matrix_plot(
       corr_mat = corr_kendall,
-      labels_vec = labels_vec,
-      labels_list = labels_list,
-      labels_notes = labels_notes
+      labels_vec = labels_vec
     )
   
   probe_corr_spearman <-
-    get_corr_matrix_gt_tbl(
+    get_corr_matrix_plot(
       corr_mat = corr_spearman,
-      labels_vec = labels_vec,
-      labels_list = labels_list,
-      labels_notes = labels_notes
+      labels_vec = labels_vec
     )
     
   list(
@@ -806,78 +806,69 @@ probe_correlations <- function(data) {
   )
 }
 
-get_corr_matrix_gt_tbl <- function(corr_mat,
-                                   labels_vec,
-                                   labels_list,
-                                   labels_notes) {
+get_corr_matrix_plot <- function(corr_mat,
+                                 labels_vec) {
   
-  corr_mat %>%
-    dplyr::as_tibble() %>%
-    dplyr::mutate(`::labels::` = labels_vec) %>%
-    dplyr::select(`::labels::`, dplyr::everything()) %>%
-    gt::gt() %>%
-    gt::cols_label(
-      .list = labels_list
-    ) %>%
-    gt::cols_label(
-      `::labels::` = ""
-    ) %>%
-    gt::cols_align(align = "center") %>%
-    gt::data_color(
-      columns = gt::one_of(names(labels_vec)),
-      colors = scales::col_numeric(
-        palette = c("blue", "white", "red"),
-        domain = c(-1, 1))
-    ) %>%
-    gt::text_transform(
-      locations = gt::cells_body(columns = gt::one_of(names(labels_vec))),
-      fn = function(x) "<br>"
-    ) %>%
-    gt::text_transform(
-      locations = gt::cells_body(columns = 1),
-      fn = function(x) paste0(x, "&nbsp;")
-    ) %>%
-    gt::opt_table_lines("none") %>%
-    gt::tab_style(
-      style = gt::cell_text(size = "x-small", align = "right", weight = "bold"),
-      locations = gt::cells_body(columns = 1)
-    ) %>%
-    gt::tab_style(
-      style = gt::cell_text(size = "x-small", weight = "bold"),
-      locations = gt::cells_column_labels(columns = TRUE)
-    ) %>%
-    gt::tab_source_note(source_note = gt::md(labels_notes)) %>%
-    gt::cols_width(
-      gt::everything() ~ gt::px(35)
-    )
-}
 
-get_corr_matrix_legend <- function() {
-  
-  dplyr::tibble(color = seq(1, -1, by = -0.25),) %>%
-    gt::gt() %>%
-    gt::tab_style(
-      locations = gt::cells_body(columns = TRUE),
-      style = gt::cell_text(size = gt::px(10))
-    ) %>%
-    gt::data_color(
-      columns = gt::vars(color),
-      colors = scales::col_numeric(
-        palette = c("blue", "white", "red"),
-        domain = c(-1, 1))
-    ) %>%
-    gt::opt_table_lines("none") %>%
-    gt::tab_options(column_labels.hidden = TRUE) %>%
-    gt::cols_width(
-      gt::everything() ~ gt::px(40)
-    ) %>%
-    gt::opt_table_lines(extent = "all") %>%
-    gt::text_transform(
-      locations = gt::cells_body(columns = TRUE),
-      fn = function(x) {
-        gsub("-", "&ndash;", x)
-      }
+  corr_df <- 
+    as.data.frame(as.table(corr_mat)) %>%
+    dplyr::mutate(Freq = ifelse(Var1 == Var2, NA_real_, Freq)) %>%
+    dplyr::mutate(Var1 = factor(Var1, levels = names(labels_vec))) %>%
+    dplyr::mutate(Var2 = factor(Var2, levels = rev(names(labels_vec))))
+    
+
+  plot_missing <- 
+    corr_df %>%
+    ggplot2::ggplot(ggplot2::aes(x = Var1, y = Var2, fill = Freq)) +
+    ggplot2::geom_tile(color = "white", linejoin = "bevel") +
+    ggplot2::scale_fill_gradientn(
+      colours = c("blue", "white", "red"),
+      na.value = "gray30",
+      limits = c(-1, 1)
+    ) +
+    ggplot2::labs(x = "", y = "") + 
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      axis.text.x = ggplot2::element_text(
+        angle = 90, vjust = 0.5, hjust = 1, size = 10
+      ),
+      axis.text.y = ggplot2::element_text(size = 10),
+      panel.grid = ggplot2::element_blank(),
+      legend.direction = "horizontal",
+      legend.title = ggplot2::element_blank(),
+      legend.position = c(0.5, 1.03),
+      plot.margin = ggplot2::unit(c(1, 0.5, 0, 0), "cm"),
+      legend.key.width = ggplot2::unit(2.0, "cm"),
+      legend.key.height = ggplot2::unit(3.0, "mm")
     )
+  
+  temp_filename <- paste0("temp_correlation_ggplot-", gt::random_id(), ".png")
+  
+  # Save PNG file to disk
+  ggplot2::ggsave(
+    filename = temp_filename,
+    plot = plot_missing,
+    device = "png",
+    dpi = 300,
+    width = length(labels_vec),
+    height = length(labels_vec)
+  )
+  
+  # Wait longer for file to be written on async filesystems
+  Sys.sleep(0.5)
+  
+  image_html <- 
+    htmltools::tags$div(
+      style = "text-align: center",
+      htmltools::HTML(
+        gt::local_image(filename = temp_filename, height = "500px") %>%
+          gsub("height:500px", "width: 100%", .)
+      )
+    )
+  
+  file.remove(temp_filename)
+  
+  image_html
 }
 
 # TODO: missing_matrix, missing_heatmap
@@ -959,18 +950,18 @@ probe_missing <- function(data) {
     ggplot2::theme_minimal() +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(
-        angle = 90, vjust = 0.5, hjust = 1, size = 10, margin = margin(t = -1)
+        angle = 90, vjust = 0.5, hjust = 1, size = 10, margin = ggplot2::margin(t = -1)
       ),
       axis.text.y = ggplot2::element_text(
-        angle = 90, hjust = 0, margin = margin(r = -3)
+        angle = 90, hjust = 0, margin = ggplot2::margin(r = -3)
       ),
       panel.grid = ggplot2::element_blank(),
       legend.direction = "horizontal",
       legend.title = ggplot2::element_blank(),
       legend.position = c(0.5, 1.0),
-      plot.margin = unit(c(1, 0.5, 0, 0), "cm"),
-      legend.key.width = unit(2.0, "cm"),
-      legend.key.height = unit(3.0, "mm")
+      plot.margin = ggplot2::unit(c(1, 0.5, 0, 0), "cm"),
+      legend.key.width = ggplot2::unit(2.0, "cm"),
+      legend.key.height = ggplot2::unit(3.0, "mm")
     )
   
   # Save PNG file to disk
@@ -1001,10 +992,15 @@ probe_missing <- function(data) {
 }
 
 probe_sample <- function(data) {
-  
+
   probe_sample <-
     data %>%
     gt::gt_preview(top_n = 5, bottom_n = 5) %>%
+    gt::fmt_missing(columns = TRUE, missing_text = "**NA**") %>%
+    gt::text_transform(
+      locations = gt::cells_body(columns = TRUE),
+      fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
+    ) %>%
     gt::tab_options(table.width = "100%")
   
   list(probe_sample = probe_sample)
@@ -1611,14 +1607,9 @@ probe_correlations_assemble <- function(data) {
             active = TRUE,
             panel_component_list = list(
               panel_component(
-                size = 10,
+                size = 12,
                 title = NULL,
                 content = correlations_data$probe_corr_pearson
-              ),
-              panel_component(
-                size = 2,
-                title = NULL,
-                content = get_corr_matrix_legend()
               )
             )
           ),
@@ -1627,14 +1618,9 @@ probe_correlations_assemble <- function(data) {
             active = FALSE,
             panel_component_list = list(
               panel_component(
-                size = 10,
+                size = 12,
                 title = NULL,
                 content = correlations_data$probe_corr_kendall
-              ),
-              panel_component(
-                size = 2,
-                title = NULL,
-                content = get_corr_matrix_legend()
               )
             )
           ),
@@ -1643,14 +1629,9 @@ probe_correlations_assemble <- function(data) {
             active = FALSE,
             panel_component_list = list(
               panel_component(
-                size = 10,
+                size = 12,
                 title = NULL,
                 content = correlations_data$probe_corr_spearman
-              ),
-              panel_component(
-                size = 2,
-                title = NULL,
-                content = get_corr_matrix_legend()
               )
             )
           )

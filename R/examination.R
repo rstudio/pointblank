@@ -191,7 +191,7 @@ get_column_description_gt <- function(data_column, n_rows) {
   column_description_tbl <-
     dplyr::tribble(
       ~label,              ~value,
-      "Distinct Units",    glue::glue("{distinct_count} {distinct_pct}", .transformer = get),
+      "Distinct",          glue::glue("{distinct_count} {distinct_pct}", .transformer = get),
       "<code>NA</code>s",  glue::glue("{na_cells} {na_cells_pct}", .transformer = get),
       "<code>Inf</code>/<code>-Inf</code>", glue::glue("{inf_cells} {inf_cells_pct}", .transformer = get),
     )
@@ -228,10 +228,10 @@ get_numeric_stats_gt <- function(data_column) {
   
   column_stats_tbl <-
     dplyr::tribble(
-      ~label,   ~value,
-      "Mean",   mean,
-      "Min",    min,
-      "Max",    max
+      ~label,     ~value,
+      "Mean",     mean,
+      "Minimum",  min,
+      "Maximum",  max
     )
   
   column_stats_gt <-
@@ -269,13 +269,13 @@ get_quantile_stats_gt <- function(data_column) {
   quantile_stats_tbl <-
     dplyr::tribble(
       ~label,              ~value,
-      "Min",               quantile_stats$min,
+      "Minimum",           quantile_stats$min,
       "5th Percentile",    quantile_stats$p05,
       "Q1",                quantile_stats$q_1,
       "Median",            quantile_stats$med,
       "Q3",                quantile_stats$q_3,
       "95th Percentile",   quantile_stats$p95,
-      "Max",               quantile_stats$max,
+      "Maximum",           quantile_stats$max,
       "Range",             quantile_stats$range,
       "IQR",               quantile_stats$iqr
     )
@@ -475,10 +475,10 @@ get_character_nchar_stats_gt <- function(data_column) {
     as.list()
   
   dplyr::tribble(
-    ~label,  ~value,
-    "Mean",  character_nchar_stats$mean,
-    "Min",   character_nchar_stats$min,
-    "Max",   character_nchar_stats$max
+    ~label,    ~value,
+    "Mean",    character_nchar_stats$mean,
+    "Minimum", character_nchar_stats$min,
+    "Maximum", character_nchar_stats$max
   ) %>%
     gt::gt() %>%
     gt::fmt_number(columns = gt::vars(value), decimals = 1) %>%
@@ -512,7 +512,7 @@ get_character_nchar_histogram <- function(data_column) {
     height = 3
   )
   
-  # Wait longer for file to be written on async filesystems
+  # Wait longer for file to be written on async file systems
   Sys.sleep(0.5)
   
   image_html <- 
@@ -725,7 +725,7 @@ probe_interactions <- function(data) {
     height = length(col_names)
   )
   
-  # Wait longer for file to be written on async filesystems
+  # Wait longer for file to be written on async file systems
   Sys.sleep(0.5)
 
   image_html <- 
@@ -764,22 +764,13 @@ probe_correlations <- function(data) {
     )
   }
     
-  data_corr <- 
-    data %>%
-    dplyr::select(dplyr::one_of(columns_numeric))
-  
+  data_corr <- dplyr::select(data, dplyr::one_of(columns_numeric))
   corr_pearson <- stats::cor(data_corr, method = "pearson", use = "pairwise.complete.obs")
   corr_kendall <- stats::cor(data_corr, method = "kendall", use = "pairwise.complete.obs")
   corr_spearman <- stats::cor(data_corr, method = "spearman", use = "pairwise.complete.obs")
   
   labels_vec <- seq_along(columns_numeric)
   names(labels_vec) <- columns_numeric
-  
-  labels_notes <- 
-    paste(
-      paste0("**", seq_along(columns_numeric), ":**&nbsp;<code>", columns_numeric, "</code>"),
-      collapse = ", "
-    )
   
   probe_corr_pearson <- 
     get_corr_matrix_plot(
@@ -808,7 +799,6 @@ probe_correlations <- function(data) {
 
 get_corr_matrix_plot <- function(corr_mat,
                                  labels_vec) {
-  
 
   corr_df <- 
     as.data.frame(as.table(corr_mat)) %>%
@@ -816,7 +806,6 @@ get_corr_matrix_plot <- function(corr_mat,
     dplyr::mutate(Var1 = factor(Var1, levels = names(labels_vec))) %>%
     dplyr::mutate(Var2 = factor(Var2, levels = rev(names(labels_vec))))
     
-
   plot_missing <- 
     corr_df %>%
     ggplot2::ggplot(ggplot2::aes(x = Var1, y = Var2, fill = Freq)) +
@@ -854,7 +843,7 @@ get_corr_matrix_plot <- function(corr_mat,
     height = length(labels_vec)
   )
   
-  # Wait longer for file to be written on async filesystems
+  # Wait longer for file to be written on async file systems
   Sys.sleep(0.5)
   
   image_html <- 
@@ -980,7 +969,7 @@ probe_missing <- function(data) {
     height = 6
   )
   
-  # Wait longer for file to be written on async filesystems
+  # Wait longer for file to be written on async file systems
   Sys.sleep(0.5)
   
   image_html <- 

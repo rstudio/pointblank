@@ -36,7 +36,7 @@ test_that("Using `scan_data()` results in an HTML document", {
     )
     
     expect_error(
-      small_table_sqlite() %>% scan_data() %>% as.character()
+      small_table_sqlite() %>% scan_data()
     )
   }
 })

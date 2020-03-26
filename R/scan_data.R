@@ -38,7 +38,8 @@
 scan_data <- function(tbl) {
   
   if (inherits(tbl, "tbl_dbi")) {
-    stop("Tables of class `tbl_dbi` aren't supported in `scan_data()`")
+    stop("Tables of class `tbl_dbi` aren't supported in `scan_data()`.",
+         call. = FALSE)
   }
   
   # nocov start

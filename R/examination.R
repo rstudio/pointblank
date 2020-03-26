@@ -879,6 +879,12 @@ probe_missing <- function(data) {
   n_cols <- ncol(data)
   n_rows <- nrow(data)
   
+  if (n_rows < 20) {
+    n_breaks <- n_rows
+  } else {
+    n_breaks <- 20
+  }
+  
   col_names <- colnames(data)
   
   frequency_tbl <- 
@@ -888,12 +894,12 @@ probe_missing <- function(data) {
         
         data %>%
           dplyr::select(dplyr::one_of(x)) %>%
-          dplyr::mutate(`::cut_group::` = cut(seq(nrow(data)), breaks = 20)) %>%
+          dplyr::mutate(`::cut_group::` = cut(seq(nrow(data)), breaks = n_breaks)) %>%
           dplyr::group_by(`::cut_group::`) %>% 
           dplyr::summarize_all(~ sum(is.na(.)) / dplyr::n()) %>%
           dplyr::select(-1) %>%
           dplyr::mutate(col_num = which(col_names %in% x)) %>%
-          dplyr::mutate(bin_num = 1:20) %>%
+          dplyr::mutate(bin_num = 1:n_breaks) %>%
           dplyr::mutate(col_name = x) %>%
           dplyr::rename(value = 1)
       }) %>%

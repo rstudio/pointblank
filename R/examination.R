@@ -1,4 +1,6 @@
-
+#
+# Generate section components such as tables and plots
+#
 
 probe_overview_stats <- function(data) {
 
@@ -89,11 +91,11 @@ probe_overview_stats <- function(data) {
   # Reproducibility Summary
   reproducibility_gt <-
     dplyr::tribble(
-      ~label,                     ~value,
-      "Scan Build Time",          paste0("`", Sys.time() %>% as.character(), "`"),
-      "**pointblank** Version",   paste0("`", utils::packageVersion("pointblank") %>% as.character(), "`"),
-      "**R** Version",            paste0(R.version$version.string, "<br><span style=\"font-size: smaller;\"><em>", R.version$nickname, "</em></span>") %>% gsub("-", "&ndash;", .),
-      "System OS",                paste0("`", R.version$platform, "`")
+      ~label,                    ~value,
+      "Scan Build Time",         paste0("`", Sys.time() %>% as.character(), "`"),
+      "**pointblank** Version",  paste0("`", utils::packageVersion("pointblank") %>% as.character(), "`"),
+      "**R** Version",           paste0(R.version$version.string, "<br><span style=\"font-size: smaller;\"><em>", R.version$nickname, "</em></span>") %>% gsub("-", "&ndash;", .),
+      "System OS",               paste0("`", R.version$platform, "`")
     ) %>%
     gt::gt() %>%
     gt::fmt_markdown(columns = gt::vars(label)) %>%
@@ -113,7 +115,6 @@ probe_overview_stats <- function(data) {
 
 probe_columns <- function(data) {
 
-  n_cols <- ncol(data)
   n_rows <- nrow(data)
   
   tbl_info <- get_tbl_information(tbl = data)
@@ -772,36 +773,22 @@ probe_correlations <- function(data) {
   labels_vec <- seq_along(columns_numeric)
   names(labels_vec) <- columns_numeric
   
-  probe_corr_pearson <- 
-    get_corr_matrix_plot(
-      corr_mat = corr_pearson,
-      labels_vec = labels_vec
-    )
-  
-  probe_corr_kendall <-
-    get_corr_matrix_plot(
-      corr_mat = corr_kendall,
-      labels_vec = labels_vec
-    )
-  
-  probe_corr_spearman <-
-    get_corr_matrix_plot(
-      corr_mat = corr_spearman,
-      labels_vec = labels_vec
-    )
+  pearson_plot <- get_corr_plot(mat = corr_pearson, labels_vec = labels_vec)
+  kendall_plot <- get_corr_plot(mat = corr_kendall, labels_vec = labels_vec)
+  spearman_plot <- get_corr_plot(mat = corr_spearman, labels_vec = labels_vec)
     
   list(
-    probe_corr_pearson  = probe_corr_pearson,
-    probe_corr_kendall  = probe_corr_kendall, 
-    probe_corr_spearman = probe_corr_spearman
+    probe_corr_pearson  = pearson_plot,
+    probe_corr_kendall  = kendall_plot, 
+    probe_corr_spearman = spearman_plot
   )
 }
 
-get_corr_matrix_plot <- function(corr_mat,
-                                 labels_vec) {
+get_corr_plot <- function(mat,
+                          labels_vec) {
 
   corr_df <- 
-    as.data.frame(as.table(corr_mat)) %>%
+    as.data.frame(as.table(mat)) %>%
     dplyr::mutate(Freq = ifelse(Var1 == Var2, NA_real_, Freq)) %>%
     dplyr::mutate(Var1 = factor(Var1, levels = names(labels_vec))) %>%
     dplyr::mutate(Var2 = factor(Var2, levels = rev(names(labels_vec))))
@@ -1729,6 +1716,7 @@ probe_sample_assemble <- function(data) {
 
 navbar <- function(sections) {
   
+  # Compose the list of navigational links for the navbar
   item_list <-
     sections %>%
     lapply(
@@ -1785,48 +1773,6 @@ navbar <- function(sections) {
         htmltools::tags$ul(
           class = "nav navbar-nav navbar-right",
           item_list
-          # htmltools::tags$li(
-          #   htmltools::tags$a(
-          #     class = "anchor",
-          #     href = "#overview",
-          #     "Overview"
-          #   )
-          # ),
-          # htmltools::tags$li(
-          #   htmltools::tags$a(
-          #     class = "anchor",
-          #     href = "#variables",
-          #     "Variables"
-          #   )
-          # ),
-          # htmltools::tags$li(
-          #   htmltools::tags$a(
-          #     class = "anchor",
-          #     href = "#interactions",
-          #     "Interactions"
-          #   )
-          # ),
-          # htmltools::tags$li(
-          #   htmltools::tags$a(
-          #     class = "anchor",
-          #     href = "#correlations",
-          #     "Correlations"
-          #   )
-          # ),
-          # htmltools::tags$li(
-          #   htmltools::tags$a(
-          #     class = "anchor",
-          #     href = "#missing",
-          #     "Missing Values"
-          #   )
-          # ),
-          # htmltools::tags$li(
-          #   htmltools::tags$a(
-          #     class = "anchor",
-          #     href = "#sample",
-          #     "Sample"
-          #   )
-          # )
         )
       )
     )

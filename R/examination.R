@@ -1026,7 +1026,24 @@ bootstrap_lib <- function() {
 }
 
 build_examination_page <- function(data,
-                                   tbl_name) {
+                                   tbl_name,
+                                   sections) {
+  
+  probe_list <-
+    sections %>%
+    lapply(
+      FUN = function(x) {
+        switch(
+          x,
+          overview = probe_overview_stats_assemble(data = data, tbl_name = tbl_name),
+          variables = probe_columns_assemble(data = data),
+          interactions = probe_interactions_assemble(data = data),
+          correlations = probe_correlations_assemble(data = data),
+          missing = probe_missing_assemble(data = data),
+          sample = probe_sample_assemble(data = data)
+        )
+      } 
+    )
   
   # htmltools::attachDependencies(
   #   htmltools::tags$html(
@@ -1039,10 +1056,37 @@ build_examination_page <- function(data,
   #   bootstrap_lib()
   # )
   
-  bootstrap_lib <- readr::read_file(file = system.file("lib", "bootstrap", "css", "bootstrap.min.css", package = "pointblank"))
-  jquery_lib <- readr::read_file(file = system.file("lib", "jquery", "jquery-1.12.4.min.js", package = "pointblank"))
-  extra_js <- readr::read_file(file = system.file("javascript", "toggle_anchor.js", package = "pointblank"))
-  extra_css <- readr::read_file(file = system.file("css", "extra.css", package = "pointblank"))
+  bootstrap_lib <- 
+    readr::read_file(
+      file = system.file(
+        "lib", "bootstrap", "css", "bootstrap.min.css",
+        package = "pointblank"
+      )
+    )
+  
+  jquery_lib <- 
+    readr::read_file(
+      file = system.file(
+        "lib", "jquery", "jquery-1.12.4.min.js",
+        package = "pointblank"
+      )
+    )
+  
+  extra_js <- 
+    readr::read_file(
+      file = system.file(
+        "javascript", "toggle_anchor.js",
+        package = "pointblank"
+      )
+    )
+  
+  extra_css <-
+    readr::read_file(
+      file = system.file(
+        "css", "extra.css",
+        package = "pointblank"
+      )
+    )
   
   examination_page <- 
     htmltools::tagList(
@@ -1062,21 +1106,13 @@ build_examination_page <- function(data,
           " </head>"
         ),
         htmltools::tags$body(
-          htmltools::tags$a(
-            class = "anchor-pos", id = "top"
-          ),
+          htmltools::tags$a(class = "anchor-pos", id = "top"),
           navbar(),
           htmltools::tags$div(
             class = "content",
             htmltools::tags$div(
               class = "container",
-              # Use `probe_*()` functions to generate row headers and section items
-              probe_overview_stats_assemble(data = data, tbl_name = tbl_name),
-              probe_columns_assemble(data = data),
-              probe_interactions_assemble(data = data),
-              probe_correlations_assemble(data = data),
-              probe_missing_assemble(data = data),
-              probe_sample_assemble(data = data)
+              probe_list
             )
           ),
           htmltools::tags$footer(

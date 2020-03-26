@@ -4,11 +4,22 @@
 \alias{scan_data}
 \title{Thoroughly scan the table data so as to understand it better}
 \usage{
-scan_data(tbl)
+scan_data(
+  tbl,
+  sections = c("overview", "variables", "interactions", "correlations", "missing",
+    "sample")
+)
 }
 \arguments{
 \item{tbl}{The input table. This can be a data frame, a tibble, or a
 \code{tbl_dbi} object.}
+
+\item{sections}{The sections to include in the finalized \verb{Table Scan} report.
+A character vector with section names is required here. The sections in
+their default order are: \code{"overview"}, \code{"variables"}, \code{"interactions"},
+\code{"correlations"}, \code{"missing"}, and \code{"sample"}. This vector can be comprised
+of less elements and the order can be changed to suit the desired layout of
+the report.}
 }
 \description{
 Generates an HTML report that scours the input table data. Before calling up

@@ -24,6 +24,12 @@
 #' complete HTML document where Bootstrap and jQuery are embedded within.
 #' 
 #' @inheritParams create_agent
+#' @param sections The sections to include in the finalized `Table Scan` report.
+#'   A character vector with section names is required here. The sections in
+#'   their default order are: `"overview"`, `"variables"`, `"interactions"`,
+#'   `"correlations"`, `"missing"`, and `"sample"`. This vector can be comprised
+#'   of less elements and the order can be changed to suit the desired layout of
+#'   the report.
 #' 
 #' @examples
 #' # Get an HTML report that describes all of
@@ -35,10 +41,28 @@
 #' 1-1
 #' 
 #' @export
-scan_data <- function(tbl) {
+scan_data <- function(tbl,
+                      sections = c("overview", "variables", "interactions",
+                                   "correlations", "missing", "sample")) {
   
+  # Stop function if a `tbl_dbi` object is supplied as the `tbl`
   if (inherits(tbl, "tbl_dbi")) {
     stop("Tables of class `tbl_dbi` aren't supported in `scan_data()`.",
+         call. = FALSE)
+  }
+  
+  # Stop function if the length of `sections` is 0
+  if (length(sections) == 0) {
+    stop("At least one `section` is required.", call. = FALSE)
+  }
+  
+  # Stop function if their are unrecognized sections in `sections`
+  if (!all(sections %in% c("overview", "variables", "interactions",
+                           "correlations", "missing", "sample"))) {
+    
+    stop("All values provided in `sections` must be a valid keyword:\n",
+         " * Allowed values are \"overview\", \"variables\", \"interactions\", ",
+         "\"correlations\", \"missing\", and \"sample\".",
          call. = FALSE)
   }
   
@@ -62,7 +86,7 @@ scan_data <- function(tbl) {
     tbl_name <- NA
   }
   
-  build_examination_page(data = tbl, tbl_name = tbl_name)
+  build_examination_page(data = tbl, tbl_name = tbl_name, sections = sections)
 }
 
 # nocov start

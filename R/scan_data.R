@@ -41,12 +41,16 @@ scan_data <- function(tbl) {
     stop("Tables of class `tbl_dbi` aren't supported in `scan_data()`")
   }
   
+  # nocov start
+  
   if (!requireNamespace("gt", quietly = TRUE)) {
     
     stop("Creating an HTML report with `scan_data()` requires the gt package:\n",
          " * Install gt with `devtools::install_github(\"rstudio/gt\")`.",
          call. = FALSE)
   }
+  
+  # nocov end
   
   # Attempt to get the table name through `match.call()` and `deparse()`
   tbl_name <- deparse(match.call()$tbl)
@@ -59,6 +63,8 @@ scan_data <- function(tbl) {
   
   build_examination_page(data = tbl, tbl_name = tbl_name)
 }
+
+# nocov start
 
 #' Print the reporting produced by [scan_data()]
 #'
@@ -94,3 +100,5 @@ knit_print.examination_page <- function(x, ...) {
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(x, ...)
 }
+
+# nocov end

@@ -7,7 +7,8 @@
 scan_data(
   tbl,
   sections = c("overview", "variables", "interactions", "correlations", "missing",
-    "sample")
+    "sample"),
+  navbar = TRUE
 )
 }
 \arguments{
@@ -20,6 +21,9 @@ their default order are: \code{"overview"}, \code{"variables"}, \code{"interacti
 \code{"correlations"}, \code{"missing"}, and \code{"sample"}. This vector can be comprised
 of less elements and the order can be changed to suit the desired layout of
 the report.}
+
+\item{navbar}{Should there be a navigation bar anchored to the top of the
+report page? By default this is \code{TRUE}.}
 }
 \description{
 Generates an HTML report that scours the input table data. Before calling up

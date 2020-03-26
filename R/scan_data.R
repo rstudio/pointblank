@@ -30,6 +30,8 @@
 #'   `"correlations"`, `"missing"`, and `"sample"`. This vector can be comprised
 #'   of less elements and the order can be changed to suit the desired layout of
 #'   the report.
+#' @param navbar Should there be a navigation bar anchored to the top of the
+#'   report page? By default this is `TRUE`.
 #' 
 #' @examples
 #' # Get an HTML report that describes all of
@@ -43,7 +45,8 @@
 #' @export
 scan_data <- function(tbl,
                       sections = c("overview", "variables", "interactions",
-                                   "correlations", "missing", "sample")) {
+                                   "correlations", "missing", "sample"),
+                      navbar = TRUE) {
   
   # Stop function if a `tbl_dbi` object is supplied as the `tbl`
   if (inherits(tbl, "tbl_dbi")) {
@@ -86,7 +89,12 @@ scan_data <- function(tbl,
     tbl_name <- NA
   }
   
-  build_examination_page(data = tbl, tbl_name = tbl_name, sections = sections)
+  build_examination_page(
+    data = tbl,
+    tbl_name = tbl_name,
+    sections = sections,
+    navbar = navbar
+  )
 }
 
 # nocov start

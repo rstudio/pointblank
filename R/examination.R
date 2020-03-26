@@ -1016,7 +1016,14 @@ bootstrap_lib <- function() {
 
 build_examination_page <- function(data,
                                    tbl_name,
-                                   sections) {
+                                   sections,
+                                   navbar) {
+  
+  if (navbar) {
+    navbar <- navbar(sections = sections)
+  } else {
+    navbar <- NULL
+  }
   
   probe_list <-
     sections %>%
@@ -1096,7 +1103,7 @@ build_examination_page <- function(data,
         ),
         htmltools::tags$body(
           htmltools::tags$a(class = "anchor-pos", id = "top"),
-          navbar(),
+          navbar,
           htmltools::tags$div(
             class = "content",
             htmltools::tags$div(
@@ -1720,7 +1727,33 @@ probe_sample_assemble <- function(data) {
 # Components of the page
 #
 
-navbar <- function() {
+navbar <- function(sections) {
+  
+  item_list <-
+    sections %>%
+    lapply(
+      FUN = function(x) {
+        
+        label <-
+          switch(
+            x,
+            overview = "Overview",
+            variables = "Variables",
+            interactions = "Interactions",
+            correlations = "Correlations",
+            missing = "Missing Values",
+            sample = "Sample"
+          )
+        
+        htmltools::tags$li(
+          htmltools::tags$a(
+            class = "anchor",
+            href = paste0("#", x),
+            label
+          )
+        )
+      }
+    )
   
   htmltools::tags$nav(
     class = "navbar navbar-default navbar-fixed-top",
@@ -1751,48 +1784,49 @@ navbar <- function() {
         class = "navbar-collapse collapse",
         htmltools::tags$ul(
           class = "nav navbar-nav navbar-right",
-          htmltools::tags$li(
-            htmltools::tags$a(
-              class = "anchor",
-              href = "#overview",
-              "Overview"
-            )
-          ),
-          htmltools::tags$li(
-            htmltools::tags$a(
-              class = "anchor",
-              href = "#variables",
-              "Variables"
-            )
-          ),
-          htmltools::tags$li(
-            htmltools::tags$a(
-              class = "anchor",
-              href = "#interactions",
-              "Interactions"
-            )
-          ),
-          htmltools::tags$li(
-            htmltools::tags$a(
-              class = "anchor",
-              href = "#correlations",
-              "Correlations"
-            )
-          ),
-          htmltools::tags$li(
-            htmltools::tags$a(
-              class = "anchor",
-              href = "#missing",
-              "Missing Values"
-            )
-          ),
-          htmltools::tags$li(
-            htmltools::tags$a(
-              class = "anchor",
-              href = "#sample",
-              "Sample"
-            )
-          )
+          item_list
+          # htmltools::tags$li(
+          #   htmltools::tags$a(
+          #     class = "anchor",
+          #     href = "#overview",
+          #     "Overview"
+          #   )
+          # ),
+          # htmltools::tags$li(
+          #   htmltools::tags$a(
+          #     class = "anchor",
+          #     href = "#variables",
+          #     "Variables"
+          #   )
+          # ),
+          # htmltools::tags$li(
+          #   htmltools::tags$a(
+          #     class = "anchor",
+          #     href = "#interactions",
+          #     "Interactions"
+          #   )
+          # ),
+          # htmltools::tags$li(
+          #   htmltools::tags$a(
+          #     class = "anchor",
+          #     href = "#correlations",
+          #     "Correlations"
+          #   )
+          # ),
+          # htmltools::tags$li(
+          #   htmltools::tags$a(
+          #     class = "anchor",
+          #     href = "#missing",
+          #     "Missing Values"
+          #   )
+          # ),
+          # htmltools::tags$li(
+          #   htmltools::tags$a(
+          #     class = "anchor",
+          #     href = "#sample",
+          #     "Sample"
+          #   )
+          # )
         )
       )
     )

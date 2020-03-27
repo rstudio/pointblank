@@ -2,7 +2,8 @@
 # Generate section components such as tables and plots
 #
 
-probe_overview_stats <- function(data) {
+probe_overview_stats <- function(data,
+                                 reporting_lang) {
 
   n_cols <- ncol(data)
   n_rows <- nrow(data)
@@ -55,11 +56,11 @@ probe_overview_stats <- function(data) {
   
   data_overview_tbl <-
     dplyr::tribble(
-      ~label,              ~value,
-      "Columns",           n_cols,
-      "Rows",              n_rows,
-      "<code>NA</code>s",  glue::glue("{na_cells} {na_cells_pct}", .transformer = get),
-      "Duplicate Rows",    glue::glue("{duplicate_rows} {duplicate_rows_pct}", .transformer = get),
+      ~label,                                 ~value,
+      tbl_lab_columns[reporting_lang],        n_cols,
+      tbl_lab_rows[reporting_lang],           n_rows,
+      tbl_lab_NAs[reporting_lang],            glue::glue("{na_cells} {na_cells_pct}", .transformer = get),
+      tbl_lab_duplicate_rows[reporting_lang], glue::glue("{duplicate_rows} {duplicate_rows_pct}", .transformer = get),
     )
   
   r_col_types_tbl <- 
@@ -91,11 +92,11 @@ probe_overview_stats <- function(data) {
   # Reproducibility Summary
   reproducibility_gt <-
     dplyr::tribble(
-      ~label,                    ~value,
-      "Scan Build Time",         paste0("`", Sys.time() %>% as.character(), "`"),
-      "**pointblank** Version",  paste0("`", utils::packageVersion("pointblank") %>% as.character(), "`"),
-      "**R** Version",           paste0(R.version$version.string, "<br><span style=\"font-size: smaller;\"><em>", R.version$nickname, "</em></span>") %>% gsub("-", "&ndash;", .),
-      "System OS",               paste0("`", R.version$platform, "`")
+      ~label,                                      ~value,
+      tbl_lab_scan_build_time[reporting_lang],     paste0("`", Sys.time() %>% as.character(), "`"),
+      tbl_lab_pointblank_version[reporting_lang],  paste0("`", utils::packageVersion("pointblank") %>% as.character(), "`"),
+      tbl_lab_r_version[reporting_lang],           paste0(R.version$version.string, "<br><span style=\"font-size: smaller;\"><em>", R.version$nickname, "</em></span>") %>% gsub("-", "&ndash;", .),
+      tbl_lab_system_os[reporting_lang],           paste0("`", R.version$platform, "`")
     ) %>%
     gt::gt() %>%
     gt::fmt_markdown(columns = gt::vars(label)) %>%
@@ -113,7 +114,8 @@ probe_overview_stats <- function(data) {
   )
 }
 
-probe_columns <- function(data) {
+probe_columns <- function(data,
+                          reporting_lang) {
 
   n_rows <- nrow(data)
   
@@ -132,13 +134,13 @@ probe_columns <- function(data) {
         
         switch(
           col_type,
-          character = probe_columns_character(data = data, column = col_name, n_rows = n_rows),
-          Date = probe_columns_date(data = data, column = col_name, n_rows = n_rows),
-          factor = probe_columns_factor(data = data, column = col_name, n_rows = n_rows),
-          integer = probe_columns_integer(data = data, column = col_name, n_rows = n_rows),
-          logical = probe_columns_logical(data = data, column = col_name, n_rows = n_rows),
-          numeric = probe_columns_numeric(data = data, column = col_name, n_rows = n_rows),
-          POSIXct = probe_columns_posix(data = data, column = col_name, n_rows = n_rows),
+          character = probe_columns_character(data = data, column = col_name, n_rows = n_rows, reporting_lang = reporting_lang),
+          Date = probe_columns_date(data = data, column = col_name, n_rows = n_rows, reporting_lang = reporting_lang),
+          factor = probe_columns_factor(data = data, column = col_name, n_rows = n_rows, reporting_lang = reporting_lang),
+          integer = probe_columns_integer(data = data, column = col_name, n_rows = n_rows, reporting_lang = reporting_lang),
+          logical = probe_columns_logical(data = data, column = col_name, n_rows = n_rows, reporting_lang = reporting_lang),
+          numeric = probe_columns_numeric(data = data, column = col_name, n_rows = n_rows, reporting_lang = reporting_lang),
+          POSIXct = probe_columns_posix(data = data, column = col_name, n_rows = n_rows, reporting_lang = reporting_lang),
           probe_columns_other(data = data, column = col_name, n_rows = n_rows)
         )
       })
@@ -146,7 +148,9 @@ probe_columns <- function(data) {
   column_descriptions
 }
 
-get_column_description_gt <- function(data_column, n_rows) {
+get_column_description_gt <- function(data_column,
+                                      n_rows,
+                                      reporting_lang) {
   
   distinct_count <- 
     data_column %>%
@@ -191,10 +195,10 @@ get_column_description_gt <- function(data_column, n_rows) {
   
   column_description_tbl <-
     dplyr::tribble(
-      ~label,              ~value,
-      "Distinct",          glue::glue("{distinct_count} {distinct_pct}", .transformer = get),
-      "<code>NA</code>s",  glue::glue("{na_cells} {na_cells_pct}", .transformer = get),
-      "<code>Inf</code>/<code>-Inf</code>", glue::glue("{inf_cells} {inf_cells_pct}", .transformer = get),
+      ~label,                                ~value,
+      tbl_lab_distinct[reporting_lang],      glue::glue("{distinct_count} {distinct_pct}", .transformer = get),
+      tbl_lab_NAs[reporting_lang],           glue::glue("{na_cells} {na_cells_pct}", .transformer = get),
+      "<code>Inf</code>/<code>-Inf</code>",  glue::glue("{inf_cells} {inf_cells_pct}", .transformer = get),
     )
   
   column_description_gt <-
@@ -210,7 +214,8 @@ get_column_description_gt <- function(data_column, n_rows) {
   column_description_gt
 }
 
-get_numeric_stats_gt <- function(data_column) {
+get_numeric_stats_gt <- function(data_column,
+                                 reporting_lang) {
   
   summary_stats <- 
     data_column %>%
@@ -229,10 +234,10 @@ get_numeric_stats_gt <- function(data_column) {
   
   column_stats_tbl <-
     dplyr::tribble(
-      ~label,     ~value,
-      "Mean",     mean,
-      "Minimum",  min,
-      "Maximum",  max
+      ~label,                           ~value,
+      tbl_lab_mean[reporting_lang],     mean,
+      tbl_lab_minimum[reporting_lang],  min,
+      tbl_lab_maximum[reporting_lang],  max
     )
   
   column_stats_gt <-
@@ -247,7 +252,8 @@ get_numeric_stats_gt <- function(data_column) {
   column_stats_gt
 }
 
-get_quantile_stats_gt <- function(data_column) {
+get_quantile_stats_gt <- function(data_column,
+                                  reporting_lang) {
   
   quantile_stats <- 
     data_column %>%
@@ -269,16 +275,16 @@ get_quantile_stats_gt <- function(data_column) {
   
   quantile_stats_tbl <-
     dplyr::tribble(
-      ~label,              ~value,
-      "Minimum",           quantile_stats$min,
-      "5th Percentile",    quantile_stats$p05,
-      "Q1",                quantile_stats$q_1,
-      "Median",            quantile_stats$med,
-      "Q3",                quantile_stats$q_3,
-      "95th Percentile",   quantile_stats$p95,
-      "Maximum",           quantile_stats$max,
-      "Range",             quantile_stats$range,
-      "IQR",               quantile_stats$iqr
+      ~label,                                 ~value,
+      tbl_lab_minimum[reporting_lang],        quantile_stats$min,
+      tbl_lab_5_percentile[reporting_lang],   quantile_stats$p05,
+      "Q1",                                   quantile_stats$q_1,
+      tbl_lab_median[reporting_lang],         quantile_stats$med,
+      "Q3",                                   quantile_stats$q_3,
+      tbl_lab_95_percentile[reporting_lang],  quantile_stats$p95,
+      tbl_lab_maximum[reporting_lang],        quantile_stats$max,
+      tbl_lab_range[reporting_lang],          quantile_stats$range,
+      "IQR",                                  quantile_stats$iqr
     )
   
   quantile_stats_gt <-
@@ -291,7 +297,8 @@ get_quantile_stats_gt <- function(data_column) {
     )
 }
 
-get_descriptive_stats_gt <- function(data_column) {
+get_descriptive_stats_gt <- function(data_column,
+                                     reporting_lang) {
   
   # Create simple function to obtain the coefficient of variation
   cv <- function(x) stats::sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
@@ -314,14 +321,14 @@ get_descriptive_stats_gt <- function(data_column) {
   
   descriptive_stats_tbl <-
     dplyr::tribble(
-      ~label,                       ~value,
-      "Mean",                       descriptive_stats$mean,
-      "Variance",                   descriptive_stats$variance,
-      "Standard Deviation",         descriptive_stats$sd,
-      "Coefficient of Variation",   descriptive_stats$cv,
-      # "Median Absolute Deviation",,
-      # "Kurtosis",                 ,
-      # "Skewness",                 ,
+      ~label,                                      ~value,
+      tbl_lab_mean[reporting_lang],                descriptive_stats$mean,
+      tbl_lab_variance[reporting_lang],            descriptive_stats$variance,
+      tbl_lab_standard_deviation[reporting_lang],  descriptive_stats$sd,
+      tbl_lab_cov[reporting_lang],                 descriptive_stats$cv,
+      # "Median Absolute Deviation",        ,
+      # "Kurtosis",                         ,
+      # "Skewness",                         ,
     )
   
   descriptive_stats_tbl %>%
@@ -334,10 +341,11 @@ get_descriptive_stats_gt <- function(data_column) {
     )
 }
 
-get_common_values_gt <- function(data_column) {
+get_common_values_gt <- function(data_column,
+                                 reporting_lang) {
   
   n_rows <- nrow(data_column)
-  
+
   common_values_tbl <- 
     data_column %>%
     dplyr::group_by_at(1) %>%
@@ -366,16 +374,16 @@ get_common_values_gt <- function(data_column) {
           dplyr::rename(value = 1) %>%
           dplyr::mutate(value = as.character(value)),
         dplyr::tibble(
-          value = paste0("**Other Values** (", other_values_distinct , ")"),
+          value = paste0("**", other_values_text[reporting_lang], "** (", other_values_distinct , ")"),
           n = other_values_n,
           frequency = other_values_n / n_rows
         )
       ) %>%
       gt::gt() %>%
       gt::cols_label(
-        value = "Value",
-        n = "Count",
-        frequency = "Frequency",
+        value = tbl_lab_value[reporting_lang],
+        n = tbl_lab_count[reporting_lang],
+        frequency = tbl_lab_frequency[reporting_lang],
       ) %>%
       gt::fmt_missing(columns = gt::vars(value), missing_text = "**NA**") %>%
       gt::text_transform(
@@ -398,9 +406,14 @@ get_common_values_gt <- function(data_column) {
       dplyr::mutate(value = as.character(value)) %>%
       gt::gt() %>%
       gt::cols_label(
-        value = "Value",
-        n = "Count",
-        frequency = "Frequency",
+        value = tbl_lab_value[reporting_lang],
+        n = tbl_lab_count[reporting_lang],
+        frequency = tbl_lab_frequency[reporting_lang],
+      ) %>%
+      gt::fmt_missing(columns = gt::vars(value), missing_text = "**NA**") %>%
+      gt::text_transform(
+        locations = gt::cells_body(columns = gt::vars(value)),
+        fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
       ) %>%
       gt::fmt_percent(columns = gt::vars(frequency), decimals = 1) %>%
       gt::fmt_markdown(columns = gt::vars(value)) %>%
@@ -420,34 +433,45 @@ get_head_tail_slices <- function(data_column) {
   head_tail_slices$probe_sample
 }
 
-get_top_bottom_slice <- function(data_column) {
-  
+get_top_bottom_slice <- function(data_column,
+                                 reporting_lang) {
+
   n_rows <- nrow(data_column)
   
   data_column_freq <-
     data_column %>%
     dplyr::group_by_at(1) %>%
-    dplyr::count(name = "Count") %>%
-    dplyr::rename("Value" = 1) %>%
+    dplyr::count() %>%
     dplyr::ungroup()
+  
+  colnames(data_column_freq) <- c(tbl_lab_value[reporting_lang], tbl_lab_count[reporting_lang])
   
   data_column_top_n <-
     data_column_freq %>%
-    dplyr::arrange_at(1, .funs = list(~ dplyr::desc(.))) %>%
-    dplyr::slice(1:10) %>%
-    dplyr::mutate(Frequency = Count / n_rows)
+    dplyr::arrange_at(2, .funs = list(~ dplyr::desc(.))) %>%
+    dplyr::slice(1:10)
+  
+  data_column_top_n[, 3] <- data_column_top_n[, 2, drop = TRUE] / n_rows
+  colnames(data_column_top_n)[3] <- tbl_lab_frequency[[reporting_lang]]
   
   data_column_bottom_n <- 
     data_column_freq %>%
     dplyr::arrange_at(1) %>%
-    dplyr::slice(1:10) %>%
-    dplyr::mutate(Frequency = Count / n_rows)
+    dplyr::slice(1:10)
+  
+  data_column_bottom_n[, 3] <- data_column_bottom_n[, 2, drop = TRUE] / n_rows
+  colnames(data_column_bottom_n)[3] <- tbl_lab_frequency[[reporting_lang]]
   
   get_slice_gt <- function(data_column, slice = "max") {
 
     data_column %>%
       gt::gt() %>%
-      gt::fmt_percent(columns = gt::vars(Frequency)) %>%
+      gt::fmt_percent(columns = 3) %>%
+      gt::fmt_missing(columns = 1, missing_text = "**NA**") %>%
+      gt::text_transform(
+        locations = gt::cells_body(columns = 1),
+        fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
+      ) %>%
       gt::tab_options(
         table.border.top.style = "none",
         table.width = "100%"
@@ -460,7 +484,8 @@ get_top_bottom_slice <- function(data_column) {
   )
 }
 
-get_character_nchar_stats_gt <- function(data_column) {
+get_character_nchar_stats_gt <- function(data_column,
+                                         reporting_lang) {
   
   character_nchar_stats <- 
     data_column %>%
@@ -476,10 +501,10 @@ get_character_nchar_stats_gt <- function(data_column) {
     as.list()
   
   dplyr::tribble(
-    ~label,    ~value,
-    "Mean",    character_nchar_stats$mean,
-    "Minimum", character_nchar_stats$min,
-    "Maximum", character_nchar_stats$max
+    ~label,                           ~value,
+    tbl_lab_mean[reporting_lang],     character_nchar_stats$mean,
+    tbl_lab_minimum[reporting_lang],  character_nchar_stats$min,
+    tbl_lab_maximum[reporting_lang],  character_nchar_stats$max
   ) %>%
     gt::gt() %>%
     gt::fmt_number(columns = gt::vars(value), decimals = 1) %>%
@@ -490,7 +515,11 @@ get_character_nchar_stats_gt <- function(data_column) {
     )
 }
 
-get_character_nchar_histogram <- function(data_column) {
+get_character_nchar_histogram <- function(data_column,
+                                          reporting_lang) {
+  
+  x_label <- plot_lab_string_length[reporting_lang]
+  y_label <- plot_lab_count[reporting_lang]
   
   suppressWarnings(
     plot_histogram <- 
@@ -499,7 +528,7 @@ get_character_nchar_histogram <- function(data_column) {
       dplyr::rename(nchar = 1) %>%
       ggplot2::ggplot(ggplot2::aes(nchar)) +
       ggplot2::geom_histogram(stat = "count", bins = 10, fill = "steelblue") +
-      ggplot2::labs(x = "String Length", y = "Count") +
+      ggplot2::labs(x = x_label, y = y_label) +
       ggplot2::theme_minimal()
   )
   
@@ -530,27 +559,49 @@ get_character_nchar_histogram <- function(data_column) {
   image_html
 }
 
-probe_columns_numeric <- function(data, column, n_rows) {
+probe_columns_numeric <- function(data,
+                                  column,
+                                  n_rows,
+                                  reporting_lang) {
   
   data_column <- data %>% dplyr::select({{ column }})
   
   column_description_gt <- 
-    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+    get_column_description_gt(
+      data_column = data_column,
+      n_rows = n_rows,
+      reporting_lang = reporting_lang
+    )
   
   column_numeric_stats_gt <-
-    get_numeric_stats_gt(data_column = data_column)
+    get_numeric_stats_gt(
+      data_column = data_column,
+      reporting_lang = reporting_lang
+    )
   
   column_quantile_stats_gt <-
-    get_quantile_stats_gt(data_column = data_column)
+    get_quantile_stats_gt(
+      data_column = data_column,
+      reporting_lang = reporting_lang
+    )
   
   column_descriptive_stats_gt <-
-    get_descriptive_stats_gt(data_column = data_column)
+    get_descriptive_stats_gt(
+      data_column = data_column,
+      reporting_lang = reporting_lang
+    )
   
   column_common_values_gt <- 
-    get_common_values_gt(data_column = data_column)
+    get_common_values_gt(
+      data_column = data_column,
+      reporting_lang = reporting_lang
+    )
   
   top_bottom_slices_gt <-
-    get_top_bottom_slice(data_column = data_column)
+    get_top_bottom_slice(
+      data_column = data_column,
+      reporting_lang = reporting_lang
+    )
   
   list(
     column_name = column,
@@ -565,31 +616,55 @@ probe_columns_numeric <- function(data, column, n_rows) {
   )
 }
 
-probe_columns_integer <- function(data, column, n_rows) {
+probe_columns_integer <- function(data,
+                                  column,
+                                  n_rows,
+                                  reporting_lang) {
   
   probe_columns_integer_list <- 
-    probe_columns_numeric(data = data, column = column, n_rows = n_rows)
+    probe_columns_numeric(
+      data = data,
+      column = column,
+      n_rows = n_rows,
+      reporting_lang = reporting_lang
+    )
   
   probe_columns_integer_list$column_type <- "integer"
   
   probe_columns_integer_list
 }
 
-probe_columns_character <- function(data, column, n_rows) {
+probe_columns_character <- function(data,
+                                    column,
+                                    n_rows,
+                                    reporting_lang) {
   
   data_column <- data %>% dplyr::select({{ column }})
   
   column_description_gt <- 
-    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+    get_column_description_gt(
+      data_column = data_column,
+      n_rows = n_rows,
+      reporting_lang = reporting_lang
+    )
   
   column_common_values_gt <- 
-    get_common_values_gt(data_column = data_column)
+    get_common_values_gt(
+      data_column = data_column,
+      reporting_lang = reporting_lang
+    )
   
   column_nchar_stats_gt <-
-    get_character_nchar_stats_gt(data_column = data_column)
+    get_character_nchar_stats_gt(
+      data_column = data_column,
+      reporting_lang = reporting_lang
+    )
   
   column_nchar_plot <- 
-    get_character_nchar_histogram(data_column = data_column)
+    get_character_nchar_histogram(
+      data_column = data_column,
+      reporting_lang = reporting_lang
+    )
   
   list(
     column_name = column,
@@ -601,12 +676,19 @@ probe_columns_character <- function(data, column, n_rows) {
   )
 }
 
-probe_columns_logical <- function(data, column, n_rows) {
+probe_columns_logical <- function(data,
+                                  column,
+                                  n_rows,
+                                  reporting_lang) {
   
   data_column <- data %>% dplyr::select({{ column }})
   
   column_description_gt <- 
-    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+    get_column_description_gt(
+      data_column = data_column,
+      n_rows = n_rows,
+      reporting_lang = reporting_lang
+    )
   
   list(
     column_name = column,
@@ -615,12 +697,19 @@ probe_columns_logical <- function(data, column, n_rows) {
   )
 }
 
-probe_columns_factor <- function(data, column, n_rows) {
+probe_columns_factor <- function(data,
+                                 column,
+                                 n_rows,
+                                 reporting_lang) {
   
   data_column <- data %>% dplyr::select({{ column }})
   
   column_description_gt <- 
-    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+    get_column_description_gt(
+      data_column = data_column,
+      n_rows = n_rows,
+      reporting_lang = reporting_lang
+    )
   
   list(
     column_name = column,
@@ -629,12 +718,19 @@ probe_columns_factor <- function(data, column, n_rows) {
   )
 }
 
-probe_columns_date <- function(data, column, n_rows) {
+probe_columns_date <- function(data,
+                               column,
+                               n_rows,
+                               reporting_lang) {
   
   data_column <- data %>% dplyr::select({{ column }})
   
   column_description_gt <- 
-    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+    get_column_description_gt(
+      data_column = data_column,
+      n_rows = n_rows,
+      reporting_lang = reporting_lang
+    )
   
   list(
     column_name = column,
@@ -643,12 +739,19 @@ probe_columns_date <- function(data, column, n_rows) {
   )
 }
 
-probe_columns_posix <- function(data, column, n_rows) {
+probe_columns_posix <- function(data,
+                                column,
+                                n_rows,
+                                reporting_lang) {
   
   data_column <- data %>% dplyr::select({{ column }})
 
   column_description_gt <- 
-    get_column_description_gt(data_column = data_column, n_rows = n_rows)
+    get_column_description_gt(
+      data_column = data_column,
+      n_rows = n_rows,
+      reporting_lang = reporting_lang
+    )
   
   list(
     column_name = column,
@@ -657,7 +760,9 @@ probe_columns_posix <- function(data, column, n_rows) {
   )
 }
 
-probe_columns_other <- function(data, column, n_rows) {
+probe_columns_other <- function(data,
+                                column,
+                                n_rows) {
   
   data_column <- data %>% dplyr::select({{ column }})
   
@@ -1004,10 +1109,11 @@ bootstrap_lib <- function() {
 build_examination_page <- function(data,
                                    tbl_name,
                                    sections,
-                                   navbar) {
+                                   navbar,
+                                   reporting_lang) {
   
   if (navbar) {
-    navbar <- navbar(sections = sections)
+    navbar <- navbar(sections = sections, reporting_lang = reporting_lang)
   } else {
     navbar <- NULL
   }
@@ -1018,12 +1124,31 @@ build_examination_page <- function(data,
       FUN = function(x) {
         switch(
           x,
-          overview = probe_overview_stats_assemble(data = data, tbl_name = tbl_name),
-          variables = probe_columns_assemble(data = data),
-          interactions = probe_interactions_assemble(data = data),
-          correlations = probe_correlations_assemble(data = data),
-          missing = probe_missing_assemble(data = data),
-          sample = probe_sample_assemble(data = data)
+          overview = probe_overview_stats_assemble(
+            data = data,
+            tbl_name = tbl_name,
+            reporting_lang = reporting_lang
+          ),
+          variables = probe_columns_assemble(
+            data = data,
+            reporting_lang = reporting_lang
+          ),
+          interactions = probe_interactions_assemble(
+            data = data,
+            reporting_lang = reporting_lang
+          ),
+          correlations = probe_correlations_assemble(
+            data = data,
+            reporting_lang = reporting_lang
+          ),
+          missing = probe_missing_assemble(
+            data = data,
+            reporting_lang = reporting_lang
+          ),
+          sample = probe_sample_assemble(
+            data = data,
+            reporting_lang = reporting_lang
+          )
         )
       } 
     )
@@ -1106,14 +1231,7 @@ build_examination_page <- function(data,
                 htmltools::tags$p(
                   class = "text-muted text-center",
                   htmltools::HTML(
-                    paste0(
-                      "Table scan generated with ",
-                      htmltools::tags$a(
-                        href = "https://www.github.com/rich-iannone/pointblank",
-                        "pointblank"
-                      ),
-                      "."
-                    )
+                    footer_text_fragment[reporting_lang]
                   )
                 )
               )
@@ -1137,13 +1255,19 @@ build_examination_page <- function(data,
   examination_page
 }
 
-probe_overview_stats_assemble <- function(data, tbl_name) {
+probe_overview_stats_assemble <- function(data,
+                                          tbl_name,
+                                          reporting_lang) {
  
-  header <- if (is.na(tbl_name)) "Overview" else paste0("Overview of <code>", tbl_name, "</code>")
+  if (is.na(tbl_name)) {
+    header <- section_title_overview_ts[reporting_lang]
+  } else {
+    header <- glue::glue(section_title_overview_of_ts[reporting_lang])
+  }
   
   row_header <- row_header(id = "overview", header = htmltools::HTML(header))
   
-  overview_stats <- probe_overview_stats(data = data)
+  overview_stats <- probe_overview_stats(data = data, reporting_lang = reporting_lang)
   
   htmltools::tagList(
     row_header,
@@ -1154,8 +1278,16 @@ probe_overview_stats_assemble <- function(data, tbl_name) {
         htmltools::tags$ul(
           class = "nav nav-pills",
           role = "tablist",
-          nav_pill_li(label = "Overview", id = "overview-dataset_overview", active = TRUE),
-          nav_pill_li(label = "Reproducibility", id = "overview-reproducibility", active = FALSE)
+          nav_pill_li(
+            label = button_label_overview_overview_ts[reporting_lang],
+            id = "overview-dataset_overview",
+            active = TRUE
+          ),
+          nav_pill_li(
+            label = button_label_overview_reproducibility_ts[reporting_lang],
+            id = "overview-reproducibility",
+            active = FALSE
+          )
         ),
         htmltools::tags$div(
           class = "tab-content",
@@ -1166,12 +1298,12 @@ probe_overview_stats_assemble <- function(data, tbl_name) {
             panel_component_list = list(
               panel_component(
                 size = 6,
-                title = "Table Overview",
+                title = subsection_title_overview_table_overview[reporting_lang],
                 content = overview_stats$data_overview_gt
               ),
               panel_component(
                 size = 6,
-                title = "Column Types",
+                title = subsection_title_overview_column_types[reporting_lang],
                 content = overview_stats$r_col_types_gt
               )
             )
@@ -1182,7 +1314,7 @@ probe_overview_stats_assemble <- function(data, tbl_name) {
             panel_component_list = list(
               panel_component(
                 size = 12,
-                title = "Reproducibility Information",
+                title = subsection_title_overview_reproducibility_information[reporting_lang],
                 content = overview_stats$reproducibility_gt
               )
             )
@@ -1193,11 +1325,14 @@ probe_overview_stats_assemble <- function(data, tbl_name) {
   )
 }
 
-probe_columns_assemble <- function(data) {
+probe_columns_assemble <- function(data,
+                                   reporting_lang) {
   
-  row_header <- row_header(id = "variables", header = "Variables")
+  header <- section_title_variables_ts[reporting_lang]
   
-  columns_data <- probe_columns(data = data)
+  row_header <- row_header(id = "variables", header = header)
+  
+  columns_data <- probe_columns(data = data, reporting_lang = reporting_lang)
   
   columns_tagLists <- 
     lapply(
@@ -1249,7 +1384,7 @@ probe_columns_assemble <- function(data) {
                       ),
                       `aria-expanded` = "true",
                       `aria-controls` = "collapseExample",
-                      "Toggle details"
+                      btn_toggle_details[reporting_lang]
                     )
                   ),
                   htmltools::tags$div(
@@ -1273,7 +1408,7 @@ probe_columns_assemble <- function(data) {
                             `aria-controls` = paste0(id_val, "bottom-", id_val, "statistics"),
                             role = "tab",
                             `data-toggle` = "tab",
-                            "Statistics"
+                            tab_label_variables_statistics_ts[reporting_lang]
                           )
                         ),
                         htmltools::tags$li(
@@ -1285,7 +1420,7 @@ probe_columns_assemble <- function(data) {
                             `aria-controls` = paste0(id_val, "bottom-", id_val, "common_values"),
                             role = "tab",
                             `data-toggle` = "tab",
-                            "Common Values"
+                            tab_label_variables_common_values_ts[reporting_lang]
                           )
                         ),
                         htmltools::tags$li(
@@ -1297,7 +1432,7 @@ probe_columns_assemble <- function(data) {
                             `aria-controls` = paste0(id_val, "bottom-", id_val, "max_min_slices"),
                             role = "tab",
                             `data-toggle` = "tab",
-                            "Max/Min Slices"
+                            tab_label_variables_max_min_slices_ts[reporting_lang]
                           )
                         )
                       ),
@@ -1312,7 +1447,7 @@ probe_columns_assemble <- function(data) {
                             class = "col-sm-6",
                             htmltools::tags$p(
                               class = "h4",
-                              "Quantile Statistics"
+                              subsection_title_variables_quantile_statistics[reporting_lang]
                             ),
                             x$column_quantile_gt
                           ),
@@ -1320,7 +1455,7 @@ probe_columns_assemble <- function(data) {
                             class = "col-sm-6",
                             htmltools::tags$p(
                               class = "h4",
-                              "Descriptive Statistics"
+                              subsection_title_variables_descriptive_statistics[reporting_lang]
                             ),
                             x$column_descriptive_gt
                           )
@@ -1334,7 +1469,7 @@ probe_columns_assemble <- function(data) {
                             class = "col-sm-12",
                             htmltools::tags$p(
                               class = "h4",
-                              "Common Values"
+                              subsection_title_variables_common_values[reporting_lang]
                             ),
                             x$column_common_gt
                           )
@@ -1348,7 +1483,7 @@ probe_columns_assemble <- function(data) {
                             class = "col-sm-6",
                             htmltools::tags$p(
                               class = "h4",
-                              "Maximum Values"
+                              subsection_title_variables_maximum_values[reporting_lang]
                             ),
                             x$column_top_slice_gt
                           ),
@@ -1356,7 +1491,7 @@ probe_columns_assemble <- function(data) {
                             class = "col-sm-6",
                             htmltools::tags$p(
                               class = "h4",
-                              "Minimum Values"
+                              subsection_title_variables_minimum_values[reporting_lang]
                             ),
                             x$column_bottom_slice_gt
                           )
@@ -1413,7 +1548,7 @@ probe_columns_assemble <- function(data) {
                       ),
                       `aria-expanded` = "true",
                       `aria-controls` = "collapseExample",
-                      "Toggle details"
+                      btn_toggle_details[reporting_lang]
                     )
                   ),
                   htmltools::tags$div(
@@ -1437,7 +1572,7 @@ probe_columns_assemble <- function(data) {
                             `aria-controls` = paste0(id_val, "bottom-", id_val, "common_values"),
                             role = "tab",
                             `data-toggle` = "tab",
-                            "Common Values"
+                            subsection_title_variables_common_values[reporting_lang]
                           )
                         ),
                         
@@ -1450,7 +1585,7 @@ probe_columns_assemble <- function(data) {
                             `aria-controls` = paste0(id_val, "bottom-", id_val, "lengths"),
                             role = "tab",
                             `data-toggle` = "tab",
-                            "String Lengths"
+                            subsection_title_variables_string_lengths[reporting_lang]
                           )
                         ),
                         
@@ -1466,7 +1601,7 @@ probe_columns_assemble <- function(data) {
                             class = "col-sm-12",
                             htmltools::tags$p(
                               class = "h4",
-                              "Common Values"
+                              subsection_title_variables_common_values[reporting_lang]
                             ),
                             x$column_common_gt
                           )
@@ -1480,7 +1615,7 @@ probe_columns_assemble <- function(data) {
                             class = "col-sm-4",
                             htmltools::tags$p(
                               class = "h4",
-                              "String Lengths"
+                              subsection_title_variables_string_lengths[reporting_lang]
                             ),
                             x$column_nchar_gt
                           ),
@@ -1488,7 +1623,7 @@ probe_columns_assemble <- function(data) {
                             class = "col-sm-8",
                             htmltools::tags$p(
                               class = "h4",
-                              "Histogram"
+                              subsection_title_variables_histogram[reporting_lang]
                             ),
                             x$column_nchar_plot
                           )
@@ -1582,9 +1717,12 @@ probe_columns_assemble <- function(data) {
 }
 
 
-probe_interactions_assemble <- function(data) {
+probe_interactions_assemble <- function(data,
+                                        reporting_lang) {
   
-  row_header <- row_header(id = "interactions", header = "Interactions")
+  header <- section_title_interactions_ts[reporting_lang]
+  
+  row_header <- row_header(id = "interactions", header = header)
   
   interactions_data <- suppressWarnings(probe_interactions(data = data))
   
@@ -1605,9 +1743,12 @@ probe_interactions_assemble <- function(data) {
 }
 
 
-probe_correlations_assemble <- function(data) {
+probe_correlations_assemble <- function(data,
+                                        reporting_lang) {
   
-  row_header <- row_header(id = "correlations", header = "Correlations")
+  header <- section_title_correlations_ts[reporting_lang]
+  
+  row_header <- row_header(id = "correlations", header = header)
   
   correlations_data <- probe_correlations(data = data)
   
@@ -1666,9 +1807,13 @@ probe_correlations_assemble <- function(data) {
   )
 }
 
-probe_missing_assemble <- function(data) {
+probe_missing_assemble <- function(data,
+                                   reporting_lang) {
   
-  row_header <- row_header(id = "missing", header = "Missing Values")
+  
+  header <- section_title_missing_values_ts[reporting_lang]
+  
+  row_header <- row_header(id = "missing", header = header)
   
   missing_data <- probe_missing(data = data)
   
@@ -1688,9 +1833,12 @@ probe_missing_assemble <- function(data) {
   )
 }
 
-probe_sample_assemble <- function(data) {
+probe_sample_assemble <- function(data,
+                                  reporting_lang) {
   
-  row_header <- row_header(id = "sample", header = "Sample")
+  header <- section_title_sample_values_ts[reporting_lang]
+  
+  row_header <- row_header(id = "sample", header = header)
   
   sample_data <- probe_sample(data = data)
   
@@ -1714,7 +1862,8 @@ probe_sample_assemble <- function(data) {
 # Components of the page
 #
 
-navbar <- function(sections) {
+navbar <- function(sections,
+                   reporting_lang) {
   
   # Compose the list of navigational links for the navbar
   item_list <-
@@ -1725,12 +1874,12 @@ navbar <- function(sections) {
         label <-
           switch(
             x,
-            overview = "Overview",
-            variables = "Variables",
-            interactions = "Interactions",
-            correlations = "Correlations",
-            missing = "Missing Values",
-            sample = "Sample"
+            overview = nav_overview_ts[reporting_lang],
+            variables = nav_variables_ts[reporting_lang],
+            interactions = nav_interactions_ts[reporting_lang],
+            correlations = nav_correlations_ts[reporting_lang],
+            missing = nav_missing_values_ts[reporting_lang],
+            sample = nav_sample_values_ts[reporting_lang]
           )
         
         htmltools::tags$li(
@@ -1764,7 +1913,8 @@ navbar <- function(sections) {
         htmltools::tags$a(
           class = "navbar-brand anchor",
           href = "#top",
-          "Table Scan"
+          style = "font-size: 14.5px",
+          nav_title_ts[reporting_lang]
         ),
       ),
       htmltools::tags$div(

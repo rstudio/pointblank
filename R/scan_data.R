@@ -32,6 +32,9 @@
 #'   the report.
 #' @param navbar Should there be a navigation bar anchored to the top of the
 #'   report page? By default this is `TRUE`.
+#' @param reporting_lang The language to use for label text in the report. By
+#'   default, `NULL` will create English (`"en"`) text. Other options include
+#'   French (`"fr"`), German (`"de"`), Italian (`"it"`), and Spanish (`"es"`).
 #' 
 #' @examples
 #' # Get an HTML report that describes all of
@@ -46,7 +49,8 @@
 scan_data <- function(tbl,
                       sections = c("overview", "variables", "interactions",
                                    "correlations", "missing", "sample"),
-                      navbar = TRUE) {
+                      navbar = TRUE,
+                      reporting_lang = NULL) {
   
   # Stop function if a `tbl_dbi` object is supplied as the `tbl`
   if (inherits(tbl, "tbl_dbi")) {
@@ -80,6 +84,9 @@ scan_data <- function(tbl,
   
   # nocov end
   
+  # Normalize the reporting language identifier and stop if necessary
+  reporting_lang <- normalize_reporting_language(reporting_lang)
+  
   # Attempt to get the table name through `match.call()` and `deparse()`
   tbl_name <- deparse(match.call()$tbl)
   
@@ -93,7 +100,8 @@ scan_data <- function(tbl,
     data = tbl,
     tbl_name = tbl_name,
     sections = sections,
-    navbar = navbar
+    navbar = navbar,
+    reporting_lang = reporting_lang
   )
 }
 

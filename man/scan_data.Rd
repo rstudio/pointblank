@@ -8,7 +8,8 @@ scan_data(
   tbl,
   sections = c("overview", "variables", "interactions", "correlations", "missing",
     "sample"),
-  navbar = TRUE
+  navbar = TRUE,
+  reporting_lang = NULL
 )
 }
 \arguments{
@@ -24,6 +25,10 @@ the report.}
 
 \item{navbar}{Should there be a navigation bar anchored to the top of the
 report page? By default this is \code{TRUE}.}
+
+\item{reporting_lang}{The language to use for label text in the report. By
+default, \code{NULL} will create English (\code{"en"}) text. Other options include
+French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), and Spanish (\code{"es"}).}
 }
 \description{
 Generates an HTML report that scours the input table data. Before calling up

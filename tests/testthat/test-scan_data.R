@@ -35,8 +35,9 @@ test_that("Using `scan_data()` results in an HTML document", {
       )
     )
     
-    expect_error(
-      small_table_sqlite() %>% scan_data()
-    )
+    expect_error(small_table_sqlite() %>% scan_data())
+    expect_error(small_table %>% scan_data(sections = NULL))
+    expect_error(small_table %>% scan_data(sections = c()))
+    expect_error(small_table %>% scan_data(sections = c("extra")))
   }
 })

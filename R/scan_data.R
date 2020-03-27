@@ -52,11 +52,15 @@ scan_data <- function(tbl,
                       navbar = TRUE,
                       reporting_lang = NULL) {
   
+  # nocov start
+  
   # Stop function if a `tbl_dbi` object is supplied as the `tbl`
   if (inherits(tbl, "tbl_dbi")) {
     stop("Tables of class `tbl_dbi` aren't supported in `scan_data()`.",
          call. = FALSE)
   }
+  
+  # nocov end
   
   # Stop function if the length of `sections` is 0
   if (length(sections) == 0) {

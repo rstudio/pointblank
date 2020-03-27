@@ -189,7 +189,7 @@ col_schema_match <- function(x,
 #'   
 #' @family Planning and Prep
 #' @section Function ID:
-#' 1-3
+#' 1-4
 #' 
 #' @export
 col_schema <- function(...,

@@ -81,11 +81,11 @@ agent <-
 ```
 
     #> 
-    #> ── Interrogation Started - there are 2 steps ──────────────────────────────────────
+    #> ── Interrogation Started - there are 2 steps ──────────────────────────────────────────────────
     #> ✓ Step 1: OK.
     #> ! Step 2: WARNING condition met.
     #> 
-    #> ── Interrogation Completed ────────────────────────────────────────────────────────
+    #> ── Interrogation Completed ────────────────────────────────────────────────────────────────────
 
 Because an *agent* was used, we can get a report from it.
 
@@ -126,12 +126,36 @@ dplyr::tibble(
     #> 5    NA     0
     #> 6     7     7
 
-Beyond these simple examples, there are many functions available in
-**pointblank** for making comprehensive table validations.
+<hr>
+
+While data validation is important one has to be familiar with the data
+first. To that end, the `scan_data()` function is provided in
+**pointblank** for generating a comprehensive summary of a tabular
+dataset. The report content is customizable and can be produced in five
+different languages: *English*, *French*, *German*, *Italian*, and
+*Spanish* (validation reports can also be produced in either of these
+languages). Here are several published examples of a **Table Scan** for
+each of these languages (using the `dplyr::storms` dataset):
+
+  - [Table Scan in
+    English](https://rpubs.com/rich_i/pointblank_storms_english)
+  - [Table Scan in
+    French](https://rpubs.com/rich_i/pointblank_storms_french)
+  - [Table Scan in
+    German](https://rpubs.com/rich_i/pointblank_storms_german)
+  - [Table Scan in
+    Italian](https://rpubs.com/rich_i/pointblank_storms_italian)
+  - [Table Scan in
+    Spanish](https://rpubs.com/rich_i/pointblank_storms_spanish)
+
+<hr>
+
+There are many functions available in **pointblank** for making
+comprehensive table validations.
 
 <p align="center">
 
-<img src="man/figures/pointblank_functions_30s.svg" width="80%">
+<img src="man/figures/pointblank_functions.svg" width="80%">
 
 </p>
 

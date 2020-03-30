@@ -137,7 +137,7 @@ conjointly <- function(x,
         values = validation_formulas
       )
   }
-  
+
   agent <-
     create_validation_step(
       agent = agent,

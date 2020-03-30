@@ -56,13 +56,7 @@ agent <-
   interrogate()
 ```
 
-The `agent` object gives us a little bit of information about how the interrogation went.
-
-```{r, print_agent}
-agent
-```
-
-The `4 passing validations` means that all of the individual validations in each of those four validation steps passed without any errors. While the one validation that failed could mean that a single test unit failed (each cell tested == 1 test unit), or, all of them failed. We have a reporting option available that breaks this down a bit more and it's suggested in the printout: `get_agent_report()`. Let's try that.
+The five `OK` messages means that all of the individual validations in each of those five validation steps passed. We have a reporting option available that breaks this down a bit more and it's suggested in the printout: `get_agent_report()`. Let's try that.
 
 ```{r get_agent_report, eval=FALSE}
 get_agent_report(agent)

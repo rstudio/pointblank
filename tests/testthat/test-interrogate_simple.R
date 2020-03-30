@@ -21,7 +21,6 @@ schema_correct <-
 
 test_that("Interrogating simply returns the expected results", {
   
-
   # Use the `col_schema_match()` function to perform
   # a simple validation step
   tbl_result <- tbl[1:2, ] %>% col_schema_match(schema = col_schema(.tbl = tbl))

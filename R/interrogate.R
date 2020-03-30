@@ -109,13 +109,17 @@ interrogate <- function(agent,
       
     } else if (assertion_type == "conjointly") {
       
-      validation_formulas <- get_values_at_idx(agent = agent, idx = i)
-      validation_n <- length(validation_formulas)
+      validation_formulas <- 
+        get_values_at_idx(agent = agent, idx = i) %>%
+        unlist(recursive = FALSE)
       
+      validation_n <- length(validation_formulas)
+
       # Create a double agent
       double_agent <- create_agent(tbl = agent$tbl)
-      
+
       for (formula in validation_formulas) {
+
         double_agent <-
           eval(
             expr = parse(
@@ -404,7 +408,7 @@ check_table_with_assertion <- function(agent, idx, table, assertion_type) {
 }
 
 interrogate_comparison <- function(agent, idx, table, assertion_type) {
-  
+
   # Get operator values for all assertion types involving
   # simple operator comparisons
   operator <- 
@@ -422,8 +426,8 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
   value <- get_values_at_idx(agent = agent, idx = idx)
 
   # Normalize a column in `vars()` to a `name` object
-  if (inherits(value, "quosures")) {
-    value <- value[[1]] %>% rlang::get_expr()
+  if (inherits(value, "list")) {
+    value <- value[1][[1]][[1]] %>% rlang::get_expr()
   }
   
   # Obtain the target column as a label
@@ -467,7 +471,7 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
 interrogate_between <- function(agent, idx, table, assertion_type) {
 
   # Get the set values for the expression
-  set <- get_values_at_idx(agent = agent, idx = idx)
+  set <- get_values_at_idx(agent = agent, idx = idx) %>% unlist()
   
   # Determine whether NAs should be allowed
   na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
@@ -475,16 +479,16 @@ interrogate_between <- function(agent, idx, table, assertion_type) {
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
-  left <- set[[1]]
-  right <- set[[2]]
+  left <- set[1]
+  right <- set[2]
   
   # Normalize `left` and `right` to `name` objects
   # (if they are given as columns in `vars()`)
-  if (inherits(left, "quosure")) {
-    left <- left %>% rlang::get_expr()
+  if (inherits(left, "list")) {
+    left <- left[[1]] %>% rlang::get_expr()
   }
-  if (inherits(right, "quosure")) {
-    right <- right %>% rlang::get_expr()
+  if (inherits(right, "list")) {
+    right <- right[[1]] %>% rlang::get_expr()
   }
   
   incl_str <- paste(ifelse(names(set) %>% as.logical(), "incl", "excl"), collapse = "_")
@@ -527,9 +531,9 @@ interrogate_between <- function(agent, idx, table, assertion_type) {
 }
 
 interrogate_set <- function(agent, idx, table, assertion_type) {
-  
+
   # Get the set values for the expression
-  set <- get_values_at_idx(agent = agent, idx = idx)
+  set <- get_values_at_idx(agent = agent, idx = idx) %>% unlist()
   
   # Determine if an NA value is part of the set
   na_pass <- any(is.na(set))
@@ -806,7 +810,7 @@ pointblank_try_catch <- function(expr) {
   
   eval_list <- 
     list(value = value, warning = warn, error = err)
-  
+
   class(eval_list) <- "table_eval"
   eval_list
 }
@@ -948,7 +952,7 @@ nb_excl_excl <- function(table, column, left, right, na_pass) {
 
 perform_action <- function(agent, idx, type) {
 
-  actions <- agent$validation_set[[idx, "actions"]]
+  actions <- agent$validation_set[[idx, "actions"]] %>% unlist(recursive = FALSE)
   
   .warn <- agent$validation_set[[idx, "warn"]]
   .notify <- agent$validation_set[[idx, "notify"]]
@@ -1199,7 +1203,7 @@ add_table_extract <- function(agent,
 
 determine_action <- function(agent, idx, false_count) {
 
-  al <- agent$validation_set[[idx, "actions"]]
+  al <- agent$validation_set[[idx, "actions"]] %>% unlist(recursive = FALSE)
   n <- agent$validation_set[[idx, "n"]]
 
   warn <- stop <- notify <- FALSE

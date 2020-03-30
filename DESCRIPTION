@@ -33,7 +33,7 @@ Imports:
     magrittr,
     rlang (>= 0.4.2),
     scales (>= 1.1.0),
-    tibble (>= 2.1.3),
+    tibble (>= 3.0.0),
     tidyselect (>= 0.2.5)
 Suggests:
     covr,

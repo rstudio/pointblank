@@ -117,7 +117,7 @@ col_vals_gt <- function(x,
                         actions = NULL,
                         brief = NULL,
                         active = TRUE) {
-  
+
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   

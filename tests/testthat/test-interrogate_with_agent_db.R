@@ -869,7 +869,7 @@ test_that("The validations with sets can include NA values", {
   small_table_na_2 <- 
     small_table %>%
     dplyr::mutate(g = dplyr::case_when(
-      is.na(c) ~ NA,
+      is.na(c) ~ NA_character_,
       f == "low" ~ "one",
       f == "mid" ~ "two",
       f == "high" ~ "three"

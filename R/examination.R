@@ -53,14 +53,14 @@ probe_overview_stats <- function(data,
     } else {
       ((duplicate_rows / n_rows) * 100) %>% round(1) %>% as.character() %>% paste0("(", ., "%)")
     }
-  
+
   data_overview_tbl <-
     dplyr::tribble(
       ~label,                                 ~value,
-      tbl_lab_columns[reporting_lang],        n_cols,
-      tbl_lab_rows[reporting_lang],           n_rows,
-      tbl_lab_NAs[reporting_lang],            glue::glue("{na_cells} {na_cells_pct}", .transformer = get),
-      tbl_lab_duplicate_rows[reporting_lang], glue::glue("{duplicate_rows} {duplicate_rows_pct}", .transformer = get),
+      tbl_lab_columns[[reporting_lang]],        as.character(n_cols),
+      tbl_lab_rows[[reporting_lang]],           as.character(n_rows),
+      tbl_lab_NAs[[reporting_lang]],            glue::glue("{na_cells} {na_cells_pct}", .transformer = get) %>% as.character(),
+      tbl_lab_duplicate_rows[[reporting_lang]], glue::glue("{duplicate_rows} {duplicate_rows_pct}", .transformer = get) %>% as.character(),
     )
   
   r_col_types_tbl <- 
@@ -93,10 +93,10 @@ probe_overview_stats <- function(data,
   reproducibility_gt <-
     dplyr::tribble(
       ~label,                                      ~value,
-      tbl_lab_scan_build_time[reporting_lang],     paste0("`", Sys.time() %>% as.character(), "`"),
-      tbl_lab_pointblank_version[reporting_lang],  paste0("`", utils::packageVersion("pointblank") %>% as.character(), "`"),
-      tbl_lab_r_version[reporting_lang],           paste0(R.version$version.string, "<br><span style=\"font-size: smaller;\"><em>", R.version$nickname, "</em></span>") %>% gsub("-", "&ndash;", .),
-      tbl_lab_system_os[reporting_lang],           paste0("`", R.version$platform, "`")
+      tbl_lab_scan_build_time[[reporting_lang]],     paste0("`", Sys.time() %>% as.character(), "`"),
+      tbl_lab_pointblank_version[[reporting_lang]],  paste0("`", utils::packageVersion("pointblank") %>% as.character(), "`"),
+      tbl_lab_r_version[[reporting_lang]],           paste0(R.version$version.string, "<br><span style=\"font-size: smaller;\"><em>", R.version$nickname, "</em></span>") %>% gsub("-", "&ndash;", .),
+      tbl_lab_system_os[[reporting_lang]],           paste0("`", R.version$platform, "`")
     ) %>%
     gt::gt() %>%
     gt::fmt_markdown(columns = gt::vars(label)) %>%
@@ -196,8 +196,8 @@ get_column_description_gt <- function(data_column,
   column_description_tbl <-
     dplyr::tribble(
       ~label,                                ~value,
-      tbl_lab_distinct[reporting_lang],      glue::glue("{distinct_count} {distinct_pct}", .transformer = get),
-      tbl_lab_NAs[reporting_lang],           glue::glue("{na_cells} {na_cells_pct}", .transformer = get),
+      tbl_lab_distinct[[reporting_lang]],    glue::glue("{distinct_count} {distinct_pct}", .transformer = get),
+      tbl_lab_NAs[[reporting_lang]],         glue::glue("{na_cells} {na_cells_pct}", .transformer = get),
       "<code>Inf</code>/<code>-Inf</code>",  glue::glue("{inf_cells} {inf_cells_pct}", .transformer = get),
     )
   
@@ -234,10 +234,10 @@ get_numeric_stats_gt <- function(data_column,
   
   column_stats_tbl <-
     dplyr::tribble(
-      ~label,                           ~value,
-      tbl_lab_mean[reporting_lang],     mean,
-      tbl_lab_minimum[reporting_lang],  min,
-      tbl_lab_maximum[reporting_lang],  max
+      ~label,                             ~value,
+      tbl_lab_mean[[reporting_lang]],     mean,
+      tbl_lab_minimum[[reporting_lang]],  min,
+      tbl_lab_maximum[[reporting_lang]],  max
     )
   
   column_stats_gt <-
@@ -272,19 +272,19 @@ get_quantile_stats_gt <- function(data_column,
     dplyr::mutate(range = max - min) %>%
     dplyr::summarize_all(~ round(., 2)) %>%
     as.list()
-  
+
   quantile_stats_tbl <-
     dplyr::tribble(
-      ~label,                                 ~value,
-      tbl_lab_minimum[reporting_lang],        quantile_stats$min,
-      tbl_lab_5_percentile[reporting_lang],   quantile_stats$p05,
-      "Q1",                                   quantile_stats$q_1,
-      tbl_lab_median[reporting_lang],         quantile_stats$med,
-      "Q3",                                   quantile_stats$q_3,
-      tbl_lab_95_percentile[reporting_lang],  quantile_stats$p95,
-      tbl_lab_maximum[reporting_lang],        quantile_stats$max,
-      tbl_lab_range[reporting_lang],          quantile_stats$range,
-      "IQR",                                  quantile_stats$iqr
+      ~label,                                   ~value,
+      tbl_lab_minimum[[reporting_lang]],        as.character(quantile_stats$min),
+      tbl_lab_5_percentile[[reporting_lang]],   as.character(quantile_stats$p05),
+      "Q1",                                     as.character(quantile_stats$q_1),
+      tbl_lab_median[[reporting_lang]],         as.character(quantile_stats$med),
+      "Q3",                                     as.character(quantile_stats$q_3),
+      tbl_lab_95_percentile[[reporting_lang]],  as.character(quantile_stats$p95),
+      tbl_lab_maximum[[reporting_lang]],        as.character(quantile_stats$max),
+      tbl_lab_range[[reporting_lang]],          as.character(quantile_stats$range),
+      "IQR",                                    as.character(quantile_stats$iqr)
     )
   
   quantile_stats_gt <-
@@ -321,11 +321,11 @@ get_descriptive_stats_gt <- function(data_column,
   
   descriptive_stats_tbl <-
     dplyr::tribble(
-      ~label,                                      ~value,
-      tbl_lab_mean[reporting_lang],                descriptive_stats$mean,
-      tbl_lab_variance[reporting_lang],            descriptive_stats$variance,
-      tbl_lab_standard_deviation[reporting_lang],  descriptive_stats$sd,
-      tbl_lab_cov[reporting_lang],                 descriptive_stats$cv,
+      ~label,                                        ~value,
+      tbl_lab_mean[[reporting_lang]],                descriptive_stats$mean,
+      tbl_lab_variance[[reporting_lang]],            descriptive_stats$variance,
+      tbl_lab_standard_deviation[[reporting_lang]],  descriptive_stats$sd,
+      tbl_lab_cov[[reporting_lang]],                 descriptive_stats$cv,
       # "Median Absolute Deviation",        ,
       # "Kurtosis",                         ,
       # "Skewness",                         ,
@@ -374,16 +374,16 @@ get_common_values_gt <- function(data_column,
           dplyr::rename(value = 1) %>%
           dplyr::mutate(value = as.character(value)),
         dplyr::tibble(
-          value = paste0("**", other_values_text[reporting_lang], "** (", other_values_distinct , ")"),
+          value = paste0("**", other_values_text[[reporting_lang]], "** (", other_values_distinct , ")"),
           n = other_values_n,
           frequency = other_values_n / n_rows
         )
       ) %>%
       gt::gt() %>%
       gt::cols_label(
-        value = tbl_lab_value[reporting_lang],
-        n = tbl_lab_count[reporting_lang],
-        frequency = tbl_lab_frequency[reporting_lang],
+        value = tbl_lab_value[[reporting_lang]],
+        n = tbl_lab_count[[reporting_lang]],
+        frequency = tbl_lab_frequency[[reporting_lang]],
       ) %>%
       gt::fmt_missing(columns = gt::vars(value), missing_text = "**NA**") %>%
       gt::text_transform(
@@ -406,9 +406,9 @@ get_common_values_gt <- function(data_column,
       dplyr::mutate(value = as.character(value)) %>%
       gt::gt() %>%
       gt::cols_label(
-        value = tbl_lab_value[reporting_lang],
-        n = tbl_lab_count[reporting_lang],
-        frequency = tbl_lab_frequency[reporting_lang],
+        value = tbl_lab_value[[reporting_lang]],
+        n = tbl_lab_count[[reporting_lang]],
+        frequency = tbl_lab_frequency[[reporting_lang]],
       ) %>%
       gt::fmt_missing(columns = gt::vars(value), missing_text = "**NA**") %>%
       gt::text_transform(
@@ -444,7 +444,7 @@ get_top_bottom_slice <- function(data_column,
     dplyr::count() %>%
     dplyr::ungroup()
   
-  colnames(data_column_freq) <- c(tbl_lab_value[reporting_lang], tbl_lab_count[reporting_lang])
+  colnames(data_column_freq) <- c(tbl_lab_value[[reporting_lang]], tbl_lab_count[[reporting_lang]])
   
   data_column_top_n <-
     data_column_freq %>%
@@ -501,10 +501,10 @@ get_character_nchar_stats_gt <- function(data_column,
     as.list()
   
   dplyr::tribble(
-    ~label,                           ~value,
-    tbl_lab_mean[reporting_lang],     character_nchar_stats$mean,
-    tbl_lab_minimum[reporting_lang],  character_nchar_stats$min,
-    tbl_lab_maximum[reporting_lang],  character_nchar_stats$max
+    ~label,                             ~value,
+    tbl_lab_mean[[reporting_lang]],     character_nchar_stats$mean,
+    tbl_lab_minimum[[reporting_lang]],  character_nchar_stats$min,
+    tbl_lab_maximum[[reporting_lang]],  character_nchar_stats$max
   ) %>%
     gt::gt() %>%
     gt::fmt_number(columns = gt::vars(value), decimals = 1) %>%
@@ -518,8 +518,8 @@ get_character_nchar_stats_gt <- function(data_column,
 get_character_nchar_histogram <- function(data_column,
                                           reporting_lang) {
   
-  x_label <- plot_lab_string_length[reporting_lang]
-  y_label <- plot_lab_count[reporting_lang]
+  x_label <- plot_lab_string_length[[reporting_lang]]
+  y_label <- plot_lab_count[[reporting_lang]]
   
   suppressWarnings(
     plot_histogram <- 
@@ -1231,7 +1231,7 @@ build_examination_page <- function(data,
                 htmltools::tags$p(
                   class = "text-muted text-center",
                   htmltools::HTML(
-                    footer_text_fragment[reporting_lang]
+                    footer_text_fragment[[reporting_lang]]
                   )
                 )
               )
@@ -1260,9 +1260,9 @@ probe_overview_stats_assemble <- function(data,
                                           reporting_lang) {
  
   if (is.na(tbl_name)) {
-    header <- section_title_overview_ts[reporting_lang]
+    header <- section_title_overview_ts[[reporting_lang]]
   } else {
-    header <- glue::glue(section_title_overview_of_ts[reporting_lang])
+    header <- glue::glue(section_title_overview_of_ts[[reporting_lang]])
   }
   
   row_header <- row_header(id = "overview", header = htmltools::HTML(header))
@@ -1279,12 +1279,12 @@ probe_overview_stats_assemble <- function(data,
           class = "nav nav-pills",
           role = "tablist",
           nav_pill_li(
-            label = button_label_overview_overview_ts[reporting_lang],
+            label = button_label_overview_overview_ts[[reporting_lang]],
             id = "overview-dataset_overview",
             active = TRUE
           ),
           nav_pill_li(
-            label = button_label_overview_reproducibility_ts[reporting_lang],
+            label = button_label_overview_reproducibility_ts[[reporting_lang]],
             id = "overview-reproducibility",
             active = FALSE
           )
@@ -1298,12 +1298,12 @@ probe_overview_stats_assemble <- function(data,
             panel_component_list = list(
               panel_component(
                 size = 6,
-                title = subsection_title_overview_table_overview[reporting_lang],
+                title = subsection_title_overview_table_overview[[reporting_lang]],
                 content = overview_stats$data_overview_gt
               ),
               panel_component(
                 size = 6,
-                title = subsection_title_overview_column_types[reporting_lang],
+                title = subsection_title_overview_column_types[[reporting_lang]],
                 content = overview_stats$r_col_types_gt
               )
             )
@@ -1314,7 +1314,7 @@ probe_overview_stats_assemble <- function(data,
             panel_component_list = list(
               panel_component(
                 size = 12,
-                title = subsection_title_overview_reproducibility_information[reporting_lang],
+                title = subsection_title_overview_reproducibility_information[[reporting_lang]],
                 content = overview_stats$reproducibility_gt
               )
             )
@@ -1328,7 +1328,7 @@ probe_overview_stats_assemble <- function(data,
 probe_columns_assemble <- function(data,
                                    reporting_lang) {
   
-  header <- section_title_variables_ts[reporting_lang]
+  header <- section_title_variables_ts[[reporting_lang]]
   
   row_header <- row_header(id = "variables", header = header)
   
@@ -1384,7 +1384,7 @@ probe_columns_assemble <- function(data,
                       ),
                       `aria-expanded` = "true",
                       `aria-controls` = "collapseExample",
-                      btn_toggle_details[reporting_lang]
+                      btn_toggle_details[[reporting_lang]]
                     )
                   ),
                   htmltools::tags$div(
@@ -1408,7 +1408,7 @@ probe_columns_assemble <- function(data,
                             `aria-controls` = paste0(id_val, "bottom-", id_val, "statistics"),
                             role = "tab",
                             `data-toggle` = "tab",
-                            tab_label_variables_statistics_ts[reporting_lang]
+                            tab_label_variables_statistics_ts[[reporting_lang]]
                           )
                         ),
                         htmltools::tags$li(
@@ -1420,7 +1420,7 @@ probe_columns_assemble <- function(data,
                             `aria-controls` = paste0(id_val, "bottom-", id_val, "common_values"),
                             role = "tab",
                             `data-toggle` = "tab",
-                            tab_label_variables_common_values_ts[reporting_lang]
+                            tab_label_variables_common_values_ts[[reporting_lang]]
                           )
                         ),
                         htmltools::tags$li(
@@ -1432,7 +1432,7 @@ probe_columns_assemble <- function(data,
                             `aria-controls` = paste0(id_val, "bottom-", id_val, "max_min_slices"),
                             role = "tab",
                             `data-toggle` = "tab",
-                            tab_label_variables_max_min_slices_ts[reporting_lang]
+                            tab_label_variables_max_min_slices_ts[[reporting_lang]]
                           )
                         )
                       ),
@@ -1447,7 +1447,7 @@ probe_columns_assemble <- function(data,
                             class = "col-sm-6",
                             htmltools::tags$p(
                               class = "h4",
-                              subsection_title_variables_quantile_statistics[reporting_lang]
+                              subsection_title_variables_quantile_statistics[[reporting_lang]]
                             ),
                             x$column_quantile_gt
                           ),
@@ -1455,7 +1455,7 @@ probe_columns_assemble <- function(data,
                             class = "col-sm-6",
                             htmltools::tags$p(
                               class = "h4",
-                              subsection_title_variables_descriptive_statistics[reporting_lang]
+                              subsection_title_variables_descriptive_statistics[[reporting_lang]]
                             ),
                             x$column_descriptive_gt
                           )
@@ -1469,7 +1469,7 @@ probe_columns_assemble <- function(data,
                             class = "col-sm-12",
                             htmltools::tags$p(
                               class = "h4",
-                              subsection_title_variables_common_values[reporting_lang]
+                              subsection_title_variables_common_values[[reporting_lang]]
                             ),
                             x$column_common_gt
                           )
@@ -1483,7 +1483,7 @@ probe_columns_assemble <- function(data,
                             class = "col-sm-6",
                             htmltools::tags$p(
                               class = "h4",
-                              subsection_title_variables_maximum_values[reporting_lang]
+                              subsection_title_variables_maximum_values[[reporting_lang]]
                             ),
                             x$column_top_slice_gt
                           ),
@@ -1491,7 +1491,7 @@ probe_columns_assemble <- function(data,
                             class = "col-sm-6",
                             htmltools::tags$p(
                               class = "h4",
-                              subsection_title_variables_minimum_values[reporting_lang]
+                              subsection_title_variables_minimum_values[[reporting_lang]]
                             ),
                             x$column_bottom_slice_gt
                           )
@@ -1548,7 +1548,7 @@ probe_columns_assemble <- function(data,
                       ),
                       `aria-expanded` = "true",
                       `aria-controls` = "collapseExample",
-                      btn_toggle_details[reporting_lang]
+                      btn_toggle_details[[reporting_lang]]
                     )
                   ),
                   htmltools::tags$div(
@@ -1572,7 +1572,7 @@ probe_columns_assemble <- function(data,
                             `aria-controls` = paste0(id_val, "bottom-", id_val, "common_values"),
                             role = "tab",
                             `data-toggle` = "tab",
-                            subsection_title_variables_common_values[reporting_lang]
+                            subsection_title_variables_common_values[[reporting_lang]]
                           )
                         ),
                         
@@ -1585,7 +1585,7 @@ probe_columns_assemble <- function(data,
                             `aria-controls` = paste0(id_val, "bottom-", id_val, "lengths"),
                             role = "tab",
                             `data-toggle` = "tab",
-                            subsection_title_variables_string_lengths[reporting_lang]
+                            subsection_title_variables_string_lengths[[reporting_lang]]
                           )
                         ),
                         
@@ -1601,7 +1601,7 @@ probe_columns_assemble <- function(data,
                             class = "col-sm-12",
                             htmltools::tags$p(
                               class = "h4",
-                              subsection_title_variables_common_values[reporting_lang]
+                              subsection_title_variables_common_values[[reporting_lang]]
                             ),
                             x$column_common_gt
                           )
@@ -1615,7 +1615,7 @@ probe_columns_assemble <- function(data,
                             class = "col-sm-4",
                             htmltools::tags$p(
                               class = "h4",
-                              subsection_title_variables_string_lengths[reporting_lang]
+                              subsection_title_variables_string_lengths[[reporting_lang]]
                             ),
                             x$column_nchar_gt
                           ),
@@ -1623,7 +1623,7 @@ probe_columns_assemble <- function(data,
                             class = "col-sm-8",
                             htmltools::tags$p(
                               class = "h4",
-                              subsection_title_variables_histogram[reporting_lang]
+                              subsection_title_variables_histogram[[reporting_lang]]
                             ),
                             x$column_nchar_plot
                           )
@@ -1720,7 +1720,7 @@ probe_columns_assemble <- function(data,
 probe_interactions_assemble <- function(data,
                                         reporting_lang) {
   
-  header <- section_title_interactions_ts[reporting_lang]
+  header <- section_title_interactions_ts[[reporting_lang]]
   
   row_header <- row_header(id = "interactions", header = header)
   
@@ -1746,7 +1746,7 @@ probe_interactions_assemble <- function(data,
 probe_correlations_assemble <- function(data,
                                         reporting_lang) {
   
-  header <- section_title_correlations_ts[reporting_lang]
+  header <- section_title_correlations_ts[[reporting_lang]]
   
   row_header <- row_header(id = "correlations", header = header)
   
@@ -1811,7 +1811,7 @@ probe_missing_assemble <- function(data,
                                    reporting_lang) {
   
   
-  header <- section_title_missing_values_ts[reporting_lang]
+  header <- section_title_missing_values_ts[[reporting_lang]]
   
   row_header <- row_header(id = "missing", header = header)
   
@@ -1836,7 +1836,7 @@ probe_missing_assemble <- function(data,
 probe_sample_assemble <- function(data,
                                   reporting_lang) {
   
-  header <- section_title_sample_values_ts[reporting_lang]
+  header <- section_title_sample_values_ts[[reporting_lang]]
   
   row_header <- row_header(id = "sample", header = header)
   
@@ -1874,12 +1874,12 @@ navbar <- function(sections,
         label <-
           switch(
             x,
-            overview = nav_overview_ts[reporting_lang],
-            variables = nav_variables_ts[reporting_lang],
-            interactions = nav_interactions_ts[reporting_lang],
-            correlations = nav_correlations_ts[reporting_lang],
-            missing = nav_missing_values_ts[reporting_lang],
-            sample = nav_sample_values_ts[reporting_lang]
+            overview = nav_overview_ts[[reporting_lang]],
+            variables = nav_variables_ts[[reporting_lang]],
+            interactions = nav_interactions_ts[[reporting_lang]],
+            correlations = nav_correlations_ts[[reporting_lang]],
+            missing = nav_missing_values_ts[[reporting_lang]],
+            sample = nav_sample_values_ts[[reporting_lang]]
           )
         
         htmltools::tags$li(
@@ -1914,7 +1914,7 @@ navbar <- function(sections,
           class = "navbar-brand anchor",
           href = "#top",
           style = "font-size: 14.5px",
-          nav_title_ts[reporting_lang]
+          nav_title_ts[[reporting_lang]]
         ),
       ),
       htmltools::tags$div(

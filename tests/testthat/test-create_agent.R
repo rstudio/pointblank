@@ -39,7 +39,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$tbl_src_details, "character")
   expect_is(agent$col_names, "character")
   expect_is(agent$col_types, "character")
-  expect_is(agent$actions, "list")
+  expect_null(agent$actions)
   expect_is(agent$end_fns, "list")
   expect_is(agent$embed_report, "logical")
   expect_is(agent$reporting_lang, "character")

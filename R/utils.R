@@ -36,7 +36,7 @@ get_column_as_sym_at_idx <- function(agent, idx) {
 }
 
 get_values_at_idx <- function(agent, idx) {
-  agent$validation_set[[idx, "values"]]
+  agent$validation_set[[idx, "values"]] %>% unlist(recursive = FALSE)
 }
 
 get_column_na_pass_at_idx <- function(agent, idx) {

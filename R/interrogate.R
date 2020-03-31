@@ -93,7 +93,7 @@ interrogate <- function(agent,
     # Use the default `action_levels` list if it exists and
     # only if it isn't set for this validation step
     if (!is.null(agent$actions[[1]]) & is.null(agent$validation_set$actions[i][[1]])) {
-      agent$validation_set[[i, "actions"]] <- agent$actions %>% unlist(recursive = FALSE)
+      agent$validation_set[[i, "actions"]] <- list(agent$actions %>% unlist(recursive = FALSE))
     }
     
     # Use preconditions to modify the table
@@ -103,15 +103,13 @@ interrogate <- function(agent,
     assertion_type <- get_assertion_type_at_idx(agent, idx = i)
 
     if (assertion_type != "conjointly") {
-      
+
       # Perform table checking based on assertion type
       tbl_checked <- check_table_with_assertion(agent, idx = i, table, assertion_type)
       
     } else if (assertion_type == "conjointly") {
       
-      validation_formulas <- 
-        get_values_at_idx(agent = agent, idx = i) %>%
-        unlist(recursive = FALSE)
+      validation_formulas <- get_values_at_idx(agent = agent, idx = i)
       
       validation_n <- length(validation_formulas)
 
@@ -427,7 +425,7 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
 
   # Normalize a column in `vars()` to a `name` object
   if (inherits(value, "list")) {
-    value <- value[1][[1]][[1]] %>% rlang::get_expr()
+    value <- value[1][[1]] %>% rlang::get_expr()
   }
   
   # Obtain the target column as a label
@@ -471,7 +469,7 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
 interrogate_between <- function(agent, idx, table, assertion_type) {
 
   # Get the set values for the expression
-  set <- get_values_at_idx(agent = agent, idx = idx) %>% unlist()
+  set <- get_values_at_idx(agent = agent, idx = idx)
   
   # Determine whether NAs should be allowed
   na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
@@ -486,9 +484,13 @@ interrogate_between <- function(agent, idx, table, assertion_type) {
   # (if they are given as columns in `vars()`)
   if (inherits(left, "list")) {
     left <- left[[1]] %>% rlang::get_expr()
+  } else {
+    left <- unname(left)
   }
   if (inherits(right, "list")) {
     right <- right[[1]] %>% rlang::get_expr()
+  } else {
+    right <- unname(right)
   }
   
   incl_str <- paste(ifelse(names(set) %>% as.logical(), "incl", "excl"), collapse = "_")
@@ -533,7 +535,7 @@ interrogate_between <- function(agent, idx, table, assertion_type) {
 interrogate_set <- function(agent, idx, table, assertion_type) {
 
   # Get the set values for the expression
-  set <- get_values_at_idx(agent = agent, idx = idx) %>% unlist()
+  set <- get_values_at_idx(agent = agent, idx = idx)
   
   # Determine if an NA value is part of the set
   na_pass <- any(is.na(set))
@@ -828,7 +830,7 @@ add_reporting_data <- function(agent, idx, tbl_checked) {
   
   agent$validation_set$eval_warning[idx] <- has_warnings
   agent$validation_set$eval_error[idx] <- has_error
-  agent$validation_set$capture_stack[idx] <- list(tbl_checked[c("warning", "error")])
+  agent$validation_set$capture_stack[[idx]] <- capture_stack
   
   if (is.null(tbl_checked$value)) {
     return(agent)

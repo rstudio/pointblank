@@ -11,7 +11,7 @@ con <-
 
 small_table <- dplyr::tbl(con, "small_table")
 
-on.exit(DBI::dbDisconnect(conn = con))
+on.exit(DBI::dbDisconnect(conn = con)) 
 
 test_that("Interrogating with an agent yields the correct results", {
   
@@ -155,52 +155,52 @@ test_that("Interrogating for valid row values", {
   
   # Use the `col_vals_between()` function to create
   # a validation step, then, `interrogate()`
-  validation <-
-    create_agent(tbl = small_table) %>%
-    col_vals_between(
-      columns = vars(d),
-      left = 0, right = 5000
-    ) %>%
-    interrogate()
-  
-  # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_between")
-  expect_equivalent(validation$validation_set$column, "d")
-  expect_true(is.list(validation$validation_set[["values"]]))
-  expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 12)
-  expect_equivalent(validation$validation_set$n_failed, 1)
-  expect_equivalent(validation$validation_set$f_passed, 0.92308)
-  expect_equivalent(validation$validation_set$f_failed, 0.07692)
-  
-  # Expect a single row in `validation$validation_set`
-  expect_equivalent(nrow(validation$validation_set), 1)
+  # validation <-
+  #   create_agent(tbl = small_table) %>%
+  #   col_vals_between(
+  #     columns = vars(d),
+  #     left = 0, right = 5000
+  #   ) %>%
+  #   interrogate()
+  # 
+  # # Expect certain values in `validation$validation_set`
+  # expect_equivalent(validation$tbl_name, "small_table")
+  # expect_equivalent(validation$validation_set$assertion_type, "col_vals_between")
+  # expect_equivalent(validation$validation_set$column, "d")
+  # expect_true(is.list(validation$validation_set[["values"]]))
+  # expect_false(validation$validation_set$all_passed)
+  # expect_equivalent(validation$validation_set$n, 13)
+  # expect_equivalent(validation$validation_set$n_passed, 12)
+  # expect_equivalent(validation$validation_set$n_failed, 1)
+  # expect_equivalent(validation$validation_set$f_passed, 0.92308)
+  # expect_equivalent(validation$validation_set$f_failed, 0.07692)
+  # 
+  # # Expect a single row in `validation$validation_set`
+  # expect_equivalent(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_between()` function to create
   # a validation step (with a precondition), then,
   # `interrogate()`
-  validation <-
-    create_agent(tbl = small_table) %>%
-    col_vals_between(
-      columns = vars(d),
-      left = 0, right = 5000,
-      preconditions = ~ tbl %>% dplyr::filter(date > 16805)
-    ) %>%
-    interrogate()
-  
-  # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_between")
-  expect_equivalent(validation$validation_set$column, "d")
-  expect_true(is.list(validation$validation_set[["values"]]))
-  expect_true(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 10)
-  expect_equivalent(validation$validation_set$n_passed, 10)
-  expect_equivalent(validation$validation_set$n_failed, 0)
-  expect_equivalent(validation$validation_set$f_passed, 1)
-  expect_equivalent(validation$validation_set$f_failed, 0)
+  # validation <-
+  #   create_agent(tbl = small_table) %>%
+  #   col_vals_between(
+  #     columns = vars(d),
+  #     left = 0, right = 5000,
+  #     preconditions = ~ tbl %>% dplyr::filter(date > 16805)
+  #   ) %>%
+  #   interrogate()
+  # 
+  # # Expect certain values in `validation$validation_set`
+  # expect_equivalent(validation$tbl_name, "small_table")
+  # expect_equivalent(validation$validation_set$assertion_type, "col_vals_between")
+  # expect_equivalent(validation$validation_set$column, "d")
+  # expect_true(is.list(validation$validation_set[["values"]]))
+  # expect_true(validation$validation_set$all_passed)
+  # expect_equivalent(validation$validation_set$n, 10)
+  # expect_equivalent(validation$validation_set$n_passed, 10)
+  # expect_equivalent(validation$validation_set$n_failed, 0)
+  # expect_equivalent(validation$validation_set$f_passed, 1)
+  # expect_equivalent(validation$validation_set$f_failed, 0)
   
   # Use the `col_vals_between()` function to create
   # a validation step, then, `interrogate()`; using
@@ -256,52 +256,52 @@ test_that("Interrogating for valid row values", {
   
   # Use the `col_vals_not_between()` function to create
   # a validation step, then, `interrogate()`
-  validation <-
-    create_agent(tbl = small_table) %>%
-    col_vals_not_between(
-      columns = vars(d),
-      left = 500, right = 1000
-    ) %>%
-    interrogate()
-  
-  # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_between")
-  expect_equivalent(validation$validation_set$column, "d")
-  expect_true(is.list(validation$validation_set[["values"]]))
-  expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 13)
-  expect_equivalent(validation$validation_set$n_passed, 9)
-  expect_equivalent(validation$validation_set$n_failed, 4)
-  expect_equivalent(validation$validation_set$f_passed, 0.69231)
-  expect_equivalent(validation$validation_set$f_failed, 0.30769)
-  
-  # Expect a single row in `validation$validation_set`
-  expect_equivalent(nrow(validation$validation_set), 1)
+  # validation <-
+  #   create_agent(tbl = small_table) %>%
+  #   col_vals_not_between(
+  #     columns = vars(d),
+  #     left = 500, right = 1000
+  #   ) %>%
+  #   interrogate()
+  # 
+  # # Expect certain values in `validation$validation_set`
+  # expect_equivalent(validation$tbl_name, "small_table")
+  # expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_between")
+  # expect_equivalent(validation$validation_set$column, "d")
+  # expect_true(is.list(validation$validation_set[["values"]]))
+  # expect_false(validation$validation_set$all_passed)
+  # expect_equivalent(validation$validation_set$n, 13)
+  # expect_equivalent(validation$validation_set$n_passed, 9)
+  # expect_equivalent(validation$validation_set$n_failed, 4)
+  # expect_equivalent(validation$validation_set$f_passed, 0.69231)
+  # expect_equivalent(validation$validation_set$f_failed, 0.30769)
+  # 
+  # # Expect a single row in `validation$validation_set`
+  # expect_equivalent(nrow(validation$validation_set), 1)
   
   # Use the `col_vals_not_between()` function to create
   # a validation step (with a precondition), then,
   # `interrogate()`
-  validation <-
-    create_agent(tbl = small_table) %>%
-    col_vals_not_between(
-      columns = vars(d),
-      left = 500, right = 1000,
-      preconditions = ~ tbl %>% dplyr::filter(date > 16805)
-    ) %>%
-    interrogate()
-  
-  # Expect certain values in `validation$validation_set`
-  expect_equivalent(validation$tbl_name, "small_table")
-  expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_between")
-  expect_equivalent(validation$validation_set$column, "d")
-  expect_true(is.list(validation$validation_set[["values"]]))
-  expect_false(validation$validation_set$all_passed)
-  expect_equivalent(validation$validation_set$n, 10)
-  expect_equivalent(validation$validation_set$n_passed, 6)
-  expect_equivalent(validation$validation_set$n_failed, 4)
-  expect_equivalent(validation$validation_set$f_passed, 0.6)
-  expect_equivalent(validation$validation_set$f_failed, 0.4)
+  # validation <-
+  #   create_agent(tbl = small_table) %>%
+  #   col_vals_not_between(
+  #     columns = vars(d),
+  #     left = 500, right = 1000,
+  #     preconditions = ~ tbl %>% dplyr::filter(date > 16805)
+  #   ) %>%
+  #   interrogate()
+  # 
+  # # Expect certain values in `validation$validation_set`
+  # expect_equivalent(validation$tbl_name, "small_table")
+  # expect_equivalent(validation$validation_set$assertion_type, "col_vals_not_between")
+  # expect_equivalent(validation$validation_set$column, "d")
+  # expect_true(is.list(validation$validation_set[["values"]]))
+  # expect_false(validation$validation_set$all_passed)
+  # expect_equivalent(validation$validation_set$n, 10)
+  # expect_equivalent(validation$validation_set$n_passed, 6)
+  # expect_equivalent(validation$validation_set$n_failed, 4)
+  # expect_equivalent(validation$validation_set$f_passed, 0.6)
+  # expect_equivalent(validation$validation_set$f_failed, 0.4)
   
   # Use the `col_vals_equal()` function to create
   # a validation step, then, `interrogate()`
@@ -635,7 +635,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
   # a validation step with NAs, switching the
   # value of the `na_pass` option
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_equal(
       columns = vars(g),
@@ -648,7 +648,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     expect_false()
   
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_equal(
       columns = vars(g),
@@ -664,7 +664,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
   # a validation step with NAs, switching the
   # value of the `na_pass` option
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_not_equal(
       columns = vars(g),
@@ -677,7 +677,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     expect_false()
   
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_not_equal(
       columns = vars(g),
@@ -693,7 +693,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
   # a validation step with NAs, switching the
   # value of the `na_pass` option
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_gt(
       columns = vars(g),
@@ -706,7 +706,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     expect_false()
   
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_gt(
       columns = vars(g),
@@ -722,7 +722,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
   # a validation step with NAs, switching the
   # value of the `na_pass` option
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_gte(
       columns = vars(g),
@@ -735,7 +735,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     expect_false()
   
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_gte(
       columns = vars(g),
@@ -751,7 +751,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
   # a validation step with NAs, switching the
   # value of the `na_pass` option
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_lt(
       columns = vars(g),
@@ -764,7 +764,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     expect_false()
   
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_lt(
       columns = vars(g),
@@ -780,7 +780,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
   # a validation step with NAs, switching the
   # value of the `na_pass` option
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_lte(
       columns = vars(g),
@@ -793,7 +793,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     expect_false()
   
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_lte(
       columns = vars(g),
@@ -809,7 +809,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
   # a validation step with NAs, switching the
   # value of the `na_pass` option
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_between(
       columns = vars(g),
@@ -822,7 +822,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     expect_false()
   
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_between(
       columns = vars(g),
@@ -838,7 +838,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
   # a validation step with NAs, switching the
   # value of the `na_pass` option
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_not_between(
       columns = vars(g),
@@ -851,7 +851,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     expect_false()
   
   small_table %>%
-    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA)) %>%
+    dplyr::mutate(g = ifelse(!is.na(c), 1.5, NA_real_)) %>%
     create_agent() %>%
     col_vals_not_between(
       columns = vars(g),

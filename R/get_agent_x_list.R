@@ -126,13 +126,13 @@ get_agent_x_list <- function(agent,
     .report_object <- agent %>% get_agent_report()
     .report_object_email <- agent %>% get_agent_report(size = "small")
     
-    if (requireNamespace("gt", quietly = TRUE) && !is.null(.report_object)) {
+    if (!is.null(.report_object)) {
       .report_html <- gt::as_raw_html(.report_object, inline_css = FALSE)
     } else {
       .report_html <- NULL
     }
     
-    if (requireNamespace("gt", quietly = TRUE) && !is.null(.report_object_email)) {
+    if (!is.null(.report_object_email)) {
       .report_html_email <- gt::as_raw_html(.report_object_email, inline_css = TRUE)
     } else {
       .report_html_email <- NULL

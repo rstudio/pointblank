@@ -77,17 +77,6 @@ scan_data <- function(tbl,
          call. = FALSE)
   }
   
-  # nocov start
-  
-  if (!requireNamespace("gt", quietly = TRUE)) {
-    
-    stop("Creating an HTML report with `scan_data()` requires the gt package:\n",
-         " * Install gt with `devtools::install_github(\"rstudio/gt\")`.",
-         call. = FALSE)
-  }
-  
-  # nocov end
-  
   # Normalize the reporting language identifier and stop if necessary
   reporting_lang <- normalize_reporting_language(reporting_lang)
   

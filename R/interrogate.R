@@ -221,8 +221,8 @@ interrogate <- function(agent,
   
   # nocov start
   
-  # Generate gt reporting objects if the gt package is available
-  if (requireNamespace("gt", quietly = TRUE) & agent$embed_report) {
+  # Generate gt-based reporting objects
+  if (agent$embed_report) {
     
     gt_agent_report <- get_agent_report(agent)
     gt_agent_report_email <- get_agent_report(agent, size = "small")
@@ -1076,13 +1076,13 @@ perform_end_action <- function(agent) {
   .report_object <- agent$reporting$report_object
   .report_object_email <- agent$reporting$report_object_email
   
-  if (requireNamespace("gt", quietly = TRUE) && !is.null(.report_object)) {
+  if (!is.null(.report_object)) {
     .report_html <- gt::as_raw_html(.report_object, inline_css = FALSE)
   } else {
     .report_html <- NULL
   }
   
-  if (requireNamespace("gt", quietly = TRUE) && !is.null(.report_object_email)) {
+  if (!is.null(.report_object_email)) {
     .report_html_email <- gt::as_raw_html(.report_object_email, inline_css = TRUE)
   } else {
     .report_html_email <- NULL

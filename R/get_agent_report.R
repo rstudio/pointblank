@@ -200,7 +200,7 @@ get_agent_report <- function(agent,
   
   # nocov start
   
-  if (requireNamespace("gt", quietly = TRUE) && display_table) {
+  if (display_table) {
     
     x_list <- list(...)
 

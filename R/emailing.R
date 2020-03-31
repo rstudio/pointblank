@@ -2,9 +2,8 @@
 #' 
 #' The `email_blast()` function is useful for sending an email message that
 #' explains the result of a **pointblank** validation. It is powered by the
-#' **blastula** and **glue** packages (please install those packages through
-#' `install.packages()`). This function should be invoked as part of the
-#' `end_fns` argument of [create_agent()]. It's also possible to invoke
+#' **blastula** and **glue** packages. This function should be invoked as part
+#' of the `end_fns` argument of [create_agent()]. It's also possible to invoke
 #' `email_blast()` as part of the `fns` argument of the [action_levels()]
 #' function (to possibly send an email message at one or more steps).
 #'
@@ -129,37 +128,24 @@ email_blast <- function(x,
   
   if (is.logical(condition_result) && condition_result) {
     
-    if (!requireNamespace("blastula", quietly = TRUE) &&
-        !requireNamespace("glue", quietly = TRUE)) {
-      
-      warning("Sending an email message with `email_blast()` requires both the blastula and glue packages:\n",
-              " * Install them with `install.packages(\"blastula\")` and `install.packages(\"glue\")`.",
-              call. = FALSE)
-      return()
-    }
-    
     check_msg_components_all_null(msg_header, msg_body, msg_footer)
     
-    if (requireNamespace("blastula", quietly = TRUE) &&
-        requireNamespace("glue", quietly = TRUE)) {
-      
-      # Preparation of the message
-      blastula_message <- 
-        blastula::compose_email(
-          header = glue::glue(msg_header) %>% blastula::md(),
-          body = glue::glue(msg_body) %>% blastula::md(),
-          footer = glue::glue(msg_footer) %>% blastula::md(),
-        )
-      
-      # Sending of the message
-      blastula::smtp_send(
-        email = blastula_message,
-        to = to,
-        from = from,
-        subject = msg_subject,
-        credentials = credentials
+    # Preparation of the message
+    blastula_message <- 
+      blastula::compose_email(
+        header = glue::glue(msg_header) %>% blastula::md(),
+        body = glue::glue(msg_body) %>% blastula::md(),
+        footer = glue::glue(msg_footer) %>% blastula::md(),
       )
-    }
+    
+    # Sending of the message
+    blastula::smtp_send(
+      email = blastula_message,
+      to = to,
+      from = from,
+      subject = msg_subject,
+      credentials = credentials
+    )
   }
 }
 
@@ -252,25 +238,11 @@ email_preview <- function(x,
     x <- get_agent_x_list(agent = x)
   }
   
-  if (!requireNamespace("blastula", quietly = TRUE) &&
-      !requireNamespace("glue", quietly = TRUE)) {
-    
-    warning("Sending an email message with `email_blast()` requires both the blastula and glue packages:\n",
-            " * Install them with `install.packages(\"blastula\")` and `install.packages(\"glue\")`.",
-            call. = FALSE)
-    
-    return()
-  }
-  
-  if (requireNamespace("blastula", quietly = TRUE) &&
-      requireNamespace("glue", quietly = TRUE)) {
-    
-    blastula::compose_email(
-      header = glue::glue(msg_header) %>% blastula::md(),
-      body = glue::glue(msg_body) %>% blastula::md(),
-      footer = glue::glue(msg_footer) %>% blastula::md(),
-    )
-  }
+  blastula::compose_email(
+    header = glue::glue(msg_header) %>% blastula::md(),
+    body = glue::glue(msg_body) %>% blastula::md(),
+    footer = glue::glue(msg_footer) %>% blastula::md(),
+  )
 }
 
 check_msg_components_all_null <- function(msg_header, msg_body, msg_footer) {

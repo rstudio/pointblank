@@ -193,7 +193,7 @@ report_col_step <-
     "en" = "STEP",
     "fr" = "\u00C9TAPE",
     "de" = "SCHRITT",
-    "it" = "INDICI",
+    "it" = "INDICE",
     "es" = "\u00CDNDICE"
   )
 
@@ -202,7 +202,7 @@ report_col_steps <-
     "en" = "STEPS",
     "fr" = "\u00C9TAPES",
     "de" = "SCHRITTE",
-    "it" = "INDICE",
+    "it" = "INDICI",
     "es" = "\u00CDNDICES"
   )
 

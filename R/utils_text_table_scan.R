@@ -124,7 +124,7 @@ subsection_title_overview_table_overview <-
   c(
     "en" = "Table Overview",
     "fr" = "Aper\u00E7u du tableau",
-    "de" = "\u00FCbersicht der Tabelle",
+    "de" = "\u00DCbersicht der Tabelle",
     "it" = "Panoramica della tabella",
     "es" = "Resumen de la tabla"
   )

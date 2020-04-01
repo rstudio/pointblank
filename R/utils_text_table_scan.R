@@ -297,7 +297,7 @@ tbl_lab_mean <-
   c(
     "en" = "Mean",
     "fr" = "Moyenne",
-    "de" = "Mittelwert",
+    "de" = "MW",
     "it" = "Media",
     "es" = "Media"
   )

@@ -292,8 +292,6 @@ get_agent_report <- function(agent,
             
           } else if (is.list(x) && length(x) > 0 && !inherits(x, "quosures")) {
             
-            steptext <- paste0(length(x), ifelse(length(x) > 1, " STEPS", " STEP"))
-            
             step_text <- 
               if (length(x) > 1) {
                 paste0(length(x), " ", report_col_step[lang])

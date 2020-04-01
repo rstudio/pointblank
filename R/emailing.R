@@ -269,7 +269,7 @@ stock_msg_body <- function() {
   "
 Here is **pointblank** validation report that was initiated at {x$time}.
 
-{x$report_html_email}
+{x$report_html_small}
 "
 }
 

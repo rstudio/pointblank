@@ -45,9 +45,8 @@ condition).}
 \description{
 The \code{email_blast()} function is useful for sending an email message that
 explains the result of a \strong{pointblank} validation. It is powered by the
-\strong{blastula} and \strong{glue} packages (please install those packages through
-\code{install.packages()}). This function should be invoked as part of the
-\code{end_fns} argument of \code{\link[=create_agent]{create_agent()}}. It's also possible to invoke
+\strong{blastula} and \strong{glue} packages. This function should be invoked as part
+of the \code{end_fns} argument of \code{\link[=create_agent]{create_agent()}}. It's also possible to invoke
 \code{email_blast()} as part of the \code{fns} argument of the \code{\link[=action_levels]{action_levels()}}
 function (to possibly send an email message at one or more steps).
 }

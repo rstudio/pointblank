@@ -294,9 +294,9 @@ get_agent_report <- function(agent,
             
             step_text <- 
               if (length(x) > 1) {
-                paste0(length(x), " ", report_col_step[lang])
-              } else {
                 paste0(length(x), " ", report_col_steps[lang])
+              } else {
+                paste0(length(x), " ", report_col_step[lang])
               }
             
             x <- 

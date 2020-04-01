@@ -45,9 +45,8 @@ print.x_list_i <- function(x, ...) {
   
   cli::cli_rule(left = "The x-list for `{x$name}`", right = "STEP {x$i}")
   cli::cli_text("{.cyan $time} ({.red POSIXct [{length(x$time)}]})")
-  cli::cli_text("{.cyan $name $tbl_name $tbl_src} ({.red chr [1]})")
+  cli::cli_text("{.cyan $name $tbl_name $tbl_src $tbl_src_details} ({.red chr [1]})")
   cli::cli_text("{.cyan $tbl} ({.blue {class(x$tbl)}})")
-  cli::cli_text("{.cyan $tbl_src_details} ({.red chr [{length(x$tbl_src_details)}]})")
   cli::cli_text("{.cyan $col_names $col_types} ({.red chr [{length(x$col_names)}]})")
   cli::cli_text("{.cyan $i $type $column $values $brief} ({.green mixed [{length(x$i)}]})")
   cli::cli_text("{.cyan $eval_error $eval_warning} ({.yellow lgl [{length(x$i)}]})")
@@ -91,9 +90,8 @@ print.x_list_n <- function(x, ...) {
   
   cli::cli_rule(left = "The x-list for `{x$name}`", right = "COMPLETE")
   cli::cli_text("{.cyan $time} ({.red POSIXct [{length(x$time)}]})")
-  cli::cli_text("{.cyan $name $tbl_name $tbl_src} ({.red chr [1]})")
+  cli::cli_text("{.cyan $name $tbl_name $tbl_src $tbl_src_details} ({.red chr [1]})")
   cli::cli_text("{.cyan $tbl} ({.blue {class(x$tbl)}})")
-  cli::cli_text("{.cyan $tbl_src_details} ({.red chr [{length(x$tbl_src_details)}]})")
   cli::cli_text("{.cyan $col_names $col_types} ({.red chr [{length(x$col_names)}]})")
   cli::cli_text("{.cyan $i $type $column $values $brief} ({.green mixed [{length(x$i)}]})")
   cli::cli_text("{.cyan $eval_error $eval_warning} ({.yellow lgl [{length(x$i)}]})")
@@ -101,8 +99,10 @@ print.x_list_n <- function(x, ...) {
   cli::cli_text("{.cyan $n $n_passed $n_failed $f_passed $f_failed} ({.green num [{length_rows}]})")
   cli::cli_text("{.cyan $warn $stop $notify} ({.yellow lgl [{length_rows}]})")
   cli::cli_text("{.cyan $validation_set} ({.blue tbl_df [{validation_set_rows}, {validation_set_cols}]})")
+  cli::cli_text("{.cyan $reporting_lang} ({.red chr [1]})")
   cli::cli_text("{.cyan $report_object} ({.pink gt_tbl})")
-  cli::cli_text("{.cyan $report_html $report_html_email} ({.brown html})")
+  cli::cli_text("{.cyan $email_object} ({.pink blastula_message})")
+  cli::cli_text("{.cyan $report_html $report_html_small} ({.brown html})")
   cli::cli_rule()
     
   # nocov end 

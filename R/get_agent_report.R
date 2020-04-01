@@ -481,7 +481,7 @@ get_agent_report <- function(agent,
         values = report_col_values[lang],
         precon = "TBL",
         eval_sym = "EVAL",
-        units = "UNITS",
+        units = report_col_units[lang],
         n_pass = "PASS",
         n_fail = "FAIL",
         extract = "EXTRACT"

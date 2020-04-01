@@ -224,6 +224,15 @@ report_col_values <-
     "es" = "VALORES"
   )
 
+report_col_units <-
+  c(
+    "en" = "UNITS",
+    "fr" = "UNIT\u00C9S",
+    "de" = "EINH.",
+    "it" = "UNIT\u00C0",
+    "es" = "UNIDADES"
+  )
+
 report_column_schema <-
   c(
     "en" = "SCHEMA",

@@ -36,6 +36,7 @@ get_agent_x_list <- function(agent,
     
     .name <- agent$name
     .time <- agent$time
+    .reporting_lang <- agent$reporting_lang
     .tbl <- agent$tbl
     .tbl_name <- agent$tbl_name
     .tbl_src <- agent$tbl_src
@@ -66,6 +67,7 @@ get_agent_x_list <- function(agent,
         notify = .notify,
         name = .name,
         time = .time,
+        reporting_lang = .reporting_lang,
         tbl = .tbl,
         tbl_name = .tbl_name,
         tbl_src = .tbl_src,
@@ -98,6 +100,7 @@ get_agent_x_list <- function(agent,
     
     .name <- agent$name
     .time <- agent$time
+    .reporting_lang <- agent$reporting_lang
     .tbl <- agent$tbl
     .tbl_name <- agent$tbl_name
     .tbl_src <- agent$tbl_src
@@ -124,7 +127,7 @@ get_agent_x_list <- function(agent,
     .validation_set <- agent$validation_set
     
     .report_object <- agent %>% get_agent_report()
-    .report_object_email <- agent %>% get_agent_report(size = "small")
+    .report_object_small <- agent %>% get_agent_report(size = "small")
     
     if (!is.null(.report_object)) {
       .report_html <- gt::as_raw_html(.report_object, inline_css = FALSE)
@@ -132,10 +135,29 @@ get_agent_x_list <- function(agent,
       .report_html <- NULL
     }
     
-    if (!is.null(.report_object_email)) {
-      .report_html_email <- gt::as_raw_html(.report_object_email, inline_css = TRUE)
+    if (!is.null(.report_object_small)) {
+      .report_html_small <- gt::as_raw_html(.report_object_small, inline_css = TRUE)
     } else {
-      .report_html_email <- NULL
+      .report_html_small <- NULL
+    }
+    
+    if (length(.time) != 0) {
+      
+      x <-
+        list(
+          time = .time,
+          report_html_small = .report_html_small
+        )
+      
+      .email_object <- 
+        blastula::compose_email(
+          header = NULL,
+          body = glue::glue(stock_msg_body()) %>% blastula::md(),
+          footer = glue::glue(stock_msg_footer()) %>% blastula::md(),
+        )
+      
+    } else {
+      .email_object <- NULL
     }
     
     x <-
@@ -145,6 +167,7 @@ get_agent_x_list <- function(agent,
         notify = .notify,
         name = .name,
         time = .time,
+        reporting_lang = .reporting_lang,
         tbl = .tbl,
         tbl_name = .tbl_name,
         tbl_src = .tbl_src,
@@ -166,8 +189,9 @@ get_agent_x_list <- function(agent,
         f_failed = .f_failed,
         validation_set = .validation_set,
         report_object = .report_object,
+        email_object = .email_object,
         report_html = .report_html,
-        report_html_email = .report_html_email
+        report_html_small = .report_html_small
       )
     
     class(x) <- c("x_list_n", "x_list")

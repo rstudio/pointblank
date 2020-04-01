@@ -62,8 +62,8 @@ get_agent_x_list <- function(agent,
     x <-
       list(
         warn = .warn,
-        notify = .notify,
         stop = .stop,
+        notify = .notify,
         name = .name,
         time = .time,
         tbl = .tbl,
@@ -141,8 +141,8 @@ get_agent_x_list <- function(agent,
     x <-
       list(
         warn = .warn,
-        notify = .notify,
         stop = .stop,
+        notify = .notify,
         name = .name,
         time = .time,
         tbl = .tbl,

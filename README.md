@@ -81,11 +81,11 @@ agent <-
 ```
 
     #> 
-    #> ── Interrogation Started - there are 2 steps ──────────────────────────────────────────────────
+    #> ── Interrogation Started - there are 2 steps ─────────────────────────────────────
     #> ✓ Step 1: OK.
     #> ! Step 2: WARNING condition met.
     #> 
-    #> ── Interrogation Completed ────────────────────────────────────────────────────────────────────
+    #> ── Interrogation Completed ───────────────────────────────────────────────────────
 
 Because an *agent* was used, we can get a report from it.
 
@@ -170,7 +170,7 @@ You can also install the development version of **pointblank** from
 **GitHub**:
 
 ``` r
-remotes::install_github("rich-iannone/pointblank")
+devtools::install_github("rich-iannone/pointblank")
 ```
 
 If you encounter a bug, have usage questions, or want to share ideas to

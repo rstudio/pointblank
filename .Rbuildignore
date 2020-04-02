@@ -12,3 +12,4 @@
 ^CRAN-RELEASE$
 ^data-raw$
 ^tests/manual_tests$
+vignettes

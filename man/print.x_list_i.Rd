@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.R
 \name{print.x_list_i}
 \alias{print.x_list_i}
-\title{Print the step-focused x-list to the console}
+\title{Print a single-step x-list to the console}
 \usage{
 \method{print}{x_list_i}(x, ...)
 }
@@ -12,6 +12,6 @@
 \item{...}{Any additional parameters.}
 }
 \description{
-This function will nicely print a step-focused x-list object to the console.
+This function will print an x-list object, for a single step, to the console.
 }
 \keyword{internal}

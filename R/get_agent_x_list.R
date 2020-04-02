@@ -46,9 +46,9 @@ get_agent_x_list <- function(agent,
     
     .i <- i
     .type <- agent$validation_set[[i, "assertion_type"]]
-    .column <- agent$validation_set[[i, "column"]] %>% unlist()
+    .columns <- agent$validation_set[[i, "column"]] %>% unlist()
     .values <- agent$validation_set[[i, "values"]] %>% unlist()
-    .brief <- agent$validation_set[[i, "brief"]]
+    .briefs <- agent$validation_set[[i, "brief"]]
     
     .eval_error <- agent$validation_set[[i, "eval_error"]]
     .eval_warning <- agent$validation_set[[i, "eval_warning"]]
@@ -62,23 +62,19 @@ get_agent_x_list <- function(agent,
     
     x <-
       list(
-        warn = .warn,
-        stop = .stop,
-        notify = .notify,
-        name = .name,
         time = .time,
-        reporting_lang = .reporting_lang,
-        tbl = .tbl,
+        name = .name,
         tbl_name = .tbl_name,
         tbl_src = .tbl_src,
         tbl_src_details = .tbl_src_details,
+        tbl = .tbl,
         col_names = .col_names,
         col_types = .col_types,
         i = .i,
         type = .type,
-        column = .column,
+        columns = .columns,
         values = .values,
-        brief = .brief,
+        briefs = .briefs,
         eval_error = .eval_error,
         eval_warning = .eval_warning,
         capture_stack = .capture_stack,
@@ -86,7 +82,11 @@ get_agent_x_list <- function(agent,
         n_passed = .n_passed,
         n_failed = .n_failed,
         f_passed = .f_passed,
-        f_failed = .f_failed
+        f_failed = .f_failed,
+        warn = .warn,
+        stop = .stop,
+        notify = .notify,
+        reporting_lang = .reporting_lang
       )
     
     class(x) <- c("x_list_i", "x_list")
@@ -110,9 +110,9 @@ get_agent_x_list <- function(agent,
     
     .i <- agent$validation_set$i
     .type <- agent$validation_set$assertion_type
-    .column <- agent$validation_set$column
+    .columns <- agent$validation_set$column
     .values <- agent$validation_set$values
-    .brief <- agent$validation_set$brief
+    .briefs <- agent$validation_set$brief
     
     .eval_error <- agent$validation_set$eval_error
     .eval_warning <- agent$validation_set$eval_warning
@@ -162,23 +162,19 @@ get_agent_x_list <- function(agent,
     
     x <-
       list(
-        warn = .warn,
-        stop = .stop,
-        notify = .notify,
-        name = .name,
         time = .time,
-        reporting_lang = .reporting_lang,
-        tbl = .tbl,
+        name = .name,
         tbl_name = .tbl_name,
         tbl_src = .tbl_src,
         tbl_src_details = .tbl_src_details,
+        tbl = .tbl,
         col_names = .col_names,
         col_types = .col_types,
         i = .i,
         type = .type,
-        column = .column,
+        columns = .columns,
         values = .values,
-        brief = .brief,
+        briefs = .briefs,
         eval_error = .eval_error,
         eval_warning = .eval_warning,
         capture_stack = .capture_stack,
@@ -187,6 +183,10 @@ get_agent_x_list <- function(agent,
         n_failed = .n_failed,
         f_passed = .f_passed,
         f_failed = .f_failed,
+        warn = .warn,
+        stop = .stop,
+        notify = .notify,
+        reporting_lang = .reporting_lang,
         validation_set = .validation_set,
         report_object = .report_object,
         email_object = .email_object,

@@ -22,9 +22,9 @@ test_that("An x-list for a step is structurally correct", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_before$name))
-  expect_equal(length(x_list_before$time), 0)
   expect_is(x_list_before$time, "POSIXct")
+  expect_equal(length(x_list_before$time), 0)
+  expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_before$name))
   expect_is(x_list_before$tbl_name, "character")
   expect_equal(x_list_before$tbl_name, "small_table")
   expect_is(x_list_before$tbl_src, "character")
@@ -33,8 +33,6 @@ test_that("An x-list for a step is structurally correct", {
   expect_equal(x_list_before$tbl_src_details, NA_character_)
   expect_is(x_list_before$tbl, "tbl_df")
   expect_equivalent(x_list_before$tbl, small_table)
-  expect_is(x_list_before$tbl_src_details, "character")
-  expect_equal(x_list_before$tbl_src_details, NA_character_)
   expect_is(x_list_before$col_names, "character")
   expect_equal(x_list_before$col_names, colnames(small_table))
   expect_is(x_list_before$col_types, "character")
@@ -47,15 +45,15 @@ test_that("An x-list for a step is structurally correct", {
   expect_equal(x_list_before$i, 1)
   expect_is(x_list_before$type, "character")
   expect_equal(x_list_before$type, "col_vals_gt")
-  expect_is(x_list_before$column, "character")
-  expect_equal(x_list_before$column, "g")
+  expect_is(x_list_before$columns, "character")
+  expect_equal(x_list_before$columns, "g")
   expect_is(x_list_before$values, "numeric")
   expect_equal(x_list_before$values, 100)
   expect_is(x_list_before$values, "numeric")
   expect_equal(x_list_before$values, 100)
-  expect_is(x_list_before$brief, "character")
+  expect_is(x_list_before$briefs, "character")
   expect_equal(
-    x_list_before$brief, 
+    x_list_before$briefs,
     paste0(
       "Expect that values in `g` (computed column) should be > `100`. ",
       "Precondition applied: `tbl %>% dplyr::mutate(g = a + 95)`."
@@ -78,10 +76,12 @@ test_that("An x-list for a step is structurally correct", {
   expect_equal(x_list_before$f_failed, NA_real_)
   expect_is(x_list_before$warn, "logical")
   expect_equal(x_list_before$warn, NA)
-  expect_is(x_list_before$notify, "logical")
-  expect_equal(x_list_before$notify, NA)
   expect_is(x_list_before$stop, "logical")
   expect_equal(x_list_before$stop, NA)
+  expect_is(x_list_before$notify, "logical")
+  expect_equal(x_list_before$notify, NA)
+  expect_is(x_list_before$reporting_lang, "character")
+  expect_equal(x_list_before$reporting_lang, "en")
   
   # Get an x-list at step 1 after interrogation
   x_list_after <- 
@@ -96,9 +96,9 @@ test_that("An x-list for a step is structurally correct", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_after$name))
   expect_equal(length(x_list_after$time), 1)
   expect_is(x_list_after$time, "POSIXct")
+  expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_after$name))
   expect_is(x_list_after$tbl_name, "character")
   expect_equal(x_list_after$tbl_name, "small_table")
   expect_is(x_list_after$tbl_src, "character")
@@ -107,8 +107,6 @@ test_that("An x-list for a step is structurally correct", {
   expect_equal(x_list_after$tbl_src_details, NA_character_)
   expect_is(x_list_after$tbl, "tbl_df")
   expect_equivalent(x_list_after$tbl, small_table)
-  expect_is(x_list_after$tbl_src_details, "character")
-  expect_equal(x_list_after$tbl_src_details, NA_character_)
   expect_is(x_list_after$col_names, "character")
   expect_equal(x_list_after$col_names, colnames(small_table))
   expect_is(x_list_after$col_types, "character")
@@ -121,15 +119,15 @@ test_that("An x-list for a step is structurally correct", {
   expect_equal(x_list_after$i, 1)
   expect_is(x_list_after$type, "character")
   expect_equal(x_list_after$type, "col_vals_gt")
-  expect_is(x_list_after$column, "character")
-  expect_equal(x_list_after$column, "g")
+  expect_is(x_list_after$columns, "character")
+  expect_equal(x_list_after$columns, "g")
   expect_is(x_list_after$values, "numeric")
   expect_equal(x_list_after$values, 100)
   expect_is(x_list_after$values, "numeric")
   expect_equal(x_list_after$values, 100)
-  expect_is(x_list_after$brief, "character")
+  expect_is(x_list_after$briefs, "character")
   expect_equal(
-    x_list_after$brief, 
+    x_list_after$briefs, 
     paste0(
       "Expect that values in `g` (computed column) should be > `100`. ",
       "Precondition applied: `tbl %>% dplyr::mutate(g = a + 95)`."
@@ -154,10 +152,12 @@ test_that("An x-list for a step is structurally correct", {
   expect_equal(x_list_after$f_failed, 0.76923)
   expect_is(x_list_after$warn, "logical")
   expect_equal(x_list_after$warn, TRUE)
-  expect_is(x_list_after$notify, "logical")
-  expect_equal(x_list_after$notify, NA)
   expect_is(x_list_after$stop, "logical")
   expect_equal(x_list_after$stop, TRUE)
+  expect_is(x_list_after$notify, "logical")
+  expect_equal(x_list_after$notify, NA)
+  expect_is(x_list_after$reporting_lang, "character")
+  expect_equal(x_list_after$reporting_lang, "en")
 })
 
 
@@ -175,9 +175,9 @@ test_that("A complete x-list is structurally correct", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_before$name))
   expect_equal(length(x_list_before$time), 0)
   expect_is(x_list_before$time, "POSIXct")
+  expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_before$name))
   expect_is(x_list_before$tbl_name, "character")
   expect_equal(x_list_before$tbl_name, "small_table")
   expect_is(x_list_before$tbl_src, "character")
@@ -186,8 +186,6 @@ test_that("A complete x-list is structurally correct", {
   expect_equal(x_list_before$tbl_src_details, NA_character_)
   expect_is(x_list_before$tbl, "tbl_df")
   expect_equivalent(x_list_before$tbl, small_table)
-  expect_is(x_list_before$tbl_src_details, "character")
-  expect_equal(x_list_before$tbl_src_details, NA_character_)
   expect_is(x_list_before$col_names, "character")
   expect_equal(x_list_before$col_names, colnames(small_table))
   expect_is(x_list_before$col_types, "character")
@@ -200,18 +198,18 @@ test_that("A complete x-list is structurally correct", {
   expect_equal(x_list_before$i, 1:3)
   expect_is(x_list_before$type, "character")
   expect_equal(x_list_before$type, c("col_vals_gt", "col_vals_lt", "col_vals_in_set"))
-  expect_is(x_list_before$column, "list")
-  expect_equal(length(x_list_before$column), 3)
-  expect_equal(x_list_before$column %>% unlist(), c("g", "c", "f"))
+  expect_is(x_list_before$columns, "list")
+  expect_equal(length(x_list_before$columns), 3)
+  expect_equal(x_list_before$columns %>% unlist(), c("g", "c", "f"))
   expect_is(x_list_before$values, "list")
   expect_equal(length(x_list_before$values), 3)
   expect_equal(unlist(x_list_before$values[1]), 100)
   expect_is(unlist(x_list_before$values[2]), "list")
   expect_is(unlist(x_list_before$values[2])[[1]], "quosure")
   expect_equal(unlist(x_list_before$values[3]), c("low", "mid", "high", "higher"))
-  expect_is(x_list_before$brief, "character")
+  expect_is(x_list_before$briefs, "character")
   expect_equal(
-    x_list_before$brief,
+    x_list_before$briefs,
     c(
       paste0(
         "Expect that values in `g` (computed column) should be > `100`. ",
@@ -244,10 +242,13 @@ test_that("A complete x-list is structurally correct", {
   expect_equal(x_list_before$f_failed, rep(NA_real_, 3))
   expect_is(x_list_before$warn, "logical")
   expect_equal(x_list_before$warn, rep(NA, 3))
-  expect_is(x_list_before$notify, "logical")
-  expect_equal(x_list_before$notify, rep(NA, 3))
   expect_is(x_list_before$stop, "logical")
   expect_equal(x_list_before$stop, rep(NA, 3))
+  expect_is(x_list_before$notify, "logical")
+  expect_equal(x_list_before$notify, rep(NA, 3))
+  expect_is(x_list_before$validation_set, c("tbl_df", "tbl", "data.frame"))
+  expect_equal(nrow(x_list_before$validation_set), 3)
+  expect_equal(ncol(x_list_before$validation_set), 25)
   expect_is(x_list_before$reporting_lang, "character")
   expect_equal(x_list_before$reporting_lang, "en")
   expect_is(x_list_before$report_object, c("gt_tbl", "list"))
@@ -268,9 +269,9 @@ test_that("A complete x-list is structurally correct", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_after$name))
   expect_equal(length(x_list_after$time), 1)
   expect_is(x_list_after$time, "POSIXct")
+  expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_after$name))
   expect_is(x_list_after$tbl_name, "character")
   expect_equal(x_list_after$tbl_name, "small_table")
   expect_is(x_list_after$tbl_src, "character")
@@ -279,8 +280,6 @@ test_that("A complete x-list is structurally correct", {
   expect_equal(x_list_after$tbl_src_details, NA_character_)
   expect_is(x_list_after$tbl, "tbl_df")
   expect_equivalent(x_list_after$tbl, small_table)
-  expect_is(x_list_after$tbl_src_details, "character")
-  expect_equal(x_list_after$tbl_src_details, NA_character_)
   expect_is(x_list_after$col_names, "character")
   expect_equal(x_list_after$col_names, colnames(small_table))
   expect_is(x_list_after$col_types, "character")
@@ -293,18 +292,18 @@ test_that("A complete x-list is structurally correct", {
   expect_equal(x_list_after$i, 1:3)
   expect_is(x_list_after$type, "character")
   expect_equal(x_list_after$type, c("col_vals_gt", "col_vals_lt", "col_vals_in_set"))
-  expect_is(x_list_after$column, "list")
-  expect_equal(length(x_list_after$column), 3)
-  expect_equal(x_list_after$column %>% unlist(), c("g", "c", "f"))
+  expect_is(x_list_after$columns, "list")
+  expect_equal(length(x_list_after$columns), 3)
+  expect_equal(x_list_after$columns %>% unlist(), c("g", "c", "f"))
   expect_is(x_list_after$values, "list")
   expect_equal(length(x_list_after$values), 3)
   expect_equal(unlist(x_list_after$values[1]), 100)
   expect_is(unlist(x_list_after$values[2]), "list")
   expect_is(unlist(x_list_after$values[2])[[1]], "quosure")
   expect_equal(unlist(x_list_after$values[3]), c("low", "mid", "high", "higher"))
-  expect_is(x_list_after$brief, "character")
+  expect_is(x_list_after$briefs, "character")
   expect_equal(
-    x_list_after$brief,
+    x_list_after$briefs,
     c(
       paste0(
         "Expect that values in `g` (computed column) should be > `100`. ",
@@ -337,10 +336,13 @@ test_that("A complete x-list is structurally correct", {
   expect_equal(x_list_after$f_failed, c(0.76923, 0.23077, 0))
   expect_is(x_list_after$warn, "logical")
   expect_equal(x_list_after$warn, c(TRUE, TRUE, FALSE))
-  expect_is(x_list_after$notify, "logical")
-  expect_equal(x_list_after$notify, rep(NA, 3))
   expect_is(x_list_after$stop, "logical")
   expect_equal(x_list_after$stop, c(TRUE, TRUE, FALSE))
+  expect_is(x_list_after$notify, "logical")
+  expect_equal(x_list_after$notify, rep(NA, 3))
+  expect_is(x_list_after$validation_set, c("tbl_df", "tbl", "data.frame"))
+  expect_equal(nrow(x_list_after$validation_set), 3)
+  expect_equal(ncol(x_list_after$validation_set), 25)
   expect_is(x_list_after$reporting_lang, "character")
   expect_equal(x_list_after$reporting_lang, "en")
   expect_is(x_list_after$report_object, c("gt_tbl", "list"))

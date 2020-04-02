@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.R
 \name{print.x_list_n}
 \alias{print.x_list_n}
-\title{Print the complete x-list to the console}
+\title{Print an x-list comprising all validation steps to the console}
 \usage{
 \method{print}{x_list_n}(x, ...)
 }
@@ -12,6 +12,7 @@
 \item{...}{Any additional parameters.}
 }
 \description{
-This function will nicely print a complete x-list object to the console.
+This function will print a x-list object, with all validation steps included,
+to the console.
 }
 \keyword{internal}

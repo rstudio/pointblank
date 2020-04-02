@@ -17,9 +17,9 @@ print.ptblank_agent <- function(x, ...) {
 }
 
 
-#' Print the step-focused x-list to the console
+#' Print a single-step x-list to the console
 #'
-#' This function will nicely print a step-focused x-list object to the console.
+#' This function will print an x-list object, for a single step, to the console.
 #' 
 #' @param x An x-list object of class `x_list_i`.
 #' @param ... Any additional parameters.
@@ -42,25 +42,27 @@ print.x_list_i <- function(x, ...) {
   )
   
   length_rows <- length(x$warn)
-  
+
   cli::cli_rule(left = "The x-list for `{x$name}`", right = "STEP {x$i}")
   cli::cli_text("{.cyan $time} ({.red POSIXct [{length(x$time)}]})")
   cli::cli_text("{.cyan $name $tbl_name $tbl_src $tbl_src_details} ({.red chr [1]})")
   cli::cli_text("{.cyan $tbl} ({.blue {class(x$tbl)}})")
   cli::cli_text("{.cyan $col_names $col_types} ({.red chr [{length(x$col_names)}]})")
-  cli::cli_text("{.cyan $i $type $column $values $brief} ({.green mixed [{length(x$i)}]})")
+  cli::cli_text("{.cyan $i $type $columns $values $briefs} ({.green mixed [{length(x$i)}]})")
   cli::cli_text("{.cyan $eval_error $eval_warning} ({.yellow lgl [{length(x$i)}]})")
   cli::cli_text("{.cyan $capture_stack} ({.orange list [{length(x$capture_stack)}]})")
   cli::cli_text("{.cyan $n $n_passed $n_failed $f_passed $f_failed} ({.green num [{length_rows}]})")
   cli::cli_text("{.cyan $warn $stop $notify} ({.yellow lgl [{length_rows}]})")
-  cli::cli_rule()
+  cli::cli_text("{.cyan $reporting_lang} ({.red chr [1]})")
+  cli::cli_rule(right = ifelse(length(x$time) == 0, "NO INTERROGATION PERFORMED", ""))
 
   # nocov end 
 }
 
-#' Print the complete x-list to the console
+#' Print an x-list comprising all validation steps to the console
 #'
-#' This function will nicely print a complete x-list object to the console.
+#' This function will print a x-list object, with all validation steps included,
+#' to the console.
 #' 
 #' @param x An x-list object of class `x_list_n`.
 #' @param ... Any additional parameters.
@@ -88,12 +90,12 @@ print.x_list_n <- function(x, ...) {
   validation_set_rows <- nrow(x$validation_set)
   validation_set_cols <- ncol(x$validation_set)
   
-  cli::cli_rule(left = "The x-list for `{x$name}`", right = "COMPLETE")
+  cli::cli_rule(left = "The x-list for `{x$name}`", right = "ALL STEPS")
   cli::cli_text("{.cyan $time} ({.red POSIXct [{length(x$time)}]})")
   cli::cli_text("{.cyan $name $tbl_name $tbl_src $tbl_src_details} ({.red chr [1]})")
   cli::cli_text("{.cyan $tbl} ({.blue {class(x$tbl)}})")
   cli::cli_text("{.cyan $col_names $col_types} ({.red chr [{length(x$col_names)}]})")
-  cli::cli_text("{.cyan $i $type $column $values $brief} ({.green mixed [{length(x$i)}]})")
+  cli::cli_text("{.cyan $i $type $columns $values $briefs} ({.green mixed [{length(x$i)}]})")
   cli::cli_text("{.cyan $eval_error $eval_warning} ({.yellow lgl [{length(x$i)}]})")
   cli::cli_text("{.cyan $capture_stack} ({.orange list [{length(x$capture_stack)}]})")
   cli::cli_text("{.cyan $n $n_passed $n_failed $f_passed $f_failed} ({.green num [{length_rows}]})")
@@ -102,8 +104,8 @@ print.x_list_n <- function(x, ...) {
   cli::cli_text("{.cyan $reporting_lang} ({.red chr [1]})")
   cli::cli_text("{.cyan $report_object} ({.pink gt_tbl})")
   cli::cli_text("{.cyan $email_object} ({.pink blastula_message})")
-  cli::cli_text("{.cyan $report_html $report_html_small} ({.brown html})")
-  cli::cli_rule()
+  cli::cli_text("{.cyan $report_html $report_html_small} ({.red chr [1]})")
+  cli::cli_rule(right = ifelse(length(x$time) == 0, "NO INTERROGATION PERFORMED", ""))
     
   # nocov end 
 }

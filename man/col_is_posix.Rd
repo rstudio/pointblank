@@ -74,12 +74,10 @@ R \code{POSIXct} dates.
 }
 
 \examples{
-library(dplyr)
-
 # Create a simple table with a
 # column of `POSIXct` values
 tbl <-
-  tibble(
+  dplyr::tibble(
     a = as.POSIXct(
       strptime(
         "2011-03-27 01:30:00",

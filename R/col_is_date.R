@@ -40,11 +40,10 @@
 #'   was passed to `x`.
 #'   
 #' @examples
-#' library(dplyr)
-#' 
 #' # Create a simple table with
 #' # a column of `Date` values
-#' tbl <- tibble(a = as.Date("2017-08-15"))
+#' tbl <- 
+#'   dplyr::tibble(a = as.Date("2017-08-15"))
 #' 
 #' # Validate that column `a` in the
 #' # table is classed as `Date`

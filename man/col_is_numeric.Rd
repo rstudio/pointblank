@@ -71,11 +71,10 @@ then be automatically generated.
 }
 
 \examples{
-library(dplyr)
-
 # Create a simple table with a
 # column of `numeric` values
-tbl <- tibble(a = c(5.1, 2.9))
+tbl <- 
+  dplyr::tibble(a = c(5.1, 2.9))
 
 # Validate that column `a` in the
 # table is classed as `numeric`

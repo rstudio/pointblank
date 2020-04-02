@@ -101,13 +101,11 @@ then be automatically generated.
 }
 
 \examples{
-library(dplyr)
-
 # Create a simple table with 2
 # columns: one with numerical
 # values,  the other with strings
 tbl <-
-  tibble(
+  dplyr::tibble(
     a = c(1, 2, 3, 4),
     b = rep(c("one", "two"), 2)
   )

@@ -40,11 +40,10 @@
 #'   was passed to `x`.
 #'
 #' @examples
-#' library(dplyr)
-#' 
 #' # Create a simple table with
 #' # a column of `factor` values
-#' tbl <- tibble(a = factor(c("one", "two")))
+#' tbl <- 
+#'   dplyr::tibble(a = factor(c("one", "two")))
 #' 
 #' # Validate that column `a` in the
 #' # table is classed as `factor`

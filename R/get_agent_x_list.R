@@ -80,11 +80,9 @@
 #' @return A `list` object.
 #' 
 #' @examples
-#' library(dplyr)
-#' 
 #' # Create a simple data frame with
 #' # a column of numerical values
-#' tbl <- tibble(a = c(5, 7, 8, 5))
+#' tbl <- dplyr::tibble(a = c(5, 7, 8, 5))
 #' 
 #' # Create an `action_levels()` list
 #' # with fractional values for the

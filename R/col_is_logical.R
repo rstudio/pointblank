@@ -40,11 +40,10 @@
 #'   was passed to `x`.
 #'   
 #' @examples
-#' library(dplyr)
-#' 
 #' # Create a simple table with a
 #' # column of `logical` values
-#' tbl <- tibble(a = c(TRUE, FALSE))
+#' tbl <- 
+#'   dplyr::tibble(a = c(TRUE, FALSE))
 #' 
 #' # Validate that column `a` in the
 #' # table is classed as `logical`

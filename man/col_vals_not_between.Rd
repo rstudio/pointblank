@@ -127,11 +127,10 @@ then be automatically generated.
 }
 
 \examples{
-library(dplyr)
-
 # Create a simple table with a
 # column of numerical values
-tbl <- tibble(a = c(5.6, 7.8, 3.4))
+tbl <- 
+  dplyr::tibble(a = c(5.6, 7.8, 3.4))
 
 # Validate that none of the values 
 # in column `a` are between 9 and 10,

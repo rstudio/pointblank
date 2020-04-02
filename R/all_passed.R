@@ -10,11 +10,10 @@
 #' @return A logical value.
 #' 
 #' @examples
-#' library(dplyr)
-#' 
 #' # Create a simple table with
 #' # a column of numerical values
-#' tbl <- tibble(a = c(5, 7, 8, 5))
+#' tbl <- 
+#'   dplyr::tibble(a = c(5, 7, 8, 5))
 #' 
 #' # Validate that values in column
 #' # `a` are always greater than 4

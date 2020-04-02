@@ -38,11 +38,10 @@
 #' @return A `ptblank_agent` object.
 #'   
 #' @examples
-#' library(dplyr)
-#' 
 #' # Create a simple table with a
 #' # column of numerical values
-#' tbl <- tibble(a = c(5, 7, 8, 7))
+#' tbl <- 
+#'   dplyr::tibble(a = c(5, 7, 8, 7))
 #' 
 #' # Create a pointblank `agent` object
 #' agent <- create_agent(tbl = tbl)

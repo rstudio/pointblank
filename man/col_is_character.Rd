@@ -71,11 +71,10 @@ then be automatically generated.
 }
 
 \examples{
-library(dplyr)
-
 # Create a simple table with
 # a column of `character` values
-tbl <- tibble(a = c("one", "two"))
+tbl <- 
+  dplyr::tibble(a = c("one", "two"))
 
 # Validate that column `a` in the
 # table is classed as `character`

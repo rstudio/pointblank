@@ -61,12 +61,10 @@ output obtained from using the \code{\link[=get_agent_x_list]{get_agent_x_list()
 }
 
 \examples{
-library(dplyr)
-
 # Create a simple table with two
 # columns of numerical values
 tbl <-
-  tibble(
+  dplyr::tibble(
     a = c(5, 7, 6, 5, 8, 7),
     b = c(7, 1, 0, 0, 0, 3)
   )
@@ -124,10 +122,10 @@ email_object <-
     tbl = tbl,
     actions = al
   ) \%>\%
-    col_vals_gt(vars(a), 5) \%>\%
-    col_vals_lt(vars(b), 5) \%>\%
-    interrogate() \%>\%
-    email_preview()
+  col_vals_gt(vars(a), 5) \%>\%
+  col_vals_lt(vars(b), 5) \%>\%
+  interrogate() \%>\%
+  email_preview()
   
 }
 \seealso{

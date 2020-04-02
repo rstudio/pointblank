@@ -61,11 +61,10 @@
 #'   was passed to `x`.
 #'   
 #' @examples
-#' library(dplyr)
-#' 
 #' # Create a simple table with a
 #' # column of numerical values
-#' tbl <- tibble(a = c(5, 4, 1, 2))
+#' tbl <- 
+#'   dplyr::tibble(a = c(5, 4, 1, 2))
 #' 
 #' # Validate that values in
 #' # column `a` are always less

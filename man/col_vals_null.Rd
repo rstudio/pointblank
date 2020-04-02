@@ -98,12 +98,10 @@ then be automatically generated.
 }
 
 \examples{
-library(dplyr)
-
 # Create a simple table with two
 # columns of numerical values
 tbl <-
-  tibble(
+  dplyr::tibble(
     a = c(1, 2, NA, NA),
     b = c(2, 2, 5, 5)
   )
@@ -115,7 +113,8 @@ tbl <-
 agent <-
   create_agent(tbl = tbl) \%>\%
   col_vals_null(vars(a),
-    preconditions = ~ tbl \%>\% dplyr::filter(b >= 5)
+    preconditions = 
+      ~ tbl \%>\% dplyr::filter(b >= 5)
   ) \%>\%
   interrogate()
 

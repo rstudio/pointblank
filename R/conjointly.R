@@ -60,12 +60,10 @@
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #'
 #' @examples
-#' library(dplyr)
-#' 
 #' # Create a simple table with three
 #' # columns of numerical values
 #' tbl <-
-#'   tibble(
+#'   dplyr::tibble(
 #'     a = c(5, 7, 6, 5, 8, 7),
 #'     b = c(3, 4, 6, 8, 9, 11),
 #'     c = c(2, 6, 8, NA, 3, 8)

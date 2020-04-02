@@ -32,12 +32,10 @@
 #'   condition).
 #'   
 #' @examples
-#' library(dplyr)
-#' 
 #' # Create a simple table with two
 #' # columns of numerical values
 #' tbl <-
-#'   tibble(
+#'   dplyr::tibble(
 #'     a = c(5, 7, 6, 5, 8, 7),
 #'     b = c(7, 1, 0, 0, 0, 3)
 #'   )
@@ -95,10 +93,10 @@
 #'     tbl = tbl,
 #'     actions = al
 #'   ) %>%
-#'     col_vals_gt(vars(a), 5) %>%
-#'     col_vals_lt(vars(b), 5) %>%
-#'     interrogate() %>%
-#'     email_preview()
+#'   col_vals_gt(vars(a), 5) %>%
+#'   col_vals_lt(vars(b), 5) %>%
+#'   interrogate() %>%
+#'   email_preview()
 #'   
 #' @family Emailing
 #' @section Function ID:
@@ -168,12 +166,10 @@ email_blast <- function(x,
 #' @return A **blastula** `email_message` object.
 #' 
 #' @examples
-#' library(dplyr)
-#' 
 #' # Create a simple table with two
 #' # columns of numerical values
 #' tbl <-
-#'   tibble(
+#'   dplyr::tibble(
 #'     a = c(5, 7, 6, 5, 8, 7),
 #'     b = c(7, 1, 0, 0, 0, 3)
 #'   )
@@ -201,10 +197,10 @@ email_blast <- function(x,
 #'     tbl = tbl,
 #'     actions = al
 #'   ) %>%
-#'     col_vals_gt(vars(a), 5) %>%
-#'     col_vals_lt(vars(b), 5) %>%
-#'     interrogate() %>%
-#'     email_preview()
+#'   col_vals_gt(vars(a), 5) %>%
+#'   col_vals_lt(vars(b), 5) %>%
+#'   interrogate() %>%
+#'   email_preview()
 #' 
 #' # The `email_preview()` function can
 #' # also be used on an agent x-list to
@@ -214,11 +210,11 @@ email_blast <- function(x,
 #'     tbl = tbl,
 #'     actions = al
 #'   ) %>%
-#'     col_vals_gt(vars(a), 5) %>%
-#'     col_vals_lt(vars(b), 5) %>%
-#'     interrogate() %>%
-#'     get_agent_x_list() %>%
-#'     email_preview()
+#'   col_vals_gt(vars(a), 5) %>%
+#'   col_vals_lt(vars(b), 5) %>%
+#'   interrogate() %>%
+#'   get_agent_x_list() %>%
+#'   email_preview()
 #' 
 #' # We can view the HTML email just
 #' # by printing `email_object`; it

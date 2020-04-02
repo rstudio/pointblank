@@ -59,11 +59,10 @@
 #'   was passed to `x`.
 #' 
 #' @examples
-#' library(dplyr)
-#' 
 #' # Create a simple table with a
 #' # column containing strings
-#' tbl <- tibble(a = c("s_0131", "s_0231"))
+#' tbl <- 
+#'   dplyr::tibble(a = c("s_0131", "s_0231"))
 #' 
 #' # Validate that all string values in
 #' # column `a` match a regex statement

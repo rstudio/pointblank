@@ -30,12 +30,10 @@
 #' @return A `ptblank_agent` object.
 #'   
 #' @examples
-#' library(dplyr)
-#' 
 #' # Create a simple table with two
 #' # columns of numerical values
 #' tbl <-
-#'   tibble(
+#'   dplyr::tibble(
 #'     a = c(5, 7, 6, 5, 8, 7),
 #'     b = c(7, 1, 0, 0, 0, 3)
 #'   )

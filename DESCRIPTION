@@ -45,4 +45,3 @@ Suggests:
     readr,
     rmarkdown
 Roxygen: list(markdown = TRUE)
-VignetteBuilder: knitr

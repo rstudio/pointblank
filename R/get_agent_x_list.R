@@ -4,9 +4,9 @@
 #' given time. The x-list will contain the most information after an
 #' interrogation has taken place. The x-list can be constrained to a particular
 #' validation step (by supplying the step number to the `i` argument), or, we
-#' can get the complete information by leaving `i` unspecified. The x-list is
-#' indeed an R `list` object that contains a veritable cornucopia of
-#' information.
+#' can get the information for all validation steps by leaving `i` unspecified.
+#' The x-list is indeed an R `list` object that contains a veritable cornucopia
+#' of information.
 #' 
 #' @param agent An agent object of class `ptblank_agent`.
 #' @param i The validation step number, which is assigned to each validation
@@ -14,8 +14,6 @@
 #'   be of the post-interrogation form (complete information). If a valid step
 #'   number is provided then x-list will have partial information, that is, data
 #'   constrained to to interrogation result of the named step.
-#' @param generate_report An option that governs whether an agent report should
-#'   be generated and be part of the output list. By default this is `TRUE`.
 #' 
 #' @return A `list` object.
 #' 
@@ -25,8 +23,7 @@
 #' 
 #' @export
 get_agent_x_list <- function(agent,
-                             i = NULL,
-                             generate_report = TRUE) {
+                             i = NULL) {
   
   if (!is.null(i)) {
     

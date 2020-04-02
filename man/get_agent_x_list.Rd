@@ -4,7 +4,7 @@
 \alias{get_agent_x_list}
 \title{Get the agent's x-list}
 \usage{
-get_agent_x_list(agent, i = NULL, generate_report = TRUE)
+get_agent_x_list(agent, i = NULL)
 }
 \arguments{
 \item{agent}{An agent object of class \code{ptblank_agent}.}
@@ -14,9 +14,6 @@ step in the order of definition. If \code{NULL} (the default), the x list will
 be of the post-interrogation form (complete information). If a valid step
 number is provided then x-list will have partial information, that is, data
 constrained to to interrogation result of the named step.}
-
-\item{generate_report}{An option that governs whether an agent report should
-be generated and be part of the output list. By default this is \code{TRUE}.}
 }
 \value{
 A \code{list} object.
@@ -26,9 +23,9 @@ The agent's x-list is a record of information that the agent possesses at any
 given time. The x-list will contain the most information after an
 interrogation has taken place. The x-list can be constrained to a particular
 validation step (by supplying the step number to the \code{i} argument), or, we
-can get the complete information by leaving \code{i} unspecified. The x-list is
-indeed an R \code{list} object that contains a veritable cornucopia of
-information.
+can get the information for all validation steps by leaving \code{i} unspecified.
+The x-list is indeed an R \code{list} object that contains a veritable cornucopia
+of information.
 }
 \section{Function ID}{
 

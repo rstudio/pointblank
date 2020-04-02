@@ -95,6 +95,47 @@ HTML has inlined styles, making it more suitable for email message bodies
 5-2
 }
 
+\examples{
+library(dplyr)
+
+# Create a simple data frame with
+# a column of numerical values
+tbl <- tibble(a = c(5, 7, 8, 5))
+
+# Create an `action_levels()` list
+# with fractional values for the
+# `warn`, `stop`, and `notify` states
+al <-
+  action_levels(
+    warn_at = 0.2,
+    stop_at = 0.8,
+    notify_at = 0.345
+  )
+
+# Create an agent (giving it the
+# `tbl` and the `al` objects),
+# supply two validation step
+# functions, then interrogate
+agent <-
+  create_agent(
+    tbl = tbl,
+    actions = al
+  ) \%>\%
+  col_vals_gt(vars(a), 7) \%>\%
+  col_is_numeric(vars(a)) \%>\%
+  interrogate()
+  
+# Get the agent x-list
+x <- get_agent_x_list(agent)
+
+# Print the x-list object `x`
+x
+
+# Get the `f_passed` component
+# of the x-list
+x$f_passed
+
+}
 \seealso{
 Other Post-interrogation: 
 \code{\link{all_passed}()},

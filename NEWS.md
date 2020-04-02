@@ -1,4 +1,4 @@
-# pointblank 0.3.1
+# pointblank 0.3.1.1
 
 * Fixed implementation of the `col_vals_between()` and `col_vals_not_between()` step functions to work with `tbl_dbi` objects.
 

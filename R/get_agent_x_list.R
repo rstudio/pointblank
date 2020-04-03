@@ -22,7 +22,7 @@
 #' \item `tbl`: the table object itself
 #' \item `col_names`: the table's column names (`chr [ncol(tbl)]`)
 #' \item `col_types`: the table's column types (`chr [ncol(tbl)]`)
-#' \item `i`: the table's column types (`chr [1]`)
+#' \item `i`: the validation step index (`int [1]`)
 #' \item `type`: the type of validation, value is validation step function name
 #' (`chr [1]`)
 #' \item `columns`: the columns specified for the validation step function

@@ -89,6 +89,10 @@
 #' 
 #' @seealso The analogue to this function: [col_vals_equal()].
 #' 
+#' @name col_vals_not_equal
+NULL
+
+#' @rdname col_vals_not_equal
 #' @import rlang
 #' @export
 col_vals_not_equal <- function(x,
@@ -147,4 +151,45 @@ col_vals_not_equal <- function(x,
   }
 
   agent
+}
+
+#' @rdname col_vals_not_equal
+#' @import rlang
+#' @export
+expect_col_vals_not_equal <- function(object,
+                                      columns,
+                                      value,
+                                      na_pass = FALSE,
+                                      preconditions = NULL,
+                                      threshold = 1) {
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_vals_not_equal(
+      columns = {{ columns }},
+      value = {{ value }}, 
+      na_pass = na_pass,
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  f_failed <- vs$f_failed
+  
+  # TODO: express warnings and errors here
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  columns <- prep_column_text(columns) %>% tidy_gsub("~", "")
+  
+  # TODO: format message in the case of multiple columns passed in
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue("Some values in column {columns} are equal to {value}.")
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
 }

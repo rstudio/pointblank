@@ -80,6 +80,10 @@
 #' @section Function ID:
 #' 2-13
 #' 
+#' @name col_vals_regex
+NULL
+
+#' @rdname col_vals_regex
 #' @import rlang
 #' @export
 col_vals_regex <- function(x,
@@ -146,4 +150,51 @@ col_vals_regex <- function(x,
   }
 
   agent
+}
+
+#' @rdname col_vals_regex
+#' @import rlang
+#' @export
+expect_col_vals_regex <- function(object,
+                                  columns,
+                                  regex,
+                                  na_pass = FALSE,
+                                  preconditions = NULL,
+                                  threshold = 1) {
+  
+  # Stop function if `expect_col_vals_regex()` is used with a database table
+  if (inherits(object, "tbl_dbi")) {
+    stop("The `expect_col_vals_regex()` expectation function cannot be used with `tbl_dbi` objects.",
+         call. = FALSE)
+  }
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_vals_regex(
+      columns = {{ columns }},
+      regex = {{ regex }},
+      na_pass = na_pass,
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  f_failed <- vs$f_failed
+  
+  # TODO: express warnings and errors here
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  columns <- prep_column_text(columns) %>% tidy_gsub("~", "")
+  
+  # TODO: format message in the case of multiple columns passed in
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue("Not all values in column {columns} matched the supplied regex.")
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
 }

@@ -2,12 +2,16 @@
 % Please edit documentation in R/col_exists.R
 \name{col_exists}
 \alias{col_exists}
+\alias{expect_col_exists}
 \title{Do one or more columns actually exist?}
 \usage{
 col_exists(x, columns, actions = NULL, brief = NULL, active = TRUE)
+
+expect_col_exists(object, columns, threshold = 1)
 }
 \arguments{
-\item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
+\item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.
+This is to be used as the main input for a validation step function.}
 
 \item{columns}{One or more columns from the table in focus. This can be
 provided as a vector of column names using \code{c()} or bare column names
@@ -25,6 +29,18 @@ the validation step inactive (still reporting its presence and keeping
 indexes for the steps unchanged). If the step function will be operating
 directly on data, then any step with \code{active = FALSE} will simply pass the
 data through with no validation whatsoever. The default for this is \code{TRUE}.}
+
+\item{object}{A data frame or a tibble. This is to be used expressly as input
+for a testthat expectation function (which are all in the form
+\verb{expect_*()}).}
+
+\item{threshold}{A simple failure threshold value for use with the testthat
+expectation function. By default, this is set to \code{1} meaning that any
+single unit of failure in data validation results in an overall test
+failure. Whole numbers beyond \code{1} indicate that any failing units up to
+that absolute threshold value will result in a succeeding testthat test.
+Likewise, fractional values (between \code{0} and \code{1}) act as a proportional
+failure threshold.}
 }
 \value{
 Either a \code{ptblank_agent} object or a table object, depending on what
@@ -32,7 +48,7 @@ was passed to \code{x}.
 }
 \description{
 The \code{col_exists()} validation step function checks whether one or more
-columns exist in the target table. The only requirement is a specification of
+columns exist in the target table. The only requirement is specification of
 the column names. Each validation step will operate over a single test unit,
 which is whether the column exists or not.
 }

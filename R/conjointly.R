@@ -84,6 +84,10 @@
 #' @section Function ID:
 #' 2-14
 #'
+#' @name conjointly
+NULL
+
+#' @rdname conjointly
 #' @import rlang
 #' @export
 conjointly <- function(x,
@@ -150,5 +154,43 @@ conjointly <- function(x,
     )
   
   agent
-}  
+}
+
+#' @rdname conjointly
+#' @import rlang
+#' @export
+expect_conjointly <- function(object,
+                              ...,
+                              .list = list2(...),
+                              preconditions = NULL,
+                              threshold = 1) {
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    conjointly(
+      .list = .list,
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  f_failed <- vs$f_failed
+  
+  # TODO: express warnings and errors here
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue(
+      "Conjoint validations failed beyond the threshold level of {threshold}.\n",
+      "* fraction failed: {f_failed} >= failure threshold: {threshold}"
+    )
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
+}
   

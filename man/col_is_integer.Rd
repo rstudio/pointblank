@@ -2,12 +2,16 @@
 % Please edit documentation in R/col_is_integer.R
 \name{col_is_integer}
 \alias{col_is_integer}
+\alias{expect_col_is_integer}
 \title{Do the columns contain integer values?}
 \usage{
 col_is_integer(x, columns, actions = NULL, brief = NULL, active = TRUE)
+
+expect_col_is_integer(object, columns, threshold = 1)
 }
 \arguments{
-\item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
+\item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.
+This is to be used as the main input for a validation step function.}
 
 \item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
@@ -24,6 +28,18 @@ the validation step inactive (still reporting its presence and keeping
 indexes for the steps unchanged). If the step function will be operating
 directly on data, then any step with \code{active = FALSE} will simply pass the
 data through with no validation whatsoever. The default for this is \code{TRUE}.}
+
+\item{object}{A data frame or a tibble. This is to be used expressly as input
+for a testthat expectation function (which are all in the form
+\verb{expect_*()}).}
+
+\item{threshold}{A simple failure threshold value for use with the testthat
+expectation function. By default, this is set to \code{1} meaning that any
+single unit of failure in data validation results in an overall test
+failure. Whole numbers beyond \code{1} indicate that any failing units up to
+that absolute threshold value will result in a succeeding testthat test.
+Likewise, fractional values (between \code{0} and \code{1}) act as a proportional
+failure threshold.}
 }
 \value{
 Either a \code{ptblank_agent} object or a table object, depending on what

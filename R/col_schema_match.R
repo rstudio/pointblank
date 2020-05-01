@@ -68,6 +68,11 @@
 #' @section Function ID:
 #' 2-24
 #' 
+#' @name col_schema_match
+NULL
+
+#' @rdname col_schema_match
+#' @import rlang
 #' @export
 col_schema_match <- function(x,
                              schema,
@@ -112,6 +117,44 @@ col_schema_match <- function(x,
       brief = brief,
       active = active
     )
+}
+
+#' @rdname col_schema_match
+#' @import rlang
+#' @export
+expect_col_schema_match <- function(object,
+                                    schema,
+                                    threshold = 1) {
+  
+  # Stop function if `expect_col_vals_regex()` is used with a database table
+  if (inherits(object, "tbl_dbi")) {
+    stop("The `expect_col_vals_regex()` expectation function cannot be used with `tbl_dbi` objects.",
+         call. = FALSE)
+  }
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_schema_match(
+      schema = {{ schema }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  f_failed <- vs$f_failed
+  
+  # TODO: express warnings and errors here
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue("The supplied `schema` did not match that of the table.")
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
 }
 
 #' Generate a table column schema manually or with a reference table

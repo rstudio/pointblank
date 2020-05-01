@@ -1,7 +1,7 @@
 #' Do one or more columns actually exist?
 #'
 #' The `col_exists()` validation step function checks whether one or more
-#' columns exist in the target table. The only requirement is a specification of
+#' columns exist in the target table. The only requirement is specification of
 #' the column names. Each validation step will operate over a single test unit,
 #' which is whether the column exists or not.
 #' 
@@ -60,7 +60,10 @@
 #' @family Validation Step Functions
 #' @section Function ID:
 #' 2-23
-#' 
+#' @name col_exists
+NULL
+
+#' @rdname col_exists
 #' @import rlang
 #' @export
 col_exists <- function(x,
@@ -120,4 +123,37 @@ col_exists <- function(x,
   }
 
   agent
+}
+
+#' @rdname col_exists
+#' @import rlang
+#' @export
+expect_col_exists <- function(object,
+                              columns,
+                              threshold = 1) {
+
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_exists(
+      columns = {{ columns }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  f_failed <- vs$f_failed
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  columns <- prep_column_text(columns) %>% tidy_gsub("~", "")
+  
+  # TODO: format message in the case of multiple columns passed in
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue("The column {columns} doesn't exist.")
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
 }

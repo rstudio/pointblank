@@ -54,6 +54,10 @@
 #' then be automatically generated.
 #'
 #' @param x A data frame, tibble, or an agent object of class `ptblank_agent`.
+#'   This is to be used as the main input for a validation step function.
+#' @param object A data frame or a tibble. This is to be used expressly as input
+#'   for a testthat expectation function (which are all in the form
+#'   `expect_*()`).
 #' @param columns The column (or a set of columns, provided as a character
 #'   vector) to which this validation should be applied.
 #' @param value A numeric value used for this test. Any column values `>value`
@@ -71,6 +75,13 @@
 #' @param actions A list containing threshold levels so that the validation step
 #'   can react accordingly when exceeding the set levels. This is to be created
 #'   with the [action_levels()] helper function.
+#' @param threshold A simple failure threshold value for use with the testthat
+#'   expectation function. By default, this is set to `1` meaning that any
+#'   single unit of failure in data validation results in an overall test
+#'   failure. Whole numbers beyond `1` indicate that any failing units up to
+#'   that absolute threshold value will result in a succeeding testthat test.
+#'   Likewise, fractional values (between `0` and `1`) act as a proportional
+#'   failure threshold.
 #' @param brief An optional, text-based description for the validation step.
 #' @param active A logical value indicating whether the validation step should
 #'   be active. If the step function is working with an agent, `FALSE` will make
@@ -106,6 +117,10 @@
 #' 
 #' @seealso The analogous function with a left-closed bound: [col_vals_gte()].
 #' 
+#' @name col_vals_gt
+NULL
+
+#' @rdname col_vals_gt
 #' @import rlang
 #' @export
 col_vals_gt <- function(x,
@@ -164,4 +179,45 @@ col_vals_gt <- function(x,
   }
 
   agent
+}
+
+#' @rdname col_vals_gt
+#' @import rlang
+#' @export
+expect_col_vals_gt <- function(object,
+                               columns,
+                               value,
+                               na_pass = FALSE,
+                               preconditions = NULL,
+                               threshold = 1) {
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_vals_gt(
+      columns = {{ columns }},
+      value = {{ value }}, 
+      na_pass = na_pass,
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  f_failed <- vs$f_failed
+  
+  # TODO: express warnings and errors here
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  columns <- prep_column_text(columns) %>% tidy_gsub("~", "")
+  
+  # TODO: format message in the case of multiple columns passed in
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue("The column {columns} isn't > {value}.")
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
 }

@@ -69,6 +69,7 @@ interrogate <- function(agent,
     quiet <- FALSE
   }
   
+  # Get the agent's validation step indices
   validation_steps <- unique(agent$validation_set$i)
   
   # Add start of interrogation console status

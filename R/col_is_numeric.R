@@ -61,6 +61,10 @@
 #' @section Function ID:
 #' 2-17
 #' 
+#' @name col_is_numeric
+NULL
+
+#' @rdname col_is_numeric
 #' @import rlang
 #' @export
 col_is_numeric <- function(x,
@@ -114,4 +118,37 @@ col_is_numeric <- function(x,
   }
 
   agent
+}
+
+#' @rdname col_is_numeric
+#' @import rlang
+#' @export
+expect_col_is_numeric <- function(object,
+                                  columns,
+                                  threshold = 1) {
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_is_numeric(
+      columns = {{ columns }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  f_failed <- vs$f_failed
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  columns <- prep_column_text(columns) %>% tidy_gsub("~", "")
+  
+  # TODO: format message in the case of multiple columns passed in
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue("The column {columns} isn't a `numeric` column.")
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
 }

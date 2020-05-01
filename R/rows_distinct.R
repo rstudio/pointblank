@@ -76,9 +76,12 @@
 #' @section Function ID:
 #' 2-15
 #' 
+#' @name rows_distinct
+NULL
+
+#' @rdname rows_distinct
 #' @import rlang
 #' @export
-
 rows_distinct <- function(x,
                           columns = NULL,
                           preconditions = NULL,
@@ -154,6 +157,43 @@ rows_distinct <- function(x,
     )
 
   agent
+}
+
+#' @rdname rows_distinct
+#' @import rlang
+#' @export
+expect_rows_distinct <- function(object,
+                                 columns,
+                                 preconditions = NULL,
+                                 threshold = 1) {
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    rows_distinct(
+      columns = {{ columns }},
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  f_failed <- vs$f_failed
+  
+  # TODO: express warnings and errors here
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue(
+      "Non-distinct rows across specified `column` are above the threshold level of {threshold}.\n",
+      "* fraction failed: {f_failed} >= failure threshold: {threshold}"
+      )
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
 }
 
 #' Verify that row data are not duplicated (deprecated)

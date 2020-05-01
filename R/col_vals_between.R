@@ -101,6 +101,10 @@
 #' 
 #' @seealso The analogue to this function: [col_vals_not_between()].
 #' 
+#' @name col_vals_between
+NULL
+
+#' @rdname col_vals_between
 #' @import rlang
 #' @export
 col_vals_between <- function(x,
@@ -166,4 +170,49 @@ col_vals_between <- function(x,
   }
 
   agent
+}
+
+#' @rdname col_vals_between
+#' @import rlang
+#' @export
+expect_col_vals_between <- function(object,
+                                    columns,
+                                    left,
+                                    right,
+                                    inclusive = c(TRUE, TRUE),
+                                    na_pass = FALSE,
+                                    preconditions = NULL,
+                                    threshold = 1) {
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_vals_between(
+      columns = {{ columns }},
+      left = {{ left }}, 
+      right = {{ right }},
+      inclusive = inclusive,
+      na_pass = na_pass,
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  f_failed <- vs$f_failed
+
+  # TODO: express warnings and errors here
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  columns <- prep_column_text(columns) %>% tidy_gsub("~", "")
+  
+  # TODO: format message in the case of multiple columns passed in
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue("The values in {columns} aren't all between {left} and {right}.")
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
 }

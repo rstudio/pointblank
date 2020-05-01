@@ -126,12 +126,6 @@ expect_col_schema_match <- function(object,
                                     schema,
                                     threshold = 1) {
   
-  # Stop function if `expect_col_vals_regex()` is used with a database table
-  if (inherits(object, "tbl_dbi")) {
-    stop("The `expect_col_vals_regex()` expectation function cannot be used with `tbl_dbi` objects.",
-         call. = FALSE)
-  }
-  
   vs <- 
     create_agent(tbl = object, name = "::QUIET::") %>%
     col_schema_match(

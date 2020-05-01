@@ -163,7 +163,7 @@ rows_distinct <- function(x,
 #' @import rlang
 #' @export
 expect_rows_distinct <- function(object,
-                                 columns,
+                                 columns = NULL,
                                  preconditions = NULL,
                                  threshold = 1) {
   

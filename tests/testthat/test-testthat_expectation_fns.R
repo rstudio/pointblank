@@ -11,6 +11,7 @@ tbl_conjointly <-
   )
 
 tbl_equal_c_3 <- tbl %>% dplyr::filter(c == 3)
+tbl_not_equal_c_3 <- tbl %>% dplyr::filter(c != 3)
 tbl_c_null <- tbl %>% dplyr::filter(is.na(c))
 tbl_c_not_null <- tbl %>% dplyr::filter(!is.na(c))
 
@@ -69,6 +70,24 @@ test_that("pointblank expectation function produce the correct results", {
   expect_failure(
     expect_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 7),
     "failure level \\(3\\) >= failure threshold \\(1\\)"
+  )
+  
+  #
+  # expect_col_vals_not_equal()
+  #
+  
+  expect_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 3)
+  expect_success(expect_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 3))
+  
+  expect_failure(expect_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 7))
+  expect_success(expect_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 3, threshold = 0.95))
+  expect_success(expect_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 20, threshold = 1000))
+  
+  expect_error(expect_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 7), class = "expectation_failure")
+  expect_failure(expect_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 7), failed_beyond)
+  expect_failure(
+    expect_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 7),
+    "failure level \\(2\\) >= failure threshold \\(1\\)"
   )
   
   #
@@ -602,6 +621,7 @@ test_that("expect errors to be expressed by pointblank under some conditions", {
   expect_error(expect_col_vals_lt(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
   expect_error(expect_col_vals_lte(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
   expect_error(expect_col_vals_equal(tbl, columns = vars(z), value = 3), regexp = no_col_msg)
+  expect_error(expect_col_vals_not_equal(tbl, columns = vars(z), value = 3), regexp = no_col_msg)
   expect_error(expect_col_vals_gte(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
   expect_error(expect_col_vals_gt(tbl, columns = vars(z), value = 0), regexp = no_col_msg)
   expect_error(expect_col_vals_between(tbl, columns = vars(z), left = 0, right = 10000), regexp = no_col_msg)

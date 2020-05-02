@@ -109,6 +109,20 @@ resolve_columns <- function(x, var_expr, preconditions) {
   column
 }
 
+get_threshold_type <- function(threshold) {
+  
+  if (threshold >= 1) {
+    threshold_type <- "absolute"
+  } else if (threshold >= 0 && threshold < 1) {
+    threshold_type <- "proportional"
+  }
+}
+
+failure_message_gluestring <-
+  "The `{expectation_type}()` expectation failed beyond the {threshold_type} \\
+threshold level ({threshold}).
+* failure level ({failed_amount}) >= failure threshold ({threshold})"
+
 row_based_step_fns_vector <- function() {
   
   c(
@@ -249,7 +263,7 @@ normalize_reporting_language <- function(reporting_lang) {
   
   if (is.null(reporting_lang)) return("en")
   
-  if (!(tolower(reporting_lang) %in%  reporting_languages)) {
+  if (!(tolower(reporting_lang) %in% reporting_languages)) {
     stop("The text ", reporting_lang, " doesn't correspond to a pointblank reporting language",
          call. = FALSE)
   }

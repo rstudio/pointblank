@@ -31,7 +31,8 @@ available, then a tibble will be returned.}
 \item{...}{Additional options passed to downstream functions.}
 }
 \value{
-A tibble.
+A gt table object if \code{display_table = TRUE} or a tibble if
+\code{display_table = FALSE}.
 }
 \description{
 We can get the essential information from an agent by using the
@@ -83,8 +84,15 @@ agent <-
 
 # Get a tibble-based report from the
 # agent by using `get_agent_report()`
+# with `display_table = FALSE`
 agent \%>\%
   get_agent_report(display_table = FALSE)
+  
+# View a the report by printing the
+# `agent` object anytime, but, return a
+# gt table object by using this with
+# `display_table = TRUE` (the default)
+gt_tbl <- get_agent_report()
 
 }
 \seealso{

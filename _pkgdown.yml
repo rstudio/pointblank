@@ -18,7 +18,7 @@ reference:
     - action_levels
     - col_schema
 
-  - title: Validation Step Functions
+  - title: Validation Step and Expectation Functions
     desc: >
       Validation steps are either used with an **agent** object or, more simply,
       just with the table of interest. When used with an *agent*, each step
@@ -27,7 +27,10 @@ reference:
       agent is involved whatsoever), then the data is checked and passed
       through. However, if we (1) set `warn_*` and/or `stop_*` thresholds and
       (2) the level of failed validation units exceeds those set levels, then
-      we'll get either a warning or a stop.
+      we'll get either a warning or a stop. Each validation step function is
+      paired with an expectation function (of the form `expect_*()`). These
+      serve as table assertions and are equivalent in usage and behavior to
+      testthat tests.
     contents:
     - col_vals_lt
     - col_vals_lte

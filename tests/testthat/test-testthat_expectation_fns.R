@@ -10,6 +10,7 @@ tbl_conjointly <-
     c = c(2, 6, 8, NA, 3, 8)
   )
 
+tbl_equal_c_3 <- tbl %>% dplyr::filter(c == 3)
 tbl_c_null <- tbl %>% dplyr::filter(is.na(c))
 tbl_c_not_null <- tbl %>% dplyr::filter(!is.na(c))
 
@@ -29,6 +30,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_vals_lt(tbl, columns = vars(d), value = 9900), class = "expectation_failure")
   expect_failure(expect_col_vals_lt(tbl, columns = vars(d), value = 9900), failed_beyond)
+  expect_failure(
+    expect_col_vals_lt(tbl, columns = vars(d), value = 9900),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_vals_lte()
@@ -43,12 +48,14 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_vals_lte(tbl, columns = vars(a), value = 7), class = "expectation_failure")
   expect_failure(expect_col_vals_lte(tbl, columns = vars(a), value = 7), failed_beyond)
+  expect_failure(
+    expect_col_vals_lte(tbl, columns = vars(a), value = 7),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_vals_equal()
   #
-  
-  tbl_equal_c_3 <- tbl %>% dplyr::filter(c == 3)
   
   expect_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 3)
   expect_success(expect_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 3))
@@ -59,6 +66,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 7), class = "expectation_failure")
   expect_failure(expect_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 7), failed_beyond)
+  expect_failure(
+    expect_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 7),
+    "failure level \\(3\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_vals_gte()
@@ -75,6 +86,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_vals_gte(tbl, columns = vars(c), value = 0), class = "expectation_failure")
   expect_failure(expect_col_vals_gte(tbl, columns = vars(c), value = 0), failed_beyond)
+  expect_failure(
+    expect_col_vals_gte(tbl, columns = vars(c), value = 0),
+    "failure level \\(2\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_vals_gt()
@@ -91,6 +106,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_vals_gt(tbl, columns = vars(c), value = 0), class = "expectation_failure")
   expect_failure(expect_col_vals_gt(tbl, columns = vars(c), value = 0), failed_beyond)
+  expect_failure(
+    expect_col_vals_gt(tbl, columns = vars(c), value = 0),
+    "failure level \\(2\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_vals_between()
@@ -108,6 +127,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_vals_between(tbl, columns = vars(d), left = 0, right = 500), class = "expectation_failure")
   expect_failure(expect_col_vals_between(tbl, columns = vars(d), left = 0, right = 500), failed_beyond)
+  expect_failure(
+    expect_col_vals_between(tbl, columns = vars(d), left = 0, right = 500),
+    "failure level \\(11\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_vals_not_between()
@@ -125,6 +148,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_vals_not_between(tbl, columns = vars(c), left = 20, right = 30), class = "expectation_failure")
   expect_failure(expect_col_vals_not_between(tbl, columns = vars(c), left = 20, right = 30), failed_beyond)
+  expect_failure(
+    expect_col_vals_not_between(tbl, columns = vars(c), left = 20, right = 30),
+    "failure level \\(2\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_vals_in_set()
@@ -141,6 +168,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_vals_in_set(tbl, columns = vars(e), set = TRUE), class = "expectation_failure")
   expect_failure(expect_col_vals_in_set(tbl, columns = vars(e), set = TRUE), failed_beyond)
+  expect_failure(
+    expect_col_vals_in_set(tbl, columns = vars(e), set = TRUE),
+    "failure level \\(5\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_vals_not_in_set()
@@ -157,6 +188,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_vals_not_in_set(tbl, columns = vars(b), set = tbl$b), class = "expectation_failure")
   expect_failure(expect_col_vals_not_in_set(tbl, columns = vars(b), set = tbl$b), failed_beyond)
+  expect_failure(
+    expect_col_vals_not_in_set(tbl, columns = vars(b), set = tbl$b),
+    "failure level \\(13\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_vals_null()
@@ -170,6 +205,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_vals_null(tbl_c_not_null, columns = vars(c)), class = "expectation_failure")
   expect_failure(expect_col_vals_null(tbl_c_not_null, columns = vars(c)), failed_beyond)
+  expect_failure(
+    expect_col_vals_null(tbl_c_not_null, columns = vars(c)),
+    "failure level \\(11\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_vals_not_null()
@@ -183,6 +222,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_vals_not_null(tbl_c_null, columns = vars(c)), class = "expectation_failure")
   expect_failure(expect_col_vals_not_null(tbl_c_null, columns = vars(c)), failed_beyond)
+  expect_failure(
+    expect_col_vals_not_null(tbl_c_null, columns = vars(c)),
+    "failure level \\(2\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_vals_regex()
@@ -195,6 +238,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$"), class = "expectation_failure")
   expect_failure(expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$"), failed_beyond)
+  expect_failure(
+    expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$"),
+    "failure level \\(13\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_conjointly()
@@ -246,6 +293,16 @@ test_that("pointblank expectation function produce the correct results", {
     failed_beyond
   )
   
+  expect_failure(
+    expect_conjointly(
+      tbl_conjointly,
+      ~ col_vals_gt(., vars(a), 6),
+      ~ col_vals_lt(., vars(b), 10),
+      ~ col_vals_not_null(., vars(c))
+    ), 
+    "failure level \\(4\\) >= failure threshold \\(1\\)"
+  )
+  
   #
   # expect_rows_distinct()
   #
@@ -259,6 +316,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_rows_distinct(tbl), class = "expectation_failure")
   expect_failure(expect_rows_distinct(tbl), failed_beyond)
+  expect_failure(
+    expect_rows_distinct(tbl),
+    "failure level \\(2\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_is_character()
@@ -278,6 +339,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_is_character(tbl, columns = vars(g)), class = "expectation_failure")
   expect_failure(expect_col_is_character(tbl, columns = vars(g)), failed_beyond)
+  expect_failure(
+    expect_col_is_character(tbl, columns = vars(g)),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_is_numeric()
@@ -297,6 +362,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_is_numeric(tbl, columns = vars(g)), class = "expectation_failure")
   expect_failure(expect_col_is_numeric(tbl, columns = vars(g)), failed_beyond)
+  expect_failure(
+    expect_col_is_numeric(tbl, columns = vars(g)),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_is_integer()
@@ -315,6 +384,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_is_integer(tbl, columns = vars(g)), class = "expectation_failure")
   expect_failure(expect_col_is_integer(tbl, columns = vars(g)), failed_beyond)
+  expect_failure(
+    expect_col_is_integer(tbl, columns = vars(g)),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_is_posix()
@@ -333,6 +406,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_is_posix(tbl, columns = vars(g)), class = "expectation_failure")
   expect_failure(expect_col_is_posix(tbl, columns = vars(g)), failed_beyond)
+  expect_failure(
+    expect_col_is_posix(tbl, columns = vars(g)),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_is_logical()
@@ -351,6 +428,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_is_logical(tbl, columns = vars(g)), class = "expectation_failure")
   expect_failure(expect_col_is_logical(tbl, columns = vars(g)), failed_beyond)
+  expect_failure(
+    expect_col_is_logical(tbl, columns = vars(g)),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_is_date()
@@ -369,6 +450,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_is_date(tbl, columns = vars(g)), class = "expectation_failure")
   expect_failure(expect_col_is_date(tbl, columns = vars(g)), failed_beyond)
+  expect_failure(
+    expect_col_is_date(tbl, columns = vars(g)),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_is_factor()
@@ -387,6 +472,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_is_factor(tbl, columns = vars(f)), class = "expectation_failure")
   expect_failure(expect_col_is_factor(tbl, columns = vars(f)), failed_beyond)
+  expect_failure(
+    expect_col_is_factor(tbl, columns = vars(f)),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_exists()
@@ -407,6 +496,10 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_error(expect_col_exists(tbl, columns = vars(h)), class = "expectation_failure")
   expect_failure(expect_col_exists(tbl, columns = vars(h)), failed_beyond)
+  expect_failure(
+    expect_col_exists(tbl, columns = vars(h)),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
   
   #
   # expect_col_schema_match()
@@ -480,6 +573,24 @@ test_that("pointblank expectation function produce the correct results", {
       )
     ), 
     failed_beyond
+  )
+  
+  expect_failure(
+    expect_col_schema_match(
+      tbl, 
+      schema = col_schema(
+        date_time = "POSIXct",
+        date = "Date",
+        a = "integer",
+        b = "character",
+        c = "numeric",
+        d = "numeric",
+        e = "logical",
+        f = "character",
+        g = "factor"
+      )
+    ), 
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
   )
 })
 

@@ -30,8 +30,8 @@ expect_col_vals_not_between(
 )
 }
 \arguments{
-\item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.
-This is to be used as the main input for a validation step function.}
+\item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
+class \code{ptblank_agent} that can be created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
@@ -88,21 +88,24 @@ returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
 }
 \description{
-The \code{col_vals_not_between()} validation step function checks whether column
-values (in any number of specified \code{columns}) \emph{do not} fall within a range.
-The range specified with three arguments: \code{left}, \code{right}, and \code{inclusive}.
-The \code{left} and \code{right} values specify the lower and upper bounds. The bounds
-can be specified as single, literal values or as column names given in
-\code{vars()}. The \code{inclusive} argument, as a vector of two logical values
-relating to \code{left} and \code{right}, states whether each bound is inclusive or
-not. The default is \code{c(TRUE, TRUE)}, where both endpoints are inclusive
-(i.e., \verb{[left, right]}). For partially-unbounded versions of this function,
-we can use the \code{\link[=col_vals_lt]{col_vals_lt()}}, \code{\link[=col_vals_lte]{col_vals_lte()}}, \code{\link[=col_vals_gt]{col_vals_gt()}}, or
-\code{\link[=col_vals_gte]{col_vals_gte()}} validation step functions. This function can be used
-directly on a data table or with an \emph{agent} object (technically, a
-\code{ptblank_agent} object). Each validation step will operate over the number of
-test units that is equal to the number of rows in the table (after any
-\code{preconditions} have been applied).
+The \code{col_vals_not_between()} validation step function and the
+\code{expect_col_vals_not_between()} expectation function both check whether
+column values in a table \emph{do not} fall within a range. The range specified
+with three arguments: \code{left}, \code{right}, and \code{inclusive}. The \code{left} and
+\code{right} values specify the lower and upper bounds. The bounds can be
+specified as single, literal values or as column names given in \code{vars()}. The
+\code{inclusive} argument, as a vector of two logical values relating to \code{left}
+and \code{right}, states whether each bound is inclusive or not. The default is
+\code{c(TRUE, TRUE)}, where both endpoints are inclusive (i.e., \verb{[left, right]}).
+For partially-unbounded versions of this function, we can use the
+\code{\link[=col_vals_lt]{col_vals_lt()}}, \code{\link[=col_vals_lte]{col_vals_lte()}}, \code{\link[=col_vals_gt]{col_vals_gt()}}, or \code{\link[=col_vals_gte]{col_vals_gte()}}
+validation step functions. The validation step function can be used directly
+on a data table or with an \emph{agent} object (technically, a \code{ptblank_agent}
+object) whereas the expectation function can only be used with a data table.
+The types of data tables that can be used include data frames, tibbles, and
+even database tables of \code{tbl_dbi} class. Each validation step or expectation
+will operate over the number of test units that is equal to the number of
+rows in the table (after any \code{preconditions} have been applied).
 }
 \details{
 If providing multiple column names to \code{columns}, the result will be an

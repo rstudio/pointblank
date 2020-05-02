@@ -1,20 +1,23 @@
 #' Are column data between two specified values?
 #'
-#' The `col_vals_between()` validation step function checks whether column
-#' values (in any number of specified `columns`) fall within a range. The range
-#' specified with three arguments: `left`, `right`, and `inclusive`. The `left`
-#' and `right` values specify the lower and upper bounds. The bounds can be
-#' specified as single, literal values or as column names given in `vars()`. The
-#' `inclusive` argument, as a vector of two logical values relating to `left`
-#' and `right`, states whether each bound is inclusive or not. The default is
-#' `c(TRUE, TRUE)`, where both endpoints are inclusive (i.e., `[left, right]`).
-#' For partially-unbounded versions of this function, we can use the
+#' The `col_vals_between()` validation step function and the
+#' `expect_col_vals_between()` expectation function both check whether column
+#' values in a table fall within a range. The range specified with three
+#' arguments: `left`, `right`, and `inclusive`. The `left` and `right` values
+#' specify the lower and upper bounds. The bounds can be specified as single,
+#' literal values or as column names given in `vars()`. The `inclusive`
+#' argument, as a vector of two logical values relating to `left` and `right`,
+#' states whether each bound is inclusive or not. The default is `c(TRUE,
+#' TRUE)`, where both endpoints are inclusive (i.e., `[left, right]`). For
+#' partially-unbounded versions of this function, we can use the
 #' [col_vals_lt()], [col_vals_lte()], [col_vals_gt()], or [col_vals_gte()]
-#' validation step functions. This function can be used directly on a data table
-#' or with an *agent* object (technically, a `ptblank_agent` object). Each
-#' validation step will operate over the number of test units that is equal to
-#' the number of rows in the table (after any `preconditions` have been
-#' applied).
+#' validation step functions. The validation step function can be used directly
+#' on a data table or with an *agent* object (technically, a `ptblank_agent`
+#' object) whereas the expectation function can only be used with a data table.
+#' The types of data tables that can be used include data frames, tibbles, and
+#' even database tables of `tbl_dbi` class. Each validation step or expectation
+#' will operate over the number of test units that is equal to the number of
+#' rows in the table (after any `preconditions` have been applied).
 #' 
 #' If providing multiple column names to `columns`, the result will be an
 #' expansion of validation steps to that number of column names (e.g.,

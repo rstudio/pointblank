@@ -1,14 +1,20 @@
 #' Do columns in the table (and their types) match a predefined schema?
 #'
-#' The `col_schema_match()` validation step function works in conjunction with a
-#' `col_schema` object (generated through the [col_schema()] function) to
-#' determine whether the expected schema matches the target table. This
-#' validation step operates over a single test unit, which is whether the schema
-#' exactly matches that of the table. If the target table is a `tbl_sql` object,
-#' we can choose to validate the column schema that is based on R column types
-#' (e.g., `"numeric"`, `"character"`, etc.), or, SQL column types (e.g.,
-#' `"double"`, `"varchar"`, etc.). That option is defined in the [col_schema()]
-#' function (with the `.db_col_types` argument).
+#' The `col_schema_match()` validation step function and the
+#' `expect_col_schema_match()` expectation function both work in conjunction
+#' with a `col_schema` object (generated through the [col_schema()] function) to
+#' determine whether the expected schema matches that of the target table. The
+#' validation step function can be used directly on a data table or with an
+#' *agent* object (technically, a `ptblank_agent` object) whereas the
+#' expectation function can only be used with a data table. The types of data
+#' tables that can be used include data frames, tibbles, and even database
+#' tables of `tbl_dbi` class. The validation step or expectation operates over a
+#' single test unit, which is whether the schema exactly matches that of the
+#' table. If the target table is a `tbl_dbi` object, we can choose to validate
+#' the column schema that is based on R column types (e.g., `"numeric"`,
+#' `"character"`, etc.), or, SQL column types (e.g., `"double"`, `"varchar"`,
+#' etc.). That option is defined in the [col_schema()] function (with the
+#' `.db_col_types` argument).
 #' 
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation step function, takes a specially-crafted list
@@ -58,9 +64,9 @@
 #'   )
 #' 
 #' # Validate that the schema object
-#' # `col_schema_x` exactly defines
+#' # `schema_obj` exactly defines
 #' # the column names and column types
-#' # of the `tbl_x` table
+#' # of the `tbl` table
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   col_schema_match(schema_obj) %>%

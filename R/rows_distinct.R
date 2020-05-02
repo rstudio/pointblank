@@ -1,12 +1,16 @@
-#' Verify that row data are distinct
+#' Are row data distinct?
 #'
-#' The `rows_distinct()` validation step function checks whether row values
+#' The `rows_distinct()` validation step function and the
+#' `expect_rows_distinct()` expectation function both check whether row values
 #' (optionally constrained to a selection of specified `columns`) are, when
-#' taken as a complete unit, distinct from all other units in the table. This
-#' function can be used directly on a data table or with an *agent* object
-#' (technically, a `ptblank_agent` object). This validation step will operate
-#' over the number of test units that is equal to the number of rows in the
-#' table (after any `preconditions` have been applied).
+#' taken as a complete unit, distinct from all other units in the table. The
+#' validation step function can be used directly on a data table or with an
+#' *agent* object (technically, a `ptblank_agent` object) whereas the
+#' expectation function can only be used with a data table. The types of data
+#' tables that can be used include data frames, tibbles, and even database
+#' tables of `tbl_dbi` class. As a validation step or as an expectation, this
+#' will operate over the number of test units that is equal to the number of
+#' rows in the table (after any `preconditions` have been applied).
 #' 
 #' We can specify the constraining column names in quotes, in `vars()`, and with
 #' the following **tidyselect** helper functions: `starts_with()`,

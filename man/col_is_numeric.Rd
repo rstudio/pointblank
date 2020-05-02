@@ -10,8 +10,8 @@ col_is_numeric(x, columns, actions = NULL, brief = NULL, active = TRUE)
 expect_col_is_numeric(object, columns, threshold = 1)
 }
 \arguments{
-\item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.
-This is to be used as the main input for a validation step function.}
+\item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
+class \code{ptblank_agent} that can be created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
@@ -49,12 +49,16 @@ returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
 }
 \description{
-The \code{col_is_numeric()} validation step function checks whether one or more
-columns is of the numeric type. Like many of the \verb{col_is_*()}-type
+The \code{col_is_numeric()} validation step function and the
+\code{expect_col_is_numeric()} expectation function both check whether one or more
+columns in a table is of the numeric type. Like many of the \verb{col_is_*()}-type
 functions in \strong{pointblank}, the only requirement is a specification of the
-column names. This function can be used directly on a data table or with an
-\emph{agent} object (technically, a \code{ptblank_agent} object). Each validation step
-will operate over a single test unit, which is whether the column is a
+column names. The validation step function can be used directly on a data
+table or with an \emph{agent} object (technically, a \code{ptblank_agent} object)
+whereas the expectation function can only be used with a data table. The
+types of data tables that can be used include data frames, tibbles, and even
+database tables of \code{tbl_dbi} class. Each validation step or expectation will
+operate over a single test unit, which is whether the column is a
 numeric-type column or not.
 }
 \details{

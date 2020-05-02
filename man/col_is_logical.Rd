@@ -10,8 +10,8 @@ col_is_logical(x, columns, actions = NULL, brief = NULL, active = TRUE)
 expect_col_is_logical(object, columns, threshold = 1)
 }
 \arguments{
-\item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.
-This is to be used as the main input for a validation step function.}
+\item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
+class \code{ptblank_agent} that can be created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
@@ -49,13 +49,17 @@ returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
 }
 \description{
-The \code{col_is_logical()} validation step function checks whether one or more
-columns is of the logical (\code{TRUE}/\code{FALSE}) type. Like many of the
+The \code{col_is_logical()} validation step function and the
+\code{expect_col_is_logical()} expectation function both check whether one or more
+columns in a table is of the logical (\code{TRUE}/\code{FALSE}) type. Like many of the
 \verb{col_is_*()}-type functions in \strong{pointblank}, the only requirement is a
-specification of the column names. This function can be used directly on a
-data table or with an \emph{agent} object (technically, a \code{ptblank_agent} object).
-Each validation step will operate over a single test unit, which is whether
-the column is an logical-type column or not.
+specification of the column names. The validation step function can be used
+directly on a data table or with an \emph{agent} object (technically, a
+\code{ptblank_agent} object) whereas the expectation function can only be used
+with a data table. The types of data tables that can be used include data
+frames, tibbles, and even database tables of the \code{tbl_dbi} class. Each
+validation step or expectation will operate over a single test unit, which is
+whether the column is an logical-type column or not.
 }
 \details{
 If providing multiple column names, the result will be an expansion of

@@ -10,8 +10,8 @@ col_exists(x, columns, actions = NULL, brief = NULL, active = TRUE)
 expect_col_exists(object, columns, threshold = 1)
 }
 \arguments{
-\item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.
-This is to be used as the main input for a validation step function.}
+\item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
+class \code{ptblank_agent} that can be created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{columns}{One or more columns from the table in focus. This can be
 provided as a vector of column names using \code{c()} or bare column names
@@ -50,10 +50,15 @@ returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
 }
 \description{
-The \code{col_exists()} validation step function checks whether one or more
-columns exist in the target table. The only requirement is specification of
-the column names. Each validation step will operate over a single test unit,
-which is whether the column exists or not.
+The \code{col_exists()} validation step function and the \code{expect_col_exists()}
+expectation function both check whether one or more columns exist in the
+target table. The only requirement is specification of the column names. The
+validation step function can be used directly on a data table or with an
+\emph{agent} object (technically, a \code{ptblank_agent} object) whereas the
+expectation function can only be used with a data table. The types of data
+tables that can be used include data frames, tibbles, and even database
+tables of the \code{tbl_dbi} class. Each validation step or expectation will
+operate over a single test unit, which is whether the column exists or not.
 }
 \details{
 If providing multiple column names, the result will be an expansion of

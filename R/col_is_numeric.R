@@ -1,11 +1,15 @@
 #' Do the columns contain numeric values?
 #'
-#' The `col_is_numeric()` validation step function checks whether one or more
-#' columns is of the numeric type. Like many of the `col_is_*()`-type
+#' The `col_is_numeric()` validation step function and the
+#' `expect_col_is_numeric()` expectation function both check whether one or more
+#' columns in a table is of the numeric type. Like many of the `col_is_*()`-type
 #' functions in **pointblank**, the only requirement is a specification of the
-#' column names. This function can be used directly on a data table or with an
-#' *agent* object (technically, a `ptblank_agent` object). Each validation step
-#' will operate over a single test unit, which is whether the column is a
+#' column names. The validation step function can be used directly on a data
+#' table or with an *agent* object (technically, a `ptblank_agent` object)
+#' whereas the expectation function can only be used with a data table. The
+#' types of data tables that can be used include data frames, tibbles, and even
+#' database tables of `tbl_dbi` class. Each validation step or expectation will
+#' operate over a single test unit, which is whether the column is a
 #' numeric-type column or not.
 #' 
 #' If providing multiple column names, the result will be an expansion of

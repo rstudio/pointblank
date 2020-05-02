@@ -1,12 +1,15 @@
 #' Are column data not `NULL`/`NA`?
 #'
-#' The `col_vals_not_null()` validation step function checks whether column
-#' values (in any number of specified `columns`) *are not* `NA` values or, in
-#' the database context, *not* `NULL` values. This function can be used directly
-#' on a data table or with an *agent* object (technically, a `ptblank_agent`
-#' object). Each validation step will operate over the number of test units that
-#' is equal to the number of rows in the table (after any `preconditions` have
-#' been applied).
+#' The `col_vals_not_null()` validation step function and the
+#' `expect_col_vals_not_null()` expectation function both check whether column
+#' values in a table *are not* `NA` values or, in the database context, *not*
+#' `NULL` values. The validation step function can be used directly on a data
+#' table or with an *agent* object (technically, a `ptblank_agent` object)
+#' whereas the expectation function can only be used with a data table. The
+#' types of data tables that can be used include data frames, tibbles, and even
+#' database tables of `tbl_dbi` class. Each validation step or expectation will
+#' operate over the number of test units that is equal to the number of rows in
+#' the table (after any `preconditions` have been applied).
 #' 
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`

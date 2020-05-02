@@ -1,9 +1,14 @@
 #' Do one or more columns actually exist?
 #'
-#' The `col_exists()` validation step function checks whether one or more
-#' columns exist in the target table. The only requirement is specification of
-#' the column names. Each validation step will operate over a single test unit,
-#' which is whether the column exists or not.
+#' The `col_exists()` validation step function and the `expect_col_exists()`
+#' expectation function both check whether one or more columns exist in the
+#' target table. The only requirement is specification of the column names. The
+#' validation step function can be used directly on a data table or with an
+#' *agent* object (technically, a `ptblank_agent` object) whereas the
+#' expectation function can only be used with a data table. The types of data
+#' tables that can be used include data frames, tibbles, and even database
+#' tables of the `tbl_dbi` class. Each validation step or expectation will
+#' operate over a single test unit, which is whether the column exists or not.
 #' 
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`

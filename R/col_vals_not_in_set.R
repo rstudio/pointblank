@@ -1,16 +1,20 @@
 #' Are data not part of a specified set of values?
 #'
-#' The `col_vals_not_in_set()` validation step function checks whether column
-#' values (in any number of specified `columns`) *are not part* of a specified
-#' `set` of values. This function can be used directly on a data table or with
-#' an *agent* object (technically, a `ptblank_agent` object). Each validation
-#' step will operate over the number of test units that is equal to the number
-#' of rows in the table (after any `preconditions` have been applied).
-#' 
+#' The `col_vals_not_in_set()` validation step function and the
+#' `expect_col_vals_not_in_set()` expectation function both check whether column
+#' values in a table *are not part* of a specified `set` of values. The
+#' validation step function can be used directly on a data table or with an
+#' *agent* object (technically, a `ptblank_agent` object) whereas the
+#' expectation function can only be used with a data table. The types of data
+#' tables that can be used include data frames, tibbles, and even database
+#' tables of `tbl_dbi` class. Each validation step or expectation will operate
+#' over the number of test units that is equal to the number of rows in the
+#' table (after any `preconditions` have been applied).
+#'
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names
-#' in quotes and in `vars()`, **tidyselect** helper functions are available for
+#' will result in the entry of two validation steps). Aside from column names in
+#' quotes and in `vars()`, **tidyselect** helper functions are available for
 #' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, and `everything()`.
 #' 

@@ -1,12 +1,16 @@
 #' Do the columns contain `POSIXct` dates?
 #'
-#' The `col_is_posix()` validation step function checks whether one or more
-#' columns is of the R `POSIXct` date-time type. Like many of the
-#' `col_is_*()`-type functions in **pointblank**, the only requirement is a
-#' specification of the column names. This function can be used directly on a
-#' data table or with an *agent* object (technically, a `ptblank_agent` object).
-#' Each validation step will operate over a single test unit, which is whether
-#' the column is a `POSIXct`-type column or not.
+#' The `col_is_posix()` validation step function and the `expect_col_is_posix()`
+#' expectation function both check whether one or more columns in a table is of
+#' the R `POSIXct` date-time type. Like many of the `col_is_*()`-type functions
+#' in **pointblank**, the only requirement is a specification of the column
+#' names. The validation step function can be used directly on a data table or
+#' with an *agent* object (technically, a `ptblank_agent` object) whereas the
+#' expectation function can only be used with a data table. The types of data
+#' tables that can be used include data frames, tibbles, and even database
+#' tables of `tbl_dbi` class. Each validation step or expectation will operate
+#' over a single test unit, which is whether the column is a `POSIXct`-type
+#' column or not.
 #' 
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`

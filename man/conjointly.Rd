@@ -24,8 +24,8 @@ expect_conjointly(
 )
 }
 \arguments{
-\item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.
-This is to be used as the main input for a validation step function.}
+\item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
+class \code{ptblank_agent} that can be created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{...}{a collection one-sided formulas that consist of validation step
 functions that validate row units. Specifically, these functions should be
@@ -75,19 +75,21 @@ returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
 }
 \description{
-The \code{conjointly()} validation step function checks whether the same test
-units all pass multiple validations with \verb{col_vals_*()}-type functions.
+The \code{conjointly()} validation step function and the \code{expect_conjointly()}
+expectation function both check whether test units at each index (typically
+each row) all pass multiple validations with \verb{col_vals_*()}-type functions.
 Because of the imposed constraint on the allowed validation step functions,
 all test units are rows of the table (after any common \code{preconditions} have
-been applied). This validation step function (internally composed of multiple
-steps) ultimately performs a rowwise test of whether all sub-validations
-reported a \emph{pass} for the same test units. In practice, an example of a
-joint validation is testing whether values for column \code{a} are greater than
-a specific value while values for column \code{b} lie within a specified range.
-The validation step functions to be part of the conjoint validation are to be
-supplied as one-sided \strong{R} formulas (using a leading \code{~}, and having a \code{.}
-stand in as the data object). This function can be used directly on a data
-table or with an \emph{agent} object (technically, a \code{ptblank_agent} object).
+been applied). The validation step function and expectation (internally
+composed of multiple validation steps) ultimately performs a rowwise test of
+whether all sub-validations reported a \emph{pass} for the same test units. In
+practice, an example of a joint validation is testing whether values for
+column \code{a} are greater than a specific value while values for column \code{b} lie
+within a specified range. The validation step functions to be part of the
+conjoint validation are to be supplied as one-sided \strong{R} formulas (using a
+leading \code{~}, and having a \code{.} stand in as the data object). The validation
+step function can be used directly on a data table or with an \emph{agent} object
+(technically, a \code{ptblank_agent} object).
 }
 \details{
 If providing multiple column names in any of the supplied validation step

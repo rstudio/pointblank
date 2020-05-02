@@ -55,17 +55,16 @@ indexes for the steps unchanged). If the step function will be operating
 directly on data, then any step with \code{active = FALSE} will simply pass the
 data through with no validation whatsoever. The default for this is \code{TRUE}.}
 
-\item{object}{A data frame or a tibble. This is to be used expressly as input
-for a testthat expectation function (which are all in the form
-\verb{expect_*()}).}
+\item{object}{A data frame or tibble (\code{tbl_df} or \code{tbl_dbi}) that serves as
+the target table for the expectation function.}
 
-\item{threshold}{A simple failure threshold value for use with the testthat
+\item{threshold}{A simple failure threshold value for use with the
 expectation function. By default, this is set to \code{1} meaning that any
 single unit of failure in data validation results in an overall test
 failure. Whole numbers beyond \code{1} indicate that any failing units up to
-that absolute threshold value will result in a succeeding testthat test.
-Likewise, fractional values (between \code{0} and \code{1}) act as a proportional
-failure threshold.}
+that absolute threshold value will result in a succeeding \strong{testthat}
+test. Likewise, fractional values (between \code{0} and \code{1}) act as a
+proportional failure threshold.}
 }
 \value{
 For the validation step function, the return value is either a

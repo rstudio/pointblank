@@ -59,9 +59,8 @@
 #'
 #' @param x A data frame, tibble (`tbl_df` or `tbl_dbi`), or, an agent object of
 #'   class `ptblank_agent` that can be created with [create_agent()].
-#' @param object A data frame or a tibble. This is to be used expressly as input
-#'   for a testthat expectation function (which are all in the form
-#'   `expect_*()`).
+#' @param object A data frame or tibble (`tbl_df` or `tbl_dbi`) that serves as
+#'   the target table for the expectation function.
 #' @param columns The column (or a set of columns, provided as a character
 #'   vector) to which this validation should be applied.
 #' @param value A numeric value used for this test. Any column values `>value`
@@ -79,13 +78,13 @@
 #' @param actions A list containing threshold levels so that the validation step
 #'   can react accordingly when exceeding the set levels. This is to be created
 #'   with the [action_levels()] helper function.
-#' @param threshold A simple failure threshold value for use with the testthat
+#' @param threshold A simple failure threshold value for use with the
 #'   expectation function. By default, this is set to `1` meaning that any
 #'   single unit of failure in data validation results in an overall test
 #'   failure. Whole numbers beyond `1` indicate that any failing units up to
-#'   that absolute threshold value will result in a succeeding testthat test.
-#'   Likewise, fractional values (between `0` and `1`) act as a proportional
-#'   failure threshold.
+#'   that absolute threshold value will result in a succeeding **testthat**
+#'   test. Likewise, fractional values (between `0` and `1`) act as a
+#'   proportional failure threshold.
 #' @param brief An optional, text-based description for the validation step.
 #' @param active A logical value indicating whether the validation step should
 #'   be active. If the step function is working with an agent, `FALSE` will make

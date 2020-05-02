@@ -14,7 +14,12 @@ rows_distinct(
   active = TRUE
 )
 
-expect_rows_distinct(object, columns, preconditions = NULL, threshold = 1)
+expect_rows_distinct(
+  object,
+  columns = NULL,
+  preconditions = NULL,
+  threshold = 1
+)
 }
 \arguments{
 \item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.

@@ -126,6 +126,8 @@ expect_col_schema_match <- function(object,
                                     schema,
                                     threshold = 1) {
   
+  expectation_type <- "expect_col_schema_match"
+  
   vs <- 
     create_agent(tbl = object, name = "::QUIET::") %>%
     col_schema_match(
@@ -135,15 +137,27 @@ expect_col_schema_match <- function(object,
     interrogate() %>% .$validation_set
   
   x <- vs$notify %>% all()
-  f_failed <- vs$f_failed
   
-  # TODO: express warnings and errors here
+  threshold_type <- get_threshold_type(threshold = threshold)
+  
+  if (threshold_type == "proportional") {
+    failed_amount <- vs$f_failed
+  } else {
+    failed_amount <- vs$n_failed
+  }
+  
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
   
   act <- testthat::quasi_label(enquo(x), arg = "object")
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue("The supplied `schema` did not match that of the table.")
+    failure_message = glue::glue(failure_message_gluestring)
   )
   
   act$val <- object

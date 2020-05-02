@@ -127,6 +127,8 @@ expect_col_is_character <- function(object,
                                     columns,
                                     threshold = 1) {
   
+  expectation_type <- "expect_col_is_character"
+  
   vs <- 
     create_agent(tbl = object, name = "::QUIET::") %>%
     col_is_character(
@@ -136,16 +138,27 @@ expect_col_is_character <- function(object,
     interrogate() %>% .$validation_set
   
   x <- vs$notify %>% all()
-  f_failed <- vs$f_failed
+  
+  threshold_type <- get_threshold_type(threshold = threshold)
+  
+  if (threshold_type == "proportional") {
+    failed_amount <- vs$f_failed
+  } else {
+    failed_amount <- vs$n_failed
+  }
+  
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
   
   act <- testthat::quasi_label(enquo(x), arg = "object")
   
-  columns <- prep_column_text(columns) %>% tidy_gsub("~", "")
-  
-  # TODO: format message in the case of multiple columns passed in
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue("The column {columns} isn't a `character` column.")
+    failure_message = glue::glue(failure_message_gluestring)
   )
   
   act$val <- object

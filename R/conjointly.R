@@ -165,6 +165,8 @@ expect_conjointly <- function(object,
                               preconditions = NULL,
                               threshold = 1) {
   
+  expectation_type <- "expect_conjointly"
+  
   vs <- 
     create_agent(tbl = object, name = "::QUIET::") %>%
     conjointly(
@@ -175,7 +177,14 @@ expect_conjointly <- function(object,
     interrogate() %>% .$validation_set
   
   x <- vs$notify %>% all()
-  f_failed <- vs$f_failed
+  
+  threshold_type <- get_threshold_type(threshold = threshold)
+  
+  if (threshold_type == "proportional") {
+    failed_amount <- vs$f_failed
+  } else {
+    failed_amount <- vs$n_failed
+  }
   
   # TODO: express warnings and errors here
   
@@ -183,10 +192,7 @@ expect_conjointly <- function(object,
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue(
-      "Conjoint validations failed beyond the threshold level of {threshold}.\n",
-      "* fraction failed: {f_failed} >= failure threshold: {threshold}"
-    )
+    failure_message = glue::glue(failure_message_gluestring)
   )
   
   act$val <- object

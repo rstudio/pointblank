@@ -68,7 +68,7 @@
 #' # `agent` object anytime, but, return a
 #' # gt table object by using this with
 #' # `display_table = TRUE` (the default)
-#' gt_tbl <- get_agent_report()
+#' gt_tbl <- get_agent_report(agent)
 #' 
 #' @family Post-interrogation
 #' @section Function ID:

@@ -72,8 +72,11 @@ Likewise, fractional values (between \code{0} and \code{1}) act as a proportiona
 failure threshold.}
 }
 \value{
-Either a \code{ptblank_agent} object or a table object, depending on what
-was passed to \code{x}.
+For the validation step function, the return value is either a
+\code{ptblank_agent} object or a table object (depending on whether an agent
+object or a table was passed to \code{x}). The expectation function invisibly
+returns its input but, in the context of testing data, the function is
+called primarily for its potential side-effects (e.g., signaling failure).
 }
 \description{
 The \code{col_vals_not_equal()} validation step function checks whether column

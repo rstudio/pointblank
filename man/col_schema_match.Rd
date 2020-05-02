@@ -41,6 +41,13 @@ that absolute threshold value will result in a succeeding testthat test.
 Likewise, fractional values (between \code{0} and \code{1}) act as a proportional
 failure threshold.}
 }
+\value{
+For the validation step function, the return value is either a
+\code{ptblank_agent} object or a table object (depending on whether an agent
+object or a table was passed to \code{x}). The expectation function invisibly
+returns its input but, in the context of testing data, the function is
+called primarily for its potential side-effects (e.g., signaling failure).
+}
 \description{
 The \code{col_schema_match()} validation step function works in conjunction with a
 \code{col_schema} object (generated through the \code{\link[=col_schema]{col_schema()}} function) to

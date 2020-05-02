@@ -58,8 +58,11 @@
 #' @param value A numeric value used for this test. Any column values `<= value`
 #'   are considered passing.
 #'   
-#' @return Either a `ptblank_agent` object or a table object, depending on what
-#'   was passed to `x`.
+#' @return For the validation step function, the return value is either a
+#'   `ptblank_agent` object or a table object (depending on whether an agent
+#'   object or a table was passed to `x`). The expectation function invisibly
+#'   returns its input but, in the context of testing data, the function is
+#'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   
 #' @examples
 #' # Create a simple table with a

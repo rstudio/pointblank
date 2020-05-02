@@ -1,12 +1,16 @@
 #' Do the columns contain `POSIXct` dates?
 #'
-#' The `col_is_posix()` validation step function checks whether one or more
-#' columns is of the R `POSIXct` date-time type. Like many of the
-#' `col_is_*()`-type functions in **pointblank**, the only requirement is a
-#' specification of the column names. This function can be used directly on a
-#' data table or with an *agent* object (technically, a `ptblank_agent` object).
-#' Each validation step will operate over a single test unit, which is whether
-#' the column is a `POSIXct`-type column or not.
+#' The `col_is_posix()` validation step function and the `expect_col_is_posix()`
+#' expectation function both check whether one or more columns in a table is of
+#' the R `POSIXct` date-time type. Like many of the `col_is_*()`-type functions
+#' in **pointblank**, the only requirement is a specification of the column
+#' names. The validation step function can be used directly on a data table or
+#' with an *agent* object (technically, a `ptblank_agent` object) whereas the
+#' expectation function can only be used with a data table. The types of data
+#' tables that can be used include data frames, tibbles, and even database
+#' tables of `tbl_dbi` class. Each validation step or expectation will operate
+#' over a single test unit, which is whether the column is a `POSIXct`-type
+#' column or not.
 #' 
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
@@ -39,8 +43,11 @@
 #'
 #' @inheritParams col_vals_gt
 #' 
-#' @return Either a `ptblank_agent` object or a table object, depending on what
-#'   was passed to `x`.
+#' @return For the validation step function, the return value is either a
+#'   `ptblank_agent` object or a table object (depending on whether an agent
+#'   object or a table was passed to `x`). The expectation function invisibly
+#'   returns its input but, in the context of testing data, the function is
+#'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   
 #' @examples
 #' # Create a simple table with a
@@ -70,6 +77,10 @@
 #' @section Function ID:
 #' 2-18
 #' 
+#' @name col_is_posix
+NULL
+
+#' @rdname col_is_posix
 #' @import rlang
 #' @export
 col_is_posix <- function(x,
@@ -123,4 +134,50 @@ col_is_posix <- function(x,
   }
 
   agent
+}
+
+#' @rdname col_is_posix
+#' @import rlang
+#' @export
+expect_col_is_posix <- function(object,
+                                  columns,
+                                  threshold = 1) {
+  
+  expectation_type <- "expect_col_is_posix"
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_is_posix(
+      columns = {{ columns }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  
+  threshold_type <- get_threshold_type(threshold = threshold)
+  
+  if (threshold_type == "proportional") {
+    failed_amount <- vs$f_failed
+  } else {
+    failed_amount <- vs$n_failed
+  }
+  
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue(failure_message_gluestring)
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
 }

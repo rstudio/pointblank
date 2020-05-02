@@ -1,13 +1,17 @@
 #' Are column data greater than a specified value?
 #'
-#' The `col_vals_gt()` validation step function checks whether column values (in
-#' any number of specified `columns`) are *greater than* a specified `value`
-#' (the exact comparison used in this function is `col_val > value`). The
-#' `value` can be specified as a single, literal value or as a column name given
-#' in `vars()`. This function can be used directly on a data table or with an
-#' *agent* object (technically, a `ptblank_agent` object). Each validation step
-#' will operate over the number of test units that is equal to the number of
-#' rows in the table (after any `preconditions` have been applied).
+#' The `col_vals_gt()` validation step function and the `expect_col_vals_gt()`
+#' expectation function both check whether column values in a table are *greater
+#' than* a specified `value` (the exact comparison used in this function is
+#' `col_val > value`). The `value` can be specified as a single, literal value
+#' or as a column name given in `vars()`. The validation step function can be
+#' used directly on a data table or with an *agent* object (technically, a
+#' `ptblank_agent` object) whereas the expectation function can only be used
+#' with a data table. The types of data tables that can be used include data
+#' frames, tibbles, and even database tables of `tbl_dbi` class. Each validation
+#' step or expectation will operate over the number of test units that is equal
+#' to the number of rows in the table (after any `preconditions` have been
+#' applied).
 #'
 #' If providing multiple column names to `columns`, the result will be an
 #' expansion of validation steps to that number of column names (e.g.,
@@ -53,7 +57,10 @@
 #' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
 #' then be automatically generated.
 #'
-#' @param x A data frame, tibble, or an agent object of class `ptblank_agent`.
+#' @param x A data frame, tibble (`tbl_df` or `tbl_dbi`), or, an agent object of
+#'   class `ptblank_agent` that can be created with [create_agent()].
+#' @param object A data frame or tibble (`tbl_df` or `tbl_dbi`) that serves as
+#'   the target table for the expectation function.
 #' @param columns The column (or a set of columns, provided as a character
 #'   vector) to which this validation should be applied.
 #' @param value A numeric value used for this test. Any column values `>value`
@@ -71,6 +78,13 @@
 #' @param actions A list containing threshold levels so that the validation step
 #'   can react accordingly when exceeding the set levels. This is to be created
 #'   with the [action_levels()] helper function.
+#' @param threshold A simple failure threshold value for use with the
+#'   expectation function. By default, this is set to `1` meaning that any
+#'   single unit of failure in data validation results in an overall test
+#'   failure. Whole numbers beyond `1` indicate that any failing units up to
+#'   that absolute threshold value will result in a succeeding **testthat**
+#'   test. Likewise, fractional values (between `0` and `1`) act as a
+#'   proportional failure threshold.
 #' @param brief An optional, text-based description for the validation step.
 #' @param active A logical value indicating whether the validation step should
 #'   be active. If the step function is working with an agent, `FALSE` will make
@@ -79,8 +93,11 @@
 #'   directly on data, then any step with `active = FALSE` will simply pass the
 #'   data through with no validation whatsoever. The default for this is `TRUE`.
 #'   
-#' @return Either a `ptblank_agent` object or a table object, depending on what
-#'   was passed to `x`.
+#' @return For the validation step function, the return value is either a
+#'   `ptblank_agent` object or a table object (depending on whether an agent
+#'   object or a table was passed to `x`). The expectation function invisibly
+#'   returns its input but, in the context of testing data, the function is
+#'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   
 #' @examples
 #' # Create a simple table with a
@@ -106,6 +123,10 @@
 #' 
 #' @seealso The analogous function with a left-closed bound: [col_vals_gte()].
 #' 
+#' @name col_vals_gt
+NULL
+
+#' @rdname col_vals_gt
 #' @import rlang
 #' @export
 col_vals_gt <- function(x,
@@ -164,4 +185,56 @@ col_vals_gt <- function(x,
   }
 
   agent
+}
+
+#' @rdname col_vals_gt
+#' @import rlang
+#' @export
+expect_col_vals_gt <- function(object,
+                               columns,
+                               value,
+                               na_pass = FALSE,
+                               preconditions = NULL,
+                               threshold = 1) {
+  
+  expectation_type <- "expect_col_vals_gt"
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_vals_gt(
+      columns = {{ columns }},
+      value = {{ value }}, 
+      na_pass = na_pass,
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  
+  threshold_type <- get_threshold_type(threshold = threshold)
+  
+  if (threshold_type == "proportional") {
+    failed_amount <- vs$f_failed
+  } else {
+    failed_amount <- vs$n_failed
+  }
+  
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue(failure_message_gluestring)
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
 }

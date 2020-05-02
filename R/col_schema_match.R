@@ -1,14 +1,20 @@
 #' Do columns in the table (and their types) match a predefined schema?
 #'
-#' The `col_schema_match()` validation step function works in conjunction with a
-#' `col_schema` object (generated through the [col_schema()] function) to
-#' determine whether the expected schema matches the target table. This
-#' validation step operates over a single test unit, which is whether the schema
-#' exactly matches that of the table. If the target table is a `tbl_sql` object,
-#' we can choose to validate the column schema that is based on R column types
-#' (e.g., `"numeric"`, `"character"`, etc.), or, SQL column types (e.g.,
-#' `"double"`, `"varchar"`, etc.). That option is defined in the [col_schema()]
-#' function (with the `.db_col_types` argument).
+#' The `col_schema_match()` validation step function and the
+#' `expect_col_schema_match()` expectation function both work in conjunction
+#' with a `col_schema` object (generated through the [col_schema()] function) to
+#' determine whether the expected schema matches that of the target table. The
+#' validation step function can be used directly on a data table or with an
+#' *agent* object (technically, a `ptblank_agent` object) whereas the
+#' expectation function can only be used with a data table. The types of data
+#' tables that can be used include data frames, tibbles, and even database
+#' tables of `tbl_dbi` class. The validation step or expectation operates over a
+#' single test unit, which is whether the schema exactly matches that of the
+#' table. If the target table is a `tbl_dbi` object, we can choose to validate
+#' the column schema that is based on R column types (e.g., `"numeric"`,
+#' `"character"`, etc.), or, SQL column types (e.g., `"double"`, `"varchar"`,
+#' etc.). That option is defined in the [col_schema()] function (with the
+#' `.db_col_types` argument).
 #' 
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation step function, takes a specially-crafted list
@@ -31,6 +37,12 @@
 #' @param schema A table schema of type `col_schema` which can be generated
 #' using the [col_schema()] function.
 #' 
+#' @return For the validation step function, the return value is either a
+#'   `ptblank_agent` object or a table object (depending on whether an agent
+#'   object or a table was passed to `x`). The expectation function invisibly
+#'   returns its input but, in the context of testing data, the function is
+#'   called primarily for its potential side-effects (e.g., signaling failure).
+#' 
 #' @examples
 #' # Create a simple table with
 #' # two columns: one `integer` and
@@ -52,9 +64,9 @@
 #'   )
 #' 
 #' # Validate that the schema object
-#' # `col_schema_x` exactly defines
+#' # `schema_obj` exactly defines
 #' # the column names and column types
-#' # of the `tbl_x` table
+#' # of the `tbl` table
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   col_schema_match(schema_obj) %>%
@@ -68,6 +80,11 @@
 #' @section Function ID:
 #' 2-24
 #' 
+#' @name col_schema_match
+NULL
+
+#' @rdname col_schema_match
+#' @import rlang
 #' @export
 col_schema_match <- function(x,
                              schema,
@@ -112,6 +129,52 @@ col_schema_match <- function(x,
       brief = brief,
       active = active
     )
+}
+
+#' @rdname col_schema_match
+#' @import rlang
+#' @export
+expect_col_schema_match <- function(object,
+                                    schema,
+                                    threshold = 1) {
+  
+  expectation_type <- "expect_col_schema_match"
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_schema_match(
+      schema = {{ schema }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  
+  threshold_type <- get_threshold_type(threshold = threshold)
+  
+  if (threshold_type == "proportional") {
+    failed_amount <- vs$f_failed
+  } else {
+    failed_amount <- vs$n_failed
+  }
+  
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue(failure_message_gluestring)
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
 }
 
 #' Generate a table column schema manually or with a reference table

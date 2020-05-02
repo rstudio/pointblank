@@ -1,13 +1,17 @@
 #' Are column data less than a specified value?
 #'
-#' The `col_vals_lt()` validation step function checks whether column values (in
-#' any number of specified `columns`) are *less than* a specified `value` (the
-#' exact comparison used in this function is `col_val < value`). The `value` can
-#' be specified as a single, literal value or as a column name given in
-#' `vars()`. This function can be used directly on a data table or with an
-#' *agent* object (technically, a `ptblank_agent` object). Each validation step
-#' will operate over the number of test units that is equal to the number of
-#' rows in the table (after any `preconditions` have been applied).
+#' The `col_vals_lt()` validation step function and the `expect_col_vals_lt()`
+#' expectation function both check whether column values in a table are *less
+#' than* a specified `value` (the exact comparison used in this function is
+#' `col_val < value`). The `value` can be specified as a single, literal value
+#' or as a column name given in `vars()`. The validation step function can be
+#' used directly on a data table or with an *agent* object (technically, a
+#' `ptblank_agent` object) whereas the expectation function can only be used
+#' with a data table. The types of data tables that can be used include data
+#' frames, tibbles, and even database tables of `tbl_dbi` class. Each validation
+#' step or expectation will operate over the number of test units that is equal
+#' to the number of rows in the table (after any `preconditions` have been
+#' applied).
 #'
 #' If providing multiple column names to `columns`, the result will be an
 #' expansion of validation steps to that number of column names (e.g.,
@@ -57,8 +61,11 @@
 #' @param value A numeric value used for this test. Any column values `< value`
 #'   are considered passing.
 #'   
-#' @return Either a `ptblank_agent` object or a table object, depending on what
-#'   was passed to `x`.
+#' @return For the validation step function, the return value is either a
+#'   `ptblank_agent` object or a table object (depending on whether an agent
+#'   object or a table was passed to `x`). The expectation function invisibly
+#'   returns its input but, in the context of testing data, the function is
+#'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   
 #' @examples
 #' # Create a simple table with a
@@ -85,6 +92,10 @@
 #' 
 #' @seealso The analogous function with a right-closed bound: [col_vals_lte()].
 #' 
+#' @name col_vals_lt
+NULL
+
+#' @rdname col_vals_lt
 #' @import rlang
 #' @export
 col_vals_lt <- function(x,
@@ -143,4 +154,56 @@ col_vals_lt <- function(x,
   }
 
   agent
+}
+
+#' @rdname col_vals_lt
+#' @import rlang
+#' @export
+expect_col_vals_lt <- function(object,
+                               columns,
+                               value,
+                               na_pass = FALSE,
+                               preconditions = NULL,
+                               threshold = 1) {
+  
+  expectation_type <- "expect_col_vals_lt"
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_vals_lt(
+      columns = {{ columns }},
+      value = {{ value }}, 
+      na_pass = na_pass,
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  
+  threshold_type <- get_threshold_type(threshold = threshold)
+  
+  if (threshold_type == "proportional") {
+    failed_amount <- vs$f_failed
+  } else {
+    failed_amount <- vs$n_failed
+  }
+
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
+    
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue(failure_message_gluestring)
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
 }

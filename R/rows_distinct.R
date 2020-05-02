@@ -1,12 +1,16 @@
-#' Verify that row data are distinct
+#' Are row data distinct?
 #'
-#' The `rows_distinct()` validation step function checks whether row values
+#' The `rows_distinct()` validation step function and the
+#' `expect_rows_distinct()` expectation function both check whether row values
 #' (optionally constrained to a selection of specified `columns`) are, when
-#' taken as a complete unit, distinct from all other units in the table. This
-#' function can be used directly on a data table or with an *agent* object
-#' (technically, a `ptblank_agent` object). This validation step will operate
-#' over the number of test units that is equal to the number of rows in the
-#' table (after any `preconditions` have been applied).
+#' taken as a complete unit, distinct from all other units in the table. The
+#' validation step function can be used directly on a data table or with an
+#' *agent* object (technically, a `ptblank_agent` object) whereas the
+#' expectation function can only be used with a data table. The types of data
+#' tables that can be used include data frames, tibbles, and even database
+#' tables of `tbl_dbi` class. As a validation step or as an expectation, this
+#' will operate over the number of test units that is equal to the number of
+#' rows in the table (after any `preconditions` have been applied).
 #' 
 #' We can specify the constraining column names in quotes, in `vars()`, and with
 #' the following **tidyselect** helper functions: `starts_with()`,
@@ -45,8 +49,11 @@
 #'
 #' @inheritParams col_vals_gt
 #'   
-#' @return Either a `ptblank_agent` object or a table object, depending on what
-#'   was passed to `x`.
+#' @return For the validation step function, the return value is either a
+#'   `ptblank_agent` object or a table object (depending on whether an agent
+#'   object or a table was passed to `x`). The expectation function invisibly
+#'   returns its input but, in the context of testing data, the function is
+#'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   
 #' @examples
 #' # Create a simple table with three
@@ -76,9 +83,12 @@
 #' @section Function ID:
 #' 2-15
 #' 
+#' @name rows_distinct
+NULL
+
+#' @rdname rows_distinct
 #' @import rlang
 #' @export
-
 rows_distinct <- function(x,
                           columns = NULL,
                           preconditions = NULL,
@@ -154,6 +164,54 @@ rows_distinct <- function(x,
     )
 
   agent
+}
+
+#' @rdname rows_distinct
+#' @import rlang
+#' @export
+expect_rows_distinct <- function(object,
+                                 columns = NULL,
+                                 preconditions = NULL,
+                                 threshold = 1) {
+  
+  expectation_type <- "expect_rows_distinct"
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    rows_distinct(
+      columns = {{ columns }},
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  
+  threshold_type <- get_threshold_type(threshold = threshold)
+  
+  if (threshold_type == "proportional") {
+    failed_amount <- vs$f_failed
+  } else {
+    failed_amount <- vs$n_failed
+  }
+  
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue(failure_message_gluestring)
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
 }
 
 #' Verify that row data are not duplicated (deprecated)

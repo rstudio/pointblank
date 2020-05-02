@@ -1,18 +1,20 @@
 #' Perform multiple rowwise validations for joint validity
 #'
-#' The `conjointly()` validation step function checks whether the same test
-#' units all pass multiple validations with `col_vals_*()`-type functions.
+#' The `conjointly()` validation step function and the `expect_conjointly()`
+#' expectation function both check whether test units at each index (typically
+#' each row) all pass multiple validations with `col_vals_*()`-type functions.
 #' Because of the imposed constraint on the allowed validation step functions,
 #' all test units are rows of the table (after any common `preconditions` have
-#' been applied). This validation step function (internally composed of multiple
-#' steps) ultimately performs a rowwise test of whether all sub-validations
-#' reported a *pass* for the same test units. In practice, an example of a
-#' joint validation is testing whether values for column `a` are greater than
-#' a specific value while values for column `b` lie within a specified range.
-#' The validation step functions to be part of the conjoint validation are to be
-#' supplied as one-sided **R** formulas (using a leading `~`, and having a `.`
-#' stand in as the data object). This function can be used directly on a data
-#' table or with an *agent* object (technically, a `ptblank_agent` object).
+#' been applied). The validation step function and expectation (internally
+#' composed of multiple validation steps) ultimately performs a rowwise test of
+#' whether all sub-validations reported a *pass* for the same test units. In
+#' practice, an example of a joint validation is testing whether values for
+#' column `a` are greater than a specific value while values for column `b` lie
+#' within a specified range. The validation step functions to be part of the
+#' conjoint validation are to be supplied as one-sided **R** formulas (using a
+#' leading `~`, and having a `.` stand in as the data object). The validation
+#' step function can be used directly on a data table or with an *agent* object
+#' (technically, a `ptblank_agent` object).
 #' 
 #' If providing multiple column names in any of the supplied validation step
 #' functions, the result will be an expansion of sub-validation steps to that
@@ -59,6 +61,12 @@
 #' `~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(., vars(b)`).
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #'
+#' @return For the validation step function, the return value is either a
+#'   `ptblank_agent` object or a table object (depending on whether an agent
+#'   object or a table was passed to `x`). The expectation function invisibly
+#'   returns its input but, in the context of testing data, the function is
+#'   called primarily for its potential side-effects (e.g., signaling failure).
+#'
 #' @examples
 #' # Create a simple table with three
 #' # columns of numerical values
@@ -84,6 +92,10 @@
 #' @section Function ID:
 #' 2-14
 #'
+#' @name conjointly
+NULL
+
+#' @rdname conjointly
 #' @import rlang
 #' @export
 conjointly <- function(x,
@@ -150,5 +162,49 @@ conjointly <- function(x,
     )
   
   agent
-}  
+}
+
+#' @rdname conjointly
+#' @import rlang
+#' @export
+expect_conjointly <- function(object,
+                              ...,
+                              .list = list2(...),
+                              preconditions = NULL,
+                              threshold = 1) {
+  
+  expectation_type <- "expect_conjointly"
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    conjointly(
+      .list = .list,
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  
+  threshold_type <- get_threshold_type(threshold = threshold)
+  
+  if (threshold_type == "proportional") {
+    failed_amount <- vs$f_failed
+  } else {
+    failed_amount <- vs$n_failed
+  }
+  
+  # TODO: express warnings and errors here
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue(failure_message_gluestring)
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
+}
   

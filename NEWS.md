@@ -1,5 +1,7 @@
 # pointblank 0.3.1.9000 (development version)
 
+* Added 24 expectation functions (e.g., `expect_col_exists()`, `expect_rows_distinct()`, `expect_col_schema_match()`, etc.) as complements of the 24 validation step functions; all of these can be used for **testthat** tests of tabular data with a simplified interface that exposes an easy-to-use failure `threshold`.
+
 # pointblank 0.3.1.1
 
 * Fixed implementation of the `col_vals_between()` and `col_vals_not_between()` step functions to work with `tbl_dbi` objects.

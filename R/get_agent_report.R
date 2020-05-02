@@ -42,7 +42,8 @@
 #'   available, then a tibble will be returned.
 #' @param ... Additional options passed to downstream functions.
 #' 
-#' @return A tibble.
+#' @return A gt table object if `display_table = TRUE` or a tibble if
+#'   `display_table = FALSE`.
 #' 
 #' @examples
 #' # Create a simple table with a
@@ -59,8 +60,15 @@
 #' 
 #' # Get a tibble-based report from the
 #' # agent by using `get_agent_report()`
+#' # with `display_table = FALSE`
 #' agent %>%
 #'   get_agent_report(display_table = FALSE)
+#'   
+#' # View a the report by printing the
+#' # `agent` object anytime, but, return a
+#' # gt table object by using this with
+#' # `display_table = TRUE` (the default)
+#' gt_tbl <- get_agent_report(agent)
 #' 
 #' @family Post-interrogation
 #' @section Function ID:

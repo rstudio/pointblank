@@ -1,9 +1,14 @@
 #' Do one or more columns actually exist?
 #'
-#' The `col_exists()` validation step function checks whether one or more
-#' columns exist in the target table. The only requirement is a specification of
-#' the column names. Each validation step will operate over a single test unit,
-#' which is whether the column exists or not.
+#' The `col_exists()` validation step function and the `expect_col_exists()`
+#' expectation function both check whether one or more columns exist in the
+#' target table. The only requirement is specification of the column names. The
+#' validation step function can be used directly on a data table or with an
+#' *agent* object (technically, a `ptblank_agent` object) whereas the
+#' expectation function can only be used with a data table. The types of data
+#' tables that can be used include data frames, tibbles, and even database
+#' tables of the `tbl_dbi` class. Each validation step or expectation will
+#' operate over a single test unit, which is whether the column exists or not.
 #' 
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
@@ -34,8 +39,11 @@
 #'   provided as a vector of column names using `c()` or bare column names
 #'   enclosed in [vars()].
 #'   
-#' @return Either a `ptblank_agent` object or a table object, depending on what
-#'   was passed to `x`.
+#' @return For the validation step function, the return value is either a
+#'   `ptblank_agent` object or a table object (depending on whether an agent
+#'   object or a table was passed to `x`). The expectation function invisibly
+#'   returns its input but, in the context of testing data, the function is
+#'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   
 #' @examples
 #' # Create a simple table with
@@ -60,7 +68,10 @@
 #' @family Validation Step Functions
 #' @section Function ID:
 #' 2-23
-#' 
+#' @name col_exists
+NULL
+
+#' @rdname col_exists
 #' @import rlang
 #' @export
 col_exists <- function(x,
@@ -120,4 +131,50 @@ col_exists <- function(x,
   }
 
   agent
+}
+
+#' @rdname col_exists
+#' @import rlang
+#' @export
+expect_col_exists <- function(object,
+                              columns,
+                              threshold = 1) {
+
+  expectation_type <- "expect_col_exists"
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_exists(
+      columns = {{ columns }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  x <- vs$notify %>% all()
+  
+  threshold_type <- get_threshold_type(threshold = threshold)
+  
+  if (threshold_type == "proportional") {
+    failed_amount <- vs$f_failed
+  } else {
+    failed_amount <- vs$n_failed
+  }
+  
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue(failure_message_gluestring)
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
 }

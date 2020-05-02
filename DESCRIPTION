@@ -34,6 +34,7 @@ Imports:
     magrittr,
     rlang (>= 0.4.5),
     scales (>= 1.1.0),
+    testthat (>= 2.3.2),
     tibble (>= 3.0.0),
     tidyselect (>= 1.0.0)
 Suggests:
@@ -41,7 +42,6 @@ Suggests:
     knitr,
     lubridate,
     RSQLite,
-    testthat (>= 2.1.0),
     readr,
     rmarkdown
 Roxygen: list(markdown = TRUE)

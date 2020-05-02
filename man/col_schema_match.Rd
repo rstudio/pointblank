@@ -2,12 +2,16 @@
 % Please edit documentation in R/col_schema_match.R
 \name{col_schema_match}
 \alias{col_schema_match}
+\alias{expect_col_schema_match}
 \title{Do columns in the table (and their types) match a predefined schema?}
 \usage{
 col_schema_match(x, schema, actions = NULL, brief = NULL, active = TRUE)
+
+expect_col_schema_match(object, schema, threshold = 1)
 }
 \arguments{
-\item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
+\item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
+class \code{ptblank_agent} that can be created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{schema}{A table schema of type \code{col_schema} which can be generated
 using the \code{\link[=col_schema]{col_schema()}} function.}
@@ -24,17 +28,41 @@ the validation step inactive (still reporting its presence and keeping
 indexes for the steps unchanged). If the step function will be operating
 directly on data, then any step with \code{active = FALSE} will simply pass the
 data through with no validation whatsoever. The default for this is \code{TRUE}.}
+
+\item{object}{A data frame or tibble (\code{tbl_df} or \code{tbl_dbi}) that serves as
+the target table for the expectation function.}
+
+\item{threshold}{A simple failure threshold value for use with the
+expectation function. By default, this is set to \code{1} meaning that any
+single unit of failure in data validation results in an overall test
+failure. Whole numbers beyond \code{1} indicate that any failing units up to
+that absolute threshold value will result in a succeeding \strong{testthat}
+test. Likewise, fractional values (between \code{0} and \code{1}) act as a
+proportional failure threshold.}
+}
+\value{
+For the validation step function, the return value is either a
+\code{ptblank_agent} object or a table object (depending on whether an agent
+object or a table was passed to \code{x}). The expectation function invisibly
+returns its input but, in the context of testing data, the function is
+called primarily for its potential side-effects (e.g., signaling failure).
 }
 \description{
-The \code{col_schema_match()} validation step function works in conjunction with a
-\code{col_schema} object (generated through the \code{\link[=col_schema]{col_schema()}} function) to
-determine whether the expected schema matches the target table. This
-validation step operates over a single test unit, which is whether the schema
-exactly matches that of the table. If the target table is a \code{tbl_sql} object,
-we can choose to validate the column schema that is based on R column types
-(e.g., \code{"numeric"}, \code{"character"}, etc.), or, SQL column types (e.g.,
-\code{"double"}, \code{"varchar"}, etc.). That option is defined in the \code{\link[=col_schema]{col_schema()}}
-function (with the \code{.db_col_types} argument).
+The \code{col_schema_match()} validation step function and the
+\code{expect_col_schema_match()} expectation function both work in conjunction
+with a \code{col_schema} object (generated through the \code{\link[=col_schema]{col_schema()}} function) to
+determine whether the expected schema matches that of the target table. The
+validation step function can be used directly on a data table or with an
+\emph{agent} object (technically, a \code{ptblank_agent} object) whereas the
+expectation function can only be used with a data table. The types of data
+tables that can be used include data frames, tibbles, and even database
+tables of \code{tbl_dbi} class. The validation step or expectation operates over a
+single test unit, which is whether the schema exactly matches that of the
+table. If the target table is a \code{tbl_dbi} object, we can choose to validate
+the column schema that is based on R column types (e.g., \code{"numeric"},
+\code{"character"}, etc.), or, SQL column types (e.g., \code{"double"}, \code{"varchar"},
+etc.). That option is defined in the \code{\link[=col_schema]{col_schema()}} function (with the
+\code{.db_col_types} argument).
 }
 \details{
 Often, we will want to specify \code{actions} for the validation. This argument,
@@ -80,9 +108,9 @@ schema_obj <-
   )
 
 # Validate that the schema object
-# `col_schema_x` exactly defines
+# `schema_obj` exactly defines
 # the column names and column types
-# of the `tbl_x` table
+# of the `tbl` table
 agent <-
   create_agent(tbl = tbl) \%>\%
   col_schema_match(schema_obj) \%>\%

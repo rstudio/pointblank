@@ -2,7 +2,8 @@
 % Please edit documentation in R/rows_distinct.R
 \name{rows_distinct}
 \alias{rows_distinct}
-\title{Verify that row data are distinct}
+\alias{expect_rows_distinct}
+\title{Are row data distinct?}
 \usage{
 rows_distinct(
   x,
@@ -12,9 +13,17 @@ rows_distinct(
   brief = NULL,
   active = TRUE
 )
+
+expect_rows_distinct(
+  object,
+  columns = NULL,
+  preconditions = NULL,
+  threshold = 1
+)
 }
 \arguments{
-\item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
+\item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
+class \code{ptblank_agent} that can be created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
@@ -39,19 +48,37 @@ the validation step inactive (still reporting its presence and keeping
 indexes for the steps unchanged). If the step function will be operating
 directly on data, then any step with \code{active = FALSE} will simply pass the
 data through with no validation whatsoever. The default for this is \code{TRUE}.}
+
+\item{object}{A data frame or tibble (\code{tbl_df} or \code{tbl_dbi}) that serves as
+the target table for the expectation function.}
+
+\item{threshold}{A simple failure threshold value for use with the
+expectation function. By default, this is set to \code{1} meaning that any
+single unit of failure in data validation results in an overall test
+failure. Whole numbers beyond \code{1} indicate that any failing units up to
+that absolute threshold value will result in a succeeding \strong{testthat}
+test. Likewise, fractional values (between \code{0} and \code{1}) act as a
+proportional failure threshold.}
 }
 \value{
-Either a \code{ptblank_agent} object or a table object, depending on what
-was passed to \code{x}.
+For the validation step function, the return value is either a
+\code{ptblank_agent} object or a table object (depending on whether an agent
+object or a table was passed to \code{x}). The expectation function invisibly
+returns its input but, in the context of testing data, the function is
+called primarily for its potential side-effects (e.g., signaling failure).
 }
 \description{
-The \code{rows_distinct()} validation step function checks whether row values
+The \code{rows_distinct()} validation step function and the
+\code{expect_rows_distinct()} expectation function both check whether row values
 (optionally constrained to a selection of specified \code{columns}) are, when
-taken as a complete unit, distinct from all other units in the table. This
-function can be used directly on a data table or with an \emph{agent} object
-(technically, a \code{ptblank_agent} object). This validation step will operate
-over the number of test units that is equal to the number of rows in the
-table (after any \code{preconditions} have been applied).
+taken as a complete unit, distinct from all other units in the table. The
+validation step function can be used directly on a data table or with an
+\emph{agent} object (technically, a \code{ptblank_agent} object) whereas the
+expectation function can only be used with a data table. The types of data
+tables that can be used include data frames, tibbles, and even database
+tables of \code{tbl_dbi} class. As a validation step or as an expectation, this
+will operate over the number of test units that is equal to the number of
+rows in the table (after any \code{preconditions} have been applied).
 }
 \details{
 We can specify the constraining column names in quotes, in \code{vars()}, and with

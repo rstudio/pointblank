@@ -2,6 +2,7 @@
 % Please edit documentation in R/conjointly.R
 \name{conjointly}
 \alias{conjointly}
+\alias{expect_conjointly}
 \title{Perform multiple rowwise validations for joint validity}
 \usage{
 conjointly(
@@ -13,9 +14,18 @@ conjointly(
   brief = NULL,
   active = TRUE
 )
+
+expect_conjointly(
+  object,
+  ...,
+  .list = list2(...),
+  preconditions = NULL,
+  threshold = 1
+)
 }
 \arguments{
-\item{x}{A data frame, tibble, or an agent object of class \code{ptblank_agent}.}
+\item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
+class \code{ptblank_agent} that can be created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{...}{a collection one-sided formulas that consist of validation step
 functions that validate row units. Specifically, these functions should be
@@ -44,21 +54,41 @@ the validation step inactive (still reporting its presence and keeping
 indexes for the steps unchanged). If the step function will be operating
 directly on data, then any step with \code{active = FALSE} will simply pass the
 data through with no validation whatsoever. The default for this is \code{TRUE}.}
+
+\item{object}{A data frame or tibble (\code{tbl_df} or \code{tbl_dbi}) that serves as
+the target table for the expectation function.}
+
+\item{threshold}{A simple failure threshold value for use with the
+expectation function. By default, this is set to \code{1} meaning that any
+single unit of failure in data validation results in an overall test
+failure. Whole numbers beyond \code{1} indicate that any failing units up to
+that absolute threshold value will result in a succeeding \strong{testthat}
+test. Likewise, fractional values (between \code{0} and \code{1}) act as a
+proportional failure threshold.}
+}
+\value{
+For the validation step function, the return value is either a
+\code{ptblank_agent} object or a table object (depending on whether an agent
+object or a table was passed to \code{x}). The expectation function invisibly
+returns its input but, in the context of testing data, the function is
+called primarily for its potential side-effects (e.g., signaling failure).
 }
 \description{
-The \code{conjointly()} validation step function checks whether the same test
-units all pass multiple validations with \verb{col_vals_*()}-type functions.
+The \code{conjointly()} validation step function and the \code{expect_conjointly()}
+expectation function both check whether test units at each index (typically
+each row) all pass multiple validations with \verb{col_vals_*()}-type functions.
 Because of the imposed constraint on the allowed validation step functions,
 all test units are rows of the table (after any common \code{preconditions} have
-been applied). This validation step function (internally composed of multiple
-steps) ultimately performs a rowwise test of whether all sub-validations
-reported a \emph{pass} for the same test units. In practice, an example of a
-joint validation is testing whether values for column \code{a} are greater than
-a specific value while values for column \code{b} lie within a specified range.
-The validation step functions to be part of the conjoint validation are to be
-supplied as one-sided \strong{R} formulas (using a leading \code{~}, and having a \code{.}
-stand in as the data object). This function can be used directly on a data
-table or with an \emph{agent} object (technically, a \code{ptblank_agent} object).
+been applied). The validation step function and expectation (internally
+composed of multiple validation steps) ultimately performs a rowwise test of
+whether all sub-validations reported a \emph{pass} for the same test units. In
+practice, an example of a joint validation is testing whether values for
+column \code{a} are greater than a specific value while values for column \code{b} lie
+within a specified range. The validation step functions to be part of the
+conjoint validation are to be supplied as one-sided \strong{R} formulas (using a
+leading \code{~}, and having a \code{.} stand in as the data object). The validation
+step function can be used directly on a data table or with an \emph{agent} object
+(technically, a \code{ptblank_agent} object).
 }
 \details{
 If providing multiple column names in any of the supplied validation step

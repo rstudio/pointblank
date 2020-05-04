@@ -66,10 +66,10 @@ resolve_columns <- function(x, var_expr, preconditions) {
   if (inherits(var_expr, "quosure") && var_expr %>% rlang::as_label() == "NULL") {
     return(character(0))
   } 
-  
+
   # Get the column names
   if (is.null(preconditions)) {
-    
+
     if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
       
       column <- resolve_expr_to_cols(tbl = x, var_expr = !!var_expr)
@@ -81,26 +81,18 @@ resolve_columns <- function(x, var_expr, preconditions) {
     }
     
   } else {
-    
+
     if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
-      
-      tbl <- x
-      
-      tbl <- 
-        preconditions %>%
-        rlang::f_rhs() %>%
-        rlang::eval_tidy()
+  
+      tbl <- apply_preconditions(tbl = x, preconditions = preconditions)
       
       column <- resolve_expr_to_cols(tbl = tbl, var_expr = !!var_expr)
       
     } else if (inherits(x, ("ptblank_agent"))) {
-      
+
       tbl <- get_tbl_object(agent = x)
       
-      tbl <- 
-        preconditions %>%
-        rlang::f_rhs() %>%
-        rlang::eval_tidy()
+      tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
       
       column <- resolve_expr_to_cols(tbl = tbl, var_expr = !!var_expr)
     }

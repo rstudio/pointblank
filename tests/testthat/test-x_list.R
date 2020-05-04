@@ -4,8 +4,8 @@ al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 
 agent <-
   create_agent(tbl = small_table, actions = al) %>%
-  col_vals_gt(vars(g), 100, preconditions = ~tbl %>% dplyr::mutate(g = a + 95)) %>%
-  col_vals_lt(vars(c), vars(d), preconditions = ~tbl %>% dplyr::mutate(d = d - 200)) %>%
+  col_vals_gt(vars(g), 100, preconditions = ~ . %>% dplyr::mutate(g = a + 95)) %>%
+  col_vals_lt(vars(c), vars(d), preconditions = ~ . %>% dplyr::mutate(d = d - 200)) %>%
   col_vals_in_set(vars(f), c("low", "mid", "high", "higher"))
 
 test_that("An x-list for a step is structurally correct", {
@@ -56,7 +56,7 @@ test_that("An x-list for a step is structurally correct", {
     x_list_before$briefs,
     paste0(
       "Expect that values in `g` (computed column) should be > `100`. ",
-      "Precondition applied: `tbl %>% dplyr::mutate(g = a + 95)`."
+      "Precondition applied: `. %>% dplyr::mutate(g = a + 95)`."
       )
   )
   expect_is(x_list_before$eval_error, "logical")
@@ -130,7 +130,7 @@ test_that("An x-list for a step is structurally correct", {
     x_list_after$briefs, 
     paste0(
       "Expect that values in `g` (computed column) should be > `100`. ",
-      "Precondition applied: `tbl %>% dplyr::mutate(g = a + 95)`."
+      "Precondition applied: `. %>% dplyr::mutate(g = a + 95)`."
     )
   )
   expect_is(x_list_after$eval_error, "logical")
@@ -213,11 +213,11 @@ test_that("A complete x-list is structurally correct", {
     c(
       paste0(
         "Expect that values in `g` (computed column) should be > `100`. ",
-        "Precondition applied: `tbl %>% dplyr::mutate(g = a + 95)`."
+        "Precondition applied: `. %>% dplyr::mutate(g = a + 95)`."
       ),
       paste0(
         "Expect that values in `c` should be < `d`. Precondition applied: ",
-        "`tbl %>% dplyr::mutate(d = d - 200)`."
+        "`. %>% dplyr::mutate(d = d - 200)`."
       ),
       paste0(
         "Expect that values in `f` should be in the set of `low`, `mid`, ",
@@ -307,11 +307,11 @@ test_that("A complete x-list is structurally correct", {
     c(
       paste0(
         "Expect that values in `g` (computed column) should be > `100`. ",
-        "Precondition applied: `tbl %>% dplyr::mutate(g = a + 95)`."
+        "Precondition applied: `. %>% dplyr::mutate(g = a + 95)`."
       ),
       paste0(
         "Expect that values in `c` should be < `d`. Precondition applied: ",
-        "`tbl %>% dplyr::mutate(d = d - 200)`."
+        "`. %>% dplyr::mutate(d = d - 200)`."
       ),
       paste0(
         "Expect that values in `f` should be in the set of `low`, `mid`, ",

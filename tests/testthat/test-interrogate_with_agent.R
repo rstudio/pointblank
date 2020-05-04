@@ -248,7 +248,7 @@ test_that("Interrogating for valid row values", {
     col_vals_between(
       columns = vars(d),
       left = 0, right = 5000,
-      preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-04")
+      preconditions = ~ . %>% dplyr::filter(date > "2016-01-04")
     ) %>%
     interrogate()
   
@@ -349,7 +349,7 @@ test_that("Interrogating for valid row values", {
     col_vals_not_between(
       columns = vars(d),
       left = 500, right = 1000,
-      preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-04")
+      preconditions = ~ . %>% dplyr::filter(date > "2016-01-04")
     ) %>%
     interrogate()
   
@@ -395,7 +395,7 @@ test_that("Interrogating for valid row values", {
     col_vals_equal(
       columns = vars(d),
       value = 283.94,
-      preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-04")
+      preconditions = ~ . %>% dplyr::filter(date > "2016-01-04")
     ) %>%
     interrogate()
   
@@ -464,7 +464,7 @@ test_that("Interrogating for valid row values", {
     col_vals_not_equal(
       columns = vars(d),
       value = 283.94,
-      preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-04")
+      preconditions = ~ . %>% dplyr::filter(date > "2016-01-04")
     ) %>%
     interrogate()
   
@@ -511,7 +511,7 @@ test_that("Interrogating for valid row values", {
       create_agent(tbl = small_table) %>%
       col_vals_gt(
         columns = vars(date_time), value = vars(date),
-        preconditions = ~ tbl %>% dplyr::mutate(date = lubridate::as_datetime(date))) %>%
+        preconditions = ~ . %>% dplyr::mutate(date = lubridate::as_datetime(date))) %>%
       interrogate()
   )
   
@@ -558,7 +558,7 @@ test_that("Interrogating for valid row values", {
   validation <-
     create_agent(tbl = small_table) %>%
     rows_distinct(
-      preconditions = ~ tbl %>% dplyr::filter(date != "2016-01-20")
+      preconditions = ~ . %>% dplyr::filter(date != "2016-01-20")
     ) %>%
     interrogate()
   
@@ -690,7 +690,7 @@ test_that("Interrogating for valid row values", {
     create_agent(tbl = small_table) %>%
     col_vals_not_null(
       columns = vars(c),
-      preconditions = ~ tbl %>%
+      preconditions = ~ . %>%
         dplyr::filter(date > "2016-01-06" & date < "2016-01-30")
     ) %>%
     interrogate()
@@ -736,7 +736,7 @@ test_that("Interrogating for valid row values", {
     create_agent(tbl = small_table) %>%
     col_vals_null(
       columns = vars(c),
-      preconditions = ~ tbl %>%
+      preconditions = ~ . %>%
         dplyr::filter(date == '2016-01-06' | date == '2016-01-30')
     ) %>%
     interrogate()
@@ -786,7 +786,7 @@ test_that("Interrogating for valid row values", {
     col_vals_regex(
       columns = vars(f),
       regex = "[a-z]{3}",
-      preconditions = ~ tbl %>% dplyr::filter(f != "high")
+      preconditions = ~ . %>% dplyr::filter(f != "high")
     ) %>%
     interrogate()
   

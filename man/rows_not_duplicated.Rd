@@ -21,11 +21,9 @@ vector) to which this validation should be applied.}
 
 \item{preconditions}{expressions used for mutating the input table before
 proceeding with the validation. This is ideally as a one-sided R formula
-using a leading \code{~}. In the formula representation, the \code{tbl} serves as the
+using a leading \code{~}. In the formula representation, the \code{.} serves as the
 input data table to be transformed (e.g.,
-\code{~ tbl \%>\% dplyr::mutate(col = col + 10)}. A series of expressions can be
-used by enclosing the set of statements with \code{{ }} but note that the \code{tbl}
-object must be ultimately returned.}
+\code{~ . \%>\% dplyr::mutate(col = col + 10)}.}
 
 \item{brief}{An optional, text-based description for the validation step.}
 

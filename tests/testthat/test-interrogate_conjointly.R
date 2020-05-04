@@ -66,7 +66,7 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
       ~ col_vals_gt(., columns = vars(a), value = 4),
       ~ col_vals_lt(., columns = vars(b), value = 10),
       ~ col_vals_not_null(., columns = vars(c)),
-      preconditions = ~ tbl %>% head(2)
+      preconditions = ~ . %>% head(2)
     ) %>%
     interrogate()
   
@@ -107,7 +107,7 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
     expect_equal(c("~", "col_vals_not_null(., columns = vars(c))"))
   
   validation$validation_set[["preconditions"]] %>% unlist() %>% .[[1]] %>% as.character() %>%
-    expect_equal(c("~", "tbl %>% head(2)"))
+    expect_equal(c("~", ". %>% head(2)"))
   
   # Use a single validation step function in a single
   # `conjointly()` validation step, then, `interrogate()`

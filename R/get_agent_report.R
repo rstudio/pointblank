@@ -340,7 +340,7 @@ get_agent_report <- function(agent,
           x
         } 
       )
-    
+
     # Reformat `precon`
     precon_upd <- 
       validation_set$preconditions %>%
@@ -348,6 +348,7 @@ get_agent_report <- function(agent,
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
         FUN = function(x) {
+
           if (is.null(x)) {
             x <- 
               make_button(
@@ -357,9 +358,8 @@ get_agent_report <- function(agent,
                 background = "#FFFFFF"
               )
             
-          } else {
-            x <- x %>% as.character() %>% base::setdiff("~")
-            
+          } else if (rlang::is_formula(x) || rlang::is_function(x)) {
+
             x <- 
               make_button(
                 x = "&#10174;",

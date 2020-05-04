@@ -41,11 +41,9 @@ a pass.}
 
 \item{preconditions}{expressions used for mutating the input table before
 proceeding with the validation. This is ideally as a one-sided R formula
-using a leading \code{~}. In the formula representation, the \code{tbl} serves as the
+using a leading \code{~}. In the formula representation, the \code{.} serves as the
 input data table to be transformed (e.g.,
-\code{~ tbl \%>\% dplyr::mutate(col = col + 10)}. A series of expressions can be
-used by enclosing the set of statements with \code{{ }} but note that the \code{tbl}
-object must be ultimately returned.}
+\code{~ . \%>\% dplyr::mutate(col = col + 10)}.}
 
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
@@ -107,15 +105,15 @@ unit should be counted as a \emph{pass} or a \emph{fail}. The default of
 test units.
 
 Having table \code{preconditions} means \strong{pointblank} will mutate the table just
-before interrogation. It's isolated to the validation steps produced by this
-validation step function. Using \strong{dplyr} code is suggested here since the
-statements can be translated to SQL if necessary. The code is to be supplied
-as a one-sided \strong{R} formula (using a leading \code{~}). In the formula
-representation, the obligatory \code{tbl} variable will serve as the input
-data table to be transformed (e.g.,
-\code{~ tbl \%>\% dplyr::mutate(col_a = col_b + 10)}. A series of expressions can be
-used by enclosing the set of statements with \code{{ }} but note that the \code{tbl}
-variable must be ultimately returned.
+before interrogation. Such a table mutation is isolated in scope to the
+validation step(s) produced by the validation step function call. Using
+\strong{dplyr} code is suggested here since the statements can be translated to
+SQL if necessary. The code is most easily supplied as a one-sided \strong{R}
+formula (using a leading \code{~}). In the formula representation, the \code{.} serves
+as the input data table to be transformed (e.g.,
+\code{~ . \%>\% dplyr::mutate(col_a = col_b + 10)}). Alternatively, a function could
+instead be supplied (e.g.,
+\code{function(x) dplyr::mutate(x, col_a = col_b + 10)}).
 
 Often, we will want to specify \code{actions} for the validation. This argument,
 present in every validation step function, takes a specially-crafted list
@@ -158,9 +156,8 @@ tbl <-
 agent <-
   create_agent(tbl = tbl) \%>\%
   col_vals_lte(vars(a_b), 10,
-    preconditions = ~ {
-      tbl \%>\% dplyr::mutate(a_b = a + b)
-    }
+    preconditions = ~
+      . \%>\% dplyr::mutate(a_b = a + b)
   ) \%>\%
   interrogate()
 

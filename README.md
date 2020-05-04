@@ -5,8 +5,8 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/pointblank)](https://cran.r-project.org/package=pointblank)
-[![Travis-CI Build
-Status](https://travis-ci.org/rich-iannone/pointblank.svg?branch=master)](https://travis-ci.org/rich-iannone/pointblank)
+[![R build
+status](https://github.com/rich-iannone/pointblank/workflows/R-CMD-check/badge.svg)](https://github.com/rich-iannone/pointblank/actions)
 [![Coverage
 status](https://codecov.io/gh/rich-iannone/pointblank/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/pointblank?branch=master)
 
@@ -76,16 +76,16 @@ agent <-
   ) %>%
   create_agent(name = "simple_tibble", actions = al) %>%
   col_vals_between(vars(a), 1, 9, na_pass = TRUE) %>%
-  col_vals_lt(vars(c), 12, preconditions = ~tbl %>% dplyr::mutate(c = a + b)) %>%
+  col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b)) %>%
   interrogate()
 ```
 
     #> 
-    #> ── Interrogation Started - there are 2 steps ─────────────────────────────────────
+    #> ── Interrogation Started - there are 2 steps ─────────────────────────────────────────────────────────
     #> ✓ Step 1: OK.
     #> ! Step 2: WARNING condition met.
     #> 
-    #> ── Interrogation Completed ───────────────────────────────────────────────────────
+    #> ── Interrogation Completed ───────────────────────────────────────────────────────────────────────────
 
 Because an *agent* was used, we can get a report from it.
 
@@ -108,13 +108,12 @@ dplyr::tibble(
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
   col_vals_between(vars(a), 1, 9, na_pass = TRUE) %>%
-  col_vals_lt(vars(c), 12, preconditions = ~tbl %>% dplyr::mutate(c = a + b))
+  col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b))
 ```
 
     Warning message:
     The validation (`col_vals_lt()`) meets or exceeds the warn threshold
-     * VIOLATION: Expect that when the precondition `tbl %>% dplyr::mutate(c = a + b)`
-    is applied, values in `c` (computed column) should be < 12
+     * VIOLATION: Expect that values in `c` (computed column) should be < `12`. Precondition applied: `. %>% dplyr::mutate(c = a + b)`.
 
     #> # A tibble: 6 x 2
     #>       a     b

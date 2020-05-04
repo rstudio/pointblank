@@ -19,7 +19,7 @@ library(dplyr)
 # pointblank <a href='http://rich-iannone.github.io/pointblank/'><img src="man/figures/logo.svg" align="right" height="250px" /></a>
 
 [![CRAN status](https://www.r-pkg.org/badges/version/pointblank)](https://cran.r-project.org/package=pointblank)
-[![Travis-CI Build Status](https://travis-ci.org/rich-iannone/pointblank.svg?branch=master)](https://travis-ci.org/rich-iannone/pointblank)
+[![R build status](https://github.com/rich-iannone/pointblank/workflows/R-CMD-check/badge.svg)](https://github.com/rich-iannone/pointblank/actions)
 [![Coverage status](https://codecov.io/gh/rich-iannone/pointblank/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/pointblank?branch=master)
 
 With the **pointblank** package it's really easy to validate your data with workflows attuned to your data quality needs. The **pointblank** philosophy: a set of validation step functions should work seamlessly with data in local data tables and with data in databases.
@@ -59,7 +59,7 @@ agent <-
   ) %>%
   create_agent(name = "simple_tibble", actions = al) %>%
   col_vals_between(vars(a), 1, 9, na_pass = TRUE) %>%
-  col_vals_lt(vars(c), 12, preconditions = ~tbl %>% dplyr::mutate(c = a + b)) %>%
+  col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b)) %>%
   interrogate()
 ```
 
@@ -71,7 +71,7 @@ agent <-
   ) %>%
   create_agent(name = "simple_tibble", actions = action_levels(warn_at = 1)) %>%
   col_vals_between(vars(a), 1, 9, na_pass = TRUE) %>%
-  col_vals_lt(vars(c), 12, preconditions = ~tbl %>% dplyr::mutate(c = a + b)) %>%
+  col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b)) %>%
   interrogate()
 ```
 
@@ -95,15 +95,15 @@ dplyr::tibble(
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
   col_vals_between(vars(a), 1, 9, na_pass = TRUE) %>%
-  col_vals_lt(vars(c), 12, preconditions = ~tbl %>% dplyr::mutate(c = a + b))
+  col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b))
 ```
 
 ```
 Warning message:
 The validation (`col_vals_lt()`) meets or exceeds the warn threshold
- * VIOLATION: Expect that when the precondition `tbl %>% dplyr::mutate(c = a + b)`
-is applied, values in `c` (computed column) should be < 12
+ * VIOLATION: Expect that values in `c` (computed column) should be < `12`. Precondition applied: `. %>% dplyr::mutate(c = a + b)`.
 ```
+
 ```{r tibble_print, echo=FALSE, paged.print=FALSE}
 dplyr::tibble(
     a = c(5, 7, 6, 5, NA, 7),

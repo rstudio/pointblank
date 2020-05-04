@@ -373,7 +373,7 @@ test_that("Interrogating simply returns the expected results", {
     col_vals_not_between(
       columns = vars(d),
       left = 3000, right = 10000,
-      preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-20"),
+      preconditions = ~ . %>% dplyr::filter(date > "2016-01-20"),
       actions = action_levels(warn_at = 1)
     )
   
@@ -387,7 +387,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_not_between(
         columns = vars(d),
         left = 0, right = 3000,
-        preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-20"),
+        preconditions = ~ . %>% dplyr::filter(date > "2016-01-20"),
         actions = action_levels(warn_at = 1)
       )
   )
@@ -404,7 +404,7 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_not_between(
         columns = vars(d),
         left = 0, right = 3000,
-        preconditions = ~ tbl %>% dplyr::filter(date > "2016-01-20"),
+        preconditions = ~ . %>% dplyr::filter(date > "2016-01-20"),
         actions = action_levels(stop_at = 1)
       )
   )
@@ -605,7 +605,7 @@ test_that("Interrogating simply returns the expected results", {
     tbl %>%
     col_vals_null(
       columns = vars(c),
-      preconditions = ~ tbl %>% dplyr::filter(date == "2016-01-06")
+      preconditions = ~ . %>% dplyr::filter(date == "2016-01-06")
     )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -617,7 +617,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_vals_null(
         columns = vars(c),
-        preconditions = ~ tbl %>% dplyr::filter(date != "2016-01-06"),
+        preconditions = ~ . %>% dplyr::filter(date != "2016-01-06"),
         actions = action_levels(warn_at = 1)
       )
   )
@@ -633,7 +633,7 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_vals_null(
         columns = vars(c),
-        preconditions = ~ tbl %>% dplyr::filter(date != "2016-01-06"),
+        preconditions = ~ . %>% dplyr::filter(date != "2016-01-06"),
         actions = action_levels(stop_at = 1)
       )
   )

@@ -19,15 +19,15 @@
 #' `matches()`, and `everything()`.
 #' 
 #' Having table `preconditions` means **pointblank** will mutate the table just
-#' before interrogation. It's isolated to the validation steps produced by this
-#' validation step function. Using **dplyr** code is suggested here since the
-#' statements can be translated to SQL if necessary. The code is to be supplied
-#' as a one-sided **R** formula (using a leading `~`). In the formula
-#' representation, the obligatory `tbl` variable will serve as the input
-#' data table to be transformed (e.g.,
-#' `~ tbl %>% dplyr::mutate(col_a = col_b + 10)`. A series of expressions can be
-#' used by enclosing the set of statements with `{ }` but note that the `tbl`
-#' variable must be ultimately returned.
+#' before interrogation. Such a table mutation is isolated in scope to the
+#' validation step(s) produced by the validation step function call. Using
+#' **dplyr** code is suggested here since the statements can be translated to
+#' SQL if necessary. The code is most easily supplied as a one-sided **R**
+#' formula (using a leading `~`). In the formula representation, the `.` serves
+#' as the input data table to be transformed (e.g., 
+#' `~ . %>% dplyr::mutate(col_a = col_b + 10)`). Alternatively, a function could
+#' instead be supplied (e.g., 
+#' `function(x) dplyr::mutate(x, col_a = col_b + 10)`).
 #' 
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation step function, takes a specially-crafted list

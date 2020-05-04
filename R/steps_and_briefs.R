@@ -14,7 +14,7 @@ create_validation_step <- function(agent,
   } else {
     i <- max(agent$validation_set$i) + 1L
   }
-  
+
   # Create a validation step as a single-row `tbl_df` object
   validation_step_df <-
     dplyr::tibble(
@@ -46,15 +46,45 @@ create_validation_step <- function(agent,
 }
 
 apply_preconditions_to_tbl <- function(agent, idx, tbl) {
-  
+
   preconditions <- agent$validation_set$preconditions[[idx]]
   
-  if (!is.null(preconditions)) {
+  tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
+  
+  tbl
+}
+
+apply_preconditions <- function(tbl, preconditions) {
+  
+  if (is.null(preconditions)) {
+    return(tbl)
+  }
+  
+  if (is.function(preconditions)) {
     
-    tbl <- 
+    tbl <- preconditions(tbl)
+    
+  } else if (rlang::is_formula(preconditions)) {
+    
+    # Take the RHS of `preconditions` and eval with `eval_tidy()`
+    preconditions <- 
       preconditions %>%
       rlang::f_rhs() %>%
       rlang::eval_tidy()
+    
+    if (inherits(preconditions, "fseq")) {
+      
+      tbl <- preconditions(tbl)
+      
+    } else {
+      stop("If using formula syntax to define `preconditions`, the RHS ",
+           "must resolve to a functional sequence.",
+           call. = FALSE)
+    }
+    
+  } else {
+    stop("If providing `preconditions` it must either be as a function or a formula.",
+         call. = FALSE)
   }
   
   tbl
@@ -231,9 +261,13 @@ generate_autobriefs <- function(agent, columns, preconditions, values, assertion
 prep_precondition_text <- function(preconditions, lang) {
   
   if (is.null(preconditions)) return("")
-  
-  precondition_label <- preconditions %>% rlang::f_rhs() %>% rlang::as_label()
-  
+
+  if (rlang::is_formula(preconditions)) {
+    precondition_label <- preconditions %>% rlang::f_rhs() %>% rlang::as_label()
+  } else {
+    precondition_label <- preconditions %>% rlang::as_label()
+  }
+
   paste0(precondition_text[lang], ": `", precondition_label, "`.")
 }
 

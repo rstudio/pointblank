@@ -252,7 +252,7 @@ expect_col_schema_match <- function(object,
 #'   
 #' @family Planning and Prep
 #' @section Function ID:
-#' 1-4
+#' 1-5
 #' 
 #' @export
 col_schema <- function(...,

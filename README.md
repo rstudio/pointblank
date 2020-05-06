@@ -81,11 +81,11 @@ agent <-
 ```
 
     #> 
-    #> ── Interrogation Started - there are 2 steps ─────────────────────────────────────────────────────────
+    #> ── Interrogation Started - there are 2 steps ───────────────────────
     #> ✓ Step 1: OK.
     #> ! Step 2: WARNING condition met.
     #> 
-    #> ── Interrogation Completed ───────────────────────────────────────────────────────────────────────────
+    #> ── Interrogation Completed ─────────────────────────────────────────
 
 Because an *agent* was used, we can get a report from it.
 
@@ -95,14 +95,13 @@ agent
 
 <img src="man/figures/agent_report.png">
 
-Here’s another example that follows the second, *agent*-less workflow
-(where validation step functions operate directly on data).
+Next up is an example that follows the second, *agent*-less workflow
+(where validation step functions operate directly on data). We use the
+same two validation step functions as before but, this time, use them
+directly on the data\! In this workflow, an error occur will occur if
+there is a single ‘fail’ unit:
 
 ``` r
-# Use the same two validation step functions as before
-# but, this time, use them directly on the data! By
-# default, warnings are given with 1 'fail' unit
-# (can be customized using the `action_levels()` function)
 dplyr::tibble(
     a = c(5, 7, 6, 5, NA, 7),
     b = c(6, 1, 0, 6,  0, 7)
@@ -111,7 +110,27 @@ dplyr::tibble(
   col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b))
 ```
 
-    Warning message:
+    Error: The validation (`col_vals_lt()`) meets or exceeds the stop threshold
+     * VIOLATION: Expect that values in `c` (computed column) should be < `12`. Precondition applied: `. %>% dplyr::mutate(c = a + b)`.
+
+We can downgrade this to a warning with the `warn_on_fail()` helper
+function (and assigning to `actions`). In this way, the data will be
+returned, but warnings will appear.
+
+``` r
+# This `warn_on_fail()` is a nice wrapper for
+# `action_levels`; it works great in this data
+# checking workflow!
+al <- warn_on_fail()
+
+dplyr::tibble(
+    a = c(5, 7, 6, 5, NA, 7),
+    b = c(6, 1, 0, 6,  0, 7)
+  ) %>%
+  col_vals_between(vars(a), 1, 9, na_pass = TRUE, actions = al) %>%
+  col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b), actions = al)
+```
+
     The validation (`col_vals_lt()`) meets or exceeds the warn threshold
      * VIOLATION: Expect that values in `c` (computed column) should be < `12`. Precondition applied: `. %>% dplyr::mutate(c = a + b)`.
 
@@ -124,6 +143,12 @@ dplyr::tibble(
     #> 4     5     6
     #> 5    NA     0
     #> 6     7     7
+
+Should you need more fine-grained thresholds and resultant actions, the
+`action_levels()` function can be used to specify multiple failure
+thresholds and side effects for each failure state. However, the
+`warn_on_fail()` and `stop_on_fail()` (applied by default, with `stop_at
+= 1`) helpers should in most cases suffice for this workflow.
 
 <hr>
 

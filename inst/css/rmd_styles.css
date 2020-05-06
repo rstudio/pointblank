@@ -1,0 +1,27 @@
+.pointblank-section .panel-heading h4 {
+  font-size: 13px;
+}
+
+.pointblank-section-pass .panel-heading h4 {
+  font-weight: normal;
+}
+
+.panel.pointblank-section-pass > .panel-heading {
+  background: none;
+}
+
+.pointblank-badge-container-inner {
+  text-align: center;
+  padding-bottom: 14px;
+  font-size: 16px;
+}
+
+.pointblank-badge {
+  display: inline;
+  cursor: pointer;
+}
+
+.pointblank-chunk.panel > .panel-heading {
+  padding-top: 15px;
+  padding-bottom: 5.5px;
+}

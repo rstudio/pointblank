@@ -1,0 +1,51 @@
+---
+title: "Performing Data Validation Inside of an R Markdown Document"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(pointblank)
+validate_rmd()
+```
+
+The above message indicates a dire reality: validation checks *did not* pass (**4 failing validations!**). Turns out we can validate our data right inside of an **R Markdown** document. The **pointblank** package makes that possible by providing the `validate_rmd()` function (put it inside the `setup` code chunk). The **pointblank** package ships with a small dataset called `small_table`. It *really* is small, only a few rows:
+
+```{r small_table}
+small_table
+```
+
+We can perform validation checks on that table with **pointblank** step functions. Be sure to use `validate = TRUE` as a chunk option. The results will be initially hidden in the rendered HTML document but can be revealed by pressing the status button. Testing like this would normally stop the rendering of the R Markdown document but here any errors captured and reported in the rendered doc. 
+
+```{r validate = TRUE}
+col_exists(small_table, columns = vars(a, b, c, d, e, f))
+rows_distinct(small_table, vars(d, e))
+col_vals_gt(small_table, vars(d), 1000)
+```
+
+We could also use non-**pointblank** solutions that might yield errors when a validation check fails. For instance, `stopifnot()` combined with a predicate statement works really well for simple validations.
+
+```{r validate = TRUE}
+stopifnot(nrow(small_table) > 10)
+stopifnot("time" %in% colnames(small_table))
+```
+
+Note that with multiple **pointblank** step functions chained together, only the first error encountered will be reported. So, use multiple statements if necessary to check which may result in failed validations.
+
+```{r validate = TRUE}
+small_table %>% 
+  col_exists(columns = vars(a, b, c, d, e, f)) %>% # this passes validation
+  rows_distinct() %>%                              # this step fails (showing us the error message)
+  col_vals_gt(vars(d), 5000)                       # this also fails (we don't see its message)
+```
+
+When validation doesn't fail us, we can still inspect the validation code and the results.
+
+```{r validate = TRUE}
+small_table %>% 
+  col_is_date("date") %>%
+  col_vals_gt(vars(d), vars(c), na_pass = TRUE)
+```
+
+That's about it for this example *.Rmd*. Always be sure to test that there data!

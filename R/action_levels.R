@@ -12,7 +12,11 @@
 #' this will act as an override if set also in [create_agent()]. Usage of
 #' `action_levels()` is required to have any useful side effects (i.e.,
 #' warnings, throwing errors) in the case of validation step functions operating
-#' directly on data.
+#' directly on data. There are two helper functions that are convenient when
+#' using validation step functions with data: `warn_on_fail()` and
+#' `stop_on_fail()`. These helpers either warn or stop (default failure
+#' threshold for each is set to `1`), and, they do so with informative warning
+#' or error messages.
 #'
 #' The output of the `action_levels()` call in `actions` will be interpreted
 #' slightly differently if using an *agent* or using validation step functions
@@ -20,9 +24,9 @@
 #' values supplied to `warn_at` or `stop_at` will be automatically given a stock
 #' `warning()` or `stop()` function. If you were to supply those manually then
 #' the stock functions would be overridden. Furthermore, if `actions` is NULL in
-#' this workflow, **pointblank** will use a `warn_at` value of `1` (providing a
-#' warning if there are any *fail* units). We can absolutely suppress this
-#' automatic warning behavior by at each validation step by setting `active =
+#' this workflow, **pointblank** will use a `stop_at` value of `1` (providing an
+#' error message if there are any *fail* units). We can absolutely suppress this
+#' automatic stopping behavior by at each validation step by setting `active =
 #' FALSE`. In this interactive data case there is no stock function given for
 #' the `notify_at`. The `notify` failure state is less commonly used in this
 #' workflow as it is in the *agent*-based one.
@@ -80,7 +84,7 @@
 #' # stop functions directly on data, their
 #' # use is commonly to trigger warnings
 #' # and raise errors. The following will
-#' # provide a warning (but that's suppressed
+#' # provide a error (but that's suppressed
 #' # here).
 #' suppressWarnings(
 #'   tbl %>%
@@ -89,8 +93,12 @@
 #' 
 #' @family Planning and Prep
 #' @section Function ID:
-#' 1-3
-#'   
+#' 1-4
+#' 
+#' @name action_levels
+NULL
+
+#' @rdname action_levels
 #' @export
 action_levels <- function(warn_at = NULL,
                           stop_at = NULL,
@@ -112,6 +120,18 @@ action_levels <- function(warn_at = NULL,
     notify_count = notify_list$count,
     fns = fns
   )
+}
+
+#' @rdname action_levels
+#' @export
+warn_on_fail <- function(warn_at = 1) {
+  action_levels(warn_at = warn_at, fns = list(warn = ~stock_warning(x = x)))
+}
+
+#' @rdname action_levels
+#' @export
+stop_on_fail <- function(stop_at = 1) {
+  action_levels(stop_at = stop_at, fns = list(stop = ~stock_stoppage(x = x)))
 }
 
 normalize_fns_list <- function(fns) {
@@ -180,7 +200,7 @@ prime_actions <- function(actions) {
       actions$fns$stop <- ~stock_stoppage(x = x)
     }
   } else {
-    actions <- action_levels(warn_at = 1, fns = list(warn = ~stock_warning(x = x)))
+    actions <- action_levels(stop_at = 1, fns = list(stop = ~stock_stoppage(x = x)))
   }
   
   actions

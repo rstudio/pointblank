@@ -2,9 +2,15 @@
 % Please edit documentation in R/action_levels.R
 \name{action_levels}
 \alias{action_levels}
+\alias{warn_on_fail}
+\alias{stop_on_fail}
 \title{Set action levels: failure thresholds and functions to invoke}
 \usage{
 action_levels(warn_at = NULL, stop_at = NULL, notify_at = NULL, fns = NULL)
+
+warn_on_fail(warn_at = 1)
+
+stop_on_fail(stop_at = 1)
 }
 \arguments{
 \item{warn_at, stop_at, notify_at}{The threshold number or fraction of
@@ -37,7 +43,11 @@ validation step, acting as a default for the validation as a whole. Calls of
 this will act as an override if set also in \code{\link[=create_agent]{create_agent()}}. Usage of
 \code{action_levels()} is required to have any useful side effects (i.e.,
 warnings, throwing errors) in the case of validation step functions operating
-directly on data.
+directly on data. There are two helper functions that are convenient when
+using validation step functions with data: \code{warn_on_fail()} and
+\code{stop_on_fail()}. These helpers either warn or stop (default failure
+threshold for each is set to \code{1}), and, they do so with informative warning
+or error messages.
 }
 \details{
 The output of the \code{action_levels()} call in \code{actions} will be interpreted
@@ -46,9 +56,9 @@ directly on a data table. For convenience when working directly on data, any
 values supplied to \code{warn_at} or \code{stop_at} will be automatically given a stock
 \code{warning()} or \code{stop()} function. If you were to supply those manually then
 the stock functions would be overridden. Furthermore, if \code{actions} is NULL in
-this workflow, \strong{pointblank} will use a \code{warn_at} value of \code{1} (providing a
-warning if there are any \emph{fail} units). We can absolutely suppress this
-automatic warning behavior by at each validation step by setting \code{active = FALSE}. In this interactive data case there is no stock function given for
+this workflow, \strong{pointblank} will use a \code{stop_at} value of \code{1} (providing an
+error message if there are any \emph{fail} units). We can absolutely suppress this
+automatic stopping behavior by at each validation step by setting \code{active = FALSE}. In this interactive data case there is no stock function given for
 the \code{notify_at}. The \code{notify} failure state is less commonly used in this
 workflow as it is in the \emph{agent}-based one.
 
@@ -58,7 +68,7 @@ When using an \emph{agent}, we often opt to not use any functions in \code{fns} 
 }
 \section{Function ID}{
 
-1-3
+1-4
 }
 
 \examples{
@@ -94,7 +104,7 @@ agent <-
 # stop functions directly on data, their
 # use is commonly to trigger warnings
 # and raise errors. The following will
-# provide a warning (but that's suppressed
+# provide a error (but that's suppressed
 # here).
 suppressWarnings(
   tbl \%>\%
@@ -106,6 +116,7 @@ suppressWarnings(
 Other Planning and Prep: 
 \code{\link{col_schema}()},
 \code{\link{create_agent}()},
-\code{\link{scan_data}()}
+\code{\link{scan_data}()},
+\code{\link{validate_rmd}()}
 }
 \concept{Planning and Prep}

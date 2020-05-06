@@ -69,6 +69,7 @@ complete HTML document where Bootstrap and jQuery are embedded within.
 Other Planning and Prep: 
 \code{\link{action_levels}()},
 \code{\link{col_schema}()},
-\code{\link{create_agent}()}
+\code{\link{create_agent}()},
+\code{\link{validate_rmd}()}
 }
 \concept{Planning and Prep}

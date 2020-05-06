@@ -90,6 +90,7 @@ agent <-
 Other Planning and Prep: 
 \code{\link{action_levels}()},
 \code{\link{col_schema}()},
-\code{\link{scan_data}()}
+\code{\link{scan_data}()},
+\code{\link{validate_rmd}()}
 }
 \concept{Planning and Prep}

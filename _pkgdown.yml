@@ -124,4 +124,4 @@ navbar:
     href: https://github.com/rich-iannone/pointblank
 
 development:
-  mode: auto
+  version_tooltip: "Development version"

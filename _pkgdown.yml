@@ -15,6 +15,7 @@ reference:
     contents:
     - scan_data
     - create_agent
+    - validate_rmd
     - action_levels
     - col_schema
 

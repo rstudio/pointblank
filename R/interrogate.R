@@ -63,7 +63,7 @@ interrogate <- function(agent,
   # Add the starting time to the `agent` object
   agent$time <- Sys.time()
   
-  if (agent$name == "::QUIET::") {
+  if (agent$name == "::QUIET::" || !interactive()) {
     quiet <- TRUE
   } else {
     quiet <- FALSE

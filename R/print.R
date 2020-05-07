@@ -3,15 +3,35 @@
 #' This function will allow the agent to print a useful report.
 #' 
 #' @param x An agent object of class `ptblank_agent`.
+#' @param view The value for `print()`s `browse` argument.
 #' @param ... Any additional parameters.
 #' 
 #' @keywords internal
 #' @export
-print.ptblank_agent <- function(x, ...) {
+print.ptblank_agent <- function(x, view = interactive(), ...) {
   
   # nocov start 
   
-  print(get_agent_report(x))
+  print(get_agent_report(x), view = view, ...)
+  
+  # nocov end 
+}
+
+#' Knit print the agent information table
+#'
+#' This facilitates printing of the agent report table within a knitr code chunk.
+#'
+#' @param x An object of class `ptblank_agent`.
+#' @param ... Any additional parameters.
+#'
+#' @keywords internal
+#' @noRd
+knit_print.ptblank_agent <- function(x, ...) {
+  
+  # nocov start 
+
+  # Use `knit_print()` to print in a code chunk
+  knitr::knit_print(get_agent_report(x), ...)
   
   # nocov end 
 }

@@ -4,10 +4,12 @@
 \alias{print.ptblank_agent}
 \title{Print the agent information to the console}
 \usage{
-\method{print}{ptblank_agent}(x, ...)
+\method{print}{ptblank_agent}(x, view = interactive(), ...)
 }
 \arguments{
 \item{x}{An agent object of class \code{ptblank_agent}.}
+
+\item{view}{The value for \code{print()}s \code{browse} argument.}
 
 \item{...}{Any additional parameters.}
 }

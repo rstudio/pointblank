@@ -80,13 +80,6 @@ agent <-
   interrogate()
 ```
 
-    #> 
-    #> ── Interrogation Started - there are 2 steps ───────────────────────
-    #> ✓ Step 1: OK.
-    #> ! Step 2: WARNING condition met.
-    #> 
-    #> ── Interrogation Completed ─────────────────────────────────────────
-
 Because an *agent* was used, we can get a report from it.
 
 ``` r
@@ -114,7 +107,7 @@ dplyr::tibble(
      * VIOLATION: Expect that values in `c` (computed column) should be < `12`. Precondition applied: `. %>% dplyr::mutate(c = a + b)`.
 
 We can downgrade this to a warning with the `warn_on_fail()` helper
-function (and assigning to `actions`). In this way, the data will be
+function (assigning to `actions`). In this way, the data will be
 returned, but warnings will appear.
 
 ``` r

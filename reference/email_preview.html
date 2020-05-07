@@ -209,7 +209,8 @@ footer components of the HTML email message.</p></td>
   <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>), <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>), <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='interrogate.html'>interrogate</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>email_preview</span>()</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Interrogation Started - there are 2 steps</span><span> </span><span style='color: #00BBBB;'>───────────────────────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #BBBB00;'>!</span><span> Step </span><span style='color: #00BB00;'>1</span><span>: </span><span style='color: #BBBB00;'>WARNING</span><span> and </span><span style='color: #0000BB;'>NOTIFY</span><span> conditions met.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #BBBB00;'>!</span><span> Step </span><span style='color: #00BB00;'>2</span><span>: </span><span style='color: #BBBB00;'>WARNING</span><span> condition met.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Interrogation Completed</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────────</span><span></span></div><div class='input'>
+  <span class='fu'>email_preview</span>()
+
 <span class='co'># The `email_preview()` function can</span>
 <span class='co'># also be used on an agent x-list to</span>
 <span class='co'># get the same email message object</span>
@@ -222,12 +223,11 @@ footer components of the HTML email message.</p></td>
   <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>), <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='interrogate.html'>interrogate</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='get_agent_x_list.html'>get_agent_x_list</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>email_preview</span>()</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Interrogation Started - there are 2 steps</span><span> </span><span style='color: #00BBBB;'>───────────────────────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #BBBB00;'>!</span><span> Step </span><span style='color: #00BB00;'>1</span><span>: </span><span style='color: #BBBB00;'>WARNING</span><span> and </span><span style='color: #0000BB;'>NOTIFY</span><span> conditions met.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #BBBB00;'>!</span><span> Step </span><span style='color: #00BB00;'>2</span><span>: </span><span style='color: #BBBB00;'>WARNING</span><span> condition met.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Interrogation Completed</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────────</span><span></span></div><div class='input'>
-# We can view the HTML email just
-# by printing `email_object`; it
-# should appear in the Viewer
+  <span class='fu'>email_preview</span>()
 
-</div></span></pre>
+<span class='co'># We can view the HTML email just</span>
+<span class='co'># by printing `email_object`; it</span>
+<span class='co'># should appear in the Viewer</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

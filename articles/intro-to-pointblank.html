@@ -129,16 +129,7 @@
   <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">a</span>), <span class="kw">value</span> <span class="kw">=</span> <span class="fl">10</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">b</span>), <span class="kw">regex</span> <span class="kw">=</span> <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">d</span>), <span class="kw">left</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">right</span> <span class="kw">=</span> <span class="fl">5000</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span>()
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── Interrogation Started - there are 5 steps ───────────────────────────────────</span>
-<span class="co">#&gt; ✔ Step 1: OK.</span>
-<span class="co">#&gt; ✔ Step 2: OK.</span>
-<span class="co">#&gt; ✔ Step 3: OK.</span>
-<span class="co">#&gt; ✔ Step 4: OK.</span>
-<span class="co">#&gt; ✔ Step 5: OK.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── Interrogation Completed ─────────────────────────────────────────────────────</span></pre></body></html></div>
+  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span>()</pre></body></html></div>
 <p>The five <code>OK</code> messages means that all of the individual validations in each of those five validation steps passed. Printing the <code>agent</code> object gives a step-by-step breakdown of the interrogation process.</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">agent</span></pre></body></html></div>
 <p><img src="images/agent_report.png" width="100%"></p>

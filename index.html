@@ -109,26 +109,20 @@
   <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">a</span>), <span class="fl">1</span>, <span class="fl">9</span>, <span class="kw">na_pass</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">c</span>), <span class="fl">12</span>, <span class="kw">preconditions</span> <span class="kw">=</span> ~ <span class="no">.</span> <span class="kw">%&gt;%</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">c</span> <span class="kw">=</span> <span class="no">a</span> + <span class="no">b</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/interrogate.html">interrogate</a></span>()</pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; ── Interrogation Started - there are 2 steps ───────────────────────</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt; ✓ Step 1: OK.</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt; ! Step 2: </span><span class="al">WARNING</span><span class="co"> condition met.</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt; </span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt; ── Interrogation Completed ─────────────────────────────────────────</span></span></code></pre></div>
 <p>Because an <em>agent</em> was used, we can get a report from it.</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="no">agent</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="no">agent</span></pre></div>
 <p><img src="reference/figures/agent_report.png"></p>
 <p>Next up is an example that follows the second, <em>agent</em>-less workflow (where validation step functions operate directly on data). We use the same two validation step functions as before but, this time, use them directly on the data! In this workflow, an error occur will occur if there is a single ‘fail’ unit:</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tibble</a></span>(
+<div class="sourceCode" id="cb3"><pre class="r"><span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tibble</a></span>(
     <span class="kw">a</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">NA</span>, <span class="fl">7</span>),
     <span class="kw">b</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">6</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>,  <span class="fl">0</span>, <span class="fl">7</span>)
   ) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">a</span>), <span class="fl">1</span>, <span class="fl">9</span>, <span class="kw">na_pass</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">c</span>), <span class="fl">12</span>, <span class="kw">preconditions</span> <span class="kw">=</span> ~ <span class="no">.</span> <span class="kw">%&gt;%</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">c</span> <span class="kw">=</span> <span class="no">a</span> + <span class="no">b</span>))</pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>Error<span class="op">:</span><span class="st"> </span>The <span class="kw">validation</span> (<span class="st">`</span><span class="dt">col_vals_lt()</span><span class="st">`</span>) meets or exceeds the stop threshold</span>
-<span id="cb5-2"><a href="#cb5-2"></a> <span class="op">*</span><span class="st"> </span>VIOLATION<span class="op">:</span><span class="st"> </span>Expect that values <span class="cf">in</span> <span class="st">`</span><span class="dt">c</span><span class="st">`</span> (computed column) should be <span class="op">&lt;</span><span class="st"> `</span><span class="dt">12</span><span class="st">`</span>. Precondition applied<span class="op">:</span><span class="st"> `</span><span class="dt">. %&gt;% dplyr::mutate(c = a + b)</span><span class="st">`</span>.</span></code></pre></div>
-<p>We can downgrade this to a warning with the <code><a href="reference/action_levels.html">warn_on_fail()</a></code> helper function (and assigning to <code>actions</code>). In this way, the data will be returned, but warnings will appear.</p>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="co"># This `warn_on_fail()` is a nice wrapper for</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>Error<span class="op">:</span><span class="st"> </span>The <span class="kw">validation</span> (<span class="st">`</span><span class="dt">col_vals_lt()</span><span class="st">`</span>) meets or exceeds the stop threshold</span>
+<span id="cb4-2"><a href="#cb4-2"></a> <span class="op">*</span><span class="st"> </span>VIOLATION<span class="op">:</span><span class="st"> </span>Expect that values <span class="cf">in</span> <span class="st">`</span><span class="dt">c</span><span class="st">`</span> (computed column) should be <span class="op">&lt;</span><span class="st"> `</span><span class="dt">12</span><span class="st">`</span>. Precondition applied<span class="op">:</span><span class="st"> `</span><span class="dt">. %&gt;% dplyr::mutate(c = a + b)</span><span class="st">`</span>.</span></code></pre></div>
+<p>We can downgrade this to a warning with the <code><a href="reference/action_levels.html">warn_on_fail()</a></code> helper function (assigning to <code>actions</code>). In this way, the data will be returned, but warnings will appear.</p>
+<div class="sourceCode" id="cb5"><pre class="r"><span class="co"># This `warn_on_fail()` is a nice wrapper for</span>
 <span class="co"># `action_levels`; it works great in this data</span>
 <span class="co"># checking workflow!</span>
 <span class="no">al</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/action_levels.html">warn_on_fail</a></span>()
@@ -139,18 +133,18 @@
   ) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">a</span>), <span class="fl">1</span>, <span class="fl">9</span>, <span class="kw">na_pass</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">actions</span> <span class="kw">=</span> <span class="no">al</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">c</span>), <span class="fl">12</span>, <span class="kw">preconditions</span> <span class="kw">=</span> ~ <span class="no">.</span> <span class="kw">%&gt;%</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">c</span> <span class="kw">=</span> <span class="no">a</span> + <span class="no">b</span>), <span class="kw">actions</span> <span class="kw">=</span> <span class="no">al</span>)</pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>The <span class="kw">validation</span> (<span class="st">`</span><span class="dt">col_vals_lt()</span><span class="st">`</span>) meets or exceeds the warn threshold</span>
-<span id="cb7-2"><a href="#cb7-2"></a> <span class="op">*</span><span class="st"> </span>VIOLATION<span class="op">:</span><span class="st"> </span>Expect that values <span class="cf">in</span> <span class="st">`</span><span class="dt">c</span><span class="st">`</span> (computed column) should be <span class="op">&lt;</span><span class="st"> `</span><span class="dt">12</span><span class="st">`</span>. Precondition applied<span class="op">:</span><span class="st"> `</span><span class="dt">. %&gt;% dplyr::mutate(c = a + b)</span><span class="st">`</span>.</span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt;       a     b</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt; 1     5     6</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt; 2     7     1</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt; 3     6     0</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="co">#&gt; 4     5     6</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a><span class="co">#&gt; 5    NA     0</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a><span class="co">#&gt; 6     7     7</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>The <span class="kw">validation</span> (<span class="st">`</span><span class="dt">col_vals_lt()</span><span class="st">`</span>) meets or exceeds the warn threshold</span>
+<span id="cb6-2"><a href="#cb6-2"></a> <span class="op">*</span><span class="st"> </span>VIOLATION<span class="op">:</span><span class="st"> </span>Expect that values <span class="cf">in</span> <span class="st">`</span><span class="dt">c</span><span class="st">`</span> (computed column) should be <span class="op">&lt;</span><span class="st"> `</span><span class="dt">12</span><span class="st">`</span>. Precondition applied<span class="op">:</span><span class="st"> `</span><span class="dt">. %&gt;% dplyr::mutate(c = a + b)</span><span class="st">`</span>.</span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt;       a     b</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt; 1     5     6</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt; 2     7     1</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt; 3     6     0</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt; 4     5     6</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt; 5    NA     0</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt; 6     7     7</span></span></code></pre></div>
 <p>Should you need more fine-grained thresholds and resultant actions, the <code><a href="reference/action_levels.html">action_levels()</a></code> function can be used to specify multiple failure thresholds and side effects for each failure state. However, the <code><a href="reference/action_levels.html">warn_on_fail()</a></code> and <code><a href="reference/action_levels.html">stop_on_fail()</a></code> (applied by default, with <code>stop_at = 1</code>) helpers should in most cases suffice for this workflow.</p>
 <hr>
 <p>While data validation is important one has to be familiar with the data first. To that end, the <code><a href="reference/scan_data.html">scan_data()</a></code> function is provided in <strong>pointblank</strong> for generating a comprehensive summary of a tabular dataset. The report content is customizable and can be produced in five different languages: <em>English</em>, <em>French</em>, <em>German</em>, <em>Italian</em>, and <em>Spanish</em> (validation reports can also be produced in either of these languages). Here are several published examples of a <strong>Table Scan</strong> for each of these languages (using the <code><a href="https://dplyr.tidyverse.org/reference/storms.html">dplyr::storms</a></code> dataset):</p>
@@ -168,9 +162,9 @@
 <p><img src="reference/figures/pointblank_functions.svg" width="80%"></p>
 
 <p>Want to try this out? The <strong>pointblank</strong> package is available on <strong>CRAN</strong>:</p>
-<div class="sourceCode" id="cb8"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"pointblank"</span>)</pre></div>
+<div class="sourceCode" id="cb7"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"pointblank"</span>)</pre></div>
 <p>You can also install the development version of <strong>pointblank</strong> from <strong>GitHub</strong>:</p>
-<div class="sourceCode" id="cb9"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"rich-iannone/pointblank"</span>)</pre></div>
+<div class="sourceCode" id="cb8"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"rich-iannone/pointblank"</span>)</pre></div>
 <p>If you encounter a bug, have usage questions, or want to share ideas to make this package better, feel free to file an <a href="https://github.com/rich-iannone/pointblank/issues">issue</a>.</p>
 <div id="code-of-conduct" class="section level2">
 <h2 class="hasAnchor">

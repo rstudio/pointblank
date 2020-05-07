@@ -239,7 +239,8 @@ workflow as it is in the <em>agent</em>-based one.</p>
 <span class='no'>agent</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='kw'>tbl</span> <span class='kw'>=</span> <span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>), <span class='fl'>7</span>, <span class='kw'>actions</span> <span class='kw'>=</span> <span class='no'>al</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Interrogation Started - there is a single validation step</span><span> </span><span style='color: #00BBBB;'>───────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #BB0000;'>✖</span><span> Step </span><span style='color: #00BB00;'>1</span><span>: </span><span style='color: #BB0000;'>STOP</span><span> and </span><span style='color: #0000BB;'>NOTIFY</span><span> conditions met.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Interrogation Completed</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────────</span><span></span></div><div class='input'>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
+
 <span class='co'># The report from the agent will show</span>
 <span class='co'># that the `warn` state has been entered</span>
 <span class='co'># for the first and only validation step.</span>
@@ -255,7 +256,7 @@ workflow as it is in the <em>agent</em>-based one.</p>
 <span class='fu'><a href='https://rdrr.io/r/base/warning.html'>suppressWarnings</a></span>(
   <span class='no'>tbl</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>), <span class='fl'>5</span>, <span class='kw'>actions</span> <span class='kw'>=</span> <span class='no'>al</span>)
-)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 1</span><span>
+)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 1</span><span>
 #&gt;       a
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>     5

@@ -186,11 +186,12 @@ tables will be provided in a list object.</p></td>
   <span class='fu'><a href='interrogate.html'>interrogate</a></span>(
     <span class='kw'>extract_failed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
     <span class='kw'>get_first_n</span> <span class='kw'>=</span> <span class='fl'>10</span>
-  )</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Interrogation Started - there are 2 steps</span><span> </span><span style='color: #00BBBB;'>───────────────────────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> Step </span><span style='color: #00BB00;'>1</span><span>: </span><span style='color: #00BB00;'>OK</span><span>.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> Step </span><span style='color: #00BB00;'>2</span><span>: </span><span style='color: #00BB00;'>OK</span><span>.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Interrogation Completed</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────────</span><span></span></div><div class='input'>
+  )
+
 <span class='co'># Get row sample data for those rows</span>
 <span class='co'># in `tbl` that did not pass the first</span>
 <span class='co'># validation step (`col_vals_between`)</span>
-<span class='no'>agent</span> <span class='kw'>%&gt;%</span> <span class='fu'>get_data_extracts</span>(<span class='kw'>i</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 1</span><span>
+<span class='no'>agent</span> <span class='kw'>%&gt;%</span> <span class='fu'>get_data_extracts</span>(<span class='kw'>i</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 1</span><span>
 #&gt;       a
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>     7

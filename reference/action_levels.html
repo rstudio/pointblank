@@ -59,7 +59,11 @@ action_levels() could also be applied directly to any validation step and
 this will act as an override if set also in create_agent(). Usage of
 action_levels() is required to have any useful side effects (i.e.,
 warnings, throwing errors) in the case of validation step functions operating
-directly on data." />
+directly on data. There are two helper functions that are convenient when
+using validation step functions with data: warn_on_fail() and
+stop_on_fail(). These helpers either warn or stop (default failure
+threshold for each is set to 1), and, they do so with informative warning
+or error messages." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -146,10 +150,18 @@ validation step, acting as a default for the validation as a whole. Calls of
 this will act as an override if set also in <code><a href='create_agent.html'>create_agent()</a></code>. Usage of
 <code>action_levels()</code> is required to have any useful side effects (i.e.,
 warnings, throwing errors) in the case of validation step functions operating
-directly on data.</p>
+directly on data. There are two helper functions that are convenient when
+using validation step functions with data: <code>warn_on_fail()</code> and
+<code>stop_on_fail()</code>. These helpers either warn or stop (default failure
+threshold for each is set to <code>1</code>), and, they do so with informative warning
+or error messages.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>action_levels</span>(<span class='kw'>warn_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stop_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>notify_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>action_levels</span>(<span class='kw'>warn_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stop_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>notify_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>warn_on_fail</span>(<span class='kw'>warn_at</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+
+<span class='fu'>stop_on_fail</span>(<span class='kw'>stop_at</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,9 +197,9 @@ directly on a data table. For convenience when working directly on data, any
 values supplied to <code>warn_at</code> or <code>stop_at</code> will be automatically given a stock
 <code><a href='https://rdrr.io/r/base/warning.html'>warning()</a></code> or <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code> function. If you were to supply those manually then
 the stock functions would be overridden. Furthermore, if <code>actions</code> is NULL in
-this workflow, <strong>pointblank</strong> will use a <code>warn_at</code> value of <code>1</code> (providing a
-warning if there are any <em>fail</em> units). We can absolutely suppress this
-automatic warning behavior by at each validation step by setting <code>active = FALSE</code>. In this interactive data case there is no stock function given for
+this workflow, <strong>pointblank</strong> will use a <code>stop_at</code> value of <code>1</code> (providing an
+error message if there are any <em>fail</em> units). We can absolutely suppress this
+automatic stopping behavior by at each validation step by setting <code>active = FALSE</code>. In this interactive data case there is no stock function given for
 the <code>notify_at</code>. The <code>notify</code> failure state is less commonly used in this
 workflow as it is in the <em>agent</em>-based one.</p>
 <p>When using an <em>agent</em>, we often opt to not use any functions in <code>fns</code> as the
@@ -197,13 +209,14 @@ workflow as it is in the <em>agent</em>-based one.</p>
 
     
 
-<p>1-3</p>
+<p>1-4</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Planning and Prep: 
 <code><a href='col_schema.html'>col_schema</a>()</code>,
 <code><a href='create_agent.html'>create_agent</a>()</code>,
-<code><a href='scan_data.html'>scan_data</a>()</code></p></div>
+<code><a href='scan_data.html'>scan_data</a>()</code>,
+<code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a simple data frame with</span>
@@ -226,7 +239,7 @@ workflow as it is in the <em>agent</em>-based one.</p>
 <span class='no'>agent</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='kw'>tbl</span> <span class='kw'>=</span> <span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>), <span class='fl'>7</span>, <span class='kw'>actions</span> <span class='kw'>=</span> <span class='no'>al</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>── Interrogation Started - there is a single validation step ───────────────────</span></div><div class='output co'>#&gt; <span class='message'>✖ Step 1: STOP and NOTIFY conditions met.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>── Interrogation Completed ─────────────────────────────────────────────────────</span></div><div class='input'>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Interrogation Started - there is a single validation step</span><span> </span><span style='color: #00BBBB;'>───────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #BB0000;'>✖</span><span> Step </span><span style='color: #00BB00;'>1</span><span>: </span><span style='color: #BB0000;'>STOP</span><span> and </span><span style='color: #0000BB;'>NOTIFY</span><span> conditions met.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Interrogation Completed</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────────</span><span></span></div><div class='input'>
 <span class='co'># The report from the agent will show</span>
 <span class='co'># that the `warn` state has been entered</span>
 <span class='co'># for the first and only validation step.</span>
@@ -237,19 +250,19 @@ workflow as it is in the <em>agent</em>-based one.</p>
 <span class='co'># stop functions directly on data, their</span>
 <span class='co'># use is commonly to trigger warnings</span>
 <span class='co'># and raise errors. The following will</span>
-<span class='co'># provide a warning (but that's suppressed</span>
+<span class='co'># provide a error (but that's suppressed</span>
 <span class='co'># here).</span>
 <span class='fu'><a href='https://rdrr.io/r/base/warning.html'>suppressWarnings</a></span>(
   <span class='no'>tbl</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>), <span class='fl'>5</span>, <span class='kw'>actions</span> <span class='kw'>=</span> <span class='no'>al</span>)
-)</div><div class='output co'>#&gt; # A tibble: 4 x 1
+)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 1</span><span>
 #&gt;       a
-#&gt;   &lt;dbl&gt;
-#&gt; 1     5
-#&gt; 2     7
-#&gt; 3     8
-#&gt; 4     5</div><div class='input'>
-</div></pre>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     5
+#&gt; </span><span style='color: #555555;'>2</span><span>     7
+#&gt; </span><span style='color: #555555;'>3</span><span>     8
+#&gt; </span><span style='color: #555555;'>4</span><span>     5</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -265,7 +278,7 @@ workflow as it is in the <em>agent</em>-based one.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

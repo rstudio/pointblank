@@ -243,21 +243,21 @@ available, then a tibble will be returned.</p></td>
 <span class='no'>agent</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='kw'>tbl</span> <span class='kw'>=</span> <span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>), <span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>── Interrogation Started - there is a single validation step ───────────────────</span></div><div class='output co'>#&gt; <span class='message'>✔ Step 1: OK.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>── Interrogation Completed ─────────────────────────────────────────────────────</span></div><div class='input'>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Interrogation Started - there is a single validation step</span><span> </span><span style='color: #00BBBB;'>───────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> Step </span><span style='color: #00BB00;'>1</span><span>: </span><span style='color: #00BB00;'>OK</span><span>.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Interrogation Completed</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────────</span><span></span></div><div class='input'>
 <span class='co'># Get a tibble-based report from the</span>
 <span class='co'># agent by using `get_agent_report()`</span>
 <span class='co'># with `display_table = FALSE`</span>
 <span class='no'>agent</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>get_agent_report</span>(<span class='kw'>display_table</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 14
+  <span class='fu'>get_agent_report</span>(<span class='kw'>display_table</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 14</span><span>
 #&gt;       i type  columns values precon active eval  units n_pass f_pass W     S    
-#&gt;   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;lgl&gt;  &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;
-#&gt; 1     1 col_… a       4      &lt;NA&gt;   TRUE   OK        4      4      1 NA    NA   
-#&gt; # … with 2 more variables: N &lt;lgl&gt;, extract &lt;int&gt;</div><div class='input'>
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     1 col_… a       4      </span><span style='color: #BB0000;'>NA</span><span>     TRUE   OK        4      4      1 </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>   
+#&gt; </span><span style='color: #555555;'># … with 2 more variables: N </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, extract </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'>
 <span class='co'># View a the report by printing the</span>
 <span class='co'># `agent` object anytime, but, return a</span>
 <span class='co'># gt table object by using this with</span>
 <span class='co'># `display_table = TRUE` (the default)</span>
-<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span> <span class='fu'>get_agent_report</span>(<span class='no'>agent</span>)</div></pre>
+<span class='no'>gt_tbl</span> <span class='kw'>&lt;-</span> <span class='fu'>get_agent_report</span>(<span class='no'>agent</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -273,7 +273,7 @@ available, then a tibble will be returned.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

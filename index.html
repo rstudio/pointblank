@@ -112,7 +112,7 @@
 <p>Because an <em>agent</em> was used, we can get a report from it.</p>
 <div class="sourceCode" id="cb2"><pre class="r"><span class="no">agent</span></pre></div>
 <p><img src="reference/figures/agent_report.png"></p>
-<p>Next up is an example that follows the second, <em>agent</em>-less workflow (where validation step functions operate directly on data). We use the same two validation step functions as before but, this time, use them directly on the data! In this workflow, an error occur will occur if there is a single ‘fail’ unit:</p>
+<p>Next up is an example that follows the second, <em>agent</em>-less workflow (where validation step functions operate directly on data). We use the same two validation step functions as before but, this time, use them directly on the data! In this workflow, by default, an error will occur if there is a single ‘fail’ unit in any validation step:</p>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tibble</a></span>(
     <span class="kw">a</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">NA</span>, <span class="fl">7</span>),
     <span class="kw">b</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">6</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>,  <span class="fl">0</span>, <span class="fl">7</span>)

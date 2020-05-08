@@ -168,7 +168,10 @@ each of these languages (using the `dplyr::storms` dataset):
 <hr>
 
 There are many functions available in **pointblank** for making
-comprehensive table validations.
+comprehensive table validations. Each validation step function is paired
+with an expectation function (of the form `expect_*()`). These serve as
+table assertions and are equivalent in usage and behavior to
+**testthat** tests.
 
 <p align="center">
 

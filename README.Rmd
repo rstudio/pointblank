@@ -143,7 +143,7 @@ While data validation is important one has to be familiar with the data first. T
 
 <hr>
 
-There are many functions available in **pointblank** for making comprehensive table validations.
+There are many functions available in **pointblank** for making comprehensive table validations. Each validation step function is paired with an expectation function (of the form `expect_*()`). These serve as table assertions and are equivalent in usage and behavior to **testthat** tests.
 
 <p align="center"><img src="man/figures/pointblank_functions.svg" width="80%"></p>
 

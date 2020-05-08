@@ -85,7 +85,7 @@ agent
 
 <img src="man/figures/agent_report.png">
 
-Next up is an example that follows the second, *agent*-less workflow (where validation step functions operate directly on data). We use the same two validation step functions as before but, this time, use them directly on the data! In this workflow, an error occur will occur if there is a single 'fail' unit:
+Next up is an example that follows the second, *agent*-less workflow (where validation step functions operate directly on data). We use the same two validation step functions as before but, this time, use them directly on the data! In this workflow, by default, an error will occur if there is a single 'fail' unit in any validation step:
 
 ```{r example_workflow_two_error, eval=FALSE}
 dplyr::tibble(

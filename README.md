@@ -91,8 +91,8 @@ agent
 Next up is an example that follows the second, *agent*-less workflow
 (where validation step functions operate directly on data). We use the
 same two validation step functions as before but, this time, use them
-directly on the data\! In this workflow, an error occur will occur if
-there is a single ‘fail’ unit:
+directly on the data\! In this workflow, by default, an error will occur
+if there is a single ‘fail’ unit in any validation step:
 
 ``` r
 dplyr::tibble(

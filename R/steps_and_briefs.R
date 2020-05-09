@@ -375,7 +375,7 @@ prep_conjointly_expectation_text <- function(values_text, lang) {
   glue::glue(conjointly_expectation_text[lang])
 }
 
-prep_col_exists_expectation_text <- function(column_text,lang) {
+prep_col_exists_expectation_text <- function(column_text, lang) {
   
   glue::glue(col_exists_expectation_text[lang])
 }

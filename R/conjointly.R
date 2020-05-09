@@ -198,9 +198,11 @@ expect_conjointly <- function(object,
   
   act <- testthat::quasi_label(enquo(x), arg = "object")
   
+  values_text <- prep_values_text(values = vs$values, limit = 3, lang = "en")
+  
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue(failure_message_gluestring)
+    failure_message = glue::glue(failure_message_gluestring(expectation_type))
   )
   
   act$val <- object

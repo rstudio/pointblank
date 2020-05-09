@@ -224,9 +224,13 @@ expect_col_vals_between <- function(object,
   
   act <- testthat::quasi_label(enquo(x), arg = "object")
   
+  column_text <- prep_column_text(vs$column[[1]])
+  value_1 <- prep_values_text(values = vs$values[[1]][[1]], limit = 3, lang = "en")
+  value_2 <- prep_values_text(values = vs$values[[1]][[2]], limit = 3, lang = "en")
+
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue(failure_message_gluestring)
+    failure_message = glue::glue(failure_message_gluestring(expectation_type))
   )
   
   act$val <- object

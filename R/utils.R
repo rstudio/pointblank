@@ -110,10 +110,47 @@ get_threshold_type <- function(threshold) {
   }
 }
 
-failure_message_gluestring <-
-  "The `{expectation_type}()` expectation failed beyond the {threshold_type} \\
-threshold level ({threshold}).
+failure_message_gluestring <- function(expectation_type) {
+  
+  if (!grepl("^expect", expectation_type)) {
+    expectation_type <- paste0("expect_", expectation_type)
+  }
+  
+  failure_text <- 
+    switch(
+      expectation_type,
+      "expect_col_vals_gt" =,
+      "expect_col_vals_gte" =,
+      "expect_col_vals_lt" =,
+      "expect_col_vals_lte" =,
+      "expect_col_vals_equal" =,
+      "expect_col_vals_not_equal" = compare_failure_text[["en"]],
+      "expect_col_vals_between" = between_failure_text[["en"]],
+      "expect_col_vals_not_between" = not_between_failure_text[["en"]],
+      "expect_col_vals_in_set" = in_set_failure_text[["en"]],
+      "expect_col_vals_not_in_set" = not_in_set_failure_text[["en"]],
+      "expect_col_vals_null" = null_failure_text[["en"]],
+      "expect_col_vals_not_null" = not_null_failure_text[["en"]],
+      "expect_col_vals_regex" = regex_failure_text[["en"]],
+      "expect_conjointly" = conjointly_failure_text[["en"]],
+      "expect_col_exists" = col_exists_failure_text[["en"]],
+      "expect_col_is_numeric" =,
+      "expect_col_is_integer" =,
+      "expect_col_is_character" =,
+      "expect_col_is_logical" =,
+      "expect_col_is_posix" =,
+      "expect_col_is_date" =,
+      "expect_col_is_factor" = col_is_failure_text[["en"]],
+      "expect_rows_distinct" = all_row_distinct_failure_text[["en"]],
+      "expect_col_schema_match" = col_schema_match_failure_text[["en"]]
+    )
+
+paste0(
+failure_text, " ",
+"The `{expectation_type}()` expectation failed beyond the {threshold_type} threshold level ({threshold}).
 * failure level ({failed_amount}) >= failure threshold ({threshold})"
+  )
+}
 
 row_based_step_fns_vector <- function() {
   

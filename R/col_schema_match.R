@@ -169,7 +169,7 @@ expect_col_schema_match <- function(object,
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue(failure_message_gluestring)
+    failure_message = glue::glue(failure_message_gluestring(expectation_type))
   )
   
   act$val <- object

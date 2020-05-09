@@ -163,9 +163,12 @@ expect_col_is_integer <- function(object,
   
   act <- testthat::quasi_label(enquo(x), arg = "object")
   
+  column_text <- prep_column_text(vs$column[[1]])
+  col_type <- "integer"
+  
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue(failure_message_gluestring)
+    failure_message = glue::glue(failure_message_gluestring(expectation_type))
   )
   
   act$val <- object

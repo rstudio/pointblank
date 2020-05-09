@@ -17,7 +17,8 @@ tbl_c_not_null <- tbl %>% dplyr::filter(!is.na(c))
 
 test_that("pointblank expectation function produce the correct results", {
 
-  failed_beyond <- ".*expectation failed beyond the absolute threshold level.*"
+  failed_beyond_absolute <- ".*validation failed beyond the absolute threshold level.*"
+  failed_beyond_proportional <- ".*validation failed beyond the proportional threshold level.*"
   
   #
   # expect_col_vals_lt()
@@ -30,7 +31,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_vals_lt(tbl, columns = vars(d), value = 1, threshold = 1000))
   
   expect_error(expect_col_vals_lt(tbl, columns = vars(d), value = 9900), class = "expectation_failure")
-  expect_failure(expect_col_vals_lt(tbl, columns = vars(d), value = 9900), failed_beyond)
+
+  expect_failure(expect_col_vals_lt(tbl, columns = vars(d), value = 9900, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_lt(tbl, columns = vars(d), value = 9900, threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_vals_lt(tbl, columns = vars(d), value = 9900),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
@@ -48,7 +52,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_vals_lte(tbl, columns = vars(a), value = 0, threshold = 1000))
   
   expect_error(expect_col_vals_lte(tbl, columns = vars(a), value = 7), class = "expectation_failure")
-  expect_failure(expect_col_vals_lte(tbl, columns = vars(a), value = 7), failed_beyond)
+  
+  expect_failure(expect_col_vals_lte(tbl, columns = vars(a), value = 7, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_lte(tbl, columns = vars(a), value = 7, threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_vals_lte(tbl, columns = vars(a), value = 7),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
@@ -66,7 +73,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_vals_equal(tbl, columns = vars(c), value = 20, threshold = 1000))
   
   expect_error(expect_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 7), class = "expectation_failure")
-  expect_failure(expect_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 7), failed_beyond)
+  
+  expect_failure(expect_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 7, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 7, threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_vals_equal(tbl_equal_c_3, columns = vars(c), value = 7),
     "failure level \\(3\\) >= failure threshold \\(1\\)"
@@ -84,7 +94,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 20, threshold = 1000))
   
   expect_error(expect_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 7), class = "expectation_failure")
-  expect_failure(expect_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 7), failed_beyond)
+  
+  expect_failure(expect_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 7, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 7, threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_vals_not_equal(tbl_not_equal_c_3, columns = vars(c), value = 7),
     "failure level \\(2\\) >= failure threshold \\(1\\)"
@@ -104,7 +117,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_vals_gte(tbl, columns = vars(c), value = 0, threshold = 1000))
   
   expect_error(expect_col_vals_gte(tbl, columns = vars(c), value = 0), class = "expectation_failure")
-  expect_failure(expect_col_vals_gte(tbl, columns = vars(c), value = 0), failed_beyond)
+  
+  expect_failure(expect_col_vals_gte(tbl, columns = vars(c), value = 0, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_gte(tbl, columns = vars(c), value = 0, threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_vals_gte(tbl, columns = vars(c), value = 0),
     "failure level \\(2\\) >= failure threshold \\(1\\)"
@@ -124,7 +140,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_vals_gt(tbl, columns = vars(c), value = 0, threshold = 1000))
   
   expect_error(expect_col_vals_gt(tbl, columns = vars(c), value = 0), class = "expectation_failure")
-  expect_failure(expect_col_vals_gt(tbl, columns = vars(c), value = 0), failed_beyond)
+  
+  expect_failure(expect_col_vals_gt(tbl, columns = vars(c), value = 0, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_gt(tbl, columns = vars(c), value = 0, threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_vals_gt(tbl, columns = vars(c), value = 0),
     "failure level \\(2\\) >= failure threshold \\(1\\)"
@@ -145,7 +164,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_vals_between(tbl, columns = vars(a), left = -3, right = -1, threshold = 1000))
   
   expect_error(expect_col_vals_between(tbl, columns = vars(d), left = 0, right = 500), class = "expectation_failure")
-  expect_failure(expect_col_vals_between(tbl, columns = vars(d), left = 0, right = 500), failed_beyond)
+  
+  expect_failure(expect_col_vals_between(tbl, columns = vars(d), left = 0, right = 500, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_between(tbl, columns = vars(d), left = 0, right = 500, threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_vals_between(tbl, columns = vars(d), left = 0, right = 500),
     "failure level \\(11\\) >= failure threshold \\(1\\)"
@@ -166,7 +188,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_failure(expect_col_vals_not_between(tbl, columns = vars(a), left = 0, right = 1, inclusive = c(TRUE, TRUE)))
   
   expect_error(expect_col_vals_not_between(tbl, columns = vars(c), left = 20, right = 30), class = "expectation_failure")
-  expect_failure(expect_col_vals_not_between(tbl, columns = vars(c), left = 20, right = 30), failed_beyond)
+  
+  expect_failure(expect_col_vals_not_between(tbl, columns = vars(c), left = 20, right = 30, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_not_between(tbl, columns = vars(c), left = 20, right = 30, threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_vals_not_between(tbl, columns = vars(c), left = 20, right = 30),
     "failure level \\(2\\) >= failure threshold \\(1\\)"
@@ -186,7 +211,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_failure(expect_col_vals_in_set(tbl, columns = vars(e), set = TRUE))
   
   expect_error(expect_col_vals_in_set(tbl, columns = vars(e), set = TRUE), class = "expectation_failure")
-  expect_failure(expect_col_vals_in_set(tbl, columns = vars(e), set = TRUE), failed_beyond)
+  
+  expect_failure(expect_col_vals_in_set(tbl, columns = vars(e), set = TRUE, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_in_set(tbl, columns = vars(e), set = TRUE, threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_vals_in_set(tbl, columns = vars(e), set = TRUE),
     "failure level \\(5\\) >= failure threshold \\(1\\)"
@@ -206,7 +234,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_failure(expect_col_vals_not_in_set(tbl, columns = vars(e), set = TRUE))
   
   expect_error(expect_col_vals_not_in_set(tbl, columns = vars(b), set = tbl$b), class = "expectation_failure")
-  expect_failure(expect_col_vals_not_in_set(tbl, columns = vars(b), set = tbl$b), failed_beyond)
+  
+  expect_failure(expect_col_vals_not_in_set(tbl, columns = vars(b), set = tbl$b, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_not_in_set(tbl, columns = vars(b), set = tbl$b, threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_vals_not_in_set(tbl, columns = vars(b), set = tbl$b),
     "failure level \\(13\\) >= failure threshold \\(1\\)"
@@ -223,7 +254,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_failure(expect_col_vals_null(tbl, columns = vars(c), threshold = 0.5))
   
   expect_error(expect_col_vals_null(tbl_c_not_null, columns = vars(c)), class = "expectation_failure")
-  expect_failure(expect_col_vals_null(tbl_c_not_null, columns = vars(c)), failed_beyond)
+  
+  expect_failure(expect_col_vals_null(tbl_c_not_null, columns = vars(c), threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_null(tbl_c_not_null, columns = vars(c), threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_vals_null(tbl_c_not_null, columns = vars(c)),
     "failure level \\(11\\) >= failure threshold \\(1\\)"
@@ -240,7 +274,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_vals_not_null(tbl, columns = vars(c), threshold = 1000))
   
   expect_error(expect_col_vals_not_null(tbl_c_null, columns = vars(c)), class = "expectation_failure")
-  expect_failure(expect_col_vals_not_null(tbl_c_null, columns = vars(c)), failed_beyond)
+  
+  expect_failure(expect_col_vals_not_null(tbl_c_null, columns = vars(c), threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_not_null(tbl_c_null, columns = vars(c), threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_vals_not_null(tbl_c_null, columns = vars(c)),
     "failure level \\(2\\) >= failure threshold \\(1\\)"
@@ -256,7 +293,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 1000))
   
   expect_error(expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$"), class = "expectation_failure")
-  expect_failure(expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$"), failed_beyond)
+  
+  expect_failure(expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$"),
     "failure level \\(13\\) >= failure threshold \\(1\\)"
@@ -307,9 +347,21 @@ test_that("pointblank expectation function produce the correct results", {
       tbl_conjointly,
       ~ col_vals_gt(., vars(a), 6),
       ~ col_vals_lt(., vars(b), 10),
-      ~ col_vals_not_null(., vars(c))
+      ~ col_vals_not_null(., vars(c)),
+      threshold = 1
     ), 
-    failed_beyond
+    failed_beyond_absolute
+  )
+  
+  expect_failure(
+    expect_conjointly(
+      tbl_conjointly,
+      ~ col_vals_gt(., vars(a), 6),
+      ~ col_vals_lt(., vars(b), 10),
+      ~ col_vals_not_null(., vars(c)),
+      threshold = 0.01
+    ), 
+    failed_beyond_proportional
   )
   
   expect_failure(
@@ -334,7 +386,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_failure(expect_rows_distinct(tbl, columns = vars(date_time, date)))
   
   expect_error(expect_rows_distinct(tbl), class = "expectation_failure")
-  expect_failure(expect_rows_distinct(tbl), failed_beyond)
+  
+  expect_failure(expect_rows_distinct(tbl, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_rows_distinct(tbl, threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_rows_distinct(tbl),
     "failure level \\(2\\) >= failure threshold \\(1\\)"
@@ -357,7 +412,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_is_character(tbl, columns = vars(g), threshold = 2))
   
   expect_error(expect_col_is_character(tbl, columns = vars(g)), class = "expectation_failure")
-  expect_failure(expect_col_is_character(tbl, columns = vars(g)), failed_beyond)
+  
+  expect_failure(expect_col_is_character(tbl, columns = vars(g), threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_is_character(tbl, columns = vars(g), threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_is_character(tbl, columns = vars(g)),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
@@ -380,7 +438,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_is_numeric(tbl, columns = vars(g), threshold = 2))
   
   expect_error(expect_col_is_numeric(tbl, columns = vars(g)), class = "expectation_failure")
-  expect_failure(expect_col_is_numeric(tbl, columns = vars(g)), failed_beyond)
+  
+  expect_failure(expect_col_is_numeric(tbl, columns = vars(g), threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_is_numeric(tbl, columns = vars(g), threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_is_numeric(tbl, columns = vars(g)),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
@@ -402,7 +463,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_is_integer(tbl, columns = vars(g), threshold = 2))
   
   expect_error(expect_col_is_integer(tbl, columns = vars(g)), class = "expectation_failure")
-  expect_failure(expect_col_is_integer(tbl, columns = vars(g)), failed_beyond)
+  
+  expect_failure(expect_col_is_integer(tbl, columns = vars(g), threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_is_integer(tbl, columns = vars(g), threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_is_integer(tbl, columns = vars(g)),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
@@ -424,7 +488,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_is_posix(tbl, columns = vars(g), threshold = 2))
   
   expect_error(expect_col_is_posix(tbl, columns = vars(g)), class = "expectation_failure")
-  expect_failure(expect_col_is_posix(tbl, columns = vars(g)), failed_beyond)
+  
+  expect_failure(expect_col_is_posix(tbl, columns = vars(g), threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_is_posix(tbl, columns = vars(g), threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_is_posix(tbl, columns = vars(g)),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
@@ -446,7 +513,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_is_logical(tbl, columns = vars(g), threshold = 2))
   
   expect_error(expect_col_is_logical(tbl, columns = vars(g)), class = "expectation_failure")
-  expect_failure(expect_col_is_logical(tbl, columns = vars(g)), failed_beyond)
+  
+  expect_failure(expect_col_is_logical(tbl, columns = vars(g), threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_is_logical(tbl, columns = vars(g), threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_is_logical(tbl, columns = vars(g)),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
@@ -468,7 +538,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_is_date(tbl, columns = vars(g), threshold = 2))
   
   expect_error(expect_col_is_date(tbl, columns = vars(g)), class = "expectation_failure")
-  expect_failure(expect_col_is_date(tbl, columns = vars(g)), failed_beyond)
+  
+  expect_failure(expect_col_is_date(tbl, columns = vars(g), threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_is_date(tbl, columns = vars(g), threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_is_date(tbl, columns = vars(g)),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
@@ -490,7 +563,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_success(expect_col_is_factor(tbl, columns = vars(date), threshold = 2))
   
   expect_error(expect_col_is_factor(tbl, columns = vars(f)), class = "expectation_failure")
-  expect_failure(expect_col_is_factor(tbl, columns = vars(f)), failed_beyond)
+  
+  expect_failure(expect_col_is_factor(tbl, columns = vars(f), threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_is_factor(tbl, columns = vars(f), threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_is_factor(tbl, columns = vars(f)),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
@@ -514,7 +590,10 @@ test_that("pointblank expectation function produce the correct results", {
   expect_failure(expect_col_exists(tbl, columns = "h"))
   
   expect_error(expect_col_exists(tbl, columns = vars(h)), class = "expectation_failure")
-  expect_failure(expect_col_exists(tbl, columns = vars(h)), failed_beyond)
+  
+  expect_failure(expect_col_exists(tbl, columns = vars(h), threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_exists(tbl, columns = vars(h), threshold = 0.01), failed_beyond_proportional)
+  
   expect_failure(
     expect_col_exists(tbl, columns = vars(h)),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
@@ -589,9 +668,29 @@ test_that("pointblank expectation function produce the correct results", {
         e = "logical",
         f = "character",
         g = "factor"
-      )
+      ),
+      threshold = 1
     ), 
-    failed_beyond
+    failed_beyond_absolute
+  )
+  
+  expect_failure(
+    expect_col_schema_match(
+      tbl, 
+      schema = col_schema(
+        date_time = "POSIXct",
+        date = "Date",
+        a = "integer",
+        b = "character",
+        c = "numeric",
+        d = "numeric",
+        e = "logical",
+        f = "character",
+        g = "factor"
+      ),
+      threshold = 0.01
+    ), 
+    failed_beyond_proportional
   )
   
   expect_failure(

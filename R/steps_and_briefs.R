@@ -107,17 +107,8 @@ create_autobrief <- function(agent,
         "col_vals_lt", "col_vals_lte",
         "col_vals_equal", "col_vals_not_equal")) {
     
-    operator <- 
-      switch(
-        assertion_type,
-        "col_vals_gt" = ">",
-        "col_vals_gte" = ">=",
-        "col_vals_lt" = "<",
-        "col_vals_lte" = "<=",
-        "col_vals_equal" = "==",
-        "col_vals_not_equal" = "!="
-      )
-    
+    operator <- prep_operator_text(fn_name = assertion_type)
+
     expectation_text <- 
       prep_compare_expectation_text(
         column_text,
@@ -257,6 +248,21 @@ generate_autobriefs <- function(agent, columns, preconditions, values, assertion
       )
   )
 }
+
+prep_operator_text <- function(fn_name) {
+  
+  switch(
+    fn_name,
+    "col_vals_gt" = ">",
+    "col_vals_gte" = ">=",
+    "col_vals_lt" = "<",
+    "col_vals_lte" = "<=",
+    "col_vals_equal" = "==",
+    "col_vals_not_equal" = "!=",
+    NA_character_
+  )
+}
+
 
 prep_precondition_text <- function(preconditions, lang) {
   

@@ -110,15 +110,15 @@ get_threshold_type <- function(threshold) {
   }
 }
 
-failure_message_gluestring <- function(expectation_type) {
+failure_message_gluestring <- function(fn_name) {
   
-  if (!grepl("^expect", expectation_type)) {
-    expectation_type <- paste0("expect_", expectation_type)
+  if (!grepl("^expect", fn_name)) {
+    fn_name <- paste0("expect_", fn_name)
   }
   
   failure_text <- 
     switch(
-      expectation_type,
+      fn_name,
       "expect_col_vals_gt" =,
       "expect_col_vals_gte" =,
       "expect_col_vals_lt" =,
@@ -147,7 +147,7 @@ failure_message_gluestring <- function(expectation_type) {
 
 paste0(
 failure_text, " ",
-"The `{expectation_type}()` expectation failed beyond the {threshold_type} threshold level ({threshold}).
+"The `{fn_name}()` validation failed beyond the {threshold_type} threshold level ({threshold}).
 * failure level ({failed_amount}) >= failure threshold ({threshold})"
   )
 }

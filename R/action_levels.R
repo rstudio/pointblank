@@ -207,9 +207,27 @@ prime_actions <- function(actions) {
 }
 
 stock_stoppage <- function(x) {
-  stop("The validation (`", x$type, "()`) meets or exceeds the stop threshold\n",
-       " * VIOLATION: ", x$brief,
-       call. = FALSE)
+
+  fn_name <- x$type
+  column_text <- prep_column_text(x$column)
+  values_text <- prep_values_text(values = x$values, limit = 3, lang = "en")
+  operator <- prep_operator_text(fn_name = x$type)
+  value_1 <- prep_values_text(x$values) %>% tidy_gsub(",.*", "")
+  value_2 <- prep_values_text(x$values) %>% tidy_gsub(".*, ", "")
+  
+  if (!is.null(x$actions$stop_count)) {
+    threshold <- x$actions$stop_count
+    failed_amount <- x$n_failed
+    threshold_type <- "absolute"
+  } else if (!is.null(x$actions$stop_fraction)) {
+    threshold <-x$actions$stop_fraction
+    failed_amount <- x$f_failed
+    threshold_type <- "proportional"
+  }
+  
+  failure_message <- glue::glue(failure_message_gluestring(fn_name = fn_name))
+  
+  stop(failure_message, call. = FALSE)
 }
 
 stock_warning <- function(x) {

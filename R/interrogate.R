@@ -1040,6 +1040,7 @@ perform_action <- function(agent, idx, type) {
   .type <- agent$validation_set[[idx, "assertion_type"]]
   .column <- agent$validation_set[[idx, "column"]] %>% unlist()
   .values <- agent$validation_set[[idx, "values"]] %>% unlist()
+  .actions <- agent$validation_set[[idx, "actions"]] %>% unlist()
   .brief <- agent$validation_set[[idx, "brief"]]
   
   .eval_error <- agent$validation_set[[idx, "eval_error"]]
@@ -1071,6 +1072,7 @@ perform_action <- function(agent, idx, type) {
       type = .type,
       column = .column,
       values = .values,
+      actions = .actions,
       brief = .brief,
       eval_error = .eval_error,
       eval_warning = .eval_warning,
@@ -1126,6 +1128,7 @@ perform_end_action <- function(agent) {
   .type <- agent$validation_set$assertion_type
   .column <- agent$validation_set$column
   .values <- agent$validation_set$values
+  .actions <- agent$validation_set$actions
   .brief <- agent$validation_set$brief
   
   .eval_error <- agent$validation_set$eval_error
@@ -1174,6 +1177,7 @@ perform_end_action <- function(agent) {
       type = .type,
       column = .column,
       values = .values,
+      actions = .actions,
       brief = .brief,
       eval_error = .eval_error,
       eval_warning = .eval_warning,

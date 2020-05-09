@@ -157,7 +157,7 @@ expect_col_vals_not_null <- function(object,
                                      preconditions = NULL,
                                      threshold = 1) {
   
-  expectation_type <- "expect_col_vals_not_null"
+  fn_name <- "expect_col_vals_not_null"
   
   vs <- 
     create_agent(tbl = object, name = "::QUIET::") %>%
@@ -191,7 +191,7 @@ expect_col_vals_not_null <- function(object,
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue(failure_message_gluestring(expectation_type))
+    failure_message = glue::glue(failure_message_gluestring(fn_name = fn_name))
   )
   
   act$val <- object

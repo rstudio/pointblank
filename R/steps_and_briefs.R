@@ -189,16 +189,7 @@ create_autobrief <- function(agent,
   
   if (grepl("col_is_.*", assertion_type)) {
     
-    if (assertion_type %in% 
-        c("col_is_numeric", "col_is_integer", "col_is_character",
-          "col_is_logical", "col_is_factor")) {
-      col_type <- gsub("col_is_", "", assertion_type)
-    } else if (assertion_type == "col_is_posix") {
-      col_type <- "POSIXct"
-    } else if (assertion_type == "col_is_date") {
-      col_type <- "Date"
-    }
-    
+    col_type <- prep_col_type(fn_name = assertion_type)
     expectation_text <- prep_col_is_expectation_text(column_text, col_type, lang = lang)
     autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
@@ -263,6 +254,22 @@ prep_operator_text <- function(fn_name) {
   )
 }
 
+prep_col_type <- function(fn_name) {
+  
+  if (!grepl("col_is", fn_name)) {
+    return(NA_character_)
+  }
+  
+  if (grepl("col_is_(numeric|integer|character|logical|factor)", fn_name)) {
+    col_type <- gsub("col_is_", "", fn_name)
+  } else if (grepl("col_is_posix", fn_name)) {
+    col_type <- "POSIXct"
+  } else if (grepl("col_is_date", fn_name)) {
+    col_type <- "Date"
+  }
+  
+  col_type
+}
 
 prep_precondition_text <- function(preconditions, lang) {
   

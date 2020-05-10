@@ -212,8 +212,15 @@ stock_stoppage <- function(x) {
   column_text <- prep_column_text(x$column)
   values_text <- prep_values_text(values = x$values, limit = 3, lang = "en")
   operator <- prep_operator_text(fn_name = x$type)
-  value_1 <- prep_values_text(x$values) %>% tidy_gsub(",.*", "")
-  value_2 <- prep_values_text(x$values) %>% tidy_gsub(".*, ", "")
+  
+  if (grepl("between", fn_name)) {
+    value_1 <- prep_values_text(x$values) %>% tidy_gsub(",.*", "")
+    value_2 <- prep_values_text(x$values) %>% tidy_gsub(".*, ", "")
+  }
+  
+  if (grepl("col_is", fn_name)) {
+    col_type <- prep_col_type(fn_name = fn_name)
+  }
   
   if (!is.null(x$actions$stop_count)) {
     threshold <- x$actions$stop_count
@@ -231,13 +238,20 @@ stock_stoppage <- function(x) {
 }
 
 stock_warning <- function(x) {
-  
+
   fn_name <- x$type
   column_text <- prep_column_text(x$column)
   values_text <- prep_values_text(values = x$values, limit = 3, lang = "en")
   operator <- prep_operator_text(fn_name = x$type)
-  value_1 <- prep_values_text(x$values) %>% tidy_gsub(",.*", "")
-  value_2 <- prep_values_text(x$values) %>% tidy_gsub(".*, ", "")
+  
+  if (grepl("between", fn_name)) {
+    value_1 <- prep_values_text(x$values) %>% tidy_gsub(",.*", "")
+    value_2 <- prep_values_text(x$values) %>% tidy_gsub(".*, ", "")
+  }
+  
+  if (grepl("col_is", fn_name)) {
+    col_type <- prep_col_type(fn_name = fn_name)
+  }
   
   if (!is.null(x$actions$warn_count)) {
     threshold <- x$actions$warn_count

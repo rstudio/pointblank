@@ -110,11 +110,6 @@ get_threshold_type <- function(threshold) {
   }
 }
 
-failure_message_gluestring <-
-  "The `{expectation_type}()` expectation failed beyond the {threshold_type} \\
-threshold level ({threshold}).
-* failure level ({failed_amount}) >= failure threshold ({threshold})"
-
 row_based_step_fns_vector <- function() {
   
   c(

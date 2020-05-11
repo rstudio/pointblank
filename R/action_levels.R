@@ -207,13 +207,63 @@ prime_actions <- function(actions) {
 }
 
 stock_stoppage <- function(x) {
-  stop("The validation (`", x$type, "()`) meets or exceeds the stop threshold\n",
-       " * VIOLATION: ", x$brief,
-       call. = FALSE)
+
+  fn_name <- x$type
+  column_text <- prep_column_text(x$column)
+  values_text <- prep_values_text(values = x$values, limit = 3, lang = "en")
+  operator <- prep_operator_text(fn_name = x$type)
+  
+  if (grepl("between", fn_name)) {
+    value_1 <- prep_values_text(x$values) %>% tidy_gsub(",.*", "")
+    value_2 <- prep_values_text(x$values) %>% tidy_gsub(".*, ", "")
+  }
+  
+  if (grepl("col_is", fn_name)) {
+    col_type <- prep_col_type(fn_name = fn_name)
+  }
+  
+  if (!is.null(x$actions$stop_count)) {
+    threshold <- x$actions$stop_count
+    failed_amount <- x$n_failed
+    threshold_type <- "absolute"
+  } else if (!is.null(x$actions$stop_fraction)) {
+    threshold <-x$actions$stop_fraction
+    failed_amount <- x$f_failed
+    threshold_type <- "proportional"
+  }
+  
+  failure_message <- glue::glue(failure_message_gluestring(fn_name = fn_name, lang = "en"))
+  
+  stop(failure_message, call. = FALSE)
 }
 
 stock_warning <- function(x) {
-  warning("The validation (`", x$type, "()`) meets or exceeds the warn threshold\n",
-          " * VIOLATION: ", x$brief,
-          call. = FALSE)
+
+  fn_name <- x$type
+  column_text <- prep_column_text(x$column)
+  values_text <- prep_values_text(values = x$values, limit = 3, lang = "en")
+  operator <- prep_operator_text(fn_name = x$type)
+  
+  if (grepl("between", fn_name)) {
+    value_1 <- prep_values_text(x$values) %>% tidy_gsub(",.*", "")
+    value_2 <- prep_values_text(x$values) %>% tidy_gsub(".*, ", "")
+  }
+  
+  if (grepl("col_is", fn_name)) {
+    col_type <- prep_col_type(fn_name = fn_name)
+  }
+  
+  if (!is.null(x$actions$warn_count)) {
+    threshold <- x$actions$warn_count
+    failed_amount <- x$n_failed
+    threshold_type <- "absolute"
+  } else if (!is.null(x$actions$warn_fraction)) {
+    threshold <-x$actions$warn_fraction
+    failed_amount <- x$f_failed
+    threshold_type <- "proportional"
+  }
+  
+  failure_message <- glue::glue(failure_message_gluestring(fn_name = fn_name, lang = "en"))
+  
+  warning(failure_message, call. = FALSE)
 }

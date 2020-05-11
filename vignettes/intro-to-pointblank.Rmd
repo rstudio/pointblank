@@ -78,16 +78,11 @@ This short demo shows some of the salient features of defining validation steps 
 
 ### A Walkthrough of **pointblank** in the Pipeline-based Data Validation Workflow
 
-The second workflow, *pipeline-based data validations*, somewhat simplifies the process for checking data directly. There is no *agent* involved here and we instead call validation step functions directly on the data table objects. Because no *agent*, there is no report, and the idea is that the side effects are most important here. We can trigger warnings, raise errors, or write out logs when exceeding specified failure thresholds. The data just passes through the validation functions (some data in, the same data out). Where would we do this? When importing data, for instance, we could pass the incoming data through a few validation step functions with *warn_at* and *stop_at* threshold levels set. We could also use a set of validation step functions further down the script on transformed data as a QA/QC measure. If bad data quality might be ruinous for a downstream report (especially in an automated context), it's better to stop the process through **pointblank** validation tests and get to the heart of the matter.
+The second workflow, *pipeline-based data validations*, somewhat simplifies the process for checking data directly. There is no *agent* involved here and we instead call validation step functions directly on the data table objects. Because no *agent*, there is no report, and the idea is that the side effects are most important here. We can trigger warnings, raise errors, or write out logs when exceeding specified failure thresholds. The data just passes through the validation functions (some data in, the same data out). Where would we do this? When importing data, for instance, we could pass the incoming data through a few validation step functions, possibly with customized threshold levels set (by default, any test units failing will result in an error). We could also use a set of validation step functions further down the script on transformed data as a QA/QC measure. If bad data quality might be ruinous for a downstream report (especially in an automated context), it's better to stop the process through **pointblank** validation tests and get to the heart of the matter.
 
 Let's adapt the previous example to optimize it to the pipeline-based data validation workflow:
 
 ```{r pipeline_small_table, eval=FALSE, paged.print=FALSE}
-
-# Create an `action_levels` object, stopping the pipeline
-# if we get a single failing test unit
-al <- action_levels(stop_at = 1)
-
 small_table %>%
   col_is_posix(vars(date_time), actions = al) %>%
   col_vals_in_set(vars(f), set = c("low", "mid", "high"), actions = al) %>%
@@ -97,7 +92,9 @@ small_table %>%
 ```
 
 ```
-Error: The validation (`col_vals_between()`) meets or exceeds the stop threshold
+Error: Exceedance of failed test units where values in `d` should have been between `0` and `5000`.
+The `col_vals_between()` validation failed beyond the absolute threshold level (1).
+* failure level (1) >= failure threshold (1) 
 ```
 
 Great! This stringent threshold setting stopped the evaluation of the pipeline and, in turn, stops the running script if it's deployed and automatically running on the regular. The `action_levels()` function is quite powerful and it allows us to define custom functions to react to entering each of the three states. In this type of workflow we don't need to define those functions, **pointblank** will automatically do the sensible thing and provide a stock `warning()` or `stop()` message.

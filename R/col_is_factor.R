@@ -134,7 +134,7 @@ expect_col_is_factor <- function(object,
                                  columns,
                                  threshold = 1) {
   
-  expectation_type <- "expect_col_is_factor"
+  fn_name <- "expect_col_is_factor"
   
   vs <- 
     create_agent(tbl = object, name = "::QUIET::") %>%
@@ -163,9 +163,12 @@ expect_col_is_factor <- function(object,
   
   act <- testthat::quasi_label(enquo(x), arg = "object")
   
+  column_text <- prep_column_text(vs$column[[1]])
+  col_type <- "factor"
+  
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue(failure_message_gluestring)
+    failure_message = glue::glue(failure_message_gluestring(fn_name = fn_name, lang = "en"))
   )
   
   act$val <- object

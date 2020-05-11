@@ -232,7 +232,7 @@ stock_stoppage <- function(x) {
     threshold_type <- "proportional"
   }
   
-  failure_message <- glue::glue(failure_message_gluestring(fn_name = fn_name))
+  failure_message <- glue::glue(failure_message_gluestring(fn_name = fn_name, lang = "en"))
   
   stop(failure_message, call. = FALSE)
 }
@@ -263,7 +263,7 @@ stock_warning <- function(x) {
     threshold_type <- "proportional"
   }
   
-  failure_message <- glue::glue(failure_message_gluestring(fn_name = fn_name))
+  failure_message <- glue::glue(failure_message_gluestring(fn_name = fn_name, lang = "en"))
   
   warning(failure_message, call. = FALSE)
 }

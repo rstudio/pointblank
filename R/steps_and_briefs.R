@@ -411,3 +411,45 @@ prep_col_schema_match_expectation_text <- function(lang) {
   
   glue::glue(col_schema_match_expectation_text[lang])
 }
+
+failure_message_gluestring <- function(fn_name, lang) {
+  
+  if (!grepl("^expect", fn_name)) {
+    fn_name <- paste0("expect_", fn_name)
+  }
+  
+  failure_text <- 
+    switch(
+      fn_name,
+      "expect_col_vals_gt" =,
+      "expect_col_vals_gte" =,
+      "expect_col_vals_lt" =,
+      "expect_col_vals_lte" =,
+      "expect_col_vals_equal" =,
+      "expect_col_vals_not_equal" = compare_failure_text[[lang]],
+      "expect_col_vals_between" = between_failure_text[[lang]],
+      "expect_col_vals_not_between" = not_between_failure_text[[lang]],
+      "expect_col_vals_in_set" = in_set_failure_text[[lang]],
+      "expect_col_vals_not_in_set" = not_in_set_failure_text[[lang]],
+      "expect_col_vals_null" = null_failure_text[[lang]],
+      "expect_col_vals_not_null" = not_null_failure_text[[lang]],
+      "expect_col_vals_regex" = regex_failure_text[[lang]],
+      "expect_conjointly" = conjointly_failure_text[[lang]],
+      "expect_col_exists" = col_exists_failure_text[[lang]],
+      "expect_col_is_numeric" =,
+      "expect_col_is_integer" =,
+      "expect_col_is_character" =,
+      "expect_col_is_logical" =,
+      "expect_col_is_posix" =,
+      "expect_col_is_date" =,
+      "expect_col_is_factor" = col_is_failure_text[[lang]],
+      "expect_rows_distinct" = all_row_distinct_failure_text[[lang]],
+      "expect_col_schema_match" = col_schema_match_failure_text[[lang]]
+    )
+  
+  paste0(
+    failure_text, "\n",
+    "The `{fn_name}()` validation failed beyond the {threshold_type} threshold level ({threshold}).
+* failure level ({failed_amount}) >= failure threshold ({threshold})"
+  )
+}

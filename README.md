@@ -103,8 +103,9 @@ dplyr::tibble(
   col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b))
 ```
 
-    Error: The validation (`col_vals_lt()`) meets or exceeds the stop threshold
-     * VIOLATION: Expect that values in `c` (computed column) should be < `12`. Precondition applied: `. %>% dplyr::mutate(c = a + b)`.
+    Error: Exceedance of failed test units where values in `c` should have been < `12`.
+    The `col_vals_lt()` validation failed beyond the absolute threshold level (1).
+    * failure level (2) >= failure threshold (1) 
 
 We can downgrade this to a warning with the `warn_on_fail()` helper
 function (assigning to `actions`). In this way, the data will be
@@ -124,9 +125,6 @@ dplyr::tibble(
   col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b), actions = al)
 ```
 
-    The validation (`col_vals_lt()`) meets or exceeds the warn threshold
-     * VIOLATION: Expect that values in `c` (computed column) should be < `12`. Precondition applied: `. %>% dplyr::mutate(c = a + b)`.
-
     #> # A tibble: 6 x 2
     #>       a     b
     #>   <dbl> <dbl>
@@ -136,6 +134,11 @@ dplyr::tibble(
     #> 4     5     6
     #> 5    NA     0
     #> 6     7     7
+
+    Warning message:
+    Exceedance of failed test units where values in `c` should have been < `12`.
+    The `col_vals_lt()` validation failed beyond the absolute threshold level (1).
+    * failure level (2) >= failure threshold (1) 
 
 Should you need more fine-grained thresholds and resultant actions, the
 `action_levels()` function can be used to specify multiple failure

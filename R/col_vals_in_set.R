@@ -197,7 +197,7 @@ expect_col_vals_in_set <- function(object,
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue(failure_message_gluestring(fn_name = fn_name))
+    failure_message = glue::glue(failure_message_gluestring(fn_name = fn_name, lang = "en"))
   )
   
   act$val <- object

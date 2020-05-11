@@ -1,5 +1,7 @@
 test_options <- new.env(parent = emptyenv())
 
+#nocov start
+
 #' Perform **pointblank** validation testing within R Markdown documents
 #' 
 #' The `validate_rmd()` function sets up a framework for validation testing
@@ -298,3 +300,6 @@ knitr_chunk_hook <- function(x, options) {
   
   render_template("chunk", data)
 }
+
+#nocov end
+

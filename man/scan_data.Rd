@@ -13,8 +13,7 @@ scan_data(
 )
 }
 \arguments{
-\item{tbl}{The input table. This can be a data frame, a tibble, or a
-\code{tbl_dbi} object.}
+\item{tbl}{The input table. This can be a data frame or a tibble.}
 
 \item{sections}{The sections to include in the finalized \verb{Table Scan} report.
 A character vector with section names is required here. The sections in

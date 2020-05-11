@@ -23,7 +23,7 @@
 #' `scan_data(tbl = iris) %>% as.character()`). The resulting HTML string is a
 #' complete HTML document where Bootstrap and jQuery are embedded within.
 #' 
-#' @inheritParams create_agent
+#' @param tbl The input table. This can be a data frame or a tibble.
 #' @param sections The sections to include in the finalized `Table Scan` report.
 #'   A character vector with section names is required here. The sections in
 #'   their default order are: `"overview"`, `"variables"`, `"interactions"`,

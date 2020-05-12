@@ -9,11 +9,12 @@
 #' expectation function can only be used with a data table. The types of data
 #' tables that can be used include data frames, tibbles, and even database
 #' tables of `tbl_dbi` class. The validation step or expectation operates over a
-#' single test unit, which is whether the schema exactly matches that of the
-#' table. If the target table is a `tbl_dbi` object, we can choose to validate
-#' the column schema that is based on R column types (e.g., `"numeric"`,
+#' single test unit, which is whether the schema matches that of the table
+#' (within the constraints enforced by the `complete` and `in_order` options).
+#' If the target table is a `tbl_dbi` object, we can choose to validate the
+#' column schema that is based on R column types (e.g., `"numeric"`,
 #' `"character"`, etc.), or, SQL column types (e.g., `"double"`, `"varchar"`,
-#' etc.). That option is defined in the [col_schema()] function (with the
+#' etc.). That option is defined in the [col_schema()] function (it is the
 #' `.db_col_types` argument).
 #' 
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -35,7 +36,16 @@
 #' 
 #' @inheritParams col_vals_gt
 #' @param schema A table schema of type `col_schema` which can be generated
-#' using the [col_schema()] function.
+#'   using the [col_schema()] function.
+#' @param complete A requirement to account for all table columns in the
+#'   `schema`. By default, this is `TRUE` and so that all column names in the
+#'   target table must be present in the schema object. This restriction can be
+#'   relaxed by using `FALSE`, where we can provide a subset of table columns in
+#'   the schema.
+#' @param in_order A stringent requirement for enforcing the order of columns in
+#'   the provided `schema`. By default, this is `TRUE` and the order of columns
+#'   in both the schema and the target table must match. By setting to `FALSE`,
+#'   this strict order requirement is removed.
 #' 
 #' @return For the validation step function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
@@ -88,13 +98,31 @@ NULL
 #' @export
 col_schema_match <- function(x,
                              schema,
+                             complete = TRUE,
+                             in_order = TRUE,
                              actions = NULL,
                              brief = NULL,
                              active = TRUE) {
   
+  if (!inherits(schema, "col_schema")) {
+    stop("A `col_schema` object must be provided to `schema`:\n",
+         "* A schema can be defined using the `col_schema()` function",
+         call. = FALSE)
+  }
+  
+  # Incorporate `complete` and `in_order` options into
+  # the `schema` object
+  if (is.null(schema$`__complete__`) && is.null(schema$`__in_order__`)) {
+    
+    schema <- 
+      structure(
+        c(schema, list(`__complete__` = complete, `__in_order__` = in_order)),
+        class = c("match_options", class(schema))
+      )
+  }
   
   if (is_a_table_object(x)) {
-    
+
     secret_agent <- create_agent(x, name = "::QUIET::") %>%
       col_schema_match(
         schema = schema,
@@ -136,6 +164,8 @@ col_schema_match <- function(x,
 #' @export
 expect_col_schema_match <- function(object,
                                     schema,
+                                    complete = TRUE,
+                                    in_order = TRUE,
                                     threshold = 1) {
   
   fn_name <- "expect_col_schema_match"

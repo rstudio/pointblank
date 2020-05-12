@@ -5,9 +5,23 @@
 \alias{expect_col_schema_match}
 \title{Do columns in the table (and their types) match a predefined schema?}
 \usage{
-col_schema_match(x, schema, actions = NULL, brief = NULL, active = TRUE)
+col_schema_match(
+  x,
+  schema,
+  complete = TRUE,
+  in_order = TRUE,
+  actions = NULL,
+  brief = NULL,
+  active = TRUE
+)
 
-expect_col_schema_match(object, schema, threshold = 1)
+expect_col_schema_match(
+  object,
+  schema,
+  complete = TRUE,
+  in_order = TRUE,
+  threshold = 1
+)
 }
 \arguments{
 \item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
@@ -15,6 +29,17 @@ class \code{ptblank_agent} that can be created with \code{\link[=create_agent]{c
 
 \item{schema}{A table schema of type \code{col_schema} which can be generated
 using the \code{\link[=col_schema]{col_schema()}} function.}
+
+\item{complete}{A requirement to account for all table columns in the
+\code{schema}. By default, this is \code{TRUE} and so that all column names in the
+target table must be present in the schema object. This restriction can be
+relaxed by using \code{FALSE}, where we can provide a subset of table columns in
+the schema.}
+
+\item{in_order}{A stringent requirement for enforcing the order of columns in
+the provided \code{schema}. By default, this is \code{TRUE} and the order of columns
+in both the schema and the target table must match. By setting to \code{FALSE},
+this strict order requirement is removed.}
 
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
@@ -57,11 +82,12 @@ validation step function can be used directly on a data table or with an
 expectation function can only be used with a data table. The types of data
 tables that can be used include data frames, tibbles, and even database
 tables of \code{tbl_dbi} class. The validation step or expectation operates over a
-single test unit, which is whether the schema exactly matches that of the
-table. If the target table is a \code{tbl_dbi} object, we can choose to validate
-the column schema that is based on R column types (e.g., \code{"numeric"},
+single test unit, which is whether the schema matches that of the table
+(within the constraints enforced by the \code{complete} and \code{in_order} options).
+If the target table is a \code{tbl_dbi} object, we can choose to validate the
+column schema that is based on R column types (e.g., \code{"numeric"},
 \code{"character"}, etc.), or, SQL column types (e.g., \code{"double"}, \code{"varchar"},
-etc.). That option is defined in the \code{\link[=col_schema]{col_schema()}} function (with the
+etc.). That option is defined in the \code{\link[=col_schema]{col_schema()}} function (it is the
 \code{.db_col_types} argument).
 }
 \details{

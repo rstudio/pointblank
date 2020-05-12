@@ -850,10 +850,10 @@ interrogate_distinct <- function(agent, idx, table) {
 
 interrogate_col_schema_match <- function(agent, idx, table) {
 
-  # Get the reference `col_schema` object
+  # Get the reference `col_schema` object (this is user-supplied)
   table_schema_y <- agent$validation_set$values[[idx]]
   
-  # Get the `table` `col_schema` object
+  # Get the `table` `col_schema` object (this is constructed from the table)
   if (inherits(table, "tbl_dbi")) {
     
     if (inherits(table_schema_y, "sql_type")) {
@@ -881,7 +881,48 @@ interrogate_col_schema_match <- function(agent, idx, table) {
   
   # Create function for validating the `col_schema_match()` step function
   tbl_col_schema_match <- function(table, table_schema_x, table_schema_y) {
+
+    # Extract options from `table_schema_y`
+    complete <- table_schema_y$`__complete__`
+    in_order <- table_schema_y$`__in_order__`
+
+    table_schema_y$`__complete__` <- NULL
+    table_schema_y$`__in_order__` <- NULL
+    class(table_schema_y) <- class(table_schema_x)
     
+    if (complete && length(table_schema_y) < length(table_schema_x)) {
+      return(dplyr::tibble(pb_is_good_ = FALSE))
+    }
+
+    if (!in_order) {
+      
+      table_schema_x <- 
+        structure(
+          table_schema_x[order(names(table_schema_x))],
+          class = class(table_schema_x)
+        )
+      
+      table_schema_y <- 
+        structure(
+          table_schema_y[order(names(table_schema_y))],
+          class = class(table_schema_y)
+        )
+    }
+    
+    # If there is no requirement for completeness in the user-defined
+    # schema, use only the intersecting names across the schemas in the
+    # reference schema
+    if (!complete) {
+
+      table_schema_x <-
+        structure(
+          table_schema_x[intersect(names(table_schema_x), names(table_schema_y))],
+          class = class(table_schema_x)
+        )
+    }
+    
+    # Check for exact matching between the reference schema and
+    # the user-defined schema
     if (identical(table_schema_x, table_schema_y)) {
       dplyr::tibble(pb_is_good_ = TRUE)
     } else {

@@ -78,4 +78,16 @@ test_that("Utility functions won't fail us", {
   agent %>% get_column_na_pass_at_idx(idx = 1) %>% expect_equal(TRUE)
   agent %>% get_column_na_pass_at_idx(idx = 2) %>% expect_is("logical")
   agent %>% get_column_na_pass_at_idx(idx = 2) %>% expect_equal(FALSE)
+  
+  # Expect that the `create_col_schema_from_names_types()` function generates
+  # named list object from a character vector and an unnamed list
+  col_names <- names(small_table)
+  col_types <- unname(lapply(small_table, class))
+  
+  cs <- create_col_schema_from_names_types(names = col_names, types = col_types)
+  
+  expect_is(cs, "list")
+  expect_equal(names(cs), col_names)
+  expect_equal(unname(cs), col_types)
+  expect_equal(length(cs), length(col_names), length(col_types))
 })

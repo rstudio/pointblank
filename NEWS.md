@@ -1,12 +1,16 @@
 # pointblank 0.3.1.9000 (development version)
 
+* The new `validate_rmd()` function can be used within an R Markdown document for **pointblank** validation testing within specialized validation code chunks inside an R Markdown document. To enable this functionality, `validate_rmd()` is called early within an R Markdown document to signal that validation should occur within specific code chunks having the `validate = TRUE` option set. Using pointblank validation step functions on data in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere. In the rendered HTML document, the successes and failures of validation tests are clearly shown with status buttons that reveal the otherwise hidden validation statements and any associated error messages.
+
+* Added 24 expectation functions (e.g., `expect_col_exists()`, `expect_rows_distinct()`, `expect_col_schema_match()`, etc.) as complements of the 24 validation step functions; all of these can be used for **testthat** tests of tabular data with a simplified interface that exposes an easy-to-use failure `threshold`.
+
 * Rewrote the internal `stock_stoppage()` and `stock_warning()` functions so that the generated error and warning messages match whether validation step functions are used directly on data or it is expectation functions that are being used.
+
+* The default behavior of using validation step functions (e.g., `col_vals_lt()`) directly on data tables has been changed. Before, a single test unit failure would trigger a warning. Now, a single test unit failing results in an error. Going back to the earlier behavior now requires the use of `actions = warn_on_fail()` (a new helper function, which has a default `warn_at` threshold value of `1`) with each invocation of a validation step function. The `stop_on_fail()` helper function is also new in this release, and has a `stop_at` threshold parameter, also with a default of `1`.
 
 * Console status messages when performing an interrogation now only appear in an interactive session. They will no longer appear during R Markdown rendering nor during execution of unattended scripts.
 
 * A `knit.print()` method was added to facilitate the printing of the agent report table within an R Markdown code chunk.
-
-* Added 24 expectation functions (e.g., `expect_col_exists()`, `expect_rows_distinct()`, `expect_col_schema_match()`, etc.) as complements of the 24 validation step functions; all of these can be used for **testthat** tests of tabular data with a simplified interface that exposes an easy-to-use failure `threshold`.
 
 # pointblank 0.3.1.1
 

@@ -56,11 +56,12 @@ agent object (technically, a ptblank_agent object) whereas the
 expectation function can only be used with a data table. The types of data
 tables that can be used include data frames, tibbles, and even database
 tables of tbl_dbi class. The validation step or expectation operates over a
-single test unit, which is whether the schema exactly matches that of the
-table. If the target table is a tbl_dbi object, we can choose to validate
-the column schema that is based on R column types (e.g., &quot;numeric&quot;,
+single test unit, which is whether the schema matches that of the table
+(within the constraints enforced by the complete and in_order options).
+If the target table is a tbl_dbi object, we can choose to validate the
+column schema that is based on R column types (e.g., &quot;numeric&quot;,
 &quot;character&quot;, etc.), or, SQL column types (e.g., &quot;double&quot;, &quot;varchar&quot;,
-etc.). That option is defined in the col_schema() function (with the
+etc.). That option is defined in the col_schema() function (it is the
 .db_col_types argument)." />
 <meta property="og:image" content="/logo.svg" />
 
@@ -145,17 +146,32 @@ validation step function can be used directly on a data table or with an
 expectation function can only be used with a data table. The types of data
 tables that can be used include data frames, tibbles, and even database
 tables of <code>tbl_dbi</code> class. The validation step or expectation operates over a
-single test unit, which is whether the schema exactly matches that of the
-table. If the target table is a <code>tbl_dbi</code> object, we can choose to validate
-the column schema that is based on R column types (e.g., <code>"numeric"</code>,
+single test unit, which is whether the schema matches that of the table
+(within the constraints enforced by the <code>complete</code> and <code>in_order</code> options).
+If the target table is a <code>tbl_dbi</code> object, we can choose to validate the
+column schema that is based on R column types (e.g., <code>"numeric"</code>,
 <code>"character"</code>, etc.), or, SQL column types (e.g., <code>"double"</code>, <code>"varchar"</code>,
-etc.). That option is defined in the <code><a href='col_schema.html'>col_schema()</a></code> function (with the
+etc.). That option is defined in the <code><a href='col_schema.html'>col_schema()</a></code> function (it is the
 <code>.db_col_types</code> argument).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>col_schema_match</span>(<span class='no'>x</span>, <span class='no'>schema</span>, <span class='kw'>actions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>brief</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>active</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>col_schema_match</span>(
+  <span class='no'>x</span>,
+  <span class='no'>schema</span>,
+  <span class='kw'>complete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>in_order</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>actions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>brief</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>active</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
 
-<span class='fu'>expect_col_schema_match</span>(<span class='no'>object</span>, <span class='no'>schema</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+<span class='fu'>expect_col_schema_match</span>(
+  <span class='no'>object</span>,
+  <span class='no'>schema</span>,
+  <span class='kw'>complete</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>in_order</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>1</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,6 +185,21 @@ class <code>ptblank_agent</code> that can be created with <code><a href='create_
       <th>schema</th>
       <td><p>A table schema of type <code>col_schema</code> which can be generated
 using the <code><a href='col_schema.html'>col_schema()</a></code> function.</p></td>
+    </tr>
+    <tr>
+      <th>complete</th>
+      <td><p>A requirement to account for all table columns in the
+<code>schema</code>. By default, this is <code>TRUE</code> and so that all column names in the
+target table must be present in the schema object. This restriction can be
+relaxed by using <code>FALSE</code>, where we can provide a subset of table columns in
+the schema.</p></td>
+    </tr>
+    <tr>
+      <th>in_order</th>
+      <td><p>A stringent requirement for enforcing the order of columns in
+the provided <code>schema</code>. By default, this is <code>TRUE</code> and the order of columns
+in both the schema and the target table must match. By setting to <code>FALSE</code>,
+this strict order requirement is removed.</p></td>
     </tr>
     <tr>
       <th>actions</th>

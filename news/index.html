@@ -124,7 +124,10 @@
 <a href="#pointblank-0319000-development-version" class="anchor"></a>pointblank 0.3.1.9000 (development version)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Added 24 expectation functions (e.g., <code><a href="../reference/col_exists.html">expect_col_exists()</a></code>, <code><a href="../reference/rows_distinct.html">expect_rows_distinct()</a></code>, <code><a href="../reference/col_schema_match.html">expect_col_schema_match()</a></code>, etc.) as complements of the 24 validation step functions; all of these can be used for <strong>testthat</strong> tests of tabular data with a simplified interface that exposes an easy-to-use failure <code>threshold</code>.</li>
+<li><p>Rewrote the internal <code>stock_stoppage()</code> and <code>stock_warning()</code> functions so that the generated error and warning messages match whether validation step functions are used directly on data or it is expectation functions that are being used.</p></li>
+<li><p>Console status messages when performing an interrogation now only appear in an interactive session. They will no longer appear during R Markdown rendering nor during execution of unattended scripts.</p></li>
+<li><p>A <code>knit.print()</code> method was added to facilitate the printing of the agent report table within an R Markdown code chunk.</p></li>
+<li><p>Added 24 expectation functions (e.g., <code><a href="../reference/col_exists.html">expect_col_exists()</a></code>, <code><a href="../reference/rows_distinct.html">expect_rows_distinct()</a></code>, <code><a href="../reference/col_schema_match.html">expect_col_schema_match()</a></code>, etc.) as complements of the 24 validation step functions; all of these can be used for <strong>testthat</strong> tests of tabular data with a simplified interface that exposes an easy-to-use failure <code>threshold</code>.</p></li>
 </ul>
 </div>
     <div id="pointblank-0311" class="section level1">

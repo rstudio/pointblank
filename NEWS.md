@@ -1,5 +1,11 @@
 # pointblank 0.3.1.9000 (development version)
 
+* Rewrote the internal `stock_stoppage()` and `stock_warning()` functions so that the generated error and warning messages match whether validation step functions are used directly on data or it is expectation functions that are being used.
+
+* Console status messages when performing an interrogation now only appear in an interactive session. They will no longer appear during R Markdown rendering nor during execution of unattended scripts.
+
+* A `knit.print()` method was added to facilitate the printing of the agent report table within an R Markdown code chunk.
+
 * Added 24 expectation functions (e.g., `expect_col_exists()`, `expect_rows_distinct()`, `expect_col_schema_match()`, etc.) as complements of the 24 validation step functions; all of these can be used for **testthat** tests of tabular data with a simplified interface that exposes an easy-to-use failure `threshold`.
 
 # pointblank 0.3.1.1

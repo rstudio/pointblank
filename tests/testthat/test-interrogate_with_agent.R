@@ -32,8 +32,8 @@ test_that("Interrogating with an agent yields the correct results", {
   schema <- 
     col_schema(
       date_time = c("POSIXct", "POSIXt"), date = "Date", 
-      a = "integer", b = "character", c = "numeric", d = "numeric", 
-      e = "logical", f = "character"
+      a = "integer", b = "character", c = "numeric",
+      d = "numeric", e = "logical", f = "character"
     )
   
   validation <-
@@ -56,6 +56,18 @@ test_that("Interrogating with an agent yields the correct results", {
   
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Expect an error if a `col_schema` object isn't provided to `schema`
+  expect_error(
+    create_agent(tbl = small_table) %>%
+      col_schema_match(
+        schema = list(
+          date_time = c("POSIXct", "POSIXt"), date = "Date", 
+          a = "integer", b = "character", c = "numeric",
+          d = "numeric",  e = "logical", f = "character"
+        )
+      )
+  )
   
   # Use the `col_exists()` function to create
   # a validation step, then, `interrogate()`

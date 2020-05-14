@@ -136,6 +136,13 @@ Should you need more fine-grained thresholds and resultant actions, the `action_
 
 <hr>
 
+Using **pointblank** in an R Markdown workflow is enabled by default once the **pointblank** library is loaded. The framework allows for validation testing within specialized validation code chunks where the `validate = TRUE` option
+is set. Using **pointblank** validation step functions on data in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere. All errors are reported in the validation code chunk after rendering the document to HTML, where green or red status buttons indicate whether all validations succeeded or failures occurred. Click them to reveal the otherwise hidden validation statements and their error messages (if any).
+
+<p align="center"><img src="man/figures/pointblank_rmarkdown.png" width="80%" style="border:2px solid #021a40;"></p>
+
+<hr>
+
 While data validation is important one has to be familiar with the data first. To that end, the `scan_data()` function is provided in **pointblank** for generating a comprehensive summary of a tabular dataset. The report content is customizable and can be produced in five different languages: *English*, *French*, *German*, *Italian*, and *Spanish* (validation reports can also be produced in either of these languages). Here are several published examples of a **Table Scan** for each of these languages (using the `dplyr::storms` dataset):
 
 - [Table Scan in English](https://rpubs.com/rich_i/pointblank_storms_english)

@@ -1,0 +1,51 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(pointblank)
+# Use `validate_rmd()` here to set options for the
+# pointblank validation workflow within R Markdown documents
+```
+
+We can validate data inside of specialized code chunks. The **pointblank** makes this possible by loading it, as above. We'll perform some simple validations using `small_table`.
+
+```{r small_table}
+small_table
+```
+
+We can perform validation checks on that table with **pointblank** step functions (inside code chunks where `validate = TRUE`). The results will be initially hidden in the rendered HTML document but can be revealed.
+
+```{r validation_step_functions, validate = TRUE}
+col_exists(small_table, columns = vars(a, b, c, d, e, f))
+rows_distinct(small_table, vars(d, e))
+col_vals_gt(small_table, vars(d), 1000)
+```
+
+We could also use **pointblank**'s `stop_if_not()` function to generate some predicate-based validation statements.
+
+```{r stop_if_not, validate = TRUE}
+stop_if_not(nrow(small_table) > 10)
+stop_if_not("time" %in% colnames(small_table))
+```
+
+Note that with multiple **pointblank** step functions chained together, only the first error encountered will be reported.
+
+```{r validate = TRUE}
+small_table %>% 
+  col_exists(columns = vars(a, b, c, d, e, f)) %>% # this passes validation
+  rows_distinct() %>%                              # this step fails (showing us the error message)
+  col_vals_gt(vars(d), 5000)                       # this also fails (we don't see its message)
+```
+
+If all validations in a chunk do not fail, we can still inspect the validation code.
+
+```{r validate = TRUE}
+small_table %>% 
+  col_is_date("date") %>%
+  col_vals_gt(vars(d), vars(c), na_pass = TRUE)
+```
+

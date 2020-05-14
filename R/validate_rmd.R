@@ -2,20 +2,20 @@ test_options <- new.env(parent = emptyenv())
 
 #nocov start
 
-#' Perform **pointblank** validation testing within R Markdown documents
+#' Modify **pointblank** validation testing options within R Markdown documents
 #' 
-#' The `validate_rmd()` function sets up a framework for validation testing
-#' within specialized validation code chunks inside an R Markdown document. To
-#' enable this functionality, `validate_rmd()` should be called early within an
-#' R Markdown document code chunk (preferably in the `setup` chunk) to signal
-#' that validation should occur within specific code chunks. The validation code
-#' chunks require the `validate = TRUE` option to be set. Using **pointblank**
-#' validation step functions on data in these marked code chunks will flag
-#' overall failure if the stop threshold is exceeded anywhere. All errors are
-#' reported in the validation code chunk after rendering the document to HTML,
-#' where a centered status button either indicates success or the number of
-#' overall failures. Clicking the button reveals the otherwise hidden validation
-#' statements and their error messages (if any).
+#' Using **pointblank** in an R Markdown workflow is enabled by default once the
+#' **pointblank** library is loaded. The framework allows for validation testing
+#' within specialized validation code chunks where the `validate = TRUE` option
+#' is set. Using **pointblank** validation step functions on data in these
+#' marked code chunks will flag overall failure if the stop threshold is
+#' exceeded anywhere. All errors are reported in the validation code chunk after
+#' rendering the document to HTML, where green or red status buttons indicate
+#' whether all validations succeeded or failures occurred. Clicking any such
+#' button reveals the otherwise hidden validation statements and their error
+#' messages (if any). While the framework for such testing is set up by default,
+#' the `validate_rmd()` function offers an opportunity to set UI and logging
+#' options.
 #'
 #' @param summary If `TRUE` (the default), then there will be a leading summary
 #'   of all validations in the rendered R Markdown document. With `FALSE`, this
@@ -25,46 +25,17 @@ test_options <- new.env(parent = emptyenv())
 #'   `"validation_errors.log"` in the working directory. To both enable logging
 #'   and to specify a file name, include a path to a log file of the desired
 #'   name.
-#' @param theme A choice of which theme to use. Currently, the only available
-#'   option is `"default"`.
 #'
 #' @family Planning and Prep
 #' @section Function ID:
 #' 1-3
-#'
+#' 
 #' @export
 validate_rmd <- function(summary = TRUE,
-                         log_to_file = NULL,
-                         theme = "default") {
+                         log_to_file = NULL) {
   
-  theme <- match.arg(theme)
-  
-  knitr::opts_hooks$set(
-    error = function(options) {
-      if (isTRUE(options$validate)) {
-        options$error = TRUE
-      }
-      options
-    }
-  )
-  
-  error <- knitr_error_hook(knitr::knit_hooks$get("error"))
-  document <- knitr_document_hook(knitr::knit_hooks$get("document"))
-  
-  # TODO: this isn't currently used (but may be useful later)
-  # evaluate <- knitr_evaluate_hook(knitr::knit_hooks$get("evaluate"))
-  
-  knitr::knit_hooks$set(
-    chunk = knitr_chunk_hook,
-    error = error,
-    document = document
-  )
-  
-  reset_doc_counts()
-  
-  # Store the `summary` and `theme` values to `test_options`
+  # Store the `summary` value to `test_options`
   test_options$summary <- summary
-  test_options$theme <- theme
   
   # Determine whether file logging with `log4r` is to be done and also
   # determine the filename of the logging file
@@ -85,8 +56,6 @@ validate_rmd <- function(summary = TRUE,
     } else if (!isTRUE(log_to_file) && is.logical(log_to_file)) {
       test_options$perform_logging <- FALSE
     }
-  } else {
-    test_options$perform_logging <- FALSE
   }
   
   if (test_options$perform_logging) {
@@ -98,6 +67,33 @@ validate_rmd <- function(summary = TRUE,
         appenders = log4r::file_appender(test_options$log_to_file)
       )
   }
+}
+
+validate_rmd_setup <- function() {
+  
+  knitr::opts_hooks$set(
+    error = function(options) {
+      if (isTRUE(options$validate)) {
+        options$error = TRUE
+      }
+      options
+    }
+  )
+  
+  error <- knitr_error_hook(knitr::knit_hooks$get("error"))
+  document <- knitr_document_hook(knitr::knit_hooks$get("document"))
+  
+  knitr::knit_hooks$set(
+    chunk = knitr_chunk_hook,
+    error = error,
+    document = document
+  )
+  
+  reset_doc_counts()
+  
+  # Store default logical values for the summary and logging options
+  test_options$summary <- TRUE
+  test_options$perform_logging <- FALSE
   
   validate_rmd_dependencies()
 }
@@ -148,11 +144,9 @@ validate_rmd_dependencies <- function() {
 
 render_template <- function(template_name, data) {
   
-  theme <- test_options$theme
-  
   path <- 
     system.file(
-      "templates", theme, paste0(template_name, ".html"),
+      "templates", "default", paste0(template_name, ".html"),
       package = "pointblank"
     )
   
@@ -168,7 +162,7 @@ render_template <- function(template_name, data) {
     
     if (data$pass) {
       
-      state <- "info"  
+      state <- "success"  
       text <- "All validations passed."
       
     } else {
@@ -213,9 +207,6 @@ knitr_error_hook <- function(previous_hook) {
     if (isTRUE(options$validate)) {
 
       increment_count("error")
-      
-      # TODO: Integrate the errored code with the error message 
-      # error_code <- options$code
       
       error_message <- x %>% tidy_gsub("##", "") %>% tidy_gsub("\n", "")
       log4r_error(message = error_message)
@@ -285,16 +276,144 @@ knitr_chunk_hook <- function(x, options) {
   error_count <- get_chunk_count("error")
   pass <- error_count == 0
   
+  extract_code <- function(x) {
+    
+    matches <- gregexpr(pattern = "```r(.|\n)*?```", x)
+    
+    regmatches(x = x, m = matches) %>%
+      unlist() %>%
+      tidy_gsub("(```r\\n|\\n```)", "")
+  }
+  
+  extract_output <- function(x) {
+    
+    matches <- gregexpr(pattern = "```\n##(.|\n)*?```", x, perl = TRUE)
+    
+    regmatches(x = x, m = matches) %>%
+      unlist() %>%
+      tidy_gsub("(```\\n|\\n```)", "")
+  }
+  
+  is_error_output <- function(output_vec) {
+    grepl("^## Error", output_vec)
+  }
+  
+  code_vec <- extract_code(x)
+  output_vec <- extract_output(x)
+  error_vec <- is_error_output(output_vec = output_vec)
+  
+  remix_content <- function(code_vec, output_vec, error_vec) {
+    
+    pass_svg <- 
+      htmltools::HTML(
+        "<svg height=\"1.5em\" viewBox=\"0 0 32 32\" style=\"margin-top: 1px; fill: green;\"><path d=\"M 28.28125 6.28125 L 11 23.5625 L 3.71875 16.28125 L 2.28125 17.71875 L 10.28125 25.71875 L 11 26.40625 L 11.71875 25.71875 L 29.71875 7.71875 Z\"></path></svg>"
+      )
+    
+    fail_svg <- 
+      htmltools::HTML(
+        "<svg height=\"1.5em\" viewBox=\"0 0 32 32\" style=\"margin-top: 3px; fill: red;\"><path d=\"M 16 3 C 8.832031 3 3 8.832031 3 16 C 3 23.167969 8.832031 29 16 29 C 23.167969 29 29 23.167969 29 16 C 29 8.832031 23.167969 3 16 3 Z M 16 5 C 22.085938 5 27 9.914063 27 16 C 27 22.085938 22.085938 27 16 27 C 9.914063 27 5 22.085938 5 16 C 5 9.914063 9.914063 5 16 5 Z M 12.21875 10.78125 L 10.78125 12.21875 L 14.5625 16 L 10.78125 19.78125 L 12.21875 21.21875 L 16 17.4375 L 19.78125 21.21875 L 21.21875 19.78125 L 17.4375 16 L 21.21875 12.21875 L 19.78125 10.78125 L 16 14.5625 Z\"/></svg>"
+      )
+    
+    output_vec[!error_vec] <- NA_character_
+    
+    content <- c()
+    
+    for (i in seq_along(code_vec)) {
+     
+      
+      if (!error_vec[i]) {
+        
+        # Success Case
+        output_content <- 
+          htmltools::tagList(
+            htmltools::tags$div(
+              class = "panel panel-success",
+              htmltools::tags$div(
+                class = "panel-heading",
+                style = "color: #333; border-color: transparent;",
+                htmltools::tags$div(
+                  style = "display: inline-flex; width: 100%",
+                  htmltools::tags$div(
+                    style = "margin-top: 2px; padding-left: 5px; background: #FAFAFA;",
+                    pass_svg
+                  ),
+                  htmltools::tags$div(
+                    style = "padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 4px; margin-top: 2px; background: #FAFAFA; width: 100%; overflow-x: scroll;",
+                    htmltools::tags$code(
+                      style = "background-color: #FAFAFA; padding-left: 0;",
+                      code_vec[i]
+                    )
+                  )
+                )
+              )
+            )
+          )
+        
+      } else {
+        
+        # Failure Case
+        output_content <- 
+          htmltools::tagList(
+            htmltools::tags$div(
+              class = "panel panel-danger",
+              htmltools::tags$div(
+                class = "panel-heading",
+                style = "color: #333; border-color: transparent;",
+                htmltools::tags$div(
+                  style = "display: inline-flex; width: 100%",
+                  htmltools::tags$div(
+                    style = "margin-top: 2px; padding-left: 5px; background: #FAFAFA;",
+                    fail_svg
+                  ),
+                  htmltools::tags$div(
+                    style = "padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 4px; margin-top: 2px; background: #FAFAFA; width: 100%; overflow-x: scroll;",
+                    htmltools::tags$code(
+                      style = "background-color: #FAFAFA; padding-left: 0;",
+                      code_vec[i]
+                    )
+                  )
+                ),
+                htmltools::tags$hr(
+                  style = "margin-top: 10px; margin-bottom: 0; border: 1px solid #EBCCD1;"
+                ),
+                htmltools::tags$div(
+                  class = "panel-body",
+                  style = "padding-left: 15px; padding-top: 15px; padding-right: 15px; padding-bottom: 15px; background: #FAFAFA; width: 100%; overflow-x: scroll;",
+                  htmltools::tags$code(
+                    style = "background-color: #FAFAFA; padding-left: 0; overflow-x: scroll;",
+                    output_vec[i]
+                  )
+                ),
+                htmltools::tags$hr(
+                  style = "margin-top: 0; margin-bottom: 0; border: 1px solid #EBCCD1;"
+                ),
+              )
+            )
+          )
+      }
+      
+      content <-  c(content, as.character(output_content)) %>% as.character()
+        
+    }
+    
+    content <- paste(content, collapse = "")
+  }
+  
+  content <- 
+    remix_content(code_vec = code_vec, output_vec = output_vec, error_vec = error_vec)
+  
+    
+  # Prepare the data list
   data <- 
     list(
       chunk_id = sprintf("chunk-%07d", sample.int(9999999, 1)),
       button_class = "default",
-      bootstrap_class = if (pass) "info" else "danger",
+      bootstrap_class = if (pass) "success" else "danger",
       status = if (pass) "pass" else "fail",
       pass = pass,
       pass_count = get_chunk_count("pass"),
       error_count = error_count,
-      content = paste(x, collapse = "\n"),
+      content = content,
       noun = if (error_count == 1) "validation" else "validations"
     )
   
@@ -303,3 +422,78 @@ knitr_chunk_hook <- function(x, options) {
 
 #nocov end
 
+#' The next generation of `stopifnot()`-type functions: `stop_if_not()`
+#'
+#' This is `stopifnot()` but with a twist: it works well as a standalone,
+#' replacement for `stopifnot()` but is also customized for use in validation
+#' checks in R Markdown documents where **pointblank** is loaded. Using
+#' `stop_if_not()` in a code chunk where the `validate = TRUE` option is set
+#' will yield the correct reporting of successes and failures whereas
+#' `stopifnot()` *does not*.
+#' 
+#' @param ... R expressions that should each evaluate to (a logical vector of
+#' all) `TRUE`.
+#' 
+#' @return `NULL` if all statements in `...` are `TRUE`.
+#' 
+#' @examples 
+#' # This checks whether the number of
+#' # rows in `small_table` is greater
+#' # than `10`
+#' stop_if_not(nrow(small_table) > 10)
+#' 
+#' # This will stop for sure: there
+#' # isn't a `time` column in `small_table`
+#' # (but there are the `date_time` and
+#' # `date` columns)
+#' # stop_if_not("time" %in% colnames(small_table))
+#' 
+#' # You're not bound to using tabular
+#' # data here, any statements that
+#' # evaluate to logical vectors will work
+#' stop_if_not(1:5 < 20:25)
+#' 
+#' @export
+stop_if_not <- function(...) {
+  
+  res <- list(...)
+  
+  n <- length(res)
+  
+  if (n == 0L) return()
+
+  for (y in 1L:n) {
+    
+    res_y <- .subset2(res, y)
+    
+    if (length(res_y) != 1 || is.na(res_y) || !res_y) {
+      
+      if (all(res_y)) break
+      
+      matched_call <- match.call()
+      
+      deparsed_call <- deparse(matched_call[[y + 1]])
+      
+      if (length(call) > 1) {
+        deparsed_call <- paste(deparsed_call[1L], "...")
+      }
+      
+      stop(
+        sQuote(deparsed_call), " is not TRUE.",
+        call. = FALSE, domain = NA
+      )
+    }
+  }
+
+  if ("knitr" %in% loadedNamespaces() &&
+      "pointblank" %in% loadedNamespaces() &&
+      exists("options$validate") && 
+      isTRUE(options$validate)) {
+    
+    return(TRUE)
+    
+  } else {
+    
+    return()
+  }
+}

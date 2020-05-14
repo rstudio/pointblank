@@ -1,10 +1,12 @@
 <!--html_preserve-->
-<div class="pointblank-badge-container-inner">
+<div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
   <span class="pointblank-badge label label-{state}" data-toggle="collapse" data-target="#{chunk_id}" aria-expanded="false" aria-controls="{chunk_id}">{text}</span>
 </div>
-<div id="{chunk_id}" class="pointblank-chunk panel panel-{bootstrap_class} collapse">
-  <div class="panel-heading">
-<!--/html_preserve-->
-  {content}
+<div id="{chunk_id}" class="pointblank-chunk panel panel-{state} collapse" >
+  <div class="panel" style="margin-bottom: 0px;">
+    <div class="panel-body" style="padding-left: 18px; padding-top: 18px; padding-right: 18px; padding-bottom: 0px; background: #FAFAFA;">
+      {content}
+    </div>
   </div>
 </div>
+<!--/html_preserve-->

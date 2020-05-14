@@ -7,7 +7,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 
 library(pointblank)
-validate_rmd()
 ```
 
 The above message indicates a dire reality: validation checks *did not* pass (**4 failing validations!**). Turns out we can validate our data right inside of an **R Markdown** document. The **pointblank** package makes that possible by providing the `validate_rmd()` function (put it inside the `setup` code chunk). The **pointblank** package ships with a small dataset called `small_table`. It *really* is small, only a few rows:
@@ -24,11 +23,11 @@ rows_distinct(small_table, vars(d, e))
 col_vals_gt(small_table, vars(d), 1000)
 ```
 
-We could also use non-**pointblank** solutions that might yield errors when a validation check fails. For instance, `stopifnot()` combined with a predicate statement works really well for simple validations.
+We could also use **pointblank**'s `stop_if_not()` function to generate some predicate-based validation statements. This works really well on all sorts of data tables and these predicates are really easy to whip up.
 
 ```{r validate = TRUE}
-stopifnot(nrow(small_table) > 10)
-stopifnot("time" %in% colnames(small_table))
+stop_if_not(nrow(small_table) > 10)
+stop_if_not("time" %in% colnames(small_table))
 ```
 
 Note that with multiple **pointblank** step functions chained together, only the first error encountered will be reported. So, use multiple statements if necessary to check which may result in failed validations.

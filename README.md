@@ -165,6 +165,9 @@ validation statements and their error messages (if any).
 
 </p>
 
+The above R Markdown document is available as a template in RStudio. Try
+it out\!
+
 <hr>
 
 While data validation is important one has to be familiar with the data

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Modify <strong>pointblank</strong> validation testing options within R Markdown documents — validate_rmd • pointblank</title>
+<title>The next generation of <code>stopifnot()</code>-type functions: <code>stop_if_not()</code> — stop_if_not • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,19 +46,13 @@
 
 
 
-<meta property="og:title" content="Modify <strong>pointblank</strong> validation testing options within R Markdown documents — validate_rmd" />
-<meta property="og:description" content="Using pointblank in an R Markdown workflow is enabled by default once the
-pointblank library is loaded. The framework allows for validation testing
-within specialized validation code chunks where the validate = TRUE option
-is set. Using pointblank validation step functions on data in these
-marked code chunks will flag overall failure if the stop threshold is
-exceeded anywhere. All errors are reported in the validation code chunk after
-rendering the document to HTML, where green or red status buttons indicate
-whether all validations succeeded or failures occurred. Clicking any such
-button reveals the otherwise hidden validation statements and their error
-messages (if any). While the framework for such testing is set up by default,
-the validate_rmd() function offers an opportunity to set UI and logging
-options." />
+<meta property="og:title" content="The next generation of <code>stopifnot()</code>-type functions: <code>stop_if_not()</code> — stop_if_not" />
+<meta property="og:description" content="This is stopifnot() but with a twist: it works well as a standalone,
+replacement for stopifnot() but is also customized for use in validation
+checks in R Markdown documents where pointblank is loaded. Using
+stop_if_not() in a code chunk where the validate = TRUE option is set
+will yield the correct reporting of successes and failures whereas
+stopifnot() does not." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -127,60 +121,52 @@ options." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Modify <strong>pointblank</strong> validation testing options within R Markdown documents</h1>
+    <h1>The next generation of <code>stopifnot()</code>-type functions: <code>stop_if_not()</code></h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/validate_rmd.R'><code>R/validate_rmd.R</code></a></small>
-    <div class="hidden name"><code>validate_rmd.Rd</code></div>
+    <div class="hidden name"><code>stop_if_not.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Using <strong>pointblank</strong> in an R Markdown workflow is enabled by default once the
-<strong>pointblank</strong> library is loaded. The framework allows for validation testing
-within specialized validation code chunks where the <code>validate = TRUE</code> option
-is set. Using <strong>pointblank</strong> validation step functions on data in these
-marked code chunks will flag overall failure if the stop threshold is
-exceeded anywhere. All errors are reported in the validation code chunk after
-rendering the document to HTML, where green or red status buttons indicate
-whether all validations succeeded or failures occurred. Clicking any such
-button reveals the otherwise hidden validation statements and their error
-messages (if any). While the framework for such testing is set up by default,
-the <code>validate_rmd()</code> function offers an opportunity to set UI and logging
-options.</p>
+    <p>This is <code><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot()</a></code> but with a twist: it works well as a standalone,
+replacement for <code><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot()</a></code> but is also customized for use in validation
+checks in R Markdown documents where <strong>pointblank</strong> is loaded. Using
+<code>stop_if_not()</code> in a code chunk where the <code>validate = TRUE</code> option is set
+will yield the correct reporting of successes and failures whereas
+<code><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot()</a></code> <em>does not</em>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>validate_rmd</span>(<span class='kw'>summary</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>log_to_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>stop_if_not</span>(<span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>summary</th>
-      <td><p>If <code>TRUE</code> (the default), then there will be a leading summary
-of all validations in the rendered R Markdown document. With <code>FALSE</code>, this
-element is not shown.</p></td>
-    </tr>
-    <tr>
-      <th>log_to_file</th>
-      <td><p>An option to log errors to a text file. By default, no
-logging is done but <code>TRUE</code> will write log entries to
-<code>"validation_errors.log"</code> in the working directory. To both enable logging
-and to specify a file name, include a path to a log file of the desired
-name.</p></td>
+      <th>...</th>
+      <td><p>R expressions that should each evaluate to (a logical vector of
+all) <code>TRUE</code>.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
+    <p><code>NULL</code> if all statements in <code>...</code> are <code>TRUE</code>.</p>
 
-<p>1-3</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># This checks whether the number of</span>
+<span class='co'># rows in `small_table` is greater</span>
+<span class='co'># than `10`</span>
+<span class='fu'>stop_if_not</span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>small_table</span>) <span class='kw'>&gt;</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; NULL</div><div class='input'>
+<span class='co'># This will stop for sure: there</span>
+<span class='co'># isn't a `time` column in `small_table`</span>
+<span class='co'># (but there are the `date_time` and</span>
+<span class='co'># `date` columns)</span>
+<span class='co'># stop_if_not("time" %in% colnames(small_table))</span>
 
-    <div class='dont-index'><p>Other Planning and Prep: 
-<code><a href='action_levels.html'>action_levels</a>()</code>,
-<code><a href='col_schema.html'>col_schema</a>()</code>,
-<code><a href='create_agent.html'>create_agent</a>()</code>,
-<code><a href='scan_data.html'>scan_data</a>()</code></p></div>
-
+<span class='co'># You're not bound to using tabular</span>
+<span class='co'># data here, any statements that</span>
+<span class='co'># evaluate to logical vectors will work</span>
+<span class='fu'>stop_if_not</span>(<span class='fl'>1</span>:<span class='fl'>5</span> <span class='kw'>&lt;</span> <span class='fl'>20</span>:<span class='fl'>25</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: longer object length is not a multiple of shorter object length</span></div><div class='output co'>#&gt; NULL</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

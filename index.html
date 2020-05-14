@@ -150,6 +150,12 @@
 <span id="cb6-14"><a href="#cb6-14"></a><span class="op">*</span><span class="st"> </span>failure <span class="kw">level</span> (<span class="dv">2</span>) <span class="op">&gt;=</span><span class="st"> </span>failure <span class="kw">threshold</span> (<span class="dv">1</span>) </span></code></pre></div>
 <p>Should you need more fine-grained thresholds and resultant actions, the <code><a href="reference/action_levels.html">action_levels()</a></code> function can be used to specify multiple failure thresholds and side effects for each failure state. However, the <code><a href="reference/action_levels.html">warn_on_fail()</a></code> and <code><a href="reference/action_levels.html">stop_on_fail()</a></code> (applied by default, with <code>stop_at = 1</code>) helpers should in most cases suffice for this workflow.</p>
 <hr>
+<p>Using <strong>pointblank</strong> in an R Markdown workflow is enabled by default once the <strong>pointblank</strong> library is loaded. The framework allows for validation testing within specialized validation code chunks where the <code>validate = TRUE</code> option is set. Using <strong>pointblank</strong> validation step functions on data in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere. All errors are reported in the validation code chunk after rendering the document to HTML, where green or red status buttons indicate whether all validations succeeded or failures occurred. Click them to reveal the otherwise hidden validation statements and their error messages (if any).</p>
+<p align="center">
+</p>
+<p><img src="reference/figures/pointblank_rmarkdown.png" width="80%" style="border:2px solid #021a40;"></p>
+
+<hr>
 <p>While data validation is important one has to be familiar with the data first. To that end, the <code><a href="reference/scan_data.html">scan_data()</a></code> function is provided in <strong>pointblank</strong> for generating a comprehensive summary of a tabular dataset. The report content is customizable and can be produced in five different languages: <em>English</em>, <em>French</em>, <em>German</em>, <em>Italian</em>, and <em>Spanish</em> (validation reports can also be produced in either of these languages). Here are several published examples of a <strong>Table Scan</strong> for each of these languages (using the <code><a href="https://dplyr.tidyverse.org/reference/storms.html">dplyr::storms</a></code> dataset):</p>
 <ul>
 <li><a href="https://rpubs.com/rich_i/pointblank_storms_english">Table Scan in English</a></li>

@@ -165,8 +165,8 @@ validation statements and their error messages (if any).
 
 </p>
 
-The above R Markdown document is available as a template in RStudio. Try
-it out\!
+The above R Markdown document is available as a template in RStudio
+(called `Pointblank Validation`). Try it out\!
 
 <hr>
 

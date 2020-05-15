@@ -474,7 +474,7 @@ stop_if_not <- function(...) {
       
       deparsed_call <- deparse(matched_call[[y + 1]])
       
-      if (length(call) > 1) {
+      if (length(deparsed_call) > 1) {
         deparsed_call <- paste(deparsed_call[1L], "...")
       }
       

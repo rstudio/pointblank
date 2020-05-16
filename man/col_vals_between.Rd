@@ -102,6 +102,7 @@ For the validation function, the return value is either a
 object or a table was passed to \code{x}). The expectation function invisibly
 returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
+The test function returns a logical value.
 }
 \description{
 The \code{col_vals_between()} validation function, the \code{expect_col_vals_between()}

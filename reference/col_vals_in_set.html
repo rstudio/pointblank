@@ -47,16 +47,16 @@
 
 
 <meta property="og:title" content="Are column data part of a specified set of values? — col_vals_in_set" />
-<meta property="og:description" content="The col_vals_in_set() validation step function and the
-expect_col_vals_in_set() expectation function both check whether column
-values in a table are part of a specified set of values. The validation
-step function can be used directly on a data table or with an agent object
-(technically, a ptblank_agent object) whereas the expectation function can
-only be used with a data table. The types of data tables that can be used
-include data frames, tibbles, and even database tables of tbl_dbi class.
-Each validation step or expectation will operate over the number of test
-units that is equal to the number of rows in the table (after any
-preconditions have been applied)." />
+<meta property="og:description" content="The col_vals_in_set() validation function, the expect_col_vals_in_set()
+expectation function, and the test_col_vals_in_set() test function all
+check whether column values in a table are part of a specified set of
+values. The validation step function can be used directly on a data table or
+with an agent object (technically, a ptblank_agent object) whereas the
+expectation and test functions can only be used with a data table. The types
+of data tables that can be used include data frames, tibbles, and even
+database tables of tbl_dbi class. Each validation step or expectation will
+operate over the number of test units that is equal to the number of rows in
+the table (after any preconditions have been applied)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -131,16 +131,16 @@ preconditions have been applied)." />
     </div>
 
     <div class="ref-description">
-    <p>The <code>col_vals_in_set()</code> validation step function and the
-<code>expect_col_vals_in_set()</code> expectation function both check whether column
-values in a table are part of a specified <code>set</code> of values. The validation
-step function can be used directly on a data table or with an <em>agent</em> object
-(technically, a <code>ptblank_agent</code> object) whereas the expectation function can
-only be used with a data table. The types of data tables that can be used
-include data frames, tibbles, and even database tables of <code>tbl_dbi</code> class.
-Each validation step or expectation will operate over the number of test
-units that is equal to the number of rows in the table (after any
-<code>preconditions</code> have been applied).</p>
+    <p>The <code>col_vals_in_set()</code> validation function, the <code>expect_col_vals_in_set()</code>
+expectation function, and the <code>test_col_vals_in_set()</code> test function all
+check whether column values in a table are part of a specified <code>set</code> of
+values. The validation step function can be used directly on a data table or
+with an <em>agent</em> object (technically, a <code>ptblank_agent</code> object) whereas the
+expectation and test functions can only be used with a data table. The types
+of data tables that can be used include data frames, tibbles, and even
+database tables of <code>tbl_dbi</code> class. Each validation step or expectation will
+operate over the number of test units that is equal to the number of rows in
+the table (after any <code>preconditions</code> have been applied).</p>
     </div>
 
     <pre class="usage"><span class='fu'>col_vals_in_set</span>(
@@ -159,7 +159,9 @@ units that is equal to the number of rows in the table (after any
   <span class='no'>set</span>,
   <span class='kw'>preconditions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>1</span>
-)</pre>
+)
+
+<span class='fu'>test_col_vals_in_set</span>(<span class='no'>object</span>, <span class='no'>columns</span>, <span class='no'>set</span>, <span class='kw'>preconditions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -225,22 +227,23 @@ proportional failure threshold.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>For the validation step function, the return value is either a
+    <p>For the validation function, the return value is either a
 <code>ptblank_agent</code> object or a table object (depending on whether an agent
 object or a table was passed to <code>x</code>). The expectation function invisibly
 returns its input but, in the context of testing data, the function is
-called primarily for its potential side-effects (e.g., signaling failure).</p>
+called primarily for its potential side-effects (e.g., signaling failure).
+The test function returns a logical value.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If providing multiple column names, the result will be an expansion of
 validation steps to that number of column names (e.g., <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars(col_a, col_b)</a></code>
-will result in the entry of two validation steps). Aside from column names
-in quotes and in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, <strong>tidyselect</strong> helper functions are available for
+will result in the entry of two validation steps). Aside from column names in
+quotes and in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, <strong>tidyselect</strong> helper functions are available for
 specifying columns. They are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>,
 <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p>
 <p>Having table <code>preconditions</code> means <strong>pointblank</strong> will mutate the table just
 before interrogation. Such a table mutation is isolated in scope to the
-validation step(s) produced by the validation step function call. Using
+validation step(s) produced by the validation function call. Using
 <strong>dplyr</strong> code is suggested here since the statements can be translated to
 SQL if necessary. The code is most easily supplied as a one-sided <strong>R</strong>
 formula (using a leading <code>~</code>). In the formula representation, the <code>.</code> serves
@@ -249,7 +252,7 @@ as the input data table to be transformed (e.g.,
 instead be supplied (e.g.,
 <code>function(x) dplyr::mutate(x, col_a = col_b + 10)</code>).</p>
 <p>Often, we will want to specify <code>actions</code> for the validation. This argument,
-present in every validation step function, takes a specially-crafted list
+present in every validation function, takes a specially-crafted list
 object that is best produced by the <code><a href='action_levels.html'>action_levels()</a></code> function. Read that
 function's documentation for the lowdown on how to create reactions to
 above-threshold failure levels in validation. The basic gist is that you'll
@@ -274,7 +277,7 @@ then be automatically generated.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>The analogue to this function: <code><a href='col_vals_not_in_set.html'>col_vals_not_in_set()</a></code>.</p>
-<p>Other Validation Step Functions: 
+<p>Other validation functions: 
 <code><a href='col_exists.html'>col_exists</a>()</code>,
 <code><a href='col_is_character.html'>col_is_character</a>()</code>,
 <code><a href='col_is_date.html'>col_is_date</a>()</code>,

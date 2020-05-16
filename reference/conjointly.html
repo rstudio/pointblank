@@ -47,21 +47,22 @@
 
 
 <meta property="og:title" content="Perform multiple rowwise validations for joint validity — conjointly" />
-<meta property="og:description" content="The conjointly() validation step function and the expect_conjointly()
-expectation function both check whether test units at each index (typically
-each row) all pass multiple validations with col_vals_*()-type functions.
-Because of the imposed constraint on the allowed validation step functions,
-all test units are rows of the table (after any common preconditions have
-been applied). The validation step function and expectation (internally
-composed of multiple validation steps) ultimately performs a rowwise test of
+<meta property="og:description" content="The conjointly() validation function, the expect_conjointly() expectation
+function, and the test_conjointly() test function all check whether test
+units at each index (typically each row) all pass multiple validations with
+col_vals_*()-type functions. Because of the imposed constraint on the
+allowed validation functions, all test units are rows of the table (after any
+common preconditions have been applied). Each of the functions (composed
+with multiple validation function calls) ultimately perform a rowwise test of
 whether all sub-validations reported a pass for the same test units. In
 practice, an example of a joint validation is testing whether values for
 column a are greater than a specific value while values for column b lie
-within a specified range. The validation step functions to be part of the
-conjoint validation are to be supplied as one-sided R formulas (using a
-leading ~, and having a . stand in as the data object). The validation
-step function can be used directly on a data table or with an agent object
-(technically, a ptblank_agent object)." />
+within a specified range. The validation functions to be part of the conjoint
+validation are to be supplied as one-sided R formulas (using a leading
+~, and having a . stand in as the data object). The validation function
+can be used directly on a data table or with an agent object (technically,
+a ptblank_agent object) whereas the expectation and test functions can only
+be used with a data table." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -136,21 +137,22 @@ step function can be used directly on a data table or with an agent object
     </div>
 
     <div class="ref-description">
-    <p>The <code>conjointly()</code> validation step function and the <code>expect_conjointly()</code>
-expectation function both check whether test units at each index (typically
-each row) all pass multiple validations with <code>col_vals_*()</code>-type functions.
-Because of the imposed constraint on the allowed validation step functions,
-all test units are rows of the table (after any common <code>preconditions</code> have
-been applied). The validation step function and expectation (internally
-composed of multiple validation steps) ultimately performs a rowwise test of
+    <p>The <code>conjointly()</code> validation function, the <code>expect_conjointly()</code> expectation
+function, and the <code>test_conjointly()</code> test function all check whether test
+units at each index (typically each row) all pass multiple validations with
+<code>col_vals_*()</code>-type functions. Because of the imposed constraint on the
+allowed validation functions, all test units are rows of the table (after any
+common <code>preconditions</code> have been applied). Each of the functions (composed
+with multiple validation function calls) ultimately perform a rowwise test of
 whether all sub-validations reported a <em>pass</em> for the same test units. In
 practice, an example of a joint validation is testing whether values for
 column <code>a</code> are greater than a specific value while values for column <code>b</code> lie
-within a specified range. The validation step functions to be part of the
-conjoint validation are to be supplied as one-sided <strong>R</strong> formulas (using a
-leading <code>~</code>, and having a <code>.</code> stand in as the data object). The validation
-step function can be used directly on a data table or with an <em>agent</em> object
-(technically, a <code>ptblank_agent</code> object).</p>
+within a specified range. The validation functions to be part of the conjoint
+validation are to be supplied as one-sided <strong>R</strong> formulas (using a leading
+<code>~</code>, and having a <code>.</code> stand in as the data object). The validation function
+can be used directly on a data table or with an <em>agent</em> object (technically,
+a <code>ptblank_agent</code> object) whereas the expectation and test functions can only
+be used with a data table.</p>
     </div>
 
     <pre class="usage"><span class='fu'>conjointly</span>(
@@ -164,6 +166,14 @@ step function can be used directly on a data table or with an <em>agent</em> obj
 )
 
 <span class='fu'>expect_conjointly</span>(
+  <span class='no'>object</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>.list</span> <span class='kw'>=</span> <span class='fu'>list2</span>(<span class='no'>...</span>),
+  <span class='kw'>preconditions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>1</span>
+)
+
+<span class='fu'>test_conjointly</span>(
   <span class='no'>object</span>,
   <span class='no'>...</span>,
   <span class='kw'>.list</span> <span class='kw'>=</span> <span class='fu'>list2</span>(<span class='no'>...</span>),
@@ -236,11 +246,12 @@ proportional failure threshold.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>For the validation step function, the return value is either a
+    <p>For the validation function, the return value is either a
 <code>ptblank_agent</code> object or a table object (depending on whether an agent
 object or a table was passed to <code>x</code>). The expectation function invisibly
 returns its input but, in the context of testing data, the function is
-called primarily for its potential side-effects (e.g., signaling failure).</p>
+called primarily for its potential side-effects (e.g., signaling failure).
+The test function returns a logical value.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If providing multiple column names in any of the supplied validation step
@@ -251,7 +262,7 @@ are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>sta
 <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p>
 <p>Having table <code>preconditions</code> means <strong>pointblank</strong> will mutate the table just
 before interrogation. Such a table mutation is isolated in scope to the
-validation step(s) produced by the validation step function call. Using
+validation step(s) produced by the validation function call. Using
 <strong>dplyr</strong> code is suggested here since the statements can be translated to
 SQL if necessary. The code is most easily supplied as a one-sided <strong>R</strong>
 formula (using a leading <code>~</code>). In the formula representation, the <code>.</code> serves
@@ -260,7 +271,7 @@ as the input data table to be transformed (e.g.,
 instead be supplied (e.g.,
 <code>function(x) dplyr::mutate(x, col_a = col_b + 10)</code>).</p>
 <p>Often, we will want to specify <code>actions</code> for the validation. This argument,
-present in every validation step function, takes a specially-crafted list
+present in every validation function, takes a specially-crafted list
 object that is best produced by the <code><a href='action_levels.html'>action_levels()</a></code> function. Read that
 function's documentation for the lowdown on how to create reactions to
 above-threshold failure levels in validation. The basic gist is that you'll
@@ -284,7 +295,7 @@ then be automatically generated.</p>
 <p>2-14</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Validation Step Functions: 
+    <div class='dont-index'><p>Other validation functions: 
 <code><a href='col_exists.html'>col_exists</a>()</code>,
 <code><a href='col_is_character.html'>col_is_character</a>()</code>,
 <code><a href='col_is_date.html'>col_is_date</a>()</code>,

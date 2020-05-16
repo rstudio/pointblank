@@ -58,9 +58,9 @@ validation step, acting as a default for the validation as a whole. Calls of
 action_levels() could also be applied directly to any validation step and
 this will act as an override if set also in create_agent(). Usage of
 action_levels() is required to have any useful side effects (i.e.,
-warnings, throwing errors) in the case of validation step functions operating
+warnings, throwing errors) in the case of validation functions operating
 directly on data. There are two helper functions that are convenient when
-using validation step functions with data: warn_on_fail() and
+using validation functions with data: warn_on_fail() and
 stop_on_fail(). These helpers either warn or stop (default failure
 threshold for each is set to 1), and, they do so with informative warning
 or error messages." />
@@ -149,9 +149,9 @@ validation step, acting as a default for the validation as a whole. Calls of
 <code>action_levels()</code> could also be applied directly to any validation step and
 this will act as an override if set also in <code><a href='create_agent.html'>create_agent()</a></code>. Usage of
 <code>action_levels()</code> is required to have any useful side effects (i.e.,
-warnings, throwing errors) in the case of validation step functions operating
+warnings, throwing errors) in the case of validation functions operating
 directly on data. There are two helper functions that are convenient when
-using validation step functions with data: <code>warn_on_fail()</code> and
+using validation functions with data: <code>warn_on_fail()</code> and
 <code>stop_on_fail()</code>. These helpers either warn or stop (default failure
 threshold for each is set to <code>1</code>), and, they do so with informative warning
 or error messages.</p>
@@ -192,7 +192,7 @@ each named state can be used by enclosing the set of statements with <code>{ }</
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The output of the <code>action_levels()</code> call in <code>actions</code> will be interpreted
-slightly differently if using an <em>agent</em> or using validation step functions
+slightly differently if using an <em>agent</em> or using validation functions
 directly on a data table. For convenience when working directly on data, any
 values supplied to <code>warn_at</code> or <code>stop_at</code> will be automatically given a stock
 <code><a href='https://rdrr.io/r/base/warning.html'>warning()</a></code> or <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code> function. If you were to supply those manually then

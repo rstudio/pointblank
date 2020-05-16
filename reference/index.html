@@ -172,8 +172,8 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-validation-step-and-expectation-functions" class="hasAnchor"><a href="#section-validation-step-and-expectation-functions" class="anchor"></a>Validation Step and Expectation Functions</h2>
-          <p class="section-desc"><p>Validation steps are either used with an <strong>agent</strong> object or, more simply, just with the table of interest. When used with an <em>agent</em>, each step function called works to build up a validation plan (which is executed with the <code><a href="../reference/interrogate.html">interrogate()</a></code> function). If used directly on data (that is, no agent is involved whatsoever), then the data is checked and passed through. However, if we (1) set <code>warn_*</code> and/or <code>stop_*</code> thresholds and (2) the level of failed validation units exceeds those set levels, then we’ll get either a warning or a stop. Each validation step function is paired with an expectation function (of the form <code>expect_*()</code>). These serve as table assertions and are equivalent in usage and behavior to testthat tests.</p></p>
+          <h2 id="section-validation-step-expectation-and-test-functions" class="hasAnchor"><a href="#section-validation-step-expectation-and-test-functions" class="anchor"></a>Validation Step, Expectation, and Test Functions</h2>
+          <p class="section-desc"><p>Validation steps are either used with an <strong>agent</strong> object or, more simply, just with the table of interest. When used with an <em>agent</em>, each step function called works to build up a validation plan (which is executed with the <code><a href="../reference/interrogate.html">interrogate()</a></code> function). If used directly on data (that is, no agent is involved whatsoever), then the data is checked and passed through. However, if we (1) set <code>warn_*</code> and/or <code>stop_*</code> thresholds and (2) the level of failed validation units exceeds those set levels, then we’ll get either a warning or a stop. Each validation step function is assoicated with an expectation function (of the form <code>expect_*()</code>). These expectation functions are equivalent in usage and behavior to those in the <strong>testthat</strong> package. Finallly, each validation function has an associated test function (of the form <code>test_*()</code>) which always returns a logical value.</p></p>
         </th>
       </tr>
       
@@ -184,145 +184,145 @@
       <tr>
         
         <td>
-          <p><code><a href="col_vals_lt.html">col_vals_lt()</a></code> <code><a href="col_vals_lt.html">expect_col_vals_lt()</a></code> </p>
+          <p><code><a href="col_vals_lt.html">col_vals_lt()</a></code> <code><a href="col_vals_lt.html">expect_col_vals_lt()</a></code> <code><a href="col_vals_lt.html">test_col_vals_lt()</a></code> </p>
         </td>
         <td><p>Are column data less than a specified value?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_vals_lte.html">col_vals_lte()</a></code> <code><a href="col_vals_lte.html">expect_col_vals_lte()</a></code> </p>
+          <p><code><a href="col_vals_lte.html">col_vals_lte()</a></code> <code><a href="col_vals_lte.html">expect_col_vals_lte()</a></code> <code><a href="col_vals_lte.html">test_col_vals_lte()</a></code> </p>
         </td>
         <td><p>Are column data less than or equal to a specified value?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_vals_equal.html">col_vals_equal()</a></code> <code><a href="col_vals_equal.html">expect_col_vals_equal()</a></code> </p>
+          <p><code><a href="col_vals_equal.html">col_vals_equal()</a></code> <code><a href="col_vals_equal.html">expect_col_vals_equal()</a></code> <code><a href="col_vals_equal.html">test_col_vals_equal()</a></code> </p>
         </td>
         <td><p>Are column data equal to a specified value?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_vals_not_equal.html">col_vals_not_equal()</a></code> <code><a href="col_vals_not_equal.html">expect_col_vals_not_equal()</a></code> </p>
+          <p><code><a href="col_vals_not_equal.html">col_vals_not_equal()</a></code> <code><a href="col_vals_not_equal.html">expect_col_vals_not_equal()</a></code> <code><a href="col_vals_not_equal.html">test_col_vals_not_equal()</a></code> </p>
         </td>
         <td><p>Are column data not equal to a specified value?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_vals_gte.html">col_vals_gte()</a></code> <code><a href="col_vals_gte.html">expect_col_vals_gte()</a></code> </p>
+          <p><code><a href="col_vals_gte.html">col_vals_gte()</a></code> <code><a href="col_vals_gte.html">expect_col_vals_gte()</a></code> <code><a href="col_vals_gte.html">test_col_vals_gte()</a></code> </p>
         </td>
         <td><p>Are column data greater than or equal to a specified value?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_vals_gt.html">col_vals_gt()</a></code> <code><a href="col_vals_gt.html">expect_col_vals_gt()</a></code> </p>
+          <p><code><a href="col_vals_gt.html">col_vals_gt()</a></code> <code><a href="col_vals_gt.html">expect_col_vals_gt()</a></code> <code><a href="col_vals_gt.html">test_col_vals_gt()</a></code> </p>
         </td>
         <td><p>Are column data greater than a specified value?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_vals_between.html">col_vals_between()</a></code> <code><a href="col_vals_between.html">expect_col_vals_between()</a></code> </p>
+          <p><code><a href="col_vals_between.html">col_vals_between()</a></code> <code><a href="col_vals_between.html">expect_col_vals_between()</a></code> <code><a href="col_vals_between.html">test_col_vals_between()</a></code> </p>
         </td>
         <td><p>Are column data between two specified values?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_vals_not_between.html">col_vals_not_between()</a></code> <code><a href="col_vals_not_between.html">expect_col_vals_not_between()</a></code> </p>
+          <p><code><a href="col_vals_not_between.html">col_vals_not_between()</a></code> <code><a href="col_vals_not_between.html">expect_col_vals_not_between()</a></code> <code><a href="col_vals_not_between.html">test_col_vals_not_between()</a></code> </p>
         </td>
         <td><p>Are column data not between two specified values?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_vals_in_set.html">col_vals_in_set()</a></code> <code><a href="col_vals_in_set.html">expect_col_vals_in_set()</a></code> </p>
+          <p><code><a href="col_vals_in_set.html">col_vals_in_set()</a></code> <code><a href="col_vals_in_set.html">expect_col_vals_in_set()</a></code> <code><a href="col_vals_in_set.html">test_col_vals_in_set()</a></code> </p>
         </td>
         <td><p>Are column data part of a specified set of values?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_vals_not_in_set.html">col_vals_not_in_set()</a></code> <code><a href="col_vals_not_in_set.html">expect_col_vals_not_in_set()</a></code> </p>
+          <p><code><a href="col_vals_not_in_set.html">col_vals_not_in_set()</a></code> <code><a href="col_vals_not_in_set.html">expect_col_vals_not_in_set()</a></code> <code><a href="col_vals_not_in_set.html">test_col_vals_not_in_set()</a></code> </p>
         </td>
         <td><p>Are data not part of a specified set of values?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_vals_null.html">col_vals_null()</a></code> <code><a href="col_vals_null.html">expect_col_vals_null()</a></code> </p>
+          <p><code><a href="col_vals_null.html">col_vals_null()</a></code> <code><a href="col_vals_null.html">expect_col_vals_null()</a></code> <code><a href="col_vals_null.html">test_col_vals_null()</a></code> </p>
         </td>
         <td><p>Are column data <code>NULL</code>/<code>NA</code>?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_vals_not_null.html">col_vals_not_null()</a></code> <code><a href="col_vals_not_null.html">expect_col_vals_not_null()</a></code> </p>
+          <p><code><a href="col_vals_not_null.html">col_vals_not_null()</a></code> <code><a href="col_vals_not_null.html">expect_col_vals_not_null()</a></code> <code><a href="col_vals_not_null.html">test_col_vals_not_null()</a></code> </p>
         </td>
         <td><p>Are column data not <code>NULL</code>/<code>NA</code>?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_vals_regex.html">col_vals_regex()</a></code> <code><a href="col_vals_regex.html">expect_col_vals_regex()</a></code> </p>
+          <p><code><a href="col_vals_regex.html">col_vals_regex()</a></code> <code><a href="col_vals_regex.html">expect_col_vals_regex()</a></code> <code><a href="col_vals_regex.html">test_col_vals_regex()</a></code> </p>
         </td>
         <td><p>Do strings in column data match a regex pattern?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="conjointly.html">conjointly()</a></code> <code><a href="conjointly.html">expect_conjointly()</a></code> </p>
+          <p><code><a href="conjointly.html">conjointly()</a></code> <code><a href="conjointly.html">expect_conjointly()</a></code> <code><a href="conjointly.html">test_conjointly()</a></code> </p>
         </td>
         <td><p>Perform multiple rowwise validations for joint validity</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="rows_distinct.html">rows_distinct()</a></code> <code><a href="rows_distinct.html">expect_rows_distinct()</a></code> </p>
+          <p><code><a href="rows_distinct.html">rows_distinct()</a></code> <code><a href="rows_distinct.html">expect_rows_distinct()</a></code> <code><a href="rows_distinct.html">test_rows_distinct()</a></code> </p>
         </td>
         <td><p>Are row data distinct?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_is_character.html">col_is_character()</a></code> <code><a href="col_is_character.html">expect_col_is_character()</a></code> </p>
+          <p><code><a href="col_is_character.html">col_is_character()</a></code> <code><a href="col_is_character.html">expect_col_is_character()</a></code> <code><a href="col_is_character.html">test_col_is_character()</a></code> </p>
         </td>
         <td><p>Do the columns contain character/string data?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_is_numeric.html">col_is_numeric()</a></code> <code><a href="col_is_numeric.html">expect_col_is_numeric()</a></code> </p>
+          <p><code><a href="col_is_numeric.html">col_is_numeric()</a></code> <code><a href="col_is_numeric.html">expect_col_is_numeric()</a></code> <code><a href="col_is_numeric.html">test_col_is_numeric()</a></code> </p>
         </td>
         <td><p>Do the columns contain numeric values?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_is_integer.html">col_is_integer()</a></code> <code><a href="col_is_integer.html">expect_col_is_integer()</a></code> </p>
+          <p><code><a href="col_is_integer.html">col_is_integer()</a></code> <code><a href="col_is_integer.html">expect_col_is_integer()</a></code> <code><a href="col_is_integer.html">test_col_is_integer()</a></code> </p>
         </td>
         <td><p>Do the columns contain integer values?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_is_logical.html">col_is_logical()</a></code> <code><a href="col_is_logical.html">expect_col_is_logical()</a></code> </p>
+          <p><code><a href="col_is_logical.html">col_is_logical()</a></code> <code><a href="col_is_logical.html">expect_col_is_logical()</a></code> <code><a href="col_is_logical.html">test_col_is_logical()</a></code> </p>
         </td>
         <td><p>Do the columns contain logical values?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_is_date.html">col_is_date()</a></code> <code><a href="col_is_date.html">expect_col_is_date()</a></code> </p>
+          <p><code><a href="col_is_date.html">col_is_date()</a></code> <code><a href="col_is_date.html">expect_col_is_date()</a></code> <code><a href="col_is_date.html">test_col_is_date()</a></code> </p>
         </td>
         <td><p>Do the columns contain R <code>Date</code> objects?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_is_posix.html">col_is_posix()</a></code> <code><a href="col_is_posix.html">expect_col_is_posix()</a></code> </p>
+          <p><code><a href="col_is_posix.html">col_is_posix()</a></code> <code><a href="col_is_posix.html">expect_col_is_posix()</a></code> <code><a href="col_is_posix.html">test_col_is_posix()</a></code> </p>
         </td>
         <td><p>Do the columns contain <code>POSIXct</code> dates?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_is_factor.html">col_is_factor()</a></code> <code><a href="col_is_factor.html">expect_col_is_factor()</a></code> </p>
+          <p><code><a href="col_is_factor.html">col_is_factor()</a></code> <code><a href="col_is_factor.html">expect_col_is_factor()</a></code> <code><a href="col_is_factor.html">test_col_is_factor()</a></code> </p>
         </td>
         <td><p>Do the columns contain R <code>factor</code> objects?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_exists.html">col_exists()</a></code> <code><a href="col_exists.html">expect_col_exists()</a></code> </p>
+          <p><code><a href="col_exists.html">col_exists()</a></code> <code><a href="col_exists.html">expect_col_exists()</a></code> <code><a href="col_exists.html">test_col_exists()</a></code> </p>
         </td>
         <td><p>Do one or more columns actually exist?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_schema_match.html">col_schema_match()</a></code> <code><a href="col_schema_match.html">expect_col_schema_match()</a></code> </p>
+          <p><code><a href="col_schema_match.html">col_schema_match()</a></code> <code><a href="col_schema_match.html">expect_col_schema_match()</a></code> <code><a href="col_schema_match.html">test_col_schema_match()</a></code> </p>
         </td>
         <td><p>Do columns in the table (and their types) match a predefined schema?</p></td>
       </tr>

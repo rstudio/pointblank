@@ -47,11 +47,11 @@ A \code{ptblank_agent} object.
 Creates an \emph{agent} object, which is used in a \emph{data quality reporting}
 workflow. The overall aim of this workflow is to generate some reporting on
 the state of data quality for a target table. We can supply as many
-validation step functions as the user wishes to write to get validation
+validation functions as the user wishes to write to get validation
 coverage on that table. We supply a single table to \code{create_agent()}, which
 becomes the sole focus of the data quality analysis. After application of
-one or more validation step functions, we need to use the \code{\link[=interrogate]{interrogate()}}
-function to complete the process; the validation step functions, when called
+one or more validation functions, we need to use the \code{\link[=interrogate]{interrogate()}}
+function to complete the process; the validation functions, when called
 on an agent, are merely instructions up to that point. The \emph{agent} then has
 information on how the interrogation went. Reporting of the interrogation can
 be performed with the \code{\link[=get_agent_report]{get_agent_report()}} function. If we just need to know

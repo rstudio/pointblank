@@ -3,6 +3,7 @@
 \name{col_schema_match}
 \alias{col_schema_match}
 \alias{expect_col_schema_match}
+\alias{test_col_schema_match}
 \title{Do columns in the table (and their types) match a predefined schema?}
 \usage{
 col_schema_match(
@@ -16,6 +17,14 @@ col_schema_match(
 )
 
 expect_col_schema_match(
+  object,
+  schema,
+  complete = TRUE,
+  in_order = TRUE,
+  threshold = 1
+)
+
+test_col_schema_match(
   object,
   schema,
   complete = TRUE,
@@ -66,40 +75,41 @@ test. Likewise, fractional values (between \code{0} and \code{1}) act as a
 proportional failure threshold.}
 }
 \value{
-For the validation step function, the return value is either a
+For the validation function, the return value is either a
 \code{ptblank_agent} object or a table object (depending on whether an agent
 object or a table was passed to \code{x}). The expectation function invisibly
 returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
+The test function returns a logical value.
 }
 \description{
-The \code{col_schema_match()} validation step function and the
-\code{expect_col_schema_match()} expectation function both work in conjunction
-with a \code{col_schema} object (generated through the \code{\link[=col_schema]{col_schema()}} function) to
-determine whether the expected schema matches that of the target table. The
-validation step function can be used directly on a data table or with an
-\emph{agent} object (technically, a \code{ptblank_agent} object) whereas the
-expectation function can only be used with a data table. The types of data
-tables that can be used include data frames, tibbles, and even database
-tables of \code{tbl_dbi} class. The validation step or expectation operates over a
-single test unit, which is whether the schema matches that of the table
-(within the constraints enforced by the \code{complete} and \code{in_order} options).
-If the target table is a \code{tbl_dbi} object, we can choose to validate the
-column schema that is based on R column types (e.g., \code{"numeric"},
-\code{"character"}, etc.), or, SQL column types (e.g., \code{"double"}, \code{"varchar"},
-etc.). That option is defined in the \code{\link[=col_schema]{col_schema()}} function (it is the
-\code{.db_col_types} argument).
+The \code{col_schema_match()} validation function, the \code{expect_col_schema_match()}
+expectation function, and the \code{test_col_schema_match()} test function all
+work in conjunction with a \code{col_schema} object (generated through the
+\code{\link[=col_schema]{col_schema()}} function) to determine whether the expected schema matches
+that of the target table. The validation function can be used directly on a
+data table or with an \emph{agent} object (technically, a \code{ptblank_agent} object)
+whereas the expectation and test functions can only be used with a data
+table. The types of data tables that can be used include data frames,
+tibbles, and even database tables of \code{tbl_dbi} class. The validation step or
+expectation operates over a single test unit, which is whether the schema
+matches that of the table (within the constraints enforced by the \code{complete}
+and \code{in_order} options). If the target table is a \code{tbl_dbi} object, we can
+choose to validate the column schema that is based on R column types (e.g.,
+\code{"numeric"}, \code{"character"}, etc.), or, SQL column types (e.g., \code{"double"},
+\code{"varchar"}, etc.). That option is defined in the \code{\link[=col_schema]{col_schema()}} function (it
+is the \code{.db_col_types} argument).
 }
 \details{
 Often, we will want to specify \code{actions} for the validation. This argument,
-present in every validation step function, takes a specially-crafted list
-object that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that
-function's documentation for the lowdown on how to create reactions to
-above-threshold failure levels in validation. The basic gist is that you'll
-want at least a single threshold level (specified as either the fraction test
-units failed, or, an absolute value), often using the \code{warn_at} argument.
-Using \code{action_levels(warn_at = 1)} or \code{action_levels(stop_at = 1)} are good
-choices depending on the situation (the first produces a warning, the other
+present in every validation function, takes a specially-crafted list object
+that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that function's
+documentation for the lowdown on how to create reactions to above-threshold
+failure levels in validation. The basic gist is that you'll want at least a
+single threshold level (specified as either the fraction test units failed,
+or, an absolute value), often using the \code{warn_at} argument. Using
+\code{action_levels(warn_at = 1)} or \code{action_levels(stop_at = 1)} are good choices
+depending on the situation (the first produces a warning, the other
 \code{stop()}s).
 
 Want to describe this validation step in some detail? Keep in mind that this
@@ -148,7 +158,7 @@ all_passed(agent)
 
 }
 \seealso{
-Other Validation Step Functions: 
+Other validation functions: 
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},
@@ -173,4 +183,4 @@ Other Validation Step Functions:
 \code{\link{conjointly}()},
 \code{\link{rows_distinct}()}
 }
-\concept{Validation Step Functions}
+\concept{validation functions}

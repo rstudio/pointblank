@@ -18,7 +18,7 @@ types (\code{"r"}) or SQL column types (\code{"sql"}).}
 }
 \description{
 A table column schema object, as can be created by \code{col_schema()}, is
-necessary when using the \code{\link[=col_schema_match]{col_schema_match()}} validation step function (which
+necessary when using the \code{\link[=col_schema_match]{col_schema_match()}} validation function (which
 checks whether the table object under study matches a known column schema).
 The \code{col_schema} object can be made by carefully supplying the column names
 and their types as a set of named arguments, or, we could provide a table

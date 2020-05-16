@@ -7,7 +7,7 @@ test_options <- new.env(parent = emptyenv())
 #' Using **pointblank** in an R Markdown workflow is enabled by default once the
 #' **pointblank** library is loaded. The framework allows for validation testing
 #' within specialized validation code chunks where the `validate = TRUE` option
-#' is set. Using **pointblank** validation step functions on data in these
+#' is set. Using **pointblank** validation functions on data in these
 #' marked code chunks will flag overall failure if the stop threshold is
 #' exceeded anywhere. All errors are reported in the validation code chunk after
 #' rendering the document to HTML, where green or red status buttons indicate

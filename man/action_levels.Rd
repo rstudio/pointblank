@@ -42,16 +42,16 @@ validation step, acting as a default for the validation as a whole. Calls of
 \code{action_levels()} could also be applied directly to any validation step and
 this will act as an override if set also in \code{\link[=create_agent]{create_agent()}}. Usage of
 \code{action_levels()} is required to have any useful side effects (i.e.,
-warnings, throwing errors) in the case of validation step functions operating
+warnings, throwing errors) in the case of validation functions operating
 directly on data. There are two helper functions that are convenient when
-using validation step functions with data: \code{warn_on_fail()} and
+using validation functions with data: \code{warn_on_fail()} and
 \code{stop_on_fail()}. These helpers either warn or stop (default failure
 threshold for each is set to \code{1}), and, they do so with informative warning
 or error messages.
 }
 \details{
 The output of the \code{action_levels()} call in \code{actions} will be interpreted
-slightly differently if using an \emph{agent} or using validation step functions
+slightly differently if using an \emph{agent} or using validation functions
 directly on a data table. For convenience when working directly on data, any
 values supplied to \code{warn_at} or \code{stop_at} will be automatically given a stock
 \code{warning()} or \code{stop()} function. If you were to supply those manually then

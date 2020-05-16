@@ -1,40 +1,40 @@
 #' Are column data not between two specified values?
 #' 
-#' The `col_vals_not_between()` validation step function and the
-#' `expect_col_vals_not_between()` expectation function both check whether
-#' column values in a table *do not* fall within a range. The range specified
-#' with three arguments: `left`, `right`, and `inclusive`. The `left` and
-#' `right` values specify the lower and upper bounds. The bounds can be
-#' specified as single, literal values or as column names given in `vars()`. The
-#' `inclusive` argument, as a vector of two logical values relating to `left`
-#' and `right`, states whether each bound is inclusive or not. The default is
-#' `c(TRUE, TRUE)`, where both endpoints are inclusive (i.e., `[left, right]`).
-#' For partially-unbounded versions of this function, we can use the
+#' The `col_vals_not_between()` validation function, the
+#' `expect_col_vals_not_between()` expectation function, and the
+#' `test_col_vals_not_between()` test function all check whether column values
+#' in a table *do not* fall within a range. The range specified with three
+#' arguments: `left`, `right`, and `inclusive`. The `left` and `right` values
+#' specify the lower and upper bounds. The bounds can be specified as single,
+#' literal values or as column names given in `vars()`. The `inclusive`
+#' argument, as a vector of two logical values relating to `left` and `right`,
+#' states whether each bound is inclusive or not. The default is `c(TRUE,
+#' TRUE)`, where both endpoints are inclusive (i.e., `[left, right]`). For
+#' partially-unbounded versions of this function, we can use the
 #' [col_vals_lt()], [col_vals_lte()], [col_vals_gt()], or [col_vals_gte()]
-#' validation step functions. The validation step function can be used directly
-#' on a data table or with an *agent* object (technically, a `ptblank_agent`
-#' object) whereas the expectation function can only be used with a data table.
-#' The types of data tables that can be used include data frames, tibbles, and
-#' even database tables of `tbl_dbi` class. Each validation step or expectation
-#' will operate over the number of test units that is equal to the number of
-#' rows in the table (after any `preconditions` have been applied).
-#' 
+#' validation functions. The validation function can be used directly on a data
+#' table or with an *agent* object (technically, a `ptblank_agent` object)
+#' whereas the expectation and test functions can only be used with a data
+#' table. The types of data tables that can be used include data frames,
+#' tibbles, and even database tables of `tbl_dbi` class. Each validation step or
+#' expectation will operate over the number of test units that is equal to the
+#' number of rows in the table (after any `preconditions` have been applied).
+#'
 #' If providing multiple column names to `columns`, the result will be an
 #' expansion of validation steps to that number of column names (e.g.,
 #' `vars(col_a, col_b)` will result in the entry of two validation steps). Aside
 #' from column names in quotes and in `vars()`, **tidyselect** helper functions
 #' are available for specifying columns. They are: `starts_with()`,
 #' `ends_with()`, `contains()`, `matches()`, and `everything()`.
-#' 
-#' This validation step function supports special handling of `NA` values. The
+#'
+#' This validation function supports special handling of `NA` values. The
 #' `na_pass` argument will determine whether an `NA` value appearing in a test
-#' unit should be counted as a *pass* or a *fail*. The default of
-#' `na_pass = FALSE` means that any `NA`s encountered will accumulate failing
-#' test units. 
+#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
+#' FALSE` means that any `NA`s encountered will accumulate failing test units.
 #' 
 #' Having table `preconditions` means **pointblank** will mutate the table just
 #' before interrogation. Such a table mutation is isolated in scope to the
-#' validation step(s) produced by the validation step function call. Using
+#' validation step(s) produced by the validation function call. Using
 #' **dplyr** code is suggested here since the statements can be translated to
 #' SQL if necessary. The code is most easily supplied as a one-sided **R**
 #' formula (using a leading `~`). In the formula representation, the `.` serves
@@ -44,7 +44,7 @@
 #' `function(x) dplyr::mutate(x, col_a = col_b + 10)`).
 #' 
 #' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation step function, takes a specially-crafted list
+#' present in every validation function, takes a specially-crafted list
 #' object that is best produced by the [action_levels()] function. Read that
 #' function's documentation for the lowdown on how to create reactions to
 #' above-threshold failure levels in validation. The basic gist is that you'll
@@ -68,11 +68,12 @@
 #'   Any values `>= left` and `<= right` will be considered as failing.
 #' @inheritParams col_vals_between
 #' 
-#' @return For the validation step function, the return value is either a
+#' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
 #'   object or a table was passed to `x`). The expectation function invisibly
 #'   returns its input but, in the context of testing data, the function is
 #'   called primarily for its potential side-effects (e.g., signaling failure).
+#'   The test function returns a logical value.
 #'   
 #' @examples
 #' # Create a simple table with a
@@ -94,7 +95,7 @@
 #' # using `all_passed()`
 #' all_passed(agent)
 #' 
-#' @family Validation Step Functions
+#' @family validation functions
 #' @section Function ID:
 #' 2-8
 #' 
@@ -229,4 +230,39 @@ expect_col_vals_not_between <- function(object,
   act$val <- object
   
   invisible(act$val)
+}
+
+#' @rdname col_vals_not_between
+#' @import rlang
+#' @export
+test_col_vals_not_between <- function(object,
+                                      columns,
+                                      left,
+                                      right,
+                                      inclusive = c(TRUE, TRUE),
+                                      na_pass = FALSE,
+                                      preconditions = NULL,
+                                      threshold = 1) {
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_vals_not_between(
+      columns = {{ columns }},
+      left = {{ left }}, 
+      right = {{ right }},
+      inclusive = inclusive,
+      na_pass = na_pass,
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
+  
+  all(!vs$notify)
 }

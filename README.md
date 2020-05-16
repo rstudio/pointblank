@@ -12,16 +12,16 @@ status](https://codecov.io/gh/rich-iannone/pointblank/branch/master/graph/badge.
 
 With the **pointblank** package it’s really easy to validate your data
 with workflows attuned to your data quality needs. The **pointblank**
-philosophy: a set of validation step functions should work seamlessly
-with data in local data tables and with data in databases.
+philosophy: a set of validation functions should work seamlessly with
+data in local data tables and with data in databases.
 
 The two dominant workflows that **pointblank** enables are *data quality
 reporting* and *pipeline-based data validations*. Both workflows make
-use of a large collection of simple validation step functions (e.g., are
+use of a large collection of simple validation functions (e.g., are
 values in a specific column greater than those in another column or some
 fixed value?), and, both allow for stepwise, temporary
-mutation/alteration of the input table to enable much more sophisticated
-validation checks.
+mutation/alteration of the input table (through `preconditions`) to
+enable much more sophisticated validation checks.
 
 <hr>
 
@@ -44,8 +44,8 @@ met)? Yep, you can do all that.
 
 The second workflow, *pipeline-based data validations* gives us a
 different validation scheme that is valuable for data validation checks
-during an ETL process. With **pointblank**’s validation step functions,
-we can directly operate on data and trigger warnings, raise errors, or
+during an ETL process. With **pointblank**’s validation functions, we
+can directly operate on data and trigger warnings, raise errors, or
 write out logs when exceeding specified failure thresholds. It’s a cinch
 to perform checks on import of the data and at key points during the
 transformation process, perhaps stopping everything if things are
@@ -89,10 +89,10 @@ agent
 <img src="man/figures/agent_report.png">
 
 Next up is an example that follows the second, *agent*-less workflow
-(where validation step functions operate directly on data). We use the
-same two validation step functions as before but, this time, use them
-directly on the data\! In this workflow, by default, an error will occur
-if there is a single ‘fail’ unit in any validation step:
+(where validation functions operate directly on data). We use the same
+two validation functions as before but, this time, use them directly on
+the data\! In this workflow, by default, an error will occur if there is
+a single ‘fail’ unit in any validation step:
 
 ``` r
 dplyr::tibble(
@@ -151,13 +151,13 @@ thresholds and side effects for each failure state. However, the
 Using **pointblank** in an R Markdown workflow is enabled by default
 once the **pointblank** library is loaded. The framework allows for
 validation testing within specialized validation code chunks where the
-`validate = TRUE` option is set. Using **pointblank** validation step
+`validate = TRUE` option is set. Using **pointblank** validation
 functions on data in these marked code chunks will flag overall failure
 if the stop threshold is exceeded anywhere. All errors are reported in
 the validation code chunk after rendering the document to HTML, where
 green or red status buttons indicate whether all validations succeeded
 or failures occurred. Click them to reveal the otherwise hidden
-validation statements and their error messages (if any).
+validation statements and any associated error messages.
 
 <p align="center">
 
@@ -165,8 +165,8 @@ validation statements and their error messages (if any).
 
 </p>
 
-The above R Markdown document is available as a template in RStudio
-(called `Pointblank Validation`). Try it out\!
+The above R Markdown document is available as a template in the RStudio
+IDE (it’s called `Pointblank Validation`). Try it out\!
 
 <hr>
 
@@ -193,10 +193,13 @@ each of these languages (using the `dplyr::storms` dataset):
 <hr>
 
 There are many functions available in **pointblank** for making
-comprehensive table validations. Each validation step function is paired
-with an expectation function (of the form `expect_*()`). These serve as
-table assertions and are equivalent in usage and behavior to
-**testthat** tests.
+comprehensive table validations. Each validation function is associated
+with an expectation function (of the form `expect_*()`). They are
+equivalent in usage and behavior to **testthat** tests with the big
+distinction that they check aspects of data tables (and not the results
+of function calls). Furthermore, each validation function has an
+associated test function (of the form `test_*()`) which always returns a
+logical value (`TRUE` or `FALSE`).
 
 <p align="center">
 

@@ -3,11 +3,14 @@
 \name{col_exists}
 \alias{col_exists}
 \alias{expect_col_exists}
+\alias{test_col_exists}
 \title{Do one or more columns actually exist?}
 \usage{
 col_exists(x, columns, actions = NULL, brief = NULL, active = TRUE)
 
 expect_col_exists(object, columns, threshold = 1)
+
+test_col_exists(object, columns, threshold = 1)
 }
 \arguments{
 \item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
@@ -42,40 +45,42 @@ test. Likewise, fractional values (between \code{0} and \code{1}) act as a
 proportional failure threshold.}
 }
 \value{
-For the validation step function, the return value is either a
+For the validation function, the return value is either a
 \code{ptblank_agent} object or a table object (depending on whether an agent
 object or a table was passed to \code{x}). The expectation function invisibly
 returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
+The test function returns a logical value.
 }
 \description{
-The \code{col_exists()} validation step function and the \code{expect_col_exists()}
-expectation function both check whether one or more columns exist in the
-target table. The only requirement is specification of the column names. The
-validation step function can be used directly on a data table or with an
-\emph{agent} object (technically, a \code{ptblank_agent} object) whereas the
-expectation function can only be used with a data table. The types of data
-tables that can be used include data frames, tibbles, and even database
-tables of the \code{tbl_dbi} class. Each validation step or expectation will
-operate over a single test unit, which is whether the column exists or not.
+The \code{col_exists()} validation function, the \code{expect_col_exists()} expectation
+function, and the \code{test_col_exists()} test function all check whether one or
+more columns exist in the target table. The only requirement is specification
+of the column names. The validation function can be used directly on a data
+table or with an \emph{agent} object (technically, a \code{ptblank_agent} object)
+whereas the expectation and test functions can only be used with a data
+table. The types of data tables that can be used include data frames,
+tibbles, and even database tables of the \code{tbl_dbi} class. Each validation
+step or expectation will operate over a single test unit, which is whether
+the column exists or not.
 }
 \details{
 If providing multiple column names, the result will be an expansion of
 validation steps to that number of column names (e.g., \code{vars(col_a, col_b)}
-will result in the entry of two validation steps). Aside from column names
-in quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
+will result in the entry of two validation steps). Aside from column names in
+quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
 specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{contains()},
 \code{matches()}, and \code{everything()}.
 
 Often, we will want to specify \code{actions} for the validation. This argument,
-present in every validation step function, takes a specially-crafted list
-object that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that
-function's documentation for the lowdown on how to create reactions to
-above-threshold failure levels in validation. The basic gist is that you'll
-want at least a single threshold level (specified as either the fraction test
-units failed, or, an absolute value), often using the \code{warn_at} argument.
-Using \code{action_levels(warn_at = 1)} or \code{action_levels(stop_at = 1)} are good
-choices depending on the situation (the first produces a warning, the other
+present in every validation function, takes a specially-crafted list object
+that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that function's
+documentation for the lowdown on how to create reactions to above-threshold
+failure levels in validation. The basic gist is that you'll want at least a
+single threshold level (specified as either the fraction test units failed,
+or, an absolute value), often using the \code{warn_at} argument. Using
+\code{action_levels(warn_at = 1)} or \code{action_levels(stop_at = 1)} are good choices
+depending on the situation (the first produces a warning, the other
 \code{stop()}s).
 
 Want to describe this validation step in some detail? Keep in mind that this
@@ -111,7 +116,7 @@ all_passed(agent)
 
 }
 \seealso{
-Other Validation Step Functions: 
+Other validation functions: 
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},
 \code{\link{col_is_factor}()},
@@ -136,4 +141,4 @@ Other Validation Step Functions:
 \code{\link{conjointly}()},
 \code{\link{rows_distinct}()}
 }
-\concept{Validation Step Functions}
+\concept{validation functions}

@@ -1,15 +1,16 @@
 #' Are data not part of a specified set of values?
 #'
-#' The `col_vals_not_in_set()` validation step function and the
-#' `expect_col_vals_not_in_set()` expectation function both check whether column
-#' values in a table *are not part* of a specified `set` of values. The
-#' validation step function can be used directly on a data table or with an
-#' *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation function can only be used with a data table. The types of data
-#' tables that can be used include data frames, tibbles, and even database
-#' tables of `tbl_dbi` class. Each validation step or expectation will operate
-#' over the number of test units that is equal to the number of rows in the
-#' table (after any `preconditions` have been applied).
+#' The `col_vals_not_in_set()` validation function, the
+#' `expect_col_vals_not_in_set()` expectation function, and the
+#' `test_col_vals_not_in_set()` test function all check whether column values in
+#' a table *are not part* of a specified `set` of values. The validation
+#' function can be used directly on a data table or with an *agent* object
+#' (technically, a `ptblank_agent` object) whereas the expectation and test
+#' functions can only be used with a data table. The types of data tables that
+#' can be used include data frames, tibbles, and even database tables of
+#' `tbl_dbi` class. Each validation step or expectation will operate over the
+#' number of test units that is equal to the number of rows in the table (after
+#' any `preconditions` have been applied).
 #'
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
@@ -20,7 +21,7 @@
 #' 
 #' Having table `preconditions` means **pointblank** will mutate the table just
 #' before interrogation. Such a table mutation is isolated in scope to the
-#' validation step(s) produced by the validation step function call. Using
+#' validation step(s) produced by the validation function call. Using
 #' **dplyr** code is suggested here since the statements can be translated to
 #' SQL if necessary. The code is most easily supplied as a one-sided **R**
 #' formula (using a leading `~`). In the formula representation, the `.` serves
@@ -30,7 +31,7 @@
 #' `function(x) dplyr::mutate(x, col_a = col_b + 10)`).
 #' 
 #' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation step function, takes a specially-crafted list
+#' present in every validation function, takes a specially-crafted list
 #' object that is best produced by the [action_levels()] function. Read that
 #' function's documentation for the lowdown on how to create reactions to
 #' above-threshold failure levels in validation. The basic gist is that you'll
@@ -53,11 +54,12 @@
 #' @param set A vector of numeric or string-based elements, where column values
 #'   found within this `set` will be considered as failing.
 #'   
-#' @return For the validation step function, the return value is either a
+#' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
 #'   object or a table was passed to `x`). The expectation function invisibly
 #'   returns its input but, in the context of testing data, the function is
 #'   called primarily for its potential side-effects (e.g., signaling failure).
+#'   The test function returns a logical value.
 #'   
 #' @examples
 #' # Create a simple table with 2
@@ -86,7 +88,7 @@
 #' # by using `all_passed()`
 #' all_passed(agent)
 #' 
-#' @family Validation Step Functions
+#' @family validation functions
 #' @section Function ID:
 #' 2-10
 #' 
@@ -204,4 +206,33 @@ expect_col_vals_not_in_set <- function(object,
   act$val <- object
   
   invisible(act$val)
+}
+
+#' @rdname col_vals_not_in_set
+#' @import rlang
+#' @export
+test_col_vals_not_in_set <- function(object,
+                                     columns,
+                                     set,
+                                     preconditions = NULL,
+                                     threshold = 1) {
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_vals_not_in_set(
+      columns = {{ columns }},
+      set = {{ set }}, 
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
+  
+  all(!vs$notify)
 }

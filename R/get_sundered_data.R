@@ -4,7 +4,7 @@
 #' part of the input dataset for something else. The `get_sundered_data()`
 #' function works with an agent object that has intel (i.e., post
 #' `interrogate()`) and gets either the 'pass' data piece (rows with no failing
-#' units across all row-based validation step functions), or, the 'fail' data
+#' units across all row-based validation functions), or, the 'fail' data
 #' piece (rows with at least one failing unit across the same series of
 #' validations). There are some caveats, only those validation steps with
 #' no `preconditions` are considered. And, the validation steps used for this

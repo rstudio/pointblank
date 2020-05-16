@@ -3,6 +3,7 @@
 \name{conjointly}
 \alias{conjointly}
 \alias{expect_conjointly}
+\alias{test_conjointly}
 \title{Perform multiple rowwise validations for joint validity}
 \usage{
 conjointly(
@@ -16,6 +17,14 @@ conjointly(
 )
 
 expect_conjointly(
+  object,
+  ...,
+  .list = list2(...),
+  preconditions = NULL,
+  threshold = 1
+)
+
+test_conjointly(
   object,
   ...,
   .list = list2(...),
@@ -65,28 +74,30 @@ test. Likewise, fractional values (between \code{0} and \code{1}) act as a
 proportional failure threshold.}
 }
 \value{
-For the validation step function, the return value is either a
+For the validation function, the return value is either a
 \code{ptblank_agent} object or a table object (depending on whether an agent
 object or a table was passed to \code{x}). The expectation function invisibly
 returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
+The test function returns a logical value.
 }
 \description{
-The \code{conjointly()} validation step function and the \code{expect_conjointly()}
-expectation function both check whether test units at each index (typically
-each row) all pass multiple validations with \verb{col_vals_*()}-type functions.
-Because of the imposed constraint on the allowed validation step functions,
-all test units are rows of the table (after any common \code{preconditions} have
-been applied). The validation step function and expectation (internally
-composed of multiple validation steps) ultimately performs a rowwise test of
+The \code{conjointly()} validation function, the \code{expect_conjointly()} expectation
+function, and the \code{test_conjointly()} test function all check whether test
+units at each index (typically each row) all pass multiple validations with
+\verb{col_vals_*()}-type functions. Because of the imposed constraint on the
+allowed validation functions, all test units are rows of the table (after any
+common \code{preconditions} have been applied). Each of the functions (composed
+with multiple validation function calls) ultimately perform a rowwise test of
 whether all sub-validations reported a \emph{pass} for the same test units. In
 practice, an example of a joint validation is testing whether values for
 column \code{a} are greater than a specific value while values for column \code{b} lie
-within a specified range. The validation step functions to be part of the
-conjoint validation are to be supplied as one-sided \strong{R} formulas (using a
-leading \code{~}, and having a \code{.} stand in as the data object). The validation
-step function can be used directly on a data table or with an \emph{agent} object
-(technically, a \code{ptblank_agent} object).
+within a specified range. The validation functions to be part of the conjoint
+validation are to be supplied as one-sided \strong{R} formulas (using a leading
+\code{~}, and having a \code{.} stand in as the data object). The validation function
+can be used directly on a data table or with an \emph{agent} object (technically,
+a \code{ptblank_agent} object) whereas the expectation and test functions can only
+be used with a data table.
 }
 \details{
 If providing multiple column names in any of the supplied validation step
@@ -98,7 +109,7 @@ are: \code{starts_with()}, \code{ends_with()}, \code{contains()}, \code{matches(
 
 Having table \code{preconditions} means \strong{pointblank} will mutate the table just
 before interrogation. Such a table mutation is isolated in scope to the
-validation step(s) produced by the validation step function call. Using
+validation step(s) produced by the validation function call. Using
 \strong{dplyr} code is suggested here since the statements can be translated to
 SQL if necessary. The code is most easily supplied as a one-sided \strong{R}
 formula (using a leading \code{~}). In the formula representation, the \code{.} serves
@@ -108,7 +119,7 @@ instead be supplied (e.g.,
 \code{function(x) dplyr::mutate(x, col_a = col_b + 10)}).
 
 Often, we will want to specify \code{actions} for the validation. This argument,
-present in every validation step function, takes a specially-crafted list
+present in every validation function, takes a specially-crafted list
 object that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that
 function's documentation for the lowdown on how to create reactions to
 above-threshold failure levels in validation. The basic gist is that you'll
@@ -155,7 +166,7 @@ agent <-
 
 }
 \seealso{
-Other Validation Step Functions: 
+Other validation functions: 
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},
@@ -180,4 +191,4 @@ Other Validation Step Functions:
 \code{\link{col_vals_regex}()},
 \code{\link{rows_distinct}()}
 }
-\concept{Validation Step Functions}
+\concept{validation functions}

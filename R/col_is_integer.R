@@ -1,26 +1,26 @@
 #' Do the columns contain integer values?
 #'
-#' The `col_is_integer()` validation step function and the
-#' `expect_col_is_integer()` expectation function both check whether one or more
-#' columns in a table is of the integer type. Like many of the `col_is_*()`-type
-#' functions in **pointblank**, the only requirement is a specification of the
-#' column names. The validation step function can be used directly on a data
-#' table or with an *agent* object (technically, a `ptblank_agent` object)
-#' whereas the expectation function can only be used with a data table. The
-#' types of data tables that can be used include data frames, tibbles, and even
-#' database tables of the `tbl_dbi` class. Each validation step or expectation
-#' will operate over a single test unit, which is whether the column is an
-#' integer-type column or not.
-#' 
+#' The `col_is_integer()` validation function, the `expect_col_is_integer()`
+#' expectation function, and the `test_col_is_integer()` test function all check
+#' whether one or more columns in a table is of the integer type. Like many of
+#' the `col_is_*()`-type functions in **pointblank**, the only requirement is a
+#' specification of the column names. The validation function can be used
+#' directly on a data table or with an *agent* object (technically, a
+#' `ptblank_agent` object) whereas the expectation and test functions can only
+#' be used with a data table. The types of data tables that can be used include
+#' data frames, tibbles, and even database tables of the `tbl_dbi` class. Each
+#' validation step or expectation will operate over a single test unit, which is
+#' whether the column is an integer-type column or not.
+#'
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names
-#' in quotes and in `vars()`, **tidyselect** helper functions are available for
+#' will result in the entry of two validation steps). Aside from column names in
+#' quotes and in `vars()`, **tidyselect** helper functions are available for
 #' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, and `everything()`.
 #' 
 #' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation step function, takes a specially-crafted list
+#' present in every validation function, takes a specially-crafted list
 #' object that is best produced by the [action_levels()] function. Read that
 #' function's documentation for the lowdown on how to create reactions to
 #' above-threshold failure levels in validation. The basic gist is that you'll
@@ -40,11 +40,12 @@
 #' 
 #' @inheritParams col_vals_gt
 #' 
-#' @return For the validation step function, the return value is either a
+#' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
 #'   object or a table was passed to `x`). The expectation function invisibly
 #'   returns its input but, in the context of testing data, the function is
 #'   called primarily for its potential side-effects (e.g., signaling failure).
+#'   The test function returns a logical value.
 #'   
 #' @examples
 #' # Create a simple table with a
@@ -64,7 +65,7 @@
 #' # by using `all_passed()`
 #' all_passed(agent)
 #' 
-#' @family Validation Step Functions
+#' @family validation functions
 #' @section Function ID:
 #' 2-18
 #' 
@@ -174,4 +175,29 @@ expect_col_is_integer <- function(object,
   act$val <- object
   
   invisible(act$val)
+}
+
+#' @rdname col_is_integer
+#' @import rlang
+#' @export
+test_col_is_integer <- function(object,
+                                columns,
+                                threshold = 1) {
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_is_integer(
+      columns = {{ columns }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
+  
+  all(!vs$notify)
 }

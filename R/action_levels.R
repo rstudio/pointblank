@@ -11,15 +11,15 @@
 #' `action_levels()` could also be applied directly to any validation step and
 #' this will act as an override if set also in [create_agent()]. Usage of
 #' `action_levels()` is required to have any useful side effects (i.e.,
-#' warnings, throwing errors) in the case of validation step functions operating
+#' warnings, throwing errors) in the case of validation functions operating
 #' directly on data. There are two helper functions that are convenient when
-#' using validation step functions with data: `warn_on_fail()` and
+#' using validation functions with data: `warn_on_fail()` and
 #' `stop_on_fail()`. These helpers either warn or stop (default failure
 #' threshold for each is set to `1`), and, they do so with informative warning
 #' or error messages.
 #'
 #' The output of the `action_levels()` call in `actions` will be interpreted
-#' slightly differently if using an *agent* or using validation step functions
+#' slightly differently if using an *agent* or using validation functions
 #' directly on a data table. For convenience when working directly on data, any
 #' values supplied to `warn_at` or `stop_at` will be automatically given a stock
 #' `warning()` or `stop()` function. If you were to supply those manually then

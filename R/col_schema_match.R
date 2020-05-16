@@ -1,33 +1,33 @@
 #' Do columns in the table (and their types) match a predefined schema?
 #'
-#' The `col_schema_match()` validation step function and the
-#' `expect_col_schema_match()` expectation function both work in conjunction
-#' with a `col_schema` object (generated through the [col_schema()] function) to
-#' determine whether the expected schema matches that of the target table. The
-#' validation step function can be used directly on a data table or with an
-#' *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation function can only be used with a data table. The types of data
-#' tables that can be used include data frames, tibbles, and even database
-#' tables of `tbl_dbi` class. The validation step or expectation operates over a
-#' single test unit, which is whether the schema matches that of the table
-#' (within the constraints enforced by the `complete` and `in_order` options).
-#' If the target table is a `tbl_dbi` object, we can choose to validate the
-#' column schema that is based on R column types (e.g., `"numeric"`,
-#' `"character"`, etc.), or, SQL column types (e.g., `"double"`, `"varchar"`,
-#' etc.). That option is defined in the [col_schema()] function (it is the
-#' `.db_col_types` argument).
-#' 
+#' The `col_schema_match()` validation function, the `expect_col_schema_match()`
+#' expectation function, and the `test_col_schema_match()` test function all
+#' work in conjunction with a `col_schema` object (generated through the
+#' [col_schema()] function) to determine whether the expected schema matches
+#' that of the target table. The validation function can be used directly on a
+#' data table or with an *agent* object (technically, a `ptblank_agent` object)
+#' whereas the expectation and test functions can only be used with a data
+#' table. The types of data tables that can be used include data frames,
+#' tibbles, and even database tables of `tbl_dbi` class. The validation step or
+#' expectation operates over a single test unit, which is whether the schema
+#' matches that of the table (within the constraints enforced by the `complete`
+#' and `in_order` options). If the target table is a `tbl_dbi` object, we can
+#' choose to validate the column schema that is based on R column types (e.g.,
+#' `"numeric"`, `"character"`, etc.), or, SQL column types (e.g., `"double"`,
+#' `"varchar"`, etc.). That option is defined in the [col_schema()] function (it
+#' is the `.db_col_types` argument).
+#'
 #' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation step function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction test
-#' units failed, or, an absolute value), often using the `warn_at` argument.
-#' Using `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good
-#' choices depending on the situation (the first produces a warning, the other
+#' present in every validation function, takes a specially-crafted list object
+#' that is best produced by the [action_levels()] function. Read that function's
+#' documentation for the lowdown on how to create reactions to above-threshold
+#' failure levels in validation. The basic gist is that you'll want at least a
+#' single threshold level (specified as either the fraction test units failed,
+#' or, an absolute value), often using the `warn_at` argument. Using
+#' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
+#' depending on the situation (the first produces a warning, the other
 #' `stop()`s).
-#' 
+#'
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The
@@ -47,7 +47,7 @@
 #'   in both the schema and the target table must match. By setting to `FALSE`,
 #'   this strict order requirement is removed.
 #' 
-#' @return For the validation step function, the return value is either a
+#' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
 #'   object or a table was passed to `x`). The expectation function invisibly
 #'   returns its input but, in the context of testing data, the function is
@@ -86,7 +86,7 @@
 #' # steps passed by using `all_passed()`
 #' all_passed(agent)
 #' 
-#' @family Validation Step Functions
+#' @family validation functions
 #' @section Function ID:
 #' 2-24
 #' 
@@ -207,10 +207,37 @@ expect_col_schema_match <- function(object,
   invisible(act$val)
 }
 
+#' @rdname col_schema_match
+#' @import rlang
+#' @export
+test_col_schema_match <- function(object,
+                                  schema,
+                                  complete = TRUE,
+                                  in_order = TRUE,
+                                  threshold = 1) {
+  
+  vs <- 
+    create_agent(tbl = object, name = "::QUIET::") %>%
+    col_schema_match(
+      schema = {{ schema }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>% .$validation_set
+  
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
+  
+  all(!vs$notify)
+}
+
 #' Generate a table column schema manually or with a reference table
 #' 
 #' A table column schema object, as can be created by `col_schema()`, is
-#' necessary when using the [col_schema_match()] validation step function (which
+#' necessary when using the [col_schema_match()] validation function (which
 #' checks whether the table object under study matches a known column schema).
 #' The `col_schema` object can be made by carefully supplying the column names
 #' and their types as a set of named arguments, or, we could provide a table

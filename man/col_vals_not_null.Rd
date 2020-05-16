@@ -3,6 +3,7 @@
 \name{col_vals_not_null}
 \alias{col_vals_not_null}
 \alias{expect_col_vals_not_null}
+\alias{test_col_vals_not_null}
 \title{Are column data not \code{NULL}/\code{NA}?}
 \usage{
 col_vals_not_null(
@@ -15,6 +16,8 @@ col_vals_not_null(
 )
 
 expect_col_vals_not_null(object, columns, preconditions = NULL, threshold = 1)
+
+test_col_vals_not_null(object, columns, preconditions = NULL, threshold = 1)
 }
 \arguments{
 \item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
@@ -54,20 +57,21 @@ test. Likewise, fractional values (between \code{0} and \code{1}) act as a
 proportional failure threshold.}
 }
 \value{
-For the validation step function, the return value is either a
+For the validation function, the return value is either a
 \code{ptblank_agent} object or a table object (depending on whether an agent
 object or a table was passed to \code{x}). The expectation function invisibly
 returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
 }
 \description{
-The \code{col_vals_not_null()} validation step function and the
-\code{expect_col_vals_not_null()} expectation function both check whether column
-values in a table \emph{are not} \code{NA} values or, in the database context, \emph{not}
-\code{NULL} values. The validation step function can be used directly on a data
-table or with an \emph{agent} object (technically, a \code{ptblank_agent} object)
-whereas the expectation function can only be used with a data table. The
-types of data tables that can be used include data frames, tibbles, and even
+The \code{col_vals_not_null()} validation function, the
+\code{expect_col_vals_not_null()} expectation function, and the
+\code{test_col_vals_not_null()} test function all check whether column values in a
+table \emph{are not} \code{NA} values or, in the database context, \emph{not} \code{NULL} values.
+The validation function can be used directly on a data table or with an
+\emph{agent} object (technically, a \code{ptblank_agent} object) whereas the
+expectation and test functions can only be used with a data table. The types
+of data tables that can be used include data frames, tibbles, and even
 database tables of \code{tbl_dbi} class. Each validation step or expectation will
 operate over the number of test units that is equal to the number of rows in
 the table (after any \code{preconditions} have been applied).
@@ -75,14 +79,14 @@ the table (after any \code{preconditions} have been applied).
 \details{
 If providing multiple column names, the result will be an expansion of
 validation steps to that number of column names (e.g., \code{vars(col_a, col_b)}
-will result in the entry of two validation steps). Aside from column names
-in quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
+will result in the entry of two validation steps). Aside from column names in
+quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
 specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{contains()},
 \code{matches()}, and \code{everything()}.
 
 Having table \code{preconditions} means \strong{pointblank} will mutate the table just
 before interrogation. Such a table mutation is isolated in scope to the
-validation step(s) produced by the validation step function call. Using
+validation step(s) produced by the validation function call. Using
 \strong{dplyr} code is suggested here since the statements can be translated to
 SQL if necessary. The code is most easily supplied as a one-sided \strong{R}
 formula (using a leading \code{~}). In the formula representation, the \code{.} serves
@@ -92,7 +96,7 @@ instead be supplied (e.g.,
 \code{function(x) dplyr::mutate(x, col_a = col_b + 10)}).
 
 Often, we will want to specify \code{actions} for the validation. This argument,
-present in every validation step function, takes a specially-crafted list
+present in every validation function, takes a specially-crafted list
 object that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that
 function's documentation for the lowdown on how to create reactions to
 above-threshold failure levels in validation. The basic gist is that you'll
@@ -146,7 +150,7 @@ all_passed(agent)
 \seealso{
 The analogue to this function: \code{\link[=col_vals_null]{col_vals_null()}}.
 
-Other Validation Step Functions: 
+Other validation functions: 
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},
@@ -171,4 +175,4 @@ Other Validation Step Functions:
 \code{\link{conjointly}()},
 \code{\link{rows_distinct}()}
 }
-\concept{Validation Step Functions}
+\concept{validation functions}

@@ -43,11 +43,11 @@ further details for the DB table (\code{chr [1]})
 \item \code{col_names}: the table's column names (\code{chr [ncol(tbl)]})
 \item \code{col_types}: the table's column types (\code{chr [ncol(tbl)]})
 \item \code{i}: the validation step index (\code{int [1]})
-\item \code{type}: the type of validation, value is validation step function name
+\item \code{type}: the type of validation, value is validation function name
 (\code{chr [1]})
-\item \code{columns}: the columns specified for the validation step function
+\item \code{columns}: the columns specified for the validation function
 (\verb{chr [variable length]})
-\item \code{values}: the values specified for the validation step function
+\item \code{values}: the values specified for the validation function
 (\verb{mixed types [variable length]})
 \item \code{briefs}: the brief for the validation step in the specified
 \code{reporting_lang} (\code{chr [1]})

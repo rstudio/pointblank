@@ -3,6 +3,7 @@
 \name{col_vals_gt}
 \alias{col_vals_gt}
 \alias{expect_col_vals_gt}
+\alias{test_col_vals_gt}
 \title{Are column data greater than a specified value?}
 \usage{
 col_vals_gt(
@@ -17,6 +18,15 @@ col_vals_gt(
 )
 
 expect_col_vals_gt(
+  object,
+  columns,
+  value,
+  na_pass = FALSE,
+  preconditions = NULL,
+  threshold = 1
+)
+
+test_col_vals_gt(
   object,
   columns,
   value,
@@ -70,25 +80,25 @@ test. Likewise, fractional values (between \code{0} and \code{1}) act as a
 proportional failure threshold.}
 }
 \value{
-For the validation step function, the return value is either a
+For the validation function, the return value is either a
 \code{ptblank_agent} object or a table object (depending on whether an agent
 object or a table was passed to \code{x}). The expectation function invisibly
 returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
 }
 \description{
-The \code{col_vals_gt()} validation step function and the \code{expect_col_vals_gt()}
-expectation function both check whether column values in a table are \emph{greater
-than} a specified \code{value} (the exact comparison used in this function is
-\code{col_val > value}). The \code{value} can be specified as a single, literal value
-or as a column name given in \code{vars()}. The validation step function can be
-used directly on a data table or with an \emph{agent} object (technically, a
-\code{ptblank_agent} object) whereas the expectation function can only be used
-with a data table. The types of data tables that can be used include data
-frames, tibbles, and even database tables of \code{tbl_dbi} class. Each validation
-step or expectation will operate over the number of test units that is equal
-to the number of rows in the table (after any \code{preconditions} have been
-applied).
+The \code{col_vals_gt()} validation function, the \code{expect_col_vals_gt()}
+expectation function, and the \code{test_col_vals_gt()} test function all check
+whether column values in a table are \emph{greater than} a specified \code{value} (the
+exact comparison used in this function is \code{col_val > value}). The \code{value} can
+be specified as a single, literal value or as a column name given in
+\code{vars()}. The validation function can be used directly on a data table or
+with an \emph{agent} object (technically, a \code{ptblank_agent} object) whereas the
+expectation and test functions can only be used with a data table. The types
+of data tables that can be used include data frames, tibbles, and even
+database tables of \code{tbl_dbi} class. Each validation step or expectation will
+operate over the number of test units that is equal to the number of rows in
+the table (after any \code{preconditions} have been applied).
 }
 \details{
 If providing multiple column names to \code{columns}, the result will be an
@@ -98,15 +108,13 @@ from column names in quotes and in \code{vars()}, \strong{tidyselect} helper fun
 are available for specifying columns. They are: \code{starts_with()},
 \code{ends_with()}, \code{contains()}, \code{matches()}, and \code{everything()}.
 
-This validation step function supports special handling of \code{NA} values. The
+This validation function supports special handling of \code{NA} values. The
 \code{na_pass} argument will determine whether an \code{NA} value appearing in a test
-unit should be counted as a \emph{pass} or a \emph{fail}. The default of
-\code{na_pass = FALSE} means that any \code{NA}s encountered will accumulate failing
-test units.
+unit should be counted as a \emph{pass} or a \emph{fail}. The default of \code{na_pass = FALSE} means that any \code{NA}s encountered will accumulate failing test units.
 
 Having table \code{preconditions} means \strong{pointblank} will mutate the table just
 before interrogation. Such a table mutation is isolated in scope to the
-validation step(s) produced by the validation step function call. Using
+validation step(s) produced by the validation function call. Using
 \strong{dplyr} code is suggested here since the statements can be translated to
 SQL if necessary. The code is most easily supplied as a one-sided \strong{R}
 formula (using a leading \code{~}). In the formula representation, the \code{.} serves
@@ -116,7 +124,7 @@ instead be supplied (e.g.,
 \code{function(x) dplyr::mutate(x, col_a = col_b + 10)}).
 
 Often, we will want to specify \code{actions} for the validation. This argument,
-present in every validation step function, takes a specially-crafted list
+present in every validation function, takes a specially-crafted list
 object that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that
 function's documentation for the lowdown on how to create reactions to
 above-threshold failure levels in validation. The basic gist is that you'll
@@ -162,7 +170,7 @@ all_passed(agent)
 \seealso{
 The analogous function with a left-closed bound: \code{\link[=col_vals_gte]{col_vals_gte()}}.
 
-Other Validation Step Functions: 
+Other validation functions: 
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},
@@ -187,4 +195,4 @@ Other Validation Step Functions:
 \code{\link{conjointly}()},
 \code{\link{rows_distinct}()}
 }
-\concept{Validation Step Functions}
+\concept{validation functions}

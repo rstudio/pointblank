@@ -48,24 +48,64 @@
 #'   The test function returns a logical value.
 #'   
 #' @examples
-#' # Create a simple table with
-#' # two columns of numerical values
+#' # For all examples here, we'll use
+#' # a simple table with two columns
+#' # of numerical values
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 7, 6, 5, 8, 7),
 #'     b = c(7, 1, 0, 0, 0, 3)
 #'   )
 #' 
+#' # A: Using an `agent` with validation
+#' #    functions and then `interrogate()`
+#' 
 #' # Validate that columns `a` and `b`
-#' # exist in the `tbl` table
+#' # exist in the `tbl` table; this
+#' # makes two distinct validation
+#' # steps since two columns were
+#' # provided to vars()
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   col_exists(vars(a, b)) %>%
 #'   interrogate()
 #' 
-#' # Determine if these three validation
-#' # steps passed by using `all_passed()`
+#' # Determine if this validation
+#' # had no failing test units (1)
 #' all_passed(agent)
+#' 
+#' # Calling `agent` in the console
+#' # prints the agent's report; but we
+#' # can get a `gt_tbl` object directly
+#' # with `get_agent_report(agent)`
+#' 
+#' # B: Using the validation function
+#' #    directly on the data (no `agent`)
+#' 
+#' # This way of using validation functions
+#' # acts as a data filter: data is passed
+#' # through but should `stop()` if there
+#' # is a single test unit failing; the
+#' # behavior of side effects can be
+#' # customized with the `actions` option
+#' tbl %>% col_exists(vars(a, b))
+#' 
+#' # C: Using the expectation function
+#' 
+#' # With the `expect_*()` form, we need
+#' # to be more exacting and provide one
+#' # column at a time; this is primarily
+#' # used in testthat tests
+#' expect_col_exists(tbl, vars(a))
+#' expect_col_exists(tbl, vars(b))
+#' 
+#' # D: Using the test function
+#' 
+#' # With the `test_*()` form, we should
+#' # get a single logical value returned
+#' # to us (even if there are multiple
+#' # columns tested, as is the case below)
+#' tbl %>% test_col_exists(vars(a, b))
 #' 
 #' @family validation functions
 #' @section Function ID:

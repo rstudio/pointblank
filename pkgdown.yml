@@ -1,7 +1,7 @@
 pandoc: 2.7.3
 pkgdown: 1.5.1.9000
-pkgdown_sha: 810084e8a9abd091378a6b75fa9d7de9ce637aa1
+pkgdown_sha: 3b74d8860686ed6d63e536d7ec4971fbbde5faff
 articles:
   intro-to-pointblank: intro-to-pointblank.html
-last_built: 2020-05-16T04:38Z
+last_built: 2020-05-18T17:22Z
 

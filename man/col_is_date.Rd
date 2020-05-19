@@ -141,7 +141,7 @@ small_table \%>\%
 # typically perform one validation at a
 # time; this is primarily used in
 # testthat tests
-expect_col_is_character(
+expect_col_is_date(
   small_table, vars(date)
 )
 

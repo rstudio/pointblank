@@ -315,11 +315,10 @@ then be automatically generated.</p>
 <span class='co'># typically perform one validation at a</span>
 <span class='co'># time; this is primarily used in</span>
 <span class='co'># testthat tests</span>
-<span class='fu'><a href='col_is_character.html'>expect_col_is_character</a></span>(
+<span class='fu'>expect_col_is_date</span>(
   <span class='no'>small_table</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>date</span>)
-)</div><div class='output co'>#&gt; <span class='error'>Error: Failure to validate that column `date` is of type: character.</span>
-#&gt; <span class='error'>The `expect_col_is_character()` validation failed beyond the absolute threshold level (1).</span>
-#&gt; <span class='error'>* failure level (1) &gt;= failure threshold (1)</span></div><div class='input'>
+)
+
 <span class='co'># D: Using the test function</span>
 
 <span class='co'># With the `test_*()` form, we should</span>

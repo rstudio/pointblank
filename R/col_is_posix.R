@@ -51,28 +51,61 @@
 #'   The test function returns a logical value.
 #'   
 #' @examples
-#' # Create a simple table with a
-#' # column of `POSIXct` values
-#' tbl <-
-#'   dplyr::tibble(
-#'     a = as.POSIXct(
-#'       strptime(
-#'         "2011-03-27 01:30:00",
-#'         "%Y-%m-%d %H:%M:%S")
-#'       )
-#'   )
+#' # The `small_table` dataset in the
+#' # package has a `date_time` column;
+#' # the following examples will validate
+#' # that that column is of the `POSIXct`
+#' # and `POSIXt` classes
 #' 
-#' # Validate that column `a` in the
-#' # table is classed as `POSIXct`
+#' # A: Using an `agent` with validation
+#' #    functions and then `interrogate()`
+#' 
+#' # Validate that the column `date_time`
+#' # is indeed a date-time column
 #' agent <-
-#'   create_agent(tbl = tbl) %>%
-#'   col_is_posix(vars(a)) %>%
+#'   create_agent(small_table) %>%
+#'   col_is_posix(vars(date_time)) %>%
 #'   interrogate()
-#' 
-#' # Determine if this column
-#' # validation has passed by
-#' # using `all_passed()`
+#'   
+#' # Determine if this validation
+#' # had no failing test units (1)
 #' all_passed(agent)
+#' 
+#' # Calling `agent` in the console
+#' # prints the agent's report; but we
+#' # can get a `gt_tbl` object directly
+#' # with `get_agent_report(agent)`
+#' 
+#' # B: Using the validation function
+#' #    directly on the data (no `agent`)
+#' 
+#' # This way of using validation functions
+#' # acts as a data filter: data is passed
+#' # through but should `stop()` if there
+#' # is a single test unit failing; the
+#' # behavior of side effects can be
+#' # customized with the `actions` option
+#' small_table %>%
+#'   col_is_posix(vars(date_time)) %>%
+#'   dplyr::slice(1:5)
+#' 
+#' # C: Using the expectation function
+#' 
+#' # With the `expect_*()` form, we would
+#' # typically perform one validation at a
+#' # time; this is primarily used in
+#' # testthat tests
+#' expect_col_is_posix(
+#'   small_table, vars(date_time)
+#' )
+#' 
+#' # D: Using the test function
+#' 
+#' # With the `test_*()` form, we should
+#' # get a single logical value returned
+#' # to us
+#' small_table %>%
+#'   test_col_is_posix(vars(date_time))
 #' 
 #' @family validation functions
 #' @section Function ID:

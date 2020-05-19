@@ -147,22 +147,72 @@ then be automatically generated.
 }
 
 \examples{
-# Create a simple table with a
-# column containing strings
-tbl <- 
-  dplyr::tibble(a = c("s_0131", "s_0231"))
+# The `small_table` dataset in the
+# package has a character-based `b`
+# column with values that adhere to
+# a very particular pattern; the
+# following examples will validate
+# that that column abides by a regex
+# pattern
+small_table
 
-# Validate that all string values in
-# column `a` match a regex statement
+# This is the regex pattern that will
+# be used throughout
+pattern <- "[0-9]-[a-z]{3}-[0-9]{3}"
+
+# A: Using an `agent` with validation
+#    functions and then `interrogate()`
+
+# Validate that all values in column
+# `b` match the regex `pattern`
 agent <-
-  create_agent(tbl = tbl) \%>\%
-  col_vals_regex(vars(a), "^s_[0-9]{4}$") \%>\%
+  create_agent(small_table) \%>\%
+  col_vals_regex(vars(b), pattern) \%>\%
   interrogate()
-
-# Determine if these column
-# validations have all passed
-# by using `all_passed()`
+  
+# Determine if this validation
+# had no failing test units (there
+# are 13 test units, one for each row)
 all_passed(agent)
+
+# Calling `agent` in the console
+# prints the agent's report; but we
+# can get a `gt_tbl` object directly
+# with `get_agent_report(agent)`
+
+# B: Using the validation function
+#    directly on the data (no `agent`)
+
+# This way of using validation functions
+# acts as a data filter: data is passed
+# through but should `stop()` if there
+# is a single test unit failing; the
+# behavior of side effects can be
+# customized with the `actions` option
+small_table \%>\%
+  col_vals_regex(vars(b), pattern) \%>\%
+  dplyr::slice(1:5)
+
+# C: Using the expectation function
+
+# With the `expect_*()` form, we would
+# typically perform one validation at a
+# time; this is primarily used in
+# testthat tests
+expect_col_vals_regex(
+  small_table,
+  vars(b), pattern
+)
+
+# D: Using the test function
+
+# With the `test_*()` form, we should
+# get a single logical value returned
+# to us
+small_table \%>\%
+  test_col_vals_regex(
+    vars(b), pattern
+  )
 
 }
 \seealso{

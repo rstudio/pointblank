@@ -70,25 +70,99 @@
 #'   The test function returns a logical value.
 #'
 #' @examples
-#' # Create a simple table with three
-#' # columns of numerical values
+#' # For all examples here, we'll use
+#' # a simple table with three numeric
+#' # columns (`a`, `b`, and `c`); this is
+#' # a very basic table but it'll be more
+#' # useful when explaining things later
 #' tbl <-
 #'   dplyr::tibble(
-#'     a = c(5, 7, 6, 5, 8, 7),
-#'     b = c(3, 4, 6, 8, 9, 11),
-#'     c = c(2, 6, 8, NA, 3, 8)
+#'     a = c(5, 2, 6),
+#'     b = c(3, 4, 6),
+#'     c = c(9, 8, 7)
 #'   )
-#'
-#' # Validate that values in column
-#' # `a` are always greater than 4
+#'   
+#' tbl
+#'   
+#' # A: Using an `agent` with validation
+#' #    functions and then `interrogate()`
+#' 
+#' # Validate a number of things on a
+#' # row-by-row basis using validation
+#' # functions of the `col_vals*` type
+#' # (all have the same number of test
+#' # units): (1) values in `a` are less
+#' # than `4`, (2) values in `c` are
+#' # greater than the adjacent values in
+#' # `a`, and (3) there aren't any NA
+#' # values in `b`
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   conjointly(
-#'     ~ col_vals_gt(., vars(a), 6),
-#'     ~ col_vals_lt(., vars(b), 10),
-#'     ~ col_vals_not_null(., vars(c))
+#'     ~ col_vals_lt(., vars(a), 8),
+#'     ~ col_vals_gt(., vars(c), vars(a)),
+#'     ~ col_vals_not_null(., vars(b))
 #'     ) %>%
 #'   interrogate()
+#'   
+#' # Determine if this validation
+#' # had no failing test units (there
+#' # are 3 test units, one for each row)
+#' all_passed(agent)
+#' 
+#' # Calling `agent` in the console
+#' # prints the agent's report; but we
+#' # can get a `gt_tbl` object directly
+#' # with `get_agent_report(agent)`
+#' 
+#' # What's going on? Think of there being
+#' # three parallel validations, each
+#' # producing a column of `TRUE` or `FALSE`
+#' # values (`pass` or `fail`) and line them
+#' # up side-by-side, any rows with any
+#' # `FALSE` values results in a conjoint
+#' # `fail` test unit
+#' 
+#' # B: Using the validation function
+#' #    directly on the data (no `agent`)
+#' 
+#' # This way of using validation functions
+#' # acts as a data filter: data is passed
+#' # through but should `stop()` if there
+#' # is a single test unit failing; the
+#' # behavior of side effects can be
+#' # customized with the `actions` option
+#' tbl %>%
+#'   conjointly(
+#'     ~ col_vals_lt(., vars(a), 8),
+#'     ~ col_vals_gt(., vars(c), vars(a)),
+#'     ~ col_vals_not_null(., vars(b))
+#'   )
+#'
+#' # C: Using the expectation function
+#' 
+#' # With the `expect_*()` form, we would
+#' # typically perform one validation at a
+#' # time; this is primarily used in
+#' # testthat tests
+#' expect_conjointly(
+#'   tbl,
+#'   ~ col_vals_lt(., vars(a), 8),
+#'   ~ col_vals_gt(., vars(c), vars(a)),
+#'   ~ col_vals_not_null(., vars(b))
+#' )
+#' 
+#' # D: Using the test function
+#' 
+#' # With the `test_*()` form, we should
+#' # get a single logical value returned
+#' # to us
+#' tbl %>%
+#'   test_conjointly(
+#'     ~ col_vals_lt(., vars(a), 8),
+#'     ~ col_vals_gt(., vars(c), vars(a)),
+#'     ~ col_vals_not_null(., vars(b))
+#'   )
 #'
 #' @family validation functions
 #' @section Function ID:

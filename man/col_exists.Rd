@@ -96,8 +96,8 @@ then be automatically generated.
 
 \examples{
 # For all examples here, we'll use
-# a simple table with two columns
-# of numerical values
+# a simple table with two columns:
+# `a` and `b`
 tbl <-
   dplyr::tibble(
     a = c(5, 7, 6, 5, 8, 7),
@@ -111,9 +111,9 @@ tbl <-
 # exist in the `tbl` table; this
 # makes two distinct validation
 # steps since two columns were
-# provided to vars()
+# provided to `vars()`
 agent <-
-  create_agent(tbl = tbl) \%>\%
+  create_agent(tbl) \%>\%
   col_exists(vars(a, b)) \%>\%
   interrogate()
 

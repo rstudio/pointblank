@@ -173,23 +173,93 @@ then be automatically generated.
 }
 
 \examples{
-# Create a simple table with
-# a column of numerical values
-tbl <- 
-  dplyr::tibble(a = c(5.6, 8.2, 7.8))
+# The `small_table` dataset in the
+# package has a column of numeric
+# values in `c` (there are a few NAs
+# in that column); the following
+# examples will validate the values
+# in that numeric column
 
-# Validate that values in
-# column `a` are all between
-# 1 and 9
+# A: Using an `agent` with validation
+#    functions and then `interrogate()`
+
+# Validate that values in column `c`
+# are all between `1` and `9`; because
+# there are NA values, we'll choose to
+# let those pass validation by setting
+# `na_pass = TRUE`
 agent <-
-  create_agent(tbl = tbl) \%>\%
-  col_vals_between(vars(a), 1, 9) \%>\%
+  create_agent(small_table) \%>\%
+  col_vals_between(
+    vars(c), 1, 9, na_pass = TRUE
+  ) \%>\%
   interrogate()
-
-# Determine if this column
-# validation has passed by using
-# `all_passed()`
+  
+# Determine if this validation
+# had no failing test units (there
+# are 13 test units, one for each row)
 all_passed(agent)
+
+# Calling `agent` in the console
+# prints the agent's report; but we
+# can get a `gt_tbl` object directly
+# with `get_agent_report(agent)`
+
+# B: Using the validation function
+#    directly on the data (no `agent`)
+
+# This way of using validation functions
+# acts as a data filter: data is passed
+# through but should `stop()` if there
+# is a single test unit failing; the
+# behavior of side effects can be
+# customized with the `actions` option
+small_table \%>\%
+  col_vals_between(
+    vars(c), 1, 9, na_pass = TRUE
+  ) \%>\%
+  dplyr::pull(c)
+
+# C: Using the expectation function
+
+# With the `expect_*()` form, we would
+# typically perform one validation at a
+# time; this is primarily used in
+# testthat tests
+expect_col_vals_between(
+  small_table, vars(c), 1, 9,
+  na_pass = TRUE
+)
+
+# D: Using the test function
+
+# With the `test_*()` form, we should
+# get a single logical value returned
+# to us
+small_table \%>\%
+  test_col_vals_between(
+    vars(c), 1, 9,
+    na_pass = TRUE
+  )
+
+# An additional note on the bounds for
+# this function: they are inclusive by
+# default (i.e., values of exactly 1
+# and 9 will pass); we can modify the
+# inclusiveness of the upper and lower
+# bounds with the `inclusive` option,
+# which is a length-2 logical vector
+
+# Testing with the upper bound being
+# non-inclusive, we get `FALSE` since
+# two values are `9` and they now fall
+# outside of the upper (or right) bound
+small_table \%>\%
+  test_col_vals_between(
+    vars(c), 1, 9,
+    inclusive = c(TRUE, FALSE),
+    na_pass = TRUE
+  )
 
 }
 \seealso{

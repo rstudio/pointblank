@@ -121,30 +121,68 @@ then be automatically generated.
 }
 
 \examples{
-# Create a simple table with two
-# columns of numerical values
+# For all examples here, we'll use
+# a simple table with four columns:
+# `a`, `b`, `c`, and `d`
 tbl <-
   dplyr::tibble(
-    a = c(1, 2, NA, NA),
-    b = c(2, 2, 5, 5)
+    a = c( 5,  7,  6,  5,  8),
+    b = c( 7,  1,  0,  0,  0),
+    c = c(NA, NA, NA, NA, NA),
+    d = c(35, 23, NA, NA, NA)
   )
+  
+tbl
+  
+# A: Using an `agent` with validation
+#    functions and then `interrogate()`
 
-# Validate that all values in
-# column `a` are NULL when
-# values in column `b` are
-# equal to 5
+# Validate that all values in column
+# `c` are NA (they would be NULL in a
+# database context, which isn't the
+# case here)
 agent <-
-  create_agent(tbl = tbl) \%>\%
-  col_vals_null(vars(a),
-    preconditions = 
-      ~ . \%>\% dplyr::filter(b >= 5)
-  ) \%>\%
+  create_agent(tbl) \%>\%
+  col_vals_null(vars(c)) \%>\%
   interrogate()
 
-# Determine if these column
-# validations have all passed
-# by using `all_passed()`
+# Determine if this validation
+# had no failing test units (there
+# are 5 test units, one for each row)
 all_passed(agent)
+
+# Calling `agent` in the console
+# prints the agent's report; but we
+# can get a `gt_tbl` object directly
+# with `get_agent_report(agent)`
+
+# B: Using the validation function
+#    directly on the data (no `agent`)
+
+# This way of using validation functions
+# acts as a data filter: data is passed
+# through but should `stop()` if there
+# is a single test unit failing; the
+# behavior of side effects can be
+# customized with the `actions` option
+tbl \%>\%
+  col_vals_null(vars(c)) \%>\%
+  dplyr::pull(c)
+
+# C: Using the expectation function
+
+# With the `expect_*()` form, we would
+# typically perform one validation at a
+# time; this is primarily used in
+# testthat tests
+expect_col_vals_null(tbl, vars(c))
+
+# D: Using the test function
+
+# With the `test_*()` form, we should
+# get a single logical value returned
+# to us
+tbl \%>\% test_col_vals_null(vars(c))
 
 }
 \seealso{

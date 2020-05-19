@@ -97,22 +97,63 @@ then be automatically generated.
 }
 
 \examples{
-# Create a simple table with
-# a column of `factor` values
+# Let's modify the `f` column in the
+# `small_table` dataset so that the
+# values are factors instead of having
+# the `character` class; the following
+# examples will validate that the `f`
+# column was successfully mutated and
+# now consists of factors
 tbl <- 
-  dplyr::tibble(a = factor(c("one", "two")))
+  small_table \%>\%
+  dplyr::mutate(f = factor(f))
 
-# Validate that column `a` in the
-# table is classed as `factor`
+# A: Using an `agent` with validation
+#    functions and then `interrogate()`
+
+# Validate that the column `f` in the
+# `tbl` object is of the `factor` class
 agent <-
-  create_agent(tbl = tbl) \%>\%
-  col_is_factor(vars(a)) \%>\%
+  create_agent(tbl) \%>\%
+  col_is_factor(vars(f)) \%>\%
   interrogate()
-
-# Determine if these column
-# validations have all passed
-# by using `all_passed()`
+  
+# Determine if this validation
+# had no failing test units (1)
 all_passed(agent)
+
+# Calling `agent` in the console
+# prints the agent's report; but we
+# can get a `gt_tbl` object directly
+# with `get_agent_report(agent)`
+
+# B: Using the validation function
+#    directly on the data (no `agent`)
+
+# This way of using validation functions
+# acts as a data filter: data is passed
+# through but should `stop()` if there
+# is a single test unit failing; the
+# behavior of side effects can be
+# customized with the `actions` option
+tbl \%>\%
+  col_is_factor(vars(f)) \%>\%
+  dplyr::slice(1:5)
+
+# C: Using the expectation function
+
+# With the `expect_*()` form, we would
+# typically perform one validation at a
+# time; this is primarily used in
+# testthat tests
+expect_col_is_factor(tbl, vars(f))
+
+# D: Using the test function
+
+# With the `test_*()` form, we should
+# get a single logical value returned
+# to us
+tbl \%>\% test_col_is_factor(vars(f))
 
 }
 \seealso{

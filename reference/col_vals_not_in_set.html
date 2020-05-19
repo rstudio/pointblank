@@ -311,31 +311,67 @@ then be automatically generated.</p>
 <code><a href='rows_distinct.html'>rows_distinct</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a simple table with 2</span>
-<span class='co'># columns: one with numerical</span>
-<span class='co'># values,  the other with strings</span>
-<span class='no'>tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
-    <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>),
-    <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"one"</span>, <span class='st'>"two"</span>), <span class='fl'>2</span>)
-  )
+    <pre class="examples"><div class='input'><span class='co'># The `small_table` dataset in the</span>
+<span class='co'># package will be used to validate that</span>
+<span class='co'># column values are part of a given set</span>
 
-<span class='co'># Validate that all numerical</span>
-<span class='co'># values in column `a` do not</span>
-<span class='co'># belong to a specified numerical</span>
-<span class='co'># set, and, create an analogous</span>
-<span class='co'># validation check for column `b`</span>
-<span class='co'># within a set of string values </span>
+<span class='co'># A: Using an `agent` with validation</span>
+<span class='co'>#    functions and then `interrogate()`</span>
+
+<span class='co'># Validate that values in column `f`</span>
+<span class='co'># contain none of the values `lows`,</span>
+<span class='co'># `mids`, and `highs`</span>
 <span class='no'>agent</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='kw'>tbl</span> <span class='kw'>=</span> <span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>col_vals_not_in_set</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>), <span class='fl'>7</span>:<span class='fl'>10</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>col_vals_not_in_set</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"seven"</span>, <span class='st'>"eight"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='no'>small_table</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>col_vals_not_in_set</span>(
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>f</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lows"</span>, <span class='st'>"mids"</span>, <span class='st'>"highs"</span>)
+  ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
 
-<span class='co'># Determine if these column</span>
-<span class='co'># validations have all passed</span>
-<span class='co'># by using `all_passed()`</span>
+<span class='co'># Determine if this validation</span>
+<span class='co'># had no failing test units (there</span>
+<span class='co'># are 13 test units, one for each row)</span>
 <span class='fu'><a href='all_passed.html'>all_passed</a></span>(<span class='no'>agent</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># Calling `agent` in the console</span>
+<span class='co'># prints the agent's report; but we</span>
+<span class='co'># can get a `gt_tbl` object directly</span>
+<span class='co'># with `get_agent_report(agent)`</span>
+
+<span class='co'># B: Using the validation function</span>
+<span class='co'>#    directly on the data (no `agent`)</span>
+
+<span class='co'># This way of using validation functions</span>
+<span class='co'># acts as a data filter: data is passed</span>
+<span class='co'># through but should `stop()` if there</span>
+<span class='co'># is a single test unit failing; the</span>
+<span class='co'># behavior of side effects can be</span>
+<span class='co'># customized with the `actions` option</span>
+<span class='no'>small_table</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>col_vals_not_in_set</span>(
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>f</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lows"</span>, <span class='st'>"mids"</span>, <span class='st'>"highs"</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='no'>f</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>()</div><div class='output co'>#&gt; [1] "high" "low"  "mid" </div><div class='input'>
+<span class='co'># C: Using the expectation function</span>
+
+<span class='co'># With the `expect_*()` form, we would</span>
+<span class='co'># typically perform one validation at a</span>
+<span class='co'># time; this is primarily used in</span>
+<span class='co'># testthat tests</span>
+<span class='fu'>expect_col_vals_not_in_set</span>(
+  <span class='no'>small_table</span>,
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>f</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lows"</span>, <span class='st'>"mids"</span>, <span class='st'>"highs"</span>)
+)
+
+<span class='co'># D: Using the test function</span>
+
+<span class='co'># With the `test_*()` form, we should</span>
+<span class='co'># get a single logical value returned</span>
+<span class='co'># to us</span>
+<span class='no'>small_table</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>test_col_vals_not_in_set</span>(
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>f</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lows"</span>, <span class='st'>"mids"</span>, <span class='st'>"highs"</span>)
+  )</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

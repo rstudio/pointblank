@@ -266,23 +266,67 @@ then be automatically generated.</p>
 <code><a href='rows_distinct.html'>rows_distinct</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a simple table with a</span>
-<span class='co'># column of `integer` values</span>
+    <pre class="examples"><div class='input'><span class='co'># For all examples here, we'll use</span>
+<span class='co'># a simple table with a character</span>
+<span class='co'># column (`a`) and a integer column</span>
+<span class='co'># (`b`)</span>
 <span class='no'>tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5L</span>, <span class='fl'>9L</span>, <span class='fl'>3L</span>))
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
+    <span class='kw'>a</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>6</span>],
+    <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>2</span>:<span class='fl'>7</span>
+  )
 
-<span class='co'># Validate that column `a` in the</span>
-<span class='co'># table is classed as `integer`</span>
+<span class='co'># A: Using an `agent` with validation</span>
+<span class='co'>#    functions and then `interrogate()`</span>
+
+<span class='co'># Validate that column `b` has the</span>
+<span class='co'># `integer` class</span>
 <span class='no'>agent</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='kw'>tbl</span> <span class='kw'>=</span> <span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>col_is_integer</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>col_is_integer</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
 
-<span class='co'># Determine if these column</span>
-<span class='co'># validations have all passed</span>
-<span class='co'># by using `all_passed()`</span>
+<span class='co'># Determine if this validation</span>
+<span class='co'># had no failing test units (1)</span>
 <span class='fu'><a href='all_passed.html'>all_passed</a></span>(<span class='no'>agent</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-</div></pre>
+<span class='co'># Calling `agent` in the console</span>
+<span class='co'># prints the agent's report; but we</span>
+<span class='co'># can get a `gt_tbl` object directly</span>
+<span class='co'># with `get_agent_report(agent)`</span>
+
+<span class='co'># B: Using the validation function</span>
+<span class='co'>#    directly on the data (no `agent`)</span>
+
+<span class='co'># This way of using validation functions</span>
+<span class='co'># acts as a data filter: data is passed</span>
+<span class='co'># through but should `stop()` if there</span>
+<span class='co'># is a single test unit failing; the</span>
+<span class='co'># behavior of side effects can be</span>
+<span class='co'># customized with the `actions` option</span>
+<span class='no'>tbl</span> <span class='kw'>%&gt;%</span> <span class='fu'>col_is_integer</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 2</span><span>
+#&gt;   a         b
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> a         2
+#&gt; </span><span style='color: #555555;'>2</span><span> b         3
+#&gt; </span><span style='color: #555555;'>3</span><span> c         4
+#&gt; </span><span style='color: #555555;'>4</span><span> d         5
+#&gt; </span><span style='color: #555555;'>5</span><span> e         6
+#&gt; </span><span style='color: #555555;'>6</span><span> f         7</div><div class='input'>
+<span class='co'># C: Using the expectation function</span>
+
+<span class='co'># With the `expect_*()` form, we would</span>
+<span class='co'># typically perform one validation at a</span>
+<span class='co'># time; this is primarily used in</span>
+<span class='co'># testthat tests</span>
+<span class='fu'>expect_col_is_integer</span>(<span class='no'>tbl</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>))
+
+<span class='co'># D: Using the test function</span>
+
+<span class='co'># With the `test_*()` form, we should</span>
+<span class='co'># get a single logical value returned</span>
+<span class='co'># to us</span>
+<span class='no'>tbl</span> <span class='kw'>%&gt;%</span> <span class='fu'>test_col_is_integer</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

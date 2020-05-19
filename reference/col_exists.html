@@ -264,8 +264,8 @@ then be automatically generated.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># For all examples here, we'll use</span>
-<span class='co'># a simple table with two columns</span>
-<span class='co'># of numerical values</span>
+<span class='co'># a simple table with two columns:</span>
+<span class='co'># `a` and `b`</span>
 <span class='no'>tbl</span> <span class='kw'>&lt;-</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
     <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>6</span>, <span class='fl'>5</span>, <span class='fl'>8</span>, <span class='fl'>7</span>),
@@ -279,9 +279,9 @@ then be automatically generated.</p>
 <span class='co'># exist in the `tbl` table; this</span>
 <span class='co'># makes two distinct validation</span>
 <span class='co'># steps since two columns were</span>
-<span class='co'># provided to vars()</span>
+<span class='co'># provided to `vars()`</span>
 <span class='no'>agent</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='kw'>tbl</span> <span class='kw'>=</span> <span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>col_exists</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>, <span class='no'>b</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
 

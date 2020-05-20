@@ -125,9 +125,9 @@
 #' xl_step_4 <-
 #'   agent %>% get_agent_x_list(i = 4)
 #'  
-#' # And these peruse the different parts
-#' # of the list; let's get the fraction
-#' # of test units that failed
+#' # And then we can peruse the different
+#' # parts of the list; let's get the
+#' # fraction of test units that failed
 #' xl_step_4$f_failed
 #' 
 #' # Just printing the x-list will tell

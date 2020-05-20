@@ -55,37 +55,79 @@
 #'   The test function returns a logical value.
 #' 
 #' @examples
-#' # Create a simple table with
-#' # two columns: one `integer` and
-#' # the other `character`
+#' 
+#' # For all examples here, we'll use
+#' # a simple table with two columns:
+#' # one `integer` (`a`) and the other
+#' # `character` (`b`); the following
+#' # examples will validate that the
+#' # table columns abides match a schema
+#' # object as created by `col_schema()`
 #' tbl <- 
 #'   dplyr::tibble(
 #'     a = 1:5,
 #'     b = letters[1:5]
 #'   )
+#'   
+#' tbl
 #' 
-#' # Create a column schema object
+#' # Create a column schema object with
+#' # the helper function `col_schema()`
 #' # that describes the columns and
-#' # their types (in the expected
-#' # order)
+#' # their types (in the expected order)
 #' schema_obj <- 
 #'   col_schema(
 #'     a = "integer",
 #'     b = "character"
 #'   )
+#'   
+#' # A: Using an `agent` with validation
+#' #    functions and then `interrogate()`
 #' 
 #' # Validate that the schema object
 #' # `schema_obj` exactly defines
 #' # the column names and column types
-#' # of the `tbl` table
 #' agent <-
-#'   create_agent(tbl = tbl) %>%
+#'   create_agent(tbl) %>%
 #'   col_schema_match(schema_obj) %>%
 #'   interrogate()
 #' 
-#' # Determine if these three validation
-#' # steps passed by using `all_passed()`
+#' # Determine if this validation
+#' # had no failing test units (there is
+#' # a single test unit governed by
+#' # whether there is a match)
 #' all_passed(agent)
+#' 
+#' # Calling `agent` in the console
+#' # prints the agent's report; but we
+#' # can get a `gt_tbl` object directly
+#' # with `get_agent_report(agent)`
+#' 
+#' # B: Using the validation function
+#' #    directly on the data (no `agent`)
+#' 
+#' # This way of using validation functions
+#' # acts as a data filter: data is passed
+#' # through but should `stop()` if there
+#' # is a single test unit failing; the
+#' # behavior of side effects can be
+#' # customized with the `actions` option
+#' tbl %>% col_schema_match(schema_obj)
+#'
+#' # C: Using the expectation function
+#' 
+#' # With the `expect_*()` form, we would
+#' # typically perform one validation at a
+#' # time; this is primarily used in
+#' # testthat tests
+#' expect_col_schema_match(tbl, schema_obj)
+#' 
+#' # D: Using the test function
+#' 
+#' # With the `test_*()` form, we should
+#' # get a single logical value returned
+#' # to us
+#' tbl %>% test_col_schema_match(schema_obj)
 #' 
 #' @family validation functions
 #' @section Function ID:

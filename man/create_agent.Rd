@@ -44,19 +44,36 @@ German (\code{"de"}), Italian (\code{"it"}), and Spanish (\code{"es"}).}
 A \code{ptblank_agent} object.
 }
 \description{
-Creates an \emph{agent} object, which is used in a \emph{data quality reporting}
-workflow. The overall aim of this workflow is to generate some reporting on
-the state of data quality for a target table. We can supply as many
-validation functions as the user wishes to write to get validation
-coverage on that table. We supply a single table to \code{create_agent()}, which
-becomes the sole focus of the data quality analysis. After application of
-one or more validation functions, we need to use the \code{\link[=interrogate]{interrogate()}}
-function to complete the process; the validation functions, when called
-on an agent, are merely instructions up to that point. The \emph{agent} then has
-information on how the interrogation went. Reporting of the interrogation can
-be performed with the \code{\link[=get_agent_report]{get_agent_report()}} function. If we just need to know
-whether all validations completely passed (i.e., all steps had no failing
-test units), the \code{\link[=all_passed]{all_passed()}} function should be used.
+The \code{create_agent()} function creates an \emph{agent} object, which is used in a
+\emph{data quality reporting} workflow. The overall aim of this workflow is to
+generate useful reporting information for assessing the level of data quality
+for the target table. We can supply as many validation functions as the user
+wishes to write, thereby increasing the level of validation coverage for that
+table. The \emph{agent} assigned by the \code{create_agent()} call takes validation
+functions, which expand to validation steps (each one is numbered). This
+process is known as developing a \emph{validation plan}.
+
+The validation functions, when called on an agent, are merely instructions up
+to the point the \code{\link[=interrogate]{interrogate()}} function is called. That kicks off the
+process of the \emph{agent} acting on the \emph{validation plan} and getting results
+for each step. Once the interrogation process is complete, we can say that
+the \emph{agent} has intel. Calling the agent itself will result in a reporting
+table. This reporting of the interrogation can also be accessed with the
+\code{\link[=get_agent_report]{get_agent_report()}} function, where there are more reporting options.
+
+A very detailed list object, known as the x-list, can be obtained by using
+the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function. This font of information can be taken as
+a whole, or, broken down by the step number.
+
+Sometimes it is useful to see which rows were the failing ones. By using the
+\code{\link[=get_data_extracts]{get_data_extracts()}} functions, we either get a list of tibbles (for those
+steps that have data extracts) or one tibble if the validation step is
+specified.
+
+If we just need to know whether all validations completely passed (i.e., all
+steps had no failing test units), the \code{\link[=all_passed]{all_passed()}} function could be used.
+However, in practice, it's rarely the case that all data validation steps are
+free from any failing units.
 }
 \section{Function ID}{
 
@@ -64,26 +81,83 @@ test units), the \code{\link[=all_passed]{all_passed()}} function should be used
 }
 
 \examples{
-# Create a simple table with a
-# column of numerical values
-tbl <- 
-  dplyr::tibble(a = c(5, 7, 8, 7))
+# Let's walk through a data quality
+# analysis of an extremely small table;
+# it's actually called `small_table` and
+# we can find it as a dataset in this
+# package
+small_table
 
-# Create a pointblank `agent` object
-agent <- create_agent(tbl = tbl)
+# We ought to think about what's
+# tolerable in terms of data quality so
+# let's designate proportional failure
+# thresholds to the `warn`, `stop`, and
+# `notify` states using `action_levels()`
+al <- 
+  action_levels(
+    warn_at = 0.1,
+    stop_at = 0.25,
+    notify_at = 0.35
+  )
 
-# Then, as with any `ptblank_agent`
-# object, we can add validation steps
-# to the validation plan and then
-# eventually use `interrogate()`
-# to perform the validations; here,
-# with a single validation step, we
-# expect that values in column `a`
-# are always greater than 4
+# Now create a pointblank `agent` object
+# and give it the `al` object; the
+# reporting will be a bit more useful if
+# there are some target metrics
+agent <- 
+  create_agent(small_table, actions = al)
+
+# Then, as with any `agent` object, we
+# can add steps to the validation plan by
+# using as many validation functions as we
+# want; then, we use `interrogate()` to
+# physically perform the validations and
+# gather intel
 agent <-
-  agent \%>\%
-  col_vals_gt(vars(a), 4) \%>\%
+  agent \%>\% 
+  col_exists(vars(date, date_time)) \%>\%
+  col_vals_regex(
+    vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+  ) \%>\%
+  rows_distinct() \%>\%
+  col_vals_gt(vars(d), 100) \%>\%
+  col_vals_lte(vars(c), 5) \%>\%
+  col_vals_equal(
+    vars(d), vars(d),
+    na_pass = TRUE
+  ) \%>\%
+  col_vals_between(
+    vars(c),
+    left = vars(a), right = vars(d),
+    na_pass = TRUE
+  ) \%>\%
   interrogate()
+  
+# Calling `agent` in the console
+# prints the agent's report; but we
+# can get a `gt_tbl` object directly
+# with `get_agent_report(agent)`
+
+# From the report we know that Step
+# 4 had two test units (rows, really)
+# that failed; we can see those rows
+# with `get_data_extracts()` 
+agent \%>\% get_data_extracts(i = 4)
+
+# We can get an x-list for the whole
+# validation (8 steps), or, just for
+# the 4th step with `get_agent_x_list()`
+xl_step_4 <-
+  agent \%>\% get_agent_x_list(i = 4)
+ 
+# And these peruse the different parts
+# of the list; let's get the fraction
+# of test units that failed
+xl_step_4$f_failed
+
+# Just printing the x-list will tell
+# us what's available therein
+xl_step_4
  
 }
 \seealso{

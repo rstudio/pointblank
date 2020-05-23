@@ -187,6 +187,12 @@ create_autobrief <- function(agent,
     autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
+  if (assertion_type == "col_vals_expr") {
+   
+    expectation_text <- prep_col_vals_expr_expectation_text(lang = lang)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text) 
+  }
+  
   if (grepl("col_is_.*", assertion_type)) {
     
     col_type <- prep_col_type(fn_name = assertion_type)
@@ -410,6 +416,11 @@ prep_row_distinct_expectation_text <- function(column_text, lang) {
 prep_col_schema_match_expectation_text <- function(lang) {
   
   glue::glue(col_schema_match_expectation_text[lang])
+}
+
+prep_col_vals_expr_expectation_text <- function(lang) {
+  
+  glue::glue(col_vals_expr_expectation_text[lang])
 }
 
 failure_message_gluestring <- function(fn_name, lang) {

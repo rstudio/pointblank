@@ -297,6 +297,19 @@ get_agent_report <- function(agent,
                 "</div>"
               )
             
+          } else if (is_call(x)) {
+            
+            text <- rlang::as_label(x)
+            
+            x <- 
+              paste0(
+                "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "font-family: monospace; white-space: nowrap; ",
+                "text-overflow: ellipsis; overflow: hidden;\">",
+                text,
+                "</p></div>"
+              )
+            
           } else if (is.list(x) && length(x) > 0 && !inherits(x, "quosures")) {
             
             step_text <- 

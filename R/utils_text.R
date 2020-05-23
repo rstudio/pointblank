@@ -157,6 +157,25 @@ not_null_failure_text <-
     "es" = "Superaci\u00F3n de unidades de prueba fallidas donde los valores en {column_text} no deber\u00EDan sido NULL."
   )
 
+
+col_vals_expr_expectation_text <- 
+  c(
+    "en" = "Expect that values should agree with the given R expression."#,
+    #"fr" = "Attendez-vous \u00E0 ce que les valeurs de {column_text} {column_computed_text} correspondent \u00E0 l'expression r\u00E9guli\u00E8re: {values_text}.",
+    #"de" = "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} mit dem regul\u00E4ren Ausdruck {values_text} \u00FCbereinstimmen.",
+    #"it" = "Aspettati che i valori in {column_text} {column_computed_text} debbano corrispondere all'espressione regolare: {values_text}.",
+    #"es" = "Espere que los valores en {column_text} {column_computed_text} coincidan con la expresi\u00F3n regular: {values_text}."
+  )
+
+col_vals_expr_failure_text <- 
+  c(
+    "en" = "Exceedance of failed test units where values should have agreed with the given R expression."#,
+    #"fr" = "D\u00E9passement des unit\u00E9s de test ayant \u00E9chou\u00E9 o\u00F9 les valeurs dans {column_text} auraient d\u00FB correspondre \u00E0 l'expression r\u00E9guli\u00E8re: {values_text}.",
+    #"de" = "\u00DCberschreitung fehlgeschlagener Testeinheiten, bei denen die Werte in {column_text} mit dem regul\u00E4ren Ausdruck {values_text} \u00FCbereinstimmen sollten.",
+    #"it" = "Superamento delle unit\u00E0 di test non riuscite in cui i valori in {column_text} avrebbero dovuto corrispondere all'espressione regolare: {values_text}.",
+    #"es" = "Superaci\u00F3n de unidades de prueba fallidas donde los valores en {column_text} deber\u00EDan coincidir con la expresi\u00F3n regular: {values_text}."
+  )
+
 regex_expectation_text <- 
   c(
     "en" = "Expect that values in {column_text} {column_computed_text} should match the regular expression: {values_text}.",

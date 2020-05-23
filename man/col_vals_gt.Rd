@@ -156,12 +156,12 @@ then be automatically generated.
 # character columns (`d`, `e`, and `f`)
 tbl <-
   dplyr::tibble(
-      a = c(5, 5, 5, 5, 5, 5),
-      b = c(1, 1, 1, 2, 2, 2),
-      c = c(1, 1, 1, 2, 3, 4),
-      d = LETTERS[a],
-      e = LETTERS[b],
-      f = LETTERS[c]
+    a = c(5, 5, 5, 5, 5, 5),
+    b = c(1, 1, 1, 2, 2, 2),
+    c = c(1, 1, 1, 2, 3, 4),
+    d = LETTERS[a],
+    e = LETTERS[b],
+    f = LETTERS[c]
   )
   
 tbl
@@ -230,6 +230,7 @@ Other validation functions:
 \code{\link{col_schema_match}()},
 \code{\link{col_vals_between}()},
 \code{\link{col_vals_equal}()},
+\code{\link{col_vals_expr}()},
 \code{\link{col_vals_gte}()},
 \code{\link{col_vals_in_set}()},
 \code{\link{col_vals_lte}()},

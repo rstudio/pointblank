@@ -2,6 +2,18 @@
 #' @export
 dplyr::vars
 
+#' @importFrom dplyr case_when
+#' @export
+dplyr::case_when
+
+#' @importFrom dplyr between
+#' @export
+dplyr::between
+
+#' @importFrom dplyr expr
+#' @export
+dplyr::expr
+
 #' @importFrom tidyselect starts_with
 #' @export
 tidyselect::starts_with

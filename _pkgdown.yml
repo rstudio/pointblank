@@ -48,6 +48,7 @@ reference:
     - col_vals_null
     - col_vals_not_null
     - col_vals_regex
+    - col_vals_expr
     - conjointly
     - rows_distinct
     - col_is_character

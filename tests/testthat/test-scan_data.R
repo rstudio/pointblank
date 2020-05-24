@@ -1,5 +1,7 @@
 test_that("Using `scan_data()` results in an HTML document", {
   
+  skip_on_cran()
+  
   scan_data_html <- scan_data(tbl = datasets::airquality) %>% as.character()
   
   expect_equal(length(scan_data_html), 1)

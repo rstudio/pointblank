@@ -303,6 +303,42 @@ test_that("pointblank expectation function produce the correct results", {
   )
   
   #
+  # expect_col_vals_expr()
+  #
+  
+  expect_col_vals_expr(tbl, ~ a %% 1 == 0)
+  expect_col_vals_expr(tbl, ~ c %% 1 == 0)
+  expect_col_vals_expr(tbl, expr(a %% 1 == 0))
+  expect_col_vals_expr(tbl, expr(c %% 1 == 0))
+  expect_col_vals_expr(tbl, ~ case_when(
+    b == 1 ~ a > 5 & c >= 1
+  ))
+  expect_col_vals_expr(tbl, expr(
+    case_when(
+      b == 1 ~ a > 5 & c >= 1
+    )
+  ))
+  
+  expect_success(expect_col_vals_expr(tbl, ~ a %% 1 == 0))
+  expect_success(expect_col_vals_expr(tbl, ~ a %>% between(0, 10)))
+  expect_failure(expect_col_vals_expr(tbl, ~ a < 5))
+  expect_success(expect_col_vals_expr(tbl, expr(a %% 1 == 0)))
+  expect_success(expect_col_vals_expr(tbl, expr(a %>% between(0, 10))))
+  
+  expect_failure(expect_col_vals_expr(tbl, ~ a < 5))
+  expect_failure(expect_col_vals_expr(tbl, expr(a < 5)))
+  
+  expect_error(expect_col_vals_expr(tbl, expr(a < 5)), class = "expectation_failure")
+  
+  expect_failure(expect_col_vals_expr(tbl, expr(a < 5), threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_expr(tbl, expr(a < 5), threshold = 0.01), failed_beyond_proportional)
+  
+  expect_failure(
+    expect_col_vals_expr(tbl, expr(a < 5)),
+    "failure level \\(3\\) >= failure threshold \\(1\\)"
+  )
+  
+  #
   # expect_conjointly()
   #
   

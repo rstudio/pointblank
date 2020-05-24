@@ -311,6 +311,7 @@ then be automatically generated.</p>
 <code><a href='col_schema_match.html'>col_schema_match</a>()</code>,
 <code><a href='col_vals_between.html'>col_vals_between</a>()</code>,
 <code><a href='col_vals_equal.html'>col_vals_equal</a>()</code>,
+<code><a href='col_vals_expr.html'>col_vals_expr</a>()</code>,
 <code><a href='col_vals_gte.html'>col_vals_gte</a>()</code>,
 <code><a href='col_vals_in_set.html'>col_vals_in_set</a>()</code>,
 <code><a href='col_vals_lte.html'>col_vals_lte</a>()</code>,
@@ -331,12 +332,12 @@ then be automatically generated.</p>
 <span class='co'># character columns (`d`, `e`, and `f`)</span>
 <span class='no'>tbl</span> <span class='kw'>&lt;-</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
-      <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>),
-      <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>2</span>),
-      <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>),
-      <span class='kw'>d</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='no'>a</span>],
-      <span class='kw'>e</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='no'>b</span>],
-      <span class='kw'>f</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='no'>c</span>]
+    <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>),
+    <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>2</span>),
+    <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>),
+    <span class='kw'>d</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='no'>a</span>],
+    <span class='kw'>e</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='no'>b</span>],
+    <span class='kw'>f</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='no'>c</span>]
   )
 
 <span class='no'>tbl</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 6</span><span>

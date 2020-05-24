@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Are column data less than or equal to a specified value? — col_vals_lte • pointblank</title>
+<title>Do column data agree with a predicate expression? — col_vals_expr • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,19 +46,16 @@
 
 
 
-<meta property="og:title" content="Are column data less than or equal to a specified value? — col_vals_lte" />
-<meta property="og:description" content="The col_vals_lte() validation function, the expect_col_vals_lte()
-expectation function, and the test_col_vals_lte() test function all check
-whether column values in a table are less than or equal to a specified
-value (the exact comparison used in this function is col_val &amp;lt;= value).
-The value can be specified as a single, literal value or as a column name
-given in vars(). The validation step function can be used directly on a
-data table or with an agent object (technically, a ptblank_agent object)
-whereas the expectation and test functions can only be used with a data
-table. The types of data tables that can be used include data frames,
-tibbles, and even database tables of tbl_dbi class. Each validation step or
-expectation will operate over the number of test units that is equal to the
-number of rows in the table (after any preconditions have been applied)." />
+<meta property="og:title" content="Do column data agree with a predicate expression? — col_vals_expr" />
+<meta property="og:description" content="The col_vals_expr() validation function checks for whether column values in
+a table match a user-defined predicate expression. The validation function
+can be used directly on a data table or with an agent object (technically,
+a ptblank_agent object) whereas the expectation and test functions can only
+be used with a data table. The types of data tables that can be used include
+data frames, tibbles, and even database tables of tbl_dbi class. Each
+validation step or expectation will operate over the number of test units
+that is equal to the number of rows in the table (after any preconditions
+have been applied)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -127,54 +124,35 @@ number of rows in the table (after any preconditions have been applied)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Are column data less than or equal to a specified value?</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/col_vals_lte.R'><code>R/col_vals_lte.R</code></a></small>
-    <div class="hidden name"><code>col_vals_lte.Rd</code></div>
+    <h1>Do column data agree with a predicate expression?</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/col_vals_expr.R'><code>R/col_vals_expr.R</code></a></small>
+    <div class="hidden name"><code>col_vals_expr.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>col_vals_lte()</code> validation function, the <code>expect_col_vals_lte()</code>
-expectation function, and the <code>test_col_vals_lte()</code> test function all check
-whether column values in a table are <em>less than or equal to</em> a specified
-<code>value</code> (the exact comparison used in this function is <code>col_val &lt;= value</code>).
-The <code>value</code> can be specified as a single, literal value or as a column name
-given in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>. The validation step function can be used directly on a
-data table or with an <em>agent</em> object (technically, a <code>ptblank_agent</code> object)
-whereas the expectation and test functions can only be used with a data
-table. The types of data tables that can be used include data frames,
-tibbles, and even database tables of <code>tbl_dbi</code> class. Each validation step or
-expectation will operate over the number of test units that is equal to the
-number of rows in the table (after any <code>preconditions</code> have been applied).</p>
+    <p>The <code>col_vals_expr()</code> validation function checks for whether column values in
+a table match a user-defined predicate expression. The validation function
+can be used directly on a data table or with an <em>agent</em> object (technically,
+a <code>ptblank_agent</code> object) whereas the expectation and test functions can only
+be used with a data table. The types of data tables that can be used include
+data frames, tibbles, and even database tables of <code>tbl_dbi</code> class. Each
+validation step or expectation will operate over the number of test units
+that is equal to the number of rows in the table (after any <code>preconditions</code>
+have been applied).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>col_vals_lte</span>(
+    <pre class="usage"><span class='fu'>col_vals_expr</span>(
   <span class='no'>x</span>,
-  <span class='no'>columns</span>,
-  <span class='no'>value</span>,
-  <span class='kw'>na_pass</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>expr</span>,
   <span class='kw'>preconditions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>actions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>brief</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>active</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )
 
-<span class='fu'>expect_col_vals_lte</span>(
-  <span class='no'>object</span>,
-  <span class='no'>columns</span>,
-  <span class='no'>value</span>,
-  <span class='kw'>na_pass</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>preconditions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>1</span>
-)
+<span class='fu'>expect_col_vals_expr</span>(<span class='no'>object</span>, <span class='no'>expr</span>, <span class='kw'>preconditions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
-<span class='fu'>test_col_vals_lte</span>(
-  <span class='no'>object</span>,
-  <span class='no'>columns</span>,
-  <span class='no'>value</span>,
-  <span class='kw'>na_pass</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>preconditions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>1</span>
-)</pre>
+<span class='fu'>test_col_vals_expr</span>(<span class='no'>object</span>, <span class='no'>expr</span>, <span class='kw'>preconditions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,20 +163,10 @@ number of rows in the table (after any <code>preconditions</code> have been appl
 class <code>ptblank_agent</code> that can be created with <code><a href='create_agent.html'>create_agent()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>columns</th>
-      <td><p>The column (or a set of columns, provided as a character
-vector) to which this validation should be applied.</p></td>
-    </tr>
-    <tr>
-      <th>value</th>
-      <td><p>A numeric value used for this test. Any column values <code>&lt;= value</code>
-are considered passing.</p></td>
-    </tr>
-    <tr>
-      <th>na_pass</th>
-      <td><p>Should any encountered <code>NA</code> values be allowed to pass a
-validation unit? This is by default <code>FALSE</code>. Set to <code>TRUE</code> to give <code>NA</code>s
-a pass.</p></td>
+      <th>expr</th>
+      <td><p>An expression to use for this test. This can either be in the
+form of a call made with the <code><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr()</a></code> function or as a one-sided <strong>R</strong>
+formula (using a leading <code>~</code>).</p></td>
     </tr>
     <tr>
       <th>preconditions</th>
@@ -254,16 +222,7 @@ called primarily for its potential side-effects (e.g., signaling failure).
 The test function returns a logical value.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>If providing multiple column names to <code>columns</code>, the result will be an
-expansion of validation steps to that number of column names (e.g.,
-<code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars(col_a, col_b)</a></code> will result in the entry of two validation steps). Aside
-from column names in quotes and in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, <strong>tidyselect</strong> helper functions
-are available for specifying columns. They are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p>
-<p>This validation function supports special handling of <code>NA</code> values. The
-<code>na_pass</code> argument will determine whether an <code>NA</code> value appearing in a test
-unit should be counted as a <em>pass</em> or a <em>fail</em>. The default of <code>na_pass = FALSE</code> means that any <code>NA</code>s encountered will accumulate failing test units.</p>
-<p>Having table <code>preconditions</code> means <strong>pointblank</strong> will mutate the table just
+    <p>Having table <code>preconditions</code> means <strong>pointblank</strong> will mutate the table just
 before interrogation. Such a table mutation is isolated in scope to the
 validation step(s) produced by the validation function call. Using
 <strong>dplyr</strong> code is suggested here since the statements can be translated to
@@ -295,11 +254,10 @@ then be automatically generated.</p>
 
     
 
-<p>2-2</p>
+<p>2-25</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>The analogous function with a right-open bound: <code><a href='col_vals_lt.html'>col_vals_lt()</a></code>.</p>
-<p>Other validation functions: 
+    <div class='dont-index'><p>Other validation functions: 
 <code><a href='col_exists.html'>col_exists</a>()</code>,
 <code><a href='col_is_character.html'>col_is_character</a>()</code>,
 <code><a href='col_is_date.html'>col_is_date</a>()</code>,
@@ -311,10 +269,10 @@ then be automatically generated.</p>
 <code><a href='col_schema_match.html'>col_schema_match</a>()</code>,
 <code><a href='col_vals_between.html'>col_vals_between</a>()</code>,
 <code><a href='col_vals_equal.html'>col_vals_equal</a>()</code>,
-<code><a href='col_vals_expr.html'>col_vals_expr</a>()</code>,
 <code><a href='col_vals_gte.html'>col_vals_gte</a>()</code>,
 <code><a href='col_vals_gt.html'>col_vals_gt</a>()</code>,
 <code><a href='col_vals_in_set.html'>col_vals_in_set</a>()</code>,
+<code><a href='col_vals_lte.html'>col_vals_lte</a>()</code>,
 <code><a href='col_vals_lt.html'>col_vals_lt</a>()</code>,
 <code><a href='col_vals_not_between.html'>col_vals_not_between</a>()</code>,
 <code><a href='col_vals_not_equal.html'>col_vals_not_equal</a>()</code>,
@@ -332,32 +290,29 @@ then be automatically generated.</p>
 <span class='co'># character columns (`d`, `e`, and `f`)</span>
 <span class='no'>tbl</span> <span class='kw'>&lt;-</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
-      <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>),
-      <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>2</span>),
-      <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>),
-      <span class='kw'>d</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='no'>a</span>],
-      <span class='kw'>e</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='no'>b</span>],
-      <span class='kw'>f</span> <span class='kw'>=</span> <span class='no'>LETTERS</span>[<span class='no'>c</span>]
+    <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>6</span>),
+    <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>),
+    <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.5</span>, <span class='fl'>0.3</span>, <span class='fl'>0.8</span>, <span class='fl'>1.4</span>, <span class='fl'>1.9</span>, <span class='fl'>1.2</span>),
   )
 
-<span class='no'>tbl</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 6</span><span>
-#&gt;       a     b     c d     e     f    
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     5     1     1 E     A     A    
-#&gt; </span><span style='color: #555555;'>2</span><span>     5     1     1 E     A     A    
-#&gt; </span><span style='color: #555555;'>3</span><span>     5     1     1 E     A     A    
-#&gt; </span><span style='color: #555555;'>4</span><span>     5     2     2 E     B     B    
-#&gt; </span><span style='color: #555555;'>5</span><span>     5     2     3 E     B     C    
-#&gt; </span><span style='color: #555555;'>6</span><span>     5     2     4 E     B     D    </div><div class='input'>
+<span class='no'>tbl</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 3</span><span>
+#&gt;       a     b     c
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     1     0   0.5
+#&gt; </span><span style='color: #555555;'>2</span><span>     2     0   0.3
+#&gt; </span><span style='color: #555555;'>3</span><span>     1     0   0.8
+#&gt; </span><span style='color: #555555;'>4</span><span>     7     1   1.4
+#&gt; </span><span style='color: #555555;'>5</span><span>     8     1   1.9
+#&gt; </span><span style='color: #555555;'>6</span><span>     6     1   1.2</div><div class='input'>
 <span class='co'># A: Using an `agent` with validation</span>
 <span class='co'>#    functions and then `interrogate()` </span>
 
-<span class='co'># Validate that values in column `c`</span>
-<span class='co'># are all less than or equal to the</span>
-<span class='co'># value of `4`</span>
+<span class='co'># Validate that values in column `a`</span>
+<span class='co'># are integer-like by using the R modulo</span>
+<span class='co'># operator and expecting `0`</span>
 <span class='no'>agent</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>col_vals_lte</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>c</span>), <span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>col_vals_expr</span>(<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span>(<span class='no'>a</span> <span class='kw'>%%</span> <span class='fl'>1</span> <span class='kw'>==</span> <span class='fl'>0</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
 
 <span class='co'># Determine if this validation</span>
@@ -379,22 +334,43 @@ then be automatically generated.</p>
 <span class='co'># behavior of side effects can be</span>
 <span class='co'># customized with the `actions` option</span>
 <span class='no'>tbl</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>col_vals_lte</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>c</span>), <span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='no'>c</span>)</div><div class='output co'>#&gt; [1] 1 1 1 2 3 4</div><div class='input'>
+  <span class='fu'>col_vals_expr</span>(<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span>(<span class='no'>a</span> <span class='kw'>%%</span> <span class='fl'>1</span> <span class='kw'>==</span> <span class='fl'>0</span>)) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='no'>a</span>)</div><div class='output co'>#&gt; [1] 1 2 1 7 8 6</div><div class='input'>
 <span class='co'># C: Using the expectation function</span>
 
 <span class='co'># With the `expect_*()` form, we would</span>
 <span class='co'># typically perform one validation at a</span>
 <span class='co'># time; this is primarily used in</span>
 <span class='co'># testthat tests</span>
-<span class='fu'>expect_col_vals_lte</span>(<span class='no'>tbl</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>c</span>), <span class='fl'>4</span>)
+<span class='fu'>expect_col_vals_expr</span>(<span class='no'>tbl</span>, ~ <span class='no'>a</span> <span class='kw'>%%</span> <span class='fl'>1</span> <span class='kw'>==</span> <span class='fl'>0</span>)
 
 <span class='co'># D: Using the test function</span>
 
 <span class='co'># With the `test_*()` form, we should</span>
 <span class='co'># get a single logical value returned</span>
 <span class='co'># to us</span>
-<span class='fu'>test_col_vals_lte</span>(<span class='no'>tbl</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>c</span>), <span class='fl'>4</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'>test_col_vals_expr</span>(<span class='no'>tbl</span>, ~ <span class='no'>a</span> <span class='kw'>%%</span> <span class='fl'>1</span> <span class='kw'>==</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># Variations</span>
+
+<span class='co'># We can do more complex things by</span>
+<span class='co'># taking advantage of the `case_when()`</span>
+<span class='co'># and `between()` functions (available</span>
+<span class='co'># for use in the pointblank package) </span>
+<span class='no'>tbl</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>test_col_vals_expr</span>(~ <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span>(
+    <span class='no'>b</span> <span class='kw'>==</span> <span class='fl'>0</span> ~ <span class='no'>a</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/between.html'>between</a></span>(<span class='fl'>0</span>, <span class='fl'>5</span>) <span class='kw'>&amp;</span> <span class='no'>c</span> <span class='kw'>&lt;</span> <span class='fl'>1</span>,
+    <span class='no'>b</span> <span class='kw'>==</span> <span class='fl'>1</span> ~ <span class='no'>a</span> <span class='kw'>&gt;</span> <span class='fl'>5</span> <span class='kw'>&amp;</span> <span class='no'>c</span> <span class='kw'>&gt;=</span> <span class='fl'>1</span>
+  ))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># If you only want to test a subset of</span>
+<span class='co'># rows, then the `case_when()` statement</span>
+<span class='co'># doesn't need to be exhaustive; any</span>
+<span class='co'># rows that don't fall into the cases</span>
+<span class='co'># will be pruned (giving us less test</span>
+<span class='co'># units overall) </span>
+<span class='no'>tbl</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>test_col_vals_expr</span>(~ <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span>(
+    <span class='no'>b</span> <span class='kw'>==</span> <span class='fl'>1</span> ~ <span class='no'>a</span> <span class='kw'>&gt;</span> <span class='fl'>5</span> <span class='kw'>&amp;</span> <span class='no'>c</span> <span class='kw'>&gt;=</span> <span class='fl'>1</span>
+  ))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

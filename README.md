@@ -112,9 +112,10 @@ function (assigning to `actions`). In this way, the data will be
 returned, but warnings will appear.
 
 ``` r
-# This `warn_on_fail()` is a nice wrapper for
-# `action_levels`; it works great in this data
-# checking workflow!
+# This `warn_on_fail()` function is a nice
+# shortcut for `action_levels(warn_at = 1)`;
+# it works great in this data checking workflow
+# (and the threshold can still be adjusted)
 al <- warn_on_fail()
 
 dplyr::tibble(

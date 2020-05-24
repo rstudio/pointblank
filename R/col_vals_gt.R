@@ -104,12 +104,12 @@
 #' # character columns (`d`, `e`, and `f`)
 #' tbl <-
 #'   dplyr::tibble(
-#'       a = c(5, 5, 5, 5, 5, 5),
-#'       b = c(1, 1, 1, 2, 2, 2),
-#'       c = c(1, 1, 1, 2, 3, 4),
-#'       d = LETTERS[a],
-#'       e = LETTERS[b],
-#'       f = LETTERS[c]
+#'     a = c(5, 5, 5, 5, 5, 5),
+#'     b = c(1, 1, 1, 2, 2, 2),
+#'     c = c(1, 1, 1, 2, 3, 4),
+#'     d = LETTERS[a],
+#'     e = LETTERS[b],
+#'     f = LETTERS[c]
 #'   )
 #'   
 #' tbl

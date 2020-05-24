@@ -390,6 +390,7 @@ check_table_with_assertion <- function(agent, idx, table, assertion_type) {
       "col_vals_null" = interrogate_null(agent, idx, table),
       "col_vals_not_null" = interrogate_not_null(agent, idx, table),
       "col_vals_regex" = interrogate_regex(agent, idx, table),
+      "col_vals_expr" = interrogate_expr(agent, idx, table),
       "col_exists" = interrogate_col_exists(agent, idx, table),
       "col_is_numeric" =,
       "col_is_integer" =,
@@ -699,6 +700,25 @@ interrogate_regex <- function(agent, idx, table) {
   
   # Perform rowwise validations for the column
   pointblank_try_catch(tbl_val_regex(table, {{ column }}, regex, na_pass))
+}
+
+interrogate_expr <- function(agent, idx, table) {
+  
+  # Get the expression
+  expr <- get_values_at_idx(agent = agent, idx = idx)
+  
+  # Create function for validating the `col_vals_expr()` step function
+  tbl_val_expr <- function(table, expr) {
+    
+    expr <- expr[[1]]
+
+    table %>% 
+      dplyr::mutate(pb_is_good_ = !!expr) %>%
+      dplyr::filter(!is.na(pb_is_good_))
+  }
+  
+  # Perform rowwise validations for the column
+  pointblank_try_catch(tbl_val_expr(table, expr))
 }
 
 interrogate_null <- function(agent, idx, table) {

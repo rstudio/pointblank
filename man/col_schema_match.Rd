@@ -211,6 +211,7 @@ Other validation functions:
 \code{\link{col_is_posix}()},
 \code{\link{col_vals_between}()},
 \code{\link{col_vals_equal}()},
+\code{\link{col_vals_expr}()},
 \code{\link{col_vals_gte}()},
 \code{\link{col_vals_gt}()},
 \code{\link{col_vals_in_set}()},

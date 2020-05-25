@@ -251,7 +251,7 @@ get_agent_report <- function(agent,
               paste(
                 paste0(
                   "<span style=\"color: purple; ",
-                  "font-size: bigger;\">&#8643;</span>",
+                  "font-size: bigger;\">&marker;</span>",
                   text
                 ),
                 collapse = ", "
@@ -277,7 +277,42 @@ get_agent_report <- function(agent,
         USE.NAMES = FALSE,
         FUN = function(x) {
 
-          if (is.list(x) && length(x) > 0 && inherits(x, "col_schema")) {
+          if (is.list(x) && length(x) == 2 &&  all(names(x) %in% c("TRUE", "FALSE"))) {
+            # Case of in-between comparison validation where there are
+            # one or two columns specified as bounds
+            bounds_incl <- as.logical(names(x))
+            
+            if (rlang::is_quosure(x[[1]])) {
+              x_left <- 
+                paste0(
+                  "<span style=\"color: purple; font-size: bigger;\">&marker;</span>",
+                  rlang::as_label(x[[1]])
+                )
+            } else {
+              x_left <- x[[1]]
+            }
+            
+            if (rlang::is_quosure(x[[2]])) {
+              x_right <- 
+                paste0(
+                  "<span style=\"color: purple; font-size: bigger;\">&marker;</span>",
+                  rlang::as_label(x[[2]])
+                )
+            } else {
+              x_right <- x[[2]]
+            }
+            
+            x <- 
+              paste0(
+                "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "font-family: monospace; white-space: nowrap; ",
+                "text-overflow: ellipsis; overflow: hidden;\">",
+                paste0(x_left, ", ", x_right),
+                "</p></div>"
+              )
+
+          } else if (is.list(x) && length(x) > 0 && inherits(x, "col_schema")) {
+            # Case of column schema as a value
             
             column_schema_text <- report_column_schema[lang]
             column_schema_type_text <- 
@@ -311,6 +346,7 @@ get_agent_report <- function(agent,
               )
             
           } else if (is.list(x) && length(x) > 0 && !inherits(x, "quosures")) {
+            # Conjointly case
             
             step_text <- 
               if (length(x) > 1) {
@@ -368,7 +404,7 @@ get_agent_report <- function(agent,
                 x = "&Iscr;",
                 scale = scale,
                 color = "#333333",
-                background = "#FFFFFF"
+                background = "#EFEFEF"
               )
             
           } else if (rlang::is_formula(x) || rlang::is_function(x)) {

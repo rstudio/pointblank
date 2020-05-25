@@ -226,7 +226,7 @@ get_agent_report <- function(agent,
       paste0(
         "<button style=\"background: ", background, "; padding: ",
         5 * scale, "px ", 5 * scale, "px; ",
-        "color: ", color, "; font-size: ", 15 * scale, "px; border: none;\">",
+        "color: ", color, "; font-size: ", 15 * scale, "px; border: none; pointer-events: none;\">",
         x, "</button>"
       )
     }
@@ -371,7 +371,7 @@ get_agent_report <- function(agent,
               x %>%
               tidy_gsub(
                 "~",
-                "<span style=\"color: purple; font-size: bigger;\">&#8643;</span>"
+                "<span style=\"color: purple; font-size: bigger;\">&marker;</span>"
               ) %>%
               unname()
             
@@ -437,7 +437,8 @@ get_agent_report <- function(agent,
               get_data_extracts(agent = agent, i = x) %>%
               as.data.frame(stringsAsFactors = FALSE)
             
-            temp_file <- tempfile(pattern = paste0("csv_file_", x), fileext = ".csv")
+            temp_file <- 
+              tempfile(pattern = paste0("csv_file_", x), fileext = ".csv")
             
             write.csv(df, file = temp_file, row.names = FALSE)
             
@@ -446,7 +447,12 @@ get_agent_report <- function(agent,
             file_encoded <- base64enc::base64encode(temp_file)
             
             output_file_name <- 
-              gsub(":", "_", paste0(agent_name, "_", formatC(x, width = 4, format = "d", flag = "0"), ".csv"))
+              paste0(
+                agent_name, "_",
+                formatC(x, width = 4, format = "d", flag = "0"),
+                ".csv"
+              ) %>%
+              tidy_gsub(":", "_")
 
             x <- 
               htmltools::a(
@@ -456,7 +462,8 @@ get_agent_report <- function(agent,
                 download = output_file_name,
                 htmltools::tags$button(
                   style = "background-color: #67C2DC; color: #FFFFFF; border: none; padding: 5px; font-weight: bold; cursor: pointer; border-radius: 4px;",
-                  "CSV")
+                  "CSV"
+                )
               ) %>%
               as.character()
           }

@@ -420,6 +420,49 @@ get_agent_report <- function(agent,
           x
         } 
       )
+    
+    # Reformat `extract`
+    extract_upd <-
+      seq_along(extract_count) %>%
+      vapply(
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          
+          if (is.na(extract_count[x])) {
+            x <- "&mdash;"
+          } else if (!is.na(extract_count[x])) {
+
+            df <- 
+              get_data_extracts(agent = agent, i = x) %>%
+              as.data.frame(stringsAsFactors = FALSE)
+            
+            temp_file <- tempfile(pattern = paste0("csv_file_", x), fileext = ".csv")
+            
+            write.csv(df, file = temp_file, row.names = FALSE)
+            
+            on.exit(unlink(temp_file))
+            
+            file_encoded <- base64enc::base64encode(temp_file)
+            
+            output_file_name <- 
+              gsub(":", "_", paste0(agent_name, "_", formatC(x, width = 4, format = "d", flag = "0"), ".csv"))
+
+            x <- 
+              htmltools::a(
+                href = paste0(
+                  "data:text/csv;base64,", file_encoded
+                ),
+                download = output_file_name,
+                htmltools::tags$button(
+                  style = "background: #67C2DC; color: #FFFFFF; cursor: pointer;",
+                  "CSV")
+              ) %>%
+              as.character()
+          }
+          x
+        } 
+      )
 
     # Reformat W, S, and N
     W_upd <- 
@@ -509,7 +552,7 @@ get_agent_report <- function(agent,
         W = W_upd,
         S = S_upd,
         N = N_upd,
-        extract = extract
+        extract = extract_upd
       ) %>%
       dplyr::select(
         i, type, columns, values, precon, eval_sym, units,
@@ -563,7 +606,7 @@ get_agent_report <- function(agent,
         decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE
       ) %>%
       gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2) %>%
-      gt::fmt_markdown(columns = gt::vars(columns, values, eval_sym, precon, W, S, N)) %>%
+      gt::fmt_markdown(columns = gt::vars(columns, values, eval_sym, precon, W, S, N, extract)) %>%
       gt::fmt_missing(columns = gt::vars(columns, values, units, extract)) %>%
       gt::cols_hide(columns = gt::vars(W_val, S_val, N_val, eval, active)) %>%
       gt::text_transform(
@@ -573,7 +616,7 @@ get_agent_report <- function(agent,
         }
       ) %>%
       gt::text_transform(
-        locations = gt::cells_body(columns = gt::vars(units, extract)),
+        locations = gt::cells_body(columns = gt::vars(units)),
         fn = function(x) {
           dplyr::case_when(
             x == "&mdash;" ~ x,

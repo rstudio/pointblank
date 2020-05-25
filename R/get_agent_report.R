@@ -226,7 +226,8 @@ get_agent_report <- function(agent,
       paste0(
         "<button style=\"background: ", background, "; padding: ",
         5 * scale, "px ", 5 * scale, "px; ",
-        "color: ", color, "; font-size: ", 15 * scale, "px; border: none; pointer-events: none;\">",
+        "color: ", color, "; font-size: ", 15 * scale,
+        "px; border: none; pointer-events: none;\">",
         x, "</button>"
       )
     }
@@ -437,6 +438,8 @@ get_agent_report <- function(agent,
               get_data_extracts(agent = agent, i = x) %>%
               as.data.frame(stringsAsFactors = FALSE)
             
+            title_text <- paste0(nrow(df), " failing rows available.")
+            
             temp_file <- 
               tempfile(pattern = paste0("csv_file_", x), fileext = ".csv")
             
@@ -461,11 +464,13 @@ get_agent_report <- function(agent,
                 ),
                 download = output_file_name,
                 htmltools::tags$button(
+                  title = title_text,
                   style = "background-color: #67C2DC; color: #FFFFFF; border: none; padding: 5px; font-weight: bold; cursor: pointer; border-radius: 4px;",
                   "CSV"
                 )
               ) %>%
               as.character()
+            
           }
           x
         } 

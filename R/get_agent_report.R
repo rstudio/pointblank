@@ -455,7 +455,7 @@ get_agent_report <- function(agent,
                 ),
                 download = output_file_name,
                 htmltools::tags$button(
-                  style = "background: #67C2DC; color: #FFFFFF; cursor: pointer;",
+                  style = "background-color: #67C2DC; color: #FFFFFF; border: none; padding: 5px; font-weight: bold; cursor: pointer; border-radius: 4px;",
                   "CSV")
               ) %>%
               as.character()

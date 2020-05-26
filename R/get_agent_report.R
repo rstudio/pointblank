@@ -226,7 +226,8 @@ get_agent_report <- function(agent,
       paste0(
         "<button style=\"background: ", background, "; padding: ",
         5 * scale, "px ", 5 * scale, "px; ",
-        "color: ", color, "; font-size: ", 15 * scale, "px; border: none;\">",
+        "color: ", color, "; font-size: ", 15 * scale,
+        "px; border: none; pointer-events: none;\">",
         x, "</button>"
       )
     }
@@ -371,7 +372,7 @@ get_agent_report <- function(agent,
               x %>%
               tidy_gsub(
                 "~",
-                "<span style=\"color: purple; font-size: bigger;\">&#8643;</span>"
+                "<span style=\"color: purple; font-size: bigger;\">&marker;</span>"
               ) %>%
               unname()
             
@@ -416,6 +417,60 @@ get_agent_report <- function(agent,
                 color = "#FFFFFF",
                 background = "#67C2DC"
               )
+          }
+          x
+        } 
+      )
+    
+    # Reformat `extract`
+    extract_upd <-
+      seq_along(extract_count) %>%
+      vapply(
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          
+          if (is.na(extract_count[x])) {
+            x <- "&mdash;"
+          } else if (!is.na(extract_count[x])) {
+
+            df <- 
+              get_data_extracts(agent = agent, i = x) %>%
+              as.data.frame(stringsAsFactors = FALSE)
+            
+            title_text <- paste0(nrow(df), " failing rows available.")
+            
+            temp_file <- 
+              tempfile(pattern = paste0("csv_file_", x), fileext = ".csv")
+            
+            write.csv(df, file = temp_file, row.names = FALSE)
+            
+            on.exit(unlink(temp_file))
+            
+            file_encoded <- base64enc::base64encode(temp_file)
+            
+            output_file_name <- 
+              paste0(
+                agent_name, "_",
+                formatC(x, width = 4, format = "d", flag = "0"),
+                ".csv"
+              ) %>%
+              tidy_gsub(":", "_")
+
+            x <- 
+              htmltools::a(
+                href = paste0(
+                  "data:text/csv;base64,", file_encoded
+                ),
+                download = output_file_name,
+                htmltools::tags$button(
+                  title = title_text,
+                  style = "background-color: #67C2DC; color: #FFFFFF; border: none; padding: 5px; font-weight: bold; cursor: pointer; border-radius: 4px;",
+                  "CSV"
+                )
+              ) %>%
+              as.character()
+            
           }
           x
         } 
@@ -509,7 +564,7 @@ get_agent_report <- function(agent,
         W = W_upd,
         S = S_upd,
         N = N_upd,
-        extract = extract
+        extract = extract_upd
       ) %>%
       dplyr::select(
         i, type, columns, values, precon, eval_sym, units,
@@ -540,7 +595,7 @@ get_agent_report <- function(agent,
         units = report_col_units[lang],
         n_pass = "PASS",
         n_fail = "FAIL",
-        extract = "EXTRACT"
+        extract = "EXT"
       ) %>%
       gt::tab_header(
         title = pointblank_validation_title_text[lang],
@@ -563,7 +618,7 @@ get_agent_report <- function(agent,
         decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE
       ) %>%
       gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2) %>%
-      gt::fmt_markdown(columns = gt::vars(columns, values, eval_sym, precon, W, S, N)) %>%
+      gt::fmt_markdown(columns = gt::vars(columns, values, eval_sym, precon, W, S, N, extract)) %>%
       gt::fmt_missing(columns = gt::vars(columns, values, units, extract)) %>%
       gt::cols_hide(columns = gt::vars(W_val, S_val, N_val, eval, active)) %>%
       gt::text_transform(
@@ -573,7 +628,7 @@ get_agent_report <- function(agent,
         }
       ) %>%
       gt::text_transform(
-        locations = gt::cells_body(columns = gt::vars(units, extract)),
+        locations = gt::cells_body(columns = gt::vars(units)),
         fn = function(x) {
           dplyr::case_when(
             x == "&mdash;" ~ x,
@@ -731,7 +786,7 @@ get_agent_report <- function(agent,
           gt::vars(columns) ~ gt::px(120),
           gt::vars(values) ~ gt::px(140),
           gt::vars(precon) ~ gt::px(35),
-          gt::vars(extract) ~ gt::px(75),
+          gt::vars(extract) ~ gt::px(65),
           gt::vars(W) ~ gt::px(30),
           gt::vars(S) ~ gt::px(30),
           gt::vars(N) ~ gt::px(30),

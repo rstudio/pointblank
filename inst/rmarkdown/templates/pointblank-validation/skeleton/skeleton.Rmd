@@ -37,14 +37,26 @@ Note that with multiple **pointblank** step functions chained together, only the
 ```{r validate = TRUE}
 small_table %>% 
   col_exists(columns = vars(a, b, c, d, e, f)) %>% # this passes validation
-  rows_distinct() %>%                              # this step fails (showing us the error message)
-  col_vals_gt(vars(d), 5000)                       # this also fails (we don't see its message)
+  rows_distinct() %>%                              # this step fails (we see an error message)
+  col_vals_gt(vars(d), 5000)                       # this also fails (we do not see its error)
 ```
 
-If all validations in a chunk do not fail, we can still inspect the validation code.
+If all validations in a `validate` chunk do not fail, we can still inspect the validation code.
 
 ```{r validate = TRUE}
 small_table %>% 
   col_is_date("date") %>%
   col_vals_gt(vars(d), vars(c), na_pass = TRUE)
+```
+
+We can provide a single, agent-based interrogation inside of a `validate` chunk. Don't put anything else in the chunk though (the agent likes to work alone).
+
+```{r validate = TRUE}
+small_table %>%
+  create_agent() %>%
+  col_vals_gt(vars(a), 3) %>%
+  col_vals_expr(~ case_when(
+    c > 5 ~ a > 5 & d >= 2000
+  )) %>%
+  interrogate()
 ```

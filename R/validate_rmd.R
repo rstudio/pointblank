@@ -160,7 +160,12 @@ render_template <- function(template_name, data) {
     
     text <- pb_glue_data(data, "{error_count} {noun} failed")
     
-    if (data$pass) {
+    if (data$agent_report) {
+      
+      state <- "info"
+      text <- "Agent Report"
+      
+    } else if (data$pass) {
       
       state <- "success"  
       text <- "All validations passed."
@@ -275,6 +280,7 @@ knitr_chunk_hook <- function(x, options) {
   
   error_count <- get_chunk_count("error")
   pass <- error_count == 0
+  agent_report <- FALSE
   
   extract_code <- function(x) {
     
@@ -287,22 +293,52 @@ knitr_chunk_hook <- function(x, options) {
   
   extract_output <- function(x) {
     
-    matches <- gregexpr(pattern = "```\n##(.|\n)*?```", x, perl = TRUE)
+    if (grepl("<!--html_preserve-->", x)) {
+      
+      matches <- gregexpr(pattern = "<!--html_preserve-->(.|\n)*?<!--/html_preserve-->", x)
+
+      output <- regmatches(x = x, m = matches) %>% unlist()
+      
+    } else {
+      
+      matches <- gregexpr(pattern = "```\n##(.|\n)*?```", x)
+      
+      output <- 
+        regmatches(x = x, m = matches) %>%
+        unlist() %>%
+        tidy_gsub("(```\\n|\\n```)", "")
+    }
     
-    regmatches(x = x, m = matches) %>%
-      unlist() %>%
-      tidy_gsub("(```\\n|\\n```)", "")
+    output
   }
   
   is_error_output <- function(output_vec) {
     grepl("^## Error", output_vec)
   }
   
+  is_agent_tbl_output <- function(output_vec) {
+    grepl("<!--html_preserve-->", output_vec)
+  }
+  
   code_vec <- extract_code(x)
   output_vec <- extract_output(x)
+  agent_tbl_vec <- is_agent_tbl_output(output_vec)
   error_vec <- is_error_output(output_vec = output_vec)
   
-  remix_content <- function(code_vec, output_vec, error_vec) {
+  agent_report <- any(agent_tbl_vec)
+  
+  for (i in seq_along(output_vec)) {
+    
+    if (agent_tbl_vec[i]) {
+      next
+    }
+    
+    if (!error_vec[i]) {
+      output_vec[i] <- NA_character_
+    }
+  }
+  
+  remix_content <- function(code_vec, output_vec, error_vec, agent_tbl_vec) {
     
     pass_svg <- 
       htmltools::HTML(
@@ -314,14 +350,19 @@ knitr_chunk_hook <- function(x, options) {
         "<svg height=\"1.5em\" viewBox=\"0 0 32 32\" style=\"margin-top: 3px; fill: red;\"><path d=\"M 16 3 C 8.832031 3 3 8.832031 3 16 C 3 23.167969 8.832031 29 16 29 C 23.167969 29 29 23.167969 29 16 C 29 8.832031 23.167969 3 16 3 Z M 16 5 C 22.085938 5 27 9.914063 27 16 C 27 22.085938 22.085938 27 16 27 C 9.914063 27 5 22.085938 5 16 C 5 9.914063 9.914063 5 16 5 Z M 12.21875 10.78125 L 10.78125 12.21875 L 14.5625 16 L 10.78125 19.78125 L 12.21875 21.21875 L 16 17.4375 L 19.78125 21.21875 L 21.21875 19.78125 L 17.4375 16 L 21.21875 12.21875 L 19.78125 10.78125 L 16 14.5625 Z\"/></svg>"
       )
     
-    output_vec[!error_vec] <- NA_character_
-    
     content <- c()
     
     for (i in seq_along(code_vec)) {
      
-      
-      if (!error_vec[i]) {
+      if (agent_tbl_vec[i]) {
+        
+        # Agent Report Table Case
+        output_content <-
+          htmltools::tagList(
+            htmltools::HTML(output_vec), htmltools::tags$br()
+          )
+        
+      } else if (!error_vec[i]) {
         
         # Success Case
         output_content <- 
@@ -400,8 +441,12 @@ knitr_chunk_hook <- function(x, options) {
   }
   
   content <- 
-    remix_content(code_vec = code_vec, output_vec = output_vec, error_vec = error_vec)
-  
+    remix_content(
+      code_vec = code_vec,
+      output_vec = output_vec,
+      error_vec = error_vec,
+      agent_tbl_vec = agent_tbl_vec
+    )
     
   # Prepare the data list
   data <- 
@@ -411,6 +456,7 @@ knitr_chunk_hook <- function(x, options) {
       bootstrap_class = if (pass) "success" else "danger",
       status = if (pass) "pass" else "fail",
       pass = pass,
+      agent_report = agent_report,
       pass_count = get_chunk_count("pass"),
       error_count = error_count,
       content = content,

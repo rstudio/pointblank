@@ -595,7 +595,7 @@ get_agent_report <- function(agent,
         units = report_col_units[lang],
         n_pass = "PASS",
         n_fail = "FAIL",
-        extract = "EXTRACT"
+        extract = "EXT"
       ) %>%
       gt::tab_header(
         title = pointblank_validation_title_text[lang],
@@ -786,7 +786,7 @@ get_agent_report <- function(agent,
           gt::vars(columns) ~ gt::px(120),
           gt::vars(values) ~ gt::px(140),
           gt::vars(precon) ~ gt::px(35),
-          gt::vars(extract) ~ gt::px(75),
+          gt::vars(extract) ~ gt::px(65),
           gt::vars(W) ~ gt::px(30),
           gt::vars(S) ~ gt::px(30),
           gt::vars(N) ~ gt::px(30),

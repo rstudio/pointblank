@@ -443,7 +443,7 @@ get_agent_report <- function(agent,
             temp_file <- 
               tempfile(pattern = paste0("csv_file_", x), fileext = ".csv")
             
-            write.csv(df, file = temp_file, row.names = FALSE)
+            utils::write.csv(df, file = temp_file, row.names = FALSE)
             
             on.exit(unlink(temp_file))
             

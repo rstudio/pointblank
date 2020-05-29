@@ -45,6 +45,7 @@ jobs:
         run: |
           install.packages('remotes')
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          remotes::install_github('jonkeane/dittodb')
         shell: Rscript {0}
 
       - name: Cache R packages

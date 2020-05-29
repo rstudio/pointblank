@@ -43,6 +43,10 @@ Suggests:
     covr,
     lubridate,
     RSQLite,
+    RMariaDB,
     readr,
-    rmarkdown
+    rmarkdown,
+    dittodb
+Remotes: 
+    github::jonkeane/dittodb
 Roxygen: list(markdown = TRUE)

@@ -1,5 +1,4 @@
 library(dittodb)
-library(tidyverse)
 library(pointblank)
 
 test_that("pointblank agent works with dittodb-mocked MySQL database connection", {

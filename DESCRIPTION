@@ -48,5 +48,5 @@ Suggests:
     rmarkdown,
     dittodb
 Remotes: 
-    jonkeane/dittodb
+    github::jonkeane/dittodb
 Roxygen: list(markdown = TRUE)

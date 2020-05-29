@@ -1,5 +1,8 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "pointblank",
   "description": "Validate data in data frames, 'tibble' objects, and in database\n    tables (e.g., 'PostgreSQL' and 'MySQL'). Validation pipelines can be made\n    using easily-readable, consecutive validation steps. Upon execution of the\n    validation plan, several reporting options are available. User-defined\n    thresholds for failure rates allow for the determination of appropriate\n    reporting actions.",
@@ -114,6 +117,12 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "dittodb",
+      "name": "dittodb",
+      "sameAs": "https://github.com/jonkeane/dittodb"
     }
   ],
   "softwareRequirements": [
@@ -359,8 +368,16 @@
   ],
   "releaseNotes": "https://github.com/pachamaltese/pointblank/blob/master/NEWS.md",
   "readme": "https://github.com/pachamaltese/pointblank/blob/master/README.md",
-  "fileSize": "6909.513KB",
+  "fileSize": "6909.52KB",
   "contIntegration": "https://codecov.io/gh/rich-iannone/pointblank?branch=master",
-  "keywords": ["r", "data-validation", "data-quality", "failure-thresholds", "data-frames", "database-tables", "easy-to-use"],
+  "keywords": [
+    "r",
+    "data-validation",
+    "data-quality",
+    "failure-thresholds",
+    "data-frames",
+    "database-tables",
+    "easy-to-use"
+  ],
   "relatedLink": "https://CRAN.R-project.org/package=pointblank"
 }

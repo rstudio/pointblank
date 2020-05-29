@@ -45,7 +45,8 @@ Suggests:
     RSQLite,
     RMariaDB,
     readr,
-    rmarkdown
+    rmarkdown,
+    dittodb
 Remotes: 
     jonkeane/dittodb
 Roxygen: list(markdown = TRUE)

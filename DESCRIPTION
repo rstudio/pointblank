@@ -43,6 +43,9 @@ Suggests:
     covr,
     lubridate,
     RSQLite,
+    RMariaDB,
     readr,
     rmarkdown
+Remotes: 
+    jonkeane/dittodb
 Roxygen: list(markdown = TRUE)

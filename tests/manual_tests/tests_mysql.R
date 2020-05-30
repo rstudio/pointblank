@@ -1,21 +1,23 @@
 library(tidyverse)
 library(pointblank)
+library(DBI)
+library(RMariaDB)
 
 # Create a connection to the `aedes_aegypti_core_55_1d`
 # database hosted publicly at "ensembldb.ensembl.org"
-con <-
+con <- 
   DBI::dbConnect(
-    drv = RMariaDB::MariaDB(),
-    dbname = "aedes_aegypti_core_55_1d",
-    username = "anonymous",
-    password = "",
-    host = "ensembldb.ensembl.org",
-    port = 3306
-  )
+  drv = RMariaDB::MariaDB(),
+  dbname = "aedes_aegypti_core_55_1d",
+  username = "anonymous",
+  password = "",
+  host = "ensembldb.ensembl.org",
+  port = 3306
+)
 
 # Set failure thresholds and functions that are
 # actioned from exceeding certain error levels
-al <-  action_levels(warn_at = 0.02, stop_at = 0.05, notify_at = 0.10)
+al <- action_levels(warn_at = 0.02, stop_at = 0.05, notify_at = 0.10)
 
 # Validate the `assembly` table in the `aedes_aegypti_core_55_1d` DB
 agent <- 
@@ -41,7 +43,21 @@ agent <-
       ori = "integer"
     )
   ) %>%
+  col_schema_match(
+    schema = col_schema(
+      asm_seq_region_id = "int",
+      cmp_seq_region_id = "int",
+      asm_start = "int",
+      asm_end = "int",
+      cmp_start = "int",
+      cmp_end = "int",
+      ori = "tinyint",
+      .db_col_types = "sql"
+    )
+  ) %>%
   interrogate()
+
+DBI::dbDisconnect(con)
 
 # Get a report from the `agent`
 agent

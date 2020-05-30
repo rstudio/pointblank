@@ -96,6 +96,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "RPostgres",
+      "name": "RPostgres",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=RPostgres"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "readr",
       "name": "readr",
       "provider": {
@@ -368,7 +380,7 @@
   ],
   "releaseNotes": "https://github.com/pachamaltese/pointblank/blob/master/NEWS.md",
   "readme": "https://github.com/pachamaltese/pointblank/blob/master/README.md",
-  "fileSize": "6909.509KB",
+  "fileSize": "6913.85KB",
   "contIntegration": "https://codecov.io/gh/rich-iannone/pointblank?branch=master",
   "keywords": [
     "r",

@@ -66,10 +66,10 @@ resolve_columns <- function(x, var_expr, preconditions) {
   if (inherits(var_expr, "quosure") && var_expr %>% rlang::as_label() == "NULL") {
     return(character(0))
   } 
-
+  
   # Get the column names
   if (is.null(preconditions)) {
-
+    
     if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
       
       column <- resolve_expr_to_cols(tbl = x, var_expr = !!var_expr)
@@ -81,15 +81,15 @@ resolve_columns <- function(x, var_expr, preconditions) {
     }
     
   } else {
-
+    
     if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
-  
+      
       tbl <- apply_preconditions(tbl = x, preconditions = preconditions)
       
       column <- resolve_expr_to_cols(tbl = tbl, var_expr = !!var_expr)
       
     } else if (inherits(x, ("ptblank_agent"))) {
-
+      
       tbl <- get_tbl_object(agent = x)
       
       tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
@@ -181,7 +181,7 @@ get_tbl_information <- function(tbl) {
     )
     
   } else if (inherits(tbl, "tbl_dbi")) {
-
+    
     tbl_src <- gsub("^([a-z]*).*", "\\1", get_tbl_dbi_src_details(tbl))
     
     r_column_names_types <- get_r_column_names_types(tbl)
@@ -205,24 +205,16 @@ get_tbl_information <- function(tbl) {
         )
     }
     
-    if  (tbl_src == "postgres") {
+    if (tbl_src != "sqlite" & tbl_src != "postgres") {
       
-      db_col_types <- 
-        DBI::dbGetQuery(tbl_connection, q_types) %>%
-        dplyr::pull(data_type) %>%
-        tolower()
-      
-    }
-    
-    if (!any(tbl_src %in% c("sqlite", "postgres"))) {
-    
       db_col_types <- 
         DBI::dbGetQuery(tbl_connection, q_types) %>%
         dplyr::pull(DATA_TYPE) %>%
         tolower()
       
-    } else if (tbl_src == "sqlite") {
-      
+    }
+    
+    if (tbl_src == "sqlite") {
       db_col_types <-
         vapply(
           r_column_names_types$col_names,
@@ -241,9 +233,13 @@ get_tbl_information <- function(tbl) {
           }
         ) %>%
         tolower()
-      
-    } else {
-      db_col_types <- NA_character_
+    }
+    
+    if (tbl_src == "postgres") {
+      db_col_types <- 
+        DBI::dbGetQuery(tbl_connection, q_types) %>%
+        dplyr::pull(data_type) %>%
+        tolower()
     }
     
     return(

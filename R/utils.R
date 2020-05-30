@@ -192,13 +192,30 @@ get_tbl_information <- function(tbl) {
     
     n_cols <- length(r_column_names_types$col_names)
     
-    q_types <- 
-      glue::glue(
-        "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}' LIMIT {n_cols}"
-      )
+    if (tbl_src != "postgres") {
+      q_types <- 
+        glue::glue(
+          "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}' LIMIT {n_cols}"
+        )
+    } else {
+      db_tbl_name_no_schema <- gsub('.*\\.', '', db_tbl_name)
+      q_types <- 
+        glue::glue(
+          "select column_name,data_type from information_schema.columns where table_name = '{db_tbl_name_no_schema}'"
+        )
+    }
     
-    if (tbl_src != "sqlite") {
+    if  (tbl_src == "postgres") {
       
+      db_col_types <- 
+        DBI::dbGetQuery(tbl_connection, q_types) %>%
+        dplyr::pull(data_type) %>%
+        tolower()
+      
+    }
+    
+    if (!any(tbl_src %in% c("sqlite", "postgres"))) {
+    
       db_col_types <- 
         DBI::dbGetQuery(tbl_connection, q_types) %>%
         dplyr::pull(DATA_TYPE) %>%

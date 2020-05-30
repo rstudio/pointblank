@@ -40,6 +40,8 @@ test_that("pointblank agent works with dittodb-mocked Postgres database connecti
       ) %>%
       interrogate())
     
+    DBI::dbDisconnect(con)
+    
     expect_equal(agent$name, "trade_statistics: 'hs07_yrp' table")
     expect_equal(agent$tbl_name, "table")
     expect_equal(agent$tbl_src, "postgres")
@@ -50,7 +52,6 @@ test_that("pointblank agent works with dittodb-mocked Postgres database connecti
     expect_equal(nrow(agent$validation_set), 3)
     expect_equal(ncol(agent$validation_set), 25)
     
-    DBI::dbDisconnect(con)
     # stop_db_capturing()
   })
 })

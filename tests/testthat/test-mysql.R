@@ -46,6 +46,8 @@ test_that("pointblank agent works with dittodb-mocked MySQL database connection"
       ) %>%
       interrogate())
     
+    DBI::dbDisconnect(con)
+    
     expect_equal(agent$name, "aedes_aegypti_core_55_1d: 'assembly' table")
     expect_equal(agent$tbl_name, "table")
     expect_equal(agent$tbl_src, "mysql")
@@ -56,7 +58,6 @@ test_that("pointblank agent works with dittodb-mocked MySQL database connection"
     expect_equal(nrow(agent$validation_set), 7)
     expect_equal(ncol(agent$validation_set), 25)
     
-    DBI::dbDisconnect(con)
     # stop_db_capturing()
   })
 })

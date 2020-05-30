@@ -242,6 +242,10 @@ get_tbl_information <- function(tbl) {
         tolower()
     }
     
+    if (!exists("db_col_types")) {
+      db_col_types <- NA_character_
+    }
+    
     return(
       list(
         tbl_src = tbl_src,

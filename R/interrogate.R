@@ -206,7 +206,10 @@ interrogate <- function(agent,
     validation_end_time <- Sys.time()
     
     # Get the duration for the validation step    
-    time_diff_s <- (validation_end_time - validation_start_time)[[1]] %>% round(4)
+    time_diff_s <- 
+      difftime(validation_end_time, validation_start_time, units = "secs") %>%
+      as.numeric() %>%
+      round(4)
     
     # Add the timing information to the `agent` object
     agent$validation_set$time_processed[i] <- validation_start_time

@@ -191,7 +191,7 @@ get_tbl_information <- function(tbl) {
     db_tbl_name <- dbplyr::remote_name(tbl) %>% as.character()
     
     n_cols <- length(r_column_names_types$col_names)
-    
+
     if (tbl_src != "postgres") {
       q_types <- 
         glue::glue(

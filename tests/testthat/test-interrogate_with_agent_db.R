@@ -617,16 +617,6 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$n_failed, 0)
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
-  
-  # Expect an error when using the `col_vals_regex()` function
-  # to create with a `tbl_dbi` table object
-  expect_error(
-    create_agent(tbl = small_table) %>%
-      col_vals_regex(
-        columns = vars(b),
-        regex = "[0-9]-[a-z]{3}-[0-9]{3}"
-      )
-  )
 })
 
 test_that("Interrogating with an agent incorporates the `na_pass` option", {

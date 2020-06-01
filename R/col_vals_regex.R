@@ -6,10 +6,10 @@
 #' The validation step function can be used directly on a data table or with an
 #' *agent* object (technically, a `ptblank_agent` object) whereas the
 #' expectation and test functions can only be used with a data table. The types
-#' of data tables that can be used include data frames and tibbles. Each
-#' validation step or expectation will operate over the number of test units
-#' that is equal to the number of rows in the table (after any `preconditions`
-#' have been applied).
+#' of data tables that can be used include data frames, tibbles, and even
+#' database tables of `tbl_dbi` class. Each validation step or expectation will
+#' operate over the number of test units that is equal to the number of rows in
+#' the table (after any `preconditions` have been applied).
 #'
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
@@ -151,14 +151,6 @@ col_vals_regex <- function(x,
                            brief = NULL,
                            active = TRUE) {
   
-  # Stop function if `col_vals_regex()` is to be used with a database table
-  if (is_ptblank_agent(x)) {
-    if (inherits(x$tbl, "tbl_dbi")) {
-      stop("The `col_vals_regex()` step function cannot be used with `tbl_dbi` objects.",
-           call. = FALSE)
-    }
-  }
-  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   
@@ -218,12 +210,6 @@ expect_col_vals_regex <- function(object,
                                   preconditions = NULL,
                                   threshold = 1) {
   
-  # Stop function if `expect_col_vals_regex()` is used with a database table
-  if (inherits(object, "tbl_dbi")) {
-    stop("The `expect_col_vals_regex()` expectation function cannot be used with `tbl_dbi` objects.",
-         call. = FALSE)
-  }
-  
   fn_name <- "expect_col_vals_regex"
   
   vs <- 
@@ -278,12 +264,6 @@ test_col_vals_regex <- function(object,
                                 na_pass = FALSE,
                                 preconditions = NULL,
                                 threshold = 1) {
-  
-  # Stop function if `expect_col_vals_regex()` is used with a database table
-  if (inherits(object, "tbl_dbi")) {
-    stop("The `expect_col_vals_regex()` expectation function cannot be used with `tbl_dbi` objects.",
-         call. = FALSE)
-  }
   
   vs <- 
     create_agent(tbl = object, name = "::QUIET::") %>%

@@ -93,10 +93,10 @@ whether column values in a table correspond to a \code{regex} matching expressio
 The validation step function can be used directly on a data table or with an
 \emph{agent} object (technically, a \code{ptblank_agent} object) whereas the
 expectation and test functions can only be used with a data table. The types
-of data tables that can be used include data frames and tibbles. Each
-validation step or expectation will operate over the number of test units
-that is equal to the number of rows in the table (after any \code{preconditions}
-have been applied).
+of data tables that can be used include data frames, tibbles, and even
+database tables of \code{tbl_dbi} class. Each validation step or expectation will
+operate over the number of test units that is equal to the number of rows in
+the table (after any \code{preconditions} have been applied).
 }
 \details{
 If providing multiple column names, the result will be an expansion of

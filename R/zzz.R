@@ -24,7 +24,6 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
   )
 }
 
-
 utils::globalVariables(
   c(
     ".",
@@ -42,6 +41,7 @@ utils::globalVariables(
     "count",
     "Count",
     "::cut_group::",
+    "data_type",
     "DATA_TYPE",
     "desc",
     "duplicates",
@@ -71,6 +71,7 @@ utils::globalVariables(
     "pb_is_good_",
     "precon",
     "preconditions",
+    "%REGEXP%",
     "S",
     "schema",
     "sd",

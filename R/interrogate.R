@@ -700,9 +700,9 @@ interrogate_regex <- function(agent, idx, table) {
     }
     
     if (tbl_type == "mysql") {
-      
+
       tbl <- 
-        table %>% 
+        table %>%
         dplyr::mutate(pb_is_good_ = ifelse(!is.na({{ column }}), {{ column }} %REGEXP% regex, NA)) %>%
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
           is.na(pb_is_good_) ~ na_pass,

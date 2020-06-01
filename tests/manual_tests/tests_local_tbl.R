@@ -4,9 +4,11 @@ library(tidyverse)
 al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 
 agent <-
-  create_agent(tbl = small_table, actions = al) %>%
+  small_table %>%
+  create_agent(actions = al) %>%
   col_vals_gt(vars(date_time), vars(date), na_pass = TRUE) %>%
   col_vals_gt(vars(b), vars(g), na_pass = TRUE) %>%
+  col_vals_regex(vars(b), "[1-9]-[a-z]{3}-[0-9]{3}") %>%
   rows_distinct() %>%
   col_vals_gt(vars(d), 100) %>%
   col_vals_equal(vars(d), vars(d), na_pass = TRUE) %>%

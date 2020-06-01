@@ -688,21 +688,44 @@ interrogate_regex <- function(agent, idx, table) {
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
+  tbl_type <- agent$tbl_src
+  
   # Create function for validating the `col_vals_regex()` step function
-  tbl_val_regex <- function(table, column, regex, na_pass) {
+  tbl_val_regex <- function(table, tbl_type, column, regex, na_pass) {
     
     column_validity_checks_column(table = table, column = {{ column }})
     
-    table %>% 
-      dplyr::mutate(pb_is_good_ = ifelse(!is.na({{ column }}), grepl(regex, {{ column }}), NA)) %>%
-      dplyr::mutate(pb_is_good_ = dplyr::case_when(
-        is.na(pb_is_good_) ~ na_pass,
-        TRUE ~ pb_is_good_
-      ))
+    if (tbl_type == "sqlite") { 
+      stop("Regex-based validations are currently not supported on SQLite database tables", call. = FALSE)
+    }
+    
+    if (tbl_type == "mysql") {
+      
+      tbl <- 
+        table %>% 
+        dplyr::mutate(pb_is_good_ = ifelse(!is.na({{ column }}), {{ column }} %REGEXP% regex, NA)) %>%
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          is.na(pb_is_good_) ~ na_pass,
+          TRUE ~ pb_is_good_
+        ))
+      
+    } else {
+      
+      # This works for postgres and local tables; untested so far in other DBs
+      tbl <- 
+        table %>% 
+        dplyr::mutate(pb_is_good_ = ifelse(!is.na({{ column }}), grepl(regex, {{ column }}), NA)) %>%
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          is.na(pb_is_good_) ~ na_pass,
+          TRUE ~ pb_is_good_
+        ))
+    }
+    
+    tbl
   }
   
   # Perform rowwise validations for the column
-  pointblank_try_catch(tbl_val_regex(table, {{ column }}, regex, na_pass))
+  pointblank_try_catch(tbl_val_regex(table, tbl_type, {{ column }}, regex, na_pass))
 }
 
 interrogate_expr <- function(agent, idx, table) {

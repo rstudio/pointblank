@@ -550,6 +550,7 @@ get_agent_report <- function(agent,
         )
       ) %>%
       dplyr::mutate(
+        type = paste0("`", type, "`"),
         columns = columns_upd,
         values = values_upd,
         precon = precon_upd,
@@ -618,7 +619,7 @@ get_agent_report <- function(agent,
         decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE
       ) %>%
       gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2) %>%
-      gt::fmt_markdown(columns = gt::vars(columns, values, eval_sym, precon, W, S, N, extract)) %>%
+      gt::fmt_markdown(columns = gt::vars(type, columns, values, eval_sym, precon, W, S, N, extract)) %>%
       gt::fmt_missing(columns = gt::vars(columns, values, units, extract)) %>%
       gt::cols_hide(columns = gt::vars(W_val, S_val, N_val, eval, active)) %>%
       gt::text_transform(

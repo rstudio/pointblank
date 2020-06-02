@@ -443,8 +443,12 @@ get_agent_report <- function(agent,
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
         FUN = function(x) {
-          
-          if (eval[x] == "OK") {
+
+          if (is.na(eval[x])) {
+            
+            out <- "&mdash;"
+            
+          } else if (eval[x] == "OK") {
             
             out <- 
               make_button(
@@ -511,10 +515,7 @@ get_agent_report <- function(agent,
                 background = "transparent",
                 text = text
               )
-          } else if (is.na(eval[x])) {
-            out <- "&mdash;"
           }
-          
           out
         } 
       )

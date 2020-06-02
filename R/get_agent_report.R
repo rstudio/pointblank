@@ -233,6 +233,27 @@ get_agent_report <- function(agent,
     }
     
     validation_set <- validation_set[report_tbl$i, ]
+
+    # Reformat `type`
+    assertion_type <- validation_set$assertion_type
+    type_upd <- 
+      seq_along(assertion_type) %>%
+      vapply(
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          
+          title <- agent$validation_set$brief[[x]]
+          
+          paste0(
+            "<div><p title=\"", title, "\"style=\"margin-top: 0px; margin-bottom: 0px; ",
+            "font-family: monospace; white-space: nowrap; ",
+            "text-overflow: ellipsis; overflow: hidden;\">",
+            assertion_type[x],
+            "</p></div>"
+          )
+        }
+      )
     
     # Reformat `columns`
     columns_upd <- 
@@ -639,7 +660,7 @@ get_agent_report <- function(agent,
     gt_agent_report <- 
       report_tbl %>%
       dplyr::mutate(
-        type = paste0("`", type, "`"),
+        type = type_upd,
         columns = columns_upd,
         values = values_upd,
         precon = precon_upd,
@@ -712,12 +733,6 @@ get_agent_report <- function(agent,
       gt::fmt_markdown(columns = gt::vars(type, columns, values, precon, eval_sym, W, S, N, extract)) %>%
       gt::fmt_missing(columns = gt::vars(columns, values, units, extract)) %>%
       gt::cols_hide(columns = gt::vars(W_val, S_val, N_val, active, eval)) %>%
-      gt::text_transform(
-        locations = gt::cells_body(columns = gt::vars(type)),
-        fn = function(x) {
-          paste0("<code>", x, "</code>")
-        }
-      ) %>%
       gt::text_transform(
         locations = gt::cells_body(columns = gt::vars(units)),
         fn = function(x) {

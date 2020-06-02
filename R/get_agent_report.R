@@ -221,19 +221,19 @@ get_agent_report <- function(agent,
       email_table <- FALSE
     }
     
-    make_button <- function(x, scale, color, background) {
+    make_button <- function(x, scale, color, background, text = NULL, border_radius = NULL) {
       
       paste0(
-        "<button style=\"background: ", background, "; padding: ",
-        5 * scale, "px ", 5 * scale, "px; ",
+        "<button title=\"", text, "\" style=\"background: ", background,
+        "; padding: ", 5 * scale, "px ", 5 * scale, "px; ",
         "color: ", color, "; font-size: ", 15 * scale,
-        "px; border: none; pointer-events: none;\">",
+        "px; border: none; border-radius: ", border_radius, "\">",
         x, "</button>"
       )
     }
     
     validation_set <- validation_set[report_tbl$i, ]
-  
+    
     # Reformat `columns`
     columns_upd <- 
       validation_set$column %>%
@@ -248,6 +248,7 @@ get_agent_report <- function(agent,
             x <- NA_character_
           } else {
             text <- x %>% unlist() %>% strsplit(", ") %>% unlist()
+            title <- text
             text <- 
               paste(
                 paste0(
@@ -259,7 +260,7 @@ get_agent_report <- function(agent,
               )
             x <- 
               paste0(
-                "<div><p style=\"margin-top: 0px;margin-bottom: 0px; ",
+                "<div><p title=\"", title, "\"style=\"margin-top: 0px;margin-bottom: 0px; ",
                 "font-family: monospace; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
                 text,
@@ -278,7 +279,7 @@ get_agent_report <- function(agent,
         USE.NAMES = FALSE,
         FUN = function(x) {
 
-          if (is.list(x) && length(x) == 2 &&  all(names(x) %in% c("TRUE", "FALSE"))) {
+          if (is.list(x) && length(x) == 2 && all(names(x) %in% c("TRUE", "FALSE"))) {
             # Case of in-between comparison validation where there are
             # one or two columns specified as bounds
             bounds_incl <- as.logical(names(x))
@@ -303,12 +304,15 @@ get_agent_report <- function(agent,
               x_right <- x[[2]]
             }
             
+            title <- paste0(rlang::as_label(x[[1]]), ", ", rlang::as_label(x[[2]]))
+            text <- paste0(x_left, ", ", x_right)
+
             x <- 
               paste0(
-                "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "<div><p title=\"", title, "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
                 "font-family: monospace; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
-                paste0(x_left, ", ", x_right),
+                text,
                 "</p></div>"
               )
 
@@ -339,7 +343,7 @@ get_agent_report <- function(agent,
             
             x <- 
               paste0(
-                "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "<div><p title=\"", text , "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
                 "font-family: monospace; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
                 text,
@@ -367,7 +371,7 @@ get_agent_report <- function(agent,
             x <- NA_character_
             
           } else {
-            
+
             text <-
               x %>%
               tidy_gsub(
@@ -375,12 +379,12 @@ get_agent_report <- function(agent,
                 "<span style=\"color: purple; font-size: bigger;\">&marker;</span>"
               ) %>%
               unname()
-            
+          
             text <- paste(text, collapse = ", ")
             
             x <- 
               paste0(
-                "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "<div><p title=\"", x %>% tidy_gsub("~", "") %>% paste(., collapse = ", "), "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
                 "font-family: monospace; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
                 text,
@@ -405,20 +409,113 @@ get_agent_report <- function(agent,
                 x = "&Iscr;",
                 scale = scale,
                 color = "#333333",
-                background = "#EFEFEF"
+                background = "#EFEFEF",
+                text = "No table preconditions applied.",
+                border_radius = "4px"
               )
             
           } else if (rlang::is_formula(x) || rlang::is_function(x)) {
 
+            if (rlang::is_formula(x)) {
+              text <- rlang::as_label(x) %>% tidy_gsub("^~", "")
+            } else {
+              text <- rlang::as_label(body(x))
+            }
+            
             x <- 
               make_button(
                 x = "&#10174;",
                 scale = scale,
                 color = "#FFFFFF",
-                background = "#67C2DC"
+                background = "#67C2DC",
+                text = paste0("Table altered with preconditions: ", text),
+                border_radius = "4px"
               )
           }
           x
+        } 
+      )
+
+    # Reformat `eval`
+    eval_upd <- 
+      seq_along(eval) %>%
+      vapply(
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          
+          if (eval[x] == "OK") {
+            
+            out <- 
+              make_button(
+                x = "&check;",
+                scale = scale,
+                color = "#4CA64C",
+                background = "transparent",
+                text = "No evaluation issues."
+              )
+            
+          } else if (eval[x] == "W + E") {
+            
+            text <- agent$validation_set$capture_stack[[x]]$error
+            
+            if (!is.null(text)) {
+              text <- as.character(text)
+            } else {
+              text <- ""
+            }
+            
+            out <- 
+              make_button(
+                x = "&#128165;",
+                scale = scale,
+                color = "#FFFFFF",
+                background = "transparent",
+                text = text
+              )
+            
+          } else if (eval[x] == "WARNING") {
+            
+            text <- agent$validation_set$capture_stack[[x]]$warning
+            
+            if (!is.null(text)) {
+              text <- as.character(text)
+            } else {
+              text <- ""
+            }
+            
+            out <- 
+              make_button(
+                x = "&#9888;",
+                scale = scale,
+                color = "#222222",
+                background = "transparent",
+                text = text
+              )
+            
+          } else if (eval[x] == "ERROR") {
+            
+            text <- agent$validation_set$capture_stack[[x]]$error
+            
+            if (!is.null(text)) {
+              text <- as.character(text)
+            } else {
+              text <- ""
+            }
+            
+            out <- 
+              make_button(
+                x = "&#128165;",
+                scale = scale,
+                color = "#FFFFFF",
+                background = "transparent",
+                text = text
+              )
+          } else if (is.na(eval[x])) {
+            out <- "&mdash;"
+          }
+          
+          out
         } 
       )
     
@@ -541,19 +638,11 @@ get_agent_report <- function(agent,
     gt_agent_report <- 
       report_tbl %>%
       dplyr::mutate(
-        eval_sym = dplyr::case_when(
-          eval == "OK" ~ "&check;",
-          eval == "W + E" ~ "&#9888; + &#128165;",
-          eval == "WARNING" ~ "&#9888;",
-          eval == "ERROR" ~ "&#128165;",
-          is.na(eval) ~ "&mdash;"
-        )
-      ) %>%
-      dplyr::mutate(
         type = paste0("`", type, "`"),
         columns = columns_upd,
         values = values_upd,
         precon = precon_upd,
+        eval_sym = eval_upd,
         units = units,
         n_pass = n_pass,
         n_fail = units - n_pass,
@@ -619,9 +708,9 @@ get_agent_report <- function(agent,
         decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE
       ) %>%
       gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2) %>%
-      gt::fmt_markdown(columns = gt::vars(type, columns, values, eval_sym, precon, W, S, N, extract)) %>%
+      gt::fmt_markdown(columns = gt::vars(type, columns, values, precon, eval_sym, W, S, N, extract)) %>%
       gt::fmt_missing(columns = gt::vars(columns, values, units, extract)) %>%
-      gt::cols_hide(columns = gt::vars(W_val, S_val, N_val, eval, active)) %>%
+      gt::cols_hide(columns = gt::vars(W_val, S_val, N_val, active, eval)) %>%
       gt::text_transform(
         locations = gt::cells_body(columns = gt::vars(type)),
         fn = function(x) {

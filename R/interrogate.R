@@ -89,12 +89,6 @@ interrogate <- function(agent,
     # Get the table object for interrogation 
     table <- get_tbl_object(agent)
     
-    # Use the default `action_levels` list if it exists and
-    # only if it isn't set for this validation step
-    if (!is.null(agent$actions) && is.null(agent$validation_set$actions[i][[1]])) {
-      agent$validation_set[[i, "actions"]] <- list(agent$actions)
-    }
-    
     # Use preconditions to modify the table
     table <- apply_preconditions_to_tbl(agent, idx = i, tbl = table)
 

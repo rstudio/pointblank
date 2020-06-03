@@ -183,7 +183,7 @@ col_vals_in_set <- function(x,
         column = columns[i],
         values = set,
         preconditions = preconditions,
-        actions = actions,
+        actions = covert_actions(actions, agent),
         brief = brief[i],
         active = active
       )

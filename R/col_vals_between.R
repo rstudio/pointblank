@@ -239,7 +239,7 @@ col_vals_between <- function(x,
         values = c(left, right),
         na_pass = na_pass,
         preconditions = preconditions,
-        actions = actions,
+        actions = covert_actions(actions, agent),
         brief = brief[i],
         active = active
       )

@@ -224,6 +224,7 @@ conjointly <- function(x,
       )
   }
 
+  # Add a validation step
   agent <-
     create_validation_step(
       agent = agent,
@@ -232,7 +233,7 @@ conjointly <- function(x,
       values = validation_formulas,
       na_pass = NULL,
       preconditions = preconditions,
-      actions = actions,
+      actions = covert_actions(actions, agent),
       brief = brief,
       active = active
     )

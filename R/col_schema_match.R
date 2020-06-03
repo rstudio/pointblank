@@ -196,7 +196,7 @@ col_schema_match <- function(x,
       column = NA_character_,
       values = schema,
       preconditions = NULL,
-      actions = actions,
+      actions = covert_actions(actions, agent),
       brief = brief,
       active = active
     )

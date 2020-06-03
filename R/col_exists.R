@@ -166,7 +166,7 @@ col_exists <- function(x,
         assertion_type = "col_exists",
         column = columns[i],
         preconditions = NULL,
-        actions = actions,
+        actions = covert_actions(actions, agent),
         brief = brief[i],
         active = active
       )

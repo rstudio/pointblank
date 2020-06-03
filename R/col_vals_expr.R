@@ -200,7 +200,7 @@ col_vals_expr <- function(x,
       column = NA_character_,
       values = expr,
       preconditions = preconditions,
-      actions = actions,
+      actions = covert_actions(actions, agent),
       brief = brief,
       active = active
     )

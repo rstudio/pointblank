@@ -206,6 +206,15 @@ prime_actions <- function(actions) {
   actions
 }
 
+covert_actions <- function(actions, agent) {
+  
+  if (is.null(actions)) {
+    actions <- agent$actions
+  } 
+  
+  actions
+}
+
 stock_stoppage <- function(x) {
 
   fn_name <- x$type

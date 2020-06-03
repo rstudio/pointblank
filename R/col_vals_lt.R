@@ -182,7 +182,7 @@ col_vals_lt <- function(x,
   }
   
   # Add one or more validation steps based on the
-  # length of the `column` variable
+  # length of the `columns` variable
   for (i in seq(columns)) {
     
     agent <-
@@ -193,7 +193,7 @@ col_vals_lt <- function(x,
         values = value,
         na_pass = na_pass,
         preconditions = preconditions,
-        actions = actions,
+        actions = covert_actions(actions, agent),
         brief = brief[i],
         active = active
       )

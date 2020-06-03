@@ -191,7 +191,7 @@ col_vals_regex <- function(x,
         values = regex,
         na_pass = na_pass,
         preconditions = preconditions,
-        actions = actions,
+        actions = covert_actions(actions, agent),
         brief = brief[i],
         active = active
       )

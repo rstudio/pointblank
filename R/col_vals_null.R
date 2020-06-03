@@ -179,7 +179,7 @@ col_vals_null <- function(x,
         assertion_type = "col_vals_null",
         column = columns[i],
         preconditions = preconditions,
-        actions = actions,
+        actions = covert_actions(actions, agent),
         brief = brief[i],
         active = active
       )

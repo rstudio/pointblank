@@ -157,7 +157,7 @@ col_is_integer <- function(x,
         assertion_type = "col_is_integer",
         column = columns[i],
         preconditions = NULL,
-        actions = actions,
+        actions = covert_actions(actions, agent),
         brief = brief[i],
         active = active
       )

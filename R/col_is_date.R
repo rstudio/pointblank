@@ -158,7 +158,7 @@ col_is_date <- function(x,
         assertion_type = "col_is_date",
         column = columns[i],
         preconditions = NULL,
-        actions = actions,
+        actions = covert_actions(actions, agent),
         brief = brief[i],
         active = active
       )

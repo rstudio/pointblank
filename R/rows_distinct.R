@@ -152,7 +152,7 @@ rows_distinct <- function(x,
       )
   }
 
-  # Add one or more validation steps
+  # Add a validation step
   agent <-
     create_validation_step(
       agent = agent,
@@ -160,7 +160,7 @@ rows_distinct <- function(x,
       column = list(ifelse(is.null(columns), NA_character_, columns)),
       values = NULL,
       preconditions = preconditions,
-      actions = actions,
+      actions = covert_actions(actions, agent),
       brief = brief,
       active = active
     )

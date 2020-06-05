@@ -45,13 +45,13 @@ agent <-
   ) %>%
   col_schema_match(
     schema = col_schema(
-      asm_seq_region_id = "int",
-      cmp_seq_region_id = "int",
-      asm_start = "int",
-      asm_end = "int",
-      cmp_start = "int",
-      cmp_end = "int",
-      ori = "tinyint",
+      asm_seq_region_id = "INT",
+      cmp_seq_region_id = "INT",
+      asm_start = "INT",
+      asm_end = "INT",
+      cmp_start = "INT",
+      cmp_end = "INT",
+      ori = "TINYINT",
       .db_col_types = "sql"
     )
   ) %>%

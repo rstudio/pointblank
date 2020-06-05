@@ -363,6 +363,13 @@ col_schema <- function(...,
 
   x <- list(...)
   
+  # Transform SQL column types to lowercase to allow
+  # both uppercase and lowercase conventions while
+  # standardizing the input
+  if (db_col_types == "sql") {
+    x <- lapply(x, tolower)
+  }
+  
   # Apply the `col_schema` and the `r_type`/`sql_type` classes
   class(x) <- c(paste0(db_col_types, "_type"), "col_schema")
   

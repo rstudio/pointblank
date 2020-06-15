@@ -115,7 +115,7 @@ tab_label_variables_max_min_slices_ts <-
   c(
     "en" = "Max/Min Slices",
     "fr" = "Tranche sup\u00E9rieure et inf\u00E9rieure",
-    "de" = "Mininmale und maximale Werte",
+    "de" = "Minimale und maximale Werte",
     "it" = "Fetta superiore e inferiore",
     "es" = "Rebanada superior e inferior"
   )

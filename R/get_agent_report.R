@@ -200,15 +200,22 @@ get_agent_report <- function(agent,
   if (keep == "fail_states") {
     report_tbl <- report_tbl %>% dplyr::filter(total_pts > 0)
   }
-
+  
   report_tbl <-
     report_tbl %>%
     dplyr::select(-dplyr::ends_with("pts"))
   
+  
+  validation_set <- validation_set[report_tbl$i, ]
+  eval <- eval[report_tbl$i]
+  
+  extracts <- 
+    agent$extracts[as.character(intersect(as.numeric(names(agent$extracts)), report_tbl$i))]
+  
   # nocov start
   
   if (display_table) {
-    
+
     x_list <- list(...)
 
     if (length(x_list) > 0) {
@@ -232,8 +239,6 @@ get_agent_report <- function(agent,
       )
     }
     
-    validation_set <- validation_set[report_tbl$i, ]
-
     # Reformat `type`
     assertion_type <- validation_set$assertion_type
     type_upd <- 
@@ -242,8 +247,8 @@ get_agent_report <- function(agent,
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
         FUN = function(x) {
-          
-          title <- agent$validation_set$brief[[x]]
+
+          title <- gsub("\"", "'", agent$validation_set$brief[[x]])
           
           paste0(
             "<div><p title=\"", title, "\"style=\"margin-top: 0px; margin-bottom: 0px; ",
@@ -254,7 +259,7 @@ get_agent_report <- function(agent,
           )
         }
       )
-    
+
     # Reformat `columns`
     columns_upd <- 
       validation_set$column %>%
@@ -281,7 +286,7 @@ get_agent_report <- function(agent,
               )
             x <- 
               paste0(
-                "<div><p title=\"", title, "\"style=\"margin-top: 0px;margin-bottom: 0px; ",
+                "<div><p title=\"", paste(title, collapse = ", "), "\"style=\"margin-top: 0px;margin-bottom: 0px; ",
                 "font-family: monospace; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
                 text,
@@ -300,7 +305,7 @@ get_agent_report <- function(agent,
         USE.NAMES = FALSE,
         FUN = function(x) {
 
-          if (is.list(x) && length(x) == 2 && all(names(x) %in% c("TRUE", "FALSE"))) {
+          if (is.list(x) && length(x) == 2 && all(names(x) %in% c("TRUE", "FALSE")) && !is_formula(x[[1]])) {
             # Case of in-between comparison validation where there are
             # one or two columns specified as bounds
             bounds_incl <- as.logical(names(x))
@@ -449,7 +454,7 @@ get_agent_report <- function(agent,
                 scale = scale,
                 color = "#FFFFFF",
                 background = "#67C2DC",
-                text = paste0("Table altered with preconditions: ", text),
+                text = paste0("Table altered with preconditions: ", gsub("\"", "'", text)),
                 border_radius = "4px"
               )
           }
@@ -540,21 +545,21 @@ get_agent_report <- function(agent,
           out
         } 
       )
-    
+
     # Reformat `extract`
     extract_upd <-
-      seq_along(extract_count) %>%
+      validation_set$i %>%
       vapply(
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
         FUN = function(x) {
-          
-          if (is.na(extract_count[x])) {
+
+          if (is.null(extracts[as.character(x)][[1]])) {
             x <- "&mdash;"
-          } else if (!is.na(extract_count[x])) {
+          } else {
 
             df <- 
-              get_data_extracts(agent = agent, i = x) %>%
+              extracts[as.character(x)][[1]] %>%
               as.data.frame(stringsAsFactors = FALSE)
             
             title_text <- paste0(nrow(df), " failing rows available.")

@@ -183,18 +183,22 @@ interrogate <- function(agent,
     perform_action(agent, idx = i, type = "notify")
     perform_action(agent, idx = i, type = "stop")
 
-    # Add extracts of failed rows if `extract_failed` is TRUE
-    agent <- 
-      add_table_extract(
-        agent = agent,
-        idx = i,
-        tbl_checked = tbl_checked,
-        extract_failed = extract_failed,
-        get_first_n = get_first_n,
-        sample_n = sample_n,
-        sample_frac = sample_frac,
-        sample_limit = sample_limit
-      )
+    # Add extracts of failed rows if validation function operates on
+    # values in rows and `extract_failed` is TRUE
+    if (assertion_type %in% row_based_step_fns_vector()) {
+      
+      agent <- 
+        add_table_extract(
+          agent = agent,
+          idx = i,
+          tbl_checked = tbl_checked,
+          extract_failed = extract_failed,
+          get_first_n = get_first_n,
+          sample_n = sample_n,
+          sample_frac = sample_frac,
+          sample_limit = sample_limit
+        )
+    }
     
     # Get the ending time for the validation step
     validation_end_time <- Sys.time()
@@ -956,7 +960,7 @@ interrogate_col_schema_match <- function(agent, idx, table) {
 
       table_schema_x <-
         structure(
-          table_schema_x[intersect(names(table_schema_x), names(table_schema_y))],
+          table_schema_x[base::intersect(names(table_schema_x), names(table_schema_y))],
           class = class(table_schema_x)
         )
     }

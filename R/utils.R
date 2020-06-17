@@ -113,12 +113,12 @@ get_threshold_type <- function(threshold) {
 row_based_step_fns_vector <- function() {
   
   c(
-    "col_vals_gt",
-    "col_vals_gte",
     "col_vals_lt",
     "col_vals_lte",
     "col_vals_equal",
     "col_vals_not_equal",
+    "col_vals_gte",
+    "col_vals_gt",
     "col_vals_between",
     "col_vals_not_between",
     "col_vals_in_set",
@@ -126,7 +126,9 @@ row_based_step_fns_vector <- function() {
     "col_vals_null",
     "col_vals_not_null",
     "col_vals_regex",
-    "conjointly"
+    "col_vals_expr",
+    "conjointly",
+    "rows_distinct"
   )
 }
 

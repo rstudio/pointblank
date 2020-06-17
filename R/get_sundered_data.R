@@ -54,7 +54,7 @@
 get_sundered_data <- function(agent,
                               type = "pass",
                               id_cols = NULL) {
-  
+
   # Stop function if the agent hasn't
   # yet performed an interrogation
   if (!inherits(agent, "has_intel")) {
@@ -90,7 +90,7 @@ get_sundered_data <- function(agent,
   validation_steps_i <- 
     agent$validation_set %>%
     dplyr::filter(eval_error == FALSE) %>%
-    dplyr::filter(assertion_type %in% row_based_step_fns_vector()) %>%
+    dplyr::filter(assertion_type %in% base::setdiff(row_based_step_fns_vector(), "rows_distinct")) %>%
     dplyr::filter(vapply(preconditions, FUN = is.null, FUN.VALUE = logical(1))) %>%
     dplyr::pull(i)
   

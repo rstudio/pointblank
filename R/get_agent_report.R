@@ -210,7 +210,7 @@ get_agent_report <- function(agent,
   eval <- eval[report_tbl$i]
   
   extracts <- 
-    agent$extracts[as.character(intersect(as.numeric(names(agent$extracts)), report_tbl$i))]
+    agent$extracts[as.character(base::intersect(as.numeric(names(agent$extracts)), report_tbl$i))]
   
   # nocov start
   

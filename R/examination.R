@@ -11,12 +11,12 @@ probe_overview_stats <- function(data,
   na_cells_1 <- data %>% dplyr::select_if(function(x) any(is.na(x)))
   
   if (ncol(na_cells_1) > 0) {
+    
     na_cells <-
       na_cells_1 %>%
-      dplyr::summarise_each(~ sum(is.na(.))) %>%
-      dplyr::mutate(`::all_na::` = sum(.)) %>%
-      dplyr::pull(`::all_na::`) %>%
-      as.integer()
+      dplyr::filter(is.na(.)) %>%
+      nrow()
+    
   } else {
     na_cells <- 0L
   }
@@ -169,7 +169,7 @@ get_column_description_gt <- function(data_column,
   
   na_cells <- 
     data_column %>%
-    dplyr::summarise_each(~ sum(is.na(.))) %>%
+    dplyr::summarize(sum(is.na(.))) %>%
     dplyr::pull(1) %>%
     as.integer()
   
@@ -177,20 +177,33 @@ get_column_description_gt <- function(data_column,
     if (na_cells == 0) {
       ""
     } else {
-      ((na_cells / n_rows) * 100) %>% round(1) %>% as.character() %>% paste0("(", ., "%)")
+      ((na_cells / n_rows) * 100) %>% 
+        round(1) %>% 
+        as.character() %>% 
+        paste0("(", ., "%)")
     }
   
-  inf_cells <-
-    data_column %>%
-    dplyr::summarize_each(~ sum(is.infinite(.))) %>%
-    dplyr::pull(1) %>%
-    as.integer()
+  # Get a count of Inf/-Inf values for non-DB table cells
+  if (!inherits(data_column, "tbl_dbi")) {
+    
+    inf_cells <-
+      data_column %>%
+      dplyr::pull(1) %>%
+      is.infinite() %>%
+      sum()
+    
+  } else {
+    inf_cells <- 0L
+  }
   
   inf_cells_pct <- 
     if (inf_cells == 0) {
       ""
     } else {
-      ((inf_cells / n_rows) * 100) %>% round(1) %>% as.character() %>% paste0("(", ., "%)")
+      ((inf_cells / n_rows) * 100) %>% 
+        round(1) %>% 
+        as.character() %>% 
+        paste0("(", ., "%)")
     }
   
   column_description_tbl <-

@@ -146,17 +146,17 @@ the table (after any <code>preconditions</code> have been applied).</p>
     </div>
 
     <pre class="usage"><span class='fu'>col_vals_not_null</span>(
-  <span class='no'>x</span>,
-  <span class='no'>columns</span>,
-  <span class='kw'>preconditions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>actions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>brief</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>active</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>x</span>,
+  <span class='kw'>columns</span>,
+  preconditions = <span class='kw'>NULL</span>,
+  actions = <span class='kw'>NULL</span>,
+  brief = <span class='kw'>NULL</span>,
+  active = <span class='fl'>TRUE</span>
 )
 
-<span class='fu'>expect_col_vals_not_null</span>(<span class='no'>object</span>, <span class='no'>columns</span>, <span class='kw'>preconditions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'>expect_col_vals_not_null</span>(<span class='kw'>object</span>, <span class='kw'>columns</span>, preconditions = <span class='kw'>NULL</span>, threshold = <span class='fl'>1</span>)
 
-<span class='fu'>test_col_vals_not_null</span>(<span class='no'>object</span>, <span class='no'>columns</span>, <span class='kw'>preconditions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+<span class='fu'>test_col_vals_not_null</span>(<span class='kw'>object</span>, <span class='kw'>columns</span>, preconditions = <span class='kw'>NULL</span>, threshold = <span class='fl'>1</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,7 +164,7 @@ the table (after any <code>preconditions</code> have been applied).</p>
     <tr>
       <th>x</th>
       <td><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), or, an agent object of
-class <code>ptblank_agent</code> that can be created with <code><a href='create_agent.html'>create_agent()</a></code>.</p></td>
+class <code>ptblank_agent</code> that can be created with <code>create_agent()</code>.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -175,7 +175,7 @@ vector) to which this validation should be applied.</p></td>
       <th>preconditions</th>
       <td><p>expressions used for mutating the input table before
 proceeding with the validation. This is ideally as a one-sided R formula
-using a leading <code>~</code>. In the formula representation, the <code>.</code> serves as the
+using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>. In the formula representation, the <code>.</code> serves as the
 input data table to be transformed (e.g.,
 <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code>.</p></td>
     </tr>
@@ -183,7 +183,7 @@ input data table to be transformed (e.g.,
       <th>actions</th>
       <td><p>A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
-with the <code><a href='action_levels.html'>action_levels()</a></code> helper function.</p></td>
+with the <code>action_levels()</code> helper function.</p></td>
     </tr>
     <tr>
       <th>brief</th>
@@ -226,31 +226,31 @@ The test function returns a logical value.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If providing multiple column names, the result will be an expansion of
-validation steps to that number of column names (e.g., <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars(col_a, col_b)</a></code>
+validation steps to that number of column names (e.g., <code>vars(col_a, col_b)</code>
 will result in the entry of two validation steps). Aside from column names in
-quotes and in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, <strong>tidyselect</strong> helper functions are available for
-specifying columns. They are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p>
+quotes and in <code>vars()</code>, <strong>tidyselect</strong> helper functions are available for
+specifying columns. They are: <code>starts_with()</code>, <code>ends_with()</code>, <code>contains()</code>,
+<code>matches()</code>, and <code>everything()</code>.</p>
 <p>Having table <code>preconditions</code> means <strong>pointblank</strong> will mutate the table just
 before interrogation. Such a table mutation is isolated in scope to the
 validation step(s) produced by the validation function call. Using
 <strong>dplyr</strong> code is suggested here since the statements can be translated to
 SQL if necessary. The code is most easily supplied as a one-sided <strong>R</strong>
-formula (using a leading <code>~</code>). In the formula representation, the <code>.</code> serves
+formula (using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>). In the formula representation, the <code>.</code> serves
 as the input data table to be transformed (e.g.,
 <code>~ . %&gt;% dplyr::mutate(col_a = col_b + 10)</code>). Alternatively, a function could
 instead be supplied (e.g.,
 <code>function(x) dplyr::mutate(x, col_a = col_b + 10)</code>).</p>
 <p>Often, we will want to specify <code>actions</code> for the validation. This argument,
 present in every validation function, takes a specially-crafted list
-object that is best produced by the <code><a href='action_levels.html'>action_levels()</a></code> function. Read that
+object that is best produced by the <code>action_levels()</code> function. Read that
 function's documentation for the lowdown on how to create reactions to
 above-threshold failure levels in validation. The basic gist is that you'll
 want at least a single threshold level (specified as either the fraction test
 units failed, or, an absolute value), often using the <code>warn_at</code> argument.
 This is especially true when <code>x</code> is a table object because, otherwise,
 nothing happens. For the <code>col_vals_*()</code>-type functions, using
-<code><a href='action_levels.html'>action_levels(warn_at = 0.25)</a></code> or <code><a href='action_levels.html'>action_levels(stop_at = 0.25)</a></code> are good
+<code>action_levels(warn_at = 0.25)</code> or <code>action_levels(stop_at = 0.25)</code> are good
 choices depending on the situation (the first produces a warning when a
 quarter of the total test units fails, the other <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>s at the same
 threshold level).</p>
@@ -266,53 +266,53 @@ then be automatically generated.</p>
 <p>2-12</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>The analogue to this function: <code><a href='col_vals_null.html'>col_vals_null()</a></code>.</p>
+    <div class='dont-index'><p>The analogue to this function: <code>col_vals_null()</code>.</p>
 <p>Other validation functions: 
-<code><a href='col_exists.html'>col_exists</a>()</code>,
-<code><a href='col_is_character.html'>col_is_character</a>()</code>,
-<code><a href='col_is_date.html'>col_is_date</a>()</code>,
-<code><a href='col_is_factor.html'>col_is_factor</a>()</code>,
-<code><a href='col_is_integer.html'>col_is_integer</a>()</code>,
-<code><a href='col_is_logical.html'>col_is_logical</a>()</code>,
-<code><a href='col_is_numeric.html'>col_is_numeric</a>()</code>,
-<code><a href='col_is_posix.html'>col_is_posix</a>()</code>,
-<code><a href='col_schema_match.html'>col_schema_match</a>()</code>,
-<code><a href='col_vals_between.html'>col_vals_between</a>()</code>,
-<code><a href='col_vals_equal.html'>col_vals_equal</a>()</code>,
-<code><a href='col_vals_expr.html'>col_vals_expr</a>()</code>,
-<code><a href='col_vals_gte.html'>col_vals_gte</a>()</code>,
-<code><a href='col_vals_gt.html'>col_vals_gt</a>()</code>,
-<code><a href='col_vals_in_set.html'>col_vals_in_set</a>()</code>,
-<code><a href='col_vals_lte.html'>col_vals_lte</a>()</code>,
-<code><a href='col_vals_lt.html'>col_vals_lt</a>()</code>,
-<code><a href='col_vals_not_between.html'>col_vals_not_between</a>()</code>,
-<code><a href='col_vals_not_equal.html'>col_vals_not_equal</a>()</code>,
-<code><a href='col_vals_not_in_set.html'>col_vals_not_in_set</a>()</code>,
-<code><a href='col_vals_null.html'>col_vals_null</a>()</code>,
-<code><a href='col_vals_regex.html'>col_vals_regex</a>()</code>,
-<code><a href='conjointly.html'>conjointly</a>()</code>,
-<code><a href='rows_distinct.html'>rows_distinct</a>()</code></p></div>
+<code>col_exists()</code>,
+<code>col_is_character()</code>,
+<code>col_is_date()</code>,
+<code>col_is_factor()</code>,
+<code>col_is_integer()</code>,
+<code>col_is_logical()</code>,
+<code>col_is_numeric()</code>,
+<code>col_is_posix()</code>,
+<code>col_schema_match()</code>,
+<code>col_vals_between()</code>,
+<code>col_vals_equal()</code>,
+<code>col_vals_expr()</code>,
+<code>col_vals_gte()</code>,
+<code>col_vals_gt()</code>,
+<code>col_vals_in_set()</code>,
+<code>col_vals_lte()</code>,
+<code>col_vals_lt()</code>,
+<code>col_vals_not_between()</code>,
+<code>col_vals_not_equal()</code>,
+<code>col_vals_not_in_set()</code>,
+<code>col_vals_null()</code>,
+<code>col_vals_regex()</code>,
+<code>conjointly()</code>,
+<code>rows_distinct()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># For all examples here, we'll use</span>
 <span class='co'># a simple table with four columns:</span>
 <span class='co'># `a`, `b`, `c`, and `d`</span>
-<span class='no'>tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
-    <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>( <span class='fl'>5</span>,  <span class='fl'>7</span>,  <span class='fl'>6</span>,  <span class='fl'>5</span>,  <span class='fl'>8</span>),
-    <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>( <span class='fl'>7</span>,  <span class='fl'>1</span>,  <span class='fl'>0</span>,  <span class='fl'>0</span>,  <span class='fl'>0</span>),
-    <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>),
-    <span class='kw'>d</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>35</span>, <span class='fl'>23</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>)
+<span class='kw'>tbl</span> <span class='op'>&lt;-</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
+    a = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>( <span class='fl'>5</span>,  <span class='fl'>7</span>,  <span class='fl'>6</span>,  <span class='fl'>5</span>,  <span class='fl'>8</span>),
+    b = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>( <span class='fl'>7</span>,  <span class='fl'>1</span>,  <span class='fl'>0</span>,  <span class='fl'>0</span>,  <span class='fl'>0</span>),
+    c = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>),
+    d = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>35</span>, <span class='fl'>23</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>)
   )
-
-<span class='no'>tbl</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 4</span><span>
+  
+<span class='kw'>tbl</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 4</span><span>
 #&gt;       a     b c         d
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>     5     7 </span><span style='color: #BB0000;'>NA</span><span>       35
 #&gt; </span><span style='color: #555555;'>2</span><span>     7     1 </span><span style='color: #BB0000;'>NA</span><span>       23
 #&gt; </span><span style='color: #555555;'>3</span><span>     6     0 </span><span style='color: #BB0000;'>NA</span><span>       </span><span style='color: #BB0000;'>NA</span><span>
 #&gt; </span><span style='color: #555555;'>4</span><span>     5     0 </span><span style='color: #BB0000;'>NA</span><span>       </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'>5</span><span>     8     0 </span><span style='color: #BB0000;'>NA</span><span>       </span><span style='color: #BB0000;'>NA</span><span></div><div class='input'>
+#&gt; </span><span style='color: #555555;'>5</span><span>     8     0 </span><span style='color: #BB0000;'>NA</span><span>       </span><span style='color: #BB0000;'>NA</span><span></div><div class='input'>  
 <span class='co'># A: Using an `agent` with validation</span>
 <span class='co'>#    functions and then `interrogate()`</span>
 
@@ -320,15 +320,15 @@ then be automatically generated.</p>
 <span class='co'># `b` are *not* NA (they would be</span>
 <span class='co'># non-NULL in a database context, which</span>
 <span class='co'># isn't the case here)</span>
-<span class='no'>agent</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>col_vals_not_null</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
+<span class='kw'>agent</span> <span class='op'>&lt;-</span>
+  <span class='fu'>create_agent</span>(<span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_not_null</span>(<span class='fu'>vars</span>(<span class='kw'>b</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'>interrogate</span>()
 
 <span class='co'># Determine if this validation</span>
 <span class='co'># had no failing test units (there</span>
 <span class='co'># are 5 test units, one for each row)</span>
-<span class='fu'><a href='all_passed.html'>all_passed</a></span>(<span class='no'>agent</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'>all_passed</span>(<span class='kw'>agent</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># Calling `agent` in the console</span>
 <span class='co'># prints the agent's report; but we</span>
 <span class='co'># can get a `gt_tbl` object directly</span>
@@ -343,24 +343,23 @@ then be automatically generated.</p>
 <span class='co'># is a single test unit failing; the</span>
 <span class='co'># behavior of side effects can be</span>
 <span class='co'># customized with the `actions` option</span>
-<span class='no'>tbl</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>col_vals_not_null</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>)) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='no'>b</span>)</div><div class='output co'>#&gt; [1] 7 1 0 0 0</div><div class='input'>
+<span class='kw'>tbl</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_not_null</span>(<span class='fu'>vars</span>(<span class='kw'>b</span>)) <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='kw'>b</span>)</div><div class='output co'>#&gt; [1] 7 1 0 0 0</div><div class='input'>
 <span class='co'># C: Using the expectation function</span>
 
 <span class='co'># With the `expect_*()` form, we would</span>
 <span class='co'># typically perform one validation at a</span>
 <span class='co'># time; this is primarily used in</span>
 <span class='co'># testthat tests</span>
-<span class='fu'>expect_col_vals_not_null</span>(<span class='no'>tbl</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>))
+<span class='fu'>expect_col_vals_not_null</span>(<span class='kw'>tbl</span>, <span class='fu'>vars</span>(<span class='kw'>b</span>))
 
 <span class='co'># D: Using the test function</span>
 
 <span class='co'># With the `test_*()` form, we should</span>
 <span class='co'># get a single logical value returned</span>
 <span class='co'># to us</span>
-<span class='no'>tbl</span> <span class='kw'>%&gt;%</span> <span class='fu'>test_col_vals_not_null</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-</div></span></pre>
+<span class='kw'>tbl</span> <span class='op'>%&gt;%</span> <span class='fu'>test_col_vals_not_null</span>(<span class='fu'>vars</span>(<span class='kw'>b</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -128,18 +128,18 @@ email_message object will be returned." />
 
     <div class="ref-description">
     <p>The <code>email_preview()</code> function provides a preview of an email that would
-normally be produced and sent through the <code><a href='email_blast.html'>email_blast()</a></code> function. The <code>x</code>
+normally be produced and sent through the <code>email_blast()</code> function. The <code>x</code>
 that we need for this is the agent x-list that is produced by the
-<code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function. Or, we can supply an agent object. In both
+<code>get_agent_x_list()</code> function. Or, we can supply an agent object. In both
 cases, the email message with appear in the Viewer and a <strong>blastula</strong>
 <code>email_message</code> object will be returned.</p>
     </div>
 
     <pre class="usage"><span class='fu'>email_preview</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>msg_header</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>msg_body</span> <span class='kw'>=</span> <span class='fu'><a href='stock_msg_body.html'>stock_msg_body</a></span>(),
-  <span class='kw'>msg_footer</span> <span class='kw'>=</span> <span class='fu'><a href='stock_msg_footer.html'>stock_msg_footer</a></span>()
+  <span class='kw'>x</span>,
+  msg_header = <span class='kw'>NULL</span>,
+  msg_body = <span class='fu'>stock_msg_body</span>(),
+  msg_footer = <span class='fu'>stock_msg_footer</span>()
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -148,7 +148,7 @@ cases, the email message with appear in the Viewer and a <strong>blastula</stron
     <tr>
       <th>x</th>
       <td><p>A pointblank agent or an agent x-list. The x-list object can be
-created with the <code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function. It is recommended that the
+created with the <code>get_agent_x_list()</code> function. It is recommended that the
 <code>i = NULL</code> and <code>generate_report = TRUE</code> so that the agent report is
 available within the email preview.</p></td>
     </tr>
@@ -170,27 +170,27 @@ footer components of the HTML email message.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Emailing: 
-<code><a href='email_blast.html'>email_blast</a>()</code>,
-<code><a href='stock_msg_body.html'>stock_msg_body</a>()</code>,
-<code><a href='stock_msg_footer.html'>stock_msg_footer</a>()</code></p></div>
+<code>email_blast()</code>,
+<code>stock_msg_body()</code>,
+<code>stock_msg_footer()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a simple table with two</span>
 <span class='co'># columns of numerical values</span>
-<span class='no'>tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
-    <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>6</span>, <span class='fl'>5</span>, <span class='fl'>8</span>, <span class='fl'>7</span>),
-    <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>7</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>3</span>)
+<span class='kw'>tbl</span> <span class='op'>&lt;-</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
+    a = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>6</span>, <span class='fl'>5</span>, <span class='fl'>8</span>, <span class='fl'>7</span>),
+    b = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>7</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>3</span>)
   )
 
 <span class='co'># Create an `action_levels()` list</span>
 <span class='co'># with absolute values for the</span>
 <span class='co'># `warn`, and `notify` states (with</span>
 <span class='co'># thresholds of 1 and 2 'fail' units)</span>
-<span class='no'>al</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='action_levels.html'>action_levels</a></span>(
-    <span class='kw'>warn_at</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-    <span class='kw'>notify_at</span> <span class='kw'>=</span> <span class='fl'>2</span>
+<span class='kw'>al</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>action_levels</span>(
+    warn_at = <span class='fl'>1</span>,
+    notify_at = <span class='fl'>2</span>
   )
 
 <span class='co'># In a workflow that involves an</span>
@@ -201,33 +201,34 @@ footer components of the HTML email message.</p></td>
 <span class='co'># message object beforehand by using</span>
 <span class='co'># the `email_preview()` function</span>
 <span class='co'># on an `agent` object</span>
-<span class='no'>email_object</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(
-    <span class='kw'>tbl</span> <span class='kw'>=</span> <span class='no'>tbl</span>,
-    <span class='kw'>actions</span> <span class='kw'>=</span> <span class='no'>al</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>), <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>), <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span>() <span class='kw'>%&gt;%</span>
+<span class='kw'>email_object</span> <span class='op'>&lt;-</span>
+  <span class='fu'>create_agent</span>(
+    tbl = <span class='kw'>tbl</span>,
+    actions = <span class='kw'>al</span>
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_lt</span>(<span class='fu'>vars</span>(<span class='kw'>b</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>interrogate</span>() <span class='op'>%&gt;%</span>
   <span class='fu'>email_preview</span>()
 
 <span class='co'># The `email_preview()` function can</span>
 <span class='co'># also be used on an agent x-list to</span>
 <span class='co'># get the same email message object</span>
-<span class='no'>email_object</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(
-    <span class='kw'>tbl</span> <span class='kw'>=</span> <span class='no'>tbl</span>,
-    <span class='kw'>actions</span> <span class='kw'>=</span> <span class='no'>al</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>), <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>b</span>), <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='get_agent_x_list.html'>get_agent_x_list</a></span>() <span class='kw'>%&gt;%</span>
+<span class='kw'>email_object</span> <span class='op'>&lt;-</span>
+  <span class='fu'>create_agent</span>(
+    tbl = <span class='kw'>tbl</span>,
+    actions = <span class='kw'>al</span>
+  ) <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_lt</span>(<span class='fu'>vars</span>(<span class='kw'>b</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>interrogate</span>() <span class='op'>%&gt;%</span>
+  <span class='fu'>get_agent_x_list</span>() <span class='op'>%&gt;%</span>
   <span class='fu'>email_preview</span>()
 
 <span class='co'># We can view the HTML email just</span>
 <span class='co'># by printing `email_object`; it</span>
-<span class='co'># should appear in the Viewer</span></div></pre>
+<span class='co'># should appear in the Viewer</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

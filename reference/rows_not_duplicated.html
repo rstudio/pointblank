@@ -126,12 +126,12 @@
     </div>
 
     <pre class="usage"><span class='fu'>rows_not_duplicated</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>preconditions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>brief</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>actions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>active</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>x</span>,
+  columns = <span class='kw'>NULL</span>,
+  preconditions = <span class='kw'>NULL</span>,
+  brief = <span class='kw'>NULL</span>,
+  actions = <span class='kw'>NULL</span>,
+  active = <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -150,7 +150,7 @@ vector) to which this validation should be applied.</p></td>
       <th>preconditions</th>
       <td><p>expressions used for mutating the input table before
 proceeding with the validation. This is ideally as a one-sided R formula
-using a leading <code>~</code>. In the formula representation, the <code>.</code> serves as the
+using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>. In the formula representation, the <code>.</code> serves as the
 input data table to be transformed (e.g.,
 <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code>.</p></td>
     </tr>
@@ -162,7 +162,7 @@ input data table to be transformed (e.g.,
       <th>actions</th>
       <td><p>A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
-with the <code><a href='action_levels.html'>action_levels()</a></code> helper function.</p></td>
+with the <code>action_levels()</code> helper function.</p></td>
     </tr>
     <tr>
       <th>active</th>

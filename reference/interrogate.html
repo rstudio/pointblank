@@ -129,17 +129,17 @@ how the interrogation went down." />
     <p>When the agent has all the information on what to do (i.e., a validation plan
 which is a series of validation steps), the interrogation process can occur
 according its plan. After that, the agent will have gathered intel, and we
-can use functions like <code><a href='get_agent_report.html'>get_agent_report()</a></code> and <code><a href='all_passed.html'>all_passed()</a></code> to understand
+can use functions like <code>get_agent_report()</code> and <code>all_passed()</code> to understand
 how the interrogation went down.</p>
     </div>
 
     <pre class="usage"><span class='fu'>interrogate</span>(
-  <span class='no'>agent</span>,
-  <span class='kw'>extract_failed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>get_first_n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sample_n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sample_frac</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sample_limit</span> <span class='kw'>=</span> <span class='fl'>5000</span>
+  <span class='kw'>agent</span>,
+  extract_failed = <span class='fl'>TRUE</span>,
+  get_first_n = <span class='kw'>NULL</span>,
+  sample_n = <span class='kw'>NULL</span>,
+  sample_frac = <span class='kw'>NULL</span>,
+  sample_limit = <span class='fl'>5000</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -197,10 +197,10 @@ when sampling non-passing rows using the <code>sample_frac</code> option.</p></t
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a simple table with two</span>
 <span class='co'># columns of numerical values</span>
-<span class='no'>tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
-    <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>6</span>, <span class='fl'>5</span>, <span class='fl'>8</span>, <span class='fl'>7</span>),
-    <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>7</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>3</span>)
+<span class='kw'>tbl</span> <span class='op'>&lt;-</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
+    a = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>6</span>, <span class='fl'>5</span>, <span class='fl'>8</span>, <span class='fl'>7</span>),
+    b = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>7</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>3</span>)
   )
 
 <span class='co'># Validate that values in column</span>
@@ -208,10 +208,11 @@ when sampling non-passing rows using the <code>sample_frac</code> option.</p></t
 <span class='co'># using `interrogate()` carries out</span>
 <span class='co'># the validation plan and completes</span>
 <span class='co'># the whole process</span>
-<span class='no'>agent</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='kw'>tbl</span> <span class='kw'>=</span> <span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>), <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>interrogate</span>()</div></pre>
+<span class='kw'>agent</span> <span class='op'>&lt;-</span>
+  <span class='fu'>create_agent</span>(tbl = <span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>interrogate</span>()
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

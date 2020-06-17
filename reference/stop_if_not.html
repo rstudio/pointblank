@@ -135,7 +135,7 @@ will yield the correct reporting of successes and failures whereas
 <code><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot()</a></code> <em>does not</em>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>stop_if_not</span>(<span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>stop_if_not</span>(<span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,7 +155,7 @@ all) <code>TRUE</code>.</p></td>
     <pre class="examples"><div class='input'><span class='co'># This checks whether the number of</span>
 <span class='co'># rows in `small_table` is greater</span>
 <span class='co'># than `10`</span>
-<span class='fu'>stop_if_not</span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>small_table</span>) <span class='kw'>&gt;</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; NULL</div><div class='input'>
+<span class='fu'>stop_if_not</span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>small_table</span>) <span class='op'>&gt;</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; NULL</div><div class='input'>
 <span class='co'># This will stop for sure: there</span>
 <span class='co'># isn't a `time` column in `small_table`</span>
 <span class='co'># (but there are the `date_time` and</span>
@@ -165,8 +165,7 @@ all) <code>TRUE</code>.</p></td>
 <span class='co'># You're not bound to using tabular</span>
 <span class='co'># data here, any statements that</span>
 <span class='co'># evaluate to logical vectors will work</span>
-<span class='fu'>stop_if_not</span>(<span class='fl'>1</span>:<span class='fl'>5</span> <span class='kw'>&lt;</span> <span class='fl'>20</span>:<span class='fl'>25</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: longer object length is not a multiple of shorter object length</span></div><div class='output co'>#&gt; NULL</div><div class='input'>
-</div></pre>
+<span class='fu'>stop_if_not</span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span> <span class='op'>&lt;</span> <span class='fl'>20</span><span class='op'>:</span><span class='fl'>25</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: longer object length is not a multiple of shorter object length</span></div><div class='output co'>#&gt; NULL</div><div class='input'></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

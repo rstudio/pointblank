@@ -166,11 +166,11 @@ complete HTML document where Bootstrap and jQuery are embedded within.</p>
     </div>
 
     <pre class="usage"><span class='fu'>scan_data</span>(
-  <span class='no'>tbl</span>,
-  <span class='kw'>sections</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"overview"</span>, <span class='st'>"variables"</span>, <span class='st'>"interactions"</span>, <span class='st'>"correlations"</span>, <span class='st'>"missing"</span>,
+  <span class='kw'>tbl</span>,
+  sections = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"overview"</span>, <span class='st'>"variables"</span>, <span class='st'>"interactions"</span>, <span class='st'>"correlations"</span>, <span class='st'>"missing"</span>,
     <span class='st'>"sample"</span>),
-  <span class='kw'>navbar</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>reporting_lang</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  navbar = <span class='fl'>TRUE</span>,
+  reporting_lang = <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -210,15 +210,16 @@ French (<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</cod
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Planning and Prep: 
-<code><a href='action_levels.html'>action_levels</a>()</code>,
-<code><a href='col_schema.html'>col_schema</a>()</code>,
-<code><a href='create_agent.html'>create_agent</a>()</code>,
-<code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
+<code>action_levels()</code>,
+<code>col_schema()</code>,
+<code>create_agent()</code>,
+<code>validate_rmd()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Get an HTML report that describes all of</span>
 <span class='co'># the data in the `dplyr::storms` dataset</span>
-<span class='co'># scan_data(tbl = dplyr::storms)</span></div></pre>
+<span class='co'># scan_data(tbl = dplyr::storms)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

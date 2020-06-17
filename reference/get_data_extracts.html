@@ -129,11 +129,11 @@ call)." />
     <p>Get data that didn't pass a validation step. The amount of data available in
 a particular extract depends on both the fraction of validation units that
 didn't pass a validation step and the level of sampling or explicit
-collection from that set of units (this is defined within the <code><a href='interrogate.html'>interrogate()</a></code>
+collection from that set of units (this is defined within the <code>interrogate()</code>
 call).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_data_extracts</span>(<span class='no'>agent</span>, <span class='kw'>i</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>get_data_extracts</span>(<span class='kw'>agent</span>, i = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,7 +141,7 @@ call).</p>
     <tr>
       <th>agent</th>
       <td><p>An agent object of class <code>ptblank_agent</code>. It should have had
-<code><a href='interrogate.html'>interrogate()</a></code> called on it, such that the validation steps were carried
+<code>interrogate()</code> called on it, such that the validation steps were carried
 out and any sample rows from non-passing validations could potentially be
 available in the object.</p></td>
     </tr>
@@ -165,38 +165,37 @@ tables will be provided in a list object.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Post-interrogation: 
-<code><a href='all_passed.html'>all_passed</a>()</code>,
-<code><a href='get_agent_report.html'>get_agent_report</a>()</code>,
-<code><a href='get_agent_x_list.html'>get_agent_x_list</a>()</code>,
-<code><a href='get_sundered_data.html'>get_sundered_data</a>()</code></p></div>
+<code>all_passed()</code>,
+<code>get_agent_report()</code>,
+<code>get_agent_x_list()</code>,
+<code>get_sundered_data()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a simple table with a</span>
 <span class='co'># column of numerical values</span>
-<span class='no'>tbl</span> <span class='kw'>&lt;-</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span>))
+<span class='kw'>tbl</span> <span class='op'>&lt;-</span> 
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(a = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span>))
 
 <span class='co'># Create 2 simple validation steps</span>
 <span class='co'># that test whether values within</span>
 <span class='co'># column `a`</span>
-<span class='no'>agent</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='kw'>tbl</span> <span class='kw'>=</span> <span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_between.html'>col_vals_between</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>), <span class='fl'>4</span>, <span class='fl'>6</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_lte.html'>col_vals_lte</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>), <span class='fl'>7</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span>(
-    <span class='kw'>extract_failed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>get_first_n</span> <span class='kw'>=</span> <span class='fl'>10</span>
+<span class='kw'>agent</span> <span class='op'>&lt;-</span>
+  <span class='fu'>create_agent</span>(tbl = <span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_between</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>4</span>, <span class='fl'>6</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_lte</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>7</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>interrogate</span>(
+    extract_failed = <span class='fl'>TRUE</span>,
+    get_first_n = <span class='fl'>10</span>
   )
 
 <span class='co'># Get row sample data for those rows</span>
 <span class='co'># in `tbl` that did not pass the first</span>
 <span class='co'># validation step (`col_vals_between`)</span>
-<span class='no'>agent</span> <span class='kw'>%&gt;%</span> <span class='fu'>get_data_extracts</span>(<span class='kw'>i</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 1</span><span>
+<span class='kw'>agent</span> <span class='op'>%&gt;%</span> <span class='fu'>get_data_extracts</span>(i = <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 1</span><span>
 #&gt;       a
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>     7
-#&gt; </span><span style='color: #555555;'>2</span><span>     8</div><div class='input'>
-</div></span></pre>
+#&gt; </span><span style='color: #555555;'>2</span><span>     8</div><div class='input'></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

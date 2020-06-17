@@ -139,15 +139,15 @@ or error messages." />
 
     <div class="ref-description">
     <p>The <code>action_levels()</code> function works with the <code>actions</code> argument that is
-present in the <code><a href='create_agent.html'>create_agent()</a></code> function and in every validation step
+present in the <code>create_agent()</code> function and in every validation step
 function. With it, we can provide threshold <em>fail</em> levels for any combination
 of <code>warn</code>, <code>stop</code>, or <code>notify</code> states. We can react to any entrance of a
 state by supplying corresponding functions to the <code>fns</code> argument. They will
 undergo evaluation at the time when the matching state is entered. If
-provided to <code><a href='create_agent.html'>create_agent()</a></code> then the policies will be applied to every
+provided to <code>create_agent()</code> then the policies will be applied to every
 validation step, acting as a default for the validation as a whole. Calls of
 <code>action_levels()</code> could also be applied directly to any validation step and
-this will act as an override if set also in <code><a href='create_agent.html'>create_agent()</a></code>. Usage of
+this will act as an override if set also in <code>create_agent()</code>. Usage of
 <code>action_levels()</code> is required to have any useful side effects (i.e.,
 warnings, throwing errors) in the case of validation functions operating
 directly on data. There are two helper functions that are convenient when
@@ -157,11 +157,11 @@ threshold for each is set to <code>1</code>), and, they do so with informative w
 or error messages.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>action_levels</span>(<span class='kw'>warn_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stop_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>notify_at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>action_levels</span>(warn_at = <span class='kw'>NULL</span>, stop_at = <span class='kw'>NULL</span>, notify_at = <span class='kw'>NULL</span>, fns = <span class='kw'>NULL</span>)
 
-<span class='fu'>warn_on_fail</span>(<span class='kw'>warn_at</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'>warn_on_fail</span>(warn_at = <span class='fl'>1</span>)
 
-<span class='fu'>stop_on_fail</span>(<span class='kw'>stop_at</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+<span class='fu'>stop_on_fail</span>(stop_at = <span class='fl'>1</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,40 +213,40 @@ workflow as it is in the <em>agent</em>-based one.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Planning and Prep: 
-<code><a href='col_schema.html'>col_schema</a>()</code>,
-<code><a href='create_agent.html'>create_agent</a>()</code>,
-<code><a href='scan_data.html'>scan_data</a>()</code>,
-<code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
+<code>col_schema()</code>,
+<code>create_agent()</code>,
+<code>scan_data()</code>,
+<code>validate_rmd()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a simple data frame with</span>
 <span class='co'># a column of numerical values</span>
-<span class='no'>tbl</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span>))
+<span class='kw'>tbl</span> <span class='op'>&lt;-</span> <span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(a = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span>))
 
 <span class='co'># Create an `action_levels()` list</span>
 <span class='co'># with fractional values for the</span>
 <span class='co'># `warn`, `stop`, and `notify` states</span>
-<span class='no'>al</span> <span class='kw'>&lt;-</span>
+<span class='kw'>al</span> <span class='op'>&lt;-</span> 
   <span class='fu'>action_levels</span>(
-    <span class='kw'>warn_at</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
-    <span class='kw'>stop_at</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-    <span class='kw'>notify_at</span> <span class='kw'>=</span> <span class='fl'>0.345</span>
+    warn_at = <span class='fl'>0.2</span>,
+    stop_at = <span class='fl'>0.8</span>,
+    notify_at = <span class='fl'>0.345</span>
   )
 
 <span class='co'># Validate that values in column</span>
 <span class='co'># `a` are always greater than 7 and</span>
 <span class='co'># apply the list of action levels</span>
-<span class='no'>agent</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='kw'>tbl</span> <span class='kw'>=</span> <span class='no'>tbl</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>), <span class='fl'>7</span>, <span class='kw'>actions</span> <span class='kw'>=</span> <span class='no'>al</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
+<span class='kw'>agent</span> <span class='op'>&lt;-</span>
+  <span class='fu'>create_agent</span>(tbl = <span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>7</span>, actions = <span class='kw'>al</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>interrogate</span>()
 
 <span class='co'># The report from the agent will show</span>
 <span class='co'># that the `warn` state has been entered</span>
 <span class='co'># for the first and only validation step.</span>
 
 <span class='co'># agent</span>
-
+  
 <span class='co'># In the context of using validation</span>
 <span class='co'># stop functions directly on data, their</span>
 <span class='co'># use is commonly to trigger warnings</span>
@@ -254,16 +254,15 @@ workflow as it is in the <em>agent</em>-based one.</p>
 <span class='co'># provide a error (but that's suppressed</span>
 <span class='co'># here).</span>
 <span class='fu'><a href='https://rdrr.io/r/base/warning.html'>suppressWarnings</a></span>(
-  <span class='no'>tbl</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='no'>a</span>), <span class='fl'>5</span>, <span class='kw'>actions</span> <span class='kw'>=</span> <span class='no'>al</span>)
+  <span class='kw'>tbl</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>5</span>, actions = <span class='kw'>al</span>)
 )</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 1</span><span>
 #&gt;       a
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>     5
 #&gt; </span><span style='color: #555555;'>2</span><span>     7
 #&gt; </span><span style='color: #555555;'>3</span><span>     8
-#&gt; </span><span style='color: #555555;'>4</span><span>     5</div><div class='input'>
-</div></span></pre>
+#&gt; </span><span style='color: #555555;'>4</span><span>     5</div><div class='input'></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -129,12 +129,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "dittodb",
-      "name": "dittodb",
-      "sameAs": "https://github.com/jonkeane/dittodb"
     }
   ],
   "softwareRequirements": [
@@ -380,7 +374,7 @@
   ],
   "releaseNotes": "https://github.com/pachamaltese/pointblank/blob/master/NEWS.md",
   "readme": "https://github.com/pachamaltese/pointblank/blob/master/README.md",
-  "fileSize": "6913.865KB",
+  "fileSize": "6906.977KB",
   "contIntegration": "https://codecov.io/gh/rich-iannone/pointblank?branch=master",
   "keywords": [
     "r",

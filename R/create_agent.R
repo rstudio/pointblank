@@ -80,7 +80,11 @@
 #' # reporting will be a bit more useful if
 #' # there are some target metrics
 #' agent <- 
-#'   create_agent(small_table, actions = al)
+#'   create_agent(
+#'     small_table,
+#'     name = "example",
+#'     actions = al
+#'   )
 #'
 #' # Then, as with any `agent` object, we
 #' # can add steps to the validation plan by
@@ -112,6 +116,14 @@
 #' # prints the agent's report; but we
 #' # can get a `gt_tbl` object directly
 #' # with `get_agent_report(agent)`
+#' report <- get_agent_report(agent)
+#' class(report)
+#' 
+#' # What can you do with the report?
+#' # Print it from an R Markdown code,
+#' # use it in an email, put it in a
+#' # webpage, or further modify it with
+#' # the **gt** package
 #' 
 #' # From the report we know that Step
 #' # 4 had two test units (rows, really)
@@ -133,6 +145,12 @@
 #' # Just printing the x-list will tell
 #' # us what's available therein
 #' xl_step_4
+#' 
+#' # An x-list not specific to any step
+#' # will have way more information and a
+#' # slightly different structure; see
+#' # `help(get_agent_x_list)` for more info
+#' get_agent_x_list(agent)
 #'  
 #' @family Planning and Prep
 #' @section Function ID:

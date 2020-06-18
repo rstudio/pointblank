@@ -1,39 +1,52 @@
 #' Set action levels: failure thresholds and functions to invoke
 #' 
+#' @description
 #' The `action_levels()` function works with the `actions` argument that is
 #' present in the [create_agent()] function and in every validation step
 #' function. With it, we can provide threshold *fail* levels for any combination
-#' of `warn`, `stop`, or `notify` states. We can react to any entrance of a
-#' state by supplying corresponding functions to the `fns` argument. They will
-#' undergo evaluation at the time when the matching state is entered. If
-#' provided to [create_agent()] then the policies will be applied to every
-#' validation step, acting as a default for the validation as a whole. Calls of
-#' `action_levels()` could also be applied directly to any validation step and
-#' this will act as an override if set also in [create_agent()]. Usage of
-#' `action_levels()` is required to have any useful side effects (i.e.,
+#' of `warn`, `stop`, or `notify` states.
+#' 
+#' We can react to any entrance of a state by supplying corresponding functions
+#' to the `fns` argument. They will undergo evaluation at the time when the
+#' matching state is entered. If provided to [create_agent()] then the policies
+#' will be applied to every validation step, acting as a default for the
+#' validation as a whole.
+#' 
+#' Calls of `action_levels()` could also be applied directly to any validation
+#' step and this will act as an override if set also in [create_agent()]. Usage
+#' of `action_levels()` is required to have any useful side effects (i.e.,
 #' warnings, throwing errors) in the case of validation functions operating
-#' directly on data. There are two helper functions that are convenient when
-#' using validation functions with data: `warn_on_fail()` and
-#' `stop_on_fail()`. These helpers either warn or stop (default failure
-#' threshold for each is set to `1`), and, they do so with informative warning
-#' or error messages.
+#' directly on data (e.g., `mtcars %>% col_vals_lt("mpg", 35)`). There are two
+#' helper functions that are convenient when using validation functions directly
+#' on data (the `agent`-less workflow): `warn_on_fail()` and `stop_on_fail()`.
+#' These helpers either warn or stop (default failure threshold for each is set
+#' to `1`), and, they do so with informative warning or error messages. The
+#' `stop_on_fail()` helper is applied by default when using validation functions
+#' directly on data (more information on this is provided in *Details*).
 #'
+#' @details
 #' The output of the `action_levels()` call in `actions` will be interpreted
 #' slightly differently if using an *agent* or using validation functions
-#' directly on a data table. For convenience when working directly on data, any
+#' directly on a data table. For convenience, when working directly on data, any
 #' values supplied to `warn_at` or `stop_at` will be automatically given a stock
-#' `warning()` or `stop()` function. If you were to supply those manually then
-#' the stock functions would be overridden. Furthermore, if `actions` is NULL in
-#' this workflow, **pointblank** will use a `stop_at` value of `1` (providing an
-#' error message if there are any *fail* units). We can absolutely suppress this
-#' automatic stopping behavior by at each validation step by setting `active =
-#' FALSE`. In this interactive data case there is no stock function given for
-#' the `notify_at`. The `notify` failure state is less commonly used in this
-#' workflow as it is in the *agent*-based one.
+#' `warning()` or `stop()` function. For example using 
+#' `small_table %>% col_is_integer("date")` will provide a detailed stop message
+#' by default, indicating the reason for the failure. If you were to supply the
+#' `fns` for `stop` or `warn` manually then the stock functions would be
+#' overridden. Furthermore, if `actions` is NULL in this workflow (the default),
+#' **pointblank** will use a `stop_at` value of `1` (providing a detailed,
+#' context-specific error message if there are any *fail* units). We can
+#' absolutely suppress this automatic stopping behavior by at each validation
+#' step by setting `active = FALSE`. In this interactive data case, there is no
+#' stock function given for `notify_at`. The `notify` failure state is less
+#' commonly used in this workflow as it is in the *agent*-based one.
 #' 
 #' When using an *agent*, we often opt to not use any functions in `fns` as the
 #' `warn`, `stop`, and `notify` failure states will be reported on when using
-#' `create_agent_report()` (and, usually that's sufficient).
+#' `create_agent_report()` (and, usually that's sufficient). Instead, using the
+#' `end_fns` argument is a better choice since that scheme provides useful data
+#' on the entire interrogation, allowing for finer control on side effects and
+#' reducing potential for duplicating any side effects.
 #' 
 #' @param warn_at,stop_at,notify_at The threshold number or fraction of
 #'   test units that can provide a *fail* result before entering the
@@ -52,10 +65,6 @@
 #'   each named state can be used by enclosing the set of statements with `{ }`.
 #' 
 #' @examples 
-#' # Create a simple data frame with
-#' # a column of numerical values
-#' tbl <- dplyr::tibble(a = c(5, 7, 8, 5))
-#' 
 #' # Create an `action_levels()` list
 #' # with fractional values for the
 #' # `warn`, `stop`, and `notify` states
@@ -63,32 +72,40 @@
 #'   action_levels(
 #'     warn_at = 0.2,
 #'     stop_at = 0.8,
-#'     notify_at = 0.345
+#'     notify_at = 0.5
 #'   )
+#'   
+#' # Use the included `small_table` dataset
+#' # for the validtion example
+#' small_table
 #' 
 #' # Validate that values in column
-#' # `a` are always greater than 7 and
-#' # apply the list of action levels
+#' # `a` are always greater than `2` and
+#' # apply the list of action levels (`al`)
 #' agent <-
-#'   create_agent(tbl = tbl) %>%
-#'   col_vals_gt(vars(a), 7, actions = al) %>%
+#'   create_agent(tbl = small_table) %>%
+#'   col_vals_gt(vars(a), 2, actions = al) %>%
 #'   interrogate()
 #'
 #' # The report from the agent will show
 #' # that the `warn` state has been entered
-#' # for the first and only validation step.
-#' 
-#' # agent
+#' # for the first and only validation step;
+#' # Let's look at the *tibble* version of the
+#' # agent report (accessible through the use
+#' # of the `get_agent_report()` function)
+#' agent %>% 
+#'   get_agent_report(display_table = FALSE)
 #'   
 #' # In the context of using validation
-#' # stop functions directly on data, their
+#' # functions directly on data, their
 #' # use is commonly to trigger warnings
-#' # and raise errors. The following will
-#' # provide a error (but that's suppressed
-#' # here).
+#' # and raise errors. The following *will*
+#' # provide a warning (but that's
+#' # suppressed here) and the `small_table`
+#' # data will be returned
 #' suppressWarnings(
-#'   tbl %>%
-#'     col_vals_gt(vars(a), 5, actions = al)
+#'   small_table %>%
+#'     col_vals_gt(vars(a), 2, actions = al)
 #' )
 #' 
 #' @family Planning and Prep

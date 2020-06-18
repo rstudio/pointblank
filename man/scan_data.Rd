@@ -50,7 +50,7 @@ across variables}
 The output HTML report is viewable in the RStudio Viewer and can also be
 integrated in R Markdown HTML reports. If you need the output HTML as a
 string, it's possible to get that by using \code{as.character()} (e.g.,
-\code{scan_data(tbl = iris) \%>\% as.character()}). The resulting HTML string is a
+\code{scan_data(tbl = mtcars) \%>\% as.character()}). The resulting HTML string is a
 complete HTML document where Bootstrap and jQuery are embedded within.
 }
 \section{Function ID}{

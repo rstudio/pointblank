@@ -20,7 +20,7 @@
 #' The output HTML report is viewable in the RStudio Viewer and can also be
 #' integrated in R Markdown HTML reports. If you need the output HTML as a
 #' string, it's possible to get that by using `as.character()` (e.g.,
-#' `scan_data(tbl = iris) %>% as.character()`). The resulting HTML string is a
+#' `scan_data(tbl = mtcars) %>% as.character()`). The resulting HTML string is a
 #' complete HTML document where Bootstrap and jQuery are embedded within.
 #' 
 #' @param tbl The input table. This can be a data frame or a tibble.

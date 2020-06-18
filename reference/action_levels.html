@@ -50,20 +50,23 @@
 <meta property="og:description" content="The action_levels() function works with the actions argument that is
 present in the create_agent() function and in every validation step
 function. With it, we can provide threshold fail levels for any combination
-of warn, stop, or notify states. We can react to any entrance of a
-state by supplying corresponding functions to the fns argument. They will
-undergo evaluation at the time when the matching state is entered. If
-provided to create_agent() then the policies will be applied to every
-validation step, acting as a default for the validation as a whole. Calls of
-action_levels() could also be applied directly to any validation step and
-this will act as an override if set also in create_agent(). Usage of
-action_levels() is required to have any useful side effects (i.e.,
+of warn, stop, or notify states.
+We can react to any entrance of a state by supplying corresponding functions
+to the fns argument. They will undergo evaluation at the time when the
+matching state is entered. If provided to create_agent() then the policies
+will be applied to every validation step, acting as a default for the
+validation as a whole.
+Calls of action_levels() could also be applied directly to any validation
+step and this will act as an override if set also in create_agent(). Usage
+of action_levels() is required to have any useful side effects (i.e.,
 warnings, throwing errors) in the case of validation functions operating
-directly on data. There are two helper functions that are convenient when
-using validation functions with data: warn_on_fail() and
-stop_on_fail(). These helpers either warn or stop (default failure
-threshold for each is set to 1), and, they do so with informative warning
-or error messages." />
+directly on data (e.g., mtcars %&amp;gt;% col_vals_lt(&quot;mpg&quot;, 35)). There are two
+helper functions that are convenient when using validation functions directly
+on data (the agent-less workflow): warn_on_fail() and stop_on_fail().
+These helpers either warn or stop (default failure threshold for each is set
+to 1), and, they do so with informative warning or error messages. The
+stop_on_fail() helper is applied by default when using validation functions
+directly on data (more information on this is provided in Details)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -141,20 +144,23 @@ or error messages." />
     <p>The <code>action_levels()</code> function works with the <code>actions</code> argument that is
 present in the <code>create_agent()</code> function and in every validation step
 function. With it, we can provide threshold <em>fail</em> levels for any combination
-of <code>warn</code>, <code>stop</code>, or <code>notify</code> states. We can react to any entrance of a
-state by supplying corresponding functions to the <code>fns</code> argument. They will
-undergo evaluation at the time when the matching state is entered. If
-provided to <code>create_agent()</code> then the policies will be applied to every
-validation step, acting as a default for the validation as a whole. Calls of
-<code>action_levels()</code> could also be applied directly to any validation step and
-this will act as an override if set also in <code>create_agent()</code>. Usage of
-<code>action_levels()</code> is required to have any useful side effects (i.e.,
+of <code>warn</code>, <code>stop</code>, or <code>notify</code> states.</p>
+<p>We can react to any entrance of a state by supplying corresponding functions
+to the <code>fns</code> argument. They will undergo evaluation at the time when the
+matching state is entered. If provided to <code>create_agent()</code> then the policies
+will be applied to every validation step, acting as a default for the
+validation as a whole.</p>
+<p>Calls of <code>action_levels()</code> could also be applied directly to any validation
+step and this will act as an override if set also in <code>create_agent()</code>. Usage
+of <code>action_levels()</code> is required to have any useful side effects (i.e.,
 warnings, throwing errors) in the case of validation functions operating
-directly on data. There are two helper functions that are convenient when
-using validation functions with data: <code>warn_on_fail()</code> and
-<code>stop_on_fail()</code>. These helpers either warn or stop (default failure
-threshold for each is set to <code>1</code>), and, they do so with informative warning
-or error messages.</p>
+directly on data (e.g., <code>mtcars %&gt;% col_vals_lt("mpg", 35)</code>). There are two
+helper functions that are convenient when using validation functions directly
+on data (the <code>agent</code>-less workflow): <code>warn_on_fail()</code> and <code>stop_on_fail()</code>.
+These helpers either warn or stop (default failure threshold for each is set
+to <code>1</code>), and, they do so with informative warning or error messages. The
+<code>stop_on_fail()</code> helper is applied by default when using validation functions
+directly on data (more information on this is provided in <em>Details</em>).</p>
     </div>
 
     <pre class="usage"><span class='fu'>action_levels</span>(warn_at = <span class='kw'>NULL</span>, stop_at = <span class='kw'>NULL</span>, notify_at = <span class='kw'>NULL</span>, fns = <span class='kw'>NULL</span>)
@@ -193,18 +199,25 @@ each named state can be used by enclosing the set of statements with <code>{ }</
 
     <p>The output of the <code>action_levels()</code> call in <code>actions</code> will be interpreted
 slightly differently if using an <em>agent</em> or using validation functions
-directly on a data table. For convenience when working directly on data, any
+directly on a data table. For convenience, when working directly on data, any
 values supplied to <code>warn_at</code> or <code>stop_at</code> will be automatically given a stock
-<code><a href='https://rdrr.io/r/base/warning.html'>warning()</a></code> or <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code> function. If you were to supply those manually then
-the stock functions would be overridden. Furthermore, if <code>actions</code> is NULL in
-this workflow, <strong>pointblank</strong> will use a <code>stop_at</code> value of <code>1</code> (providing an
-error message if there are any <em>fail</em> units). We can absolutely suppress this
-automatic stopping behavior by at each validation step by setting <code>active = FALSE</code>. In this interactive data case there is no stock function given for
-the <code>notify_at</code>. The <code>notify</code> failure state is less commonly used in this
-workflow as it is in the <em>agent</em>-based one.</p>
+<code><a href='https://rdrr.io/r/base/warning.html'>warning()</a></code> or <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code> function. For example using
+<code>small_table %&gt;% col_is_integer("date")</code> will provide a detailed stop message
+by default, indicating the reason for the failure. If you were to supply the
+<code>fns</code> for <code>stop</code> or <code>warn</code> manually then the stock functions would be
+overridden. Furthermore, if <code>actions</code> is NULL in this workflow (the default),
+<strong>pointblank</strong> will use a <code>stop_at</code> value of <code>1</code> (providing a detailed,
+context-specific error message if there are any <em>fail</em> units). We can
+absolutely suppress this automatic stopping behavior by at each validation
+step by setting <code>active = FALSE</code>. In this interactive data case, there is no
+stock function given for <code>notify_at</code>. The <code>notify</code> failure state is less
+commonly used in this workflow as it is in the <em>agent</em>-based one.</p>
 <p>When using an <em>agent</em>, we often opt to not use any functions in <code>fns</code> as the
 <code>warn</code>, <code>stop</code>, and <code>notify</code> failure states will be reported on when using
-<code>create_agent_report()</code> (and, usually that's sufficient).</p>
+<code>create_agent_report()</code> (and, usually that's sufficient). Instead, using the
+<code>end_fns</code> argument is a better choice since that scheme provides useful data
+on the entire interrogation, allowing for finer control on side effects and
+reducing potential for duplicating any side effects.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
@@ -219,50 +232,80 @@ workflow as it is in the <em>agent</em>-based one.</p>
 <code>validate_rmd()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a simple data frame with</span>
-<span class='co'># a column of numerical values</span>
-<span class='kw'>tbl</span> <span class='op'>&lt;-</span> <span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(a = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span>))
-
-<span class='co'># Create an `action_levels()` list</span>
+    <pre class="examples"><div class='input'><span class='co'># Create an `action_levels()` list</span>
 <span class='co'># with fractional values for the</span>
 <span class='co'># `warn`, `stop`, and `notify` states</span>
 <span class='kw'>al</span> <span class='op'>&lt;-</span> 
   <span class='fu'>action_levels</span>(
     warn_at = <span class='fl'>0.2</span>,
     stop_at = <span class='fl'>0.8</span>,
-    notify_at = <span class='fl'>0.345</span>
+    notify_at = <span class='fl'>0.5</span>
   )
-
+  
+<span class='co'># Use the included `small_table` dataset</span>
+<span class='co'># for the validtion example</span>
+<span class='kw'>small_table</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 13 x 8</span><span>
+#&gt;    date_time           date           a b             c      d e     f    
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> 2016-01-04 </span><span style='color: #555555;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high 
+#&gt; </span><span style='color: #555555;'> 2</span><span> 2016-01-04 </span><span style='color: #555555;'>00:32:00</span><span> 2016-01-04     3 5-egh-163     8 </span><span style='text-decoration: underline;'>10</span><span>000. TRUE  low  
+#&gt; </span><span style='color: #555555;'> 3</span><span> 2016-01-05 </span><span style='color: #555555;'>13:32:00</span><span> 2016-01-05     6 8-kdg-938     3  </span><span style='text-decoration: underline;'>2</span><span>343. TRUE  high 
+#&gt; </span><span style='color: #555555;'> 4</span><span> 2016-01-06 </span><span style='color: #555555;'>17:23:00</span><span> 2016-01-06     2 5-jdo-903    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>3</span><span>892. FALSE mid  
+#&gt; </span><span style='color: #555555;'> 5</span><span> 2016-01-09 </span><span style='color: #555555;'>12:36:00</span><span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+#&gt; </span><span style='color: #555555;'> 6</span><span> 2016-01-11 </span><span style='color: #555555;'>06:15:00</span><span> 2016-01-11     4 2-dhe-923     4  </span><span style='text-decoration: underline;'>3</span><span>291. TRUE  mid  
+#&gt; </span><span style='color: #555555;'> 7</span><span> 2016-01-15 </span><span style='color: #555555;'>18:46:00</span><span> 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+#&gt; </span><span style='color: #555555;'> 8</span><span> 2016-01-17 </span><span style='color: #555555;'>11:27:00</span><span> 2016-01-17     4 5-boe-639     2  </span><span style='text-decoration: underline;'>1</span><span>036. FALSE low  
+#&gt; </span><span style='color: #555555;'> 9</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#&gt; </span><span style='color: #555555;'>10</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#&gt; </span><span style='color: #555555;'>11</span><span> 2016-01-26 </span><span style='color: #555555;'>20:07:00</span><span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
+#&gt; </span><span style='color: #555555;'>12</span><span> 2016-01-28 </span><span style='color: #555555;'>02:51:00</span><span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  
+#&gt; </span><span style='color: #555555;'>13</span><span> 2016-01-30 </span><span style='color: #555555;'>11:23:00</span><span> 2016-01-30     1 3-dka-303    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>2</span><span>230. TRUE  high </div><div class='input'>
 <span class='co'># Validate that values in column</span>
-<span class='co'># `a` are always greater than 7 and</span>
-<span class='co'># apply the list of action levels</span>
+<span class='co'># `a` are always greater than `2` and</span>
+<span class='co'># apply the list of action levels (`al`)</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'>create_agent</span>(tbl = <span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>7</span>, actions = <span class='kw'>al</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>create_agent</span>(tbl = <span class='kw'>small_table</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>2</span>, actions = <span class='kw'>al</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>interrogate</span>()
 
 <span class='co'># The report from the agent will show</span>
 <span class='co'># that the `warn` state has been entered</span>
-<span class='co'># for the first and only validation step.</span>
-
-<span class='co'># agent</span>
-  
+<span class='co'># for the first and only validation step;</span>
+<span class='co'># Let's look at the *tibble* version of the</span>
+<span class='co'># agent report (accessible through the use</span>
+<span class='co'># of the `get_agent_report()` function)</span>
+<span class='kw'>agent</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>get_agent_report</span>(display_table = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 14</span><span>
+#&gt;       i type  columns values precon active eval  units n_pass f_pass W     S    
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     1 col_… a       2      </span><span style='color: #BB0000;'>NA</span><span>     TRUE   OK       13      9  0.692 TRUE  FALSE
+#&gt; </span><span style='color: #555555;'># … with 2 more variables: N </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, extract </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'>  
 <span class='co'># In the context of using validation</span>
-<span class='co'># stop functions directly on data, their</span>
+<span class='co'># functions directly on data, their</span>
 <span class='co'># use is commonly to trigger warnings</span>
-<span class='co'># and raise errors. The following will</span>
-<span class='co'># provide a error (but that's suppressed</span>
-<span class='co'># here).</span>
+<span class='co'># and raise errors. The following *will*</span>
+<span class='co'># provide a warning (but that's</span>
+<span class='co'># suppressed here) and the `small_table`</span>
+<span class='co'># data will be returned</span>
 <span class='fu'><a href='https://rdrr.io/r/base/warning.html'>suppressWarnings</a></span>(
-  <span class='kw'>tbl</span> <span class='op'>%&gt;%</span>
-    <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>5</span>, actions = <span class='kw'>al</span>)
-)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 1</span><span>
-#&gt;       a
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     5
-#&gt; </span><span style='color: #555555;'>2</span><span>     7
-#&gt; </span><span style='color: #555555;'>3</span><span>     8
-#&gt; </span><span style='color: #555555;'>4</span><span>     5</div><div class='input'></div></span></pre>
+  <span class='kw'>small_table</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>2</span>, actions = <span class='kw'>al</span>)
+)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 13 x 8</span><span>
+#&gt;    date_time           date           a b             c      d e     f    
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> 2016-01-04 </span><span style='color: #555555;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high 
+#&gt; </span><span style='color: #555555;'> 2</span><span> 2016-01-04 </span><span style='color: #555555;'>00:32:00</span><span> 2016-01-04     3 5-egh-163     8 </span><span style='text-decoration: underline;'>10</span><span>000. TRUE  low  
+#&gt; </span><span style='color: #555555;'> 3</span><span> 2016-01-05 </span><span style='color: #555555;'>13:32:00</span><span> 2016-01-05     6 8-kdg-938     3  </span><span style='text-decoration: underline;'>2</span><span>343. TRUE  high 
+#&gt; </span><span style='color: #555555;'> 4</span><span> 2016-01-06 </span><span style='color: #555555;'>17:23:00</span><span> 2016-01-06     2 5-jdo-903    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>3</span><span>892. FALSE mid  
+#&gt; </span><span style='color: #555555;'> 5</span><span> 2016-01-09 </span><span style='color: #555555;'>12:36:00</span><span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+#&gt; </span><span style='color: #555555;'> 6</span><span> 2016-01-11 </span><span style='color: #555555;'>06:15:00</span><span> 2016-01-11     4 2-dhe-923     4  </span><span style='text-decoration: underline;'>3</span><span>291. TRUE  mid  
+#&gt; </span><span style='color: #555555;'> 7</span><span> 2016-01-15 </span><span style='color: #555555;'>18:46:00</span><span> 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+#&gt; </span><span style='color: #555555;'> 8</span><span> 2016-01-17 </span><span style='color: #555555;'>11:27:00</span><span> 2016-01-17     4 5-boe-639     2  </span><span style='text-decoration: underline;'>1</span><span>036. FALSE low  
+#&gt; </span><span style='color: #555555;'> 9</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#&gt; </span><span style='color: #555555;'>10</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#&gt; </span><span style='color: #555555;'>11</span><span> 2016-01-26 </span><span style='color: #555555;'>20:07:00</span><span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
+#&gt; </span><span style='color: #555555;'>12</span><span> 2016-01-28 </span><span style='color: #555555;'>02:51:00</span><span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  
+#&gt; </span><span style='color: #555555;'>13</span><span> 2016-01-30 </span><span style='color: #555555;'>11:23:00</span><span> 2016-01-30     1 3-dka-303    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>2</span><span>230. TRUE  high </div><div class='input'></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

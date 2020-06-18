@@ -273,18 +273,16 @@ as the input data table to be transformed (e.g.,
 instead be supplied (e.g.,
 <code>function(x) dplyr::mutate(x, col_a = col_b + 10)</code>).</p>
 <p>Often, we will want to specify <code>actions</code> for the validation. This argument,
-present in every validation function, takes a specially-crafted list
-object that is best produced by the <code>action_levels()</code> function. Read that
-function's documentation for the lowdown on how to create reactions to
-above-threshold failure levels in validation. The basic gist is that you'll
-want at least a single threshold level (specified as either the fraction test
-units failed, or, an absolute value), often using the <code>warn_at</code> argument.
-This is especially true when <code>x</code> is a table object because, otherwise,
-nothing happens. For the <code>col_vals_*()</code>-type functions, using
-<code>action_levels(warn_at = 0.25)</code> or <code>action_levels(stop_at = 0.25)</code> are good
-choices depending on the situation (the first produces a warning when a
-quarter of the total test units fails, the other <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>s at the same
-threshold level).</p>
+present in every validation function, takes a specially-crafted list object
+that is best produced by the <code>action_levels()</code> function. Read that function's
+documentation for the lowdown on how to create reactions to above-threshold
+failure levels in validation. The basic gist is that you'll want at least a
+single threshold level (specified as either the fraction of test units
+failed, or, an absolute value), often using the <code>warn_at</code> argument. This is
+especially true when <code>x</code> is a table object because, otherwise, nothing
+happens. For the <code>col_vals_*()</code>-type functions, using <code>action_levels(warn_at = 0.25)</code> or <code>action_levels(stop_at = 0.25)</code> are good choices depending on the
+situation (the first produces a warning when a quarter of the total test
+units fails, the other <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>s at the same threshold level).</p>
 <p>Want to describe this validation step in some detail? Keep in mind that this
 is only useful if <code>x</code> is an <em>agent</em>. If that's the case, <code>brief</code> the agent
 with some text that fits. Don't worry if you don't want to do it. The

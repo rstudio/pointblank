@@ -221,9 +221,11 @@ interrogation.</p></td>
     <tr>
       <th>reporting_lang</th>
       <td><p>The language to use for automatic creation of briefs
-(short descriptions for each validation step). By default, <code>NULL</code> will
-create English (<code>"en"</code>) text. Other options include French (<code>"fr"</code>),
-German (<code>"de"</code>), Italian (<code>"it"</code>), and Spanish (<code>"es"</code>).</p></td>
+(short descriptions for each validation step) and for the agent report (a
+summary table that provides the validation plan and the results from the
+interrogation. By default, <code>NULL</code> will create English (<code>"en"</code>) text. Other
+options include French (<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), and
+Spanish (<code>"es"</code>).</p></td>
     </tr>
     </table>
 
@@ -278,9 +280,11 @@ German (<code>"de"</code>), Italian (<code>"it"</code>), and Spanish (<code>"es"
   )
 
 <span class='co'># Now create a pointblank `agent` object</span>
-<span class='co'># and give it the `al` object; the</span>
-<span class='co'># reporting will be a bit more useful if</span>
-<span class='co'># there are some target metrics</span>
+<span class='co'># and give it the `al` object (which</span>
+<span class='co'># serves as a default for all validation</span>
+<span class='co'># steps which can be overridden); the</span>
+<span class='co'># static thresholds provided by `al` will</span>
+<span class='co'># make the reporting a bit more useful</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span> 
   <span class='fu'>create_agent</span>(
     <span class='kw'>small_table</span>,

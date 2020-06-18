@@ -171,12 +171,14 @@ devtools::install_github("rich-iannone/pointblank")
 
 If you encounter a bug, have usage questions, or want to share ideas to make this package better, feel free to file an [issue](https://github.com/rich-iannone/pointblank/issues).
 
+<hr>
+
 #### How **pointblank** Fits in with Other Packages that Validate Tabular Data
 
 The **pointblank** package isn't the only one of its kind available for **R**. The reason for introducing yet another has to do with **pointblank**'s goals:
 
 - ability to work with local tables and database tables with minimal changes in the API
-- great flexibility in workflows, allowing for: (1) report-based validations, (2) inline validations, (3) validation of data in unit tests (with the set of `expect_*()` functions), and (4) validation of data to support conditional expressions (with the set of `test_*()` functions) 
+- great flexibility in workflows, allowing for: (1) report-based validations, (2) inline validations, (3) validation of data tables in unit tests (with the set of `expect_*()` functions), and (4) validation of data tables to support conditional expressions (with the set of `test_*()` functions) 
 - extra tools for understanding new datasets (`scan_data()`) and validating data in specialized R Markdown code chunks (`validate_rmd()`)
 - reporting outputs translated to multiple spoken languages
 - developing an API that closely follows tidyverse conventions by adhering to the [tidyverse style guide](https://style.tidyverse.org)
@@ -185,8 +187,12 @@ The **pointblank** package isn't the only one of its kind available for **R**. T
 While **pointblank** is trying to do something different with its own interface, it may not suit your specific needs. Here is a listing of some of the other validation packages available for **R**, with links to their respective project pages:
 
 **assertr**&nbsp;([GITHUB](https://github.com/ropensci/assertr),&nbsp;[WEBSITE](https://docs.ropensci.org/assertr))
+
 **validate**&nbsp;([GITHUB](https://github.com/data-cleaning/validate))
+
 **dataMaid**&nbsp;([GITHUB](https://github.com/ekstroem/dataMaid))
+
+<hr>
 
 ##### Code of Conduct
 

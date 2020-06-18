@@ -227,6 +227,8 @@ If you encounter a bug, have usage questions, or want to share ideas to
 make this package better, feel free to file an
 [issue](https://github.com/rich-iannone/pointblank/issues).
 
+<hr>
+
 #### How **pointblank** Fits in with Other Packages that Validate Tabular Data
 
 The **pointblank** package isn’t the only one of its kind available for
@@ -236,10 +238,10 @@ The **pointblank** package isn’t the only one of its kind available for
   - ability to work with local tables and database tables with minimal
     changes in the API
   - great flexibility in workflows, allowing for: (1) report-based
-    validations, (2) inline validations, (3) validation of data in unit
-    tests (with the set of `expect_*()` functions), and (4) validation
-    of data to support conditional expressions (with the set of
-    `test_*()` functions)
+    validations, (2) inline validations, (3) validation of data tables
+    in unit tests (with the set of `expect_*()` functions), and (4)
+    validation of data tables to support conditional expressions (with
+    the set of `test_*()` functions)
   - extra tools for understanding new datasets (`scan_data()`) and
     validating data in specialized R Markdown code chunks
     (`validate_rmd()`)
@@ -255,8 +257,12 @@ some of the other validation packages available for **R**, with links to
 their respective project pages:
 
 **assertr** ([GITHUB](https://github.com/ropensci/assertr), [WEBSITE](https://docs.ropensci.org/assertr))
+
 **validate** ([GITHUB](https://github.com/data-cleaning/validate))
+
 **dataMaid** ([GITHUB](https://github.com/ekstroem/dataMaid))
+
+<hr>
 
 ##### Code of Conduct
 

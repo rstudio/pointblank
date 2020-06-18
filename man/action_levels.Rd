@@ -14,13 +14,13 @@ stop_on_fail(stop_at = 1)
 }
 \arguments{
 \item{warn_at, stop_at, notify_at}{The threshold number or fraction of
-validation units that can provide a \emph{fail} result before entering the
+test units that can provide a \emph{fail} result before entering the
 \code{warn}, \code{stop}, or \code{notify} failure states. If this a decimal value between
 \code{0} and \code{1} then it's a proportional failure threshold (e.g., \code{0.15}
-indicates that if 15\% percent of the validation units are found to \emph{fail},
+indicates that if 15\% percent of the test units are found to \emph{fail},
 then the designated failure state is entered). Absolute values starting
 from \code{1} can be used instead, and this constitutes an absolute failure
-threshold (e.g., \code{10} means that if 10 of the validation units are found to
+threshold (e.g., \code{10} means that if 10 of the test units are found to
 \emph{fail}, the failure state is entered).}
 
 \item{fns}{A named list of functions that is to be paired with the

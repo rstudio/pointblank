@@ -49,9 +49,11 @@
 #'   will be not generated and available with the agent upon returning from the
 #'   interrogation.
 #' @param reporting_lang The language to use for automatic creation of briefs
-#'   (short descriptions for each validation step). By default, `NULL` will
-#'   create English (`"en"`) text. Other options include French (`"fr"`),
-#'   German (`"de"`), Italian (`"it"`), and Spanish (`"es"`).
+#'   (short descriptions for each validation step) and for the agent report (a
+#'   summary table that provides the validation plan and the results from the
+#'   interrogation. By default, `NULL` will create English (`"en"`) text. Other
+#'   options include French (`"fr"`), German (`"de"`), Italian (`"it"`), and
+#'   Spanish (`"es"`).
 #'   
 #' @return A `ptblank_agent` object.
 #'   
@@ -76,9 +78,11 @@
 #'   )
 #' 
 #' # Now create a pointblank `agent` object
-#' # and give it the `al` object; the
-#' # reporting will be a bit more useful if
-#' # there are some target metrics
+#' # and give it the `al` object (which
+#' # serves as a default for all validation
+#' # steps which can be overridden); the
+#' # static thresholds provided by `al` will
+#' # make the reporting a bit more useful
 #' agent <- 
 #'   create_agent(
 #'     small_table,

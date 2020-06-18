@@ -2,14 +2,14 @@
 % Please edit documentation in R/get_agent_report.R
 \name{get_agent_report}
 \alias{get_agent_report}
-\title{Get a simple report from an agent}
+\title{Get a summary report from an agent}
 \usage{
 get_agent_report(
   agent,
   arrange_by = c("i", "severity"),
   keep = c("all", "fail_states"),
   display_table = TRUE,
-  ...
+  size = "standard"
 )
 }
 \arguments{
@@ -28,41 +28,80 @@ default), and if the \strong{gt} package is installed, a display table for the
 report will be shown in the Viewer. If \code{FALSE}, or if \strong{gt} is not
 available, then a tibble will be returned.}
 
-\item{...}{Additional options passed to downstream functions.}
+\item{size}{The size of the display table, which can be either \code{"standard"}
+(the default) or \code{"small"}. This only applies to a display table (where
+\code{display_table = TRUE}).}
 }
 \value{
-A gt table object if \code{display_table = TRUE} or a tibble if
+A \strong{gt} table object if \code{display_table = TRUE} or a tibble if
 \code{display_table = FALSE}.
 }
 \description{
-We can get the essential information from an agent by using the
-\code{get_agent_report()} function. The amount of fields with intel is different
-depending on whether or not the agent performed an interrogation (with
-\code{interrogate()}). The tibble that is returned has the following columns:
+We can get an informative summary table from an agent by using the
+\code{get_agent_report()} function. The table can be provided in two substantially
+different forms: as a \strong{gt} based display table (the default), or, as a
+tibble. The amount of fields with intel is different depending on whether or
+not the agent performed an interrogation (with the \code{\link[=interrogate]{interrogate()}} function).
+Basically, before \code{\link[=interrogate]{interrogate()}} is called, the agent will contain just the
+validation plan (however many rows it has depends on how many validation
+functions were supplied a part of that plan). Post-interrogation, information
+on the passing and failing test units is provided, along with indicators on
+whether certain failure states were entered (provided they were set through
+\code{actions}). The display table variant of the agent report, the default form,
+will have the following columns:
+
+\itemize{
+\item i (unlabeled): the validation step number
+\item STEP: the name of the validation function used for the validation step
+\item COLUMNS: the names of the target columns used in the validation step
+(if applicable)
+\item VALUES: the values used in the validation step, where applicable; this
+could be as literal values, as column names, an expression, a set of
+sub-validations (for a \code{\link[=conjointly]{conjointly()}} validation step), etc.
+\item TBL: indicates whether any there were any preconditions to apply
+before interrogation; if not, a script 'I' stands for 'identity' but, if so,
+a right-facing arrow appears
+\item EVAL: a character value that denotes the result of each validation
+step functions' evaluation during interrogation
+\item UNITS: the total number of test units for the validation step
+\item PASS: the number of test units that received a \emph{pass}
+\item FAIL: the fraction of test units that received a \emph{pass}
+\item W, S, N: indicators that show whether the \code{warn}, \code{stop}, or \code{notify}
+states were entered; unset states appear as dashes, states that are set with
+thresholds appear as unfilled circles when not entered and filled when
+thresholds are exceeded (colors for W, S, and N are amber, red, and blue)
+\item EXT: a column that provides buttons with data extracts for each
+validation step where failed rows are available (as CSV files)
+}
+
+The small version of the display table (obtained using \code{size = "small"}) omits
+the \code{COLUMNS}, \code{TBL}, and \code{EXT} columns. The width of the small table is
+485px; the standard table is 875px wide.
+
+If choosing to get a tibble (with \code{display_table = FALSE}), it will have the
+following columns:
+
 \itemize{
 \item i: the validation step number
-\item type: the validation type, which mirrors the name of the validation
-step function
-\item columns: the names of the columns used in the validation step
+\item type: the name of the validation function used for the validation step
+\item columns: the names of the target columns used in the validation step
+(if applicable)
 \item values: the values used in the validation step, where applicable; for
-a \code{conjointly()} validation step, this is a listing of all sub-validations
+a \code{\link[=conjointly]{conjointly()}} validation step, this is a listing of all sub-validations
 \item precon: indicates whether any there are any preconditions to apply
 before interrogation and, if so, the number of statements used
 \item active: a logical value that indicates whether a validation step is
-set to 'active' during an interrogation
+set to \code{"active"} during an interrogation
 \item eval: a character value that denotes the result of each validation
 step functions' evaluation during interrogation
-\item units: the total number of validation units for the validation step
-\item n_pass: the number of validation units that received a \emph{pass}
-\item f_pass: the fraction of validation units that received a \emph{pass}
-\item W: a logical value stating whether the \code{warn} state was entered
-\item S: a logical value stating whether the \code{stop} state was entered
-\item N: a logical value stating whether the \code{notify} state was entered
+\item units: the total number of test units for the validation step
+\item n_pass: the number of test units that received a \emph{pass}
+\item f_pass: the fraction of test units that received a \emph{pass}
+\item W, S, N: logical value stating whether the \code{warn}, \code{stop}, or \code{notify}
+states were entered
 \item extract: a logical value that indicates whether a data extract is
 available for the validation step
 }
-If the \strong{gt} package is installed (and if \code{display_table = TRUE}, which is
-the default) then a \strong{gt} table will be displayed with the same information.
 }
 \section{Function ID}{
 
@@ -92,7 +131,24 @@ agent \%>\%
 # `agent` object anytime, but, return a
 # gt table object by using this with
 # `display_table = TRUE` (the default)
-gt_tbl <- get_agent_report(agent)
+report <- get_agent_report(agent)
+class(report)
+
+# What can you do with the report?
+# Print it from an R Markdown code,
+# use it in an email, put it in a
+# webpage, or further modify it with
+# the **gt** package
+
+# The agent report as a **gt** display
+# table comes in two sizes: "standard"
+# (the default) and "small"
+small_report <- 
+  get_agent_report(agent, size = "small")
+class(small_report)
+
+# The standard report is 875px wide
+# the small one is 485px wide
 
 }
 \seealso{

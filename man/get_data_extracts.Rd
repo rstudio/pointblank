@@ -21,11 +21,22 @@ A list of tables if \code{i} is not provided, or, a standalone table if
 \code{i} is given.
 }
 \description{
-Get data that didn't pass a validation step. The amount of data available in
-a particular extract depends on both the fraction of validation units that
-didn't pass a validation step and the level of sampling or explicit
-collection from that set of units (this is defined within the \code{\link[=interrogate]{interrogate()}}
-call).
+In an agent-based workflow, after interrogation with \code{\link[=interrogate]{interrogate()}} we can
+get the row data that didn't pass row-based validation steps with the
+\code{get_data_extracts()} function. The amount of data available in a particular
+extract depends on both the fraction of test units that didn't pass a
+validation step and the level of sampling or explicit collection from that
+set of units.
+
+The availability of data extracts for each row-based validation step is
+depends on whether \code{extract_failed} is set to \code{TRUE} within the
+\code{\link[=interrogate]{interrogate()}} call (it is by default). The amount of \emph{fail} rows extracted
+depends on the collection parameters in \code{\link[=interrogate]{interrogate()}}, and the default
+behavior is to collect up to the first 5000 \emph{fail} rows.
+
+Row-based validation steps are based on the validation functions of the form
+\verb{col_vals_*()} and also include \code{\link[=conjointly]{conjointly()}} and \code{\link[=rows_distinct]{rows_distinct()}}. Only
+those types of validation steps can provide data extracts.
 }
 \section{Function ID}{
 

@@ -36,9 +36,11 @@ will be not generated and available with the agent upon returning from the
 interrogation.}
 
 \item{reporting_lang}{The language to use for automatic creation of briefs
-(short descriptions for each validation step). By default, \code{NULL} will
-create English (\code{"en"}) text. Other options include French (\code{"fr"}),
-German (\code{"de"}), Italian (\code{"it"}), and Spanish (\code{"es"}).}
+(short descriptions for each validation step) and for the agent report (a
+summary table that provides the validation plan and the results from the
+interrogation. By default, \code{NULL} will create English (\code{"en"}) text. Other
+options include French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), and
+Spanish (\code{"es"}).}
 }
 \value{
 A \code{ptblank_agent} object.
@@ -101,9 +103,11 @@ al <-
   )
 
 # Now create a pointblank `agent` object
-# and give it the `al` object; the
-# reporting will be a bit more useful if
-# there are some target metrics
+# and give it the `al` object (which
+# serves as a default for all validation
+# steps which can be overridden); the
+# static thresholds provided by `al` will
+# make the reporting a bit more useful
 agent <- 
   create_agent(
     small_table,

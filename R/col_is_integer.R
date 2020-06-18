@@ -20,17 +20,16 @@
 #' `matches()`, and `everything()`.
 #' 
 #' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction test
-#' units failed, or, an absolute value), often using the `warn_at` argument.
-#' This is especially true when `x` is a table object because, otherwise,
-#' nothing happens. For the `col_is_*()`-type functions, using 
-#' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
-#' depending on the situation (the first produces a warning, the other
-#' `stop()`s).
+#' present in every validation function, takes a specially-crafted list object
+#' that is best produced by the [action_levels()] function. Read that function's
+#' documentation for the lowdown on how to create reactions to above-threshold
+#' failure levels in validation. The basic gist is that you'll want at least a
+#' single threshold level (specified as either the fraction of test units
+#' failed, or, an absolute value), often using the `warn_at` argument. This is
+#' especially true when `x` is a table object because, otherwise, nothing
+#' happens. For the `col_is_*()`-type functions, using `action_levels(warn_at =
+#' 1)` or `action_levels(stop_at = 1)` are good choices depending on the
+#' situation (the first produces a warning, the other `stop()`s).
 #' 
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent

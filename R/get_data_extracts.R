@@ -1,10 +1,22 @@
 #' Collect data extracts from a validation step
 #'
-#' Get data that didn't pass a validation step. The amount of data available in
-#' a particular extract depends on both the fraction of validation units that
-#' didn't pass a validation step and the level of sampling or explicit
-#' collection from that set of units (this is defined within the [interrogate()]
-#' call).
+#' @description
+#' In an agent-based workflow, after interrogation with [interrogate()] we can
+#' get the row data that didn't pass row-based validation steps with the
+#' `get_data_extracts()` function. The amount of data available in a particular
+#' extract depends on both the fraction of test units that didn't pass a
+#' validation step and the level of sampling or explicit collection from that
+#' set of units.
+#'
+#' The availability of data extracts for each row-based validation step is
+#' depends on whether `extract_failed` is set to `TRUE` within the
+#' [interrogate()] call (it is by default). The amount of *fail* rows extracted
+#' depends on the collection parameters in [interrogate()], and the default
+#' behavior is to collect up to the first 5000 *fail* rows.
+#'
+#' Row-based validation steps are based on the validation functions of the form
+#' `col_vals_*()` and also include [conjointly()] and [rows_distinct()]. Only
+#' those types of validation steps can provide data extracts.
 #'
 #' @param agent An agent object of class `ptblank_agent`. It should have had
 #'   [interrogate()] called on it, such that the validation steps were carried

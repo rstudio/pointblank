@@ -36,13 +36,13 @@
 #' `create_agent_report()` (and, usually that's sufficient).
 #' 
 #' @param warn_at,stop_at,notify_at The threshold number or fraction of
-#'   validation units that can provide a *fail* result before entering the
+#'   test units that can provide a *fail* result before entering the
 #'   `warn`, `stop`, or `notify` failure states. If this a decimal value between
 #'   `0` and `1` then it's a proportional failure threshold (e.g., `0.15`
-#'   indicates that if 15% percent of the validation units are found to *fail*,
+#'   indicates that if 15% percent of the test units are found to *fail*,
 #'   then the designated failure state is entered). Absolute values starting
 #'   from `1` can be used instead, and this constitutes an absolute failure
-#'   threshold (e.g., `10` means that if 10 of the validation units are found to
+#'   threshold (e.g., `10` means that if 10 of the test units are found to
 #'   *fail*, the failure state is entered).
 #' @param fns A named list of functions that is to be paired with the
 #'   appropriate failure states. The syntax for this list involves using failure

@@ -1,16 +1,56 @@
 # pointblank 0.3.1.9000 (development version)
 
-* The new `validate_rmd()` function can be used within an R Markdown document for **pointblank** validation testing within specialized validation code chunks inside an R Markdown document. To enable this functionality, `validate_rmd()` is called early within an R Markdown document to signal that validation should occur within specific code chunks having the `validate = TRUE` option set. Using pointblank validation step functions on data in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere. In the rendered HTML document, the successes and failures of validation tests are clearly shown with status buttons that reveal the otherwise hidden validation statements and any associated error messages.
+## New R Markdown features
 
-* Added 24 expectation functions (e.g., `expect_col_exists()`, `expect_rows_distinct()`, `expect_col_schema_match()`, etc.) as complements of the 24 validation step functions; all of these can be used for **testthat** tests of tabular data with a simplified interface that exposes an easy-to-use failure `threshold`.
+* New R Markdown validation feature allows for validation testing within specialized validation code chunks where the `validate = TRUE` option is set. Using **pointblank** validation functions on data in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere. All errors are reported in the validation code chunk after rendering the document to HTML, where green or red status buttons indicate whether all validations succeeded or failures occurred. Clicking any such button reveals the otherwise hidden validation statements and their error messages (if any). Using **pointblank** in an R Markdown workflow is enabled by default once the **pointblank** library is loaded. While the framework for such testing is set up by default, the new `validate_rmd()` function offers an opportunity to set UI and logging options.
 
-* Rewrote the internal `stock_stoppage()` and `stock_warning()` functions so that the generated error and warning messages match whether validation step functions are used directly on data or it is expectation functions that are being used.
+* Added an R Markdown template for the new R Markdown validation feature (`Pointblank Validation`).
+
+* The new `stop_if_not()` function works well as a standalone, replacement for `stopifnot()` but is also customized for use in validation checks in R Markdown documents where **pointblank** is loaded. Using `stop_if_not()` in a code chunk where the `validate = TRUE` option is set will yield the correct reporting of successes and failures whereas `stopifnot()` *does not*.
+
+* A `knit.print()` method was added to facilitate the printing of the agent report table within an R Markdown code chunk.
+
+## Breaking changes
 
 * The default behavior of using validation step functions (e.g., `col_vals_lt()`) directly on data tables has been changed. Before, a single test unit failure would trigger a warning. Now, a single test unit failing results in an error. Going back to the earlier behavior now requires the use of `actions = warn_on_fail()` (a new helper function, which has a default `warn_at` threshold value of `1`) with each invocation of a validation step function. The `stop_on_fail()` helper function is also new in this release, and has a `stop_at` threshold parameter, also with a default of `1`.
 
+## New features
+
+* Added 24 *expectation* functions (e.g., `expect_col_exists()`, `expect_rows_distinct()`, `expect_col_schema_match()`, etc.) as complements of the 24 validation functions. All of these can be used for **testthat** tests of tabular data with a simplified interface that exposes an easy-to-use failure `threshold` (defaulting to `1`).
+
+* Added 24 *test* functions (e.g., `test_col_exists()`, `test_rows_distinct()`, `test_col_schema_match()`, etc.) to further complement the 24 validation functions. These functions return a logical value: `TRUE` if the threshold (having a default of `1`) is exceeded, `FALSE` otherwise. These `test_*()` functions use the same simplified interface of the `expect_*()` functions.
+
+* Added the `col_vals_expr()`, `expect_col_vals_expr()`, and `test_col_vals_expr()` *validation*, *expectation*, and *test* functions, making it easier for DIY validations. The **dplyr** `expr()`, `case_when()`, and `between()` functions were re-exported for easier accessibility here since they work exceedingly well with the new functions.
+
+* `col_schema_match()` (and its *expect* and *test* analogues) gained new arguments: `complete` and `in_order`. These allow for some relaxation of constraints related to the completeness and ordering of columns defined in a `col_schema` object (created by `col_schema()`).
+
+* The `preconditions` argument available in all *validation*, *expectation*, and *test* functions now accepts both formula and function values (previously, only formula values were accepted).
+
+* The appearance of the agent report has improved and it's gained some new features: (1) data extracts for failing rows (on row-based validation steps) can be downloaded as CSVs via the new buttons that appear in the `EXT` column, (2) there are useful has tooltips on most fields of the table (e.g., hovering over items in `STEP` will show the brief, `TBL` icons will describe whether any preconditions were applied to the table prior to interrogation, etc.), and (3) there are printing improvements in the `COLUMNS` and `VALUES` columns (e.g., table columns are distinguished from literal values).
+
+* Improved the appearance of the email message generated by `email_blast()` and `email_preview()`. This email message, when using the `stock_msg_body()` and `stock_msg_footer()` as defaults for `msg_body` and `msg_footer`, embeds a `"small"` version of the agent report and provides some introductory text with nicer formatting than before.
+
+## Documentation improvements
+
+* All functions now have revised documentation that is more complete, has more examples, and consistent across the many *validation*, *expectation*, and *test* functions.
+
+* The package `README` now contains better graphics, some reworked examples, and a new section on the package's design goals (with a listing of other **R** packages that also focus on table validation).
+
+## Minor improvements and bug fixes
+
+* Rewrote the internal `stock_stoppage()` and `stock_warning()` functions so that the generated error and warning messages match whether validation functions are used directly on data or *expectation* functions are being used.
+
 * Console status messages when performing an interrogation now only appear in an interactive session. They will no longer appear during R Markdown rendering nor during execution of unattended scripts.
 
-* A `knit.print()` method was added to facilitate the printing of the agent report table within an R Markdown code chunk.
+* The `col_vals_regex()` *validation* function (plus the associated *expectation* and *test* functions) can now be used with database tables (on some of the DB types that support regular expressions). This has been tested on MySQL and PostgreSQL, which have differing underlying SQL implementations.
+
+* The `col_schema()` function now allows for either uppercase or lowercase SQL column types (using `.db_col_types = "sql"`). Previously, supplying SQL columns types as uppercase (e.g., "INT", "TINYINT", etc.) would always fail validation because the SQL column types of the target table are captured as lowercase values during the `create_agent()` call.
+
+* Many new tests were added to cover both the new functions and the existing functions. It's important for a validation package that testing be comprehensive and rigorous, so, this will continue to be a focus in forthcoming releases.
+
+* Fixed a duration label bug in the console status messages that appear during interrogation (now consistently has values reported in seconds)
+
+* Added column validity checks inside of internal `interrogate_*()` functions
 
 # pointblank 0.3.1.1
 

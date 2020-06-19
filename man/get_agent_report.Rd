@@ -74,9 +74,9 @@ thresholds are exceeded (colors for W, S, and N are amber, red, and blue)
 validation step where failed rows are available (as CSV files)
 }
 
-The small version of the display table (obtained using \code{size = "small"}) omits
-the \code{COLUMNS}, \code{TBL}, and \code{EXT} columns. The width of the small table is
-485px; the standard table is 875px wide.
+The small version of the display table (obtained using \code{size = "small"})
+omits the \code{COLUMNS}, \code{TBL}, and \code{EXT} columns. The width of the small table
+is 575px; the standard table is 875px wide.
 
 If choosing to get a tibble (with \code{display_table = FALSE}), it will have the
 following columns:
@@ -148,7 +148,7 @@ small_report <-
 class(small_report)
 
 # The standard report is 875px wide
-# the small one is 485px wide
+# the small one is 575px wide
 
 }
 \seealso{

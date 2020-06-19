@@ -243,7 +243,11 @@ get_agent_x_list <- function(agent,
       x <-
         list(
           time = .time,
-          report_html_small = .report_html_small
+          report_html_small = .report_html_small,
+          reporting_lang = .reporting_lang,
+          i = .i,
+          n = .n,
+          validation_set = .validation_set
         )
       
       .email_object <- 

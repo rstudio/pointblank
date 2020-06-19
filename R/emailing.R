@@ -261,12 +261,28 @@ check_msg_components_all_null <- function(msg_header, msg_body, msg_footer) {
 #' 3-3
 #' 
 #' @export
-stock_msg_body <- function() {
-  "
-Here is **pointblank** validation report that was initiated at {x$time}.
+stock_msg_body <- function(reporting_lang = NULL) {
 
-{x$report_html_small}
+paste0(
+  blastula::add_image(
+    system.file("img", "pointblank_logo.png", package = "pointblank"),
+    width = 150
+  ),
 "
+<br>
+<div style=\"text-align: center; font-size: larger;\">
+This <strong>pointblank</strong> validation report, \\
+containing <strong>{nrow(x$validation_set)}</strong> validation steps,<br>\\
+was initiated on {blastula::add_readable_time(x$time)}.
+</div>
+<br><br>
+{x$report_html_small}
+<br>
+<div style=\"text-align: center; font-size: larger;\">
+&#9678;
+</div>
+"
+)
 }
 
 #' Provide simple email message body components: footer
@@ -284,7 +300,8 @@ Here is **pointblank** validation report that was initiated at {x$time}.
 #' 
 #' @export
 stock_msg_footer <- function() {
-  "
+  
+"
 Validation performed via the `pointblank` **R** package.
   
 [Information and package documentation](https://rich-iannone.github.io/pointblank/)

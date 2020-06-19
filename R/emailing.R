@@ -272,7 +272,8 @@ paste0(
 <br>
 <div style=\"text-align: center; font-size: larger;\">
 This <strong>pointblank</strong> validation report, \\
-containing <strong>{nrow(x$validation_set)}</strong> validation steps,<br>\\
+containing <strong>{nrow(x$validation_set)}</strong> validation step\\
+{ifelse(nrow(x$validation_set) != 1, 's', '')},<br>\\
 was initiated on {blastula::add_readable_time(x$time)}.
 </div>
 <br><br>
@@ -302,9 +303,13 @@ was initiated on {blastula::add_readable_time(x$time)}.
 stock_msg_footer <- function() {
   
 "
-Validation performed via the `pointblank` **R** package.
-  
-[Information and package documentation](https://rich-iannone.github.io/pointblank/)
+<br>
+Validation performed via the <code>pointblank</code> <strong>R<strong> package.
+<br><br><br>
+<div>
+<a style=\"background-color: #999999; color: white; padding: 1em 1.5em; \\
+position: relative; text-decoration: none; text-transform: uppercase; \\
+cursor: pointer;\" href=\"https://rich-iannone.github.io/pointblank/\">Information and package documentation</a></div>
 "
 }
 

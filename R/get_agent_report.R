@@ -920,12 +920,12 @@ get_agent_report <- function(agent,
 
       gt_agent_report <- 
         gt_agent_report %>%
-        gt::cols_hide(gt::vars(columns, values, precon, extract)) %>%
+        gt::cols_hide(gt::vars(columns, eval_sym, precon, extract)) %>%
         gt::cols_width(
           gt::vars(i) ~ gt::px(30),
           gt::vars(type) ~ gt::px(170),
+          gt::vars(values) ~ gt::px(130),
           gt::vars(precon) ~ gt::px(30),
-          gt::vars(eval_sym) ~ gt::px(40),
           gt::vars(units) ~ gt::px(50),
           gt::vars(n_pass) ~ gt::px(50),
           gt::vars(n_fail) ~ gt::px(50),
@@ -948,7 +948,7 @@ get_agent_report <- function(agent,
           gt::vars(i) ~ gt::px(50),
           gt::vars(type) ~ gt::px(170),
           gt::vars(columns) ~ gt::px(120),
-          gt::vars(values) ~ gt::px(140),
+          gt::vars(values) ~ gt::px(120),
           gt::vars(precon) ~ gt::px(35),
           gt::vars(extract) ~ gt::px(65),
           gt::vars(W) ~ gt::px(30),

@@ -253,8 +253,8 @@ get_agent_x_list <- function(agent,
       .email_object <- 
         blastula::compose_email(
           header = NULL,
-          body = glue::glue(stock_msg_body()) %>% blastula::md(),
-          footer = glue::glue(stock_msg_footer()) %>% blastula::md(),
+          body = glue::glue(stock_msg_body()) %>% gt::html(),
+          footer = glue::glue(stock_msg_footer()) %>% gt::html(),
         )
       
     } else {

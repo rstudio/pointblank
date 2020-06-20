@@ -23,13 +23,15 @@
 #' `scan_data(tbl = mtcars) %>% as.character()`). The resulting HTML string is a
 #' complete HTML document where Bootstrap and jQuery are embedded within.
 #' 
-#' @param tbl The input table. This can be a data frame or a tibble.
+#' @param tbl The input table. This can be a data frame, tibble, or `tbl_dbi`.
+#'   object.
 #' @param sections The sections to include in the finalized `Table Scan` report.
 #'   A character vector with section names is required here. The sections in
 #'   their default order are: `"overview"`, `"variables"`, `"interactions"`,
 #'   `"correlations"`, `"missing"`, and `"sample"`. This vector can be comprised
 #'   of less elements and the order can be changed to suit the desired layout of
-#'   the report.
+#'   the report. For `tbl_dbi` objects, the `"interactions"` and
+#'   `"correlations"` sections are excluded.
 #' @param navbar Should there be a navigation bar anchored to the top of the
 #'   report page? By default this is `TRUE`.
 #' @param reporting_lang The language to use for label text in the report. By

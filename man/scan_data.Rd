@@ -13,14 +13,16 @@ scan_data(
 )
 }
 \arguments{
-\item{tbl}{The input table. This can be a data frame or a tibble.}
+\item{tbl}{The input table. This can be a data frame, tibble, or \code{tbl_dbi}.
+object.}
 
 \item{sections}{The sections to include in the finalized \verb{Table Scan} report.
 A character vector with section names is required here. The sections in
 their default order are: \code{"overview"}, \code{"variables"}, \code{"interactions"},
 \code{"correlations"}, \code{"missing"}, and \code{"sample"}. This vector can be comprised
 of less elements and the order can be changed to suit the desired layout of
-the report.}
+the report. For \code{tbl_dbi} objects, the \code{"interactions"} and
+\code{"correlations"} sections are excluded.}
 
 \item{navbar}{Should there be a navigation bar anchored to the top of the
 report page? By default this is \code{TRUE}.}

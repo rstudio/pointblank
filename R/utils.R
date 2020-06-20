@@ -208,12 +208,11 @@ get_tbl_information <- function(tbl) {
     }
     
     if (tbl_src != "sqlite" & tbl_src != "postgres") {
-      
       db_col_types <- 
         DBI::dbGetQuery(tbl_connection, q_types) %>%
+        dplyr::collect() %>%
         dplyr::pull(DATA_TYPE) %>%
         tolower()
-      
     }
     
     if (tbl_src == "sqlite") {

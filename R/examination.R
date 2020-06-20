@@ -560,8 +560,8 @@ get_head_tail_slices <- function(data_column) {
 get_top_bottom_slice <- function(data_column,
                                  reporting_lang) {
 
-  n_rows <- nrow(data_column)
-  
+  n_rows <- data_column %>% dplyr::count(name = "n") %>% dplyr::pull(n)
+
   data_column_freq <-
     data_column %>%
     dplyr::group_by_at(1) %>%

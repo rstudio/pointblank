@@ -333,25 +333,22 @@ get_quantile_stats_gt <- function(data_column,
     )
 }
 
-get_descriptive_stats_gt <- function(data_column,
-                                     reporting_lang) {
+calculate_quantile_stats <- function(data_column) {
   
-  # Create simple function to obtain the coefficient of variation
-  cv <- function(x) stats::sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
-  
-  descriptive_stats <- 
-    data_column %>%
+  data_column %>%
     dplyr::summarize_all(
       .funs = list(
-        mean = ~ mean(., na.rm = TRUE),
-        variance = ~ stats::var(., na.rm = TRUE),
-        sd = ~ stats::sd(., na.rm = TRUE),
-        cv = ~ cv(.)#,
-        #mad = ,
-        #kur = ,
-        #skwns = 
+        min = ~ min(., na.rm = TRUE),
+        p05 = ~ stats::quantile(., probs = 0.05, na.rm = TRUE),
+        q_1 = ~ stats::quantile(., probs = 0.25, na.rm = TRUE),
+        med = ~ stats::median(., na.rm = TRUE),
+        q_3 = ~ stats::quantile(., probs = 0.75, na.rm = TRUE),
+        p95 = ~ stats::quantile(., probs = 0.95, na.rm = TRUE),
+        max = ~ max(., na.rm = TRUE),
+        iqr = ~ stats::IQR(., na.rm = TRUE)
       )
     ) %>%
+    dplyr::mutate(range = max - min) %>%
     dplyr::summarize_all(~ round(., 2)) %>%
     as.list()
   

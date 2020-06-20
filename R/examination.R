@@ -629,6 +629,8 @@ get_character_nchar_stats_gt <- function(data_column,
         max = ~ max(., na.rm = TRUE)
       )
     ) %>%
+    dplyr::collect() %>%
+    dplyr::mutate_all(.funs = as.numeric) %>%
     as.list()
   
   dplyr::tribble(

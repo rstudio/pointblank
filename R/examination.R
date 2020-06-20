@@ -263,23 +263,51 @@ get_numeric_stats_gt <- function(data_column,
 get_quantile_stats_gt <- function(data_column,
                                   reporting_lang) {
   
-  quantile_stats <- 
-    data_column %>%
-    dplyr::summarize_all(
-      .funs = list(
-        min = ~ min(., na.rm = TRUE),
-        p05 = ~ stats::quantile(., probs = 0.05, na.rm = TRUE),
-        q_1 = ~ stats::quantile(., probs = 0.25, na.rm = TRUE),
-        med = ~ stats::median(., na.rm = TRUE),
-        q_3 = ~ stats::quantile(., probs = 0.75, na.rm = TRUE),
-        p95 = ~ stats::quantile(., probs = 0.95, na.rm = TRUE),
-        max = ~ max(., na.rm = TRUE),
-        iqr = ~ stats::IQR(., na.rm = TRUE)
-      )
-    ) %>%
-    dplyr::mutate(range = max - min) %>%
-    dplyr::summarize_all(~ round(., 2)) %>%
-    as.list()
+  if (inherits(data_column, "tbl_dbi")) {
+    
+    data_column <- data_column %>% dplyr::filter(!is.na(1))
+    
+    n_rows <- 
+      data_column %>%
+      dplyr::count(name = "n") %>%
+      dplyr::pull(n) %>%
+      as.numeric()
+    
+    if (n_rows <= 1000) {
+      
+      data_column <- data_column %>% dplyr::collect()
+      
+      quantile_stats <- calculate_quantile_stats(data_column = data_column)
+      
+    } else {
+      
+      quantile_rows <- (c(0.05, 0.25, 0.5, 0.75, 0.95) * n_rows) %>% floor()
+
+      data_arranged <- 
+        data_column %>%
+        dplyr::rename(a = 1) %>%
+        dplyr::arrange(a)
+      
+      quantile_stats <- 
+        dplyr::tibble(
+          min = data_arranged %>% dplyr::summarize(a = min(a, na.rm = TRUE)) %>% dplyr::pull(a) %>% as.numeric(),
+          p05 = data_arranged %>% head(quantile_rows[1]) %>% dplyr::arrange(desc(a)) %>% head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          q_1 = data_arranged %>% head(quantile_rows[2]) %>% dplyr::arrange(desc(a)) %>% head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          med = data_arranged %>% head(quantile_rows[3]) %>% dplyr::arrange(desc(a)) %>% head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          q_3 = data_arranged %>% head(quantile_rows[4]) %>% dplyr::arrange(desc(a)) %>% head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          p95 = data_arranged %>% head(quantile_rows[5]) %>% dplyr::arrange(desc(a)) %>% head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          max = data_arranged %>% dplyr::summarize(a = max(a, na.rm = TRUE)) %>% dplyr::pull(a) %>% as.numeric()
+        ) %>%
+        dplyr::mutate(
+          range = max - min,
+          iqr = q_3 - q_1
+        ) %>%
+        dplyr::summarize_all(~ round(., 2)) %>%
+        as.list()
+    }
+  } else {
+    quantile_stats <- calculate_quantile_stats(data_column)
+  }
 
   quantile_stats_tbl <-
     dplyr::tribble(

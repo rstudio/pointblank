@@ -1106,42 +1106,132 @@ probe_missing <- function(data) {
   
   col_names <- colnames(data)
   
-  frequency_tbl <- 
-    lapply(
-      col_names,
-      FUN = function(x) {
-        
-        data %>%
-          dplyr::select(dplyr::one_of(x)) %>%
-          dplyr::mutate(`::cut_group::` = cut(seq(nrow(data)), breaks = n_breaks)) %>%
-          dplyr::group_by(`::cut_group::`) %>% 
-          dplyr::summarize_all(~ sum(is.na(.)) / dplyr::n()) %>%
-          dplyr::select(-1) %>%
-          dplyr::mutate(col_num = which(col_names %in% x)) %>%
-          dplyr::mutate(bin_num = 1:n_breaks) %>%
-          dplyr::mutate(col_name = x) %>%
-          dplyr::rename(value = 1)
-      }) %>%
+  cuts <- floor(seq(from = 1, to = n_rows, length.out = n_breaks + 1))[-1]
+  bin_size <- cuts[1]
+  
+  if (inherits(data, "tbl_dbi")) {
+    
+    frequency_list <- 
+      lapply(
+        col_names,
+        FUN = function(`_x_`) {
+          
+          col_num <- which(col_names %in% `_x_`)
+          bin_num <- 1:20
+          missing_tally <- 0L
+          
+          missing_freq <- 
+            vapply(
+              bin_num,
+              FUN.VALUE = numeric(1),
+              FUN = function(x) {
+
+                missing_n_span <- 
+                  data %>% 
+                  dplyr::select(1, dplyr::one_of(`_x_`))
+                
+                if (ncol(missing_n_span) == 1) {
+                  
+                  missing_n_span <- 
+                    missing_n_span %>%
+                    rename(a = 1)
+                  
+                } else {
+                  
+                  missing_n_span <- 
+                    missing_n_span %>%
+                    rename(a = 2)
+                }
+                
+                missing_n_span <- 
+                  missing_n_span %>%
+                  head(cuts[x]) %>%
+                  dplyr::summarize_all(~ sum(is.na(.))) %>%
+                  dplyr::pull(a) %>%
+                  as.integer()
+                
+                missing_bin <- missing_n_span - missing_tally
+                
+                missing_tally <<- missing_tally + missing_bin
+                
+                (missing_bin / bin_size) %>% as.numeric()
+              }
+            )
+
+          dplyr::tibble(
+            value = missing_freq,
+            col_num = col_num,
+            bin_num = bin_num,
+            col_name = `_x_`
+          )
+        })
+    
+  } else {
+    
+    frequency_list <- 
+      lapply(
+        col_names,
+        FUN = function(`_x_`) {
+          
+          
+          data %>%
+            dplyr::select(dplyr::one_of(`_x_`)) %>%
+            dplyr::mutate(`::cut_group::` = dplyr::case_when(
+              dplyr::row_number() < !!cuts[1] ~ 1L,
+              dplyr::row_number() < !!cuts[2] ~ 2L,
+              dplyr::row_number() < !!cuts[3] ~ 3L,
+              dplyr::row_number() < !!cuts[4] ~ 4L,
+              dplyr::row_number() < !!cuts[5] ~ 5L,
+              dplyr::row_number() < !!cuts[6] ~ 6L,
+              dplyr::row_number() < !!cuts[7] ~ 7L,
+              dplyr::row_number() < !!cuts[8] ~ 8L,
+              dplyr::row_number() < !!cuts[9] ~ 9L,
+              dplyr::row_number() < !!cuts[10] ~ 10L,
+              dplyr::row_number() < !!cuts[11] ~ 11L,
+              dplyr::row_number() < !!cuts[12] ~ 12L,
+              dplyr::row_number() < !!cuts[13] ~ 13L,
+              dplyr::row_number() < !!cuts[14] ~ 14L,
+              dplyr::row_number() < !!cuts[15] ~ 15L,
+              dplyr::row_number() < !!cuts[16] ~ 16L,
+              dplyr::row_number() < !!cuts[17] ~ 17L,
+              dplyr::row_number() < !!cuts[18] ~ 18L,
+              dplyr::row_number() < !!cuts[19] ~ 19L,
+              dplyr::row_number() < !!cuts[20] ~ 20L,
+              TRUE ~ 20L
+            )) %>%
+            dplyr::group_by(`::cut_group::`) %>% 
+            dplyr::summarize_all(~ sum(is.na(.)) / dplyr::n()) %>%
+            dplyr::collect() %>%
+            dplyr::select(-1) %>%
+            dplyr::mutate(col_num = which(col_names %in% `_x_`)) %>%
+            dplyr::mutate(bin_num = 1:n_breaks) %>%
+            dplyr::mutate(col_name = `_x_`) %>%
+            dplyr::rename(value = 1)
+        })
+  }
+  
+  frequency_tbl <-
+    frequency_list %>%
     dplyr::bind_rows() %>%
     dplyr::mutate(value = ifelse(value == 0, NA_real_, value)) %>%
-    dplyr::mutate(col_name = factor(col_name, levels = names(data)))
-  
+    dplyr::mutate(col_name = factor(col_name, levels = colnames(data)))
   
   missing_tbl <- 
     lapply(
       col_names,
-      FUN = function(x) {
+      FUN = function(`_x_`) {
         data %>% 
-          dplyr::select(dplyr::one_of(x)) %>%
+          dplyr::select(dplyr::one_of(`_x_`)) %>%
           dplyr::group_by() %>% 
           dplyr::summarize_all(~ sum(is.na(.)) / dplyr::n()) %>%
-          dplyr::mutate(col_num = which(col_names %in% x)) %>%
-          dplyr::mutate(col_name = x) %>%
+          dplyr::collect() %>%
+          dplyr::mutate(col_num = which(col_names %in% `_x_`)) %>%
+          dplyr::mutate(col_name = `_x_`) %>%
           dplyr::rename(value = 1)
       }) %>%
     dplyr::bind_rows() %>%
     dplyr::mutate(value = round(value, 2)) %>%
-    dplyr::mutate(col_name = factor(col_name, levels = names(data)))
+    dplyr::mutate(col_name = factor(col_name, levels = colnames(data)))
   
   # cols_any_missing <-
   #   col_names[
@@ -1151,7 +1241,7 @@ probe_missing <- function(data) {
   #       dplyr::mutate_all(~ . > 0) %>%
   #       t() %>% .[, 1]
   #   ]
-  
+
   plot_missing <- 
     frequency_tbl %>%
     ggplot2::ggplot(ggplot2::aes(x = col_name, y = bin_num, fill = value)) +
@@ -1255,7 +1345,7 @@ build_examination_page <- function(data,
   } else {
     navbar <- NULL
   }
-  
+
   probe_list <-
     sections %>%
     lapply(

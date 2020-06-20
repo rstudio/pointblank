@@ -291,11 +291,11 @@ get_quantile_stats_gt <- function(data_column,
       quantile_stats <- 
         dplyr::tibble(
           min = data_arranged %>% dplyr::summarize(a = min(a, na.rm = TRUE)) %>% dplyr::pull(a) %>% as.numeric(),
-          p05 = data_arranged %>% stats::head(quantile_rows[1]) %>% dplyr::arrange(desc(a)) %>% stats::head(1) %>% dplyr::pull(a) %>% as.numeric(),
-          q_1 = data_arranged %>% stats::head(quantile_rows[2]) %>% dplyr::arrange(desc(a)) %>% stats::head(1) %>% dplyr::pull(a) %>% as.numeric(),
-          med = data_arranged %>% stats::head(quantile_rows[3]) %>% dplyr::arrange(desc(a)) %>% stats::head(1) %>% dplyr::pull(a) %>% as.numeric(),
-          q_3 = data_arranged %>% stats::head(quantile_rows[4]) %>% dplyr::arrange(desc(a)) %>% stats::head(1) %>% dplyr::pull(a) %>% as.numeric(),
-          p95 = data_arranged %>% stats::head(quantile_rows[5]) %>% dplyr::arrange(desc(a)) %>% stats::head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          p05 = data_arranged %>% utils::head(quantile_rows[1]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          q_1 = data_arranged %>% utils::head(quantile_rows[2]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          med = data_arranged %>% utils::head(quantile_rows[3]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          q_3 = data_arranged %>% utils::head(quantile_rows[4]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          p95 = data_arranged %>% utils::head(quantile_rows[5]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
           max = data_arranged %>% dplyr::summarize(a = max(a, na.rm = TRUE)) %>% dplyr::pull(a) %>% as.numeric()
         ) %>%
         dplyr::mutate(
@@ -455,7 +455,7 @@ get_common_values_gt <- function(data_column,
 
   if (n_rows_common_values_tbl > 10) {
     
-    top_ten_rows <- common_values_tbl %>% stats::head(10)
+    top_ten_rows <- common_values_tbl %>% utils::head(10)
 
     other_values_tbl <-
       common_values_tbl %>% 
@@ -476,7 +476,7 @@ get_common_values_gt <- function(data_column,
     common_values_gt <-
       dplyr::bind_rows(
         top_ten_rows %>% 
-          stats::head(9) %>%
+          utils::head(9) %>%
           dplyr::collect() %>%
           dplyr::mutate(
             n = as.numeric(n),
@@ -565,7 +565,7 @@ get_top_bottom_slice <- function(data_column,
   data_column_top_n <-
     data_column_freq %>%
     dplyr::arrange(dplyr::desc(!! name_2)) %>%
-    stats::head(10) %>%
+    utils::head(10) %>%
     dplyr::collect()
   
   data_column_top_n[, 3] <- data_column_top_n[, 2, drop = TRUE] / n_rows
@@ -574,7 +574,7 @@ get_top_bottom_slice <- function(data_column,
   data_column_bottom_n <- 
     data_column_freq %>%
     dplyr::arrange(!! name_2) %>%
-    stats::head(10) %>%
+    utils::head(10) %>%
     dplyr::collect()
   
   data_column_bottom_n[, 3] <- data_column_bottom_n[, 2, drop = TRUE] / n_rows
@@ -1132,7 +1132,7 @@ probe_missing <- function(data) {
                 
                 missing_n_span <- 
                   missing_n_span %>%
-                  stats::head(cuts[x]) %>%
+                  utils::head(cuts[x]) %>%
                   dplyr::summarize_all(~ sum(is.na(.))) %>%
                   dplyr::pull(a) %>%
                   as.integer()

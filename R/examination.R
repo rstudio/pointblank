@@ -1428,7 +1428,7 @@ build_examination_page <- function(data,
     htmltools::tagList(
       htmltools::HTML("<!doctype html>"),
       htmltools::tags$html(
-        lang = "en",
+        lang = reporting_lang,
         htmltools::HTML(
           "<head>\n",
           "   <meta charset=\"utf-8\">\n",
@@ -1486,7 +1486,7 @@ build_examination_page <- function(data,
 probe_overview_stats_assemble <- function(data,
                                           tbl_name,
                                           reporting_lang) {
- 
+
   if (is.na(tbl_name)) {
     header <- section_title_overview_ts[[reporting_lang]]
   } else {

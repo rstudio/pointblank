@@ -617,7 +617,7 @@ get_top_bottom_slice <- function(data_column,
 
 get_character_nchar_stats_gt <- function(data_column,
                                          reporting_lang) {
-  
+
   character_nchar_stats <- 
     data_column %>%
     dplyr::mutate_all(.funs = nchar) %>%
@@ -625,8 +625,8 @@ get_character_nchar_stats_gt <- function(data_column,
     dplyr::summarize_all(
       .funs = list(
         mean = ~ mean(., na.rm = TRUE),
-        min = ~min(., na.rm = TRUE),
-        max = ~max(., na.rm = TRUE)
+        min = ~ min(., na.rm = TRUE),
+        max = ~ max(., na.rm = TRUE)
       )
     ) %>%
     as.list()

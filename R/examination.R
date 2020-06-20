@@ -461,10 +461,22 @@ get_common_values_gt <- function(data_column,
     dplyr::arrange(desc(n)) %>%
     dplyr::ungroup()
   
-  if (nrow(common_values_tbl) > 10) {
+  n_rows_common_values_tbl <- 
+    common_values_tbl %>%
+    dplyr::count(name = "n", wt = n) %>%
+    dplyr::pull(n)
+
+  if (n_rows_common_values_tbl > 10) {
     
-    other_values_tbl <- common_values_tbl %>% dplyr::slice(-c(1:10))
-    other_values_distinct <- nrow(other_values_tbl)
+    top_ten_rows <- common_values_tbl %>% head(10)
+
+    other_values_tbl <-
+      common_values_tbl %>% 
+      dplyr::anti_join(top_ten_rows, by = colnames(common_values_tbl)) %>% 
+      dplyr::arrange(desc(n))
+    
+    other_values_distinct <- 
+      other_values_tbl %>% dplyr::count(name = "n", wt = n) %>% dplyr::pull(n)
     
     other_values_n <- 
       other_values_tbl %>%
@@ -476,9 +488,12 @@ get_common_values_gt <- function(data_column,
 
     common_values_gt <-
       dplyr::bind_rows(
-        common_values_tbl %>%
-          dplyr::slice(1:9) %>%
-          dplyr::mutate(frequency = n / n_rows) %>%
+        top_ten_rows %>% 
+          head(9) %>%
+          dplyr::collect() %>%
+          dplyr::mutate(
+            n = as.numeric(n),
+            frequency = n / n_rows) %>%
           dplyr::rename(value = 1) %>%
           dplyr::mutate(value = as.character(value)),
         dplyr::tibble(
@@ -509,6 +524,7 @@ get_common_values_gt <- function(data_column,
     
     common_values_gt <-
       common_values_tbl %>%
+      dplyr::collect() %>%
       dplyr::mutate(frequency = n / n_rows) %>%
       dplyr::rename(value = 1) %>%
       dplyr::mutate(value = as.character(value)) %>%

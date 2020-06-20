@@ -223,7 +223,7 @@ get_column_description_gt <- function(data_column,
 
 get_numeric_stats_gt <- function(data_column,
                                  reporting_lang) {
-  
+
   summary_stats <- 
     data_column %>%
     dplyr::summarize_all(
@@ -233,6 +233,7 @@ get_numeric_stats_gt <- function(data_column,
         ~ max(., na.rm = TRUE)
       )
     ) %>%
+    dplyr::collect() %>%
     dplyr::summarize_all(~ round(., 2))
   
   mean <- summary_stats$mean

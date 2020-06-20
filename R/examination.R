@@ -1121,13 +1121,13 @@ probe_missing <- function(data) {
                   
                   missing_n_span <- 
                     missing_n_span %>%
-                    rename(a = 1)
+                    dplyr::rename(a = 1)
                   
                 } else {
                   
                   missing_n_span <- 
                     missing_n_span %>%
-                    rename(a = 2)
+                    dplyr::rename(a = 2)
                 }
                 
                 missing_n_span <- 

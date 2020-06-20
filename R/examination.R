@@ -351,7 +351,82 @@ calculate_quantile_stats <- function(data_column) {
     dplyr::mutate(range = max - min) %>%
     dplyr::summarize_all(~ round(., 2)) %>%
     as.list()
+}
+
+get_descriptive_stats_gt <- function(data_column,
+                                     reporting_lang) {
   
+  if (inherits(data_column, "tbl_dbi")) {
+    
+    data_column <- data_column %>% dplyr::filter(!is.na(1))
+
+    mean <-
+      data_column %>%
+      dplyr::rename(a = 1) %>%
+      dplyr::group_by() %>%
+      dplyr::summarize("__mean__"  = mean(a, na.rm = TRUE)) %>%
+      dplyr::pull(`__mean__`)
+    
+    variance <-
+      data_column %>%
+      dplyr::rename(a = 1) %>%
+      dplyr::mutate(
+        "__diff__" = (!!mean - a)^2
+      ) %>%
+      dplyr::group_by() %>%
+      dplyr::summarize(
+        "__var__"  = mean(`__diff__`, na.rm = TRUE)
+      ) %>%
+      dplyr::pull(`__var__`)
+    
+    # variance <-
+    #   data_column %>%
+    #   dplyr::rename(a = 1) %>%
+    #   dplyr::mutate(
+    #     "__mean__" = mean(a, na.rm = TRUE),
+    #     "__diff__" = (`__mean__` - a)^2
+    #   ) %>%
+    #   dplyr::group_by() %>%
+    #   dplyr::summarize(
+    #     "__var__"  = mean(`__diff__`, na.rm = TRUE)
+    #   ) %>%
+    #   dplyr::pull(`__var__`)
+    
+    sd <- variance^0.5
+    cv <- sd / mean
+    
+    descriptive_stats <- 
+      dplyr::tibble(
+        mean = mean,
+        variance = variance,
+        sd = sd,
+        cv = cv
+      ) %>%
+      dplyr::summarize_all(~ round(., 2)) %>%
+      as.list()
+  
+  } else {
+    
+    # Create simple function to obtain the coefficient of variation
+    cv <- function(x) stats::sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
+    
+    descriptive_stats <- 
+      data_column %>%
+      dplyr::summarize_all(
+        .funs = list(
+          mean = ~ mean(., na.rm = TRUE),
+          variance = ~ stats::var(., na.rm = TRUE),
+          sd = ~ stats::sd(., na.rm = TRUE),
+          cv = ~ cv(.)#,
+          #mad = ,
+          #kur = ,
+          #skwns = 
+        )
+      ) %>%
+      dplyr::summarize_all(~ round(., 2)) %>%
+      as.list()
+  }
+
   descriptive_stats_tbl <-
     dplyr::tribble(
       ~label,                                        ~value,

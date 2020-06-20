@@ -54,10 +54,9 @@ scan_data <- function(tbl,
   
   # nocov start
   
-  # Stop function if a `tbl_dbi` object is supplied as the `tbl`
+  # Limit components if a `tbl_dbi` object is supplied as the `tbl`
   if (inherits(tbl, "tbl_dbi")) {
-    stop("Tables of class `tbl_dbi` aren't supported in `scan_data()`.",
-         call. = FALSE)
+    sections <- setdiff(sections, c("interactions", "correlations"))
   }
   
   # nocov end

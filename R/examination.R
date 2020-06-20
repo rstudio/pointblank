@@ -568,7 +568,12 @@ get_top_bottom_slice <- function(data_column,
     dplyr::count() %>%
     dplyr::ungroup()
   
-  colnames(data_column_freq) <- c(tbl_lab_value[[reporting_lang]], tbl_lab_count[[reporting_lang]])
+  name_1 <- rlang::sym(tbl_lab_value[[reporting_lang]])
+  name_2 <- rlang::sym(tbl_lab_count[[reporting_lang]])
+  
+  data_column_freq <- 
+    data_column_freq %>%
+    dplyr::select(!! name_1 := 1, !! name_2 := 2)
   
   data_column_top_n <-
     data_column_freq %>%

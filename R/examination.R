@@ -1099,6 +1099,10 @@ probe_missing <- function(data) {
   } else {
     n_breaks <- 20
   }
+
+  if (n_rows <= 1000) {
+    data <- dplyr::collect(data)
+  }
   
   col_names <- colnames(data)
   

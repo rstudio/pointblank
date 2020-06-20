@@ -108,7 +108,7 @@ probe_overview_stats <- function(data,
 probe_columns <- function(data,
                           reporting_lang) {
 
-  n_rows <- nrow(data)
+  n_rows <- data %>% dplyr::count(name = "n") %>% dplyr::pull(n)
   
   tbl_info <- get_tbl_information(tbl = data)
   
@@ -142,7 +142,7 @@ probe_columns <- function(data,
 get_column_description_gt <- function(data_column,
                                       n_rows,
                                       reporting_lang) {
-  
+
   distinct_count <- 
     data_column %>%
     dplyr::distinct() %>%
@@ -160,9 +160,12 @@ get_column_description_gt <- function(data_column,
   
   na_cells <- 
     data_column %>%
-    dplyr::summarize(sum(is.na(.))) %>%
-    dplyr::pull(1) %>%
-    as.integer()
+    dplyr::select(dplyr::everything()) %>%
+    dplyr::summarise_all(~ sum(is.na(.))) %>%
+    dplyr::collect() %>% 
+    t() %>%
+    as.vector() %>%
+    sum()
   
   na_cells_pct <- 
     if (na_cells == 0) {

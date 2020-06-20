@@ -577,8 +577,7 @@ get_top_bottom_slice <- function(data_column,
   
   data_column_top_n <-
     data_column_freq %>%
-    dplyr::arrange_at(2, .funs = list(~ dplyr::desc(.))) %>%
-    dplyr::slice(1:10)
+    dplyr::arrange(dplyr::desc(!! name_2)) %>%
   
   data_column_top_n[, 3] <- data_column_top_n[, 2, drop = TRUE] / n_rows
   colnames(data_column_top_n)[3] <- tbl_lab_frequency[[reporting_lang]]

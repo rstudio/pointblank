@@ -78,7 +78,7 @@ scan_data <- function(tbl,
   
   # Normalize the reporting language identifier and stop if necessary
   reporting_lang <- normalize_reporting_language(reporting_lang)
-  
+
   # Attempt to get the table name through `match.call()` and `deparse()`
   tbl_name <- deparse(match.call()$tbl)
   
@@ -87,7 +87,7 @@ scan_data <- function(tbl,
   if (tbl_name == ".") {
     tbl_name <- NA
   }
-  
+
   build_examination_page(
     data = tbl,
     tbl_name = tbl_name,

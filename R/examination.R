@@ -6,39 +6,30 @@ probe_overview_stats <- function(data,
                                  reporting_lang) {
 
   n_cols <- ncol(data)
-  n_rows <- nrow(data)
+  n_rows <- data %>% dplyr::count(name = "n") %>% dplyr::pull(n) %>% as.numeric()
 
-  na_cells_1 <- data %>% dplyr::select_if(function(x) any(is.na(x)))
-  
-  if (ncol(na_cells_1) > 0) {
-    
-    na_cells <-
-      na_cells_1 %>%
-      dplyr::filter(is.na(.)) %>%
-      nrow()
-    
-  } else {
-    na_cells <- 0L
-  }
-  
+  na_cells <- 
+    data %>%
+    dplyr::select(dplyr::everything()) %>%
+    dplyr::summarise_all(~ sum(is.na(.))) %>%
+    dplyr::collect() %>% 
+    t() %>%
+    as.vector() %>%
+    sum()
+
   tbl_info <- get_tbl_information(tbl = data)
   
   tbl_src <- tbl_info$tbl_src
   r_col_types <- tbl_info$r_col_types
+
+  n_rows_distinct <- 
+    data %>%
+    dplyr::distinct() %>%
+    dplyr::count(name = "n") %>%
+    dplyr::pull(n) %>%
+    as.numeric()
   
-  duplicate_rows <- 
-    suppressMessages(
-      create_agent(tbl = data %>% dplyr::select_at(which(r_col_types != "list"))) %>%
-        rows_distinct() %>%
-        interrogate() %>%
-        unclass() %>%
-        .$validation_set %>%
-        .$tbl_checked %>% .[[1]] %>% .[[1]] %>%
-        dplyr::select(pb_is_good_) %>%
-        dplyr::summarize(duplicates = sum(!pb_is_good_)) %>%
-        dplyr::pull(duplicates) %>%
-        as.integer()
-    )
+  duplicate_rows <- n_rows - n_rows_distinct
   
   na_cells_pct <- 
     if (na_cells == 0) {

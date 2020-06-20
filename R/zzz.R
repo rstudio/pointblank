@@ -27,6 +27,10 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
 utils::globalVariables(
   c(
     ".",
+    "__diff__",
+    "__mean__",
+    "__var__",
+    "a",
     "action",
     "active",
     "::all_na::",
@@ -71,6 +75,8 @@ utils::globalVariables(
     "pb_is_good_",
     "precon",
     "preconditions",
+    "q_1",
+    "q_3",
     "%REGEXP%",
     "S",
     "schema",

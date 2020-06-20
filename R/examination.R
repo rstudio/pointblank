@@ -379,19 +379,6 @@ get_descriptive_stats_gt <- function(data_column,
       ) %>%
       dplyr::pull(`__var__`)
     
-    # variance <-
-    #   data_column %>%
-    #   dplyr::rename(a = 1) %>%
-    #   dplyr::mutate(
-    #     "__mean__" = mean(a, na.rm = TRUE),
-    #     "__diff__" = (`__mean__` - a)^2
-    #   ) %>%
-    #   dplyr::group_by() %>%
-    #   dplyr::summarize(
-    #     "__var__"  = mean(`__diff__`, na.rm = TRUE)
-    #   ) %>%
-    #   dplyr::pull(`__var__`)
-    
     sd <- variance^0.5
     cv <- sd / mean
     

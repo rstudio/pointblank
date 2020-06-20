@@ -452,7 +452,7 @@ get_descriptive_stats_gt <- function(data_column,
 get_common_values_gt <- function(data_column,
                                  reporting_lang) {
   
-  n_rows <- nrow(data_column)
+  n_rows <- data_column %>% dplyr::count(name = "n") %>% dplyr::pull(n)
 
   common_values_tbl <- 
     data_column %>%

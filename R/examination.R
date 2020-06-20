@@ -1090,10 +1090,10 @@ get_corr_plot <- function(mat,
 # TODO: report missing values based on user input (e.g., "9999", empty strings)
 
 probe_missing <- function(data) {
-
-  n_cols <- ncol(data)
-  n_rows <- nrow(data)
   
+  n_cols <- ncol(data)
+  n_rows <- data %>% dplyr::count(name = "n") %>% dplyr::pull(n) %>% as.numeric()
+
   if (n_rows < 20) {
     n_breaks <- n_rows
   } else {

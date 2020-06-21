@@ -662,9 +662,13 @@ get_character_nchar_histogram <- function(data_column,
       data_column %>%
       dplyr::mutate_all(.funs = nchar) %>%
       dplyr::rename(nchar = 1) %>%
+      dplyr::group_by(nchar) %>%
+      dplyr::summarize(n = n()) %>%
       dplyr::collect() %>%
-      ggplot2::ggplot(ggplot2::aes(nchar)) +
-      ggplot2::geom_histogram(stat = "count", bins = 10, fill = "steelblue") +
+      dplyr::filter(!is.na(nchar)) %>%
+      dplyr::mutate_all(.funs = as.numeric) %>%
+      ggplot2::ggplot(ggplot2::aes(x = nchar, y = n)) +
+      ggplot2::geom_col(fill = "steelblue") +
       ggplot2::labs(x = x_label, y = y_label) +
       ggplot2::theme_minimal()
   )

@@ -110,7 +110,11 @@ probe_overview_stats <- function(data,
 probe_columns <- function(data,
                           reporting_lang) {
 
-  n_rows <- data %>% dplyr::count(name = "n") %>% dplyr::pull(n)
+  n_rows <- 
+    data %>%
+    dplyr::count(name = "n") %>%
+    dplyr::pull(n) %>%
+    as.numeric()
   
   tbl_info <- get_tbl_information(tbl = data)
   

@@ -8,14 +8,16 @@ probe_overview_stats <- function(data,
   n_cols <- ncol(data)
   n_rows <- data %>% dplyr::count(name = "n") %>% dplyr::pull(n) %>% as.numeric()
 
-  na_cells <- 
-    data %>%
-    dplyr::select(dplyr::everything()) %>%
-    dplyr::summarise_all(~ sum(is.na(.))) %>%
-    dplyr::collect() %>% 
-    t() %>%
-    as.vector() %>%
-    sum()
+  suppressWarnings(
+    na_cells <- 
+      data %>%
+      dplyr::select(dplyr::everything()) %>%
+      dplyr::summarise_all(~ sum(is.na(.))) %>%
+      dplyr::collect() %>% 
+      t() %>%
+      as.vector() %>%
+      sum()
+  )
 
   tbl_info <- get_tbl_information(tbl = data)
   

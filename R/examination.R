@@ -669,6 +669,7 @@ get_character_nchar_histogram <- function(data_column,
       dplyr::mutate_all(.funs = as.numeric) %>%
       ggplot2::ggplot(ggplot2::aes(x = nchar, y = n)) +
       ggplot2::geom_col(fill = "steelblue") +
+      ggplot2::geom_hline(yintercept = 0, color = "#B2B2B2") +
       ggplot2::labs(x = x_label, y = y_label) +
       ggplot2::theme_minimal()
   )

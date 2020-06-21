@@ -1254,7 +1254,7 @@ probe_missing <- function(data) {
     ) +
     ggplot2::scale_y_continuous(
       breaks = c(0, 1, 20),
-      labels = c("", as.character(n_rows), "0")
+      labels = c("", as.character(n_rows), "1")
     ) +
     ggplot2::geom_label(
       data = missing_tbl,

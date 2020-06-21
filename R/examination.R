@@ -293,6 +293,7 @@ get_quantile_stats_gt <- function(data_column,
       data_arranged <- 
         data_column %>%
         dplyr::rename(a = 1) %>%
+        dplyr::filter(!is.na(a)) %>%
         dplyr::arrange(a)
       
       quantile_stats <- 

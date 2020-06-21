@@ -663,7 +663,7 @@ get_character_nchar_histogram <- function(data_column,
       dplyr::mutate_all(.funs = nchar) %>%
       dplyr::rename(nchar = 1) %>%
       dplyr::group_by(nchar) %>%
-      dplyr::summarize(n = n()) %>%
+      dplyr::summarize(n = dplyr::n()) %>%
       dplyr::collect() %>%
       dplyr::filter(!is.na(nchar)) %>%
       dplyr::mutate_all(.funs = as.numeric) %>%

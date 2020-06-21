@@ -115,7 +115,7 @@ probe_columns <- function(data,
   tbl_info <- get_tbl_information(tbl = data)
   
   col_names <- tbl_info$col_names
-  col_types <- tbl_info$r_col_types
+  col_types <- tbl_info$r_col_types %>% gsub("integer64", "integer", ., fixed = TRUE)
   
   column_descriptions <- 
     lapply(

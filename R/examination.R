@@ -672,6 +672,7 @@ get_character_nchar_histogram <- function(data_column,
       ggplot2::geom_hline(yintercept = 0, color = "#B2B2B2") +
       ggplot2::labs(x = x_label, y = y_label) +
       ggplot2::scale_x_continuous(limits = c(0, NA)) +
+      ggplot2::scale_y_continuous(labels = scales::comma_format()) +
       ggplot2::theme_minimal()
   )
   

@@ -23,13 +23,15 @@
 #' `scan_data(tbl = mtcars) %>% as.character()`). The resulting HTML string is a
 #' complete HTML document where Bootstrap and jQuery are embedded within.
 #' 
-#' @param tbl The input table. This can be a data frame or a tibble.
+#' @param tbl The input table. This can be a data frame, tibble, or `tbl_dbi`.
+#'   object.
 #' @param sections The sections to include in the finalized `Table Scan` report.
 #'   A character vector with section names is required here. The sections in
 #'   their default order are: `"overview"`, `"variables"`, `"interactions"`,
 #'   `"correlations"`, `"missing"`, and `"sample"`. This vector can be comprised
 #'   of less elements and the order can be changed to suit the desired layout of
-#'   the report.
+#'   the report. For `tbl_dbi` objects, the `"interactions"` and
+#'   `"correlations"` sections are excluded.
 #' @param navbar Should there be a navigation bar anchored to the top of the
 #'   report page? By default this is `TRUE`.
 #' @param reporting_lang The language to use for label text in the report. By
@@ -54,10 +56,9 @@ scan_data <- function(tbl,
   
   # nocov start
   
-  # Stop function if a `tbl_dbi` object is supplied as the `tbl`
+  # Limit components if a `tbl_dbi` object is supplied as the `tbl`
   if (inherits(tbl, "tbl_dbi")) {
-    stop("Tables of class `tbl_dbi` aren't supported in `scan_data()`.",
-         call. = FALSE)
+    sections <- setdiff(sections, c("interactions", "correlations"))
   }
   
   # nocov end
@@ -79,7 +80,7 @@ scan_data <- function(tbl,
   
   # Normalize the reporting language identifier and stop if necessary
   reporting_lang <- normalize_reporting_language(reporting_lang)
-  
+
   # Attempt to get the table name through `match.call()` and `deparse()`
   tbl_name <- deparse(match.call()$tbl)
   
@@ -88,7 +89,7 @@ scan_data <- function(tbl,
   if (tbl_name == ".") {
     tbl_name <- NA
   }
-  
+
   build_examination_page(
     data = tbl,
     tbl_name = tbl_name,

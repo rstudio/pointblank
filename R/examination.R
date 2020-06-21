@@ -6,39 +6,32 @@ probe_overview_stats <- function(data,
                                  reporting_lang) {
 
   n_cols <- ncol(data)
-  n_rows <- nrow(data)
+  n_rows <- data %>% dplyr::count(name = "n") %>% dplyr::pull(n) %>% as.numeric()
 
-  na_cells_1 <- data %>% dplyr::select_if(function(x) any(is.na(x)))
-  
-  if (ncol(na_cells_1) > 0) {
-    
-    na_cells <-
-      na_cells_1 %>%
-      dplyr::filter(is.na(.)) %>%
-      nrow()
-    
-  } else {
-    na_cells <- 0L
-  }
-  
+  suppressWarnings(
+    na_cells <- 
+      data %>%
+      dplyr::select(dplyr::everything()) %>%
+      dplyr::summarise_all(~ sum(is.na(.))) %>%
+      dplyr::collect() %>% 
+      t() %>%
+      as.vector() %>%
+      sum()
+  )
+
   tbl_info <- get_tbl_information(tbl = data)
   
   tbl_src <- tbl_info$tbl_src
   r_col_types <- tbl_info$r_col_types
+
+  n_rows_distinct <- 
+    data %>%
+    dplyr::distinct() %>%
+    dplyr::count(name = "n") %>%
+    dplyr::pull(n) %>%
+    as.numeric()
   
-  duplicate_rows <- 
-    suppressMessages(
-      create_agent(tbl = data %>% dplyr::select_at(which(r_col_types != "list"))) %>%
-        rows_distinct() %>%
-        interrogate() %>%
-        unclass() %>%
-        .$validation_set %>%
-        .$tbl_checked %>% .[[1]] %>% .[[1]] %>%
-        dplyr::select(pb_is_good_) %>%
-        dplyr::summarize(duplicates = sum(!pb_is_good_)) %>%
-        dplyr::pull(duplicates) %>%
-        as.integer()
-    )
+  duplicate_rows <- n_rows - n_rows_distinct
   
   na_cells_pct <- 
     if (na_cells == 0) {
@@ -117,12 +110,16 @@ probe_overview_stats <- function(data,
 probe_columns <- function(data,
                           reporting_lang) {
 
-  n_rows <- nrow(data)
+  n_rows <- 
+    data %>%
+    dplyr::count(name = "n") %>%
+    dplyr::pull(n) %>%
+    as.numeric()
   
   tbl_info <- get_tbl_information(tbl = data)
   
   col_names <- tbl_info$col_names
-  col_types <- tbl_info$r_col_types
+  col_types <- tbl_info$r_col_types %>% gsub("integer64", "integer", ., fixed = TRUE)
   
   column_descriptions <- 
     lapply(
@@ -151,7 +148,7 @@ probe_columns <- function(data,
 get_column_description_gt <- function(data_column,
                                       n_rows,
                                       reporting_lang) {
-  
+
   distinct_count <- 
     data_column %>%
     dplyr::distinct() %>%
@@ -169,9 +166,12 @@ get_column_description_gt <- function(data_column,
   
   na_cells <- 
     data_column %>%
-    dplyr::summarize(sum(is.na(.))) %>%
-    dplyr::pull(1) %>%
-    as.integer()
+    dplyr::select(dplyr::everything()) %>%
+    dplyr::summarise_all(~ sum(is.na(.))) %>%
+    dplyr::collect() %>% 
+    t() %>%
+    as.vector() %>%
+    sum()
   
   na_cells_pct <- 
     if (na_cells == 0) {
@@ -229,7 +229,7 @@ get_column_description_gt <- function(data_column,
 
 get_numeric_stats_gt <- function(data_column,
                                  reporting_lang) {
-  
+
   summary_stats <- 
     data_column %>%
     dplyr::summarize_all(
@@ -239,7 +239,9 @@ get_numeric_stats_gt <- function(data_column,
         ~ max(., na.rm = TRUE)
       )
     ) %>%
-    dplyr::summarize_all(~ round(., 2))
+    dplyr::collect() %>%
+    dplyr::summarize_all(~ round(., 2)) %>%
+    dplyr::mutate_all(.funs = as.numeric)
   
   mean <- summary_stats$mean
   min <- summary_stats$min
@@ -268,23 +270,58 @@ get_numeric_stats_gt <- function(data_column,
 get_quantile_stats_gt <- function(data_column,
                                   reporting_lang) {
   
-  quantile_stats <- 
-    data_column %>%
-    dplyr::summarize_all(
-      .funs = list(
-        min = ~ min(., na.rm = TRUE),
-        p05 = ~ stats::quantile(., probs = 0.05, na.rm = TRUE),
-        q_1 = ~ stats::quantile(., probs = 0.25, na.rm = TRUE),
-        med = ~ stats::median(., na.rm = TRUE),
-        q_3 = ~ stats::quantile(., probs = 0.75, na.rm = TRUE),
-        p95 = ~ stats::quantile(., probs = 0.95, na.rm = TRUE),
-        max = ~ max(., na.rm = TRUE),
-        iqr = ~ stats::IQR(., na.rm = TRUE)
-      )
-    ) %>%
-    dplyr::mutate(range = max - min) %>%
-    dplyr::summarize_all(~ round(., 2)) %>%
-    as.list()
+  if (inherits(data_column, "tbl_dbi")) {
+    
+    data_column <- data_column %>% dplyr::filter(!is.na(1))
+    
+    n_rows <- 
+      data_column %>%
+      dplyr::count(name = "n") %>%
+      dplyr::pull(n) %>%
+      as.numeric()
+    
+    if (n_rows <= 1000) {
+      
+      data_column <- data_column %>% dplyr::collect()
+      
+      quantile_stats <- calculate_quantile_stats(data_column = data_column)
+      
+    } else {
+
+      data_arranged <- 
+        data_column %>%
+        dplyr::rename(a = 1) %>%
+        dplyr::filter(!is.na(a)) %>%
+        dplyr::arrange(a)
+      
+      n_rows_data <-  
+        data_arranged %>%
+        dplyr::count(name = "n") %>%
+        dplyr::pull(n) %>%
+        as.numeric()
+      
+      quantile_rows <- floor(c(0.05, 0.25, 0.5, 0.75, 0.95) * n_rows_data)
+
+      quantile_stats <-
+        dplyr::tibble(
+          min = data_arranged %>% dplyr::summarize(a = min(a, na.rm = TRUE)) %>% dplyr::pull(a) %>% as.numeric(),
+          p05 = data_arranged %>% utils::head(quantile_rows[1]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          q_1 = data_arranged %>% utils::head(quantile_rows[2]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          med = data_arranged %>% utils::head(quantile_rows[3]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          q_3 = data_arranged %>% utils::head(quantile_rows[4]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          p95 = data_arranged %>% utils::head(quantile_rows[5]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
+          max = data_arranged %>% dplyr::summarize(a = max(a, na.rm = TRUE)) %>% dplyr::pull(a) %>% as.numeric()
+        ) %>%
+        dplyr::mutate(
+          range = max - min,
+          iqr = q_3 - q_1
+        ) %>%
+        dplyr::summarize_all(~ round(., 2)) %>%
+        as.list()
+    }
+  } else {
+    quantile_stats <- calculate_quantile_stats(data_column)
+  }
 
   quantile_stats_tbl <-
     dplyr::tribble(
@@ -310,28 +347,89 @@ get_quantile_stats_gt <- function(data_column,
     )
 }
 
+calculate_quantile_stats <- function(data_column) {
+  
+  data_column %>%
+    dplyr::summarize_all(
+      .funs = list(
+        min = ~ min(., na.rm = TRUE),
+        p05 = ~ stats::quantile(., probs = 0.05, na.rm = TRUE),
+        q_1 = ~ stats::quantile(., probs = 0.25, na.rm = TRUE),
+        med = ~ stats::median(., na.rm = TRUE),
+        q_3 = ~ stats::quantile(., probs = 0.75, na.rm = TRUE),
+        p95 = ~ stats::quantile(., probs = 0.95, na.rm = TRUE),
+        max = ~ max(., na.rm = TRUE),
+        iqr = ~ stats::IQR(., na.rm = TRUE)
+      )
+    ) %>%
+    dplyr::mutate(range = max - min) %>%
+    dplyr::summarize_all(~ round(., 2)) %>%
+    as.list()
+}
+
 get_descriptive_stats_gt <- function(data_column,
                                      reporting_lang) {
   
-  # Create simple function to obtain the coefficient of variation
-  cv <- function(x) stats::sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
+  if (inherits(data_column, "tbl_dbi")) {
+    
+    data_column <- 
+      data_column %>%
+      dplyr::filter(!is.na(1))
+
+    mean <-
+      data_column %>%
+      dplyr::rename(a = 1) %>%
+      dplyr::group_by() %>%
+      dplyr::summarize("__mean__" = mean(a, na.rm = TRUE)) %>%
+      dplyr::pull(`__mean__`)
+    
+    variance <-
+      data_column %>%
+      dplyr::rename(a = 1) %>%
+      dplyr::mutate(
+        "__diff__" = (!!mean - a)^2
+      ) %>%
+      dplyr::group_by() %>%
+      dplyr::summarize(
+        "__var__"  = mean(`__diff__`, na.rm = TRUE)
+      ) %>%
+      dplyr::pull(`__var__`)
+    
+    sd <- variance^0.5
+    cv <- sd / mean
+    
+    descriptive_stats <- 
+      dplyr::tibble(
+        mean = mean,
+        variance = variance,
+        sd = sd,
+        cv = cv
+      ) %>%
+      dplyr::summarize_all(~ round(., 2)) %>%
+      as.list()
   
-  descriptive_stats <- 
-    data_column %>%
-    dplyr::summarize_all(
-      .funs = list(
-        mean = ~ mean(., na.rm = TRUE),
-        variance = ~ stats::var(., na.rm = TRUE),
-        sd = ~ stats::sd(., na.rm = TRUE),
-        cv = ~ cv(.)#,
-        #mad = ,
-        #kur = ,
-        #skwns = 
-      )
-    ) %>%
-    dplyr::summarize_all(~ round(., 2)) %>%
-    as.list()
-  
+  } else {
+    
+    # Create simple function to obtain the coefficient of variation
+    cv <- function(x) stats::sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
+    
+    descriptive_stats <- 
+      data_column %>%
+      dplyr::summarize_all(
+        .funs = list(
+          mean = ~ mean(., na.rm = TRUE),
+          variance = ~ stats::var(., na.rm = TRUE),
+          sd = ~ stats::sd(., na.rm = TRUE),
+          cv = ~ cv(.)#,
+          #mad = ,
+          #kur = ,
+          #skwns = 
+        )
+      ) %>%
+      dplyr::summarize_all(~ round(., 2)) %>%
+      as.list()
+  }
+
   descriptive_stats_tbl <-
     dplyr::tribble(
       ~label,                                        ~value,
@@ -357,7 +455,7 @@ get_descriptive_stats_gt <- function(data_column,
 get_common_values_gt <- function(data_column,
                                  reporting_lang) {
   
-  n_rows <- nrow(data_column)
+  n_rows <- data_column %>% dplyr::count(name = "n") %>% dplyr::pull(n)
 
   common_values_tbl <- 
     data_column %>%
@@ -366,10 +464,22 @@ get_common_values_gt <- function(data_column,
     dplyr::arrange(desc(n)) %>%
     dplyr::ungroup()
   
-  if (nrow(common_values_tbl) > 10) {
+  n_rows_common_values_tbl <- 
+    common_values_tbl %>%
+    dplyr::count(name = "n", wt = n) %>%
+    dplyr::pull(n)
+
+  if (n_rows_common_values_tbl > 10) {
     
-    other_values_tbl <- common_values_tbl %>% dplyr::slice(-c(1:10))
-    other_values_distinct <- nrow(other_values_tbl)
+    top_ten_rows <- common_values_tbl %>% utils::head(10)
+
+    other_values_tbl <-
+      common_values_tbl %>% 
+      dplyr::anti_join(top_ten_rows, by = colnames(common_values_tbl)) %>% 
+      dplyr::arrange(desc(n))
+    
+    other_values_distinct <- 
+      other_values_tbl %>% dplyr::count(name = "n", wt = n) %>% dplyr::pull(n)
     
     other_values_n <- 
       other_values_tbl %>%
@@ -381,9 +491,12 @@ get_common_values_gt <- function(data_column,
 
     common_values_gt <-
       dplyr::bind_rows(
-        common_values_tbl %>%
-          dplyr::slice(1:9) %>%
-          dplyr::mutate(frequency = n / n_rows) %>%
+        top_ten_rows %>% 
+          utils::head(9) %>%
+          dplyr::collect() %>%
+          dplyr::mutate(
+            n = as.numeric(n),
+            frequency = n / n_rows) %>%
           dplyr::rename(value = 1) %>%
           dplyr::mutate(value = as.character(value)),
         dplyr::tibble(
@@ -414,6 +527,7 @@ get_common_values_gt <- function(data_column,
     
     common_values_gt <-
       common_values_tbl %>%
+      dplyr::collect() %>%
       dplyr::mutate(frequency = n / n_rows) %>%
       dplyr::rename(value = 1) %>%
       dplyr::mutate(value = as.character(value)) %>%
@@ -449,28 +563,35 @@ get_head_tail_slices <- function(data_column) {
 get_top_bottom_slice <- function(data_column,
                                  reporting_lang) {
 
-  n_rows <- nrow(data_column)
-  
+  n_rows <- data_column %>% dplyr::count(name = "n") %>% dplyr::pull(n)
+
   data_column_freq <-
     data_column %>%
     dplyr::group_by_at(1) %>%
     dplyr::count() %>%
     dplyr::ungroup()
   
-  colnames(data_column_freq) <- c(tbl_lab_value[[reporting_lang]], tbl_lab_count[[reporting_lang]])
+  name_1 <- rlang::sym(tbl_lab_value[[reporting_lang]])
+  name_2 <- rlang::sym(tbl_lab_count[[reporting_lang]])
+  
+  data_column_freq <- 
+    data_column_freq %>%
+    dplyr::select(!! name_1 := 1, !! name_2 := 2)
   
   data_column_top_n <-
     data_column_freq %>%
-    dplyr::arrange_at(2, .funs = list(~ dplyr::desc(.))) %>%
-    dplyr::slice(1:10)
+    dplyr::arrange(dplyr::desc(!! name_2)) %>%
+    utils::head(10) %>%
+    dplyr::collect()
   
   data_column_top_n[, 3] <- data_column_top_n[, 2, drop = TRUE] / n_rows
   colnames(data_column_top_n)[3] <- tbl_lab_frequency[[reporting_lang]]
   
   data_column_bottom_n <- 
     data_column_freq %>%
-    dplyr::arrange_at(1) %>%
-    dplyr::slice(1:10)
+    dplyr::arrange(!! name_2) %>%
+    utils::head(10) %>%
+    dplyr::collect()
   
   data_column_bottom_n[, 3] <- data_column_bottom_n[, 2, drop = TRUE] / n_rows
   colnames(data_column_bottom_n)[3] <- tbl_lab_frequency[[reporting_lang]]
@@ -499,7 +620,7 @@ get_top_bottom_slice <- function(data_column,
 
 get_character_nchar_stats_gt <- function(data_column,
                                          reporting_lang) {
-  
+
   character_nchar_stats <- 
     data_column %>%
     dplyr::mutate_all(.funs = nchar) %>%
@@ -507,10 +628,12 @@ get_character_nchar_stats_gt <- function(data_column,
     dplyr::summarize_all(
       .funs = list(
         mean = ~ mean(., na.rm = TRUE),
-        min = ~min(., na.rm = TRUE),
-        max = ~max(., na.rm = TRUE)
+        min = ~ min(., na.rm = TRUE),
+        max = ~ max(., na.rm = TRUE)
       )
     ) %>%
+    dplyr::collect() %>%
+    dplyr::mutate_all(.funs = as.numeric) %>%
     as.list()
   
   dplyr::tribble(
@@ -533,15 +656,23 @@ get_character_nchar_histogram <- function(data_column,
   
   x_label <- plot_lab_string_length[[reporting_lang]]
   y_label <- plot_lab_count[[reporting_lang]]
-  
+
   suppressWarnings(
     plot_histogram <- 
       data_column %>%
       dplyr::mutate_all(.funs = nchar) %>%
       dplyr::rename(nchar = 1) %>%
-      ggplot2::ggplot(ggplot2::aes(nchar)) +
-      ggplot2::geom_histogram(stat = "count", bins = 10, fill = "steelblue") +
+      dplyr::group_by(nchar) %>%
+      dplyr::summarize(n = dplyr::n()) %>%
+      dplyr::collect() %>%
+      dplyr::filter(!is.na(nchar)) %>%
+      dplyr::mutate_all(.funs = as.numeric) %>%
+      ggplot2::ggplot(ggplot2::aes(x = nchar, y = n)) +
+      ggplot2::geom_col(fill = "steelblue") +
+      ggplot2::geom_hline(yintercept = 0, color = "#B2B2B2") +
       ggplot2::labs(x = x_label, y = y_label) +
+      ggplot2::scale_x_continuous(limits = c(0, NA)) +
+      ggplot2::scale_y_continuous(labels = scales::comma_format()) +
       ggplot2::theme_minimal()
   )
   
@@ -576,8 +707,10 @@ probe_columns_numeric <- function(data,
                                   column,
                                   n_rows,
                                   reporting_lang) {
-  
-  data_column <- data %>% dplyr::select({{ column }})
+
+  data_column <- 
+    data %>% 
+    dplyr::select({{ column }})
   
   column_description_gt <- 
     get_column_description_gt(
@@ -633,7 +766,7 @@ probe_columns_integer <- function(data,
                                   column,
                                   n_rows,
                                   reporting_lang) {
-  
+
   probe_columns_integer_list <- 
     probe_columns_numeric(
       data = data,
@@ -965,67 +1098,150 @@ get_corr_plot <- function(mat,
   image_html
 }
 
-# TODO: missing_matrix, missing_heatmap
 # TODO: report missing values based on user input (e.g., "9999", empty strings)
 
 probe_missing <- function(data) {
-
-  n_cols <- ncol(data)
-  n_rows <- nrow(data)
   
+  n_cols <- ncol(data)
+  n_rows <- data %>% dplyr::count(name = "n") %>% dplyr::pull(n) %>% as.numeric()
+
   if (n_rows < 20) {
     n_breaks <- n_rows
   } else {
     n_breaks <- 20
   }
+
+  if (n_rows <= 1000) {
+    data <- dplyr::collect(data)
+  }
   
   col_names <- colnames(data)
   
-  frequency_tbl <- 
-    lapply(
-      col_names,
-      FUN = function(x) {
-        
-        data %>%
-          dplyr::select(dplyr::one_of(x)) %>%
-          dplyr::mutate(`::cut_group::` = cut(seq(nrow(data)), breaks = n_breaks)) %>%
-          dplyr::group_by(`::cut_group::`) %>% 
-          dplyr::summarize_all(~ sum(is.na(.)) / dplyr::n()) %>%
-          dplyr::select(-1) %>%
-          dplyr::mutate(col_num = which(col_names %in% x)) %>%
-          dplyr::mutate(bin_num = 1:n_breaks) %>%
-          dplyr::mutate(col_name = x) %>%
-          dplyr::rename(value = 1)
-      }) %>%
+  cuts <- floor(seq(from = 1, to = n_rows, length.out = n_breaks + 1))[-1]
+  bin_size <- cuts[1]
+  
+  if (inherits(data, "tbl_dbi")) {
+    
+    frequency_list <- 
+      lapply(
+        col_names,
+        FUN = function(`_x_`) {
+          
+          col_num <- which(col_names %in% `_x_`)
+          bin_num <- 1:20
+          missing_tally <- 0L
+          
+          missing_freq <- 
+            vapply(
+              bin_num,
+              FUN.VALUE = numeric(1),
+              FUN = function(x) {
+
+                missing_n_span <- 
+                  data %>% 
+                  dplyr::select(1, dplyr::one_of(`_x_`))
+                
+                if (ncol(missing_n_span) == 1) {
+                  
+                  missing_n_span <- 
+                    missing_n_span %>%
+                    dplyr::rename(a = 1)
+                  
+                } else {
+                  
+                  missing_n_span <- 
+                    missing_n_span %>%
+                    dplyr::rename(a = 2)
+                }
+                
+                missing_n_span <- 
+                  missing_n_span %>%
+                  utils::head(cuts[x]) %>%
+                  dplyr::summarize_all(~ sum(is.na(.))) %>%
+                  dplyr::pull(a) %>%
+                  as.integer()
+                
+                missing_bin <- missing_n_span - missing_tally
+                
+                missing_tally <<- missing_tally + missing_bin
+                
+                (missing_bin / bin_size) %>% as.numeric()
+              }
+            )
+
+          dplyr::tibble(
+            value = missing_freq,
+            col_num = col_num,
+            bin_num = bin_num,
+            col_name = `_x_`
+          )
+        })
+    
+  } else {
+    
+    frequency_list <- 
+      lapply(
+        col_names,
+        FUN = function(`_x_`) {
+          
+          data %>%
+            dplyr::select(dplyr::one_of(`_x_`)) %>%
+            dplyr::mutate(`::cut_group::` = dplyr::case_when(
+              dplyr::row_number() < !!cuts[1] ~ 1L,
+              dplyr::row_number() < !!cuts[2] ~ 2L,
+              dplyr::row_number() < !!cuts[3] ~ 3L,
+              dplyr::row_number() < !!cuts[4] ~ 4L,
+              dplyr::row_number() < !!cuts[5] ~ 5L,
+              dplyr::row_number() < !!cuts[6] ~ 6L,
+              dplyr::row_number() < !!cuts[7] ~ 7L,
+              dplyr::row_number() < !!cuts[8] ~ 8L,
+              dplyr::row_number() < !!cuts[9] ~ 9L,
+              dplyr::row_number() < !!cuts[10] ~ 10L,
+              dplyr::row_number() < !!cuts[11] ~ 11L,
+              dplyr::row_number() < !!cuts[12] ~ 12L,
+              dplyr::row_number() < !!cuts[13] ~ 13L,
+              dplyr::row_number() < !!cuts[14] ~ 14L,
+              dplyr::row_number() < !!cuts[15] ~ 15L,
+              dplyr::row_number() < !!cuts[16] ~ 16L,
+              dplyr::row_number() < !!cuts[17] ~ 17L,
+              dplyr::row_number() < !!cuts[18] ~ 18L,
+              dplyr::row_number() < !!cuts[19] ~ 19L,
+              dplyr::row_number() < !!cuts[20] ~ 20L,
+              TRUE ~ 20L
+            )) %>%
+            dplyr::group_by(`::cut_group::`) %>% 
+            dplyr::summarize_all(~ sum(is.na(.)) / dplyr::n()) %>%
+            dplyr::collect() %>%
+            dplyr::select(-1) %>%
+            dplyr::mutate(col_num = which(col_names %in% `_x_`)) %>%
+            dplyr::mutate(bin_num = 1:n_breaks) %>%
+            dplyr::mutate(col_name = `_x_`) %>%
+            dplyr::rename(value = 1)
+        })
+  }
+  
+  frequency_tbl <-
+    frequency_list %>%
     dplyr::bind_rows() %>%
     dplyr::mutate(value = ifelse(value == 0, NA_real_, value)) %>%
-    dplyr::mutate(col_name = factor(col_name, levels = names(data)))
-  
+    dplyr::mutate(col_name = factor(col_name, levels = colnames(data)))
   
   missing_tbl <- 
     lapply(
       col_names,
-      FUN = function(x) {
+      FUN = function(`_x_`) {
         data %>% 
-          dplyr::select(dplyr::one_of(x)) %>%
+          dplyr::select(dplyr::one_of(`_x_`)) %>%
           dplyr::group_by() %>% 
           dplyr::summarize_all(~ sum(is.na(.)) / dplyr::n()) %>%
-          dplyr::mutate(col_num = which(col_names %in% x)) %>%
-          dplyr::mutate(col_name = x) %>%
+          dplyr::collect() %>%
+          dplyr::mutate(col_num = which(col_names %in% `_x_`)) %>%
+          dplyr::mutate(col_name = `_x_`) %>%
           dplyr::rename(value = 1)
       }) %>%
     dplyr::bind_rows() %>%
     dplyr::mutate(value = round(value, 2)) %>%
-    dplyr::mutate(col_name = factor(col_name, levels = names(data)))
-  
-  # cols_any_missing <-
-  #   col_names[
-  #     missing_tbl %>%
-  #       dplyr::group_by() %>%
-  #       dplyr::summarize_all(~ sum(.)) %>%
-  #       dplyr::mutate_all(~ . > 0) %>%
-  #       t() %>% .[, 1]
-  #   ]
+    dplyr::mutate(col_name = factor(col_name, levels = colnames(data)))
   
   plot_missing <- 
     frequency_tbl %>%
@@ -1038,7 +1254,7 @@ probe_missing <- function(data) {
     ) +
     ggplot2::scale_y_continuous(
       breaks = c(0, 1, 20),
-      labels = c("", as.character(n_rows), "0")
+      labels = c("", as.character(n_rows), "1")
     ) +
     ggplot2::geom_label(
       data = missing_tbl,
@@ -1130,7 +1346,7 @@ build_examination_page <- function(data,
   } else {
     navbar <- NULL
   }
-  
+
   probe_list <-
     sections %>%
     lapply(
@@ -1213,7 +1429,7 @@ build_examination_page <- function(data,
     htmltools::tagList(
       htmltools::HTML("<!doctype html>"),
       htmltools::tags$html(
-        lang = "en",
+        lang = reporting_lang,
         htmltools::HTML(
           "<head>\n",
           "   <meta charset=\"utf-8\">\n",
@@ -1271,7 +1487,7 @@ build_examination_page <- function(data,
 probe_overview_stats_assemble <- function(data,
                                           tbl_name,
                                           reporting_lang) {
- 
+
   if (is.na(tbl_name)) {
     header <- section_title_overview_ts[[reporting_lang]]
   } else {

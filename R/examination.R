@@ -372,13 +372,15 @@ get_descriptive_stats_gt <- function(data_column,
   
   if (inherits(data_column, "tbl_dbi")) {
     
-    data_column <- data_column %>% dplyr::filter(!is.na(1))
+    data_column <- 
+      data_column %>%
+      dplyr::filter(!is.na(1))
 
     mean <-
       data_column %>%
       dplyr::rename(a = 1) %>%
       dplyr::group_by() %>%
-      dplyr::summarize("__mean__"  = mean(a, na.rm = TRUE)) %>%
+      dplyr::summarize("__mean__" = mean(a, na.rm = TRUE)) %>%
       dplyr::pull(`__mean__`)
     
     variance <-
@@ -654,7 +656,7 @@ get_character_nchar_histogram <- function(data_column,
   
   x_label <- plot_lab_string_length[[reporting_lang]]
   y_label <- plot_lab_count[[reporting_lang]]
-  
+
   suppressWarnings(
     plot_histogram <- 
       data_column %>%

@@ -236,7 +236,8 @@ get_numeric_stats_gt <- function(data_column,
       )
     ) %>%
     dplyr::collect() %>%
-    dplyr::summarize_all(~ round(., 2))
+    dplyr::summarize_all(~ round(., 2)) %>%
+    dplyr::mutate_all(.funs = as.numeric)
   
   mean <- summary_stats$mean
   min <- summary_stats$min

@@ -287,8 +287,6 @@ get_quantile_stats_gt <- function(data_column,
       quantile_stats <- calculate_quantile_stats(data_column = data_column)
       
     } else {
-      
-      quantile_rows <- (c(0.05, 0.25, 0.5, 0.75, 0.95) * n_rows) %>% floor()
 
       data_arranged <- 
         data_column %>%
@@ -296,12 +294,15 @@ get_quantile_stats_gt <- function(data_column,
         dplyr::filter(!is.na(a)) %>%
         dplyr::arrange(a)
       
-      quantile_stats <- 
       n_rows_data <-  
         data_arranged %>%
         dplyr::count(name = "n") %>%
         dplyr::pull(n) %>%
         as.numeric()
+      
+      quantile_rows <- floor(c(0.05, 0.25, 0.5, 0.75, 0.95) * n_rows_data)
+
+      quantile_stats <-
         dplyr::tibble(
           min = data_arranged %>% dplyr::summarize(a = min(a, na.rm = TRUE)) %>% dplyr::pull(a) %>% as.numeric(),
           p05 = data_arranged %>% utils::head(quantile_rows[1]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),

@@ -707,8 +707,10 @@ probe_columns_numeric <- function(data,
                                   column,
                                   n_rows,
                                   reporting_lang) {
-  
-  data_column <- data %>% dplyr::select({{ column }})
+
+  data_column <- 
+    data %>% 
+    dplyr::select({{ column }})
   
   column_description_gt <- 
     get_column_description_gt(
@@ -764,7 +766,7 @@ probe_columns_integer <- function(data,
                                   column,
                                   n_rows,
                                   reporting_lang) {
-  
+
   probe_columns_integer_list <- 
     probe_columns_numeric(
       data = data,

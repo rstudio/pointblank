@@ -297,6 +297,11 @@ get_quantile_stats_gt <- function(data_column,
         dplyr::arrange(a)
       
       quantile_stats <- 
+      n_rows_data <-  
+        data_arranged %>%
+        dplyr::count(name = "n") %>%
+        dplyr::pull(n) %>%
+        as.numeric()
         dplyr::tibble(
           min = data_arranged %>% dplyr::summarize(a = min(a, na.rm = TRUE)) %>% dplyr::pull(a) %>% as.numeric(),
           p05 = data_arranged %>% utils::head(quantile_rows[1]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),

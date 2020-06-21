@@ -1184,7 +1184,6 @@ probe_missing <- function(data) {
         col_names,
         FUN = function(`_x_`) {
           
-          
           data %>%
             dplyr::select(dplyr::one_of(`_x_`)) %>%
             dplyr::mutate(`::cut_group::` = dplyr::case_when(
@@ -1244,15 +1243,6 @@ probe_missing <- function(data) {
     dplyr::mutate(value = round(value, 2)) %>%
     dplyr::mutate(col_name = factor(col_name, levels = colnames(data)))
   
-  # cols_any_missing <-
-  #   col_names[
-  #     missing_tbl %>%
-  #       dplyr::group_by() %>%
-  #       dplyr::summarize_all(~ sum(.)) %>%
-  #       dplyr::mutate_all(~ . > 0) %>%
-  #       t() %>% .[, 1]
-  #   ]
-
   plot_missing <- 
     frequency_tbl %>%
     ggplot2::ggplot(ggplot2::aes(x = col_name, y = bin_num, fill = value)) +

@@ -1098,7 +1098,6 @@ get_corr_plot <- function(mat,
   image_html
 }
 
-# TODO: missing_matrix, missing_heatmap
 # TODO: report missing values based on user input (e.g., "9999", empty strings)
 
 probe_missing <- function(data) {

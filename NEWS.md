@@ -1,4 +1,4 @@
-# pointblank 0.3.1.9000 (development version)
+# pointblank 0.4.0
 
 ## New R Markdown features
 

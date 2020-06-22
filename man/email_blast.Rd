@@ -23,8 +23,8 @@ available in an internal evaluation context.}
 \item{to, from}{The email addresses for the recipients and the sender.}
 
 \item{credentials}{A credentials list object that is produced by either of
-the \code{\link[blastula:creds]{blastula::creds()}}, \code{\link[blastula:creds_anonymous]{blastula::creds_anonymous()}},
-\code{\link[blastula:creds_key]{blastula::creds_key()}}, or \code{\link[blastula:creds_file]{blastula::creds_file()}} functions. Please
+the \code{\link[blastula:credential_helpers]{blastula::creds()}}, \code{\link[blastula:credential_helpers]{blastula::creds_anonymous()}},
+\code{\link[blastula:credential_helpers]{blastula::creds_key()}}, or \code{\link[blastula:credential_helpers]{blastula::creds_file()}} functions. Please
 refer to the \strong{blastula} documentation for details on each of these helper
 functions.}
 

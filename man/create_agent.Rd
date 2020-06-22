@@ -179,7 +179,7 @@ xl_step_4
 # will have way more information and a
 # slightly different structure; see
 # `help(get_agent_x_list)` for more info
-get_agent_x_list(agent)
+# get_agent_x_list(agent)
  
 }
 \seealso{

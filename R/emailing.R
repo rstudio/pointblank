@@ -192,29 +192,29 @@ email_blast <- function(x,
 #' # message object beforehand by using
 #' # the `email_preview()` function
 #' # on an `agent` object
-#' email_object <-
-#'   create_agent(
-#'     tbl = tbl,
-#'     actions = al
-#'   ) %>%
-#'   col_vals_gt(vars(a), 5) %>%
-#'   col_vals_lt(vars(b), 5) %>%
-#'   interrogate() %>%
-#'   email_preview()
+#' # email_object <-
+#' #   create_agent(
+#' #     tbl = tbl,
+#' #     actions = al
+#' #   ) %>%
+#' #   col_vals_gt(vars(a), 5) %>%
+#' #   col_vals_lt(vars(b), 5) %>%
+#' #   interrogate() %>%
+#' #   email_preview()
 #' 
 #' # The `email_preview()` function can
 #' # also be used on an agent x-list to
 #' # get the same email message object
-#' email_object <-
-#'   create_agent(
-#'     tbl = tbl,
-#'     actions = al
-#'   ) %>%
-#'   col_vals_gt(vars(a), 5) %>%
-#'   col_vals_lt(vars(b), 5) %>%
-#'   interrogate() %>%
-#'   get_agent_x_list() %>%
-#'   email_preview()
+#' # email_object <-
+#' #   create_agent(
+#' #     tbl = tbl,
+#' #     actions = al
+#' #   ) %>%
+#' #   col_vals_gt(vars(a), 5) %>%
+#' #   col_vals_lt(vars(b), 5) %>%
+#' #   interrogate() %>%
+#' #   get_agent_x_list() %>%
+#' #   email_preview()
 #' 
 #' # We can view the HTML email just
 #' # by printing `email_object`; it

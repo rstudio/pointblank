@@ -23,10 +23,10 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{blastula}{\code{\link[blastula]{creds}}, \code{\link[blastula]{creds_anonymous}}, \code{\link[blastula]{creds_file}}, \code{\link[blastula]{creds_key}}}
+  \item{blastula}{\code{\link[blastula:credential_helpers]{creds}}, \code{\link[blastula:credential_helpers]{creds_anonymous}}, \code{\link[blastula:credential_helpers]{creds_file}}, \code{\link[blastula:credential_helpers]{creds_key}}}
 
-  \item{dplyr}{\code{\link[dplyr]{between}}, \code{\link[dplyr]{case_when}}, \code{\link[dplyr]{expr}}, \code{\link[dplyr]{vars}}}
+  \item{dplyr}{\code{\link[dplyr]{between}}, \code{\link[dplyr]{case_when}}, \code{\link[dplyr:tidyeval-compat]{expr}}, \code{\link[dplyr]{vars}}}
 
-  \item{tidyselect}{\code{\link[tidyselect]{contains}}, \code{\link[tidyselect]{ends_with}}, \code{\link[tidyselect]{everything}}, \code{\link[tidyselect]{matches}}, \code{\link[tidyselect]{starts_with}}}
+  \item{tidyselect}{\code{\link[tidyselect:starts_with]{contains}}, \code{\link[tidyselect:starts_with]{ends_with}}, \code{\link[tidyselect]{everything}}, \code{\link[tidyselect:starts_with]{matches}}, \code{\link[tidyselect]{starts_with}}}
 }}
 

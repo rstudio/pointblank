@@ -76,7 +76,7 @@
 #'   )
 #'   
 #' # Use the included `small_table` dataset
-#' # for the validtion example
+#' # for the validation example
 #' small_table
 #' 
 #' # Validate that values in column

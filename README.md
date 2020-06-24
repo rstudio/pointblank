@@ -192,6 +192,16 @@ Italian](https://img.shields.io/static/v1?label=Table%20Scan&message=Italian&col
 [![Table Scan in
 Spanish](https://img.shields.io/static/v1?label=Table%20Scan&message=Spanish&color=blue)](https://rpubs.com/rich_i/pointblank_storms_spanish)
 
+Database tables can be used with `scan_data()` as well. Here are two
+examples using the `full_region` table of the **Rfam** database (hosted
+publicly at “mysql-rfam-public.ebi.ac.uk”) and the `assembly` table of
+the **Ensembl** database (hosted publicly at “ensembldb.ensembl.org”).
+
+[![Rfam:
+full\_region](https://img.shields.io/static/v1?label=Table%20Scan&message=Rfam:%20full_region&color=green)](https://rpubs.com/rich_i/rfam_full_region)   
+[![Ensembl:
+assembly](https://img.shields.io/static/v1?label=Table%20Scan&message=Ensembl:%20assembly&color=green)](https://rpubs.com/rich_i/ensembl_assembly)
+
 <hr>
 
 There are many functions available in **pointblank** for making

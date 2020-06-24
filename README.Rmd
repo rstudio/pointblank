@@ -151,6 +151,12 @@ While data validation is important, one has to be familiar with the data first. 
 [![Table Scan in Italian](https://img.shields.io/static/v1?label=Table%20Scan&message=Italian&color=blue)](https://rpubs.com/rich_i/pointblank_storms_italian)&nbsp;&nbsp;&nbsp;
 [![Table Scan in Spanish](https://img.shields.io/static/v1?label=Table%20Scan&message=Spanish&color=blue)](https://rpubs.com/rich_i/pointblank_storms_spanish)
 
+Database tables can be used with `scan_data()` as well. Here are two examples using the `full_region` table of the **Rfam** database (hosted publicly at "mysql-rfam-public.ebi.ac.uk") and the `assembly` table of the **Ensembl** database (hosted publicly at "ensembldb.ensembl.org").
+
+[![Rfam: full_region](https://img.shields.io/static/v1?label=Table%20Scan&message=Rfam: full_region&color=green)](https://rpubs.com/rich_i/rfam_full_region)&nbsp;&nbsp;&nbsp;
+[![Ensembl: assembly](https://img.shields.io/static/v1?label=Table%20Scan&message=Ensembl: assembly&color=green)](https://rpubs.com/rich_i/ensembl_assembly)
+
+
 <hr>
 
 There are many functions available in **pointblank** for making comprehensive table validations. Each validation function is associated with an expectation function (of the form `expect_*()`). They are equivalent in usage and behavior to **testthat** tests with the big distinction that they check aspects of data tables (and not the results of function calls). Furthermore, each validation function has an associated test function (of the form `test_*()`) which always returns a logical value (`TRUE` or `FALSE`).

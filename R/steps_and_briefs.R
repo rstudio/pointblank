@@ -22,12 +22,25 @@ create_validation_step <- function(agent,
   } else {
     step_id <- as.character(step_id[1])
   }
-
+  
+  # Calculate the SHA1 hash for the validation step
+  sha1 <-
+    digest::sha1(
+      list(
+        assertion_type = assertion_type,
+        column = ifelse(is.null(column), list(NULL), list(column)),
+        values = ifelse(is.null(values), list(NULL), list(values)),
+        na_pass = ifelse(is.null(na_pass), as.logical(NA), as.logical(na_pass)),
+        preconditions = ifelse(is.null(preconditions), list(NULL), list(preconditions))
+      )
+    )
+  
   # Create a validation step as a single-row `tbl_df` object
   validation_step_df <-
     dplyr::tibble(
       i = i,
       step_id = step_id,
+      sha1 = sha1,
       assertion_type = assertion_type,
       column = ifelse(is.null(column), list(NULL), list(column)),
       values = ifelse(is.null(values), list(NULL), list(values)),

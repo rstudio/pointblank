@@ -75,6 +75,10 @@
 #' @param actions A list containing threshold levels so that the validation step
 #'   can react accordingly when exceeding the set levels. This is to be created
 #'   with the [action_levels()] helper function.
+#' @param step_id An optional string that identifies the validation step and
+#'   serves to distinguish it from any other validation steps. By default, this
+#'   is `NULL` and should an ID string not be provided an automatically
+#'   generated step ID value (based on the step index) will be used.
 #' @param threshold A simple failure threshold value for use with the
 #'   expectation function. By default, this is set to `1` meaning that any
 #'   single unit of failure in data validation results in an overall test
@@ -180,6 +184,7 @@ col_vals_gt <- function(x,
                         na_pass = FALSE,
                         preconditions = NULL,
                         actions = NULL,
+                        step_id = NULL,
                         brief = NULL,
                         active = TRUE) {
 
@@ -224,6 +229,7 @@ col_vals_gt <- function(x,
         na_pass = na_pass,
         preconditions = preconditions,
         actions = covert_actions(actions, agent),
+        step_id = step_id,
         brief = brief[i],
         active = active
       )

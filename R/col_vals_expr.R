@@ -153,6 +153,7 @@ col_vals_expr <- function(x,
                           expr,
                           preconditions = NULL,
                           actions = NULL,
+                          step_id = NULL,
                           brief = NULL,
                           active = TRUE) {
   
@@ -201,6 +202,7 @@ col_vals_expr <- function(x,
       values = expr,
       preconditions = preconditions,
       actions = covert_actions(actions, agent),
+      step_id = step_id,
       brief = brief,
       active = active
     )

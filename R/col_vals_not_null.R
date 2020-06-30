@@ -139,6 +139,7 @@ col_vals_not_null <- function(x,
                               columns,
                               preconditions = NULL,
                               actions = NULL,
+                              step_id = NULL,
                               brief = NULL,
                               active = TRUE) {
   
@@ -181,6 +182,7 @@ col_vals_not_null <- function(x,
         column = columns[i],
         preconditions = preconditions,
         actions = covert_actions(actions, agent),
+        step_id = step_id,
         brief = brief[i],
         active = active
       )

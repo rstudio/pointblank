@@ -179,6 +179,7 @@ conjointly <- function(x,
                        .list = list2(...),
                        preconditions = NULL,
                        actions = NULL,
+                       step_id = NULL,
                        brief = NULL,
                        active = TRUE) {
 
@@ -234,6 +235,7 @@ conjointly <- function(x,
       na_pass = NULL,
       preconditions = preconditions,
       actions = covert_actions(actions, agent),
+      step_id = step_id,
       brief = brief,
       active = active
     )

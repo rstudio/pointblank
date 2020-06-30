@@ -142,6 +142,7 @@ col_vals_in_set <- function(x,
                             set,
                             preconditions = NULL,
                             actions = NULL,
+                            step_id = NULL,
                             brief = NULL,
                             active = TRUE) {
   
@@ -184,6 +185,7 @@ col_vals_in_set <- function(x,
         values = set,
         preconditions = preconditions,
         actions = covert_actions(actions, agent),
+        step_id = step_id,
         brief = brief[i],
         active = active
       )

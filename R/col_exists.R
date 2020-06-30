@@ -119,6 +119,7 @@ NULL
 col_exists <- function(x,
                        columns,
                        actions = NULL,
+                       step_id = NULL,
                        brief = NULL,
                        active = TRUE) {
 
@@ -167,6 +168,7 @@ col_exists <- function(x,
         column = columns[i],
         preconditions = NULL,
         actions = covert_actions(actions, agent),
+        step_id = step_id,
         brief = brief[i],
         active = active
       )

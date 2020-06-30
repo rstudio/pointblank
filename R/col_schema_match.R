@@ -144,6 +144,7 @@ col_schema_match <- function(x,
                              complete = TRUE,
                              in_order = TRUE,
                              actions = NULL,
+                             step_id = NULL,
                              brief = NULL,
                              active = TRUE) {
   
@@ -197,6 +198,7 @@ col_schema_match <- function(x,
       values = schema,
       preconditions = NULL,
       actions = covert_actions(actions, agent),
+      step_id = step_id,
       brief = brief,
       active = active
     )

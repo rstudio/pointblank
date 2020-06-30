@@ -5,6 +5,7 @@ create_validation_step <- function(agent,
                                    na_pass = NULL,
                                    preconditions = NULL,
                                    actions = NULL,
+                                   step_id = NULL,
                                    brief = NULL,
                                    active = NULL) {
   
@@ -14,11 +15,19 @@ create_validation_step <- function(agent,
   } else {
     i <- max(agent$validation_set$i) + 1L
   }
+  
+  # If `step_id` is NULL, generate an ID based on `i`
+  if (is.null(step_id)) {
+    step_id <- formatC(i, width = 4, format = "d", flag = "0")
+  } else {
+    step_id <- as.character(step_id[1])
+  }
 
   # Create a validation step as a single-row `tbl_df` object
   validation_step_df <-
     dplyr::tibble(
       i = i,
+      step_id = step_id,
       assertion_type = assertion_type,
       column = ifelse(is.null(column), list(NULL), list(column)),
       values = ifelse(is.null(values), list(NULL), list(values)),

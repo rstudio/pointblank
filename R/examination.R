@@ -1,3 +1,5 @@
+# nocov start
+
 #
 # Generate section components such as tables and plots
 #
@@ -2218,3 +2220,6 @@ nav_pill_li <- function(label, id, active = FALSE) {
 pb_glue_data <- function(.x, ...) {
   glue::glue_data(.x, ..., .transformer = get, .envir = emptyenv())
 }
+
+# nocov end
+

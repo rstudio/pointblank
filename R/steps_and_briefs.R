@@ -16,13 +16,6 @@ create_validation_step <- function(agent,
     i <- max(agent$validation_set$i) + 1L
   }
   
-  # If `step_id` is NULL, generate an ID based on `i`
-  if (is.null(step_id)) {
-    step_id <- formatC(i, width = 4, format = "d", flag = "0")
-  } else {
-    step_id <- as.character(step_id[1])
-  }
-  
   # Calculate the SHA1 hash for the validation step
   sha1 <-
     digest::sha1(

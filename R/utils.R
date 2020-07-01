@@ -101,34 +101,75 @@ resolve_columns <- function(x, var_expr, preconditions) {
   column
 }
 
-normalize_step_id <- function(step_id, columns) {
-  
-  if (!is.null(step_id) && length(columns) > 1) {
+normalize_step_id <- function(step_id, columns, agent) {
+
+  if (is.null(step_id)) {
+
+    if (length(agent$validation_set$i) < 1) {
+      i <- 1
+    } else {
+      i <- max(agent$validation_set$i) + 1
+    }
     
-    # Generate multiple `step_id` values with single `step_id`
-    if (length(step_id) == 1) {
-      step_id <- 
-        paste0(
-          step_id[1], ".",
-          formatC(seq_along(columns), width = 4, format = "d", flag = "0")
-        )
-    } else if (length(step_id) != 1 && length(step_id) != length(columns)) {
-      step_id <- 
-        paste0(
-          step_id[1], ".",
-          formatC(seq_along(columns), width = 4, format = "d", flag = "0")
-        )
-      # TODO: issue warning about length of `step_id`
-    } else if (anyDuplicated(step_id) != 0) {
+    steps <- length(columns) - 1
+    i <- seq(from = i, to = i + steps)
+    
+    # Generate an ID based on `i`
+    step_id <- formatC(i, width = 4, format = "d", flag = "0")
+    return(step_id)
+  }
+  
+  # Ensure that `step_id` is coerced to character
+  step_id <- as.character(step_id)
+  
+  if (length(columns) == 1) {
+    
+    if (length(step_id) > 1) {
+      warning(
+        "Multiple `step_id` values provided for a single column:\n",
+        "* Only the first `step_id` element will be used.",
+        call. = FALSE
+      )
+    }
+    
+    return(step_id[1])
+    
+  } else if (length(columns) > 1) {
+    
+    if (length(step_id) == length(columns)) {
       
-      step_id <- 
-        paste0(
-          step_id[1], ".",
-          formatC(seq_along(columns), width = 4, format = "d", flag = "0")
-        )
-      # TODO: issue warning about duplicated `step_id` values
+     if (anyDuplicated(step_id) != 0) {
+       
+       # Issue warning about duplicated `step_id` values
+       warning(
+         "Duplicate `step_id` values provided:\n",
+         "* Only the first `step_id` element will be used.",
+         call. = FALSE
+       )
+       
+       step_id <- generate_indexed_vals(step_id[1], seq_along(columns))
+     }
+    
+      return(step_id)
+      
+    } else if (length(step_id) == 1) {
+      
+      # Generate multiple `step_id` values with single `step_id`
+      step_id <- generate_indexed_vals(step_id[1], seq_along(columns))
+      
+    } else if (length(step_id) != 1 && length(step_id) != length(columns)) {
+
+      # Issue warning about length of `step_id`
+      warning(
+        "The number of `step_id` values is neither `1` nor the number of `columns`:\n",
+        "* Only the first `step_id` element will be used.",
+        call. = FALSE
+      )
+      
+      step_id <- generate_indexed_vals(step_id[1], seq_along(columns))
     }
   }
+  
   step_id
 }
 

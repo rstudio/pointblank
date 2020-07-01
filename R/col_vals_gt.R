@@ -75,10 +75,17 @@
 #' @param actions A list containing threshold levels so that the validation step
 #'   can react accordingly when exceeding the set levels. This is to be created
 #'   with the [action_levels()] helper function.
-#' @param step_id An optional string that identifies the validation step and
-#'   serves to distinguish it from any other validation steps. By default, this
-#'   is `NULL` and should an ID string not be provided an automatically
-#'   generated step ID value (based on the step index) will be used.
+#' @param step_id One or more optional identifiers for the single or multiple
+#'   validation steps generated from calling a validation function. The use of
+#'   step IDs serves to distinguish validation steps from each other and provide
+#'   an opportunity for supplying a more meaningful label compared to the step
+#'   index. By default this is `NULL`, and **pointblank** will automatically
+#'   generate the step ID value (based on the step index) in this case. One or
+#'   more values can be provided, and the exact number of ID values should (1)
+#'   match the number of validation steps that the validation function call will
+#'   produce (influenced by the number of `columns` provided), (2) be an ID
+#'   string not used in any previous validation step, and (3) be a vector with
+#'   unique values.
 #' @param threshold A simple failure threshold value for use with the
 #'   expectation function. By default, this is set to `1` meaning that any
 #'   single unit of failure in data validation results in an overall test

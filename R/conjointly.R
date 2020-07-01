@@ -224,6 +224,13 @@ conjointly <- function(x,
         values = validation_formulas
       )
   }
+  
+  # Normalize any provided `step_id` value(s)
+  step_id <- normalize_step_id(step_id, columns = "column", agent)
+  
+  # Check `step_id` value(s) against all other `step_id`
+  # values in earlier validation steps
+  check_step_id_duplicates(step_id, agent)
 
   # Add a validation step
   agent <-

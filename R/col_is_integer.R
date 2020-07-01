@@ -147,9 +147,12 @@ col_is_integer <- function(x,
     brief <- generate_autobriefs(agent, columns, preconditions, values, "col_is_integer")
   }
   
-  step_id <- normalize_step_id(step_id, columns)
+  # Normalize any provided `step_id` value(s)
+  step_id <- normalize_step_id(step_id, columns, agent)
   
-  # TODO: check `step_id` value(s) against previous recorded IDs
+  # Check `step_id` value(s) against all other `step_id`
+  # values in earlier validation steps
+  check_step_id_duplicates(step_id, agent)
   
   # Add one or more validation steps based on the
   # length of the `columns` variable

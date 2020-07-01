@@ -101,6 +101,38 @@ resolve_columns <- function(x, var_expr, preconditions) {
   column
 }
 
+normalize_step_id <- function(step_id, columns) {
+  
+  if (!is.null(step_id) && length(columns) > 1) {
+    
+    # Generate multiple `step_id` values with single `step_id`
+    if (length(step_id) == 1) {
+      step_id <- 
+        paste0(
+          step_id[1], ".",
+          formatC(seq_along(columns), width = 4, format = "d", flag = "0")
+        )
+    } else if (length(step_id) != 1 && length(step_id) != length(columns)) {
+      step_id <- 
+        paste0(
+          step_id[1], ".",
+          formatC(seq_along(columns), width = 4, format = "d", flag = "0")
+        )
+      # TODO: issue warning about length of `step_id`
+    } else if (anyDuplicated(step_id) != 0) {
+      
+      step_id <- 
+        paste0(
+          step_id[1], ".",
+          formatC(seq_along(columns), width = 4, format = "d", flag = "0")
+        )
+      # TODO: issue warning about duplicated `step_id` values
+    }
+    
+  }
+  step_id
+}
+
 get_threshold_type <- function(threshold) {
   
   if (threshold >= 1) {

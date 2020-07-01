@@ -150,6 +150,7 @@ the table (after any <code>preconditions</code> have been applied).</p>
   na_pass = <span class='fl'>FALSE</span>,
   preconditions = <span class='kw'>NULL</span>,
   actions = <span class='kw'>NULL</span>,
+  step_id = <span class='kw'>NULL</span>,
   brief = <span class='kw'>NULL</span>,
   active = <span class='fl'>TRUE</span>
 )
@@ -208,6 +209,13 @@ input data table to be transformed (e.g.,
       <td><p>A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
 with the <code>action_levels()</code> helper function.</p></td>
+    </tr>
+    <tr>
+      <th>step_id</th>
+      <td><p>An optional string that identifies the validation step and
+serves to distinguish it from any other validation steps. By default, this
+is <code>NULL</code> and should an ID string not be provided an automatically
+generated step ID value (based on the step index) will be used.</p></td>
     </tr>
     <tr>
       <th>brief</th>

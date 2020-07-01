@@ -42,10 +42,17 @@ input data table to be transformed (e.g.,
 can react accordingly when exceeding the set levels. This is to be created
 with the \code{\link[=action_levels]{action_levels()}} helper function.}
 
-\item{step_id}{An optional string that identifies the validation step and
-serves to distinguish it from any other validation steps. By default, this
-is \code{NULL} and should an ID string not be provided an automatically
-generated step ID value (based on the step index) will be used.}
+\item{step_id}{One or more optional identifiers for the single or multiple
+validation steps generated from calling a validation function. The use of
+step IDs serves to distinguish validation steps from each other and provide
+an opportunity for supplying a more meaningful label compared to the step
+index. By default this is \code{NULL}, and \strong{pointblank} will automatically
+generate the step ID value (based on the step index) in this case. One or
+more values can be provided, and the exact number of ID values should (1)
+match the number of validation steps that the validation function call will
+produce (influenced by the number of \code{columns} provided), (2) be an ID
+string not used in any previous validation step, and (3) be a vector with
+unique values.}
 
 \item{brief}{An optional, text-based description for the validation step.}
 

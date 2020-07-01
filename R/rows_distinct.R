@@ -152,6 +152,8 @@ rows_distinct <- function(x,
         column = columns
       )
   }
+  
+  # TODO: check `step_id` value(s) against previous recorded IDs
 
   # Add a validation step
   agent <-

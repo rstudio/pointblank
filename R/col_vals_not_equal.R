@@ -181,6 +181,10 @@ col_vals_not_equal <- function(x,
     brief <- generate_autobriefs(agent, columns, preconditions, values = value, "col_vals_not_equal")
   }
   
+  step_id <- normalize_step_id(step_id, columns)
+  
+  # TODO: check `step_id` value(s) against previous recorded IDs
+  
   # Add one or more validation steps based on the
   # length of the `columns` variable
   for (i in seq(columns)) {
@@ -194,7 +198,7 @@ col_vals_not_equal <- function(x,
         na_pass = na_pass,
         preconditions = preconditions,
         actions = covert_actions(actions, agent),
-        step_id = step_id,
+        step_id = step_id[i],
         brief = brief[i],
         active = active
       )

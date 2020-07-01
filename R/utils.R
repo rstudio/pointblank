@@ -128,7 +128,6 @@ normalize_step_id <- function(step_id, columns) {
         )
       # TODO: issue warning about duplicated `step_id` values
     }
-    
   }
   step_id
 }

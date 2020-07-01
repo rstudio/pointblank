@@ -173,6 +173,26 @@ normalize_step_id <- function(step_id, columns, agent) {
   step_id
 }
 
+check_step_id_duplicates <- function(step_id, agent) {
+  
+  if (any(step_id %in% agent$validation_set$step_id)) {
+
+    error_at_index <- max(agent$validation_set$i)
+    a_duplicate_step_id <- step_id[step_id %in% agent$validation_set$step_id][1]
+    
+    stop(
+      "Just after step index `", error_at_index, "`, the following `step_id` has been ",
+      "seen as used in a previous validation step:\n",
+      " * \"", a_duplicate_step_id, "\"",
+      call. = FALSE
+    )
+  }
+}
+
+generate_indexed_vals <- function(x, numbers, sep = ".") {
+  paste0(x, sep, formatC(numbers, width = 4, format = "d", flag = "0"))
+}
+
 get_threshold_type <- function(threshold) {
   
   if (threshold >= 1) {

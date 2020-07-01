@@ -17,7 +17,7 @@ BugReports: https://github.com/rich-iannone/pointblank/issues
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 7.1.0.9000
+RoxygenNote: 7.1.1
 Depends: 
     R (>= 3.5.0)
 Imports:
@@ -25,6 +25,7 @@ Imports:
     blastula (>= 0.3.1),
     cli (>= 2.0.2),
     DBI (>= 1.1.0),
+    digest (>= 0.6.25),
     dplyr (>= 1.0.0),
     dbplyr (>= 1.4.4),
     ggforce (>= 0.3.1),

@@ -144,6 +144,7 @@ col_schema_match <- function(x,
                              complete = TRUE,
                              in_order = TRUE,
                              actions = NULL,
+                             step_id = NULL,
                              brief = NULL,
                              active = TRUE) {
   
@@ -188,6 +189,13 @@ col_schema_match <- function(x,
       )
   }
   
+  # Normalize any provided `step_id` value(s)
+  step_id <- normalize_step_id(step_id, columns = "column", agent)
+  
+  # Check `step_id` value(s) against all other `step_id`
+  # values in earlier validation steps
+  check_step_id_duplicates(step_id, agent)
+  
   # Add a validation step
   agent <-
     create_validation_step(
@@ -197,6 +205,7 @@ col_schema_match <- function(x,
       values = schema,
       preconditions = NULL,
       actions = covert_actions(actions, agent),
+      step_id = step_id,
       brief = brief,
       active = active
     )

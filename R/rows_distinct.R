@@ -95,6 +95,7 @@ rows_distinct <- function(x,
                           columns = NULL,
                           preconditions = NULL,
                           actions = NULL,
+                          step_id = NULL,
                           brief = NULL,
                           active = TRUE) {
 
@@ -151,6 +152,15 @@ rows_distinct <- function(x,
         column = columns
       )
   }
+  
+  # Normalize any provided `step_id` value(s)
+  step_id <- normalize_step_id(step_id, columns = "column", agent)
+  
+  # Check `step_id` value(s) against all other `step_id`
+  # values in earlier validation steps
+  check_step_id_duplicates(step_id, agent)
+  
+  # TODO: check `step_id` value(s) against previous recorded IDs
 
   # Add a validation step
   agent <-
@@ -161,6 +171,7 @@ rows_distinct <- function(x,
       values = NULL,
       preconditions = preconditions,
       actions = covert_actions(actions, agent),
+      step_id = step_id,
       brief = brief,
       active = active
     )

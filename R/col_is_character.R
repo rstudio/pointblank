@@ -114,6 +114,7 @@ NULL
 col_is_character <- function(x,
                              columns,
                              actions = NULL,
+                             step_id = NULL,
                              brief = NULL,
                              active = TRUE) {
   
@@ -145,6 +146,13 @@ col_is_character <- function(x,
     brief <- generate_autobriefs(agent, columns, preconditions, values, "col_is_character")
   }
   
+  # Normalize any provided `step_id` value(s)
+  step_id <- normalize_step_id(step_id, columns, agent)
+  
+  # Check `step_id` value(s) against all other `step_id`
+  # values in earlier validation steps
+  check_step_id_duplicates(step_id, agent)
+  
   # Add one or more validation steps based on the
   # length of the `columns` variable
   for (i in seq(columns)) {
@@ -156,6 +164,7 @@ col_is_character <- function(x,
         column = columns[i],
         preconditions = NULL,
         actions = covert_actions(actions, agent),
+        step_id = step_id[i],
         brief = brief[i],
         active = active
       )

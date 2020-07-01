@@ -214,6 +214,8 @@ create_agent <- function(tbl,
       validation_set =
         dplyr::tibble(
           i = integer(0),
+          step_id = character(0),
+          sha1 = character(0),
           assertion_type = character(0),
           column = list(NULL),
           values = list(NULL),

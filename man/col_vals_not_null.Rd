@@ -11,6 +11,7 @@ col_vals_not_null(
   columns,
   preconditions = NULL,
   actions = NULL,
+  step_id = NULL,
   brief = NULL,
   active = TRUE
 )
@@ -35,6 +36,11 @@ input data table to be transformed (e.g.,
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
 with the \code{\link[=action_levels]{action_levels()}} helper function.}
+
+\item{step_id}{An optional string that identifies the validation step and
+serves to distinguish it from any other validation steps. By default, this
+is \code{NULL} and should an ID string not be provided an automatically
+generated step ID value (based on the step index) will be used.}
 
 \item{brief}{An optional, text-based description for the validation step.}
 

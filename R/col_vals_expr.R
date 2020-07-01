@@ -153,6 +153,7 @@ col_vals_expr <- function(x,
                           expr,
                           preconditions = NULL,
                           actions = NULL,
+                          step_id = NULL,
                           brief = NULL,
                           active = TRUE) {
   
@@ -192,6 +193,13 @@ col_vals_expr <- function(x,
       )
   }
   
+  # Normalize any provided `step_id` value(s)
+  step_id <- normalize_step_id(step_id, columns = "column", agent)
+  
+  # Check `step_id` value(s) against all other `step_id`
+  # values in earlier validation steps
+  check_step_id_duplicates(step_id, agent)
+  
   # Add a validation step
   agent <-
     create_validation_step(
@@ -201,6 +209,7 @@ col_vals_expr <- function(x,
       values = expr,
       preconditions = preconditions,
       actions = covert_actions(actions, agent),
+      step_id = step_id,
       brief = brief,
       active = active
     )

@@ -151,6 +151,7 @@ col_vals_lte <- function(x,
                          na_pass = FALSE,
                          preconditions = NULL,
                          actions = NULL,
+                         step_id = NULL,
                          brief = NULL,
                          active = TRUE) {
   
@@ -182,6 +183,13 @@ col_vals_lte <- function(x,
     brief <- generate_autobriefs(agent, columns, preconditions, values = value, "col_vals_lte")
   }
   
+  # Normalize any provided `step_id` value(s)
+  step_id <- normalize_step_id(step_id, columns, agent)
+  
+  # Check `step_id` value(s) against all other `step_id`
+  # values in earlier validation steps
+  check_step_id_duplicates(step_id, agent)
+  
   # Add one or more validation steps based on the
   # length of the `columns` variable
   for (i in seq(columns)) {
@@ -195,6 +203,7 @@ col_vals_lte <- function(x,
         na_pass = na_pass,
         preconditions = preconditions,
         actions = covert_actions(actions, agent),
+        step_id = step_id[i],
         brief = brief[i],
         active = active
       )

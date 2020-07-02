@@ -140,9 +140,9 @@ interrogate <- function(agent,
             table = tbl_checked,
             assertion_type
           )
-        
+
         tbl_checked <- tbl_checked$value
-        
+
         tbl_checked <-
           tbl_checked %>%
           dplyr::rename(!!new_col := pb_is_good_)
@@ -419,13 +419,17 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
       "col_vals_equal" = "==",
       "col_vals_not_equal" = "!="
     )
-  
+
   # Get the value for the expression
   value <- get_values_at_idx(agent = agent, idx = idx)
 
   # Normalize a column in `vars()` to a `name` object
   if (inherits(value, "list")) {
     value <- value[1][[1]] %>% rlang::get_expr()
+  } else {
+    if (is.character(value)) {
+      value <- paste0("'", value, "'")
+    }
   }
   
   # Obtain the target column as a label
@@ -439,14 +443,15 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
   # Perform rowwise validations for the column
   pointblank_try_catch(tbl_val_comparison(table, column, operator, value, na_pass))
 }
+
 # Function for validating comparison step functions
 tbl_val_comparison <- function(table, column, operator, value, na_pass) {
-  
+
   column_validity_checks_column_value(table = table, column = {{ column }}, value = {{ value }})
   
   # Construct a string-based expression for the validation
   expression <- paste(column, operator, value)
-  
+
   table %>%
     dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(expression)) %>%
     dplyr::mutate(pb_is_good_ = dplyr::case_when(

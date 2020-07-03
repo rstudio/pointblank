@@ -161,7 +161,8 @@
 #' 1-2
 #'   
 #' @export
-create_agent <- function(tbl,
+create_agent <- function(tbl = NULL,
+                         read_fn = NULL,
                          name = NULL,
                          actions = NULL,
                          end_fns = NULL,
@@ -171,20 +172,51 @@ create_agent <- function(tbl,
   # Generate an agent name if none provided
   if (is.null(name)) {
     name <- paste0("agent_", gsub(" ", "_", Sys.time() %>% as.character()))
-    brief <- "Create agent with auto-assigned validation name"
-  } else {
-    brief <- "Create agent with an assigned validation name"
   }
   
   # Normalize the reporting language identifier and stop if necessary
   reporting_lang <- normalize_reporting_language(reporting_lang)
 
-  tbl_name <- deparse(match.call()$tbl)
+  # If nothing is provided for either `tbl` or `read_fn`,
+  # this function needs to be stopped
+  if (is.null(tbl) && is.null(read_fn)) {
+    
+    stop(
+      "A table object or table-reading function must be supplied:\n",
+      " * Use a table object in the `tbl` argument.\n",
+      " * Or supply a table-reading function in `read_fn`.\n",
+      " * You can do both: the supplied `tbl` will take priority.",
+      call. = FALSE
+    )
+  }
   
-  if (tbl_name == ".") {
+  if (!is.null(tbl)) {
+    tbl_name <- deparse(match.call()$tbl)
+    if (tbl_name == ".") {
+      tbl_name <- "table"
+    }
+  } else {
     tbl_name <- "table"
   }
   
+  
+  if (!is.null(read_fn) && is.null(tbl)) {
+    if (inherits(read_fn, "function")) {
+      tbl <- rlang::exec(read_fn)
+    } else if (rlang::is_formula(read_fn)) {
+      tbl <- read_fn %>% rlang::f_rhs() %>% rlang::eval_tidy()
+    } else {
+      stop(
+        "The `read_fn` object must be a function or an R formula.\n",
+        "* A function can be made with `function()` {<table reading code>}.\n",
+        "* An R formula can also be used, with the expression on the RHS.",
+        call. = FALSE
+      )
+    }
+  }
+  
+  # Get some basic information on the table, which will be
+  # returned as a list
   tbl_information <- get_tbl_information(tbl = tbl)
 
   # If any `end_fns` are specified we always attempt to
@@ -199,6 +231,7 @@ create_agent <- function(tbl,
       name = name,
       time = as.POSIXct(NA)[-1],
       tbl = tbl,
+      read_fn = read_fn,
       tbl_name = tbl_name,
       db_tbl_name = tbl_information$db_tbl_name,
       tbl_src = tbl_information$tbl_src,

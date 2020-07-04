@@ -14,7 +14,8 @@ interrogate(
 )
 }
 \arguments{
-\item{agent}{An agent object of class \code{ptblank_agent}.}
+\item{agent}{An agent object of class \code{ptblank_agent} that is created with
+\code{\link[=create_agent]{create_agent()}}.}
 
 \item{extract_failed}{An option to collect rows that didn't pass a particular
 validation step. The default is \code{TRUE} and further options allow for fine

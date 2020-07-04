@@ -35,7 +35,7 @@ test_col_schema_match(
 }
 \arguments{
 \item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
-class \code{ptblank_agent} that can be created with \code{\link[=create_agent]{create_agent()}}.}
+class \code{ptblank_agent} that is created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{schema}{A table schema of type \code{col_schema} which can be generated
 using the \code{\link[=col_schema]{col_schema()}} function.}

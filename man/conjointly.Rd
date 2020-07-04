@@ -35,7 +35,7 @@ test_conjointly(
 }
 \arguments{
 \item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
-class \code{ptblank_agent} that can be created with \code{\link[=create_agent]{create_agent()}}.}
+class \code{ptblank_agent} that is created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{...}{a collection one-sided formulas that consist of validation step
 functions that validate row units. Specifically, these functions should be

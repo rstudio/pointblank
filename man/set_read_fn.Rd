@@ -18,5 +18,13 @@ function (e.g., \verb{function() \{ <table reading code> \}}) or, (2) with an R
 formula expression (e.g., \verb{~ \{ <table reading code> \}}).}
 }
 \description{
-Set a table-reading function to an agent
+A table-reading function can be associated with an \emph{agent} with
+\code{set_read_fn()}. If a data table is already associated with an \emph{agent}, it
+will act as the target table (i.e., the \emph{agent} will disregard the
+table-reading function). However, if there is no data table associated with
+the \emph{agent} then the table-reading function will be invoked. We can always
+remove a data table associated with an agent with the \code{\link[=remove_tbl]{remove_tbl()}}
+function. There are two ways to specify a \code{read_fn}: (1) using a function
+(e.g., \verb{function() \{ <table reading code> \}}) or, (2) with an R formula
+expression (e.g., \verb{~ \{ <table reading code> \}}).
 }

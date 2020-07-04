@@ -10,30 +10,39 @@
 #' functions, which expand to validation steps (each one is numbered). This
 #' process is known as developing a *validation plan*.
 #'
-#' The validation functions, when called on an agent, are merely instructions up
-#' to the point the [interrogate()] function is called. That kicks off the
+#' The validation functions, when called on an *agent*, are merely instructions
+#' up to the point the [interrogate()] function is called. That kicks off the
 #' process of the *agent* acting on the *validation plan* and getting results
 #' for each step. Once the interrogation process is complete, we can say that
-#' the *agent* has intel. Calling the agent itself will result in a reporting
+#' the *agent* has intel. Calling the *agent* itself will result in a reporting
 #' table. This reporting of the interrogation can also be accessed with the
 #' [get_agent_report()] function, where there are more reporting options.
 #'
-#' A very detailed list object, known as the x-list, can be obtained by using
-#' the [get_agent_x_list()] function. This font of information can be taken as
-#' a whole, or, broken down by the step number.
-#' 
+#' @details A very detailed list object, known as the x-list, can be obtained by
+#' using the [get_agent_x_list()] function on the *agent*. This font of
+#' information can be taken as a whole, or, broken down by the step number (with
+#' the `i` argument).
+#'
 #' Sometimes it is useful to see which rows were the failing ones. By using the
-#' [get_data_extracts()] functions, we either get a list of tibbles (for those
-#' steps that have data extracts) or one tibble if the validation step is
-#' specified.
+#' [get_data_extracts()] function on the *agent*, we either get a list of
+#' tibbles (for those steps that have data extracts) or one tibble if the
+#' validation step is specified with the `i` argument.
 #'
 #' If we just need to know whether all validations completely passed (i.e., all
-#' steps had no failing test units), the [all_passed()] function could be used.
-#' However, in practice, it's rarely the case that all data validation steps are
-#' free from any failing units.
+#' steps had no failing test units), the [all_passed()] function could be used
+#' on the *agent*. However, in practice, it's not often the case that all data
+#' validation steps are free from any failing units.
 #'
 #' @param tbl The input table. This can be a data frame, a tibble, or a
-#'   `tbl_dbi` object.
+#'   `tbl_dbi` object. Alternatively, a function can be used to read in the
+#'   input data table with the `read_fn` argument (in which case, `tbl` can be
+#'   `NULL`).
+#' @param read_fn A function that's used for reading in the data. If a `tbl` is
+#'   not provided, then this function will be invoked. However, if both a `tbl`
+#'   *and* a `read_fn` is specified, then the supplied `tbl` will take priority.
+#'   There are two ways to specify a `read_fn`: (1) using a function (e.g., 
+#'   `function() { <table reading code> }`) or, (2) with an R formula expression
+#'   (e.g., `~ { <table reading code> }`).
 #' @param name An optional name for the validation plan that the agent will
 #'   eventually carry out during the interrogation process. If no value is
 #'   provided, a name will be generated based on the current system time.
@@ -46,10 +55,10 @@
 #'   interrogation.
 #' @param embed_report An option to embed a **gt**-based validation report into
 #'   the `ptblank_agent` object. If `FALSE` (the default) then the table object
-#'   will be not generated and available with the agent upon returning from the
-#'   interrogation.
+#'   will be not generated and available with the *agent* upon returning from
+#'   the interrogation.
 #' @param reporting_lang The language to use for automatic creation of briefs
-#'   (short descriptions for each validation step) and for the agent report (a
+#'   (short descriptions for each validation step) and for the *agent report* (a
 #'   summary table that provides the validation plan and the results from the
 #'   interrogation. By default, `NULL` will create English (`"en"`) text. Other
 #'   options include French (`"fr"`), German (`"de"`), Italian (`"it"`), and
@@ -72,8 +81,8 @@
 #' # `notify` states using `action_levels()`
 #' al <- 
 #'   action_levels(
-#'     warn_at = 0.1,
-#'     stop_at = 0.25,
+#'       warn_at = 0.10,
+#'       stop_at = 0.25,
 #'     notify_at = 0.35
 #'   )
 #' 
@@ -124,10 +133,10 @@
 #' class(report)
 #' 
 #' # What can you do with the report?
-#' # Print it from an R Markdown code,
-#' # use it in an email, put it in a
-#' # webpage, or further modify it with
-#' # the **gt** package
+#' # Print it from an R Markdown code
+#' # chunk, use it in a **blastula** email,
+#' # put it in a webpage, or further
+#' # modify it with the **gt** package
 #' 
 #' # From the report we know that Step
 #' # 4 had two test units (rows, really)

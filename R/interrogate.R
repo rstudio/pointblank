@@ -6,7 +6,8 @@
 #' can use functions like [get_agent_report()] and [all_passed()] to understand
 #' how the interrogation went down.
 #'
-#' @param agent An agent object of class `ptblank_agent`.
+#' @param agent An agent object of class `ptblank_agent` that is created with
+#'   [create_agent()].
 #' @param extract_failed An option to collect rows that didn't pass a particular
 #'   validation step. The default is `TRUE` and further options allow for fine
 #'   control of how these rows are collected.

@@ -62,6 +62,22 @@ agent_write <- function(agent,
 
 #' Read an agent from disk (redeployment)
 #' 
+#' An *agent* that has been written to disk (with [agent_write()]) can be read
+#' back into memory with the `agent_read()` function. Once the *agent* has been
+#' read, it may not have a data table associated with it (depending on whether
+#' the `keep_tbl` option was `TRUE` or `FALSE` when writing to disk) but it
+#' should still be able to produce an agent report (by printing the agent to the
+#' console or using [get_agent_report()]), return an agent x-list (with
+#' [get_agent_x_list()]), and yield any available data extracts with
+#' [get_data_extracts()]. Furthermore, all of its validation steps will still be
+#' present (along with results from any interrogation).
+#' 
+#' Should the *agent* possess a table-reading function (can be set any time with
+#' [set_read_fn()]) or a specific table (settable with [set_tbl()]) we could use
+#' the [interrogate()] function again. This is useful for tables that evolve
+#' over time and need periodic data quality assessments with the same validation
+#' steps (and more steps can be added as well).
+#' 
 #' @param path The path to the file that was previously written by
 #'   [agent_write()].
 #' 
@@ -124,6 +140,16 @@ remove_tbl <- function(agent) {
 }
 
 #' Set a table-reading function to an agent
+#'
+#' A table-reading function can be associated with an *agent* with
+#' `set_read_fn()`. If a data table is already associated with an *agent*, it
+#' will act as the target table (i.e., the *agent* will disregard the
+#' table-reading function). However, if there is no data table associated with
+#' the *agent* then the table-reading function will be invoked. We can always
+#' remove a data table associated with an agent with the [remove_tbl()]
+#' function. There are two ways to specify a `read_fn`: (1) using a function
+#' (e.g., `function() { <table reading code> }`) or, (2) with an R formula
+#' expression (e.g., `~ { <table reading code> }`).
 #' 
 #' @param agent An *agent* object of class `ptblank_agent` that is created with
 #'   [create_agent()].

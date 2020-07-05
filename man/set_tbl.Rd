@@ -15,5 +15,9 @@ tibble, or a \code{tbl_dbi} object. Any table already associated with the
 \emph{agent} will be overwritten.}
 }
 \description{
-Set a data table to an agent
+Setting a data table to \emph{agent} with \code{set_tbl()} replaces any table (data
+frame, a tibble, or a \code{tbl_dbi} object) associated with the \emph{agent}. If no
+data table is associated with an \emph{agent}, setting one will mean the data
+table takes precedence over table-reading function (settable in
+\code{\link[=create_agent]{create_agent()}}'s \code{read_fn} argument or with \code{\link[=set_read_fn]{set_read_fn()}}).
 }

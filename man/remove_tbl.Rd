@@ -11,5 +11,12 @@ remove_tbl(agent)
 \code{\link[=create_agent]{create_agent()}}.}
 }
 \description{
-Remove a data table associated with an agent
+Removing an \emph{agent}'s association to a data table can be done with the
+\code{remove_tbl()} function. This may be preferable when relying on a
+table-reading function (settable in \code{\link[=create_agent]{create_agent()}}'s \code{read_fn} argument or
+with \code{\link[=set_read_fn]{set_read_fn()}}) instead of directly using a table. If interrogating
+again with \code{\link[=interrogate]{interrogate()}} then there must be either an association to a
+table or a table-reading function available in the \emph{agent} (\code{\link[=set_read_fn]{set_read_fn()}}
+can help in this regard if the the \code{read_fn} argument in \code{\link[=create_agent]{create_agent()}} was
+left as \code{NULL} when creating the agent).
 }

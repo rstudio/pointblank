@@ -1,4 +1,4 @@
-#' Write an agent to disk (in reserve)
+#' Write an agent to disk
 #' 
 #' Writing an *agent* to disk with `agent_write()` is good practice for keeping
 #' data validation intel close at hand for later retrieval (with
@@ -60,7 +60,7 @@ agent_write <- function(agent,
   invisible(agent)
 }
 
-#' Read an agent from disk (redeployment)
+#' Read an agent from disk
 #' 
 #' An *agent* that has been written to disk (with [agent_write()]) can be read
 #' back into memory with the `agent_read()` function. Once the *agent* has been

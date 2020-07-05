@@ -2,7 +2,7 @@
 % Please edit documentation in R/agent_ops.R
 \name{agent_write}
 \alias{agent_write}
-\title{Write an agent to disk (in reserve)}
+\title{Write an agent to disk}
 \usage{
 agent_write(agent, filename, path = NULL, keep_tbl = FALSE)
 }
@@ -31,9 +31,9 @@ setting \code{keep_tbl} to \code{TRUE} but this only works in the case where the
 is not of the \code{tbl_dbi} class.
 }
 \details{
-It can be helpful to set a table-reading function to later reuse the agent
+It can be helpful to set a table-reading function to later reuse the \emph{agent}
 when read from disk through \code{\link[=agent_read]{agent_read()}}. This can be done with the
 \code{read_fn} argument of \code{\link[=create_agent]{create_agent()}} or, later, with \code{\link[=set_read_fn]{set_read_fn()}}.
-Alternatively, we can reintroduce the agent to a data table with the
+Alternatively, we can reintroduce the \emph{agent} to a data table with the
 \code{\link[=set_tbl]{set_tbl()}} function.
 }

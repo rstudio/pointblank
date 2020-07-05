@@ -18,5 +18,5 @@ with \code{\link[=set_read_fn]{set_read_fn()}}) instead of directly using a tabl
 again with \code{\link[=interrogate]{interrogate()}} then there must be either an association to a
 table or a table-reading function available in the \emph{agent} (\code{\link[=set_read_fn]{set_read_fn()}}
 can help in this regard if the the \code{read_fn} argument in \code{\link[=create_agent]{create_agent()}} was
-left as \code{NULL} when creating the agent).
+left as \code{NULL} when creating the \emph{agent}).
 }

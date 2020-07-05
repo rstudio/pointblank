@@ -2,7 +2,7 @@
 % Please edit documentation in R/agent_ops.R
 \name{agent_read}
 \alias{agent_read}
-\title{Read an agent from disk (redeployment)}
+\title{Read an agent from disk}
 \usage{
 agent_read(path)
 }
@@ -15,8 +15,8 @@ An \emph{agent} that has been written to disk (with \code{\link[=agent_write]{ag
 back into memory with the \code{agent_read()} function. Once the \emph{agent} has been
 read, it may not have a data table associated with it (depending on whether
 the \code{keep_tbl} option was \code{TRUE} or \code{FALSE} when writing to disk) but it
-should still be able to produce an agent report (by printing the agent to the
-console or using \code{\link[=get_agent_report]{get_agent_report()}}), return an agent x-list (with
+should still be able to produce an agent report (by printing the \emph{agent} to
+the console or using \code{\link[=get_agent_report]{get_agent_report()}}), return an agent x-list (with
 \code{\link[=get_agent_x_list]{get_agent_x_list()}}), and yield any available data extracts with
 \code{\link[=get_data_extracts]{get_data_extracts()}}. Furthermore, all of its validation steps will still be
 present (along with results from any interrogation).

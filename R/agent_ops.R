@@ -7,10 +7,10 @@
 #' setting `keep_tbl` to `TRUE` but this only works in the case where the table
 #' is not of the `tbl_dbi` class.
 #'
-#' It can be helpful to set a table-reading function to later reuse the agent
+#' It can be helpful to set a table-reading function to later reuse the *agent*
 #' when read from disk through [agent_read()]. This can be done with the
 #' `read_fn` argument of [create_agent()] or, later, with [set_read_fn()].
-#' Alternatively, we can reintroduce the agent to a data table with the
+#' Alternatively, we can reintroduce the *agent* to a data table with the
 #' [set_tbl()] function.
 #' 
 #' @param agent An *agent* object of class `ptblank_agent` that is created with
@@ -66,8 +66,8 @@ agent_write <- function(agent,
 #' back into memory with the `agent_read()` function. Once the *agent* has been
 #' read, it may not have a data table associated with it (depending on whether
 #' the `keep_tbl` option was `TRUE` or `FALSE` when writing to disk) but it
-#' should still be able to produce an agent report (by printing the agent to the
-#' console or using [get_agent_report()]), return an agent x-list (with
+#' should still be able to produce an agent report (by printing the *agent* to
+#' the console or using [get_agent_report()]), return an agent x-list (with
 #' [get_agent_x_list()]), and yield any available data extracts with
 #' [get_data_extracts()]. Furthermore, all of its validation steps will still be
 #' present (along with results from any interrogation).
@@ -87,6 +87,12 @@ agent_read <- function(path) {
 }
 
 #' Set a data table to an agent
+#' 
+#' Setting a data table to *agent* with `set_tbl()` replaces any table (data
+#' frame, a tibble, or a `tbl_dbi` object) associated with the *agent*. If no
+#' data table is associated with an *agent*, setting one will mean the data
+#' table takes precedence over table-reading function (settable in
+#' [create_agent()]'s `read_fn` argument or with [set_read_fn()]).
 #' 
 #' @param agent An *agent* object of class `ptblank_agent` that is created with
 #'   [create_agent()].
@@ -129,6 +135,15 @@ set_tbl <- function(agent,
 
 #' Remove a data table associated with an agent
 #' 
+#' Removing an *agent*'s association to a data table can be done with the
+#' `remove_tbl()` function. This may be preferable when relying on a
+#' table-reading function (settable in [create_agent()]'s `read_fn` argument or
+#' with [set_read_fn()]) instead of directly using a table. If interrogating
+#' again with [interrogate()] then there must be either an association to a
+#' table or a table-reading function available in the *agent* ([set_read_fn()]
+#' can help in this regard if the the `read_fn` argument in [create_agent()] was
+#' left as `NULL` when creating the *agent*).
+#' 
 #' @param agent An *agent* object of class `ptblank_agent` that is created with
 #'   [create_agent()].
 #'   
@@ -146,7 +161,7 @@ remove_tbl <- function(agent) {
 #' will act as the target table (i.e., the *agent* will disregard the
 #' table-reading function). However, if there is no data table associated with
 #' the *agent* then the table-reading function will be invoked. We can always
-#' remove a data table associated with an agent with the [remove_tbl()]
+#' remove a data table associated with an *agent* with the [remove_tbl()]
 #' function. There are two ways to specify a `read_fn`: (1) using a function
 #' (e.g., `function() { <table reading code> }`) or, (2) with an R formula
 #' expression (e.g., `~ { <table reading code> }`).

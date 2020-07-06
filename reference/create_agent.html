@@ -55,24 +55,13 @@ wishes to write, thereby increasing the level of validation coverage for that
 table. The agent assigned by the create_agent() call takes validation
 functions, which expand to validation steps (each one is numbered). This
 process is known as developing a validation plan.
-The validation functions, when called on an agent, are merely instructions up
-to the point the interrogate() function is called. That kicks off the
+The validation functions, when called on an agent, are merely instructions
+up to the point the interrogate() function is called. That kicks off the
 process of the agent acting on the validation plan and getting results
 for each step. Once the interrogation process is complete, we can say that
 the agent has intel. Calling the agent itself will result in a reporting
 table. This reporting of the interrogation can also be accessed with the
-get_agent_report() function, where there are more reporting options.
-A very detailed list object, known as the x-list, can be obtained by using
-the get_agent_x_list() function. This font of information can be taken as
-a whole, or, broken down by the step number.
-Sometimes it is useful to see which rows were the failing ones. By using the
-get_data_extracts() functions, we either get a list of tibbles (for those
-steps that have data extracts) or one tibble if the validation step is
-specified.
-If we just need to know whether all validations completely passed (i.e., all
-steps had no failing test units), the all_passed() function could be used.
-However, in practice, it's rarely the case that all data validation steps are
-free from any failing units." />
+get_agent_report() function, where there are more reporting options." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -155,28 +144,18 @@ wishes to write, thereby increasing the level of validation coverage for that
 table. The <em>agent</em> assigned by the <code>create_agent()</code> call takes validation
 functions, which expand to validation steps (each one is numbered). This
 process is known as developing a <em>validation plan</em>.</p>
-<p>The validation functions, when called on an agent, are merely instructions up
-to the point the <code>interrogate()</code> function is called. That kicks off the
+<p>The validation functions, when called on an <em>agent</em>, are merely instructions
+up to the point the <code>interrogate()</code> function is called. That kicks off the
 process of the <em>agent</em> acting on the <em>validation plan</em> and getting results
 for each step. Once the interrogation process is complete, we can say that
-the <em>agent</em> has intel. Calling the agent itself will result in a reporting
+the <em>agent</em> has intel. Calling the <em>agent</em> itself will result in a reporting
 table. This reporting of the interrogation can also be accessed with the
 <code>get_agent_report()</code> function, where there are more reporting options.</p>
-<p>A very detailed list object, known as the x-list, can be obtained by using
-the <code>get_agent_x_list()</code> function. This font of information can be taken as
-a whole, or, broken down by the step number.</p>
-<p>Sometimes it is useful to see which rows were the failing ones. By using the
-<code>get_data_extracts()</code> functions, we either get a list of tibbles (for those
-steps that have data extracts) or one tibble if the validation step is
-specified.</p>
-<p>If we just need to know whether all validations completely passed (i.e., all
-steps had no failing test units), the <code>all_passed()</code> function could be used.
-However, in practice, it's rarely the case that all data validation steps are
-free from any failing units.</p>
     </div>
 
     <pre class="usage"><span class='fu'>create_agent</span>(
-  <span class='kw'>tbl</span>,
+  tbl = <span class='kw'>NULL</span>,
+  read_fn = <span class='kw'>NULL</span>,
   name = <span class='kw'>NULL</span>,
   actions = <span class='kw'>NULL</span>,
   end_fns = <span class='kw'>NULL</span>,
@@ -190,7 +169,18 @@ free from any failing units.</p>
     <tr>
       <th>tbl</th>
       <td><p>The input table. This can be a data frame, a tibble, or a
-<code>tbl_dbi</code> object.</p></td>
+<code>tbl_dbi</code> object. Alternatively, a function can be used to read in the
+input data table with the <code>read_fn</code> argument (in which case, <code>tbl</code> can be
+<code>NULL</code>).</p></td>
+    </tr>
+    <tr>
+      <th>read_fn</th>
+      <td><p>A function that's used for reading in the data. If a <code>tbl</code> is
+not provided, then this function will be invoked. However, if both a <code>tbl</code>
+<em>and</em> a <code>read_fn</code> is specified, then the supplied <code>tbl</code> will take priority.
+There are two ways to specify a <code>read_fn</code>: (1) using a function (e.g.,
+<code>function() { &lt;table reading code&gt; }</code>) or, (2) with an R formula expression
+(e.g., <code>~ { &lt;table reading code&gt; }</code>).</p></td>
     </tr>
     <tr>
       <th>name</th>
@@ -215,13 +205,13 @@ interrogation.</p></td>
       <th>embed_report</th>
       <td><p>An option to embed a <strong>gt</strong>-based validation report into
 the <code>ptblank_agent</code> object. If <code>FALSE</code> (the default) then the table object
-will be not generated and available with the agent upon returning from the
-interrogation.</p></td>
+will be not generated and available with the <em>agent</em> upon returning from
+the interrogation.</p></td>
     </tr>
     <tr>
       <th>reporting_lang</th>
       <td><p>The language to use for automatic creation of briefs
-(short descriptions for each validation step) and for the agent report (a
+(short descriptions for each validation step) and for the <em>agent report</em> (a
 summary table that provides the validation plan and the results from the
 interrogation. By default, <code>NULL</code> will create English (<code>"en"</code>) text. Other
 options include French (<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), and
@@ -232,6 +222,20 @@ Spanish (<code>"es"</code>).</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>ptblank_agent</code> object.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>A very detailed list object, known as the x-list, can be obtained by
+using the <code>get_agent_x_list()</code> function on the <em>agent</em>. This font of
+information can be taken as a whole, or, broken down by the step number (with
+the <code>i</code> argument).</p>
+<p>Sometimes it is useful to see which rows were the failing ones. By using the
+<code>get_data_extracts()</code> function on the <em>agent</em>, we either get a list of
+tibbles (for those steps that have data extracts) or one tibble if the
+validation step is specified with the <code>i</code> argument.</p>
+<p>If we just need to know whether all validations completely passed (i.e., all
+steps had no failing test units), the <code>all_passed()</code> function could be used
+on the <em>agent</em>. However, in practice, it's not often the case that all data
+validation steps are free from any failing units.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
@@ -274,8 +278,8 @@ Spanish (<code>"es"</code>).</p></td>
 <span class='co'># `notify` states using `action_levels()`</span>
 <span class='kw'>al</span> <span class='op'>&lt;-</span> 
   <span class='fu'>action_levels</span>(
-    warn_at = <span class='fl'>0.1</span>,
-    stop_at = <span class='fl'>0.25</span>,
+      warn_at = <span class='fl'>0.10</span>,
+      stop_at = <span class='fl'>0.25</span>,
     notify_at = <span class='fl'>0.35</span>
   )
 
@@ -325,10 +329,10 @@ Spanish (<code>"es"</code>).</p></td>
 <span class='kw'>report</span> <span class='op'>&lt;-</span> <span class='fu'>get_agent_report</span>(<span class='kw'>agent</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>report</span>)</div><div class='output co'>#&gt; [1] "gt_tbl" "list"  </div><div class='input'>
 <span class='co'># What can you do with the report?</span>
-<span class='co'># Print it from an R Markdown code,</span>
-<span class='co'># use it in an email, put it in a</span>
-<span class='co'># webpage, or further modify it with</span>
-<span class='co'># the **gt** package</span>
+<span class='co'># Print it from an R Markdown code</span>
+<span class='co'># chunk, use it in a **blastula** email,</span>
+<span class='co'># put it in a webpage, or further</span>
+<span class='co'># modify it with the **gt** package</span>
 
 <span class='co'># From the report we know that Step</span>
 <span class='co'># 4 had two test units (rows, really)</span>

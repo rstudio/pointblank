@@ -123,6 +123,10 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#pointblank-development-version" class="anchor"></a>pointblank (development version)<small> Unreleased </small>
 </h1>
+<ul>
+<li><p>The <code>agent_write()</code> and <code>agent_read()</code> functions were added; they allow for saving the agent to disk and reading the agent back from disk.</p></li>
+<li><p>Added a a set of functions for setting and removing an agent’s association to a data table (<code>set_tbl()</code> and <code>remove_tbl()</code>) or a table-reading function (<code>set_read_fn()</code> and <code>remove_read_fn()</code>).</p></li>
+</ul>
 </div>
     <div id="pointblank-040" class="section level1">
 <h1 class="page-header" data-toc-text="0.4.0">
@@ -150,7 +154,7 @@
 <a href="#new-features" class="anchor"></a>New features</h2>
 <ul>
 <li><p>Added 24 <em>expectation</em> functions (e.g., <code>expect_col_exists()</code>, <code>expect_rows_distinct()</code>, <code>expect_col_schema_match()</code>, etc.) as complements of the 24 validation functions. All of these can be used for <strong>testthat</strong> tests of tabular data with a simplified interface that exposes an easy-to-use failure <code>threshold</code> (defaulting to <code>1</code>).</p></li>
-<li><p>Added 24 <em>test</em> functions (e.g., <code>test_col_exists()</code>, <code>test_rows_distinct()</code>, <code>test_col_schema_match()</code>, etc.) to further complement the 24 validation functions. These functions return a logical value: <code>TRUE</code> if the threshold (having a default of <code>1</code>) is exceeded, <code>FALSE</code> otherwise. These <code>test_*()</code> functions use the same simplified interface of the <code>expect_*()</code> functions.</p></li>
+<li><p>Added 24 <em>test</em> functions (e.g., <code>test_col_exists()</code>, <code>test_rows_distinct()</code>, <code>test_col_schema_match()</code>, etc.) to further complement the 24 validation functions. These functions return a logical value: <code>TRUE</code> if the threshold (having a default of <code>1</code>) is <em>not</em> exceeded, <code>FALSE</code> otherwise. These <code>test_*()</code> functions use the same simplified interface of the <code>expect_*()</code> functions.</p></li>
 <li><p>Added the <code>col_vals_expr()</code>, <code>expect_col_vals_expr()</code>, and <code>test_col_vals_expr()</code> <em>validation</em>, <em>expectation</em>, and <em>test</em> functions, making it easier for DIY validations. The <strong>dplyr</strong> <code>expr()</code>, <code>case_when()</code>, and <code>between()</code> functions were re-exported for easier accessibility here since they work exceedingly well with the new functions.</p></li>
 <li><p><code>col_schema_match()</code> (and its <em>expect</em> and <em>test</em> analogues) gained new arguments: <code>complete</code> and <code>in_order</code>. These allow for some relaxation of constraints related to the completeness and ordering of columns defined in a <code>col_schema</code> object (created by <code>col_schema()</code>).</p></li>
 <li><p>The <code>preconditions</code> argument available in all <em>validation</em>, <em>expectation</em>, and <em>test</em> functions now accepts both formula and function values (previously, only formula values were accepted).</p></li>

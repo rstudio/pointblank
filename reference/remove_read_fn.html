@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Given an agent that has a validation plan, perform an interrogation — interrogate • pointblank</title>
+<title>Remove a table-reading function associated with an agent — remove_read_fn • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,12 +46,11 @@
 
 
 
-<meta property="og:title" content="Given an agent that has a validation plan, perform an interrogation — interrogate" />
-<meta property="og:description" content="When the agent has all the information on what to do (i.e., a validation plan
-which is a series of validation steps), the interrogation process can occur
-according its plan. After that, the agent will have gathered intel, and we
-can use functions like get_agent_report() and all_passed() to understand
-how the interrogation went down." />
+<meta property="og:title" content="Remove a table-reading function associated with an agent — remove_read_fn" />
+<meta property="og:description" content="Removing an agent's association to a table-reading function can be done
+with remove_read_fn(). This may be good idea when relying on the direct
+association of a data table (settable in create_agent()'s tbl argument or
+with set_tbl()), where the table-reading function is no longer relevant." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -120,100 +119,31 @@ how the interrogation went down." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Given an agent that has a validation plan, perform an interrogation</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/interrogate.R'><code>R/interrogate.R</code></a></small>
-    <div class="hidden name"><code>interrogate.Rd</code></div>
+    <h1>Remove a table-reading function associated with an agent</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/agent_ops.R'><code>R/agent_ops.R</code></a></small>
+    <div class="hidden name"><code>remove_read_fn.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>When the agent has all the information on what to do (i.e., a validation plan
-which is a series of validation steps), the interrogation process can occur
-according its plan. After that, the agent will have gathered intel, and we
-can use functions like <code>get_agent_report()</code> and <code>all_passed()</code> to understand
-how the interrogation went down.</p>
+    <p>Removing an <em>agent</em>'s association to a table-reading function can be done
+with <code>remove_read_fn()</code>. This may be good idea when relying on the direct
+association of a data table (settable in <code>create_agent()</code>'s <code>tbl</code> argument or
+with <code>set_tbl()</code>), where the table-reading function is no longer relevant.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>interrogate</span>(
-  <span class='kw'>agent</span>,
-  extract_failed = <span class='fl'>TRUE</span>,
-  get_first_n = <span class='kw'>NULL</span>,
-  sample_n = <span class='kw'>NULL</span>,
-  sample_frac = <span class='kw'>NULL</span>,
-  sample_limit = <span class='fl'>5000</span>
-)</pre>
+    <pre class="usage"><span class='fu'>remove_read_fn</span>(<span class='kw'>agent</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>agent</th>
-      <td><p>An agent object of class <code>ptblank_agent</code> that is created with
+      <td><p>An <em>agent</em> object of class <code>ptblank_agent</code> that is created with
 <code>create_agent()</code>.</p></td>
-    </tr>
-    <tr>
-      <th>extract_failed</th>
-      <td><p>An option to collect rows that didn't pass a particular
-validation step. The default is <code>TRUE</code> and further options allow for fine
-control of how these rows are collected.</p></td>
-    </tr>
-    <tr>
-      <th>get_first_n</th>
-      <td><p>If the option to collect non-passing rows is chosen, there
-is the option here to collect the first <code>n</code> rows here. Supply the number of
-rows to extract from the top of the non-passing rows table (the ordering of
-data from the original table is retained).</p></td>
-    </tr>
-    <tr>
-      <th>sample_n</th>
-      <td><p>If the option to collect non-passing rows is chosen, this
-option allows for the sampling of <code>n</code> rows. Supply the number of rows to
-sample from the non-passing rows table. If <code>n</code> is greater than the number
-of non-passing rows, then all the rows will be returned.</p></td>
-    </tr>
-    <tr>
-      <th>sample_frac</th>
-      <td><p>If the option to collect non-passing rows is chosen, this
-option allows for the sampling of a fraction of those rows. Provide a
-number in the range of <code>0</code> and <code>1</code>. The number of rows to return may be
-extremely large (and this is especially when querying remote databases),
-however, the <code>sample_limit</code> option will apply a hard limit to the returned
-rows.</p></td>
-    </tr>
-    <tr>
-      <th>sample_limit</th>
-      <td><p>A value that limits the possible number of rows returned
-when sampling non-passing rows using the <code>sample_frac</code> option.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>ptblank_agent</code> object.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
-    
-
-<p>4-1</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a simple table with two</span>
-<span class='co'># columns of numerical values</span>
-<span class='kw'>tbl</span> <span class='op'>&lt;-</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
-    a = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>6</span>, <span class='fl'>5</span>, <span class='fl'>8</span>, <span class='fl'>7</span>),
-    b = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>7</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>3</span>)
-  )
-
-<span class='co'># Validate that values in column</span>
-<span class='co'># `a` from `tbl` are always &gt; 5,</span>
-<span class='co'># using `interrogate()` carries out</span>
-<span class='co'># the validation plan and completes</span>
-<span class='co'># the whole process</span>
-<span class='kw'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'>create_agent</span>(tbl = <span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>interrogate</span>()
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -49,5 +49,6 @@ Suggests:
     RMariaDB,
     RPostgres,
     readr,
-    rmarkdown
+    rmarkdown,
+    sparklyr
 Roxygen: list(markdown = TRUE)

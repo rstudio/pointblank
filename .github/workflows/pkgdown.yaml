@@ -6,12 +6,13 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: ubuntu-18.04
-    
+    runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
 
       - uses: r-lib/actions/setup-r@master
+        with:
+          r-version: 'release'
 
       - uses: r-lib/actions/setup-pandoc@master
 
@@ -25,23 +26,15 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-bionic-r-${{ matrix.config.r }}-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-bionic-r-${{ matrix.config.r }}-
-
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        env:
-          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
-        run: |
-          Rscript -e "remotes::install_github('r-hub/sysreqs')"
-          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
-          sudo -s eval "$sysreqs"
+          key: macOS-r-4.0-2-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: macOS-r-4.0-2-
 
       - name: Install dependencies
         run: |
           install.packages("remotes")
           remotes::install_deps(dependencies = TRUE)
           remotes::install_dev("pkgdown")
+          remotes::install_github("tidyverse/tidytemplate")
         shell: Rscript {0}
 
       - name: Install package
@@ -50,4 +43,3 @@ jobs:
       - name: Deploy package
         run: pkgdown::deploy_to_branch(new_process = FALSE)
         shell: Rscript {0}
-        

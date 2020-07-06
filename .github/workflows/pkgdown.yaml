@@ -8,11 +8,6 @@ jobs:
   pkgdown:
     runs-on: ubuntu-18.04
     
-    env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      GITHUB_MSSQL: true
-      RSPM: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
-    
     steps:
       - uses: actions/checkout@v2
 
@@ -45,8 +40,8 @@ jobs:
       - name: Install dependencies
         run: |
           install.packages("remotes")
-          install.packages("pkgdown")
           remotes::install_deps(dependencies = TRUE)
+          remotes::install_dev("pkgdown")
         shell: Rscript {0}
 
       - name: Install package

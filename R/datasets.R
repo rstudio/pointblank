@@ -60,7 +60,12 @@ small_table_sqlite <- function() {
          call. = FALSE)
   }
   
-  con <- DBI::dbConnect(RSQLite::SQLite(), dbname = "inst/small_table.db")
+  con <- 
+    DBI::dbConnect(
+      RSQLite::SQLite(), 
+      dbname = system.file("small_table.db", package = "pointblank")
+    )
+  
   dplyr::tbl(con, "small_table")
   
   # nocov end

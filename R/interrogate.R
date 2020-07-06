@@ -6,7 +6,8 @@
 #' can use functions like [get_agent_report()] and [all_passed()] to understand
 #' how the interrogation went down.
 #'
-#' @param agent An agent object of class `ptblank_agent`.
+#' @param agent An agent object of class `ptblank_agent` that is created with
+#'   [create_agent()].
 #' @param extract_failed An option to collect rows that didn't pass a particular
 #'   validation step. The default is `TRUE` and further options allow for fine
 #'   control of how these rows are collected.
@@ -62,7 +63,48 @@ interrogate <- function(agent,
 
   # Add the starting time to the `agent` object
   agent$time <- Sys.time()
-  
+
+  # Stop function if `agent$tbl` and `agent$read_fn` are both NULL
+  if (is.null(agent$tbl) && is.null(agent$read_fn)) {
+    
+    stop(
+      "We can't `interrogate()` because the agent doesn't have a data table or ",
+      "a function to obtain one:\n",
+      "* Use the `set_tbl()` function to specify a table, or\n",
+      "* Use `set_read_fn()` to supply a table-reading function.",
+      call. = FALSE
+    )
+  }
+
+  if (is.null(agent$tbl) && !is.null(agent$read_fn)) {
+    if (inherits(agent$read_fn, "function")) {
+      agent$tbl <- rlang::exec(agent$read_fn)
+    } else if (rlang::is_formula(agent$read_fn)) {
+      agent$tbl <- agent$read_fn %>% rlang::f_rhs() %>% rlang::eval_tidy()
+    } else {
+
+      stop(
+        "The `read_fn` object must be a function or an R formula.\n",
+        "* A function can be made with `function()` {<table reading code>}.\n",
+        "* An R formula can also be used, with the expression on the RHS.",
+        call. = FALSE
+      )
+    }
+
+    # Obtain basic information on the table and
+    # set the relevant list elements
+    tbl_information <- get_tbl_information(tbl = agent$tbl)
+
+    agent$db_tbl_name <- tbl_information$db_tbl_name
+    agent$tbl_src <- tbl_information$tbl_src
+    agent$tbl_src_details <- tbl_information$tbl_src_details
+    agent$col_names <- tbl_information$col_names
+    agent$col_types <- tbl_information$r_col_types
+    agent$db_col_types <- tbl_information$db_col_types
+
+    agent$extracts <- NULL
+  }
+
   if (agent$name == "::QUIET::" || !interactive()) {
     quiet <- TRUE
   } else {

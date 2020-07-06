@@ -5,7 +5,8 @@
 \title{Create a pointblank agent object}
 \usage{
 create_agent(
-  tbl,
+  tbl = NULL,
+  read_fn = NULL,
   name = NULL,
   actions = NULL,
   end_fns = NULL,
@@ -15,7 +16,16 @@ create_agent(
 }
 \arguments{
 \item{tbl}{The input table. This can be a data frame, a tibble, or a
-\code{tbl_dbi} object.}
+\code{tbl_dbi} object. Alternatively, a function can be used to read in the
+input data table with the \code{read_fn} argument (in which case, \code{tbl} can be
+\code{NULL}).}
+
+\item{read_fn}{A function that's used for reading in the data. If a \code{tbl} is
+not provided, then this function will be invoked. However, if both a \code{tbl}
+\emph{and} a \code{read_fn} is specified, then the supplied \code{tbl} will take priority.
+There are two ways to specify a \code{read_fn}: (1) using a function (e.g.,
+\verb{function() \{ <table reading code> \}}) or, (2) with an R formula expression
+(e.g., \verb{~ \{ <table reading code> \}}).}
 
 \item{name}{An optional name for the validation plan that the agent will
 eventually carry out during the interrogation process. If no value is
@@ -32,11 +42,11 @@ interrogation.}
 
 \item{embed_report}{An option to embed a \strong{gt}-based validation report into
 the \code{ptblank_agent} object. If \code{FALSE} (the default) then the table object
-will be not generated and available with the agent upon returning from the
-interrogation.}
+will be not generated and available with the \emph{agent} upon returning from
+the interrogation.}
 
 \item{reporting_lang}{The language to use for automatic creation of briefs
-(short descriptions for each validation step) and for the agent report (a
+(short descriptions for each validation step) and for the \emph{agent report} (a
 summary table that provides the validation plan and the results from the
 interrogation. By default, \code{NULL} will create English (\code{"en"}) text. Other
 options include French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), and
@@ -55,27 +65,29 @@ table. The \emph{agent} assigned by the \code{create_agent()} call takes validat
 functions, which expand to validation steps (each one is numbered). This
 process is known as developing a \emph{validation plan}.
 
-The validation functions, when called on an agent, are merely instructions up
-to the point the \code{\link[=interrogate]{interrogate()}} function is called. That kicks off the
+The validation functions, when called on an \emph{agent}, are merely instructions
+up to the point the \code{\link[=interrogate]{interrogate()}} function is called. That kicks off the
 process of the \emph{agent} acting on the \emph{validation plan} and getting results
 for each step. Once the interrogation process is complete, we can say that
-the \emph{agent} has intel. Calling the agent itself will result in a reporting
+the \emph{agent} has intel. Calling the \emph{agent} itself will result in a reporting
 table. This reporting of the interrogation can also be accessed with the
 \code{\link[=get_agent_report]{get_agent_report()}} function, where there are more reporting options.
-
-A very detailed list object, known as the x-list, can be obtained by using
-the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function. This font of information can be taken as
-a whole, or, broken down by the step number.
+}
+\details{
+A very detailed list object, known as the x-list, can be obtained by
+using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function on the \emph{agent}. This font of
+information can be taken as a whole, or, broken down by the step number (with
+the \code{i} argument).
 
 Sometimes it is useful to see which rows were the failing ones. By using the
-\code{\link[=get_data_extracts]{get_data_extracts()}} functions, we either get a list of tibbles (for those
-steps that have data extracts) or one tibble if the validation step is
-specified.
+\code{\link[=get_data_extracts]{get_data_extracts()}} function on the \emph{agent}, we either get a list of
+tibbles (for those steps that have data extracts) or one tibble if the
+validation step is specified with the \code{i} argument.
 
 If we just need to know whether all validations completely passed (i.e., all
-steps had no failing test units), the \code{\link[=all_passed]{all_passed()}} function could be used.
-However, in practice, it's rarely the case that all data validation steps are
-free from any failing units.
+steps had no failing test units), the \code{\link[=all_passed]{all_passed()}} function could be used
+on the \emph{agent}. However, in practice, it's not often the case that all data
+validation steps are free from any failing units.
 }
 \section{Function ID}{
 
@@ -97,8 +109,8 @@ small_table
 # `notify` states using `action_levels()`
 al <- 
   action_levels(
-    warn_at = 0.1,
-    stop_at = 0.25,
+      warn_at = 0.10,
+      stop_at = 0.25,
     notify_at = 0.35
   )
 
@@ -149,10 +161,10 @@ report <- get_agent_report(agent)
 class(report)
 
 # What can you do with the report?
-# Print it from an R Markdown code,
-# use it in an email, put it in a
-# webpage, or further modify it with
-# the **gt** package
+# Print it from an R Markdown code
+# chunk, use it in a **blastula** email,
+# put it in a webpage, or further
+# modify it with the **gt** package
 
 # From the report we know that Step
 # 4 had two test units (rows, really)

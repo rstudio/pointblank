@@ -16,7 +16,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_true(
     all(
       names(agent) ==
-        c("name", "time", "tbl", "tbl_name", "db_tbl_name",
+        c("name", "time", "tbl", "read_fn", "tbl_name", "db_tbl_name",
           "tbl_src", "tbl_src_details", "col_names", "col_types", "db_col_types",
           "actions", "end_fns", "embed_report", "reporting", "reporting_lang",
           "validation_set", "extracts"

@@ -57,7 +57,7 @@
 #' then be automatically generated.
 #'
 #' @param x A data frame, tibble (`tbl_df` or `tbl_dbi`), or, an agent object of
-#'   class `ptblank_agent` that can be created with [create_agent()].
+#'   class `ptblank_agent` that is created with [create_agent()].
 #' @param object A data frame or tibble (`tbl_df` or `tbl_dbi`) that serves as
 #'   the target table for the expectation function.
 #' @param columns The column (or a set of columns, provided as a character

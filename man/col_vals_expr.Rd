@@ -22,7 +22,7 @@ test_col_vals_expr(object, expr, preconditions = NULL, threshold = 1)
 }
 \arguments{
 \item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
-class \code{ptblank_agent} that can be created with \code{\link[=create_agent]{create_agent()}}.}
+class \code{ptblank_agent} that is created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{expr}{An expression to use for this test. This can either be in the
 form of a call made with the \code{expr()} function or as a one-sided \strong{R}

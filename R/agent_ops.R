@@ -182,3 +182,21 @@ set_read_fn <- function(agent,
   agent$read_fn <- read_fn
   invisible(agent)
 }
+
+#' Remove a table-reading function associated with an agent
+#' 
+#' Removing an *agent*'s association to a table-reading function can be done
+#' with `remove_read_fn()`. This may be good idea when instead relying on the
+#' direct association of a data table (settable in [create_agent()]'s `tbl`
+#' argument or with [set_tbl()]), where the table-reading function is no longer
+#' relevant.
+#' 
+#' @param agent An *agent* object of class `ptblank_agent` that is created with
+#'   [create_agent()].
+#'   
+#' @export
+remove_read_fn <- function(agent) {
+  
+  agent$read_fn <- NULL
+  invisible(agent)
+}

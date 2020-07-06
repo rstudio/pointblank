@@ -744,7 +744,17 @@ interrogate_regex <- function(agent, idx, table) {
       stop("Regex-based validations are currently not supported on SQLite database tables", call. = FALSE)
     }
     
-    if (tbl_type == "mysql") {
+    if (tbl_type == "tbl_spark") { 
+      
+      tbl <- 
+        table %>%
+        dplyr::mutate(pb_is_good_ = ifelse(!is.na({{ column }}), RLIKE({{ column }}, regex), NA)) %>%
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          is.na(pb_is_good_) ~ na_pass,
+          TRUE ~ pb_is_good_
+        ))
+      
+    } else if (tbl_type == "mysql") {
 
       tbl <- 
         table %>%

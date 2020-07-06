@@ -108,6 +108,21 @@ reference:
     - get_sundered_data
     - all_passed
     
+  - title: Agent Ops
+    desc: >
+      We have options for writing an agent to disk with the `agent_write()`
+      function (useful for keeping data validation intel close at hand). The 
+      agent can be retrieved with the `agent_read()` function. A set of
+      functions for setting and removing an agent's association to a data table
+      or a table-reading function is also available in this function family.
+    contents:
+    - agent_write
+    - agent_read
+    - set_tbl
+    - remove_tbl
+    - set_read_fn
+    - remove_read_fn
+    
   - title: Datasets
     contents:
     - small_table

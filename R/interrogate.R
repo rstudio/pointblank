@@ -955,7 +955,7 @@ interrogate_col_schema_match <- function(agent, idx, table) {
   table_schema_y <- agent$validation_set$values[[idx]]
   
   # Get the `table` `col_schema` object (this is constructed from the table)
-  if (inherits(table, "tbl_dbi")) {
+  if (inherits(table, "tbl_dbi") || inherits(table, "tbl_spark")) {
     
     if (inherits(table_schema_y, "sql_type")) {
       

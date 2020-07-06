@@ -1,5 +1,9 @@
 # pointblank (development version)
 
+* The `agent_write()` and `agent_read()` functions were added; they allow for saving the agent to disk and reading the agent back from disk.
+
+* Added a a set of functions for setting and removing an agent's association to a data table (`set_tbl()` and `remove_tbl()`) or a table-reading function (`set_read_fn()` and `remove_read_fn()`).
+
 # pointblank 0.4.0
 
 ## New R Markdown features
@@ -20,7 +24,7 @@
 
 * Added 24 *expectation* functions (e.g., `expect_col_exists()`, `expect_rows_distinct()`, `expect_col_schema_match()`, etc.) as complements of the 24 validation functions. All of these can be used for **testthat** tests of tabular data with a simplified interface that exposes an easy-to-use failure `threshold` (defaulting to `1`).
 
-* Added 24 *test* functions (e.g., `test_col_exists()`, `test_rows_distinct()`, `test_col_schema_match()`, etc.) to further complement the 24 validation functions. These functions return a logical value: `TRUE` if the threshold (having a default of `1`) is exceeded, `FALSE` otherwise. These `test_*()` functions use the same simplified interface of the `expect_*()` functions.
+* Added 24 *test* functions (e.g., `test_col_exists()`, `test_rows_distinct()`, `test_col_schema_match()`, etc.) to further complement the 24 validation functions. These functions return a logical value: `TRUE` if the threshold (having a default of `1`) is *not* exceeded, `FALSE` otherwise. These `test_*()` functions use the same simplified interface of the `expect_*()` functions.
 
 * Added the `col_vals_expr()`, `expect_col_vals_expr()`, and `test_col_vals_expr()` *validation*, *expectation*, and *test* functions, making it easier for DIY validations. The **dplyr** `expr()`, `case_when()`, and `between()` functions were re-exported for easier accessibility here since they work exceedingly well with the new functions.
 

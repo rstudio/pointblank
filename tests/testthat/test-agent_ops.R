@@ -169,4 +169,10 @@ test_that("The `agent_write()` and `agent_read()` functions works as expected", 
   # But do expect the `read_fn` list element to be present as a formula
   expect_true(rlang::is_formula(agent_test_4$read_fn))
   expect_true(rlang::is_bare_formula(agent_test_4$read_fn))
+  
+  # Remove the table-reading function from the agent with `remove_read_fn()`
+  agent_test_4 <- agent_test_4 %>% remove_read_fn()
+  
+  # Don't expect the `read_fn` element to be in the agent object
+  expect_null(agent_test_4$read_fn)
 })

@@ -30,12 +30,8 @@ jobs:
           restore-keys: macOS-r-4.0-2-
 
       - name: Install system dependencies
-        env:
-          RHUB_PLATFORM: macos-elcapitan-release
         run: |
-          Rscript -e "remotes::install_github('r-hub/sysreqs')"
-          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
-          sudo -s eval "$sysreqs"
+          brew install mariadb-connector-c
 
       - name: Install dependencies
         run: |

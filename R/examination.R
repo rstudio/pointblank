@@ -14,13 +14,13 @@ probe_overview_stats <- function(data,
     na_cells <- 
       data %>%
       dplyr::select(dplyr::everything()) %>%
-      dplyr::summarise_all(~ sum(is.na(.))) %>%
+      dplyr::summarise_all(~ sum(ifelse(is.na(.), 1, 0))) %>%
       dplyr::collect() %>% 
       t() %>%
       as.vector() %>%
       sum()
   )
-
+  
   tbl_info <- get_tbl_information(tbl = data)
   
   tbl_src <- tbl_info$tbl_src
@@ -169,7 +169,7 @@ get_column_description_gt <- function(data_column,
   na_cells <- 
     data_column %>%
     dplyr::select(dplyr::everything()) %>%
-    dplyr::summarise_all(~ sum(is.na(.))) %>%
+    dplyr::summarise_all(~ sum(ifelse(is.na(.), 1, 0))) %>%
     dplyr::collect() %>% 
     t() %>%
     as.vector() %>%
@@ -186,7 +186,7 @@ get_column_description_gt <- function(data_column,
     }
   
   # Get a count of Inf/-Inf values for non-DB table cells
-  if (!inherits(data_column, "tbl_dbi")) {
+  if (!inherits(data_column, "tbl_dbi") && !inherits(data_column, "tbl_spark")) {
     
     inf_cells <-
       data_column %>%
@@ -350,30 +350,61 @@ get_quantile_stats_gt <- function(data_column,
 }
 
 calculate_quantile_stats <- function(data_column) {
+
+  if (inherits(data_column, "tbl_spark")) {
+    
+    column_name <- colnames(data_column)
+    
+    quantiles <- 
+      sparklyr::sdf_quantile(
+        data_column, column_name,
+        probabilities = c(0, 0.05, 0.25, 0.5, 0.75, 0.95, 1)
+      ) %>% 
+      unname()
+    
+    quantile_stats <- 
+      list(
+        min = quantiles[1],
+        p05 = quantiles[2],
+        q_1 = quantiles[3],
+        med = quantiles[4],
+        q_3 = quantiles[5],
+        p95 = quantiles[6],
+        max = quantiles[7],
+        iqr = quantiles[5] - quantiles[3],
+        range = quantiles[7] - quantiles[1]
+      ) %>% 
+      lapply(FUN = function(x) round(x, 2))
+    
+  } else {
   
-  data_column %>%
-    dplyr::summarize_all(
-      .funs = list(
-        min = ~ min(., na.rm = TRUE),
-        p05 = ~ stats::quantile(., probs = 0.05, na.rm = TRUE),
-        q_1 = ~ stats::quantile(., probs = 0.25, na.rm = TRUE),
-        med = ~ stats::median(., na.rm = TRUE),
-        q_3 = ~ stats::quantile(., probs = 0.75, na.rm = TRUE),
-        p95 = ~ stats::quantile(., probs = 0.95, na.rm = TRUE),
-        max = ~ max(., na.rm = TRUE),
-        iqr = ~ stats::IQR(., na.rm = TRUE)
-      )
-    ) %>%
-    dplyr::mutate(range = max - min) %>%
-    dplyr::summarize_all(~ round(., 2)) %>%
-    as.list()
+    quantile_stats <- 
+      data_column %>%
+      dplyr::summarize_all(
+        .funs = list(
+          min = ~ min(., na.rm = TRUE),
+          p05 = ~ stats::quantile(., probs = 0.05, na.rm = TRUE),
+          q_1 = ~ stats::quantile(., probs = 0.25, na.rm = TRUE),
+          med = ~ stats::median(., na.rm = TRUE),
+          q_3 = ~ stats::quantile(., probs = 0.75, na.rm = TRUE),
+          p95 = ~ stats::quantile(., probs = 0.95, na.rm = TRUE),
+          max = ~ max(., na.rm = TRUE),
+          iqr = ~ stats::IQR(., na.rm = TRUE)
+        )
+      ) %>%
+      dplyr::mutate(range = max - min) %>%
+      dplyr::summarize_all(~ round(., 2)) %>%
+      as.list()
+  }
+
+  quantile_stats
 }
 
 get_descriptive_stats_gt <- function(data_column,
                                      reporting_lang) {
-  
-  if (inherits(data_column, "tbl_dbi")) {
-    
+
+  if (inherits(data_column, "tbl_dbi") || inherits(data_column, "tbl_spark")) {
+
     data_column <- 
       data_column %>%
       dplyr::filter(!is.na(1))
@@ -456,7 +487,7 @@ get_descriptive_stats_gt <- function(data_column,
 
 get_common_values_gt <- function(data_column,
                                  reporting_lang) {
-  
+ 
   n_rows <- data_column %>% dplyr::count(name = "n") %>% dplyr::pull(n)
 
   common_values_tbl <- 
@@ -564,7 +595,7 @@ get_head_tail_slices <- function(data_column) {
 
 get_top_bottom_slice <- function(data_column,
                                  reporting_lang) {
-
+  
   n_rows <- data_column %>% dplyr::count(name = "n") %>% dplyr::pull(n)
 
   data_column_freq <-
@@ -622,7 +653,7 @@ get_top_bottom_slice <- function(data_column,
 
 get_character_nchar_stats_gt <- function(data_column,
                                          reporting_lang) {
-
+  
   character_nchar_stats <- 
     data_column %>%
     dplyr::mutate_all(.funs = nchar) %>%
@@ -655,7 +686,7 @@ get_character_nchar_stats_gt <- function(data_column,
 
 get_character_nchar_histogram <- function(data_column,
                                           reporting_lang) {
-  
+
   x_label <- plot_lab_string_length[[reporting_lang]]
   y_label <- plot_lab_count[[reporting_lang]]
 
@@ -1103,7 +1134,7 @@ get_corr_plot <- function(mat,
 # TODO: report missing values based on user input (e.g., "9999", empty strings)
 
 probe_missing <- function(data) {
-  
+
   n_cols <- ncol(data)
   n_rows <- data %>% dplyr::count(name = "n") %>% dplyr::pull(n) %>% as.numeric()
 
@@ -1122,7 +1153,7 @@ probe_missing <- function(data) {
   cuts <- floor(seq(from = 1, to = n_rows, length.out = n_breaks + 1))[-1]
   bin_size <- cuts[1]
   
-  if (inherits(data, "tbl_dbi")) {
+  if (inherits(data, "tbl_dbi") || inherits(data, "tbl_spark")) {
     
     frequency_list <- 
       lapply(
@@ -1159,7 +1190,7 @@ probe_missing <- function(data) {
                 missing_n_span <- 
                   missing_n_span %>%
                   utils::head(cuts[x]) %>%
-                  dplyr::summarize_all(~ sum(is.na(.))) %>%
+                  dplyr::summarize_all(~ sum(ifelse(is.na(.), 1, 0))) %>%
                   dplyr::pull(a) %>%
                   as.integer()
                 
@@ -1221,7 +1252,7 @@ probe_missing <- function(data) {
             dplyr::rename(value = 1)
         })
   }
-  
+
   frequency_tbl <-
     frequency_list %>%
     dplyr::bind_rows() %>%
@@ -1235,7 +1266,7 @@ probe_missing <- function(data) {
         data %>% 
           dplyr::select(dplyr::one_of(`_x_`)) %>%
           dplyr::group_by() %>% 
-          dplyr::summarize_all(~ sum(is.na(.)) / dplyr::n()) %>%
+          dplyr::summarize_all(~ sum(ifelse(is.na(.), 1, 0)) / dplyr::n()) %>%
           dplyr::collect() %>%
           dplyr::mutate(col_num = which(col_names %in% `_x_`)) %>%
           dplyr::mutate(col_name = `_x_`) %>%

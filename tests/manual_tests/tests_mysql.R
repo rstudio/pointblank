@@ -15,8 +15,13 @@ con <-
   port = 3306
 )
 
-# Set failure thresholds and functions that are
-# actioned from exceeding certain error levels
+##
+## Data Quality Analysis
+##
+
+# Create an `action_levels` object, setting
+# *warn*, *stop*, and *notify* thresholds at
+# 0.02, 0.05, and 0.10
 al <- action_levels(warn_at = 0.02, stop_at = 0.05, notify_at = 0.10)
 
 # Validate the `assembly` table in the `aedes_aegypti_core_55_1d` DB
@@ -61,3 +66,10 @@ DBI::dbDisconnect(con)
 
 # Get a report from the `agent`
 agent
+
+##
+## Table Scan
+##
+
+assembly_tbl <- dplyr::tbl(con, "assembly")
+scan_data(assembly_tbl)

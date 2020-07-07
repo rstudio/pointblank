@@ -274,6 +274,27 @@ get_tbl_information <- function(tbl) {
       )
     )
     
+  } else if (inherits(tbl, "tbl_spark")) {
+    
+    r_column_names_types <- get_r_column_names_types(tbl)
+    
+    tbl_schema <- sparklyr::sdf_schema(tbl)
+    
+    db_col_types <- 
+      lapply(tbl_schema, `[[`, 2) %>%
+      unlist() %>% unname() %>% tolower()
+    
+    return(
+      list(
+        tbl_src = "tbl_spark",
+        tbl_src_details = "Spark",
+        db_tbl_name = NA_character_,
+        col_names = r_column_names_types$col_names,
+        r_col_types = r_column_names_types$r_col_types,
+        db_col_types = db_col_types
+      )
+    )
+    
   } else if (inherits(tbl, "tbl_dbi")) {
     
     tbl_src <- gsub("^([a-z]*).*", "\\1", get_tbl_dbi_src_details(tbl))

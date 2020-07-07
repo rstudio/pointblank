@@ -34,8 +34,9 @@ test_conjointly(
 )
 }
 \arguments{
-\item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
-class \code{ptblank_agent} that is created with \code{\link[=create_agent]{create_agent()}}.}
+\item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), Spark DataFrame
+(\code{tbl_spark}), or, an agent object of class \code{ptblank_agent} that is created
+with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{...}{a collection one-sided formulas that consist of validation step
 functions that validate row units. Specifically, these functions should be
@@ -75,8 +76,9 @@ indexes for the steps unchanged). If the step function will be operating
 directly on data, then any step with \code{active = FALSE} will simply pass the
 data through with no validation whatsoever. The default for this is \code{TRUE}.}
 
-\item{object}{A data frame or tibble (\code{tbl_df} or \code{tbl_dbi}) that serves as
-the target table for the expectation function.}
+\item{object}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or Spark
+DataFrame (\code{tbl_spark}) that serves as the target table for the expectation
+function or the test function.}
 
 \item{threshold}{A simple failure threshold value for use with the
 expectation function. By default, this is set to \code{1} meaning that any

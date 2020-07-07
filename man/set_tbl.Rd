@@ -11,13 +11,13 @@ set_tbl(agent, tbl)
 \code{\link[=create_agent]{create_agent()}}.}
 
 \item{tbl}{The input table for the \code{agent}. This can be a data frame, a
-tibble, or a \code{tbl_dbi} object. Any table already associated with the
-\emph{agent} will be overwritten.}
+tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object. Any table already
+associated with the \emph{agent} will be overwritten.}
 }
 \description{
-Setting a data table to \emph{agent} with \code{set_tbl()} replaces any table (data
-frame, a tibble, or a \code{tbl_dbi} object) associated with the \emph{agent}. If no
-data table is associated with an \emph{agent}, setting one will mean the data
-table takes precedence over table-reading function (settable in
+Setting a data table to \emph{agent} with \code{set_tbl()} replaces any table (a data
+frame, a tibble, objects of class \code{tbl_dbi} or \code{tbl_spark}) associated with
+the \emph{agent}. If no data table is associated with an \emph{agent}, setting one will
+mean the data table takes precedence over table-reading function (settable in
 \code{\link[=create_agent]{create_agent()}}'s \code{read_fn} argument or with \code{\link[=set_read_fn]{set_read_fn()}}).
 }

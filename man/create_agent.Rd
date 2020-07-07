@@ -15,10 +15,10 @@ create_agent(
 )
 }
 \arguments{
-\item{tbl}{The input table. This can be a data frame, a tibble, or a
-\code{tbl_dbi} object. Alternatively, a function can be used to read in the
-input data table with the \code{read_fn} argument (in which case, \code{tbl} can be
-\code{NULL}).}
+\item{tbl}{The input table. This can be a data frame, a tibble, a \code{tbl_dbi}
+object, or a \code{tbl_spark} object. Alternatively, a function can be used to
+read in the input data table with the \code{read_fn} argument (in which case,
+\code{tbl} can be \code{NULL}).}
 
 \item{read_fn}{A function that's used for reading in the data. If a \code{tbl} is
 not provided, then this function will be invoked. However, if both a \code{tbl}

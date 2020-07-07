@@ -19,8 +19,8 @@ agent_write(agent, filename, path = NULL, keep_tbl = FALSE)
 \emph{agent} (which is the case when the \emph{agent} is created using
 \verb{create_agent(tbl = <data table, ...)}). The default is \code{FALSE} where the
 data table is removed before writing to disk. For database tables of the
-class \code{tbl_dbi}, the table is always removed (even if \code{keep_tbl} is set to
-\code{TRUE}).}
+class \code{tbl_dbi} and for Spark DataFrames (\code{tbl_spark}) the table is always
+removed (even if \code{keep_tbl} is set to \code{TRUE}).}
 }
 \description{
 Writing an \emph{agent} to disk with \code{agent_write()} is good practice for keeping
@@ -28,7 +28,7 @@ data validation intel close at hand for later retrieval (with
 \code{\link[=agent_read]{agent_read()}}). By default, any data table that the \emph{agent} may have before
 being committed to disk will be expunged. This behavior can be changed by
 setting \code{keep_tbl} to \code{TRUE} but this only works in the case where the table
-is not of the \code{tbl_dbi} class.
+is not of the \code{tbl_dbi} or the \code{tbl_spark} class.
 }
 \details{
 It can be helpful to set a table-reading function to later reuse the \emph{agent}

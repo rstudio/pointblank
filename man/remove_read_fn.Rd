@@ -12,7 +12,8 @@ remove_read_fn(agent)
 }
 \description{
 Removing an \emph{agent}'s association to a table-reading function can be done
-with \code{remove_read_fn()}. This may be good idea when relying on the direct
-association of a data table (settable in \code{\link[=create_agent]{create_agent()}}'s \code{tbl} argument or
-with \code{\link[=set_tbl]{set_tbl()}}), where the table-reading function is no longer relevant.
+with \code{remove_read_fn()}. This may be good idea when instead relying on the
+direct association of a data table (settable in \code{\link[=create_agent]{create_agent()}}'s \code{tbl}
+argument or with \code{\link[=set_tbl]{set_tbl()}}), where the table-reading function is no longer
+relevant.
 }

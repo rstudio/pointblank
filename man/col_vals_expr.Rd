@@ -21,8 +21,9 @@ expect_col_vals_expr(object, expr, preconditions = NULL, threshold = 1)
 test_col_vals_expr(object, expr, preconditions = NULL, threshold = 1)
 }
 \arguments{
-\item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or, an agent object of
-class \code{ptblank_agent} that is created with \code{\link[=create_agent]{create_agent()}}.}
+\item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), Spark DataFrame
+(\code{tbl_spark}), or, an agent object of class \code{ptblank_agent} that is created
+with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{expr}{An expression to use for this test. This can either be in the
 form of a call made with the \code{expr()} function or as a one-sided \strong{R}
@@ -59,8 +60,9 @@ indexes for the steps unchanged). If the step function will be operating
 directly on data, then any step with \code{active = FALSE} will simply pass the
 data through with no validation whatsoever. The default for this is \code{TRUE}.}
 
-\item{object}{A data frame or tibble (\code{tbl_df} or \code{tbl_dbi}) that serves as
-the target table for the expectation function.}
+\item{object}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or Spark
+DataFrame (\code{tbl_spark}) that serves as the target table for the expectation
+function or the test function.}
 
 \item{threshold}{A simple failure threshold value for use with the
 expectation function. By default, this is set to \code{1} meaning that any
@@ -84,10 +86,10 @@ a table match a user-defined predicate expression. The validation function
 can be used directly on a data table or with an \emph{agent} object (technically,
 a \code{ptblank_agent} object) whereas the expectation and test functions can only
 be used with a data table. The types of data tables that can be used include
-data frames, tibbles, and even database tables of \code{tbl_dbi} class. Each
-validation step or expectation will operate over the number of test units
-that is equal to the number of rows in the table (after any \code{preconditions}
-have been applied).
+data frames, tibbles, database tables (\code{tbl_dbi}), and Spark DataFrames
+(\code{tbl_spark}). Each validation step or expectation will operate over the
+number of test units that is equal to the number of rows in the table (after
+any \code{preconditions} have been applied).
 }
 \details{
 Having table \code{preconditions} means \strong{pointblank} will mutate the table just

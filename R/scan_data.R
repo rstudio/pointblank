@@ -57,7 +57,7 @@ scan_data <- function(tbl,
   # nocov start
   
   # Limit components if a `tbl_dbi` object is supplied as the `tbl`
-  if (inherits(tbl, "tbl_dbi")) {
+  if (inherits(tbl, "tbl_dbi") || inherits(tbl, "tbl_spark")) {
     sections <- setdiff(sections, c("interactions", "correlations"))
   }
   

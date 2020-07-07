@@ -1,4 +1,4 @@
-library(tidyvere)
+library(tidyverse)
 library(pointblank)
 library(sparklyr)
 library(intendo)

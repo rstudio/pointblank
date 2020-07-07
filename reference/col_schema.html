@@ -52,12 +52,14 @@ necessary when using the col_schema_match() validation function (which
 checks whether the table object under study matches a known column schema).
 The col_schema object can be made by carefully supplying the column names
 and their types as a set of named arguments, or, we could provide a table
-object, which could by of the data.frame, tbl_df, or tbl_dbi varieties.
-There's an additional option, which is just for validating the schema of a
-tbl_dbi object: we can validate the schema based on R column types (e.g.,
-&quot;numeric&quot;, &quot;character&quot;, etc.), or, SQL column types (e.g., &quot;double&quot;,
-&quot;varchar&quot;, etc.). This is great if we want to validate table column schemas
-both on the server side and when tabular data is collected and loaded into R." />
+object, which could by of the data.frame, tbl_df, tbl_dbi, or
+tbl_spark varieties. There's an additional option, which is just for
+validating the schema of a tbl_dbi or tbl_spark object: we can validate
+the schema based on R column types (e.g., &quot;numeric&quot;, &quot;character&quot;, etc.),
+SQL column types (e.g., &quot;double&quot;, &quot;varchar&quot;, etc.), or Spark SQL column
+types (&quot;DoubleType&quot;, &quot;StringType&quot;, etc.). This is great if we want to
+validate table column schemas both on the server side and when tabular data
+is collected and loaded into R." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -137,12 +139,14 @@ necessary when using the <code>col_schema_match()</code> validation function (wh
 checks whether the table object under study matches a known column schema).
 The <code>col_schema</code> object can be made by carefully supplying the column names
 and their types as a set of named arguments, or, we could provide a table
-object, which could by of the <code>data.frame</code>, <code>tbl_df</code>, or <code>tbl_dbi</code> varieties.
-There's an additional option, which is just for validating the schema of a
-<code>tbl_dbi</code> object: we can validate the schema based on R column types (e.g.,
-<code>"numeric"</code>, <code>"character"</code>, etc.), or, SQL column types (e.g., <code>"double"</code>,
-<code>"varchar"</code>, etc.). This is great if we want to validate table column schemas
-both on the server side and when tabular data is collected and loaded into R.</p>
+object, which could by of the <code>data.frame</code>, <code>tbl_df</code>, <code>tbl_dbi</code>, or
+<code>tbl_spark</code> varieties. There's an additional option, which is just for
+validating the schema of a <code>tbl_dbi</code> or <code>tbl_spark</code> object: we can validate
+the schema based on R column types (e.g., <code>"numeric"</code>, <code>"character"</code>, etc.),
+SQL column types (e.g., <code>"double"</code>, <code>"varchar"</code>, etc.), or Spark SQL column
+types (<code>"DoubleType"</code>, <code>"StringType"</code>, etc.). This is great if we want to
+validate table column schemas both on the server side and when tabular data
+is collected and loaded into R.</p>
     </div>
 
     <pre class="usage"><span class='fu'>col_schema</span>(<span class='kw'>...</span>, .tbl = <span class='kw'>NULL</span>, .db_col_types = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"r"</span>, <span class='st'>"sql"</span>))</pre>
@@ -201,9 +205,9 @@ types (<code>"r"</code>) or SQL column types (<code>"sql"</code>).</p></td>
   )
 
 <span class='co'># Validate that the schema object</span>
-<span class='co'># `col_schema_x` exactly defines</span>
+<span class='co'># `schema_obj` exactly defines</span>
 <span class='co'># the column names and column types</span>
-<span class='co'># of the `tbl_x` table</span>
+<span class='co'># of the `tbl` table</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span>
   <span class='fu'>create_agent</span>(tbl = <span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>col_schema_match</span>(<span class='kw'>schema_obj</span>) <span class='op'>%&gt;%</span>

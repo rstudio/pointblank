@@ -55,14 +55,17 @@ that of the target table. The validation function can be used directly on a
 data table or with an agent object (technically, a ptblank_agent object)
 whereas the expectation and test functions can only be used with a data
 table. The types of data tables that can be used include data frames,
-tibbles, and even database tables of tbl_dbi class. The validation step or
-expectation operates over a single test unit, which is whether the schema
-matches that of the table (within the constraints enforced by the complete
-and in_order options). If the target table is a tbl_dbi object, we can
-choose to validate the column schema that is based on R column types (e.g.,
-&quot;numeric&quot;, &quot;character&quot;, etc.), or, SQL column types (e.g., &quot;double&quot;,
-&quot;varchar&quot;, etc.). That option is defined in the col_schema() function (it
-is the .db_col_types argument)." />
+tibbles, database tables (tbl_dbi), and Spark DataFrames (tbl_spark).
+Each validation step or expectation will operate over a single test unit,
+which is whether the column is an integer-type column or not. The validation
+step or expectation operates over a single test unit, which is whether the
+schema matches that of the table (within the constraints enforced by the
+complete and in_order options). If the target table is a tbl_dbi or a
+tbl_spark object, we can choose to validate the column schema that is based
+on R column types (e.g., &quot;numeric&quot;, &quot;character&quot;, etc.), SQL column types
+(e.g., &quot;double&quot;, &quot;varchar&quot;, etc.), or Spark SQL types (e.g,.
+&quot;DoubleType&quot;, &quot;StringType&quot;, etc.). That option is defined in the
+col_schema() function (it is the .db_col_types argument)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -145,14 +148,17 @@ that of the target table. The validation function can be used directly on a
 data table or with an <em>agent</em> object (technically, a <code>ptblank_agent</code> object)
 whereas the expectation and test functions can only be used with a data
 table. The types of data tables that can be used include data frames,
-tibbles, and even database tables of <code>tbl_dbi</code> class. The validation step or
-expectation operates over a single test unit, which is whether the schema
-matches that of the table (within the constraints enforced by the <code>complete</code>
-and <code>in_order</code> options). If the target table is a <code>tbl_dbi</code> object, we can
-choose to validate the column schema that is based on R column types (e.g.,
-<code>"numeric"</code>, <code>"character"</code>, etc.), or, SQL column types (e.g., <code>"double"</code>,
-<code>"varchar"</code>, etc.). That option is defined in the <code>col_schema()</code> function (it
-is the <code>.db_col_types</code> argument).</p>
+tibbles, database tables (<code>tbl_dbi</code>), and Spark DataFrames (<code>tbl_spark</code>).
+Each validation step or expectation will operate over a single test unit,
+which is whether the column is an integer-type column or not. The validation
+step or expectation operates over a single test unit, which is whether the
+schema matches that of the table (within the constraints enforced by the
+<code>complete</code> and <code>in_order</code> options). If the target table is a <code>tbl_dbi</code> or a
+<code>tbl_spark</code> object, we can choose to validate the column schema that is based
+on R column types (e.g., <code>"numeric"</code>, <code>"character"</code>, etc.), SQL column types
+(e.g., <code>"double"</code>, <code>"varchar"</code>, etc.), or Spark SQL types (e.g,.
+<code>"DoubleType"</code>, <code>"StringType"</code>, etc.). That option is defined in the
+<code>col_schema()</code> function (it is the <code>.db_col_types</code> argument).</p>
     </div>
 
     <pre class="usage"><span class='fu'>col_schema_match</span>(
@@ -187,8 +193,9 @@ is the <code>.db_col_types</code> argument).</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), or, an agent object of
-class <code>ptblank_agent</code> that is created with <code>create_agent()</code>.</p></td>
+      <td><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), Spark DataFrame
+(<code>tbl_spark</code>), or, an agent object of class <code>ptblank_agent</code> that is created
+with <code>create_agent()</code>.</p></td>
     </tr>
     <tr>
       <th>schema</th>
@@ -245,8 +252,9 @@ data through with no validation whatsoever. The default for this is <code>TRUE</
     </tr>
     <tr>
       <th>object</th>
-      <td><p>A data frame or tibble (<code>tbl_df</code> or <code>tbl_dbi</code>) that serves as
-the target table for the expectation function.</p></td>
+      <td><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), or Spark
+DataFrame (<code>tbl_spark</code>) that serves as the target table for the expectation
+function or the test function.</p></td>
     </tr>
     <tr>
       <th>threshold</th>

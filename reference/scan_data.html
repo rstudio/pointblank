@@ -178,8 +178,8 @@ complete HTML document where Bootstrap and jQuery are embedded within.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tbl</th>
-      <td><p>The input table. This can be a data frame, tibble, or <code>tbl_dbi</code>.
-object.</p></td>
+      <td><p>The input table. This can be a data frame, tibble, a <code>tbl_dbi</code>
+object, or a <code>tbl_spark</code> object.</p></td>
     </tr>
     <tr>
       <th>sections</th>
@@ -188,7 +188,7 @@ A character vector with section names is required here. The sections in
 their default order are: <code>"overview"</code>, <code>"variables"</code>, <code>"interactions"</code>,
 <code>"correlations"</code>, <code>"missing"</code>, and <code>"sample"</code>. This vector can be comprised
 of less elements and the order can be changed to suit the desired layout of
-the report. For <code>tbl_dbi</code> objects, the <code>"interactions"</code> and
+the report. For <code>tbl_dbi</code> and <code>tbl_spark</code> objects, the <code>"interactions"</code> and
 <code>"correlations"</code> sections are excluded.</p></td>
     </tr>
     <tr>

@@ -55,10 +55,10 @@ be specified as a single, literal value or as a column name given in
 vars(). The validation function can be used directly on a data table or
 with an agent object (technically, a ptblank_agent object) whereas the
 expectation and test functions can only be used with a data table. The types
-of data tables that can be used include data frames, tibbles, and even
-database tables of tbl_dbi class. Each validation step or expectation will
-operate over the number of test units that is equal to the number of rows in
-the table (after any preconditions have been applied)." />
+of data tables that can be used include data frames, tibbles, database tables
+(tbl_dbi), and Spark DataFrames (tbl_spark). Each validation step or
+expectation will operate over the number of test units that is equal to the
+number of rows in the table (after any preconditions have been applied)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -141,10 +141,10 @@ be specified as a single, literal value or as a column name given in
 <code>vars()</code>. The validation function can be used directly on a data table or
 with an <em>agent</em> object (technically, a <code>ptblank_agent</code> object) whereas the
 expectation and test functions can only be used with a data table. The types
-of data tables that can be used include data frames, tibbles, and even
-database tables of <code>tbl_dbi</code> class. Each validation step or expectation will
-operate over the number of test units that is equal to the number of rows in
-the table (after any <code>preconditions</code> have been applied).</p>
+of data tables that can be used include data frames, tibbles, database tables
+(<code>tbl_dbi</code>), and Spark DataFrames (<code>tbl_spark</code>). Each validation step or
+expectation will operate over the number of test units that is equal to the
+number of rows in the table (after any <code>preconditions</code> have been applied).</p>
     </div>
 
     <pre class="usage"><span class='fu'>col_vals_lt</span>(
@@ -182,8 +182,9 @@ the table (after any <code>preconditions</code> have been applied).</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), or, an agent object of
-class <code>ptblank_agent</code> that is created with <code>create_agent()</code>.</p></td>
+      <td><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), Spark DataFrame
+(<code>tbl_spark</code>), or, an agent object of class <code>ptblank_agent</code> that is created
+with <code>create_agent()</code>.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -244,8 +245,9 @@ data through with no validation whatsoever. The default for this is <code>TRUE</
     </tr>
     <tr>
       <th>object</th>
-      <td><p>A data frame or tibble (<code>tbl_df</code> or <code>tbl_dbi</code>) that serves as
-the target table for the expectation function.</p></td>
+      <td><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), or Spark
+DataFrame (<code>tbl_spark</code>) that serves as the target table for the expectation
+function or the test function.</p></td>
     </tr>
     <tr>
       <th>threshold</th>

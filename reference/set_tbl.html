@@ -47,10 +47,10 @@
 
 
 <meta property="og:title" content="Set a data table to an agent — set_tbl" />
-<meta property="og:description" content="Setting a data table to agent with set_tbl() replaces any table (data
-frame, a tibble, or a tbl_dbi object) associated with the agent. If no
-data table is associated with an agent, setting one will mean the data
-table takes precedence over table-reading function (settable in
+<meta property="og:description" content="Setting a data table to agent with set_tbl() replaces any table (a data
+frame, a tibble, objects of class tbl_dbi or tbl_spark) associated with
+the agent. If no data table is associated with an agent, setting one will
+mean the data table takes precedence over table-reading function (settable in
 create_agent()'s read_fn argument or with set_read_fn())." />
 <meta property="og:image" content="/logo.svg" />
 
@@ -126,10 +126,10 @@ create_agent()'s read_fn argument or with set_read_fn())." />
     </div>
 
     <div class="ref-description">
-    <p>Setting a data table to <em>agent</em> with <code>set_tbl()</code> replaces any table (data
-frame, a tibble, or a <code>tbl_dbi</code> object) associated with the <em>agent</em>. If no
-data table is associated with an <em>agent</em>, setting one will mean the data
-table takes precedence over table-reading function (settable in
+    <p>Setting a data table to <em>agent</em> with <code>set_tbl()</code> replaces any table (a data
+frame, a tibble, objects of class <code>tbl_dbi</code> or <code>tbl_spark</code>) associated with
+the <em>agent</em>. If no data table is associated with an <em>agent</em>, setting one will
+mean the data table takes precedence over table-reading function (settable in
 <code>create_agent()</code>'s <code>read_fn</code> argument or with <code>set_read_fn()</code>).</p>
     </div>
 
@@ -146,8 +146,8 @@ table takes precedence over table-reading function (settable in
     <tr>
       <th>tbl</th>
       <td><p>The input table for the <code>agent</code>. This can be a data frame, a
-tibble, or a <code>tbl_dbi</code> object. Any table already associated with the
-<em>agent</em> will be overwritten.</p></td>
+tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object. Any table already
+associated with the <em>agent</em> will be overwritten.</p></td>
     </tr>
     </table>
 

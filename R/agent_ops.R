@@ -5,7 +5,7 @@
 #' [agent_read()]). By default, any data table that the *agent* may have before
 #' being committed to disk will be expunged. This behavior can be changed by
 #' setting `keep_tbl` to `TRUE` but this only works in the case where the table
-#' is not of the `tbl_dbi` class.
+#' is not of the `tbl_dbi` or the `tbl_spark` class.
 #'
 #' It can be helpful to set a table-reading function to later reuse the *agent*
 #' when read from disk through [agent_read()]. This can be done with the
@@ -22,8 +22,8 @@
 #'   *agent* (which is the case when the *agent* is created using 
 #'   `create_agent(tbl = <data table, ...)`). The default is `FALSE` where the
 #'   data table is removed before writing to disk. For database tables of the
-#'   class `tbl_dbi`, the table is always removed (even if `keep_tbl` is set to
-#'   `TRUE`).
+#'   class `tbl_dbi` and for Spark DataFrames (`tbl_spark`) the table is always
+#'   removed (even if `keep_tbl` is set to `TRUE`).
 #' 
 #' @export
 agent_write <- function(agent,
@@ -33,10 +33,10 @@ agent_write <- function(agent,
   
   if (keep_tbl) {
     
-    if (inherits(agent$tbl, "tbl_dbi")) {
+    if (inherits(agent$tbl, "tbl_dbi") || inherits(agent$tbl, "tbl_spark")) {
       
       warning(
-        "A table of class `tbl_dbi` cannot be kept with the agent.",
+        "A table of class `tbl_dbi` or `tbl_spark` cannot be kept with the agent.",
         call. = FALSE
       )
       
@@ -88,17 +88,17 @@ agent_read <- function(path) {
 
 #' Set a data table to an agent
 #' 
-#' Setting a data table to *agent* with `set_tbl()` replaces any table (data
-#' frame, a tibble, or a `tbl_dbi` object) associated with the *agent*. If no
-#' data table is associated with an *agent*, setting one will mean the data
-#' table takes precedence over table-reading function (settable in
+#' Setting a data table to *agent* with `set_tbl()` replaces any table (a data
+#' frame, a tibble, objects of class `tbl_dbi` or `tbl_spark`) associated with
+#' the *agent*. If no data table is associated with an *agent*, setting one will
+#' mean the data table takes precedence over table-reading function (settable in
 #' [create_agent()]'s `read_fn` argument or with [set_read_fn()]).
 #' 
 #' @param agent An *agent* object of class `ptblank_agent` that is created with
 #'   [create_agent()].
 #' @param tbl The input table for the `agent`. This can be a data frame, a
-#'   tibble, or a `tbl_dbi` object. Any table already associated with the
-#'   *agent* will be overwritten.
+#'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Any table already
+#'   associated with the *agent* will be overwritten.
 #' 
 #' @export
 set_tbl <- function(agent,

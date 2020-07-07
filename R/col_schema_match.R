@@ -8,14 +8,17 @@
 #' data table or with an *agent* object (technically, a `ptblank_agent` object)
 #' whereas the expectation and test functions can only be used with a data
 #' table. The types of data tables that can be used include data frames,
-#' tibbles, and even database tables of `tbl_dbi` class. The validation step or
-#' expectation operates over a single test unit, which is whether the schema
-#' matches that of the table (within the constraints enforced by the `complete`
-#' and `in_order` options). If the target table is a `tbl_dbi` object, we can
-#' choose to validate the column schema that is based on R column types (e.g.,
-#' `"numeric"`, `"character"`, etc.), or, SQL column types (e.g., `"double"`,
-#' `"varchar"`, etc.). That option is defined in the [col_schema()] function (it
-#' is the `.db_col_types` argument).
+#' tibbles, database tables (`tbl_dbi`), and Spark DataFrames (`tbl_spark`).
+#' Each validation step or expectation will operate over a single test unit,
+#' which is whether the column is an integer-type column or not. The validation
+#' step or expectation operates over a single test unit, which is whether the
+#' schema matches that of the table (within the constraints enforced by the
+#' `complete` and `in_order` options). If the target table is a `tbl_dbi` or a
+#' `tbl_spark` object, we can choose to validate the column schema that is based
+#' on R column types (e.g., `"numeric"`, `"character"`, etc.), SQL column types
+#' (e.g., `"double"`, `"varchar"`, etc.), or Spark SQL types (e.g,.
+#' `"DoubleType"`, `"StringType"`, etc.). That option is defined in the
+#' [col_schema()] function (it is the `.db_col_types` argument).
 #'
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list object
@@ -293,12 +296,14 @@ test_col_schema_match <- function(object,
 #' checks whether the table object under study matches a known column schema).
 #' The `col_schema` object can be made by carefully supplying the column names
 #' and their types as a set of named arguments, or, we could provide a table
-#' object, which could by of the `data.frame`, `tbl_df`, or `tbl_dbi` varieties.
-#' There's an additional option, which is just for validating the schema of a
-#' `tbl_dbi` object: we can validate the schema based on R column types (e.g.,
-#' `"numeric"`, `"character"`, etc.), or, SQL column types (e.g., `"double"`,
-#' `"varchar"`, etc.). This is great if we want to validate table column schemas
-#' both on the server side and when tabular data is collected and loaded into R.
+#' object, which could by of the `data.frame`, `tbl_df`, `tbl_dbi`, or
+#' `tbl_spark` varieties. There's an additional option, which is just for
+#' validating the schema of a `tbl_dbi` or `tbl_spark` object: we can validate
+#' the schema based on R column types (e.g., `"numeric"`, `"character"`, etc.),
+#' SQL column types (e.g., `"double"`, `"varchar"`, etc.), or Spark SQL column
+#' types (`"DoubleType"`, `"StringType"`, etc.). This is great if we want to
+#' validate table column schemas both on the server side and when tabular data
+#' is collected and loaded into R.
 #' 
 #' @param ... A set of named arguments where the names refer to column names and
 #'   the values are one or more column types.
@@ -328,9 +333,9 @@ test_col_schema_match <- function(object,
 #'   )
 #' 
 #' # Validate that the schema object
-#' # `col_schema_x` exactly defines
+#' # `schema_obj` exactly defines
 #' # the column names and column types
-#' # of the `tbl_x` table
+#' # of the `tbl` table
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   col_schema_match(schema_obj) %>%
@@ -395,7 +400,7 @@ col_schema <- function(...,
       class(x) <- c("r_type", "col_schema")
     }
     
-    if (inherits(.tbl, "tbl_dbi")) {
+    if (inherits(.tbl, "tbl_dbi") || inherits(.tbl, "tbl_spark")) {
       
       tbl_info <- get_tbl_information(tbl = .tbl)
       

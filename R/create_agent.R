@@ -33,10 +33,10 @@
 #' on the *agent*. However, in practice, it's not often the case that all data
 #' validation steps are free from any failing units.
 #'
-#' @param tbl The input table. This can be a data frame, a tibble, or a
-#'   `tbl_dbi` object. Alternatively, a function can be used to read in the
-#'   input data table with the `read_fn` argument (in which case, `tbl` can be
-#'   `NULL`).
+#' @param tbl The input table. This can be a data frame, a tibble, a `tbl_dbi`
+#'   object, or a `tbl_spark` object. Alternatively, a function can be used to
+#'   read in the input data table with the `read_fn` argument (in which case,
+#'   `tbl` can be `NULL`).
 #' @param read_fn A function that's used for reading in the data. If a `tbl` is
 #'   not provided, then this function will be invoked. However, if both a `tbl`
 #'   *and* a `read_fn` is specified, then the supplied `tbl` will take priority.

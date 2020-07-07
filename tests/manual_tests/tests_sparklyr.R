@@ -52,6 +52,7 @@ agent <-
     vars(revenue),
     left = 0.01, right = 150
   ) %>%
+  col_vals_not_null(vars(user_id, session_id, time, name, type, revenue)) %>%
   col_vals_between(
     vars(time),
     left = "2015-01-01", right = "2016-01-01"
@@ -80,7 +81,8 @@ agent <-
     vars(session_id),
     regex = "[A-Z]{5}_[a-z]{8}"
   ) %>%
-   col_schema_match(schema = revenue_tbl_schema) %>%
+  col_is_character(vars(user_id, session_id)) %>%
+  col_schema_match(schema = revenue_tbl_schema) %>%
   interrogate()
 
 agent

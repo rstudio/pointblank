@@ -142,7 +142,7 @@ write_agent_yaml <- function(agent,
                              file) {
   
   as_agent_yaml_list(agent) %>%
-    write_yaml(
+    yaml::write_yaml(
       file = file,
       handlers = list(
         logical = function(x) {

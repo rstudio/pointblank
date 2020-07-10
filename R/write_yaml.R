@@ -16,17 +16,36 @@ agent_yaml_write <- function(agent,
 }
 
 #' @export
-agent_yaml_string <- function(agent) {
+agent_yaml_string <- function(agent = NULL,
+                              path = NULL) {
   
-  as_agent_yaml_list(agent) %>%
-    yaml::as.yaml(
-      handlers = list(
-        logical = function(x) {
-          result <- ifelse(x, "true", "false")
-          class(result) <- "verbatim"
-          return(result)
-        })
+  if (is.null(agent) && is.null(path)) {
+    stop(
+      "An `agent` object or a `path` to a YAML file must be specified.",
+      call. = FALSE
     )
+  }
+  
+  if (!is.null(agent) && !is.null(path)) {
+    stop("Only one of `agent` or `path` should be specified.", call. = FALSE)
+  }
+  
+  if (!is.null(agent)) {
+    
+    as_agent_yaml_list(agent) %>%
+      yaml::as.yaml(
+        handlers = list(
+          logical = function(x) {
+            result <- ifelse(x, "true", "false")
+            class(result) <- "verbatim"
+            result
+          }
+        )
+      ) %>% cat()
+    
+  } else {
+    readLines(path) %>% paste(collapse = "\n") %>% cat()
+  }
 }
 
 as_vars_fn <- function(columns) {

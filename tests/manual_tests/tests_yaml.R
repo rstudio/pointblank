@@ -35,21 +35,16 @@ agent <-
   ) %>%
   col_vals_between(vars(c), left = 2.03, right = vars(d), na_pass = TRUE)
 
-as_agent_yaml_list(agent)
+agent_yaml_string(agent = agent)
 
-agent_yaml_string(agent) %>% cat()
+agent_yaml_write(agent, filename = "test.yaml")
 
-agent_yaml_write(agent, "test.yaml")
+agent_yaml_string(path = "test.yaml")
 
-agent <- agent_yaml_read(file = "test.yaml")
+agent_plan <- agent_yaml_read(path = "test.yaml")
+agent_plan
 
-# TODO: Adapt `agent_yaml_string` to show a yaml string from a file
-# agent_yaml_string(file = "test.yaml") %>% yaml::as.yaml() %>% cat()
+agent_yaml_show_exprs(path = "test.yaml")
 
-# TODO: Create `agent_yaml_show_exprs()` to show the expression pipeline
-# in the console (similar to `dput()`'s console output)
-agent_yaml_show_exprs(file = "test.yaml") #%>% cat()
-
-agent_file <- agent_yaml_interrogate(file = "test.yaml")
-
-agent_file
+agent_intel <- agent_yaml_interrogate(path = "test.yaml")
+agent_intel

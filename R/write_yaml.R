@@ -1,20 +1,55 @@
+#' Write an agent's validation plan to a YAML file
+#' 
+#' With `agent_yaml_write()` we can take an existing *agent* and write that
+#' *agent*'s validation plan to a YAML file. With that YAML, we can modify the
+#' file if so desired, or, use it as is to create a new agent with the
+#' [agent_yaml_read()] function. That *agent* will have a validation plan and is
+#' ready to [interrogate()] the data. One caveat for writing the *agent* to YAML
+#' is the condition of having a table-reading function (`read_fn`) set (it's a
+#' function that is used to read the target table when [interrogate()] is
+#' called). This option can be set when using [create_agent()] or with
+#' [set_read_fn()] (for use with an existing *agent*).
+#' 
+#' @param agent An *agent* object of class `ptblank_agent` that is created with
+#'   [create_agent()].
+#' @param filename The name of the YAML file to create on disk. It is
+#'   recommended that either the `.yaml` or `.yml` extension be used for this
+#'   file.
+#' @param path An optional path to which the YAML file should be saved (combined
+#'   with `filename`).
+#' 
 #' @export
 agent_yaml_write <- function(agent,
-                             file) {
+                             filename,
+                             path = NULL) {
+  
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
+  
+  filename <- fs::path_expand(filename)
   
   as_agent_yaml_list(agent) %>%
     yaml::write_yaml(
-      file = file,
+      file = filename,
       handlers = list(
         logical = function(x) {
           result <- ifelse(x, "true", "false")
           class(result) <- "verbatim"
-          return(result)
+          result
         }
       )
     )
 }
 
+
+#' Display *pointblank* YAML using an agent or a YAML file
+#'
+#' @param agent An *agent* object of class `ptblank_agent` that is created with
+#'   [create_agent()].
+#' @param path A path to a YAML file that specifies a validation plan for an
+#'   *agent*.
+#' 
 #' @export
 agent_yaml_string <- function(agent = NULL,
                               path = NULL) {

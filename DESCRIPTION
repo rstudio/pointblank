@@ -37,6 +37,7 @@ Imports:
     log4r (>= 0.3.2),
     knitr (>= 1.28),
     rlang (>= 0.4.6),
+    magrittr,
     scales (>= 1.1.1),
     testthat (>= 2.3.2),
     tibble (>= 3.0.0),

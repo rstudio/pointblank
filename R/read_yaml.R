@@ -101,55 +101,77 @@ make_validation_steps <- function(steps) {
   
   if (length(steps) == 0) return("")
   
-  lapply(
-    seq_along(steps),
-    FUN = function(x) { 
-      
-      step_i <- steps[[x]]
-      step_fn <- names(step_i)
-      
-      vapply(
-        seq_along(step_i[[1]]),
-        FUN.VALUE = character(1), 
-        FUN = function(x) {
-          
-          arg_name <- names(step_i[[1]][x])
-          val <- step_i[[1]][[x]]
-          
-          if (arg_name == "fns") {
-            return(paste("  ", val, collapse = ",\n"))
-          }
-          
-          if (is.null(val[1])) {
-            
-            val <- "NULL"
-          
-          } else if (!is.null(val[1]) && is.logical(val[1])) {
-            
-            val <- as.character(val)
-            
-          } else if (!is.null(val[1]) &&
-              is.character(val[1]) &&
-              !grepl("^vars\\(.*?\\)$", val[1]) &&
-              !(arg_name %in% c("preconditions", "expr", "schema"))) {
-            
-            val <- paste0("\"", val, "\"")
-          }
-
-          if (length(val) > 1) {
-            val <- paste0("c(", paste(as.character(val), collapse = ", "), ")")
-          } else {
-            val <- as.character(val)
-          }
-
-          paste(" ", arg_name[1], "=", val[1])
-        }
-      ) %>% 
-        paste(collapse = ",\n") %>%
-        paste0("%>%\n", step_fn, "(\n", ., "\n)")
-    }
-  ) %>% 
+  str_exprs <- 
+    lapply(
+      seq_along(steps),
+      FUN = function(x) { 
+        
+        step_i <- steps[[x]]
+        step_fn <- names(step_i)
+        
+        args <- 
+          vapply(
+            seq_along(step_i[[1]]),
+            FUN.VALUE = character(1), 
+            FUN = function(x) {
+              
+              arg_name <- names(step_i[[1]][x])
+              val <- step_i[[1]][[x]]
+              
+              if (arg_name == "fns") {
+                return(paste("  ", val, collapse = ",\n"))
+              }
+              
+              # Return empty string if seeing default values
+              if (arg_name == "active" && val) {
+                return("")
+              }
+              if (arg_name == "preconditions" && is.null(val)) {
+                return("")
+              }
+              if (arg_name == "na_pass" && !val) {
+                return("")
+              }
+              if (arg_name == "inclusive" && all(val)) {
+                return("")
+              }
+              
+              if (is.null(val[1])) {
+                
+                val <- "NULL"
+                
+              } else if (!is.null(val[1]) && is.logical(val[1])) {
+                
+                val <- as.character(val)
+                
+              } else if (!is.null(val[1]) &&
+                         is.character(val[1]) &&
+                         !grepl("^vars\\(.*?\\)$", val[1]) &&
+                         !(arg_name %in% c("preconditions", "expr", "schema"))) {
+                
+                val <- paste0("\"", val, "\"")
+              }
+              
+              if (length(val) > 1) {
+                val <- paste0("c(", paste(as.character(val), collapse = ", "), ")")
+              } else {
+                val <- as.character(val)
+              }
+              
+              paste(" ", arg_name[1], "=", val[1])
+            }
+          )
+        
+        args <- args[args != ""]
+        
+        args %>% 
+          paste(collapse = ",\n") %>%
+          paste0("%>%\n", step_fn, "(\n", ., "\n)")
+      }
+    ) %>% 
     unlist() %>%
     paste(collapse = " ") %>%
     paste0(., " ")
+  
+  gsub("rows_distinct(\n  columns = NULL\n)", "rows_distinct()", str_exprs, fixed = TRUE)
 }

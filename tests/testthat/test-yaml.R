@@ -166,4 +166,16 @@ test_that("YAML writing and reading works as expected", {
     agent_intel$validation_set$n_failed,
     c(0, 1, 0, 0, 0, 11, 0, 0, 0, 0, 0, 2, 2, 0, 7, 1)
   )
+  
+  # Expect an error if using `agent_yaml_string()` with both an
+  # agent and a YAML file
+  expect_error(agent_yaml_string(agent = agent_intel, path = file.path(temp_dir, "test.yaml")))
+  
+  # Expect an error if using `agent_yaml_string()` with neither an
+  # agent nor a YAML file specified
+  expect_error(agent_yaml_string())
+  
+  # Expect an error if using `as_agent_yaml_list()` with an agent
+  # that doesn't have a table-reading function specified
+  expect_error(agent_plan %>% remove_read_fn() %>% as_agent_yaml_list())
 })

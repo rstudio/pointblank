@@ -97,7 +97,7 @@ as_list_preconditions <- function(preconditions) {
 
 to_list_action_levels <- function(actions) {
   
-  agent_actions <- agent$actions
+  agent_actions <- actions
   agent_actions[sapply(agent_actions, is.null)] <- NULL
   agent_actions$fns[sapply(agent_actions$fns, is.null)] <- NULL
   

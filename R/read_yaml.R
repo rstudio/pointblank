@@ -86,14 +86,41 @@ make_action_levels_str <- function(al) {
     return("NULL")
   }
   
-  warn_at <- c(al$warn_fraction, al$warn_count) %||% "NULL"
-  stop_at <- c(al$stop_fraction, al$stop_count) %||% "NULL"
-  notify_at <- c(al$notify_fraction, al$notify_count) %||% "NULL"
+  top_args <- c()
   
-  # TODO: incorporate fns component
+  if (!is.null(al$warn_fraction) || !is.null(al$warn_count)) {
+    top_args <- c(top_args, paste0("warn_at = ", c(al$warn_fraction, al$warn_count)))
+  }
+  if (!is.null(al$stop_fraction) || !is.null(al$stop_count)) {
+    top_args <- c(top_args, paste0("stop_at = ", c(al$stop_fraction, al$stop_count)))
+  }
+  if (!is.null(al$notify_fraction) || !is.null(al$notify_count)) {
+    top_args <- c(top_args, paste0("notify_at = ", c(al$notify_fraction, al$notify_count)))
+  }
+
+  fns_args <- c()
   
-  glue::glue(
-    "action_levels(warn_at = {warn_at}, stop_at = {stop_at}, notify_at = {notify_at})"
+  if (!is.null(al$fns$warn)) {
+    fns_args <- c(fns_args, paste0("warn = ", al$fns$warn))
+  }
+  if (!is.null(al$fns$stop)) {
+    fns_args <- c(fns_args, paste0("stop = ", al$fns$stop))
+  }
+  if (!is.null(al$fns$notify)) {
+    fns_args <- c(fns_args, paste0("notify = ", al$fns$notify))
+  }
+  
+  if (length(fns_args) > 0) {
+    fns_args <- paste0("fns = list(\n", fns_args, ")")
+  }
+  
+  paste0(
+    "action_levels(\n",
+    paste(
+      c(paste0(top_args, collapse = "\n,"), fns_args),
+      collapse = ",\n"
+    ),
+    ")"
   )
 }
 

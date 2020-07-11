@@ -105,6 +105,14 @@ to_list_action_levels <- function(actions) {
   
   if (length(agent_actions$fns) == 0) agent_actions$fns <- NULL
   
+  agent_actions$fns <- 
+    lapply(
+      agent_actions$fns,
+      FUN = function(x) {
+        if (!is.null(x)) x %>% as.character() %>% paste(collapse = "")
+      }
+    )
+  
   list(action_levels = agent_actions)
 }
 
@@ -140,6 +148,31 @@ get_arg_value_lr <- function(value) {
   }
   
   out
+}
+
+prune_lst_step <- function(lst_step) {
+  
+  if ("preconditions" %in% names(lst_step[[1]]) &&
+      is.null(lst_step[[1]][["preconditions"]])) {
+    lst_step[[1]]["preconditions"] <- NULL
+  }
+  if ("na_pass" %in% names(lst_step[[1]]) &&
+      !lst_step[[1]][["na_pass"]]) {
+    lst_step[[1]]["na_pass"] <- NULL
+  }
+  if ("active" %in% names(lst_step[[1]]) &&
+      lst_step[[1]][["active"]]) {
+    lst_step[[1]]["active"] <- NULL
+  }
+  if ("complete" %in% names(lst_step[[1]]) &&
+      lst_step[[1]][["complete"]]) {
+    lst_step[[1]]["complete"] <- NULL
+  }
+  if ("in_order" %in% names(lst_step[[1]]) &&
+      lst_step[[1]][["in_order"]]) {
+    lst_step[[1]]["in_order"] <- NULL
+  }
+  lst_step
 }
 
 as_agent_yaml_list <- function(agent) {
@@ -284,9 +317,8 @@ as_agent_yaml_list <- function(agent) {
       
       vals <- step_list$values[[1]]
       length_vals <- length(vals) - 2
-      
       vals_complete <- vals$`__complete__`
-      vals_complete <- vals$`__complete__`
+      vals_in_order <- vals$`__in_order__`
       
       vals_columns <- vals[seq_len(length_vals)]
       
@@ -313,6 +345,8 @@ as_agent_yaml_list <- function(agent) {
         list(
           validation_fn = list(
             schema = schema_fn,
+            complete = vals_complete,
+            in_order = vals_in_order,
             active = step_list$active
           )
         )
@@ -329,6 +363,11 @@ as_agent_yaml_list <- function(agent) {
         )
     }
     
+    # Remove list elements that are representative of defaults
+    lst_step <- prune_lst_step(lst_step)
+    
+    # Set the top level list-element name to that of
+    # the validation function
     names(lst_step) <- validation_fn
     all_steps <- c(all_steps, list(lst_step))
   }

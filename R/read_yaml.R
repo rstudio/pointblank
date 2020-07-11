@@ -120,19 +120,29 @@ make_validation_steps <- function(steps) {
             return(paste("  ", val, collapse = ",\n"))
           }
           
-          if (is.character(val) &&
-              !grepl("^vars\\(.*?\\)$", val) &&
+          if (is.null(val[1])) {
+            
+            val <- "NULL"
+          
+          } else if (!is.null(val[1]) && is.logical(val[1])) {
+            
+            val <- as.character(val)
+            
+          } else if (!is.null(val[1]) &&
+              is.character(val[1]) &&
+              !grepl("^vars\\(.*?\\)$", val[1]) &&
               !(arg_name %in% c("preconditions", "expr", "schema"))) {
+            
             val <- paste0("\"", val, "\"")
           }
-          
+
           if (length(val) > 1) {
             val <- paste0("c(", paste(as.character(val), collapse = ", "), ")")
           } else {
             val <- as.character(val)
           }
-          
-          paste(" ", arg_name, "=", val)
+
+          paste(" ", arg_name[1], "=", val[1])
         }
       ) %>% 
         paste(collapse = ",\n") %>%

@@ -54,7 +54,7 @@ agent_yaml_interrogate <- function(path) {
 #'
 #' @export
 agent_yaml_show_exprs <- function(path) {
-  cat(expr_from_agent_yaml(path = path, interrogate = FALSE))
+  message(expr_from_agent_yaml(path = path, interrogate = FALSE))
 }
 
 expr_from_agent_yaml <- function(path,

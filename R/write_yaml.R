@@ -67,19 +67,21 @@ agent_yaml_string <- function(agent = NULL,
   
   if (!is.null(agent)) {
     
-    as_agent_yaml_list(agent) %>%
-      yaml::as.yaml(
-        handlers = list(
-          logical = function(x) {
-            result <- ifelse(x, "true", "false")
-            class(result) <- "verbatim"
-            result
-          }
+    message(
+      as_agent_yaml_list(agent) %>%
+        yaml::as.yaml(
+          handlers = list(
+            logical = function(x) {
+              result <- ifelse(x, "true", "false")
+              class(result) <- "verbatim"
+              result
+            }
+          )
         )
-      ) %>% cat()
+    )
     
   } else {
-    readLines(path) %>% paste(collapse = "\n") %>% cat()
+    message(readLines(path) %>% paste(collapse = "\n"))
   }
 }
 

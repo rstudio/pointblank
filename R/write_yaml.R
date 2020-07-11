@@ -191,7 +191,6 @@ as_agent_yaml_list <- function(agent) {
             active = step_list$active
           )
         )
-      names(lst_step) <- validation_fn
       
     } else if (validation_fn %in% c("col_vals_between", "col_vals_not_between")) {
 
@@ -207,7 +206,6 @@ as_agent_yaml_list <- function(agent) {
             active = step_list$active
           )
         )
-      names(lst_step) <- validation_fn
       
     } else if (validation_fn %in% c("col_vals_in_set", "col_vals_not_in_set")) {
       
@@ -220,7 +218,6 @@ as_agent_yaml_list <- function(agent) {
             active = step_list$active
           )
         )
-      names(lst_step) <- validation_fn
 
     } else if (validation_fn %in% c("col_vals_null", "col_vals_not_null")) {
       
@@ -232,7 +229,6 @@ as_agent_yaml_list <- function(agent) {
             active = step_list$active
           )
         )
-      names(lst_step) <- validation_fn
       
     } else if (validation_fn == "col_vals_regex") {
 
@@ -245,7 +241,6 @@ as_agent_yaml_list <- function(agent) {
             active = step_list$active
           )
         )
-      names(lst_step) <- validation_fn
       
     } else if (grepl("col_is_", validation_fn) || validation_fn == "col_exists") {
 
@@ -256,7 +251,6 @@ as_agent_yaml_list <- function(agent) {
             active = step_list$active
           )
         )
-      names(lst_step) <- validation_fn
       
     } else if (validation_fn == "col_vals_expr") {
 
@@ -268,7 +262,6 @@ as_agent_yaml_list <- function(agent) {
             active = step_list$active
           )
         )
-      names(lst_step) <- validation_fn
       
     } else if (validation_fn == "rows_distinct") {
 
@@ -286,7 +279,6 @@ as_agent_yaml_list <- function(agent) {
             active = step_list$active
           )
         )
-      names(lst_step) <- validation_fn
     
     } else if (validation_fn == "col_schema_match") {
       
@@ -324,7 +316,6 @@ as_agent_yaml_list <- function(agent) {
             active = step_list$active
           )
         )
-      names(lst_step) <- validation_fn
       
     } else if (validation_fn == "conjointly") {
       
@@ -336,9 +327,9 @@ as_agent_yaml_list <- function(agent) {
             active = step_list$active
           )
         )
-      names(lst_step) <- validation_fn
     }
     
+    names(lst_step) <- validation_fn
     all_steps <- c(all_steps, list(lst_step))
   }
   

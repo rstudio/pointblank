@@ -68,7 +68,7 @@ expr_from_agent_yaml <- function(path,
       create_agent(
       read_fn = {y$read_fn},
       name = \"{y$name}\",
-      actions = {make_action_levels_str(y$action_levels)},
+      {make_action_levels_str(y$actions)},
       embed_report = {y$embed_report},
       reporting_lang = \"{y$reporting_lang}\"
       ) {make_validation_steps(y$steps)}"
@@ -85,7 +85,7 @@ make_action_levels_str <- function(al) {
   if (is.null(al)) {
     return("NULL")
   }
-  
+
   top_args <- c()
   
   if (!is.null(al$warn_fraction) || !is.null(al$warn_count)) {
@@ -111,16 +111,16 @@ make_action_levels_str <- function(al) {
   }
   
   if (length(fns_args) > 0) {
-    fns_args <- paste0("fns = list(\n", fns_args, ")")
+    fns_args <- paste0("    fns = list(\n", paste0("      ", fns_args), "\n    )")
   }
   
   paste0(
-    "action_levels(\n",
-    paste(
-      c(paste0(top_args, collapse = "\n,"), fns_args),
+    "  actions = action_levels(\n",
+    paste0(
+      c(paste0("    ", top_args, collapse = ",\n"), fns_args),
       collapse = ",\n"
     ),
-    ")"
+    "\n  )"
   )
 }
 
@@ -170,6 +170,10 @@ make_validation_steps <- function(steps) {
               } else if (!is.null(val[1]) && is.logical(val[1])) {
                 
                 val <- as.character(val)
+                
+              } else if (!is.null(val[1]) && arg_name == "actions") {
+
+                return(make_action_levels_str(val))
                 
               } else if (!is.null(val[1]) && arg_name == "schema") {
 

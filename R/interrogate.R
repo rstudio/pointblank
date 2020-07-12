@@ -1284,9 +1284,9 @@ perform_end_action <- function(agent) {
   .f_failed <- agent$validation_set$f_failed
   
   .validation_set <- agent$validation_set
-  
+
   .report_object <- agent$reporting$report_object
-  .report_object_email <- agent$reporting$report_object_email
+  .report_object_small <- agent$reporting$report_object_email
   
   if (!is.null(.report_object)) {
     .report_html <- gt::as_raw_html(.report_object, inline_css = FALSE)
@@ -1294,10 +1294,10 @@ perform_end_action <- function(agent) {
     .report_html <- NULL
   }
   
-  if (!is.null(.report_object_email)) {
-    .report_html_email <- gt::as_raw_html(.report_object_email, inline_css = TRUE)
+  if (!is.null(.report_object_small)) {
+    .report_html_small <- gt::as_raw_html(.report_object_small, inline_css = TRUE)
   } else {
-    .report_html_email <- NULL
+    .report_html_small <- NULL
   }
 
   # Have the local vars packaged in a list to make creating
@@ -1332,7 +1332,7 @@ perform_end_action <- function(agent) {
       validation_set = .validation_set,
       report_object = .report_object,
       report_html = .report_html,
-      report_html_email = .report_html_email
+      report_html_small = .report_html_small
     )
 
   lapply(actions, function(y) {

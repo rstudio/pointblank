@@ -127,7 +127,7 @@ email_blast <- function(x,
   if (is.logical(condition_result) && condition_result) {
     
     check_msg_components_all_null(msg_header, msg_body, msg_footer)
-    
+
     # Preparation of the message
     blastula_message <- 
       blastula::compose_email(
@@ -233,7 +233,7 @@ email_preview <- function(x,
   if (inherits(x, "ptblank_agent")) {
     x <- get_agent_x_list(agent = x)
   }
-  
+
   blastula::compose_email(
     header = glue::glue(msg_header) %>% blastula::md(),
     body = glue::glue(msg_body) %>% blastula::md(),

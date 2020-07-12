@@ -246,8 +246,9 @@ as_agent_yaml_list <- function(agent) {
        call. = FALSE
     )
   }
-  
+
   action_levels_default <- as_action_levels(agent$actions)
+  end_fns <- agent$end_fns %>% unlist()
   
   lst_name <- to_list_name(agent$name)
   lst_read_fn <- to_list_read_fn(agent$read_fn)
@@ -258,10 +259,27 @@ as_agent_yaml_list <- function(agent) {
     lst_action_levels <- list(actions = action_levels_default)
   }
   
-  lst_end_fns <- list(end_fns = agent$end_fns %>% unlist() %>% as.character())
-  lst_embed_report <- list(embed_report = agent$embed_report)
-  lst_reporting_lang <- list(reporting_lang = agent$reporting_lang)
+  if (is.null(end_fns)) {
+    lst_end_fns <- NULL
+  } else {
+    lst_end_fns <- list(end_fns = as.character(end_fns))
+  }
   
+  if (is.null(agent$embed_report) || 
+      (!is.null(agent$embed_report) && !agent$embed_report)) {
+    lst_embed_report <- NULL
+  } else {
+    lst_embed_report <- list(embed_report = agent$embed_report)
+  }
+
+  if (is.null(agent$reporting_lang) || 
+      (!is.null(agent$reporting_lang) && agent$reporting_lang == "en")) {
+    lst_reporting_lang <- NULL
+  } else {
+    lst_reporting_lang <- list(reporting_lang = agent$reporting_lang)
+  }
+
+  # Select only the necessary columns from the agent's `validation_set` 
   agent_validation_set <- 
     agent$validation_set %>% 
     dplyr::select(

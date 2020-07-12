@@ -59,19 +59,20 @@ agent_yaml_show_exprs <- function(path) {
 
 expr_from_agent_yaml <- function(path,
                                  interrogate = FALSE) {
-  
+
   y <- yaml::read_yaml(file = path)
-  
+
   expr_str <- 
     glue::glue(
-      "
-      create_agent(
-      read_fn = {y$read_fn},
-      name = \"{y$name}\",
-      {make_action_levels_str(y$actions)},
-      embed_report = {y$embed_report},
-      reporting_lang = \"{y$reporting_lang}\"
-      ) {make_validation_steps(y$steps)}"
+"create_agent(
+  read_fn = {y$read_fn},
+  name = \"{y$name}\",
+{make_action_levels_str(y$actions)},
+{make_end_fns_str(y$end_fns)},
+  embed_report = {y$embed_report},
+  reporting_lang = \"{y$reporting_lang}\"
+) {make_validation_steps(y$steps)}",
+      .trim = FALSE
     ) %>% as.character()
   
   if (interrogate) {
@@ -120,6 +121,19 @@ make_action_levels_str <- function(al) {
       c(paste0("    ", top_args, collapse = ",\n"), fns_args),
       collapse = ",\n"
     ),
+    "\n  )"
+  )
+}
+
+make_end_fns_str <- function(end_fns) {
+  
+  if (is.null(end_fns)) {
+    return("NULL")
+  }
+  
+  paste0(
+    "  end_fns = list(\n",
+      c(paste0("    ", end_fns, collapse = ",\n")),
     "\n  )"
   )
 }

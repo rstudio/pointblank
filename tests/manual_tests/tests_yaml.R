@@ -6,8 +6,8 @@ agent <-
   create_agent(tbl = small_table, read_fn = ~ small_table, actions = al) %>%
   col_vals_in_set(vars(f), set = c("low", "mid", "high")) %>%
   col_vals_between(vars(a), 2, 8) %>%
-  col_vals_lt(vars(a), vars(d), na_pass = TRUE, preconditions = ~ . %>% dplyr::filter(a > 3)) %>%
   col_vals_gt(vars(d), 100) %>%
+  col_vals_lt(vars(a), vars(d), na_pass = TRUE, preconditions = ~ . %>% dplyr::filter(a > 3)) %>%
   col_vals_equal(vars(d), vars(d), na_pass = TRUE) %>%
   col_vals_null(vars(c)) %>%
   col_vals_regex(vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}") %>%
@@ -26,7 +26,9 @@ agent <-
       d = "numeric",
       e = "logical",
       f = "character"
-    )
+    ), 
+    complete = FALSE,
+    in_order = FALSE
   ) %>%
   conjointly(
     ~ col_vals_lt(., vars(a), 8),
@@ -41,10 +43,11 @@ agent_yaml_write(agent, filename = "test.yaml")
 
 agent_yaml_string(path = "test.yaml")
 
+agent_yaml_show_exprs(path = "test.yaml")
+
 agent_plan <- agent_yaml_read(path = "test.yaml")
 agent_plan
 
-agent_yaml_show_exprs(path = "test.yaml")
 
 agent_intel <- agent_yaml_interrogate(path = "test.yaml")
 agent_intel

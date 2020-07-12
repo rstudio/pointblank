@@ -3,7 +3,12 @@ library(pointblank)
 al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 
 agent <- 
-  create_agent(tbl = small_table, read_fn = ~ small_table, actions = al) %>%
+  create_agent(
+    tbl = small_table,
+    read_fn = ~ small_table,
+    actions = al,
+    reporting_lang = "de"
+  ) %>%
   col_vals_in_set(
     vars(f), set = c("low", "mid", "high"),
     actions = action_levels(warn_at = 3, notify_at = 5)

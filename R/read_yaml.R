@@ -171,6 +171,31 @@ make_validation_steps <- function(steps) {
                 
                 val <- as.character(val)
                 
+              } else if (!is.null(val[1]) && arg_name == "schema") {
+
+                vals <- 
+                  vapply(
+                    val,
+                    FUN.VALUE = character(1),
+                    USE.NAMES = FALSE,
+                    FUN = function(x) {
+                      if (length(x) > 1) {
+                        val <- paste0("c(", paste0(paste0("\"", as.character(x), "\""), collapse = ", "), ")")
+                      } else {
+                        val <- paste0("\"", as.character(x), "\"")
+                      }
+                      val
+                    }
+                  )
+
+                val <- 
+                  paste0("  schema = col_schema(\n",
+                    paste("   ", names(val), "=", vals, collapse = ",\n"),
+                    "\n  )"
+                  )
+                
+                return(val)
+                
               } else if (!is.null(val[1]) &&
                          is.character(val[1]) &&
                          !grepl("^vars\\(.*?\\)$", val[1]) &&

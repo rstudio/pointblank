@@ -258,8 +258,7 @@ as_agent_yaml_list <- function(agent) {
     lst_action_levels <- list(actions = action_levels_default)
   }
   
-  # TODO: write out `end_fns`
-  
+  lst_end_fns <- list(end_fns = agent$end_fns %>% unlist() %>% as.character())
   lst_embed_report <- list(embed_report = agent$embed_report)
   lst_reporting_lang <- list(reporting_lang = agent$reporting_lang)
   
@@ -432,6 +431,7 @@ as_agent_yaml_list <- function(agent) {
     lst_name,
     lst_read_fn,
     lst_action_levels,
+    lst_end_fns,
     lst_embed_report,
     lst_reporting_lang,
     list(steps = all_steps)

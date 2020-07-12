@@ -61,20 +61,38 @@ expr_from_agent_yaml <- function(path,
                                  interrogate = FALSE) {
 
   y <- yaml::read_yaml(file = path)
-
-  expr_str <- 
-    glue::glue(
-"create_agent(
-  read_fn = {y$read_fn},
-  name = \"{y$name}\",
-{make_action_levels_str(y$actions)},
-{make_end_fns_str(y$end_fns)},
-  embed_report = {y$embed_report},
-  reporting_lang = \"{y$reporting_lang}\"
-) {make_validation_steps(y$steps)}",
-      .trim = FALSE
-    ) %>% as.character()
   
+  read_fn <- paste0("  read_fn = ", y$read_fn)
+  name <- paste0("  name = \"", y$name, "\"")
+  actions <- make_action_levels_str(y$actions)
+  end_fns <- make_end_fns_str(y$end_fns)
+  
+  if (!is.null(y$embed_report) && y$embed_report) {
+    embed_report <- paste0("  embed_report = ", y$embed_report)
+  } else {
+    embed_report <- NULL
+  }
+  
+  if (!is.null(y$reporting_lang) && y$reporting_lang != "en") {
+    reporting_lang <- paste0("  reporting_lang = \"", y$reporting_lang, "\"")
+  } else {
+    reporting_lang <- NULL
+  }
+  
+  validation_steps <- make_validation_steps(y$steps)
+  
+  # Generate the expression string
+  expr_str <-
+    paste0(
+      "create_agent(\n",
+      paste(
+        c(read_fn, name, actions, end_fns, embed_report, reporting_lang),
+        collapse = ",\n"
+      ),
+      "\n) ",
+      validation_steps
+    )
+
   if (interrogate) {
     expr_str <- paste0(expr_str, "%>%\ninterrogate()")
   }
@@ -84,7 +102,7 @@ expr_from_agent_yaml <- function(path,
 make_action_levels_str <- function(al) {
   
   if (is.null(al)) {
-    return("NULL")
+    return(NULL)
   }
 
   top_args <- c()
@@ -128,7 +146,7 @@ make_action_levels_str <- function(al) {
 make_end_fns_str <- function(end_fns) {
   
   if (is.null(end_fns)) {
-    return("NULL")
+    return(NULL)
   }
   
   paste0(

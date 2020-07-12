@@ -22,7 +22,7 @@ necessary when using the \code{\link[=col_schema_match]{col_schema_match()}} val
 checks whether the table object under study matches a known column schema).
 The \code{col_schema} object can be made by carefully supplying the column names
 and their types as a set of named arguments, or, we could provide a table
-object, which could by of the \code{data.frame}, \code{tbl_df}, \code{tbl_dbi}, or
+object, which could be of the \code{data.frame}, \code{tbl_df}, \code{tbl_dbi}, or
 \code{tbl_spark} varieties. There's an additional option, which is just for
 validating the schema of a \code{tbl_dbi} or \code{tbl_spark} object: we can validate
 the schema based on R column types (e.g., \code{"numeric"}, \code{"character"}, etc.),

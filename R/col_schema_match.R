@@ -296,7 +296,7 @@ test_col_schema_match <- function(object,
 #' checks whether the table object under study matches a known column schema).
 #' The `col_schema` object can be made by carefully supplying the column names
 #' and their types as a set of named arguments, or, we could provide a table
-#' object, which could by of the `data.frame`, `tbl_df`, `tbl_dbi`, or
+#' object, which could be of the `data.frame`, `tbl_df`, `tbl_dbi`, or
 #' `tbl_spark` varieties. There's an additional option, which is just for
 #' validating the schema of a `tbl_dbi` or `tbl_spark` object: we can validate
 #' the schema based on R column types (e.g., `"numeric"`, `"character"`, etc.),

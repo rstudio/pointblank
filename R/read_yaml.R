@@ -11,6 +11,10 @@
 #' @param path A path to a YAML file that specifies a validation plan for an
 #'   *agent*.
 #' 
+#' @family pointblank YAML
+#' @section Function ID:
+#' 7-2
+#' 
 #' @export
 agent_yaml_read <- function(path) {
   expr_from_agent_yaml(path = path, interrogate = FALSE) %>%
@@ -32,6 +36,10 @@ agent_yaml_read <- function(path) {
 #' @param path A path to a YAML file that specifies a validation plan for an
 #'   *agent*.
 #'
+#' @family pointblank YAML
+#' @section Function ID:
+#' 7-3
+#'
 #' @export
 agent_yaml_interrogate <- function(path) {
   expr_from_agent_yaml(path = path, interrogate = TRUE) %>%
@@ -51,6 +59,10 @@ agent_yaml_interrogate <- function(path) {
 #'
 #' @param path A path to a YAML file that specifies a validation plan for an
 #'   *agent*.
+#'   
+#' @family pointblank YAML
+#' @section Function ID:
+#' 7-5
 #'
 #' @export
 agent_yaml_show_exprs <- function(path) {

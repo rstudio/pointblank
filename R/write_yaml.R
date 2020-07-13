@@ -18,6 +18,10 @@
 #' @param path An optional path to which the YAML file should be saved (combined
 #'   with `filename`).
 #' 
+#' @family pointblank YAML
+#' @section Function ID:
+#' 7-1
+#' 
 #' @export
 agent_yaml_write <- function(agent,
                              filename,
@@ -49,6 +53,10 @@ agent_yaml_write <- function(agent,
 #'   [create_agent()].
 #' @param path A path to a YAML file that specifies a validation plan for an
 #'   *agent*.
+#'   
+#' @family pointblank YAML
+#' @section Function ID:
+#' 7-4
 #' 
 #' @export
 agent_yaml_string <- function(agent = NULL,

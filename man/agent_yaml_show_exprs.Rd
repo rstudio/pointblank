@@ -24,6 +24,45 @@ carefully written by hand.
 7-5
 }
 
+\examples{
+# Let's create a validation plan for the
+# data quality analysis of the `small_table`
+# dataset; we need an agent and its
+# table-reading function enables retrieval
+# of the target table
+agent <- 
+  create_agent(
+    read_fn = ~small_table,
+    name = "example",
+    actions = action_levels(
+      warn_at = 0.10,
+      stop_at = 0.25,
+      notify_at = 0.35
+    )
+  ) \%>\%
+  col_exists(vars(date, date_time)) \%>\%
+  col_vals_regex(
+    vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+  ) \%>\%
+  rows_distinct() \%>\%
+  col_vals_gt(vars(d), 100) \%>\%
+  col_vals_lte(vars(c), 5)
+
+# The agent can be written to a pointblank
+# YAML file with `agent_yaml_write()`
+# agent_yaml_write(agent, filename = "x.yml")
+
+# At a later time, the YAML file can
+# be read into a new agent with the
+# `agent_yaml_read()` function
+# agent <- agent_yaml_read(path = "x.yml")
+
+# To get a sense of which expressions are
+# being used to generate the new agent, we
+# can use `agent_yaml_show_exprs()`
+# agent_yaml_show_exprs(path = "x.yml")
+  
+}
 \seealso{
 Other pointblank YAML: 
 \code{\link{agent_yaml_interrogate}()},

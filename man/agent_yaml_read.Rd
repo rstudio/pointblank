@@ -20,6 +20,11 @@ can be given more validation steps if needed before using \code{\link[=interroga
 taking part in any other agent ops (e.g., writing to disk with outputs intact
 via \code{\link[=agent_write]{agent_write()}} or again to \strong{pointblank} YAML with
 \code{\link[=agent_yaml_write]{agent_yaml_write()}}).
+
+To get a picture of how \code{agent_yaml_read()} is interpreting the validation
+plan specified in the \strong{pointblank} YAML, we can use the
+\code{\link[=agent_yaml_show_exprs]{agent_yaml_show_exprs()}} function. That function shows us (in the console)
+the \strong{pointblank} expressions for generating the described validation plan.
 }
 \section{Function ID}{
 

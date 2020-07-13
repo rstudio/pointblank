@@ -1,5 +1,4 @@
 library(pointblank)
-library(tidyverse)
 
 al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 

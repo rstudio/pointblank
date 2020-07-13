@@ -268,25 +268,35 @@ agent_yaml_show_exprs <- function(path) {
 expr_from_agent_yaml <- function(path,
                                  interrogate = FALSE) {
 
+  # Read the YAML file with `yaml::read_yaml()`
   y <- yaml::read_yaml(file = path)
   
+  # Get the `name` and `read_fn` fields from the YAML
+  # file and create argument strings
   read_fn <- paste0("  read_fn = ", y$read_fn)
   name <- paste0("  name = \"", y$name, "\"")
+  
+  # Create argument strings for the `actions` and
+  # `end_fns` arguments (which could be NULL)
   actions <- make_action_levels_str(y$actions)
   end_fns <- make_end_fns_str(y$end_fns)
   
+  # The `embed_report` and `reporting_lang` values are
+  # taken from the YAML (if they exist) and transformed
+  # to argument strings
   if (!is.null(y$embed_report) && y$embed_report) {
     embed_report <- paste0("  embed_report = ", y$embed_report)
   } else {
     embed_report <- NULL
   }
-  
   if (!is.null(y$reporting_lang) && y$reporting_lang != "en") {
     reporting_lang <- paste0("  reporting_lang = \"", y$reporting_lang, "\"")
   } else {
     reporting_lang <- NULL
   }
   
+  # Generate all of the validation steps that make up
+  # the agent's validation plan
   validation_steps <- make_validation_steps(y$steps)
   
   # Generate the expression string
@@ -301,9 +311,12 @@ expr_from_agent_yaml <- function(path,
       validation_steps
     )
 
+  # Add the `interrogate()` statement if needed (this is
+  # for the `agent_yaml_interrogate()` function)
   if (interrogate) {
     expr_str <- paste0(expr_str, "%>%\ninterrogate()")
   }
+  
   expr_str
 }
 

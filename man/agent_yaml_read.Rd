@@ -19,3 +19,16 @@ agent can be given more validation steps if needed before using
 \code{\link[=interrogate]{interrogate()}} or taking part in any other agent ops (e.g., writing to disk
 with \code{\link[=agent_write]{agent_write()}} or \code{\link[=agent_yaml_write]{agent_yaml_write()}}).
 }
+\section{Function ID}{
+
+7-2
+}
+
+\seealso{
+Other pointblank YAML: 
+\code{\link{agent_yaml_interrogate}()},
+\code{\link{agent_yaml_show_exprs}()},
+\code{\link{agent_yaml_string}()},
+\code{\link{agent_yaml_write}()}
+}
+\concept{pointblank YAML}

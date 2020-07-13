@@ -16,3 +16,16 @@ agent_yaml_string(agent = NULL, path = NULL)
 \description{
 Display \emph{pointblank} YAML using an agent or a YAML file
 }
+\section{Function ID}{
+
+7-4
+}
+
+\seealso{
+Other pointblank YAML: 
+\code{\link{agent_yaml_interrogate}()},
+\code{\link{agent_yaml_read}()},
+\code{\link{agent_yaml_show_exprs}()},
+\code{\link{agent_yaml_write}()}
+}
+\concept{pointblank YAML}

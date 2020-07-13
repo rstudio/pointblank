@@ -28,3 +28,16 @@ function that is used to read the target table when \code{\link[=interrogate]{in
 called). This option can be set when using \code{\link[=create_agent]{create_agent()}} or with
 \code{\link[=set_read_fn]{set_read_fn()}} (for use with an existing \emph{agent}).
 }
+\section{Function ID}{
+
+7-1
+}
+
+\seealso{
+Other pointblank YAML: 
+\code{\link{agent_yaml_interrogate}()},
+\code{\link{agent_yaml_read}()},
+\code{\link{agent_yaml_show_exprs}()},
+\code{\link{agent_yaml_string}()}
+}
+\concept{pointblank YAML}

@@ -20,3 +20,16 @@ YAML file). The additional invocation of \code{\link[=interrogate]{interrogate()
 options of that function. As with \code{\link[=agent_yaml_read]{agent_yaml_read()}} the agent is returned
 except, this time, it has intel from the interrogation.
 }
+\section{Function ID}{
+
+7-3
+}
+
+\seealso{
+Other pointblank YAML: 
+\code{\link{agent_yaml_read}()},
+\code{\link{agent_yaml_show_exprs}()},
+\code{\link{agent_yaml_string}()},
+\code{\link{agent_yaml_write}()}
+}
+\concept{pointblank YAML}

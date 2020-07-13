@@ -123,7 +123,7 @@ reference:
     - set_read_fn
     - remove_read_fn
   
-  - title: **pointblank** YAML
+  - title: pointblank YAML
     desc: >
       YAML. It's not a bad data-serialization language and it's certainly
       good enough for specifying **pointblank** validation plans. A 

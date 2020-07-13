@@ -93,10 +93,14 @@ agent <-
 # with the `agent_yaml_string()` function
 # agent_yaml_string(path = "x.yml")
 
+# The YAML can also be printed in the console
+# by supplying the agent as the input
+agent_yaml_string(agent = agent)
+
 # At a later time, the YAML file can
 # be read into a new agent with the
 # `agent_yaml_read()` function
-# agent <- agent_yaml_read("x.yml")
+# agent <- agent_yaml_read(path = "x.yml")
 
 # We can interrogate the data (which
 # is accessible through the `read_fn`)
@@ -104,7 +108,9 @@ agent <-
 # agent with intel, or, we can
 # interrogate directly from the YAML
 # file with `agent_yaml_interrogate()`
-# agent <- agent_yaml_interrogate("x.yml")
+# agent <- 
+#   agent_yaml_interrogate(path = "x.yml")
+
 }
 \seealso{
 Other pointblank YAML: 

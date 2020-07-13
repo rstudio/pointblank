@@ -196,7 +196,7 @@ agent_yaml_write <- function(agent,
 #' # At a later time, the YAML file can
 #' # be read into a new agent with the
 #' # `agent_yaml_read()` function
-#' agent <- agent_yaml_read(path = "x.yml")
+#' agent <- agent_yaml_read(path = yml_file)
 #' 
 #' class(agent)
 #'   

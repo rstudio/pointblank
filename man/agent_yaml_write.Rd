@@ -19,20 +19,93 @@ with \code{filename}).}
 }
 \description{
 With \code{agent_yaml_write()} we can take an existing \emph{agent} and write that
-\emph{agent}'s validation plan to a YAML file. With that YAML, we can modify the
-file if so desired, or, use it as is to create a new agent with the
-\code{\link[=agent_yaml_read]{agent_yaml_read()}} function. That \emph{agent} will have a validation plan and is
-ready to \code{\link[=interrogate]{interrogate()}} the data. One caveat for writing the \emph{agent} to YAML
-is the condition of having a table-reading function (\code{read_fn}) set (it's a
-function that is used to read the target table when \code{\link[=interrogate]{interrogate()}} is
-called). This option can be set when using \code{\link[=create_agent]{create_agent()}} or with
-\code{\link[=set_read_fn]{set_read_fn()}} (for use with an existing \emph{agent}).
+\emph{agent}'s validation plan to a YAML file. With \strong{pointblank} YAML, we can
+modify the YAML markup if so desired, or, use as is to create a new agent
+with the \code{\link[=agent_yaml_read]{agent_yaml_read()}} function. That \emph{agent} will have a validation
+plan and is ready to \code{\link[=interrogate]{interrogate()}} the data. We can go a step further and
+perform an interrogation directly from the YAML file with the
+\code{\link[=agent_yaml_interrogate]{agent_yaml_interrogate()}} function. That returns an agent with intel (having
+already interrogated the target data table).
+
+One requirement for writing the \emph{agent} to YAML is that we need to have
+table-reading function (\code{read_fn}) specified (it's a function that is used to
+read the target table when \code{\link[=interrogate]{interrogate()}} is called). This option can be set
+when using \code{\link[=create_agent]{create_agent()}} or with \code{\link[=set_read_fn]{set_read_fn()}} (for use with an existing
+\emph{agent}).
 }
 \section{Function ID}{
 
 7-1
 }
 
+\examples{
+# Let's go through the process of
+# developing an agent with a validation
+# plan (to be used for the data quality
+# analysis of the `small_table` dataset),
+# and then offloading that validation
+# plan to a pointblank YAML file
+
+# We ought to think about what's
+# tolerable in terms of data quality so
+# let's designate proportional failure
+# thresholds to the `warn`, `stop`, and
+# `notify` states using `action_levels()`
+al <- 
+  action_levels(
+    warn_at = 0.10,
+    stop_at = 0.25,
+    notify_at = 0.35
+  )
+
+# Now create a pointblank `agent` object
+# and give it the `al` object (which
+# serves as a default for all validation
+# steps which can be overridden); the
+# data will be referenced in a `read_fn`
+# (a requirement for writing to YAML)
+agent <- 
+  create_agent(
+    read_fn = ~small_table,
+    name = "example",
+    actions = al
+  )
+
+# Then, as with any `agent` object, we
+# can add steps to the validation plan by
+# using as many validation functions as we
+# want
+agent <-
+  agent \%>\% 
+  col_exists(vars(date, date_time)) \%>\%
+  col_vals_regex(
+    vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+  ) \%>\%
+  rows_distinct() \%>\%
+  col_vals_gt(vars(d), 100) \%>\%
+  col_vals_lte(vars(c), 5)
+
+# The agent can be written to a pointblank
+# YAML file with `agent_yaml_write()`
+# agent_yaml_write(agent, filename = "x.yml")
+
+# We can view the YAML file in the console
+# with the `agent_yaml_string()` function
+# agent_yaml_string(path = "x.yml")
+
+# At a later time, the YAML file can
+# be read into a new agent with the
+# `agent_yaml_read()` function
+# agent <- agent_yaml_read("x.yml")
+
+# We can interrogate the data (which
+# is accessible through the `read_fn`)
+# with `interrogate()` and get an
+# agent with intel, or, we can
+# interrogate directly from the YAML
+# file with `agent_yaml_interrogate()`
+# agent <- agent_yaml_interrogate("x.yml")
+}
 \seealso{
 Other pointblank YAML: 
 \code{\link{agent_yaml_interrogate}()},

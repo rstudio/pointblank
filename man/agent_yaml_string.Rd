@@ -62,14 +62,21 @@ agent_yaml_string(agent = agent)
 # YAML file with `agent_yaml_write()`
 # agent_yaml_write(agent, filename = "x.yml")
 
+# The 'x.yml' file is available in the package
+# through `system.file()`
+yml_file <- 
+  system.file("x.yml", package = "pointblank")
+
 # The `agent_yaml_string()` function can
 # be used with the YAML file as well
-# agent_yaml_string(path = "x.yml")
+agent_yaml_string(path = yml_file)
 
 # At a later time, the YAML file can
 # be read into a new agent with the
 # `agent_yaml_read()` function
-# agent <- agent_yaml_read(path = "x.yml")
+agent <- agent_yaml_read(path = yml_file)
+
+class(agent)
   
 }
 \seealso{

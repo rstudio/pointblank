@@ -122,6 +122,24 @@ reference:
     - remove_tbl
     - set_read_fn
     - remove_read_fn
+  
+  - title: **pointblank** YAML
+    desc: >
+      YAML. It's not a bad data-serialization language and it's certainly
+      good enough for specifying **pointblank** validation plans. A 
+      **pointblank** YAML file can be generated with an agent by using the
+      `agent_yaml_write()` function. You're always free to create
+      **pointblank** YAML by hand. Or you can edit/extend an existing
+      **pointblank** YAML file. An agent can be created from **pointblank**
+      YAML with the `agent_yaml_read()` function. We can even interrogate
+      right from **pointblank** YAML by using `agent_yaml_interrogate()`,
+      which is really super cool if you think about it.
+    contents:
+    - agent_yaml_write
+    - agent_yaml_read
+    - agent_yaml_interrogate
+    - agent_yaml_string
+    - agent_yaml_show_exprs
     
   - title: Datasets
     contents:

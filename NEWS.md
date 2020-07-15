@@ -1,8 +1,24 @@
 # pointblank (development version)
 
-* The `agent_write()` and `agent_read()` functions were added; they allow for saving the agent to disk and reading the agent back from disk.
+## New features
+
+* The *agent* can now be given a table-reading function, which is used for reading in the data during an interrogation. If a `tbl` is not provided, then this function will be invoked. However, if both a `tbl` and a `read_fn` is specified, then the supplied `tbl` will take priority (useful for one-shot interrogations with a table in an interactive context). There are two ways to specify a `read_fn`: (1) using a function (e.g., `function() { <table reading code> }`) or, (2) with an R formula expression (e.g., `~ { <table reading code> }`).
 
 * Added a a set of functions for setting and removing an agent's association to a data table (`set_tbl()` and `remove_tbl()`) or a table-reading function (`set_read_fn()` and `remove_read_fn()`).
+
+* All validation functions now have a `step_id` parameter. The use of step IDs serves to distinguish validation steps from each other and provide an opportunity for supplying a more meaningful label compared to the step index. Supplying a `step_id` is optional; **pointblank** will automatically generate the step ID value (based on the step index) if it's not provided.
+
+* Added new functions for reading and writing YAML (here, called **pointblank** YAML). A **pointblank** YAML file can be generated with an agent by using the `agent_yaml_write()` function. You're always free to create **pointblank** YAML by hand, or, you can edit/extend an existing **pointblank** YAML file. An agent can be created from **pointblank** YAML with the `agent_yaml_read()` function. It's also possible to interrogate a target data table right from **pointblank** YAML by using `agent_yaml_interrogate()`.
+
+* The `agent_write()` and `agent_read()` functions were added; they allow for saving the agent to disk and reading the agent back from disk. Saved-to-disk agents still retain their validation plans, intel from interrogations, and their reference to a target table (the `read_fn` value) and even the entire target table (if requested). Reading an agent from disk with `agent_read()` allows us to use post-interrogation functions (e.g., `get_agent_x_list()`, `get_data_extracts()`, `get_agent_report()`, etc.) as though the interrogation had just occurred.
+
+* **pointblank** is now compatible with Spark DataFrames through the **sparklyr** package. Simply use a `tbl_spark` object when specifying the target table in `create_agent()`, `set_tbl()`, or `scan_data()`.
+
+## Minor improvements and bug fixes
+
+* An issue with showing the agent report table in the email message body via the `email_blast()` function has been resolved.
+
+* Resolved issue with using literal character values in comparison-based validation functions (e.g., `col_vals_between()`, `col_vals_gt()`, etc.).
 
 # pointblank 0.4.0
 

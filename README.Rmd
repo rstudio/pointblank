@@ -156,7 +156,6 @@ Database tables can be used with `scan_data()` as well. Here are two examples us
 [![Rfam: full_region](https://img.shields.io/static/v1?label=Table%20Scan&message=Rfam: full_region&color=green)](https://rpubs.com/rich_i/rfam_full_region)&nbsp;&nbsp;&nbsp;
 [![Ensembl: assembly](https://img.shields.io/static/v1?label=Table%20Scan&message=Ensembl: assembly&color=green)](https://rpubs.com/rich_i/ensembl_assembly)
 
-
 <hr>
 
 There are many functions available in **pointblank** for making comprehensive table validations. Each validation function is associated with an expectation function (of the form `expect_*()`). They are equivalent in usage and behavior to **testthat** tests with the big distinction that they check aspects of data tables (and not the results of function calls). Furthermore, each validation function has an associated test function (of the form `test_*()`) which always returns a logical value (`TRUE` or `FALSE`).
@@ -183,8 +182,8 @@ If you encounter a bug, have usage questions, or want to share ideas to make thi
 
 The **pointblank** package isn't the only one of its kind available for **R**. The reason for introducing yet another has to do with **pointblank**'s goals:
 
-- ability to work with local tables and database tables with minimal changes in the API
-- great flexibility in workflows, allowing for: (1) report-based validations, (2) inline validations, (3) validation of data tables in unit tests (with the set of `expect_*()` functions), and (4) validation of data tables to support conditional expressions (with the set of `test_*()` functions) 
+- ability to work with local tables, database tables, and Spark DataFrames (via **sparklyr**) with minimal changes in the API
+- great flexibility in data validation workflows, allowing for: (1) report-based validations, (2) inline validations, (3) validation of data tables in unit tests (with the set of `expect_*()` functions), and (4) validation of data tables to support conditional expressions (with the set of `test_*()` functions) 
 - extra tools for understanding new datasets (`scan_data()`) and validating data in specialized R Markdown code chunks (`validate_rmd()`)
 - reporting outputs translated to multiple spoken languages
 - developing an API that closely follows tidyverse conventions by adhering to the [tidyverse style guide](https://style.tidyverse.org)

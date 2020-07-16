@@ -245,13 +245,13 @@ The **pointblank** package isn’t the only one of its kind available for
 **R**. The reason for introducing yet another has to do with
 **pointblank**’s goals:
 
-  - ability to work with local tables and database tables with minimal
-    changes in the API
-  - great flexibility in workflows, allowing for: (1) report-based
-    validations, (2) inline validations, (3) validation of data tables
-    in unit tests (with the set of `expect_*()` functions), and (4)
-    validation of data tables to support conditional expressions (with
-    the set of `test_*()` functions)
+  - ability to work with local tables, database tables, and Spark
+    DataFrames (via **sparklyr**) with minimal changes in the API
+  - great flexibility in data validation workflows, allowing for: (1)
+    report-based validations, (2) inline validations, (3) validation of
+    data tables in unit tests (with the set of `expect_*()` functions),
+    and (4) validation of data tables to support conditional expressions
+    (with the set of `test_*()` functions)
   - extra tools for understanding new datasets (`scan_data()`) and
     validating data in specialized R Markdown code chunks
     (`validate_rmd()`)

@@ -123,10 +123,26 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#pointblank-development-version" class="anchor"></a>pointblank (development version)<small> Unreleased </small>
 </h1>
+<div id="new-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>New features</h2>
 <ul>
-<li><p>The <code>agent_write()</code> and <code>agent_read()</code> functions were added; they allow for saving the agent to disk and reading the agent back from disk.</p></li>
+<li><p>The <em>agent</em> can now be given a table-reading function, which is used for reading in the data during an interrogation. If a <code>tbl</code> is not provided, then this function will be invoked. However, if both a <code>tbl</code> and a <code>read_fn</code> is specified, then the supplied <code>tbl</code> will take priority (useful for one-shot interrogations with a table in an interactive context). There are two ways to specify a <code>read_fn</code>: (1) using a function (e.g., <code>function() { &lt;table reading code&gt; }</code>) or, (2) with an R formula expression (e.g., <code>~ { &lt;table reading code&gt; }</code>).</p></li>
 <li><p>Added a a set of functions for setting and removing an agent’s association to a data table (<code>set_tbl()</code> and <code>remove_tbl()</code>) or a table-reading function (<code>set_read_fn()</code> and <code>remove_read_fn()</code>).</p></li>
+<li><p>All validation functions now have a <code>step_id</code> parameter. The use of step IDs serves to distinguish validation steps from each other and provide an opportunity for supplying a more meaningful label compared to the step index. Supplying a <code>step_id</code> is optional; <strong>pointblank</strong> will automatically generate the step ID value (based on the step index) if it’s not provided.</p></li>
+<li><p>Added new functions for reading and writing YAML (here, called <strong>pointblank</strong> YAML). A <strong>pointblank</strong> YAML file can be generated with an agent by using the <code>agent_yaml_write()</code> function. You’re always free to create <strong>pointblank</strong> YAML by hand, or, you can edit/extend an existing <strong>pointblank</strong> YAML file. An agent can be created from <strong>pointblank</strong> YAML with the <code>agent_yaml_read()</code> function. It’s also possible to interrogate a target data table right from <strong>pointblank</strong> YAML by using <code>agent_yaml_interrogate()</code>.</p></li>
+<li><p>The <code>agent_write()</code> and <code>agent_read()</code> functions were added; they allow for saving the agent to disk and reading the agent back from disk. Saved-to-disk agents still retain their validation plans, intel from interrogations, and their reference to a target table (the <code>read_fn</code> value) and even the entire target table (if requested). Reading an agent from disk with <code>agent_read()</code> allows us to use post-interrogation functions (e.g., <code>get_agent_x_list()</code>, <code>get_data_extracts()</code>, <code>get_agent_report()</code>, etc.) as though the interrogation had just occurred.</p></li>
+<li><p><strong>pointblank</strong> is now compatible with Spark DataFrames through the <strong>sparklyr</strong> package. Simply use a <code>tbl_spark</code> object when specifying the target table in <code>create_agent()</code>, <code>set_tbl()</code>, or <code>scan_data()</code>.</p></li>
 </ul>
+</div>
+<div id="minor-improvements-and-bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-improvements-and-bug-fixes" class="anchor"></a>Minor improvements and bug fixes</h2>
+<ul>
+<li><p>An issue with showing the agent report table in the email message body via the <code>email_blast()</code> function has been resolved.</p></li>
+<li><p>Resolved issue with using literal character values in comparison-based validation functions (e.g., <code>col_vals_between()</code>, <code>col_vals_gt()</code>, etc.).</p></li>
+</ul>
+</div>
 </div>
     <div id="pointblank-040" class="section level1">
 <h1 class="page-header" data-toc-text="0.4.0">
@@ -149,9 +165,9 @@
 <li>The default behavior of using validation step functions (e.g., <code>col_vals_lt()</code>) directly on data tables has been changed. Before, a single test unit failure would trigger a warning. Now, a single test unit failing results in an error. Going back to the earlier behavior now requires the use of <code>actions = warn_on_fail()</code> (a new helper function, which has a default <code>warn_at</code> threshold value of <code>1</code>) with each invocation of a validation step function. The <code>stop_on_fail()</code> helper function is also new in this release, and has a <code>stop_at</code> threshold parameter, also with a default of <code>1</code>.</li>
 </ul>
 </div>
-<div id="new-features" class="section level2">
+<div id="new-features-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features" class="anchor"></a>New features</h2>
+<a href="#new-features-1" class="anchor"></a>New features</h2>
 <ul>
 <li><p>Added 24 <em>expectation</em> functions (e.g., <code>expect_col_exists()</code>, <code>expect_rows_distinct()</code>, <code>expect_col_schema_match()</code>, etc.) as complements of the 24 validation functions. All of these can be used for <strong>testthat</strong> tests of tabular data with a simplified interface that exposes an easy-to-use failure <code>threshold</code> (defaulting to <code>1</code>).</p></li>
 <li><p>Added 24 <em>test</em> functions (e.g., <code>test_col_exists()</code>, <code>test_rows_distinct()</code>, <code>test_col_schema_match()</code>, etc.) to further complement the 24 validation functions. These functions return a logical value: <code>TRUE</code> if the threshold (having a default of <code>1</code>) is <em>not</em> exceeded, <code>FALSE</code> otherwise. These <code>test_*()</code> functions use the same simplified interface of the <code>expect_*()</code> functions.</p></li>
@@ -171,9 +187,9 @@
 <li><p>The package <code>README</code> now contains better graphics, some reworked examples, and a new section on the package’s design goals (with a listing of other <strong>R</strong> packages that also focus on table validation).</p></li>
 </ul>
 </div>
-<div id="minor-improvements-and-bug-fixes" class="section level2">
+<div id="minor-improvements-and-bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-improvements-and-bug-fixes" class="anchor"></a>Minor improvements and bug fixes</h2>
+<a href="#minor-improvements-and-bug-fixes-1" class="anchor"></a>Minor improvements and bug fixes</h2>
 <ul>
 <li><p>Rewrote the internal <code>stock_stoppage()</code> and <code>stock_warning()</code> functions so that the generated error and warning messages match whether validation functions are used directly on data or <em>expectation</em> functions are being used.</p></li>
 <li><p>Console status messages when performing an interrogation now only appear in an interactive session. They will no longer appear during R Markdown rendering nor during execution of unattended scripts.</p></li>
@@ -218,9 +234,9 @@
 <li><p>The <code>incl_na</code> argument, which was implemented in a few validation step functions, has been renamed to <code>na_pass</code> to better indicate its purpose (to consider any encountered <code>NA</code> values as passing test units), and, its use has been expanded to other relevant functions.</p></li>
 </ul>
 </div>
-<div id="new-features-1" class="section level2">
+<div id="new-features-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-1" class="anchor"></a>New Features</h2>
+<a href="#new-features-2" class="anchor"></a>New Features</h2>
 <ul>
 <li><p>It’s now possible to use <code>vars()</code> and certain tidyselect select helpers (e.g., <code>starts_with()</code>) when defining <code>columns</code> in the <strong>pointblank</strong> validation step functions.</p></li>
 <li><p>The <code>conjointly()</code> function is a new validation step function that allows for multiple rowwise validation steps to be performed for joint validity testing.</p></li>

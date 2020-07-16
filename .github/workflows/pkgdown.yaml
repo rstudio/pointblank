@@ -43,6 +43,11 @@ jobs:
 
       - name: Install package
         run: R CMD INSTALL .
+        
+      - name: Git setup
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
 
       - name: Deploy package
         run: pkgdown::deploy_to_branch(new_process = FALSE)

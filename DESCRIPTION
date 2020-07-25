@@ -51,5 +51,6 @@ Suggests:
     RPostgres,
     readr,
     rmarkdown,
-    sparklyr
+    sparklyr,
+    dittodb
 Roxygen: list(markdown = TRUE)

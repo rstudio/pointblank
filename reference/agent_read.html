@@ -130,14 +130,14 @@ present (along with results from any interrogation)." />
     </div>
 
     <div class="ref-description">
-    <p>An <em>agent</em> that has been written to disk (with <code>agent_write()</code>) can be read
+    <p>An <em>agent</em> that has been written to disk (with <code><a href='agent_write.html'>agent_write()</a></code>) can be read
 back into memory with the <code>agent_read()</code> function. Once the <em>agent</em> has been
 read, it may not have a data table associated with it (depending on whether
 the <code>keep_tbl</code> option was <code>TRUE</code> or <code>FALSE</code> when writing to disk) but it
 should still be able to produce an agent report (by printing the <em>agent</em> to
-the console or using <code>get_agent_report()</code>), return an agent x-list (with
-<code>get_agent_x_list()</code>), and yield any available data extracts with
-<code>get_data_extracts()</code>. Furthermore, all of its validation steps will still be
+the console or using <code><a href='get_agent_report.html'>get_agent_report()</a></code>), return an agent x-list (with
+<code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code>), and yield any available data extracts with
+<code><a href='get_data_extracts.html'>get_data_extracts()</a></code>. Furthermore, all of its validation steps will still be
 present (along with results from any interrogation).</p>
     </div>
 
@@ -149,15 +149,15 @@ present (along with results from any interrogation).</p>
     <tr>
       <th>path</th>
       <td><p>The path to the file that was previously written by
-<code>agent_write()</code>.</p></td>
+<code><a href='agent_write.html'>agent_write()</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Should the <em>agent</em> possess a table-reading function (can be set any time with
-<code>set_read_fn()</code>) or a specific table (settable with <code>set_tbl()</code>) we could use
-the <code>interrogate()</code> function again. This is useful for tables that evolve
+<code><a href='set_read_fn.html'>set_read_fn()</a></code>) or a specific table (settable with <code><a href='set_tbl.html'>set_tbl()</a></code>) we could use
+the <code><a href='interrogate.html'>interrogate()</a></code> function again. This is useful for tables that evolve
 over time and need periodic data quality assessments with the same validation
 steps (and more steps can be added as well).</p>
 

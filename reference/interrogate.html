@@ -129,7 +129,7 @@ how the interrogation went down." />
     <p>When the agent has all the information on what to do (i.e., a validation plan
 which is a series of validation steps), the interrogation process can occur
 according its plan. After that, the agent will have gathered intel, and we
-can use functions like <code>get_agent_report()</code> and <code>all_passed()</code> to understand
+can use functions like <code><a href='get_agent_report.html'>get_agent_report()</a></code> and <code><a href='all_passed.html'>all_passed()</a></code> to understand
 how the interrogation went down.</p>
     </div>
 
@@ -148,7 +148,7 @@ how the interrogation went down.</p>
     <tr>
       <th>agent</th>
       <td><p>An agent object of class <code>ptblank_agent</code> that is created with
-<code>create_agent()</code>.</p></td>
+<code><a href='create_agent.html'>create_agent()</a></code>.</p></td>
     </tr>
     <tr>
       <th>extract_failed</th>
@@ -210,8 +210,8 @@ when sampling non-passing rows using the <code>sample_frac</code> option.</p></t
 <span class='co'># the validation plan and completes</span>
 <span class='co'># the whole process</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'>create_agent</span>(tbl = <span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(tbl = <span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>interrogate</span>()
 </div></pre>
   </div>

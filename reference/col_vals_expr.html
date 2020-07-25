@@ -162,12 +162,12 @@ any <code>preconditions</code> have been applied).</p>
       <th>x</th>
       <td><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), Spark DataFrame
 (<code>tbl_spark</code>), or, an agent object of class <code>ptblank_agent</code> that is created
-with <code>create_agent()</code>.</p></td>
+with <code><a href='create_agent.html'>create_agent()</a></code>.</p></td>
     </tr>
     <tr>
       <th>expr</th>
       <td><p>An expression to use for this test. This can either be in the
-form of a call made with the <code>expr()</code> function or as a one-sided <strong>R</strong>
+form of a call made with the <code><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr()</a></code> function or as a one-sided <strong>R</strong>
 formula (using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>).</p></td>
     </tr>
     <tr>
@@ -182,7 +182,7 @@ input data table to be transformed (e.g.,
       <th>actions</th>
       <td><p>A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
-with the <code>action_levels()</code> helper function.</p></td>
+with the <code><a href='action_levels.html'>action_levels()</a></code> helper function.</p></td>
     </tr>
     <tr>
       <th>step_id</th>
@@ -251,14 +251,14 @@ instead be supplied (e.g.,
 <code>function(x) dplyr::mutate(x, col_a = col_b + 10)</code>).</p>
 <p>Often, we will want to specify <code>actions</code> for the validation. This argument,
 present in every validation function, takes a specially-crafted list
-object that is best produced by the <code>action_levels()</code> function. Read that
+object that is best produced by the <code><a href='action_levels.html'>action_levels()</a></code> function. Read that
 function's documentation for the lowdown on how to create reactions to
 above-threshold failure levels in validation. The basic gist is that you'll
 want at least a single threshold level (specified as either the fraction of
 test units failed, or, an absolute value), often using the <code>warn_at</code>
 argument. This is especially true when <code>x</code> is a table object because,
 otherwise, nothing happens. For the <code>col_vals_*()</code>-type functions, using
-<code>action_levels(warn_at = 0.25)</code> or <code>action_levels(stop_at = 0.25)</code> are good
+<code><a href='action_levels.html'>action_levels(warn_at = 0.25)</a></code> or <code><a href='action_levels.html'>action_levels(stop_at = 0.25)</a></code> are good
 choices depending on the situation (the first produces a warning when a
 quarter of the total test units fails, the other <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>s at the same
 threshold level).</p>
@@ -275,30 +275,30 @@ then be automatically generated.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other validation functions: 
-<code>col_exists()</code>,
-<code>col_is_character()</code>,
-<code>col_is_date()</code>,
-<code>col_is_factor()</code>,
-<code>col_is_integer()</code>,
-<code>col_is_logical()</code>,
-<code>col_is_numeric()</code>,
-<code>col_is_posix()</code>,
-<code>col_schema_match()</code>,
-<code>col_vals_between()</code>,
-<code>col_vals_equal()</code>,
-<code>col_vals_gte()</code>,
-<code>col_vals_gt()</code>,
-<code>col_vals_in_set()</code>,
-<code>col_vals_lte()</code>,
-<code>col_vals_lt()</code>,
-<code>col_vals_not_between()</code>,
-<code>col_vals_not_equal()</code>,
-<code>col_vals_not_in_set()</code>,
-<code>col_vals_not_null()</code>,
-<code>col_vals_null()</code>,
-<code>col_vals_regex()</code>,
-<code>conjointly()</code>,
-<code>rows_distinct()</code></p></div>
+<code><a href='col_exists.html'>col_exists</a>()</code>,
+<code><a href='col_is_character.html'>col_is_character</a>()</code>,
+<code><a href='col_is_date.html'>col_is_date</a>()</code>,
+<code><a href='col_is_factor.html'>col_is_factor</a>()</code>,
+<code><a href='col_is_integer.html'>col_is_integer</a>()</code>,
+<code><a href='col_is_logical.html'>col_is_logical</a>()</code>,
+<code><a href='col_is_numeric.html'>col_is_numeric</a>()</code>,
+<code><a href='col_is_posix.html'>col_is_posix</a>()</code>,
+<code><a href='col_schema_match.html'>col_schema_match</a>()</code>,
+<code><a href='col_vals_between.html'>col_vals_between</a>()</code>,
+<code><a href='col_vals_equal.html'>col_vals_equal</a>()</code>,
+<code><a href='col_vals_gte.html'>col_vals_gte</a>()</code>,
+<code><a href='col_vals_gt.html'>col_vals_gt</a>()</code>,
+<code><a href='col_vals_in_set.html'>col_vals_in_set</a>()</code>,
+<code><a href='col_vals_lte.html'>col_vals_lte</a>()</code>,
+<code><a href='col_vals_lt.html'>col_vals_lt</a>()</code>,
+<code><a href='col_vals_not_between.html'>col_vals_not_between</a>()</code>,
+<code><a href='col_vals_not_equal.html'>col_vals_not_equal</a>()</code>,
+<code><a href='col_vals_not_in_set.html'>col_vals_not_in_set</a>()</code>,
+<code><a href='col_vals_not_null.html'>col_vals_not_null</a>()</code>,
+<code><a href='col_vals_null.html'>col_vals_null</a>()</code>,
+<code><a href='col_vals_regex.html'>col_vals_regex</a>()</code>,
+<code><a href='conjointly.html'>conjointly</a>()</code>,
+<code><a href='rows_distinct.html'>rows_distinct</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># For all of the examples here, we'll</span>
@@ -328,14 +328,14 @@ then be automatically generated.</p>
 <span class='co'># are integer-like by using the R modulo</span>
 <span class='co'># operator and expecting `0`</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'>create_agent</span>(<span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_expr</span>(<span class='fu'>expr</span>(<span class='kw'>a</span> <span class='op'>%%</span> <span class='fl'>1</span> <span class='op'>==</span> <span class='fl'>0</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'>interrogate</span>()
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_expr</span>(<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span>(<span class='kw'>a</span> <span class='op'>%%</span> <span class='fl'>1</span> <span class='op'>==</span> <span class='fl'>0</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
 
 <span class='co'># Determine if this validation</span>
 <span class='co'># had no failing test units (there</span>
 <span class='co'># are 6 test units, one for each row)</span>
-<span class='fu'>all_passed</span>(<span class='kw'>agent</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'><a href='all_passed.html'>all_passed</a></span>(<span class='kw'>agent</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># Calling `agent` in the console</span>
 <span class='co'># prints the agent's report; but we</span>
 <span class='co'># can get a `gt_tbl` object directly</span>
@@ -351,7 +351,7 @@ then be automatically generated.</p>
 <span class='co'># behavior of side effects can be</span>
 <span class='co'># customized with the `actions` option</span>
 <span class='kw'>tbl</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>col_vals_expr</span>(<span class='fu'>expr</span>(<span class='kw'>a</span> <span class='op'>%%</span> <span class='fl'>1</span> <span class='op'>==</span> <span class='fl'>0</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_expr</span>(<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span>(<span class='kw'>a</span> <span class='op'>%%</span> <span class='fl'>1</span> <span class='op'>==</span> <span class='fl'>0</span>)) <span class='op'>%&gt;%</span>
   <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='kw'>a</span>)</div><div class='output co'>#&gt; [1] 1 2 1 7 8 6</div><div class='input'>  
 <span class='co'># C: Using the expectation function</span>
 
@@ -374,8 +374,8 @@ then be automatically generated.</p>
 <span class='co'># and `between()` functions (available</span>
 <span class='co'># for use in the pointblank package) </span>
 <span class='kw'>tbl</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>test_col_vals_expr</span>(<span class='op'>~</span> <span class='fu'>case_when</span>(
-    <span class='kw'>b</span> <span class='op'>==</span> <span class='fl'>0</span> <span class='op'>~</span> <span class='kw'>a</span> <span class='op'>%&gt;%</span> <span class='fu'>between</span>(<span class='fl'>0</span>, <span class='fl'>5</span>) <span class='op'>&amp;</span> <span class='kw'>c</span> <span class='op'>&lt;</span> <span class='fl'>1</span>,
+  <span class='fu'>test_col_vals_expr</span>(<span class='op'>~</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span>(
+    <span class='kw'>b</span> <span class='op'>==</span> <span class='fl'>0</span> <span class='op'>~</span> <span class='kw'>a</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/between.html'>between</a></span>(<span class='fl'>0</span>, <span class='fl'>5</span>) <span class='op'>&amp;</span> <span class='kw'>c</span> <span class='op'>&lt;</span> <span class='fl'>1</span>,
     <span class='kw'>b</span> <span class='op'>==</span> <span class='fl'>1</span> <span class='op'>~</span> <span class='kw'>a</span> <span class='op'>&gt;</span> <span class='fl'>5</span> <span class='op'>&amp;</span> <span class='kw'>c</span> <span class='op'>&gt;=</span> <span class='fl'>1</span>
   ))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># If you only want to test a subset of</span>
@@ -385,7 +385,7 @@ then be automatically generated.</p>
 <span class='co'># will be pruned (giving us less test</span>
 <span class='co'># units overall) </span>
 <span class='kw'>tbl</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>test_col_vals_expr</span>(<span class='op'>~</span> <span class='fu'>case_when</span>(
+  <span class='fu'>test_col_vals_expr</span>(<span class='op'>~</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span>(
     <span class='kw'>b</span> <span class='op'>==</span> <span class='fl'>1</span> <span class='op'>~</span> <span class='kw'>a</span> <span class='op'>&gt;</span> <span class='fl'>5</span> <span class='op'>&amp;</span> <span class='kw'>c</span> <span class='op'>&gt;=</span> <span class='fl'>1</span>
   ))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'></div></span></pre>
   </div>

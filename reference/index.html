@@ -130,7 +130,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-planning-and-prep" class="hasAnchor"><a href="#section-planning-and-prep" class="anchor"></a>Planning and Prep</h2>
-          <p class="section-desc"><p>Should you need to understand your data a bit more, use the <code>scan_data()</code> function. It provides a comprehensive report on the data you might be planning on validating. If going down the road of preparing a data quality analysis, call on an <em>agent</em> to carry out that eventual plan with <code>create_agent()</code>. The agent here is to be told which table is the target, and, we devise a stepwise validation plan with validation step functions.</p></p>
+          <p class="section-desc"><p>Should you need to understand your data a bit more, use the <code><a href="../reference/scan_data.html">scan_data()</a></code> function. It provides a comprehensive report on the data you might be planning on validating. If going down the road of preparing a data quality analysis, call on an <em>agent</em> to carry out that eventual plan with <code><a href="../reference/create_agent.html">create_agent()</a></code>. The agent here is to be told which table is the target, and, we devise a stepwise validation plan with validation step functions.</p></p>
         </th>
       </tr>
       
@@ -173,7 +173,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-validation-step-expectation-and-test-functions" class="hasAnchor"><a href="#section-validation-step-expectation-and-test-functions" class="anchor"></a>Validation Step, Expectation, and Test Functions</h2>
-          <p class="section-desc"><p>Validation steps are either used with an <strong>agent</strong> object or, more simply, just with the table of interest. When used with an <em>agent</em>, each step function called works to build up a validation plan (which is executed with the <code>interrogate()</code> function). If used directly on data (that is, no agent is involved whatsoever), then the data is checked and passed through. However, if we (1) set <code>warn_*</code> and/or <code>stop_*</code> thresholds and (2) the level of failed validation units exceeds those set levels, then we’ll get either a warning or a stop. Each validation step function is assoicated with an expectation function (of the form <code>expect_*()</code>). These expectation functions are equivalent in usage and behavior to those in the <strong>testthat</strong> package. Finallly, each validation function has an associated test function (of the form <code>test_*()</code>) which always returns a logical value.</p></p>
+          <p class="section-desc"><p>Validation steps are either used with an <strong>agent</strong> object or, more simply, just with the table of interest. When used with an <em>agent</em>, each step function called works to build up a validation plan (which is executed with the <code><a href="../reference/interrogate.html">interrogate()</a></code> function). If used directly on data (that is, no agent is involved whatsoever), then the data is checked and passed through. However, if we (1) set <code>warn_*</code> and/or <code>stop_*</code> thresholds and (2) the level of failed validation units exceeds those set levels, then we’ll get either a warning or a stop. Each validation step function is assoicated with an expectation function (of the form <code>expect_*()</code>). These expectation functions are equivalent in usage and behavior to those in the <strong>testthat</strong> package. Finallly, each validation function has an associated test function (of the form <code>test_*()</code>) which always returns a logical value.</p></p>
         </th>
       </tr>
       
@@ -336,7 +336,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-emailing" class="hasAnchor"><a href="#section-emailing" class="anchor"></a>Emailing</h2>
-          <p class="section-desc"><p>Sometimes we want to email a report of a validation because of the importance of the information contained therein. The <code>email_blast()</code> function can be used within the <code>end_fns</code> argument of <code>create_agent()</code>, giving us options to send a customizable message only if specified conditions are met. To gain some practice with email customization, the <code>email_preview()</code> function is handy (it can be used directly on an <code>agent</code> object or an agent x-list object). The <code>stock_msg_body()</code> and <code>stock_msg_footer()</code> functions give us reasonable defaults for the HTML message itself, incorporating an emailable version of the validation report.</p></p>
+          <p class="section-desc"><p>Sometimes we want to email a report of a validation because of the importance of the information contained therein. The <code><a href="../reference/email_blast.html">email_blast()</a></code> function can be used within the <code>end_fns</code> argument of <code><a href="../reference/create_agent.html">create_agent()</a></code>, giving us options to send a customizable message only if specified conditions are met. To gain some practice with email customization, the <code><a href="../reference/email_preview.html">email_preview()</a></code> function is handy (it can be used directly on an <code>agent</code> object or an agent x-list object). The <code><a href="../reference/stock_msg_body.html">stock_msg_body()</a></code> and <code><a href="../reference/stock_msg_footer.html">stock_msg_footer()</a></code> functions give us reasonable defaults for the HTML message itself, incorporating an emailable version of the validation report.</p></p>
         </th>
       </tr>
       
@@ -373,7 +373,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-interrogation" class="hasAnchor"><a href="#section-interrogation" class="anchor"></a>Interrogation</h2>
-          <p class="section-desc"><p>If we have an <strong>agent</strong> object that has a plan (i.e., validation steps), the <code>interrogate()</code> function instructs the <em>agent</em> to interrogate the <code>tbl</code> data. The agent will go to work and also perform side-effect functions at the step level and upon completion (if those are defined).</p></p>
+          <p class="section-desc"><p>If we have an <strong>agent</strong> object that has a plan (i.e., validation steps), the <code><a href="../reference/interrogate.html">interrogate()</a></code> function instructs the <em>agent</em> to interrogate the <code>tbl</code> data. The agent will go to work and also perform side-effect functions at the step level and upon completion (if those are defined).</p></p>
         </th>
       </tr>
       
@@ -392,7 +392,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-post-interrogation" class="hasAnchor"><a href="#section-post-interrogation" class="anchor"></a>Post-interrogation</h2>
-          <p class="section-desc"><p>After interrogation with an agent, we can always get a report through its print method. However, we can get more options by using <code>get_agent_report()</code>. The agent always has a special list called an x-list. Access that by invoking the <code>get_agent_x_list()</code> and you’ll then have a smorgasbord of information about how the validation went down. Table extracts are collected by default for failed rows (up to a limit) and we can access those with <code>get_data_extracts()</code>. Table rows can be sundered into ‘pass’ and ‘fail’ pieces. Access those table fragments with the <code>get_sundered_data()</code> function. Want to know if all validation steps have passed with flying colors? Sometimes that could happen; use the <code>all_passed()</code> function to find out.</p></p>
+          <p class="section-desc"><p>After interrogation with an agent, we can always get a report through its print method. However, we can get more options by using <code><a href="../reference/get_agent_report.html">get_agent_report()</a></code>. The agent always has a special list called an x-list. Access that by invoking the <code><a href="../reference/get_agent_x_list.html">get_agent_x_list()</a></code> and you’ll then have a smorgasbord of information about how the validation went down. Table extracts are collected by default for failed rows (up to a limit) and we can access those with <code><a href="../reference/get_data_extracts.html">get_data_extracts()</a></code>. Table rows can be sundered into ‘pass’ and ‘fail’ pieces. Access those table fragments with the <code><a href="../reference/get_sundered_data.html">get_sundered_data()</a></code> function. Want to know if all validation steps have passed with flying colors? Sometimes that could happen; use the <code><a href="../reference/all_passed.html">all_passed()</a></code> function to find out.</p></p>
         </th>
       </tr>
       
@@ -435,7 +435,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-agent-ops" class="hasAnchor"><a href="#section-agent-ops" class="anchor"></a>Agent Ops</h2>
-          <p class="section-desc"><p>We have options for writing an agent to disk with the <code>agent_write()</code> function (useful for keeping data validation intel close at hand). The agent can be retrieved with the <code>agent_read()</code> function. A set of functions for setting and removing an agent’s association to a data table or a table-reading function is also available in this function family.</p></p>
+          <p class="section-desc"><p>We have options for writing an agent to disk with the <code><a href="../reference/agent_write.html">agent_write()</a></code> function (useful for keeping data validation intel close at hand). The agent can be retrieved with the <code><a href="../reference/agent_read.html">agent_read()</a></code> function. A set of functions for setting and removing an agent’s association to a data table or a table-reading function is also available in this function family.</p></p>
         </th>
       </tr>
       
@@ -484,7 +484,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-pointblank-yaml" class="hasAnchor"><a href="#section-pointblank-yaml" class="anchor"></a>pointblank YAML</h2>
-          <p class="section-desc"><p>YAML. It’s not a bad data-serialization language and it’s certainly good enough for specifying <strong>pointblank</strong> validation plans. A <strong>pointblank</strong> YAML file can be generated with an agent by using the <code>agent_yaml_write()</code> function. You’re always free to create <strong>pointblank</strong> YAML by hand. Or you can edit/extend an existing <strong>pointblank</strong> YAML file. An agent can be created from <strong>pointblank</strong> YAML with the <code>agent_yaml_read()</code> function. We can even interrogate right from <strong>pointblank</strong> YAML by using <code>agent_yaml_interrogate()</code>, which is really super cool if you think about it.</p></p>
+          <p class="section-desc"><p>YAML. It’s not a bad data-serialization language and it’s certainly good enough for specifying <strong>pointblank</strong> validation plans. A <strong>pointblank</strong> YAML file can be generated with an agent by using the <code><a href="../reference/agent_yaml_write.html">agent_yaml_write()</a></code> function. You’re always free to create <strong>pointblank</strong> YAML by hand. Or you can edit/extend an existing <strong>pointblank</strong> YAML file. An agent can be created from <strong>pointblank</strong> YAML with the <code><a href="../reference/agent_yaml_read.html">agent_yaml_read()</a></code> function. We can even interrogate right from <strong>pointblank</strong> YAML by using <code><a href="../reference/agent_yaml_interrogate.html">agent_yaml_interrogate()</a></code>, which is really super cool if you think about it.</p></p>
         </th>
       </tr>
       

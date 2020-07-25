@@ -128,9 +128,9 @@ email_message object will be returned." />
 
     <div class="ref-description">
     <p>The <code>email_preview()</code> function provides a preview of an email that would
-normally be produced and sent through the <code>email_blast()</code> function. The <code>x</code>
+normally be produced and sent through the <code><a href='email_blast.html'>email_blast()</a></code> function. The <code>x</code>
 that we need for this is the agent x-list that is produced by the
-<code>get_agent_x_list()</code> function. Or, we can supply an agent object. In both
+<code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function. Or, we can supply an agent object. In both
 cases, the email message with appear in the Viewer and a <strong>blastula</strong>
 <code>email_message</code> object will be returned.</p>
     </div>
@@ -138,8 +138,8 @@ cases, the email message with appear in the Viewer and a <strong>blastula</stron
     <pre class="usage"><span class='fu'>email_preview</span>(
   <span class='kw'>x</span>,
   msg_header = <span class='kw'>NULL</span>,
-  msg_body = <span class='fu'>stock_msg_body</span>(),
-  msg_footer = <span class='fu'>stock_msg_footer</span>()
+  msg_body = <span class='fu'><a href='stock_msg_body.html'>stock_msg_body</a></span>(),
+  msg_footer = <span class='fu'><a href='stock_msg_footer.html'>stock_msg_footer</a></span>()
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -148,7 +148,7 @@ cases, the email message with appear in the Viewer and a <strong>blastula</stron
     <tr>
       <th>x</th>
       <td><p>A pointblank agent or an agent x-list. The x-list object can be
-created with the <code>get_agent_x_list()</code> function. It is recommended that the
+created with the <code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function. It is recommended that the
 <code>i = NULL</code> and <code>generate_report = TRUE</code> so that the agent report is
 available within the email preview.</p></td>
     </tr>
@@ -170,9 +170,9 @@ footer components of the HTML email message.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Emailing: 
-<code>email_blast()</code>,
-<code>stock_msg_body()</code>,
-<code>stock_msg_footer()</code></p></div>
+<code><a href='email_blast.html'>email_blast</a>()</code>,
+<code><a href='stock_msg_body.html'>stock_msg_body</a>()</code>,
+<code><a href='stock_msg_footer.html'>stock_msg_footer</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a simple table with two</span>
@@ -188,7 +188,7 @@ footer components of the HTML email message.</p></td>
 <span class='co'># `warn`, and `notify` states (with</span>
 <span class='co'># thresholds of 1 and 2 'fail' units)</span>
 <span class='kw'>al</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>action_levels</span>(
+  <span class='fu'><a href='action_levels.html'>action_levels</a></span>(
     warn_at = <span class='fl'>1</span>,
     notify_at = <span class='fl'>2</span>
   )

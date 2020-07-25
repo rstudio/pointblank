@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Are column data <code>NULL</code>/<code>NA</code>? — col_vals_null • pointblank</title>
+<title>Are column data NULL/NA? — col_vals_null • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Are column data <code>NULL</code>/<code>NA</code>? — col_vals_null" />
+<meta property="og:title" content="Are column data NULL/NA? — col_vals_null" />
 <meta property="og:description" content="The col_vals_null() validation function, the expect_col_vals_null()
 expectation function, and the test_col_vals_null() test function all check
 whether column values in a table are NA values or, in the database context,
@@ -164,7 +164,7 @@ number of rows in the table (after any <code>preconditions</code> have been appl
       <th>x</th>
       <td><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), Spark DataFrame
 (<code>tbl_spark</code>), or, an agent object of class <code>ptblank_agent</code> that is created
-with <code>create_agent()</code>.</p></td>
+with <code><a href='create_agent.html'>create_agent()</a></code>.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -183,7 +183,7 @@ input data table to be transformed (e.g.,
       <th>actions</th>
       <td><p>A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
-with the <code>action_levels()</code> helper function.</p></td>
+with the <code><a href='action_levels.html'>action_levels()</a></code> helper function.</p></td>
     </tr>
     <tr>
       <th>step_id</th>
@@ -241,11 +241,11 @@ The test function returns a logical value.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If providing multiple column names, the result will be an expansion of
-validation steps to that number of column names (e.g., <code>vars(col_a, col_b)</code>
+validation steps to that number of column names (e.g., <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars(col_a, col_b)</a></code>
 will result in the entry of two validation steps). Aside from column names in
-quotes and in <code>vars()</code>, <strong>tidyselect</strong> helper functions are available for
-specifying columns. They are: <code>starts_with()</code>, <code>ends_with()</code>, <code>contains()</code>,
-<code>matches()</code>, and <code>everything()</code>.</p>
+quotes and in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, <strong>tidyselect</strong> helper functions are available for
+specifying columns. They are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>,
+<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p>
 <p>Having table <code>preconditions</code> means <strong>pointblank</strong> will mutate the table just
 before interrogation. Such a table mutation is isolated in scope to the
 validation step(s) produced by the validation function call. Using
@@ -258,14 +258,14 @@ instead be supplied (e.g.,
 <code>function(x) dplyr::mutate(x, col_a = col_b + 10)</code>).</p>
 <p>Often, we will want to specify <code>actions</code> for the validation. This argument,
 present in every validation function, takes a specially-crafted list
-object that is best produced by the <code>action_levels()</code> function. Read that
+object that is best produced by the <code><a href='action_levels.html'>action_levels()</a></code> function. Read that
 function's documentation for the lowdown on how to create reactions to
 above-threshold failure levels in validation. The basic gist is that you'll
 want at least a single threshold level (specified as either the fraction of
 test units failed, or, an absolute value), often using the <code>warn_at</code>
 argument. This is especially true when <code>x</code> is a table object because,
 otherwise, nothing happens. For the <code>col_vals_*()</code>-type functions, using
-<code>action_levels(warn_at = 0.25)</code> or <code>action_levels(stop_at = 0.25)</code> are good
+<code><a href='action_levels.html'>action_levels(warn_at = 0.25)</a></code> or <code><a href='action_levels.html'>action_levels(stop_at = 0.25)</a></code> are good
 choices depending on the situation (the first produces a warning when a
 quarter of the total test units fails, the other <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>s at the same
 threshold level).</p>
@@ -281,32 +281,32 @@ then be automatically generated.</p>
 <p>2-11</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>The analogue to this function: <code>col_vals_not_null()</code>.</p>
+    <div class='dont-index'><p>The analogue to this function: <code><a href='col_vals_not_null.html'>col_vals_not_null()</a></code>.</p>
 <p>Other validation functions: 
-<code>col_exists()</code>,
-<code>col_is_character()</code>,
-<code>col_is_date()</code>,
-<code>col_is_factor()</code>,
-<code>col_is_integer()</code>,
-<code>col_is_logical()</code>,
-<code>col_is_numeric()</code>,
-<code>col_is_posix()</code>,
-<code>col_schema_match()</code>,
-<code>col_vals_between()</code>,
-<code>col_vals_equal()</code>,
-<code>col_vals_expr()</code>,
-<code>col_vals_gte()</code>,
-<code>col_vals_gt()</code>,
-<code>col_vals_in_set()</code>,
-<code>col_vals_lte()</code>,
-<code>col_vals_lt()</code>,
-<code>col_vals_not_between()</code>,
-<code>col_vals_not_equal()</code>,
-<code>col_vals_not_in_set()</code>,
-<code>col_vals_not_null()</code>,
-<code>col_vals_regex()</code>,
-<code>conjointly()</code>,
-<code>rows_distinct()</code></p></div>
+<code><a href='col_exists.html'>col_exists</a>()</code>,
+<code><a href='col_is_character.html'>col_is_character</a>()</code>,
+<code><a href='col_is_date.html'>col_is_date</a>()</code>,
+<code><a href='col_is_factor.html'>col_is_factor</a>()</code>,
+<code><a href='col_is_integer.html'>col_is_integer</a>()</code>,
+<code><a href='col_is_logical.html'>col_is_logical</a>()</code>,
+<code><a href='col_is_numeric.html'>col_is_numeric</a>()</code>,
+<code><a href='col_is_posix.html'>col_is_posix</a>()</code>,
+<code><a href='col_schema_match.html'>col_schema_match</a>()</code>,
+<code><a href='col_vals_between.html'>col_vals_between</a>()</code>,
+<code><a href='col_vals_equal.html'>col_vals_equal</a>()</code>,
+<code><a href='col_vals_expr.html'>col_vals_expr</a>()</code>,
+<code><a href='col_vals_gte.html'>col_vals_gte</a>()</code>,
+<code><a href='col_vals_gt.html'>col_vals_gt</a>()</code>,
+<code><a href='col_vals_in_set.html'>col_vals_in_set</a>()</code>,
+<code><a href='col_vals_lte.html'>col_vals_lte</a>()</code>,
+<code><a href='col_vals_lt.html'>col_vals_lt</a>()</code>,
+<code><a href='col_vals_not_between.html'>col_vals_not_between</a>()</code>,
+<code><a href='col_vals_not_equal.html'>col_vals_not_equal</a>()</code>,
+<code><a href='col_vals_not_in_set.html'>col_vals_not_in_set</a>()</code>,
+<code><a href='col_vals_not_null.html'>col_vals_not_null</a>()</code>,
+<code><a href='col_vals_regex.html'>col_vals_regex</a>()</code>,
+<code><a href='conjointly.html'>conjointly</a>()</code>,
+<code><a href='rows_distinct.html'>rows_distinct</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># For all examples here, we'll use</span>
@@ -336,14 +336,14 @@ then be automatically generated.</p>
 <span class='co'># database context, which isn't the</span>
 <span class='co'># case here)</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'>create_agent</span>(<span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_null</span>(<span class='fu'>vars</span>(<span class='kw'>c</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'>interrogate</span>()
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_null</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>c</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
 
 <span class='co'># Determine if this validation</span>
 <span class='co'># had no failing test units (there</span>
 <span class='co'># are 5 test units, one for each row)</span>
-<span class='fu'>all_passed</span>(<span class='kw'>agent</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'><a href='all_passed.html'>all_passed</a></span>(<span class='kw'>agent</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># Calling `agent` in the console</span>
 <span class='co'># prints the agent's report; but we</span>
 <span class='co'># can get a `gt_tbl` object directly</span>
@@ -359,7 +359,7 @@ then be automatically generated.</p>
 <span class='co'># behavior of side effects can be</span>
 <span class='co'># customized with the `actions` option</span>
 <span class='kw'>tbl</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_null</span>(<span class='fu'>vars</span>(<span class='kw'>c</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_null</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>c</span>)) <span class='op'>%&gt;%</span>
   <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='kw'>c</span>)</div><div class='output co'>#&gt; [1] NA NA NA NA NA</div><div class='input'>
 <span class='co'># C: Using the expectation function</span>
 
@@ -367,14 +367,14 @@ then be automatically generated.</p>
 <span class='co'># typically perform one validation at a</span>
 <span class='co'># time; this is primarily used in</span>
 <span class='co'># testthat tests</span>
-<span class='fu'>expect_col_vals_null</span>(<span class='kw'>tbl</span>, <span class='fu'>vars</span>(<span class='kw'>c</span>))
+<span class='fu'>expect_col_vals_null</span>(<span class='kw'>tbl</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>c</span>))
 
 <span class='co'># D: Using the test function</span>
 
 <span class='co'># With the `test_*()` form, we should</span>
 <span class='co'># get a single logical value returned</span>
 <span class='co'># to us</span>
-<span class='kw'>tbl</span> <span class='op'>%&gt;%</span> <span class='fu'>test_col_vals_null</span>(<span class='fu'>vars</span>(<span class='kw'>c</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'></div></span></pre>
+<span class='kw'>tbl</span> <span class='op'>%&gt;%</span> <span class='fu'>test_col_vals_null</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>c</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

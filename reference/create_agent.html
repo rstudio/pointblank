@@ -145,12 +145,12 @@ table. The <em>agent</em> assigned by the <code>create_agent()</code> call takes
 functions, which expand to validation steps (each one is numbered). This
 process is known as developing a <em>validation plan</em>.</p>
 <p>The validation functions, when called on an <em>agent</em>, are merely instructions
-up to the point the <code>interrogate()</code> function is called. That kicks off the
+up to the point the <code><a href='interrogate.html'>interrogate()</a></code> function is called. That kicks off the
 process of the <em>agent</em> acting on the <em>validation plan</em> and getting results
 for each step. Once the interrogation process is complete, we can say that
 the <em>agent</em> has intel. Calling the <em>agent</em> itself will result in a reporting
 table. This reporting of the interrogation can also be accessed with the
-<code>get_agent_report()</code> function, where there are more reporting options.</p>
+<code><a href='get_agent_report.html'>get_agent_report()</a></code> function, where there are more reporting options.</p>
     </div>
 
     <pre class="usage"><span class='fu'>create_agent</span>(
@@ -192,7 +192,7 @@ provided, a name will be generated based on the current system time.</p></td>
       <th>actions</th>
       <td><p>A list containing threshold levels so that all validation
 steps can react accordingly when exceeding the set levels. This is to be
-created with the <code>action_levels()</code> helper function. Should an action levels
+created with the <code><a href='action_levels.html'>action_levels()</a></code> helper function. Should an action levels
 list be used for specific validation step, any default set here will be
 overridden.</p></td>
     </tr>
@@ -225,15 +225,15 @@ Spanish (<code>"es"</code>).</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>A very detailed list object, known as the x-list, can be obtained by
-using the <code>get_agent_x_list()</code> function on the <em>agent</em>. This font of
+using the <code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function on the <em>agent</em>. This font of
 information can be taken as a whole, or, broken down by the step number (with
 the <code>i</code> argument).</p>
 <p>Sometimes it is useful to see which rows were the failing ones. By using the
-<code>get_data_extracts()</code> function on the <em>agent</em>, we either get a list of
+<code><a href='get_data_extracts.html'>get_data_extracts()</a></code> function on the <em>agent</em>, we either get a list of
 tibbles (for those steps that have data extracts) or one tibble if the
 validation step is specified with the <code>i</code> argument.</p>
 <p>If we just need to know whether all validations completely passed (i.e., all
-steps had no failing test units), the <code>all_passed()</code> function could be used
+steps had no failing test units), the <code><a href='all_passed.html'>all_passed()</a></code> function could be used
 on the <em>agent</em>. However, in practice, it's not often the case that all data
 validation steps are free from any failing units.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
@@ -244,10 +244,10 @@ validation steps are free from any failing units.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Planning and Prep: 
-<code>action_levels()</code>,
-<code>col_schema()</code>,
-<code>scan_data()</code>,
-<code>validate_rmd()</code></p></div>
+<code><a href='action_levels.html'>action_levels</a>()</code>,
+<code><a href='col_schema.html'>col_schema</a>()</code>,
+<code><a href='scan_data.html'>scan_data</a>()</code>,
+<code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Let's walk through a data quality</span>
@@ -277,7 +277,7 @@ validation steps are free from any failing units.</p>
 <span class='co'># thresholds to the `warn`, `stop`, and</span>
 <span class='co'># `notify` states using `action_levels()`</span>
 <span class='kw'>al</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>action_levels</span>(
+  <span class='fu'><a href='action_levels.html'>action_levels</a></span>(
       warn_at = <span class='fl'>0.10</span>,
       stop_at = <span class='fl'>0.25</span>,
     notify_at = <span class='fl'>0.35</span>
@@ -304,29 +304,29 @@ validation steps are free from any failing units.</p>
 <span class='co'># gather intel</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span>
   <span class='kw'>agent</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>col_exists</span>(<span class='fu'>vars</span>(<span class='kw'>date</span>, <span class='kw'>date_time</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_regex</span>(
-    <span class='fu'>vars</span>(<span class='kw'>b</span>), <span class='st'>"[0-9]-[a-z]{3}-[0-9]{3}"</span>
+  <span class='fu'><a href='col_exists.html'>col_exists</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>date</span>, <span class='kw'>date_time</span>)) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_regex.html'>col_vals_regex</a></span>(
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>b</span>), <span class='st'>"[0-9]-[a-z]{3}-[0-9]{3}"</span>
   ) <span class='op'>%&gt;%</span>
-  <span class='fu'>rows_distinct</span>() <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>d</span>), <span class='fl'>100</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_lte</span>(<span class='fu'>vars</span>(<span class='kw'>c</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_equal</span>(
-    <span class='fu'>vars</span>(<span class='kw'>d</span>), <span class='fu'>vars</span>(<span class='kw'>d</span>),
+  <span class='fu'><a href='rows_distinct.html'>rows_distinct</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>d</span>), <span class='fl'>100</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_lte.html'>col_vals_lte</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>c</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_equal.html'>col_vals_equal</a></span>(
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>d</span>), <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>d</span>),
     na_pass = <span class='fl'>TRUE</span>
   ) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_between</span>(
-    <span class='fu'>vars</span>(<span class='kw'>c</span>),
-    left = <span class='fu'>vars</span>(<span class='kw'>a</span>), right = <span class='fu'>vars</span>(<span class='kw'>d</span>),
+  <span class='fu'><a href='col_vals_between.html'>col_vals_between</a></span>(
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>c</span>),
+    left = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), right = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>d</span>),
     na_pass = <span class='fl'>TRUE</span>
   ) <span class='op'>%&gt;%</span>
-  <span class='fu'>interrogate</span>()
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
   
 <span class='co'># Calling `agent` in the console</span>
 <span class='co'># prints the agent's report; but we</span>
 <span class='co'># can get a `gt_tbl` object directly</span>
 <span class='co'># with `get_agent_report(agent)`</span>
-<span class='kw'>report</span> <span class='op'>&lt;-</span> <span class='fu'>get_agent_report</span>(<span class='kw'>agent</span>)
+<span class='kw'>report</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_agent_report.html'>get_agent_report</a></span>(<span class='kw'>agent</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>report</span>)</div><div class='output co'>#&gt; [1] "gt_tbl" "list"  </div><div class='input'>
 <span class='co'># What can you do with the report?</span>
 <span class='co'># Print it from an R Markdown code</span>
@@ -338,7 +338,7 @@ validation steps are free from any failing units.</p>
 <span class='co'># 4 had two test units (rows, really)</span>
 <span class='co'># that failed; we can see those rows</span>
 <span class='co'># with `get_data_extracts()` </span>
-<span class='kw'>agent</span> <span class='op'>%&gt;%</span> <span class='fu'>get_data_extracts</span>(i = <span class='fl'>4</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 8</span><span>
+<span class='kw'>agent</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='get_data_extracts.html'>get_data_extracts</a></span>(i = <span class='fl'>4</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 8</span><span>
 #&gt;   date_time           date           a b             c     d e     f    
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9  838. FALSE high 
@@ -347,7 +347,7 @@ validation steps are free from any failing units.</p>
 <span class='co'># validation (8 steps), or, just for</span>
 <span class='co'># the 4th step with `get_agent_x_list()`</span>
 <span class='kw'>xl_step_4</span> <span class='op'>&lt;-</span>
-  <span class='kw'>agent</span> <span class='op'>%&gt;%</span> <span class='fu'>get_agent_x_list</span>(i = <span class='fl'>4</span>)
+  <span class='kw'>agent</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='get_agent_x_list.html'>get_agent_x_list</a></span>(i = <span class='fl'>4</span>)
  
 <span class='co'># And then we can peruse the different</span>
 <span class='co'># parts of the list; let's get the</span>

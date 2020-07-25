@@ -130,8 +130,8 @@ function (to possibly send an email message at one or more steps)." />
     <p>The <code>email_blast()</code> function is useful for sending an email message that
 explains the result of a <strong>pointblank</strong> validation. It is powered by the
 <strong>blastula</strong> and <strong>glue</strong> packages. This function should be invoked as part
-of the <code>end_fns</code> argument of <code>create_agent()</code>. It's also possible to invoke
-<code>email_blast()</code> as part of the <code>fns</code> argument of the <code>action_levels()</code>
+of the <code>end_fns</code> argument of <code><a href='create_agent.html'>create_agent()</a></code>. It's also possible to invoke
+<code>email_blast()</code> as part of the <code>fns</code> argument of the <code><a href='action_levels.html'>action_levels()</a></code>
 function (to possibly send an email message at one or more steps).</p>
     </div>
 
@@ -142,8 +142,8 @@ function (to possibly send an email message at one or more steps).</p>
   credentials = <span class='kw'>NULL</span>,
   msg_subject = <span class='kw'>NULL</span>,
   msg_header = <span class='kw'>NULL</span>,
-  msg_body = <span class='fu'>stock_msg_body</span>(),
-  msg_footer = <span class='fu'>stock_msg_footer</span>(),
+  msg_body = <span class='fu'><a href='stock_msg_body.html'>stock_msg_body</a></span>(),
+  msg_footer = <span class='fu'><a href='stock_msg_footer.html'>stock_msg_footer</a></span>(),
   send_condition = <span class='op'>~</span><span class='fl'>TRUE</span> <span class='op'>%in%</span> <span class='kw'>x</span><span class='op'>$</span><span class='kw'>notify</span>
 )</pre>
 
@@ -182,7 +182,7 @@ footer components of the HTML email message.</p></td>
 of length 1. If <code>TRUE</code> then the email will be sent, if <code>FALSE</code> then that
 won't happen. The expression can use x-list variables (e.g., <code>x$notify</code>,
 <code>x$type</code>, etc.) and all of those variables can be viewed using the
-<code>get_agent_x_list()</code> function. The default expression is <code>~TRUE %in% x$notify</code>,
+<code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function. The default expression is <code>~TRUE %in% x$notify</code>,
 which results in <code>TRUE</code> if there are any <code>TRUE</code> values in the <code>x$notify</code>
 logical vector (i.e., any validation step results in a 'notify'
 condition).</p></td>
@@ -192,8 +192,8 @@ condition).</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>To better get a handle on emailing with <code>email_blast()</code>, the analogous
-<code>email_preview()</code> can be used with a <strong>pointblank</strong> agent object or the
-output obtained from using the <code>get_agent_x_list()</code> function.</p>
+<code><a href='email_preview.html'>email_preview()</a></code> can be used with a <strong>pointblank</strong> agent object or the
+output obtained from using the <code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
@@ -202,9 +202,9 @@ output obtained from using the <code>get_agent_x_list()</code> function.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Emailing: 
-<code>email_preview()</code>,
-<code>stock_msg_body()</code>,
-<code>stock_msg_footer()</code></p></div>
+<code><a href='email_preview.html'>email_preview</a>()</code>,
+<code><a href='stock_msg_body.html'>stock_msg_body</a>()</code>,
+<code><a href='stock_msg_footer.html'>stock_msg_footer</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a simple table with two</span>
@@ -220,7 +220,7 @@ output obtained from using the <code>get_agent_x_list()</code> function.</p>
 <span class='co'># `warn`, and `notify` states (with</span>
 <span class='co'># thresholds of 1 and 2 'fail' units)</span>
 <span class='kw'>al</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>action_levels</span>(
+  <span class='fu'><a href='action_levels.html'>action_levels</a></span>(
     warn_at = <span class='fl'>1</span>,
     notify_at = <span class='fl'>2</span>
   )
@@ -264,14 +264,14 @@ output obtained from using the <code>get_agent_x_list()</code> function.</p>
 <span class='co'># the like, we can use the </span>
 <span class='co'># `email_preview()` function</span>
 <span class='kw'>email_object</span> <span class='op'>&lt;-</span>
-  <span class='fu'>create_agent</span>(
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(
     tbl = <span class='kw'>tbl</span>,
     actions = <span class='kw'>al</span>
   ) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_lt</span>(<span class='fu'>vars</span>(<span class='kw'>b</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>interrogate</span>() <span class='op'>%&gt;%</span>
-  <span class='fu'>email_preview</span>()
+  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>b</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='email_preview.html'>email_preview</a></span>()
   </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

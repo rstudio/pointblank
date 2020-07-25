@@ -143,7 +143,7 @@ col_schema() function (it is the .db_col_types argument)." />
     <p>The <code>col_schema_match()</code> validation function, the <code>expect_col_schema_match()</code>
 expectation function, and the <code>test_col_schema_match()</code> test function all
 work in conjunction with a <code>col_schema</code> object (generated through the
-<code>col_schema()</code> function) to determine whether the expected schema matches
+<code><a href='col_schema.html'>col_schema()</a></code> function) to determine whether the expected schema matches
 that of the target table. The validation function can be used directly on a
 data table or with an <em>agent</em> object (technically, a <code>ptblank_agent</code> object)
 whereas the expectation and test functions can only be used with a data
@@ -158,7 +158,7 @@ schema matches that of the table (within the constraints enforced by the
 on R column types (e.g., <code>"numeric"</code>, <code>"character"</code>, etc.), SQL column types
 (e.g., <code>"double"</code>, <code>"varchar"</code>, etc.), or Spark SQL types (e.g,.
 <code>"DoubleType"</code>, <code>"StringType"</code>, etc.). That option is defined in the
-<code>col_schema()</code> function (it is the <code>.db_col_types</code> argument).</p>
+<code><a href='col_schema.html'>col_schema()</a></code> function (it is the <code>.db_col_types</code> argument).</p>
     </div>
 
     <pre class="usage"><span class='fu'>col_schema_match</span>(
@@ -195,12 +195,12 @@ on R column types (e.g., <code>"numeric"</code>, <code>"character"</code>, etc.)
       <th>x</th>
       <td><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), Spark DataFrame
 (<code>tbl_spark</code>), or, an agent object of class <code>ptblank_agent</code> that is created
-with <code>create_agent()</code>.</p></td>
+with <code><a href='create_agent.html'>create_agent()</a></code>.</p></td>
     </tr>
     <tr>
       <th>schema</th>
       <td><p>A table schema of type <code>col_schema</code> which can be generated
-using the <code>col_schema()</code> function.</p></td>
+using the <code><a href='col_schema.html'>col_schema()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>complete</th>
@@ -221,7 +221,7 @@ this strict order requirement is removed.</p></td>
       <th>actions</th>
       <td><p>A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
-with the <code>action_levels()</code> helper function.</p></td>
+with the <code><a href='action_levels.html'>action_levels()</a></code> helper function.</p></td>
     </tr>
     <tr>
       <th>step_id</th>
@@ -280,12 +280,12 @@ The test function returns a logical value.</p>
 
     <p>Often, we will want to specify <code>actions</code> for the validation. This argument,
 present in every validation function, takes a specially-crafted list object
-that is best produced by the <code>action_levels()</code> function. Read that function's
+that is best produced by the <code><a href='action_levels.html'>action_levels()</a></code> function. Read that function's
 documentation for the lowdown on how to create reactions to above-threshold
 failure levels in validation. The basic gist is that you'll want at least a
 single threshold level (specified as either the fraction of test units
 failed, or, an absolute value), often using the <code>warn_at</code> argument. Using
-<code>action_levels(warn_at = 1)</code> or <code>action_levels(stop_at = 1)</code> are good choices
+<code><a href='action_levels.html'>action_levels(warn_at = 1)</a></code> or <code><a href='action_levels.html'>action_levels(stop_at = 1)</a></code> are good choices
 depending on the situation (the first produces a warning, the other
 <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>s).</p>
 <p>Want to describe this validation step in some detail? Keep in mind that this
@@ -301,30 +301,30 @@ then be automatically generated.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other validation functions: 
-<code>col_exists()</code>,
-<code>col_is_character()</code>,
-<code>col_is_date()</code>,
-<code>col_is_factor()</code>,
-<code>col_is_integer()</code>,
-<code>col_is_logical()</code>,
-<code>col_is_numeric()</code>,
-<code>col_is_posix()</code>,
-<code>col_vals_between()</code>,
-<code>col_vals_equal()</code>,
-<code>col_vals_expr()</code>,
-<code>col_vals_gte()</code>,
-<code>col_vals_gt()</code>,
-<code>col_vals_in_set()</code>,
-<code>col_vals_lte()</code>,
-<code>col_vals_lt()</code>,
-<code>col_vals_not_between()</code>,
-<code>col_vals_not_equal()</code>,
-<code>col_vals_not_in_set()</code>,
-<code>col_vals_not_null()</code>,
-<code>col_vals_null()</code>,
-<code>col_vals_regex()</code>,
-<code>conjointly()</code>,
-<code>rows_distinct()</code></p></div>
+<code><a href='col_exists.html'>col_exists</a>()</code>,
+<code><a href='col_is_character.html'>col_is_character</a>()</code>,
+<code><a href='col_is_date.html'>col_is_date</a>()</code>,
+<code><a href='col_is_factor.html'>col_is_factor</a>()</code>,
+<code><a href='col_is_integer.html'>col_is_integer</a>()</code>,
+<code><a href='col_is_logical.html'>col_is_logical</a>()</code>,
+<code><a href='col_is_numeric.html'>col_is_numeric</a>()</code>,
+<code><a href='col_is_posix.html'>col_is_posix</a>()</code>,
+<code><a href='col_vals_between.html'>col_vals_between</a>()</code>,
+<code><a href='col_vals_equal.html'>col_vals_equal</a>()</code>,
+<code><a href='col_vals_expr.html'>col_vals_expr</a>()</code>,
+<code><a href='col_vals_gte.html'>col_vals_gte</a>()</code>,
+<code><a href='col_vals_gt.html'>col_vals_gt</a>()</code>,
+<code><a href='col_vals_in_set.html'>col_vals_in_set</a>()</code>,
+<code><a href='col_vals_lte.html'>col_vals_lte</a>()</code>,
+<code><a href='col_vals_lt.html'>col_vals_lt</a>()</code>,
+<code><a href='col_vals_not_between.html'>col_vals_not_between</a>()</code>,
+<code><a href='col_vals_not_equal.html'>col_vals_not_equal</a>()</code>,
+<code><a href='col_vals_not_in_set.html'>col_vals_not_in_set</a>()</code>,
+<code><a href='col_vals_not_null.html'>col_vals_not_null</a>()</code>,
+<code><a href='col_vals_null.html'>col_vals_null</a>()</code>,
+<code><a href='col_vals_regex.html'>col_vals_regex</a>()</code>,
+<code><a href='conjointly.html'>conjointly</a>()</code>,
+<code><a href='rows_distinct.html'>rows_distinct</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -354,7 +354,7 @@ then be automatically generated.</p>
 <span class='co'># that describes the columns and</span>
 <span class='co'># their types (in the expected order)</span>
 <span class='kw'>schema_obj</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>col_schema</span>(
+  <span class='fu'><a href='col_schema.html'>col_schema</a></span>(
     a = <span class='st'>"integer"</span>,
     b = <span class='st'>"character"</span>
   )
@@ -366,15 +366,15 @@ then be automatically generated.</p>
 <span class='co'># `schema_obj` exactly defines</span>
 <span class='co'># the column names and column types</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'>create_agent</span>(<span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
   <span class='fu'>col_schema_match</span>(<span class='kw'>schema_obj</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>interrogate</span>()
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
 
 <span class='co'># Determine if this validation</span>
 <span class='co'># had no failing test units (there is</span>
 <span class='co'># a single test unit governed by</span>
 <span class='co'># whether there is a match)</span>
-<span class='fu'>all_passed</span>(<span class='kw'>agent</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'><a href='all_passed.html'>all_passed</a></span>(<span class='kw'>agent</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># Calling `agent` in the console</span>
 <span class='co'># prints the agent's report; but we</span>
 <span class='co'># can get a `gt_tbl` object directly</span>

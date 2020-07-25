@@ -188,8 +188,8 @@ available for the validation step
 <code>get_agent_report()</code> function. The table can be provided in two substantially
 different forms: as a <strong>gt</strong> based display table (the default), or, as a
 tibble. The amount of fields with intel is different depending on whether or
-not the agent performed an interrogation (with the <code>interrogate()</code> function).
-Basically, before <code>interrogate()</code> is called, the agent will contain just the
+not the agent performed an interrogation (with the <code><a href='interrogate.html'>interrogate()</a></code> function).
+Basically, before <code><a href='interrogate.html'>interrogate()</a></code> is called, the agent will contain just the
 validation plan (however many rows it has depends on how many validation
 functions were supplied a part of that plan). Post-interrogation, information
 on the passing and failing test units is provided, along with indicators on
@@ -203,7 +203,7 @@ will have the following columns:</p>
 (if applicable)</p></li>
 <li><p>VALUES: the values used in the validation step, where applicable; this
 could be as literal values, as column names, an expression, a set of
-sub-validations (for a <code>conjointly()</code> validation step), etc.</p></li>
+sub-validations (for a <code><a href='conjointly.html'>conjointly()</a></code> validation step), etc.</p></li>
 <li><p>TBL: indicates whether any there were any preconditions to apply
 before interrogation; if not, a script 'I' stands for 'identity' but, if so,
 a right-facing arrow appears</p></li>
@@ -231,7 +231,7 @@ following columns:</p>
 <li><p>columns: the names of the target columns used in the validation step
 (if applicable)</p></li>
 <li><p>values: the values used in the validation step, where applicable; for
-a <code>conjointly()</code> validation step, this is a listing of all sub-validations</p></li>
+a <code><a href='conjointly.html'>conjointly()</a></code> validation step, this is a listing of all sub-validations</p></li>
 <li><p>precon: indicates whether any there are any preconditions to apply
 before interrogation and, if so, the number of statements used</p></li>
 <li><p>active: a logical value that indicates whether a validation step is
@@ -303,10 +303,10 @@ available, then a tibble will be returned.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Post-interrogation: 
-<code>all_passed()</code>,
-<code>get_agent_x_list()</code>,
-<code>get_data_extracts()</code>,
-<code>get_sundered_data()</code></p></div>
+<code><a href='all_passed.html'>all_passed</a>()</code>,
+<code><a href='get_agent_x_list.html'>get_agent_x_list</a>()</code>,
+<code><a href='get_data_extracts.html'>get_data_extracts</a>()</code>,
+<code><a href='get_sundered_data.html'>get_sundered_data</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a simple table with a</span>
@@ -317,9 +317,9 @@ available, then a tibble will be returned.</p></td>
 <span class='co'># Validate that values in column</span>
 <span class='co'># `a` are always greater than 4</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'>create_agent</span>(tbl = <span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>4</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>interrogate</span>()
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(tbl = <span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), <span class='fl'>4</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
 
 <span class='co'># Get a tibble-based report from the</span>
 <span class='co'># agent by using `get_agent_report()`</span>

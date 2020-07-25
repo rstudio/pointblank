@@ -135,7 +135,7 @@ those types of validation steps can provide data extracts." />
     </div>
 
     <div class="ref-description">
-    <p>In an agent-based workflow, after interrogation with <code>interrogate()</code> we can
+    <p>In an agent-based workflow, after interrogation with <code><a href='interrogate.html'>interrogate()</a></code> we can
 get the row data that didn't pass row-based validation steps with the
 <code>get_data_extracts()</code> function. The amount of data available in a particular
 extract depends on both the fraction of test units that didn't pass a
@@ -143,11 +143,11 @@ validation step and the level of sampling or explicit collection from that
 set of units.</p>
 <p>The availability of data extracts for each row-based validation step is
 depends on whether <code>extract_failed</code> is set to <code>TRUE</code> within the
-<code>interrogate()</code> call (it is by default). The amount of <em>fail</em> rows extracted
-depends on the collection parameters in <code>interrogate()</code>, and the default
+<code><a href='interrogate.html'>interrogate()</a></code> call (it is by default). The amount of <em>fail</em> rows extracted
+depends on the collection parameters in <code><a href='interrogate.html'>interrogate()</a></code>, and the default
 behavior is to collect up to the first 5000 <em>fail</em> rows.</p>
 <p>Row-based validation steps are based on the validation functions of the form
-<code>col_vals_*()</code> and also include <code>conjointly()</code> and <code>rows_distinct()</code>. Only
+<code>col_vals_*()</code> and also include <code><a href='conjointly.html'>conjointly()</a></code> and <code><a href='rows_distinct.html'>rows_distinct()</a></code>. Only
 those types of validation steps can provide data extracts.</p>
     </div>
 
@@ -159,7 +159,7 @@ those types of validation steps can provide data extracts.</p>
     <tr>
       <th>agent</th>
       <td><p>An agent object of class <code>ptblank_agent</code>. It should have had
-<code>interrogate()</code> called on it, such that the validation steps were carried
+<code><a href='interrogate.html'>interrogate()</a></code> called on it, such that the validation steps were carried
 out and any sample rows from non-passing validations could potentially be
 available in the object.</p></td>
     </tr>
@@ -183,10 +183,10 @@ tables will be provided in a list object.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Post-interrogation: 
-<code>all_passed()</code>,
-<code>get_agent_report()</code>,
-<code>get_agent_x_list()</code>,
-<code>get_sundered_data()</code></p></div>
+<code><a href='all_passed.html'>all_passed</a>()</code>,
+<code><a href='get_agent_report.html'>get_agent_report</a>()</code>,
+<code><a href='get_agent_x_list.html'>get_agent_x_list</a>()</code>,
+<code><a href='get_sundered_data.html'>get_sundered_data</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a simple table with a</span>
@@ -198,10 +198,10 @@ tables will be provided in a list object.</p></td>
 <span class='co'># that test whether values within</span>
 <span class='co'># column `a`</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'>create_agent</span>(tbl = <span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_between</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>4</span>, <span class='fl'>6</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_lte</span>(<span class='fu'>vars</span>(<span class='kw'>a</span>), <span class='fl'>7</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>interrogate</span>(
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(tbl = <span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_between.html'>col_vals_between</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), <span class='fl'>4</span>, <span class='fl'>6</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_lte.html'>col_vals_lte</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), <span class='fl'>7</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span>(
     extract_failed = <span class='fl'>TRUE</span>,
     get_first_n = <span class='fl'>10</span>
   )

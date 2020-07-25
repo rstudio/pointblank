@@ -134,13 +134,13 @@ and conjointly())." />
     <p>Validation of the data is one thing but, sometimes, you want to use the best
 part of the input dataset for something else. The <code>get_sundered_data()</code>
 function works with an agent object that has intel (i.e., post
-<code>interrogate()</code>) and gets either the 'pass' data piece (rows with no failing
+<code><a href='interrogate.html'>interrogate()</a></code>) and gets either the 'pass' data piece (rows with no failing
 units across all row-based validation functions), or, the 'fail' data
 piece (rows with at least one failing unit across the same series of
 validations). There are some caveats, only those validation steps with
 no <code>preconditions</code> are considered. And, the validation steps used for this
 must, again, be of the row-based variety (e.g., the <code>col_vals_*()</code> functions,
-and <code>conjointly()</code>).</p>
+and <code><a href='conjointly.html'>conjointly()</a></code>).</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_sundered_data</span>(<span class='kw'>agent</span>, type = <span class='st'>"pass"</span>, id_cols = <span class='kw'>NULL</span>)</pre>
@@ -151,7 +151,7 @@ and <code>conjointly()</code>).</p>
     <tr>
       <th>agent</th>
       <td><p>An agent object of class <code>ptblank_agent</code>. It should have had
-<code>interrogate()</code> called on it, such that the validation steps were actually
+<code><a href='interrogate.html'>interrogate()</a></code> called on it, such that the validation steps were actually
 carried out.</p></td>
     </tr>
     <tr>
@@ -179,10 +179,10 @@ if a <code>type</code> is given.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Post-interrogation: 
-<code>all_passed()</code>,
-<code>get_agent_report()</code>,
-<code>get_agent_x_list()</code>,
-<code>get_data_extracts()</code></p></div>
+<code><a href='all_passed.html'>all_passed</a>()</code>,
+<code><a href='get_agent_report.html'>get_agent_report</a>()</code>,
+<code><a href='get_agent_x_list.html'>get_agent_x_list</a>()</code>,
+<code><a href='get_data_extracts.html'>get_data_extracts</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a series of three validation</span>
@@ -190,17 +190,17 @@ if a <code>type</code> is given.</p>
 <span class='co'># the `small_table` tibble object;</span>
 <span class='co'># `interrogate()` immediately</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'>create_agent</span>(tbl = <span class='kw'>small_table</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_gt</span>(<span class='fu'>vars</span>(<span class='kw'>d</span>), <span class='fl'>100</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_equal</span>(
-    <span class='fu'>vars</span>(<span class='kw'>d</span>), <span class='fu'>vars</span>(<span class='kw'>d</span>),
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(tbl = <span class='kw'>small_table</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>d</span>), <span class='fl'>100</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_equal.html'>col_vals_equal</a></span>(
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>d</span>), <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>d</span>),
     na_pass = <span class='fl'>TRUE</span>
   ) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_between</span>(
-    <span class='fu'>vars</span>(<span class='kw'>c</span>), left = <span class='fu'>vars</span>(<span class='kw'>a</span>), right = <span class='fu'>vars</span>(<span class='kw'>d</span>),
+  <span class='fu'><a href='col_vals_between.html'>col_vals_between</a></span>(
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>c</span>), left = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), right = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>d</span>),
     na_pass = <span class='fl'>TRUE</span>
   ) <span class='op'>%&gt;%</span>
-  <span class='fu'>interrogate</span>()
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
 
 <span class='co'># Get the sundered data piece that</span>
 <span class='co'># contains only rows that passed all</span>

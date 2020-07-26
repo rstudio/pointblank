@@ -1,6 +1,3 @@
-library(dittodb)
-library(pointblank)
-
 test_that("pointblank agent works with dittodb-mocked Postgres database connection", {
   # Create a connection to the `trade_statistics`
   # database hosted publicly at "tradestatistics.io"

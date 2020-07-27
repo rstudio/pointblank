@@ -1,6 +1,3 @@
-library(dittodb)
-library(pointblank)
-
 test_that("pointblank agent works with dittodb-mocked MySQL database connection", {
   # Create a connection to the `aedes_aegypti_core_55_1d`
   # database hosted publicly at "ensembldb.ensembl.org"

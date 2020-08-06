@@ -8,7 +8,7 @@ precondition_text <-
   c(
     "en" = "Precondition applied",
     "fr" = "Condition pr\u00E9alable",
-    "de" = "Voraussetzung angewendet",
+    "de" = "Voraussetzung angewandt",
     "it" = "Prerequisito applicato",
     "es" = "Condici\u00F3n previa aplicada"
   )
@@ -251,7 +251,7 @@ all_row_distinct_expectation_text <-
   c(
     "en" = "Expect entirely distinct rows across all columns.",
     "fr" = "Attendez-vous \u00E0 des lignes enti\u00E8rement distinctes dans toutes les colonnes.",
-    "de" = "Erwarten Sie in allen Spalten v\u00F6llig unterschiedliche Zeilen.",
+    "de" = "Erwarten Sie in allen Spalten einzigartige Zeilen.",
     "it" = "Aspettati righe completamente distinte su tutte le colonne.",
     "es" = "Espere filas completamente distintas en todas las columnas."
   )
@@ -260,7 +260,7 @@ all_row_distinct_failure_text <-
   c(
     "en" = "Exceedance of failed test units where there weren't distinct rows across all columns.",
     "fr" = "D\u00E9passement des unit\u00E9s de test ayant \u00E9chou\u00E9 l\u00E0 o\u00F9 il n'y avait pas des lignes distinctes dans toutes les colonnes.",
-    "de" = "\u00DCberschreitung fehlgeschlagener Testeinheiten, bei denen nicht in allen Spalten unterschiedliche Zeilen vorhanden waren.",
+    "de" = "\u00DCberschreitung fehlgeschlagener Testeinheiten, bei denen nicht in allen Spalten einzigartige Zeilen vorhanden waren.",
     "it" = "Superamento di unit\u00E0 di test fallite in cui non c'erano righe distinte su tutte le colonne.",
     "es" = "Superaci\u00F3n de unidades de prueba fallidas donde no hab\u00EDa filas distintas en todas las columnas."
   )
@@ -269,7 +269,7 @@ across_row_distinct_expectation_text <-
   c(
     "en" = "Expect entirely distinct rows across {column_text}.",
     "fr" = "Attendez-vous \u00E0 des lignes enti\u00E8rement distinctes sur {column_text}.",
-    "de" = "Erwarten Sie v\u00F6llig unterschiedliche Zeilen in {column_text}.",
+    "de" = "Erwarten Sie einzigartige Zeilen in {column_text}.",
     "it" = "Aspettati righe completamente distinte su {column_text}.",
     "es" = "Espere filas completamente distintas en {column_text}."
   )

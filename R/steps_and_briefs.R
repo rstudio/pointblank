@@ -245,7 +245,7 @@ finalize_autobrief <- function(expectation_text, precondition_text) {
 }
 
 generate_autobriefs <- function(agent, columns, preconditions, values, assertion_type) {
-  
+
   vapply(
     columns,
     USE.NAMES = FALSE,
@@ -353,8 +353,8 @@ prep_compare_expectation_text <- function(column_text,
                                           operator,
                                           values_text,
                                           lang) {
-  
-  glue::glue(compare_expectation_text[lang])
+
+  glue::glue(compare_expectation_text[[lang]])
 }
 
 prep_in_set_expectation_text <- function(column_text,

@@ -69,7 +69,7 @@ section_title_overview_of_ts <-
   c(
     "en" = "Overview of <code>{tbl_name}</code>",
     "fr" = "Aper\u00E7u du tableau <code>{tbl_name}</code>",
-    "de" = "\u00DCbersicht über die Tabelle <code>{tbl_name}</code>",
+    "de" = "\u00DCbersicht \u00FCber die Tabelle <code>{tbl_name}</code>",
     "it" = "Panoramica della tabella <code>{tbl_name}</code>",
     "es" = "Resumen de la tabla <code>{tbl_name}</code>"
   )

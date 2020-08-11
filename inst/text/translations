@@ -2,7 +2,7 @@ autobriefs:
   precondition_text:
     en: Precondition applied
     fr: Condition préalable
-    de: Voraussetzung angewendet
+    de: Voraussetzung angewandt
     it: Prerequisito applicato
     es: Condición previa aplicada
   column_computed_text:
@@ -164,19 +164,19 @@ autobriefs:
   all_row_distinct_expectation_text:
     en: Expect entirely distinct rows across all columns.
     fr: Attendez-vous à des lignes entièrement distinctes dans toutes les colonnes.
-    de: Erwarten Sie in allen Spalten völlig unterschiedliche Zeilen.
+    de: Erwarten Sie in allen Spalten einzigartige Zeilen.
     it: Aspettati righe completamente distinte su tutte le colonne.
     es: Se esperan filas completamente distintas en todas las columnas.
   all_row_distinct_failure_text:
     en: Exceedance of failed test units where there weren't distinct rows across all columns.
     fr: Dépassement des unités de test ayant échoué là où il n'y avait pas des lignes distinctes dans toutes les colonnes.
-    de: Überschreitung fehlgeschlagener Testeinheiten, bei denen nicht in allen Spalten unterschiedliche Zeilen vorhanden waren.
+    de: Überschreitung fehlgeschlagener Testeinheiten, bei denen nicht in allen Spalten einzigartige Zeilen vorhanden waren.
     it: Superamento di unità di test fallite in cui non c'erano righe distinte su tutte le colonne.
     es: Se superó el nú de unidades de prueba fallidas donde no había filas distintas en todas las columnas.
   across_row_distinct_expectation_text:
     en: Expect entirely distinct rows across {column_text}.
     fr: Attendez-vous à des lignes entièrement distinctes sur {column_text}.
-    de: Erwarten Sie völlig unterschiedliche Zeilen in {column_text}.
+    de: Erwarten Sie einzigartige Zeilen in {column_text}.
     it: Aspettati righe completamente distinte su {column_text}.
     es: Se esperan filas completamente distintas en {column_text}.
   across_row_distinct_failure_text:
@@ -268,13 +268,13 @@ table_scan:
   nav_title_ts:
     en: Table Scan
     fr: Scan de table
-    de: Tabellenscan
+    de: Scan der Tabelle
     it: Scansione della tabella
     es: Escaneo de Tabla
   nav_overview_ts:
     en: Overview
     fr: Aperçu
-    de: Überblick
+    de: Übersicht
     it: Panoramica
     es: Resumen
   nav_variables_ts:
@@ -310,7 +310,7 @@ table_scan:
   section_title_overview_of_ts:
     en: Overview of <code>{tbl_name}</code>
     fr: Aperçu du tableau <code>{tbl_name}</code>
-    de: Übersicht der Tabelle <code>{tbl_name}</code>
+    de: Übersicht über die Tabelle <code>{tbl_name}</code>
     it: Panoramica della tabella <code>{tbl_name}</code>
     es: Resumen de la tabla <code>{tbl_name}</code>
   button_label_overview_reproducibility_ts:
@@ -328,13 +328,13 @@ table_scan:
   tab_label_variables_common_values_ts:
     en: Common Values
     fr: Valeurs communes
-    de: Gemeinsame Werte
+    de: Häufigsten Werte
     it: Valori comuni
     es: Valores comunes
   tab_label_variables_max_min_slices_ts:
     en: Max/Min Slices
     fr: Tranche supérieure et inférieure
-    de: Obere und untere Scheibe
+    de: Minimale und maximale Werte
     it: Fetta superiore e inferiore
     es: Rebanada superior e inferior
   subsection_title_overview_table_overview:
@@ -358,13 +358,13 @@ table_scan:
   subsection_title_variables_quantile_statistics:
     en: Quantile Statistics
     fr: Statistiques quantiles
-    de: Quantile Statistik
+    de: Verteilungswerte
     it: Statistiche quantili
     es: Estadísticas cuantiles
   subsection_title_variables_descriptive_statistics:
     en: Descriptive Statistics
     fr: Statistiques descriptives
-    de: Beschreibende Statistik
+    de: Deskriptive Statistik
     it: Statistiche descrittive
     es: Estadísticas descriptivas
   subsection_title_variables_maximum_values:
@@ -376,13 +376,13 @@ table_scan:
   subsection_title_variables_minimum_values:
     en: Minimum Values
     fr: Valeurs minimales
-    de: Mindestwerte
+    de: Minimalwerte
     it: Valori minimi
     es: Valores mínimos
   subsection_title_variables_string_lengths:
     en: String Lengths
     fr: Longueurs de chaîne de caractères
-    de: String-Längen
+    de: Zeichenlängen
     it: Lunghezza delle stringhe
     es: Longitudes de la cadena de caracteres
   subsection_title_variables_histogram:
@@ -394,7 +394,7 @@ table_scan:
   btn_toggle_details:
     en: Toggle details
     fr: Basculer les détails
-    de: Details umschalten
+    de: Details einblenden
     it: Attiva / disattiva i dettagli
     es: Alternar detalles
   tbl_lab_columns:
@@ -406,7 +406,7 @@ table_scan:
   tbl_lab_rows:
     en: Rows
     fr: Enregistrements
-    de: Datensätzen
+    de: Einträge
     it: Record
     es: Registros
   tbl_lab_NAs:
@@ -418,7 +418,7 @@ table_scan:
   tbl_lab_duplicate_rows:
     en: Duplicate Rows
     fr: Enregistrements en double
-    de: Doppelte Datensätzen
+    de: Doppelte Einträge
     it: Record duplicati
     es: Registros duplicados
   tbl_lab_scan_build_time:
@@ -448,13 +448,13 @@ table_scan:
   tbl_lab_distinct:
     en: Distinct
     fr: valeurs uniques
-    de: Eindeutigen Werten
+    de: Einzigartige Werte
     it: Valori unici
     es: Valores únicos
   tbl_lab_mean:
     en: Mean
     fr: Moyenne
-    de: MW
+    de: Mittelwert
     it: Media
     es: Media
   tbl_lab_minimum:
@@ -472,7 +472,7 @@ table_scan:
   tbl_lab_5_percentile:
     en: 5th Percentile
     fr: 5e centile
-    de: 5 Perzentil
+    de: 5tes Perzentil
     it: 5 percentile
     es: Quinto percentil
   tbl_lab_median:
@@ -484,7 +484,7 @@ table_scan:
   tbl_lab_95_percentile:
     en: 95th Percentile
     fr: 95e centile
-    de: 95 Perzentil
+    de: 95tes Perzentil
     it: 95 percentile
     es: Percentil 95
   tbl_lab_range:
@@ -496,7 +496,7 @@ table_scan:
   tbl_lab_variance:
     en: Variance
     fr: Variance
-    de: Varianz 
+    de: Varianz
     it: Varianza
     es: Varianza
   tbl_lab_standard_deviation:
@@ -520,7 +520,7 @@ table_scan:
   tbl_lab_count:
     en: Count
     fr: Compte
-    de: Zählung
+    de: Anzahl
     it: Conteggio
     es: Cuenta
   tbl_lab_frequency:
@@ -532,7 +532,7 @@ table_scan:
   plot_lab_string_length:
     en: String Length
     fr: Longueur de chaîne de caractères
-    de: String-Länge
+    de: Zeichenlänge
     it: Lunghezza della stringa
     es: Longitud de la cadena de caracteres
   other_values_text:
@@ -544,6 +544,6 @@ table_scan:
   footer_text_fragment:
     en: Table scan generated with <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>.
     fr: Scan de table généré avec <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>.
-    de: Mit <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a> generierter Tabellenscan.
+    de: Mit <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a> generierter Scan der Tabelle.
     it: Scansione della tabella generata con <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>.
     es: Escaneo de Tabla generado con <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>.

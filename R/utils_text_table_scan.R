@@ -6,7 +6,7 @@ nav_title_ts <-
   c(
     "en" = "Table Scan",
     "fr" = "Scan de table",
-    "de" = "Tabellenscan",
+    "de" = "Scan der Tabelle",
     "it" = "Scansione della tabella",
     "es" = "Escaneo de Tabla"
   )
@@ -15,7 +15,7 @@ nav_overview_ts <-
   c(
     "en" = "Overview",
     "fr" = "Aper\u00E7u",
-    "de" = "\u00DCberblick",
+    "de" = "\u00DCbersicht",
     "it" = "Panoramica",
     "es" = "Resumen"
   )
@@ -69,7 +69,7 @@ section_title_overview_of_ts <-
   c(
     "en" = "Overview of <code>{tbl_name}</code>",
     "fr" = "Aper\u00E7u du tableau <code>{tbl_name}</code>",
-    "de" = "\u00DCbersicht der Tabelle <code>{tbl_name}</code>",
+    "de" = "\u00DCbersicht \u00FCber die Tabelle <code>{tbl_name}</code>",
     "it" = "Panoramica della tabella <code>{tbl_name}</code>",
     "es" = "Resumen de la tabla <code>{tbl_name}</code>"
   )
@@ -106,7 +106,7 @@ tab_label_variables_common_values_ts <-
   c(
     "en" = "Common Values",
     "fr" = "Valeurs communes",
-    "de" = "Gemeinsame Werte",
+    "de" = "H\u00E9ufigste Werte",
     "it" = "Valori comuni",
     "es" = "Valores comunes"
   )
@@ -115,7 +115,7 @@ tab_label_variables_max_min_slices_ts <-
   c(
     "en" = "Max/Min Slices",
     "fr" = "Tranche sup\u00E9rieure et inf\u00E9rieure",
-    "de" = "Obere und untere Scheibe",
+    "de" = "Minimale und maximale Werte",
     "it" = "Fetta superiore e inferiore",
     "es" = "Rebanada superior e inferior"
   )
@@ -151,7 +151,7 @@ subsection_title_variables_quantile_statistics <-
   c(
     "en" = "Quantile Statistics",
     "fr" = "Statistiques quantiles",
-    "de" = "Quantile Statistik",
+    "de" = "Verteilungswerte",
     "it" = "Statistiche quantili",
     "es" = "Estad\u00EDsticas cuantiles"
   )
@@ -160,7 +160,7 @@ subsection_title_variables_descriptive_statistics <-
   c(
     "en" = "Descriptive Statistics",
     "fr" = "Statistiques descriptives",
-    "de" = "Beschreibende Statistik",
+    "de" = "Deskriptive Statistik",
     "it" = "Statistiche descrittive",
     "es" = "Estad\u00EDsticas descriptivas"
   )
@@ -180,7 +180,7 @@ subsection_title_variables_minimum_values <-
   c(
     "en" = "Minimum Values",
     "fr" = "Valeurs minimales",
-    "de" = "Mindestwerte",
+    "de" = "Minimalwerte",
     "it" = "Valori minimi",
     "es" = "Valores m\u00EDnimos"
   )
@@ -189,7 +189,7 @@ subsection_title_variables_string_lengths <-
   c(
     "en" = "String Lengths",
     "fr" = "Longueurs de cha\u00EEne de caract\u00E8res",
-    "de" = "String-L\u00E4ngen",
+    "de" = "Zeichenl\u00E4ngen",
     "it" = "Lunghezza delle stringhe",
     "es" = "Longitudes de la cadena de caracteres"
   )
@@ -207,7 +207,7 @@ btn_toggle_details <-
   c(
     "en" = "Toggle details",
     "fr" = "Basculer les d\u00E9tails",
-    "de" = "Details umschalten",
+    "de" = "Details einblenden",
     "it" = "Attiva / disattiva i dettagli",
     "es" = "Alternar detalles"
   )
@@ -225,7 +225,7 @@ tbl_lab_rows <-
   c(
     "en" = "Rows",
     "fr" = "Enregistrements",
-    "de" = "Datens\u00E4tzen",
+    "de" = "Eintr\u00E4ge",
     "it" = "Record",
     "es" = "Registros"
   )
@@ -243,7 +243,7 @@ tbl_lab_duplicate_rows <-
   c(
     "en" = "Duplicate Rows",
     "fr" = "Enregistrements en double",
-    "de" = "Doppelte Datens\u00E4tzen",
+    "de" = "Doppelte Eintr\u00E4ge",
     "it" = "Record duplicati",
     "es" = "Registros duplicados"
   )
@@ -288,7 +288,7 @@ tbl_lab_distinct <-
   c(
     "en" = "Distinct",
     "fr" = "valeurs uniques",
-    "de" = "Eindeutigen Werten",
+    "de" = "Einzigartige Werte",
     "it" = "Valori unici",
     "es" = "Valores \u00FAnicos"
   )
@@ -297,7 +297,7 @@ tbl_lab_mean <-
   c(
     "en" = "Mean",
     "fr" = "Moyenne",
-    "de" = "MW",
+    "de" = "Mittelwert",
     "it" = "Media",
     "es" = "Media"
   )
@@ -324,7 +324,7 @@ tbl_lab_5_percentile <-
   c(
     "en" = "5th Percentile",
     "fr" = "5e centile",
-    "de" = "5 Perzentil",
+    "de" = "5tes Perzentil",
     "it" = "5 percentile",
     "es" = "Quinto percentil"
   )
@@ -342,7 +342,7 @@ tbl_lab_95_percentile <-
   c(
     "en" = "95th Percentile",
     "fr" = "95e centile",
-    "de" = "95 Perzentil",
+    "de" = "95tes Perzentil",
     "it" = "95 percentile",
     "es" = "Percentil 95"
   )
@@ -360,7 +360,7 @@ tbl_lab_variance <-
   c(
     "en" = "Variance",
     "fr" = "Variance",
-    "de" = "Varianz ",
+    "de" = "Varianz",
     "it" = "Varianza",
     "es" = "Varianza"
   )
@@ -396,7 +396,7 @@ tbl_lab_count <-
   c(
     "en" = "Count",
     "fr" = "Compte",
-    "de" = "Z\u00E4hlung",
+    "de" = "Anzahl",
     "it" = "Conteggio",
     "es" = "Cuenta"
   )
@@ -416,7 +416,7 @@ plot_lab_string_length <-
   c(
     "en" = "String Length",
     "fr" = "Longueur de cha\u00EEne de caract\u00E8res",
-    "de" = "String-L\u00E4nge",
+    "de" = "Zeichenl\u00E4nge",
     "it" = "Lunghezza della stringa",
     "es" = "Longitud de la cadena de caracteres"
   )
@@ -434,7 +434,7 @@ footer_text_fragment <-
   c(
     "en" = "Table scan generated with <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>.",
     "fr" = "Scan de table g\u00E9n\u00E9r\u00E9 avec <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>.",
-    "de" = "Mit <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a> generierter Tabellenscan.",
+    "de" = "Mit <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a> generierter Scan der Tabelle",
     "it" = "Scansione della tabella generata con <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>.",
     "es" = "Escaneo de Tabla generado con <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
   )

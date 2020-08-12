@@ -1,7 +1,7 @@
 test_that("pointblank agent works with dittodb-mocked Postgres database connection", {
   # Create a connection to the `trade_statistics`
   # database hosted publicly at "tradestatistics.io"
-  with_mock_db({
+  dittodb::with_mock_db({
     # start_db_capturing()
     con <- DBI::dbConnect(
       drv = RPostgres::Postgres(),

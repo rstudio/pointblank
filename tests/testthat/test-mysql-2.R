@@ -1,7 +1,7 @@
 test_that("scan_data works with dittodb-mocked MySQL database connection", {
   # Create a connection to the `aedes_aegypti_core_55_1d`
   # database hosted publicly at "ensembldb.ensembl.org"
-  with_mock_db({
+  dittodb::with_mock_db({
     # start_db_capturing()
     con <- DBI::dbConnect(
       drv = RMariaDB::MariaDB(),

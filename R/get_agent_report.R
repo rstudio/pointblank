@@ -398,12 +398,14 @@ get_agent_report <- function(agent,
           } else if (is.list(x) && length(x) > 0 && inherits(x, "col_schema")) {
             # Case of column schema as a value
             
-            column_schema_text <- report_column_schema[lang]
+            column_schema_text <- 
+              get_lsv("agent_report/report_column_schema")[[lang]]
+            
             column_schema_type_text <- 
               if (inherits(x, "r_type")) {
-                report_r_col_types[lang]
+                get_lsv("agent_report/report_r_col_types")[[lang]]
               } else {
-                report_r_sql_types[lang]
+                get_lsv("agent_report/report_r_sql_types")[[lang]]
               }
             
             x <- 
@@ -434,9 +436,9 @@ get_agent_report <- function(agent,
             
             step_text <- 
               if (length(x) > 1) {
-                paste0(length(x), " ", report_col_steps[lang])
+                paste0(length(x), " ", get_lsv("agent_report/report_col_steps")[[lang]])
               } else {
-                paste0(length(x), " ", report_col_step[lang])
+                paste0(length(x), " ", get_lsv("agent_report/report_col_step")[[lang]])
               }
             
             x <- 
@@ -757,18 +759,18 @@ get_agent_report <- function(agent,
       ) %>%
       gt::cols_label(
         i = "",
-        type = report_col_step[lang],
-        columns = report_col_columns[lang],
-        values = report_col_values[lang],
+        type = get_lsv("agent_report/report_col_step")[[lang]],
+        columns = get_lsv("agent_report/report_col_columns")[[lang]],
+        values = get_lsv("agent_report/report_col_values")[[lang]],
         precon = "TBL",
         eval_sym = "EVAL",
-        units = report_col_units[lang],
+        units = get_lsv("agent_report/report_col_units")[[lang]],
         n_pass = "PASS",
         n_fail = "FAIL",
         extract = "EXT"
       ) %>%
       gt::tab_header(
-        title = pointblank_validation_title_text[lang],
+        title = get_lsv("agent_report/pointblank_validation_title_text")[[lang]],
         subtitle = gt::md(paste0("`", agent_name, " (", agent_time, ")`<br><br>"))
       ) %>%
       gt::tab_options(
@@ -904,11 +906,14 @@ get_agent_report <- function(agent,
           title = gt::md(
             paste0(
               "<div>",
-              "<span style=\"float: left;\">", pointblank_validation_plan_text[lang], "</span>",
+              "<span style=\"float: left;\">", 
+              get_lsv("agent_report/pointblank_validation_plan_text")[[lang]],
+              "</span>",
               "<span style=\"float: right; text-decoration-line: underline; ",
               "font-size: 16px; text-decoration-color: #008B8B;",
               "padding-top: 0.1em; padding-right: 0.4em;\">",
-              no_interrogation_performed_text[lang], "</span>",
+              get_lsv("agent_report/no_interrogation_performed_text")[[lang]],
+              "</span>",
               "</div>"
             )
           ),

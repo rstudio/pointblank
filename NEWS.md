@@ -1,6 +1,6 @@
 # pointblank (development version)
 
-# pointblank 0.5.0
+# pointblank 0.5.0 (2020-08-12)
 
 ## New features
 

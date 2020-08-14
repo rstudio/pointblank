@@ -66,8 +66,8 @@
 #'   vector) to which this validation should be applied.
 #' @param value A numeric value used for this test. Any column values `>value`
 #'   are considered passing.
-#' @param na_pass Should any encountered `NA` values be allowed to pass a
-#'   validation unit? This is by default `FALSE`. Set to `TRUE` to give `NA`s
+#' @param na_pass Should any encountered `NA` values be considered as passing
+#'   test units? This is by default `FALSE`. Set to `TRUE` to give `NA`s
 #'   a pass.
 #' @param preconditions expressions used for mutating the input table before
 #'   proceeding with the validation. This is ideally as a one-sided R formula

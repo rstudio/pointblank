@@ -47,8 +47,8 @@ vector) to which this validation should be applied.}
 \item{value}{A numeric value used for this test. Any column values \verb{>value}
 are considered passing.}
 
-\item{na_pass}{Should any encountered \code{NA} values be allowed to pass a
-validation unit? This is by default \code{FALSE}. Set to \code{TRUE} to give \code{NA}s
+\item{na_pass}{Should any encountered \code{NA} values be considered as passing
+test units? This is by default \code{FALSE}. Set to \code{TRUE} to give \code{NA}s
 a pass.}
 
 \item{preconditions}{expressions used for mutating the input table before

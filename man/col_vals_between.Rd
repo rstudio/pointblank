@@ -64,8 +64,8 @@ column given in \code{vars()}.}
 \code{left} and \code{right} bounds should be inclusive. By default, both bounds
 are inclusive.}
 
-\item{na_pass}{Should any encountered \code{NA} values be allowed to pass a
-validation unit? This is by default \code{FALSE}. Set to \code{TRUE} to give \code{NA}s
+\item{na_pass}{Should any encountered \code{NA} values be considered as passing
+test units? This is by default \code{FALSE}. Set to \code{TRUE} to give \code{NA}s
 a pass.}
 
 \item{preconditions}{expressions used for mutating the input table before

@@ -1,10 +1,13 @@
 test_that("pointblank agent works with dittodb-mocked SQL Server database connection", {
-  # Create a connection to the `aedes_aegypti_core_55_1d`
-  # database hosted publicly at "ensembldb.ensembl.org"
+  # Create a connection to the `NYC Flights 2013 database`
+  # database hosted publicly at "local SQL Server"
+  testthat::skip("skip")
   dittodb::with_mock_db({
-    # start_db_capturing()
+  # start_db_capturing()
+  
     con <- DBI::dbConnect(
       odbc::odbc(),
+      dbname = "dbo",
       Driver = "ODBC Driver 17 for SQL Server",
       Server = "127.0.0.1",
       UID = "pointblank",
@@ -25,21 +28,13 @@ test_that("pointblank agent works with dittodb-mocked SQL Server database connec
         actions = al
       ) %>%
       col_vals_lte(vars(year), 2013L) %>%
-      # col_vals_gte(vars(year), 1956L) %>%
-      # col_vals_gt(vars(engines), 0L) %>%
-      # col_vals_gt(vars(seats), 0L) %>%
-      # col_vals_in_set(vars(manufacturer), "BOEING") %>%
-      # col_schema_match(
-      #   schema = col_schema(
-      #     manufacturer = "character",
-      #     year = "integer",
-      #     engines = "integer",
-      #     seats = "integer"
-      #   )
-      # ) %>%
+      col_vals_gte(vars(year), 1956L) %>%
+      col_vals_gt(vars(engines), 0L) %>%
+      col_vals_gt(vars(seats), 0L) %>%
       interrogate()
     
     DBI::dbDisconnect(con)
-    # stop_db_capturing()
+    
+  # stop_db_capturing()
   })
 })

@@ -494,12 +494,22 @@ tbl_val_comparison <- function(table, column, operator, value, na_pass) {
   # Construct a string-based expression for the validation
   expression <- paste(column, operator, value)
 
-  table %>%
-    dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(expression)) %>%
-    dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      is.na(pb_is_good_) ~ na_pass,
-      TRUE ~ pb_is_good_
-    ))
+  table_sql_server <- any(grepl("sql server|sqlserver", tolower(class(table))))
+  
+  if(table_sql_server) {
+    table %>%
+      dplyr::mutate(pb_is_good_ = dplyr::case_when(
+        !!rlang::parse_expr(expression) ~ 1,
+        TRUE ~ 0
+      ))
+  } else {
+    table %>%
+      dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(expression)) %>%
+      dplyr::mutate(pb_is_good_ = dplyr::case_when(
+        is.na(pb_is_good_) ~ na_pass,
+        TRUE ~ pb_is_good_
+      ))
+  }
 }
 
 interrogate_between <- function(agent, idx, table, assertion_type) {
@@ -1130,21 +1140,42 @@ add_reporting_data <- function(agent, idx, tbl_checked) {
     dplyr::pull(n) %>%
     as.numeric()
   
+  # Test if connection is SQL Server
+  tbl_checked_sql_server <- any(grepl("sql server|sqlserver", tolower(class(tbl_checked))))
+  
   # Get total count of TRUE rows
-  n_passed <-
-    tbl_checked %>%
-    dplyr::filter(pb_is_good_ == TRUE) %>%
-    dplyr::summarize(n = dplyr::n()) %>%
-    dplyr::pull(n) %>%
-    as.numeric()
+  if (tbl_checked_sql_server) {
+    n_passed <-
+      tbl_checked %>%
+      dplyr::filter(pb_is_good_ == 1) %>%
+      dplyr::summarize(n = dplyr::n()) %>%
+      dplyr::pull(n) %>%
+      as.numeric()    
+  } else {
+    n_passed <-
+      tbl_checked %>%
+      dplyr::filter(pb_is_good_ == TRUE) %>%
+      dplyr::summarize(n = dplyr::n()) %>%
+      dplyr::pull(n) %>%
+      as.numeric()
+  }
   
   # Get total count of FALSE rows
-  n_failed <-
-    tbl_checked %>%
-    dplyr::filter(pb_is_good_ == FALSE) %>%
-    dplyr::summarize(n = dplyr::n()) %>%
-    dplyr::pull(n) %>%
-    as.numeric()
+  if (tbl_checked_sql_server) {
+    n_failed <-
+      tbl_checked %>%
+      dplyr::filter(pb_is_good_ == 0) %>%
+      dplyr::summarize(n = dplyr::n()) %>%
+      dplyr::pull(n) %>%
+      as.numeric()
+  } else {
+    n_failed <-
+      tbl_checked %>%
+      dplyr::filter(pb_is_good_ == FALSE) %>%
+      dplyr::summarize(n = dplyr::n()) %>%
+      dplyr::pull(n) %>%
+      as.numeric()
+  }
   
   agent$validation_set$n[idx] <- row_count
   agent$validation_set$n_passed[idx] <- n_passed
@@ -1362,11 +1393,19 @@ add_table_extract <- function(agent,
   tbl_checked <- tbl_checked$value
   
   tbl_type <- tbl_checked %>% class()
+  tbl_type_sql_server <- any(grepl("sql server|sqlserver", tolower(tbl_checked)))
   
-  problem_rows <- 
-    tbl_checked %>%
-    dplyr::filter(pb_is_good_ == FALSE) %>%
-    dplyr::select(-pb_is_good_)
+  if (tbl_type_sql_server) {
+    problem_rows <- 
+      tbl_checked %>%
+      dplyr::filter(pb_is_good_ == 0) %>%
+      dplyr::select(-pb_is_good_)
+  } else {
+    problem_rows <- 
+      tbl_checked %>%
+      dplyr::filter(pb_is_good_ == FALSE) %>%
+      dplyr::select(-pb_is_good_)
+  }
   
   if (!is.null(get_first_n)) {
     

@@ -8,9 +8,12 @@ Description: Validate data in data frames, 'tibble' objects, and in database
     validation plan, several reporting options are available. User-defined
     thresholds for failure rates allow for the determination of appropriate
     reporting actions.
-Authors@R: 
+Authors@R: c(
     person("Richard", "Iannone", , "riannone@me.com", c("aut", "cre"),
-           comment = c(ORCID = "0000-0003-3925-190X"))
+           comment = c(ORCID = "0000-0003-3925-190X")),
+    person("Mauricio", "Vargas", , "mvargas@dcc.uchile.cl", c("aut"),
+           comment = c(ORCID = "0000-0003-1017-7574"))
+    )
 License: MIT + file LICENSE
 URL: https://github.com/rich-iannone/pointblank
 BugReports: https://github.com/rich-iannone/pointblank/issues
@@ -52,5 +55,6 @@ Suggests:
     readr,
     rmarkdown,
     sparklyr,
-    dittodb
+    dittodb,
+    odbc
 Roxygen: list(markdown = TRUE)

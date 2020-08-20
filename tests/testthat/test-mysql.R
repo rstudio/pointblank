@@ -1,6 +1,9 @@
 test_that("pointblank agent works with dittodb-mocked MySQL database connection", {
   # Create a connection to the `aedes_aegypti_core_55_1d`
   # database hosted publicly at "ensembldb.ensembl.org"
+  
+  testthat::skip_on_os("solaris")
+  
   dittodb::with_mock_db({
     # start_db_capturing()
     con <- DBI::dbConnect(

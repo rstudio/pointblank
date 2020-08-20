@@ -52,5 +52,6 @@ Suggests:
     readr,
     rmarkdown,
     sparklyr,
-    dittodb
+    dittodb,
+    odbc
 Roxygen: list(markdown = TRUE)

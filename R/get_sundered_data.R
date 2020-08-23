@@ -140,6 +140,8 @@ get_sundered_data <- function(agent,
     
     new_col_ii <- paste0("pb_is_good_", i + 1)
     
+    if (length(seq(tbl_check_obj)) == 1) break
+    
     tbl_check_join_r <- tbl_check_obj[[i + 1]][[1]]
     
     if (!(agent$tbl_src %in% c("tbl_df", "data.frame"))) {
@@ -180,7 +182,7 @@ get_sundered_data <- function(agent,
 
     if (i == (max(seq(tbl_check_obj)) - 1)) break
   }
-  
+
   columns_str_vec <- paste0("pb_is_good_", seq(tbl_check_obj))
   columns_str_add <- paste0("pb_is_good_", seq(tbl_check_obj), collapse = " + ")
   validation_n <- length(seq(tbl_check_obj))

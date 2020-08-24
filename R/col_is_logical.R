@@ -119,6 +119,7 @@ col_is_logical <- function(x,
                            columns,
                            actions = NULL,
                            step_id = NULL,
+                           label = NULL,
                            brief = NULL,
                            active = TRUE) {
   
@@ -136,6 +137,7 @@ col_is_logical <- function(x,
     secret_agent <- create_agent(x, name = "::QUIET::") %>%
       col_is_logical(
         columns = columns,
+        label = label,
         brief = brief,
         actions = prime_actions(actions),
         active = active
@@ -169,6 +171,7 @@ col_is_logical <- function(x,
         preconditions = NULL,
         actions = covert_actions(actions, agent),
         step_id = step_id[i],
+        label = label,
         brief = brief[i],
         active = active
       )

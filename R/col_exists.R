@@ -120,6 +120,7 @@ col_exists <- function(x,
                        columns,
                        actions = NULL,
                        step_id = NULL,
+                       label = NULL,
                        brief = NULL,
                        active = TRUE) {
 
@@ -144,6 +145,7 @@ col_exists <- function(x,
       col_exists(
         columns = columns,
         actions = prime_actions(actions),
+        label = label,
         brief = brief,
         active = active
       ) %>% interrogate()
@@ -176,6 +178,7 @@ col_exists <- function(x,
         preconditions = NULL,
         actions = covert_actions(actions, agent),
         step_id = step_id[i],
+        label = label,
         brief = brief[i],
         active = active
       )

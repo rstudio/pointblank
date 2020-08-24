@@ -145,6 +145,7 @@ get_agent_x_list <- function(agent,
     .type <- agent$validation_set[[i, "assertion_type"]]
     .columns <- agent$validation_set[[i, "column"]] %>% unlist()
     .values <- agent$validation_set[[i, "values"]] %>% unlist()
+    .label <- agent$validation_set[[i, "label"]]
     .briefs <- agent$validation_set[[i, "brief"]]
     
     .eval_error <- agent$validation_set[[i, "eval_error"]]
@@ -171,6 +172,7 @@ get_agent_x_list <- function(agent,
         type = .type,
         columns = .columns,
         values = .values,
+        label = .label,
         briefs = .briefs,
         eval_error = .eval_error,
         eval_warning = .eval_warning,
@@ -209,6 +211,7 @@ get_agent_x_list <- function(agent,
     .type <- agent$validation_set$assertion_type
     .columns <- agent$validation_set$column
     .values <- agent$validation_set$values
+    .label <- agent$validation_set$label
     .briefs <- agent$validation_set$brief
     
     .eval_error <- agent$validation_set$eval_error
@@ -275,6 +278,7 @@ get_agent_x_list <- function(agent,
         type = .type,
         columns = .columns,
         values = .values,
+        label = .label,
         briefs = .briefs,
         eval_error = .eval_error,
         eval_warning = .eval_warning,

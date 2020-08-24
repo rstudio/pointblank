@@ -44,7 +44,7 @@ with \code{\link[=create_agent]{create_agent()}}.}
 \item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
-\item{value}{A numeric value used for this test. Any column values \verb{>value}
+\item{value}{A numeric value used for this test. Any column values \verb{> value}
 are considered passing.}
 
 \item{na_pass}{Should any encountered \code{NA} values be considered as passing

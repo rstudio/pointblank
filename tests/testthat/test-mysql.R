@@ -57,6 +57,6 @@ test_that("pointblank agent works with dittodb-mocked MySQL database connection"
     expect_equal(agent$col_types, c("integer", "integer", "integer", "integer", "integer", "integer", "integer"))
     expect_equal(agent$db_col_types, c("int", "int", "int", "int", "int", "int", "tinyint"))
     expect_equal(nrow(agent$validation_set), 7)
-    expect_equal(ncol(agent$validation_set), 27)
+    expect_equal(ncol(agent$validation_set), 28)
   })
 })

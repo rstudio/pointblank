@@ -13,6 +13,7 @@ conjointly(
   preconditions = NULL,
   actions = NULL,
   step_id = NULL,
+  label = NULL,
   brief = NULL,
   active = TRUE
 )
@@ -66,6 +67,8 @@ match the number of validation steps that the validation function call will
 produce (influenced by the number of \code{columns} provided), (2) be an ID
 string not used in any previous validation step, and (3) be a vector with
 unique values.}
+
+\item{label}{An optional label for the validation step.}
 
 \item{brief}{An optional, text-based description for the validation step.}
 

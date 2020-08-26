@@ -123,6 +123,12 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#pointblank-development-version" class="anchor"></a>pointblank (development version)<small> Unreleased </small>
 </h1>
+<ul>
+<li><p>Improved compatibility with validations performed on SQL Server 2019.</p></li>
+<li><p>Integrated the <code>label</code> argument into all validation functions; this label is available in the agent <code>x_list</code> and, more importantly, displayed in the agent report (in the <code>STEP</code> column).</p></li>
+<li><p>Added the <code>"combined"</code> option in the <code><a href="../reference/get_sundered_data.html">get_sundered_data()</a></code> function (for the <code>type</code> argument). This applies a categorical (pass/fail) label (settable in the new <code>pass_fail</code> argument of the same function) in a new <code>.pb_combined</code> flag column of the output table.</p></li>
+<li><p>Made several visual improvements to the agent report.</p></li>
+</ul>
 </div>
     <div id="pointblank-050" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.0">

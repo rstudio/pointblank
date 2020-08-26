@@ -1,5 +1,13 @@
 # pointblank (development version)
 
+* Improved compatibility with validations performed on SQL Server 2019.
+
+* Integrated the `label` argument into all validation functions; this label is available in the agent `x_list` and, more importantly, displayed in the agent report (in the `STEP` column).
+
+* Added the `"combined"` option in the `get_sundered_data()` function (for the `type` argument). This applies a categorical (pass/fail) label (settable in the new `pass_fail` argument of the same function) in a new `.pb_combined` flag column of the output table.
+
+* Made several visual improvements to the agent report.
+
 # pointblank 0.5.0
 
 ## New features

@@ -51,6 +51,7 @@ test_that("An x-list for a step is structurally correct", {
   expect_equal(x_list_before$values, 100)
   expect_is(x_list_before$values, "numeric")
   expect_equal(x_list_before$values, 100)
+  expect_is(x_list_before$label, "character")
   expect_is(x_list_before$briefs, "character")
   expect_equal(
     x_list_before$briefs,
@@ -125,6 +126,7 @@ test_that("An x-list for a step is structurally correct", {
   expect_equal(x_list_after$values, 100)
   expect_is(x_list_after$values, "numeric")
   expect_equal(x_list_after$values, 100)
+  expect_is(x_list_after$label, "character")
   expect_is(x_list_after$briefs, "character")
   expect_equal(
     x_list_after$briefs, 
@@ -207,6 +209,7 @@ test_that("A complete x-list is structurally correct", {
   expect_is(unlist(x_list_before$values[2]), "list")
   expect_is(unlist(x_list_before$values[2])[[1]], "quosure")
   expect_equal(unlist(x_list_before$values[3]), c("low", "mid", "high", "higher"))
+  expect_is(x_list_before$label, "character")
   expect_is(x_list_before$briefs, "character")
   expect_equal(
     x_list_before$briefs,
@@ -248,7 +251,7 @@ test_that("A complete x-list is structurally correct", {
   expect_equal(x_list_before$notify, rep(NA, 3))
   expect_is(x_list_before$validation_set, c("tbl_df", "tbl", "data.frame"))
   expect_equal(nrow(x_list_before$validation_set), 3)
-  expect_equal(ncol(x_list_before$validation_set), 27)
+  expect_equal(ncol(x_list_before$validation_set), 28)
   expect_is(x_list_before$reporting_lang, "character")
   expect_equal(x_list_before$reporting_lang, "en")
   expect_is(x_list_before$report_object, c("gt_tbl", "list"))
@@ -301,6 +304,7 @@ test_that("A complete x-list is structurally correct", {
   expect_is(unlist(x_list_after$values[2]), "list")
   expect_is(unlist(x_list_after$values[2])[[1]], "quosure")
   expect_equal(unlist(x_list_after$values[3]), c("low", "mid", "high", "higher"))
+  expect_is(x_list_after$label, "character")
   expect_is(x_list_after$briefs, "character")
   expect_equal(
     x_list_after$briefs,
@@ -342,7 +346,7 @@ test_that("A complete x-list is structurally correct", {
   expect_equal(x_list_after$notify, rep(NA, 3))
   expect_is(x_list_after$validation_set, c("tbl_df", "tbl", "data.frame"))
   expect_equal(nrow(x_list_after$validation_set), 3)
-  expect_equal(ncol(x_list_after$validation_set), 27)
+  expect_equal(ncol(x_list_after$validation_set), 28)
   expect_is(x_list_after$reporting_lang, "character")
   expect_equal(x_list_after$reporting_lang, "en")
   expect_is(x_list_after$report_object, c("gt_tbl", "list"))

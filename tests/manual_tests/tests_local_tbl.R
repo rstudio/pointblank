@@ -11,7 +11,10 @@ agent <-
   rows_distinct() %>%
   col_vals_gt(vars(d), 100) %>%
   col_vals_equal(vars(d), vars(d), na_pass = TRUE) %>%
-  col_vals_between(vars(c), left = vars(a), right = vars(d), na_pass = TRUE)
+  col_vals_between(vars(c), left = vars(a), right = vars(d), na_pass = TRUE) %>%
+  col_vals_not_between(vars(c), left = 10, right = 20, na_pass = TRUE) %>%
+  rows_distinct(vars(d, e, f)) %>%
+  col_is_integer(vars(a))
 
 agent <- agent %>% interrogate()
 agent

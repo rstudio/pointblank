@@ -180,6 +180,7 @@ conjointly <- function(x,
                        preconditions = NULL,
                        actions = NULL,
                        step_id = NULL,
+                       label = NULL,
                        brief = NULL,
                        active = TRUE) {
 
@@ -205,6 +206,7 @@ conjointly <- function(x,
         .list = .list,
         preconditions = preconditions,
         actions = prime_actions(actions),
+        label = label,
         brief = brief,
         active = active
       ) %>% interrogate()
@@ -243,6 +245,7 @@ conjointly <- function(x,
       preconditions = preconditions,
       actions = covert_actions(actions, agent),
       step_id = step_id,
+      label = label,
       brief = brief,
       active = active
     )

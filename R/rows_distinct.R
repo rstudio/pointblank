@@ -96,6 +96,7 @@ rows_distinct <- function(x,
                           preconditions = NULL,
                           actions = NULL,
                           step_id = NULL,
+                          label = NULL,
                           brief = NULL,
                           active = TRUE) {
 
@@ -125,6 +126,7 @@ rows_distinct <- function(x,
       rows_distinct(
         columns = columns,
         preconditions = preconditions,
+        label = label,
         brief = brief,
         actions = prime_actions(actions),
         active = active
@@ -172,6 +174,7 @@ rows_distinct <- function(x,
       preconditions = preconditions,
       actions = covert_actions(actions, agent),
       step_id = step_id,
+      label = label,
       brief = brief,
       active = active
     )

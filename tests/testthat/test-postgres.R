@@ -52,6 +52,6 @@ test_that("pointblank agent works with dittodb-mocked Postgres database connecti
     expect_equal(agent$col_types, c("integer", "character", "character", "numeric", "numeric"))
     expect_equal(agent$db_col_types, c("integer", "character varying", "character varying", "numeric", "numeric"))
     expect_equal(nrow(agent$validation_set), 3)
-    expect_equal(ncol(agent$validation_set), 27)
+    expect_equal(ncol(agent$validation_set), 28)
   })
 })

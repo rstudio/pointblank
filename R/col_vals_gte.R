@@ -152,6 +152,7 @@ col_vals_gte <- function(x,
                          preconditions = NULL,
                          actions = NULL,
                          step_id = NULL,
+                         label = NULL,
                          brief = NULL,
                          active = TRUE) {
   
@@ -169,6 +170,7 @@ col_vals_gte <- function(x,
         value = value,
         na_pass = na_pass,
         preconditions = preconditions,
+        label = label,
         brief = brief,
         actions = prime_actions(actions),
         active = active
@@ -204,6 +206,7 @@ col_vals_gte <- function(x,
         preconditions = preconditions,
         actions = covert_actions(actions, agent),
         step_id = step_id[i],
+        label = label,
         brief = brief[i],
         active = active
       )

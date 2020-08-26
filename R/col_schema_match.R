@@ -148,6 +148,7 @@ col_schema_match <- function(x,
                              in_order = TRUE,
                              actions = NULL,
                              step_id = NULL,
+                             label = NULL,
                              brief = NULL,
                              active = TRUE) {
   
@@ -173,6 +174,7 @@ col_schema_match <- function(x,
     secret_agent <- create_agent(x, name = "::QUIET::") %>%
       col_schema_match(
         schema = schema,
+        label = label,
         brief = brief,
         actions = prime_actions(actions),
         active = active
@@ -209,6 +211,7 @@ col_schema_match <- function(x,
       preconditions = NULL,
       actions = covert_actions(actions, agent),
       step_id = step_id,
+      label = label,
       brief = brief,
       active = active
     )

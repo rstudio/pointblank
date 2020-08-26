@@ -379,6 +379,42 @@ get_tbl_information <- function(tbl) {
   } 
 }
 
+add_icon_img <- function(icon,
+                         height = 30,
+                         v_align = "middle") {
+
+  file <- 
+    system.file(
+      "img", "function_icons", paste0(icon, ".png"),
+      package = "pointblank"
+    )
+  
+  image_raw <-
+    readBin(
+      con = file,
+      what = "raw",
+      n = file.info(file)$size
+    )
+  
+  image_uri <- 
+    paste0(
+      "data:", mime::guess_type(file = file), ";base64,",
+      base64enc::base64encode(image_raw, 0)
+    )
+  
+  img <- 
+    htmltools::tags$img(
+      src = image_uri,
+      alt = icon,
+      style = htmltools::css(
+        height = htmltools::validateCssUnit(height),
+        `vertical-align` = v_align
+      )
+    )
+  
+  htmltools::HTML(as.character(img))
+}
+
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
   gsub(pattern, replacement, x, fixed = fixed)
 }

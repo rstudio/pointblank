@@ -28,8 +28,8 @@ the \code{pass_fail} argument) in a new \code{.pb_combined} flag column. For thi
 case the ordering of rows is fully retained from the input table.}
 
 \item{pass_fail}{A vector for encoding the flag column with 'pass' and 'fail'
-value when \code{type = "combined"}. The default is \code{c("pass", "fail")} but
-other options might be \code{c(TRUE, FALSE)}, \code{c(1, 0)}, or \code{c(1L, 0L)}.}
+values when \code{type = "combined"}. The default is \code{c("pass", "fail")} but
+other options could be \code{c(TRUE, FALSE)}, \code{c(1, 0)}, or \code{c(1L, 0L)}.}
 
 \item{id_cols}{An optional specification of one or more identifying columns.
 When taken together, we can count on this single column or grouping of

@@ -398,7 +398,7 @@ add_icon_img <- function(icon,
   
   image_uri <- 
     paste0(
-      "data:", mime::guess_type(file = file), ";base64,",
+      "data:image/png;base64,",
       base64enc::base64encode(image_raw, 0)
     )
   

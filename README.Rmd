@@ -40,7 +40,7 @@ The second workflow, *pipeline-based data validations* gives us a different vali
 
 <hr>
 
-The **pointblank** package is designed to be both straightforward yet powerful. And fast! All validation checks on remote tables are done entirely in-database so we can add dozens or hundreds of validation steps without any long waits for reporting. Here is a brief example of how to use **pointblank** to validate a local table with an agent.
+The **pointblank** package is designed to be both straightforward yet powerful. And fast! Local data frames don't take very long to validate extensively and all validation checks on remote tables are done entirely in-database. So we can add dozens or even hundreds of validation steps without any long waits for reporting. Here is a brief example of how to use **pointblank** to validate a local table with an agent.
 
 ```{r simple_tibble_example, eval = FALSE}
 # Generate a simple `action_levels` object to
@@ -77,7 +77,9 @@ agent <-
   interrogate()
 ```
 
-Because an *agent* was used, we can get a **gt**-based report by printing it. 
+Should you want to perform validation checks on database or Spark tables, provide a `tbl_dbi` or `tbl_spark` object to `create_agent()`. The **pointblank** package currently supports MySQL, PostgreSQL, SQLite, SQL Server, and Spark DataFrames (through the **sparklyr** package).
+
+The reporting's pretty sweet. We can get a **gt**-based report by printing an *agent*.
 
 <img src="man/figures/agent_report.png">
 

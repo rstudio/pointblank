@@ -52,9 +52,16 @@
 #' 
 #' @export
 get_sundered_data <- function(agent,
-                              type = "pass",
+                              type = c("pass", "fail", "combined"),
+                              pass_fail = c("pass", "fail"),
                               id_cols = NULL) {
 
+  # Match to one of the three choices (`pass`, `fail`, `combined`)
+  # while still allowing for the NULL optiona
+  if (!is.null(type)) {
+    type <- match.arg(type)
+  }
+  
   # Stop function if the agent hasn't
   # yet performed an interrogation
   if (!inherits(agent, "has_intel")) {
@@ -215,6 +222,20 @@ get_sundered_data <- function(agent,
       dplyr::select(-pb_is_good_)
     
     return(sundered_tbl_fail)
+  }
+  
+  if (!is.null(type) && type == "combined") {
+    
+    sundered_tbl_combined <- 
+      tbl_check_join %>%
+      dplyr::mutate(pb_is_good_ = dplyr::case_when(
+        pb_is_good_ ~ pass_fail[1],
+        !pb_is_good_ ~ pass_fail[2],
+        TRUE ~ pass_fail[1]
+      )) %>%
+      dplyr::rename(`.pb_combined` = pb_is_good_)
+    
+    return(sundered_tbl_combined)
   }
   
   if (is.null(type)) {

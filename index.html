@@ -90,78 +90,73 @@
 <p><img src="reference/figures/pipeline_based_data_validations.png"></p>
 <p>The second workflow, <em>pipeline-based data validations</em> gives us a different validation scheme that is valuable for data validation checks during an ETL process. With <strong>pointblank</strong>’s validation functions, we can directly operate on data and trigger warnings, raise errors, or write out logs when exceeding specified failure thresholds. It’s a cinch to perform checks on import of the data and at key points during the transformation process, perhaps stopping everything if things are exceptionally bad with regard to data quality.</p>
 <hr>
-<p>The <strong>pointblank</strong> package is designed to be both straightforward yet powerful. And fast! All validation checks on remote tables are done entirely in-database so we can add dozens or hundreds of validation steps without any long waits for reporting. Here is a brief example of how to use <strong>pointblank</strong> to validate a local table with an agent.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># Generate a simple `action_levels` object to</span>
-<span class="co"># set the `warn` state if a validation step</span>
-<span class="co"># has a single 'fail' unit</span>
-<span class="kw">al</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/action_levels.html">action_levels</a></span>(warn_at = <span class="fl">1</span>)
-
-<span class="co"># Create a pointblank `agent` object, with the</span>
-<span class="co"># tibble as the target table. Use two validation</span>
-<span class="co"># step functions, then, `interrogate()`. The</span>
-<span class="co"># agent now has some useful intel.</span>
-<span class="kw">agent</span> <span class="op">&lt;-</span> 
-  <span class="kw">dplyr</span>::<span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span>(
-    a = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">NA</span>, <span class="fl">7</span>),
-    b = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">6</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>,  <span class="fl">0</span>, <span class="fl">7</span>)
-  ) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/create_agent.html">create_agent</a></span>(name = <span class="st">"simple_tibble"</span>, actions = <span class="kw">al</span>) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">a</span>), <span class="fl">1</span>, <span class="fl">9</span>, na_pass = <span class="fl">TRUE</span>) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">c</span>), <span class="fl">12</span>, preconditions = <span class="op">~</span> <span class="kw">.</span> <span class="op">%&gt;%</span> <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(c = <span class="kw">a</span> <span class="op">+</span> <span class="kw">b</span>)) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/interrogate.html">interrogate</a></span>()
-</pre></div>
-<p>Because an <em>agent</em> was used, we can get a <strong>gt</strong>-based report by printing it.</p>
+<p>The <strong>pointblank</strong> package is designed to be both straightforward yet powerful. And fast! Local data frames don’t take very long to validate extensively and all validation checks on remote tables are done entirely in-database. So we can add dozens or even hundreds of validation steps without any long waits for reporting. Here is a brief example of how to use <strong>pointblank</strong> to validate a local table with an agent.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Generate a simple `action_levels` object to</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co"># set the `warn` state if a validation step</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># has a single 'fail' unit</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>al &lt;-<span class="st"> </span><span class="kw">action_levels</span>(<span class="dt">warn_at =</span> <span class="dv">1</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co"># Create a pointblank `agent` object, with the</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># tibble as the target table. Use two validation</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># step functions, then, `interrogate()`. The</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># agent now has some useful intel.</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>agent &lt;-<span class="st"> </span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">tibble</span>(</span>
+<span id="cb1-12"><a href="#cb1-12"></a>    <span class="dt">a =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="ot">NA</span>, <span class="dv">7</span>),</span>
+<span id="cb1-13"><a href="#cb1-13"></a>    <span class="dt">b =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">6</span>,  <span class="dv">0</span>, <span class="dv">7</span>)</span>
+<span id="cb1-14"><a href="#cb1-14"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="st">  </span><span class="kw">create_agent</span>(<span class="dt">name =</span> <span class="st">"simple_tibble"</span>, <span class="dt">actions =</span> al) <span class="op">%&gt;%</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="st">  </span><span class="kw">col_vals_between</span>(<span class="kw">vars</span>(a), <span class="dv">1</span>, <span class="dv">9</span>, <span class="dt">na_pass =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="st">  </span><span class="kw">col_vals_lt</span>(<span class="kw">vars</span>(c), <span class="dv">12</span>, <span class="dt">preconditions =</span> <span class="op">~</span><span class="st"> </span>. <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">c =</span> a <span class="op">+</span><span class="st"> </span>b)) <span class="op">%&gt;%</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="st">  </span><span class="kw">interrogate</span>()</span></code></pre></div>
+<p>Should you want to perform validation checks on database or Spark tables, provide a <code>tbl_dbi</code> or <code>tbl_spark</code> object to <code><a href="reference/create_agent.html">create_agent()</a></code>. The <strong>pointblank</strong> package currently supports MySQL, PostgreSQL, SQLite, SQL Server, and Spark DataFrames (through the <strong>sparklyr</strong> package).</p>
+<p>The reporting’s pretty sweet. We can get a <strong>gt</strong>-based report by printing an <em>agent</em>.</p>
 <p><img src="reference/figures/agent_report.png"></p>
 <hr>
 <p>Next up is an example that follows the second, <em>agent</em>-less workflow (where validation functions operate directly on data). We use the same two validation functions as before but, this time, use them directly on the data! In this workflow, by default, an error will occur if there is a single ‘fail’ unit in any validation step:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">dplyr</span>::<span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span>(
-    a = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">NA</span>, <span class="fl">7</span>),
-    b = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">6</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>,  <span class="fl">0</span>, <span class="fl">7</span>)
-  ) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">a</span>), <span class="fl">1</span>, <span class="fl">9</span>, na_pass = <span class="fl">TRUE</span>) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">c</span>), <span class="fl">12</span>, preconditions = <span class="op">~</span> <span class="kw">.</span> <span class="op">%&gt;%</span> <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(c = <span class="kw">a</span> <span class="op">+</span> <span class="kw">b</span>))
-</pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>Error<span class="op">:</span><span class="st"> </span>Exceedance of failed test units where values <span class="cf">in</span> <span class="st">`</span><span class="dt">c</span><span class="st">`</span> should have been <span class="op">&lt;</span><span class="st"> `</span><span class="dt">12</span><span class="st">`</span>.</span>
-<span id="cb3-2"><a href="#cb3-2"></a>The <span class="st">`</span><span class="dt">col_vals_lt()</span><span class="st">`</span> validation failed beyond the absolute threshold <span class="kw">level</span> (<span class="dv">1</span>).</span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="op">*</span><span class="st"> </span>failure <span class="kw">level</span> (<span class="dv">2</span>) <span class="op">&gt;=</span><span class="st"> </span>failure <span class="kw">threshold</span> (<span class="dv">1</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>dplyr<span class="op">::</span><span class="kw">tibble</span>(</span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="dt">a =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="ot">NA</span>, <span class="dv">7</span>),</span>
+<span id="cb2-3"><a href="#cb2-3"></a>    <span class="dt">b =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">6</span>,  <span class="dv">0</span>, <span class="dv">7</span>)</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="st">  </span><span class="kw">col_vals_between</span>(<span class="kw">vars</span>(a), <span class="dv">1</span>, <span class="dv">9</span>, <span class="dt">na_pass =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="st">  </span><span class="kw">col_vals_lt</span>(<span class="kw">vars</span>(c), <span class="dv">12</span>, <span class="dt">preconditions =</span> <span class="op">~</span><span class="st"> </span>. <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">c =</span> a <span class="op">+</span><span class="st"> </span>b))</span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a>Error<span class="op">:</span><span class="st"> </span>Exceedance of failed test units where values <span class="cf">in</span> <span class="st">`</span><span class="dt">c</span><span class="st">`</span> should have been <span class="op">&lt;</span><span class="st"> `</span><span class="dt">12</span><span class="st">`</span>.</span>
+<span id="cb2-9"><a href="#cb2-9"></a>The <span class="st">`</span><span class="dt">col_vals_lt()</span><span class="st">`</span> validation failed beyond the absolute threshold <span class="kw">level</span> (<span class="dv">1</span>).</span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="op">*</span><span class="st"> </span>failure <span class="kw">level</span> (<span class="dv">2</span>) <span class="op">&gt;=</span><span class="st"> </span>failure <span class="kw">threshold</span> (<span class="dv">1</span>) </span></code></pre></div>
 <p>We can downgrade this to a warning with the <code><a href="reference/action_levels.html">warn_on_fail()</a></code> helper function (assigning to <code>actions</code>). In this way, the data will be returned, but warnings will appear.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="co"># This `warn_on_fail()` function is a nice</span>
-<span class="co"># shortcut for `action_levels(warn_at = 1)`;</span>
-<span class="co"># it works great in this data checking workflow</span>
-<span class="co"># (and the threshold can still be adjusted)</span>
-<span class="kw">al</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/action_levels.html">warn_on_fail</a></span>()
-
-<span class="kw">dplyr</span>::<span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span>(
-    a = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">NA</span>, <span class="fl">7</span>),
-    b = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">6</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>,  <span class="fl">0</span>, <span class="fl">7</span>)
-  ) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">a</span>), <span class="fl">1</span>, <span class="fl">9</span>, na_pass = <span class="fl">TRUE</span>, actions = <span class="kw">al</span>) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">c</span>), <span class="fl">12</span>, preconditions = <span class="op">~</span> <span class="kw">.</span> <span class="op">%&gt;%</span> <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(c = <span class="kw">a</span> <span class="op">+</span> <span class="kw">b</span>), actions = <span class="kw">al</span>)
-</pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt;       a     b</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; 1     5     6</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt; 2     7     1</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; 3     6     0</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; 4     5     6</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt; 5    NA     0</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt; 6     7     7</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a></span>
-<span id="cb5-11"><a href="#cb5-11"></a>Warning message<span class="op">:</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a>Exceedance of failed test units where values <span class="cf">in</span> <span class="st">`</span><span class="dt">c</span><span class="st">`</span> should have been <span class="op">&lt;</span><span class="st"> `</span><span class="dt">12</span><span class="st">`</span>.</span>
-<span id="cb5-13"><a href="#cb5-13"></a>The <span class="st">`</span><span class="dt">col_vals_lt()</span><span class="st">`</span> validation failed beyond the absolute threshold <span class="kw">level</span> (<span class="dv">1</span>).</span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="op">*</span><span class="st"> </span>failure <span class="kw">level</span> (<span class="dv">2</span>) <span class="op">&gt;=</span><span class="st"> </span>failure <span class="kw">threshold</span> (<span class="dv">1</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># This `warn_on_fail()` function is a nice</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co"># shortcut for `action_levels(warn_at = 1)`;</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># it works great in this data checking workflow</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># (and the threshold can still be adjusted)</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>al &lt;-<span class="st"> </span><span class="kw">warn_on_fail</span>()</span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a>dplyr<span class="op">::</span><span class="kw">tibble</span>(</span>
+<span id="cb3-8"><a href="#cb3-8"></a>    <span class="dt">a =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="ot">NA</span>, <span class="dv">7</span>),</span>
+<span id="cb3-9"><a href="#cb3-9"></a>    <span class="dt">b =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">6</span>,  <span class="dv">0</span>, <span class="dv">7</span>)</span>
+<span id="cb3-10"><a href="#cb3-10"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="st">  </span><span class="kw">col_vals_between</span>(<span class="kw">vars</span>(a), <span class="dv">1</span>, <span class="dv">9</span>, <span class="dt">na_pass =</span> <span class="ot">TRUE</span>, <span class="dt">actions =</span> al) <span class="op">%&gt;%</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="st">  </span><span class="kw">col_vals_lt</span>(<span class="kw">vars</span>(c), <span class="dv">12</span>, <span class="dt">preconditions =</span> <span class="op">~</span><span class="st"> </span>. <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">c =</span> a <span class="op">+</span><span class="st"> </span>b), <span class="dt">actions =</span> al)</span>
+<span id="cb3-13"><a href="#cb3-13"></a></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#&gt;       a     b</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="co">#&gt; 1     5     6</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="co">#&gt; 2     7     1</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt; 3     6     0</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt; 4     5     6</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt; 5    NA     0</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="co">#&gt; 6     7     7</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a></span>
+<span id="cb3-24"><a href="#cb3-24"></a>Warning message<span class="op">:</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a>Exceedance of failed test units where values <span class="cf">in</span> <span class="st">`</span><span class="dt">c</span><span class="st">`</span> should have been <span class="op">&lt;</span><span class="st"> `</span><span class="dt">12</span><span class="st">`</span>.</span>
+<span id="cb3-26"><a href="#cb3-26"></a>The <span class="st">`</span><span class="dt">col_vals_lt()</span><span class="st">`</span> validation failed beyond the absolute threshold <span class="kw">level</span> (<span class="dv">1</span>).</span>
+<span id="cb3-27"><a href="#cb3-27"></a><span class="op">*</span><span class="st"> </span>failure <span class="kw">level</span> (<span class="dv">2</span>) <span class="op">&gt;=</span><span class="st"> </span>failure <span class="kw">threshold</span> (<span class="dv">1</span>) </span></code></pre></div>
 <p>Should you need more fine-grained thresholds and resultant actions, the <code><a href="reference/action_levels.html">action_levels()</a></code> function can be used to specify multiple failure thresholds and side effects for each failure state. However, the <code><a href="reference/action_levels.html">warn_on_fail()</a></code> and <code><a href="reference/action_levels.html">stop_on_fail()</a></code> (applied by default, with <code>stop_at = 1</code>) helpers should in most cases suffice for this workflow.</p>
 <hr>
 <p>Using <strong>pointblank</strong> in an R Markdown workflow is enabled by default once the <strong>pointblank</strong> library is loaded. The framework allows for validation testing within specialized validation code chunks where the <code>validate = TRUE</code> option is set. Using <strong>pointblank</strong> validation functions on data in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere. All errors are reported in the validation code chunk after rendering the document to HTML, where green or red status buttons indicate whether all validations succeeded or failures occurred. Click them to reveal the otherwise hidden validation statements and any associated error messages.</p>
 <p align="center">
-</p>
-<p><img src="reference/figures/pointblank_rmarkdown.png" width="80%" style="border:2px solid #021a40;"></p>
-
+<img src="reference/figures/pointblank_rmarkdown.png" width="80%" style="border:2px solid #021a40;"></p>
 <p>The above R Markdown document is available as a template in the RStudio IDE (it’s called <code>Pointblank Validation</code>). Try it out!</p>
 <hr>
 <p>While data validation is important, one has to be familiar with the data first. To that end, the <code><a href="reference/scan_data.html">scan_data()</a></code> function is provided in <strong>pointblank</strong> for generating a comprehensive summary of a tabular dataset. The report content is customizable, can be used inside an R Markdown document, and (as with the validation report) it can be produced in five different languages: <em>English</em>, <em>French</em>, <em>German</em>, <em>Italian</em>, and <em>Spanish</em>. Here are several published examples of a <strong>Table Scan</strong> for each of these languages using the <code><a href="https://dplyr.tidyverse.org/reference/storms.html">dplyr::storms</a></code> dataset. Clicking any of these will take you to a highly interactive <strong>RPubs</strong> document.</p>
@@ -171,17 +166,11 @@
 <hr>
 <p>There are many functions available in <strong>pointblank</strong> for making comprehensive table validations. Each validation function is associated with an expectation function (of the form <code>expect_*()</code>). They are equivalent in usage and behavior to <strong>testthat</strong> tests with the big distinction that they check aspects of data tables (and not the results of function calls). Furthermore, each validation function has an associated test function (of the form <code>test_*()</code>) which always returns a logical value (<code>TRUE</code> or <code>FALSE</code>).</p>
 <p align="center">
-</p>
-<p><img src="reference/figures/pointblank_functions.svg" width="80%"></p>
-
+<img src="reference/figures/pointblank_functions.svg" width="80%"></p>
 <p>Want to try this out? The <strong>pointblank</strong> package is available on <strong>CRAN</strong>:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"pointblank"</span>)
-</pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">install.packages</span>(<span class="st">"pointblank"</span>)</span></code></pre></div>
 <p>You can also install the development version of <strong>pointblank</strong> from <strong>GitHub</strong>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="kw">devtools</span>::<span class="fu">install_github</span>(<span class="st">"rich-iannone/pointblank"</span>)
-</pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"rich-iannone/pointblank"</span>)</span></code></pre></div>
 <p>If you encounter a bug, have usage questions, or want to share ideas to make this package better, feel free to file an <a href="https://github.com/rich-iannone/pointblank/issues">issue</a>.</p>
 <hr>
 <div id="how-pointblank-fits-in-with-other-packages-that-validate-tabular-data" class="section level4">

@@ -1,10 +1,12 @@
 test_that("pointblank agent works with dittodb-mocked SQL Server database connection", {
+  
+  skip_on_cran()
+  
   # Create a connection to the `NYC Flights 2013 database`
   # database hosted publicly at "local SQL Server"
-  testthat::skip("skip")
+  
   dittodb::with_mock_db({
   # start_db_capturing()
-  
     con <- DBI::dbConnect(
       odbc::odbc(),
       dbname = "dbo",

@@ -1,4 +1,4 @@
-# pointblank (development version)
+# pointblank 0.5.1
 
 * Improved compatibility with validations performed on SQL Server 2019.
 

@@ -4,7 +4,12 @@
 \alias{get_sundered_data}
 \title{Sunder the data, splitting it into 'pass' and 'fail' pieces}
 \usage{
-get_sundered_data(agent, type = "pass", id_cols = NULL)
+get_sundered_data(
+  agent,
+  type = c("pass", "fail", "combined"),
+  pass_fail = c("pass", "fail"),
+  id_cols = NULL
+)
 }
 \arguments{
 \item{agent}{An agent object of class \code{ptblank_agent}. It should have had
@@ -12,27 +17,39 @@ get_sundered_data(agent, type = "pass", id_cols = NULL)
 carried out.}
 
 \item{type}{The desired piece of data resulting from the splitting. Options
-are \code{"pass"} (the default) and \code{"fail"}.}
+for returning a single table are \code{"pass"} (the default) and \code{"fail"}. Each
+of these options return a single table with, in the \code{"pass"} case, only the
+rows that passed across all validation steps (i.e., had no failing test
+units in any part of a row for any validation step), or, the complementary
+set of rows in the \code{"fail"} case. Providing \code{NULL} returns both of the
+split data tables in a list (with the names of \code{"pass"} and \code{"fail"}). The
+option \code{"combined"} applies a categorical (pass/fail) label (settable in
+the \code{pass_fail} argument) in a new \code{.pb_combined} flag column. For this
+case the ordering of rows is fully retained from the input table.}
+
+\item{pass_fail}{A vector for encoding the flag column with 'pass' and 'fail'
+values when \code{type = "combined"}. The default is \code{c("pass", "fail")} but
+other options could be \code{c(TRUE, FALSE)}, \code{c(1, 0)}, or \code{c(1L, 0L)}.}
 
 \item{id_cols}{An optional specification of one or more identifying columns.
 When taken together, we can count on this single column or grouping of
 columns to distinguish rows.}
 }
 \value{
-A list of table objects if \code{type} is \code{NULL}, or, a table object piece
-if a \code{type} is given.
+A list of table objects if \code{type} is \code{NULL}, or, a single table if a
+\code{type} is given.
 }
 \description{
 Validation of the data is one thing but, sometimes, you want to use the best
 part of the input dataset for something else. The \code{get_sundered_data()}
 function works with an agent object that has intel (i.e., post
 \code{interrogate()}) and gets either the 'pass' data piece (rows with no failing
-units across all row-based validation functions), or, the 'fail' data
-piece (rows with at least one failing unit across the same series of
-validations). There are some caveats, only those validation steps with
-no \code{preconditions} are considered. And, the validation steps used for this
-must, again, be of the row-based variety (e.g., the \verb{col_vals_*()} functions,
-and \code{\link[=conjointly]{conjointly()}}).
+test units across all row-based validation functions), or, the 'fail' data
+piece (rows with at least one failing test unit across the same series of
+validations). There are some caveats, only those validation steps with no
+\code{preconditions} are considered. And, the validation steps used for this
+splitting must be of the row-based variety (e.g., the \verb{col_vals_*()}
+functions or \code{\link[=conjointly]{conjointly()}}).
 }
 \section{Function ID}{
 

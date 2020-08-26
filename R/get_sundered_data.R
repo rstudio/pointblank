@@ -25,8 +25,8 @@
 #'   the `pass_fail` argument) in a new `.pb_combined` flag column. For this
 #'   case the ordering of rows is fully retained from the input table.
 #' @param pass_fail A vector for encoding the flag column with 'pass' and 'fail'
-#'   value when `type = "combined"`. The default is `c("pass", "fail")` but
-#'   other options might be `c(TRUE, FALSE)`, `c(1, 0)`, or `c(1L, 0L)`.
+#'   values when `type = "combined"`. The default is `c("pass", "fail")` but
+#'   other options could be `c(TRUE, FALSE)`, `c(1, 0)`, or `c(1L, 0L)`.
 #' @param id_cols An optional specification of one or more identifying columns.
 #'   When taken together, we can count on this single column or grouping of
 #'   columns to distinguish rows.

@@ -354,7 +354,8 @@ then be automatically generated.</p>
 <span class='co'># Determine if this validation</span>
 <span class='co'># had no failing test units (there</span>
 <span class='co'># are 13 test units, one for each row)</span>
-<span class='fu'><a href='all_passed.html'>all_passed</a></span>(<span class='kw'>agent</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'><a href='all_passed.html'>all_passed</a></span>(<span class='kw'>agent</span>)
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># Calling `agent` in the console</span>
 <span class='co'># prints the agent's report; but we</span>
 <span class='co'># can get a `gt_tbl` object directly</span>
@@ -374,7 +375,8 @@ then be automatically generated.</p>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>f</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lows"</span>, <span class='st'>"mids"</span>, <span class='st'>"highs"</span>)
   ) <span class='op'>%&gt;%</span>
   <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='kw'>f</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>()</div><div class='output co'>#&gt; [1] "high" "low"  "mid" </div><div class='input'>
+  <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>()
+</div><div class='output co'>#&gt; [1] "high" "low"  "mid" </div><div class='input'>
 <span class='co'># C: Using the expectation function</span>
 
 <span class='co'># With the `expect_*()` form, we would</span>
@@ -394,7 +396,9 @@ then be automatically generated.</p>
 <span class='kw'>small_table</span> <span class='op'>%&gt;%</span>
   <span class='fu'>test_col_vals_not_in_set</span>(
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>f</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lows"</span>, <span class='st'>"mids"</span>, <span class='st'>"highs"</span>)
-  )</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'></div></pre>
+  )
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -200,11 +200,13 @@ carefully written by hand.</p>
 <span class='co'># `agent_yaml_read()` function</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='agent_yaml_read.html'>agent_yaml_read</a></span>(path = <span class='kw'>yml_file</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>agent</span>)</div><div class='output co'>#&gt; [1] "ptblank_agent"</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>agent</span>)
+</div><div class='output co'>#&gt; [1] "ptblank_agent"</div><div class='input'>
 <span class='co'># To get a sense of which expressions are</span>
 <span class='co'># being used to generate the new agent, we</span>
 <span class='co'># can use `agent_yaml_show_exprs()`</span>
-<span class='fu'>agent_yaml_show_exprs</span>(path = <span class='kw'>yml_file</span>)</div><div class='output co'>#&gt; <span class='message'>create_agent(</span>
+<span class='fu'>agent_yaml_show_exprs</span>(path = <span class='kw'>yml_file</span>)
+</div><div class='output co'>#&gt; <span class='message'>create_agent(</span>
 #&gt; <span class='message'>  read_fn = ~small_table,</span>
 #&gt; <span class='message'>  name = "example",</span>
 #&gt; <span class='message'>  actions = action_levels(</span>
@@ -231,7 +233,8 @@ carefully written by hand.</p>
 #&gt; <span class='message'>col_vals_lte(</span>
 #&gt; <span class='message'>  columns = vars(c),</span>
 #&gt; <span class='message'>  value = 5</span>
-#&gt; <span class='message'>) </span></div><div class='input'>  </div></pre>
+#&gt; <span class='message'>) </span></div><div class='input'>  
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

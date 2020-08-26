@@ -225,7 +225,8 @@ returned except, this time, it has intel from the interrogation.</p>
 
 <span class='co'># We can view the YAML file in the console</span>
 <span class='co'># with the `agent_yaml_string()` function</span>
-<span class='fu'><a href='agent_yaml_string.html'>agent_yaml_string</a></span>(path = <span class='kw'>yml_file</span>)</div><div class='output co'>#&gt; <span class='message'>name: example</span>
+<span class='fu'><a href='agent_yaml_string.html'>agent_yaml_string</a></span>(path = <span class='kw'>yml_file</span>)
+</div><div class='output co'>#&gt; <span class='message'>name: example</span>
 #&gt; <span class='message'>read_fn: ~small_table</span>
 #&gt; <span class='message'>actions:</span>
 #&gt; <span class='message'>  warn_fraction: 0.1</span>
@@ -249,7 +250,8 @@ returned except, this time, it has intel from the interrogation.</p>
 #&gt; <span class='message'>    value: 5.0</span></div><div class='input'>
 <span class='co'># The YAML can also be printed in the console</span>
 <span class='co'># by supplying the agent as the input</span>
-<span class='fu'><a href='agent_yaml_string.html'>agent_yaml_string</a></span>(agent = <span class='kw'>agent</span>)</div><div class='output co'>#&gt; <span class='message'>name: example</span>
+<span class='fu'><a href='agent_yaml_string.html'>agent_yaml_string</a></span>(agent = <span class='kw'>agent</span>)
+</div><div class='output co'>#&gt; <span class='message'>name: example</span>
 #&gt; <span class='message'>read_fn: ~small_table</span>
 #&gt; <span class='message'>actions:</span>
 #&gt; <span class='message'>  warn_fraction: 0.1</span>
@@ -278,7 +280,8 @@ returned except, this time, it has intel from the interrogation.</p>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span> 
   <span class='fu'>agent_yaml_interrogate</span>(path = <span class='kw'>yml_file</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>agent</span>)</div><div class='output co'>#&gt; [1] "has_intel"     "ptblank_agent"</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>agent</span>)
+</div><div class='output co'>#&gt; [1] "has_intel"     "ptblank_agent"</div><div class='input'>
 <span class='co'># If it's desired to only create a new</span>
 <span class='co'># agent with the validation plan in place</span>
 <span class='co'># (stopping short of interrogating the data),</span>
@@ -286,7 +289,9 @@ returned except, this time, it has intel from the interrogation.</p>
 <span class='co'># will be useful</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='agent_yaml_read.html'>agent_yaml_read</a></span>(path = <span class='kw'>yml_file</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>agent</span>)</div><div class='output co'>#&gt; [1] "ptblank_agent"</div><div class='input'></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>agent</span>)
+</div><div class='output co'>#&gt; [1] "ptblank_agent"</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

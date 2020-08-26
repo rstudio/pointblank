@@ -244,7 +244,8 @@ reducing potential for duplicating any side effects.</p>
   
 <span class='co'># Use the included `small_table` dataset</span>
 <span class='co'># for the validation example</span>
-<span class='kw'>small_table</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 13 x 8</span><span>
+<span class='kw'>small_table</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 13 x 8</span><span>
 #&gt;    date_time           date           a b             c      d e     f    
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> 2016-01-04 </span><span style='color: #555555;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high 
@@ -275,7 +276,8 @@ reducing potential for duplicating any side effects.</p>
 <span class='co'># agent report (accessible through the use</span>
 <span class='co'># of the `get_agent_report()` function)</span>
 <span class='kw'>agent</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='get_agent_report.html'>get_agent_report</a></span>(display_table = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 14</span><span>
+  <span class='fu'><a href='get_agent_report.html'>get_agent_report</a></span>(display_table = <span class='fl'>FALSE</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 14</span><span>
 #&gt;       i type  columns values precon active eval  units n_pass f_pass W     S    
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>     1 col_… a       2      </span><span style='color: #BB0000;'>NA</span><span>     TRUE   OK       13      9  0.692 TRUE  FALSE
@@ -290,7 +292,8 @@ reducing potential for duplicating any side effects.</p>
 <span class='fu'><a href='https://rdrr.io/r/base/warning.html'>suppressWarnings</a></span>(
   <span class='kw'>small_table</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), <span class='fl'>2</span>, actions = <span class='kw'>al</span>)
-)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 13 x 8</span><span>
+)
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 13 x 8</span><span>
 #&gt;    date_time           date           a b             c      d e     f    
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> 2016-01-04 </span><span style='color: #555555;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high 
@@ -305,7 +308,8 @@ reducing potential for duplicating any side effects.</p>
 #&gt; </span><span style='color: #555555;'>10</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
 #&gt; </span><span style='color: #555555;'>11</span><span> 2016-01-26 </span><span style='color: #555555;'>20:07:00</span><span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
 #&gt; </span><span style='color: #555555;'>12</span><span> 2016-01-28 </span><span style='color: #555555;'>02:51:00</span><span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  
-#&gt; </span><span style='color: #555555;'>13</span><span> 2016-01-30 </span><span style='color: #555555;'>11:23:00</span><span> 2016-01-30     1 3-dka-303    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>2</span><span>230. TRUE  high </div><div class='input'></div></span></pre>
+#&gt; </span><span style='color: #555555;'>13</span><span> 2016-01-30 </span><span style='color: #555555;'>11:23:00</span><span> 2016-01-30     1 3-dka-303    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>2</span><span>230. TRUE  high </div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

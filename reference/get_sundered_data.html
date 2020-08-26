@@ -51,12 +51,12 @@
 part of the input dataset for something else. The get_sundered_data()
 function works with an agent object that has intel (i.e., post
 interrogate()) and gets either the 'pass' data piece (rows with no failing
-units across all row-based validation functions), or, the 'fail' data
-piece (rows with at least one failing unit across the same series of
-validations). There are some caveats, only those validation steps with
-no preconditions are considered. And, the validation steps used for this
-must, again, be of the row-based variety (e.g., the col_vals_*() functions,
-and conjointly())." />
+test units across all row-based validation functions), or, the 'fail' data
+piece (rows with at least one failing test unit across the same series of
+validations). There are some caveats, only those validation steps with no
+preconditions are considered. And, the validation steps used for this
+splitting must be of the row-based variety (e.g., the col_vals_*()
+functions or conjointly())." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -135,15 +135,20 @@ and conjointly())." />
 part of the input dataset for something else. The <code>get_sundered_data()</code>
 function works with an agent object that has intel (i.e., post
 <code><a href='interrogate.html'>interrogate()</a></code>) and gets either the 'pass' data piece (rows with no failing
-units across all row-based validation functions), or, the 'fail' data
-piece (rows with at least one failing unit across the same series of
-validations). There are some caveats, only those validation steps with
-no <code>preconditions</code> are considered. And, the validation steps used for this
-must, again, be of the row-based variety (e.g., the <code>col_vals_*()</code> functions,
-and <code><a href='conjointly.html'>conjointly()</a></code>).</p>
+test units across all row-based validation functions), or, the 'fail' data
+piece (rows with at least one failing test unit across the same series of
+validations). There are some caveats, only those validation steps with no
+<code>preconditions</code> are considered. And, the validation steps used for this
+splitting must be of the row-based variety (e.g., the <code>col_vals_*()</code>
+functions or <code><a href='conjointly.html'>conjointly()</a></code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_sundered_data</span>(<span class='kw'>agent</span>, type = <span class='st'>"pass"</span>, id_cols = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>get_sundered_data</span>(
+  <span class='kw'>agent</span>,
+  type = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pass"</span>, <span class='st'>"fail"</span>, <span class='st'>"combined"</span>),
+  pass_fail = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pass"</span>, <span class='st'>"fail"</span>),
+  id_cols = <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,7 +162,21 @@ carried out.</p></td>
     <tr>
       <th>type</th>
       <td><p>The desired piece of data resulting from the splitting. Options
-are <code>"pass"</code> (the default) and <code>"fail"</code>.</p></td>
+for returning a single table are <code>"pass"</code> (the default) and <code>"fail"</code>. Each
+of these options return a single table with, in the <code>"pass"</code> case, only the
+rows that passed across all validation steps (i.e., had no failing test
+units in any part of a row for any validation step), or, the complementary
+set of rows in the <code>"fail"</code> case. Providing <code>NULL</code> returns both of the
+split data tables in a list (with the names of <code>"pass"</code> and <code>"fail"</code>). The
+option <code>"combined"</code> applies a categorical (pass/fail) label (settable in
+the <code>pass_fail</code> argument) in a new <code>.pb_combined</code> flag column. For this
+case the ordering of rows is fully retained from the input table.</p></td>
+    </tr>
+    <tr>
+      <th>pass_fail</th>
+      <td><p>A vector for encoding the flag column with 'pass' and 'fail'
+values when <code>type = "combined"</code>. The default is <code><a href='https://rdrr.io/r/base/c.html'>c("pass", "fail")</a></code> but
+other options could be <code><a href='https://rdrr.io/r/base/c.html'>c(TRUE, FALSE)</a></code>, <code><a href='https://rdrr.io/r/base/c.html'>c(1, 0)</a></code>, or <code><a href='https://rdrr.io/r/base/c.html'>c(1L, 0L)</a></code>.</p></td>
     </tr>
     <tr>
       <th>id_cols</th>
@@ -169,8 +188,8 @@ columns to distinguish rows.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of table objects if <code>type</code> is <code>NULL</code>, or, a table object piece
-if a <code>type</code> is given.</p>
+    <p>A list of table objects if <code>type</code> is <code>NULL</code>, or, a single table if a
+<code>type</code> is given.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
@@ -205,7 +224,8 @@ if a <code>type</code> is given.</p>
 <span class='co'># Get the sundered data piece that</span>
 <span class='co'># contains only rows that passed all</span>
 <span class='co'># validation steps (the default piece)</span>
-<span class='kw'>agent</span> <span class='op'>%&gt;%</span> <span class='fu'>get_sundered_data</span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 9 x 8</span><span>
+<span class='kw'>agent</span> <span class='op'>%&gt;%</span> <span class='fu'>get_sundered_data</span>()
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 9 x 8</span><span>
 #&gt;   date_time           date           a b             c      d e     f    
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> 2016-01-04 </span><span style='color: #555555;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high 
@@ -216,7 +236,8 @@ if a <code>type</code> is given.</p>
 #&gt; </span><span style='color: #555555;'>6</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
 #&gt; </span><span style='color: #555555;'>7</span><span> 2016-01-26 </span><span style='color: #555555;'>20:07:00</span><span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
 #&gt; </span><span style='color: #555555;'>8</span><span> 2016-01-28 </span><span style='color: #555555;'>02:51:00</span><span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  
-#&gt; </span><span style='color: #555555;'>9</span><span> 2016-01-30 </span><span style='color: #555555;'>11:23:00</span><span> 2016-01-30     1 3-dka-303    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>2</span><span>230. TRUE  high </div><div class='input'></div></span></pre>
+#&gt; </span><span style='color: #555555;'>9</span><span> 2016-01-30 </span><span style='color: #555555;'>11:23:00</span><span> 2016-01-30     1 3-dka-303    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>2</span><span>230. TRUE  high </div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

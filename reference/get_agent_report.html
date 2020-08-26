@@ -325,7 +325,8 @@ available, then a tibble will be returned.</p></td>
 <span class='co'># agent by using `get_agent_report()`</span>
 <span class='co'># with `display_table = FALSE`</span>
 <span class='kw'>agent</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>get_agent_report</span>(display_table = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 14</span><span>
+  <span class='fu'>get_agent_report</span>(display_table = <span class='fl'>FALSE</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 14</span><span>
 #&gt;       i type  columns values precon active eval  units n_pass f_pass W     S    
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>     1 col_… a       4      </span><span style='color: #BB0000;'>NA</span><span>     TRUE   OK        4      4      1 </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>   
@@ -335,7 +336,8 @@ available, then a tibble will be returned.</p></td>
 <span class='co'># gt table object by using this with</span>
 <span class='co'># `display_table = TRUE` (the default)</span>
 <span class='kw'>report</span> <span class='op'>&lt;-</span> <span class='fu'>get_agent_report</span>(<span class='kw'>agent</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>report</span>)</div><div class='output co'>#&gt; [1] "gt_tbl" "list"  </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>report</span>)
+</div><div class='output co'>#&gt; [1] "gt_tbl" "list"  </div><div class='input'>
 <span class='co'># What can you do with the report?</span>
 <span class='co'># Print it from an R Markdown code,</span>
 <span class='co'># use it in an email, put it in a</span>
@@ -347,9 +349,11 @@ available, then a tibble will be returned.</p></td>
 <span class='co'># (the default) and "small"</span>
 <span class='kw'>small_report</span> <span class='op'>&lt;-</span> 
   <span class='fu'>get_agent_report</span>(<span class='kw'>agent</span>, size = <span class='st'>"small"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>small_report</span>)</div><div class='output co'>#&gt; [1] "gt_tbl" "list"  </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>small_report</span>)
+</div><div class='output co'>#&gt; [1] "gt_tbl" "list"  </div><div class='input'>
 <span class='co'># The standard report is 875px wide</span>
 <span class='co'># the small one is 575px wide</span>
+
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

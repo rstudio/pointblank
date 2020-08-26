@@ -215,7 +215,8 @@ types (<code>"r"</code>) or SQL column types (<code>"sql"</code>).</p></td>
 
 <span class='co'># Determine if these three validation</span>
 <span class='co'># steps passed by using `all_passed()`</span>
-<span class='fu'><a href='all_passed.html'>all_passed</a></span>(<span class='kw'>agent</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'><a href='all_passed.html'>all_passed</a></span>(<span class='kw'>agent</span>)
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># We can alternatively create</span>
 <span class='co'># a column schema object from a</span>
 <span class='co'># `tbl_df` object</span>
@@ -233,7 +234,9 @@ types (<code>"r"</code>) or SQL column types (<code>"sql"</code>).</p></td>
 <span class='fu'><a href='create_agent.html'>create_agent</a></span>(tbl = <span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='col_schema_match.html'>col_schema_match</a></span>(<span class='kw'>schema_obj</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='interrogate.html'>interrogate</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='all_passed.html'>all_passed</a></span>()</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>  </div></pre>
+  <span class='fu'><a href='all_passed.html'>all_passed</a></span>()
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>  
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

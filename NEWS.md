@@ -1,6 +1,6 @@
 # pointblank (development version)
 
-# pointblank 0.5.0 (2020-08-12)
+# pointblank 0.5.0
 
 ## New features
 
@@ -28,7 +28,7 @@
 
 * New **testthat** tests were added that test **pointblank** validations against mock PostgreSQL and MySQL database tables via the **dittodb** package. Thank you @pachamaltese for implementing these tests.
 
-# pointblank 0.4.0 (2020-06-22)
+# pointblank 0.4.0
 
 ## New R Markdown features
 
@@ -84,7 +84,7 @@
 
 * Added column validity checks inside of internal `interrogate_*()` functions
 
-# pointblank 0.3.1 (2020-04-02)
+# pointblank 0.3.1
 
 * Fixed implementation of the `col_vals_between()` and `col_vals_not_between()` step functions to work with `tbl_dbi` objects.
 
@@ -104,7 +104,7 @@
 
 * Numerous fixes to ensure compatibility with tibble 3.0.0
 
-# pointblank 0.3.0 (2020-01-10)
+# pointblank 0.3.0
 
 The pointblank package has been changed significantly from the previous version in favor of consistency and simplicity, better reporting, and increased power. The internals have been extensively refactored and the API has accordingly gone through revisions.
 
@@ -128,12 +128,12 @@ The pointblank package has been changed significantly from the previous version 
 
 * The `conjointly()` function is a new validation step function that allows for multiple rowwise validation steps to be performed for joint validity testing.
 
-# pointblank 0.2.1 (2019-09-12)
+# pointblank 0.2.1
 
 * Revisions on account of API changes in **tidyr** `1.0.0`.
 
 * Incorporates corrections related to API changes in **rlang** `0.2.0`.
 
-# pointblank 0.1 (2017-08-25)
+# pointblank 0.1
 
 * First release.

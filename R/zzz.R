@@ -87,6 +87,7 @@ utils::globalVariables(
     "sd",
     "S_pts",
     "S_val",
+    "status_color",
     "tbl_checked",
     "total_pts",
     "type",

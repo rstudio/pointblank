@@ -150,6 +150,7 @@ test unit, which is whether the column is a factor-type column or not.</p>
   <span class='kw'>columns</span>,
   actions = <span class='kw'>NULL</span>,
   step_id = <span class='kw'>NULL</span>,
+  label = <span class='kw'>NULL</span>,
   brief = <span class='kw'>NULL</span>,
   active = <span class='fl'>TRUE</span>
 )
@@ -191,6 +192,10 @@ match the number of validation steps that the validation function call will
 produce (influenced by the number of <code>columns</code> provided), (2) be an ID
 string not used in any previous validation step, and (3) be a vector with
 unique values.</p></td>
+    </tr>
+    <tr>
+      <th>label</th>
+      <td><p>An optional label for the validation step.</p></td>
     </tr>
     <tr>
       <th>brief</th>

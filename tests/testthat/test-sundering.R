@@ -129,6 +129,46 @@ test_that("sundered data can be generated and retrieved with a `tbl_df`", {
   )
 })
 
+test_that("sundered data can be combined to a single `tbl_df` with a single flag column", {
+  
+  # Use the `"combined"` option in `get_sundered_data()`
+  combined_data_tbl <- get_sundered_data(agent, type = "combined")
+  
+  # Expect that the table ius of the same type as the input data
+  expect_is(small_table, "tbl_df")
+  expect_is(combined_data_tbl, "tbl_df")
+  
+  # Expect there to be the same number of rows as the
+  # input table but one more column
+  expect_equal(nrow(combined_data_tbl), nrow(small_table))
+  expect_equal(ncol(combined_data_tbl), ncol(small_table) + 1)
+  
+  # Expect the same column names as the input table but
+  # with one more column at the end
+  expect_equal(
+    colnames(combined_data_tbl),
+    c(colnames(small_table), ".pb_combined")
+  )
+  
+  # Using different encodings for the 'pass' and 'label' status, expect
+  # the column type and available values to change accordingly
+  c_1 <- get_sundered_data(agent, type = "combined", pass_fail = c(1, 0))
+  c_2 <- get_sundered_data(agent, type = "combined", pass_fail = c(TRUE, FALSE))
+  c_3 <- get_sundered_data(agent, type = "combined", pass_fail = c("good", "bad"))
+  c_4 <- get_sundered_data(agent, type = "combined", pass_fail = c(1L, 0L))
+  expect_is(c_1$.pb_combined, "numeric")
+  expect_is(c_2$.pb_combined, "logical")
+  expect_is(c_3$.pb_combined, "character")
+  expect_is(c_4$.pb_combined, "integer")
+  expect_equal(unique(c_1$.pb_combined), c(1, 0))
+  expect_equal(unique(c_2$.pb_combined), c(TRUE, FALSE))
+  expect_equal(unique(c_3$.pb_combined), c("good", "bad"))
+  expect_equal(unique(c_4$.pb_combined), c(1L, 0L))
+  
+  # Expect the rows to be in the same order as the input table
+  expect_equivalent(combined_data_tbl %>% dplyr::select(-.pb_combined), small_table)
+})
+
 test_that("sundered data can be generated and retrieved with a `tbl_df` (one step)", {
   
   # These tests ensure that a single-step interrogation works

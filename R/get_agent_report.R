@@ -281,35 +281,64 @@ get_agent_report <- function(agent,
       email_table <- FALSE
     }
     
-    make_button <- function(x, scale, color, background, text = NULL, border_radius = NULL) {
+    make_button <- function(x, scale, color, background, text = NULL, border_radius = NULL, v_align = "middle") {
       
       paste0(
         "<button title=\"", text, "\" style=\"background: ", background,
         "; padding: ", 5 * scale, "px ", 5 * scale, "px; ",
-        "color: ", color, "; font-size: ", 15 * scale,
+        "color: ", color, "; vertical-align: ", v_align, "; font-size: ", 15 * scale,
         "px; border: none; border-radius: ", border_radius, "\">",
         x, "</button>"
       )
     }
-    
+
     # Reformat `type`
     assertion_type <- validation_set$assertion_type
+    label <- validation_set$label
+    
     type_upd <- 
       seq_along(assertion_type) %>%
       vapply(
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
         FUN = function(x) {
-
-          title <- gsub("\"", "'", agent$validation_set$brief[[x]])
           
-          paste0(
-            "<div><p title=\"", title, "\"style=\"margin-top: 0px; margin-bottom: 0px; ",
-            "font-family: monospace; white-space: nowrap; ",
-            "text-overflow: ellipsis; overflow: hidden;\">",
-            assertion_type[x],
-            "</p></div>"
-          )
+          assertion_type_nchar <- nchar(assertion_type[x])
+          
+          text_size <- ifelse(assertion_type_nchar + 2 >= 20, 9, 11)
+          text_size <- ifelse(email_table, 10, text_size)
+          
+          if (email_table) {
+
+            paste0(
+              "<code style=\"font-size: ", text_size,
+              "px;\">&nbsp;", assertion_type[x], "()</code>"
+            )
+
+          } else {
+            
+            if (!is.na(label[x])) {
+              
+              paste0(
+                "<div><div style=\"float: left; width: 30px;\">",
+                add_icon_img(icon = assertion_type[x]),
+                "</div>",
+                "<div style=\"line-height: 0.7em; margin-left: 32px; padding-left: 3px;\">",
+                "<p style=\"margin: 0; padding-top: 4px; font-size: 9px; \">",
+                htmltools::htmlEscape(label[x]), "</p>",
+                "<p style=\"margin: 0;\"><code style=\"font-size: 11px;\">",
+                assertion_type[x], "()</code></p></div></div>"
+              )
+              
+            } else {
+              
+              paste0(
+                add_icon_img(icon = assertion_type[x]),
+                "<code style=\"font-size: ", text_size,
+                "px;\">&nbsp;", assertion_type[x], "()</code>"
+              )
+            }
+          }
         }
       )
 
@@ -720,6 +749,7 @@ get_agent_report <- function(agent,
     gt_agent_report <- 
       report_tbl %>%
       dplyr::mutate(
+        status_color = NA_character_,
         type = type_upd,
         columns = columns_upd,
         values = values_upd,
@@ -739,11 +769,11 @@ get_agent_report <- function(agent,
         extract = extract_upd
       ) %>%
       dplyr::select(
-        i, type, columns, values, precon, eval_sym, units,
+        status_color, i, type, columns, values, precon, eval_sym, units,
         n_pass, f_pass, n_fail, f_fail, W, S, N, extract,
         W_val, S_val, N_val, eval, active
       ) %>%
-      gt::gt() %>%
+      gt::gt(id = "report") %>%
       gt::cols_merge(columns = gt::vars(n_pass, f_pass), hide_columns = gt::vars(f_pass)) %>%
       gt::cols_merge(columns = gt::vars(n_fail, f_fail), hide_columns = gt::vars(f_fail)) %>%
       gt::text_transform(
@@ -758,6 +788,7 @@ get_agent_report <- function(agent,
         }
       ) %>%
       gt::cols_label(
+        status_color = "",
         i = "",
         type = get_lsv("agent_report/report_col_step")[[lang]],
         columns = get_lsv("agent_report/report_col_columns")[[lang]],
@@ -785,6 +816,10 @@ get_agent_report <- function(agent,
         align = "center",
         columns = gt::vars(f_pass, f_fail)
       ) %>%
+      gt::cols_align(
+        align = "right",
+        columns = gt::vars(i)
+      ) %>%
       gt::fmt_number(
         columns = gt::vars(units, n_pass, n_fail, f_pass, f_fail),
         decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE
@@ -792,6 +827,7 @@ get_agent_report <- function(agent,
       gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2) %>%
       gt::fmt_markdown(columns = gt::vars(type, columns, values, precon, eval_sym, W, S, N, extract)) %>%
       gt::fmt_missing(columns = gt::vars(columns, values, units, extract)) %>%
+      gt::fmt_missing(columns = gt::vars(status_color), missing_text = "") %>%
       gt::cols_hide(columns = gt::vars(W_val, S_val, N_val, active, eval)) %>%
       gt::text_transform(
         locations = gt::cells_body(columns = gt::vars(units)),
@@ -811,7 +847,11 @@ get_agent_report <- function(agent,
         locations = gt::cells_title("subtitle")
       ) %>%
       gt::tab_style(
-        style = gt::cell_text(weight = "bold", color = "#666666"),
+        style = gt::cell_text(
+          weight = "bold",
+          color = "#666666",
+          size = ifelse(email_table, gt::px(10), gt::px(13))
+        ),
         locations = gt::cells_body(columns = gt::vars(i))
       ) %>%
       gt::tab_style(
@@ -832,46 +872,39 @@ get_agent_report <- function(agent,
         )
       ) %>%
       gt::tab_style(
-        style = gt::cell_borders(
-          sides = "left",
-          color = "#4CA64C",
-          weight = gt::px(7)
+        style = gt::cell_fill(
+          color = "#4CA64C"
         ),
         locations = gt::cells_body(
-          columns = gt::vars(i),
+          columns = gt::vars(status_color),
           rows = units == n_pass
         )
       ) %>%
       gt::tab_style(
-        style = gt::cell_borders(
-          sides = "left",
+        style = gt::cell_fill(
           color = "#4CA64C66",
-          weight = gt::px(5)
+          alpha = 0.5
         ),
         locations = gt::cells_body(
-          columns = gt::vars(i),
+          columns = gt::vars(status_color),
           rows = units != n_pass
         )
       ) %>%
       gt::tab_style(
-        style = gt::cell_borders(
-          sides = "left",
-          color = "#FFBF00",
-          weight = gt::px(7)
+        style = gt::cell_fill(
+          color = "#FFBF00"
         ),
         locations = gt::cells_body(
-          columns = gt::vars(i),
+          columns = gt::vars(status_color),
           rows = W_val
         )
       ) %>%
       gt::tab_style(
-        style = gt::cell_borders(
-          sides = "left",
-          color = "#CF142B",
-          weight = gt::px(7)
+        style = gt::cell_fill(
+          color = "#CF142B"
         ),
         locations = gt::cells_body(
-          columns = gt::vars(i),
+          columns = gt::vars(status_color),
           rows = S_val
         )
       ) %>%
@@ -925,11 +958,11 @@ get_agent_report <- function(agent,
 
       gt_agent_report <- 
         gt_agent_report %>%
-        gt::cols_hide(gt::vars(columns, eval_sym, precon, extract)) %>%
+        gt::cols_hide(gt::vars(columns, values, eval_sym, precon, extract)) %>%
         gt::cols_width(
-          gt::vars(i) ~ gt::px(30),
-          gt::vars(type) ~ gt::px(170),
-          gt::vars(values) ~ gt::px(130),
+          gt::vars(status_color) ~ gt::px(4),
+          gt::vars(i) ~ gt::px(25),
+          gt::vars(type) ~ gt::px(190),
           gt::vars(precon) ~ gt::px(30),
           gt::vars(units) ~ gt::px(50),
           gt::vars(n_pass) ~ gt::px(50),
@@ -939,10 +972,9 @@ get_agent_report <- function(agent,
           gt::vars(N) ~ gt::px(30),
           TRUE ~ gt::px(20)
         ) %>%
-        gt::tab_options(data_row.padding = gt::px(4)) %>%
         gt::tab_style(
-          style = gt::cell_text(size = gt::px(10), weight = "bold", color = "#666666"),
-          locations = gt::cells_column_labels(columns = TRUE)
+          locations = gt::cells_body(columns = gt::everything()),
+          style = "height: 40px"
         )
       
     } else {
@@ -950,8 +982,9 @@ get_agent_report <- function(agent,
       gt_agent_report <- 
         gt_agent_report %>%
         gt::cols_width(
-          gt::vars(i) ~ gt::px(50),
-          gt::vars(type) ~ gt::px(170),
+          gt::vars(status_color) ~ gt::px(6),
+          gt::vars(i) ~ gt::px(35),
+          gt::vars(type) ~ gt::px(190),
           gt::vars(columns) ~ gt::px(120),
           gt::vars(values) ~ gt::px(120),
           gt::vars(precon) ~ gt::px(35),
@@ -964,6 +997,10 @@ get_agent_report <- function(agent,
         gt::tab_style(
           style = gt::cell_text(weight = "bold", color = "#666666"),
           locations = gt::cells_column_labels(columns = TRUE)
+        ) %>%
+        gt::tab_style(
+          locations = gt::cells_body(columns = gt::everything()),
+          style = "height: 40px"
         )
     }
 

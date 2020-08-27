@@ -387,7 +387,8 @@ get_agent_report <- function(agent,
         USE.NAMES = FALSE,
         FUN = function(x) {
 
-          if (is.list(x) && length(x) == 2 && all(names(x) %in% c("TRUE", "FALSE")) && !is_formula(x[[1]])) {
+          if (!is.null(x) && !is.null(names(x)) && all(names(x) %in% c("TRUE", "FALSE"))) {
+
             # Case of in-between comparison validation where there are
             # one or two columns specified as bounds
             bounds_incl <- as.logical(names(x))
@@ -412,8 +413,23 @@ get_agent_report <- function(agent,
               x_right <- x[[2]]
             }
             
-            title <- paste0(rlang::as_label(x[[1]]), ", ", rlang::as_label(x[[2]]))
-            text <- paste0(x_left, ", ", x_right)
+            text <- 
+              paste0(
+                ifelse(bounds_incl[1], "[", "("),
+                x_left,
+                ", ",
+                x_right,
+                ifelse(bounds_incl[2], "]", ")")
+              )
+            
+            title <- 
+              paste0(
+                ifelse(bounds_incl[1], "[", "("),
+                rlang::as_label(x[[1]]),
+                ", ",
+                rlang::as_label(x[[2]]),
+                ifelse(bounds_incl[2], "]", ")")
+              )
 
             x <- 
               paste0(
@@ -425,6 +441,7 @@ get_agent_report <- function(agent,
               )
 
           } else if (is.list(x) && length(x) > 0 && inherits(x, "col_schema")) {
+            
             # Case of column schema as a value
             
             column_schema_text <- 
@@ -461,6 +478,7 @@ get_agent_report <- function(agent,
               )
             
           } else if (is.list(x) && length(x) > 0 && !inherits(x, "quosures")) {
+            
             # Conjointly case
             
             step_text <- 

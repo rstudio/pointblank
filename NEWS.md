@@ -1,5 +1,9 @@
 # pointblank (development version)
 
+* Fixes a performance issue for validations on larger tables.
+
+# pointblank 0.5.1
+
 * Improved compatibility with validations performed on SQL Server 2019.
 
 * Integrated the `label` argument into all validation functions; this label is available in the agent `x_list` and, more importantly, displayed in the agent report (in the `STEP` column).

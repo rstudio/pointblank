@@ -1389,13 +1389,12 @@ add_table_extract <- function(agent,
   if (is.null(tbl_checked$value)) {
     return(agent)
   }
-  
+
   tbl_checked <- tbl_checked$value
   
   tbl_type <- tbl_checked %>% class()
-  tbl_type_sql_server <- any(grepl("sql server|sqlserver", tolower(tbl_checked)))
   
-  if (tbl_type_sql_server) {
+  if (grepl("sql server|sqlserver", agent$tbl_src_details)) {
     problem_rows <- 
       tbl_checked %>%
       dplyr::filter(pb_is_good_ == 0) %>%

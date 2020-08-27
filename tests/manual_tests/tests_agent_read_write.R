@@ -35,7 +35,9 @@ agent_1new
 # Using `interrogate()` again to re-interrogate the data:
 agent_1new <- agent_1new %>% interrogate()
 
-# This is the revised agent report
+# This is the revised agent report (some columns are
+# missing in `diff_table` compared to `small_table` so
+# the first validation step fails to evaluate)
 agent_1new
 
 
@@ -61,9 +63,10 @@ agent_2new <- agent_read("agent_2.rds")
 
 # Interrogating again should work! There is because there is `read_fn`
 # defined, which isn't lost upon writing the agent to disk like
-# the `tbl` is by default
+# the `tbl` is by default (however it's set to read in `diff_table`)
 agent_2new %>% interrogate()
 
+# We can set the table to `small_table`
 agent_2new <- agent_2new %>% set_tbl(small_table)
 
 # This shows the previous agent report

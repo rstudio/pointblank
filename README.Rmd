@@ -191,7 +191,7 @@ The **pointblank** package isn't the only one of its kind available for **R**. T
 - developing an API that closely follows tidyverse conventions by adhering to the [tidyverse style guide](https://style.tidyverse.org)
 - lots of attention on making the package documentation and examples the best they can be
 
-While **pointblank** is trying to do something different with its own interface, it may not suit your specific needs. Here is a listing of some of the other validation packages available for **R**, with links to their respective project pages:
+While **pointblank** is trying to do something different, it may not suit your specific needs. Here is a listing of some other validation **R** packages:
 
 **assertr**&nbsp;([GITHUB](https://github.com/ropensci/assertr),&nbsp;[WEBSITE](https://docs.ropensci.org/assertr))
 

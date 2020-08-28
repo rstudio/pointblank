@@ -4,7 +4,7 @@
 
 * Fixes a performance issue for validations on larger tables.
 
-* Improved the formatting of value ranges in the agent report.
+* Improved formatting of value ranges in the agent report.
 
 # pointblank 0.5.1
 

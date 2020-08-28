@@ -588,8 +588,12 @@ get_agent_report <- function(agent,
               )
             
           } else if (eval[x] == "W + E") {
-            
-            text <- agent$validation_set$capture_stack[[x]]$error
+
+            text <- 
+              htmltools::htmlEscape(
+                agent$validation_set$capture_stack[[x]]$error %>%
+                  tidy_gsub("\"", "'")
+              )
             
             if (!is.null(text)) {
               text <- as.character(text)
@@ -607,8 +611,12 @@ get_agent_report <- function(agent,
               )
             
           } else if (eval[x] == "WARNING") {
-            
-            text <- agent$validation_set$capture_stack[[x]]$warning
+
+            text <- 
+              htmltools::htmlEscape(
+                agent$validation_set$capture_stack[[x]]$warning %>%
+                  tidy_gsub("\"", "'")
+              )
             
             if (!is.null(text)) {
               text <- as.character(text)
@@ -627,7 +635,11 @@ get_agent_report <- function(agent,
             
           } else if (eval[x] == "ERROR") {
             
-            text <- agent$validation_set$capture_stack[[x]]$error
+            text <-
+              htmltools::htmlEscape(
+                agent$validation_set$capture_stack[[x]]$error %>%
+                  tidy_gsub("\"", "'")
+              )
             
             if (!is.null(text)) {
               text <- as.character(text)

@@ -63,13 +63,13 @@ use **pointblank** to validate a local table with an agent.
 ``` r
 # Generate a simple `action_levels` object to
 # set the `warn` state if a validation step
-# has a single 'fail' unit
+# has a single 'fail' test unit
 al <- action_levels(warn_at = 1)
 
 # Create a pointblank `agent` object, with the
-# tibble as the target table. Use two validation
-# step functions, then, `interrogate()`. The
-# agent now has some useful intel.
+# tibble as the target table. Use three validation
+# functions, then, `interrogate()`. The agent will
+# then have some useful intel.
 agent <- 
   dplyr::tibble(
     a = c(5, 7, 6, 5, NA, 7),
@@ -78,6 +78,7 @@ agent <-
   create_agent(name = "simple_tibble", actions = al) %>%
   col_vals_between(vars(a), 1, 9, na_pass = TRUE) %>%
   col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b)) %>%
+  col_is_numeric(vars(a, b)) %>%
   interrogate()
 ```
 
@@ -105,7 +106,8 @@ dplyr::tibble(
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
   col_vals_between(vars(a), 1, 9, na_pass = TRUE) %>%
-  col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b))
+  col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b)) %>%
+  col_is_numeric(vars(a, b))
 ```
 
     Error: Exceedance of failed test units where values in `c` should have been < `12`.
@@ -128,7 +130,8 @@ dplyr::tibble(
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
   col_vals_between(vars(a), 1, 9, na_pass = TRUE, actions = al) %>%
-  col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b), actions = al)
+  col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b), actions = al) %>%
+  col_is_numeric(vars(a, b))
 ```
 
     #> # A tibble: 6 x 2

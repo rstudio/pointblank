@@ -94,13 +94,13 @@
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="co"># Generate a simple `action_levels` object to</span>
 <span class="co"># set the `warn` state if a validation step</span>
-<span class="co"># has a single 'fail' unit</span>
+<span class="co"># has a single 'fail' test unit</span>
 <span class="kw">al</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/action_levels.html">action_levels</a></span>(warn_at = <span class="fl">1</span>)
 
 <span class="co"># Create a pointblank `agent` object, with the</span>
-<span class="co"># tibble as the target table. Use two validation</span>
-<span class="co"># step functions, then, `interrogate()`. The</span>
-<span class="co"># agent now has some useful intel.</span>
+<span class="co"># tibble as the target table. Use three validation</span>
+<span class="co"># functions, then, `interrogate()`. The agent will</span>
+<span class="co"># then have some useful intel.</span>
 <span class="kw">agent</span> <span class="op">&lt;-</span> 
   <span class="kw">dplyr</span>::<span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span>(
     a = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">NA</span>, <span class="fl">7</span>),
@@ -109,6 +109,7 @@
   <span class="fu"><a href="reference/create_agent.html">create_agent</a></span>(name = <span class="st">"simple_tibble"</span>, actions = <span class="kw">al</span>) <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">a</span>), <span class="fl">1</span>, <span class="fl">9</span>, na_pass = <span class="fl">TRUE</span>) <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">c</span>), <span class="fl">12</span>, preconditions = <span class="op">~</span> <span class="kw">.</span> <span class="op">%&gt;%</span> <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(c = <span class="kw">a</span> <span class="op">+</span> <span class="kw">b</span>)) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">a</span>, <span class="kw">b</span>)) <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/interrogate.html">interrogate</a></span>()
 </pre></div>
 <p>Should you want to perform validation checks on database or Spark tables, provide a <code>tbl_dbi</code> or <code>tbl_spark</code> object to <code><a href="reference/create_agent.html">create_agent()</a></code>. The <strong>pointblank</strong> package currently supports MySQL, PostgreSQL, SQLite, SQL Server, and Spark DataFrames (through the <strong>sparklyr</strong> package).</p>
@@ -122,7 +123,8 @@
     b = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">6</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>,  <span class="fl">0</span>, <span class="fl">7</span>)
   ) <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">a</span>), <span class="fl">1</span>, <span class="fl">9</span>, na_pass = <span class="fl">TRUE</span>) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">c</span>), <span class="fl">12</span>, preconditions = <span class="op">~</span> <span class="kw">.</span> <span class="op">%&gt;%</span> <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(c = <span class="kw">a</span> <span class="op">+</span> <span class="kw">b</span>))
+  <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">c</span>), <span class="fl">12</span>, preconditions = <span class="op">~</span> <span class="kw">.</span> <span class="op">%&gt;%</span> <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(c = <span class="kw">a</span> <span class="op">+</span> <span class="kw">b</span>)) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">a</span>, <span class="kw">b</span>))
 </pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>Error<span class="op">:</span><span class="st"> </span>Exceedance of failed test units where values <span class="cf">in</span> <span class="st">`</span><span class="dt">c</span><span class="st">`</span> should have been <span class="op">&lt;</span><span class="st"> `</span><span class="dt">12</span><span class="st">`</span>.</span>
 <span id="cb3-2"><a href="#cb3-2"></a>The <span class="st">`</span><span class="dt">col_vals_lt()</span><span class="st">`</span> validation failed beyond the absolute threshold <span class="kw">level</span> (<span class="dv">1</span>).</span>
@@ -140,7 +142,8 @@
     b = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">6</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>,  <span class="fl">0</span>, <span class="fl">7</span>)
   ) <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">a</span>), <span class="fl">1</span>, <span class="fl">9</span>, na_pass = <span class="fl">TRUE</span>, actions = <span class="kw">al</span>) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">c</span>), <span class="fl">12</span>, preconditions = <span class="op">~</span> <span class="kw">.</span> <span class="op">%&gt;%</span> <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(c = <span class="kw">a</span> <span class="op">+</span> <span class="kw">b</span>), actions = <span class="kw">al</span>)
+  <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">c</span>), <span class="fl">12</span>, preconditions = <span class="op">~</span> <span class="kw">.</span> <span class="op">%&gt;%</span> <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(c = <span class="kw">a</span> <span class="op">+</span> <span class="kw">b</span>), actions = <span class="kw">al</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">a</span>, <span class="kw">b</span>))
 </pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt;       a     b</span></span>

@@ -714,6 +714,59 @@ get_agent_report <- function(agent,
         } 
       )
 
+    # Generate table type HTML
+    create_table_type_html <- function(agent) {
+      
+      tbl_src <- agent$tbl_src
+      
+      text <- 
+        switch(
+          tbl_src,
+          tbl_df = c(`#F1D35A` = "A tibble"),
+          sqlite = c(`#BACBEF` = "SQLite table"),
+          mysql = c(`#EBAD40` = "MySQL table"),
+          postgres = c(`#3E638B` = "PostgreSQL table"),
+          tbl_spark = c(`#D47531` = "Spark DataFrame"),
+          NA_character_
+        )
+
+      if (!is.na(text)) {
+        paste0(
+          "<span style=\"background-color: ", names(text), ";",
+          "color: #222;padding: 0.5em 0.5em;",
+          "position: inherit;text-transform: uppercase;margin: 5px 1px 5px 5px;",
+          "font-weight: bold;border: solid 1px ", names(text), ";",
+          "padding: 2px 10px 2px 10px;font-size: smaller;\">",
+          text,
+          "</span>"
+        )
+      } else {
+        ""
+      }
+    }
+    table_type <- create_table_type_html(agent)
+    
+    # Generate table time and duration HTML
+    create_table_time_html <- function(agent) {
+      
+      time <- agent$time
+      
+      if (length(time) < 1) {
+        return("")
+      }
+      
+      paste0(
+        "<span style=\"background-color: #FFF;",
+        "color: #222;padding: 0.5em 0.5em;",
+        "position: inherit;text-transform: uppercase;margin: 5px 1px 5px 5px;",
+        "border: solid 1px #999;font-variant-numeric: tabular-nums;",
+        "border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;\">",
+        format(time, "%Y-%m-%d %H:%M:%S %Z"),
+        "</span>"
+      )
+    }
+    table_time <- create_table_time_html(agent)
+
     # Reformat W, S, and N
     W_upd <- 
       validation_set$warn %>%
@@ -832,7 +885,11 @@ get_agent_report <- function(agent,
       ) %>%
       gt::tab_header(
         title = get_lsv("agent_report/pointblank_validation_title_text")[[lang]],
-        subtitle = gt::md(paste0("`", agent_name, " (", agent_time, ")`<br><br>"))
+        subtitle = gt::md(
+          paste0(
+            "`", agent_name, "` ", table_type, " ", table_time, " <br><br>"
+          )
+        )
       ) %>%
       gt::tab_options(
         table.font.size = gt::pct(90 * scale),
@@ -980,7 +1037,11 @@ get_agent_report <- function(agent,
               "</div>"
             )
           ),
-          subtitle = gt::md(paste0("`", agent_name, "`<br><br>"))
+          subtitle = gt::md(
+            paste0(
+              "`", agent_name, "` ", table_type, " ", table_time, " <br><br>"
+            )
+          )
         )
     }
     

@@ -94,11 +94,10 @@ printing an *agent*.
 
 <hr>
 
-Next up is an example that follows the second, *agent*-less workflow
-(where validation functions operate directly on data). We use the same
-two validation functions as before but, this time, use them directly on
-the data\! In this workflow, by default, an error will occur if there is
-a single ‘fail’ unit in any validation step:
+Next up is an example that follows the second, *agent*-less workflow.
+It’s the same three validation functions as before but, this time, we
+use them directly on the data\! In this workflow, by default, an error
+will occur if there is a single ‘fail’ test unit in any validation step:
 
 ``` r
 dplyr::tibble(

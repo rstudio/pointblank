@@ -274,7 +274,7 @@ paste0(
 This <strong>pointblank</strong> validation report, \\
 containing <strong>{nrow(x$validation_set)}</strong> validation step\\
 {ifelse(nrow(x$validation_set) != 1, 's', '')},<br>\\
-was initiated on {blastula::add_readable_time(x$time)}.
+was initiated on {blastula::add_readable_time(x$time_start)}.
 </div>
 <br><br>
 {x$report_html_small}

@@ -1,5 +1,3 @@
-context("Creation of `agent` objects")
-
 test_that("Creating a valid `agent` object is possible", {
   
   tbl <-
@@ -16,10 +14,10 @@ test_that("Creating a valid `agent` object is possible", {
   expect_true(
     all(
       names(agent) ==
-        c("name", "time", "tbl", "read_fn", "tbl_name", "db_tbl_name",
-          "tbl_src", "tbl_src_details", "col_names", "col_types", "db_col_types",
-          "actions", "end_fns", "embed_report", "reporting", "reporting_lang",
-          "validation_set", "extracts"
+        c("name", "time_start", "time_end", "tbl", "read_fn", "tbl_name",
+          "db_tbl_name", "tbl_src", "tbl_src_details", "col_names",
+          "col_types", "db_col_types", "actions", "end_fns", "embed_report",
+          "reporting", "reporting_lang", "validation_set", "extracts"
         )
     )
   )
@@ -32,7 +30,8 @@ test_that("Creating a valid `agent` object is possible", {
   
   # Expect certain classes for the different `ptblank_agent` components
   expect_is(agent$name, "character")
-  expect_is(agent$time, "POSIXct")
+  expect_is(agent$time_start, "POSIXct")
+  expect_is(agent$time_end, "POSIXct")
   expect_is(agent$tbl, class(tbl))
   expect_is(agent$tbl_name, "character")
   expect_is(agent$tbl_src, "character")

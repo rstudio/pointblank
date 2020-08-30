@@ -132,7 +132,7 @@ get_agent_x_list <- function(agent,
     .stop <- agent$validation_set[[i, "stop"]]
     
     .name <- agent$name
-    .time <- agent$time
+    .time_start <- agent$time_start
     .reporting_lang <- agent$reporting_lang
     .tbl <- agent$tbl
     .tbl_name <- agent$tbl_name
@@ -160,7 +160,7 @@ get_agent_x_list <- function(agent,
     
     x <-
       list(
-        time = .time,
+        time_start = .time_start,
         name = .name,
         tbl_name = .tbl_name,
         tbl_src = .tbl_src,
@@ -198,7 +198,7 @@ get_agent_x_list <- function(agent,
     .stop <- agent$validation_set$stop
     
     .name <- agent$name
-    .time <- agent$time
+    .time_start <- agent$time_start
     .reporting_lang <- agent$reporting_lang
     .tbl <- agent$tbl
     .tbl_name <- agent$tbl_name
@@ -241,11 +241,13 @@ get_agent_x_list <- function(agent,
       .report_html_small <- NULL
     }
     
-    if (length(.time) != 0) {
+    if (length(.time_start) != 0) {
       
+      # Create a 'temporary' x-list just for the `stock_msg_body()`
+      # function used in the `blastula::compose_email()` call
       x <-
         list(
-          time = .time,
+          time_start = .time_start,
           report_html_small = .report_html_small,
           reporting_lang = .reporting_lang,
           i = .i,
@@ -266,7 +268,7 @@ get_agent_x_list <- function(agent,
     
     x <-
       list(
-        time = .time,
+        time_start = .time_start,
         name = .name,
         tbl_name = .tbl_name,
         tbl_src = .tbl_src,

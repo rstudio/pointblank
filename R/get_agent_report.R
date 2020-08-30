@@ -144,7 +144,7 @@ get_agent_report <- function(agent,
   validation_set <- agent$validation_set
   
   agent_name <- agent$name
-  agent_time <- agent$time
+  agent_time <- agent$time_start
   
   lang <- agent$reporting_lang
   
@@ -722,22 +722,23 @@ get_agent_report <- function(agent,
       text <- 
         switch(
           tbl_src,
-          tbl_df = c(`#F1D35A` = "A tibble"),
-          sqlite = c(`#BACBEF` = "SQLite table"),
-          mysql = c(`#EBAD40` = "MySQL table"),
-          postgres = c(`#3E638B` = "PostgreSQL table"),
-          tbl_spark = c(`#D47531` = "Spark DataFrame"),
+          data.frame = c("#9933CC", "#FFFFFF", "A data frame"),
+          tbl_df = c("#F1D35A", "#222222", "A tibble"),
+          sqlite = c("#BACBEF", "#222222", "SQLite table"),
+          mysql = c("#EBAD40", "#222222", "MySQL table"),
+          postgres = c("#3E638B", "#FFFFFF", "PostgreSQL table"),
+          tbl_spark = c("#D47531", "#FFFFFF", "Spark DataFrame"),
           NA_character_
         )
 
-      if (!is.na(text)) {
+      if (all(!is.na(text))) {
         paste0(
-          "<span style=\"background-color: ", names(text), ";",
-          "color: #222;padding: 0.5em 0.5em;",
+          "<span style=\"background-color: ", text[1], ";",
+          "color: ", text[2], ";padding: 0.5em 0.5em;",
           "position: inherit;text-transform: uppercase;margin: 5px 1px 5px 5px;",
-          "font-weight: bold;border: solid 1px ", names(text), ";",
+          "font-weight: bold;border: solid 1px ", text[1], ";",
           "padding: 2px 10px 2px 10px;font-size: smaller;\">",
-          text,
+          text[3],
           "</span>"
         )
       } else {
@@ -746,25 +747,48 @@ get_agent_report <- function(agent,
     }
     table_type <- create_table_type_html(agent)
     
-    # Generate table time and duration HTML
+    # Generate table execution start time
     create_table_time_html <- function(agent) {
+
+      time_start <- agent$time_start
+      time_end <- agent$time_end
       
-      time <- agent$time
-      
-      if (length(time) < 1) {
+      if (length(time_start) < 1) {
         return("")
       }
       
+      time_duration <- get_time_duration(time_start, time_end)
+      time_duration_formatted <- print_time_duration_report(time_duration)
+      
       paste0(
         "<span style=\"background-color: #FFF;",
-        "color: #222;padding: 0.5em 0.5em;",
-        "position: inherit;text-transform: uppercase;margin: 5px 1px 5px 5px;",
-        "border: solid 1px #999;font-variant-numeric: tabular-nums;",
+        "color: #444;padding: 0.5em 0.5em;",
+        "position: inherit;text-transform: uppercase;margin: 5px 0 5px 5px;",
+        "border: solid 1px #666666;font-variant-numeric: tabular-nums;",
         "border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;\">",
-        format(time, "%Y-%m-%d %H:%M:%S %Z"),
+        format(time_start, "%Y-%m-%d %H:%M:%S %Z"),
+        "</span>",
+        
+        "<span style=\"background-color: #FFF;",
+        "color: #444;padding: 0.5em 0.5em;",
+        "position: inherit;margin: 5px 1px 5px 0;",
+        "border: solid 1px #666666;border-left: none;",
+        "font-variant-numeric: tabular-nums;",
+        "border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;\">",
+        time_duration_formatted,
         "</span>"
       )
     }
+    
+    print_time_duration_report <- function(time_diff_s) {
+      
+      if (time_diff_s < 1) {
+        "< 1 s"
+      } else {
+        paste0(formatC(round(time_diff_s, 1), format = "f", drop0trailing = FALSE, digits = 1), " s")
+      }
+    }
+
     table_time <- create_table_time_html(agent)
 
     # Reformat W, S, and N

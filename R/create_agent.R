@@ -238,7 +238,8 @@ create_agent <- function(tbl = NULL,
   agent <-
     list(
       name = name,
-      time = as.POSIXct(NA)[-1],
+      time_start = as.POSIXct(NA)[-1],
+      time_end = as.POSIXct(NA)[-1],
       tbl = tbl,
       read_fn = read_fn,
       tbl_name = tbl_name,

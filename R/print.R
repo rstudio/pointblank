@@ -64,7 +64,7 @@ print.x_list_i <- function(x, ...) {
   length_rows <- length(x$warn)
 
   cli::cli_rule(left = "The x-list for `{x$name}`", right = "STEP {x$i}")
-  cli::cli_text("{.cyan $time} ({.red POSIXct [{length(x$time)}]})")
+  cli::cli_text("{.cyan $time_start} ({.red POSIXct [{length(x$time_start)}]})")
   cli::cli_text("{.cyan $name $tbl_name $tbl_src $tbl_src_details} ({.red chr [1]})")
   cli::cli_text("{.cyan $tbl} ({.blue {class(x$tbl)}})")
   cli::cli_text("{.cyan $col_names $col_types} ({.red chr [{length(x$col_names)}]})")
@@ -111,7 +111,7 @@ print.x_list_n <- function(x, ...) {
   validation_set_cols <- ncol(x$validation_set)
   
   cli::cli_rule(left = "The x-list for `{x$name}`", right = "ALL STEPS")
-  cli::cli_text("{.cyan $time} ({.red POSIXct [{length(x$time)}]})")
+  cli::cli_text("{.cyan $time_start} ({.red POSIXct [{length(x$time_start)}]})")
   cli::cli_text("{.cyan $name $tbl_name $tbl_src $tbl_src_details} ({.red chr [1]})")
   cli::cli_text("{.cyan $tbl} ({.blue {class(x$tbl)}})")
   cli::cli_text("{.cyan $col_names $col_types} ({.red chr [{length(x$col_names)}]})")

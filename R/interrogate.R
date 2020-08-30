@@ -62,7 +62,7 @@ interrogate <- function(agent,
                         sample_limit = 5000) {
 
   # Add the starting time to the `agent` object
-  agent$time <- Sys.time()
+  agent$time_start <- Sys.time()
 
   # Stop function if `agent$tbl` and `agent$read_fn` are both NULL
   if (is.null(agent$tbl) && is.null(agent$read_fn)) {
@@ -245,12 +245,9 @@ interrogate <- function(agent,
     # Get the ending time for the validation step
     validation_end_time <- Sys.time()
     
-    # Get the duration for the validation step    
-    time_diff_s <- 
-      difftime(validation_end_time, validation_start_time, units = "secs") %>%
-      as.numeric() %>%
-      round(4)
-    
+    # Get the time duration for the validation step (in seconds)    
+    time_diff_s <- get_time_duration(validation_start_time, validation_end_time)
+
     # Add the timing information to the `agent` object
     agent$validation_set$time_processed[i] <- validation_start_time
     agent$validation_set$proc_duration_s[i] <- time_diff_s
@@ -283,10 +280,18 @@ interrogate <- function(agent,
   # Add closing rule of interrogation console status
   create_cli_footer(quiet)
   
+  # Add the ending time to the `agent` object
+  agent$time_end <- Sys.time()
+  
   agent
 }
 
 # nocov start
+
+get_time_duration <- function(start_time, end_time, units = "secs", round = 4) {
+  
+  round(as.numeric(difftime(end_time, start_time, units = units)), digits = round)
+}
 
 create_cli_header <- function(validation_steps, quiet) {
   
@@ -1201,7 +1206,8 @@ perform_action <- function(agent, idx, type) {
   .stop <- agent$validation_set[[idx, "stop"]]
   
   .name <- agent$name
-  .time <- agent$time
+  .time_start <- agent$time_start
+  .time_end <- agent$time_end
   .tbl <- agent$tbl
   .tbl_name <- agent$tbl_name
   .tbl_src <- agent$tbl_src
@@ -1234,7 +1240,8 @@ perform_action <- function(agent, idx, type) {
       notify = .notify,
       stop = .stop,
       name = .name,
-      time = .time,
+      time_start = .time_start,
+      time_end = .time_end,
       tbl = .tbl,
       tbl_name = .tbl_name,
       tbl_src = .tbl_src,
@@ -1289,7 +1296,8 @@ perform_end_action <- function(agent) {
   .stop <- agent$validation_set$stop
   
   .name <- agent$name
-  .time <- agent$time
+  .time_start <- agent$time_start
+  .time_end <- agent$time_end
   .tbl <- agent$tbl
   .tbl_name <- agent$tbl_name
   .tbl_src <- agent$tbl_src
@@ -1339,7 +1347,8 @@ perform_end_action <- function(agent) {
       notify = .notify,
       stop = .stop,
       name = .name,
-      time = .time,
+      time_start = .time_start,
+      time_end = .time_end,
       tbl = .tbl,
       tbl_name = .tbl_name,
       tbl_src = .tbl_src,

@@ -12,7 +12,9 @@
 #' For an **x-list** obtained with `i` specified for a validation step, the
 #' following components are available:
 #' \itemize{
-#' \item `time`: the time at which the validation may have been performed
+#' \item `time_start`: the time at which the interrogation began
+#' (`POSIXct [0 or 1]`)
+#' \item `time_end`: the time at which the interrogation ended
 #' (`POSIXct [0 or 1]`)
 #' \item `name`: the (optional) name given to the validation (`chr [1]`)
 #' \item `tbl_name`: the name of the table object, if available (`chr [1]`)
@@ -133,6 +135,7 @@ get_agent_x_list <- function(agent,
     
     .name <- agent$name
     .time_start <- agent$time_start
+    .time_end <- agent$time_end
     .reporting_lang <- agent$reporting_lang
     .tbl <- agent$tbl
     .tbl_name <- agent$tbl_name
@@ -161,6 +164,7 @@ get_agent_x_list <- function(agent,
     x <-
       list(
         time_start = .time_start,
+        time_end = .time_end,
         name = .name,
         tbl_name = .tbl_name,
         tbl_src = .tbl_src,
@@ -199,6 +203,7 @@ get_agent_x_list <- function(agent,
     
     .name <- agent$name
     .time_start <- agent$time_start
+    .time_end <- agent$time_end
     .reporting_lang <- agent$reporting_lang
     .tbl <- agent$tbl
     .tbl_name <- agent$tbl_name
@@ -269,6 +274,7 @@ get_agent_x_list <- function(agent,
     x <-
       list(
         time_start = .time_start,
+        time_end = .time_end,
         name = .name,
         tbl_name = .tbl_name,
         tbl_src = .tbl_src,

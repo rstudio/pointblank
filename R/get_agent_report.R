@@ -738,7 +738,7 @@ get_agent_report <- function(agent,
           sqlite = c("#BACBEF", "#222222", "SQLite table"),
           mysql = c("#EBAD40", "#222222", "MySQL table"),
           postgres = c("#3E638B", "#FFFFFF", "PostgreSQL table"),
-          tbl_spark = c("#D47531", "#FFFFFF", "Spark DataFrame"),
+          tbl_spark = c("#E66F21", "#FFFFFF", "Spark DataFrame"),
           NA_character_
         )
 

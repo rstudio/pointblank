@@ -714,6 +714,17 @@ get_agent_report <- function(agent,
         } 
       )
 
+    # Generate the agent name
+    agent_name_styled <-
+      paste0(
+        "<span style=\"text-decoration-style: solid;",
+        "text-decoration-color: #ADD8E6; text-decoration-line: underline;",
+        "text-underline-position: under; color: #333333;",
+        "font-variant-numeric: tabular-nums; padding-left: 4px; padding-right: 2px;\">",
+        agent_name,
+        "</span>"
+      )
+    
     # Generate table type HTML
     create_table_type_html <- function(agent) {
       
@@ -911,7 +922,7 @@ get_agent_report <- function(agent,
         title = get_lsv("agent_report/pointblank_validation_title_text")[[lang]],
         subtitle = gt::md(
           paste0(
-            "`", agent_name, "` ", table_type, " ", table_time, " <br><br>"
+            agent_name_styled, " ", table_type, " ", table_time, " <br><br>"
           )
         )
       ) %>%
@@ -1063,7 +1074,7 @@ get_agent_report <- function(agent,
           ),
           subtitle = gt::md(
             paste0(
-              "`", agent_name, "` ", table_type, " ", table_time, " <br><br>"
+              agent_name_styled, " ", table_type, " ", table_time, " <br><br>"
             )
           )
         )

@@ -116,7 +116,7 @@
 <p>The reporting’s pretty sweet. We can get a <strong>gt</strong>-based report by printing an <em>agent</em>.</p>
 <p><img src="reference/figures/agent_report.png"></p>
 <hr>
-<p>Next up is an example that follows the second, <em>agent</em>-less workflow (where validation functions operate directly on data). We use the same two validation functions as before but, this time, use them directly on the data! In this workflow, by default, an error will occur if there is a single ‘fail’ unit in any validation step:</p>
+<p>Next up is an example that follows the second, <em>agent</em>-less workflow. It’s the same three validation functions as before but, this time, we use them directly on the data! In this workflow, by default, an error will occur if there is a single ‘fail’ test unit in any validation step:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="kw">dplyr</span>::<span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span>(
     a = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">NA</span>, <span class="fl">7</span>),

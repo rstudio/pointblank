@@ -1,5 +1,3 @@
-context("An x-list has the correct components")
-
 al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 
 agent <-
@@ -22,8 +20,10 @@ test_that("An x-list for a step is structurally correct", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_is(x_list_before$time, "POSIXct")
-  expect_equal(length(x_list_before$time), 0)
+  expect_is(x_list_before$time_start, "POSIXct")
+  expect_equal(length(x_list_before$time_start), 0)
+  expect_is(x_list_before$time_end, "POSIXct")
+  expect_equal(length(x_list_before$time_end), 0)
   expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_before$name))
   expect_is(x_list_before$tbl_name, "character")
   expect_equal(x_list_before$tbl_name, "small_table")
@@ -97,8 +97,10 @@ test_that("An x-list for a step is structurally correct", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equal(length(x_list_after$time), 1)
-  expect_is(x_list_after$time, "POSIXct")
+  expect_equal(length(x_list_after$time_start), 1)
+  expect_is(x_list_after$time_start, "POSIXct")
+  expect_equal(length(x_list_after$time_end), 1)
+  expect_is(x_list_after$time_end, "POSIXct")
   expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_after$name))
   expect_is(x_list_after$tbl_name, "character")
   expect_equal(x_list_after$tbl_name, "small_table")
@@ -177,8 +179,10 @@ test_that("A complete x-list is structurally correct", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equal(length(x_list_before$time), 0)
-  expect_is(x_list_before$time, "POSIXct")
+  expect_equal(length(x_list_before$time_start), 0)
+  expect_is(x_list_before$time_start, "POSIXct")
+  expect_equal(length(x_list_before$time_end), 0)
+  expect_is(x_list_before$time_end, "POSIXct")
   expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_before$name))
   expect_is(x_list_before$tbl_name, "character")
   expect_equal(x_list_before$tbl_name, "small_table")
@@ -272,8 +276,10 @@ test_that("A complete x-list is structurally correct", {
   
   # Expect elements of the object to be equivalent
   # to specific parameters
-  expect_equal(length(x_list_after$time), 1)
-  expect_is(x_list_after$time, "POSIXct")
+  expect_equal(length(x_list_after$time_start), 1)
+  expect_is(x_list_after$time_start, "POSIXct")
+  expect_equal(length(x_list_after$time_end), 1)
+  expect_is(x_list_after$time_end, "POSIXct")
   expect_true(grepl("^agent_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}:[0-9]{2}:[0-9]{2}$", x_list_after$name))
   expect_is(x_list_after$tbl_name, "character")
   expect_equal(x_list_after$tbl_name, "small_table")

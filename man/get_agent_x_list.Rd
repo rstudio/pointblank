@@ -32,7 +32,9 @@ veritable cornucopia of information.
 For an \strong{x-list} obtained with \code{i} specified for a validation step, the
 following components are available:
 \itemize{
-\item \code{time}: the time at which the validation may have been performed
+\item \code{time_start}: the time at which the interrogation began
+(\verb{POSIXct [0 or 1]})
+\item \code{time_end}: the time at which the interrogation ended
 (\verb{POSIXct [0 or 1]})
 \item \code{name}: the (optional) name given to the validation (\code{chr [1]})
 \item \code{tbl_name}: the name of the table object, if available (\code{chr [1]})

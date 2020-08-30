@@ -43,8 +43,6 @@ validate_rmd <- function(summary = TRUE,
     
     if (isTRUE(log_to_file)) {
       
-      # TODO: consider appending the date and time to the
-      # generic `validation_errors.log` filename
       test_options$perform_logging <- TRUE
       test_options$log_to_file <- file.path(getwd(), "validation_errors.log")
       

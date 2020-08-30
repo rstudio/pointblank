@@ -20,7 +20,7 @@ is_agent_empty <- function(agent) {
 }
 
 interrogation_time <- function(agent) {
-  if (has_agent_intel(agent)) agent$time else NA
+  if (has_agent_intel(agent)) agent$time_start else NA
 }
 
 number_of_validation_steps <- function(agent) {

@@ -1103,6 +1103,38 @@ get_agent_report <- function(agent,
           style = "height: 40px"
         )
       
+      if (!has_agent_intel(agent)) {
+        
+        gt_agent_report <- 
+          gt_agent_report %>%
+          gt::tab_header(
+            title = gt::md(
+              paste0(
+                "<div>",
+                "<span style=\"float: left;\">", 
+                get_lsv("agent_report/pointblank_validation_plan_text")[[lang]],
+                "</span>",
+                "<span style=\"float: right; text-decoration-line: underline; ",
+                "font-size: 16px; text-decoration-color: #008B8B;",
+                "padding-top: 0.1em; padding-right: 0.4em;\">",
+                get_lsv("agent_report/no_interrogation_performed_text")[[lang]],
+                "</span>",
+                "</div>"
+              )
+            ),
+            subtitle = gt::md(paste0(agent_name_styled, " ", table_type, " <br><br>"))
+          )
+        
+      } else {
+        
+        gt_agent_report <- 
+          gt_agent_report %>%
+          gt::tab_header(
+            title = get_lsv("agent_report/pointblank_validation_title_text")[[lang]],
+            subtitle = gt::md(paste0(agent_name_styled, " ", table_type, " <br><br>"))
+          )
+      }
+      
     } else {
       
       gt_agent_report <- 

@@ -278,6 +278,7 @@ get_agent_report <- function(agent,
         base::intersect(as.numeric(names(agent$extracts)), report_tbl$i)
       )
     ]
+  briefs <- validation_set$brief
   
   make_boxed_text_html <- function(x,
                                    color = "#333333",
@@ -353,7 +354,8 @@ get_agent_report <- function(agent,
           if (!is.na(label[x])) {
             
             paste0(
-              "<div><div style=\"float: left; width: 30px;\">",
+              "<div aria-label=\"", briefs[x], "\" data-balloon-pos=\"right\"",
+              "style=\"width: fit-content\"><div style=\"float: left; width: 30px;\">",
               add_icon_img(icon = assertion_type[x]),
               "</div>",
               "<div style=\"line-height: 0.7em; margin-left: 32px; padding-left: 3px;\">",
@@ -366,9 +368,12 @@ get_agent_report <- function(agent,
           } else {
             
             paste0(
+              "<div aria-label=\"", briefs[x], "\" data-balloon-pos=\"right\"",
+              "style=\"width: fit-content\">",
               add_icon_img(icon = assertion_type[x]),
               "<code style=\"font-size: ", text_size,
-              "px;\">&nbsp;", assertion_type[x], "()</code>"
+              "px;\">&nbsp;", assertion_type[x], "()</code>",
+              "</div>"
             )
           }
         }
@@ -399,14 +404,27 @@ get_agent_report <- function(agent,
               ),
               collapse = ", "
             )
-          x <- 
-            paste0(
-              "<div><p title=\"", paste(title, collapse = ", "), "\"style=\"margin-top: 0px;margin-bottom: 0px; ",
-              "font-family: monospace; white-space: nowrap; ",
-              "text-overflow: ellipsis; overflow: hidden;\">",
-              text,
-              "</p></div>"
-            )
+          
+          if (size == "small") {
+            x <- 
+              paste0(
+                "<div><p title=\"", paste(title, collapse = ", "), "\"style=\"margin-top: 0px;margin-bottom: 0px; ",
+                "font-family: monospace; white-space: nowrap; ",
+                "text-overflow: ellipsis; overflow: hidden;\">",
+                text,
+                "</p></div>"
+              )
+          } else {
+            x <- 
+              paste0(
+                "<div aria-label=\"", paste(title, collapse = ", "), "\" data-balloon-pos=\"left\">",
+                "<p style=\"margin-top: 0px;margin-bottom: 0px; ",
+                "font-family: monospace; white-space: nowrap; ",
+                "text-overflow: ellipsis; overflow: hidden;\">",
+                text,
+                "</p></div>"
+              )
+          }
         }
         x
       }
@@ -464,14 +482,26 @@ get_agent_report <- function(agent,
               ifelse(bounds_incl[2], "]", ")")
             )
           
-          x <- 
-            paste0(
-              "<div><p title=\"", title, "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
-              "font-family: monospace; white-space: nowrap; ",
-              "text-overflow: ellipsis; overflow: hidden;\">",
-              text,
-              "</p></div>"
-            )
+          if (size == "small") {
+            x <-
+              paste0(
+                "<div><p title=\"", title, "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "font-family: monospace; white-space: nowrap; ",
+                "text-overflow: ellipsis; overflow: hidden;\">",
+                text,
+                "</p></div>"
+              )
+          } else {
+            x <- 
+              paste0(
+                "<div aria-label=\"", title, "\" data-balloon-pos=\"left\">",
+                "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "font-family: monospace; white-space: nowrap; ",
+                "text-overflow: ellipsis; overflow: hidden;\">",
+                text,
+                "</p></div>"
+              )
+          }
           
         } else if (is.list(x) && length(x) > 0 && inherits(x, "col_schema")) {
           
@@ -500,15 +530,27 @@ get_agent_report <- function(agent,
         } else if (is_call(x)) {
           
           text <- rlang::as_label(x)
-          
-          x <- 
-            paste0(
-              "<div><p title=\"", text , "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
-              "font-family: monospace; white-space: nowrap; ",
-              "text-overflow: ellipsis; overflow: hidden;\">",
-              text,
-              "</p></div>"
-            )
+
+          if (size == "small") {
+            x <- 
+              paste0(
+                "<div><p title=\"", text , "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "font-family: monospace; white-space: nowrap; ",
+                "text-overflow: ellipsis; overflow: hidden;\">",
+                text,
+                "</p></div>"
+              )
+          } else {
+            x <- 
+              paste0(
+                "<div aria-label=\"", text, "\" data-balloon-pos=\"left\">",
+                "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "font-family: monospace; white-space: nowrap; ",
+                "text-overflow: ellipsis; overflow: hidden;\">",
+                text,
+                "</p></div>"
+              )
+          }
           
         } else if (is.list(x) && length(x) > 0 && !inherits(x, "quosures")) {
           
@@ -543,14 +585,26 @@ get_agent_report <- function(agent,
           
           text <- paste(text, collapse = ", ")
           
-          x <- 
-            paste0(
-              "<div><p title=\"", x %>% tidy_gsub("~", "") %>% paste(., collapse = ", "), "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
-              "font-family: monospace; white-space: nowrap; ",
-              "text-overflow: ellipsis; overflow: hidden;\">",
-              text,
-              "</p></div>"
-            )
+          if (size == "small") {
+            x <- 
+              paste0(
+                "<div><p title=\"", x %>% tidy_gsub("~", "") %>% paste(., collapse = ", "), "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "font-family: monospace; white-space: nowrap; ",
+                "text-overflow: ellipsis; overflow: hidden;\">",
+                text,
+                "</p></div>"
+              )
+          } else {
+            x <- 
+              paste0(
+                "<div aria-label=\"", x %>% tidy_gsub("~", "") %>% paste(., collapse = ", "),
+                "\" data-balloon-pos=\"left\"><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "font-family: monospace; white-space: nowrap; ",
+                "text-overflow: ellipsis; overflow: hidden;\">",
+                text,
+                "</p></div>"
+              )
+          }
         }
         x
       } 
@@ -743,13 +797,13 @@ get_agent_report <- function(agent,
               ),
               download = output_file_name,
               htmltools::tags$button(
-                title = title_text,
+                `aria-label` = title_text,
+                `data-balloon-pos` = "left",
                 style = "background-color: #67C2DC; color: #FFFFFF; border: none; padding: 5px; font-weight: bold; cursor: pointer; border-radius: 4px;",
                 "CSV"
               )
             ) %>%
             as.character()
-          
         }
         x
       } 

@@ -90,7 +90,7 @@
 <p><img src="reference/figures/pipeline_based_data_validations.png"></p>
 <p>The second workflow, <em>pipeline-based data validations</em> gives us a different validation scheme that is valuable for data validation checks during an ETL process. With <strong>pointblank</strong>’s validation functions, we can directly operate on data and trigger warnings, raise errors, or write out logs when exceeding specified failure thresholds. It’s a cinch to perform checks on import of the data and at key points during the transformation process, perhaps stopping everything if things are exceptionally bad with regard to data quality.</p>
 <hr>
-<p>The <strong>pointblank</strong> package is designed to be both straightforward yet powerful. And fast! Local data frames don’t take very long to validate extensively and all validation checks on remote tables are done entirely in-database. So we can add dozens or even hundreds of validation steps without any long waits for reporting. Here is a brief example of how to use <strong>pointblank</strong> to validate a local table with an agent.</p>
+<p>The <strong>pointblank</strong> package is designed to be both straightforward yet powerful. And fast! Local data frames don’t take very long to validate extensively and all validation checks on remote tables are done entirely in-database. So we can add dozens or even hundreds of validation steps without any long waits for reporting. Here is an example of how to use <strong>pointblank</strong> to validate a local table with an agent.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="co"># Generate a simple `action_levels` object to</span>
 <span class="co"># set the `warn` state if a validation step</span>

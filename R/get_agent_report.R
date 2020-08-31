@@ -275,12 +275,7 @@ get_agent_report <- function(agent,
   extracts <- 
     agent$extracts[
       as.character(
-        base::intersect(
-          as.numeric(
-            names(agent$extracts)
-          ),
-          report_tbl$i
-        )
+        base::intersect(as.numeric(names(agent$extracts)), report_tbl$i)
       )
     ]
   
@@ -296,19 +291,11 @@ get_agent_report <- function(agent,
                                    v_align = "middle") {
     
     if (!is.null(tt_position) && size == "standard") {
-      
-      # if (!is.null(tt_text_size)) {
-      #   tt_text_size <- paste0("data-balloon-length=\"", tt_text_size, "\"")
-      # }
-      
-      #tt_position <- paste0("data-balloon-pos=\"", tt_position, "\" ", tt_text_size)
       text_type <- "aria-label"
     } else {
       text_type <- "title"
     }
-    
-    #padding <- paste(paste0(padding * scale, "px"), collapse = " ")
-
+  
     text_html <- 
       htmltools::tags$span(
         htmltools::HTML(x),

@@ -57,8 +57,8 @@ The **pointblank** package is designed to be both straightforward yet
 powerful. And fast\! Local data frames don’t take very long to validate
 extensively and all validation checks on remote tables are done entirely
 in-database. So we can add dozens or even hundreds of validation steps
-without any long waits for reporting. Here is a brief example of how to
-use **pointblank** to validate a local table with an agent.
+without any long waits for reporting. Here is an example of how to use
+**pointblank** to validate a local table with an agent.
 
 ``` r
 # Generate a simple `action_levels` object to

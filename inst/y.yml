@@ -1,0 +1,13 @@
+table:
+  name: name_of_table
+  info: Some information about the table.
+columns:
+  col_1: Information about `col_1`.
+  col_2: Information about `col_2`.
+  col_3:
+    info: This column is all about numbers.
+    origin: [RAW] Obtained from a third party.
+    contact: joepublic@example.com
+changes:
+  - [2020-01-15] Recent changes to the table.
+  - [2019-12-03] Changes made.

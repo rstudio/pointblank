@@ -1,4 +1,4 @@
-name: example
+label: A simple example with the `small_table`.
 read_fn: ~small_table
 actions:
   warn_fraction: 0.1

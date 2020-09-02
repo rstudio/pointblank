@@ -46,7 +46,7 @@ test_that("pointblank agent works with dittodb-mocked Postgres database connecti
     # stop_db_capturing()
     
     expect_equal(agent$label, "trade_statistics: 'hs07_yrp' table")
-    expect_equal(agent$tbl_name, "table")
+    expect_equal(agent$tbl_name, NA_character_)
     expect_equal(agent$tbl_src, "postgres")
     expect_equal(agent$tbl_src_details, "postgres  [guest@tradestatistics.io:5432/trade_statistics]")
     expect_equal(agent$col_names, c("year", "reporter_iso", "partner_iso", "export_value_usd", "import_value_usd"))

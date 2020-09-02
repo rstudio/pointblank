@@ -26,7 +26,6 @@ agent <-
     label = "pfmegrnargs: 'rna' table",
     actions = al
   ) %>%
-  # col_vals_lt(vars(timestamp), value = as.Date("2020-05-05")) %>%
   col_vals_regex(vars(seq_short), "[GTCA]*", na_pass = TRUE) %>%
   col_is_character(vars(upi, userstamp, crc64, seq_short, seq_long, md5)) %>%
   col_vals_gte(vars(len), 1) %>%

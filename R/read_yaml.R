@@ -49,7 +49,7 @@
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~small_table,
-#'     name = "example",
+#'     label = "example",
 #'     actions = al
 #'   )
 #' 
@@ -159,7 +159,7 @@ agent_yaml_read <- function(path) {
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~small_table,
-#'     name = "example",
+#'     label = "example",
 #'     actions = al
 #'   )
 #' 
@@ -245,7 +245,7 @@ agent_yaml_interrogate <- function(path) {
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~small_table,
-#'     name = "example",
+#'     label = "example",
 #'     actions = action_levels(
 #'       warn_at = 0.10,
 #'       stop_at = 0.25,
@@ -296,10 +296,10 @@ expr_from_agent_yaml <- function(path,
   # Read the YAML file with `yaml::read_yaml()`
   y <- yaml::read_yaml(file = path)
   
-  # Get the `name` and `read_fn` fields from the YAML
+  # Get the `label` and `read_fn` fields from the YAML
   # file and create argument strings
   read_fn <- paste0("  read_fn = ", y$read_fn)
-  name <- paste0("  name = \"", y$name, "\"")
+  label <- paste0("  label = \"", y$label, "\"")
   
   # Create argument strings for the `actions` and
   # `end_fns` arguments (which could be NULL)
@@ -329,7 +329,7 @@ expr_from_agent_yaml <- function(path,
     paste0(
       "create_agent(\n",
       paste(
-        c(read_fn, name, actions, end_fns, embed_report, reporting_lang),
+        c(read_fn, label, actions, end_fns, embed_report, reporting_lang),
         collapse = ",\n"
       ),
       "\n) ",

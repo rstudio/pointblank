@@ -165,7 +165,7 @@ col_vals_lte <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x, name = "::QUIET::") %>%
+    secret_agent <- create_agent(x, label = "::QUIET::") %>%
       col_vals_lte(
         columns = columns,
         value = value,
@@ -229,7 +229,7 @@ expect_col_vals_lte <- function(object,
   fn_name <- "expect_col_vals_lte"
   
   vs <- 
-    create_agent(tbl = object, name = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") %>%
     col_vals_lte(
       columns = {{ columns }},
       value = {{ value }}, 
@@ -283,7 +283,7 @@ test_col_vals_lte <- function(object,
                               threshold = 1) {
   
   vs <- 
-    create_agent(tbl = object, name = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") %>%
     col_vals_lte(
       columns = {{ columns }},
       value = {{ value }}, 

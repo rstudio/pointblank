@@ -133,7 +133,7 @@ col_is_date <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x, name = "::QUIET::") %>%
+    secret_agent <- create_agent(x, label = "::QUIET::") %>%
       col_is_date(
         columns = columns,
         label = label,
@@ -189,7 +189,7 @@ expect_col_is_date <- function(object,
   fn_name <- "expect_col_is_date"
   
   vs <- 
-    create_agent(tbl = object, name = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") %>%
     col_is_date(
       columns = {{ columns }},
       actions = action_levels(notify_at = threshold)
@@ -236,7 +236,7 @@ test_col_is_date <- function(object,
                              threshold = 1) {
   
   vs <- 
-    create_agent(tbl = object, name = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") %>%
     col_is_date(
       columns = {{ columns }},
       actions = action_levels(notify_at = threshold)

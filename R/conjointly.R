@@ -201,7 +201,7 @@ conjointly <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x, name = "::QUIET::") %>%
+    secret_agent <- create_agent(x, label = "::QUIET::") %>%
       conjointly(
         .list = .list,
         preconditions = preconditions,
@@ -265,7 +265,7 @@ expect_conjointly <- function(object,
   fn_name <- "expect_conjointly"
   
   vs <- 
-    create_agent(tbl = object, name = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") %>%
     conjointly(
       .list = .list,
       preconditions = {{ preconditions }},
@@ -309,7 +309,7 @@ test_conjointly <- function(object,
                             threshold = 1) {
   
   vs <- 
-    create_agent(tbl = object, name = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") %>%
     conjointly(
       .list = .list,
       preconditions = {{ preconditions }},

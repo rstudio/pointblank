@@ -155,7 +155,7 @@ col_vals_in_set <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x, name = "::QUIET::") %>%
+    secret_agent <- create_agent(x, label = "::QUIET::") %>%
       col_vals_in_set(
         columns = columns,
         set = set,
@@ -216,7 +216,7 @@ expect_col_vals_in_set <- function(object,
   fn_name <- "expect_col_vals_in_set"
   
   vs <- 
-    create_agent(tbl = object, name = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") %>%
     col_vals_in_set(
       columns = {{ columns }},
       set = {{ set }}, 
@@ -267,7 +267,7 @@ test_col_vals_in_set <- function(object,
                                  threshold = 1) {
   
   vs <- 
-    create_agent(tbl = object, name = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") %>%
     col_vals_in_set(
       columns = {{ columns }},
       set = {{ set }}, 

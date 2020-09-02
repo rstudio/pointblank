@@ -141,7 +141,7 @@ col_exists <- function(x,
 
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x, name = "::QUIET::") %>%
+    secret_agent <- create_agent(x, label = "::QUIET::") %>%
       col_exists(
         columns = columns,
         actions = prime_actions(actions),
@@ -197,7 +197,7 @@ expect_col_exists <- function(object,
   fn_name <- "expect_col_exists"
   
   vs <- 
-    create_agent(tbl = object, name = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") %>%
     col_exists(
       columns = {{ columns }},
       actions = action_levels(notify_at = threshold)
@@ -243,7 +243,7 @@ test_col_exists <- function(object,
                             threshold = 1) {
   
   vs <- 
-    create_agent(tbl = object, name = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") %>%
     col_exists(
       columns = {{ columns }},
       actions = action_levels(notify_at = threshold)

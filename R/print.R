@@ -65,7 +65,7 @@ print.x_list_i <- function(x, ...) {
 
   cli::cli_rule(left = "The x-list for `{x$name}`", right = "STEP {x$i}")
   cli::cli_text("{.cyan $time_start $time_end} ({.red POSIXct [{length(x$time_start)}]})")
-  cli::cli_text("{.cyan $name $tbl_name $tbl_src $tbl_src_details} ({.red chr [1]})")
+  cli::cli_text("{.cyan $label $tbl_name $tbl_src $tbl_src_details} ({.red chr [1]})")
   cli::cli_text("{.cyan $tbl} ({.blue {class(x$tbl)}})")
   cli::cli_text("{.cyan $col_names $col_types} ({.red chr [{length(x$col_names)}]})")
   cli::cli_text("{.cyan $i $type $columns $values $label $briefs} ({.green mixed [{length(x$i)}]})")
@@ -112,7 +112,7 @@ print.x_list_n <- function(x, ...) {
   
   cli::cli_rule(left = "The x-list for `{x$name}`", right = "ALL STEPS")
   cli::cli_text("{.cyan $time_start $time_end} ({.red POSIXct [{length(x$time_start)}]})")
-  cli::cli_text("{.cyan $name $tbl_name $tbl_src $tbl_src_details} ({.red chr [1]})")
+  cli::cli_text("{.cyan $label $tbl_name $tbl_src $tbl_src_details} ({.red chr [1]})")
   cli::cli_text("{.cyan $tbl} ({.blue {class(x$tbl)}})")
   cli::cli_text("{.cyan $col_names $col_types} ({.red chr [{length(x$col_names)}]})")
   cli::cli_text("{.cyan $i $type $columns $values $label $briefs} ({.green mixed [{length(x$i)}]})")

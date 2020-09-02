@@ -4,7 +4,7 @@ al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 
 agent <-
   small_table %>%
-  create_agent(name = "local_table", actions = al) %>%
+  create_agent(label = "local_table", actions = al) %>%
   col_vals_gt(vars(date_time), vars(date), na_pass = TRUE) %>%
   col_vals_gt(vars(b), vars(g), na_pass = TRUE) %>%
   col_vals_regex(vars(b), "[1-9]-[a-z]{3}-[0-9]{3}") %>%

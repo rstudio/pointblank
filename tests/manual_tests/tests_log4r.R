@@ -9,7 +9,7 @@ agent <-
   create_agent(
     tbl = small_table,
     read_fn = ~small_table,
-    name = "small_table_tests",
+    label = "small_table_tests",
     actions = action_levels(
       warn_at = 3,
       fns = list(

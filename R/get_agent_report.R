@@ -339,8 +339,8 @@ get_agent_report <- function(agent,
         
         assertion_type_nchar <- nchar(assertion_type[x])
         
-        text_size <- ifelse(assertion_type_nchar + 2 >= 20, 9, 11)
-        text_size <- ifelse(size == "small", 10, text_size)
+        text_size <- ifelse(assertion_type_nchar + 2 >= 20, 10, 11)
+        text_size <- ifelse(size == "small", 11, text_size)
         
         if (size == "small") {
           
@@ -398,8 +398,7 @@ get_agent_report <- function(agent,
           text <- 
             paste(
               paste0(
-                "<span style=\"color: purple; ",
-                "font-size: bigger;\">&marker;</span>",
+                "<span style=\"color: purple;\">&marker;</span>",
                 text
               ),
               collapse = ", "
@@ -419,9 +418,9 @@ get_agent_report <- function(agent,
               paste0(
                 "<div aria-label=\"", paste(title, collapse = ", "), "\" data-balloon-pos=\"left\">",
                 "<p style=\"margin-top: 0px;margin-bottom: 0px; ",
-                "font-family: monospace; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
+                "font-size: 11px; white-space: nowrap; ",
+                "text-overflow: ellipsis; overflow: hidden; line-height: 2em;\">",
+                "<code>", text, "</code>",
                 "</p></div>"
               )
           }
@@ -447,7 +446,7 @@ get_agent_report <- function(agent,
           if (rlang::is_quosure(x[[1]])) {
             x_left <- 
               paste0(
-                "<span style=\"color: purple; font-size: bigger;\">&marker;</span>",
+                "<span style=\"color: purple;\">&marker;</span>",
                 rlang::as_label(x[[1]])
               )
           } else {
@@ -457,7 +456,7 @@ get_agent_report <- function(agent,
           if (rlang::is_quosure(x[[2]])) {
             x_right <- 
               paste0(
-                "<span style=\"color: purple; font-size: bigger;\">&marker;</span>",
+                "<span style=\"color: purple;\">&marker;</span>",
                 rlang::as_label(x[[2]])
               )
           } else {
@@ -496,9 +495,9 @@ get_agent_report <- function(agent,
               paste0(
                 "<div aria-label=\"", title, "\" data-balloon-pos=\"left\">",
                 "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
-                "font-family: monospace; white-space: nowrap; ",
+                "font-size: 11px; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
+                "<code>", text, "</code>",
                 "</p></div>"
               )
           }
@@ -545,9 +544,9 @@ get_agent_report <- function(agent,
               paste0(
                 "<div aria-label=\"", text, "\" data-balloon-pos=\"left\">",
                 "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
-                "font-family: monospace; white-space: nowrap; ",
+                "font-size: 11px; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
+                "<code>", text, "</code>",
                 "</p></div>"
               )
           }
@@ -579,7 +578,7 @@ get_agent_report <- function(agent,
             x %>%
             tidy_gsub(
               "~",
-              "<span style=\"color: purple; font-size: bigger;\">&marker;</span>"
+              "<span style=\"color: purple;\">&marker;</span>"
             ) %>%
             unname()
           
@@ -601,7 +600,7 @@ get_agent_report <- function(agent,
                 "\" data-balloon-pos=\"left\"><p style=\"margin-top: 0px; margin-bottom: 0px; ",
                 "font-family: monospace; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
+                "<code>", text, "</code>",
                 "</p></div>"
               )
           }
@@ -837,7 +836,8 @@ get_agent_report <- function(agent,
         NA_character_
       )
     
-    if (all(!is.na(text))) {
+    if (all(!is.na(text)) && is.na(agent$tbl_name)) {
+
       paste0(
         "<span style=\"background-color: ", text[1], ";",
         "color: ", text[2], ";padding: 0.5em 0.5em;",
@@ -847,13 +847,49 @@ get_agent_report <- function(agent,
         text[3],
         "</span>"
       )
+    } else if (all(!is.na(text)) && !is.na(agent$tbl_name)) {
+      
+      as.character(
+        htmltools::tagList(
+          htmltools::tags$span(
+            text[3],
+            style = htmltools::css(
+              `background-color` = text[1],
+              color = text[2],
+              padding = "0.5em 0.5em",
+              position = "inherit",
+              `text-transform` = "uppercase",
+              margin = "5px 0px 5px 5px",
+              `font-weight` = "bold",
+              border = paste0("solid 1px ", text[1]),
+              padding = "2px 15px 2px 15px",
+              `font-size` = "smaller"
+            )
+          ),
+          htmltools::tags$span(
+            agent$tbl_name,
+            style = htmltools::css(
+              `background-color` = "none",
+              color = text[2],
+              padding = "0.5em 0.5em",
+              position = "inherit",
+              margin = "5px 1px 5px -4px",
+              `font-weight` = "bold",
+              border = paste0("solid 1px ", text[1]),
+              padding = "2px 15px 2px 15px",
+              `font-size` = "smaller"
+            )
+          )
+        )
+      )
+      
     } else {
       ""
     }
   }
   table_type <- create_table_type_html(agent)
   
-  # Generate table execution start time
+  # Generate table execution start/end time (and duration)
   create_table_time_html <- function(agent) {
     
     time_start <- agent$time_start
@@ -869,8 +905,8 @@ get_agent_report <- function(agent,
     paste0(
       "<span style=\"background-color: #FFF;",
       "color: #444;padding: 0.5em 0.5em;",
-      "position: inherit;text-transform: uppercase;margin: 5px 0 5px 5px;",
-      "border: solid 1px #666666;font-variant-numeric: tabular-nums;",
+      "position: inherit;text-transform: uppercase;margin-left: 10px;",
+      "border: solid 1px #999999;font-variant-numeric: tabular-nums;",
       "border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;\">",
       format(time_start, "%Y-%m-%d %H:%M:%S %Z"),
       "</span>",
@@ -878,10 +914,18 @@ get_agent_report <- function(agent,
       "<span style=\"background-color: #FFF;",
       "color: #444;padding: 0.5em 0.5em;",
       "position: inherit;margin: 5px 1px 5px 0;",
-      "border: solid 1px #666666;border-left: none;",
+      "border: solid 1px #999999;border-left: none;",
       "font-variant-numeric: tabular-nums;",
       "border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;\">",
       time_duration_formatted,
+      "</span>",
+      
+      "<span style=\"background-color: #FFF;",
+      "color: #444;padding: 0.5em 0.5em;",
+      "position: inherit;text-transform: uppercase;margin: 5px 1px 5px -1px;",
+      "border: solid 1px #999999;border-left: none;",
+      "border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;\">",
+      format(time_end, "%Y-%m-%d %H:%M:%S %Z"),
       "</span>"
     )
   }
@@ -1017,10 +1061,11 @@ get_agent_report <- function(agent,
       title = get_lsv("agent_report/pointblank_validation_title_text")[[lang]],
       subtitle = gt::md(
         paste0(
-          agent_label_styled, " ", table_type, " ", table_time, " <br><br>"
+          agent_label_styled, " ", table_type, "  <br><br>"
         )
       )
     ) %>%
+    gt::tab_source_note(source_note = gt::md(table_time)) %>%
     gt::tab_options(
       table.font.size = gt::pct(90),
       row.striping.include_table_body = FALSE
@@ -1071,23 +1116,6 @@ get_agent_report <- function(agent,
       ),
       locations = gt::cells_body(columns = gt::vars(i))
     ) %>%
-    # gt::tab_style(
-    #   style = list(
-    #     gt::cell_fill(color = "#F2F2F2", alpha = 0.75),
-    #     gt::cell_text(color = "#8B8B8B")
-    #   ),
-    #   locations = gt::cells_body(
-    #     columns = TRUE,
-    #     rows = active == FALSE
-    #   )
-    # ) %>%
-    # gt::tab_style(
-    #   style = gt::cell_fill(color = "#FFC1C1", alpha = 0.35),
-    #   locations = gt::cells_body(
-    #     columns = TRUE,
-    #     rows = eval == "ERROR"
-    #   )
-    # ) %>%
     gt::tab_style(
       style = gt::cell_fill(color = "#4CA64C"),
       locations = gt::cells_body(
@@ -1241,7 +1269,17 @@ get_agent_report <- function(agent,
       ) %>%
       gt::tab_style(
         locations = gt::cells_body(columns = gt::everything()),
-        style = "height: 40px"
+        style = "height: 35px"
+      ) %>% gt::opt_css(
+        css = "
+          #report .gt_sourcenote {
+            height: 35px;
+            padding: 0
+          }
+          #report .gt_from_md {
+            line-height: 1em;
+          }
+        "
       )
     
     if (!has_agent_intel(agent)) {
@@ -1302,13 +1340,23 @@ get_agent_report <- function(agent,
         locations = gt::cells_body(columns = gt::everything()),
         style = "height: 40px"
       ) %>%
-      #gt::opt_table_font(font = gt::google_font("Open Sans")) %>%
+      gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) %>%
       gt::opt_css("@import url(\"https://unpkg.com/balloon-css/balloon.min.css\");") %>%
+      gt::opt_css("@import url(\"https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap\");") %>%
       gt::opt_css(
         css = "
           #report .gt_row {
             overflow: visible;
-          }"
+          }
+          #report .gt_sourcenote {
+            height: 35px;
+            padding: 0
+          }
+          #report code {
+            font-family: 'IBM Plex Mono', monospace, courier;
+            font-size: 11px;
+          }
+        "
       )
   }
   

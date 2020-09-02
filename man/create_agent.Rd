@@ -7,9 +7,10 @@
 create_agent(
   tbl = NULL,
   read_fn = NULL,
-  name = NULL,
+  tbl_name = NULL,
   actions = NULL,
   end_fns = NULL,
+  label = NULL,
   embed_report = FALSE,
   reporting_lang = NULL
 )
@@ -27,9 +28,9 @@ There are two ways to specify a \code{read_fn}: (1) using a function (e.g.,
 \verb{function() \{ <table reading code> \}}) or, (2) with an R formula expression
 (e.g., \verb{~ \{ <table reading code> \}}).}
 
-\item{name}{An optional name for the validation plan that the agent will
-eventually carry out during the interrogation process. If no value is
-provided, a name will be generated based on the current system time.}
+\item{tbl_name}{A optional name to assign to the input table object. If no
+value is provided, a name will be generated based on whatever information
+is available.}
 
 \item{actions}{A list containing threshold levels so that all validation
 steps can react accordingly when exceeding the set levels. This is to be
@@ -39,6 +40,11 @@ overridden.}
 
 \item{end_fns}{A list of functions that should be performed at the end of an
 interrogation.}
+
+\item{label}{An optional label for the validation plan. If no value is
+provided, a label will be generated based on the current system time.
+Markdown can be used here to make the label more visually appealing (it
+will appear in the header area of the agent report).}
 
 \item{embed_report}{An option to embed a \strong{gt}-based validation report into
 the \code{ptblank_agent} object. If \code{FALSE} (the default) then the table object
@@ -123,7 +129,7 @@ al <-
 agent <- 
   create_agent(
     small_table,
-    name = "example",
+    label = "example",
     actions = al
   )
 

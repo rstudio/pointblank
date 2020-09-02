@@ -61,7 +61,7 @@ al <-
 agent <- 
   create_agent(
     read_fn = ~small_table,
-    name = "example",
+    label = "example",
     actions = al
   )
 

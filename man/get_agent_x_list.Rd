@@ -36,7 +36,7 @@ following components are available:
 (\verb{POSIXct [0 or 1]})
 \item \code{time_end}: the time at which the interrogation ended
 (\verb{POSIXct [0 or 1]})
-\item \code{name}: the (optional) name given to the validation (\code{chr [1]})
+\item \code{label}: the optional label given to the agent (\code{chr [1]})
 \item \code{tbl_name}: the name of the table object, if available (\code{chr [1]})
 \item \code{tbl_src}: the type of table used in the validation (\code{chr [1]})
 \item \code{tbl_src_details}: if the table is a database table, this provides

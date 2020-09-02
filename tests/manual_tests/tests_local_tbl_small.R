@@ -5,7 +5,7 @@ al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 agent <-
   small_table %>%
   create_agent(
-    tbl_name = "`pointblank::small_table`",
+    tbl_name = "pointblank::small_table",
     label = "A local table test.",
     actions = al
   ) %>%

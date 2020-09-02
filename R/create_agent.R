@@ -40,12 +40,12 @@
 #' @param read_fn A function that's used for reading in the data. If a `tbl` is
 #'   not provided, then this function will be invoked. However, if both a `tbl`
 #'   *and* a `read_fn` is specified, then the supplied `tbl` will take priority.
-#'   There are two ways to specify a `read_fn`: (1) using a function (e.g., 
+#'   There are two ways to specify a `read_fn`: (1) using a function (e.g.,
 #'   `function() { <table reading code> }`) or, (2) with an R formula expression
 #'   (e.g., `~ { <table reading code> }`).
-#' @param name An optional name for the validation plan that the agent will
-#'   eventually carry out during the interrogation process. If no value is
-#'   provided, a name will be generated based on the current system time.
+#' @param tbl_name A optional name to assign to the input table object. If no
+#'   value is provided, a name will be generated based on whatever information
+#'   is available.
 #' @param actions A list containing threshold levels so that all validation
 #'   steps can react accordingly when exceeding the set levels. This is to be
 #'   created with the [action_levels()] helper function. Should an action levels
@@ -53,6 +53,10 @@
 #'   overridden.
 #' @param end_fns A list of functions that should be performed at the end of an
 #'   interrogation.
+#' @param label An optional label for the validation plan. If no value is
+#'   provided, a label will be generated based on the current system time.
+#'   Markdown can be used here to make the label more visually appealing (it
+#'   will appear in the header area of the agent report).
 #' @param embed_report An option to embed a **gt**-based validation report into
 #'   the `ptblank_agent` object. If `FALSE` (the default) then the table object
 #'   will be not generated and available with the *agent* upon returning from
@@ -95,7 +99,7 @@
 #' agent <- 
 #'   create_agent(
 #'     small_table,
-#'     name = "example",
+#'     label = "example",
 #'     actions = al
 #'   )
 #'
@@ -172,15 +176,16 @@
 #' @export
 create_agent <- function(tbl = NULL,
                          read_fn = NULL,
-                         name = NULL,
+                         tbl_name = NULL,
                          actions = NULL,
                          end_fns = NULL,
+                         label = NULL,
                          embed_report = FALSE,
                          reporting_lang = NULL) {
 
-  # Generate an agent name if none provided
-  if (is.null(name)) {
-    name <- paste0("agent_", gsub(" ", "_", Sys.time() %>% as.character()))
+  # Generate a label if none provided
+  if (is.null(label)) {
+    label <- paste0("[", gsub(" ", "|", Sys.time() %>% as.character()), "]")
   }
   
   # Normalize the reporting language identifier and stop if necessary
@@ -199,15 +204,12 @@ create_agent <- function(tbl = NULL,
     )
   }
   
-  if (!is.null(tbl)) {
+  if (!is.null(tbl) && is.null(tbl_name)) {
     tbl_name <- deparse(match.call()$tbl)
     if (tbl_name == ".") {
       tbl_name <- "table"
     }
-  } else {
-    tbl_name <- "table"
   }
-  
   
   if (!is.null(read_fn) && is.null(tbl)) {
     if (inherits(read_fn, "function")) {
@@ -237,12 +239,10 @@ create_agent <- function(tbl = NULL,
   # Create the agent list object
   agent <-
     list(
-      name = name,
-      time_start = as.POSIXct(NA)[-1],
-      time_end = as.POSIXct(NA)[-1],
       tbl = tbl,
       read_fn = read_fn,
       tbl_name = tbl_name,
+      label = label,
       db_tbl_name = tbl_information$db_tbl_name,
       tbl_src = tbl_information$tbl_src,
       tbl_src_details = tbl_information$tbl_src_details,
@@ -254,6 +254,8 @@ create_agent <- function(tbl = NULL,
       embed_report = embed_report,
       reporting = NULL,
       reporting_lang = reporting_lang,
+      time_start = as.POSIXct(NA)[-1],
+      time_end = as.POSIXct(NA)[-1],
       validation_set =
         dplyr::tibble(
           i = integer(0),

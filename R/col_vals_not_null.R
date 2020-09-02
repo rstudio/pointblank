@@ -154,7 +154,7 @@ col_vals_not_null <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x, name = "::QUIET::") %>%
+    secret_agent <- create_agent(x, label = "::QUIET::") %>%
       col_vals_not_null(
         columns = columns,
         preconditions = preconditions,
@@ -212,7 +212,7 @@ expect_col_vals_not_null <- function(object,
   fn_name <- "expect_col_vals_not_null"
   
   vs <- 
-    create_agent(tbl = object, name = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") %>%
     col_vals_not_null(
       columns = {{ columns }},
       preconditions = {{ preconditions }},
@@ -260,7 +260,7 @@ test_col_vals_not_null <- function(object,
                                    threshold = 1) {
 
   vs <- 
-    create_agent(tbl = object, name = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") %>%
     col_vals_not_null(
       columns = {{ columns }},
       preconditions = {{ preconditions }},

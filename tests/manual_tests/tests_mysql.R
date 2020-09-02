@@ -28,7 +28,7 @@ al <- action_levels(warn_at = 0.02, stop_at = 0.05, notify_at = 0.10)
 agent <- 
   dplyr::tbl(con, "assembly") %>%
   create_agent(
-    name = "aedes_aegypti_core_55_1d: 'assembly' table",
+    label = "aedes_aegypti_core_55_1d: 'assembly' table",
     actions = al
   ) %>%
   col_vals_equal(vars(cmp_start), 1) %>%

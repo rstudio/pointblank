@@ -26,7 +26,7 @@ test_that("pointblank agent works with dittodb-mocked Postgres database connecti
     agent <- expect_warning(
       dplyr::tbl(con, "hs07_yrp") %>%
         create_agent(
-          name = "trade_statistics: 'hs07_yrp' table",
+          label = "trade_statistics: 'hs07_yrp' table",
           actions = al
         ) %>%
         col_vals_gte(vars(export_value_usd), 0) %>% 
@@ -45,8 +45,8 @@ test_that("pointblank agent works with dittodb-mocked Postgres database connecti
     DBI::dbDisconnect(con)
     # stop_db_capturing()
     
-    expect_equal(agent$name, "trade_statistics: 'hs07_yrp' table")
-    expect_equal(agent$tbl_name, "table")
+    expect_equal(agent$label, "trade_statistics: 'hs07_yrp' table")
+    expect_equal(agent$tbl_name, NA_character_)
     expect_equal(agent$tbl_src, "postgres")
     expect_equal(agent$tbl_src_details, "postgres  [guest@tradestatistics.io:5432/trade_statistics]")
     expect_equal(agent$col_names, c("year", "reporter_iso", "partner_iso", "export_value_usd", "import_value_usd"))

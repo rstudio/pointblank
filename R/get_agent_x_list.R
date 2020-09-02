@@ -16,7 +16,7 @@
 #' (`POSIXct [0 or 1]`)
 #' \item `time_end`: the time at which the interrogation ended
 #' (`POSIXct [0 or 1]`)
-#' \item `name`: the (optional) name given to the validation (`chr [1]`)
+#' \item `label`: the optional label given to the agent (`chr [1]`)
 #' \item `tbl_name`: the name of the table object, if available (`chr [1]`)
 #' \item `tbl_src`: the type of table used in the validation (`chr [1]`)
 #' \item `tbl_src_details`: if the table is a database table, this provides
@@ -133,7 +133,7 @@ get_agent_x_list <- function(agent,
     .notify <- agent$validation_set[[i, "notify"]]
     .stop <- agent$validation_set[[i, "stop"]]
     
-    .name <- agent$name
+    .agent_label <- agent$label
     .time_start <- agent$time_start
     .time_end <- agent$time_end
     .reporting_lang <- agent$reporting_lang
@@ -165,7 +165,7 @@ get_agent_x_list <- function(agent,
       list(
         time_start = .time_start,
         time_end = .time_end,
-        name = .name,
+        label = .agent_label,
         tbl_name = .tbl_name,
         tbl_src = .tbl_src,
         tbl_src_details = .tbl_src_details,
@@ -201,7 +201,7 @@ get_agent_x_list <- function(agent,
     .notify <- agent$validation_set$notify
     .stop <- agent$validation_set$stop
     
-    .name <- agent$name
+    .agent_label <- agent$label
     .time_start <- agent$time_start
     .time_end <- agent$time_end
     .reporting_lang <- agent$reporting_lang
@@ -275,7 +275,7 @@ get_agent_x_list <- function(agent,
       list(
         time_start = .time_start,
         time_end = .time_end,
-        name = .name,
+        label = .agent_label,
         tbl_name = .tbl_name,
         tbl_src = .tbl_src,
         tbl_src_details = .tbl_src_details,

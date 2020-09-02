@@ -75,17 +75,21 @@ agent <-
     a = c(5, 7, 6, 5, NA, 7),
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
-  create_agent(name = "simple_tibble", actions = al) %>%
+  create_agent(
+    label = "A very *simple* example.",
+    actions = al
+  ) %>%
   col_vals_between(vars(a), 1, 9, na_pass = TRUE) %>%
   col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b)) %>%
   col_is_numeric(vars(a, b)) %>%
   interrogate()
 ```
 
-Should you want to perform validation checks on database or Spark
+Should you want to perform validation checks on database or *Spark*
 tables, provide a `tbl_dbi` or `tbl_spark` object to `create_agent()`.
-The **pointblank** package currently supports MySQL, PostgreSQL, SQLite,
-SQL Server, and Spark DataFrames (through the **sparklyr** package).
+The **pointblank** package currently supports *MySQL*, *PostgreSQL*,
+*SQLite*, *SQL Server*, and *Spark DataFrames* (through the **sparklyr**
+package).
 
 The reporting’s pretty sweet. We can get a **gt**-based report by
 printing an *agent*.

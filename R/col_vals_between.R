@@ -210,7 +210,7 @@ col_vals_between <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x, name = "::QUIET::") %>%
+    secret_agent <- create_agent(x, label = "::QUIET::") %>%
       col_vals_between(
         columns = columns,
         left = left,
@@ -278,7 +278,7 @@ expect_col_vals_between <- function(object,
   fn_name <- "expect_col_vals_between"
   
   vs <- 
-    create_agent(tbl = object, name = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") %>%
     col_vals_between(
       columns = {{ columns }},
       left = {{ left }}, 
@@ -336,7 +336,7 @@ test_col_vals_between <- function(object,
                                   threshold = 1) {
   
   vs <- 
-    create_agent(tbl = object, name = "::QUIET::") %>%
+    create_agent(tbl = object, label = "::QUIET::") %>%
     col_vals_between(
       columns = {{ columns }},
       left = {{ left }}, 

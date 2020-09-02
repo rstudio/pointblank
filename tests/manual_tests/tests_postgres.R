@@ -23,10 +23,9 @@ al <- action_levels(warn_at = 0.02, stop_at = 0.05, notify_at = 0.10)
 agent <- 
   dplyr::tbl(con, "rna") %>%
   create_agent(
-    name = "pfmegrnargs: 'rna' table",
+    label = "pfmegrnargs: 'rna' table",
     actions = al
   ) %>%
-  # col_vals_lt(vars(timestamp), value = as.Date("2020-05-05")) %>%
   col_vals_regex(vars(seq_short), "[GTCA]*", na_pass = TRUE) %>%
   col_is_character(vars(upi, userstamp, crc64, seq_short, seq_long, md5)) %>%
   col_vals_gte(vars(len), 1) %>%

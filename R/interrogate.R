@@ -105,7 +105,7 @@ interrogate <- function(agent,
     agent$extracts <- NULL
   }
 
-  if (agent$name == "::QUIET::" || !interactive()) {
+  if (agent$label == "::QUIET::" || !interactive()) {
     quiet <- TRUE
   } else {
     quiet <- FALSE
@@ -1205,7 +1205,7 @@ perform_action <- function(agent, idx, type) {
   .notify <- agent$validation_set[[idx, "notify"]]
   .stop <- agent$validation_set[[idx, "stop"]]
   
-  .name <- agent$name
+  .agent_label <- agent$label
   .time_start <- agent$time_start
   .time_end <- agent$time_end
   .tbl <- agent$tbl
@@ -1239,7 +1239,7 @@ perform_action <- function(agent, idx, type) {
       warn = .warn,
       notify = .notify,
       stop = .stop,
-      name = .name,
+      agent_label = .agent_label,
       time_start = .time_start,
       time_end = .time_end,
       tbl = .tbl,
@@ -1295,7 +1295,7 @@ perform_end_action <- function(agent) {
   .notify <- agent$validation_set$notify
   .stop <- agent$validation_set$stop
   
-  .name <- agent$name
+  .agent_label <- agent$label
   .time_start <- agent$time_start
   .time_end <- agent$time_end
   .tbl <- agent$tbl
@@ -1346,7 +1346,7 @@ perform_end_action <- function(agent) {
       warn = .warn,
       notify = .notify,
       stop = .stop,
-      name = .name,
+      agent_label = .agent_label,
       time_start = .time_start,
       time_end = .time_end,
       tbl = .tbl,

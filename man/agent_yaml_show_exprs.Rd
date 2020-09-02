@@ -33,7 +33,7 @@ carefully written by hand.
 agent <- 
   create_agent(
     read_fn = ~small_table,
-    name = "example",
+    label = "example",
     actions = action_levels(
       warn_at = 0.10,
       stop_at = 0.25,

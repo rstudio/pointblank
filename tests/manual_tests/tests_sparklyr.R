@@ -15,10 +15,6 @@ Sys.setenv(JAVA_HOME="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Conte
 sc <- spark_connect(master = "local")
 intendo_revenue_sp <- dplyr::copy_to(sc, intendo::intendo_revenue)
 
-##
-## Data Quality Analysis
-##
-
 # Make a vector of known product types
 intendo_products <-
   c(
@@ -43,7 +39,7 @@ revenue_tbl_schema <-
   )
 
 # Create an `action_levels` object, setting
-# *warn* and *stop* thresholds at 0.1 and 0.10
+# *warn* and *stop* thresholds at 0.01 and 0.10
 al <- action_levels(warn_at = 0.01, stop_at = 0.10)
 
 agent <-

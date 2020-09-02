@@ -143,9 +143,6 @@ get_agent_report <- function(agent,
   
   validation_set <- agent$validation_set
   
-  agent_name <- agent$name
-  agent_time <- agent$time_start
-  
   lang <- agent$reporting_lang
   
   eval <- 
@@ -278,58 +275,38 @@ get_agent_report <- function(agent,
         base::intersect(as.numeric(names(agent$extracts)), report_tbl$i)
       )
     ]
+  
   briefs <- validation_set$brief
-  
-  make_boxed_text_html <- function(x,
-                                   color = "#333333",
-                                   background = "transparent",
-                                   font_size = "15px",
-                                   padding = "5px",
-                                   tt_text = NULL,
-                                   tt_position = "left",
-                                   tt_text_size = NULL,
-                                   border_radius = NULL,
-                                   v_align = "middle") {
-    
-    if (!is.null(tt_position) && size == "standard") {
-      text_type <- "aria-label"
-    } else {
-      text_type <- "title"
-    }
-  
-    text_html <- 
-      htmltools::tags$span(
-        htmltools::HTML(x),
-        style = htmltools::css(
-          background = background,
-          padding = padding,
-          color = color,
-          `vertical-align` = v_align,
-          `font-size` = font_size,
-          border = "none",
-          `border-radius` = border_radius
-        )
-      )
-
-    if (size == "standard") {
-      text_html <-
-        text_html %>%
-        htmltools::tagAppendAttributes(
-          `aria-label` = tt_text,
-          `data-balloon-pos` = tt_position,
-          `data-balloon-length` = if (!is.null(tt_text_size)) tt_text_size
-        )
-    } else {
-      text_html <- text_html %>% htmltools::tagAppendAttributes(`title` = tt_text)
-    }
-
-    text_html %>% as.character()
-  }
-  
-  # Reformat `type`
   assertion_type <- validation_set$assertion_type
   label <- validation_set$label
   
+  # Generate agent label HTML
+  agent_label_styled <- create_agent_label_html(agent)
+  
+  # Generate table type HTML
+  table_type <- create_table_type_html(agent)
+
+  # Generate action levels HTML
+  action_levels <- make_action_levels_html(agent)
+  
+  # Combine label, table type, and action levels into
+  # a table subtitle <div>
+  combined_subtitle <-
+    htmltools::tagList(
+      htmltools::HTML(agent_label_styled),
+      htmltools::tags$div(
+        style = htmltools::css(
+          height = "25px"
+        ),
+        htmltools::HTML(paste0(table_type, action_levels))
+      ) 
+    ) %>% as.character()
+
+  # Generate table execution start/end time (and duration)
+  # as a table source note
+  table_time <- create_table_time_html(agent)
+  
+  # Reformat `type`
   type_upd <- 
     seq_along(assertion_type) %>%
     vapply(
@@ -339,8 +316,8 @@ get_agent_report <- function(agent,
         
         assertion_type_nchar <- nchar(assertion_type[x])
         
-        text_size <- ifelse(assertion_type_nchar + 2 >= 20, 9, 11)
-        text_size <- ifelse(size == "small", 10, text_size)
+        text_size <- ifelse(assertion_type_nchar + 2 >= 20, 10, 11)
+        text_size <- ifelse(size == "small", 11, text_size)
         
         if (size == "small") {
           
@@ -356,7 +333,7 @@ get_agent_report <- function(agent,
             paste0(
               "<div aria-label=\"", briefs[x], "\" data-balloon-pos=\"right\"",
               "style=\"width: fit-content\"><div style=\"float: left; width: 30px;\">",
-              add_icon_img(icon = assertion_type[x]),
+              add_icon_svg(icon = assertion_type[x]),
               "</div>",
               "<div style=\"line-height: 0.7em; margin-left: 32px; padding-left: 3px;\">",
               "<p style=\"margin: 0; padding-top: 4px; font-size: 9px; \">",
@@ -366,11 +343,11 @@ get_agent_report <- function(agent,
             )
             
           } else {
-            
+
             paste0(
               "<div aria-label=\"", briefs[x], "\" data-balloon-pos=\"right\"",
               "style=\"width: fit-content\">",
-              add_icon_img(icon = assertion_type[x]),
+              "<img>",add_icon_svg(icon = assertion_type[x]), "</img>",
               "<code style=\"font-size: ", text_size,
               "px;\">&nbsp;", assertion_type[x], "()</code>",
               "</div>"
@@ -398,8 +375,7 @@ get_agent_report <- function(agent,
           text <- 
             paste(
               paste0(
-                "<span style=\"color: purple; ",
-                "font-size: bigger;\">&marker;</span>",
+                "<span style=\"color: purple;\">&marker;</span>",
                 text
               ),
               collapse = ", "
@@ -419,9 +395,9 @@ get_agent_report <- function(agent,
               paste0(
                 "<div aria-label=\"", paste(title, collapse = ", "), "\" data-balloon-pos=\"left\">",
                 "<p style=\"margin-top: 0px;margin-bottom: 0px; ",
-                "font-family: monospace; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
+                "font-size: 11px; white-space: nowrap; ",
+                "text-overflow: ellipsis; overflow: hidden; line-height: 2em;\">",
+                "<code>", text, "</code>",
                 "</p></div>"
               )
           }
@@ -447,7 +423,7 @@ get_agent_report <- function(agent,
           if (rlang::is_quosure(x[[1]])) {
             x_left <- 
               paste0(
-                "<span style=\"color: purple; font-size: bigger;\">&marker;</span>",
+                "<span style=\"color: purple;\">&marker;</span>",
                 rlang::as_label(x[[1]])
               )
           } else {
@@ -457,7 +433,7 @@ get_agent_report <- function(agent,
           if (rlang::is_quosure(x[[2]])) {
             x_right <- 
               paste0(
-                "<span style=\"color: purple; font-size: bigger;\">&marker;</span>",
+                "<span style=\"color: purple;\">&marker;</span>",
                 rlang::as_label(x[[2]])
               )
           } else {
@@ -496,9 +472,9 @@ get_agent_report <- function(agent,
               paste0(
                 "<div aria-label=\"", title, "\" data-balloon-pos=\"left\">",
                 "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
-                "font-family: monospace; white-space: nowrap; ",
+                "font-size: 11px; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
+                "<code>", text, "</code>",
                 "</p></div>"
               )
           }
@@ -545,9 +521,9 @@ get_agent_report <- function(agent,
               paste0(
                 "<div aria-label=\"", text, "\" data-balloon-pos=\"left\">",
                 "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
-                "font-family: monospace; white-space: nowrap; ",
+                "font-size: 11px; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
+                "<code>", text, "</code>",
                 "</p></div>"
               )
           }
@@ -579,7 +555,7 @@ get_agent_report <- function(agent,
             x %>%
             tidy_gsub(
               "~",
-              "<span style=\"color: purple; font-size: bigger;\">&marker;</span>"
+              "<span style=\"color: purple;\">&marker;</span>"
             ) %>%
             unname()
           
@@ -601,7 +577,7 @@ get_agent_report <- function(agent,
                 "\" data-balloon-pos=\"left\"><p style=\"margin-top: 0px; margin-bottom: 0px; ",
                 "font-family: monospace; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
+                "<code>", text, "</code>",
                 "</p></div>"
               )
           }
@@ -622,6 +598,7 @@ get_agent_report <- function(agent,
           x <- 
             make_boxed_text_html(
               x = "&#x02192;",
+              size = size,
               color = "#333333",
               background = "transparent",
               font_size = "18px",
@@ -641,6 +618,7 @@ get_agent_report <- function(agent,
           x <- 
             make_boxed_text_html(
               x = "&#x021BB;",
+              size = size,
               color = "#3C898A",
               background = "transparent",
               font_size = "18px",
@@ -671,6 +649,7 @@ get_agent_report <- function(agent,
           out <- 
             make_boxed_text_html(
               x = "&check;",
+              size = size,
               color = "#4CA64C",
               background = "transparent",
               tt_text = "No evaluation issues."
@@ -695,6 +674,7 @@ get_agent_report <- function(agent,
           out <- 
             make_boxed_text_html(
               x = "&#128165;",
+              size = size,
               color = "#FFFFFF",
               background = "transparent",
               tt_text = text,
@@ -720,6 +700,7 @@ get_agent_report <- function(agent,
           out <- 
             make_boxed_text_html(
               x = "&#9888;",
+              size = size,
               color = "#222222",
               background = "transparent",
               tt_text = text,
@@ -745,6 +726,7 @@ get_agent_report <- function(agent,
           out <- 
             make_boxed_text_html(
               x = "&#128165;",
+              size = size,
               color = "#FFFFFF",
               background = "transparent",
               tt_text = text,
@@ -784,17 +766,14 @@ get_agent_report <- function(agent,
           
           output_file_name <- 
             paste0(
-              agent_name, "_",
+              "extract_",
               formatC(x, width = 4, format = "d", flag = "0"),
               ".csv"
-            ) %>%
-            tidy_gsub(":", "_")
+            )
           
           x <- 
             htmltools::a(
-              href = paste0(
-                "data:text/csv;base64,", file_encoded
-              ),
+              href = paste0("data:text/csv;base64,", file_encoded),
               download = output_file_name,
               htmltools::tags$button(
                 `aria-label` = title_text,
@@ -809,95 +788,10 @@ get_agent_report <- function(agent,
       } 
     )
   
-  # Generate the agent name
-  agent_name_styled <-
-    paste0(
-      "<span style=\"text-decoration-style: solid;",
-      "text-decoration-color: #ADD8E6; text-decoration-line: underline;",
-      "text-underline-position: under; color: #333333;",
-      "font-variant-numeric: tabular-nums; padding-left: 4px; padding-right: 2px;\">",
-      agent_name,
-      "</span>"
-    )
-  
-  # Generate table type HTML
-  create_table_type_html <- function(agent) {
-    
-    tbl_src <- agent$tbl_src
-    
-    text <- 
-      switch(
-        tbl_src,
-        data.frame = c("#9933CC", "#FFFFFF", "A data frame"),
-        tbl_df = c("#F1D35A", "#222222", "A tibble"),
-        sqlite = c("#BACBEF", "#222222", "SQLite table"),
-        mysql = c("#EBAD40", "#222222", "MySQL table"),
-        postgres = c("#3E638B", "#FFFFFF", "PostgreSQL table"),
-        tbl_spark = c("#E66F21", "#FFFFFF", "Spark DataFrame"),
-        NA_character_
-      )
-    
-    if (all(!is.na(text))) {
-      paste0(
-        "<span style=\"background-color: ", text[1], ";",
-        "color: ", text[2], ";padding: 0.5em 0.5em;",
-        "position: inherit;text-transform: uppercase;margin: 5px 1px 5px 5px;",
-        "font-weight: bold;border: solid 1px ", text[1], ";",
-        "padding: 2px 10px 2px 10px;font-size: smaller;\">",
-        text[3],
-        "</span>"
-      )
-    } else {
-      ""
-    }
-  }
-  table_type <- create_table_type_html(agent)
-  
-  # Generate table execution start time
-  create_table_time_html <- function(agent) {
-    
-    time_start <- agent$time_start
-    time_end <- agent$time_end
-    
-    if (length(time_start) < 1) {
-      return("")
-    }
-    
-    time_duration <- get_time_duration(time_start, time_end)
-    time_duration_formatted <- print_time_duration_report(time_duration)
-    
-    paste0(
-      "<span style=\"background-color: #FFF;",
-      "color: #444;padding: 0.5em 0.5em;",
-      "position: inherit;text-transform: uppercase;margin: 5px 0 5px 5px;",
-      "border: solid 1px #666666;font-variant-numeric: tabular-nums;",
-      "border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;\">",
-      format(time_start, "%Y-%m-%d %H:%M:%S %Z"),
-      "</span>",
-      
-      "<span style=\"background-color: #FFF;",
-      "color: #444;padding: 0.5em 0.5em;",
-      "position: inherit;margin: 5px 1px 5px 0;",
-      "border: solid 1px #666666;border-left: none;",
-      "font-variant-numeric: tabular-nums;",
-      "border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;\">",
-      time_duration_formatted,
-      "</span>"
-    )
-  }
-  
-  print_time_duration_report <- function(time_diff_s) {
-    
-    if (time_diff_s < 1) {
-      "< 1 s"
-    } else {
-      paste0(formatC(round(time_diff_s, 1), format = "f", drop0trailing = FALSE, digits = 1), " s")
-    }
-  }
-  
-  table_time <- create_table_time_html(agent)
-  
+  #
   # Reformat W, S, and N
+  #
+  
   W_upd <- 
     validation_set$warn %>%
     vapply(
@@ -907,9 +801,9 @@ get_agent_report <- function(agent,
         if (is.na(x)) {
           x <- "&mdash;"
         } else if (x == TRUE) {
-          x <- "<span style=\"color: #FFBF00;\">&#9679;</span>"
+          x <- "<span style=\"color: #E5AB00;\">&#9679;</span>"
         } else if (x == FALSE) {
-          x <- "<span style=\"color: #FFBF00;\">&cir;</span>"
+          x <- "<span style=\"color: #E5AB00;\">&cir;</span>"
         }
         x
       }
@@ -958,7 +852,7 @@ get_agent_report <- function(agent,
   f_fail_val <- ifelse(f_fail_val > 0 & f_fail_val < 0.01, 0.01, f_fail_val)
   f_fail_val <- ifelse(f_fail_val < 1 & f_fail_val > 0.99, 0.99, f_fail_val)
   f_fail_val <- as.numeric(f_fail_val)
-  
+
   gt_agent_report <- 
     report_tbl %>%
     dplyr::mutate(
@@ -1015,12 +909,9 @@ get_agent_report <- function(agent,
     ) %>%
     gt::tab_header(
       title = get_lsv("agent_report/pointblank_validation_title_text")[[lang]],
-      subtitle = gt::md(
-        paste0(
-          agent_name_styled, " ", table_type, " ", table_time, " <br><br>"
-        )
-      )
+      subtitle = gt::md(combined_subtitle)
     ) %>%
+    gt::tab_source_note(source_note = gt::md(table_time)) %>%
     gt::tab_options(
       table.font.size = gt::pct(90),
       row.striping.include_table_body = FALSE
@@ -1071,23 +962,6 @@ get_agent_report <- function(agent,
       ),
       locations = gt::cells_body(columns = gt::vars(i))
     ) %>%
-    # gt::tab_style(
-    #   style = list(
-    #     gt::cell_fill(color = "#F2F2F2", alpha = 0.75),
-    #     gt::cell_text(color = "#8B8B8B")
-    #   ),
-    #   locations = gt::cells_body(
-    #     columns = TRUE,
-    #     rows = active == FALSE
-    #   )
-    # ) %>%
-    # gt::tab_style(
-    #   style = gt::cell_fill(color = "#FFC1C1", alpha = 0.35),
-    #   locations = gt::cells_body(
-    #     columns = TRUE,
-    #     rows = eval == "ERROR"
-    #   )
-    # ) %>%
     gt::tab_style(
       style = gt::cell_fill(color = "#4CA64C"),
       locations = gt::cells_body(
@@ -1215,7 +1089,7 @@ get_agent_report <- function(agent,
         ),
         subtitle = gt::md(
           paste0(
-            agent_name_styled, " ", table_type, " ", table_time, " <br><br>"
+            agent_label_styled, " ", table_type, " ", table_time, " <br><br>"
           )
         )
       )
@@ -1241,7 +1115,7 @@ get_agent_report <- function(agent,
       ) %>%
       gt::tab_style(
         locations = gt::cells_body(columns = gt::everything()),
-        style = "height: 40px"
+        style = "height: 35px"
       )
     
     if (!has_agent_intel(agent)) {
@@ -1263,7 +1137,7 @@ get_agent_report <- function(agent,
               "</div>"
             )
           ),
-          subtitle = gt::md(paste0(agent_name_styled, " ", table_type, " <br><br>"))
+          subtitle = gt::md(paste0(agent_label_styled, " ", table_type, " <br><br>"))
         )
       
     } else {
@@ -1272,7 +1146,7 @@ get_agent_report <- function(agent,
         gt_agent_report %>%
         gt::tab_header(
           title = get_lsv("agent_report/pointblank_validation_title_text")[[lang]],
-          subtitle = gt::md(paste0(agent_name_styled, " ", table_type, " <br><br>"))
+          subtitle = gt::md(paste0(agent_label_styled, " ", table_type, " <br><br>"))
         )
     }
     
@@ -1302,17 +1176,312 @@ get_agent_report <- function(agent,
         locations = gt::cells_body(columns = gt::everything()),
         style = "height: 40px"
       ) %>%
-      #gt::opt_table_font(font = gt::google_font("Open Sans")) %>%
+      gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) %>%
       gt::opt_css("@import url(\"https://unpkg.com/balloon-css/balloon.min.css\");") %>%
+      gt::opt_css("@import url(\"https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap\");") %>%
       gt::opt_css(
         css = "
           #report .gt_row {
             overflow: visible;
-          }"
+          }
+          #report .gt_sourcenote {
+            height: 35px;
+            padding: 0
+          }
+          #report code {
+            font-family: 'IBM Plex Mono', monospace, courier;
+            font-size: 11px;
+          }
+        "
       )
   }
   
   # nocov end
   
   gt_agent_report
+}
+
+create_table_time_html <- function(agent) {
+  
+  time_start <- agent$time_start
+  time_end <- agent$time_end
+  
+  if (length(time_start) < 1) {
+    return("")
+  }
+  
+  time_duration <- get_time_duration(time_start, time_end)
+  time_duration_formatted <- print_time_duration_report(time_duration)
+  
+  paste0(
+    "<span style=\"background-color: #FFF;",
+    "color: #444;padding: 0.5em 0.5em;",
+    "position: inherit;text-transform: uppercase;margin-left: 10px;",
+    "border: solid 1px #999999;font-variant-numeric: tabular-nums;",
+    "border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;\">",
+    format(time_start, "%Y-%m-%d %H:%M:%S %Z"),
+    "</span>",
+    
+    "<span style=\"background-color: #FFF;",
+    "color: #444;padding: 0.5em 0.5em;",
+    "position: inherit;margin: 5px 1px 5px 0;",
+    "border: solid 1px #999999;border-left: none;",
+    "font-variant-numeric: tabular-nums;",
+    "border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;\">",
+    time_duration_formatted,
+    "</span>",
+    
+    "<span style=\"background-color: #FFF;",
+    "color: #444;padding: 0.5em 0.5em;",
+    "position: inherit;text-transform: uppercase;margin: 5px 1px 5px -1px;",
+    "border: solid 1px #999999;border-left: none;",
+    "border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;\">",
+    format(time_end, "%Y-%m-%d %H:%M:%S %Z"),
+    "</span>"
+  )
+}
+
+print_time_duration_report <- function(time_diff_s) {
+  
+  if (time_diff_s < 1) {
+    "< 1 s"
+  } else {
+    paste0(formatC(round(time_diff_s, 1), format = "f", drop0trailing = FALSE, digits = 1), " s")
+  }
+}
+
+create_agent_label_html <- function(agent) {
+  
+  htmltools::tags$span(
+    agent$label,
+    style = htmltools::css(
+      `text-decoration-style` = "solid",
+      `text-decoration-color` = "#ADD8E6",
+      `text-decoration-line` = "underline",
+      `text-underline-position` = "under",
+      color = "#333333",
+      `font-variant-numeric` = "tabular-nums",
+      `padding-left` = "4px",
+      `margin-right` = "5px",
+      `padding-right` = "2px"
+    )
+  ) %>% as.character()
+}
+
+create_table_type_html <- function(agent) {
+  
+  text <- 
+    switch(
+      agent$tbl_src,
+      data.frame = c("#9933CC", "#FFFFFF", "A data frame"),
+      tbl_df = c("#F1D35A", "#222222", "A tibble"),
+      sqlite = c("#BACBEF", "#222222", "SQLite table"),
+      mysql = c("#EBAD40", "#222222", "MySQL table"),
+      postgres = c("#3E638B", "#FFFFFF", "PostgreSQL table"),
+      tbl_spark = c("#E66F21", "#FFFFFF", "Spark DataFrame"),
+      NA_character_
+    )
+  
+  if (all(!is.na(text)) && is.na(agent$tbl_name)) {
+    
+    paste0(
+      "<span style=\"background-color: ", text[1], ";",
+      "color: ", text[2], ";padding: 0.5em 0.5em;",
+      "position: inherit;text-transform: uppercase;margin: 5px 1px 5px 4px;",
+      "font-weight: bold;border: solid 1px ", text[1], ";",
+      "padding: 2px 10px 2px 10px;font-size: smaller;\">",
+      text[3],
+      "</span>"
+    )
+  } else if (all(!is.na(text)) && !is.na(agent$tbl_name)) {
+    
+    as.character(
+      htmltools::tagList(
+        htmltools::tags$span(
+          text[3],
+          style = htmltools::css(
+            `background-color` = text[1],
+            color = text[2],
+            padding = "0.5em 0.5em",
+            position = "inherit",
+            `text-transform` = "uppercase",
+            margin = "5px 0px 5px 5px",
+            `font-weight` = "bold",
+            border = paste0("solid 1px ", text[1]),
+            padding = "2px 15px 2px 15px",
+            `font-size` = "smaller"
+          )
+        ),
+        htmltools::tags$span(
+          agent$tbl_name,
+          style = htmltools::css(
+            `background-color` = "none",
+            color = text[2],
+            padding = "0.5em 0.5em",
+            position = "inherit",
+            margin = "5px 10px 5px -4px",
+            `font-weight` = "bold",
+            border = paste0("solid 1px ", text[1]),
+            padding = "2px 15px 2px 15px",
+            `font-size` = "smaller"
+          )
+        )
+      )
+    )
+    
+  } else {
+    ""
+  }
+}
+
+make_action_levels_html <- function(agent) {
+  
+  actions <- agent$actions
+  
+  if (is.null(unlist(actions[1:6]))) {
+    return("")
+  }
+  
+  warn <- c(actions$warn_fraction, actions$warn_count) %||% "&mdash;"
+  stop <- c(actions$stop_fraction, actions$stop_count) %||% "&mdash;"
+  notify <- c(actions$notify_fraction, actions$notify_count) %||% "&mdash;"
+  
+  as.character(
+    htmltools::tagList(
+      htmltools::tags$span(
+        "WARN",
+        style = htmltools::css(
+          `background-color` = "#E5AB00",
+          color = "white",
+          padding = "0.5em 0.5em",
+          position = "inherit",
+          `text-transform` = "uppercase",
+          margin = "5px 0px 5px 5px",
+          `font-weight` = "bold",
+          border = paste0("solid 1px #E5AB00"),
+          padding = "2px 15px 2px 15px",
+          `font-size` = "smaller"
+        )
+      ),
+      htmltools::tags$span(
+        htmltools::HTML(warn),
+        style = htmltools::css(
+          `background-color` = "none",
+          color = "#333333",
+          padding = "0.5em 0.5em",
+          position = "inherit",
+          margin = "5px 0px 5px -4px",
+          `font-weight` = "bold",
+          border = paste0("solid 1px #E5AB00"),
+          padding = "2px 15px 2px 15px",
+          `font-size` = "smaller"
+        )
+      ),
+      htmltools::tags$span(
+        "STOP",
+        style = htmltools::css(
+          `background-color` = "#D0182F",
+          color = "white",
+          padding = "0.5em 0.5em",
+          position = "inherit",
+          `text-transform` = "uppercase",
+          margin = "5px 0px 5px 1px",
+          `font-weight` = "bold",
+          border = paste0("solid 1px #D0182F"),
+          padding = "2px 15px 2px 15px",
+          `font-size` = "smaller"
+        )
+      ),
+      htmltools::tags$span(
+        htmltools::HTML(stop),
+        style = htmltools::css(
+          `background-color` = "none",
+          color = "#333333",
+          padding = "0.5em 0.5em",
+          position = "inherit",
+          margin = "5px 0px 5px -4px",
+          `font-weight` = "bold",
+          border = paste0("solid 1px #D0182F"),
+          padding = "2px 15px 2px 15px",
+          `font-size` = "smaller"
+        )
+      ),
+      htmltools::tags$span(
+        "NOTIFY",
+        style = htmltools::css(
+          `background-color` = "#499FFE",
+          color = "white",
+          padding = "0.5em 0.5em",
+          position = "inherit",
+          `text-transform` = "uppercase",
+          margin = "5px 0px 5px 1px",
+          `font-weight` = "bold",
+          border = paste0("solid 1px #499FFE"),
+          padding = "2px 15px 2px 15px",
+          `font-size` = "smaller"
+        )
+      ),
+      htmltools::tags$span(
+        htmltools::HTML(notify),
+        style = htmltools::css(
+          `background-color` = "none",
+          color = "#333333",
+          padding = "0.5em 0.5em",
+          position = "inherit",
+          margin = "5px 0px 5px -4px",
+          `font-weight` = "bold",
+          border = paste0("solid 1px #499FFE"),
+          padding = "2px 15px 2px 15px",
+          `font-size` = "smaller"
+        )
+      )
+    )
+  )
+}
+
+make_boxed_text_html <- function(x,
+                                 size = "standard",
+                                 color = "#333333",
+                                 background = "transparent",
+                                 font_size = "15px",
+                                 padding = "5px",
+                                 tt_text = NULL,
+                                 tt_position = "left",
+                                 tt_text_size = NULL,
+                                 border_radius = NULL,
+                                 v_align = "middle") {
+  
+  if (!is.null(tt_position) && size == "standard") {
+    text_type <- "aria-label"
+  } else {
+    text_type <- "title"
+  }
+  
+  text_html <- 
+    htmltools::tags$span(
+      htmltools::HTML(x),
+      style = htmltools::css(
+        background = background,
+        padding = padding,
+        color = color,
+        `vertical-align` = v_align,
+        `font-size` = font_size,
+        border = "none",
+        `border-radius` = border_radius
+      )
+    )
+  
+  if (size == "standard") {
+    text_html <-
+      text_html %>%
+      htmltools::tagAppendAttributes(
+        `aria-label` = tt_text,
+        `data-balloon-pos` = tt_position,
+        `data-balloon-length` = if (!is.null(tt_text_size)) tt_text_size
+      )
+  } else {
+    text_html <- text_html %>% htmltools::tagAppendAttributes(`title` = tt_text)
+  }
+  
+  text_html %>% as.character()
 }

@@ -25,7 +25,7 @@ test_that("pointblank agent works with dittodb-mocked MySQL database connection"
     # dbFetch `n` is ignored while mocking databases.
     agent <- expect_warning(dplyr::tbl(con, "assembly") %>%
       create_agent(
-        name = "aedes_aegypti_core_55_1d: 'assembly' table",
+        label = "aedes_aegypti_core_55_1d: 'assembly' table",
         actions = al
       ) %>%
       col_vals_equal(vars(cmp_start), 1) %>%
@@ -50,7 +50,7 @@ test_that("pointblank agent works with dittodb-mocked MySQL database connection"
     DBI::dbDisconnect(con)
     # stop_db_capturing()
     
-    expect_equal(agent$name, "aedes_aegypti_core_55_1d: 'assembly' table")
+    expect_equal(agent$label, "aedes_aegypti_core_55_1d: 'assembly' table")
     expect_equal(agent$tbl_name, "table")
     expect_equal(agent$tbl_src, "mysql")
     expect_equal(agent$tbl_src_details, "mysql  [anonymous@ensembldb.ensembl.org:NA/aedes_aegypti_core_55_1d]")

@@ -25,7 +25,7 @@ revenue_tbl_schema <-
 
 # Create an `action_levels` object, setting
 # *warn* and *stop* thresholds at 0.01 and 0.10
-al <- action_levels(warn_at = 0.01, stop_at = 0.10)
+al <- action_levels(warn_at = 0.01, stop_at = 0.10, notify_at = 0.15)
 
 agent <-
   create_agent(

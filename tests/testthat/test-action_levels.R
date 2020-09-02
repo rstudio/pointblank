@@ -1,5 +1,3 @@
-context("Tests of `action_levels()`")
-
 test_that("The `action_levels()` helper function works as expected", {
   
   # Expect that if `action_levels()` is used as is,
@@ -148,7 +146,7 @@ test_that("The `action_levels()` helper function works as expected", {
 test_that("The appropriate actions occur when using `action_levels()`", {
   
   agent <-
-    create_agent(tbl = small_table, name = "small_table_tests") %>%
+    create_agent(tbl = small_table, label = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
       actions = action_levels(warn_at = 3, fns = list(warn = ~"warning")
@@ -165,7 +163,7 @@ test_that("The appropriate actions occur when using `action_levels()`", {
   agent_report$W %>% expect_equal(rep(TRUE, 2))
   
   agent <-
-    create_agent(tbl = small_table, name = "small_table_tests") %>%
+    create_agent(tbl = small_table, label = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
       actions = action_levels(notify_at = 3, fns = list(notify = ~"notify")
@@ -182,7 +180,7 @@ test_that("The appropriate actions occur when using `action_levels()`", {
   agent_report$N %>% expect_equal(rep(TRUE, 2))
   
   agent <-
-    create_agent(tbl = small_table, name = "small_table_tests") %>%
+    create_agent(tbl = small_table, label = "small_table_tests") %>%
     col_vals_gt(
       vars(d), 1000,
       actions = action_levels(stop_at = 3, fns = list(stop = ~"stop")

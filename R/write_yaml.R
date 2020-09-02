@@ -53,7 +53,7 @@
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~small_table,
-#'     name = "example",
+#'     label = "example",
 #'     actions = al
 #'   )
 #' 
@@ -160,7 +160,7 @@ agent_yaml_write <- function(agent,
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~small_table,
-#'     name = "example",
+#'     label = "example",
 #'     actions = action_levels(
 #'       warn_at = 0.10,
 #'       stop_at = 0.25,
@@ -327,8 +327,8 @@ to_list_read_fn <- function(read_fn) {
   list(read_fn = read_fn %>% rlang::as_label())
 }
 
-to_list_name <- function(name) {
-  list(name = name)
+to_list_label <- function(label) {
+  list(label = label)
 }
 
 get_arg_value <- function(value) {
@@ -404,7 +404,7 @@ as_agent_yaml_list <- function(agent) {
   action_levels_default <- as_action_levels(agent$actions)
   end_fns <- agent$end_fns %>% unlist()
   
-  lst_name <- to_list_name(agent$name)
+  lst_label <- to_list_label(agent$label)
   lst_read_fn <- to_list_read_fn(agent$read_fn)
   
   if (is.null(action_levels_default)) {
@@ -600,7 +600,7 @@ as_agent_yaml_list <- function(agent) {
   }
   
   c(
-    lst_name,
+    lst_label,
     lst_read_fn,
     lst_action_levels,
     lst_end_fns,

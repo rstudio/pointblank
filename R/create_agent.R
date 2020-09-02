@@ -207,8 +207,11 @@ create_agent <- function(tbl = NULL,
   if (!is.null(tbl) && is.null(tbl_name)) {
     tbl_name <- deparse(match.call()$tbl)
     if (tbl_name == ".") {
-      tbl_name <- "table"
+      tbl_name <- NA_character_
     }
+  } 
+  if (is.null(tbl_name)) {
+    tbl_name <- NA_character_
   }
   
   if (!is.null(read_fn) && is.null(tbl)) {

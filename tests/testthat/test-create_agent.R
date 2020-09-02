@@ -14,10 +14,11 @@ test_that("Creating a valid `agent` object is possible", {
   expect_true(
     all(
       names(agent) ==
-        c("name", "time_start", "time_end", "tbl", "read_fn", "tbl_name",
+        c("tbl", "read_fn", "tbl_name", "label",
           "db_tbl_name", "tbl_src", "tbl_src_details", "col_names",
           "col_types", "db_col_types", "actions", "end_fns", "embed_report",
-          "reporting", "reporting_lang", "validation_set", "extracts"
+          "reporting", "reporting_lang", "time_start", "time_end",
+          "validation_set", "extracts"
         )
     )
   )
@@ -29,19 +30,21 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$validation_set, "tbl_df")
   
   # Expect certain classes for the different `ptblank_agent` components
-  expect_is(agent$name, "character")
-  expect_is(agent$time_start, "POSIXct")
-  expect_is(agent$time_end, "POSIXct")
   expect_is(agent$tbl, class(tbl))
+  expect_null(agent$read_fn)
   expect_is(agent$tbl_name, "character")
+  expect_is(agent$label, "character")
   expect_is(agent$tbl_src, "character")
   expect_is(agent$tbl_src_details, "character")
   expect_is(agent$col_names, "character")
   expect_is(agent$col_types, "character")
+  expect_is(agent$db_col_types, "character")
   expect_null(agent$actions)
   expect_is(agent$end_fns, "list")
   expect_is(agent$embed_report, "logical")
   expect_is(agent$reporting_lang, "character")
+  expect_is(agent$time_start, "POSIXct")
+  expect_is(agent$time_end, "POSIXct")
   expect_is(agent$validation_set$i, "integer")
   expect_is(agent$validation_set$assertion_type, "character")
   expect_is(agent$validation_set$column, "list")
@@ -69,9 +72,16 @@ test_that("Creating a valid `agent` object is possible", {
   expect_is(agent$validation_set$proc_duration_s, "numeric")
   expect_is(agent$extracts, "list")
   
-  # Create an agent with a name
-  agent_name <- create_agent(tbl = tbl, name = "test")
+  # Expect that the agent label is a formatted date-time
+  expect_match(agent$label, "^\\[[0-9]{4}-[0-9]{2}-[0-9]{2}\\|[0-9]{2}:[0-9]{2}:[0-9]{2}\\]$")
   
-  # Expect that the agent name has been set
-  expect_equivalent(agent_name$name, "test")
+  # Expect that the table name was correctly guessed as `tbl`
+  expect_match(agent$tbl_name, "tbl")
+  
+  # Create an agent with a label and a table name
+  agent_name <- create_agent(tbl = tbl, tbl_name = "table", label = "test")
+  
+  # Expect that the agent label has been set
+  expect_equivalent(agent_name$tbl_name, "table")
+  expect_equivalent(agent_name$label, "test")
 })

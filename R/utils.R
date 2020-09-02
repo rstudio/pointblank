@@ -412,7 +412,33 @@ add_icon_img <- function(icon,
       )
     )
   
-  htmltools::HTML(as.character(img))
+  gsub("\\s\\s+", " ", htmltools::HTML(as.character(img)))
+}
+
+add_icon_svg <- function(icon,
+                         height = 30,
+                         v_align = "middle") {
+  
+  file <- 
+    system.file(
+      "img", "function_icons", paste0(icon, ".svg"),
+      package = "pointblank"
+    )
+  
+  htmltools::tags$div(
+    style = htmltools::css(
+      margin = 0,
+      padding = 0,
+      display = "inline-block",
+      height = "30px",
+      `vertical-align` = "middle"
+    ),
+    htmltools::HTML(
+      paste(readLines(con = file, warn = FALSE), collapse = "") %>%
+        tidy_gsub("width=\"[0-9]*?px", paste0("width=\"", height, "px")) %>%
+        tidy_gsub("height=\"[0-9]*?px", paste0("height=\"", height, "px"))
+    )
+  ) %>% as.character()
 }
 
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {

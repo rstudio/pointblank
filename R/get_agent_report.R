@@ -143,7 +143,7 @@ get_agent_report <- function(agent,
   
   validation_set <- agent$validation_set
   
-  agent_name <- agent$name
+  agent_label <- agent$label
   agent_time <- agent$time_start
   
   lang <- agent$reporting_lang
@@ -784,7 +784,7 @@ get_agent_report <- function(agent,
           
           output_file_name <- 
             paste0(
-              agent_name, "_",
+              agent_label, "_",
               formatC(x, width = 4, format = "d", flag = "0"),
               ".csv"
             ) %>%
@@ -810,13 +810,13 @@ get_agent_report <- function(agent,
     )
   
   # Generate the agent name
-  agent_name_styled <-
+  agent_label_styled <-
     paste0(
       "<span style=\"text-decoration-style: solid;",
       "text-decoration-color: #ADD8E6; text-decoration-line: underline;",
       "text-underline-position: under; color: #333333;",
       "font-variant-numeric: tabular-nums; padding-left: 4px; padding-right: 2px;\">",
-      agent_name,
+      agent_label,
       "</span>"
     )
   
@@ -1017,7 +1017,7 @@ get_agent_report <- function(agent,
       title = get_lsv("agent_report/pointblank_validation_title_text")[[lang]],
       subtitle = gt::md(
         paste0(
-          agent_name_styled, " ", table_type, " ", table_time, " <br><br>"
+          agent_label_styled, " ", table_type, " ", table_time, " <br><br>"
         )
       )
     ) %>%
@@ -1215,7 +1215,7 @@ get_agent_report <- function(agent,
         ),
         subtitle = gt::md(
           paste0(
-            agent_name_styled, " ", table_type, " ", table_time, " <br><br>"
+            agent_label_styled, " ", table_type, " ", table_time, " <br><br>"
           )
         )
       )
@@ -1263,7 +1263,7 @@ get_agent_report <- function(agent,
               "</div>"
             )
           ),
-          subtitle = gt::md(paste0(agent_name_styled, " ", table_type, " <br><br>"))
+          subtitle = gt::md(paste0(agent_label_styled, " ", table_type, " <br><br>"))
         )
       
     } else {
@@ -1272,7 +1272,7 @@ get_agent_report <- function(agent,
         gt_agent_report %>%
         gt::tab_header(
           title = get_lsv("agent_report/pointblank_validation_title_text")[[lang]],
-          subtitle = gt::md(paste0(agent_name_styled, " ", table_type, " <br><br>"))
+          subtitle = gt::md(paste0(agent_label_styled, " ", table_type, " <br><br>"))
         )
     }
     

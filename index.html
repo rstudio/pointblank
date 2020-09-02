@@ -106,13 +106,16 @@
     a = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">NA</span>, <span class="fl">7</span>),
     b = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">6</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>,  <span class="fl">0</span>, <span class="fl">7</span>)
   ) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/create_agent.html">create_agent</a></span>(name = <span class="st">"simple_tibble"</span>, actions = <span class="kw">al</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/create_agent.html">create_agent</a></span>(
+    label = <span class="st">"A very *simple* example."</span>,
+    actions = <span class="kw">al</span>
+  ) <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/col_vals_between.html">col_vals_between</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">a</span>), <span class="fl">1</span>, <span class="fl">9</span>, na_pass = <span class="fl">TRUE</span>) <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">c</span>), <span class="fl">12</span>, preconditions = <span class="op">~</span> <span class="kw">.</span> <span class="op">%&gt;%</span> <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(c = <span class="kw">a</span> <span class="op">+</span> <span class="kw">b</span>)) <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">a</span>, <span class="kw">b</span>)) <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/interrogate.html">interrogate</a></span>()
 </pre></div>
-<p>Should you want to perform validation checks on database or Spark tables, provide a <code>tbl_dbi</code> or <code>tbl_spark</code> object to <code><a href="reference/create_agent.html">create_agent()</a></code>. The <strong>pointblank</strong> package currently supports MySQL, PostgreSQL, SQLite, SQL Server, and Spark DataFrames (through the <strong>sparklyr</strong> package).</p>
+<p>Should you want to perform validation checks on database or <em>Spark</em> tables, provide a <code>tbl_dbi</code> or <code>tbl_spark</code> object to <code><a href="reference/create_agent.html">create_agent()</a></code>. The <strong>pointblank</strong> package currently supports <em>MySQL</em>, <em>PostgreSQL</em>, <em>SQLite</em>, <em>SQL Server</em>, and <em>Spark DataFrames</em> (through the <strong>sparklyr</strong> package).</p>
 <p>The reporting’s pretty sweet. We can get a <strong>gt</strong>-based report by printing an <em>agent</em>.</p>
 <p><img src="reference/figures/agent_report.png"></p>
 <hr>

@@ -542,7 +542,7 @@ meta_yaml_read <- function(path) {
           for (z in x_names) {
             
             if (is.list(y[["table"]][[z]])) {
-              stop("All subcomponents inside of `table` should be a character vector",
+              stop("All subcomponents inside of `table` should be a character vector.",
                    call. = FALSE)
             }
           }
@@ -574,12 +574,12 @@ meta_yaml_read <- function(path) {
             if (is.list(y[["columns"]][[z]])) {
               
               if (!all(unname(unlist(lapply(y[["columns"]][[z]], is.character))))) {
-                stop("All subcomponents inside of `columns/{column_name}` should be a character vector",
+                stop("All subcomponents inside of `columns/{column_name}` should be a character vector.",
                      call. = FALSE)
               }
               
             } else if (!is.character(y[["columns"]][[z]])) {
-              stop("A component inside `columns` should either be text or text under a heading",
+              stop("A component inside `columns` should either be text or text under a heading.",
                    call. = FALSE)
             }
           }

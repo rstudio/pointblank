@@ -509,3 +509,55 @@ make_validation_steps <- function(steps) {
   
   gsub("rows_distinct(\n  columns = NULL\n)", "rows_distinct()", str_exprs, fixed = TRUE)
 }
+
+
+#
+# Pointblank Metadata YAML
+#
+
+meta_yaml_read <- function(path) {
+  
+  # Read the YAML file with `yaml::read_yaml()`
+  y <- yaml::read_yaml(file = path)
+    
+  # If `columns` is present, perform a few validations on that component
+  if ("columns" %in% names(y)) {
+    
+    # Validate that 2nd-level elements have unique names
+    if (any(duplicated(names(y[["columns"]])))) {
+      stop("Duplicate column names provided in `columns`.", call. = FALSE)
+    }
+    
+    # Validate that there is no more than only a single level below
+    # the column names
+    
+    column_names <- names(y[["columns"]])
+    
+    vapply(
+      column_names,
+      FUN.VALUE = logical(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        x_names <- names(y[["columns"]][x])
+        
+        for (z in x_names) {
+          
+          if (is.list(y[["columns"]][[z]])) {
+            
+            if (!all(unname(unlist(lapply(y[["columns"]][[z]], is.character))))) {
+              stop("All subcomponents inside of `columns/{column_name}` should be a character vector",
+                   call. = FALSE)
+            }
+            
+          } else if (!is.character(y[["columns"]][[z]])) {
+            stop("A component inside `columns` should either be text or text under a heading",
+                 call. = FALSE)
+          }
+        }
+        TRUE   
+      }
+    )
+    
+  }
+}
+

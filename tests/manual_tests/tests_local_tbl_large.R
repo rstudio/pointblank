@@ -46,7 +46,7 @@ agent <-
   col_vals_lt(
     vars(revenue),
     value = vars(price),
-    preconditions = ~ . %>% filter(type != "ad")
+    preconditions = ~ . %>% dplyr::filter(type != "ad")
   ) %>%
   col_vals_in_set(
     vars(type),

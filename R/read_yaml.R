@@ -616,3 +616,547 @@ meta_yaml_read <- function(path) {
   y
 }
 
+meta_yaml_tbl <- function(path) {
+  
+  # nocov start
+  
+  time_start <- Sys.time()
+  
+  y <- meta_yaml_read(path = path)
+  
+  if ("label" %in% names(y)) {
+    meta_label <- y[["label"]]
+    y <- y[names(y) != "label"]
+  } else {
+    meta_label <- paste0("[", gsub(" ", "|", as.character(Sys.time())), "]")
+  }
+  meta_label <- create_metadata_label_html(meta_label = meta_label)
+  
+  y_names <- names(y)
+  
+  priority_items <- c("table",  "columns")
+  names_ordered <- sort(base::intersect(y_names, priority_items), decreasing = TRUE)
+  names_others <- base::setdiff(y_names, priority_items)
+  y <- y[c(names_ordered, names_others)]
+
+  # Create empty table  
+  tbl <- dplyr::tibble(group = character(0), item = character(0))
+
+  if ("table" %in% y_names) {
+    
+    section <- y[["table"]]
+    section_names <- names(section)
+    
+    if ("name" %in% section_names ||
+        "_type" %in% section_names ||
+        "type" %in% section_names) {
+      
+      if ("type" %in% section_names || "_type" %in% section_names) {
+        if ("_type" %in% section_names) tbl_src <- section[["_type"]]
+        if ("type" %in% section_names) tbl_src <- section[["type"]]
+      } else {
+        tbl_src <- NA_character_
+      }
+      
+      if ("name" %in% section_names) {
+        tbl_name <- section[["name"]]
+      } else {
+        tbl_name <- NA_character_
+      }
+
+      table_type_html <-  
+        create_table_type_html(
+          tbl_src = tbl_src,
+          tbl_name = tbl_name
+        )
+      
+      # Remove `name`, `type`, and `_type` from `section_names`
+      section_names <- section_names[!(section_names %in% c("name", "type", "_type"))]
+    } else {
+      table_type_html <- ""
+    }
+    
+    meta_columns <- NULL
+    if ("columns" %in% section_names) meta_columns <- as.numeric(section[["columns"]][1])
+    if ("_columns" %in% section_names) meta_columns <- as.numeric(section[["_columns"]][1])
+    meta_rows <- NULL
+    if ("rows" %in% section_names) meta_rows <- as.numeric(section[["rows"]][1])
+    if ("_rows" %in% section_names) meta_rows <- as.numeric(section[["_rows"]][1])
+    
+    section_names <- 
+      section_names[!(section_names %in% c("columns", "_columns", "rows", "_rows"))]
+    
+    if (length(section_names) > 0) {
+      
+      for (s_name in section_names) {
+        
+        tbl <- 
+          add_to_tbl(
+            tbl = tbl,
+            item = title_text_md(section[s_name], elements = "vertical"),
+            group = "Table"
+          )
+      }
+    }
+  } else {
+    table_type_html <- ""
+  }
+  
+  if ("columns" %in% y_names) {
+    
+    section <- y[["columns"]]
+    column_names <- names(section)
+    
+    if (length(column_names) > 0) {
+      
+      for (column in column_names) {
+        
+        col_meta <- section[[column]]
+        
+        if (inherits(col_meta, "character")) {
+
+          list_item <- 
+            list(
+              a = paste0("<strong>INFO</strong> ", unlist(col_meta))
+            )
+          
+          names(list_item) <- column
+          
+          tbl <- 
+            add_to_tbl(
+              tbl = tbl,
+              item = title_text_md(
+                item = list_item,
+                elements = "vertical",
+                title_code = TRUE
+              ),
+              group = "Columns"
+            )
+          
+        } else {
+ 
+          list_item <- 
+            list(
+              a = paste0(
+                "<strong>",
+                toupper(names(col_meta)),
+                "</strong> ", unlist(col_meta)
+              )
+            )
+          
+          names(list_item) <- column
+          
+          tbl <- 
+            add_to_tbl(
+              tbl = tbl,
+              item = title_text_md(
+                item = list_item,
+                elements = "vertical", 
+                title_code = TRUE
+              ),
+              group = "Columns"
+            )
+        }
+      }
+    }
+  }
+  
+  if (length(names_others) > 0) {
+
+    for (o_name in names_others) {
+      
+      o_section <- y[[o_name]]
+      section_names <- names(o_section)
+      
+      if (is.null(section_names) &&
+          is.character(o_section) &&
+          length(o_section) > 0) {
+        
+        list_item <- 
+          list(
+            a = paste0("- ", unlist(o_section))
+          )
+        
+        names(list_item) <- o_name
+        
+        tbl <- 
+          add_to_tbl(
+            tbl = tbl,
+            item = title_text_md(
+              item = list_item,
+              elements = "vertical",
+              use_title = FALSE
+            ),
+            group = o_name
+          )
+      }
+      
+      for (section in section_names) {
+    
+        section_meta <- o_section[section]
+        
+        if (inherits(section_meta, "character")) {
+
+          list_item <- 
+            list(
+              a = paste0("<strong>INFO</strong> ", unlist(section_meta))
+            )
+          
+          names(list_item) <- column
+          
+          tbl <- 
+            add_to_tbl(
+              tbl = tbl,
+              item = title_text_md(
+                item = list_item,
+                elements = "vertical",
+                title_code = TRUE
+              ),
+              group = o_name
+            )
+          
+        } else {
+          
+          tbl <- 
+            add_to_tbl(
+              tbl = tbl,
+              item = title_text_md(
+                item = section_meta,
+                elements = "vertical",
+                use_title = TRUE
+              ),
+              group = o_name
+            )
+        }
+      }
+    }
+  }
+  
+  # Generate table dimensions HTML
+  table_dims <- 
+    make_table_dims_html(columns = meta_columns, rows = meta_rows)
+  
+  # Combine label, table type, and table dimensions into
+  # a table subtitle <div>
+  combined_subtitle <-
+    htmltools::tagList(
+      htmltools::HTML(meta_label),
+      htmltools::tags$div(
+        style = htmltools::css(
+          height = "25px",
+          `margin-top` = "10px"
+        ),
+        htmltools::HTML(paste0(table_type_html, table_dims))
+      ) 
+    ) %>% as.character()
+  
+  time_end <- Sys.time()
+  
+  # Generate table execution start/end time (and duration)
+  # as a table source note
+  table_time <- 
+    create_table_time_html(
+      time_start = time_start,
+      time_end = time_end
+    )
+  
+  # Generate a gt table
+  gt::gt(
+    tbl,
+    groupname_col = "group",
+    id = "metadata"
+  ) %>%
+    gt::tab_header(
+      title = "Pointblank Metadata",
+      subtitle = gt::md(combined_subtitle)
+    ) %>%
+    gt::tab_source_note(source_note = gt::md(table_time)) %>%
+    gt::fmt_markdown(columns = gt::vars(item)) %>%
+    gt::cols_width(gt::everything() ~ gt::px(876)) %>%
+    gt::tab_options(
+      column_labels.hidden = TRUE,
+      table.font.size = gt::pct(110)
+    ) %>%
+    gt::tab_style(
+      style = gt::cell_text(
+        size = gt::px(24),
+        align = "left",
+        indent = gt::px(5)
+      ),
+      locations = gt::cells_title("title")
+    ) %>%
+    gt::tab_style(
+      style = gt::cell_text(
+        size = gt::px(12),
+        align = "left",
+        indent = gt::px(5)
+      ),
+      locations = gt::cells_title("subtitle")
+    ) %>%
+    gt::tab_style(
+      style = list(
+        gt::cell_text(
+          color = "#666666",
+          weight = "bold",
+          transform = "uppercase" 
+        ),
+        gt::cell_fill(color = "#FCFCFC"),
+        gt::cell_borders(
+          sides = "bottom",
+          color = "#EFEFEF",
+          weight = 1
+        )
+      ),
+      locations = gt::cells_row_groups(groups = TRUE)
+    ) %>%
+    gt::tab_style(
+      style = list(
+        gt::cell_text(
+          color = "#666666",
+          size = "smaller",
+          indent = gt::px(5)
+        ),
+        gt::cell_borders(
+          sides = "top",
+          style = "solid",
+          color = "#EFEFEF",
+          weight = 1
+        )
+      ),
+      locations = gt::cells_body(columns = gt::everything())
+    ) %>%
+    gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) %>%
+    gt::opt_css(
+      css = "
+          #metadata p {
+            overflow: visible;
+            margin-top: 2px;
+            margin-left: 0;
+            margin-right: 0;
+            margin-bottom: 5px;
+          }
+          #metadata ul {
+            list-style-type: square;
+            padding-left: 25px;
+          }
+          #metadata li {
+            text-indent: -1px;
+          }
+          #metadata code {
+            font-family: 'IBM Plex Mono', monospace, courier;
+            font-size: 13px;
+          }
+          #metadata .pb_date {
+            text-decoration-style: solid;
+            text-decoration-color: #9933CC;
+            text-decoration-line: underline;
+            text-underline-position: under;
+            font-variant-numeric: tabular-nums;
+            margin-right: 4px;
+          }
+          #metadata .gt_sourcenote {
+            height: 35px;
+            padding: 0
+          }
+          #metadata .pb_label {
+            border: solid 1px gray;
+            padding: 0px 3px 0px 3px;
+            margin-left: 2px;
+            margin-right: 2px;
+          }
+        "
+    )
+  
+  # nocov end
+}
+
+add_to_tbl <- function(tbl, item, group) {
+  dplyr::bind_rows(tbl, dplyr::tibble(group = group, item = item))
+}
+
+title_text_md <- function(item,
+                          use_title = TRUE,
+                          title_level = 4,
+                          title_code = FALSE,
+                          elements = "vertical") {
+  
+  title <- names(item)
+  item <- unname(unlist(item))
+  
+  # Process item with text transformers
+  for (i in seq_along(item)) {
+    
+    # Dates
+    if (grepl("\\([1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]\\)", item[i])) {
+      
+      for (j in 1:10) {
+        item[i] <- 
+          gsub(
+            "(.*)\\(([1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9])\\)(.*)",
+            "\\1<span class=\"pb_date\">\\2</span>\\3",
+            item[i]
+          )
+      }
+    }
+    
+    # Labels
+    if (grepl("\\([A-Z][A-Z_]{1,}[A-Z]\\)", item[i])) {
+
+      for (j in 1:10) {
+        item[i] <-
+          gsub(
+            "(.*)\\(([A-Z][A-Z_]{1,}[A-Z])\\)(.*)",
+            "\\1<span class=\"pb_label\">\\2</span>\\3",
+            item[i]
+          )
+      }
+    }
+  }
+
+  if (elements == "vertical") {
+
+    item <- paste(item, collapse = "\n\n")
+    
+    if (use_title) {
+      
+      if (!title_code) {
+        title <- gsub("_", " ", toupper(title))
+      }
+
+      item <- 
+        paste0(
+          "<",
+          ifelse(title_code, "code", "h"),
+          ifelse(title_code, "", as.character(title_level)), " ",
+          "style=\"margin-bottom:5px;",
+          ifelse(
+            title_code,
+            paste0(
+              "font-weight:bold;line-height:2em;",
+              "border:solid 1px #499FFE;",
+              "padding:2px 8px 3px 8px;background-color:#FAFAFA;"
+            ),
+            ""
+          ),
+          "\">",
+          title, "</", ifelse(title_code, "code", "h"),
+          ifelse(title_code, "", as.character(title_level)), ">\n\n",
+          item
+        )
+    }
+    
+  } else if (elements == "horizontal") {
+
+    item <- paste(item, collapse = " &mdash; ")
+    
+    if (use_title) {
+      
+      if (!title_code) {
+        title <- gsub("_", " ", toupper(title))
+      }
+      
+      item <- 
+        paste0(
+          "<span style=\"font-size:1.17em;font-weight:bold;\">",
+          ifelse(title_code, "<code style=\"font-weight:bold;margin-bottom:2px;\">", ""),
+          title,
+          ifelse(title_code, "</code>", ""),
+          "</span>&nbsp;&nbsp;",
+          item
+        )
+    }
+  }
+  
+  item
+}
+
+create_metadata_label_html <- function(meta_label) {
+  
+  htmltools::tags$span(
+    meta_label,
+    style = htmltools::css(
+      `text-decoration-style` = "solid",
+      `text-decoration-color` = "#ADD8E6",
+      `text-decoration-line` = "underline",
+      `text-underline-position` = "under",
+      color = "#333333",
+      `font-variant-numeric` = "tabular-nums",
+      `padding-left` = "4px",
+      `margin-right` = "5px",
+      `padding-right` = "2px"
+    )
+  ) %>% as.character()
+}
+
+make_table_dims_html <- function(columns = NULL, rows = NULL) {
+  
+  if (is.null(columns) && is.null(rows)) {
+    return("")
+  }
+
+  columns <- columns %||% "&mdash;"
+  rows <- rows %||% "&mdash;"
+  
+  as.character(
+    htmltools::tagList(
+      htmltools::tags$span(
+        "ROWS",
+        style = htmltools::css(
+          `background-color` = "#eecbff",
+          color = "#333333",
+          padding = "0.5em 0.5em",
+          position = "inherit",
+          `text-transform` = "uppercase",
+          margin = "5px 0px 5px 5px",
+          `font-weight` = "bold",
+          border = paste0("solid 1px #eecbff"),
+          padding = "2px 15px 2px 15px",
+          `font-size` = "smaller"
+        )
+      ),
+      htmltools::tags$span(
+        htmltools::HTML(rows),
+        style = htmltools::css(
+          `background-color` = "none",
+          color = "#333333",
+          padding = "0.5em 0.5em",
+          position = "inherit",
+          margin = "5px 0px 5px -4px",
+          `font-weight` = "bold",
+          border = paste0("solid 1px #eecbff"),
+          padding = "2px 15px 2px 15px",
+          `font-size` = "smaller"
+        )
+      ),
+      htmltools::tags$span(
+        "COLUMNS",
+        style = htmltools::css(
+          `background-color` = "#ffd4e5",
+          color = "#333333",
+          padding = "0.5em 0.5em",
+          position = "inherit",
+          `text-transform` = "uppercase",
+          margin = "5px 0px 5px 1px",
+          `font-weight` = "bold",
+          border = paste0("solid 1px #ffd4e5"),
+          padding = "2px 15px 2px 15px",
+          `font-size` = "smaller"
+        )
+      ),
+      htmltools::tags$span(
+        htmltools::HTML(columns),
+        style = htmltools::css(
+          `background-color` = "none",
+          color = "#333333",
+          padding = "0.5em 0.5em",
+          position = "inherit",
+          margin = "5px 0px 5px -4px",
+          `font-weight` = "bold",
+          border = paste0("solid 1px #ffd4e5"),
+          padding = "2px 15px 2px 15px",
+          `font-size` = "smaller"
+        )
+      )
+    )
+  )
+}

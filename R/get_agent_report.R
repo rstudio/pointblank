@@ -284,7 +284,11 @@ get_agent_report <- function(agent,
   agent_label_styled <- create_agent_label_html(agent)
   
   # Generate table type HTML
-  table_type <- create_table_type_html(agent)
+  table_type <- 
+    create_table_type_html(
+      tbl_src = agent$tbl_src,
+      tbl_name = agent$tbl_name
+    )
 
   # Generate action levels HTML
   action_levels <- make_action_levels_html(agent)
@@ -304,7 +308,11 @@ get_agent_report <- function(agent,
 
   # Generate table execution start/end time (and duration)
   # as a table source note
-  table_time <- create_table_time_html(agent)
+  table_time <- 
+    create_table_time_html(
+      time_start = agent$time_start,
+      time_end = agent$time_end
+    )
   
   # Reformat `type`
   type_upd <- 
@@ -853,6 +861,7 @@ get_agent_report <- function(agent,
   f_fail_val <- ifelse(f_fail_val < 1 & f_fail_val > 0.99, 0.99, f_fail_val)
   f_fail_val <- as.numeric(f_fail_val)
 
+  # Generate a gt table
   gt_agent_report <- 
     report_tbl %>%
     dplyr::mutate(
@@ -947,11 +956,19 @@ get_agent_report <- function(agent,
       }
     ) %>%
     gt::tab_style(
-      style = gt::cell_text(align = "left", indent = gt::px(5)),
+      style = gt::cell_text(
+        size = gt::px(24),
+        align = "left",
+        indent = gt::px(5)
+      ),
       locations = gt::cells_title("title")
     ) %>%
     gt::tab_style(
-      style = gt::cell_text(align = "left", indent = gt::px(5)),
+      style = gt::cell_text(
+        size = gt::px(12),
+        align = "left",
+        indent = gt::px(5)
+      ),
       locations = gt::cells_title("subtitle")
     ) %>%
     gt::tab_style(
@@ -989,14 +1006,6 @@ get_agent_report <- function(agent,
         columns = gt::vars(status_color),
         rows = S_val
       )
-    ) %>%
-    gt::tab_style(
-      style = gt::cell_text(size = gt::px(20)),
-      locations = gt::cells_title(groups = "title")
-    ) %>%
-    gt::tab_style(
-      style = gt::cell_text(size = gt::px(12)),
-      locations = gt::cells_title(groups = "subtitle")
     ) %>%
     gt::tab_style(
       style = list(
@@ -1162,10 +1171,10 @@ get_agent_report <- function(agent,
         gt::vars(values) ~ gt::px(120),
         gt::vars(precon) ~ gt::px(50),
         gt::vars(eval_sym) ~ gt::px(50),
-        gt::vars(extract) ~ gt::px(65),
         gt::vars(W) ~ gt::px(30),
         gt::vars(S) ~ gt::px(30),
         gt::vars(N) ~ gt::px(30),
+        gt::vars(extract) ~ gt::px(65),
         TRUE ~ gt::px(50)
       ) %>%
       gt::tab_style(
@@ -1201,10 +1210,7 @@ get_agent_report <- function(agent,
   gt_agent_report
 }
 
-create_table_time_html <- function(agent) {
-  
-  time_start <- agent$time_start
-  time_end <- agent$time_end
+create_table_time_html <- function(time_start, time_end) {
   
   if (length(time_start) < 1) {
     return("")
@@ -1268,21 +1274,21 @@ create_agent_label_html <- function(agent) {
   ) %>% as.character()
 }
 
-create_table_type_html <- function(agent) {
+create_table_type_html <- function(tbl_src, tbl_name) {
   
   text <- 
     switch(
-      agent$tbl_src,
+      tbl_src,
       data.frame = c("#9933CC", "#FFFFFF", "A data frame"),
       tbl_df = c("#F1D35A", "#222222", "A tibble"),
       sqlite = c("#BACBEF", "#222222", "SQLite table"),
       mysql = c("#EBAD40", "#222222", "MySQL table"),
       postgres = c("#3E638B", "#FFFFFF", "PostgreSQL table"),
       tbl_spark = c("#E66F21", "#FFFFFF", "Spark DataFrame"),
-      NA_character_
+      c("#E2E2E2", "#222222", tbl_src)
     )
   
-  if (all(!is.na(text)) && is.na(agent$tbl_name)) {
+  if (all(!is.na(text)) && is.na(tbl_name)) {
     
     paste0(
       "<span style=\"background-color: ", text[1], ";",
@@ -1293,7 +1299,7 @@ create_table_type_html <- function(agent) {
       text[3],
       "</span>"
     )
-  } else if (all(!is.na(text)) && !is.na(agent$tbl_name)) {
+  } else if (all(!is.na(text)) && !is.na(tbl_name)) {
     
     as.character(
       htmltools::tagList(
@@ -1313,7 +1319,7 @@ create_table_type_html <- function(agent) {
           )
         ),
         htmltools::tags$span(
-          agent$tbl_name,
+          tbl_name,
           style = htmltools::css(
             `background-color` = "none",
             color = text[2],

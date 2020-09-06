@@ -95,8 +95,7 @@
 <p>The final function that needs to be called is the <code><a href="../reference/interrogate.html">interrogate()</a></code> function. You see, the validation step functions, when called on an <em>agent</em> object don’t do anything with the data. They are instructions. With <code><a href="../reference/interrogate.html">interrogate()</a></code> those instructions turn into actions, with the agent dutifully carrying out the interrogation plan.</p>
 <p>For our examples going forward, we’ll use the <code>small_table</code> dataset. It’s included in the <strong>pointblank</strong> package. It isn’t very large, which makes it great for simple examples. Here it is in its entirety:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">small_table</span>
-</pre></div>
+<span class="kw">small_table</span></pre></div>
 <pre><code>#&gt; # A tibble: 13 x 8
 #&gt;    date_time           date           a b             c      d e     f    
 #&gt;    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;
@@ -132,18 +131,15 @@
   <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">a</span>), value = <span class="fl">10</span>) <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">b</span>), regex = <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span>) <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">d</span>), left = <span class="fl">0</span>, right = <span class="fl">5000</span>) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span>()
-</pre></div>
+  <span class="fu"><a href="../reference/interrogate.html">interrogate</a></span>()</pre></div>
 <p>The five <code>OK</code> messages means that all of the individual validations in each of those five validation steps passed. Printing the <code>agent</code> object gives a step-by-step breakdown of the interrogation process.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">agent</span>
-</pre></div>
+<span class="kw">agent</span></pre></div>
 <p><img src="images/agent_report.png" width="100%"></p>
 <p>Let’s take a close look at how to interpret this report. The <code>STEP</code> column provides the name of the validation step function used as a basis for a validation step. <code>COLUMNS</code> shows us the target column for each validation step. The <code>VALUES</code> column lists any values required for a validation step. What is <code>TBL</code>? That indicates whether the table was mutated just before interrogation in that validation step (via the <code>preconditions</code> argument, available in every validation step function). The fancy script ‘I’ values show us that the table didn’t undergo transformation, and that we are working with the identity table. <code>EVAL</code> lets us know whether there would be issues in evaluating the table itself (catching R errors and warnings); the check marks down this column show us that, here, there were no issues.</p>
 <p>The total number of test units is provided next in <code>UNITS</code>, then the number and franction of passing test units (<code>PASS</code>), and then the number and fraction of failing test units (<code>FAIL</code>). The <code>W</code>, <code>S</code>, <code>N</code> indicators tell us whether we have entered either of the <code>WARN</code>, <code>STOP</code>, or <code>NOTIFY</code> states for these validation steps. Because we didn’t set any threshold levels for these states (that would be done with the <code><a href="../reference/action_levels.html">action_levels()</a></code> function), they are irrelevant for this report. Finally, the <code>EXTRACT</code> indicator tells us the number of data extract rows available for failed test units. For <em>step 5</em>, the <code><a href="../reference/col_vals_between.html">col_vals_between()</a></code> validation step, there is a data extract available (with <code>1</code> row). We can examine that extract with the <code><a href="../reference/get_data_extracts.html">get_data_extracts()</a></code> function:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span>(<span class="kw">agent</span>, i = <span class="fl">5</span>)
-</pre></div>
+<span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span>(<span class="kw">agent</span>, i = <span class="fl">5</span>)</pre></div>
 <pre><code>#&gt; # A tibble: 1 x 8
 #&gt;   date_time           date           a b             c      d e     f    
 #&gt;   &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;
@@ -162,8 +158,7 @@
   <span class="fu"><a href="../reference/col_vals_in_set.html">col_vals_in_set</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">f</span>), set = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"low"</span>, <span class="st">"mid"</span>, <span class="st">"high"</span>), actions = <span class="kw">al</span>) <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/col_vals_lt.html">col_vals_lt</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">a</span>), value = <span class="fl">10</span>, actions = <span class="kw">al</span>) <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/col_vals_regex.html">col_vals_regex</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">b</span>), regex = <span class="st">"^[0-9]-[a-z]{3}-[0-9]{3}$"</span>, actions = <span class="kw">al</span>) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">d</span>), left = <span class="fl">0</span>, right = <span class="fl">5000</span>, actions = <span class="kw">al</span>)
-</pre></div>
+  <span class="fu"><a href="../reference/col_vals_between.html">col_vals_between</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">d</span>), left = <span class="fl">0</span>, right = <span class="fl">5000</span>, actions = <span class="kw">al</span>)</pre></div>
 <pre><code>Error: Exceedance of failed test units where values in `d` should have been between `0` and `5000`.
 The `col_vals_between()` validation failed beyond the absolute threshold level (1).
 * failure level (1) &gt;= failure threshold (1) </code></pre>

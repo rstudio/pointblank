@@ -63,6 +63,7 @@ utils::globalVariables(
     "frequency",
     "Frequency",
     "i",
+    "item",
     "label",
     "::labels::",
     "n",

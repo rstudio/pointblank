@@ -12,107 +12,6 @@
 #' @export
 get_metadata_report <- function(path) {
   
-  # Read the YAML file with `yaml::read_yaml()`
-  y <- yaml::read_yaml(file = path)
-  
-  # If `table` is present, perform a few validations on that component
-  if ("table" %in% names(y)) {
-    
-    # Validate that 2nd-level elements have unique names
-    if (any(duplicated(names(y[["table"]])))) {
-      stop("Duplicate column names provided in `table`.", call. = FALSE)
-    }
-    
-    # Get component names of `table`
-    table_names <- names(y[["table"]])
-    
-    # Validate that there are only character vectors inside `table`
-    checks <- 
-      lapply(
-        table_names,
-        FUN = function(x) {
-          x_names <- names(y[["table"]][x])
-          
-          for (z in x_names) {
-            if (is.list(y[["table"]][[z]])) {
-              stop("All subcomponents inside of `table` should be a character vector.",
-                   call. = FALSE)
-            }
-          }
-        }
-      )
-  }
-  
-  # If `columns` is present, perform a few validations on that component
-  if ("columns" %in% names(y)) {
-    
-    # Validate that 2nd-level elements have unique names
-    if (any(duplicated(names(y[["columns"]])))) {
-      stop("Duplicate column names provided in `columns`.", call. = FALSE)
-    }
-    
-    # Get listed column names
-    column_names <- names(y[["columns"]])
-    
-    # Validate that there is no more than only a single level below
-    # the column names
-    checks <- 
-      lapply(
-        column_names,
-        FUN = function(x) {
-          x_names <- names(y[["columns"]][x])
-          
-          for (z in x_names) {
-            
-            if (is.list(y[["columns"]][[z]])) {
-              if (!all(unname(unlist(lapply(y[["columns"]][[z]], is.character))))) {
-                stop("All components inside of `columns/", z, "` should either be text or text under a single heading.",
-                     call. = FALSE)
-              }
-            }
-          }
-        }
-      )
-  }
-  
-  # If any other items are present, perform a few validations on those
-  other_names <- base::setdiff(names(y), c("table", "columns"))
-  
-  if (length(other_names) > 0) {
-    
-    # Validate that there is no more than only a single level below
-    # the column names
-    checks <- 
-      lapply(
-        other_names,
-        FUN = function(x) {
-          
-          if (is.list(y[[x]])) {
-            
-            if (any(unname(unlist(lapply(y[[x]], Negate(is.character)))))) {
-              
-              idx <- which(unname(unlist(lapply(y[[x]], Negate(is.character)))))
-              
-              stop("All components inside `",x, "/", names(y[[x]][idx]),
-                   "` should be a character vector.",
-                   call. = FALSE)
-            }
-            
-          } else if (!is.list(y[[x]])) {
-            if (!is.character(y[[x]])) {
-              stop("The component inside `", x, "` should be a character vector.",
-                   call. = FALSE)
-            }
-          }
-        }
-      )
-  }
-  
-  y
-}
-
-meta_yaml_tbl <- function(path) {
-  
   # nocov start
   
   time_start <- Sys.time()
@@ -494,6 +393,110 @@ meta_yaml_tbl <- function(path) {
     )
   
   # nocov end
+}
+
+
+
+
+meta_yaml_read <- function(path) {
+  
+  # Read the YAML file with `yaml::read_yaml()`
+  y <- yaml::read_yaml(file = path)
+  
+  # If `table` is present, perform a few validations on that component
+  if ("table" %in% names(y)) {
+    
+    # Validate that 2nd-level elements have unique names
+    if (any(duplicated(names(y[["table"]])))) {
+      stop("Duplicate column names provided in `table`.", call. = FALSE)
+    }
+    
+    # Get component names of `table`
+    table_names <- names(y[["table"]])
+    
+    # Validate that there are only character vectors inside `table`
+    checks <- 
+      lapply(
+        table_names,
+        FUN = function(x) {
+          x_names <- names(y[["table"]][x])
+          
+          for (z in x_names) {
+            if (is.list(y[["table"]][[z]])) {
+              stop("All subcomponents inside of `table` should be a character vector.",
+                   call. = FALSE)
+            }
+          }
+        }
+      )
+  }
+  
+  # If `columns` is present, perform a few validations on that component
+  if ("columns" %in% names(y)) {
+    
+    # Validate that 2nd-level elements have unique names
+    if (any(duplicated(names(y[["columns"]])))) {
+      stop("Duplicate column names provided in `columns`.", call. = FALSE)
+    }
+    
+    # Get listed column names
+    column_names <- names(y[["columns"]])
+    
+    # Validate that there is no more than only a single level below
+    # the column names
+    checks <- 
+      lapply(
+        column_names,
+        FUN = function(x) {
+          x_names <- names(y[["columns"]][x])
+          
+          for (z in x_names) {
+            
+            if (is.list(y[["columns"]][[z]])) {
+              if (!all(unname(unlist(lapply(y[["columns"]][[z]], is.character))))) {
+                stop("All components inside of `columns/", z, "` should either be text or text under a single heading.",
+                     call. = FALSE)
+              }
+            }
+          }
+        }
+      )
+  }
+  
+  # If any other items are present, perform a few validations on those
+  other_names <- base::setdiff(names(y), c("table", "columns"))
+  
+  if (length(other_names) > 0) {
+    
+    # Validate that there is no more than only a single level below
+    # the column names
+    checks <- 
+      lapply(
+        other_names,
+        FUN = function(x) {
+          
+          if (is.list(y[[x]])) {
+            
+            if (any(unname(unlist(lapply(y[[x]], Negate(is.character)))))) {
+              
+              idx <- which(unname(unlist(lapply(y[[x]], Negate(is.character)))))
+              
+              stop("All components inside `",x, "/", names(y[[x]][idx]),
+                   "` should be a character vector.",
+                   call. = FALSE)
+            }
+            
+          } else if (!is.list(y[[x]])) {
+            if (!is.character(y[[x]])) {
+              stop("The component inside `", x, "` should be a character vector.",
+                   call. = FALSE)
+            }
+          }
+        }
+      )
+  }
+  
+  y
 }
 
 add_to_tbl <- function(tbl, item, group) {

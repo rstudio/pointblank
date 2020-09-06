@@ -55,7 +55,7 @@ meta_yaml_write <- function(x = NULL,
       tbl %>%
       dplyr::count(name = "n") %>%
       dplyr::pull(n) %>%
-      as.numeric()
+      as.integer()
     
     column_list <-
       list(columns = col_schema(.tbl = tbl) %>% unclass() %>% lapply(as.list))

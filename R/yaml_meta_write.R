@@ -18,26 +18,36 @@
 meta_yaml_write <- function(x = NULL,
                             filename,
                             path = NULL) {
-  
+
   if (!is.null(path)) {
     filename <- file.path(path, filename)
   }
   
   filename <- fs::path_expand(filename)
   
+  if (inherits(x, "data.frame") || inherits(x, "tbl_dbi")) {
+    
+    tbl_name <- deparse(match.call()$x)
+    if (tbl_name == ".") {
+      tbl_name <- NA_character_
+    }
+    
+    x <- create_agent(tbl = x, tbl_name = tbl_name)
+  }
+  
   # Using an agent for `x`
   if (inherits(x, "ptblank_agent")) {
     
-    label <- agent$label
-    table.name <- agent$tbl_name
-    table.type <- agent$tbl_src
+    label <- x$label
+    table.name <- x$tbl_name
+    table.type <- x$tbl_src
     
-    column_names <- agent$col_names
-    column_types_r <- agent$col_types
+    column_names <- x$col_names
+    column_types_r <- x$col_types
     table.columns <- length(column_names)
     
     
-    tbl <- agent$tbl
+    tbl <- x$tbl
     if (inherits(tbl, "data.frame")) {
       table.rows <- nrow(tbl)
     } else {

@@ -87,7 +87,7 @@ scan_data <- function(tbl,
   # In the case where the table is piped in a `"."` is the
   # result; since it's unknown, we treat it as NA
   if (tbl_name == ".") {
-    tbl_name <- NA
+    tbl_name <- NA_character_
   }
 
   build_examination_page(

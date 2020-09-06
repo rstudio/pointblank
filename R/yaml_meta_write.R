@@ -25,7 +25,10 @@ meta_yaml_write <- function(x = NULL,
   
   filename <- fs::path_expand(filename)
   
-  if (inherits(x, "data.frame") || inherits(x, "tbl_dbi")) {
+  # If `x` is a table, generate an agent
+  if (inherits(x, "data.frame") ||
+      inherits(x, "tbl_dbi") ||
+      inherits(x, "tbl_spark")) {
     
     tbl_name <- deparse(match.call()$x)
     if (tbl_name == ".") {
@@ -46,27 +49,27 @@ meta_yaml_write <- function(x = NULL,
     column_types_r <- x$col_types
     table.columns <- length(column_names)
     
-    
     tbl <- x$tbl
-    if (inherits(tbl, "data.frame")) {
-      table.rows <- nrow(tbl)
-    } else {
-      table.rows <- NULL
-    }
+    
+    table.rows <-
+      tbl %>%
+      dplyr::count(name = "n") %>%
+      dplyr::pull(n) %>%
+      as.numeric()
     
     column_list <-
-      list(
-        columns = col_schema(.tbl = tbl) %>% unclass() %>% lapply(as.list)
-      )
+      list(columns = col_schema(.tbl = tbl) %>% unclass() %>% lapply(as.list))
     
     for (i in seq_along(column_names)) {
       
       column_list[["columns"]][[column_names[i]]] <- 
-        list(`_type` = paste(unlist(column_list[["columns"]][[column_names[i]]]), collapse = ", "))
-      
+        list(`_type` = paste(
+          unlist(column_list[["columns"]][[column_names[i]]]), collapse = ", "
+        ))
     }
   }
   
+  # Generate a list to be transformed to metadata YAML
   meta_yaml_list <-
     c(
       list(
@@ -80,7 +83,6 @@ meta_yaml_write <- function(x = NULL,
       ),
       column_list
     )
-  
   
   meta_yaml_list %>%
     yaml::write_yaml(

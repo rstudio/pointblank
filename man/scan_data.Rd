@@ -32,13 +32,13 @@ default, \code{NULL} will create English (\code{"en"}) text. Other options inclu
 French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), and Spanish (\code{"es"}).}
 }
 \description{
-Generates an HTML report that scours the input table data. Before calling up
+Generate an HTML report that scours the input table data. Before calling up
 an \emph{agent} to validate the data, it's a good idea to understand the data with
 some level of precision. Make this the initial step of a well-balanced \emph{data
 quality reporting} workflow. The reporting output contains several sections
 to make everything more digestible, and these are:
 \describe{
-\item{Overview}{Table dimensions, duplicate row count, column types, and
+\item{Overview}{Table dimensions, duplicate row counts, column types, and
 reproducibility information}
 \item{Variables}{A summary for each table variable and further statistics and
 summaries depending on the variable type}

@@ -97,14 +97,14 @@ get_metadata_report <- function(path) {
   }
   
   if ("columns" %in% y_names) {
-    
+
     section <- y[["columns"]]
     column_names <- names(section)
     
     if (length(column_names) > 0) {
       
       for (column in column_names) {
-        
+
         col_meta <- section[[column]]
         col_meta_names <- names(col_meta)
         miniheader_vec <- c()
@@ -167,10 +167,14 @@ get_metadata_report <- function(path) {
               group = "Columns"
             )
           
-          row_idx <- which(grepl(paste0("^<code.*?>", column, "<.*?"), tbl$item))
+          column_escaped <-
+            column %>% 
+            gsub("(\\(|\\)|\\[|\\]|\\||\\.|\\^|\\?|\\+|\\$|\\*)", "\\\\\\1", .)
+          
+          row_idx <- 
+            which(grepl(paste0("^<code.*?>", column_escaped, "<.*?"), tbl$item))
           
           if (length(miniheader_vec) > 0) {
-            
             tbl$item[[row_idx]] <-
               gsub(
                 "(^.*?</code>)(.*)", 

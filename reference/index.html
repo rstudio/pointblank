@@ -484,7 +484,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-pointblank-yaml" class="hasAnchor"><a href="#section-pointblank-yaml" class="anchor"></a>pointblank YAML</h2>
-          <p class="section-desc"><p>YAML. It’s not a bad data-serialization language and it’s certainly good enough for specifying <strong>pointblank</strong> validation plans. A <strong>pointblank</strong> YAML file can be generated with an agent by using the <code><a href="../reference/agent_yaml_write.html">agent_yaml_write()</a></code> function. You’re always free to create <strong>pointblank</strong> YAML by hand. Or you can edit/extend an existing <strong>pointblank</strong> YAML file. An agent can be created from <strong>pointblank</strong> YAML with the <code><a href="../reference/agent_yaml_read.html">agent_yaml_read()</a></code> function. We can even interrogate right from <strong>pointblank</strong> YAML by using <code><a href="../reference/agent_yaml_interrogate.html">agent_yaml_interrogate()</a></code>, which is really super cool if you think about it.</p></p>
+          <p class="section-desc"><p>YAML files can be used in <strong>pointblank</strong> for two distinct purposes: (1) to define agents and their validation plans, and (2) to define metadata for tables. The <code>agent_yaml_*()</code> functions allow us write agent YAML from an existing agent, create an agent from the corresponding YAML, or interrogate a table directly from an agent YAML file. On the table metadata side, there are currently two functions (<code><a href="../reference/meta_yaml_write.html">meta_yaml_write()</a></code> and <code><a href="../reference/get_metadata_report.html">get_metadata_report()</a></code>) that produce metadata YAML from a table or agent, and, generate a report from the YAML file.</p></p>
         </th>
       </tr>
       
@@ -522,6 +522,18 @@
           <p><code><a href="agent_yaml_show_exprs.html">agent_yaml_show_exprs()</a></code> </p>
         </td>
         <td><p>Display <em>pointblank</em> expressions using a YAML file with a validation plan</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="meta_yaml_write.html">meta_yaml_write()</a></code> </p>
+        </td>
+        <td><p>Write table metadata to a YAML file</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_metadata_report.html">get_metadata_report()</a></code> </p>
+        </td>
+        <td><p>Get a table metadata report from <strong>pointblank</strong> metadata YAML</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -566,7 +578,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.9000.</p>
 </div>
 
       </footer>

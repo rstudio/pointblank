@@ -36,3 +36,6 @@ vignettes/*.pdf
 # RDS files
 *.rds
 inst/doc
+
+# Developer dirs
+scripts

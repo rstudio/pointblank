@@ -125,21 +125,22 @@ reference:
   
   - title: pointblank YAML
     desc: >
-      YAML. It's not a bad data-serialization language and it's certainly
-      good enough for specifying **pointblank** validation plans. A 
-      **pointblank** YAML file can be generated with an agent by using the
-      `agent_yaml_write()` function. You're always free to create
-      **pointblank** YAML by hand. Or you can edit/extend an existing
-      **pointblank** YAML file. An agent can be created from **pointblank**
-      YAML with the `agent_yaml_read()` function. We can even interrogate
-      right from **pointblank** YAML by using `agent_yaml_interrogate()`,
-      which is really super cool if you think about it.
+      YAML files can be used in **pointblank** for two distinct purposes: (1)
+      to define agents and their validation plans, and (2) to define metadata
+      for tables.  The `agent_yaml_*()` functions allow us write agent YAML from
+      an existing agent, create an agent from the corresponding YAML, or
+      interrogate a table directly from an agent YAML file. On the table
+      metadata side, there are currently two functions (`meta_yaml_write()` and
+      `get_metadata_report()`) that produce metadata YAML from a table or agent,
+      and, generate a report from the YAML file.
     contents:
     - agent_yaml_write
     - agent_yaml_read
     - agent_yaml_interrogate
     - agent_yaml_string
     - agent_yaml_show_exprs
+    - meta_yaml_write
+    - get_metadata_report
     
   - title: Datasets
     contents:

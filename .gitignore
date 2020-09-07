@@ -39,3 +39,7 @@ inst/doc
 
 # Developer dirs
 scripts
+
+# Testing files
+meta*
+agent*

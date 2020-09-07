@@ -138,7 +138,7 @@ user-generated fields entered into the input YAML file.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>A path to a YAML file that specifies table metadata.</p></td>
+      <td><p>A path to a YAML file that specifies metadata for a table.</p></td>
     </tr>
     </table>
 
@@ -146,6 +146,90 @@ user-generated fields entered into the input YAML file.</p>
 
     <p>A <strong>gt</strong> table object.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Generate a metadata YAML file</span>
+<span class='co'># for the `small_table` dataset</span>
+<span class='co'># meta_yaml_write(</span>
+<span class='co'>#   small_table,</span>
+<span class='co'>#   filename = "meta-small_table.yml"</span>
+<span class='co'># )</span>
+
+<span class='co'># The `meta-small_table.yml` file</span>
+<span class='co'># looks like this when written</span>
+
+<span class='co'>#&gt; label: '[2020-09-06|13:37:38]'</span>
+<span class='co'>#&gt; table:</span>
+<span class='co'>#&gt;   name: small_table</span>
+<span class='co'>#&gt; _columns: 8</span>
+<span class='co'>#&gt; _rows: 13</span>
+<span class='co'>#&gt; _type: tbl_df</span>
+<span class='co'>#&gt; columns:</span>
+<span class='co'>#&gt;   date_time:</span>
+<span class='co'>#&gt;     _type: POSIXct, POSIXt</span>
+<span class='co'>#&gt;   date:</span>
+<span class='co'>#&gt;     _type: Date</span>
+<span class='co'>#&gt;   a:</span>
+<span class='co'>#&gt;     _type: integer</span>
+<span class='co'>#&gt;   b:</span>
+<span class='co'>#&gt;     _type: character</span>
+<span class='co'>#&gt;   c:</span>
+<span class='co'>#&gt;     _type: numeric</span>
+<span class='co'>#&gt;   d:</span>
+<span class='co'>#&gt;     _type: numeric</span>
+<span class='co'>#&gt;   e:</span>
+<span class='co'>#&gt;     _type: logical</span>
+<span class='co'>#&gt;   f:</span>
+<span class='co'>#&gt;     _type: character</span>
+
+<span class='co'># We can add keys and values to</span>
+<span class='co'># enrich the metadata with more</span>
+<span class='co'># pertinent information; with some</span>
+<span class='co'># direct editing of the file we get:</span>
+
+<span class='co'>#&gt; label: '[2020-09-06|13:37:38]'</span>
+<span class='co'>#&gt; table:</span>
+<span class='co'>#&gt;   name: small_table</span>
+<span class='co'>#&gt;   _columns: 8</span>
+<span class='co'>#&gt;   _rows: 13</span>
+<span class='co'>#&gt;   _type: tbl_df</span>
+<span class='co'>#&gt; columns:</span>
+<span class='co'>#&gt;   date_time:</span>
+<span class='co'>#&gt;     _type: POSIXct, POSIXt</span>
+<span class='co'>#&gt;     info: Date-time values.</span>
+<span class='co'>#&gt;   date:</span>
+<span class='co'>#&gt;     _type: Date</span>
+<span class='co'>#&gt;     info: Date values (the date part of `date_time`).</span>
+<span class='co'>#&gt;   a:</span>
+<span class='co'>#&gt;     _type: integer</span>
+<span class='co'>#&gt;     info: Small integer values (no missing values).</span>
+<span class='co'>#&gt;   b:</span>
+<span class='co'>#&gt;     _type: character</span>
+<span class='co'>#&gt;     info: Strings with a common pattern.</span>
+<span class='co'>#&gt;   c:</span>
+<span class='co'>#&gt;     _type: numeric</span>
+<span class='co'>#&gt;     info: Small numeric values (contains missing values).</span>
+<span class='co'>#&gt;   d:</span>
+<span class='co'>#&gt;     _type: numeric</span>
+<span class='co'>#&gt;     info: Large numeric values (much greater than `c`).</span>
+<span class='co'>#&gt;   e:</span>
+<span class='co'>#&gt;     _type: logical</span>
+<span class='co'>#&gt;     info: TRUE and FALSE values.</span>
+<span class='co'>#&gt;   f:</span>
+<span class='co'>#&gt;     _type: character</span>
+<span class='co'>#&gt;     info: Strings of the set `"low"`, `"mid"`, and `"high"`.</span>
+
+<span class='co'># We can visualize this metadata</span>
+<span class='co'># into a report table by using the</span>
+<span class='co'># `get_metadata_report()` function</span>
+
+<span class='co'>#&gt; get_metadata_report(</span>
+<span class='co'>#&gt;   system.file(</span>
+<span class='co'>#&gt;     "meta-small_table.yml",</span>
+<span class='co'>#&gt;     package = "pointblank"</span>
+<span class='co'>#&gt;   )</span>
+<span class='co'>#&gt; )</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

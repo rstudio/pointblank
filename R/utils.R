@@ -379,6 +379,37 @@ get_tbl_information <- function(tbl) {
   } 
 }
 
+pb_fmt_number <- function(x,
+                          decimals = 2,
+                          n_sigfig = NULL,
+                          drop_trailing_zeros = FALSE,
+                          drop_trailing_dec_mark = TRUE,
+                          use_seps = TRUE,
+                          scale_by = 1,
+                          suffixing = FALSE,
+                          pattern = "{x}",
+                          sep_mark = ",",
+                          dec_mark = ".",
+                          locale = NULL) {
+  
+  ((dplyr::tibble(a = x) %>%
+      gt::gt() %>%
+      gt::fmt_number(
+        vars(a),
+        decimals = decimals,
+        n_sigfig = n_sigfig,
+        drop_trailing_zeros = drop_trailing_zeros,
+        drop_trailing_dec_mark = drop_trailing_dec_mark,
+        use_seps = use_seps,
+        scale_by = scale_by,
+        suffixing = suffixing,
+        pattern = pattern,
+        sep_mark = sep_mark,
+        dec_mark = dec_mark,
+        locale = locale
+      ))$`_formats`[[1]][[1]][[1]])(x)
+}
+
 add_icon_img <- function(icon,
                          height = 30,
                          v_align = "middle") {

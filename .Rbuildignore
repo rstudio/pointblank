@@ -8,6 +8,7 @@
 ^revdep$
 ^_pkgdown\.yml$
 ^docs$
+^scripts$
 ^pkgdown$
 ^CRAN-RELEASE$
 ^data-raw$

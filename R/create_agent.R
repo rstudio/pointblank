@@ -69,6 +69,11 @@
 #'   interrogation. By default, `NULL` will create English (`"en"`) text. Other
 #'   options include French (`"fr"`), German (`"de"`), Italian (`"it"`), and
 #'   Spanish (`"es"`).
+#' @param locale An optional locale ID to use for formatting values in the
+#'   *agent report* summary table according the locale's rules. Examples include
+#'   "en_US" for English (United States) and "fr_FR" for French (France); more
+#'   simply, this can be a language identifier without a country designation,
+#'   like "es" for Spanish (Spain).
 #'   
 #' @return A `ptblank_agent` object.
 #'   

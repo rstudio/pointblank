@@ -136,14 +136,14 @@ get_agent_report <- function(agent,
                              arrange_by = c("i", "severity"),
                              keep = c("all", "fail_states"),
                              display_table = TRUE,
-                             size = "standard") {
+                             size = "standard",
+                             reporting_lang = NULL,
+                             locale = NULL) {
   
   arrange_by <- match.arg(arrange_by)
   keep <- match.arg(keep)
   
   validation_set <- agent$validation_set
-  
-  lang <- agent$reporting_lang
   
   eval <- 
     validation_set %>%
@@ -266,7 +266,6 @@ get_agent_report <- function(agent,
   # Generate a gt table if `display_table == TRUE`
   
   # nocov start
-  
   validation_set <- validation_set[report_tbl$i, ]
   eval <- eval[report_tbl$i]
   extracts <- 
@@ -276,6 +275,15 @@ get_agent_report <- function(agent,
       )
     ]
   
+  if (is.null(locale)) locale <- agent$locale
+  
+  if (is.null(reporting_lang)) {
+    lang <- agent$reporting_lang
+  } else {
+    normalize_reporting_language(reporting_lang = reporting_lang)
+    lang <- reporting_lang
+  }
+
   briefs <- validation_set$brief
   assertion_type <- validation_set$assertion_type
   label <- validation_set$label
@@ -291,7 +299,7 @@ get_agent_report <- function(agent,
     )
 
   # Generate action levels HTML
-  action_levels <- make_action_levels_html(agent)
+  action_levels <- make_action_levels_html(agent, locale)
   
   # Combine label, table type, and action levels into
   # a table subtitle <div>
@@ -311,7 +319,8 @@ get_agent_report <- function(agent,
   table_time <- 
     create_table_time_html(
       time_start = agent$time_start,
-      time_end = agent$time_end
+      time_end = agent$time_end,
+      locale = locale
     )
   
   # Reformat `type`
@@ -423,7 +432,7 @@ get_agent_report <- function(agent,
       FUN = function(x) {
         
         if (!is.null(x) && !is.null(names(x)) && all(names(x) %in% c("TRUE", "FALSE"))) {
-          
+
           # Case of in-between comparison validation where there are
           # one or two columns specified as bounds
           bounds_incl <- as.logical(names(x))
@@ -435,7 +444,13 @@ get_agent_report <- function(agent,
                 rlang::as_label(x[[1]])
               )
           } else {
-            x_left <- x[[1]]
+            x_left <- 
+              pb_fmt_number(
+                x[[1]],
+                decimals = 4,
+                drop_trailing_zeros = TRUE,
+                locale = locale
+              )
           }
           
           if (rlang::is_quosure(x[[2]])) {
@@ -445,10 +460,16 @@ get_agent_report <- function(agent,
                 rlang::as_label(x[[2]])
               )
           } else {
-            x_right <- x[[2]]
+            x_right <-
+              pb_fmt_number(
+                x[[2]],
+                decimals = 4,
+                drop_trailing_zeros = TRUE,
+                locale = locale
+              )
           }
           
-          text <- 
+          text <-
             paste0(
               ifelse(bounds_incl[1], "[", "("),
               x_left,
@@ -460,9 +481,19 @@ get_agent_report <- function(agent,
           title <- 
             paste0(
               ifelse(bounds_incl[1], "[", "("),
-              rlang::as_label(x[[1]]),
+              pb_fmt_number(
+                rlang::as_label(x[[1]]),
+                decimals = 4,
+                drop_trailing_zeros = TRUE,
+                locale = locale
+              ),
               ", ",
-              rlang::as_label(x[[2]]),
+              pb_fmt_number(
+                rlang::as_label(x[[2]]),
+                decimals = 4,
+                drop_trailing_zeros = TRUE,
+                locale = locale
+              ),
               ifelse(bounds_incl[2], "]", ")")
             )
           
@@ -939,9 +970,10 @@ get_agent_report <- function(agent,
     ) %>%
     gt::fmt_number(
       columns = gt::vars(units, n_pass, n_fail, f_pass, f_fail),
-      decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE
+      decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE,
+      locale = locale
     ) %>%
-    gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2) %>%
+    gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2, locale = locale) %>%
     gt::fmt_markdown(columns = gt::vars(type, columns, values, precon, eval_sym, W, S, N, extract)) %>%
     gt::fmt_missing(columns = gt::vars(columns, values, units, extract)) %>%
     gt::fmt_missing(columns = gt::vars(status_color), missing_text = "") %>%
@@ -1210,14 +1242,17 @@ get_agent_report <- function(agent,
   gt_agent_report
 }
 
-create_table_time_html <- function(time_start, time_end) {
+create_table_time_html <- function(time_start,
+                                   time_end,
+                                   locale = NULL) {
   
   if (length(time_start) < 1) {
     return("")
   }
   
   time_duration <- get_time_duration(time_start, time_end)
-  time_duration_formatted <- print_time_duration_report(time_duration)
+  time_duration_formatted <- 
+    print_time_duration_report(time_duration, locale = locale)
   
   paste0(
     "<span style=\"background-color: #FFF;",
@@ -1247,12 +1282,19 @@ create_table_time_html <- function(time_start, time_end) {
   )
 }
 
-print_time_duration_report <- function(time_diff_s) {
+print_time_duration_report <- function(time_diff_s,
+                                       locale = NULL) {
   
   if (time_diff_s < 1) {
     "< 1 s"
   } else {
-    paste0(formatC(round(time_diff_s, 1), format = "f", drop0trailing = FALSE, digits = 1), " s")
+    paste0(
+      pb_fmt_number(
+        round(time_diff_s, 1),
+        decimals = 1, locale = locale
+      ),
+      " s"
+    )
   }
 }
 
@@ -1340,17 +1382,32 @@ create_table_type_html <- function(tbl_src, tbl_name) {
   }
 }
 
-make_action_levels_html <- function(agent) {
+make_action_levels_html <- function(agent, locale) {
   
   actions <- agent$actions
   
   if (is.null(unlist(actions[1:6]))) {
     return("")
   }
+
+  warn <- 
+    c(
+      pb_fmt_number(actions$warn_fraction, decimals = 2, locale = locale),
+      pb_fmt_number(actions$warn_count, decimals = 0, locale = locale)
+    ) %||% "&mdash;"
   
-  warn <- c(actions$warn_fraction, actions$warn_count) %||% "&mdash;"
-  stop <- c(actions$stop_fraction, actions$stop_count) %||% "&mdash;"
-  notify <- c(actions$notify_fraction, actions$notify_count) %||% "&mdash;"
+  stop <-
+    c(
+      pb_fmt_number(actions$stop_fraction, decimals = 2, locale = locale),
+      pb_fmt_number(actions$stop_count, decimals = 0, locale = locale)
+    ) %||% "&mdash;"
+  
+  
+  notify <-
+    c(
+      pb_fmt_number(actions$notify_fraction, decimals = 2, locale = locale),
+      pb_fmt_number(actions$notify_count, decimals = 0, locale = locale)
+    ) %||% "&mdash;"
   
   as.character(
     htmltools::tagList(

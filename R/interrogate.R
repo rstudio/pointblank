@@ -288,9 +288,17 @@ interrogate <- function(agent,
 
 # nocov start
 
-get_time_duration <- function(start_time, end_time, units = "secs", round = 4) {
+get_time_duration <- function(start_time,
+                              end_time,
+                              units = "secs",
+                              round = 4) {
   
-  round(as.numeric(difftime(end_time, start_time, units = units)), digits = round)
+  round(
+    as.numeric(
+      difftime(end_time, start_time, units = units)
+    ),
+    digits = round
+  )
 }
 
 create_cli_header <- function(validation_steps, quiet) {

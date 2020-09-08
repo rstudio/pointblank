@@ -81,12 +81,18 @@ agent <-
 
 # The agent can be written to a pointblank
 # YAML file with `agent_yaml_write()`
-# agent_yaml_write(agent, filename = "x.yml")
+# agent_yaml_write(
+#   agent,
+#   filename = "agent-small_table.yml"
+# )
 
-# The 'x.yml' file is available in the package
-# through `system.file()`
+# The 'agent-small_table.yml' file is
+# available in the package through `system.file()`
 yml_file <- 
-  system.file("x.yml", package = "pointblank")
+  system.file(
+    "agent-small_table.yml",
+    package = "pointblank"
+  )
 
 # We can view the YAML file in the console
 # with the `agent_yaml_string()` function

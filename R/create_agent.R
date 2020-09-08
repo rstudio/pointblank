@@ -183,7 +183,8 @@ create_agent <- function(tbl = NULL,
                          tbl_name = NULL,
                          label = NULL,
                          embed_report = FALSE,
-                         reporting_lang = NULL) {
+                         reporting_lang = NULL,
+                         locale = NULL) {
 
   # Generate a label if none provided
   if (is.null(label)) {
@@ -259,6 +260,7 @@ create_agent <- function(tbl = NULL,
       embed_report = embed_report,
       reporting = NULL,
       reporting_lang = reporting_lang,
+      locale = locale,
       time_start = as.POSIXct(NA)[-1],
       time_end = as.POSIXct(NA)[-1],
       validation_set =

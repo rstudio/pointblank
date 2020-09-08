@@ -17,7 +17,7 @@ test_that("Creating a valid `agent` object is possible", {
         c("tbl", "read_fn", "tbl_name", "label",
           "db_tbl_name", "tbl_src", "tbl_src_details", "col_names",
           "col_types", "db_col_types", "actions", "end_fns", "embed_report",
-          "reporting", "reporting_lang", "time_start", "time_end",
+          "reporting", "reporting_lang", "locale", "time_start", "time_end",
           "validation_set", "extracts"
         )
     )

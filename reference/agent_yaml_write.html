@@ -234,38 +234,23 @@ with <code>filename</code>).</p></td>
 
 <span class='co'># The agent can be written to a pointblank</span>
 <span class='co'># YAML file with `agent_yaml_write()`</span>
-<span class='co'># agent_yaml_write(agent, filename = "x.yml")</span>
+<span class='co'># agent_yaml_write(</span>
+<span class='co'>#   agent,</span>
+<span class='co'>#   filename = "agent-small_table.yml"</span>
+<span class='co'># )</span>
 
-<span class='co'># The 'x.yml' file is available in the package</span>
-<span class='co'># through `system.file()`</span>
+<span class='co'># The 'agent-small_table.yml' file is</span>
+<span class='co'># available in the package through `system.file()`</span>
 <span class='kw'>yml_file</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"x.yml"</span>, package = <span class='st'>"pointblank"</span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(
+    <span class='st'>"agent-small_table.yml"</span>,
+    package = <span class='st'>"pointblank"</span>
+  )
 
 <span class='co'># We can view the YAML file in the console</span>
 <span class='co'># with the `agent_yaml_string()` function</span>
 <span class='fu'><a href='agent_yaml_string.html'>agent_yaml_string</a></span>(path = <span class='kw'>yml_file</span>)
-</div><div class='output co'>#&gt; <span class='message'>label: A simple example with the `small_table`.</span>
-#&gt; <span class='message'>read_fn: ~small_table</span>
-#&gt; <span class='message'>actions:</span>
-#&gt; <span class='message'>  warn_fraction: 0.1</span>
-#&gt; <span class='message'>  stop_fraction: 0.25</span>
-#&gt; <span class='message'>  notify_fraction: 0.35</span>
-#&gt; <span class='message'>steps:</span>
-#&gt; <span class='message'>- col_exists:</span>
-#&gt; <span class='message'>    columns: vars(date)</span>
-#&gt; <span class='message'>- col_exists:</span>
-#&gt; <span class='message'>    columns: vars(date_time)</span>
-#&gt; <span class='message'>- col_vals_regex:</span>
-#&gt; <span class='message'>    columns: vars(b)</span>
-#&gt; <span class='message'>    regex: '[0-9]-[a-z]{3}-[0-9]{3}'</span>
-#&gt; <span class='message'>- rows_distinct:</span>
-#&gt; <span class='message'>    columns: ~</span>
-#&gt; <span class='message'>- col_vals_gt:</span>
-#&gt; <span class='message'>    columns: vars(d)</span>
-#&gt; <span class='message'>    value: 100.0</span>
-#&gt; <span class='message'>- col_vals_lte:</span>
-#&gt; <span class='message'>    columns: vars(c)</span>
-#&gt; <span class='message'>    value: 5.0</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: file("") only supports open = "w+" and open = "w+b": using the former</span></div><div class='output co'>#&gt; </div><div class='input'>
 <span class='co'># The YAML can also be printed in the console</span>
 <span class='co'># by supplying the agent as the input</span>
 <span class='fu'><a href='agent_yaml_string.html'>agent_yaml_string</a></span>(agent = <span class='kw'>agent</span>)
@@ -295,7 +280,10 @@ with <code>filename</code>).</p></td>
 <span class='co'># be read into a new agent with the</span>
 <span class='co'># `agent_yaml_read()` function</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='agent_yaml_read.html'>agent_yaml_read</a></span>(path = <span class='kw'>yml_file</span>)
-
+</div><div class='output co'>#&gt; <span class='warning'>Warning: file("") only supports open = "w+" and open = "w+b": using the former</span></div><div class='output co'>#&gt; <span class='error'>Error: A table object or table-reading function must be supplied:</span>
+#&gt; <span class='error'> * Use a table object in the `tbl` argument.</span>
+#&gt; <span class='error'> * Or supply a table-reading function in `read_fn`.</span>
+#&gt; <span class='error'> * You can do both: the supplied `tbl` will take priority.</span></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>agent</span>)
 </div><div class='output co'>#&gt; [1] "ptblank_agent"</div><div class='input'>
 <span class='co'># We can interrogate the data (which</span>
@@ -306,9 +294,12 @@ with <code>filename</code>).</p></td>
 <span class='co'># file with `agent_yaml_interrogate()`</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span> 
   <span class='fu'><a href='agent_yaml_interrogate.html'>agent_yaml_interrogate</a></span>(path = <span class='kw'>yml_file</span>)
-
+</div><div class='output co'>#&gt; <span class='warning'>Warning: file("") only supports open = "w+" and open = "w+b": using the former</span></div><div class='output co'>#&gt; <span class='error'>Error: A table object or table-reading function must be supplied:</span>
+#&gt; <span class='error'> * Use a table object in the `tbl` argument.</span>
+#&gt; <span class='error'> * Or supply a table-reading function in `read_fn`.</span>
+#&gt; <span class='error'> * You can do both: the supplied `tbl` will take priority.</span></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>agent</span>)
-</div><div class='output co'>#&gt; [1] "has_intel"     "ptblank_agent"</div><div class='input'>
+</div><div class='output co'>#&gt; [1] "ptblank_agent"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

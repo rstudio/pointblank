@@ -324,7 +324,7 @@ expr_from_agent_yaml <- function(path,
   actions <- make_action_levels_str(y$actions)
   end_fns <- make_end_fns_str(y$end_fns)
   
-  # The `embed_report` and `reporting_lang` values are
+  # The `embed_report` and `lang` values are
   # taken from the YAML (if they exist) and transformed
   # to argument strings
   if (!is.null(y$embed_report) && y$embed_report) {
@@ -332,10 +332,10 @@ expr_from_agent_yaml <- function(path,
   } else {
     embed_report <- NULL
   }
-  if (!is.null(y$reporting_lang) && y$reporting_lang != "en") {
-    reporting_lang <- paste0("  reporting_lang = \"", y$reporting_lang, "\"")
+  if (!is.null(y$lang) && y$lang != "en") {
+    lang <- paste0("  lang = \"", y$lang, "\"")
   } else {
-    reporting_lang <- NULL
+    lang <- NULL
   }
   
   # Generate all of the validation steps that make up
@@ -347,7 +347,7 @@ expr_from_agent_yaml <- function(path,
     paste0(
       "create_agent(\n",
       paste(
-        c(read_fn, label, actions, end_fns, embed_report, reporting_lang),
+        c(read_fn, label, actions, end_fns, embed_report, lang),
         collapse = ",\n"
       ),
       "\n) ",

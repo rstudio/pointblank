@@ -1,15 +1,15 @@
 reporting_languages <- c("en", "fr", "de", "it", "es")
 
-normalize_reporting_language <- function(reporting_lang) {
+normalize_reporting_language <- function(lang) {
   
-  if (is.null(reporting_lang)) return("en")
+  if (is.null(lang)) return("en")
   
-  if (!(tolower(reporting_lang) %in% reporting_languages)) {
+  if (!(tolower(lang) %in% reporting_languages)) {
     stop("The text ", reporting_lang, " doesn't correspond to a pointblank reporting language",
          call. = FALSE)
   }
   
-  tolower(reporting_lang)
+  tolower(lang)
 }
 
 get_lsv <- function(text,

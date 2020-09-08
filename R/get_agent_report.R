@@ -137,7 +137,7 @@ get_agent_report <- function(agent,
                              keep = c("all", "fail_states"),
                              display_table = TRUE,
                              size = "standard",
-                             reporting_lang = NULL,
+                             lang = NULL,
                              locale = NULL) {
   
   arrange_by <- match.arg(arrange_by)
@@ -277,11 +277,10 @@ get_agent_report <- function(agent,
   
   if (is.null(locale)) locale <- agent$locale
   
-  if (is.null(reporting_lang)) {
-    lang <- agent$reporting_lang
+  if (is.null(lang)) {
+    lang <- agent$lang
   } else {
-    normalize_reporting_language(reporting_lang = reporting_lang)
-    lang <- reporting_lang
+    normalize_reporting_language(lang = lang)
   }
 
   briefs <- validation_set$brief

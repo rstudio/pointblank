@@ -12,7 +12,8 @@ create_agent(
   tbl_name = NULL,
   label = NULL,
   embed_report = FALSE,
-  reporting_lang = NULL
+  reporting_lang = NULL,
+  locale = NULL
 )
 }
 \arguments{

@@ -9,7 +9,7 @@ scan_data(
   sections = c("overview", "variables", "interactions", "correlations", "missing",
     "sample"),
   navbar = TRUE,
-  reporting_lang = NULL
+  lang = NULL
 )
 }
 \arguments{
@@ -27,9 +27,9 @@ the report. For \code{tbl_dbi} and \code{tbl_spark} objects, the \code{"interact
 \item{navbar}{Should there be a navigation bar anchored to the top of the
 report page? By default this is \code{TRUE}.}
 
-\item{reporting_lang}{The language to use for label text in the report. By
-default, \code{NULL} will create English (\code{"en"}) text. Other options include
-French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), and Spanish (\code{"es"}).}
+\item{lang}{The language to use for label text in the report. By default,
+\code{NULL} will create English (\code{"en"}) text. Other options include French
+(\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), and Spanish (\code{"es"}).}
 }
 \description{
 Generate an HTML report that scours the input table data. Before calling up

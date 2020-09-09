@@ -77,6 +77,7 @@ utils::globalVariables(
     ".panel_x",
     ".panel_y",
     "pb_is_good_",
+    "pct",
     "precon",
     "preconditions",
     "q_1",

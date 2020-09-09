@@ -311,13 +311,6 @@ get_column_description_gt <- function(data_column,
     dplyr::pull(n) %>%
     as.integer()
   
-  distinct_pct <- 
-    if (distinct_count == 0) {
-      ""
-    } else {
-      ((distinct_count / n_rows) * 100) %>% round(1) %>% as.character() %>% paste0("(", ., "%)")
-    }
-  
   na_cells <- 
     data_column %>%
     dplyr::select(dplyr::everything()) %>%
@@ -327,18 +320,9 @@ get_column_description_gt <- function(data_column,
     as.vector() %>%
     sum()
   
-  na_cells_pct <- 
-    if (na_cells == 0) {
-      ""
-    } else {
-      ((na_cells / n_rows) * 100) %>% 
-        round(1) %>% 
-        as.character() %>% 
-        paste0("(", ., "%)")
-    }
-  
   # Get a count of Inf/-Inf values for non-DB table cells
-  if (!inherits(data_column, "tbl_dbi") && !inherits(data_column, "tbl_spark")) {
+  if (!inherits(data_column, "tbl_dbi") &&
+      !inherits(data_column, "tbl_spark")) {
     
     inf_cells <-
       data_column %>%
@@ -350,28 +334,36 @@ get_column_description_gt <- function(data_column,
     inf_cells <- 0L
   }
   
-  inf_cells_pct <- 
-    if (inf_cells == 0) {
-      ""
-    } else {
-      ((inf_cells / n_rows) * 100) %>% 
-        round(1) %>% 
-        as.character() %>% 
-        paste0("(", ., "%)")
-    }
-  
   column_description_tbl <-
-    dplyr::tribble(
-      ~label,                                            ~value,
-      get_lsv("table_scan/tbl_lab_distinct")[[lang]],    glue::glue("{distinct_count} {distinct_pct}", .transformer = get),
-      get_lsv("table_scan/tbl_lab_NAs")[[lang]],         glue::glue("{na_cells} {na_cells_pct}", .transformer = get),
-      "<code>Inf</code>/<code>-Inf</code>",              glue::glue("{inf_cells} {inf_cells_pct}", .transformer = get),
-    )
-  
+    dplyr::tibble(
+      label = c(
+        get_lsv("table_scan/tbl_lab_distinct")[[lang]],
+        get_lsv("table_scan/tbl_lab_NAs")[[lang]],
+        "`Inf`/`-Inf`"
+      ),
+      value = c(distinct_count, na_cells, inf_cells),
+      pct = NA_real_
+    ) %>%
+    dplyr::mutate(pct = dplyr::case_when(
+      dplyr::row_number() == 1 ~ distinct_count / n_rows,
+      dplyr::row_number() == 2 ~ na_cells / n_rows,
+      dplyr::row_number() == 3 ~ inf_cells / n_rows,
+      TRUE ~ NA_real_
+    ))
+
   column_description_gt <-
     gt::gt(column_description_tbl) %>%
-    gt::fmt_markdown(columns = TRUE) %>%
+    gt::fmt_markdown(columns = gt::vars(label)) %>%
+    gt::fmt_number(columns = gt::vars(value), decimals = 0, locale = locale) %>%
+    gt::fmt_percent(columns = gt::vars(pct), decimals = 2, locale = locale) %>%
+    gt::cols_merge(columns = gt::vars(value, pct), pattern = "{1} ({2})") %>%
     gt::cols_align(align = "right", columns = gt::vars(value)) %>%
+    gt::text_transform(
+      locations = gt::cells_body(columns = gt::vars(value)),
+      fn = function(x) {
+        gsub("^0 \\(.*", "0", x)
+      }
+    ) %>%
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",

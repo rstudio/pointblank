@@ -233,18 +233,27 @@ probe_overview_stats <- function(data,
       table.border.top.style = "none",
       table.width = "100%"
     )
-  
-  # Reproducibility Summary
+
   reproducibility_gt <-
-    dplyr::tribble(
-      ~label,                                                    ~value,
-      get_lsv("table_scan/tbl_lab_scan_build_time")[[lang]],     paste0("`", Sys.time() %>% as.character(), "`"),
-      get_lsv("table_scan/tbl_lab_pointblank_version")[[lang]],  paste0("`", utils::packageVersion("pointblank") %>% as.character(), "`"),
-      get_lsv("table_scan/tbl_lab_r_version")[[lang]],           paste0(R.version$version.string, "<br><span style=\"font-size: smaller;\"><em>", R.version$nickname, "</em></span>") %>% gsub("-", "&ndash;", .),
-      get_lsv("table_scan/tbl_lab_system_os")[[lang]],           paste0("`", R.version$platform, "`")
+    dplyr::tibble(
+      label = c(
+        get_lsv("table_scan/tbl_lab_scan_build_time")[[lang]],
+        get_lsv("table_scan/tbl_lab_pointblank_version")[[lang]],
+        get_lsv("table_scan/tbl_lab_r_version")[[lang]],
+        get_lsv("table_scan/tbl_lab_system_os")[[lang]]
+      ),
+      value = c(
+        paste0("`", as.character(Sys.time()), "`"),
+        paste0("`", as.character(utils::packageVersion("pointblank")), "`"),
+        paste0(
+          R.version$version.string,
+          "<br><span style=\"font-size: smaller;\"><em>",
+          R.version$nickname, "</em></span>") %>%
+          gsub("-", "&ndash;", .),
+        paste0("`", R.version$platform, "`")
+      )
     ) %>%
     gt::gt() %>%
-    gt::fmt_markdown(columns = gt::vars(label)) %>%
     gt::fmt_markdown(columns = TRUE) %>%
     gt::tab_options(
       column_labels.hidden = TRUE,

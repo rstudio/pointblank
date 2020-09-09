@@ -198,6 +198,9 @@ create_agent <- function(tbl = NULL,
   
   # Normalize the reporting language identifier and stop if necessary
   lang <- normalize_reporting_language(lang)
+  
+  # Set the `locale` to the `lang` value if `locale` isn't set
+  if (is.null(locale)) locale <- lang
 
   # If nothing is provided for either `tbl` or `read_fn`,
   # this function needs to be stopped

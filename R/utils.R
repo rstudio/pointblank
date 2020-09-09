@@ -392,6 +392,10 @@ pb_fmt_number <- function(x,
                           dec_mark = ".",
                           locale = NULL) {
   
+  if (is.null(x)) return(NULL)
+  
+  if (length(x) == 1 && !inherits(x, "numeric")) return(x)
+  
   ((dplyr::tibble(a = x) %>%
       gt::gt() %>%
       gt::fmt_number(

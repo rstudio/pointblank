@@ -17,7 +17,7 @@ test_that("Creating a valid `agent` object is possible", {
         c("tbl", "read_fn", "tbl_name", "label",
           "db_tbl_name", "tbl_src", "tbl_src_details", "col_names",
           "col_types", "db_col_types", "actions", "end_fns", "embed_report",
-          "reporting", "reporting_lang", "time_start", "time_end",
+          "reporting", "lang", "locale", "time_start", "time_end",
           "validation_set", "extracts"
         )
     )
@@ -42,7 +42,7 @@ test_that("Creating a valid `agent` object is possible", {
   expect_null(agent$actions)
   expect_is(agent$end_fns, "list")
   expect_is(agent$embed_report, "logical")
-  expect_is(agent$reporting_lang, "character")
+  expect_is(agent$lang, "character")
   expect_is(agent$time_start, "POSIXct")
   expect_is(agent$time_end, "POSIXct")
   expect_is(agent$validation_set$i, "integer")

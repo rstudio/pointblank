@@ -438,11 +438,11 @@ as_agent_yaml_list <- function(agent) {
     lst_embed_report <- list(embed_report = agent$embed_report)
   }
 
-  if (is.null(agent$reporting_lang) || 
-      (!is.null(agent$reporting_lang) && agent$reporting_lang == "en")) {
-    lst_reporting_lang <- NULL
+  if (is.null(agent$lang) || 
+      (!is.null(agent$lang) && agent$lang == "en")) {
+    lst_lang <- NULL
   } else {
-    lst_reporting_lang <- list(reporting_lang = agent$reporting_lang)
+    lst_lang <- list(lang = agent$lang)
   }
 
   # Select only the necessary columns from the agent's `validation_set` 
@@ -617,7 +617,7 @@ as_agent_yaml_list <- function(agent) {
     lst_action_levels,
     lst_end_fns,
     lst_embed_report,
-    lst_reporting_lang,
+    lst_lang,
     list(steps = all_steps)
   )
 }

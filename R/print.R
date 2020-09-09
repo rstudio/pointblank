@@ -73,7 +73,7 @@ print.x_list_i <- function(x, ...) {
   cli::cli_text("{.cyan $capture_stack} ({.orange list [{length(x$capture_stack)}]})")
   cli::cli_text("{.cyan $n $n_passed $n_failed $f_passed $f_failed} ({.green num [{length_rows}]})")
   cli::cli_text("{.cyan $warn $stop $notify} ({.yellow lgl [{length_rows}]})")
-  cli::cli_text("{.cyan $reporting_lang} ({.red chr [1]})")
+  cli::cli_text("{.cyan $lang} ({.red chr [1]})")
   cli::cli_rule(right = ifelse(length(x$time) == 0, "NO INTERROGATION PERFORMED", ""))
 
   # nocov end 
@@ -121,7 +121,7 @@ print.x_list_n <- function(x, ...) {
   cli::cli_text("{.cyan $n $n_passed $n_failed $f_passed $f_failed} ({.green num [{length_rows}]})")
   cli::cli_text("{.cyan $warn $stop $notify} ({.yellow lgl [{length_rows}]})")
   cli::cli_text("{.cyan $validation_set} ({.blue tbl_df [{validation_set_rows}, {validation_set_cols}]})")
-  cli::cli_text("{.cyan $reporting_lang} ({.red chr [1]})")
+  cli::cli_text("{.cyan $lang} ({.red chr [1]})")
   cli::cli_text("{.cyan $report_object} ({.pink gt_tbl})")
   cli::cli_text("{.cyan $email_object} ({.pink blastula_message})")
   cli::cli_text("{.cyan $report_html $report_html_small} ({.red chr [1]})")

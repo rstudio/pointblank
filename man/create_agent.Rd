@@ -12,7 +12,8 @@ create_agent(
   tbl_name = NULL,
   label = NULL,
   embed_report = FALSE,
-  reporting_lang = NULL
+  lang = NULL,
+  locale = NULL
 )
 }
 \arguments{
@@ -53,12 +54,18 @@ the \code{ptblank_agent} object. If \code{FALSE} (the default) then the table ob
 will be not generated and available with the \emph{agent} upon returning from
 the interrogation.}
 
-\item{reporting_lang}{The language to use for automatic creation of briefs
-(short descriptions for each validation step) and for the \emph{agent report} (a
+\item{lang}{The language to use for automatic creation of briefs (short
+descriptions for each validation step) and for the \emph{agent report} (a
 summary table that provides the validation plan and the results from the
 interrogation. By default, \code{NULL} will create English (\code{"en"}) text. Other
 options include French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), and
 Spanish (\code{"es"}).}
+
+\item{locale}{An optional locale ID to use for formatting values in the
+\emph{agent report} summary table according the locale's rules. Examples include
+"en_US" for English (United States) and "fr_FR" for French (France); more
+simply, this can be a language identifier without a country designation,
+like "es" for Spanish (Spain).}
 }
 \value{
 A \code{ptblank_agent} object.

@@ -113,7 +113,7 @@ create_autobrief <- function(agent,
                              column = NULL,
                              values = NULL) {
 
-  lang <- agent$reporting_lang
+  lang <- agent$lang
   precondition_text <- prep_precondition_text(preconditions, lang = lang)
   column_computed_text <- prep_column_computed_text(agent, column, lang = lang)
   values_text <- prep_values_text(values, lang = lang)

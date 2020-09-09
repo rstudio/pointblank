@@ -81,8 +81,8 @@ test_that("An x-list for a step is structurally correct", {
   expect_equal(x_list_before$stop, NA)
   expect_is(x_list_before$notify, "logical")
   expect_equal(x_list_before$notify, NA)
-  expect_is(x_list_before$reporting_lang, "character")
-  expect_equal(x_list_before$reporting_lang, "en")
+  expect_is(x_list_before$lang, "character")
+  expect_equal(x_list_before$lang, "en")
   
   # Get an x-list at step 1 after interrogation
   x_list_after <- 
@@ -160,8 +160,8 @@ test_that("An x-list for a step is structurally correct", {
   expect_equal(x_list_after$stop, TRUE)
   expect_is(x_list_after$notify, "logical")
   expect_equal(x_list_after$notify, NA)
-  expect_is(x_list_after$reporting_lang, "character")
-  expect_equal(x_list_after$reporting_lang, "en")
+  expect_is(x_list_after$lang, "character")
+  expect_equal(x_list_after$lang, "en")
 })
 
 
@@ -256,8 +256,8 @@ test_that("A complete x-list is structurally correct", {
   expect_is(x_list_before$validation_set, c("tbl_df", "tbl", "data.frame"))
   expect_equal(nrow(x_list_before$validation_set), 3)
   expect_equal(ncol(x_list_before$validation_set), 28)
-  expect_is(x_list_before$reporting_lang, "character")
-  expect_equal(x_list_before$reporting_lang, "en")
+  expect_is(x_list_before$lang, "character")
+  expect_equal(x_list_before$lang, "en")
   expect_is(x_list_before$report_object, c("gt_tbl", "list"))
   expect_null(x_list_before$email_object)
   expect_is(x_list_before$report_html, "character")
@@ -353,8 +353,8 @@ test_that("A complete x-list is structurally correct", {
   expect_is(x_list_after$validation_set, c("tbl_df", "tbl", "data.frame"))
   expect_equal(nrow(x_list_after$validation_set), 3)
   expect_equal(ncol(x_list_after$validation_set), 28)
-  expect_is(x_list_after$reporting_lang, "character")
-  expect_equal(x_list_after$reporting_lang, "en")
+  expect_is(x_list_after$lang, "character")
+  expect_equal(x_list_after$lang, "en")
   expect_is(x_list_after$report_object, c("gt_tbl", "list"))
   expect_is(x_list_after$email_object, c("blastula_message", "email_message"))
   expect_is(x_list_after$report_html, "character")

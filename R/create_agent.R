@@ -63,12 +63,17 @@
 #'   the `ptblank_agent` object. If `FALSE` (the default) then the table object
 #'   will be not generated and available with the *agent* upon returning from
 #'   the interrogation.
-#' @param reporting_lang The language to use for automatic creation of briefs
-#'   (short descriptions for each validation step) and for the *agent report* (a
+#' @param lang The language to use for automatic creation of briefs (short
+#'   descriptions for each validation step) and for the *agent report* (a
 #'   summary table that provides the validation plan and the results from the
 #'   interrogation. By default, `NULL` will create English (`"en"`) text. Other
 #'   options include French (`"fr"`), German (`"de"`), Italian (`"it"`), and
 #'   Spanish (`"es"`).
+#' @param locale An optional locale ID to use for formatting values in the
+#'   *agent report* summary table according the locale's rules. Examples include
+#'   "en_US" for English (United States) and "fr_FR" for French (France); more
+#'   simply, this can be a language identifier without a country designation,
+#'   like "es" for Spanish (Spain).
 #'   
 #' @return A `ptblank_agent` object.
 #'   
@@ -183,7 +188,8 @@ create_agent <- function(tbl = NULL,
                          tbl_name = NULL,
                          label = NULL,
                          embed_report = FALSE,
-                         reporting_lang = NULL) {
+                         lang = NULL,
+                         locale = NULL) {
 
   # Generate a label if none provided
   if (is.null(label)) {
@@ -191,7 +197,10 @@ create_agent <- function(tbl = NULL,
   }
   
   # Normalize the reporting language identifier and stop if necessary
-  reporting_lang <- normalize_reporting_language(reporting_lang)
+  lang <- normalize_reporting_language(lang)
+  
+  # Set the `locale` to the `lang` value if `locale` isn't set
+  if (is.null(locale)) locale <- lang
 
   # If nothing is provided for either `tbl` or `read_fn`,
   # this function needs to be stopped
@@ -258,7 +267,8 @@ create_agent <- function(tbl = NULL,
       end_fns = list(end_fns),
       embed_report = embed_report,
       reporting = NULL,
-      reporting_lang = reporting_lang,
+      lang = lang,
+      locale = locale,
       time_start = as.POSIXct(NA)[-1],
       time_end = as.POSIXct(NA)[-1],
       validation_set =

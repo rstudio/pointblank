@@ -1,5 +1,3 @@
-context("Tests of functions dealing with YAML")
-
 temp_dir <- tempdir()
 
 test_that("YAML writing and reading works as expected", {

@@ -1,5 +1,3 @@
-context("Getting data extracts")
-
 test_that("Getting data extracts is possible", {
   
   # Use two validation step functions to create

@@ -1,5 +1,3 @@
-context("Performing conjoint interrogations with an agent")
-
 test_that("Interrogating conjointly with an agent yields the correct results", {
   
   tbl <-

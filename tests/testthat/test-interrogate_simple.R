@@ -1,5 +1,3 @@
-context("Performing simple interrogations")
-
 tbl <- 
   small_table %>%
   dplyr::mutate(g = as.factor(f))

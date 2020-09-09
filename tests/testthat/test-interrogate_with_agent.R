@@ -1,5 +1,3 @@
-context("Performing interrogations with an agent")
-
 library(lubridate)
 
 test_that("Interrogating with an agent yields the correct results", {

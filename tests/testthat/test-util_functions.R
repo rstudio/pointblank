@@ -1,5 +1,3 @@
-context("The utility functions work as expected")
-
 test_that("Utility functions won't fail us", {
   
   # Use two validation step functions to create

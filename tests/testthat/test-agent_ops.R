@@ -1,5 +1,3 @@
-context("Tests of functions dealing with agent ops")
-
 library(RSQLite)
 
 temp_dir <- tempdir()

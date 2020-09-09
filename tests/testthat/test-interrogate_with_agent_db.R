@@ -1,5 +1,3 @@
-context("Performing interrogations with an agent (using a database table)")
-
 library(DBI)
 library(RSQLite)
 

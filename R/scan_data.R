@@ -217,6 +217,12 @@ probe_overview_stats <- function(data,
         gsub(" (NA)", "", x, fixed = TRUE)
       }
     ) %>%
+    gt::text_transform(
+      locations = gt::cells_body(columns = gt::vars(value), rows = 3:4),
+      fn = function(x) {
+        gsub("^0 \\(.*", "0", x)
+      }
+    ) %>%
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",

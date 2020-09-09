@@ -161,7 +161,8 @@ table. This reporting of the interrogation can also be accessed with the
   tbl_name = <span class='kw'>NULL</span>,
   label = <span class='kw'>NULL</span>,
   embed_report = <span class='fl'>FALSE</span>,
-  reporting_lang = <span class='kw'>NULL</span>
+  lang = <span class='kw'>NULL</span>,
+  locale = <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -219,13 +220,21 @@ will be not generated and available with the <em>agent</em> upon returning from
 the interrogation.</p></td>
     </tr>
     <tr>
-      <th>reporting_lang</th>
-      <td><p>The language to use for automatic creation of briefs
-(short descriptions for each validation step) and for the <em>agent report</em> (a
+      <th>lang</th>
+      <td><p>The language to use for automatic creation of briefs (short
+descriptions for each validation step) and for the <em>agent report</em> (a
 summary table that provides the validation plan and the results from the
 interrogation. By default, <code>NULL</code> will create English (<code>"en"</code>) text. Other
 options include French (<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), and
 Spanish (<code>"es"</code>).</p></td>
+    </tr>
+    <tr>
+      <th>locale</th>
+      <td><p>An optional locale ID to use for formatting values in the
+<em>agent report</em> summary table according the locale's rules. Examples include
+"en_US" for English (United States) and "fr_FR" for French (France); more
+simply, this can be a language identifier without a country designation,
+like "es" for Spanish (Spain).</p></td>
     </tr>
     </table>
 
@@ -370,7 +379,7 @@ validation steps are free from any failing units.</p>
 <span class='co'># Just printing the x-list will tell</span>
 <span class='co'># us what's available therein</span>
 <span class='kw'>xl_step_4</span>
-</div><div class='output co'>#&gt; <span class='message'>── The x-list for `` ───────────────────────────────────────────────── STEP 4 ──</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$time_start $time_end</span><span> (</span><span style='color: #BB0000;'>POSIXct [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$label $tbl_name $tbl_src $tbl_src_details</span><span> (</span><span style='color: #BB0000;'>chr [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$tbl</span><span> (</span><span style='color: #0000BB;'>spec_tbl_df</span><span>, </span><span style='color: #0000BB;'>tbl_df</span><span>, </span><span style='color: #0000BB;'>tbl</span><span>, and </span><span style='color: #0000BB;'>data.frame</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$col_names $col_types</span><span> (</span><span style='color: #BB0000;'>chr [8]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$i $type $columns $values $label $briefs</span><span> (</span><span style='color: #00BB00;'>mixed [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$eval_error $eval_warning</span><span> (</span><span style='color: #BBBB00;'>lgl [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$capture_stack</span><span> (</span><span style='color: #BBBB00;'>list [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$n $n_passed $n_failed $f_passed $f_failed</span><span> (</span><span style='color: #00BB00;'>num [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$warn $stop $notify</span><span> (</span><span style='color: #BBBB00;'>lgl [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$reporting_lang</span><span> (</span><span style='color: #BB0000;'>chr [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'>────────────────────────────────────────────────── NO INTERROGATION PERFORMED ──</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>── The x-list for `` ───────────────────────────────────────────────── STEP 4 ──</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$time_start $time_end</span><span> (</span><span style='color: #BB0000;'>POSIXct [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$label $tbl_name $tbl_src $tbl_src_details</span><span> (</span><span style='color: #BB0000;'>chr [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$tbl</span><span> (</span><span style='color: #0000BB;'>spec_tbl_df</span><span>, </span><span style='color: #0000BB;'>tbl_df</span><span>, </span><span style='color: #0000BB;'>tbl</span><span>, and </span><span style='color: #0000BB;'>data.frame</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$col_names $col_types</span><span> (</span><span style='color: #BB0000;'>chr [8]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$i $type $columns $values $label $briefs</span><span> (</span><span style='color: #00BB00;'>mixed [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$eval_error $eval_warning</span><span> (</span><span style='color: #BBBB00;'>lgl [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$capture_stack</span><span> (</span><span style='color: #BBBB00;'>list [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$n $n_passed $n_failed $f_passed $f_failed</span><span> (</span><span style='color: #00BB00;'>num [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$warn $stop $notify</span><span> (</span><span style='color: #BBBB00;'>lgl [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$lang</span><span> (</span><span style='color: #BB0000;'>chr [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'>────────────────────────────────────────────────── NO INTERROGATION PERFORMED ──</span></div><div class='input'>
 <span class='co'># An x-list not specific to any step</span>
 <span class='co'># will have way more information and a</span>
 <span class='co'># slightly different structure; see</span>

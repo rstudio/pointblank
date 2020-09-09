@@ -170,7 +170,8 @@ complete HTML document where Bootstrap and jQuery are embedded within.</p>
   sections = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"overview"</span>, <span class='st'>"variables"</span>, <span class='st'>"interactions"</span>, <span class='st'>"correlations"</span>, <span class='st'>"missing"</span>,
     <span class='st'>"sample"</span>),
   navbar = <span class='fl'>TRUE</span>,
-  reporting_lang = <span class='kw'>NULL</span>
+  lang = <span class='kw'>NULL</span>,
+  locale = <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -197,10 +198,18 @@ the report. For <code>tbl_dbi</code> and <code>tbl_spark</code> objects, the <co
 report page? By default this is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
-      <th>reporting_lang</th>
-      <td><p>The language to use for label text in the report. By
-default, <code>NULL</code> will create English (<code>"en"</code>) text. Other options include
-French (<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), and Spanish (<code>"es"</code>).</p></td>
+      <th>lang</th>
+      <td><p>The language to use for label text in the report. By default,
+<code>NULL</code> will create English (<code>"en"</code>) text. Other options include French
+(<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), and Spanish (<code>"es"</code>).</p></td>
+    </tr>
+    <tr>
+      <th>locale</th>
+      <td><p>An optional locale ID to use for formatting values in the
+report according the locale's rules. Examples include <code>"en_US"</code> for English
+(United States) and <code>"fr_FR"</code> for French (France); more simply, this can be
+a language identifier without a country designation, like <code>"es"</code> for
+Spanish (Spain).</p></td>
     </tr>
     </table>
 

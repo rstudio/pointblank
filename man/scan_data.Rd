@@ -9,7 +9,8 @@ scan_data(
   sections = c("overview", "variables", "interactions", "correlations", "missing",
     "sample"),
   navbar = TRUE,
-  lang = NULL
+  lang = NULL,
+  locale = NULL
 )
 }
 \arguments{
@@ -30,6 +31,12 @@ report page? By default this is \code{TRUE}.}
 \item{lang}{The language to use for label text in the report. By default,
 \code{NULL} will create English (\code{"en"}) text. Other options include French
 (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), and Spanish (\code{"es"}).}
+
+\item{locale}{An optional locale ID to use for formatting values in the
+report according the locale's rules. Examples include \code{"en_US"} for English
+(United States) and \code{"fr_FR"} for French (France); more simply, this can be
+a language identifier without a country designation, like \code{"es"} for
+Spanish (Spain).}
 }
 \description{
 Generate an HTML report that scours the input table data. Before calling up

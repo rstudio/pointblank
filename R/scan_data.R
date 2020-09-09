@@ -86,6 +86,9 @@ scan_data <- function(tbl,
   
   # Normalize the reporting language identifier and stop if necessary
   lang <- normalize_reporting_language(lang)
+  
+  # Set the `locale` to the `lang` value if `locale` isn't set
+  if (is.null(locale)) locale <- lang
 
   # Attempt to get the table name through `match.call()` and `deparse()`
   tbl_name <- deparse(match.call()$tbl)

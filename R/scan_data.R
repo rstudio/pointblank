@@ -395,16 +395,24 @@ get_numeric_stats_gt <- function(data_column,
   max <- summary_stats$max
   
   column_stats_tbl <-
-    dplyr::tribble(
-      ~label,                                         ~value,
-      get_lsv("table_scan/tbl_lab_mean")[[lang]],     mean,
-      get_lsv("table_scan/tbl_lab_minimum")[[lang]],  min,
-      get_lsv("table_scan/tbl_lab_maximum")[[lang]],  max
+    dplyr::tibble(
+      label = c(
+        get_lsv("table_scan/tbl_lab_mean")[[lang]],   
+        get_lsv("table_scan/tbl_lab_minimum")[[lang]],
+        get_lsv("table_scan/tbl_lab_maximum")[[lang]]
+      ),
+      value = c(mean, min, max)
     )
-  
+
   column_stats_gt <-
     gt::gt(column_stats_tbl) %>%
-    gt::fmt_markdown(columns = TRUE) %>%
+    gt::fmt_markdown(columns = gt::vars(label)) %>%
+    gt::fmt_number(
+      columns = gt::vars(value),
+      decimals = 2,
+      drop_trailing_zeros = TRUE,
+      locale = locale
+    ) %>%
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -431,7 +439,6 @@ get_quantile_stats_gt <- function(data_column,
     if (n_rows <= 1000) {
       
       data_column <- data_column %>% dplyr::collect()
-      
       quantile_stats <- calculate_quantile_stats(data_column = data_column)
       
     } else {
@@ -472,22 +479,38 @@ get_quantile_stats_gt <- function(data_column,
   }
   
   quantile_stats_tbl <-
-    dplyr::tribble(
-      ~label,                                               ~value,
-      get_lsv("table_scan/tbl_lab_minimum")[[lang]],        as.character(quantile_stats$min),
-      get_lsv("table_scan/tbl_lab_5_percentile")[[lang]],   as.character(quantile_stats$p05),
-      "Q1",                                                 as.character(quantile_stats$q_1),
-      get_lsv("table_scan/tbl_lab_median")[[lang]],         as.character(quantile_stats$med),
-      "Q3",                                                 as.character(quantile_stats$q_3),
-      get_lsv("table_scan/tbl_lab_95_percentile")[[lang]],  as.character(quantile_stats$p95),
-      get_lsv("table_scan/tbl_lab_maximum")[[lang]],        as.character(quantile_stats$max),
-      get_lsv("table_scan/tbl_lab_range")[[lang]],          as.character(quantile_stats$range),
-      "IQR",                                                as.character(quantile_stats$iqr)
+    dplyr::tibble(
+      label = c(
+        get_lsv("table_scan/tbl_lab_minimum")[[lang]],
+        get_lsv("table_scan/tbl_lab_5_percentile")[[lang]],
+        "Q1",
+        get_lsv("table_scan/tbl_lab_median")[[lang]],
+        "Q3",
+        get_lsv("table_scan/tbl_lab_95_percentile")[[lang]],
+        get_lsv("table_scan/tbl_lab_maximum")[[lang]],
+        get_lsv("table_scan/tbl_lab_range")[[lang]],
+        "IQR"
+      ),
+      value = c(
+        quantile_stats$min,
+        quantile_stats$p05,
+        quantile_stats$q_1,
+        quantile_stats$med,
+        quantile_stats$q_3,
+        quantile_stats$p95,
+        quantile_stats$max,
+        quantile_stats$range,
+        quantile_stats$iqr
+      )
     )
-  
+    
   quantile_stats_gt <-
     gt::gt(quantile_stats_tbl) %>%
-    gt::fmt_markdown(columns = TRUE) %>%
+    gt::fmt_number(
+      columns = gt::vars(value),
+      decimals = 2,
+      locale = locale
+    ) %>%
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",
@@ -612,22 +635,30 @@ get_descriptive_stats_gt <- function(data_column,
       dplyr::summarize_all(~ round(., 2)) %>%
       as.list()
   }
-  
+
   descriptive_stats_tbl <-
-    dplyr::tribble(
-      ~label,                                        ~value,
-      get_lsv("table_scan/tbl_lab_mean")[[lang]],                descriptive_stats$mean,
-      get_lsv("table_scan/tbl_lab_variance")[[lang]],            descriptive_stats$variance,
-      get_lsv("table_scan/tbl_lab_standard_deviation")[[lang]],  descriptive_stats$sd,
-      get_lsv("table_scan/tbl_lab_cov")[[lang]],                 descriptive_stats$cv,
-      # "Median Absolute Deviation",        ,
-      # "Kurtosis",                         ,
-      # "Skewness",                         ,
+    dplyr::tibble(
+      label = c(
+        get_lsv("table_scan/tbl_lab_mean")[[lang]],
+        get_lsv("table_scan/tbl_lab_variance")[[lang]],
+        get_lsv("table_scan/tbl_lab_standard_deviation")[[lang]],
+        get_lsv("table_scan/tbl_lab_cov")[[lang]]
+      ),
+      value = c(
+        descriptive_stats$mean,
+        descriptive_stats$variance,
+        descriptive_stats$sd,
+        descriptive_stats$cv
+      )
     )
   
-  descriptive_stats_tbl %>%
-    gt::gt() %>%
-    gt::fmt_markdown(columns = TRUE) %>%
+  gt::gt(descriptive_stats_tbl) %>%
+    gt::fmt_number(
+      columns = gt::vars(value),
+      decimals = 2,
+      drop_trailing_zeros = FALSE,
+      locale = locale
+    ) %>%
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",

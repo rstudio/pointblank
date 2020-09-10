@@ -394,7 +394,9 @@ pb_fmt_number <- function(x,
   
   if (is.null(x)) return(NULL)
   
-  if (length(x) == 1 && !inherits(x, "numeric")) return(x)
+  if (length(x) == 1 && (!inherits(x, "numeric") && !inherits(x, "integer"))) {
+    return(x)
+  } 
   
   ((dplyr::tibble(a = x) %>%
       gt::gt() %>%

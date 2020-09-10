@@ -216,6 +216,12 @@ agent_report:
     de: Keine Abfrage durchgeführt
     it: Nessuna interrogazione eseguita
     es: No se realizaron interrogatorios
+  report_fail_rows_available:
+    en: "There are {fail_rows_extract} 'fail' rows available as a CSV file."
+    fr: "Il existe des {fail_rows_extract} lignes 'fail' disponibles sous forme de fichier CSV."
+    de: "Es sind {fail_rows_extract} 'fail'-Zeilen als CSV-Datei verfügbar."
+    it: "Sono disponibili {fail_rows_extract} righe 'fail' come file CSV."
+    es: "Hay {fail_rows_extract} filas 'fail' disponibles como archivo CSV."
   report_col_step:
     en: STEP
     fr: ÉTAPE

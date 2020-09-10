@@ -803,8 +803,12 @@ get_agent_report <- function(agent,
           df <- 
             extracts[as.character(x)][[1]] %>%
             as.data.frame(stringsAsFactors = FALSE)
+
+          fail_rows_extract <- 
+            pb_fmt_number(nrow(df), decimals = 0, locale = locale)
           
-          title_text <- paste0(nrow(df), " failing rows available.")
+          title_text <- 
+            glue::glue(get_lsv("agent_report/report_fail_rows_available")[[lang]])
           
           temp_file <- 
             tempfile(pattern = paste0("csv_file_", x), fileext = ".csv")

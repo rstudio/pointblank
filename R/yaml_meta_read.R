@@ -108,7 +108,10 @@ get_metadata_report <- function(path) {
     meta_label <- paste0("[", gsub(" ", "|", as.character(Sys.time())), "]")
   }
   meta_label <- create_metadata_label_html(meta_label = meta_label)
-  
+
+  meta_columns <- NULL
+  meta_rows <- NULL
+    
   y_names <- names(y)
   
   priority_items <- c("table",  "columns")
@@ -152,11 +155,11 @@ get_metadata_report <- function(path) {
     } else {
       table_type_html <- ""
     }
+
     
-    meta_columns <- NULL
     if ("columns" %in% section_names) meta_columns <- as.numeric(section[["columns"]][1])
     if ("_columns" %in% section_names) meta_columns <- as.numeric(section[["_columns"]][1])
-    meta_rows <- NULL
+
     if ("rows" %in% section_names) meta_rows <- as.numeric(section[["rows"]][1])
     if ("_rows" %in% section_names) meta_rows <- as.numeric(section[["_rows"]][1])
     
@@ -551,7 +554,8 @@ meta_yaml_read <- function(path) {
   }
   
   # If any other items are present, perform a few validations on those
-  other_names <- base::setdiff(names(y), c("table", "columns"))
+  other_names <- 
+    base::setdiff(names(y), c("table", "columns", "actions", "steps"))
   
   if (length(other_names) > 0) {
     

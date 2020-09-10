@@ -288,12 +288,17 @@ get_agent_report <- function(agent,
       )
     ]
   
-  if (is.null(locale)) locale <- agent$locale
-  
   if (is.null(lang)) {
+    
     lang <- agent$lang
+    if (is.null(locale)) locale <- agent$locale
+    
   } else {
+    
     normalize_reporting_language(lang = lang)
+    
+    # Set the `locale` to the `lang` value if `locale` isn't set
+    if (is.null(locale)) locale <- lang
   }
 
   briefs <- validation_set$brief

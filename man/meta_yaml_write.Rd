@@ -4,18 +4,18 @@
 \alias{meta_yaml_write}
 \title{Write table metadata to a YAML file}
 \usage{
-meta_yaml_write(x = NULL, filename, path = NULL)
+meta_yaml_write(metadata, filename, path = NULL)
 }
 \arguments{
-\item{x}{The input table. This can be a data frame, a tibble, a \code{tbl_dbi}
-object, or a \code{tbl_spark} object.}
-
 \item{filename}{The name of the YAML file to create on disk. It is
 recommended that either the \code{.yaml} or \code{.yml} extension be used for this
 file.}
 
 \item{path}{An optional path to which the YAML file should be saved (combined
 with \code{filename}).}
+
+\item{x}{The input table. This can be a data frame, a tibble, a \code{tbl_dbi}
+object, or a \code{tbl_spark} object.}
 }
 \description{
 With \code{meta_yaml_write()} we can take a data table and generate

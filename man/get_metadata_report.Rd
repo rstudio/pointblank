@@ -4,7 +4,7 @@
 \alias{get_metadata_report}
 \title{Get a table metadata report from \strong{pointblank} metadata YAML}
 \usage{
-get_metadata_report(path)
+get_metadata_report(metadata)
 }
 \arguments{
 \item{path}{A path to a YAML file that specifies metadata for a table.}

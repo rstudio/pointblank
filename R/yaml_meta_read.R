@@ -461,6 +461,7 @@ get_metadata_report <- function(metadata) {
           #metadata ul {
             list-style-type: square;
             padding-left: 25px;
+            margin-top: -4px;
           }
           #metadata li {
             text-indent: -1px;

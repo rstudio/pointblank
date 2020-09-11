@@ -156,7 +156,6 @@ get_metadata_report <- function(metadata) {
       table_type_html <- ""
     }
 
-    
     if ("columns" %in% section_names) meta_columns <- as.numeric(section[["columns"]][1])
     if ("_columns" %in% section_names) meta_columns <- as.numeric(section[["_columns"]][1])
 

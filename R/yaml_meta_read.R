@@ -461,6 +461,7 @@ get_metadata_report <- function(metadata) {
             list-style-type: square;
             padding-left: 25px;
             margin-top: -4px;
+            margin-bottom: 6px;
           }
           #metadata li {
             text-indent: -1px;
@@ -511,7 +512,7 @@ meta_yaml_read <- function(path) {
   check_meta_yaml_table(y)
   check_meta_yaml_columns(y)
   check_meta_yaml_others(y)
-  
+
   # Create the metadata list object
   metadata <-
     list(

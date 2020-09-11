@@ -104,4 +104,44 @@ create_metadata <- function(tbl = NULL,
   metadata
 }
 
+#' @export
+meta_columns <- function(metadata, columns, ...) {
+  
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
+  
+  metadata_items <- list(...)
+  
+  metadata_list <- metadata$metadata
+  metadata_columns <- metadata_list$columns
 
+  x <- dplyr::as_tibble(metadata_columns %>% lapply(function(x) 1))
+  
+  # Resolve the columns based on the expression
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
+  
+  for (column in columns) {
+    for (i in seq_along(metadata_items)) {
+
+      item_name <- names(metadata_items[i])
+      item_value <- metadata_items[[i]]
+      
+      if (!(item_name %in% names(metadata_columns[[column]]))) {
+      # Case where `item_name` doesn't exist for column
+        metadata_columns[[column]] <- 
+          c(
+            metadata_columns[[column]],
+            metadata_items[i]
+          )
+      } else {
+      # Case where `item_name` exists for the column
+        
+        metadata_columns[[column]][[item_name]] <- item_value
+      }
+    }
+  }
+  
+  metadata$metadata$columns <- metadata_columns
+  
+  metadata
+}

@@ -231,6 +231,14 @@ get_metadata_report <- function(metadata) {
             miniheader_vec <- c(miniheader_vec, col_type = col_type)
           }
           
+          col_meta <- 
+            lapply(col_meta, FUN = function(x) {
+              if (length(x) > 1) {
+                x <- paste0("\n", paste0("- ", x, "\n", collapse = ""))
+              }
+              x
+            })
+
           list_item <- 
             list(
               a = paste0(

@@ -105,7 +105,42 @@ create_metadata <- function(tbl = NULL,
 }
 
 #' @export
-meta_columns <- function(metadata, columns, ...) {
+meta_table <- function(metadata,
+                       ...) {
+  
+  metadata_items <- list(...)
+
+  metadata_list <- metadata$metadata
+  metadata_table <- metadata_list$table
+
+  for (i in seq_along(metadata_items)) {
+    
+    item_name <- names(metadata_items[i])
+    item_value <- metadata_items[[i]]
+    
+    if (!(item_name %in% names(metadata_table))) {
+      # Case where `item_name` doesn't exist for column
+      metadata_table <- 
+        c(
+          metadata_table,
+          metadata_items[i]
+        )
+    } else {
+      # Case where `item_name` exists for the column
+      
+      metadata_table[[item_name]] <- item_value
+    }
+  }
+
+  metadata$metadata$table <- metadata_table
+  
+  metadata
+}
+
+#' @export
+meta_columns <- function(metadata,
+                         columns,
+                         ...) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -142,6 +177,55 @@ meta_columns <- function(metadata, columns, ...) {
   }
   
   metadata$metadata$columns <- metadata_columns
+  
+  metadata
+}
+
+#' @export
+meta_section <- function(metadata,
+                         section_name,
+                         ...) {
+  
+  metadata_items <- list(...)
+  
+  metadata_list <- metadata$metadata
+  
+  if (is.null(metadata_list[[section_name]])) {
+    metadata_section <- list()
+    section_new <- TRUE
+  } else {
+    metadata_section <- metadata_list[[section_name]]
+    section_new <- FALSE
+  }
+
+  for (i in seq_along(metadata_items)) {
+    
+    item_name <- names(metadata_items[i])
+    item_value <- metadata_items[[i]]
+    
+    if (!(item_name %in% names(metadata_section))) {
+      # Case where `item_name` doesn't exist for the section
+      metadata_section <- 
+        c(
+          metadata_section,
+          metadata_items[i]
+        )
+    } else {
+      # Case where `item_name` exists for the section
+      metadata_section[[item_name]] <- item_value
+    }
+  }
+  
+  section_list <- list(a = metadata_section)
+  names(section_list) <- section_name
+
+  if (section_new) {
+    metadata$metadata <- c(metadata$metadata, section_list)
+  }
+  
+  if (!section_new) {
+    metadata$metadata[section_name] <- section_list
+  }
   
   metadata
 }

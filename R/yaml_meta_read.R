@@ -93,13 +93,13 @@
 #' #> )
 #' 
 #' @export
-get_metadata_report <- function(path) {
+get_metadata_report <- function(metadata) {
   
   # nocov start
   
   time_start <- Sys.time()
   
-  y <- meta_yaml_read(path = path)
+  y <- metadata$metadata
   
   if ("label" %in% names(y)) {
     meta_label <- y[["label"]]
@@ -199,7 +199,7 @@ get_metadata_report <- function(path) {
           
           list_item <- 
             list(
-              a = paste0("<strong>INFO</strong> ", unlist(col_meta))
+              a = paste0("<strong class=\"pb_sub_label\">INFO</strong> ", unlist(col_meta))
             )
           
           names(list_item) <- column
@@ -234,7 +234,7 @@ get_metadata_report <- function(path) {
           list_item <- 
             list(
               a = paste0(
-                "<strong>",
+                "<strong class=\"pb_sub_label\">",
                 toupper(names(col_meta)),
                 "</strong> ", unlist(col_meta)
               )
@@ -264,7 +264,10 @@ get_metadata_report <- function(path) {
             tbl$item[[row_idx]] <-
               gsub(
                 "(^.*?</code>)(.*)", 
-                paste0("\\1&nbsp;&nbsp;<code class=\"pb_col_type\">", miniheader_vec, "</code>\\2"),
+                paste0(
+                  "\\1&nbsp;&nbsp;<code class=\"pb_col_type\">",
+                  miniheader_vec, "</code>\\2"
+                ),
                 tbl$item[[row_idx]]
               )
           }
@@ -472,6 +475,10 @@ get_metadata_report <- function(path) {
             margin-left: 2px;
             margin-right: 2px;
           }
+          #metadata .pb_sub_label {
+            font-size: smaller;
+            color: #777777;
+          }
           #metadata .pb_col_type {
             font-size: 11px;
           }
@@ -485,13 +492,37 @@ get_metadata_report <- function(path) {
   # nocov end
 }
 
-
-
-
+#' @export
 meta_yaml_read <- function(path) {
   
   # Read the YAML file with `yaml::read_yaml()`
   y <- yaml::read_yaml(file = path)
+  
+  # Perform checks on elements of `y`
+  # TODO: Add checks for actions and steps (and other key elements)
+  check_meta_yaml_table(y)
+  check_meta_yaml_columns(y)
+  check_meta_yaml_others(y)
+  
+  # Create the metadata list object
+  metadata <-
+    list(
+      read_fn = NULL,
+      tbl_name = NULL,
+      label = NULL,
+      lang = NULL,
+      locale = NULL,
+      metadata = y
+    )
+  
+  # Assign the class attribute value `ptblank_metadata` to
+  # the `metadata` object
+  attr(metadata, "class") <- "ptblank_metadata"
+  
+  metadata
+}
+
+check_meta_yaml_table <- function(y) {
   
   # If `table` is present, perform a few validations on that component
   if ("table" %in% names(y)) {
@@ -520,6 +551,9 @@ meta_yaml_read <- function(path) {
         }
       )
   }
+}
+
+check_meta_yaml_columns <- function(y) {
   
   # If `columns` is present, perform a few validations on that component
   if ("columns" %in% names(y)) {
@@ -552,10 +586,13 @@ meta_yaml_read <- function(path) {
         }
       )
   }
+}
+
+check_meta_yaml_others <- function(y) {
   
   # If any other items are present, perform a few validations on those
-  other_names <- 
-    base::setdiff(names(y), c("table", "columns", "actions", "steps"))
+  exclusions <- c("table", "columns", "actions", "steps")
+  other_names <- base::setdiff(names(y), exclusions)
   
   if (length(other_names) > 0) {
     
@@ -586,8 +623,6 @@ meta_yaml_read <- function(path) {
         }
       )
   }
-  
-  y
 }
 
 add_to_tbl <- function(tbl, item, group) {

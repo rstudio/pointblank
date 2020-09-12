@@ -556,9 +556,9 @@ table_scan:
     fr: "Valeurs `NA`"
     de: "`NA`-Werte"
     it: "Valori `NA`"
-    es: "Valores de `NA`"
-    pt: "` valores NA`"
-    zh: "`NA`"
+    es: "Valores `NA`"
+    pt: "Valores `NA`"
+    zh: "`NA` 值"
   tbl_lab_duplicate_rows:
     en: "Duplicate Rows"
     fr: "Enregistrements en double"
@@ -573,7 +573,7 @@ table_scan:
     de: "Zeitpunkt des Scans"
     it: "Tempo di scansione"
     es: "Tiempo de escaneo"
-    pt: "tempo de varredura"
+    pt: "Tempo de varredura"
     zh: "创建扫描时间"
   tbl_lab_pointblank_version:
     en: "**pointblank** Version"
@@ -636,7 +636,7 @@ table_scan:
     it: "5 percentile"
     es: "Quinto percentil"
     pt: "5º percentil"
-    zh: "5%分位数"
+    zh: "5% 分位数"
   tbl_lab_median:
     en: "Median"
     fr: "Médiane"
@@ -652,7 +652,7 @@ table_scan:
     it: "95 percentile"
     es: "Percentil 95"
     pt: "95º Percentil"
-    zh: "95%分位数"
+    zh: "95% 分位数"
   tbl_lab_range:
     en: "Range"
     fr: "Étendue"

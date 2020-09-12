@@ -67,13 +67,13 @@
 #'   descriptions for each validation step) and for the *agent report* (a
 #'   summary table that provides the validation plan and the results from the
 #'   interrogation. By default, `NULL` will create English (`"en"`) text. Other
-#'   options include French (`"fr"`), German (`"de"`), Italian (`"it"`), and
-#'   Spanish (`"es"`).
+#'   options include French (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish
+#'   (`"es"`), Portuguese, (`"pt"`), and Chinese (`"zh"`).
 #' @param locale An optional locale ID to use for formatting values in the
 #'   *agent report* summary table according the locale's rules. Examples include
-#'   "en_US" for English (United States) and "fr_FR" for French (France); more
-#'   simply, this can be a language identifier without a country designation,
-#'   like "es" for Spanish (Spain).
+#'   `"en_US"` for English (United States) and `"fr_FR"` for French (France);
+#'   more simply, this can be a language identifier without a country
+#'   designation, like "es" for Spanish (Spain, same as `"es_ES"`).
 #'   
 #' @return A `ptblank_agent` object.
 #'   

@@ -335,7 +335,7 @@ agent_report:
     it: "UNITÀ"
     es: "UNIDADES"
     pt: "UNIDADES"
-    zh: "单元（UNITS）"
+    zh: "单元"
   report_column_schema:
     en: "SCHEMA"
     fr: "SCHÉMA"
@@ -730,6 +730,6 @@ table_scan:
     fr: "Scan de table généré avec <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
     de: "Mit <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a> generierter Scan der Tabelle."
     it: "Scansione della tabella generata con <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
-    es: "Escaneo de Tabla generado con <a href=\https://www.github.com/rich-iannone/pointblank\>pointblank</a>."
-    pt: "Examen da tabela gerada com <a href=\https://www.github.com/rich-iannone/pointblank\>pointblank</a>."
-    zh: "通过 <a href=\https://www.github.com/rich-iannone/pointblank\>pointblank</a>建立表扫描。"
+    es: "Escaneo de Tabla generado con <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
+    pt: "Examen da tabela gerada com <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
+    zh: "通过 <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>建立表扫描。"

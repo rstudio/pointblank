@@ -38,16 +38,18 @@ available, then a tibble will be returned.}
 descriptions for each validation step) and for the \emph{agent report} (a
 summary table that provides the validation plan and the results from the
 interrogation. By default, \code{NULL} will create English (\code{"en"}) text. Other
-options include French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), and
-Spanish (\code{"es"}). This \code{lang} option will override any previously set lang
-value (e.g., by the \code{\link[=create_agent]{create_agent()}} call).}
+options include French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish
+(\code{"es"}), Portuguese, (\code{"pt"}), and Chinese (\code{"zh"}). This \code{lang} option
+will override any previously set lang value (e.g., by the \code{\link[=create_agent]{create_agent()}}
+call).}
 
 \item{locale}{An optional locale ID to use for formatting values in the
 \emph{agent report} summary table according the locale's rules. Examples include
-"en_US" for English (United States) and "fr_FR" for French (France); more
-simply, this can be a language identifier without a country designation,
-like "es" for Spanish (Spain). This \code{locale} option will override any
-previously set locale value (e.g., by the \code{\link[=create_agent]{create_agent()}} call).}
+\code{"en_US"} for English (United States) and \code{"fr_FR"} for French (France);
+more simply, this can be a language identifier without a country
+designation, like \code{"es"} for Spanish (Spain, same as \code{"es_ES"}). This
+\code{locale} option will override any previously set locale value (e.g., by the
+\code{\link[=create_agent]{create_agent()}} call).}
 }
 \value{
 A \strong{gt} table object if \code{display_table = TRUE} or a tibble if

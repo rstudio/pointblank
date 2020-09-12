@@ -13,9 +13,9 @@ normalize_reporting_language <- function(lang) {
 }
 
 get_lsv <- function(text,
-                    yaml_file = system.file("text", "translations", package = "pointblank")) {
-  
-  x <- yaml::read_yaml(yaml_file)
+                    file = system.file("text", "translations_built", package = "pointblank")) {
+
+  x <- readRDS(file = file)
   
   if (length(text) == 2) {
     x <- x[[text[1]]]
@@ -32,3 +32,4 @@ get_lsv <- function(text,
     stop("The length of `text` must be either 1 or 2.")
   }
 }
+

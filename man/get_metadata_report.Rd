@@ -7,7 +7,7 @@
 get_metadata_report(metadata)
 }
 \arguments{
-\item{path}{A path to a YAML file that specifies metadata for a table.}
+\item{metadata}{A metadata object.}
 }
 \value{
 A \strong{gt} table object.

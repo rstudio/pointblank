@@ -26,7 +26,7 @@ create_metadata(small_table)
 # The `meta-small_table.yml` file
 # looks like this when written
 
-#> label: '[2020-09-06|13:37:38]'
+#> meta_label: '[2020-09-06|13:37:38]'
 #> table:
 #>   name: small_table
 #> _columns: 8
@@ -55,7 +55,7 @@ create_metadata(small_table)
 # pertinent information; with some
 # direct editing of the file we get:
 
-#> label: '[2020-09-06|13:37:38]'
+#> meta_label: '[2020-09-06|13:37:38]'
 #> table:
 #>   name: small_table
 #>   _columns: 8

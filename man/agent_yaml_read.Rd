@@ -7,8 +7,7 @@
 agent_yaml_read(path)
 }
 \arguments{
-\item{path}{A path to a YAML file that specifies a validation plan for an
-\emph{agent}.}
+\item{path}{A path to a \strong{pointblnk} YAML file.}
 }
 \description{
 With \code{agent_yaml_read()} we can read a \strong{pointblank} YAML file that

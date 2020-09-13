@@ -17,7 +17,7 @@
 #' # The `meta-small_table.yml` file
 #' # looks like this when written
 #' 
-#' #> label: '[2020-09-06|13:37:38]'
+#' #> meta_label: '[2020-09-06|13:37:38]'
 #' #> table:
 #' #>   name: small_table
 #' #> _columns: 8
@@ -46,7 +46,7 @@
 #' # pertinent information; with some
 #' # direct editing of the file we get:
 #' 
-#' #> label: '[2020-09-06|13:37:38]'
+#' #> meta_label: '[2020-09-06|13:37:38]'
 #' #> table:
 #' #>   name: small_table
 #' #>   _columns: 8
@@ -87,9 +87,9 @@ get_metadata_report <- function(metadata) {
   
   y <- metadata$metadata
   
-  if ("label" %in% names(y)) {
-    meta_label <- y[["label"]]
-    y <- y[names(y) != "label"]
+  if ("meta_label" %in% names(y)) {
+    meta_label <- y[["meta_label"]]
+    y <- y[names(y) != "meta_label"]
   } else {
     meta_label <- paste0("[", gsub(" ", "|", as.character(Sys.time())), "]")
   }
@@ -515,7 +515,7 @@ get_metadata_report <- function(metadata) {
 #' # The `metadata-small_table.yml` file
 #' # looks like this when written
 #' 
-#' #> label: '[2020-09-06|13:37:38]'
+#' #> meta_label: '[2020-09-06|13:37:38]'
 #' #> table:
 #' #>   name: small_table
 #' #> _columns: 8
@@ -544,7 +544,7 @@ get_metadata_report <- function(metadata) {
 #' # pertinent information; with some
 #' # direct editing of the file we get:
 #' 
-#' #> label: '[2020-09-06|13:37:38]'
+#' #> meta_label: '[2020-09-06|13:37:38]'
 #' #> table:
 #' #>   name: small_table
 #' #>   _columns: 8

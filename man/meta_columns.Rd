@@ -9,7 +9,10 @@ meta_columns(metadata, columns, ...)
 \arguments{
 \item{metadata}{A metadata object of class \code{ptblank_metadata}.}
 
-\item{columns}{The column or set of columns to focus on.}
+\item{columns}{The column or set of columns to focus on. Can be defined as a
+column name in quotes (e.g., \code{"<column_name>"}), one or more column names
+in \code{vars()} (e.g., \verb{vars(<column_name>)}), or with a select helper (e.g.,
+\code{starts_with("date")}).}
 
 \item{...}{Metadata parameters as a series of named arguments.}
 }

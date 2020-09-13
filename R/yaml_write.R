@@ -125,6 +125,10 @@ yaml_write <- function(agent = NULL,
                        filename,
                        path = NULL) {
   
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
+  
   if (is.null(agent) && is.null(metadata)) {
     stop("An agent or metadata object must be supplied to `yaml_write()`.",
          call. = FALSE)

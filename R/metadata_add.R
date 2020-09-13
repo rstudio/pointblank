@@ -100,7 +100,10 @@ meta_table <- function(metadata,
 #' as additional metadata for the column or columns.
 #' 
 #' @param metadata A metadata object of class `ptblank_metadata`.
-#' @param columns The column or set of columns to focus on.
+#' @param columns The column or set of columns to focus on. Can be defined as a
+#'   column name in quotes (e.g., `"<column_name>"`), one or more column names
+#'   in `vars()` (e.g., `vars(<column_name>)`), or with a select helper (e.g.,
+#'   `starts_with("date")`).
 #' @param ... Metadata parameters as a series of named arguments.
 #' 
 #' @return A `ptblank_metadata` object.

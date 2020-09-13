@@ -11,6 +11,9 @@ meta_table(metadata, ...)
 
 \item{...}{Metadata parameters as a series of named arguments.}
 }
+\value{
+A \code{ptblank_metadata} object.
+}
 \description{
 When a metadata object is created with the \code{\link[=create_metadata]{create_metadata()}} function, it
 has two starter sections: (1) 'table' and (2) 'columns'. We can further The
@@ -20,4 +23,46 @@ supplied table name (\code{name}) and table dimensions (as \verb{_columns} and
 function. By providing a series of named arguments (in the form
 \code{property_name = "Description of property."}), we can add more metadata that
 makes sense for describing the table as a whole.
+}
+\examples{
+# Create a pointblank `metadata`
+# object with the `create_metadata()` and
+# the `small_table` dataset
+metadata <- create_metadata(small_table)
+
+# The `metadata` object has the 'table'
+# and 'columns' sections; we can add more
+# properties to the 'table' section
+metadata <-
+  metadata \%>\%
+  meta_table(
+    row_definition = "A row has randomized values.",
+    source = c(
+      "- From the **pointblank** package",
+      "- [https://rich-iannone.github.io/pointblank/]()"
+     )
+   )
+
+# Upon printing the `metadata` object,
+# we see the additions made to the 'table'
+# section (before it wasn't visible at all
+# since the properties where using in the
+# report header)
+# metadata
+
+# The `metadata` object can be written to
+# a YAML file with the `yaml_write()`
+# function; then, metadata properties can
+# be directly edited or modified
+# yaml_write(
+#   metadata = metadata,
+#   filename = "metadata.yml"
+# )
+
+# The YAML file can then be read back
+# into a metadata object with the
+# `meta_yaml_read()` function
+# metadata <-
+#   meta_yaml_read(path = "metadata.yml")
+
 }

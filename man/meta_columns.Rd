@@ -13,6 +13,9 @@ meta_columns(metadata, columns, ...)
 
 \item{...}{Metadata parameters as a series of named arguments.}
 }
+\value{
+A \code{ptblank_metadata} object.
+}
 \description{
 Upon creation of a metadata object (with the \code{\link[=create_metadata]{create_metadata()}} function),
 there are two sections containing properties: (1) 'table' and (2) 'columns'.
@@ -22,4 +25,49 @@ nature of each column and we can do that with the \code{meta_columns()} function
 A single column (or multiple columns) is targeted, and then a series of named
 arguments (in the form \code{property_name = "Description of property."}) serves
 as additional metadata for the column or columns.
+}
+\examples{
+# Create a pointblank `metadata`
+# object with the `create_metadata()` and
+# the `small_table` dataset
+metadata <- create_metadata(small_table)
+
+# The `metadata` object has the 'table'
+# and 'columns' sections; we can add more
+# properties to individual columns in
+# the 'columns' section
+metadata <-
+  metadata \%>\%
+  meta_columns(
+    columns = vars(a),
+    info = "In the range of 1 to 10. (SIMPLE)"
+  ) \%>\%
+  meta_columns(
+    columns = starts_with("date"),
+    info = "Time-based values (e.g., `Sys.time()`)."
+  ) \%>\%
+  meta_columns(
+    columns = "date",
+    notes = "The date part of `date_time`. (CALC)"
+  )
+
+# Upon printing the `metadata` object, we see
+# the additions made to the 'columns' section
+# metadata
+
+# The `metadata` object can be written to
+# a YAML file with the `yaml_write()`
+# function; then, metadata properties can
+# be directly edited or modified
+# yaml_write(
+#   metadata = metadata,
+#   filename = "metadata.yml"
+# )
+
+# The YAML file can then be read back
+# into a metadata object with the
+# `meta_yaml_read()` function
+# metadata <-
+#   meta_yaml_read(path = "metadata.yml")
+
 }

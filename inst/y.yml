@@ -1,4 +1,4 @@
-label: A very *simple* example.
+meta_label: A very *simple* example.
 table:
   name: name_of_table
   info: Some information about the table.

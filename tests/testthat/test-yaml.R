@@ -51,7 +51,7 @@ test_that("YAML writing and reading works as expected", {
   )
 
   # Write the agent to a pointblank YAML file in the temp directory
-  agent_yaml_write(agent, filename = "test.yaml", path = temp_dir)
+  yaml_write(agent = agent, filename = "test.yaml", path = temp_dir)
 
   # Expect that the file was written to the temp directory
   expect_true("test.yaml" %in% list.files(path = temp_dir))

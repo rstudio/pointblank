@@ -39,6 +39,34 @@
 #'   
 #' @return A `ptblank_metadata` object.
 #' 
+#' @examples 
+#' # Let's walk through how we can
+#' # generate some useful metadata for an
+#' # extremely small table; it's actually
+#' # called `small_table` and we can find
+#' # it as a dataset in this package
+#' small_table
+#' 
+#' # We create a pointblank `metadata`
+#' # object with `create_metadata()`;
+#' # let's use that function with the
+#' # `small_table` dataset
+#' metadata <- create_metadata(small_table)
+#' 
+#' # This function creates some metadata
+#' # without any extra help by profiling
+#' # the supplied table object; it adds
+#' # the sections: (1) 'table' and
+#' # (2) 'columns' and we can print the
+#' # object to see the metadata report
+#' # metadata
+#' 
+#' # Alternatively, we can visualize this
+#' # metadata into the same report by using
+#' # `get_metadata_report()`
+#' report <- get_metadata_report(metadata)
+#' class(report)
+#' 
 #' @export
 create_metadata <- function(tbl = NULL,
                             read_fn = NULL,
@@ -144,7 +172,7 @@ create_metadata <- function(tbl = NULL,
 
 #' Add metadata that focuses on aspects of the data table as a whole
 #' 
-#' @param metadata A metadata object.
+#' @param metadata A metadata object of class `ptblank_metadata`.
 #' @param ... Metadata parameters.
 #'
 #' @export
@@ -182,7 +210,7 @@ meta_table <- function(metadata,
 
 #' Add metadata that focuses on aspects of a data table's columns
 #' 
-#' @param metadata A metadata object.
+#' @param metadata A metadata object of class `ptblank_metadata`.
 #' @param columns The column or set of columns to focus on.
 #' @param ... Metadata parameters.
 #'
@@ -232,7 +260,7 @@ meta_columns <- function(metadata,
 
 #' Add metadata that focuses on some key aspect of the data table
 #' 
-#' @param metadata A metadata object.
+#' @param metadata A metadata object of class `ptblank_metadata`.
 #' @param section_name The name of the section for which this metadata pertains.
 #' @param ... Metadata parameters.
 #'

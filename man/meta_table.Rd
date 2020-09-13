@@ -7,7 +7,7 @@
 meta_table(metadata, ...)
 }
 \arguments{
-\item{metadata}{A metadata object.}
+\item{metadata}{A metadata object of class \code{ptblank_metadata}.}
 
 \item{...}{Metadata parameters.}
 }

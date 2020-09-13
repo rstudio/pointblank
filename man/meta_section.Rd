@@ -7,7 +7,7 @@
 meta_section(metadata, section_name, ...)
 }
 \arguments{
-\item{metadata}{A metadata object.}
+\item{metadata}{A metadata object of class \code{ptblank_metadata}.}
 
 \item{section_name}{The name of the section for which this metadata pertains.}
 

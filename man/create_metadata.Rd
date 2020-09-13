@@ -62,3 +62,32 @@ metadata parameters that are useful for describing a particular data table.
 The \emph{metadata} object created by the \code{create_metadata()} function takes
 metadeta-focused functions.
 }
+\examples{
+# Let's walk through how we can
+# generate some useful metadata for an
+# extremely small table; it's actually
+# called `small_table` and we can find
+# it as a dataset in this package
+small_table
+
+# We create a pointblank `metadata`
+# object with `create_metadata()`;
+# let's use that function with the
+# `small_table` dataset
+metadata <- create_metadata(small_table)
+
+# This function creates some metadata
+# without any extra help by profiling
+# the supplied table object; it adds
+# the sections: (1) 'table' and
+# (2) 'columns' and we can print the
+# object to see the metadata report
+# metadata
+
+# Alternatively, we can visualize this
+# metadata into the same report by using
+# `get_metadata_report()`
+report <- get_metadata_report(metadata)
+class(report)
+
+}

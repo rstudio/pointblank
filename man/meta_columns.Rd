@@ -7,7 +7,7 @@
 meta_columns(metadata, columns, ...)
 }
 \arguments{
-\item{metadata}{A metadata object.}
+\item{metadata}{A metadata object of class \code{ptblank_metadata}.}
 
 \item{columns}{The column or set of columns to focus on.}
 

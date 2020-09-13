@@ -7,7 +7,7 @@
 get_metadata_report(metadata)
 }
 \arguments{
-\item{metadata}{A metadata object.}
+\item{metadata}{A metadata object of class \code{ptblank_metadata}.}
 }
 \value{
 A \strong{gt} table object.
@@ -19,12 +19,9 @@ display table. The amount of fields shown depends on the extent of
 user-generated fields entered into the input YAML file.
 }
 \examples{
-# Generate a metadata YAML file
-# for the `small_table` dataset
-# meta_yaml_write(
-#   small_table,
-#   filename = "meta-small_table.yml"
-# )
+# Generate a metadata object using
+# the `small_table` dataset
+create_metadata(small_table)
 
 # The `meta-small_table.yml` file
 # looks like this when written
@@ -89,16 +86,5 @@ user-generated fields entered into the input YAML file.
 #>   f:
 #>     _type: character
 #>     info: Strings of the set `"low"`, `"mid"`, and `"high"`.
-
-# We can visualize this metadata
-# into a report table by using the
-# `get_metadata_report()` function
-
-#> get_metadata_report(
-#>   system.file(
-#>     "meta-small_table.yml",
-#>     package = "pointblank"
-#>   )
-#> )
 
 }

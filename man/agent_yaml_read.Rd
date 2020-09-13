@@ -125,6 +125,6 @@ Other pointblank YAML:
 \code{\link{agent_yaml_interrogate}()},
 \code{\link{agent_yaml_show_exprs}()},
 \code{\link{agent_yaml_string}()},
-\code{\link{agent_yaml_write}()}
+\code{\link{yaml_write}()}
 }
 \concept{pointblank YAML}

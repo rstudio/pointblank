@@ -11,6 +11,49 @@
 #' 
 #' @param metadata A metadata object of class `ptblank_metadata`.
 #' @param ... Metadata parameters as a series of named arguments.
+#' 
+#' @return A `ptblank_metadata` object.
+#' 
+#' @examples 
+#' # Create a pointblank `metadata`
+#' # object with the `create_metadata()` and
+#' # the `small_table` dataset
+#' metadata <- create_metadata(small_table)
+#' 
+#' # The `metadata` object has the 'table'
+#' # and 'columns' sections; we can add more
+#' # properties to the 'table' section
+#' metadata <-
+#'   metadata %>%
+#'   meta_table(
+#'     row_definition = "A row has randomized values.",
+#'     source = c(
+#'       "- From the **pointblank** package",
+#'       "- [https://rich-iannone.github.io/pointblank/]()"
+#'      )
+#'    )
+#' 
+#' # Upon printing the `metadata` object,
+#' # we see the additions made to the 'table'
+#' # section (before it wasn't visible at all
+#' # since the properties where using in the
+#' # report header)
+#' # metadata
+#' 
+#' # The `metadata` object can be written to
+#' # a YAML file with the `yaml_write()`
+#' # function; then, metadata properties can
+#' # be directly edited or modified
+#' # yaml_write(
+#' #   metadata = metadata,
+#' #   filename = "metadata.yml"
+#' # )
+#' 
+#' # The YAML file can then be read back
+#' # into a metadata object with the
+#' # `meta_yaml_read()` function
+#' # metadata <-
+#' #   meta_yaml_read(path = "metadata.yml")
 #'
 #' @export
 meta_table <- function(metadata,
@@ -59,6 +102,52 @@ meta_table <- function(metadata,
 #' @param metadata A metadata object of class `ptblank_metadata`.
 #' @param columns The column or set of columns to focus on.
 #' @param ... Metadata parameters as a series of named arguments.
+#' 
+#' @return A `ptblank_metadata` object.
+#' 
+#' @examples 
+#' # Create a pointblank `metadata`
+#' # object with the `create_metadata()` and
+#' # the `small_table` dataset
+#' metadata <- create_metadata(small_table)
+#' 
+#' # The `metadata` object has the 'table'
+#' # and 'columns' sections; we can add more
+#' # properties to individual columns in
+#' # the 'columns' section
+#' metadata <-
+#'   metadata %>%
+#'   meta_columns(
+#'     columns = vars(a),
+#'     info = "In the range of 1 to 10. (SIMPLE)"
+#'   ) %>%
+#'   meta_columns(
+#'     columns = starts_with("date"),
+#'     info = "Time-based values (e.g., `Sys.time()`)."
+#'   ) %>%
+#'   meta_columns(
+#'     columns = "date",
+#'     notes = "The date part of `date_time`. (CALC)"
+#'   )
+#' 
+#' # Upon printing the `metadata` object, we see
+#' # the additions made to the 'columns' section
+#' # metadata
+#' 
+#' # The `metadata` object can be written to
+#' # a YAML file with the `yaml_write()`
+#' # function; then, metadata properties can
+#' # be directly edited or modified
+#' # yaml_write(
+#' #   metadata = metadata,
+#' #   filename = "metadata.yml"
+#' # )
+#' 
+#' # The YAML file can then be read back
+#' # into a metadata object with the
+#' # `meta_yaml_read()` function
+#' # metadata <-
+#' #   meta_yaml_read(path = "metadata.yml")
 #'
 #' @export
 meta_columns <- function(metadata,
@@ -106,9 +195,55 @@ meta_columns <- function(metadata,
 
 #' Add metadata that focuses on some key aspect of the data table
 #' 
+#' While the [meta_table()] and [meta_columns()] functions allow us to
+#' add/modify metadata properties for specific sections, the `meta_section()`
+#' makes it possible to add sections of our own choosing and the properties that
+#' make sense for those sections. Define a `section_name` and provide a series
+#' of named arguments (in the form `property_name = "Description of property."`)
+#' to build the metadata content for that section.
+#' 
 #' @param metadata A metadata object of class `ptblank_metadata`.
 #' @param section_name The name of the section for which this metadata pertains.
 #' @param ... Metadata parameters as a series of named arguments.
+#' 
+#' @return A `ptblank_metadata` object.
+#' 
+#' @examples 
+#' # Create a pointblank `metadata`
+#' # object with the `create_metadata()` and
+#' # the `small_table` dataset
+#' metadata <- create_metadata(small_table)
+#' 
+#' # The `metadata` object has the 'table'
+#' # and 'columns' sections; we can create
+#' # entirely different sections with their
+#' # own properties using `meta_section()`
+#' metadata <-
+#'   metadata %>%
+#'   meta_section(
+#'     section_name = "notes",
+#'     creation = "Dataset generated on (2020-01-15).",
+#'     usage = "`small_table %>% dplyr::glimpse()`"
+#'   )
+#' 
+#' # Upon printing the `metadata` object, we see
+#' # the addition of the 'notes' section and its
+#' # own metadata
+#' 
+#' # The `metadata` object can be written to
+#' # a YAML file with the `yaml_write()`
+#' # function; then, metadata properties can
+#' # be directly edited or modified
+#' # yaml_write(
+#' #   metadata = metadata,
+#' #   filename = "metadata.yml"
+#' # )
+#' 
+#' # The YAML file can then be read back
+#' # into a metadata object with the
+#' # `meta_yaml_read()` function
+#' # metadata <-
+#' #   meta_yaml_read(path = "metadata.yml")
 #'
 #' @export
 meta_section <- function(metadata,

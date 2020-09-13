@@ -105,6 +105,8 @@ meta_table <- function(metadata,
 #'   in `vars()` (e.g., `vars(<column_name>)`), or with a select helper (e.g.,
 #'   `starts_with("date")`).
 #' @param ... Metadata parameters as a series of named arguments.
+#' @param .add Should new text be added to existing text? This is `TRUE` by
+#'   default; setting to `FALSE` replaces any existing text for a property.
 #' 
 #' @return A `ptblank_metadata` object.
 #' 
@@ -130,7 +132,7 @@ meta_table <- function(metadata,
 #'   ) %>%
 #'   meta_columns(
 #'     columns = "date",
-#'     notes = "The date part of `date_time`. (CALC)"
+#'     info = "The date part of `date_time`. (CALC)"
 #'   )
 #' 
 #' # Upon printing the `metadata` object, we see
@@ -155,7 +157,8 @@ meta_table <- function(metadata,
 #' @export
 meta_columns <- function(metadata,
                          columns,
-                         ...) {
+                         ...,
+                         .add = TRUE) {
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -186,7 +189,19 @@ meta_columns <- function(metadata,
       } else {
         # Case where `item_name` exists for the column
         
-        metadata_columns[[column]][[item_name]] <- item_value
+        if (.add) {
+        # Appending case: if `.add = TRUE` append `item_value`
+        # to existing string
+          metadata_columns[[column]][[item_name]] <- 
+            paste(
+              metadata_columns[[column]][[item_name]],
+              item_value
+            )
+        } else {
+          # Replacement case: if `.add = FALSE` replace
+          # existing string with `item_value`
+          metadata_columns[[column]][[item_name]] <- item_value
+        }
       }
     }
   }

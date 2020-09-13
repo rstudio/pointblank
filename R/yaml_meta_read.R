@@ -5,7 +5,7 @@
 #' display table. The amount of fields shown depends on the extent of
 #' user-generated fields entered into the input YAML file.
 #' 
-#' @param path A path to a YAML file that specifies metadata for a table.
+#' @param metadata A metadata object.
 #' 
 #' @return A **gt** table object.
 #' 

@@ -6,8 +6,7 @@
 #' has been edited, we can get a tabular reporting object with the 
 #' [get_metadata_report()] function.
 #' 
-#' @param x The input table. This can be a data frame, a tibble, a `tbl_dbi`
-#'   object, or a `tbl_spark` object.
+#' @param metadata A metadata object.
 #' @param filename The name of the YAML file to create on disk. It is
 #'   recommended that either the `.yaml` or `.yml` extension be used for this
 #'   file.

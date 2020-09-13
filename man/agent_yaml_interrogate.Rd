@@ -76,9 +76,9 @@ agent <-
   col_vals_lte(vars(c), 5)
 
 # The agent can be written to a pointblank
-# YAML file with `agent_yaml_write()`
-# agent_yaml_write(
-#   agent,
+# YAML file with `yaml_write()`
+# yaml_write(
+#   agent = agent,
 #   filename = "agent-small_table.yml"
 # )
 

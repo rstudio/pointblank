@@ -15,6 +15,7 @@ reference:
     contents:
     - scan_data
     - create_agent
+    - create_metadata
     - validate_rmd
     - action_levels
     - col_schema
@@ -79,30 +80,42 @@ reference:
     - stock_msg_body
     - stock_msg_footer
     
-  - title: Interrogation
+  - title: "Agent: Interrogate and Report"
     desc: >
       If we have an **agent** object that has a plan (i.e., validation steps),
       the `interrogate()` function instructs the *agent* to interrogate the
       `tbl` data. The agent will go to work and also perform side-effect 
-      functions at the step level and upon completion (if those are defined). 
+      functions at the step level and upon completion (if those are functions
+      are defined). After interrogation, we can always get a report through
+      printing. However, we can get more options by using `get_agent_report()`. 
     contents:
     - interrogate
+    - get_agent_report
+    
+  - title: "Agent: Interrogate and Report"
+    desc: >
+      If we have an **agent** object that has a plan (i.e., validation steps),
+      the `interrogate()` function instructs the *agent* to interrogate the
+      `tbl` data. The agent will go to work and also perform side-effect 
+      functions at the step level and upon completion (if those are functions
+      are defined). After interrogation, we can always get a report through
+      printing. However, we can get more options by using `get_agent_report()`. 
+    contents:
+    - interrogate
+    - get_agent_report
     
   - title: Post-interrogation
     desc: >
-      After interrogation with an agent, we can always get a report through its
-      print method. However, we can get more options by using
-      `get_agent_report()`. The agent always has a special list called an
-      x-list. Access that by invoking the `get_agent_x_list()` and you'll then
-      have a smorgasbord of information about how the validation went down.
-      Table extracts are collected by default for failed rows (up to a limit)
-      and we can access those with `get_data_extracts()`. Table rows can be
-      sundered into 'pass' and 'fail' pieces. Access those table fragments with
-      the `get_sundered_data()` function. Want to know if all validation steps
-      have passed with flying colors? Sometimes that could happen; use the
+      The agent always has a special list called an x-list. Access that by
+      invoking the `get_agent_x_list()` and you'll then have a smorgasbord of
+      information about how the validation went down. Table extracts are
+      collected by default for failed rows (up to a limit) and we can access
+      those with `get_data_extracts()`. Table rows can be sundered into 'pass'
+      and 'fail' pieces. Access those table fragments with the
+      `get_sundered_data()` function. Want to know if all validation steps have
+      passed with flying colors? Sometimes that could happen; use the
       `all_passed()` function to find out.
     contents:
-    - get_agent_report
     - get_agent_x_list
     - get_data_extracts
     - get_sundered_data
@@ -134,12 +147,12 @@ reference:
       `get_metadata_report()`) that produce metadata YAML from a table or agent,
       and, generate a report from the YAML file.
     contents:
-    - agent_yaml_write
+    - yaml_write
     - agent_yaml_read
+    - meta_yaml_read
     - agent_yaml_interrogate
     - agent_yaml_string
     - agent_yaml_show_exprs
-    - meta_yaml_write
     - get_metadata_report
     
   - title: Datasets

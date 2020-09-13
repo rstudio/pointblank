@@ -4,7 +4,7 @@
 \alias{meta_columns}
 \title{Add metadata that focuses on aspects of a data table's columns}
 \usage{
-meta_columns(metadata, columns, ...)
+meta_columns(metadata, columns, ..., .add = TRUE)
 }
 \arguments{
 \item{metadata}{A metadata object of class \code{ptblank_metadata}.}
@@ -15,6 +15,9 @@ in \code{vars()} (e.g., \verb{vars(<column_name>)}), or with a select helper (e.
 \code{starts_with("date")}).}
 
 \item{...}{Metadata parameters as a series of named arguments.}
+
+\item{.add}{Should new text be added to existing text? This is \code{TRUE} by
+default; setting to \code{FALSE} replaces any existing text for a property.}
 }
 \value{
 A \code{ptblank_metadata} object.
@@ -51,7 +54,7 @@ metadata <-
   ) \%>\%
   meta_columns(
     columns = "date",
-    notes = "The date part of `date_time`. (CALC)"
+    info = "The date part of `date_time`. (CALC)"
   )
 
 # Upon printing the `metadata` object, we see

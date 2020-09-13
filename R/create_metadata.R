@@ -113,6 +113,7 @@ create_metadata <- function(tbl = NULL,
     
   } else {
     x <- agent
+    if (is.null(read_fn)) read_fn <- agent$read_fn
   }
   
   label <- x$label

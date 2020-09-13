@@ -141,7 +141,7 @@ create_metadata <- function(tbl = NULL,
   metadata_list <-
     c(
       list(
-        label = label,
+        meta_label = label,
         table = list(
           name = table.name,
           `_columns` = table.columns,
@@ -157,7 +157,7 @@ create_metadata <- function(tbl = NULL,
     list(
       read_fn = read_fn,
       tbl_name = table.name,
-      label = label,
+      meta_label = label,
       lang = lang,
       locale = locale,
       metadata = metadata_list

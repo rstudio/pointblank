@@ -16,8 +16,7 @@
 #' [agent_yaml_show_exprs()] function. That function shows us (in the console)
 #' the **pointblank** expressions for generating the described validation plan.
 #' 
-#' @param path A path to a YAML file that specifies a validation plan for an
-#'   *agent*.
+#' @param path A path to a **pointblnk** YAML file.
 #'   
 #' @examples
 #' # Let's go through the process of

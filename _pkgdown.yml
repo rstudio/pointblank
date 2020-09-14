@@ -11,7 +11,9 @@ reference:
       planning on validating. If going down the road of preparing a data quality
       analysis, call on an *agent* to carry out that eventual plan with
       `create_agent()`. The agent here is to be told which table is the target,
-      and, we devise a stepwise validation plan with validation step functions.
+      and, we devise a stepwise validation plan with validation functions. If
+      reporting on table metadata is your goal, then begin with the
+      `create_metadata()` function.
     contents:
     - scan_data
     - create_agent
@@ -20,7 +22,7 @@ reference:
     - action_levels
     - col_schema
 
-  - title: Validation Step, Expectation, and Test Functions
+  - title: Validation, Expectation, and Test Functions
     desc: >
       Validation steps are either used with an **agent** object or, more simply,
       just with the table of interest. When used with an *agent*, each step
@@ -62,18 +64,26 @@ reference:
     - col_exists
     - col_schema_match
     
+  - title: Metadata Building Functions
+    desc: >
+      We can progressively add metadata to a metadata object by using the
+      collection of `meta_*()` functions. We can add more table-based properties
+      with the `meta_table()`, details about the nature of each column with the
+      `meta_columns()` function, and add sections of our own choosing (and the
+      properties that make sense for those sections) with the `meta_section()`
+      function.
+    contents:
+    - meta_table
+    - meta_columns
+    - meta_section
+    
   - title: Emailing
     desc: >
       Sometimes we want to email a report of a validation because of the
       importance of the information contained therein. The `email_blast()`
       function can be used within the `end_fns` argument of `create_agent()`,
       giving us options to send a customizable message only if specified
-      conditions are met. To gain some practice with email customization, the
-      `email_preview()` function is handy (it can be used directly on an
-      `agent` object or an agent x-list object). The `stock_msg_body()` and
-      `stock_msg_footer()` functions give us reasonable defaults for the HTML
-      message itself, incorporating an emailable version of the validation
-      report.
+      conditions are met.
     contents:
     - email_blast
     - email_preview
@@ -86,23 +96,19 @@ reference:
       the `interrogate()` function instructs the *agent* to interrogate the
       `tbl` data. The agent will go to work and also perform side-effect 
       functions at the step level and upon completion (if those are functions
-      are defined). After interrogation, we can always get a report through
-      printing. However, we can get more options by using `get_agent_report()`. 
+      are defined). After interrogation, we can get a report through printing,
+      however, we can take advantage of more options by using the
+      `get_agent_report()` function. 
     contents:
     - interrogate
     - get_agent_report
     
-  - title: "Agent: Interrogate and Report"
+  - title: Metadata Reporting
     desc: >
-      If we have an **agent** object that has a plan (i.e., validation steps),
-      the `interrogate()` function instructs the *agent* to interrogate the
-      `tbl` data. The agent will go to work and also perform side-effect 
-      functions at the step level and upon completion (if those are functions
-      are defined). After interrogation, we can always get a report through
-      printing. However, we can get more options by using `get_agent_report()`. 
+      If we have an **metadata** object, we can get a metadata report through
+      printing, or, by using `get_metadata_report()` function. 
     contents:
-    - interrogate
-    - get_agent_report
+    - get_metadata_report
     
   - title: Post-interrogation
     desc: >

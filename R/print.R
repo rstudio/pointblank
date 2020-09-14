@@ -37,6 +37,26 @@ knit_print.ptblank_agent <- function(x, ...) {
 }
 
 
+#' Print the metadata information
+#'
+#' This function will allow the metadata to be nicely printed.
+#' 
+#' @param x An metadata object of class `ptblank_agent`.
+#' @param view The value for `print()`s `browse` argument.
+#' @param ... Any additional parameters.
+#' 
+#' @keywords internal
+#' @export
+print.ptblank_metadata <- function(x, view = interactive(), ...) {
+  
+  # nocov start 
+  
+  print(get_metadata_report(x), view = view, ...)
+  
+  # nocov end 
+}
+
+
 #' Print a single-step x-list to the console
 #'
 #' This function will print an x-list object, for a single step, to the console.

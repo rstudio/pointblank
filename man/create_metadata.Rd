@@ -55,12 +55,12 @@ designation, like "es" for Spanish (Spain, same as \code{"es_ES"}).}
 A \code{ptblank_metadata} object.
 }
 \description{
-The \code{create_metadata()} function creates an \emph{metadata} object, which is used
+The \code{create_metadata()} function creates a \emph{metadata} object, which is used
 in a \emph{metadata enrichment} workflow. The overall aim of this workflow is to
 collect and generate useful information on data tables. We can supply as many
 metadata parameters that are useful for describing a particular data table.
 The \emph{metadata} object created by the \code{create_metadata()} function takes
-metadeta-focused functions.
+metadeta-focused functions (the \verb{meta_*()} series of functions).
 }
 \examples{
 # Let's walk through how we can

@@ -1,11 +1,11 @@
 #' Create a pointblank metadata object
 #'
-#' The `create_metadata()` function creates an *metadata* object, which is used
+#' The `create_metadata()` function creates a *metadata* object, which is used
 #' in a *metadata enrichment* workflow. The overall aim of this workflow is to
 #' collect and generate useful information on data tables. We can supply as many
 #' metadata parameters that are useful for describing a particular data table.
 #' The *metadata* object created by the `create_metadata()` function takes
-#' metadeta-focused functions.
+#' metadeta-focused functions (the `meta_*()` series of functions).
 #'
 #' @param tbl The input table. This can be a data frame, a tibble, a `tbl_dbi`
 #'   object, or a `tbl_spark` object. Alternatively, a function can be used to

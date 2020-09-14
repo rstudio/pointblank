@@ -130,7 +130,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-planning-and-prep" class="hasAnchor"><a href="#section-planning-and-prep" class="anchor"></a>Planning and Prep</h2>
-          <p class="section-desc"><p>Should you need to understand your data a bit more, use the <code><a href="../reference/scan_data.html">scan_data()</a></code> function. It provides a comprehensive report on the data you might be planning on validating. If going down the road of preparing a data quality analysis, call on an <em>agent</em> to carry out that eventual plan with <code><a href="../reference/create_agent.html">create_agent()</a></code>. The agent here is to be told which table is the target, and, we devise a stepwise validation plan with validation step functions.</p></p>
+          <p class="section-desc"><p>Should you need to understand your data a bit more, use the <code><a href="../reference/scan_data.html">scan_data()</a></code> function. It provides a comprehensive report on the data you might be planning on validating. If going down the road of preparing a data quality analysis, call on an <em>agent</em> to carry out that eventual plan with <code><a href="../reference/create_agent.html">create_agent()</a></code>. The agent here is to be told which table is the target, and, we devise a stepwise validation plan with validation functions. If reporting on table metadata is your goal, then begin with the <code><a href="../reference/create_metadata.html">create_metadata()</a></code> function.</p></p>
         </th>
       </tr>
       
@@ -178,7 +178,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-validation-step-expectation-and-test-functions" class="hasAnchor"><a href="#section-validation-step-expectation-and-test-functions" class="anchor"></a>Validation Step, Expectation, and Test Functions</h2>
+          <h2 id="section-validation-expectation-and-test-functions" class="hasAnchor"><a href="#section-validation-expectation-and-test-functions" class="anchor"></a>Validation, Expectation, and Test Functions</h2>
           <p class="section-desc"><p>Validation steps are either used with an <strong>agent</strong> object or, more simply, just with the table of interest. When used with an <em>agent</em>, each step function called works to build up a validation plan (which is executed with the <code><a href="../reference/interrogate.html">interrogate()</a></code> function). If used directly on data (that is, no agent is involved whatsoever), then the data is checked and passed through. However, if we (1) set <code>warn_*</code> and/or <code>stop_*</code> thresholds and (2) the level of failed validation units exceeds those set levels, then we’ll get either a warning or a stop. Each validation step function is assoicated with an expectation function (of the form <code>expect_*()</code>). These expectation functions are equivalent in usage and behavior to those in the <strong>testthat</strong> package. Finallly, each validation function has an associated test function (of the form <code>test_*()</code>) which always returns a logical value.</p></p>
         </th>
       </tr>
@@ -341,8 +341,39 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
+          <h2 id="section-metadata-building-functions" class="hasAnchor"><a href="#section-metadata-building-functions" class="anchor"></a>Metadata Building Functions</h2>
+          <p class="section-desc"><p>We can progressively add metadata to a metadata object by using the collection of <code>meta_*()</code> functions. We can add more table-based properties with the <code><a href="../reference/meta_table.html">meta_table()</a></code>, details about the nature of each column with the <code><a href="../reference/meta_columns.html">meta_columns()</a></code> function, and add sections of our own choosing (and the properties that make sense for those sections) with the <code><a href="../reference/meta_section.html">meta_section()</a></code> function.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="meta_table.html">meta_table()</a></code> </p>
+        </td>
+        <td><p>Add metadata that focuses on aspects of the data table as a whole</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="meta_columns.html">meta_columns()</a></code> </p>
+        </td>
+        <td><p>Add metadata that focuses on aspects of a data table's columns</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="meta_section.html">meta_section()</a></code> </p>
+        </td>
+        <td><p>Add metadata that focuses on some key aspect of the data table</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
           <h2 id="section-emailing" class="hasAnchor"><a href="#section-emailing" class="anchor"></a>Emailing</h2>
-          <p class="section-desc"><p>Sometimes we want to email a report of a validation because of the importance of the information contained therein. The <code><a href="../reference/email_blast.html">email_blast()</a></code> function can be used within the <code>end_fns</code> argument of <code><a href="../reference/create_agent.html">create_agent()</a></code>, giving us options to send a customizable message only if specified conditions are met. To gain some practice with email customization, the <code><a href="../reference/email_preview.html">email_preview()</a></code> function is handy (it can be used directly on an <code>agent</code> object or an agent x-list object). The <code><a href="../reference/stock_msg_body.html">stock_msg_body()</a></code> and <code><a href="../reference/stock_msg_footer.html">stock_msg_footer()</a></code> functions give us reasonable defaults for the HTML message itself, incorporating an emailable version of the validation report.</p></p>
+          <p class="section-desc"><p>Sometimes we want to email a report of a validation because of the importance of the information contained therein. The <code><a href="../reference/email_blast.html">email_blast()</a></code> function can be used within the <code>end_fns</code> argument of <code><a href="../reference/create_agent.html">create_agent()</a></code>, giving us options to send a customizable message only if specified conditions are met.</p></p>
         </th>
       </tr>
       
@@ -379,7 +410,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-agent-interrogate-and-report" class="hasAnchor"><a href="#section-agent-interrogate-and-report" class="anchor"></a>Agent: Interrogate and Report</h2>
-          <p class="section-desc"><p>If we have an <strong>agent</strong> object that has a plan (i.e., validation steps), the <code><a href="../reference/interrogate.html">interrogate()</a></code> function instructs the <em>agent</em> to interrogate the <code>tbl</code> data. The agent will go to work and also perform side-effect functions at the step level and upon completion (if those are functions are defined). After interrogation, we can always get a report through printing. However, we can get more options by using <code><a href="../reference/get_agent_report.html">get_agent_report()</a></code>.</p></p>
+          <p class="section-desc"><p>If we have an <strong>agent</strong> object that has a plan (i.e., validation steps), the <code><a href="../reference/interrogate.html">interrogate()</a></code> function instructs the <em>agent</em> to interrogate the <code>tbl</code> data. The agent will go to work and also perform side-effect functions at the step level and upon completion (if those are functions are defined). After interrogation, we can get a report through printing, however, we can take advantage of more options by using the <code><a href="../reference/get_agent_report.html">get_agent_report()</a></code> function.</p></p>
         </th>
       </tr>
       
@@ -403,8 +434,8 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-agent-interrogate-and-report" class="hasAnchor"><a href="#section-agent-interrogate-and-report" class="anchor"></a>Agent: Interrogate and Report</h2>
-          <p class="section-desc"><p>If we have an <strong>agent</strong> object that has a plan (i.e., validation steps), the <code><a href="../reference/interrogate.html">interrogate()</a></code> function instructs the <em>agent</em> to interrogate the <code>tbl</code> data. The agent will go to work and also perform side-effect functions at the step level and upon completion (if those are functions are defined). After interrogation, we can always get a report through printing. However, we can get more options by using <code><a href="../reference/get_agent_report.html">get_agent_report()</a></code>.</p></p>
+          <h2 id="section-metadata-reporting" class="hasAnchor"><a href="#section-metadata-reporting" class="anchor"></a>Metadata Reporting</h2>
+          <p class="section-desc"><p>If we have an <strong>metadata</strong> object, we can get a metadata report through printing, or, by using <code><a href="../reference/get_metadata_report.html">get_metadata_report()</a></code> function.</p></p>
         </th>
       </tr>
       
@@ -415,15 +446,9 @@
       <tr>
         
         <td>
-          <p><code><a href="interrogate.html">interrogate()</a></code> </p>
+          <p><code><a href="get_metadata_report.html">get_metadata_report()</a></code> </p>
         </td>
-        <td><p>Given an agent that has a validation plan, perform an interrogation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_agent_report.html">get_agent_report()</a></code> </p>
-        </td>
-        <td><p>Get a summary report from an agent</p></td>
+        <td><p>Get a table metadata report from <strong>pointblank</strong> metadata YAML</p></td>
       </tr>
     </tbody><tbody>
       <tr>

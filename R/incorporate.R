@@ -1,5 +1,14 @@
 #' Given a metadata object, update and incorporate table snippets
 #' 
+#' When the *metadata* object has a number of snippets available (by using
+#' [meta_snippet()]) and the strings to use them (by using the `meta_*()`
+#' functions and `{<snippet_name>}` in the text elements), the process of
+#' incorporating aspects of the table into the metadata text can occur by
+#' using the `incorporate()` function. After that, the metadata will fully
+#' updated (getting the current state of table dimensions, rerendering the
+#' metadata text, etc.) and we can print the *metadata* object or use the
+#' [get_metadata_report()] function to see the metadata report.
+#' 
 #' @param metadata A metadata object of class `ptblank_metadata`.
 #' 
 #' @return A `ptblank_metadata` object.

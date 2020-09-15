@@ -1,22 +1,22 @@
 #' Create a pointblank metadata object
 #'
 #' The `create_metadata()` function creates a *metadata* object, which is used
-#' in a *metadata enrichment* workflow. The overall aim of this workflow is to
-#' collect and generate useful information on data tables. We can supply as many
-#' metadata parameters that are useful for describing a particular data table.
-#' The *metadata* object created by the `create_metadata()` function takes
-#' metadeta-focused functions (the `meta_*()` series of functions).
+#' in a *metadata management* workflow. The overall aim of this workflow is to
+#' record, collect, and generate useful information on data tables. We can
+#' supply as many metadata parameters that are useful for describing a
+#' particular data table. The *metadata* object created by the
+#' `create_metadata()` function takes metadeta-focused functions (the `meta_*()`
+#' series of functions).
 #'
 #' @param tbl The input table. This can be a data frame, a tibble, a `tbl_dbi`
 #'   object, or a `tbl_spark` object. Alternatively, a function can be used to
 #'   read in the input data table with the `read_fn` argument (in which case,
 #'   `tbl` can be `NULL`).
-#' @param read_fn A function that's used for reading in the data. If a `tbl` is
-#'   not provided, then this function will be invoked. However, if both a `tbl`
-#'   *and* a `read_fn` is specified, then the supplied `tbl` will take priority.
-#'   There are two ways to specify a `read_fn`: (1) using a function (e.g.,
-#'   `function() { <table reading code> }`) or, (2) with an R formula
-#'   expression.
+#' @param read_fn A function that's used for reading in the data. Even if a
+#'   `tbl` is provided, this function will be invoked to obtain the data (i.e.,
+#'   the `read_fn` takes priority). There are two ways to specify a `read_fn`:
+#'   (1) using a function (e.g., `function() { <table reading code> }`) or, (2)
+#'   with an R formula expression.
 #' @param agent A pointblank *agent* object. This object can be used instead of
 #'   supplying a table in `tbl` or a table-reading function in `read_fn`.
 #' @param tbl_name A optional name to assign to the input table object. If no

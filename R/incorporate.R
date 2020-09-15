@@ -45,6 +45,11 @@ incorporate <- function(metadata) {
   table.columns <- length(column_names)
   table.rows <- dplyr::count(tbl, name = "n") %>% dplyr::pull(n)
   
+  # TODO: Sync column names, determining which are newly seen
+  # and those that are no longer seen
+  
+  # TODO: Sync column types
+  
   #
   # Incorporate snippets
   #

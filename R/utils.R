@@ -10,6 +10,33 @@ get_tbl_object <- function(agent) {
   agent$tbl
 }
 
+# Generate a label for the `agent` or `metadata` object
+generate_label <- function(label = NULL) {
+  if (is.null(label)) {
+    label <- paste0("[", gsub(" ", "|", as.character(Sys.time())), "]")
+  }
+  label
+}
+
+safely_transformer <- function(otherwise = NA) {
+  
+  function(text, envir) {
+    tryCatch(
+      eval(parse(text = text, keep.source = FALSE), envir),
+      error = function(e) if (is.language(otherwise)) eval(otherwise) else otherwise)
+  }
+}
+
+glue_safely <- function(..., .otherwise = NA, .envir = parent.frame()) {
+  as.character(
+    glue::glue(
+      ...,
+      .transformer = safely_transformer(.otherwise),
+      .envir = .envir
+    )
+  )
+}
+
 has_agent_intel <- function(agent) {
   inherits(agent, "has_intel")
 }

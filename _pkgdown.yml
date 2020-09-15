@@ -12,8 +12,8 @@ reference:
       analysis, call on an *agent* to carry out that eventual plan with
       `create_agent()`. The agent here is to be told which table is the target,
       and, we devise a stepwise validation plan with validation functions. If
-      reporting on table metadata is your goal, then begin with the
-      `create_metadata()` function.
+      collecting and reporting on table metadata is your goal, then begin with
+      the `create_metadata()` function.
     contents:
     - scan_data
     - create_agent
@@ -71,11 +71,14 @@ reference:
       with the `meta_table()`, details about the nature of each column with the
       `meta_columns()` function, and add sections of our own choosing (and the
       properties that make sense for those sections) with the `meta_section()`
-      function.
+      function. Snippets of information gleaned from the target table by using
+      the `meta_snippet()` function. These bits of information can be
+      incorporated in text defined by the other `meta_*()` functions.
     contents:
     - meta_table
     - meta_columns
     - meta_section
+    - meta_snippet
     
   - title: Emailing
     desc: >
@@ -103,11 +106,16 @@ reference:
     - interrogate
     - get_agent_report
     
-  - title: Metadata Reporting
+  - title: "Metadata: Incorporate and Report"
     desc: >
-      If we have an **metadata** object, we can get a metadata report through
-      printing, or, by using `get_metadata_report()` function. 
+      If we have an **metadata** object that has been loaded with information
+      from using the `meta_*()` functions, the `incorporate()` function works
+      to recalculate snippets and integrate those into the text. After
+      incorporation of the new data into the metadata elements, we can get a
+      metadata report through printing, or, by using `get_metadata_report()`
+      function.
     contents:
+    - incorporate
     - get_metadata_report
     
   - title: Post-interrogation

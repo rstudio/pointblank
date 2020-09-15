@@ -36,7 +36,11 @@ get_metadata_report <- function(metadata) {
   
   time_start <- Sys.time()
   
-  y <- metadata$metadata
+  if ("metadata_rev" %in% names(metadata)) {
+    y <- metadata$metadata_rev
+  } else {
+    y <- metadata$metadata
+  }
   
   if ("meta_label" %in% names(y)) {
     meta_label <- y[["meta_label"]]

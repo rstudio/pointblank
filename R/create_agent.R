@@ -37,11 +37,11 @@
 #'   object, or a `tbl_spark` object. Alternatively, a function can be used to
 #'   read in the input data table with the `read_fn` argument (in which case,
 #'   `tbl` can be `NULL`).
-#' @param read_fn A function that's used for reading in the data. If a `tbl` is
-#'   not provided, then this function will be invoked. However, if both a `tbl`
-#'   *and* a `read_fn` is specified, then the supplied `tbl` will take priority.
-#'   There are two ways to specify a `read_fn`: (1) using a function (e.g.,
-#'   `function() { <table reading code> }`) or, (2) with an R formula expression
+#' @param read_fn A function that's used for reading in the data. Even if a
+#'   `tbl` is provided, this function will be invoked to obtain the data (i.e.,
+#'   the `read_fn` takes priority). There are two ways to specify a `read_fn`:
+#'   (1) using a function (e.g., `function() { <table reading code> }`) or, (2)
+#'   with an R formula expression.
 #' @param actions A list containing threshold levels so that all validation
 #'   steps can react accordingly when exceeding the set levels. This is to be
 #'   created with the [action_levels()] helper function. Should an action levels
@@ -192,10 +192,8 @@ create_agent <- function(tbl = NULL,
                          locale = NULL) {
 
   # Generate a label if none provided
-  if (is.null(label)) {
-    label <- paste0("[", gsub(" ", "|", Sys.time() %>% as.character()), "]")
-  }
-  
+  label <- generate_label(label = label)
+
   # Normalize the reporting language identifier and stop if necessary
   lang <- normalize_reporting_language(lang)
   
@@ -215,6 +213,8 @@ create_agent <- function(tbl = NULL,
     )
   }
   
+  # Try to infer the table name if one isn't
+  # explicitly given in `tbl_name`
   if (!is.null(tbl) && is.null(tbl_name)) {
     tbl_name <- deparse(match.call()$tbl)
     if (tbl_name == ".") {
@@ -225,7 +225,10 @@ create_agent <- function(tbl = NULL,
     tbl_name <- NA_character_
   }
   
-  if (!is.null(read_fn) && is.null(tbl)) {
+  # Prefer reading a table from a `read_fn` if it's available
+  # TODO: Verify that the table is a table object
+  # and provide an error if it isn't
+  if (!is.null(read_fn)) {
     if (inherits(read_fn, "function")) {
       tbl <- rlang::exec(read_fn)
     } else if (rlang::is_formula(read_fn)) {

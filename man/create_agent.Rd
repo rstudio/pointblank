@@ -22,11 +22,11 @@ object, or a \code{tbl_spark} object. Alternatively, a function can be used to
 read in the input data table with the \code{read_fn} argument (in which case,
 \code{tbl} can be \code{NULL}).}
 
-\item{read_fn}{A function that's used for reading in the data. If a \code{tbl} is
-not provided, then this function will be invoked. However, if both a \code{tbl}
-\emph{and} a \code{read_fn} is specified, then the supplied \code{tbl} will take priority.
-There are two ways to specify a \code{read_fn}: (1) using a function (e.g.,
-\verb{function() \{ <table reading code> \}}) or, (2) with an R formula expression}
+\item{read_fn}{A function that's used for reading in the data. Even if a
+\code{tbl} is provided, this function will be invoked to obtain the data (i.e.,
+the \code{read_fn} takes priority). There are two ways to specify a \code{read_fn}:
+(1) using a function (e.g., \verb{function() \{ <table reading code> \}}) or, (2)
+with an R formula expression.}
 
 \item{actions}{A list containing threshold levels so that all validation
 steps can react accordingly when exceeding the set levels. This is to be

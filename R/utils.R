@@ -18,6 +18,25 @@ generate_label <- function(label = NULL) {
   label
 }
 
+safely_transformer <- function(otherwise = NA) {
+  
+  function(text, envir) {
+    tryCatch(
+      eval(parse(text = text, keep.source = FALSE), envir),
+      error = function(e) if (is.language(otherwise)) eval(otherwise) else otherwise)
+  }
+}
+
+glue_safely <- function(..., .otherwise = NA, .envir = parent.frame()) {
+  as.character(
+    glue::glue(
+      ...,
+      .transformer = safely_transformer(.otherwise),
+      .envir = .envir
+    )
+  )
+}
+
 has_agent_intel <- function(agent) {
   inherits(agent, "has_intel")
 }

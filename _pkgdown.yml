@@ -71,7 +71,9 @@ reference:
       with the `meta_table()`, details about the nature of each column with the
       `meta_columns()` function, and add sections of our own choosing (and the
       properties that make sense for those sections) with the `meta_section()`
-      function.
+      function. Snippets of information gleaned from the target table by using
+      the `meta_snippet()` function. These bits of information can be
+      incorporated in text defined by the other `meta_*()` functions.
     contents:
     - meta_table
     - meta_columns

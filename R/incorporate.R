@@ -55,7 +55,7 @@ incorporate <- function(metadata) {
   #
   
   meta_snippets <- metadata$meta_snippets
-  
+
   for (i in seq_along(meta_snippets)) {
     
     snippet_fn <- 
@@ -75,16 +75,19 @@ incorporate <- function(metadata) {
   
   metadata_table <-
     lapply(metadata$metadata[["table"]], function(x) {
-      glue::glue(x) %>% as.character()
+      as.character(glue::glue(x))
     })
   
   metadata_columns <- 
     lapply(metadata$metadata[["columns"]], lapply, function(x) {
-      glue::glue(x) %>% as.character()
+      as.character(glue::glue(x))
     })
   
   extra_sections <- 
-    setdiff(names(metadata$metadata), c("meta_label", "table", "columns"))
+    base::setdiff(
+      names(metadata$metadata),
+      c("meta_label", "table", "columns")
+    )
   
   metadata_extra <- metadata$metadata[extra_sections]
   
@@ -92,12 +95,13 @@ incorporate <- function(metadata) {
     
     metadata_extra[[i]] <-
       lapply(metadata_extra[[i]], function(x) {
-        glue::glue(x) %>% as.character()
+        as.character(glue::glue(x))
       })
   }
   
   metadata_rev <-
-    c(list(meta_label = metadata_meta_label),
+    c(
+      list(meta_label = metadata_meta_label),
       list(table = metadata_table),
       list(columns = metadata_columns),
       metadata_extra,

@@ -31,11 +31,24 @@ incorporate <- function(metadata) {
     }
   }
   
-  # TODO: Update the following without user intervention
+  # Update the following property values without user intervention
   #  - _columns
   #  - _rows
   #  - _type
-
+  
+  x <- create_agent(tbl = tbl, read_fn = read_fn)
+  
+  table.type <- x$tbl_src
+  column_names <- x$col_names
+  column_types_r <- x$col_types
+  
+  table.columns <- length(column_names)
+  table.rows <- dplyr::count(tbl, name = "n") %>% dplyr::pull(n)
+  
+  #
+  # Incorporate snippets
+  #
+  
   meta_snippets <- metadata$meta_snippets
   
   for (i in seq_along(meta_snippets)) {
@@ -85,6 +98,10 @@ incorporate <- function(metadata) {
       metadata_extra,
       list(updated = Sys.time())
     )
+  
+  metadata_rev$table$`_columns` <- as.character(table.columns)
+  metadata_rev$table$`_rows` <- as.character(table.rows)
+  metadata_rev$table$`_type` <- table.type
   
   metadata$metadata_rev <- metadata_rev
   metadata

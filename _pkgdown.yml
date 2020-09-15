@@ -76,6 +76,7 @@ reference:
     - meta_table
     - meta_columns
     - meta_section
+    - meta_snippet
     
   - title: Emailing
     desc: >
@@ -103,11 +104,16 @@ reference:
     - interrogate
     - get_agent_report
     
-  - title: Metadata Reporting
+  - title: "Metadata: Incorporate and Report"
     desc: >
-      If we have an **metadata** object, we can get a metadata report through
-      printing, or, by using `get_metadata_report()` function. 
+      If we have an **metadata** object that has been loaded with information
+      from using the `meta_*()` functions, the `incorporate()` function works
+      to recalculate snippets and integrate those into the text. After
+      incorporation of the new data into the metadata elements, we can get a
+      metadata report through printing, or, by using `get_metadata_report()`
+      function.
     contents:
+    - incorporate
     - get_metadata_report
     
   - title: Post-interrogation

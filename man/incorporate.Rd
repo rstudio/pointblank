@@ -13,7 +13,14 @@ incorporate(metadata)
 A \code{ptblank_metadata} object.
 }
 \description{
-Given a metadata object, update and incorporate table snippets
+When the \emph{metadata} object has a number of snippets available (by using
+\code{\link[=meta_snippet]{meta_snippet()}}) and the strings to use them (by using the \verb{meta_*()}
+functions and \verb{\{<snippet_name>\}} in the text elements), the process of
+incorporating aspects of the table into the metadata text can occur by
+using the \code{incorporate()} function. After that, the metadata will fully
+updated (getting the current state of table dimensions, rerendering the
+metadata text, etc.) and we can print the \emph{metadata} object or use the
+\code{\link[=get_metadata_report]{get_metadata_report()}} function to see the metadata report.
 }
 \examples{
 # Take the `small_table` and

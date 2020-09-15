@@ -20,12 +20,11 @@ object, or a \code{tbl_spark} object. Alternatively, a function can be used to
 read in the input data table with the \code{read_fn} argument (in which case,
 \code{tbl} can be \code{NULL}).}
 
-\item{read_fn}{A function that's used for reading in the data. If a \code{tbl} is
-not provided, then this function will be invoked. However, if both a \code{tbl}
-\emph{and} a \code{read_fn} is specified, then the supplied \code{tbl} will take priority.
-There are two ways to specify a \code{read_fn}: (1) using a function (e.g.,
-\verb{function() \{ <table reading code> \}}) or, (2) with an R formula
-expression.}
+\item{read_fn}{A function that's used for reading in the data. Even if a
+\code{tbl} is provided, this function will be invoked to obtain the data (i.e.,
+the \code{read_fn} takes priority). There are two ways to specify a \code{read_fn}:
+(1) using a function (e.g., \verb{function() \{ <table reading code> \}}) or, (2)
+with an R formula expression.}
 
 \item{agent}{A pointblank \emph{agent} object. This object can be used instead of
 supplying a table in \code{tbl} or a table-reading function in \code{read_fn}.}
@@ -56,11 +55,12 @@ A \code{ptblank_metadata} object.
 }
 \description{
 The \code{create_metadata()} function creates a \emph{metadata} object, which is used
-in a \emph{metadata enrichment} workflow. The overall aim of this workflow is to
-collect and generate useful information on data tables. We can supply as many
-metadata parameters that are useful for describing a particular data table.
-The \emph{metadata} object created by the \code{create_metadata()} function takes
-metadeta-focused functions (the \verb{meta_*()} series of functions).
+in a \emph{metadata management} workflow. The overall aim of this workflow is to
+record, collect, and generate useful information on data tables. We can
+supply as many metadata parameters that are useful for describing a
+particular data table. The \emph{metadata} object created by the
+\code{create_metadata()} function takes metadeta-focused functions (the \verb{meta_*()}
+series of functions).
 }
 \examples{
 # Let's walk through how we can

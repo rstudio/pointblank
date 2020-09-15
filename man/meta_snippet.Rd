@@ -20,7 +20,7 @@ A \code{ptblank_metadata} object.
 \description{
 Getting little snippets of information from a table goes hand-in-hand with
 mixing those bits of info with your table metadata. Call \code{meta_snippet()} to
-define a snippet and how you'll get that from the target target (it's with a
+define a snippet and how you'll get that from the target table (it's with a
 function). So long as you know how to interact with a table and extract
 information, you can easily define snippets for a \emph{metadata} object. And once
 those snippets are defined, you can insert them into the property strings as

@@ -5,7 +5,6 @@
 #' @export
 incorporate <- function(metadata) {
   
-  
   # Get the target table for this metadata object
   # TODO: Use the same scheme as the `agent` does
   tbl <- metadata$tbl
@@ -71,16 +70,16 @@ incorporate <- function(metadata) {
   }
   
   metadata_meta_label <- 
-    as.character(glue::glue(metadata$metadata[["meta_label"]]))
+    glue_safely(metadata$metadata[["meta_label"]], .otherwise = "(SNIPPET MISSING)")
   
   metadata_table <-
     lapply(metadata$metadata[["table"]], function(x) {
-      as.character(glue::glue(x))
+      glue_safely(x, .otherwise = "(SNIPPET MISSING)")
     })
   
   metadata_columns <- 
     lapply(metadata$metadata[["columns"]], lapply, function(x) {
-      as.character(glue::glue(x))
+      glue_safely(x, .otherwise = "(SNIPPET MISSING)")
     })
   
   extra_sections <- 
@@ -95,7 +94,7 @@ incorporate <- function(metadata) {
     
     metadata_extra[[i]] <-
       lapply(metadata_extra[[i]], function(x) {
-        as.character(glue::glue(x))
+        glue_safely(x, .otherwise = "(SNIPPET MISSING)")
       })
   }
   

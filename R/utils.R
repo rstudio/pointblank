@@ -10,6 +10,14 @@ get_tbl_object <- function(agent) {
   agent$tbl
 }
 
+# Generate a label for the `agent` or `metadata` object
+generate_label <- function(label = NULL) {
+  if (is.null(label)) {
+    label <- paste0("[", gsub(" ", "|", as.character(Sys.time())), "]")
+  }
+  label
+}
+
 has_agent_intel <- function(agent) {
   inherits(agent, "has_intel")
 }

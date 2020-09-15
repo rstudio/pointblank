@@ -192,10 +192,8 @@ create_agent <- function(tbl = NULL,
                          locale = NULL) {
 
   # Generate a label if none provided
-  if (is.null(label)) {
-    label <- paste0("[", gsub(" ", "|", Sys.time() %>% as.character()), "]")
-  }
-  
+  label <- generate_label(label = label)
+
   # Normalize the reporting language identifier and stop if necessary
   lang <- normalize_reporting_language(lang)
   
@@ -215,6 +213,8 @@ create_agent <- function(tbl = NULL,
     )
   }
   
+  # Try to infer the table name if one isn't
+  # explicitly given in `tbl_name`
   if (!is.null(tbl) && is.null(tbl_name)) {
     tbl_name <- deparse(match.call()$tbl)
     if (tbl_name == ".") {
@@ -225,7 +225,10 @@ create_agent <- function(tbl = NULL,
     tbl_name <- NA_character_
   }
   
-  if (!is.null(read_fn) && is.null(tbl)) {
+  # Prefer reading a table from a `read_fn` if it's available
+  # TODO: Verify that the table is a table object
+  # and provide an error if it isn't
+  if (!is.null(read_fn)) {
     if (inherits(read_fn, "function")) {
       tbl <- rlang::exec(read_fn)
     } else if (rlang::is_formula(read_fn)) {

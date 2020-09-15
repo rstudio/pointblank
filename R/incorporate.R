@@ -2,6 +2,66 @@
 #' 
 #' @param metadata A metadata object of class `ptblank_metadata`.
 #' 
+#' @return A `ptblank_metadata` object.
+#' 
+#' @examples 
+#' # Take the `small_table` and
+#' # assign it to `test_table`; we'll
+#' # modify it later
+#' test_table <- small_table
+#' 
+#' # Generate a metadata object, add
+#' # two snippets with `meta_snippet()`,
+#' # add metadata with some other
+#' # `meta_*()` functions and then
+#' # `incorporate()` the snippets into
+#' # the metadata text
+#' metadata <- 
+#'   create_metadata(
+#'     read_fn = ~test_table,
+#'     tbl_name = "test_table"
+#'   ) %>%
+#'   meta_snippet(
+#'     snippet_name = "row_count",
+#'     fn = ~ . %>% nrow()
+#'   ) %>%
+#'   meta_snippet(
+#'     snippet_name = "col_count",
+#'     fn = ~ . %>% ncol()
+#'   ) %>%
+#'   meta_columns(
+#'     columns = vars(a),
+#'     info = "In the range of 1 to 10. (SIMPLE)"
+#'   ) %>%
+#'   meta_columns(
+#'     columns = starts_with("date"),
+#'     info = "Time-based values (e.g., `Sys.time()`)."
+#'   ) %>%
+#'   meta_columns(
+#'     columns = "date",
+#'     info = "The date part of `date_time`. (CALC)"
+#'   ) %>%
+#'   meta_section(
+#'     section_name = "rows",
+#'     row_count = "There are {row_count} rows available."
+#'   ) %>%
+#'   incorporate()
+#' 
+#' # We can print the `metadata`
+#' # object to see the metadata report
+#' # metadata
+#' 
+#' # Let's modify `test_table` to give
+#' # it more rows and an extra column
+#' test_table <- 
+#'   dplyr::bind_rows(test_table, test_table) %>%
+#'   dplyr::mutate(h = a + c)
+#' 
+#' # Using `incorporate()` will cause
+#' # the snippets to be reprocessed, and,
+#' # the strings to be updated
+#' # metadata %>% incorporate()
+#' 
 #' @export
 incorporate <- function(metadata) {
   

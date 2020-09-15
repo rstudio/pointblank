@@ -311,3 +311,32 @@ meta_section <- function(metadata,
   
   metadata
 }
+
+#' Generate a useful text 'snippet' from the target table
+#' 
+#' @param metadata A metadata object of class `ptblank_metadata`.
+#' @param snippet_name The name for snippet, which is used for interpolating the
+#'   snippet itself into metadata.
+#' @param fn A function that obtains a snippet of data from the target table.
+#' 
+#' @export
+meta_snippet <- function(metadata,
+                         snippet_name,
+                         fn) {
+  
+  if (!(snippet_name %in% names(metadata$meta_snippets))) {
+    # Case where `snippet_name` doesn't exist in `meta_snippets`
+    
+    meta_snippet <- list(a = fn)
+    names(meta_snippet) <- snippet_name
+    
+    metadata$meta_snippets <- c(metadata$meta_snippets, meta_snippet)
+    
+  } else {
+    # Case where `snippet_name` exists in `meta_snippets`
+    
+    metadata$meta_snippets[[snippet_name]] <- fn
+  }
+  
+  metadata
+}

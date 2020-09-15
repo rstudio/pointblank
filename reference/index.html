@@ -130,7 +130,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-planning-and-prep" class="hasAnchor"><a href="#section-planning-and-prep" class="anchor"></a>Planning and Prep</h2>
-          <p class="section-desc"><p>Should you need to understand your data a bit more, use the <code><a href="../reference/scan_data.html">scan_data()</a></code> function. It provides a comprehensive report on the data you might be planning on validating. If going down the road of preparing a data quality analysis, call on an <em>agent</em> to carry out that eventual plan with <code><a href="../reference/create_agent.html">create_agent()</a></code>. The agent here is to be told which table is the target, and, we devise a stepwise validation plan with validation functions. If reporting on table metadata is your goal, then begin with the <code><a href="../reference/create_metadata.html">create_metadata()</a></code> function.</p></p>
+          <p class="section-desc"><p>Should you need to understand your data a bit more, use the <code><a href="../reference/scan_data.html">scan_data()</a></code> function. It provides a comprehensive report on the data you might be planning on validating. If going down the road of preparing a data quality analysis, call on an <em>agent</em> to carry out that eventual plan with <code><a href="../reference/create_agent.html">create_agent()</a></code>. The agent here is to be told which table is the target, and, we devise a stepwise validation plan with validation functions. If collecting and reporting on table metadata is your goal, then begin with the <code><a href="../reference/create_metadata.html">create_metadata()</a></code> function.</p></p>
         </th>
       </tr>
       
@@ -342,7 +342,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-metadata-building-functions" class="hasAnchor"><a href="#section-metadata-building-functions" class="anchor"></a>Metadata Building Functions</h2>
-          <p class="section-desc"><p>We can progressively add metadata to a metadata object by using the collection of <code>meta_*()</code> functions. We can add more table-based properties with the <code><a href="../reference/meta_table.html">meta_table()</a></code>, details about the nature of each column with the <code><a href="../reference/meta_columns.html">meta_columns()</a></code> function, and add sections of our own choosing (and the properties that make sense for those sections) with the <code><a href="../reference/meta_section.html">meta_section()</a></code> function.</p></p>
+          <p class="section-desc"><p>We can progressively add metadata to a metadata object by using the collection of <code>meta_*()</code> functions. We can add more table-based properties with the <code><a href="../reference/meta_table.html">meta_table()</a></code>, details about the nature of each column with the <code><a href="../reference/meta_columns.html">meta_columns()</a></code> function, and add sections of our own choosing (and the properties that make sense for those sections) with the <code><a href="../reference/meta_section.html">meta_section()</a></code> function. Snippets of information gleaned from the target table by using the <code><a href="../reference/meta_snippet.html">meta_snippet()</a></code> function. These bits of information can be incorporated in text defined by the other <code>meta_*()</code> functions.</p></p>
         </th>
       </tr>
       
@@ -368,6 +368,12 @@
           <p><code><a href="meta_section.html">meta_section()</a></code> </p>
         </td>
         <td><p>Add metadata that focuses on some key aspect of the data table</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="meta_snippet.html">meta_snippet()</a></code> </p>
+        </td>
+        <td><p>Generate a useful text 'snippet' from the target table</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -434,8 +440,8 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-metadata-reporting" class="hasAnchor"><a href="#section-metadata-reporting" class="anchor"></a>Metadata Reporting</h2>
-          <p class="section-desc"><p>If we have an <strong>metadata</strong> object, we can get a metadata report through printing, or, by using <code><a href="../reference/get_metadata_report.html">get_metadata_report()</a></code> function.</p></p>
+          <h2 id="section-metadata-incorporate-and-report" class="hasAnchor"><a href="#section-metadata-incorporate-and-report" class="anchor"></a>Metadata: Incorporate and Report</h2>
+          <p class="section-desc"><p>If we have an <strong>metadata</strong> object that has been loaded with information from using the <code>meta_*()</code> functions, the <code><a href="../reference/incorporate.html">incorporate()</a></code> function works to recalculate snippets and integrate those into the text. After incorporation of the new data into the metadata elements, we can get a metadata report through printing, or, by using <code><a href="../reference/get_metadata_report.html">get_metadata_report()</a></code> function.</p></p>
         </th>
       </tr>
       
@@ -444,6 +450,12 @@
       
       
       <tr>
+        
+        <td>
+          <p><code><a href="incorporate.html">incorporate()</a></code> </p>
+        </td>
+        <td><p>Given a metadata object, update and incorporate table snippets</p></td>
+      </tr><tr>
         
         <td>
           <p><code><a href="get_metadata_report.html">get_metadata_report()</a></code> </p>

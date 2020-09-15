@@ -177,11 +177,11 @@ read in the input data table with the <code>read_fn</code> argument (in which ca
     </tr>
     <tr>
       <th>read_fn</th>
-      <td><p>A function that's used for reading in the data. If a <code>tbl</code> is
-not provided, then this function will be invoked. However, if both a <code>tbl</code>
-<em>and</em> a <code>read_fn</code> is specified, then the supplied <code>tbl</code> will take priority.
-There are two ways to specify a <code>read_fn</code>: (1) using a function (e.g.,
-<code>function() { &lt;table reading code&gt; }</code>) or, (2) with an R formula expression</p></td>
+      <td><p>A function that's used for reading in the data. Even if a
+<code>tbl</code> is provided, this function will be invoked to obtain the data (i.e.,
+the <code>read_fn</code> takes priority). There are two ways to specify a <code>read_fn</code>:
+(1) using a function (e.g., <code>function() { &lt;table reading code&gt; }</code>) or, (2)
+with an R formula expression.</p></td>
     </tr>
     <tr>
       <th>actions</th>

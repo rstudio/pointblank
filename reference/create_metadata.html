@@ -48,11 +48,12 @@
 
 <meta property="og:title" content="Create a pointblank metadata object — create_metadata" />
 <meta property="og:description" content="The create_metadata() function creates a metadata object, which is used
-in a metadata enrichment workflow. The overall aim of this workflow is to
-collect and generate useful information on data tables. We can supply as many
-metadata parameters that are useful for describing a particular data table.
-The metadata object created by the create_metadata() function takes
-metadeta-focused functions (the meta_*() series of functions)." />
+in a metadata management workflow. The overall aim of this workflow is to
+record, collect, and generate useful information on data tables. We can
+supply as many metadata parameters that are useful for describing a
+particular data table. The metadata object created by the
+create_metadata() function takes metadeta-focused functions (the meta_*()
+series of functions)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -128,11 +129,12 @@ metadeta-focused functions (the meta_*() series of functions)." />
 
     <div class="ref-description">
     <p>The <code>create_metadata()</code> function creates a <em>metadata</em> object, which is used
-in a <em>metadata enrichment</em> workflow. The overall aim of this workflow is to
-collect and generate useful information on data tables. We can supply as many
-metadata parameters that are useful for describing a particular data table.
-The <em>metadata</em> object created by the <code>create_metadata()</code> function takes
-metadeta-focused functions (the <code>meta_*()</code> series of functions).</p>
+in a <em>metadata management</em> workflow. The overall aim of this workflow is to
+record, collect, and generate useful information on data tables. We can
+supply as many metadata parameters that are useful for describing a
+particular data table. The <em>metadata</em> object created by the
+<code>create_metadata()</code> function takes metadeta-focused functions (the <code>meta_*()</code>
+series of functions).</p>
     </div>
 
     <pre class="usage"><span class='fu'>create_metadata</span>(
@@ -157,12 +159,11 @@ read in the input data table with the <code>read_fn</code> argument (in which ca
     </tr>
     <tr>
       <th>read_fn</th>
-      <td><p>A function that's used for reading in the data. If a <code>tbl</code> is
-not provided, then this function will be invoked. However, if both a <code>tbl</code>
-<em>and</em> a <code>read_fn</code> is specified, then the supplied <code>tbl</code> will take priority.
-There are two ways to specify a <code>read_fn</code>: (1) using a function (e.g.,
-<code>function() { &lt;table reading code&gt; }</code>) or, (2) with an R formula
-expression.</p></td>
+      <td><p>A function that's used for reading in the data. Even if a
+<code>tbl</code> is provided, this function will be invoked to obtain the data (i.e.,
+the <code>read_fn</code> takes priority). There are two ways to specify a <code>read_fn</code>:
+(1) using a function (e.g., <code>function() { &lt;table reading code&gt; }</code>) or, (2)
+with an R formula expression.</p></td>
     </tr>
     <tr>
       <th>agent</th>

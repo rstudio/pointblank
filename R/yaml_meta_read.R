@@ -26,7 +26,7 @@
 #' # The `metadata-small_table.yml` file
 #' # looks like this when written
 #' 
-#' #> meta_label: '[2020-09-06|13:37:38]'
+#' #> info_label: '[2020-09-06|13:37:38]'
 #' #> table:
 #' #>   name: small_table
 #' #> _columns: 8
@@ -55,7 +55,7 @@
 #' # pertinent information; with some
 #' # direct editing of the file we get:
 #' 
-#' #> meta_label: '[2020-09-06|13:37:38]'
+#' #> info_label: '[2020-09-06|13:37:38]'
 #' #> table:
 #' #>   name: small_table
 #' #>   _columns: 8
@@ -341,10 +341,10 @@ title_text_md <- function(item,
   item
 }
 
-create_metadata_label_html <- function(meta_label) {
+create_metadata_label_html <- function(info_label) {
   
   htmltools::tags$span(
-    meta_label,
+    info_label,
     style = htmltools::css(
       `text-decoration-style` = "solid",
       `text-decoration-color` = "#ADD8E6",

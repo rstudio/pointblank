@@ -139,7 +139,7 @@ incorporate <- function(metadata) {
   }
   
   metadata_meta_label <- 
-    glue_safely(metadata$metadata[["meta_label"]], .otherwise = "(SNIPPET MISSING)")
+    glue_safely(metadata$metadata[["info_label"]], .otherwise = "(SNIPPET MISSING)")
   
   metadata_table <-
     lapply(metadata$metadata[["table"]], function(x) {
@@ -154,7 +154,7 @@ incorporate <- function(metadata) {
   extra_sections <- 
     base::setdiff(
       names(metadata$metadata),
-      c("meta_label", "table", "columns")
+      c("info_label", "table", "columns")
     )
   
   metadata_extra <- metadata$metadata[extra_sections]
@@ -169,7 +169,7 @@ incorporate <- function(metadata) {
   
   metadata_rev <-
     c(
-      list(meta_label = metadata_meta_label),
+      list(info_label = metadata_meta_label),
       list(table = metadata_table),
       list(columns = metadata_columns),
       metadata_extra,

@@ -42,13 +42,13 @@ get_metadata_report <- function(metadata) {
     y <- metadata$metadata
   }
   
-  if ("meta_label" %in% names(y)) {
-    meta_label <- y[["meta_label"]]
-    y <- y[names(y) != "meta_label"]
+  if ("info_label" %in% names(y)) {
+    info_label <- y[["info_label"]]
+    y <- y[names(y) != "info_label"]
   } else {
-    meta_label <- paste0("[", gsub(" ", "|", as.character(Sys.time())), "]")
+    info_label <- paste0("[", gsub(" ", "|", as.character(Sys.time())), "]")
   }
-  meta_label <- create_metadata_label_html(meta_label = meta_label)
+  info_label <- create_metadata_label_html(info_label = info_label)
   
   meta_columns <- NULL
   meta_rows <- NULL
@@ -303,7 +303,7 @@ get_metadata_report <- function(metadata) {
   # a table subtitle <div>
   combined_subtitle <-
     htmltools::tagList(
-      htmltools::HTML(meta_label),
+      htmltools::HTML(info_label),
       htmltools::tags$div(
         style = htmltools::css(
           height = "25px",

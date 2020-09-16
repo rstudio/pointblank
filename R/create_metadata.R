@@ -175,7 +175,7 @@ create_informant <- function(tbl = NULL,
   metadata_list <-
     c(
       list(
-        meta_label = label,
+        info_label = label,
         table = list(
           name = table.name,
           `_columns` = table.columns,
@@ -192,7 +192,7 @@ create_informant <- function(tbl = NULL,
       tbl = if (!read_fn_given) tbl,
       read_fn = read_fn,
       tbl_name = table.name,
-      meta_label = label,
+      info_label = label,
       meta_snippets = list(),
       lang = lang,
       locale = locale,

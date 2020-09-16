@@ -12,7 +12,7 @@ info_section(x, section_name, ...)
 \item{section_name}{The name of the section for which this information
 pertains.}
 
-\item{...}{Metadata parameters as a series of named arguments.}
+\item{...}{Information entries as a series of named arguments.}
 }
 \value{
 A \code{ptblank_informant} object.
@@ -22,9 +22,8 @@ While the \code{\link[=info_tabular]{info_tabular()}} and \code{\link[=info_colu
 add/modify info text for specific sections, the \code{info_section()}
 makes it possible to add sections of our own choosing and the information
 that make sense for those sections. Define a \code{section_name} and provide a
-series of named arguments (in the form
-\code{property_name = "Description of property."}) to build the informational
-content for that section.
+series of named arguments (in the form \code{entry_name = "The information."}) to
+build the informational content for that section.
 }
 \examples{
 # Create a pointblank `informant`

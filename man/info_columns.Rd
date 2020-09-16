@@ -14,7 +14,7 @@ column name in quotes (e.g., \code{"<column_name>"}), one or more column names
 in \code{vars()} (e.g., \verb{vars(<column_name>)}), or with a select helper (e.g.,
 \code{starts_with("date")}).}
 
-\item{...}{Metadata parameters as a series of named arguments.}
+\item{...}{Information entries as a series of named arguments.}
 
 \item{.add}{Should new text be added to existing text? This is \code{TRUE} by
 default; setting to \code{FALSE} replaces any existing text for a property.}
@@ -30,7 +30,7 @@ and their types (as \verb{_type}). Beyond that, it is useful to provide details
 about the nature of each column and we can do that with the \code{info_columns()}
 function. A single column (or multiple columns) is targeted, and then a
 series of named arguments (in the form
-\code{property_name = "Description of property."}) serves as additional
+\code{entry_name = "The information."}) serves as additional
 information for the column or columns.
 }
 \examples{

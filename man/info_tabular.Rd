@@ -9,7 +9,7 @@ info_tabular(x, ...)
 \arguments{
 \item{x}{An informant object of class \code{ptblank_informant}.}
 
-\item{...}{Metadata parameters as a series of named arguments.}
+\item{...}{Information entries as a series of named arguments.}
 }
 \value{
 A \code{ptblank_informant} object.
@@ -21,8 +21,8 @@ it has two starter sections: (1) 'table' and (2) 'columns'. The
 supplied table name (\code{name}) and table dimensions (as \verb{_columns} and
 \verb{_rows}). We can add more table-based properties with the \code{info_tabular()}
 function. By providing a series of named arguments (in the form
-\code{property_name = "Description of property."}), we can add more information
-that makes sense for describing the table as a whole.
+\code{entry_name = "The information."}), we can add more information that makes
+sense for describing the table as a whole.
 }
 \examples{
 # Create a pointblank `informant`

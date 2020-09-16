@@ -4,12 +4,12 @@
 \alias{yaml_write}
 \title{Write an agent and metadata to a \strong{pointblank} YAML file}
 \usage{
-yaml_write(agent = NULL, metadata = NULL, filename, path = NULL)
+yaml_write(agent = NULL, informant = NULL, filename, path = NULL)
 }
 \arguments{
 \item{agent}{An \emph{agent} object of class \code{ptblank_agent}.}
 
-\item{metadata}{A metadata object of class \code{ptblank_informant}.}
+\item{informant}{An \emph{informant} object of class \code{ptblank_informant}.}
 
 \item{filename}{The name of the YAML file to create on disk. It is
 recommended that either the \code{.yaml} or \code{.yml} extension be used for this

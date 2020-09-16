@@ -4,10 +4,10 @@
 \alias{incorporate}
 \title{Given a metadata object, update and incorporate table snippets}
 \usage{
-incorporate(metadata)
+incorporate(informant)
 }
 \arguments{
-\item{metadata}{A metadata object of class \code{ptblank_informant}.}
+\item{informant}{An informant object of class \code{ptblank_informant}.}
 }
 \value{
 A \code{ptblank_informant} object.
@@ -20,7 +20,7 @@ incorporating aspects of the table into the metadata text can occur by
 using the \code{incorporate()} function. After that, the metadata will fully
 updated (getting the current state of table dimensions, rerendering the
 metadata text, etc.) and we can print the \emph{metadata} object or use the
-\code{\link[=get_metadata_report]{get_metadata_report()}} function to see the metadata report.
+\code{\link[=get_informant_report]{get_informant_report()}} function to see the metadata report.
 }
 \examples{
 # Take the `small_table` and

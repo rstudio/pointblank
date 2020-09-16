@@ -82,12 +82,11 @@ metadata <- create_metadata(small_table)
 # the sections: (1) 'table' and
 # (2) 'columns' and we can print the
 # object to see the metadata report
-# metadata
 
 # Alternatively, we can visualize this
 # metadata into the same report by using
-# `get_metadata_report()`
-report <- get_metadata_report(metadata)
+# `get_informant_report()`
+report <- get_informant_report(metadata)
 class(report)
 
 }

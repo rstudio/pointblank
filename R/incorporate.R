@@ -7,9 +7,9 @@
 #' using the `incorporate()` function. After that, the metadata will fully
 #' updated (getting the current state of table dimensions, rerendering the
 #' metadata text, etc.) and we can print the *metadata* object or use the
-#' [get_metadata_report()] function to see the metadata report.
+#' [get_informant_report()] function to see the metadata report.
 #' 
-#' @param metadata A metadata object of class `ptblank_informant`.
+#' @param informant An informant object of class `ptblank_informant`.
 #' 
 #' @return A `ptblank_informant` object.
 #' 
@@ -72,12 +72,12 @@
 #' # metadata %>% incorporate()
 #' 
 #' @export
-incorporate <- function(metadata) {
+incorporate <- function(informant) {
   
   # Get the target table for this metadata object
   # TODO: Use the same scheme as the `agent` does
-  tbl <- metadata$tbl
-  read_fn <- metadata$read_fn
+  tbl <- informant$tbl
+  read_fn <- informant$read_fn
   
   # TODO: Verify that either `tbl` or `read_fn` is available
   
@@ -122,42 +122,42 @@ incorporate <- function(metadata) {
   # Incorporate snippets
   #
   
-  meta_snippets <- metadata$meta_snippets
+  meta_snippets <- informant$meta_snippets
 
   for (i in seq_along(meta_snippets)) {
     
     snippet_fn <- 
-      metadata$meta_snippets[[i]] %>%
+      informant$meta_snippets[[i]] %>%
       rlang::f_rhs() %>%
       rlang::eval_tidy()
     
     if (inherits(snippet_fn, "fseq")) {
       
       snippet <- snippet_fn(tbl)
-      assign(x = names(metadata$meta_snippets[i]), value = snippet)
+      assign(x = names(informant$meta_snippets[i]), value = snippet)
     }
   }
   
   metadata_meta_label <- 
-    glue_safely(metadata$metadata[["info_label"]], .otherwise = "(SNIPPET MISSING)")
+    glue_safely(informant$metadata[["info_label"]], .otherwise = "(SNIPPET MISSING)")
   
   metadata_table <-
-    lapply(metadata$metadata[["table"]], function(x) {
+    lapply(informant$metadata[["table"]], function(x) {
       glue_safely(x, .otherwise = "(SNIPPET MISSING)")
     })
   
   metadata_columns <- 
-    lapply(metadata$metadata[["columns"]], lapply, function(x) {
+    lapply(informant$metadata[["columns"]], lapply, function(x) {
       glue_safely(x, .otherwise = "(SNIPPET MISSING)")
     })
   
   extra_sections <- 
     base::setdiff(
-      names(metadata$metadata),
+      names(informant$metadata),
       c("info_label", "table", "columns")
     )
   
-  metadata_extra <- metadata$metadata[extra_sections]
+  metadata_extra <- informant$metadata[extra_sections]
   
   for (i in seq_along(extra_sections)) {
     
@@ -180,6 +180,6 @@ incorporate <- function(metadata) {
   metadata_rev$table$`_rows` <- as.character(table.rows)
   metadata_rev$table$`_type` <- table.type
   
-  metadata$metadata_rev <- metadata_rev
-  metadata
+  informant$metadata_rev <- metadata_rev
+  informant
 }

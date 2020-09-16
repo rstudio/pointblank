@@ -18,7 +18,7 @@
 #' *agent*).
 #' 
 #' @param agent An *agent* object of class `ptblank_agent`.
-#' @param metadata A metadata object of class `ptblank_informant`.
+#' @param informant An *informant* object of class `ptblank_informant`.
 #' @param filename The name of the YAML file to create on disk. It is
 #'   recommended that either the `.yaml` or `.yml` extension be used for this
 #'   file.
@@ -121,7 +121,7 @@
 #' 
 #' @export
 yaml_write <- function(agent = NULL,
-                       metadata = NULL,
+                       informant = NULL,
                        filename,
                        path = NULL) {
 
@@ -129,17 +129,17 @@ yaml_write <- function(agent = NULL,
     filename <- file.path(path, filename)
   }
   
-  if (is.null(agent) && is.null(metadata)) {
-    stop("An agent or metadata object must be supplied to `yaml_write()`.",
+  if (is.null(agent) && is.null(informant)) {
+    stop("An agent or informant object must be supplied to `yaml_write()`.",
          call. = FALSE)
   }
 
-  if (!is.null(agent) && !is.null(metadata)) {
-    x <- c(as_agent_yaml_list(agent), metadata$metadata)
+  if (!is.null(agent) && !is.null(informant)) {
+    x <- c(as_agent_yaml_list(agent), informant$metadata)
   } else if (!is.null(agent)) {
     x <- as_agent_yaml_list(agent)
   } else {
-    x <- metadata$metadata
+    x <- informant$metadata
   }
   
   yaml::write_yaml(

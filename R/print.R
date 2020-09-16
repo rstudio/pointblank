@@ -51,7 +51,7 @@ print.ptblank_informant <- function(x, view = interactive(), ...) {
   
   # nocov start 
   
-  print(get_metadata_report(x), view = view, ...)
+  print(get_informant_report(x), view = view, ...)
   
   # nocov end 
 }

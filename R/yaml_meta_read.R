@@ -341,7 +341,7 @@ title_text_md <- function(item,
   item
 }
 
-create_metadata_label_html <- function(info_label) {
+make_info_label_html <- function(info_label) {
   
   htmltools::tags$span(
     info_label,

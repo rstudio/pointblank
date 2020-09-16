@@ -6,7 +6,7 @@
 #' added via the use of the `meta_*()` functions or addition of metadata through
 #' direct editing of a **pointblank** YAML file.
 #' 
-#' @param metadata A metadata object of class `ptblank_informant`.
+#' @param informant An informant object of class `ptblank_informant`.
 #' 
 #' @return A **gt** table object.
 #' 
@@ -25,21 +25,21 @@
 #' 
 #' # Alternatively, we can visualize this
 #' # metadata into the same report by using
-#' # `get_metadata_report()`
-#' report <- get_metadata_report(metadata)
+#' # `get_informant_report()`
+#' report <- get_informant_report(metadata)
 #' class(report)
 #' 
 #' @export
-get_metadata_report <- function(metadata) {
+get_informant_report <- function(informant) {
   
   # nocov start
   
   time_start <- Sys.time()
   
-  if ("metadata_rev" %in% names(metadata)) {
-    y <- metadata$metadata_rev
+  if ("metadata_rev" %in% names(informant)) {
+    y <- informant$metadata_rev
   } else {
-    y <- metadata$metadata
+    y <- informant$metadata
   }
   
   if ("info_label" %in% names(y)) {
@@ -48,7 +48,7 @@ get_metadata_report <- function(metadata) {
   } else {
     info_label <- paste0("[", gsub(" ", "|", as.character(Sys.time())), "]")
   }
-  info_label <- create_metadata_label_html(info_label = info_label)
+  info_label <- make_info_label_html(info_label = info_label)
   
   meta_columns <- NULL
   meta_rows <- NULL
@@ -330,7 +330,7 @@ get_metadata_report <- function(metadata) {
     id = "metadata"
   ) %>%
     gt::tab_header(
-      title = "Pointblank Metadata",
+      title = "Pointblank Information",
       subtitle = gt::md(combined_subtitle)
     ) %>%
     gt::tab_source_note(source_note = gt::md(table_time)) %>%

@@ -1,13 +1,13 @@
-#' Add metadata that focuses on aspects of the data table as a whole
+#' Add information that focuses on aspects of the data table as a whole
 #' 
-#' When a metadata object is created with the [create_informant()] function, it
-#' has two starter sections: (1) 'table' and (2) 'columns'. We can further The
+#' When an *informant* object is created with the [create_informant()] function,
+#' it has two starter sections: (1) 'table' and (2) 'columns'. The
 #' 'table' section should contain a few properties upon creation, such as the
 #' supplied table name (`name`) and table dimensions (as `_columns` and
 #' `_rows`). We can add more table-based properties with the `info_tabular()`
 #' function. By providing a series of named arguments (in the form
-#' `property_name = "Description of property."`), we can add more metadata that
-#' makes sense for describing the table as a whole.
+#' `property_name = "Description of property."`), we can add more information
+#' that makes sense for describing the table as a whole.
 #' 
 #' @param x An informant object of class `ptblank_informant`.
 #' @param ... Metadata parameters as a series of named arguments.
@@ -49,9 +49,9 @@
 #' # )
 #' 
 #' # The YAML file can then be read back
-#' # into a metadata object with the
+#' # into an informant object with the
 #' # `meta_yaml_read()` function
-#' # metadata <-
+#' # informant <-
 #' #   meta_yaml_read(path = "informant.yml")
 #'
 #' @export
@@ -89,16 +89,17 @@ info_tabular <- function(x,
   metadata
 }
 
-#' Add metadata that focuses on aspects of a data table's columns
+#' Add information that focuses on aspects of a data table's columns
 #' 
-#' Upon creation of a metadata object (with the [create_informant()] function),
-#' there are two sections containing properties: (1) 'table' and (2) 'columns'.
-#' The 'columns' section is initialized with the table's column names and their
-#' types (as `_type`). Beyond that, it is useful to provide details about the
-#' nature of each column and we can do that with the `info_columns()` function.
-#' A single column (or multiple columns) is targeted, and then a series of named
-#' arguments (in the form `property_name = "Description of property."`) serves
-#' as additional metadata for the column or columns.
+#' Upon creation of an *informant* object (with the [create_informant()]
+#' function), there are two sections containing properties: (1) 'table' and (2)
+#' 'columns'. The 'columns' section is initialized with the table's column names
+#' and their types (as `_type`). Beyond that, it is useful to provide details
+#' about the nature of each column and we can do that with the `info_columns()`
+#' function. A single column (or multiple columns) is targeted, and then a
+#' series of named arguments (in the form 
+#' `property_name = "Description of property."`) serves as additional
+#' information for the column or columns.
 #' 
 #' @param x An informant object of class `ptblank_informant`.
 #' @param columns The column or set of columns to focus on. Can be defined as a
@@ -145,7 +146,7 @@ info_tabular <- function(x,
 #' # be directly edited or modified
 #' # yaml_write(
 #' #   informant = informant,
-#' #   filename = "metadata.yml"
+#' #   filename = "informant.yml"
 #' # )
 #' 
 #' # The YAML file can then be read back
@@ -213,17 +214,19 @@ info_columns <- function(x,
   metadata
 }
 
-#' Add metadata that focuses on some key aspect of the data table
+#' Add information that focuses on some key aspect of the data table
 #' 
 #' While the [info_tabular()] and [info_columns()] functions allow us to
-#' add/modify metadata properties for specific sections, the `info_section()`
-#' makes it possible to add sections of our own choosing and the properties that
-#' make sense for those sections. Define a `section_name` and provide a series
-#' of named arguments (in the form `property_name = "Description of property."`)
-#' to build the metadata content for that section.
+#' add/modify info text for specific sections, the `info_section()`
+#' makes it possible to add sections of our own choosing and the information
+#' that make sense for those sections. Define a `section_name` and provide a
+#' series of named arguments (in the form 
+#' `property_name = "Description of property."`) to build the informational
+#' content for that section.
 #' 
 #' @param x An informant object of class `ptblank_informant`.
-#' @param section_name The name of the section for which this metadata pertains.
+#' @param section_name The name of the section for which this information
+#'   pertains.
 #' @param ... Metadata parameters as a series of named arguments.
 #' 
 #' @return A `ptblank_informant` object.
@@ -234,10 +237,10 @@ info_columns <- function(x,
 #' # and the `small_table` dataset
 #' informant <- create_informant(small_table)
 #' 
-#' # The `metadata` object has the 'table'
+#' # The `informant` object has the 'table'
 #' # and 'columns' sections; we can create
 #' # entirely different sections with their
-#' # own properties using `meta_section()`
+#' # own properties using `info_section()`
 #' informant <-
 #'   informant %>%
 #'   info_section(
@@ -248,7 +251,7 @@ info_columns <- function(x,
 #' 
 #' # Upon printing the `informant` object, we see
 #' # the addition of the 'notes' section and its
-#' # own metadata
+#' # own information
 #' 
 #' # The `informant` object can be written to
 #' # a YAML file with the `yaml_write()`
@@ -319,17 +322,17 @@ info_section <- function(x,
 #' Generate a useful text 'snippet' from the target table
 #' 
 #' Getting little snippets of information from a table goes hand-in-hand with
-#' mixing those bits of info with your table metadata. Call `info_snippet()` to
+#' mixing those bits of info with your table info. Call `info_snippet()` to
 #' define a snippet and how you'll get that from the target table (it's with a
 #' function). So long as you know how to interact with a table and extract
-#' information, you can easily define snippets for a *metadata* object. And once
-#' those snippets are defined, you can insert them into the property strings as
+#' information, you can easily define snippets for a *informant* object. And
+#' once those snippets are defined, you can insert them into the info text as
 #' defined through the `info_*()` functions. Just use curly braces with the
 #' `snippet_name` inside (e.g., `"This column has {n_cat} categories."`).
 #' 
 #' @param x An informant object of class `ptblank_informant`.
 #' @param snippet_name The name for snippet, which is used for interpolating the
-#'   snippet itself into metadata.
+#'   snippet itself into info text.
 #' @param fn A function that obtains a snippet of data from the target table.
 #' 
 #' @return A `ptblank_informant` object.
@@ -340,13 +343,13 @@ info_section <- function(x,
 #' # modify it later
 #' test_table <- small_table
 #' 
-#' # Generate a metadata object, add
+#' # Generate an informant object, add
 #' # two snippets with `info_snippet()`,
-#' # add metadata with some other
+#' # add information with some other
 #' # `info_*()` functions and then
 #' # `incorporate()` the snippets into
-#' # the metadata text
-#' metadata <- 
+#' # the info text
+#' informant <- 
 #'   create_informant(
 #'     read_fn = ~test_table,
 #'     tbl_name = "test_table"
@@ -377,9 +380,8 @@ info_section <- function(x,
 #'   ) %>%
 #'   incorporate()
 #' 
-#' # We can print the `metadata`
-#' # object to see the metadata report
-#' # metadata
+#' # We can print the `informant` object
+#' # to see the information report
 #' 
 #' # Let's modify `test_table` to give
 #' # it more rows and an extra column
@@ -389,8 +391,9 @@ info_section <- function(x,
 #' 
 #' # Using `incorporate()` will cause
 #' # the snippets to be reprocessed, and,
-#' # the strings to be updated
-#' # metadata %>% incorporate()
+#' # the info text to be updated
+#' informant <-
+#'   informant %>% incorporate()
 #' 
 #' @export
 info_snippet <- function(x,

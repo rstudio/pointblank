@@ -24,7 +24,7 @@ reference:
 
   - title: Validation, Expectation, and Test Functions
     desc: >
-      Validation steps are either used with an **agent** object or, more simply,
+      Validation steps are either used with an *agent* object or, more simply,
       just with the table of interest. When used with an *agent*, each step
       function called works to build up a validation plan (which is executed
       with the `interrogate()` function). If used directly on data (that is, no
@@ -64,21 +64,22 @@ reference:
     - col_exists
     - col_schema_match
     
-  - title: Metadata Building Functions
+  - title: Information Functions
     desc: >
-      We can progressively add metadata to a metadata object by using the
-      collection of `meta_*()` functions. We can add more table-based properties
-      with the `meta_table()`, details about the nature of each column with the
-      `meta_columns()` function, and add sections of our own choosing (and the
-      properties that make sense for those sections) with the `meta_section()`
-      function. Snippets of information gleaned from the target table by using
-      the `meta_snippet()` function. These bits of information can be
-      incorporated in text defined by the other `meta_*()` functions.
+      We can progressively add information to an *informant* object by using the
+      collection of `info_*()` functions. We can add more table-based properties
+      with the `info_tabular()` function, details about the nature of each
+      column with the `info_columns()` function, and add sections of our own
+      choosing (and the info that make sense for those sections) with the
+      `info_section()` function. Snippets of information can be gleaned from the
+      target table by using the `info_snippet()` function. These bits of
+      information can be incorporated in text defined by the other `info_*()`
+      functions via `{ }`.
     contents:
-    - meta_table
-    - meta_columns
-    - meta_section
-    - meta_snippet
+    - info_tabular
+    - info_columns
+    - info_section
+    - info_snippet
     
   - title: Emailing
     desc: >
@@ -95,28 +96,27 @@ reference:
     
   - title: "Agent: Interrogate and Report"
     desc: >
-      If we have an **agent** object that has a plan (i.e., validation steps),
+      If we have an *agent* object that has a plan (i.e., validation steps),
       the `interrogate()` function instructs the *agent* to interrogate the
-      `tbl` data. The agent will go to work and also perform side-effect 
-      functions at the step level and upon completion (if those are functions
-      are defined). After interrogation, we can get a report through printing,
-      however, we can take advantage of more options by using the
-      `get_agent_report()` function. 
+      target table. The agent will go to work and also perform specified
+      side-effect functions at the step level and upon completion (if those are
+      functions are defined). After interrogation, we can get a report through
+      printing, however, we can take advantage of more options by using the
+      `get_agent_report()` function.
     contents:
     - interrogate
     - get_agent_report
     
   - title: "Metadata: Incorporate and Report"
     desc: >
-      If we have an **metadata** object that has been loaded with information
-      from using the `meta_*()` functions, the `incorporate()` function works
-      to recalculate snippets and integrate those into the text. After
-      incorporation of the new data into the metadata elements, we can get a
-      metadata report through printing, or, by using `get_metadata_report()`
-      function.
+      If we have an *informant* object that has been loaded with information
+      from using the `info_*()` functions, the `incorporate()` function works
+      to regenerate snippets and integrate those into the info text. After
+      refreshing the table information, we can get an information report through
+      printing, or, by using `get_informant_report()` function.
     contents:
     - incorporate
-    - get_metadata_report
+    - get_informant_report
     
   - title: Post-interrogation
     desc: >

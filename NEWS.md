@@ -24,7 +24,7 @@
 
 * Added the Portuguese (`"pt"`, Brazil) and Chinese (`"zh"`, China mainland) translations.
 
-* Added a locale option for reporting; the locale will match the language (using the base locale) unless a different locale is specified. The locale is used to format numeric values according to the locale's rules.
+* Added a locale option for reporting; the locale will match the language (using the base locale) unless a different locale is specified. The locale is used to format numeric values according to the locale's rules. This also applies to the reporting offered by the `scan_data()` function.
 
 ## Breaking changes
 
@@ -34,11 +34,15 @@
 
 * Improved appearance of the agent report: (1) more tooltips, (2) tooltips are much improved: they animate, look great, and are snappier than the previous ones, (3) SVGs now used as symbols for the validation steps, (4) less confusing glyphs used in the `TBL` column, (5) agent label can be expressed as Markdown and looks nicer in the report, (6) table type (and name, if supplied as `tbl_name`) is shown in the header, (7) validation threshold levels also shown in the table header, (8) interrogation starting/ending timestamps shown (along with duration) in the table footer, (9) the table font has been changed, and (10) adjustments to table borders and cell shading were made for better readability.
 
+* The `get_agent_report()` function now has `lang` and `locale` arguments to override any of those values set prior (e.g., in `create_agent()`). This allows for the reporting language to be changed without the need to re-run everything from scratch.
+
 * Refactored a large portion of the code that produces the agent report to increase rendering speed.
 
 * Improved printing of errors/warnings (in the tooltips of the `EVAL` column in the agent report) thanks to implementation of HTML escaping.
 
 * The small version of the agent report (perfect for emailing) now has improved formatting and better optimization of components.
+
+
 
 # pointblank 0.5.2
 

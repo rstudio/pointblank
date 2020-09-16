@@ -26,9 +26,9 @@ to build the metadata content for that section.
 }
 \examples{
 # Create a pointblank `metadata`
-# object with the `create_metadata()` and
+# object with the `create_informant()` and
 # the `small_table` dataset
-metadata <- create_metadata(small_table)
+metadata <- create_informant(small_table)
 
 # The `metadata` object has the 'table'
 # and 'columns' sections; we can create

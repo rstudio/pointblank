@@ -54,12 +54,12 @@ designation, like "es" for Spanish (Spain, same as \code{"es_ES"}).}
 A \code{ptblank_informant} object.
 }
 \description{
-The \code{create_metadata()} function creates a \emph{metadata} object, which is used
+The \code{create_informant()} function creates a \emph{metadata} object, which is used
 in a \emph{metadata management} workflow. The overall aim of this workflow is to
 record, collect, and generate useful information on data tables. We can
 supply as many metadata parameters that are useful for describing a
 particular data table. The \emph{metadata} object created by the
-\code{create_metadata()} function takes metadeta-focused functions (the \verb{meta_*()}
+\code{create_informant()} function takes metadeta-focused functions (the \verb{meta_*()}
 series of functions).
 }
 \examples{
@@ -71,10 +71,10 @@ series of functions).
 small_table
 
 # We create a pointblank `metadata`
-# object with `create_metadata()`;
+# object with `create_informant()`;
 # let's use that function with the
 # `small_table` dataset
-metadata <- create_metadata(small_table)
+metadata <- create_informant(small_table)
 
 # This function creates some metadata
 # without any extra help by profiling

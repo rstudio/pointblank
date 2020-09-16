@@ -23,7 +23,7 @@ default; setting to \code{FALSE} replaces any existing text for a property.}
 A \code{ptblank_informant} object.
 }
 \description{
-Upon creation of a metadata object (with the \code{\link[=create_metadata]{create_metadata()}} function),
+Upon creation of a metadata object (with the \code{\link[=create_informant]{create_informant()}} function),
 there are two sections containing properties: (1) 'table' and (2) 'columns'.
 The 'columns' section is initialized with the table's column names and their
 types (as \verb{_type}). Beyond that, it is useful to provide details about the
@@ -34,9 +34,9 @@ as additional metadata for the column or columns.
 }
 \examples{
 # Create a pointblank `metadata`
-# object with the `create_metadata()` and
+# object with the `create_informant()` and
 # the `small_table` dataset
-metadata <- create_metadata(small_table)
+metadata <- create_informant(small_table)
 
 # The `metadata` object has the 'table'
 # and 'columns' sections; we can add more

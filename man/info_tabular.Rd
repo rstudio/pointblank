@@ -15,7 +15,7 @@ info_tabular(metadata, ...)
 A \code{ptblank_informant} object.
 }
 \description{
-When a metadata object is created with the \code{\link[=create_metadata]{create_metadata()}} function, it
+When a metadata object is created with the \code{\link[=create_informant]{create_informant()}} function, it
 has two starter sections: (1) 'table' and (2) 'columns'. We can further The
 'table' section should contain a few properties upon creation, such as the
 supplied table name (\code{name}) and table dimensions (as \verb{_columns} and
@@ -26,9 +26,9 @@ makes sense for describing the table as a whole.
 }
 \examples{
 # Create a pointblank `metadata`
-# object with the `create_metadata()` and
+# object with the `create_informant()` and
 # the `small_table` dataset
-metadata <- create_metadata(small_table)
+metadata <- create_informant(small_table)
 
 # The `metadata` object has the 'table'
 # and 'columns' sections; we can add more

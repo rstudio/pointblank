@@ -155,9 +155,9 @@
 <li><p><strong>pointblank</strong> is now compatible with Spark DataFrames through the <strong>sparklyr</strong> package. Simply use a <code>tbl_spark</code> object when specifying the target table in <code><a href="../reference/create_agent.html">create_agent()</a></code>, <code><a href="../reference/set_tbl.html">set_tbl()</a></code>, or <code><a href="../reference/scan_data.html">scan_data()</a></code>.</p></li>
 </ul>
 </div>
-<div id="minor-improvements-and-bug-fixes" class="section level2">
+<div id="minor-improvements-and-bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-improvements-and-bug-fixes" class="anchor"></a>Minor improvements and bug fixes</h2>
+<a href="#minor-improvements-and-bug-fixes-1" class="anchor"></a>Minor improvements and bug fixes</h2>
 <ul>
 <li><p>An issue with showing the agent report table in the email message body via the <code><a href="../reference/email_blast.html">email_blast()</a></code> function has been resolved.</p></li>
 <li><p>Resolved issue with using literal character values in comparison-based validation functions (e.g., <code><a href="../reference/col_vals_between.html">col_vals_between()</a></code>, <code><a href="../reference/col_vals_gt.html">col_vals_gt()</a></code>, etc.).</p></li>
@@ -181,9 +181,9 @@
 <li><p>A <code>knit.print()</code> method was added to facilitate the printing of the agent report table within an R Markdown code chunk.</p></li>
 </ul>
 </div>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>The default behavior of using validation step functions (e.g., <code><a href="../reference/col_vals_lt.html">col_vals_lt()</a></code>) directly on data tables has been changed. Before, a single test unit failure would trigger a warning. Now, a single test unit failing results in an error. Going back to the earlier behavior now requires the use of <code>actions = warn_on_fail()</code> (a new helper function, which has a default <code>warn_at</code> threshold value of <code>1</code>) with each invocation of a validation step function. The <code><a href="../reference/action_levels.html">stop_on_fail()</a></code> helper function is also new in this release, and has a <code>stop_at</code> threshold parameter, also with a default of <code>1</code>.</li>
 </ul>
@@ -210,9 +210,9 @@
 <li><p>The package <code>README</code> now contains better graphics, some reworked examples, and a new section on the package’s design goals (with a listing of other <strong>R</strong> packages that also focus on table validation).</p></li>
 </ul>
 </div>
-<div id="minor-improvements-and-bug-fixes-1" class="section level2">
+<div id="minor-improvements-and-bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-improvements-and-bug-fixes-1" class="anchor"></a>Minor improvements and bug fixes</h2>
+<a href="#minor-improvements-and-bug-fixes-2" class="anchor"></a>Minor improvements and bug fixes</h2>
 <ul>
 <li><p>Rewrote the internal <code>stock_stoppage()</code> and <code>stock_warning()</code> functions so that the generated error and warning messages match whether validation functions are used directly on data or <em>expectation</em> functions are being used.</p></li>
 <li><p>Console status messages when performing an interrogation now only appear in an interactive session. They will no longer appear during R Markdown rendering nor during execution of unattended scripts.</p></li>
@@ -245,9 +245,9 @@
 <a href="#pointblank-030" class="anchor"></a>pointblank 0.3.0<small> 2020-01-10 </small>
 </h1>
 <p>The pointblank package has been changed significantly from the previous version in favor of consistency and simplicity, better reporting, and increased power. The internals have been extensively refactored and the API has accordingly gone through revisions.</p>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking Changes</h2>
 <ul>
 <li><p>The <code>focus_on()</code> function has been removed in favor of directly using a data object. This means that a single use of <code><a href="../reference/create_agent.html">create_agent()</a></code> can now only work on a single table at a time (<code><a href="../reference/create_agent.html">create_agent()</a></code> now has a <code>tbl</code> argument). Also, the input <code>tbl</code> can be a <code>data.frame</code>, a <code>tbl_df</code>, or a <code>tbl_dbi</code> object.</p></li>
 <li><p>The <code>preconditions</code> argument has changed and it can now be used to temporarily transform the table (i.e., transforming for a particular validation step). Previously, this option could only filter the input table but now it’s possible to do useful things like joining in a table, adding columns, filtering rows, etc. The <code>preconditions</code> args now accepts a list of expressions that manipulate the table data.</p></li>

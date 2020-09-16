@@ -36,8 +36,10 @@ test_table <-
   dplyr::bind_rows(test_table, test_table) %>%
   dplyr::mutate(h = a + c)
 
-informant %>% incorporate()
+informant <-
+  informant %>% incorporate()
 
+get_informant_report(informant = informant)
 
-yaml_write(metadata = informant, filename = "informant-test.yml")
+yaml_write(informant = informant, filename = "informant-test.yml")
 

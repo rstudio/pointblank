@@ -167,7 +167,6 @@ reference:
     - agent_yaml_interrogate
     - agent_yaml_string
     - agent_yaml_show_exprs
-    - get_metadata_report
     
   - title: Datasets
     contents:

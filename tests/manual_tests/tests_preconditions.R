@@ -4,7 +4,13 @@ library(tidyverse)
 al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 
 agent <-
-  create_agent(tbl = small_table, actions = al, reporting_lang = "it") %>%
+  create_agent(
+    tbl = small_table,
+    tbl_name = "small_table",
+    label = "Tests of Preconditions",
+    actions = al,
+    lang = "it"
+  ) %>%
   col_vals_gt(vars(g), 100, preconditions = ~ . %>% dplyr::mutate(g = a + 95)) %>%
   col_vals_lt(vars(c), vars(d), preconditions = ~ . %>% dplyr::mutate(d = d - 200)) %>%
   col_vals_in_set(vars(f), c("low", "mid", "high", "higher")) %>%
@@ -31,7 +37,12 @@ report_all
 report_severe <- get_agent_report(agent, arrange_by = "severity")
 report_severe
 
-report_severe_trunc <- get_agent_report(agent, arrange_by = "severity", keep = "fail_states")
+report_severe_trunc <- 
+  get_agent_report(
+    agent,
+    arrange_by = "severity",
+    keep = "fail_states"
+  )
 report_severe_trunc
 
 extracts <- agent %>% get_data_extracts()

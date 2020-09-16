@@ -7,7 +7,7 @@ agent <-
     tbl = small_table,
     read_fn = ~ small_table,
     actions = al,
-    reporting_lang = "de"
+    lang = "de"
   ) %>%
   col_vals_in_set(
     vars(f), set = c("low", "mid", "high"),
@@ -50,7 +50,7 @@ agent <-
 
 agent_yaml_string(agent = agent)
 
-agent_yaml_write(agent, filename = "test.yaml")
+yaml_write(agent = agent, filename = "test.yaml")
 
 agent_yaml_string(path = "test.yaml")
 
@@ -58,7 +58,6 @@ agent_yaml_show_exprs(path = "test.yaml")
 
 agent_plan <- agent_yaml_read(path = "test.yaml")
 agent_plan
-
 
 agent_intel <- agent_yaml_interrogate(path = "test.yaml")
 agent_intel

@@ -4,10 +4,10 @@
 \alias{info_section}
 \title{Add metadata that focuses on some key aspect of the data table}
 \usage{
-info_section(metadata, section_name, ...)
+info_section(x, section_name, ...)
 }
 \arguments{
-\item{metadata}{A metadata object of class \code{ptblank_informant}.}
+\item{x}{An informant object of class \code{ptblank_informant}.}
 
 \item{section_name}{The name of the section for which this metadata pertains.}
 
@@ -25,40 +25,40 @@ of named arguments (in the form \code{property_name = "Description of property."
 to build the metadata content for that section.
 }
 \examples{
-# Create a pointblank `metadata`
-# object with the `create_informant()` and
-# the `small_table` dataset
-metadata <- create_informant(small_table)
+# Create a pointblank `informant`
+# object with `create_informant()`
+# and the `small_table` dataset
+informant <- create_informant(small_table)
 
 # The `metadata` object has the 'table'
 # and 'columns' sections; we can create
 # entirely different sections with their
 # own properties using `meta_section()`
-metadata <-
-  metadata \%>\%
-  meta_section(
+informant <-
+  informant \%>\%
+  info_section(
     section_name = "notes",
     creation = "Dataset generated on (2020-01-15).",
     usage = "`small_table \%>\% dplyr::glimpse()`"
   )
 
-# Upon printing the `metadata` object, we see
+# Upon printing the `informant` object, we see
 # the addition of the 'notes' section and its
 # own metadata
 
-# The `metadata` object can be written to
+# The `informant` object can be written to
 # a YAML file with the `yaml_write()`
-# function; then, metadata properties can
+# function; then, information can
 # be directly edited or modified
 # yaml_write(
-#   metadata = metadata,
-#   filename = "metadata.yml"
+#   informant = informant,
+#   filename = "informant.yml"
 # )
 
 # The YAML file can then be read back
-# into a metadata object with the
+# into an informant object with the
 # `meta_yaml_read()` function
-# metadata <-
-#   meta_yaml_read(path = "metadata.yml")
+# informant <-
+#   meta_yaml_read(path = "informant.yml")
 
 }

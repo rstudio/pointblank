@@ -4,10 +4,10 @@
 \alias{info_tabular}
 \title{Add metadata that focuses on aspects of the data table as a whole}
 \usage{
-info_tabular(metadata, ...)
+info_tabular(x, ...)
 }
 \arguments{
-\item{metadata}{A metadata object of class \code{ptblank_informant}.}
+\item{x}{An informant object of class \code{ptblank_informant}.}
 
 \item{...}{Metadata parameters as a series of named arguments.}
 }
@@ -25,16 +25,16 @@ function. By providing a series of named arguments (in the form
 makes sense for describing the table as a whole.
 }
 \examples{
-# Create a pointblank `metadata`
-# object with the `create_informant()` and
-# the `small_table` dataset
-metadata <- create_informant(small_table)
+# Create a pointblank `informant`
+# object with `create_informant()`
+# and the `small_table` dataset
+informant <- create_informant(small_table)
 
-# The `metadata` object has the 'table'
+# The `informant` object has the 'table'
 # and 'columns' sections; we can add more
 # properties to the 'table' section
-metadata <-
-  metadata \%>\%
+informant <-
+  informant \%>\%
   info_tabular(
     row_definition = "A row has randomized values.",
     source = c(
@@ -43,25 +43,25 @@ metadata <-
      )
    )
 
-# Upon printing the `metadata` object,
+# Upon printing the `informant` object,
 # we see the additions made to the 'table'
 # section (before it wasn't visible at all
-# since the properties where using in the
+# since the properties were being used in the
 # report header)
 
-# The `metadata` object can be written to
+# The `informant` object can be written to
 # a YAML file with the `yaml_write()`
-# function; then, metadata properties can
+# function; then information can
 # be directly edited or modified
 # yaml_write(
-#   metadata = metadata,
-#   filename = "metadata.yml"
+#   informant = informant,
+#   filename = "informant.yml"
 # )
 
 # The YAML file can then be read back
 # into a metadata object with the
 # `meta_yaml_read()` function
 # metadata <-
-#   meta_yaml_read(path = "metadata.yml")
+#   meta_yaml_read(path = "informant.yml")
 
 }

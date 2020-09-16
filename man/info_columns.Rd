@@ -4,10 +4,10 @@
 \alias{info_columns}
 \title{Add metadata that focuses on aspects of a data table's columns}
 \usage{
-info_columns(metadata, columns, ..., .add = TRUE)
+info_columns(x, columns, ..., .add = TRUE)
 }
 \arguments{
-\item{metadata}{A metadata object of class \code{ptblank_informant}.}
+\item{x}{An informant object of class \code{ptblank_informant}.}
 
 \item{columns}{The column or set of columns to focus on. Can be defined as a
 column name in quotes (e.g., \code{"<column_name>"}), one or more column names
@@ -33,17 +33,17 @@ arguments (in the form \code{property_name = "Description of property."}) serves
 as additional metadata for the column or columns.
 }
 \examples{
-# Create a pointblank `metadata`
-# object with the `create_informant()` and
-# the `small_table` dataset
-metadata <- create_informant(small_table)
+# Create a pointblank `informant`
+# object with `create_informant()`
+# and the `small_table` dataset
+informant <- create_informant(small_table)
 
-# The `metadata` object has the 'table'
+# The `informant` object has the 'table'
 # and 'columns' sections; we can add more
 # properties to individual columns in
 # the 'columns' section
-metadata <-
-  metadata \%>\%
+informant <-
+  informant \%>\%
   info_columns(
     columns = vars(a),
     info = "In the range of 1 to 10. (SIMPLE)"
@@ -57,23 +57,22 @@ metadata <-
     info = "The date part of `date_time`. (CALC)"
   )
 
-# Upon printing the `metadata` object, we see
+# Upon printing the `informant` object, we see
 # the additions made to the 'columns' section
-# metadata
 
-# The `metadata` object can be written to
+# The `informant` object can be written to
 # a YAML file with the `yaml_write()`
-# function; then, metadata properties can
+# function; then, information can
 # be directly edited or modified
 # yaml_write(
-#   metadata = metadata,
+#   informant = informant,
 #   filename = "metadata.yml"
 # )
 
 # The YAML file can then be read back
-# into a metadata object with the
+# into an informant object with the
 # `meta_yaml_read()` function
-# metadata <-
-#   meta_yaml_read(path = "metadata.yml")
+# informant <-
+#   meta_yaml_read(path = "informant.yml")
 
 }

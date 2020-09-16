@@ -4,10 +4,10 @@
 \alias{info_snippet}
 \title{Generate a useful text 'snippet' from the target table}
 \usage{
-info_snippet(metadata, snippet_name, fn)
+info_snippet(x, snippet_name, fn)
 }
 \arguments{
-\item{metadata}{A metadata object of class \code{ptblank_informant}.}
+\item{x}{An informant object of class \code{ptblank_informant}.}
 
 \item{snippet_name}{The name for snippet, which is used for interpolating the
 snippet itself into metadata.}

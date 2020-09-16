@@ -6,7 +6,7 @@
 #' added via the use of the `meta_*()` functions or addition of metadata through
 #' direct editing of a **pointblank** YAML file.
 #' 
-#' @param metadata A metadata object of class `ptblank_metadata`.
+#' @param metadata A metadata object of class `ptblank_informant`.
 #' 
 #' @return A **gt** table object.
 #' 

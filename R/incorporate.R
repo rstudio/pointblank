@@ -9,9 +9,9 @@
 #' metadata text, etc.) and we can print the *metadata* object or use the
 #' [get_metadata_report()] function to see the metadata report.
 #' 
-#' @param metadata A metadata object of class `ptblank_metadata`.
+#' @param metadata A metadata object of class `ptblank_informant`.
 #' 
-#' @return A `ptblank_metadata` object.
+#' @return A `ptblank_informant` object.
 #' 
 #' @examples 
 #' # Take the `small_table` and

@@ -131,9 +131,9 @@ meta_yaml_read <- function(path) {
       metadata = y
     )
   
-  # Assign the class attribute value `ptblank_metadata` to
+  # Assign the class attribute value `ptblank_informant` to
   # the `metadata` object
-  attr(metadata, "class") <- "ptblank_metadata"
+  attr(metadata, "class") <- "ptblank_informant"
   
   metadata
 }

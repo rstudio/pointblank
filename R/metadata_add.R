@@ -9,10 +9,10 @@
 #' `property_name = "Description of property."`), we can add more metadata that
 #' makes sense for describing the table as a whole.
 #' 
-#' @param metadata A metadata object of class `ptblank_metadata`.
+#' @param metadata A metadata object of class `ptblank_informant`.
 #' @param ... Metadata parameters as a series of named arguments.
 #' 
-#' @return A `ptblank_metadata` object.
+#' @return A `ptblank_informant` object.
 #' 
 #' @examples 
 #' # Create a pointblank `metadata`
@@ -56,8 +56,8 @@
 #' #   meta_yaml_read(path = "metadata.yml")
 #'
 #' @export
-meta_table <- function(metadata,
-                       ...) {
+info_tabular <- function(metadata,
+                         ...) {
   
   metadata_items <- list(...)
   
@@ -99,7 +99,7 @@ meta_table <- function(metadata,
 #' arguments (in the form `property_name = "Description of property."`) serves
 #' as additional metadata for the column or columns.
 #' 
-#' @param metadata A metadata object of class `ptblank_metadata`.
+#' @param metadata A metadata object of class `ptblank_informant`.
 #' @param columns The column or set of columns to focus on. Can be defined as a
 #'   column name in quotes (e.g., `"<column_name>"`), one or more column names
 #'   in `vars()` (e.g., `vars(<column_name>)`), or with a select helper (e.g.,
@@ -108,7 +108,7 @@ meta_table <- function(metadata,
 #' @param .add Should new text be added to existing text? This is `TRUE` by
 #'   default; setting to `FALSE` replaces any existing text for a property.
 #' 
-#' @return A `ptblank_metadata` object.
+#' @return A `ptblank_informant` object.
 #' 
 #' @examples 
 #' # Create a pointblank `metadata`
@@ -155,7 +155,7 @@ meta_table <- function(metadata,
 #' #   meta_yaml_read(path = "metadata.yml")
 #'
 #' @export
-meta_columns <- function(metadata,
+info_columns <- function(metadata,
                          columns,
                          ...,
                          .add = TRUE) {
@@ -220,11 +220,11 @@ meta_columns <- function(metadata,
 #' of named arguments (in the form `property_name = "Description of property."`)
 #' to build the metadata content for that section.
 #' 
-#' @param metadata A metadata object of class `ptblank_metadata`.
+#' @param metadata A metadata object of class `ptblank_informant`.
 #' @param section_name The name of the section for which this metadata pertains.
 #' @param ... Metadata parameters as a series of named arguments.
 #' 
-#' @return A `ptblank_metadata` object.
+#' @return A `ptblank_informant` object.
 #' 
 #' @examples 
 #' # Create a pointblank `metadata`
@@ -264,7 +264,7 @@ meta_columns <- function(metadata,
 #' #   meta_yaml_read(path = "metadata.yml")
 #'
 #' @export
-meta_section <- function(metadata,
+info_section <- function(metadata,
                          section_name,
                          ...) {
   
@@ -323,12 +323,12 @@ meta_section <- function(metadata,
 #' defined through the `meta_*()` functions. Just use curly braces with the
 #' `snippet_name` inside (e.g., `"This column has {n_cat} categories."`).
 #' 
-#' @param metadata A metadata object of class `ptblank_metadata`.
+#' @param metadata A metadata object of class `ptblank_informant`.
 #' @param snippet_name The name for snippet, which is used for interpolating the
 #'   snippet itself into metadata.
 #' @param fn A function that obtains a snippet of data from the target table.
 #' 
-#' @return A `ptblank_metadata` object.
+#' @return A `ptblank_informant` object.
 #' 
 #' @examples 
 #' # Take the `small_table` and
@@ -389,7 +389,7 @@ meta_section <- function(metadata,
 #' # metadata %>% incorporate()
 #' 
 #' @export
-meta_snippet <- function(metadata,
+info_snippet <- function(metadata,
                          snippet_name,
                          fn) {
   

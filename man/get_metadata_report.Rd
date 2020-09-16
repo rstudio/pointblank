@@ -7,7 +7,7 @@
 get_metadata_report(metadata)
 }
 \arguments{
-\item{metadata}{A metadata object of class \code{ptblank_metadata}.}
+\item{metadata}{A metadata object of class \code{ptblank_informant}.}
 }
 \value{
 A \strong{gt} table object.

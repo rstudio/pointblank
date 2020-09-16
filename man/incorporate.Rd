@@ -7,10 +7,10 @@
 incorporate(metadata)
 }
 \arguments{
-\item{metadata}{A metadata object of class \code{ptblank_metadata}.}
+\item{metadata}{A metadata object of class \code{ptblank_informant}.}
 }
 \value{
-A \code{ptblank_metadata} object.
+A \code{ptblank_informant} object.
 }
 \description{
 When the \emph{metadata} object has a number of snippets available (by using

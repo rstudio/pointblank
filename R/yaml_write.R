@@ -18,7 +18,7 @@
 #' *agent*).
 #' 
 #' @param agent An *agent* object of class `ptblank_agent`.
-#' @param metadata A metadata object of class `ptblank_metadata`.
+#' @param metadata A metadata object of class `ptblank_informant`.
 #' @param filename The name of the YAML file to create on disk. It is
 #'   recommended that either the `.yaml` or `.yml` extension be used for this
 #'   file.

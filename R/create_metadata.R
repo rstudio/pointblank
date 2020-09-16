@@ -37,7 +37,7 @@
 #'   (France); more simply, this can be a language identifier without a country
 #'   designation, like "es" for Spanish (Spain, same as `"es_ES"`).
 #'   
-#' @return A `ptblank_metadata` object.
+#' @return A `ptblank_informant` object.
 #' 
 #' @examples 
 #' # Let's walk through how we can
@@ -68,13 +68,13 @@
 #' class(report)
 #' 
 #' @export
-create_metadata <- function(tbl = NULL,
-                            read_fn = NULL,
-                            agent = NULL,
-                            tbl_name = NULL,
-                            label = NULL,
-                            lang = NULL,
-                            locale = NULL) {
+create_informant <- function(tbl = NULL,
+                             read_fn = NULL,
+                             agent = NULL,
+                             tbl_name = NULL,
+                             label = NULL,
+                             lang = NULL,
+                             locale = NULL) {
 
   read_fn_given <- !is.null(read_fn)
   
@@ -199,9 +199,9 @@ create_metadata <- function(tbl = NULL,
       metadata = metadata_list
     )
   
-  # Assign the class attribute value `ptblank_metadata` to
+  # Assign the class attribute value `ptblank_informant` to
   # the `metadata` object
-  attr(metadata, "class") <- "ptblank_metadata"
+  attr(metadata, "class") <- "ptblank_informant"
   
   metadata
 }

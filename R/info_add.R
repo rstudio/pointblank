@@ -6,11 +6,11 @@
 #' supplied table name (`name`) and table dimensions (as `_columns` and
 #' `_rows`). We can add more table-based properties with the `info_tabular()`
 #' function. By providing a series of named arguments (in the form
-#' `property_name = "Description of property."`), we can add more information
-#' that makes sense for describing the table as a whole.
+#' `entry_name = "The information."`), we can add more information that makes
+#' sense for describing the table as a whole.
 #' 
 #' @param x An informant object of class `ptblank_informant`.
-#' @param ... Metadata parameters as a series of named arguments.
+#' @param ... Information entries as a series of named arguments.
 #' 
 #' @return A `ptblank_informant` object.
 #' 
@@ -98,7 +98,7 @@ info_tabular <- function(x,
 #' about the nature of each column and we can do that with the `info_columns()`
 #' function. A single column (or multiple columns) is targeted, and then a
 #' series of named arguments (in the form 
-#' `property_name = "Description of property."`) serves as additional
+#' `entry_name = "The information."`) serves as additional
 #' information for the column or columns.
 #' 
 #' @param x An informant object of class `ptblank_informant`.
@@ -106,7 +106,7 @@ info_tabular <- function(x,
 #'   column name in quotes (e.g., `"<column_name>"`), one or more column names
 #'   in `vars()` (e.g., `vars(<column_name>)`), or with a select helper (e.g.,
 #'   `starts_with("date")`).
-#' @param ... Metadata parameters as a series of named arguments.
+#' @param ... Information entries as a series of named arguments.
 #' @param .add Should new text be added to existing text? This is `TRUE` by
 #'   default; setting to `FALSE` replaces any existing text for a property.
 #' 
@@ -220,14 +220,13 @@ info_columns <- function(x,
 #' add/modify info text for specific sections, the `info_section()`
 #' makes it possible to add sections of our own choosing and the information
 #' that make sense for those sections. Define a `section_name` and provide a
-#' series of named arguments (in the form 
-#' `property_name = "Description of property."`) to build the informational
-#' content for that section.
+#' series of named arguments (in the form `entry_name = "The information."`) to
+#' build the informational content for that section.
 #' 
 #' @param x An informant object of class `ptblank_informant`.
 #' @param section_name The name of the section for which this information
 #'   pertains.
-#' @param ... Metadata parameters as a series of named arguments.
+#' @param ... Information entries as a series of named arguments.
 #' 
 #' @return A `ptblank_informant` object.
 #' 

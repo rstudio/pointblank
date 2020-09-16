@@ -1,4 +1,4 @@
-#' Write an agent and metadata to a **pointblank** YAML file
+#' Write an *agent* and *informant* to a **pointblank** YAML file
 #' 
 #' @description 
 #' With `yaml_write()` we can take an existing *agent* and write that *agent*'s
@@ -8,7 +8,7 @@
 #' ready to [interrogate()] the data. We can go a step further and perform an
 #' interrogation directly from the YAML file with the [agent_yaml_interrogate()]
 #' function. That returns an agent with intel (having already interrogated the
-#' target data table). A metadata object can also be written to YAML with
+#' target data table). An *informant* object can also be written to YAML with
 #' `yaml_write()`.
 #'
 #' One requirement for writing the *agent* to YAML is that we need to have

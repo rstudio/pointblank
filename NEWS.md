@@ -16,6 +16,16 @@
 
 * The *metadata* object can be written to **pointblank** YAML using the revised `yaml_write()` function. 
 
+## Translations and Locales
+
+* More text in the agent report is translated now.
+
+* Improved the Spanish (Spain) translation.
+
+* Added the Portuguese (Brazil) and Chinese (China mainland) translations.
+
+* Added a locale option for reporting; the locale will match the language (using the base locale) unless a different locale is specified. The locale is used to format numeric values according to the locale's rules. 
+
 # pointblank 0.5.2
 
 * Fixes a performance issue for validations on larger tables.

@@ -59,8 +59,8 @@ in a \emph{metadata management} workflow. The overall aim of this workflow is to
 record, collect, and generate useful information on data tables. We can
 supply as many metadata parameters that are useful for describing a
 particular data table. The \emph{metadata} object created by the
-\code{create_informant()} function takes metadeta-focused functions (the \verb{meta_*()}
-series of functions).
+\code{create_informant()} function takes metadeta-focused functions (the
+\verb{info_*()} series of functions).
 }
 \examples{
 # Let's walk through how we can

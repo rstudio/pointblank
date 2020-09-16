@@ -19,7 +19,7 @@ When a metadata object is created with the \code{\link[=create_informant]{create
 has two starter sections: (1) 'table' and (2) 'columns'. We can further The
 'table' section should contain a few properties upon creation, such as the
 supplied table name (\code{name}) and table dimensions (as \verb{_columns} and
-\verb{_rows}). We can add more table-based properties with the \code{meta_table()}
+\verb{_rows}). We can add more table-based properties with the \code{info_tabular()}
 function. By providing a series of named arguments (in the form
 \code{property_name = "Description of property."}), we can add more metadata that
 makes sense for describing the table as a whole.
@@ -35,7 +35,7 @@ metadata <- create_informant(small_table)
 # properties to the 'table' section
 metadata <-
   metadata \%>\%
-  meta_table(
+  info_tabular(
     row_definition = "A row has randomized values.",
     source = c(
       "- From the **pointblank** package",
@@ -48,7 +48,6 @@ metadata <-
 # section (before it wasn't visible at all
 # since the properties where using in the
 # report header)
-# metadata
 
 # The `metadata` object can be written to
 # a YAML file with the `yaml_write()`

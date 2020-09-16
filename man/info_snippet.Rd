@@ -19,12 +19,12 @@ A \code{ptblank_informant} object.
 }
 \description{
 Getting little snippets of information from a table goes hand-in-hand with
-mixing those bits of info with your table metadata. Call \code{meta_snippet()} to
+mixing those bits of info with your table metadata. Call \code{info_snippet()} to
 define a snippet and how you'll get that from the target table (it's with a
 function). So long as you know how to interact with a table and extract
 information, you can easily define snippets for a \emph{metadata} object. And once
 those snippets are defined, you can insert them into the property strings as
-defined through the \verb{meta_*()} functions. Just use curly braces with the
+defined through the \verb{info_*()} functions. Just use curly braces with the
 \code{snippet_name} inside (e.g., \code{"This column has {n_cat} categories."}).
 }
 \examples{
@@ -34,9 +34,9 @@ defined through the \verb{meta_*()} functions. Just use curly braces with the
 test_table <- small_table
 
 # Generate a metadata object, add
-# two snippets with `meta_snippet()`,
+# two snippets with `info_snippet()`,
 # add metadata with some other
-# `meta_*()` functions and then
+# `info_*()` functions and then
 # `incorporate()` the snippets into
 # the metadata text
 metadata <- 
@@ -44,27 +44,27 @@ metadata <-
     read_fn = ~test_table,
     tbl_name = "test_table"
   ) \%>\%
-  meta_snippet(
+  info_snippet(
     snippet_name = "row_count",
     fn = ~ . \%>\% nrow()
   ) \%>\%
-  meta_snippet(
+  info_snippet(
     snippet_name = "col_count",
     fn = ~ . \%>\% ncol()
   ) \%>\%
-  meta_columns(
+  info_columns(
     columns = vars(a),
     info = "In the range of 1 to 10. (SIMPLE)"
   ) \%>\%
-  meta_columns(
+  info_columns(
     columns = starts_with("date"),
     info = "Time-based values (e.g., `Sys.time()`)."
   ) \%>\%
-  meta_columns(
+  info_columns(
     columns = "date",
     info = "The date part of `date_time`. (CALC)"
   ) \%>\%
-  meta_section(
+  info_section(
     section_name = "rows",
     row_count = "There are {row_count} rows available."
   ) \%>\%

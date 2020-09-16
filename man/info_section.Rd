@@ -17,8 +17,8 @@ info_section(metadata, section_name, ...)
 A \code{ptblank_informant} object.
 }
 \description{
-While the \code{\link[=meta_table]{meta_table()}} and \code{\link[=meta_columns]{meta_columns()}} functions allow us to
-add/modify metadata properties for specific sections, the \code{meta_section()}
+While the \code{\link[=info_tabular]{info_tabular()}} and \code{\link[=info_columns]{info_columns()}} functions allow us to
+add/modify metadata properties for specific sections, the \code{info_section()}
 makes it possible to add sections of our own choosing and the properties that
 make sense for those sections. Define a \code{section_name} and provide a series
 of named arguments (in the form \code{property_name = "Description of property."})

@@ -1,8 +1,14 @@
 # pointblank (unreleased)
 
-* Added the `create_metadata()` function to create a `ptblank_metadata` object (this function is similar to `create_agent()`).
+## Pointblank Metadata
 
-* Functions for facilitating entry of metadata elements were added. These are focused on describing columns, the table, and other fields.
+* The new metadata workflow is full of features that helps to describe tables and keep on top of changes to them.
+
+* Added the `create_metadata()` function to create a `ptblank_metadata` object (this function is similar to `create_agent()`). It is meant to hold metadata for a target table, with reporting features for geared toward communication. 
+
+* Functions for facilitating entry of metadata elements were added (`meta_table()`, `meta_columns()`, and `meta_section()`). These are focused on describing columns, the table, and other fields.
+
+* If all that wasn't enough, this release adds `meta_snippet()` to round out the collection of `meta_functions()` for this workflow. Oh, and also the all-important `incorporate()` function. What? The idea is to have a method for acquiring important bits of data from the target table (`meta_snippet()`) and then using `incorporate()` to get those morsels of data and stitch them into the metadata strings (via `{ }`).
 
 * Added the `get_metadata_report()` function for printing the metadata to a **gt** table object.
 

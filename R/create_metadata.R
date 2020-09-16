@@ -5,8 +5,8 @@
 #' record, collect, and generate useful information on data tables. We can
 #' supply as many metadata parameters that are useful for describing a
 #' particular data table. The *metadata* object created by the
-#' `create_informant()` function takes metadeta-focused functions (the `meta_*()`
-#' series of functions).
+#' `create_informant()` function takes metadeta-focused functions (the
+#' `info_*()` series of functions).
 #'
 #' @param tbl The input table. This can be a data frame, a tibble, a `tbl_dbi`
 #'   object, or a `tbl_spark` object. Alternatively, a function can be used to

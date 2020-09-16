@@ -1,7 +1,7 @@
 #' Given a metadata object, update and incorporate table snippets
 #' 
 #' When the *metadata* object has a number of snippets available (by using
-#' [meta_snippet()]) and the strings to use them (by using the `meta_*()`
+#' [info_snippet()]) and the strings to use them (by using the `info_*()`
 #' functions and `{<snippet_name>}` in the text elements), the process of
 #' incorporating aspects of the table into the metadata text can occur by
 #' using the `incorporate()` function. After that, the metadata will fully
@@ -20,9 +20,9 @@
 #' test_table <- small_table
 #' 
 #' # Generate a metadata object, add
-#' # two snippets with `meta_snippet()`,
+#' # two snippets with `info_snippet()`,
 #' # add metadata with some other
-#' # `meta_*()` functions and then
+#' # `info_*()` functions and then
 #' # `incorporate()` the snippets into
 #' # the metadata text
 #' metadata <- 
@@ -30,27 +30,27 @@
 #'     read_fn = ~test_table,
 #'     tbl_name = "test_table"
 #'   ) %>%
-#'   meta_snippet(
+#'   info_snippet(
 #'     snippet_name = "row_count",
 #'     fn = ~ . %>% nrow()
 #'   ) %>%
-#'   meta_snippet(
+#'   info_snippet(
 #'     snippet_name = "col_count",
 #'     fn = ~ . %>% ncol()
 #'   ) %>%
-#'   meta_columns(
+#'   info_columns(
 #'     columns = vars(a),
 #'     info = "In the range of 1 to 10. (SIMPLE)"
 #'   ) %>%
-#'   meta_columns(
+#'   info_columns(
 #'     columns = starts_with("date"),
 #'     info = "Time-based values (e.g., `Sys.time()`)."
 #'   ) %>%
-#'   meta_columns(
+#'   info_columns(
 #'     columns = "date",
 #'     info = "The date part of `date_time`. (CALC)"
 #'   ) %>%
-#'   meta_section(
+#'   info_section(
 #'     section_name = "rows",
 #'     row_count = "There are {row_count} rows available."
 #'   ) %>%

@@ -4,7 +4,7 @@
 #' has two starter sections: (1) 'table' and (2) 'columns'. We can further The
 #' 'table' section should contain a few properties upon creation, such as the
 #' supplied table name (`name`) and table dimensions (as `_columns` and
-#' `_rows`). We can add more table-based properties with the `meta_table()`
+#' `_rows`). We can add more table-based properties with the `info_tabular()`
 #' function. By providing a series of named arguments (in the form
 #' `property_name = "Description of property."`), we can add more metadata that
 #' makes sense for describing the table as a whole.
@@ -25,7 +25,7 @@
 #' # properties to the 'table' section
 #' metadata <-
 #'   metadata %>%
-#'   meta_table(
+#'   info_tabular(
 #'     row_definition = "A row has randomized values.",
 #'     source = c(
 #'       "- From the **pointblank** package",
@@ -38,7 +38,6 @@
 #' # section (before it wasn't visible at all
 #' # since the properties where using in the
 #' # report header)
-#' # metadata
 #' 
 #' # The `metadata` object can be written to
 #' # a YAML file with the `yaml_write()`
@@ -94,7 +93,7 @@ info_tabular <- function(metadata,
 #' there are two sections containing properties: (1) 'table' and (2) 'columns'.
 #' The 'columns' section is initialized with the table's column names and their
 #' types (as `_type`). Beyond that, it is useful to provide details about the
-#' nature of each column and we can do that with the `meta_columns()` function.
+#' nature of each column and we can do that with the `info_columns()` function.
 #' A single column (or multiple columns) is targeted, and then a series of named
 #' arguments (in the form `property_name = "Description of property."`) serves
 #' as additional metadata for the column or columns.
@@ -122,15 +121,15 @@ info_tabular <- function(metadata,
 #' # the 'columns' section
 #' metadata <-
 #'   metadata %>%
-#'   meta_columns(
+#'   info_columns(
 #'     columns = vars(a),
 #'     info = "In the range of 1 to 10. (SIMPLE)"
 #'   ) %>%
-#'   meta_columns(
+#'   info_columns(
 #'     columns = starts_with("date"),
 #'     info = "Time-based values (e.g., `Sys.time()`)."
 #'   ) %>%
-#'   meta_columns(
+#'   info_columns(
 #'     columns = "date",
 #'     info = "The date part of `date_time`. (CALC)"
 #'   )
@@ -213,8 +212,8 @@ info_columns <- function(metadata,
 
 #' Add metadata that focuses on some key aspect of the data table
 #' 
-#' While the [meta_table()] and [meta_columns()] functions allow us to
-#' add/modify metadata properties for specific sections, the `meta_section()`
+#' While the [info_tabular()] and [info_columns()] functions allow us to
+#' add/modify metadata properties for specific sections, the `info_section()`
 #' makes it possible to add sections of our own choosing and the properties that
 #' make sense for those sections. Define a `section_name` and provide a series
 #' of named arguments (in the form `property_name = "Description of property."`)
@@ -315,12 +314,12 @@ info_section <- function(metadata,
 #' Generate a useful text 'snippet' from the target table
 #' 
 #' Getting little snippets of information from a table goes hand-in-hand with
-#' mixing those bits of info with your table metadata. Call `meta_snippet()` to
+#' mixing those bits of info with your table metadata. Call `info_snippet()` to
 #' define a snippet and how you'll get that from the target table (it's with a
 #' function). So long as you know how to interact with a table and extract
 #' information, you can easily define snippets for a *metadata* object. And once
 #' those snippets are defined, you can insert them into the property strings as
-#' defined through the `meta_*()` functions. Just use curly braces with the
+#' defined through the `info_*()` functions. Just use curly braces with the
 #' `snippet_name` inside (e.g., `"This column has {n_cat} categories."`).
 #' 
 #' @param metadata A metadata object of class `ptblank_informant`.
@@ -337,9 +336,9 @@ info_section <- function(metadata,
 #' test_table <- small_table
 #' 
 #' # Generate a metadata object, add
-#' # two snippets with `meta_snippet()`,
+#' # two snippets with `info_snippet()`,
 #' # add metadata with some other
-#' # `meta_*()` functions and then
+#' # `info_*()` functions and then
 #' # `incorporate()` the snippets into
 #' # the metadata text
 #' metadata <- 
@@ -347,27 +346,27 @@ info_section <- function(metadata,
 #'     read_fn = ~test_table,
 #'     tbl_name = "test_table"
 #'   ) %>%
-#'   meta_snippet(
+#'   info_snippet(
 #'     snippet_name = "row_count",
 #'     fn = ~ . %>% nrow()
 #'   ) %>%
-#'   meta_snippet(
+#'   info_snippet(
 #'     snippet_name = "col_count",
 #'     fn = ~ . %>% ncol()
 #'   ) %>%
-#'   meta_columns(
+#'   info_columns(
 #'     columns = vars(a),
 #'     info = "In the range of 1 to 10. (SIMPLE)"
 #'   ) %>%
-#'   meta_columns(
+#'   info_columns(
 #'     columns = starts_with("date"),
 #'     info = "Time-based values (e.g., `Sys.time()`)."
 #'   ) %>%
-#'   meta_columns(
+#'   info_columns(
 #'     columns = "date",
 #'     info = "The date part of `date_time`. (CALC)"
 #'   ) %>%
-#'   meta_section(
+#'   info_section(
 #'     section_name = "rows",
 #'     row_count = "There are {row_count} rows available."
 #'   ) %>%

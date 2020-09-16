@@ -1,11 +1,11 @@
 #' Create a pointblank metadata object
 #'
-#' The `create_metadata()` function creates a *metadata* object, which is used
+#' The `create_informant()` function creates a *metadata* object, which is used
 #' in a *metadata management* workflow. The overall aim of this workflow is to
 #' record, collect, and generate useful information on data tables. We can
 #' supply as many metadata parameters that are useful for describing a
 #' particular data table. The *metadata* object created by the
-#' `create_metadata()` function takes metadeta-focused functions (the `meta_*()`
+#' `create_informant()` function takes metadeta-focused functions (the `meta_*()`
 #' series of functions).
 #'
 #' @param tbl The input table. This can be a data frame, a tibble, a `tbl_dbi`
@@ -48,10 +48,10 @@
 #' small_table
 #' 
 #' # We create a pointblank `metadata`
-#' # object with `create_metadata()`;
+#' # object with `create_informant()`;
 #' # let's use that function with the
 #' # `small_table` dataset
-#' metadata <- create_metadata(small_table)
+#' metadata <- create_informant(small_table)
 #' 
 #' # This function creates some metadata
 #' # without any extra help by profiling

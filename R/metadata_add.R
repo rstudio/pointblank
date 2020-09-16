@@ -1,6 +1,6 @@
 #' Add metadata that focuses on aspects of the data table as a whole
 #' 
-#' When a metadata object is created with the [create_metadata()] function, it
+#' When a metadata object is created with the [create_informant()] function, it
 #' has two starter sections: (1) 'table' and (2) 'columns'. We can further The
 #' 'table' section should contain a few properties upon creation, such as the
 #' supplied table name (`name`) and table dimensions (as `_columns` and
@@ -16,9 +16,9 @@
 #' 
 #' @examples 
 #' # Create a pointblank `metadata`
-#' # object with the `create_metadata()` and
+#' # object with the `create_informant()` and
 #' # the `small_table` dataset
-#' metadata <- create_metadata(small_table)
+#' metadata <- create_informant(small_table)
 #' 
 #' # The `metadata` object has the 'table'
 #' # and 'columns' sections; we can add more
@@ -90,7 +90,7 @@ info_tabular <- function(metadata,
 
 #' Add metadata that focuses on aspects of a data table's columns
 #' 
-#' Upon creation of a metadata object (with the [create_metadata()] function),
+#' Upon creation of a metadata object (with the [create_informant()] function),
 #' there are two sections containing properties: (1) 'table' and (2) 'columns'.
 #' The 'columns' section is initialized with the table's column names and their
 #' types (as `_type`). Beyond that, it is useful to provide details about the
@@ -112,9 +112,9 @@ info_tabular <- function(metadata,
 #' 
 #' @examples 
 #' # Create a pointblank `metadata`
-#' # object with the `create_metadata()` and
+#' # object with the `create_informant()` and
 #' # the `small_table` dataset
-#' metadata <- create_metadata(small_table)
+#' metadata <- create_informant(small_table)
 #' 
 #' # The `metadata` object has the 'table'
 #' # and 'columns' sections; we can add more
@@ -228,9 +228,9 @@ info_columns <- function(metadata,
 #' 
 #' @examples 
 #' # Create a pointblank `metadata`
-#' # object with the `create_metadata()` and
+#' # object with the `create_informant()` and
 #' # the `small_table` dataset
-#' metadata <- create_metadata(small_table)
+#' metadata <- create_informant(small_table)
 #' 
 #' # The `metadata` object has the 'table'
 #' # and 'columns' sections; we can create
@@ -343,7 +343,7 @@ info_section <- function(metadata,
 #' # `incorporate()` the snippets into
 #' # the metadata text
 #' metadata <- 
-#'   create_metadata(
+#'   create_informant(
 #'     read_fn = ~test_table,
 #'     tbl_name = "test_table"
 #'   ) %>%

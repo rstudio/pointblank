@@ -26,7 +26,7 @@
 #' # `incorporate()` the snippets into
 #' # the metadata text
 #' metadata <- 
-#'   create_metadata(
+#'   create_informant(
 #'     read_fn = ~test_table,
 #'     tbl_name = "test_table"
 #'   ) %>%

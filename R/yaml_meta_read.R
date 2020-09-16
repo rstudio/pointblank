@@ -10,10 +10,10 @@
 #' 
 #' @examples 
 #' # We create a pointblank `metadata`
-#' # object with `create_metadata()`;
+#' # object with `create_informant()`;
 #' # let's use that function with the
 #' # `small_table` dataset
-#' metadata <- create_metadata(small_table)
+#' metadata <- create_informant(small_table)
 #' 
 #' # A `metadata` object can be written
 #' # to a YAML file by using the

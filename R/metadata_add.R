@@ -9,22 +9,22 @@
 #' `property_name = "Description of property."`), we can add more metadata that
 #' makes sense for describing the table as a whole.
 #' 
-#' @param metadata A metadata object of class `ptblank_informant`.
+#' @param x An informant object of class `ptblank_informant`.
 #' @param ... Metadata parameters as a series of named arguments.
 #' 
 #' @return A `ptblank_informant` object.
 #' 
 #' @examples 
-#' # Create a pointblank `metadata`
-#' # object with the `create_informant()` and
-#' # the `small_table` dataset
-#' metadata <- create_informant(small_table)
+#' # Create a pointblank `informant`
+#' # object with `create_informant()`
+#' # and the `small_table` dataset
+#' informant <- create_informant(small_table)
 #' 
-#' # The `metadata` object has the 'table'
+#' # The `informant` object has the 'table'
 #' # and 'columns' sections; we can add more
 #' # properties to the 'table' section
-#' metadata <-
-#'   metadata %>%
+#' informant <-
+#'   informant %>%
 #'   info_tabular(
 #'     row_definition = "A row has randomized values.",
 #'     source = c(
@@ -33,32 +33,34 @@
 #'      )
 #'    )
 #' 
-#' # Upon printing the `metadata` object,
+#' # Upon printing the `informant` object,
 #' # we see the additions made to the 'table'
 #' # section (before it wasn't visible at all
-#' # since the properties where using in the
+#' # since the properties were being used in the
 #' # report header)
 #' 
-#' # The `metadata` object can be written to
+#' # The `informant` object can be written to
 #' # a YAML file with the `yaml_write()`
-#' # function; then, metadata properties can
+#' # function; then information can
 #' # be directly edited or modified
 #' # yaml_write(
-#' #   metadata = metadata,
-#' #   filename = "metadata.yml"
+#' #   informant = informant,
+#' #   filename = "informant.yml"
 #' # )
 #' 
 #' # The YAML file can then be read back
 #' # into a metadata object with the
 #' # `meta_yaml_read()` function
 #' # metadata <-
-#' #   meta_yaml_read(path = "metadata.yml")
+#' #   meta_yaml_read(path = "informant.yml")
 #'
 #' @export
-info_tabular <- function(metadata,
+info_tabular <- function(x,
                          ...) {
   
   metadata_items <- list(...)
+  
+  metadata <- x
   
   metadata_list <- metadata$metadata
   metadata_table <- metadata_list$table
@@ -98,7 +100,7 @@ info_tabular <- function(metadata,
 #' arguments (in the form `property_name = "Description of property."`) serves
 #' as additional metadata for the column or columns.
 #' 
-#' @param metadata A metadata object of class `ptblank_informant`.
+#' @param x An informant object of class `ptblank_informant`.
 #' @param columns The column or set of columns to focus on. Can be defined as a
 #'   column name in quotes (e.g., `"<column_name>"`), one or more column names
 #'   in `vars()` (e.g., `vars(<column_name>)`), or with a select helper (e.g.,
@@ -110,17 +112,17 @@ info_tabular <- function(metadata,
 #' @return A `ptblank_informant` object.
 #' 
 #' @examples 
-#' # Create a pointblank `metadata`
-#' # object with the `create_informant()` and
-#' # the `small_table` dataset
-#' metadata <- create_informant(small_table)
+#' # Create a pointblank `informant`
+#' # object with `create_informant()`
+#' # and the `small_table` dataset
+#' informant <- create_informant(small_table)
 #' 
-#' # The `metadata` object has the 'table'
+#' # The `informant` object has the 'table'
 #' # and 'columns' sections; we can add more
 #' # properties to individual columns in
 #' # the 'columns' section
-#' metadata <-
-#'   metadata %>%
+#' informant <-
+#'   informant %>%
 #'   info_columns(
 #'     columns = vars(a),
 #'     info = "In the range of 1 to 10. (SIMPLE)"
@@ -134,35 +136,36 @@ info_tabular <- function(metadata,
 #'     info = "The date part of `date_time`. (CALC)"
 #'   )
 #' 
-#' # Upon printing the `metadata` object, we see
+#' # Upon printing the `informant` object, we see
 #' # the additions made to the 'columns' section
-#' # metadata
 #' 
-#' # The `metadata` object can be written to
+#' # The `informant` object can be written to
 #' # a YAML file with the `yaml_write()`
-#' # function; then, metadata properties can
+#' # function; then, information can
 #' # be directly edited or modified
 #' # yaml_write(
-#' #   metadata = metadata,
+#' #   informant = informant,
 #' #   filename = "metadata.yml"
 #' # )
 #' 
 #' # The YAML file can then be read back
-#' # into a metadata object with the
+#' # into an informant object with the
 #' # `meta_yaml_read()` function
-#' # metadata <-
-#' #   meta_yaml_read(path = "metadata.yml")
+#' # informant <-
+#' #   meta_yaml_read(path = "informant.yml")
 #'
 #' @export
-info_columns <- function(metadata,
+info_columns <- function(x,
                          columns,
                          ...,
                          .add = TRUE) {
-  
+
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   
   metadata_items <- list(...)
+  
+  metadata <- x
   
   metadata_list <- metadata$metadata
   metadata_columns <- metadata_list$columns
@@ -219,55 +222,57 @@ info_columns <- function(metadata,
 #' of named arguments (in the form `property_name = "Description of property."`)
 #' to build the metadata content for that section.
 #' 
-#' @param metadata A metadata object of class `ptblank_informant`.
+#' @param x An informant object of class `ptblank_informant`.
 #' @param section_name The name of the section for which this metadata pertains.
 #' @param ... Metadata parameters as a series of named arguments.
 #' 
 #' @return A `ptblank_informant` object.
 #' 
 #' @examples 
-#' # Create a pointblank `metadata`
-#' # object with the `create_informant()` and
-#' # the `small_table` dataset
-#' metadata <- create_informant(small_table)
+#' # Create a pointblank `informant`
+#' # object with `create_informant()`
+#' # and the `small_table` dataset
+#' informant <- create_informant(small_table)
 #' 
 #' # The `metadata` object has the 'table'
 #' # and 'columns' sections; we can create
 #' # entirely different sections with their
 #' # own properties using `meta_section()`
-#' metadata <-
-#'   metadata %>%
-#'   meta_section(
+#' informant <-
+#'   informant %>%
+#'   info_section(
 #'     section_name = "notes",
 #'     creation = "Dataset generated on (2020-01-15).",
 #'     usage = "`small_table %>% dplyr::glimpse()`"
 #'   )
 #' 
-#' # Upon printing the `metadata` object, we see
+#' # Upon printing the `informant` object, we see
 #' # the addition of the 'notes' section and its
 #' # own metadata
 #' 
-#' # The `metadata` object can be written to
+#' # The `informant` object can be written to
 #' # a YAML file with the `yaml_write()`
-#' # function; then, metadata properties can
+#' # function; then, information can
 #' # be directly edited or modified
 #' # yaml_write(
-#' #   metadata = metadata,
-#' #   filename = "metadata.yml"
+#' #   informant = informant,
+#' #   filename = "informant.yml"
 #' # )
 #' 
 #' # The YAML file can then be read back
-#' # into a metadata object with the
+#' # into an informant object with the
 #' # `meta_yaml_read()` function
-#' # metadata <-
-#' #   meta_yaml_read(path = "metadata.yml")
+#' # informant <-
+#' #   meta_yaml_read(path = "informant.yml")
 #'
 #' @export
-info_section <- function(metadata,
+info_section <- function(x,
                          section_name,
                          ...) {
   
   metadata_items <- list(...)
+  
+  metadata <- x
   
   metadata_list <- metadata$metadata
   
@@ -322,7 +327,7 @@ info_section <- function(metadata,
 #' defined through the `info_*()` functions. Just use curly braces with the
 #' `snippet_name` inside (e.g., `"This column has {n_cat} categories."`).
 #' 
-#' @param metadata A metadata object of class `ptblank_informant`.
+#' @param x An informant object of class `ptblank_informant`.
 #' @param snippet_name The name for snippet, which is used for interpolating the
 #'   snippet itself into metadata.
 #' @param fn A function that obtains a snippet of data from the target table.
@@ -388,9 +393,11 @@ info_section <- function(metadata,
 #' # metadata %>% incorporate()
 #' 
 #' @export
-info_snippet <- function(metadata,
+info_snippet <- function(x,
                          snippet_name,
                          fn) {
+  
+  metadata <- x
   
   if (!(snippet_name %in% names(metadata$meta_snippets))) {
     # Case where `snippet_name` doesn't exist in `meta_snippets`

@@ -41,17 +41,16 @@
 #' 
 #' @examples 
 #' # Let's walk through how we can
-#' # generate some useful metadata for an
-#' # extremely small table; it's actually
+#' # generate some useful information for a
+#' # really small table; it's actually
 #' # called `small_table` and we can find
 #' # it as a dataset in this package
 #' small_table
 #' 
-#' # We create a pointblank `metadata`
-#' # object with `create_informant()`;
-#' # let's use that function with the
-#' # `small_table` dataset
-#' metadata <- create_informant(small_table)
+#' # Create a pointblank `informant`
+#' # object with `create_informant()`
+#' # and the `small_table` dataset
+#' informant <- create_informant(small_table)
 #' 
 #' # This function creates some metadata
 #' # without any extra help by profiling
@@ -63,7 +62,7 @@
 #' # Alternatively, we can visualize this
 #' # metadata into the same report by using
 #' # `get_informant_report()`
-#' report <- get_informant_report(metadata)
+#' report <- get_informant_report(informant)
 #' class(report)
 #' 
 #' @export

@@ -1,5 +1,15 @@
 # pointblank (unreleased)
 
+* Added the `create_metadata()` function to create a `ptblank_metadata` object (this function is similar to `create_agent()`).
+
+* Functions for facilitating entry of metadata elements were added. These are focused on describing columns, the table, and other fields.
+
+* Added the `get_metadata_report()` function for printing the metadata to a **gt** table object.
+
+* Printing the *metadata* object shows the metadata report thanks to a new print method for this purpose. 
+
+* The *metadata* object can be written to **pointblank** YAML using the revised `yaml_write()` function. 
+
 # pointblank 0.5.2
 
 * Fixes a performance issue for validations on larger tables.

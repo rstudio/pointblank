@@ -2,7 +2,7 @@
 % Please edit documentation in R/metadata_add.R
 \name{info_tabular}
 \alias{info_tabular}
-\title{Add metadata that focuses on aspects of the data table as a whole}
+\title{Add information that focuses on aspects of the data table as a whole}
 \usage{
 info_tabular(x, ...)
 }
@@ -15,14 +15,14 @@ info_tabular(x, ...)
 A \code{ptblank_informant} object.
 }
 \description{
-When a metadata object is created with the \code{\link[=create_informant]{create_informant()}} function, it
-has two starter sections: (1) 'table' and (2) 'columns'. We can further The
+When an \emph{informant} object is created with the \code{\link[=create_informant]{create_informant()}} function,
+it has two starter sections: (1) 'table' and (2) 'columns'. The
 'table' section should contain a few properties upon creation, such as the
 supplied table name (\code{name}) and table dimensions (as \verb{_columns} and
 \verb{_rows}). We can add more table-based properties with the \code{info_tabular()}
 function. By providing a series of named arguments (in the form
-\code{property_name = "Description of property."}), we can add more metadata that
-makes sense for describing the table as a whole.
+\code{property_name = "Description of property."}), we can add more information
+that makes sense for describing the table as a whole.
 }
 \examples{
 # Create a pointblank `informant`
@@ -59,9 +59,9 @@ informant <-
 # )
 
 # The YAML file can then be read back
-# into a metadata object with the
+# into an informant object with the
 # `meta_yaml_read()` function
-# metadata <-
+# informant <-
 #   meta_yaml_read(path = "informant.yml")
 
 }

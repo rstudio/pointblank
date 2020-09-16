@@ -2,18 +2,18 @@
 % Please edit documentation in R/print.R
 \name{print.ptblank_informant}
 \alias{print.ptblank_informant}
-\title{Print the metadata information}
+\title{Print the table information report}
 \usage{
 \method{print}{ptblank_informant}(x, view = interactive(), ...)
 }
 \arguments{
-\item{x}{An metadata object of class \code{ptblank_informant}.}
+\item{x}{An informant object of class \code{ptblank_informant}.}
 
 \item{view}{The value for \code{print()}s \code{browse} argument.}
 
 \item{...}{Any additional parameters.}
 }
 \description{
-This function will allow the metadata to be nicely printed.
+This function will allow the table information to be nicely printed.
 }
 \keyword{internal}

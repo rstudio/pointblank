@@ -2,7 +2,7 @@
 % Please edit documentation in R/metadata_add.R
 \name{info_columns}
 \alias{info_columns}
-\title{Add metadata that focuses on aspects of a data table's columns}
+\title{Add information that focuses on aspects of a data table's columns}
 \usage{
 info_columns(x, columns, ..., .add = TRUE)
 }
@@ -23,14 +23,15 @@ default; setting to \code{FALSE} replaces any existing text for a property.}
 A \code{ptblank_informant} object.
 }
 \description{
-Upon creation of a metadata object (with the \code{\link[=create_informant]{create_informant()}} function),
-there are two sections containing properties: (1) 'table' and (2) 'columns'.
-The 'columns' section is initialized with the table's column names and their
-types (as \verb{_type}). Beyond that, it is useful to provide details about the
-nature of each column and we can do that with the \code{info_columns()} function.
-A single column (or multiple columns) is targeted, and then a series of named
-arguments (in the form \code{property_name = "Description of property."}) serves
-as additional metadata for the column or columns.
+Upon creation of an \emph{informant} object (with the \code{\link[=create_informant]{create_informant()}}
+function), there are two sections containing properties: (1) 'table' and (2)
+'columns'. The 'columns' section is initialized with the table's column names
+and their types (as \verb{_type}). Beyond that, it is useful to provide details
+about the nature of each column and we can do that with the \code{info_columns()}
+function. A single column (or multiple columns) is targeted, and then a
+series of named arguments (in the form
+\code{property_name = "Description of property."}) serves as additional
+information for the column or columns.
 }
 \examples{
 # Create a pointblank `informant`
@@ -66,7 +67,7 @@ informant <-
 # be directly edited or modified
 # yaml_write(
 #   informant = informant,
-#   filename = "metadata.yml"
+#   filename = "informant.yml"
 # )
 
 # The YAML file can then be read back

@@ -2,7 +2,7 @@
 % Please edit documentation in R/incorporate.R
 \name{incorporate}
 \alias{incorporate}
-\title{Given a metadata object, update and incorporate table snippets}
+\title{Given an \emph{informant} object, update and incorporate table snippets}
 \usage{
 incorporate(informant)
 }
@@ -13,14 +13,14 @@ incorporate(informant)
 A \code{ptblank_informant} object.
 }
 \description{
-When the \emph{metadata} object has a number of snippets available (by using
+When the \emph{informant} object has a number of snippets available (by using
 \code{\link[=info_snippet]{info_snippet()}}) and the strings to use them (by using the \verb{info_*()}
 functions and \verb{\{<snippet_name>\}} in the text elements), the process of
-incorporating aspects of the table into the metadata text can occur by
-using the \code{incorporate()} function. After that, the metadata will fully
-updated (getting the current state of table dimensions, rerendering the
-metadata text, etc.) and we can print the \emph{metadata} object or use the
-\code{\link[=get_informant_report]{get_informant_report()}} function to see the metadata report.
+incorporating aspects of the table into the info text can occur by
+using the \code{incorporate()} function. After that, the information will be fully
+updated (getting the current state of table dimensions, re-rendering the
+info text, etc.) and we can print the \emph{informant} object or use the
+\code{\link[=get_informant_report]{get_informant_report()}} function to see the information report.
 }
 \examples{
 # Take the `small_table` and
@@ -28,13 +28,13 @@ metadata text, etc.) and we can print the \emph{metadata} object or use the
 # modify it later
 test_table <- small_table
 
-# Generate a metadata object, add
+# Generate an informant object, add
 # two snippets with `info_snippet()`,
-# add metadata with some other
+# add information with some other
 # `info_*()` functions and then
 # `incorporate()` the snippets into
-# the metadata text
-metadata <- 
+# the info text
+informant <- 
   create_informant(
     read_fn = ~test_table,
     tbl_name = "test_table"
@@ -65,9 +65,8 @@ metadata <-
   ) \%>\%
   incorporate()
 
-# We can print the `metadata`
-# object to see the metadata report
-# metadata
+# We can print the `informant` object
+# to see the information report
 
 # Let's modify `test_table` to give
 # it more rows and an extra column
@@ -78,6 +77,7 @@ test_table <-
 # Using `incorporate()` will cause
 # the snippets to be reprocessed, and,
 # the strings to be updated
-# metadata \%>\% incorporate()
+informant <-
+  informant \%>\% incorporate()
 
 }

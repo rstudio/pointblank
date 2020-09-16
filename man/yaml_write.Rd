@@ -2,7 +2,7 @@
 % Please edit documentation in R/yaml_write.R
 \name{yaml_write}
 \alias{yaml_write}
-\title{Write an agent and metadata to a \strong{pointblank} YAML file}
+\title{Write an \emph{agent} and \emph{informant} to a \strong{pointblank} YAML file}
 \usage{
 yaml_write(agent = NULL, informant = NULL, filename, path = NULL)
 }
@@ -26,7 +26,7 @@ YAML markup if so desired, or, use as is to create a new agent with the
 ready to \code{\link[=interrogate]{interrogate()}} the data. We can go a step further and perform an
 interrogation directly from the YAML file with the \code{\link[=agent_yaml_interrogate]{agent_yaml_interrogate()}}
 function. That returns an agent with intel (having already interrogated the
-target data table). A metadata object can also be written to YAML with
+target data table). An \emph{informant} object can also be written to YAML with
 \code{yaml_write()}.
 
 One requirement for writing the \emph{agent} to YAML is that we need to have

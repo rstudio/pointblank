@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_metadata.R
 \name{create_informant}
 \alias{create_informant}
-\title{Create a pointblank metadata object}
+\title{Create a pointblank \emph{informant} object}
 \usage{
 create_informant(
   tbl = NULL,
@@ -33,33 +33,33 @@ supplying a table in \code{tbl} or a table-reading function in \code{read_fn}.}
 value is provided, a name will be generated based on whatever information
 is available.}
 
-\item{label}{An optional label for the metadata report. If no value is
+\item{label}{An optional label for the information report. If no value is
 provided, a label will be generated based on the current system time.
 Markdown can be used here to make the label more visually appealing (it
-will appear in the header area of the metadata report).}
+will appear in the header area of the information report).}
 
-\item{lang}{The language to use for the metadata report (a summary table that
-provides all of the available metadata for the table. By default, \code{NULL}
-will create English (\code{"en"}) text. Other options include French (\code{"fr"}),
-German (\code{"de"}), Italian (\code{"it"}), Spanish (\code{"es"}), Portuguese, (\code{"pt"}),
-and Chinese (\code{"zh"}).}
+\item{lang}{The language to use for the information report (a summary table
+that provides all of the available information for the table. By default,
+\code{NULL} will create English (\code{"en"}) text. Other options include French
+(\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish (\code{"es"}), Portuguese,
+(\code{"pt"}), and Chinese (\code{"zh"}).}
 
 \item{locale}{An optional locale ID to use for formatting values in the
-metadata report summary table according the locale's rules. Examples
-include \code{"en_US"} for English (United States) and \code{"fr_FR"} for French
-(France); more simply, this can be a language identifier without a country
-designation, like "es" for Spanish (Spain, same as \code{"es_ES"}).}
+information report according the locale's rules. Examples include \code{"en_US"}
+for English (United States) and \code{"fr_FR"} for French (France); more simply,
+this can be a language identifier without a country designation, like "es"
+for Spanish (Spain, same as \code{"es_ES"}).}
 }
 \value{
 A \code{ptblank_informant} object.
 }
 \description{
-The \code{create_informant()} function creates a \emph{metadata} object, which is used
-in a \emph{metadata management} workflow. The overall aim of this workflow is to
-record, collect, and generate useful information on data tables. We can
-supply as many metadata parameters that are useful for describing a
-particular data table. The \emph{metadata} object created by the
-\code{create_informant()} function takes metadeta-focused functions (the
+The \code{create_informant()} function creates an \emph{informant} object, which is
+used in an \emph{information management} workflow. The overall aim of this
+workflow is to record, collect, and generate useful information on data
+tables. We can supply as information that is useful for describing a
+particular data table. The \emph{informant} object created by the
+\code{create_informant()} function takes information-focused functions (the
 \verb{info_*()} series of functions).
 }
 \examples{
@@ -75,16 +75,15 @@ small_table
 # and the `small_table` dataset
 informant <- create_informant(small_table)
 
-# This function creates some metadata
+# This function creates some information
 # without any extra help by profiling
 # the supplied table object; it adds
 # the sections: (1) 'table' and
 # (2) 'columns' and we can print the
-# object to see the metadata report
+# object to see the information report
 
-# Alternatively, we can visualize this
-# metadata into the same report by using
-# `get_informant_report()`
+# Alternatively, we can get the same report
+# by using `get_informant_report()`
 report <- get_informant_report(informant)
 class(report)
 

@@ -2,14 +2,15 @@
 % Please edit documentation in R/metadata_add.R
 \name{info_section}
 \alias{info_section}
-\title{Add metadata that focuses on some key aspect of the data table}
+\title{Add information that focuses on some key aspect of the data table}
 \usage{
 info_section(x, section_name, ...)
 }
 \arguments{
 \item{x}{An informant object of class \code{ptblank_informant}.}
 
-\item{section_name}{The name of the section for which this metadata pertains.}
+\item{section_name}{The name of the section for which this information
+pertains.}
 
 \item{...}{Metadata parameters as a series of named arguments.}
 }
@@ -18,11 +19,12 @@ A \code{ptblank_informant} object.
 }
 \description{
 While the \code{\link[=info_tabular]{info_tabular()}} and \code{\link[=info_columns]{info_columns()}} functions allow us to
-add/modify metadata properties for specific sections, the \code{info_section()}
-makes it possible to add sections of our own choosing and the properties that
-make sense for those sections. Define a \code{section_name} and provide a series
-of named arguments (in the form \code{property_name = "Description of property."})
-to build the metadata content for that section.
+add/modify info text for specific sections, the \code{info_section()}
+makes it possible to add sections of our own choosing and the information
+that make sense for those sections. Define a \code{section_name} and provide a
+series of named arguments (in the form
+\code{property_name = "Description of property."}) to build the informational
+content for that section.
 }
 \examples{
 # Create a pointblank `informant`
@@ -30,10 +32,10 @@ to build the metadata content for that section.
 # and the `small_table` dataset
 informant <- create_informant(small_table)
 
-# The `metadata` object has the 'table'
+# The `informant` object has the 'table'
 # and 'columns' sections; we can create
 # entirely different sections with their
-# own properties using `meta_section()`
+# own properties using `info_section()`
 informant <-
   informant \%>\%
   info_section(
@@ -44,7 +46,7 @@ informant <-
 
 # Upon printing the `informant` object, we see
 # the addition of the 'notes' section and its
-# own metadata
+# own information
 
 # The `informant` object can be written to
 # a YAML file with the `yaml_write()`

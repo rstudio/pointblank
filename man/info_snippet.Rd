@@ -10,7 +10,7 @@ info_snippet(x, snippet_name, fn)
 \item{x}{An informant object of class \code{ptblank_informant}.}
 
 \item{snippet_name}{The name for snippet, which is used for interpolating the
-snippet itself into metadata.}
+snippet itself into info text.}
 
 \item{fn}{A function that obtains a snippet of data from the target table.}
 }
@@ -19,11 +19,11 @@ A \code{ptblank_informant} object.
 }
 \description{
 Getting little snippets of information from a table goes hand-in-hand with
-mixing those bits of info with your table metadata. Call \code{info_snippet()} to
+mixing those bits of info with your table info. Call \code{info_snippet()} to
 define a snippet and how you'll get that from the target table (it's with a
 function). So long as you know how to interact with a table and extract
-information, you can easily define snippets for a \emph{metadata} object. And once
-those snippets are defined, you can insert them into the property strings as
+information, you can easily define snippets for a \emph{informant} object. And
+once those snippets are defined, you can insert them into the info text as
 defined through the \verb{info_*()} functions. Just use curly braces with the
 \code{snippet_name} inside (e.g., \code{"This column has {n_cat} categories."}).
 }
@@ -33,13 +33,13 @@ defined through the \verb{info_*()} functions. Just use curly braces with the
 # modify it later
 test_table <- small_table
 
-# Generate a metadata object, add
+# Generate an informant object, add
 # two snippets with `info_snippet()`,
-# add metadata with some other
+# add information with some other
 # `info_*()` functions and then
 # `incorporate()` the snippets into
-# the metadata text
-metadata <- 
+# the info text
+informant <- 
   create_informant(
     read_fn = ~test_table,
     tbl_name = "test_table"
@@ -70,9 +70,8 @@ metadata <-
   ) \%>\%
   incorporate()
 
-# We can print the `metadata`
-# object to see the metadata report
-# metadata
+# We can print the `informant` object
+# to see the information report
 
 # Let's modify `test_table` to give
 # it more rows and an extra column
@@ -82,7 +81,8 @@ test_table <-
 
 # Using `incorporate()` will cause
 # the snippets to be reprocessed, and,
-# the strings to be updated
-# metadata \%>\% incorporate()
+# the info text to be updated
+informant <-
+  informant \%>\% incorporate()
 
 }

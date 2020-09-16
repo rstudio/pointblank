@@ -38,3 +38,6 @@ test_table <-
 
 informant %>% incorporate()
 
+
+yaml_write(metadata = informant, filename = "informant-test.yml")
+

@@ -107,7 +107,7 @@ reference:
     - interrogate
     - get_agent_report
     
-  - title: "Metadata: Incorporate and Report"
+  - title: "Informant: Incorporate and Report"
     desc: >
       If we have an *informant* object that has been loaded with information
       from using the `info_*()` functions, the `incorporate()` function works

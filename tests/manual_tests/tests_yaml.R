@@ -48,16 +48,16 @@ agent <-
   ) %>%
   col_vals_between(vars(c), left = 2.03, right = vars(d), na_pass = TRUE)
 
-agent_yaml_string(agent = agent)
+yaml_agent_string(agent = agent)
 
 yaml_write(agent = agent, filename = "test.yaml")
 
-agent_yaml_string(path = "test.yaml")
+yaml_agent_string(path = "test.yaml")
 
-agent_yaml_show_exprs(path = "test.yaml")
+yaml_agent_show_exprs(path = "test.yaml")
 
-agent_plan <- agent_yaml_read(path = "test.yaml")
+agent_plan <- yaml_read_agent(path = "test.yaml")
 agent_plan
 
-agent_intel <- agent_yaml_interrogate(path = "test.yaml")
+agent_intel <- yaml_agent_interrogate(path = "test.yaml")
 agent_intel

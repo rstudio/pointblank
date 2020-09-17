@@ -156,7 +156,7 @@ create_informant <- function(tbl = NULL,
   .tbl <- x$tbl
   
   table.columns <- length(column_names)
-  table.rows <- dplyr::count(.tbl, name = "n") %>% dplyr::pull(n)
+  table.rows <- dplyr::count(.tbl, name = "n") %>% dplyr::pull(n) %>% as.numeric()
   
   column_list <- list(columns = lapply(col_schema(.tbl = .tbl), as.list))
   

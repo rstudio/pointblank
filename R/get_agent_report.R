@@ -1387,7 +1387,7 @@ create_table_type_html <- function(tbl_src, tbl_name) {
           tbl_name,
           style = htmltools::css(
             `background-color` = "none",
-            color = text[2],
+            color = "#222222",
             padding = "0.5em 0.5em",
             position = "inherit",
             margin = "5px 10px 5px -4px",

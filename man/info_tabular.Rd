@@ -60,8 +60,8 @@ informant <-
 
 # The YAML file can then be read back
 # into an informant object with the
-# `meta_yaml_read()` function
+# `yaml_read_informant()` function
 # informant <-
-#   meta_yaml_read(path = "informant.yml")
+#   yaml_read_informant(path = "informant.yml")
 
 }

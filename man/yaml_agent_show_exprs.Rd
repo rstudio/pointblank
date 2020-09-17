@@ -65,7 +65,7 @@ yml_file <-
 
 # At a later time, the YAML file can
 # be read into a new agent with the
-# `yaml_agent_read()` function
+# `yaml_read_agent()` function
 agent <- yaml_read_agent(path = yml_file)
 
 class(agent)

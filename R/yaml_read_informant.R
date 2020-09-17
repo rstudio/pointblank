@@ -102,12 +102,12 @@
 #' # as an `informant` object by using
 #' # `meta_yaml_read()`
 #' informant <- 
-#'   meta_yaml_read(path = yml_file)
+#'   yaml_read_informant(path = yml_file)
 #' 
 #' class(informant)
 #' 
 #' @export
-meta_yaml_read <- function(path) {
+yaml_read_informant <- function(path) {
   
   # Read the YAML file with `yaml::read_yaml()`
   y <- yaml::read_yaml(file = path)

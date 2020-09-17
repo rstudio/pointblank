@@ -130,7 +130,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-planning-and-prep" class="hasAnchor"><a href="#section-planning-and-prep" class="anchor"></a>Planning and Prep</h2>
-          <p class="section-desc"><p>Should you need to understand your data a bit more, use the <code><a href="../reference/scan_data.html">scan_data()</a></code> function. It provides a comprehensive report on the data you might be planning on validating. If going down the road of preparing a data quality analysis, call on an <em>agent</em> to carry out that eventual plan with <code><a href="../reference/create_agent.html">create_agent()</a></code>. The agent here is to be told which table is the target, and, we devise a stepwise validation plan with validation functions. If collecting and reporting on table metadata is your goal, then begin with the <code><a href="../reference/create_metadata.html">create_metadata()</a></code> function.</p></p>
+          <p class="section-desc"><p>Should you need to understand your data a bit more, use the <code><a href="../reference/scan_data.html">scan_data()</a></code> function. It provides a comprehensive report on the data you might be planning on validating. If going down the road of preparing a data quality analysis, call on an <em>agent</em> to carry out that eventual plan with <code><a href="../reference/create_agent.html">create_agent()</a></code>. The agent here is to be told which table is the target, and, we devise a stepwise validation plan with validation functions. If collecting and reporting on table metadata is your goal, then begin with the <code>create_metadata()</code> function.</p></p>
         </th>
       </tr>
       
@@ -150,12 +150,6 @@
           <p><code><a href="create_agent.html">create_agent()</a></code> </p>
         </td>
         <td><p>Create a pointblank agent object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_metadata.html">create_metadata()</a></code> </p>
-        </td>
-        <td><p>Create a pointblank metadata object</p></td>
       </tr><tr>
         
         <td>
@@ -179,7 +173,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-validation-expectation-and-test-functions" class="hasAnchor"><a href="#section-validation-expectation-and-test-functions" class="anchor"></a>Validation, Expectation, and Test Functions</h2>
-          <p class="section-desc"><p>Validation steps are either used with an <strong>agent</strong> object or, more simply, just with the table of interest. When used with an <em>agent</em>, each step function called works to build up a validation plan (which is executed with the <code><a href="../reference/interrogate.html">interrogate()</a></code> function). If used directly on data (that is, no agent is involved whatsoever), then the data is checked and passed through. However, if we (1) set <code>warn_*</code> and/or <code>stop_*</code> thresholds and (2) the level of failed validation units exceeds those set levels, then we’ll get either a warning or a stop. Each validation step function is assoicated with an expectation function (of the form <code>expect_*()</code>). These expectation functions are equivalent in usage and behavior to those in the <strong>testthat</strong> package. Finallly, each validation function has an associated test function (of the form <code>test_*()</code>) which always returns a logical value.</p></p>
+          <p class="section-desc"><p>Validation steps are either used with an <em>agent</em> object or, more simply, just with the table of interest. When used with an <em>agent</em>, each step function called works to build up a validation plan (which is executed with the <code><a href="../reference/interrogate.html">interrogate()</a></code> function). If used directly on data (that is, no agent is involved whatsoever), then the data is checked and passed through. However, if we (1) set <code>warn_*</code> and/or <code>stop_*</code> thresholds and (2) the level of failed validation units exceeds those set levels, then we’ll get either a warning or a stop. Each validation step function is assoicated with an expectation function (of the form <code>expect_*()</code>). These expectation functions are equivalent in usage and behavior to those in the <strong>testthat</strong> package. Finallly, each validation function has an associated test function (of the form <code>test_*()</code>) which always returns a logical value.</p></p>
         </th>
       </tr>
       
@@ -341,8 +335,8 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-metadata-building-functions" class="hasAnchor"><a href="#section-metadata-building-functions" class="anchor"></a>Metadata Building Functions</h2>
-          <p class="section-desc"><p>We can progressively add metadata to a metadata object by using the collection of <code>meta_*()</code> functions. We can add more table-based properties with the <code><a href="../reference/meta_table.html">meta_table()</a></code>, details about the nature of each column with the <code><a href="../reference/meta_columns.html">meta_columns()</a></code> function, and add sections of our own choosing (and the properties that make sense for those sections) with the <code><a href="../reference/meta_section.html">meta_section()</a></code> function. Snippets of information gleaned from the target table by using the <code><a href="../reference/meta_snippet.html">meta_snippet()</a></code> function. These bits of information can be incorporated in text defined by the other <code>meta_*()</code> functions.</p></p>
+          <h2 id="section-information-functions" class="hasAnchor"><a href="#section-information-functions" class="anchor"></a>Information Functions</h2>
+          <p class="section-desc"><p>We can progressively add information to an <em>informant</em> object by using the collection of <code>info_*()</code> functions. We can add more table-based properties with the <code><a href="../reference/info_tabular.html">info_tabular()</a></code> function, details about the nature of each column with the <code><a href="../reference/info_columns.html">info_columns()</a></code> function, and add sections of our own choosing (and the info that make sense for those sections) with the <code><a href="../reference/info_section.html">info_section()</a></code> function. Snippets of information can be gleaned from the target table by using the <code><a href="../reference/info_snippet.html">info_snippet()</a></code> function. These bits of information can be incorporated in text defined by the other <code>info_*()</code> functions via <code>{ }</code>.</p></p>
         </th>
       </tr>
       
@@ -353,25 +347,25 @@
       <tr>
         
         <td>
-          <p><code><a href="meta_table.html">meta_table()</a></code> </p>
+          <p><code><a href="info_tabular.html">info_tabular()</a></code> </p>
         </td>
-        <td><p>Add metadata that focuses on aspects of the data table as a whole</p></td>
+        <td><p>Add information that focuses on aspects of the data table as a whole</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="meta_columns.html">meta_columns()</a></code> </p>
+          <p><code><a href="info_columns.html">info_columns()</a></code> </p>
         </td>
-        <td><p>Add metadata that focuses on aspects of a data table's columns</p></td>
+        <td><p>Add information that focuses on aspects of a data table's columns</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="meta_section.html">meta_section()</a></code> </p>
+          <p><code><a href="info_section.html">info_section()</a></code> </p>
         </td>
-        <td><p>Add metadata that focuses on some key aspect of the data table</p></td>
+        <td><p>Add information that focuses on some key aspect of the data table</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="meta_snippet.html">meta_snippet()</a></code> </p>
+          <p><code><a href="info_snippet.html">info_snippet()</a></code> </p>
         </td>
         <td><p>Generate a useful text 'snippet' from the target table</p></td>
       </tr>
@@ -416,7 +410,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-agent-interrogate-and-report" class="hasAnchor"><a href="#section-agent-interrogate-and-report" class="anchor"></a>Agent: Interrogate and Report</h2>
-          <p class="section-desc"><p>If we have an <strong>agent</strong> object that has a plan (i.e., validation steps), the <code><a href="../reference/interrogate.html">interrogate()</a></code> function instructs the <em>agent</em> to interrogate the <code>tbl</code> data. The agent will go to work and also perform side-effect functions at the step level and upon completion (if those are functions are defined). After interrogation, we can get a report through printing, however, we can take advantage of more options by using the <code><a href="../reference/get_agent_report.html">get_agent_report()</a></code> function.</p></p>
+          <p class="section-desc"><p>If we have an <em>agent</em> object that has a plan (i.e., validation steps), the <code><a href="../reference/interrogate.html">interrogate()</a></code> function instructs the <em>agent</em> to interrogate the target table. The agent will go to work and also perform specified side-effect functions at the step level and upon completion (if those are functions are defined). After interrogation, we can get a report through printing, however, we can take advantage of more options by using the <code><a href="../reference/get_agent_report.html">get_agent_report()</a></code> function.</p></p>
         </th>
       </tr>
       
@@ -441,7 +435,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-metadata-incorporate-and-report" class="hasAnchor"><a href="#section-metadata-incorporate-and-report" class="anchor"></a>Metadata: Incorporate and Report</h2>
-          <p class="section-desc"><p>If we have an <strong>metadata</strong> object that has been loaded with information from using the <code>meta_*()</code> functions, the <code><a href="../reference/incorporate.html">incorporate()</a></code> function works to recalculate snippets and integrate those into the text. After incorporation of the new data into the metadata elements, we can get a metadata report through printing, or, by using <code><a href="../reference/get_metadata_report.html">get_metadata_report()</a></code> function.</p></p>
+          <p class="section-desc"><p>If we have an <em>informant</em> object that has been loaded with information from using the <code>info_*()</code> functions, the <code><a href="../reference/incorporate.html">incorporate()</a></code> function works to regenerate snippets and integrate those into the info text. After refreshing the table information, we can get an information report through printing, or, by using <code><a href="../reference/get_informant_report.html">get_informant_report()</a></code> function.</p></p>
         </th>
       </tr>
       
@@ -454,13 +448,13 @@
         <td>
           <p><code><a href="incorporate.html">incorporate()</a></code> </p>
         </td>
-        <td><p>Given a metadata object, update and incorporate table snippets</p></td>
+        <td><p>Given an <em>informant</em> object, update and incorporate table snippets</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_metadata_report.html">get_metadata_report()</a></code> </p>
+          <p><code><a href="get_informant_report.html">get_informant_report()</a></code> </p>
         </td>
-        <td><p>Get a table metadata report from a metadata object</p></td>
+        <td><p>Get a table information report from an <em>informant</em> object</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -552,7 +546,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-pointblank-yaml" class="hasAnchor"><a href="#section-pointblank-yaml" class="anchor"></a>pointblank YAML</h2>
-          <p class="section-desc"><p>YAML files can be used in <strong>pointblank</strong> for two distinct purposes: (1) to define agents and their validation plans, and (2) to define metadata for tables. The <code>agent_yaml_*()</code> functions allow us write agent YAML from an existing agent, create an agent from the corresponding YAML, or interrogate a table directly from an agent YAML file. On the table metadata side, there are currently two functions (<code>meta_yaml_write()</code> and <code><a href="../reference/get_metadata_report.html">get_metadata_report()</a></code>) that produce metadata YAML from a table or agent, and, generate a report from the YAML file.</p></p>
+          <p class="section-desc"><p>YAML files can be used in <strong>pointblank</strong> for two distinct purposes: (1) to define agents and their validation plans, and (2) to define metadata for tables. The <code>agent_yaml_*()</code> functions allow us write agent YAML from an existing agent, create an agent from the corresponding YAML, or interrogate a table directly from an agent YAML file. On the table metadata side, there are currently two functions (<code>meta_yaml_write()</code> and <code>get_metadata_report()</code>) that produce metadata YAML from a table or agent, and, generate a report from the YAML file.</p></p>
         </th>
       </tr>
       
@@ -565,7 +559,7 @@
         <td>
           <p><code><a href="yaml_write.html">yaml_write()</a></code> </p>
         </td>
-        <td><p>Write an agent and metadata to a <strong>pointblank</strong> YAML file</p></td>
+        <td><p>Write an <em>agent</em> and <em>informant</em> to a <strong>pointblank</strong> YAML file</p></td>
       </tr><tr>
         
         <td>
@@ -577,7 +571,7 @@
         <td>
           <p><code><a href="meta_yaml_read.html">meta_yaml_read()</a></code> </p>
         </td>
-        <td><p>Read a <strong>pointblank</strong> YAML file to create a metadata object</p></td>
+        <td><p>Read a <strong>pointblank</strong> YAML file to create an <em>informant</em> object</p></td>
       </tr><tr>
         
         <td>

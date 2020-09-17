@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write an agent and metadata to a pointblank YAML file — yaml_write • pointblank</title>
+<title>Write an agent and informant to a pointblank YAML file — yaml_write • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Write an agent and metadata to a pointblank YAML file — yaml_write" />
+<meta property="og:title" content="Write an agent and informant to a pointblank YAML file — yaml_write" />
 <meta property="og:description" content="With yaml_write() we can take an existing agent and write that agent's
 validation plan to a YAML file. With pointblank YAML, we can modify the
 YAML markup if so desired, or, use as is to create a new agent with the
@@ -54,7 +54,7 @@ agent_yaml_read() function. That agent will have a validation plan and is
 ready to interrogate() the data. We can go a step further and perform an
 interrogation directly from the YAML file with the agent_yaml_interrogate()
 function. That returns an agent with intel (having already interrogated the
-target data table). A metadata object can also be written to YAML with
+target data table). An informant object can also be written to YAML with
 yaml_write().
 One requirement for writing the agent to YAML is that we need to have
 table-reading function (read_fn) specified (it's a function that is used to
@@ -129,7 +129,7 @@ agent)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write an agent and metadata to a <strong>pointblank</strong> YAML file</h1>
+    <h1>Write an <em>agent</em> and <em>informant</em> to a <strong>pointblank</strong> YAML file</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/yaml_write.R'><code>R/yaml_write.R</code></a></small>
     <div class="hidden name"><code>yaml_write.Rd</code></div>
     </div>
@@ -142,7 +142,7 @@ YAML markup if so desired, or, use as is to create a new agent with the
 ready to <code><a href='interrogate.html'>interrogate()</a></code> the data. We can go a step further and perform an
 interrogation directly from the YAML file with the <code><a href='agent_yaml_interrogate.html'>agent_yaml_interrogate()</a></code>
 function. That returns an agent with intel (having already interrogated the
-target data table). A metadata object can also be written to YAML with
+target data table). An <em>informant</em> object can also be written to YAML with
 <code>yaml_write()</code>.</p>
 <p>One requirement for writing the <em>agent</em> to YAML is that we need to have
 table-reading function (<code>read_fn</code>) specified (it's a function that is used to
@@ -151,7 +151,7 @@ when using <code><a href='create_agent.html'>create_agent()</a></code> or with <
 <em>agent</em>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>yaml_write</span>(agent = <span class='kw'>NULL</span>, metadata = <span class='kw'>NULL</span>, <span class='kw'>filename</span>, path = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>yaml_write</span>(agent = <span class='kw'>NULL</span>, informant = <span class='kw'>NULL</span>, <span class='kw'>filename</span>, path = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,8 +161,8 @@ when using <code><a href='create_agent.html'>create_agent()</a></code> or with <
       <td><p>An <em>agent</em> object of class <code>ptblank_agent</code>.</p></td>
     </tr>
     <tr>
-      <th>metadata</th>
-      <td><p>A metadata object of class <code>ptblank_metadata</code>.</p></td>
+      <th>informant</th>
+      <td><p>An <em>informant</em> object of class <code>ptblank_informant</code>.</p></td>
     </tr>
     <tr>
       <th>filename</th>

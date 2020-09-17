@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Given an informant object, update and incorporate table snippets — incorporate • pointblank</title>
+<title>Generate a useful text 'snippet' from the target table — info_snippet • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,15 +46,15 @@
 
 
 
-<meta property="og:title" content="Given an informant object, update and incorporate table snippets — incorporate" />
-<meta property="og:description" content="When the informant object has a number of snippets available (by using
-info_snippet()) and the strings to use them (by using the info_*()
-functions and {&amp;lt;snippet_name&amp;gt;} in the text elements), the process of
-incorporating aspects of the table into the info text can occur by
-using the incorporate() function. After that, the information will be fully
-updated (getting the current state of table dimensions, re-rendering the
-info text, etc.) and we can print the informant object or use the
-get_informant_report() function to see the information report." />
+<meta property="og:title" content="Generate a useful text 'snippet' from the target table — info_snippet" />
+<meta property="og:description" content="Getting little snippets of information from a table goes hand-in-hand with
+mixing those bits of info with your table info. Call info_snippet() to
+define a snippet and how you'll get that from the target table (it's with a
+function). So long as you know how to interact with a table and extract
+information, you can easily define snippets for a informant object. And
+once those snippets are defined, you can insert them into the info text as
+defined through the info_*() functions. Just use curly braces with the
+snippet_name inside (e.g., &quot;This column has {n_cat} categories.&quot;)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -123,30 +123,39 @@ get_informant_report() function to see the information report." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Given an <em>informant</em> object, update and incorporate table snippets</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/incorporate.R'><code>R/incorporate.R</code></a></small>
-    <div class="hidden name"><code>incorporate.Rd</code></div>
+    <h1>Generate a useful text 'snippet' from the target table</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/info_add.R'><code>R/info_add.R</code></a></small>
+    <div class="hidden name"><code>info_snippet.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>When the <em>informant</em> object has a number of snippets available (by using
-<code><a href='info_snippet.html'>info_snippet()</a></code>) and the strings to use them (by using the <code>info_*()</code>
-functions and <code>{&lt;snippet_name&gt;}</code> in the text elements), the process of
-incorporating aspects of the table into the info text can occur by
-using the <code>incorporate()</code> function. After that, the information will be fully
-updated (getting the current state of table dimensions, re-rendering the
-info text, etc.) and we can print the <em>informant</em> object or use the
-<code><a href='get_informant_report.html'>get_informant_report()</a></code> function to see the information report.</p>
+    <p>Getting little snippets of information from a table goes hand-in-hand with
+mixing those bits of info with your table info. Call <code>info_snippet()</code> to
+define a snippet and how you'll get that from the target table (it's with a
+function). So long as you know how to interact with a table and extract
+information, you can easily define snippets for a <em>informant</em> object. And
+once those snippets are defined, you can insert them into the info text as
+defined through the <code>info_*()</code> functions. Just use curly braces with the
+<code>snippet_name</code> inside (e.g., <code>"This column has {n_cat} categories."</code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>incorporate</span>(<span class='kw'>informant</span>)</pre>
+    <pre class="usage"><span class='fu'>info_snippet</span>(<span class='kw'>x</span>, <span class='kw'>snippet_name</span>, <span class='kw'>fn</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>informant</th>
+      <th>x</th>
       <td><p>An informant object of class <code>ptblank_informant</code>.</p></td>
+    </tr>
+    <tr>
+      <th>snippet_name</th>
+      <td><p>The name for snippet, which is used for interpolating the
+snippet itself into info text.</p></td>
+    </tr>
+    <tr>
+      <th>fn</th>
+      <td><p>A function that obtains a snippet of data from the target table.</p></td>
     </tr>
     </table>
 
@@ -171,11 +180,11 @@ info text, etc.) and we can print the <em>informant</em> object or use the
     read_fn = <span class='op'>~</span><span class='kw'>test_table</span>,
     tbl_name = <span class='st'>"test_table"</span>
   ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_snippet.html'>info_snippet</a></span>(
+  <span class='fu'>info_snippet</span>(
     snippet_name = <span class='st'>"row_count"</span>,
     fn = <span class='op'>~</span> <span class='kw'>.</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()
   ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_snippet.html'>info_snippet</a></span>(
+  <span class='fu'>info_snippet</span>(
     snippet_name = <span class='st'>"col_count"</span>,
     fn = <span class='op'>~</span> <span class='kw'>.</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>()
   ) <span class='op'>%&gt;%</span>
@@ -195,7 +204,7 @@ info text, etc.) and we can print the <em>informant</em> object or use the
     section_name = <span class='st'>"rows"</span>,
     row_count = <span class='st'>"There are {row_count} rows available."</span>
   ) <span class='op'>%&gt;%</span>
-  <span class='fu'>incorporate</span>()
+  <span class='fu'><a href='incorporate.html'>incorporate</a></span>()
 </div><div class='output co'>#&gt; <span class='error'>Error in rlang::eval_tidy(.): object 'test_table' not found</span></div><div class='input'>
 <span class='co'># We can print the `informant` object</span>
 <span class='co'># to see the information report</span>
@@ -208,9 +217,9 @@ info text, etc.) and we can print the <em>informant</em> object or use the
 
 <span class='co'># Using `incorporate()` will cause</span>
 <span class='co'># the snippets to be reprocessed, and,</span>
-<span class='co'># the strings to be updated</span>
+<span class='co'># the info text to be updated</span>
 <span class='kw'>informant</span> <span class='op'>&lt;-</span>
-  <span class='kw'>informant</span> <span class='op'>%&gt;%</span> <span class='fu'>incorporate</span>()
+  <span class='kw'>informant</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='incorporate.html'>incorporate</a></span>()
 </div><div class='output co'>#&gt; <span class='error'>Error in eval(lhs, parent, parent): object 'informant' not found</span></div><div class='input'>
 </div></pre>
   </div>

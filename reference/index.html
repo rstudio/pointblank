@@ -546,7 +546,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-pointblank-yaml" class="hasAnchor"><a href="#section-pointblank-yaml" class="anchor"></a>pointblank YAML</h2>
-          <p class="section-desc"><p>YAML files can be used in <strong>pointblank</strong> for two distinct purposes: (1) to define agents and their validation plans, and (2) to define metadata for tables. The <code>agent_yaml_*()</code> functions allow us write agent YAML from an existing agent, create an agent from the corresponding YAML, or interrogate a table directly from an agent YAML file. On the table metadata side, there are currently two functions (<code>meta_yaml_write()</code> and <code>get_metadata_report()</code>) that produce metadata YAML from a table or agent, and, generate a report from the YAML file.</p></p>
+          <p class="section-desc"><p>YAML files can be used in <strong>pointblank</strong> for two distinct purposes: (1) to define agents and their validation plans, and (2) to define information for tables. The <code><a href="../reference/yaml_write.html">yaml_write()</a></code> function allows us write agent and/or informant YAML from the namesake objects. We can read them back from disk by using the <code><a href="../reference/yaml_read_agent.html">yaml_read_agent()</a></code> and <code><a href="../reference/yaml_read_informant.html">yaml_read_informant()</a></code> functions. As a nice shortcut, we can interrogate a table directly from a <strong>pointblank</strong> YAML file with <code><a href="../reference/yaml_agent_interrogate.html">yaml_agent_interrogate()</a></code>.</p></p>
         </th>
       </tr>
       
@@ -563,31 +563,31 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="agent_yaml_read.html">agent_yaml_read()</a></code> </p>
+          <p><code><a href="yaml_read_agent.html">yaml_read_agent()</a></code> </p>
         </td>
         <td><p>Read a YAML file to create a new agent with a validation plan</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="meta_yaml_read.html">meta_yaml_read()</a></code> </p>
+          <p><code><a href="yaml_read_informant.html">yaml_read_informant()</a></code> </p>
         </td>
         <td><p>Read a <strong>pointblank</strong> YAML file to create an <em>informant</em> object</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="agent_yaml_interrogate.html">agent_yaml_interrogate()</a></code> </p>
+          <p><code><a href="yaml_agent_interrogate.html">yaml_agent_interrogate()</a></code> </p>
         </td>
         <td><p>Read a YAML file to interrogate a target table immediately</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="agent_yaml_string.html">agent_yaml_string()</a></code> </p>
+          <p><code><a href="yaml_agent_string.html">yaml_agent_string()</a></code> </p>
         </td>
         <td><p>Display <strong>pointblank</strong> YAML using an agent or a YAML file</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="agent_yaml_show_exprs.html">agent_yaml_show_exprs()</a></code> </p>
+          <p><code><a href="yaml_agent_show_exprs.html">yaml_agent_show_exprs()</a></code> </p>
         </td>
         <td><p>Display <em>pointblank</em> expressions using a YAML file with a validation plan</p></td>
       </tr>

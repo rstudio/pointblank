@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write an agent and informant to a pointblank YAML file — yaml_write • pointblank</title>
+<title>Read a YAML file to interrogate a target table immediately — yaml_agent_interrogate • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,21 +46,15 @@
 
 
 
-<meta property="og:title" content="Write an agent and informant to a pointblank YAML file — yaml_write" />
-<meta property="og:description" content="With yaml_write() we can take an existing agent and write that agent's
-validation plan to a YAML file. With pointblank YAML, we can modify the
-YAML markup if so desired, or, use as is to create a new agent with the
-yaml_read_agent() function. That agent will have a validation plan and is
-ready to interrogate() the data. We can go a step further and perform an
-interrogation directly from the YAML file with the yaml_agent_interrogate()
-function. That returns an agent with intel (having already interrogated the
-target data table). An informant object can also be written to YAML with
-yaml_write().
-One requirement for writing the agent to YAML is that we need to have
-table-reading function (read_fn) specified (it's a function that is used to
-read the target table when interrogate() is called). This option can be set
-when using create_agent() or with set_read_fn() (for use with an existing
-agent)." />
+<meta property="og:title" content="Read a YAML file to interrogate a target table immediately — yaml_agent_interrogate" />
+<meta property="og:description" content="The yaml_agent_interrogate() function operates much like the
+yaml_read_agent() function (reading a pointblank YAML file and
+generating an agent with a validation plan in place). The key difference is
+that this function takes things a step function and interrogates the target
+table (defined by table-reading, read_fn, function that is required in the
+YAML file). The additional auto-invocation of interrogate() uses the
+default options of that function. As with yaml_read_agent() the agent is
+returned except, this time, it has intel from the interrogation." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -129,51 +123,31 @@ agent)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write an <em>agent</em> and <em>informant</em> to a <strong>pointblank</strong> YAML file</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/yaml_write.R'><code>R/yaml_write.R</code></a></small>
-    <div class="hidden name"><code>yaml_write.Rd</code></div>
+    <h1>Read a YAML file to interrogate a target table immediately</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/yaml_read_agent.R'><code>R/yaml_read_agent.R</code></a></small>
+    <div class="hidden name"><code>yaml_agent_interrogate.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>With <code>yaml_write()</code> we can take an existing <em>agent</em> and write that <em>agent</em>'s
-validation plan to a YAML file. With <strong>pointblank</strong> YAML, we can modify the
-YAML markup if so desired, or, use as is to create a new agent with the
-<code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code> function. That <em>agent</em> will have a validation plan and is
-ready to <code><a href='interrogate.html'>interrogate()</a></code> the data. We can go a step further and perform an
-interrogation directly from the YAML file with the <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></code>
-function. That returns an agent with intel (having already interrogated the
-target data table). An <em>informant</em> object can also be written to YAML with
-<code>yaml_write()</code>.</p>
-<p>One requirement for writing the <em>agent</em> to YAML is that we need to have
-table-reading function (<code>read_fn</code>) specified (it's a function that is used to
-read the target table when <code><a href='interrogate.html'>interrogate()</a></code> is called). This option can be set
-when using <code><a href='create_agent.html'>create_agent()</a></code> or with <code><a href='set_read_fn.html'>set_read_fn()</a></code> (for use with an existing
-<em>agent</em>).</p>
+    <p>The <code>yaml_agent_interrogate()</code> function operates much like the
+<code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code> function (reading a <strong>pointblank</strong> YAML file and
+generating an <em>agent</em> with a validation plan in place). The key difference is
+that this function takes things a step function and interrogates the target
+table (defined by table-reading, <code>read_fn</code>, function that is required in the
+YAML file). The additional auto-invocation of <code><a href='interrogate.html'>interrogate()</a></code> uses the
+default options of that function. As with <code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code> the agent is
+returned except, this time, it has intel from the interrogation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>yaml_write</span>(agent = <span class='kw'>NULL</span>, informant = <span class='kw'>NULL</span>, <span class='kw'>filename</span>, path = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>yaml_agent_interrogate</span>(<span class='kw'>path</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>agent</th>
-      <td><p>An <em>agent</em> object of class <code>ptblank_agent</code>.</p></td>
-    </tr>
-    <tr>
-      <th>informant</th>
-      <td><p>An <em>informant</em> object of class <code>ptblank_informant</code>.</p></td>
-    </tr>
-    <tr>
-      <th>filename</th>
-      <td><p>The name of the YAML file to create on disk. It is
-recommended that either the <code>.yaml</code> or <code>.yml</code> extension be used for this
-file.</p></td>
-    </tr>
-    <tr>
       <th>path</th>
-      <td><p>An optional path to which the YAML file should be saved (combined
-with <code>filename</code>).</p></td>
+      <td><p>A path to a YAML file that specifies a validation plan for an
+<em>agent</em>.</p></td>
     </tr>
     </table>
 
@@ -181,14 +155,14 @@ with <code>filename</code>).</p></td>
 
     
 
-<p>7-1</p>
+<p>7-3</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other pointblank YAML: 
-<code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate</a>()</code>,
 <code><a href='yaml_agent_show_exprs.html'>yaml_agent_show_exprs</a>()</code>,
 <code><a href='yaml_agent_string.html'>yaml_agent_string</a>()</code>,
-<code><a href='yaml_read_agent.html'>yaml_read_agent</a>()</code></p></div>
+<code><a href='yaml_read_agent.html'>yaml_read_agent</a>()</code>,
+<code><a href='yaml_write.html'>yaml_write</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Let's go through the process of</span>
@@ -196,7 +170,10 @@ with <code>filename</code>).</p></td>
 <span class='co'># plan (to be used for the data quality</span>
 <span class='co'># analysis of the `small_table` dataset),</span>
 <span class='co'># and then offloading that validation</span>
-<span class='co'># plan to a pointblank YAML file</span>
+<span class='co'># plan to a pointblank YAML file; this</span>
+<span class='co'># will later be read in as a new agent and</span>
+<span class='co'># the target data will be interrogated</span>
+<span class='co'># (one step) with `yaml_agent_interrogate()`</span>
 
 <span class='co'># We ought to think about what's</span>
 <span class='co'># tolerable in terms of data quality so</span>
@@ -245,8 +222,7 @@ with <code>filename</code>).</p></td>
 <span class='co'># )</span>
 
 <span class='co'># The 'agent-small_table.yml' file is</span>
-<span class='co'># available in the package through</span>
-<span class='co'># `system.file()`</span>
+<span class='co'># available in the package through `system.file()`</span>
 <span class='kw'>yml_file</span> <span class='op'>&lt;-</span> 
   <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(
     <span class='st'>"agent-small_table.yml"</span>,
@@ -303,25 +279,23 @@ with <code>filename</code>).</p></td>
 #&gt; <span class='message'>- col_vals_lte:</span>
 #&gt; <span class='message'>    columns: vars(c)</span>
 #&gt; <span class='message'>    value: 5.0</span></div><div class='input'>
-<span class='co'># At a later time, the YAML file can</span>
-<span class='co'># be read into a new agent with the</span>
-<span class='co'># `yaml_read_agent()` function</span>
-<span class='kw'>agent</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='yaml_read_agent.html'>yaml_read_agent</a></span>(path = <span class='kw'>yml_file</span>)
-
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>agent</span>)
-</div><div class='output co'>#&gt; [1] "ptblank_agent"</div><div class='input'>
 <span class='co'># We can interrogate the data (which</span>
 <span class='co'># is accessible through the `read_fn`)</span>
-<span class='co'># with `interrogate()` and get an</span>
-<span class='co'># agent with intel, or, we can</span>
-<span class='co'># interrogate directly from the YAML</span>
-<span class='co'># file with `yaml_agent_interrogate()`</span>
+<span class='co'># through direct use of the YAML file</span>
+<span class='co'># with `yaml_agent_interrogate()`</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate</a></span>(path = <span class='kw'>yml_file</span>)
+  <span class='fu'>yaml_agent_interrogate</span>(path = <span class='kw'>yml_file</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>agent</span>)
 </div><div class='output co'>#&gt; [1] "has_intel"     "ptblank_agent"</div><div class='input'>
+<span class='co'># If it's desired to only create a new</span>
+<span class='co'># agent with the validation plan in place</span>
+<span class='co'># (stopping short of interrogating the data),</span>
+<span class='co'># then the `yaml_read_agent()` function</span>
+<span class='co'># will be useful</span>
+<span class='kw'>agent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='yaml_read_agent.html'>yaml_read_agent</a></span>(path = <span class='kw'>yml_file</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>agent</span>)
+</div><div class='output co'>#&gt; [1] "ptblank_agent"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

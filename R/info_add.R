@@ -50,9 +50,9 @@
 #' 
 #' # The YAML file can then be read back
 #' # into an informant object with the
-#' # `meta_yaml_read()` function
+#' # `yaml_read_informant()` function
 #' # informant <-
-#' #   meta_yaml_read(path = "informant.yml")
+#' #   yaml_read_informant(path = "informant.yml")
 #'
 #' @export
 info_tabular <- function(x,
@@ -151,9 +151,9 @@ info_tabular <- function(x,
 #' 
 #' # The YAML file can then be read back
 #' # into an informant object with the
-#' # `meta_yaml_read()` function
+#' # `yaml_read_informant()` function
 #' # informant <-
-#' #   meta_yaml_read(path = "informant.yml")
+#' #   yaml_read_informant(path = "informant.yml")
 #'
 #' @export
 info_columns <- function(x,
@@ -263,9 +263,9 @@ info_columns <- function(x,
 #' 
 #' # The YAML file can then be read back
 #' # into an informant object with the
-#' # `meta_yaml_read()` function
+#' # `yaml_read_informant()` function
 #' # informant <-
-#' #   meta_yaml_read(path = "informant.yml")
+#' #   yaml_read_informant(path = "informant.yml")
 #'
 #' @export
 info_section <- function(x,

@@ -325,7 +325,7 @@ get_informant_report <- function(informant) {
   gt::gt(
     tbl,
     groupname_col = "group",
-    id = "metadata"
+    id = "pb_information"
   ) %>%
     gt::tab_header(
       title = "Pointblank Information",
@@ -389,27 +389,27 @@ get_informant_report <- function(informant) {
     gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) %>%
     gt::opt_css(
       css = "
-          #metadata p {
+          #pb_information p {
             overflow: visible;
             margin-top: 2px;
             margin-left: 0;
             margin-right: 0;
             margin-bottom: 5px;
           }
-          #metadata ul {
+          #pb_information ul {
             list-style-type: square;
             padding-left: 25px;
             margin-top: -4px;
             margin-bottom: 6px;
           }
-          #metadata li {
+          #pb_information li {
             text-indent: -1px;
           }
-          #metadata code {
+          #pb_information code {
             font-family: 'IBM Plex Mono', monospace, courier;
             font-size: 13px;
           }
-          #metadata .pb_date {
+          #pb_information .pb_date {
             text-decoration-style: solid;
             text-decoration-color: #9933CC;
             text-decoration-line: underline;
@@ -417,20 +417,20 @@ get_informant_report <- function(informant) {
             font-variant-numeric: tabular-nums;
             margin-right: 4px;
           }
-          #metadata .pb_label {
+          #pb_information .pb_label {
             border: solid 1px gray;
             padding: 0px 3px 0px 3px;
             margin-left: 2px;
             margin-right: 2px;
           }
-          #metadata .pb_sub_label {
+          #pb_information .pb_sub_label {
             font-size: smaller;
             color: #777777;
           }
-          #metadata .pb_col_type {
+          #pb_information .pb_col_type {
             font-size: 11px;
           }
-          #metadata .gt_sourcenote {
+          #pb_information .gt_sourcenote {
             height: 35px;
             padding: 0
           }
@@ -438,4 +438,195 @@ get_informant_report <- function(informant) {
     )
   
   # nocov end
+}
+
+add_to_tbl <- function(tbl, item, group) {
+  dplyr::bind_rows(tbl, dplyr::tibble(group = group, item = item))
+}
+
+title_text_md <- function(item,
+                          use_title = TRUE,
+                          title_level = 4,
+                          title_code = FALSE,
+                          elements = "vertical") {
+  
+  title <- names(item)
+  item <- unname(unlist(item))
+  
+  # Process item with text transformers
+  for (i in seq_along(item)) {
+    
+    # Dates
+    if (grepl("\\([1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]\\)", item[i])) {
+      
+      for (j in 1:10) {
+        item[i] <- 
+          gsub(
+            "(.*)\\(([1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9])\\)(.*)",
+            "\\1<span class=\"pb_date\">\\2</span>\\3",
+            item[i]
+          )
+      }
+    }
+    
+    # Labels
+    if (grepl("\\([A-Z][A-Z_]{1,}[A-Z]\\)", item[i])) {
+      
+      for (j in 1:10) {
+        item[i] <-
+          gsub(
+            "(.*)\\(([A-Z][A-Z_]{1,}[A-Z])\\)(.*)",
+            "\\1<span class=\"pb_label\">\\2</span>\\3",
+            item[i]
+          )
+      }
+    }
+  }
+  
+  if (elements == "vertical") {
+    
+    item <- paste(item, collapse = "\n\n")
+    
+    if (use_title) {
+      
+      if (!title_code) {
+        title <- gsub("_", " ", toupper(title))
+      }
+      
+      item <- 
+        paste0(
+          "<",
+          ifelse(title_code, "code", "h"),
+          ifelse(title_code, "", as.character(title_level)), " ",
+          "style=\"margin-bottom:5px;",
+          ifelse(
+            title_code,
+            paste0(
+              "font-weight:bold;line-height:2em;",
+              "border:solid 1px #499FFE;",
+              "padding:2px 8px 3px 8px;background-color:#FAFAFA;"
+            ),
+            ""
+          ),
+          "\">",
+          title, "</", ifelse(title_code, "code", "h"),
+          ifelse(title_code, "", as.character(title_level)), ">\n\n",
+          item
+        )
+    }
+    
+  } else if (elements == "horizontal") {
+    
+    item <- paste(item, collapse = " &mdash; ")
+    
+    if (use_title) {
+      
+      if (!title_code) {
+        title <- gsub("_", " ", toupper(title))
+      }
+      
+      item <- 
+        paste0(
+          "<span style=\"font-size:1.17em;font-weight:bold;\">",
+          ifelse(title_code, "<code style=\"font-weight:bold;margin-bottom:2px;\">", ""),
+          title,
+          ifelse(title_code, "</code>", ""),
+          "</span>&nbsp;&nbsp;",
+          item
+        )
+    }
+  }
+  
+  item
+}
+
+make_info_label_html <- function(info_label) {
+  
+  htmltools::tags$span(
+    info_label,
+    style = htmltools::css(
+      `text-decoration-style` = "solid",
+      `text-decoration-color` = "#ADD8E6",
+      `text-decoration-line` = "underline",
+      `text-underline-position` = "under",
+      color = "#333333",
+      `font-variant-numeric` = "tabular-nums",
+      `padding-left` = "4px",
+      `margin-right` = "5px",
+      `padding-right` = "2px"
+    )
+  ) %>% as.character()
+}
+
+make_table_dims_html <- function(columns = NULL, rows = NULL) {
+  
+  if (is.null(columns) && is.null(rows)) {
+    return("")
+  }
+  
+  columns <- columns %||% "&mdash;"
+  rows <- rows %||% "&mdash;"
+  
+  as.character(
+    htmltools::tagList(
+      htmltools::tags$span(
+        "ROWS",
+        style = htmltools::css(
+          `background-color` = "#eecbff",
+          color = "#333333",
+          padding = "0.5em 0.5em",
+          position = "inherit",
+          `text-transform` = "uppercase",
+          margin = "5px 0px 5px 5px",
+          `font-weight` = "bold",
+          border = paste0("solid 1px #eecbff"),
+          padding = "2px 15px 2px 15px",
+          `font-size` = "smaller"
+        )
+      ),
+      htmltools::tags$span(
+        htmltools::HTML(rows),
+        style = htmltools::css(
+          `background-color` = "none",
+          color = "#333333",
+          padding = "0.5em 0.5em",
+          position = "inherit",
+          margin = "5px 0px 5px -4px",
+          `font-weight` = "bold",
+          border = paste0("solid 1px #eecbff"),
+          padding = "2px 15px 2px 15px",
+          `font-size` = "smaller"
+        )
+      ),
+      htmltools::tags$span(
+        "COLUMNS",
+        style = htmltools::css(
+          `background-color` = "#BDE7B4",
+          color = "#333333",
+          padding = "0.5em 0.5em",
+          position = "inherit",
+          `text-transform` = "uppercase",
+          margin = "5px 0px 5px 1px",
+          `font-weight` = "bold",
+          border = paste0("solid 1px #BDE7B4"),
+          padding = "2px 15px 2px 15px",
+          `font-size` = "smaller"
+        )
+      ),
+      htmltools::tags$span(
+        htmltools::HTML(columns),
+        style = htmltools::css(
+          `background-color` = "none",
+          color = "#333333",
+          padding = "0.5em 0.5em",
+          position = "inherit",
+          margin = "5px 0px 5px -4px",
+          `font-weight` = "bold",
+          border = paste0("solid 1px #BDE7B4"),
+          padding = "2px 15px 2px 15px",
+          `font-size` = "smaller"
+        )
+      )
+    )
+  )
 }

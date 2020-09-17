@@ -22,9 +22,9 @@ with \code{filename}).}
 With \code{yaml_write()} we can take an existing \emph{agent} and write that \emph{agent}'s
 validation plan to a YAML file. With \strong{pointblank} YAML, we can modify the
 YAML markup if so desired, or, use as is to create a new agent with the
-\code{\link[=agent_yaml_read]{agent_yaml_read()}} function. That \emph{agent} will have a validation plan and is
+\code{\link[=yaml_read_agent]{yaml_read_agent()}} function. That \emph{agent} will have a validation plan and is
 ready to \code{\link[=interrogate]{interrogate()}} the data. We can go a step further and perform an
-interrogation directly from the YAML file with the \code{\link[=agent_yaml_interrogate]{agent_yaml_interrogate()}}
+interrogation directly from the YAML file with the \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}
 function. That returns an agent with intel (having already interrogated the
 target data table). An \emph{informant} object can also be written to YAML with
 \code{yaml_write()}.
@@ -104,18 +104,18 @@ yml_file <-
   )
 
 # We can view the YAML file in the console
-# with the `agent_yaml_string()` function
-agent_yaml_string(path = yml_file)
+# with the `yaml_agent_string()` function
+yaml_agent_string(path = yml_file)
 
 # The YAML can also be printed in the console
 # by supplying the agent as the input
-agent_yaml_string(agent = agent)
+yaml_agent_string(agent = agent)
 
 # At a later time, the YAML file can
 # be read into a new agent with the
-# `agent_yaml_read()` function
+# `yaml_read_agent()` function
 agent <- 
-  agent_yaml_read(path = yml_file)
+  yaml_read_agent(path = yml_file)
 
 class(agent)
 
@@ -124,18 +124,18 @@ class(agent)
 # with `interrogate()` and get an
 # agent with intel, or, we can
 # interrogate directly from the YAML
-# file with `agent_yaml_interrogate()`
+# file with `yaml_agent_interrogate()`
 agent <- 
-  agent_yaml_interrogate(path = yml_file)
+  yaml_agent_interrogate(path = yml_file)
 
 class(agent)
 
 }
 \seealso{
 Other pointblank YAML: 
-\code{\link{agent_yaml_interrogate}()},
-\code{\link{agent_yaml_read}()},
-\code{\link{agent_yaml_show_exprs}()},
-\code{\link{agent_yaml_string}()}
+\code{\link{yaml_agent_interrogate}()},
+\code{\link{yaml_agent_show_exprs}()},
+\code{\link{yaml_agent_string}()},
+\code{\link{yaml_read_agent}()}
 }
 \concept{pointblank YAML}

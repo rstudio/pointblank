@@ -114,9 +114,9 @@ meta_yaml_read <- function(path) {
   
   # Perform checks on elements of `y`
   # TODO: Add checks for actions and steps (and other key elements)
-  check_meta_yaml_table(y)
-  check_meta_yaml_columns(y)
-  check_meta_yaml_others(y)
+  check_info_yaml_table(y)
+  check_info_yaml_columns(y)
+  check_info_yaml_others(y)
 
   # Create the metadata list object
   metadata <-
@@ -136,7 +136,7 @@ meta_yaml_read <- function(path) {
   metadata
 }
 
-check_meta_yaml_table <- function(y) {
+check_info_yaml_table <- function(y) {
   
   # If `table` is present, perform a few validations on that component
   if ("table" %in% names(y)) {
@@ -167,7 +167,7 @@ check_meta_yaml_table <- function(y) {
   }
 }
 
-check_meta_yaml_columns <- function(y) {
+check_info_yaml_columns <- function(y) {
   
   # If `columns` is present, perform a few validations on that component
   if ("columns" %in% names(y)) {
@@ -202,7 +202,7 @@ check_meta_yaml_columns <- function(y) {
   }
 }
 
-check_meta_yaml_others <- function(y) {
+check_info_yaml_others <- function(y) {
   
   # If any other items are present, perform a few validations on those
   exclusions <- c("table", "columns", "actions", "steps")

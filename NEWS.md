@@ -14,7 +14,7 @@
 
 * You can also just print the *informant* object to show the information report thanks to a new print method for this purpose. 
 
-* The *informant* object can be written to **pointblank** YAML using the revised `yaml_write()` (previously `agent_yaml_write()`) function. We can actually write both the *agent* and the *informant* to the same YAML file which is useful since both objects share the same target table.
+* The *informant* object can be written to **pointblank** YAML using the revised `yaml_write()` (previously `agent_yaml_write()`) function. We can actually write both the *agent* and the *informant* to the same YAML file which is useful since both objects share the same target table. Reading is done with the `yaml_read_agent()` and `yaml_read_informant()` functions.
 
 ## Translations and Locales
 
@@ -29,6 +29,8 @@
 ## Breaking changes
 
 * The `yaml_write()` function replaces the `agent_yaml_write()` function. The new function works to write the *agent*, the *metadata* object, or both, to YAML.
+
+* The names of more YAML functions have been changed, the final roster now consists of: `yaml_write()`, `yaml_read_agent()`, `yaml_read_informant()`, `yaml_agent_interrogate()`, `yaml_agent_string()`, and `yaml_agent_show_exprs()`.
 
 ## Minor improvements and bug fixes
 

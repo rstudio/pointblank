@@ -2,25 +2,25 @@
 % Please edit documentation in R/incorporate.R
 \name{incorporate}
 \alias{incorporate}
-\title{Given a metadata object, update and incorporate table snippets}
+\title{Given an \emph{informant} object, update and incorporate table snippets}
 \usage{
-incorporate(metadata)
+incorporate(informant)
 }
 \arguments{
-\item{metadata}{A metadata object of class \code{ptblank_metadata}.}
+\item{informant}{An informant object of class \code{ptblank_informant}.}
 }
 \value{
-A \code{ptblank_metadata} object.
+A \code{ptblank_informant} object.
 }
 \description{
-When the \emph{metadata} object has a number of snippets available (by using
-\code{\link[=meta_snippet]{meta_snippet()}}) and the strings to use them (by using the \verb{meta_*()}
+When the \emph{informant} object has a number of snippets available (by using
+\code{\link[=info_snippet]{info_snippet()}}) and the strings to use them (by using the \verb{info_*()}
 functions and \verb{\{<snippet_name>\}} in the text elements), the process of
-incorporating aspects of the table into the metadata text can occur by
-using the \code{incorporate()} function. After that, the metadata will fully
-updated (getting the current state of table dimensions, rerendering the
-metadata text, etc.) and we can print the \emph{metadata} object or use the
-\code{\link[=get_metadata_report]{get_metadata_report()}} function to see the metadata report.
+incorporating aspects of the table into the info text can occur by
+using the \code{incorporate()} function. After that, the information will be fully
+updated (getting the current state of table dimensions, re-rendering the
+info text, etc.) and we can print the \emph{informant} object or use the
+\code{\link[=get_informant_report]{get_informant_report()}} function to see the information report.
 }
 \examples{
 # Take the `small_table` and
@@ -28,46 +28,45 @@ metadata text, etc.) and we can print the \emph{metadata} object or use the
 # modify it later
 test_table <- small_table
 
-# Generate a metadata object, add
-# two snippets with `meta_snippet()`,
-# add metadata with some other
-# `meta_*()` functions and then
+# Generate an informant object, add
+# two snippets with `info_snippet()`,
+# add information with some other
+# `info_*()` functions and then
 # `incorporate()` the snippets into
-# the metadata text
-metadata <- 
-  create_metadata(
+# the info text
+informant <- 
+  create_informant(
     read_fn = ~test_table,
     tbl_name = "test_table"
   ) \%>\%
-  meta_snippet(
+  info_snippet(
     snippet_name = "row_count",
     fn = ~ . \%>\% nrow()
   ) \%>\%
-  meta_snippet(
+  info_snippet(
     snippet_name = "col_count",
     fn = ~ . \%>\% ncol()
   ) \%>\%
-  meta_columns(
+  info_columns(
     columns = vars(a),
     info = "In the range of 1 to 10. (SIMPLE)"
   ) \%>\%
-  meta_columns(
+  info_columns(
     columns = starts_with("date"),
     info = "Time-based values (e.g., `Sys.time()`)."
   ) \%>\%
-  meta_columns(
+  info_columns(
     columns = "date",
     info = "The date part of `date_time`. (CALC)"
   ) \%>\%
-  meta_section(
+  info_section(
     section_name = "rows",
     row_count = "There are {row_count} rows available."
   ) \%>\%
   incorporate()
 
-# We can print the `metadata`
-# object to see the metadata report
-# metadata
+# We can print the `informant` object
+# to see the information report
 
 # Let's modify `test_table` to give
 # it more rows and an extra column
@@ -78,6 +77,7 @@ test_table <-
 # Using `incorporate()` will cause
 # the snippets to be reprocessed, and,
 # the strings to be updated
-# metadata \%>\% incorporate()
+informant <-
+  informant \%>\% incorporate()
 
 }

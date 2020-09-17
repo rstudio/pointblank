@@ -1,4 +1,4 @@
-#' Write an agent and metadata to a **pointblank** YAML file
+#' Write an *agent* and *informant* to a **pointblank** YAML file
 #' 
 #' @description 
 #' With `yaml_write()` we can take an existing *agent* and write that *agent*'s
@@ -8,7 +8,7 @@
 #' ready to [interrogate()] the data. We can go a step further and perform an
 #' interrogation directly from the YAML file with the [agent_yaml_interrogate()]
 #' function. That returns an agent with intel (having already interrogated the
-#' target data table). A metadata object can also be written to YAML with
+#' target data table). An *informant* object can also be written to YAML with
 #' `yaml_write()`.
 #'
 #' One requirement for writing the *agent* to YAML is that we need to have
@@ -18,7 +18,7 @@
 #' *agent*).
 #' 
 #' @param agent An *agent* object of class `ptblank_agent`.
-#' @param metadata A metadata object of class `ptblank_metadata`.
+#' @param informant An *informant* object of class `ptblank_informant`.
 #' @param filename The name of the YAML file to create on disk. It is
 #'   recommended that either the `.yaml` or `.yml` extension be used for this
 #'   file.
@@ -121,25 +121,25 @@
 #' 
 #' @export
 yaml_write <- function(agent = NULL,
-                       metadata = NULL,
+                       informant = NULL,
                        filename,
                        path = NULL) {
-  
+
   if (!is.null(path)) {
     filename <- file.path(path, filename)
   }
   
-  if (is.null(agent) && is.null(metadata)) {
-    stop("An agent or metadata object must be supplied to `yaml_write()`.",
+  if (is.null(agent) && is.null(informant)) {
+    stop("An agent or informant object must be supplied to `yaml_write()`.",
          call. = FALSE)
   }
 
-  if (!is.null(agent) && !is.null(metadata)) {
-    x <- c(as_agent_yaml_list(agent), metadata$metadata)
+  if (!is.null(agent) && !is.null(informant)) {
+    x <- c(as_agent_yaml_list(agent), informant$metadata)
   } else if (!is.null(agent)) {
     x <- as_agent_yaml_list(agent)
   } else {
-    x <- metadata$metadata
+    x <- informant$metadata
   }
   
   yaml::write_yaml(

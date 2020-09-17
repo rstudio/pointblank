@@ -1,17 +1,17 @@
-#' Given a metadata object, update and incorporate table snippets
+#' Given an *informant* object, update and incorporate table snippets
 #' 
-#' When the *metadata* object has a number of snippets available (by using
-#' [meta_snippet()]) and the strings to use them (by using the `meta_*()`
+#' When the *informant* object has a number of snippets available (by using
+#' [info_snippet()]) and the strings to use them (by using the `info_*()`
 #' functions and `{<snippet_name>}` in the text elements), the process of
-#' incorporating aspects of the table into the metadata text can occur by
-#' using the `incorporate()` function. After that, the metadata will fully
-#' updated (getting the current state of table dimensions, rerendering the
-#' metadata text, etc.) and we can print the *metadata* object or use the
-#' [get_metadata_report()] function to see the metadata report.
+#' incorporating aspects of the table into the info text can occur by
+#' using the `incorporate()` function. After that, the information will be fully
+#' updated (getting the current state of table dimensions, re-rendering the
+#' info text, etc.) and we can print the *informant* object or use the
+#' [get_informant_report()] function to see the information report.
 #' 
-#' @param metadata A metadata object of class `ptblank_metadata`.
+#' @param informant An informant object of class `ptblank_informant`.
 #' 
-#' @return A `ptblank_metadata` object.
+#' @return A `ptblank_informant` object.
 #' 
 #' @examples 
 #' # Take the `small_table` and
@@ -19,46 +19,45 @@
 #' # modify it later
 #' test_table <- small_table
 #' 
-#' # Generate a metadata object, add
-#' # two snippets with `meta_snippet()`,
-#' # add metadata with some other
-#' # `meta_*()` functions and then
+#' # Generate an informant object, add
+#' # two snippets with `info_snippet()`,
+#' # add information with some other
+#' # `info_*()` functions and then
 #' # `incorporate()` the snippets into
-#' # the metadata text
-#' metadata <- 
-#'   create_metadata(
+#' # the info text
+#' informant <- 
+#'   create_informant(
 #'     read_fn = ~test_table,
 #'     tbl_name = "test_table"
 #'   ) %>%
-#'   meta_snippet(
+#'   info_snippet(
 #'     snippet_name = "row_count",
 #'     fn = ~ . %>% nrow()
 #'   ) %>%
-#'   meta_snippet(
+#'   info_snippet(
 #'     snippet_name = "col_count",
 #'     fn = ~ . %>% ncol()
 #'   ) %>%
-#'   meta_columns(
+#'   info_columns(
 #'     columns = vars(a),
 #'     info = "In the range of 1 to 10. (SIMPLE)"
 #'   ) %>%
-#'   meta_columns(
+#'   info_columns(
 #'     columns = starts_with("date"),
 #'     info = "Time-based values (e.g., `Sys.time()`)."
 #'   ) %>%
-#'   meta_columns(
+#'   info_columns(
 #'     columns = "date",
 #'     info = "The date part of `date_time`. (CALC)"
 #'   ) %>%
-#'   meta_section(
+#'   info_section(
 #'     section_name = "rows",
 #'     row_count = "There are {row_count} rows available."
 #'   ) %>%
 #'   incorporate()
 #' 
-#' # We can print the `metadata`
-#' # object to see the metadata report
-#' # metadata
+#' # We can print the `informant` object
+#' # to see the information report
 #' 
 #' # Let's modify `test_table` to give
 #' # it more rows and an extra column
@@ -69,15 +68,16 @@
 #' # Using `incorporate()` will cause
 #' # the snippets to be reprocessed, and,
 #' # the strings to be updated
-#' # metadata %>% incorporate()
+#' informant <-
+#'   informant %>% incorporate()
 #' 
 #' @export
-incorporate <- function(metadata) {
+incorporate <- function(informant) {
   
-  # Get the target table for this metadata object
+  # Get the target table for this informant object
   # TODO: Use the same scheme as the `agent` does
-  tbl <- metadata$tbl
-  read_fn <- metadata$read_fn
+  tbl <- informant$tbl
+  read_fn <- informant$read_fn
   
   # TODO: Verify that either `tbl` or `read_fn` is available
   
@@ -122,42 +122,42 @@ incorporate <- function(metadata) {
   # Incorporate snippets
   #
   
-  meta_snippets <- metadata$meta_snippets
+  meta_snippets <- informant$meta_snippets
 
   for (i in seq_along(meta_snippets)) {
     
     snippet_fn <- 
-      metadata$meta_snippets[[i]] %>%
+      informant$meta_snippets[[i]] %>%
       rlang::f_rhs() %>%
       rlang::eval_tidy()
     
     if (inherits(snippet_fn, "fseq")) {
       
       snippet <- snippet_fn(tbl)
-      assign(x = names(metadata$meta_snippets[i]), value = snippet)
+      assign(x = names(informant$meta_snippets[i]), value = snippet)
     }
   }
   
   metadata_meta_label <- 
-    glue_safely(metadata$metadata[["meta_label"]], .otherwise = "(SNIPPET MISSING)")
+    glue_safely(informant$metadata[["info_label"]], .otherwise = "(SNIPPET MISSING)")
   
   metadata_table <-
-    lapply(metadata$metadata[["table"]], function(x) {
+    lapply(informant$metadata[["table"]], function(x) {
       glue_safely(x, .otherwise = "(SNIPPET MISSING)")
     })
   
   metadata_columns <- 
-    lapply(metadata$metadata[["columns"]], lapply, function(x) {
+    lapply(informant$metadata[["columns"]], lapply, function(x) {
       glue_safely(x, .otherwise = "(SNIPPET MISSING)")
     })
   
   extra_sections <- 
     base::setdiff(
-      names(metadata$metadata),
-      c("meta_label", "table", "columns")
+      names(informant$metadata),
+      c("info_label", "table", "columns")
     )
   
-  metadata_extra <- metadata$metadata[extra_sections]
+  metadata_extra <- informant$metadata[extra_sections]
   
   for (i in seq_along(extra_sections)) {
     
@@ -169,7 +169,7 @@ incorporate <- function(metadata) {
   
   metadata_rev <-
     c(
-      list(meta_label = metadata_meta_label),
+      list(info_label = metadata_meta_label),
       list(table = metadata_table),
       list(columns = metadata_columns),
       metadata_extra,
@@ -180,6 +180,6 @@ incorporate <- function(metadata) {
   metadata_rev$table$`_rows` <- as.character(table.rows)
   metadata_rev$table$`_type` <- table.type
   
-  metadata$metadata_rev <- metadata_rev
-  metadata
+  informant$metadata_rev <- metadata_rev
+  informant
 }

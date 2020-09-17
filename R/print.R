@@ -37,21 +37,21 @@ knit_print.ptblank_agent <- function(x, ...) {
 }
 
 
-#' Print the metadata information
+#' Print the table information report
 #'
-#' This function will allow the metadata to be nicely printed.
+#' This function will allow the table information to be nicely printed.
 #' 
-#' @param x An metadata object of class `ptblank_agent`.
+#' @param x An informant object of class `ptblank_informant`.
 #' @param view The value for `print()`s `browse` argument.
 #' @param ... Any additional parameters.
 #' 
 #' @keywords internal
 #' @export
-print.ptblank_metadata <- function(x, view = interactive(), ...) {
+print.ptblank_informant <- function(x, view = interactive(), ...) {
   
   # nocov start 
   
-  print(get_metadata_report(x), view = view, ...)
+  print(get_informant_report(x), view = view, ...)
   
   # nocov end 
 }

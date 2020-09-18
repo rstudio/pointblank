@@ -54,6 +54,10 @@
 #' # informant <-
 #' #   yaml_read_informant(path = "informant.yml")
 #'
+#' @family Information Functions
+#' @section Function ID:
+#' 3-1
+#'
 #' @export
 info_tabular <- function(x,
                          ...) {
@@ -154,6 +158,10 @@ info_tabular <- function(x,
 #' # `yaml_read_informant()` function
 #' # informant <-
 #' #   yaml_read_informant(path = "informant.yml")
+#'
+#' @family Information Functions
+#' @section Function ID:
+#' 3-2
 #'
 #' @export
 info_columns <- function(x,
@@ -266,6 +274,10 @@ info_columns <- function(x,
 #' # `yaml_read_informant()` function
 #' # informant <-
 #' #   yaml_read_informant(path = "informant.yml")
+#'
+#' @family Information Functions
+#' @section Function ID:
+#' 3-3
 #'
 #' @export
 info_section <- function(x,
@@ -393,6 +405,10 @@ info_section <- function(x,
 #' # the info text to be updated
 #' informant <-
 #'   informant %>% incorporate()
+#' 
+#' @family Information Functions
+#' @section Function ID:
+#' 3-4
 #' 
 #' @export
 info_snippet <- function(x,

@@ -24,6 +24,10 @@
 #'   data table is removed before writing to disk. For database tables of the
 #'   class `tbl_dbi` and for Spark DataFrames (`tbl_spark`) the table is always
 #'   removed (even if `keep_tbl` is set to `TRUE`).
+#'   
+#' @family Agent Ops
+#' @section Function ID:
+#' 8-1
 #' 
 #' @export
 agent_write <- function(agent,
@@ -81,6 +85,10 @@ agent_write <- function(agent,
 #' @param path The path to the file that was previously written by
 #'   [agent_write()].
 #' 
+#' @family Agent Ops
+#' @section Function ID:
+#' 8-2
+#' 
 #' @export
 agent_read <- function(path) {
   readRDS(path)
@@ -99,6 +107,10 @@ agent_read <- function(path) {
 #' @param tbl The input table for the `agent`. This can be a data frame, a
 #'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Any table already
 #'   associated with the *agent* will be overwritten.
+#' 
+#' @family Agent Ops
+#' @section Function ID:
+#' 8-3
 #' 
 #' @export
 set_tbl <- function(agent,
@@ -147,6 +159,10 @@ set_tbl <- function(agent,
 #' @param agent An *agent* object of class `ptblank_agent` that is created with
 #'   [create_agent()].
 #'   
+#' @family Agent Ops
+#' @section Function ID:
+#' 8-4
+#'   
 #' @export
 remove_tbl <- function(agent) {
   
@@ -175,6 +191,10 @@ remove_tbl <- function(agent) {
 #'   function (e.g., `function() { <table reading code> }`) or, (2) with an R
 #'   formula expression (e.g., `~ { <table reading code> }`).
 #'
+#' @family Agent Ops
+#' @section Function ID:
+#' 8-5
+#'
 #' @export
 set_read_fn <- function(agent,
                         read_fn) {
@@ -193,6 +213,10 @@ set_read_fn <- function(agent,
 #' 
 #' @param agent An *agent* object of class `ptblank_agent` that is created with
 #'   [create_agent()].
+#'   
+#' @family Agent Ops
+#' @section Function ID:
+#' 8-6
 #'   
 #' @export
 remove_read_fn <- function(agent) {

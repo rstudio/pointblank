@@ -71,6 +71,10 @@
 #' informant <-
 #'   informant %>% incorporate()
 #' 
+#' @family Incorporate and Report
+#' @section Function ID:
+#' 6-1
+#' 
 #' @export
 incorporate <- function(informant) {
   

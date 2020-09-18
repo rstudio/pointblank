@@ -100,7 +100,7 @@
 #'   
 #' @family Emailing
 #' @section Function ID:
-#' 3-1
+#' 4-1
 #' 
 #' @export 
 email_blast <- function(x,
@@ -222,7 +222,7 @@ email_blast <- function(x,
 #' 
 #' @family Emailing
 #' @section Function ID:
-#' 3-2
+#' 4-2
 #' 
 #' @export 
 email_preview <- function(x,
@@ -258,7 +258,7 @@ check_msg_components_all_null <- function(msg_header, msg_body, msg_footer) {
 #' 
 #' @family Emailing
 #' @section Function ID:
-#' 3-3
+#' 4-3
 #' 
 #' @export
 stock_msg_body <- function() {
@@ -297,7 +297,7 @@ was initiated on {blastula::add_readable_time(x$time_start)}.
 #' 
 #' @family Emailing
 #' @section Function ID:
-#' 3-4
+#' 4-4
 #' 
 #' @export
 stock_msg_footer <- function() {

@@ -49,9 +49,9 @@
 #'   col_vals_gt(vars(a), 5) %>%
 #'   interrogate()
 #' 
-#' @family Interrogate
+#' @family Interrogate and Report
 #' @section Function ID:
-#' 4-1
+#' 5-1
 #' 
 #' @export
 interrogate <- function(agent,

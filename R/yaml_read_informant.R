@@ -107,6 +107,10 @@
 #' 
 #' class(informant)
 #' 
+#' @family pointblank YAML
+#' @section Function ID:
+#' 9-3
+#' 
 #' @export
 yaml_read_informant <- function(path) {
 
@@ -223,7 +227,7 @@ yaml_read_informant <- function(path) {
 #'
 #' @family pointblank YAML
 #' @section Function ID:
-#' 7-3
+#' 9-7
 #'
 #' @export
 yaml_informant_incorporate <- function(path) {

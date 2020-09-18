@@ -142,9 +142,9 @@
 #' # The standard report is 875px wide
 #' # the small one is 575px wide
 #' 
-#' @family Post-interrogation
+#' @family Interrogate and Report
 #' @section Function ID:
-#' 5-1
+#' 5-2
 #' 
 #' @export
 get_agent_report <- function(agent,

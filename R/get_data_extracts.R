@@ -54,7 +54,7 @@
 #' 
 #' @family Post-interrogation
 #' @section Function ID:
-#' 5-3
+#' 7-2
 #' 
 #' @export
 get_data_extracts <- function(agent,

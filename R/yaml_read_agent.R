@@ -233,7 +233,7 @@ yaml_agent_interrogate <- function(path) {
     rlang::eval_tidy()
 }
 
-#' Display validation expressions using *pointblank* YAML
+#' Display validation expressions using **pointblank** YAML
 #'
 #' The `yaml_agent_show_exprs()` function follows the specifications of a
 #' **pointblank** YAML file to generate and show the **pointblank** expressions

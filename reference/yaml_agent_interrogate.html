@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read a YAML file to interrogate a target table immediately — yaml_agent_interrogate • pointblank</title>
+<title>Get an agent from pointblank YAML and interrogate() — yaml_agent_interrogate • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,11 +46,11 @@
 
 
 
-<meta property="og:title" content="Read a YAML file to interrogate a target table immediately — yaml_agent_interrogate" />
+<meta property="og:title" content="Get an agent from pointblank YAML and interrogate() — yaml_agent_interrogate" />
 <meta property="og:description" content="The yaml_agent_interrogate() function operates much like the
 yaml_read_agent() function (reading a pointblank YAML file and
 generating an agent with a validation plan in place). The key difference is
-that this function takes things a step function and interrogates the target
+that this function takes things a step further and interrogates the target
 table (defined by table-reading, read_fn, function that is required in the
 YAML file). The additional auto-invocation of interrogate() uses the
 default options of that function. As with yaml_read_agent() the agent is
@@ -123,7 +123,7 @@ returned except, this time, it has intel from the interrogation." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read a YAML file to interrogate a target table immediately</h1>
+    <h1>Get an <em>agent</em> from <strong>pointblank</strong> YAML and <code>interrogate()</code></h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/yaml_read_agent.R'><code>R/yaml_read_agent.R</code></a></small>
     <div class="hidden name"><code>yaml_agent_interrogate.Rd</code></div>
     </div>
@@ -132,7 +132,7 @@ returned except, this time, it has intel from the interrogation." />
     <p>The <code>yaml_agent_interrogate()</code> function operates much like the
 <code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code> function (reading a <strong>pointblank</strong> YAML file and
 generating an <em>agent</em> with a validation plan in place). The key difference is
-that this function takes things a step function and interrogates the target
+that this function takes things a step further and interrogates the target
 table (defined by table-reading, <code>read_fn</code>, function that is required in the
 YAML file). The additional auto-invocation of <code><a href='interrogate.html'>interrogate()</a></code> uses the
 default options of that function. As with <code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code> the agent is
@@ -161,6 +161,7 @@ returned except, this time, it has intel from the interrogation.</p>
     <div class='dont-index'><p>Other pointblank YAML: 
 <code><a href='yaml_agent_show_exprs.html'>yaml_agent_show_exprs</a>()</code>,
 <code><a href='yaml_agent_string.html'>yaml_agent_string</a>()</code>,
+<code><a href='yaml_informant_incorporate.html'>yaml_informant_incorporate</a>()</code>,
 <code><a href='yaml_read_agent.html'>yaml_read_agent</a>()</code>,
 <code><a href='yaml_write.html'>yaml_write</a>()</code></p></div>
 
@@ -196,7 +197,7 @@ returned except, this time, it has intel from the interrogation.</p>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span> 
   <span class='fu'><a href='create_agent.html'>create_agent</a></span>(
     read_fn = <span class='op'>~</span><span class='kw'>small_table</span>,
-    label = <span class='st'>"example"</span>,
+    label = <span class='st'>"A simple example with the `small_table`."</span>,
     actions = <span class='kw'>al</span>
   )
 
@@ -232,8 +233,9 @@ returned except, this time, it has intel from the interrogation.</p>
 <span class='co'># We can view the YAML file in the console</span>
 <span class='co'># with the `yaml_agent_string()` function</span>
 <span class='fu'><a href='yaml_agent_string.html'>yaml_agent_string</a></span>(path = <span class='kw'>yml_file</span>)
-</div><div class='output co'>#&gt; <span class='message'>label: A simple example with the `small_table`.</span>
-#&gt; <span class='message'>read_fn: ~small_table</span>
+</div><div class='output co'>#&gt; <span class='message'>read_fn: ~small_table</span>
+#&gt; <span class='message'>tbl_name: small_table</span>
+#&gt; <span class='message'>label: A simple example with the `small_table`.</span>
 #&gt; <span class='message'>actions:</span>
 #&gt; <span class='message'>  warn_fraction: 0.1</span>
 #&gt; <span class='message'>  stop_fraction: 0.25</span>
@@ -257,12 +259,14 @@ returned except, this time, it has intel from the interrogation.</p>
 <span class='co'># The YAML can also be printed in the console</span>
 <span class='co'># by supplying the agent as the input</span>
 <span class='fu'><a href='yaml_agent_string.html'>yaml_agent_string</a></span>(agent = <span class='kw'>agent</span>)
-</div><div class='output co'>#&gt; <span class='message'>label: example</span>
-#&gt; <span class='message'>read_fn: ~small_table</span>
+</div><div class='output co'>#&gt; <span class='message'>read_fn: ~small_table</span>
+#&gt; <span class='message'>tbl_name: .na.character</span>
+#&gt; <span class='message'>label: A simple example with the `small_table`.</span>
 #&gt; <span class='message'>actions:</span>
 #&gt; <span class='message'>  warn_fraction: 0.1</span>
 #&gt; <span class='message'>  stop_fraction: 0.25</span>
 #&gt; <span class='message'>  notify_fraction: 0.35</span>
+#&gt; <span class='message'>locale: en</span>
 #&gt; <span class='message'>steps:</span>
 #&gt; <span class='message'>- col_exists:</span>
 #&gt; <span class='message'>    columns: vars(date)</span>

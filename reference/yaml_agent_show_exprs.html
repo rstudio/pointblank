@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Display pointblank expressions using a YAML file with a validation plan — yaml_agent_show_exprs • pointblank</title>
+<title>Display validation expressions using pointblank YAML — yaml_agent_show_exprs • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Display pointblank expressions using a YAML file with a validation plan — yaml_agent_show_exprs" />
+<meta property="og:title" content="Display validation expressions using pointblank YAML — yaml_agent_show_exprs" />
 <meta property="og:description" content="The yaml_agent_show_exprs() function follows the specifications of a
 pointblank YAML file to generate and show the pointblank expressions
 for generating the described validation plan. The expressions are shown in
@@ -122,7 +122,7 @@ written by hand." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Display <em>pointblank</em> expressions using a YAML file with a validation plan</h1>
+    <h1>Display validation expressions using <em>pointblank</em> YAML</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/yaml_read_agent.R'><code>R/yaml_read_agent.R</code></a></small>
     <div class="hidden name"><code>yaml_agent_show_exprs.Rd</code></div>
     </div>
@@ -159,6 +159,7 @@ written by hand.</p>
     <div class='dont-index'><p>Other pointblank YAML: 
 <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate</a>()</code>,
 <code><a href='yaml_agent_string.html'>yaml_agent_string</a>()</code>,
+<code><a href='yaml_informant_incorporate.html'>yaml_informant_incorporate</a>()</code>,
 <code><a href='yaml_read_agent.html'>yaml_read_agent</a>()</code>,
 <code><a href='yaml_write.html'>yaml_write</a>()</code></p></div>
 
@@ -171,7 +172,7 @@ written by hand.</p>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span> 
   <span class='fu'><a href='create_agent.html'>create_agent</a></span>(
     read_fn = <span class='op'>~</span><span class='kw'>small_table</span>,
-    label = <span class='st'>"example"</span>,
+    label = <span class='st'>"A simple example with the `small_table`."</span>,
     actions = <span class='fu'><a href='action_levels.html'>action_levels</a></span>(
       warn_at = <span class='fl'>0.10</span>,
       stop_at = <span class='fl'>0.25</span>,
@@ -194,7 +195,8 @@ written by hand.</p>
 <span class='co'># )</span>
 
 <span class='co'># The 'agent-small_table.yml' file is</span>
-<span class='co'># available in the package through `system.file()`</span>
+<span class='co'># available in the package through</span>
+<span class='co'># `system.file()`</span>
 <span class='kw'>yml_file</span> <span class='op'>&lt;-</span> 
   <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(
     <span class='st'>"agent-small_table.yml"</span>,
@@ -214,12 +216,13 @@ written by hand.</p>
 <span class='fu'>yaml_agent_show_exprs</span>(path = <span class='kw'>yml_file</span>)
 </div><div class='output co'>#&gt; <span class='message'>create_agent(</span>
 #&gt; <span class='message'>  read_fn = ~small_table,</span>
-#&gt; <span class='message'>  label = "A simple example with the `small_table`.",</span>
 #&gt; <span class='message'>  actions = action_levels(</span>
 #&gt; <span class='message'>    warn_at = 0.1,</span>
 #&gt; <span class='message'>    stop_at = 0.25,</span>
 #&gt; <span class='message'>    notify_at = 0.35</span>
-#&gt; <span class='message'>  )</span>
+#&gt; <span class='message'>  ),</span>
+#&gt; <span class='message'>  tbl_name = "small_table",</span>
+#&gt; <span class='message'>  label = "A simple example with the `small_table`."</span>
 #&gt; <span class='message'>) %&gt;%</span>
 #&gt; <span class='message'>col_exists(</span>
 #&gt; <span class='message'>  columns = vars(date)</span>

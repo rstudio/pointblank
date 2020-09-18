@@ -24,6 +24,11 @@ function. By providing a series of named arguments (in the form
 \code{entry_name = "The information."}), we can add more information that makes
 sense for describing the table as a whole.
 }
+\section{Function ID}{
+
+3-1
+}
+
 \examples{
 # Create a pointblank `informant`
 # object with `create_informant()`
@@ -65,3 +70,10 @@ informant <-
 #   yaml_read_informant(path = "informant.yml")
 
 }
+\seealso{
+Other Information Functions: 
+\code{\link{info_columns}()},
+\code{\link{info_section}()},
+\code{\link{info_snippet}()}
+}
+\concept{Information Functions}

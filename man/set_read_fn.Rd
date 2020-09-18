@@ -28,3 +28,17 @@ function. There are two ways to specify a \code{read_fn}: (1) using a function
 (e.g., \verb{function() \{ <table reading code> \}}) or, (2) with an R formula
 expression (e.g., \verb{~ \{ <table reading code> \}}).
 }
+\section{Function ID}{
+
+8-5
+}
+
+\seealso{
+Other Agent Ops: 
+\code{\link{agent_read}()},
+\code{\link{agent_write}()},
+\code{\link{remove_read_fn}()},
+\code{\link{remove_tbl}()},
+\code{\link{set_tbl}()}
+}
+\concept{Agent Ops}

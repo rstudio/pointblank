@@ -28,3 +28,17 @@ the \code{\link[=interrogate]{interrogate()}} function again. This is useful for
 over time and need periodic data quality assessments with the same validation
 steps (and more steps can be added as well).
 }
+\section{Function ID}{
+
+8-2
+}
+
+\seealso{
+Other Agent Ops: 
+\code{\link{agent_write}()},
+\code{\link{remove_read_fn}()},
+\code{\link{remove_tbl}()},
+\code{\link{set_read_fn}()},
+\code{\link{set_tbl}()}
+}
+\concept{Agent Ops}

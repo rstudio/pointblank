@@ -20,3 +20,17 @@ table or a table-reading function available in the \emph{agent} (\code{\link[=se
 can help in this regard if the the \code{read_fn} argument in \code{\link[=create_agent]{create_agent()}} was
 left as \code{NULL} when creating the \emph{agent}).
 }
+\section{Function ID}{
+
+8-4
+}
+
+\seealso{
+Other Agent Ops: 
+\code{\link{agent_read}()},
+\code{\link{agent_write}()},
+\code{\link{remove_read_fn}()},
+\code{\link{set_read_fn}()},
+\code{\link{set_tbl}()}
+}
+\concept{Agent Ops}

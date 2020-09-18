@@ -25,6 +25,11 @@ that make sense for those sections. Define a \code{section_name} and provide a
 series of named arguments (in the form \code{entry_name = "The information."}) to
 build the informational content for that section.
 }
+\section{Function ID}{
+
+3-3
+}
+
 \examples{
 # Create a pointblank `informant`
 # object with `create_informant()`
@@ -63,3 +68,10 @@ informant <-
 #   yaml_read_informant(path = "informant.yml")
 
 }
+\seealso{
+Other Information Functions: 
+\code{\link{info_columns}()},
+\code{\link{info_snippet}()},
+\code{\link{info_tabular}()}
+}
+\concept{Information Functions}

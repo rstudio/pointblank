@@ -21,3 +21,17 @@ the \emph{agent}. If no data table is associated with an \emph{agent}, setting o
 mean the data table takes precedence over table-reading function (settable in
 \code{\link[=create_agent]{create_agent()}}'s \code{read_fn} argument or with \code{\link[=set_read_fn]{set_read_fn()}}).
 }
+\section{Function ID}{
+
+8-3
+}
+
+\seealso{
+Other Agent Ops: 
+\code{\link{agent_read}()},
+\code{\link{agent_write}()},
+\code{\link{remove_read_fn}()},
+\code{\link{remove_tbl}()},
+\code{\link{set_read_fn}()}
+}
+\concept{Agent Ops}

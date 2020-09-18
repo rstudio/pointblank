@@ -22,6 +22,11 @@ updated (getting the current state of table dimensions, re-rendering the
 info text, etc.) and we can print the \emph{informant} object or use the
 \code{\link[=get_informant_report]{get_informant_report()}} function to see the information report.
 }
+\section{Function ID}{
+
+6-1
+}
+
 \examples{
 # Take the `small_table` and
 # assign it to `test_table`; we'll
@@ -81,3 +86,8 @@ informant <-
   informant \%>\% incorporate()
 
 }
+\seealso{
+Other Incorporate and Report: 
+\code{\link{get_informant_report}()}
+}
+\concept{Incorporate and Report}

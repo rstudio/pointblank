@@ -17,3 +17,17 @@ direct association of a data table (settable in \code{\link[=create_agent]{creat
 argument or with \code{\link[=set_tbl]{set_tbl()}}), where the table-reading function is no longer
 relevant.
 }
+\section{Function ID}{
+
+8-6
+}
+
+\seealso{
+Other Agent Ops: 
+\code{\link{agent_read}()},
+\code{\link{agent_write}()},
+\code{\link{remove_tbl}()},
+\code{\link{set_read_fn}()},
+\code{\link{set_tbl}()}
+}
+\concept{Agent Ops}

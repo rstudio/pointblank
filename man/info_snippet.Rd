@@ -27,6 +27,11 @@ once those snippets are defined, you can insert them into the info text as
 defined through the \verb{info_*()} functions. Just use curly braces with the
 \code{snippet_name} inside (e.g., \code{"This column has {n_cat} categories."}).
 }
+\section{Function ID}{
+
+3-4
+}
+
 \examples{
 # Take the `small_table` and
 # assign it to `test_table`; we'll
@@ -86,3 +91,10 @@ informant <-
   informant \%>\% incorporate()
 
 }
+\seealso{
+Other Information Functions: 
+\code{\link{info_columns}()},
+\code{\link{info_section}()},
+\code{\link{info_tabular}()}
+}
+\concept{Information Functions}

@@ -27,7 +27,7 @@ the \strong{pointblank} expressions for generating the described validation plan
 }
 \section{Function ID}{
 
-7-2
+9-2
 }
 
 \examples{
@@ -126,6 +126,7 @@ Other pointblank YAML:
 \code{\link{yaml_agent_show_exprs}()},
 \code{\link{yaml_agent_string}()},
 \code{\link{yaml_informant_incorporate}()},
+\code{\link{yaml_read_informant}()},
 \code{\link{yaml_write}()}
 }
 \concept{pointblank YAML}

@@ -37,7 +37,7 @@ when using \code{\link[=create_agent]{create_agent()}} or with \code{\link[=set_
 }
 \section{Function ID}{
 
-7-1
+9-1
 }
 
 \examples{
@@ -137,6 +137,7 @@ Other pointblank YAML:
 \code{\link{yaml_agent_show_exprs}()},
 \code{\link{yaml_agent_string}()},
 \code{\link{yaml_informant_incorporate}()},
-\code{\link{yaml_read_agent}()}
+\code{\link{yaml_read_agent}()},
+\code{\link{yaml_read_informant}()}
 }
 \concept{pointblank YAML}

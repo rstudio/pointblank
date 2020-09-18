@@ -25,7 +25,7 @@ without needing to write the YAML to disk beforehand.
 }
 \section{Function ID}{
 
-7-4
+9-5
 }
 
 \examples{
@@ -89,6 +89,7 @@ Other pointblank YAML:
 \code{\link{yaml_agent_show_exprs}()},
 \code{\link{yaml_informant_incorporate}()},
 \code{\link{yaml_read_agent}()},
+\code{\link{yaml_read_informant}()},
 \code{\link{yaml_write}()}
 }
 \concept{pointblank YAML}

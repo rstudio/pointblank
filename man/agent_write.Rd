@@ -37,3 +37,17 @@ when read from disk through \code{\link[=agent_read]{agent_read()}}. This can be
 Alternatively, we can reintroduce the \emph{agent} to a data table with the
 \code{\link[=set_tbl]{set_tbl()}} function.
 }
+\section{Function ID}{
+
+8-1
+}
+
+\seealso{
+Other Agent Ops: 
+\code{\link{agent_read}()},
+\code{\link{remove_read_fn}()},
+\code{\link{remove_tbl}()},
+\code{\link{set_read_fn}()},
+\code{\link{set_tbl}()}
+}
+\concept{Agent Ops}

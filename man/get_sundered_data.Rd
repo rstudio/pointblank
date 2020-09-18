@@ -53,7 +53,7 @@ functions or \code{\link[=conjointly]{conjointly()}}).
 }
 \section{Function ID}{
 
-5-4
+7-3
 }
 
 \examples{
@@ -83,7 +83,6 @@ agent \%>\% get_sundered_data()
 \seealso{
 Other Post-interrogation: 
 \code{\link{all_passed}()},
-\code{\link{get_agent_report}()},
 \code{\link{get_agent_x_list}()},
 \code{\link{get_data_extracts}()}
 }

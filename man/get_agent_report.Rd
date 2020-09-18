@@ -124,7 +124,7 @@ available for the validation step
 }
 \section{Function ID}{
 
-5-1
+5-2
 }
 
 \examples{
@@ -171,10 +171,7 @@ class(small_report)
 
 }
 \seealso{
-Other Post-interrogation: 
-\code{\link{all_passed}()},
-\code{\link{get_agent_x_list}()},
-\code{\link{get_data_extracts}()},
-\code{\link{get_sundered_data}()}
+Other Interrogate and Report: 
+\code{\link{interrogate}()}
 }
-\concept{Post-interrogation}
+\concept{Interrogate and Report}

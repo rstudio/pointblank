@@ -21,7 +21,7 @@ written by hand.
 }
 \section{Function ID}{
 
-7-5
+9-6
 }
 
 \examples{
@@ -83,6 +83,7 @@ Other pointblank YAML:
 \code{\link{yaml_agent_string}()},
 \code{\link{yaml_informant_incorporate}()},
 \code{\link{yaml_read_agent}()},
+\code{\link{yaml_read_informant}()},
 \code{\link{yaml_write}()}
 }
 \concept{pointblank YAML}

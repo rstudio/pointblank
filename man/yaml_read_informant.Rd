@@ -17,6 +17,11 @@ function. What's returned is a new \emph{informant} object with the information
 intact. The \emph{informant} object can be given more information through use of
 the \verb{info_*()} functions.
 }
+\section{Function ID}{
+
+9-3
+}
+
 \examples{
 # Create a pointblank `informant`
 # object with `create_informant()`
@@ -116,3 +121,13 @@ informant <-
 class(informant)
 
 }
+\seealso{
+Other pointblank YAML: 
+\code{\link{yaml_agent_interrogate}()},
+\code{\link{yaml_agent_show_exprs}()},
+\code{\link{yaml_agent_string}()},
+\code{\link{yaml_informant_incorporate}()},
+\code{\link{yaml_read_agent}()},
+\code{\link{yaml_write}()}
+}
+\concept{pointblank YAML}

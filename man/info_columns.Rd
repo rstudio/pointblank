@@ -33,6 +33,11 @@ series of named arguments (in the form
 \code{entry_name = "The information."}) serves as additional
 information for the column or columns.
 }
+\section{Function ID}{
+
+3-2
+}
+
 \examples{
 # Create a pointblank `informant`
 # object with `create_informant()`
@@ -77,3 +82,10 @@ informant <-
 #   yaml_read_informant(path = "informant.yml")
 
 }
+\seealso{
+Other Information Functions: 
+\code{\link{info_section}()},
+\code{\link{info_snippet}()},
+\code{\link{info_tabular}()}
+}
+\concept{Information Functions}

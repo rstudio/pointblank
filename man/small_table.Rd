@@ -29,7 +29,7 @@ exact duplicates. The \code{c} column contains two \code{NA} values.
 }
 \section{Function ID}{
 
-6-1
+10-1
 }
 
 \examples{

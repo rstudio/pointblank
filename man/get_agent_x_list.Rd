@@ -94,7 +94,7 @@ HTML has inlined styles, making it more suitable for email message bodies
 }
 \section{Function ID}{
 
-5-2
+7-1
 }
 
 \examples{
@@ -139,7 +139,6 @@ x$f_passed
 \seealso{
 Other Post-interrogation: 
 \code{\link{all_passed}()},
-\code{\link{get_agent_report}()},
 \code{\link{get_data_extracts}()},
 \code{\link{get_sundered_data}()}
 }

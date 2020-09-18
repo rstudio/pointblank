@@ -7,7 +7,8 @@
 yaml_read_informant(path)
 }
 \arguments{
-\item{path}{A path to a \strong{pointblank} YAML file.}
+\item{path}{A path to a \strong{pointblank} YAML file that contains fields related
+to an \emph{informant}.}
 }
 \description{
 With \code{yaml_read_informant()} we can read a \strong{pointblank} YAML file that

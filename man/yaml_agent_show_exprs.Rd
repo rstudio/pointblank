@@ -7,8 +7,8 @@
 yaml_agent_show_exprs(path)
 }
 \arguments{
-\item{path}{A path to a YAML file that specifies a validation plan for an
-\emph{agent}.}
+\item{path}{A path to a \strong{pointblank} YAML file that contains fields related
+to an \emph{agent}.}
 }
 \description{
 The \code{yaml_agent_show_exprs()} function follows the specifications of a

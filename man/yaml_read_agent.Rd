@@ -7,7 +7,8 @@
 yaml_read_agent(path)
 }
 \arguments{
-\item{path}{A path to a \strong{pointblnk} YAML file.}
+\item{path}{A path to a \strong{pointblank} YAML file that contains fields related
+to an \emph{agent}.}
 }
 \description{
 With \code{yaml_read_agent()} we can read a \strong{pointblank} YAML file that

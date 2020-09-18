@@ -543,6 +543,8 @@ table_scan:
     de: "Spalten"
     it: "Colonne"
     es: "Columnas"
+    pt: "Colunas"
+    zh: "列"
   tbl_lab_rows:
     en: "Rows"
     fr: "Enregistrements"
@@ -589,14 +591,16 @@ table_scan:
     de: "**R** Version"
     it: "versione **R**"
     es: "Versión **R**"
+    pt: "Version **R**"
+    zh: "**R** 版本"
   tbl_lab_system_os:
     en: "Operating System"
     fr: "Système opérateur"
     de: "Betriebssystem"
     it: "Sistema operativo"
-    es: "Versión **R**"
-    pt: "Version **R**"
-    zh: "**R** 版本"
+    es: "Sistema operativo"
+    pt: "Sistema operacional"
+    zh: "操作系统"
   tbl_lab_distinct:
     en: "Distinct"
     fr: "valeurs uniques"

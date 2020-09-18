@@ -52,10 +52,10 @@ db_tbl <- function(db,
         postgresql =,
         postgres =,
         pgsql = RPostgres_driver(),
-        mysql = MySQL_driver(),
+        mysql = RMySQL_driver(),
         maria = ,
         mariadb = RMariaDB_driver(),
-        sqlite = SQLite_driver(),
+        sqlite = RSQLite_driver(),
         unknown_driver()
       )
     
@@ -96,7 +96,7 @@ RPostgres_driver <- function() {
   RPostgres::Postgres()
 }
 
-MySQL_driver <- function() {
+RMySQL_driver <- function() {
   
   if (!requireNamespace("RMySQL", quietly = TRUE)) {
     stop("Accessing a MariaDB or MySQL table requires the RMySQL package:\n",
@@ -107,7 +107,7 @@ MySQL_driver <- function() {
   RMySQL::MySQL()
 }
 
-MariaDB_driver <- function() {
+RMariaDB_driver <- function() {
   
   if (!requireNamespace("RMariaDB", quietly = TRUE)) {
     stop("Accessing a MariaDB or MySQL table requires the RMariaDB package:\n",
@@ -118,7 +118,7 @@ MariaDB_driver <- function() {
   RMariaDB::MariaDB()
 }
 
-SQLite_driver <- function() {
+RSQLite_driver <- function() {
   
   if (!requireNamespace("RSQLite", quietly = TRUE)) {
     stop("Accessing a SQLite table requires the RSQLite package:\n",

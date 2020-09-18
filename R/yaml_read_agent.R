@@ -1,4 +1,4 @@
-#' Read a YAML file to create a new agent with a validation plan
+#' Read a **pointblank** YAML file to create an *agent* object
 #'
 #' @description 
 #' With `yaml_read_agent()` we can read a **pointblank** YAML file that
@@ -117,12 +117,12 @@ yaml_read_agent <- function(path) {
     rlang::eval_tidy()
 }
 
-#' Read a YAML file to interrogate a target table immediately
+#' Get an *agent* from **pointblank** YAML and `interrogate()`
 #'
 #' The `yaml_agent_interrogate()` function operates much like the
 #' [yaml_read_agent()] function (reading a **pointblank** YAML file and
 #' generating an *agent* with a validation plan in place). The key difference is
-#' that this function takes things a step function and interrogates the target
+#' that this function takes things a step further and interrogates the target
 #' table (defined by table-reading, `read_fn`, function that is required in the
 #' YAML file). The additional auto-invocation of [interrogate()] uses the
 #' default options of that function. As with [yaml_read_agent()] the agent is

@@ -15,7 +15,8 @@
 #' [yaml_agent_show_exprs()] function. That function shows us (in the console)
 #' the **pointblank** expressions for generating the described validation plan.
 #' 
-#' @param path A path to a **pointblnk** YAML file.
+#' @param path A path to a **pointblank** YAML file that contains fields related
+#'   to an *agent*.
 #'   
 #' @examples
 #' # Let's go through the process of
@@ -128,8 +129,8 @@ yaml_read_agent <- function(path) {
 #' default options of that function. As with [yaml_read_agent()] the agent is
 #' returned except, this time, it has intel from the interrogation.
 #'
-#' @param path A path to a YAML file that specifies a validation plan for an
-#'   *agent*.
+#' @param path A path to a **pointblank** YAML file that contains fields related
+#'   to an *agent*.
 #'
 #' @examples
 #' # Let's go through the process of
@@ -242,8 +243,8 @@ yaml_agent_interrogate <- function(path) {
 #' [yaml_write()] function with a pre-existing *agent*, or, it can be carefully
 #' written by hand.
 #'
-#' @param path A path to a YAML file that specifies a validation plan for an
-#'   *agent*.
+#' @param path A path to a **pointblank** YAML file that contains fields related
+#'   to an *agent*.
 #' 
 #' @examples 
 #' # Let's create a validation plan for the

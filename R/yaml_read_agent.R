@@ -352,8 +352,8 @@ expr_from_agent_yaml <- function(path,
       "create_agent(\n",
       paste(
         c(
-          read_fn, label, actions, end_fns,
-          tbl_name, embed_report,
+          read_fn, actions, end_fns,
+          tbl_name, label, embed_report,
           lang, locale
         ),
         collapse = ",\n"

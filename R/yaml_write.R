@@ -54,7 +54,7 @@
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~small_table,
-#'     label = "example",
+#'     label = "A simple example with the `small_table`.",
 #'     actions = al
 #'   )
 #' 
@@ -182,7 +182,7 @@ yaml_write <- function(agent = NULL,
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~small_table,
-#'     label = "example",
+#'     label = "A simple example with the `small_table`.",
 #'     actions = action_levels(
 #'       warn_at = 0.10,
 #'       stop_at = 0.25,

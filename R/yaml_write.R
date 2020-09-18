@@ -651,8 +651,23 @@ as_agent_yaml_list <- function(agent) {
 }
 
 as_informant_yaml_list <- function(informant) {
-  
+
   lst_read_fn <- to_list_read_fn(informant$read_fn)
+  
+  if (length(informant$meta_snippets) > 0) {
+    
+    lst_meta_snippets <- 
+      list(
+        meta_snippets = 
+          lapply(informant$meta_snippets, FUN = function(x) {
+            paste(as.character(x), collapse = "")
+          })
+      )
+  } else {
+    lst_meta_snippets <- NULL
+  }
+  
+  #list(read_fn = paste(as.character(read_fn), collapse = ""))
   
   if (is.null(informant$lang) || 
       (!is.null(informant$lang) && informant$lang == "en")) {
@@ -671,6 +686,7 @@ as_informant_yaml_list <- function(informant) {
     lst_read_fn,
     lst_lang,
     lst_locale,
+    lst_meta_snippets,
     informant$metadata
   )
 }

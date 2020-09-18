@@ -213,6 +213,8 @@ xl_step_4
 Other Planning and Prep: 
 \code{\link{action_levels}()},
 \code{\link{col_schema}()},
+\code{\link{create_informant}()},
+\code{\link{db_tbl}()},
 \code{\link{scan_data}()},
 \code{\link{validate_rmd}()}
 }

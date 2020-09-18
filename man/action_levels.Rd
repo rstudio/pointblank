@@ -80,7 +80,7 @@ reducing potential for duplicating any side effects.
 }
 \section{Function ID}{
 
-1-4
+1-5
 }
 
 \examples{
@@ -132,6 +132,8 @@ suppressWarnings(
 Other Planning and Prep: 
 \code{\link{col_schema}()},
 \code{\link{create_agent}()},
+\code{\link{create_informant}()},
+\code{\link{db_tbl}()},
 \code{\link{scan_data}()},
 \code{\link{validate_rmd}()}
 }

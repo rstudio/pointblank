@@ -62,6 +62,11 @@ particular data table. The \emph{informant} object created by the
 \code{create_informant()} function takes information-focused functions (the
 \verb{info_*()} series of functions).
 }
+\section{Function ID}{
+
+1-3
+}
+
 \examples{
 # Let's walk through how we can
 # generate some useful information for a
@@ -88,3 +93,13 @@ report <- get_informant_report(informant)
 class(report)
 
 }
+\seealso{
+Other Planning and Prep: 
+\code{\link{action_levels}()},
+\code{\link{col_schema}()},
+\code{\link{create_agent}()},
+\code{\link{db_tbl}()},
+\code{\link{scan_data}()},
+\code{\link{validate_rmd}()}
+}
+\concept{Planning and Prep}

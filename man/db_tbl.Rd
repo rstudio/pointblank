@@ -22,7 +22,7 @@ the \code{RPostgres::Postgres()} driver function); \code{"mysql"} (MySQL, using
 \item{user, password}{The environment variables used to access the username
 and password for the database.}
 
-\item{host, port}{The database host and option port number.}
+\item{host, port}{The database host and optional port number.}
 }
 \value{
 A \code{tbl_dbi} object.
@@ -40,3 +40,18 @@ leading \code{~} (e.g,. \code{read_fn = ~db_tbl(...)}).
 The username and password are supplied though environment variables. If
 desired, these can be supplied directly by enclosing those values in \code{I()}.
 }
+\section{Function ID}{
+
+1-6
+}
+
+\seealso{
+Other Planning and Prep: 
+\code{\link{action_levels}()},
+\code{\link{col_schema}()},
+\code{\link{create_agent}()},
+\code{\link{create_informant}()},
+\code{\link{scan_data}()},
+\code{\link{validate_rmd}()}
+}
+\concept{Planning and Prep}

@@ -167,6 +167,7 @@ reference:
     - yaml_agent_interrogate
     - yaml_agent_string
     - yaml_agent_show_exprs
+    - yaml_informant_incorporate
     
   - title: Datasets
     contents:

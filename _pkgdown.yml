@@ -12,12 +12,12 @@ reference:
       analysis, call on an *agent* to carry out that eventual plan with
       `create_agent()`. The agent here is to be told which table is the target,
       and, we devise a stepwise validation plan with validation functions. If
-      collecting and reporting on table metadata is your goal, then begin with
-      the `create_metadata()` function.
+      collecting and publishing table information is your goal, then begin with
+      the `create_informant()` function.
     contents:
     - scan_data
     - create_agent
-    - create_metadata
+    - create_informant
     - validate_rmd
     - action_levels
     - db_tbl

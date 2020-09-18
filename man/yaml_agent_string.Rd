@@ -37,7 +37,7 @@ without needing to write the YAML to disk beforehand.
 agent <- 
   create_agent(
     read_fn = ~small_table,
-    label = "example",
+    label = "A simple example with the `small_table`.",
     actions = action_levels(
       warn_at = 0.10,
       stop_at = 0.25,

@@ -1,4 +1,4 @@
-#' Create a pointblank agent object
+#' Create a **pointblank** *agent* object
 #'
 #' @description
 #' The `create_agent()` function creates an *agent* object, which is used in a

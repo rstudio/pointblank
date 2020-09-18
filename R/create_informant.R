@@ -1,4 +1,4 @@
-#' Create a pointblank *informant* object
+#' Create a **pointblank** *informant* object
 #'
 #' The `create_informant()` function creates an *informant* object, which is
 #' used in an *information management* workflow. The overall aim of this

@@ -1,10 +1,10 @@
-#' Thoroughly scan the table data so as to understand it better
+#' Thoroughly scan a table to better understand it
 #' 
 #' Generate an HTML report that scours the input table data. Before calling up
 #' an *agent* to validate the data, it's a good idea to understand the data with
-#' some level of precision. Make this the initial step of a well-balanced *data
-#' quality reporting* workflow. The reporting output contains several sections
-#' to make everything more digestible, and these are:
+#' some level of precision. Make this the initial step of a well-balanced 
+#' *data quality reporting* workflow. The reporting output contains several
+#' sections to make everything more digestible, and these are:
 #' \describe{
 #' \item{Overview}{Table dimensions, duplicate row counts, column types, and
 #' reproducibility information}
@@ -17,11 +17,12 @@
 #' across variables}
 #' \item{Sample}{A table that provides the head and tail rows of the dataset}
 #' }
-#' The output HTML report is viewable in the RStudio Viewer and can also be
-#' integrated in R Markdown HTML reports. If you need the output HTML as a
+#' The output HTML report will appear in the RStudio Viewer and can also be
+#' integrated in R Markdown HTML output. If you need the output HTML as a
 #' string, it's possible to get that by using `as.character()` (e.g.,
 #' `scan_data(tbl = mtcars) %>% as.character()`). The resulting HTML string is a
-#' complete HTML document where Bootstrap and jQuery are embedded within.
+#' complete HTML document where **Bootstrap** and **jQuery** are embedded
+#' within.
 #' 
 #' @param tbl The input table. This can be a data frame, tibble, a `tbl_dbi`
 #'   object, or a `tbl_spark` object.
@@ -31,7 +32,7 @@
 #'   `"correlations"`, `"missing"`, and `"sample"`. This vector can be comprised
 #'   of less elements and the order can be changed to suit the desired layout of
 #'   the report. For `tbl_dbi` and `tbl_spark` objects, the `"interactions"` and
-#'   `"correlations"` sections are excluded.
+#'   `"correlations"` sections are currently excluded.
 #' @param navbar Should there be a navigation bar anchored to the top of the
 #'   report page? By default this is `TRUE`.
 #' @param lang The language to use for label text in the report. By default,

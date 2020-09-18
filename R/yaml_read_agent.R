@@ -47,7 +47,7 @@
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~small_table,
-#'     label = "example",
+#'     label = "A simple example with the `small_table`.",
 #'     actions = al
 #'   )
 #' 
@@ -163,7 +163,7 @@ yaml_read_agent <- function(path) {
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~small_table,
-#'     label = "example",
+#'     label = "A simple example with the `small_table`.",
 #'     actions = al
 #'   )
 #' 
@@ -232,7 +232,7 @@ yaml_agent_interrogate <- function(path) {
     rlang::eval_tidy()
 }
 
-#' Display *pointblank* expressions using a YAML file with a validation plan
+#' Display validation expressions using *pointblank* YAML
 #'
 #' The `yaml_agent_show_exprs()` function follows the specifications of a
 #' **pointblank** YAML file to generate and show the **pointblank** expressions
@@ -254,7 +254,7 @@ yaml_agent_interrogate <- function(path) {
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~small_table,
-#'     label = "example",
+#'     label = "A simple example with the `small_table`.",
 #'     actions = action_levels(
 #'       warn_at = 0.10,
 #'       stop_at = 0.25,
@@ -277,7 +277,8 @@ yaml_agent_interrogate <- function(path) {
 #' # )
 #' 
 #' # The 'agent-small_table.yml' file is
-#' # available in the package through `system.file()`
+#' # available in the package through
+#' # `system.file()`
 #' yml_file <- 
 #'   system.file(
 #'     "agent-small_table.yml",

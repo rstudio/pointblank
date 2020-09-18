@@ -2,7 +2,7 @@
 % Please edit documentation in R/yaml_read_agent.R
 \name{yaml_agent_show_exprs}
 \alias{yaml_agent_show_exprs}
-\title{Display validation expressions using \emph{pointblank} YAML}
+\title{Display validation expressions using \strong{pointblank} YAML}
 \usage{
 yaml_agent_show_exprs(path)
 }

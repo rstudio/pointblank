@@ -6,7 +6,8 @@
 #' intact. The *informant* object can be given more information through use of
 #' the `info_*()` functions.
 #' 
-#' @param path A path to a **pointblank** YAML file.
+#' @param path A path to a **pointblank** YAML file that contains fields related
+#'   to an *informant*.
 #' 
 #' @examples 
 #' # Create a pointblank `informant`

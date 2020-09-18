@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_informant.R
 \name{create_informant}
 \alias{create_informant}
-\title{Create a pointblank \emph{informant} object}
+\title{Create a \strong{pointblank} \emph{informant} object}
 \usage{
 create_informant(
   tbl = NULL,

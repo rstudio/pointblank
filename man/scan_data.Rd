@@ -2,7 +2,7 @@
 % Please edit documentation in R/scan_data.R
 \name{scan_data}
 \alias{scan_data}
-\title{Thoroughly scan the table data so as to understand it better}
+\title{Thoroughly scan a table to better understand it}
 \usage{
 scan_data(
   tbl,
@@ -23,7 +23,7 @@ their default order are: \code{"overview"}, \code{"variables"}, \code{"interacti
 \code{"correlations"}, \code{"missing"}, and \code{"sample"}. This vector can be comprised
 of less elements and the order can be changed to suit the desired layout of
 the report. For \code{tbl_dbi} and \code{tbl_spark} objects, the \code{"interactions"} and
-\code{"correlations"} sections are excluded.}
+\code{"correlations"} sections are currently excluded.}
 
 \item{navbar}{Should there be a navigation bar anchored to the top of the
 report page? By default this is \code{TRUE}.}
@@ -42,9 +42,9 @@ Spanish (Spain, same as \code{"es_ES"}).}
 \description{
 Generate an HTML report that scours the input table data. Before calling up
 an \emph{agent} to validate the data, it's a good idea to understand the data with
-some level of precision. Make this the initial step of a well-balanced \emph{data
-quality reporting} workflow. The reporting output contains several sections
-to make everything more digestible, and these are:
+some level of precision. Make this the initial step of a well-balanced
+\emph{data quality reporting} workflow. The reporting output contains several
+sections to make everything more digestible, and these are:
 \describe{
 \item{Overview}{Table dimensions, duplicate row counts, column types, and
 reproducibility information}
@@ -57,11 +57,12 @@ variables}
 across variables}
 \item{Sample}{A table that provides the head and tail rows of the dataset}
 }
-The output HTML report is viewable in the RStudio Viewer and can also be
-integrated in R Markdown HTML reports. If you need the output HTML as a
+The output HTML report will appear in the RStudio Viewer and can also be
+integrated in R Markdown HTML output. If you need the output HTML as a
 string, it's possible to get that by using \code{as.character()} (e.g.,
 \code{scan_data(tbl = mtcars) \%>\% as.character()}). The resulting HTML string is a
-complete HTML document where Bootstrap and jQuery are embedded within.
+complete HTML document where \strong{Bootstrap} and \strong{jQuery} are embedded
+within.
 }
 \section{Function ID}{
 

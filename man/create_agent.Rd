@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_agent.R
 \name{create_agent}
 \alias{create_agent}
-\title{Create a pointblank agent object}
+\title{Create a \strong{pointblank} \emph{agent} object}
 \usage{
 create_agent(
   tbl = NULL,

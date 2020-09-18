@@ -654,8 +654,23 @@ as_informant_yaml_list <- function(informant) {
   
   lst_read_fn <- to_list_read_fn(informant$read_fn)
   
+  if (is.null(informant$lang) || 
+      (!is.null(informant$lang) && informant$lang == "en")) {
+    lst_lang <- NULL
+  } else {
+    lst_lang <- list(lang = informant$lang)
+  }
+  
+  if (is.null(informant$locale)) {
+    lst_locale <- NULL
+  } else {
+    lst_locale <- list(locale = informant$locale)
+  }
+  
   c(
     lst_read_fn,
+    lst_lang,
+    lst_locale,
     informant$metadata
   )
 }

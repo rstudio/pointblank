@@ -20,6 +20,7 @@ reference:
     - create_metadata
     - validate_rmd
     - action_levels
+    - db_tbl
     - col_schema
 
   - title: Validation, Expectation, and Test Functions

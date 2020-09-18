@@ -52,7 +52,7 @@ get_informant_report <- function(informant) {
   meta_rows <- NULL
   
   y_names <- names(y)
-  
+
   priority_items <- c("table",  "columns")
   names_ordered <- sort(base::intersect(y_names, priority_items), decreasing = TRUE)
   names_others <- base::setdiff(y_names, priority_items)

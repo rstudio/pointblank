@@ -133,13 +133,15 @@ yaml_write <- function(agent = NULL,
     stop("An agent or informant object must be supplied to `yaml_write()`.",
          call. = FALSE)
   }
-
+  
   if (!is.null(agent) && !is.null(informant)) {
-    x <- c(as_agent_yaml_list(agent), informant$metadata)
+    x <- c(as_agent_yaml_list(agent), as_informant_yaml_list(informant))
+    # TODO: manage conflicts between both YAML representations
+    
   } else if (!is.null(agent)) {
     x <- as_agent_yaml_list(agent)
   } else {
-    x <- informant$metadata
+    x <- as_informant_yaml_list(informant)
   }
   
   yaml::write_yaml(
@@ -349,11 +351,15 @@ get_schema_list <- function(schema) {
 }
 
 to_list_read_fn <- function(read_fn) {
-  list(read_fn = read_fn %>% rlang::as_label())
+  list(read_fn = paste(as.character(read_fn), collapse = ""))
 }
 
 to_list_label <- function(label) {
   list(label = label)
+}
+
+to_list_tbl_name <- function(tbl_name) {
+  list(tbl_name = tbl_name)
 }
 
 get_arg_value <- function(value) {
@@ -430,6 +436,7 @@ as_agent_yaml_list <- function(agent) {
   end_fns <- agent$end_fns %>% unlist()
   
   lst_label <- to_list_label(agent$label)
+  lst_tbl_name <- to_list_tbl_name(agent$tbl_name)
   lst_read_fn <- to_list_read_fn(agent$read_fn)
   
   if (is.null(action_levels_default)) {
@@ -456,6 +463,12 @@ as_agent_yaml_list <- function(agent) {
     lst_lang <- NULL
   } else {
     lst_lang <- list(lang = agent$lang)
+  }
+  
+  if (is.null(agent$locale)) {
+    lst_locale <- NULL
+  } else {
+    lst_locale <- list(locale = agent$locale)
   }
 
   # Select only the necessary columns from the agent's `validation_set` 
@@ -625,12 +638,25 @@ as_agent_yaml_list <- function(agent) {
   }
   
   c(
-    lst_label,
     lst_read_fn,
+    lst_tbl_name,
+    lst_label,
     lst_action_levels,
     lst_end_fns,
     lst_embed_report,
     lst_lang,
+    lst_locale,
     list(steps = all_steps)
   )
 }
+
+as_informant_yaml_list <- function(informant) {
+  
+  lst_read_fn <- to_list_read_fn(informant$read_fn)
+  
+  c(
+    lst_read_fn,
+    informant$metadata
+  )
+}
+

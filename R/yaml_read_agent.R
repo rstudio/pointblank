@@ -315,6 +315,7 @@ expr_from_agent_yaml <- function(path,
   # file and create argument strings
   read_fn <- paste0("  read_fn = ", y$read_fn)
   label <- paste0("  label = \"", y$label, "\"")
+  tbl_name <- paste0("  tbl_name = \"", y$tbl_name, "\"")
   
   # Create argument strings for the `actions` and
   # `end_fns` arguments (which could be NULL)
@@ -335,6 +336,12 @@ expr_from_agent_yaml <- function(path,
     lang <- NULL
   }
   
+  if (!is.null(y$locale) && y$locale != "en") {
+    locale <- paste0("  locale = \"", y$locale, "\"")
+  } else {
+    locale <- NULL
+  }
+  
   # Generate all of the validation steps that make up
   # the agent's validation plan
   validation_steps <- make_validation_steps(y$steps)
@@ -344,7 +351,11 @@ expr_from_agent_yaml <- function(path,
     paste0(
       "create_agent(\n",
       paste(
-        c(read_fn, label, actions, end_fns, embed_report, lang),
+        c(
+          read_fn, label, actions, end_fns,
+          tbl_name, embed_report,
+          lang, locale
+        ),
         collapse = ",\n"
       ),
       "\n) ",

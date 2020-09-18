@@ -154,7 +154,7 @@ yaml_read_informant <- function(path) {
 #' informant <- 
 #'   create_informant(
 #'     read_fn = ~small_table,
-#'     label = "example"
+#'     label = "A simple example with the `small_table`."
 #'   )
 #' 
 #' # Then, as with any `informant` object, we

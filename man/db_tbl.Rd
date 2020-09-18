@@ -4,10 +4,10 @@
 \alias{db_tbl}
 \title{Get a table from a database}
 \usage{
-db_tbl(driver_db, dbname, table, user, password, host = NULL, port = NULL)
+db_tbl(db, dbname, table, user, password, host = NULL, port = NULL)
 }
 \arguments{
-\item{driver_db}{Either an appropriate driver function (e.g.,
+\item{db}{Either an appropriate driver function (e.g.,
 \code{RPostgres::Postgres()}) or a shorthand name for the database type. Valid
 names are: \code{"postgresql"}, \code{"postgres"}, or \code{"pgsql"} (PostgreSQL, using
 the \code{RPostgres::Postgres()} driver function); \code{"mysql"} (MySQL, using
@@ -28,11 +28,15 @@ and password for the database.}
 A \code{tbl_dbi} object.
 }
 \description{
-If your target table is in a database, the \code{db_tbl()} function is a handy way
-of accessing it. This function simplifies the process of getting a \code{tbl_dbi}
-object, which usually involves a combination of building a connection to a
-database and using the \code{dplyr::tbl()} function with the connection and the
-table name (or a reference to a table in a schema). The username and password
-are supplied though environment variables. If desired, these can be supplied
-directly by enclosing those values in \code{I()}.
+If your target table is in a database, the \code{db_tbl()} function
+is a handy way of accessing it. This function simplifies the process of
+getting a \code{tbl_dbi} object, which usually involves a combination of building
+a connection to a database and using the \code{dplyr::tbl()} function with the
+connection and the table name (or a reference to a table in a schema). A
+better option is to use this function as the \code{read_fn} parameter in
+\code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}. This can be done by using a
+leading \code{~} (e.g,. \code{read_fn = ~db_tbl(...)}).
+
+The username and password are supplied though environment variables. If
+desired, these can be supplied directly by enclosing those values in \code{I()}.
 }

@@ -108,32 +108,213 @@
 #' 
 #' @export
 yaml_read_informant <- function(path) {
+
+  informant_list <- 
+    expr_from_informant_yaml(path = path, incorporate = FALSE)
+
+  informant <- 
+    informant_list$expr_str %>%
+    rlang::parse_expr() %>%
+    rlang::eval_tidy()
+  
+  informant$metadata <- informant_list$metadata
+  informant
+}
+
+#' Get an *informant* from **pointblank** YAML and `incorporate()`
+#'
+#' The `yaml_informant_incorporate()` function operates much like the
+#' [yaml_read_informant()] function (reading a **pointblank** YAML file and
+#' generating an *informant* with all information in place). The key difference
+#' is that this function takes things a step further and incorporates aspects
+#' from the the target table (defined by table-reading, `read_fn`, function that
+#' is required in the YAML file). The additional auto-invocation of
+#' [incorporate()] uses the default options of that function. As with
+#' [yaml_read_informant()] the informant is returned except, this time, it has
+#' been updated with the latest information from the target table.
+#'
+#' @param path A path to a YAML file that specifies a information for an
+#'   *informant*.
+#'
+#' @examples
+#' # Let's go through the process of
+#' # developing an informant with information
+#' # about the `small_table` dataset and then
+#' # move all that to a pointblank YAML
+#' # file; this will later be read in as a
+#' # new informant and the target data will
+#' # be incorporated into the info text
+#' # (in one step) with
+#' # `yaml_informant_incorporate()`
+#' 
+#' # Now create a pointblank `informant`
+#' # object; the data will be referenced
+#' # in a `read_fn` (a requirement for
+#' # writing to YAML)
+#' informant <- 
+#'   create_informant(
+#'     read_fn = ~small_table,
+#'     label = "A simple example with the `small_table`."
+#'   )
+#' 
+#' # Then, as with any `informant` object, we
+#' # can add information by using as many
+#' # `info_*()` functions as we want
+#' informant <-
+#'   informant %>%
+#'   info_columns(
+#'    columns = vars(a),
+#'    info = "In the range of 1 to 10. (SIMPLE)"
+#'   ) %>%
+#'   info_columns(
+#'     columns = starts_with("date"),
+#'     info = "Time-based values (e.g., `Sys.time()`)."
+#'   ) %>%
+#'   info_columns(
+#'     columns = "date",
+#'     info = "The date part of `date_time`. (CALC)"
+#'   ) %>%
+#'   info_section(
+#'     section_name = "rows",
+#'     row_count = "There are {row_count} rows available."
+#'   ) %>%
+#'   info_snippet(
+#'     snippet_name = "row_count",
+#'     fn = ~ . %>% nrow()
+#'   ) %>%
+#'   incorporate()
+#'
+#' # The informant can be written to a pointblank
+#' # YAML file with `yaml_write()`
+#' # yaml_write(
+#' #   informant = informant,
+#' #   filename = "informant-small_table.yml"
+#' # )
+#' 
+#' # The 'informant-small_table.yml' file
+#' # is available in the package through
+#' # `system.file()`
+#' yml_file <- 
+#'   system.file(
+#'     "informant-small_table.yml",
+#'     package = "pointblank"
+#'   )
+#' 
+#' # We can incorporate the data (which
+#' # is accessible through the `read_fn`)
+#' # into the info text through direct
+#' # use of the YAML file with
+#' # `yaml_informant_incorporate()`
+#' informant <- 
+#'   yaml_informant_incorporate(path = yml_file)
+#' 
+#' class(informant)
+#'
+#' # If it's desired to only create a new
+#' # informant with the information in place
+#' # (stopping short of processing), then the
+#' # `yaml_read_informant()` function will
+#' # be useful
+#' informant <- 
+#'   yaml_read_informant(path = yml_file)
+#' 
+#' class(informant)
+#'
+#' @family pointblank YAML
+#' @section Function ID:
+#' 7-3
+#'
+#' @export
+yaml_informant_incorporate <- function(path) {
+  
+  informant_list <- 
+    expr_from_informant_yaml(path = path)
+  
+  informant <- 
+    informant_list$expr_str %>%
+    rlang::parse_expr() %>%
+    rlang::eval_tidy()
+  
+  informant$metadata <- informant_list$metadata
+  
+  informant <- informant %>% incorporate()
+  informant
+}
+
+expr_from_informant_yaml <- function(path,
+                                     incorporate = FALSE) {
   
   # Read the YAML file with `yaml::read_yaml()`
   y <- yaml::read_yaml(file = path)
   
   # Perform checks on elements of `y`
-  # TODO: Add checks for actions and steps (and other key elements)
   check_info_yaml_table(y)
   check_info_yaml_columns(y)
   check_info_yaml_others(y)
-
-  # Create the metadata list object
-  metadata <-
-    list(
-      read_fn = NULL,
-      tbl_name = NULL,
-      label = NULL,
-      lang = NULL,
-      locale = NULL,
-      metadata = y
+  
+  if ("read_fn" %in% names(y)) {
+    read_fn <- paste0("  read_fn = ", y$read_fn)
+  } else {
+    read_fn <- NULL
+  }
+  
+  if (!is.null(y$tbl_name)) {
+    tbl_name <- paste0("  tbl_name = \"", y$tbl_name, "\"")
+  } else {
+    tbl_name <- NULL
+  }
+  
+  if (!is.null(y$label)) {
+    label <- paste0("  label = \"", y$label, "\"")
+  } else {
+    label <- NULL
+  }
+  
+  if (!is.null(y$lang) && y$lang != "en") {
+    lang <- paste0("  lang = \"", y$lang, "\"")
+  } else {
+    lang <- NULL
+  }
+  
+  if (!is.null(y$locale) && y$locale != "en") {
+    locale <- paste0("  locale = \"", y$locale, "\"")
+  } else {
+    locale <- NULL
+  }
+  
+  # Generate `info_snippet()` expressions
+  info_snippets <- make_info_snippets(y$meta_snippets)
+  
+  # Generate the expression string
+  expr_str <-
+    paste0(
+      "create_informant(\n",
+      paste(
+        c(
+          read_fn, tbl_name, label, 
+          lang, locale
+        ),
+        collapse = ",\n"
+      ),
+      "\n) ",
+      info_snippets
     )
   
-  # Assign the class attribute value `ptblank_informant` to
-  # the `metadata` object
-  attr(metadata, "class") <- "ptblank_informant"
+  # Add the `incorporate()` statement if needed (this is
+  # for the `yaml_informant_incorporate()` function)
+  if (incorporate) {
+    expr_str <- paste0(expr_str, "%>%\nincorporate()")
+  }
   
-  metadata
+  y$read_fn <- NULL
+  y$lang <- NULL
+  y$locale <- NULL
+  y$meta_snippets <- NULL
+
+  list(
+    expr_str = expr_str,
+    metadata = y
+  )
 }
 
 check_info_yaml_table <- function(y) {
@@ -237,4 +418,28 @@ check_info_yaml_others <- function(y) {
         }
       )
   }
+}
+
+make_info_snippets <- function(snippets) {
+  
+  if (length(snippets) == 0) return("")
+  
+  str_exprs <- 
+    vapply(
+      seq_along(snippets),
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) { 
+        
+        snippet_name <- names(snippets[x])
+        snippet_fun <- snippets[[x]]
+        
+        paste0(
+          "%>% info_snippet(",
+          "snippet_name = \"", snippet_name, "\", ",
+          "fn = ", snippet_fun, ")"
+        )
+      })
+  
+  str_exprs %>% paste(collapse = " ")
 }

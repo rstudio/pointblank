@@ -1,4 +1,5 @@
-info_label: '[2020-09-06|13:37:38]'
+read_fn: ~small_table
+info_label: A simple example with the `small_table`.
 table:
   name: small_table
   _columns: 8

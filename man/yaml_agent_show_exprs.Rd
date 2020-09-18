@@ -2,7 +2,7 @@
 % Please edit documentation in R/yaml_read_agent.R
 \name{yaml_agent_show_exprs}
 \alias{yaml_agent_show_exprs}
-\title{Display \emph{pointblank} expressions using a YAML file with a validation plan}
+\title{Display validation expressions using \emph{pointblank} YAML}
 \usage{
 yaml_agent_show_exprs(path)
 }
@@ -33,7 +33,7 @@ written by hand.
 agent <- 
   create_agent(
     read_fn = ~small_table,
-    label = "example",
+    label = "A simple example with the `small_table`.",
     actions = action_levels(
       warn_at = 0.10,
       stop_at = 0.25,
@@ -56,7 +56,8 @@ agent <-
 # )
 
 # The 'agent-small_table.yml' file is
-# available in the package through `system.file()`
+# available in the package through
+# `system.file()`
 yml_file <- 
   system.file(
     "agent-small_table.yml",
@@ -80,6 +81,7 @@ yaml_agent_show_exprs(path = yml_file)
 Other pointblank YAML: 
 \code{\link{yaml_agent_interrogate}()},
 \code{\link{yaml_agent_string}()},
+\code{\link{yaml_informant_incorporate}()},
 \code{\link{yaml_read_agent}()},
 \code{\link{yaml_write}()}
 }

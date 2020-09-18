@@ -51,6 +51,7 @@ Suggests:
     lubridate,
     RSQLite,
     RMariaDB,
+    RMySQL,
     RPostgres,
     readr,
     rmarkdown,

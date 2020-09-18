@@ -2,7 +2,7 @@
 % Please edit documentation in R/yaml_read_agent.R
 \name{yaml_agent_interrogate}
 \alias{yaml_agent_interrogate}
-\title{Read a YAML file to interrogate a target table immediately}
+\title{Get an \emph{agent} from \strong{pointblank} YAML and \code{interrogate()}}
 \usage{
 yaml_agent_interrogate(path)
 }
@@ -14,7 +14,7 @@ yaml_agent_interrogate(path)
 The \code{yaml_agent_interrogate()} function operates much like the
 \code{\link[=yaml_read_agent]{yaml_read_agent()}} function (reading a \strong{pointblank} YAML file and
 generating an \emph{agent} with a validation plan in place). The key difference is
-that this function takes things a step function and interrogates the target
+that this function takes things a step further and interrogates the target
 table (defined by table-reading, \code{read_fn}, function that is required in the
 YAML file). The additional auto-invocation of \code{\link[=interrogate]{interrogate()}} uses the
 default options of that function. As with \code{\link[=yaml_read_agent]{yaml_read_agent()}} the agent is
@@ -57,7 +57,7 @@ al <-
 agent <- 
   create_agent(
     read_fn = ~small_table,
-    label = "example",
+    label = "A simple example with the `small_table`.",
     actions = al
   )
 
@@ -120,6 +120,7 @@ class(agent)
 Other pointblank YAML: 
 \code{\link{yaml_agent_show_exprs}()},
 \code{\link{yaml_agent_string}()},
+\code{\link{yaml_informant_incorporate}()},
 \code{\link{yaml_read_agent}()},
 \code{\link{yaml_write}()}
 }

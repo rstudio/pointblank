@@ -1,5 +1,6 @@
-label: A simple example with the `small_table`.
 read_fn: ~small_table
+tbl_name: small_table
+label: A simple example with the `small_table`.
 actions:
   warn_fraction: 0.1
   stop_fraction: 0.25

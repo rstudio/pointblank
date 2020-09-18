@@ -2,7 +2,7 @@
 % Please edit documentation in R/yaml_read_agent.R
 \name{yaml_read_agent}
 \alias{yaml_read_agent}
-\title{Read a YAML file to create a new agent with a validation plan}
+\title{Read a \strong{pointblank} YAML file to create an \emph{agent} object}
 \usage{
 yaml_read_agent(path)
 }
@@ -59,7 +59,7 @@ al <-
 agent <- 
   create_agent(
     read_fn = ~small_table,
-    label = "example",
+    label = "A simple example with the `small_table`.",
     actions = al
   )
 
@@ -124,6 +124,7 @@ Other pointblank YAML:
 \code{\link{yaml_agent_interrogate}()},
 \code{\link{yaml_agent_show_exprs}()},
 \code{\link{yaml_agent_string}()},
+\code{\link{yaml_informant_incorporate}()},
 \code{\link{yaml_write}()}
 }
 \concept{pointblank YAML}

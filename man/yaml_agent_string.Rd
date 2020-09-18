@@ -37,7 +37,7 @@ without needing to write the YAML to disk beforehand.
 agent <- 
   create_agent(
     read_fn = ~small_table,
-    label = "example",
+    label = "A simple example with the `small_table`.",
     actions = action_levels(
       warn_at = 0.10,
       stop_at = 0.25,
@@ -87,6 +87,7 @@ class(agent)
 Other pointblank YAML: 
 \code{\link{yaml_agent_interrogate}()},
 \code{\link{yaml_agent_show_exprs}()},
+\code{\link{yaml_informant_incorporate}()},
 \code{\link{yaml_read_agent}()},
 \code{\link{yaml_write}()}
 }

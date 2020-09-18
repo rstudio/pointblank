@@ -1,4 +1,4 @@
-#' Read a YAML file to create a new agent with a validation plan
+#' Read a **pointblank** YAML file to create an *agent* object
 #'
 #' @description 
 #' With `yaml_read_agent()` we can read a **pointblank** YAML file that
@@ -47,7 +47,7 @@
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~small_table,
-#'     label = "example",
+#'     label = "A simple example with the `small_table`.",
 #'     actions = al
 #'   )
 #' 
@@ -117,12 +117,12 @@ yaml_read_agent <- function(path) {
     rlang::eval_tidy()
 }
 
-#' Read a YAML file to interrogate a target table immediately
+#' Get an *agent* from **pointblank** YAML and `interrogate()`
 #'
 #' The `yaml_agent_interrogate()` function operates much like the
 #' [yaml_read_agent()] function (reading a **pointblank** YAML file and
 #' generating an *agent* with a validation plan in place). The key difference is
-#' that this function takes things a step function and interrogates the target
+#' that this function takes things a step further and interrogates the target
 #' table (defined by table-reading, `read_fn`, function that is required in the
 #' YAML file). The additional auto-invocation of [interrogate()] uses the
 #' default options of that function. As with [yaml_read_agent()] the agent is
@@ -163,7 +163,7 @@ yaml_read_agent <- function(path) {
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~small_table,
-#'     label = "example",
+#'     label = "A simple example with the `small_table`.",
 #'     actions = al
 #'   )
 #' 
@@ -232,7 +232,7 @@ yaml_agent_interrogate <- function(path) {
     rlang::eval_tidy()
 }
 
-#' Display *pointblank* expressions using a YAML file with a validation plan
+#' Display validation expressions using *pointblank* YAML
 #'
 #' The `yaml_agent_show_exprs()` function follows the specifications of a
 #' **pointblank** YAML file to generate and show the **pointblank** expressions
@@ -254,7 +254,7 @@ yaml_agent_interrogate <- function(path) {
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~small_table,
-#'     label = "example",
+#'     label = "A simple example with the `small_table`.",
 #'     actions = action_levels(
 #'       warn_at = 0.10,
 #'       stop_at = 0.25,
@@ -277,7 +277,8 @@ yaml_agent_interrogate <- function(path) {
 #' # )
 #' 
 #' # The 'agent-small_table.yml' file is
-#' # available in the package through `system.file()`
+#' # available in the package through
+#' # `system.file()`
 #' yml_file <- 
 #'   system.file(
 #'     "agent-small_table.yml",
@@ -315,6 +316,7 @@ expr_from_agent_yaml <- function(path,
   # file and create argument strings
   read_fn <- paste0("  read_fn = ", y$read_fn)
   label <- paste0("  label = \"", y$label, "\"")
+  tbl_name <- paste0("  tbl_name = \"", y$tbl_name, "\"")
   
   # Create argument strings for the `actions` and
   # `end_fns` arguments (which could be NULL)
@@ -335,6 +337,12 @@ expr_from_agent_yaml <- function(path,
     lang <- NULL
   }
   
+  if (!is.null(y$locale) && y$locale != "en") {
+    locale <- paste0("  locale = \"", y$locale, "\"")
+  } else {
+    locale <- NULL
+  }
+  
   # Generate all of the validation steps that make up
   # the agent's validation plan
   validation_steps <- make_validation_steps(y$steps)
@@ -344,7 +352,11 @@ expr_from_agent_yaml <- function(path,
     paste0(
       "create_agent(\n",
       paste(
-        c(read_fn, label, actions, end_fns, embed_report, lang),
+        c(
+          read_fn, actions, end_fns,
+          tbl_name, label, embed_report,
+          lang, locale
+        ),
         collapse = ",\n"
       ),
       "\n) ",

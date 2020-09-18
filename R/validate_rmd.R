@@ -28,7 +28,7 @@ test_options <- new.env(parent = emptyenv())
 #'
 #' @family Planning and Prep
 #' @section Function ID:
-#' 1-3
+#' 1-4
 #' 
 #' @export
 validate_rmd <- function(summary = TRUE,

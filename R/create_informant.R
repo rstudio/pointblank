@@ -64,6 +64,10 @@
 #' report <- get_informant_report(informant)
 #' class(report)
 #' 
+#' @family Planning and Prep
+#' @section Function ID:
+#' 1-3
+#' 
 #' @export
 create_informant <- function(tbl = NULL,
                              read_fn = NULL,

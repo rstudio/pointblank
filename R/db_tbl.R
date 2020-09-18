@@ -23,9 +23,13 @@
 #'   (two-element vector with the names of schema and table).
 #' @param user,password The environment variables used to access the username
 #'   and password for the database.
-#' @param host,port The database host and option port number.
+#' @param host,port The database host and optional port number.
 #'   
 #' @return A `tbl_dbi` object.
+#'
+#' @family Planning and Prep
+#' @section Function ID:
+#' 1-6
 #'
 #' @export
 db_tbl <- function(db,

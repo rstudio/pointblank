@@ -370,7 +370,7 @@ test_col_schema_match <- function(object,
 #'   
 #' @family Planning and Prep
 #' @section Function ID:
-#' 1-5
+#' 1-7
 #' 
 #' @export
 col_schema <- function(...,

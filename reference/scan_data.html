@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Thoroughly scan the table data so as to understand it better — scan_data • pointblank</title>
+<title>Thoroughly scan a table to better understand it — scan_data • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,12 +46,12 @@
 
 
 
-<meta property="og:title" content="Thoroughly scan the table data so as to understand it better — scan_data" />
+<meta property="og:title" content="Thoroughly scan a table to better understand it — scan_data" />
 <meta property="og:description" content="Generate an HTML report that scours the input table data. Before calling up
 an agent to validate the data, it's a good idea to understand the data with
-some level of precision. Make this the initial step of a well-balanced data
-quality reporting workflow. The reporting output contains several sections
-to make everything more digestible, and these are:
+some level of precision. Make this the initial step of a well-balanced
+data quality reporting workflow. The reporting output contains several
+sections to make everything more digestible, and these are:
 OverviewTable dimensions, duplicate row counts, column types, and
 reproducibility information
 VariablesA summary for each table variable and further statistics and
@@ -63,11 +63,12 @@ Missing ValuesA summary figure that shows the degree of missingness
 across variables
 SampleA table that provides the head and tail rows of the dataset
 
-The output HTML report is viewable in the RStudio Viewer and can also be
-integrated in R Markdown HTML reports. If you need the output HTML as a
+The output HTML report will appear in the RStudio Viewer and can also be
+integrated in R Markdown HTML output. If you need the output HTML as a
 string, it's possible to get that by using as.character() (e.g.,
 scan_data(tbl = mtcars) %&amp;gt;% as.character()). The resulting HTML string is a
-complete HTML document where Bootstrap and jQuery are embedded within." />
+complete HTML document where Bootstrap and jQuery are embedded
+within." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -136,7 +137,7 @@ complete HTML document where Bootstrap and jQuery are embedded within." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Thoroughly scan the table data so as to understand it better</h1>
+    <h1>Thoroughly scan a table to better understand it</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/scan_data.R'><code>R/scan_data.R</code></a></small>
     <div class="hidden name"><code>scan_data.Rd</code></div>
     </div>
@@ -144,9 +145,9 @@ complete HTML document where Bootstrap and jQuery are embedded within." />
     <div class="ref-description">
     <p>Generate an HTML report that scours the input table data. Before calling up
 an <em>agent</em> to validate the data, it's a good idea to understand the data with
-some level of precision. Make this the initial step of a well-balanced <em>data
-quality reporting</em> workflow. The reporting output contains several sections
-to make everything more digestible, and these are:</p><dl>
+some level of precision. Make this the initial step of a well-balanced
+<em>data quality reporting</em> workflow. The reporting output contains several
+sections to make everything more digestible, and these are:</p><dl>
 <dt>Overview</dt><dd><p>Table dimensions, duplicate row counts, column types, and
 reproducibility information</p></dd>
 <dt>Variables</dt><dd><p>A summary for each table variable and further statistics and
@@ -158,11 +159,12 @@ variables</p></dd>
 across variables</p></dd>
 <dt>Sample</dt><dd><p>A table that provides the head and tail rows of the dataset</p></dd>
 
-</dl><p>The output HTML report is viewable in the RStudio Viewer and can also be
-integrated in R Markdown HTML reports. If you need the output HTML as a
+</dl><p>The output HTML report will appear in the RStudio Viewer and can also be
+integrated in R Markdown HTML output. If you need the output HTML as a
 string, it's possible to get that by using <code><a href='https://rdrr.io/r/base/character.html'>as.character()</a></code> (e.g.,
 <code>scan_data(tbl = mtcars) %&gt;% as.character()</code>). The resulting HTML string is a
-complete HTML document where Bootstrap and jQuery are embedded within.</p>
+complete HTML document where <strong>Bootstrap</strong> and <strong>jQuery</strong> are embedded
+within.</p>
     </div>
 
     <pre class="usage"><span class='fu'>scan_data</span>(
@@ -190,7 +192,7 @@ their default order are: <code>"overview"</code>, <code>"variables"</code>, <cod
 <code>"correlations"</code>, <code>"missing"</code>, and <code>"sample"</code>. This vector can be comprised
 of less elements and the order can be changed to suit the desired layout of
 the report. For <code>tbl_dbi</code> and <code>tbl_spark</code> objects, the <code>"interactions"</code> and
-<code>"correlations"</code> sections are excluded.</p></td>
+<code>"correlations"</code> sections are currently excluded.</p></td>
     </tr>
     <tr>
       <th>navbar</th>

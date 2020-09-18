@@ -118,10 +118,16 @@ yaml_read_informant <- function(path) {
   check_info_yaml_columns(y)
   check_info_yaml_others(y)
 
+  if ("read_fn" %in% names(y)) {
+    read_fn <- y[["read_fn"]]
+  } else {
+    read_fn <- NULL
+  }
+  
   # Create the metadata list object
   metadata <-
     list(
-      read_fn = NULL,
+      read_fn = read_fn,
       tbl_name = NULL,
       label = NULL,
       lang = NULL,

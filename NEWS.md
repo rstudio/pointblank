@@ -22,7 +22,7 @@
 
 * Improved the Spanish (Spain) translation.
 
-* Added the Portuguese (`"pt"`, Brazil) and Chinese (`"zh"`, China mainland) translations.
+* Added the Portuguese (`"pt"`, Brazil), Chinese (`"zh"`, China mainland), and Russian (`"ru"`) translations.
 
 * Added a locale option for reporting; the locale will match the language (using the base locale) unless a different locale is specified. The locale is used to format numeric values according to the locale's rules. This also applies to the reporting offered by the `scan_data()` function.
 

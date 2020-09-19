@@ -78,7 +78,12 @@ small_table
 # Create a pointblank `informant`
 # object with `create_informant()`
 # and the `small_table` dataset
-informant <- create_informant(small_table)
+informant <- 
+  create_informant(
+    read_fn = ~small_table,
+    tbl_name = "small_table",
+    label = "An example."
+  )
 
 # This function creates some information
 # without any extra help by profiling

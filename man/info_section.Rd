@@ -32,9 +32,16 @@ build the informational content for that section.
 
 \examples{
 # Create a pointblank `informant`
-# object with `create_informant()`
-# and the `small_table` dataset
-informant <- create_informant(small_table)
+# object with `create_informant()`;
+# we specify a `read_fn` with the
+# `~` followed by a statement that
+# gets the `small_table` dataset
+informant <- 
+  create_informant(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example."
+  )
 
 # The `informant` object has the 'table'
 # and 'columns' sections; we can create
@@ -49,7 +56,7 @@ informant <-
   )
 
 # Upon printing the `informant` object, we see
-# the addition of the 'notes' section and its
+# the addition of the 'Notes' section and its
 # own information
 
 # The `informant` object can be written to

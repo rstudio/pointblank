@@ -47,7 +47,8 @@ test_table <- small_table
 informant <- 
   create_informant(
     read_fn = ~test_table,
-    tbl_name = "test_table"
+    tbl_name = "test_table",
+    label = "An example."
   ) \%>\%
   info_snippet(
     snippet_name = "row_count",

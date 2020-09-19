@@ -54,7 +54,7 @@ with that validation plan, ready to interrogate the target table at will
 (using the table-reading function stored as the read_fn). The agent can be
 given more validation steps if needed before using interrogate() or taking
 part in any other agent ops (e.g., writing to disk with outputs intact via
-agent_write() or again to pointblank YAML with yaml_write()).
+x_write_disk() or again to pointblank YAML with yaml_write()).
 To get a picture of how yaml_read_agent() is interpreting the validation
 plan specified in the pointblank YAML, we can use the
 yaml_agent_show_exprs() function. That function shows us (in the console)
@@ -140,7 +140,7 @@ with that validation plan, ready to interrogate the target table at will
 (using the table-reading function stored as the <code>read_fn</code>). The agent can be
 given more validation steps if needed before using <code><a href='interrogate.html'>interrogate()</a></code> or taking
 part in any other agent ops (e.g., writing to disk with outputs intact via
-<code><a href='agent_write.html'>agent_write()</a></code> or again to <strong>pointblank</strong> YAML with <code><a href='yaml_write.html'>yaml_write()</a></code>).</p>
+<code><a href='x_write_disk.html'>x_write_disk()</a></code> or again to <strong>pointblank</strong> YAML with <code><a href='yaml_write.html'>yaml_write()</a></code>).</p>
 <p>To get a picture of how <code>yaml_read_agent()</code> is interpreting the validation
 plan specified in the <strong>pointblank</strong> YAML, we can use the
 <code><a href='yaml_agent_show_exprs.html'>yaml_agent_show_exprs()</a></code> function. That function shows us (in the console)

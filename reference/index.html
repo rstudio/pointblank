@@ -508,8 +508,8 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-agent-ops" class="hasAnchor"><a href="#section-agent-ops" class="anchor"></a>Agent Ops</h2>
-          <p class="section-desc"><p>We have options for writing an agent to disk with the <code><a href="../reference/agent_write.html">agent_write()</a></code> function (useful for keeping data validation intel close at hand). The agent can be retrieved with the <code><a href="../reference/agent_read.html">agent_read()</a></code> function. A set of functions for setting and removing an agent’s association to a data table or a table-reading function is also available in this function family.</p></p>
+          <h2 id="section-object-ops" class="hasAnchor"><a href="#section-object-ops" class="anchor"></a>Object Ops</h2>
+          <p class="section-desc"><p>We have options for writing an agent or informant to disk with the <code><a href="../reference/x_write_disk.html">x_write_disk()</a></code> function. The on-disk object can be retrieved with the <code><a href="../reference/x_read_disk.html">x_read_disk()</a></code> function. A set of functions for setting and removing these objects’ association to a data table or a table-reading function is also available in this function family.</p></p>
         </th>
       </tr>
       
@@ -520,39 +520,39 @@
       <tr>
         
         <td>
-          <p><code><a href="agent_write.html">agent_write()</a></code> </p>
+          <p><code><a href="x_write_disk.html">x_write_disk()</a></code> </p>
         </td>
-        <td><p>Write an agent to disk</p></td>
+        <td><p>Write a <strong>pointblank</strong> <em>agent</em> or <em>informant</em> to disk</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="agent_read.html">agent_read()</a></code> </p>
+          <p><code><a href="x_read_disk.html">x_read_disk()</a></code> </p>
         </td>
-        <td><p>Read an agent from disk</p></td>
+        <td><p>Read a <strong>pointblank</strong> <em>agent</em> or <em>informant</em> from disk</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="set_tbl.html">set_tbl()</a></code> </p>
         </td>
-        <td><p>Set a data table to an agent</p></td>
+        <td><p>Set a data table to an <em>agent</em> or <em>informant</em></p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="remove_tbl.html">remove_tbl()</a></code> </p>
         </td>
-        <td><p>Remove a data table associated with an agent</p></td>
+        <td><p>Remove a data table associated with an <em>agent</em> or <em>informant</em></p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="set_read_fn.html">set_read_fn()</a></code> </p>
         </td>
-        <td><p>Set a table-reading function to an agent</p></td>
+        <td><p>Set a table-reading function to an <em>agent</em> or <em>informant</em></p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="remove_read_fn.html">remove_read_fn()</a></code> </p>
         </td>
-        <td><p>Remove a table-reading function associated with an agent</p></td>
+        <td><p>Remove a table-reading function associated with an <em>agent</em> or <em>informant</em></p></td>
       </tr>
     </tbody><tbody>
       <tr>

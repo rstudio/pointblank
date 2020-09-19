@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Set a data table to an agent — set_tbl • pointblank</title>
+<title>Set a data table to an agent or informant — set_tbl • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,12 +46,15 @@
 
 
 
-<meta property="og:title" content="Set a data table to an agent — set_tbl" />
-<meta property="og:description" content="Setting a data table to agent with set_tbl() replaces any table (a data
-frame, a tibble, objects of class tbl_dbi or tbl_spark) associated with
-the agent. If no data table is associated with an agent, setting one will
-mean the data table takes precedence over table-reading function (settable in
-create_agent()'s read_fn argument or with set_read_fn())." />
+<meta property="og:title" content="Set a data table to an agent or informant — set_tbl" />
+<meta property="og:description" content="Setting a data table to an agent or informant with set_tbl() replaces
+any associated table (a data frame, a tibble, objects of class tbl_dbi or
+tbl_spark). If a data table is associated with an agent or informant
+along with a table-reading function (settable in create_agent() and
+create_informant()'s read_fn argument or with set_read_fn()), the
+table-reading function will take precedence. If this is undesirable, it be
+removed with the remove_read_fn() function. The association to a table can
+be removed with with remove_tbl()." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -120,34 +123,37 @@ create_agent()'s read_fn argument or with set_read_fn())." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Set a data table to an agent</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/agent_ops.R'><code>R/agent_ops.R</code></a></small>
+    <h1>Set a data table to an <em>agent</em> or <em>informant</em></h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/object_ops.R'><code>R/object_ops.R</code></a></small>
     <div class="hidden name"><code>set_tbl.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Setting a data table to <em>agent</em> with <code>set_tbl()</code> replaces any table (a data
-frame, a tibble, objects of class <code>tbl_dbi</code> or <code>tbl_spark</code>) associated with
-the <em>agent</em>. If no data table is associated with an <em>agent</em>, setting one will
-mean the data table takes precedence over table-reading function (settable in
-<code><a href='create_agent.html'>create_agent()</a></code>'s <code>read_fn</code> argument or with <code><a href='set_read_fn.html'>set_read_fn()</a></code>).</p>
+    <p>Setting a data table to an <em>agent</em> or <em>informant</em> with <code>set_tbl()</code> replaces
+any associated table (a data frame, a tibble, objects of class <code>tbl_dbi</code> or
+<code>tbl_spark</code>). If a data table is associated with an <em>agent</em> or <em>informant</em>
+along with a table-reading function (settable in <code><a href='create_agent.html'>create_agent()</a></code> and
+<code><a href='create_informant.html'>create_informant()</a></code>'s <code>read_fn</code> argument or with <code><a href='set_read_fn.html'>set_read_fn()</a></code>), the
+table-reading function will take precedence. If this is undesirable, it be
+removed with the <code><a href='remove_read_fn.html'>remove_read_fn()</a></code> function. The association to a table can
+be removed with with <code><a href='remove_tbl.html'>remove_tbl()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>set_tbl</span>(<span class='kw'>agent</span>, <span class='kw'>tbl</span>)</pre>
+    <pre class="usage"><span class='fu'>set_tbl</span>(<span class='kw'>x</span>, <span class='kw'>tbl</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>agent</th>
-      <td><p>An <em>agent</em> object of class <code>ptblank_agent</code> that is created with
-<code><a href='create_agent.html'>create_agent()</a></code>.</p></td>
+      <th>x</th>
+      <td><p>An <em>agent</em> object of class <code>ptblank_agent</code>, or, an <em>informant</em> of
+class <code>ptblank_informant</code>.</p></td>
     </tr>
     <tr>
       <th>tbl</th>
       <td><p>The input table for the <code>agent</code>. This can be a data frame, a
 tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object. Any table already
-associated with the <em>agent</em> will be overwritten.</p></td>
+associated with the <em>agent</em> or <em>informant</em> will be overwritten.</p></td>
     </tr>
     </table>
 
@@ -158,12 +164,12 @@ associated with the <em>agent</em> will be overwritten.</p></td>
 <p>8-3</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Agent Ops: 
-<code><a href='agent_read.html'>agent_read</a>()</code>,
-<code><a href='agent_write.html'>agent_write</a>()</code>,
+    <div class='dont-index'><p>Other Object Ops: 
 <code><a href='remove_read_fn.html'>remove_read_fn</a>()</code>,
 <code><a href='remove_tbl.html'>remove_tbl</a>()</code>,
-<code><a href='set_read_fn.html'>set_read_fn</a>()</code></p></div>
+<code><a href='set_read_fn.html'>set_read_fn</a>()</code>,
+<code><a href='x_read_disk.html'>x_read_disk</a>()</code>,
+<code><a href='x_write_disk.html'>x_write_disk</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

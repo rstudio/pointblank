@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Remove a data table associated with an agent or informant — remove_tbl • pointblank</title>
+<title>Read a pointblank agent or informant from disk — x_read_disk • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,14 +46,18 @@
 
 
 
-<meta property="og:title" content="Remove a data table associated with an agent or informant — remove_tbl" />
-<meta property="og:description" content="Removing an agent or informant's association to a data table can be done
-with the remove_tbl() function. This can be useful to ensure that the table
-data isn't unintentionally written to disk. It is usually best to avoid
-directly associating a table to an agent or informant, instead opting for
-setting a table-reading function (via create_agent() and
-create_informant()'s read_fn argument, or, with set_read_fn()). The
-association to a table can be set again with set_tbl()." />
+<meta property="og:title" content="Read a pointblank agent or informant from disk — x_read_disk" />
+<meta property="og:description" content="An agent or informant that has been written to disk (with
+x_write_disk()) can be read back into memory with the x_read_disk()
+function. Once the agent or informant has been generated in this way, it
+may not have a data table associated with it (depending on whether the
+keep_tbl option was TRUE or FALSE when writing to disk) but it should
+still be able to produce reporting (by printing the agent or informant to
+the console or using get_agent_report()/get_informant_report()). An
+agent will return an x-list with get_agent_x_list() and yield any
+available data extracts with get_data_extracts(). Furthermore, all of an
+agent's validation steps will still be present (along with results from the
+last interrogation)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -122,45 +126,60 @@ association to a table can be set again with set_tbl()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Remove a data table associated with an <em>agent</em> or <em>informant</em></h1>
+    <h1>Read a <strong>pointblank</strong> <em>agent</em> or <em>informant</em> from disk</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/object_ops.R'><code>R/object_ops.R</code></a></small>
-    <div class="hidden name"><code>remove_tbl.Rd</code></div>
+    <div class="hidden name"><code>x_read_disk.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Removing an <em>agent</em> or <em>informant</em>'s association to a data table can be done
-with the <code>remove_tbl()</code> function. This can be useful to ensure that the table
-data isn't unintentionally written to disk. It is usually best to avoid
-directly associating a table to an <em>agent</em> or <em>informant</em>, instead opting for
-setting a table-reading function (via <code><a href='create_agent.html'>create_agent()</a></code> and
-<code><a href='create_informant.html'>create_informant()</a></code>'s <code>read_fn</code> argument, or, with <code><a href='set_read_fn.html'>set_read_fn()</a></code>). The
-association to a table can be set again with <code><a href='set_tbl.html'>set_tbl()</a></code>.</p>
+    <p>An <em>agent</em> or <em>informant</em> that has been written to disk (with
+<code><a href='x_write_disk.html'>x_write_disk()</a></code>) can be read back into memory with the <code>x_read_disk()</code>
+function. Once the <em>agent</em> or <em>informant</em> has been generated in this way, it
+may not have a data table associated with it (depending on whether the
+<code>keep_tbl</code> option was <code>TRUE</code> or <code>FALSE</code> when writing to disk) but it should
+still be able to produce reporting (by printing the <em>agent</em> or <em>informant</em> to
+the console or using <code><a href='get_agent_report.html'>get_agent_report()</a></code>/<code><a href='get_informant_report.html'>get_informant_report()</a></code>). An
+<em>agent</em> will return an x-list with <code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> and yield any
+available data extracts with <code><a href='get_data_extracts.html'>get_data_extracts()</a></code>. Furthermore, all of an
+<em>agent</em>'s validation steps will still be present (along with results from the
+last interrogation).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>remove_tbl</span>(<span class='kw'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>x_read_disk</span>(<span class='kw'>path</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>An <em>agent</em> object of class <code>ptblank_agent</code>, or, an <em>informant</em> of
-class <code>ptblank_informant</code>.</p></td>
+      <th>path</th>
+      <td><p>The path to a file that was previously written by
+<code><a href='x_write_disk.html'>x_write_disk()</a></code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Should the <em>agent</em> or <em>informant</em> possess a table-reading function (can be
+set any time with <code><a href='set_read_fn.html'>set_read_fn()</a></code>) or a specific table (settable with
+<code><a href='set_tbl.html'>set_tbl()</a></code>) we could use the <code><a href='interrogate.html'>interrogate()</a></code> or <code><a href='incorporate.html'>incorporate()</a></code> function
+again. For a <em>data quality reporting</em> workflow, it is useful to
+<code><a href='interrogate.html'>interrogate()</a></code> target tables that evolve over time. While the same
+validation steps will be used, more can be added before calling
+<code><a href='interrogate.html'>interrogate()</a></code>. For an <em>information management</em> workflow with an <em>informant</em>
+object, using <code><a href='incorporate.html'>incorporate()</a></code> will update aspects of the reporting such as
+table dimensions, and info snippets/text will be regenerated.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
 
-<p>8-4</p>
+<p>8-2</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Object Ops: 
 <code><a href='remove_read_fn.html'>remove_read_fn</a>()</code>,
+<code><a href='remove_tbl.html'>remove_tbl</a>()</code>,
 <code><a href='set_read_fn.html'>set_read_fn</a>()</code>,
 <code><a href='set_tbl.html'>set_tbl</a>()</code>,
-<code><a href='x_read_disk.html'>x_read_disk</a>()</code>,
 <code><a href='x_write_disk.html'>x_write_disk</a>()</code></p></div>
 
   </div>

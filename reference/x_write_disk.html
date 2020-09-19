@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Remove a data table associated with an agent or informant — remove_tbl • pointblank</title>
+<title>Write a pointblank agent or informant to disk — x_write_disk • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,14 +46,14 @@
 
 
 
-<meta property="og:title" content="Remove a data table associated with an agent or informant — remove_tbl" />
-<meta property="og:description" content="Removing an agent or informant's association to a data table can be done
-with the remove_tbl() function. This can be useful to ensure that the table
-data isn't unintentionally written to disk. It is usually best to avoid
-directly associating a table to an agent or informant, instead opting for
-setting a table-reading function (via create_agent() and
-create_informant()'s read_fn argument, or, with set_read_fn()). The
-association to a table can be set again with set_tbl()." />
+<meta property="og:title" content="Write a pointblank agent or informant to disk — x_write_disk" />
+<meta property="og:description" content="Writing an agent or informant to disk with x_write_disk() can be useful
+for keeping data validation intel or table information close at hand for
+later retrieval (with x_read_disk()). By default, any data table that the
+agent or informant may have held before being committed to disk will be
+expunged. This behavior can be changed by setting keep_tbl to TRUE but
+this only works in the case where the table is not of the tbl_dbi or the
+tbl_spark class." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -122,22 +122,22 @@ association to a table can be set again with set_tbl()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Remove a data table associated with an <em>agent</em> or <em>informant</em></h1>
+    <h1>Write a <strong>pointblank</strong> <em>agent</em> or <em>informant</em> to disk</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/object_ops.R'><code>R/object_ops.R</code></a></small>
-    <div class="hidden name"><code>remove_tbl.Rd</code></div>
+    <div class="hidden name"><code>x_write_disk.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Removing an <em>agent</em> or <em>informant</em>'s association to a data table can be done
-with the <code>remove_tbl()</code> function. This can be useful to ensure that the table
-data isn't unintentionally written to disk. It is usually best to avoid
-directly associating a table to an <em>agent</em> or <em>informant</em>, instead opting for
-setting a table-reading function (via <code><a href='create_agent.html'>create_agent()</a></code> and
-<code><a href='create_informant.html'>create_informant()</a></code>'s <code>read_fn</code> argument, or, with <code><a href='set_read_fn.html'>set_read_fn()</a></code>). The
-association to a table can be set again with <code><a href='set_tbl.html'>set_tbl()</a></code>.</p>
+    <p>Writing an <em>agent</em> or <em>informant</em> to disk with <code>x_write_disk()</code> can be useful
+for keeping data validation intel or table information close at hand for
+later retrieval (with <code><a href='x_read_disk.html'>x_read_disk()</a></code>). By default, any data table that the
+<em>agent</em> or <em>informant</em> may have held before being committed to disk will be
+expunged. This behavior can be changed by setting <code>keep_tbl</code> to <code>TRUE</code> but
+this only works in the case where the table is not of the <code>tbl_dbi</code> or the
+<code>tbl_spark</code> class.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>remove_tbl</span>(<span class='kw'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>x_write_disk</span>(<span class='kw'>x</span>, <span class='kw'>filename</span>, path = <span class='kw'>NULL</span>, keep_tbl = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,21 +147,49 @@ association to a table can be set again with <code><a href='set_tbl.html'>set_tb
       <td><p>An <em>agent</em> object of class <code>ptblank_agent</code>, or, an <em>informant</em> of
 class <code>ptblank_informant</code>.</p></td>
     </tr>
+    <tr>
+      <th>filename</th>
+      <td><p>The filename to create on disk for the <code>agent</code> or
+<code>informant</code>.</p></td>
+    </tr>
+    <tr>
+      <th>path</th>
+      <td><p>An optional path to which the file should be saved (this is
+automatically combined with <code>filename</code>).</p></td>
+    </tr>
+    <tr>
+      <th>keep_tbl</th>
+      <td><p>An option to keep a data table that is associated with the
+<em>agent</em> or <em>informant</em> (which is the case when the <em>agent</em>, for example, is
+created using <code>create_agent(tbl = &lt;data table, ...)</code>). The default is
+<code>FALSE</code> where the data table is removed before writing to disk. For
+database tables of the class <code>tbl_dbi</code> and for Spark DataFrames
+(<code>tbl_spark</code>) the table is always removed (even if <code>keep_tbl</code> is set to
+<code>TRUE</code>).</p></td>
+    </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>It is recommended to set a table-reading function for later reuse of the
+<em>agent</em> and <em>informant</em> after being read from disk through <code><a href='x_read_disk.html'>x_read_disk()</a></code>.
+This can be done initially with the <code>read_fn</code> argument of
+<code><a href='create_agent.html'>create_agent()</a></code>/<code><a href='create_informant.html'>create_informant()</a></code> or, later, with <code><a href='set_read_fn.html'>set_read_fn()</a></code>.
+Alternatively, we can reintroduce the <em>agent</em> or <em>informant</em> to a data table
+with the <code><a href='set_tbl.html'>set_tbl()</a></code> function.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
 
-<p>8-4</p>
+<p>8-1</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Object Ops: 
 <code><a href='remove_read_fn.html'>remove_read_fn</a>()</code>,
+<code><a href='remove_tbl.html'>remove_tbl</a>()</code>,
 <code><a href='set_read_fn.html'>set_read_fn</a>()</code>,
 <code><a href='set_tbl.html'>set_tbl</a>()</code>,
-<code><a href='x_read_disk.html'>x_read_disk</a>()</code>,
-<code><a href='x_write_disk.html'>x_write_disk</a>()</code></p></div>
+<code><a href='x_read_disk.html'>x_read_disk</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

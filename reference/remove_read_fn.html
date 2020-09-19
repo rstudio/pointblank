@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Remove a table-reading function associated with an agent — remove_read_fn • pointblank</title>
+<title>Remove a table-reading function associated with an agent or informant — remove_read_fn • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,12 +46,13 @@
 
 
 
-<meta property="og:title" content="Remove a table-reading function associated with an agent — remove_read_fn" />
-<meta property="og:description" content="Removing an agent's association to a table-reading function can be done
-with remove_read_fn(). This may be good idea when instead relying on the
-direct association of a data table (settable in create_agent()'s tbl
-argument or with set_tbl()), where the table-reading function is no longer
-relevant." />
+<meta property="og:title" content="Remove a table-reading function associated with an agent or informant — remove_read_fn" />
+<meta property="og:description" content="Removing an agent or an informant's association to a table-reading
+function can be done with remove_read_fn(). This may be good idea in an
+interactive session when instead relying on the direct association of a data
+table (settable in create_agent() and create_informant()'s tbl argument
+or with set_tbl()). The table-reading function can be set again with
+set_read_fn()." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -120,28 +121,29 @@ relevant." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Remove a table-reading function associated with an agent</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/agent_ops.R'><code>R/agent_ops.R</code></a></small>
+    <h1>Remove a table-reading function associated with an <em>agent</em> or <em>informant</em></h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/object_ops.R'><code>R/object_ops.R</code></a></small>
     <div class="hidden name"><code>remove_read_fn.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Removing an <em>agent</em>'s association to a table-reading function can be done
-with <code>remove_read_fn()</code>. This may be good idea when instead relying on the
-direct association of a data table (settable in <code><a href='create_agent.html'>create_agent()</a></code>'s <code>tbl</code>
-argument or with <code><a href='set_tbl.html'>set_tbl()</a></code>), where the table-reading function is no longer
-relevant.</p>
+    <p>Removing an <em>agent</em> or an <em>informant</em>'s association to a table-reading
+function can be done with <code>remove_read_fn()</code>. This may be good idea in an
+interactive session when instead relying on the direct association of a data
+table (settable in <code><a href='create_agent.html'>create_agent()</a></code> and <code><a href='create_informant.html'>create_informant()</a></code>'s <code>tbl</code> argument
+or with <code><a href='set_tbl.html'>set_tbl()</a></code>). The table-reading function can be set again with
+<code><a href='set_read_fn.html'>set_read_fn()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>remove_read_fn</span>(<span class='kw'>agent</span>)</pre>
+    <pre class="usage"><span class='fu'>remove_read_fn</span>(<span class='kw'>x</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>agent</th>
-      <td><p>An <em>agent</em> object of class <code>ptblank_agent</code> that is created with
-<code><a href='create_agent.html'>create_agent()</a></code>.</p></td>
+      <th>x</th>
+      <td><p>An <em>agent</em> object of class <code>ptblank_agent</code>, or, an <em>informant</em> of
+class <code>ptblank_informant</code>.</p></td>
     </tr>
     </table>
 
@@ -152,12 +154,12 @@ relevant.</p>
 <p>8-6</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Agent Ops: 
-<code><a href='agent_read.html'>agent_read</a>()</code>,
-<code><a href='agent_write.html'>agent_write</a>()</code>,
+    <div class='dont-index'><p>Other Object Ops: 
 <code><a href='remove_tbl.html'>remove_tbl</a>()</code>,
 <code><a href='set_read_fn.html'>set_read_fn</a>()</code>,
-<code><a href='set_tbl.html'>set_tbl</a>()</code></p></div>
+<code><a href='set_tbl.html'>set_tbl</a>()</code>,
+<code><a href='x_read_disk.html'>x_read_disk</a>()</code>,
+<code><a href='x_write_disk.html'>x_write_disk</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

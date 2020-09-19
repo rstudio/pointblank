@@ -245,7 +245,12 @@ for Spanish (Spain, same as <code>"es_ES"</code>).</p></td>
 <span class='co'># Create a pointblank `informant`</span>
 <span class='co'># object with `create_informant()`</span>
 <span class='co'># and the `small_table` dataset</span>
-<span class='kw'>informant</span> <span class='op'>&lt;-</span> <span class='fu'>create_informant</span>(<span class='kw'>small_table</span>)
+<span class='kw'>informant</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>create_informant</span>(
+    read_fn = <span class='op'>~</span><span class='kw'>small_table</span>,
+    tbl_name = <span class='st'>"small_table"</span>,
+    label = <span class='st'>"An example."</span>
+  )
 
 <span class='co'># This function creates some information</span>
 <span class='co'># without any extra help by profiling</span>

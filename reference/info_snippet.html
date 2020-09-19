@@ -189,7 +189,8 @@ snippet itself into info text.</p></td>
 <span class='kw'>informant</span> <span class='op'>&lt;-</span> 
   <span class='fu'><a href='create_informant.html'>create_informant</a></span>(
     read_fn = <span class='op'>~</span><span class='kw'>test_table</span>,
-    tbl_name = <span class='st'>"test_table"</span>
+    tbl_name = <span class='st'>"test_table"</span>,
+    label = <span class='st'>"An example."</span>
   ) <span class='op'>%&gt;%</span>
   <span class='fu'>info_snippet</span>(
     snippet_name = <span class='st'>"row_count"</span>,

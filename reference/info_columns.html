@@ -185,9 +185,16 @@ default; setting to <code>FALSE</code> replaces any existing text for a property
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Create a pointblank `informant`</span>
-<span class='co'># object with `create_informant()`</span>
-<span class='co'># and the `small_table` dataset</span>
-<span class='kw'>informant</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create_informant.html'>create_informant</a></span>(<span class='kw'>small_table</span>)
+<span class='co'># object with `create_informant()`;</span>
+<span class='co'># we specify a `read_fn` with the</span>
+<span class='co'># `~` followed by a statement that</span>
+<span class='co'># gets the `small_table` dataset</span>
+<span class='kw'>informant</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_informant.html'>create_informant</a></span>(
+    read_fn = <span class='op'>~</span> <span class='kw'>small_table</span>,
+    tbl_name = <span class='st'>"small_table"</span>,
+    label = <span class='st'>"An example."</span>
+  )
 
 <span class='co'># The `informant` object has the 'table'</span>
 <span class='co'># and 'columns' sections; we can add more</span>
@@ -209,7 +216,7 @@ default; setting to <code>FALSE</code> replaces any existing text for a property
   )
 
 <span class='co'># Upon printing the `informant` object, we see</span>
-<span class='co'># the additions made to the 'columns' section</span>
+<span class='co'># the additions made to the 'Columns' section</span>
 
 <span class='co'># The `informant` object can be written to</span>
 <span class='co'># a YAML file with the `yaml_write()`</span>

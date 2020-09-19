@@ -2,23 +2,22 @@
 % Please edit documentation in R/agent_ops.R
 \name{remove_tbl}
 \alias{remove_tbl}
-\title{Remove a data table associated with an agent}
+\title{Remove a data table associated with an \emph{agent} or \emph{informant}}
 \usage{
-remove_tbl(agent)
+remove_tbl(x)
 }
 \arguments{
-\item{agent}{An \emph{agent} object of class \code{ptblank_agent} that is created with
-\code{\link[=create_agent]{create_agent()}}.}
+\item{x}{An \emph{agent} object of class \code{ptblank_agent}, or, an \emph{informant} of
+class \code{ptblank_informant}.}
 }
 \description{
-Removing an \emph{agent}'s association to a data table can be done with the
-\code{remove_tbl()} function. This may be preferable when relying on a
-table-reading function (settable in \code{\link[=create_agent]{create_agent()}}'s \code{read_fn} argument or
-with \code{\link[=set_read_fn]{set_read_fn()}}) instead of directly using a table. If interrogating
-again with \code{\link[=interrogate]{interrogate()}} then there must be either an association to a
-table or a table-reading function available in the \emph{agent} (\code{\link[=set_read_fn]{set_read_fn()}}
-can help in this regard if the the \code{read_fn} argument in \code{\link[=create_agent]{create_agent()}} was
-left as \code{NULL} when creating the \emph{agent}).
+Removing an \emph{agent} or \emph{informant}'s association to a data table can be done
+with the \code{remove_tbl()} function. This can be useful to ensure that the table
+data isn't unintentionally written to disk. It is usually best to avoid
+directly associating a table to an \emph{agent} or \emph{informant}, instead opting for
+setting a table-reading function (via \code{\link[=create_agent]{create_agent()}} and
+\code{\link[=create_informant]{create_informant()}}'s \code{read_fn} argument, or, with \code{\link[=set_read_fn]{set_read_fn()}}). The
+association to a table can be set again with \code{\link[=set_tbl]{set_tbl()}}.
 }
 \section{Function ID}{
 
@@ -26,11 +25,11 @@ left as \code{NULL} when creating the \emph{agent}).
 }
 
 \seealso{
-Other Agent Ops: 
-\code{\link{agent_read}()},
-\code{\link{agent_write}()},
+Other Object Ops: 
 \code{\link{remove_read_fn}()},
 \code{\link{set_read_fn}()},
-\code{\link{set_tbl}()}
+\code{\link{set_tbl}()},
+\code{\link{x_read_disk}()},
+\code{\link{x_write_disk}()}
 }
-\concept{Agent Ops}
+\concept{Object Ops}

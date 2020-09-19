@@ -82,7 +82,7 @@ before interrogation; if not, a script 'I' stands for 'identity' but, if so,
 a right-facing arrow appears
 \item EVAL: a character value that denotes the result of each validation
 step functions' evaluation during interrogation
-\item UNITS: the total number of test units for the validation step
+\item \emph{N}: the total number of test units for the validation step
 \item PASS: the number of test units that received a \emph{pass}
 \item FAIL: the fraction of test units that received a \emph{pass}
 \item W, S, N: indicators that show whether the \code{warn}, \code{stop}, or \code{notify}

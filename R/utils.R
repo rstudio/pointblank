@@ -12,10 +12,10 @@ get_tbl_object <- function(agent) {
 
 # Generate a label for the `agent` or `informant` object
 generate_label <- function(label = NULL) {
-  if (is.null(label)) {
-    label <- paste0("[", gsub(" ", "|", as.character(Sys.time())), "]")
-  }
-  label
+  
+  if (!is.null(label)) return(as.character(label))
+  
+  paste0("[", gsub(" ", "|", as.character(Sys.time())), "]")
 }
 
 safely_transformer <- function(otherwise = NA) {

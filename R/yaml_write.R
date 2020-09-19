@@ -652,6 +652,13 @@ as_agent_yaml_list <- function(agent) {
 
 as_informant_yaml_list <- function(informant) {
 
+  if (is.null(informant$read_fn)) {
+    stop(
+      "The informant must have a `read_fn` value to transform it into YAML.",
+      call. = FALSE
+    )
+  }
+  
   lst_read_fn <- to_list_read_fn(informant$read_fn)
   
   if (length(informant$meta_snippets) > 0) {

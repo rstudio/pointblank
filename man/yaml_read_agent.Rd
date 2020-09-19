@@ -18,7 +18,7 @@ with that validation plan, ready to interrogate the target table at will
 (using the table-reading function stored as the \code{read_fn}). The agent can be
 given more validation steps if needed before using \code{\link[=interrogate]{interrogate()}} or taking
 part in any other agent ops (e.g., writing to disk with outputs intact via
-\code{\link[=agent_write]{agent_write()}} or again to \strong{pointblank} YAML with \code{\link[=yaml_write]{yaml_write()}}).
+\code{\link[=x_write_disk]{x_write_disk()}} or again to \strong{pointblank} YAML with \code{\link[=yaml_write]{yaml_write()}}).
 
 To get a picture of how \code{yaml_read_agent()} is interpreting the validation
 plan specified in the \strong{pointblank} YAML, we can use the

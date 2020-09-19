@@ -32,11 +32,17 @@
 
 * The names of more YAML functions have been changed, the final roster now consists of: `yaml_write()`, `yaml_read_agent()`, `yaml_read_informant()`, `yaml_agent_interrogate()`, `yaml_agent_string()`, and `yaml_agent_show_exprs()`.
 
+* The `x_write_disk()` function replaces the `agent_write()` function. The new function works to write the *agent* or the *metadata* object to disk.
+
+* The `x_read_disk()` function replaces the `agent_read()` function. The new function works to read both the *agent* or the *metadata* objects written to disk.
+
 ## Minor improvements and bug fixes
 
 * Improved appearance of the agent report: (1) more tooltips, (2) the tooltips are much improved (they animate, have larger text, and are snappier than the previous ones), (3) SVGs are now used as symbols for the validation steps instead of blurry PNGs, (4) less confusing glyphs are now used in the `TBL` column, (5) the agent label can be expressed as Markdown and looks nicer in the report, (6) the table type (and name, if supplied as `tbl_name`) is shown in the header, (7) validation threshold levels also shown in the table header, (8) interrogation starting/ending timestamps are shown (along with duration) in the table footer, (9) the table font has been changed to be less default-y, and (10) adjustments to table borders and cell shading were made for better readability.
 
 * The `get_agent_report()` function now has `lang` and `locale` arguments to override any of those values set prior (e.g., in `create_agent()`). This allows for the reporting language to be changed without the need to re-run everything from scratch.
+
+* The `set_tbl()`, `remove_tbl()`, `set_read_fn()`, and `remove_read_fn()` functions can now also be used with an *informant* object.
 
 * Refactored a large portion of the code that produces the agent report to increase rendering speed.
 

@@ -27,7 +27,7 @@
 #' a right-facing arrow appears
 #' \item EVAL: a character value that denotes the result of each validation
 #' step functions' evaluation during interrogation
-#' \item UNITS: the total number of test units for the validation step
+#' \item *N*: the total number of test units for the validation step
 #' \item PASS: the number of test units that received a *pass*
 #' \item FAIL: the fraction of test units that received a *pass*
 #' \item W, S, N: indicators that show whether the `warn`, `stop`, or `notify`
@@ -965,7 +965,7 @@ get_agent_report <- function(agent,
       values = get_lsv("agent_report/report_col_values")[[lang]],
       precon = "TBL",
       eval_sym = "EVAL",
-      units = get_lsv("agent_report/report_col_units")[[lang]],
+      units = gt::md("&sdot; &sdot; &sdot; &sdot;"),
       n_pass = "PASS",
       n_fail = "FAIL",
       extract = "EXT"

@@ -8,7 +8,7 @@
 #' (using the table-reading function stored as the `read_fn`). The agent can be
 #' given more validation steps if needed before using [interrogate()] or taking
 #' part in any other agent ops (e.g., writing to disk with outputs intact via
-#' [agent_write()] or again to **pointblank** YAML with [yaml_write()]).
+#' [x_write_disk()] or again to **pointblank** YAML with [yaml_write()]).
 #'
 #' To get a picture of how `yaml_read_agent()` is interpreting the validation
 #' plan specified in the **pointblank** YAML, we can use the

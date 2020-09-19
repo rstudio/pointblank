@@ -2,7 +2,7 @@ library(RSQLite)
 
 temp_dir <- tempdir()
 
-test_that("The `agent_write()` and `agent_read()` functions works as expected", {
+test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected", {
   
   # Create an agent with a single validation step, using
   # `small_table` as the `tbl`; interrogate the data
@@ -12,13 +12,13 @@ test_that("The `agent_write()` and `agent_read()` functions works as expected", 
     interrogate()
   
   # Write the agent to disk, don't elect to keep the table
-  agent %>% agent_write(filename = "agent_test_1", path = temp_dir)
+  agent %>% x_write_disk(filename = "agent_test_1", path = temp_dir)
   
   # Expect that the file was written to the temp directory
   expect_true("agent_test_1" %in% list.files(path = temp_dir))
   
-  # Read the agent back with `agent_read()`
-  agent_test_1 <- agent_read(path = file.path(temp_dir, "agent_test_1"))
+  # Read the agent back with `x_read_disk()`
+  agent_test_1 <- x_read_disk(path = file.path(temp_dir, "agent_test_1"))
   
   # Expect a `ptblank_agent` object
   expect_s3_class(agent_test_1, "ptblank_agent")
@@ -36,13 +36,13 @@ test_that("The `agent_write()` and `agent_read()` functions works as expected", 
   expect_null(agent_test_1$extracts)
   
   # Write the agent to disk again, but choose to keep the table
-  agent %>% agent_write(filename = "agent_test_2", path = temp_dir, keep_tbl = TRUE)
+  agent %>% x_write_disk(filename = "agent_test_2", path = temp_dir, keep_tbl = TRUE)
   
   # Expect that the file was written to the temp directory
   expect_true("agent_test_2" %in% list.files(path = temp_dir))
   
-  # Read the agent back with `agent_read()`
-  agent_test_2 <- agent_read(path = file.path(temp_dir, "agent_test_2"))
+  # Read the agent back with `x_read_disk()`
+  agent_test_2 <- x_read_disk(path = file.path(temp_dir, "agent_test_2"))
   
   # Expect a `ptblank_agent` object
   expect_s3_class(agent_test_2, "ptblank_agent")
@@ -54,9 +54,6 @@ test_that("The `agent_write()` and `agent_read()` functions works as expected", 
   # Expect the `extracts` list to be available in the agent object
   expect_type(agent_test_2$extracts, "list")
   
-  
-  
-  
   # Create an agent with a single validation step, using
   # the `small_table` sqlite table  as the `tbl`; interrogate
   # the data
@@ -66,13 +63,13 @@ test_that("The `agent_write()` and `agent_read()` functions works as expected", 
     interrogate()
   
   # Write the agent to disk, don't elect to keep the table
-  agent %>% agent_write(filename = "agent_test_3", path = temp_dir)
+  agent %>% x_write_disk(filename = "agent_test_3", path = temp_dir)
   
   # Expect that the file was written to the temp directory
   expect_true("agent_test_3" %in% list.files(path = temp_dir))
   
-  # Read the agent back with `agent_read()`
-  agent_test_3 <- agent_read(path = file.path(temp_dir, "agent_test_3"))
+  # Read the agent back with `x_read_disk()`
+  agent_test_3 <- x_read_disk(path = file.path(temp_dir, "agent_test_3"))
   
   # Expect a `ptblank_agent` object
   expect_s3_class(agent_test_3, "ptblank_agent")
@@ -93,14 +90,14 @@ test_that("The `agent_write()` and `agent_read()` functions works as expected", 
   # expect a warning since we can't directly keep `tbl_dbi` data
   # even if `keep_tbl = TRUE`
   expect_warning(
-    agent %>% agent_write(filename = "agent_test_4", path = temp_dir, keep_tbl = TRUE)
+    agent %>% x_write_disk(filename = "agent_test_4", path = temp_dir, keep_tbl = TRUE)
   )
   
   # Expect that the file was written to the temp directory
   expect_true("agent_test_4" %in% list.files(path = temp_dir))
   
-  # Read the agent back with `agent_read()`
-  agent_test_4 <- agent_read(path = file.path(temp_dir, "agent_test_4"))
+  # Read the agent back with `x_read_disk()`
+  agent_test_4 <- x_read_disk(path = file.path(temp_dir, "agent_test_4"))
   
   # Expect a `ptblank_agent` object
   expect_s3_class(agent_test_4, "ptblank_agent")
@@ -138,7 +135,7 @@ test_that("The `agent_write()` and `agent_read()` functions works as expected", 
   
   # Set the table in the agent to once again be `small_table`
   # but in the table to `set_tbl()`
-  agent_test_4 <- small_table %>% set_tbl(agent = agent_test_4, tbl = .)
+  agent_test_4 <- small_table %>% set_tbl(x = agent_test_4, tbl = .)
   
   # Expect the new `tbl` data to be in the agent object
   expect_s3_class(agent_test_4$tbl, "tbl_df")

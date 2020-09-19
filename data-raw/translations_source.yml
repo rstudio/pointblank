@@ -369,15 +369,6 @@ agent_report:
     pt: "VALORES"
     zh: "值"
     ru: "ЦЕННОСТИ"
-  report_col_units:
-    en: "N"
-    fr: "N"
-    de: "N"
-    it: "N"
-    es: "N"
-    pt: "N"
-    zh: "N"
-    ru: "N"
   report_column_schema:
     en: "SCHEMA"
     fr: "SCHÉMA"

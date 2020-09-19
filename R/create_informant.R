@@ -150,7 +150,6 @@ create_informant <- function(tbl = NULL,
     if (is.null(read_fn)) read_fn <- agent$read_fn
   }
   
-  label <- x$label
   table.name <- x$tbl_name
   table.type <- x$tbl_src
   

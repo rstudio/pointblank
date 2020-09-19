@@ -27,7 +27,7 @@
 #' a right-facing arrow appears
 #' \item EVAL: a character value that denotes the result of each validation
 #' step functions' evaluation during interrogation
-#' \item UNITS: the total number of test units for the validation step
+#' \item *N*: the total number of test units for the validation step
 #' \item PASS: the number of test units that received a *pass*
 #' \item FAIL: the fraction of test units that received a *pass*
 #' \item W, S, N: indicators that show whether the `warn`, `stop`, or `notify`

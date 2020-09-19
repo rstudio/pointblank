@@ -2,7 +2,7 @@
 
 ## Pointblank Information
 
-* The new information management workflow is full of features that help you to describe tables and keep on top of changes to them. To make this work well, a new character enters: the *informant*!
+* The new *information management* workflow is full of features that help you to describe tables and keep on top of changes to them. To make this work well, a new character enters: the *informant*!
 
 * Added the `create_informant()` function to create a `ptblank_informant` object (this function is similar to `create_agent()`). It is meant to hold information (as much as you want, really) for a target table, with reporting features geared toward communication.
 

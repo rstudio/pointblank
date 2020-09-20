@@ -255,6 +255,11 @@ validation step is specified with the <code>i</code> argument.</p>
 steps had no failing test units), the <code><a href='all_passed.html'>all_passed()</a></code> function could be used
 on the <em>agent</em>. However, in practice, it's not often the case that all data
 validation steps are free from any failing units.</p>
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+
+<p><img src='figures/man_create_agent_1.png' width=100% /></p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
@@ -313,8 +318,8 @@ validation steps are free from any failing units.</p>
 <span class='co'># make the reporting a bit more useful</span>
 <span class='kw'>agent</span> <span class='op'>&lt;-</span> 
   <span class='fu'>create_agent</span>(
-    <span class='kw'>small_table</span>,
-    label = <span class='st'>"example"</span>,
+    read_fn = <span class='op'>~</span> <span class='kw'>small_table</span>,
+    label = <span class='st'>"An example."</span>,
     actions = <span class='kw'>al</span>
   )
 
@@ -387,7 +392,7 @@ validation steps are free from any failing units.</p>
 <span class='co'># slightly different structure; see</span>
 <span class='co'># `help(get_agent_x_list)` for more info</span>
 <span class='co'># get_agent_x_list(agent)</span>
- 
+
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

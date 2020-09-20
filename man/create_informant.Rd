@@ -62,6 +62,11 @@ particular data table. The \emph{informant} object created by the
 \code{create_informant()} function takes information-focused functions (the
 \verb{info_*()} series of functions).
 }
+\section{Figures}{
+
+\if{html}{\figure{man_create_informant_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 1-3

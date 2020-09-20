@@ -25,6 +25,11 @@ that make sense for those sections. Define a \code{section_name} and provide a
 series of named arguments (in the form \code{entry_name = "The information."}) to
 build the informational content for that section.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_info_section_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 3-3

@@ -27,6 +27,11 @@ once those snippets are defined, you can insert them into the info text as
 defined through the \verb{info_*()} functions. Just use curly braces with the
 \code{snippet_name} inside (e.g., \code{"This column has {n_cat} categories."}).
 }
+\section{Figures}{
+
+\if{html}{\figure{man_info_snippet_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 3-4
@@ -90,7 +95,7 @@ test_table <-
 # the info text to be updated
 informant <-
   informant \%>\% incorporate()
-
+  
 }
 \seealso{
 Other Information Functions: 

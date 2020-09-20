@@ -33,6 +33,11 @@ series of named arguments (in the form
 \code{entry_name = "The information."}) serves as additional
 information for the column or columns.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_info_columns_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 3-2

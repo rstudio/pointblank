@@ -24,6 +24,11 @@ function. By providing a series of named arguments (in the form
 \code{entry_name = "The information."}), we can add more information that makes
 sense for describing the table as a whole.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_info_tabular_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 3-1

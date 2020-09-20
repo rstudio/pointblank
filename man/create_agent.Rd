@@ -104,6 +104,11 @@ steps had no failing test units), the \code{\link[=all_passed]{all_passed()}} fu
 on the \emph{agent}. However, in practice, it's not often the case that all data
 validation steps are free from any failing units.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_create_agent_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 1-2
@@ -137,8 +142,8 @@ al <-
 # make the reporting a bit more useful
 agent <- 
   create_agent(
-    small_table,
-    label = "example",
+    read_fn = ~ small_table,
+    label = "An example.",
     actions = al
   )
 
@@ -207,7 +212,7 @@ xl_step_4
 # slightly different structure; see
 # `help(get_agent_x_list)` for more info
 # get_agent_x_list(agent)
- 
+
 }
 \seealso{
 Other Planning and Prep: 

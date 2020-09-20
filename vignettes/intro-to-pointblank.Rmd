@@ -56,6 +56,17 @@ agent <-
   interrogate()
 ```
 
+```
+── Interrogation Started - there are 5 steps ──────────────────────────────────
+✓ Step 1: OK.
+✓ Step 2: OK.
+✓ Step 3: OK.
+✓ Step 4: OK.
+✓ Step 5: OK.
+
+── Interrogation Completed ─────────────────────────────────────────────────
+```
+
 The five `OK` messages means that all of the individual validations in each of those five validation steps passed. Printing the `agent` object gives a step-by-step breakdown of the interrogation process.
 
 ```{r get_agent_report, eval=FALSE}

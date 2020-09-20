@@ -69,6 +69,9 @@
 #' report <- get_informant_report(informant)
 #' class(report)
 #' 
+#' @section Figures:
+#' \if{html}{\figure{man_create_informant_1.png}{options: width=100\%}}
+#' 
 #' @family Planning and Prep
 #' @section Function ID:
 #' 1-3

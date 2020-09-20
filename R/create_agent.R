@@ -105,8 +105,8 @@
 #' # make the reporting a bit more useful
 #' agent <- 
 #'   create_agent(
-#'     small_table,
-#'     label = "example",
+#'     read_fn = ~ small_table,
+#'     label = "An example.",
 #'     actions = al
 #'   )
 #'
@@ -175,6 +175,9 @@
 #' # slightly different structure; see
 #' # `help(get_agent_x_list)` for more info
 #' # get_agent_x_list(agent)
+#' 
+#' @section Figures:
+#' \if{html}{\figure{man_create_agent_1.png}{options: width=100\%}}
 #'  
 #' @family Planning and Prep
 #' @section Function ID:

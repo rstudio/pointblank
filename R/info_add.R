@@ -58,6 +58,9 @@
 #' # informant <-
 #' #   yaml_read_informant(path = "informant.yml")
 #'
+#' @section Figures:
+#' \if{html}{\figure{man_info_tabular_1.png}{options: width=100\%}}
+#'
 #' @family Information Functions
 #' @section Function ID:
 #' 3-1
@@ -169,6 +172,9 @@ info_tabular <- function(x,
 #' # `yaml_read_informant()` function
 #' # informant <-
 #' #   yaml_read_informant(path = "informant.yml")
+#' 
+#' @section Figures:
+#' \if{html}{\figure{man_info_columns_1.png}{options: width=100\%}}
 #'
 #' @family Information Functions
 #' @section Function ID:
@@ -292,6 +298,9 @@ info_columns <- function(x,
 #' # `yaml_read_informant()` function
 #' # informant <-
 #' #   yaml_read_informant(path = "informant.yml")
+#' 
+#' @section Figures:
+#' \if{html}{\figure{man_info_section_1.png}{options: width=100\%}}
 #'
 #' @family Information Functions
 #' @section Function ID:
@@ -424,6 +433,9 @@ info_section <- function(x,
 #' # the info text to be updated
 #' informant <-
 #'   informant %>% incorporate()
+#'   
+#' @section Figures:
+#' \if{html}{\figure{man_info_snippet_1.png}{options: width=100\%}}
 #' 
 #' @family Information Functions
 #' @section Function ID:

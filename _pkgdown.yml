@@ -91,7 +91,7 @@ reference:
       conditions are met.
     contents:
     - email_blast
-    - email_preview
+    - email_create
     - stock_msg_body
     - stock_msg_footer
     

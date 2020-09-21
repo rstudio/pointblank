@@ -253,7 +253,8 @@ check_msg_components_all_null <- function(msg_header, msg_body, msg_footer) {
 #' Provide simple email message body components: body
 #' 
 #' The `stock_msg_body()` function simply provides some stock text for an email
-#' message sent via [email_blast()] or previewed through [email_create()].
+#' message sent via [email_blast()] or obtained as a standalone object through
+#' [email_create()].
 #'
 #' @return Text suitable for the `msg_body` arguments of [email_blast()] and
 #'   [email_create()].
@@ -291,8 +292,8 @@ was initiated on {blastula::add_readable_time(x$time_start)}.
 #' Provide simple email message body components: footer
 #' 
 #' The `stock_msg_footer()` functions simply provide some stock text for an
-#' email message sent via [email_blast()] or previewed through
-#' [email_create()].
+#' email message sent via [email_blast()] or obtained as a standalone object
+#' through [email_create()].
 #'
 #' @return Text suitable for the `msg_footer` argument of [email_blast()] and
 #'   [email_create()].

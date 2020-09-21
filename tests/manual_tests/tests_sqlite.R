@@ -22,7 +22,7 @@ agent <-
   col_vals_gte(vars(c), 2, na_pass = TRUE) %>%
   col_vals_equal(vars(e), 1, preconditions = ~ . %>% dplyr::filter(e == 1)) %>%
   col_vals_not_equal(vars(e), 0) %>%
-  col_vals_lt(vars(e), 10, preconditions = ~ . %>% dplyr::mutate(e = e + 9)) %>%
+  col_vals_lt(vars(a), 10, preconditions = ~ . %>% dplyr::mutate(a = a + 9)) %>%
   col_vals_in_set(vars(f), c("low", "medium", "high")) %>%
   col_vals_not_in_set(vars(e), 3:5) %>%
   col_vals_between(vars(d), 0, 10000) %>%

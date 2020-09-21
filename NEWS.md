@@ -36,6 +36,8 @@
 
 * The `x_read_disk()` function replaces the `agent_read()` function. The new function works to read both the *agent* or the *metadata* objects written to disk.
 
+* The `email_preview()` function has been renamed to `email_create()`.
+
 ## Minor improvements and bug fixes
 
 * Improved appearance of the agent report: (1) more tooltips, (2) the tooltips are much improved (they animate, have larger text, and are snappier than the previous ones), (3) SVGs are now used as symbols for the validation steps instead of blurry PNGs, (4) less confusing glyphs are now used in the `TBL` column, (5) the agent label can be expressed as Markdown and looks nicer in the report, (6) the table type (and name, if supplied as `tbl_name`) is shown in the header, (7) validation threshold levels also shown in the table header, (8) interrogation starting/ending timestamps are shown (along with duration) in the table footer, (9) the table font has been changed to be less default-y, and (10) adjustments to table borders and cell shading were made for better readability.

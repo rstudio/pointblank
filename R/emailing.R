@@ -158,8 +158,10 @@ email_blast <- function(x,
 #'
 #' @param x A pointblank agent or an agent x-list. The x-list object can be
 #'   created with the [get_agent_x_list()] function. It is recommended that the
-#'   `i = NULL` and `generate_report = TRUE` so that the agent report is
-#'   available within the email preview.
+#'   option `i = NULL` be used with [get_agent_x_list()] if supplying an x-list
+#'   as `x`. Furthermore, The option `generate_report = TRUE` should be used
+#'   with [create_agent()] so that the agent report is available within the
+#'   email.
 #' @param msg_header,msg_body,msg_footer Content for the header, body, and
 #'   footer components of the HTML email message.
 #'   

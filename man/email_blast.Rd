@@ -2,7 +2,7 @@
 % Please edit documentation in R/emailing.R
 \name{email_blast}
 \alias{email_blast}
-\title{Send email at a step or at the end of an interrogation}
+\title{Send email at a validation step or at the end of an interrogation}
 \usage{
 email_blast(
   x,
@@ -52,7 +52,7 @@ function (to possibly send an email message at one or more steps).
 }
 \details{
 To better get a handle on emailing with \code{email_blast()}, the analogous
-\code{\link[=email_preview]{email_preview()}} can be used with a \strong{pointblank} agent object or the
+\code{\link[=email_create]{email_create()}} can be used with a \strong{pointblank} agent object or the
 output obtained from using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function.
 }
 \section{Function ID}{
@@ -116,7 +116,7 @@ al <-
 # nonexistent; to look at the email
 # message before sending anything of
 # the like, we can use the 
-# `email_preview()` function
+# `email_create()` function
 email_object <-
   create_agent(
     tbl = tbl,
@@ -125,12 +125,12 @@ email_object <-
   col_vals_gt(vars(a), 5) \%>\%
   col_vals_lt(vars(b), 5) \%>\%
   interrogate() \%>\%
-  email_preview()
+  email_create()
   
 }
 \seealso{
 Other Emailing: 
-\code{\link{email_preview}()},
+\code{\link{email_create}()},
 \code{\link{stock_msg_body}()},
 \code{\link{stock_msg_footer}()}
 }

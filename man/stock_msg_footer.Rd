@@ -12,8 +12,8 @@ Text suitable for the \code{msg_footer} argument of \code{\link[=email_blast]{em
 }
 \description{
 The \code{stock_msg_footer()} functions simply provide some stock text for an
-email message sent via \code{\link[=email_blast]{email_blast()}} or previewed through
-\code{\link[=email_create]{email_create()}}.
+email message sent via \code{\link[=email_blast]{email_blast()}} or obtained as a standalone object
+through \code{\link[=email_create]{email_create()}}.
 }
 \section{Function ID}{
 

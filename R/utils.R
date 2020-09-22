@@ -2,6 +2,10 @@ is_ptblank_agent <- function(x) {
   inherits(x, "ptblank_agent")
 }
 
+is_ptblank_informant <- function(x) {
+  inherits(x, "ptblank_informant")
+}
+
 is_a_table_object <- function(x) {
   inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))
 }

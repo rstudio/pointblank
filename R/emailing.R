@@ -232,7 +232,7 @@ email_create <- function(x,
                          msg_body = stock_msg_body(),
                          msg_footer = stock_msg_footer()) {
   
-  if (inherits(x, "ptblank_agent")) {
+  if (is_ptblank_agent(x)) {
     x <- get_agent_x_list(agent = x)
   }
 

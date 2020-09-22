@@ -31,6 +31,6 @@ extracts <- agent %>% get_data_extracts()
 
 x_list <- get_agent_x_list(agent)
 
-email <- email_preview(agent)
+email <- email_create(agent)
 
 sundered <- get_sundered_data(agent)

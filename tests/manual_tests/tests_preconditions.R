@@ -51,4 +51,4 @@ extracts
 x_list <- get_agent_x_list(agent)
 x_list
 
-email_preview(agent)
+email_create(agent)

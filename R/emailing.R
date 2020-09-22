@@ -1,4 +1,4 @@
-#' Send email at a step or at the end of an interrogation
+#' Send email at a validation step or at the end of an interrogation
 #' 
 #' The `email_blast()` function is useful for sending an email message that
 #' explains the result of a **pointblank** validation. It is powered by the
@@ -8,7 +8,7 @@
 #' function (to possibly send an email message at one or more steps).
 #'
 #' To better get a handle on emailing with `email_blast()`, the analogous
-#' [email_preview()] can be used with a **pointblank** agent object or the
+#' [email_create()] can be used with a **pointblank** agent object or the
 #' output obtained from using the [get_agent_x_list()] function.
 #' 
 #' @param x A reference to list object prepared by the agent. It's only
@@ -87,7 +87,7 @@
 #' # nonexistent; to look at the email
 #' # message before sending anything of
 #' # the like, we can use the 
-#' # `email_preview()` function
+#' # `email_create()` function
 #' email_object <-
 #'   create_agent(
 #'     tbl = tbl,
@@ -96,7 +96,7 @@
 #'   col_vals_gt(vars(a), 5) %>%
 #'   col_vals_lt(vars(b), 5) %>%
 #'   interrogate() %>%
-#'   email_preview()
+#'   email_create()
 #'   
 #' @family Emailing
 #' @section Function ID:
@@ -147,9 +147,9 @@ email_blast <- function(x,
   }
 }
 
-#' Get a preview of an email before actually sending that email
+#' Create an email object from a **pointblank** *agent*
 #' 
-#' The `email_preview()` function provides a preview of an email that would
+#' The `email_create()` function produce an email message object that would
 #' normally be produced and sent through the [email_blast()] function. The `x`
 #' that we need for this is the agent x-list that is produced by the
 #' [get_agent_x_list()] function. Or, we can supply an agent object. In both
@@ -158,8 +158,10 @@ email_blast <- function(x,
 #'
 #' @param x A pointblank agent or an agent x-list. The x-list object can be
 #'   created with the [get_agent_x_list()] function. It is recommended that the
-#'   `i = NULL` and `generate_report = TRUE` so that the agent report is
-#'   available within the email preview.
+#'   option `i = NULL` be used with [get_agent_x_list()] if supplying an x-list
+#'   as `x`. Furthermore, The option `generate_report = TRUE` should be used
+#'   with [create_agent()] so that the agent report is available within the
+#'   email.
 #' @param msg_header,msg_body,msg_footer Content for the header, body, and
 #'   footer components of the HTML email message.
 #'   
@@ -190,7 +192,7 @@ email_blast <- function(x,
 #' # emailing with `email_blast()` but,
 #' # first, we can look at the email
 #' # message object beforehand by using
-#' # the `email_preview()` function
+#' # the `email_create()` function
 #' # on an `agent` object
 #' # email_object <-
 #' #   create_agent(
@@ -200,9 +202,9 @@ email_blast <- function(x,
 #' #   col_vals_gt(vars(a), 5) %>%
 #' #   col_vals_lt(vars(b), 5) %>%
 #' #   interrogate() %>%
-#' #   email_preview()
+#' #   email_create()
 #' 
-#' # The `email_preview()` function can
+#' # The `email_create()` function can
 #' # also be used on an agent x-list to
 #' # get the same email message object
 #' # email_object <-
@@ -214,7 +216,7 @@ email_blast <- function(x,
 #' #   col_vals_lt(vars(b), 5) %>%
 #' #   interrogate() %>%
 #' #   get_agent_x_list() %>%
-#' #   email_preview()
+#' #   email_create()
 #' 
 #' # We can view the HTML email just
 #' # by printing `email_object`; it
@@ -225,12 +227,12 @@ email_blast <- function(x,
 #' 4-2
 #' 
 #' @export 
-email_preview <- function(x,
-                          msg_header = NULL,
-                          msg_body = stock_msg_body(),
-                          msg_footer = stock_msg_footer()) {
+email_create <- function(x,
+                         msg_header = NULL,
+                         msg_body = stock_msg_body(),
+                         msg_footer = stock_msg_footer()) {
   
-  if (inherits(x, "ptblank_agent")) {
+  if (is_ptblank_agent(x)) {
     x <- get_agent_x_list(agent = x)
   }
 
@@ -251,10 +253,11 @@ check_msg_components_all_null <- function(msg_header, msg_body, msg_footer) {
 #' Provide simple email message body components: body
 #' 
 #' The `stock_msg_body()` function simply provides some stock text for an email
-#' message sent via [email_blast()] or previewed through [email_preview()].
+#' message sent via [email_blast()] or obtained as a standalone object through
+#' [email_create()].
 #'
 #' @return Text suitable for the `msg_body` arguments of [email_blast()] and
-#'   [email_preview()].
+#'   [email_create()].
 #' 
 #' @family Emailing
 #' @section Function ID:
@@ -289,11 +292,11 @@ was initiated on {blastula::add_readable_time(x$time_start)}.
 #' Provide simple email message body components: footer
 #' 
 #' The `stock_msg_footer()` functions simply provide some stock text for an
-#' email message sent via [email_blast()] or previewed through
-#' [email_preview()].
+#' email message sent via [email_blast()] or obtained as a standalone object
+#' through [email_create()].
 #'
 #' @return Text suitable for the `msg_footer` argument of [email_blast()] and
-#'   [email_preview()].
+#'   [email_create()].
 #' 
 #' @family Emailing
 #' @section Function ID:

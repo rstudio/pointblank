@@ -661,7 +661,7 @@ get_agent_report <- function(agent,
               background = "transparent",
               font_size = "18px",
               padding = 0,
-              tt_text = "No table preconditions applied.",
+              tt_text = get_lsv("agent_report/report_no_table_preconditions")[[lang]],
               border_radius = "4px"
             )
           
@@ -681,8 +681,7 @@ get_agent_report <- function(agent,
               background = "transparent",
               font_size = "18px",
               padding = 0,
-              tt_text = paste0("Table altered with preconditions: ", gsub("\"", "'", text)),
-              tt_text_size = "large",
+              tt_text = get_lsv("agent_report/report_some_table_preconditions")[[lang]],
               border_radius = "4px"
             )
         }
@@ -710,7 +709,7 @@ get_agent_report <- function(agent,
               size = size,
               color = "#4CA64C",
               background = "transparent",
-              tt_text = "No evaluation issues."
+              tt_text = get_lsv("agent_report/report_no_evaluation_issues")[[lang]],
             )
           
         } else if (eval[x] == "W + E") {

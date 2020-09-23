@@ -293,129 +293,151 @@ get_r_column_names_types <- function(tbl) {
 
 get_tbl_information <- function(tbl) {
   
-  if (inherits(tbl, "data.frame")) {
+  if (is.data.frame(tbl)) {
     
-    r_column_names_types <- get_r_column_names_types(tbl)
+    tbl_information <- get_tbl_information_df(tbl)
     
-    tbl_src <- "data.frame"
-    if (inherits(tbl, "tbl_df")) {
-      tbl_src <- "tbl_df"
-    } 
+  } else if (is_tbl_spark(tbl)) {
     
-    return(
-      list(
-        tbl_src = tbl_src,
-        tbl_src_details = NA_character_,
-        db_tbl_name = NA_character_,
-        col_names = r_column_names_types$col_names,
-        r_col_types = r_column_names_types$r_col_types,
-        db_col_types = NA_character_
-      )
-    )
+    tbl_information <- get_tbl_information_spark(tbl)
     
-  } else if (inherits(tbl, "tbl_spark")) {
+  } else if (is_tbl_dbi(tbl)) {
     
-    r_column_names_types <- get_r_column_names_types(tbl)
-    
-    tbl_schema <- sparklyr::sdf_schema(tbl)
-    
-    db_col_types <- 
-      lapply(tbl_schema, `[[`, 2) %>%
-      unlist() %>% unname() %>% tolower()
-    
-    return(
-      list(
-        tbl_src = "tbl_spark",
-        tbl_src_details = "Spark",
-        db_tbl_name = NA_character_,
-        col_names = r_column_names_types$col_names,
-        r_col_types = r_column_names_types$r_col_types,
-        db_col_types = db_col_types
-      )
-    )
-    
-  } else if (inherits(tbl, "tbl_dbi")) {
-    
-    tbl_src <- gsub("^([a-z]*).*", "\\1", get_tbl_dbi_src_details(tbl))
-    tbl_sql_server <- grepl("sql server|sqlserver", tolower(get_tbl_dbi_src_details(tbl)))
-    
-    r_column_names_types <- get_r_column_names_types(tbl)
-    
-    tbl_connection <- tbl %>% .$src %>% .$con
-    
-    db_tbl_name <- dbplyr::remote_name(tbl) %>% as.character()
-    
-    n_cols <- length(r_column_names_types$col_names)
-
-    if (tbl_src != "postgres") {
-      q_types <- ifelse(
-        tbl_sql_server,
-        glue::glue("SELECT TOP 9 {n_cols} DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}'"),
-        glue::glue("SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}' LIMIT {n_cols}")
-      )
-    } else {
-      db_tbl_name_no_schema <- gsub('.*\\.', '', db_tbl_name)
-      q_types <- 
-        glue::glue(
-          "select column_name,data_type from information_schema.columns where table_name = '{db_tbl_name_no_schema}'"
-        )
-    }
-    
-    if (tbl_src != "sqlite" & tbl_src != "postgres") {
-      db_col_types <- 
-        DBI::dbGetQuery(tbl_connection, q_types) %>%
-        dplyr::collect() %>%
-        dplyr::pull(DATA_TYPE) %>%
-        tolower()
-    }
-    
-    if (tbl_src == "sqlite") {
-      db_col_types <-
-        vapply(
-          r_column_names_types$col_names,
-          FUN.VALUE = character(1),
-          USE.NAMES = FALSE,
-          FUN = function(x) {
-            
-            DBI::dbDataType(
-              tbl_connection,
-              tbl %>%
-                dplyr::select(x) %>%
-                utils::head(1) %>%
-                dplyr::collect() %>%
-                dplyr::pull(x)
-            )
-          }
-        ) %>%
-        tolower()
-    }
-    
-    if (tbl_src == "postgres") {
-      db_col_types <- 
-        DBI::dbGetQuery(tbl_connection, q_types) %>%
-        dplyr::pull(data_type) %>%
-        tolower()
-    }
-    
-    if (!exists("db_col_types")) {
-      db_col_types <- NA_character_
-    }
-    
-    return(
-      list(
-        tbl_src = tbl_src,
-        tbl_src_details = get_tbl_dbi_src_details(tbl),
-        db_tbl_name = db_tbl_name,
-        col_names = r_column_names_types$col_names,
-        r_col_types = r_column_names_types$r_col_types,
-        db_col_types = db_col_types
-      )
-    )
+    tbl_information <- get_tbl_information_dbi(tbl)
     
   } else {
     warning("Information on this table type cannot be obtained at present.",
             call. = FALSE)
   } 
+  
+  tbl_information
+}
+
+get_tbl_information_df <- function(tbl) {
+  
+  r_column_names_types <- get_r_column_names_types(tbl)
+  
+  tbl_src <- if (tibble::is_tibble(tbl)) "tbl_df" else "data.frame"
+  
+  list(
+    tbl_src = tbl_src,
+    tbl_src_details = NA_character_,
+    db_tbl_name = NA_character_,
+    col_names = r_column_names_types$col_names,
+    r_col_types = r_column_names_types$r_col_types,
+    db_col_types = NA_character_
+  )
+}
+
+get_tbl_information_spark <- function(tbl) {
+  
+  r_column_names_types <- get_r_column_names_types(tbl)
+  
+  tbl_schema <- sparklyr::sdf_schema(tbl)
+  
+  db_col_types <- 
+    lapply(tbl_schema, `[[`, 2) %>%
+    unlist() %>%
+    unname() %>%
+    tolower()
+  
+  list(
+    tbl_src = "tbl_spark",
+    tbl_src_details = "Spark",
+    db_tbl_name = NA_character_,
+    col_names = r_column_names_types$col_names,
+    r_col_types = r_column_names_types$r_col_types,
+    db_col_types = db_col_types
+  )
+}
+
+get_tbl_information_dbi <- function(tbl) {
+  
+  tbl_connection <- tbl$src$con
+
+  tbl_src_details <- tolower(get_tbl_dbi_src_details(tbl))
+  
+  if (grepl("sql server|sqlserver", tbl_src_details)) {
+    tbl_src <- "mssql"
+  } else {
+    tbl_src <- gsub("^([a-z]*).*", "\\1", get_tbl_dbi_src_details(tbl))
+  }
+  
+  db_tbl_name <- as.character(dbplyr::remote_name(tbl))
+  
+  r_column_names_types <- get_r_column_names_types(tbl)
+  
+  n_cols <- length(r_column_names_types$col_names)
+  
+  if (tbl_src == "postgres") {
+    
+    db_tbl_name_no_schema <- gsub('.*\\.', '', db_tbl_name)
+    
+    q_types <- 
+      glue::glue(
+        "select column_name,data_type from information_schema.columns where table_name = '{db_tbl_name_no_schema}'"
+      )
+
+  } else {
+    
+    q_types <- 
+      ifelse(
+        tbl_src == "mssql",
+        glue::glue("SELECT TOP 9 {n_cols} DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}'"),
+        glue::glue("SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}' LIMIT {n_cols}")
+      )
+  }
+  
+  if (tbl_src == "postgres") {
+    
+    db_col_types <- 
+      DBI::dbGetQuery(tbl_connection, q_types) %>%
+      dplyr::pull(data_type) %>%
+      tolower()
+  }
+  
+  if (tbl_src == "sqlite") {
+    db_col_types <-
+      vapply(
+        r_column_names_types$col_names,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          
+          DBI::dbDataType(
+            tbl_connection,
+            tbl %>%
+              dplyr::select(x) %>%
+              utils::head(1) %>%
+              dplyr::collect() %>%
+              dplyr::pull(x)
+          )
+        }
+      ) %>%
+      tolower()
+  }
+  
+  if (tbl_src != "sqlite" & tbl_src != "postgres") {
+
+    db_col_types <- 
+      DBI::dbGetQuery(tbl_connection, q_types) %>%
+      dplyr::collect() %>%
+      dplyr::pull(DATA_TYPE) %>%
+      tolower()
+  }
+  
+  if (!exists("db_col_types")) {
+    db_col_types <- NA_character_
+  }
+
+  list(
+    tbl_src = tbl_src,
+    tbl_src_details = get_tbl_dbi_src_details(tbl),
+    db_tbl_name = db_tbl_name,
+    col_names = r_column_names_types$col_names,
+    r_col_types = r_column_names_types$r_col_types,
+    db_col_types = db_col_types
+  )
 }
 
 pb_fmt_number <- function(x,

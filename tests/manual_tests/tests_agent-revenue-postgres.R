@@ -64,5 +64,5 @@ agent_revenue_postgres <-
 x_write_disk(
   agent_revenue_postgres,
   filename = "agent_revenue_postgres.rds",
-  path = here::here("tests/manual_tests/output")
+  path = here::here("tests/manual_tests")
 )

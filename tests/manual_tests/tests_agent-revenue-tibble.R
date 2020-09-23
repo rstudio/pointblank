@@ -60,5 +60,5 @@ agent_revenue_data_frame <-
 x_write_disk(
   agent_revenue_data_frame,
   filename = "agent_revenue_data_frame.rds",
-  path = here::here("tests/manual_tests/output")
+  path = here::here("tests/manual_tests")
 )

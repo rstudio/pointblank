@@ -60,5 +60,5 @@ agent_revenue_tibble <-
 x_write_disk(
   agent_revenue_tibble,
   filename = "agent_revenue_tibble.rds",
-  path = here::here("tests/manual_tests/output")
+  path = here::here("tests/manual_tests")
 )

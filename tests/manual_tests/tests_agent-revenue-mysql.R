@@ -64,5 +64,5 @@ agent_revenue_mysql <-
 x_write_disk(
   agent_revenue_mysql,
   filename = "agent_revenue_mysql.rds",
-  path = here::here("tests/manual_tests/output")
+  path = here::here("tests/manual_tests")
 )

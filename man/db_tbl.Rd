@@ -17,7 +17,11 @@ the \code{RPostgres::Postgres()} driver function); \code{"mysql"} (MySQL, using
 \item{dbname}{The database name.}
 
 \item{table}{The name of the table, or, a reference to a table in a schema
-(two-element vector with the names of schema and table).}
+(two-element vector with the names of schema and table). Alternatively,
+this can be supplied as a data table to copy into an in-memory database
+connection. This only works if: (1) the \code{db} is either \code{"sqlite"} or
+\code{"duckdb"}, (2) the \code{dbname} was chosen as \code{":memory:"}, and (3) the
+\code{data_tbl} is a data frame or a tibble object.}
 
 \item{user, password}{The environment variables used to access the username
 and password for the database.}

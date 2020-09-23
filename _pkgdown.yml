@@ -82,6 +82,7 @@ reference:
     - info_columns
     - info_section
     - info_snippet
+    - snip_list
     
   - title: Emailing
     desc: >

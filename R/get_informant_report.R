@@ -7,6 +7,8 @@
 #' direct editing of a **pointblank** YAML file.
 #' 
 #' @param informant An informant object of class `ptblank_informant`.
+#' @param size The size of the display table, which can be either `"standard"`
+#'   (the default, with a width of 875px) or `"small"` (width of 575px).
 #' 
 #' @return A **gt** table object.
 #' 
@@ -32,7 +34,8 @@
 #' 6-2
 #' 
 #' @export
-get_informant_report <- function(informant) {
+get_informant_report <- function(informant,
+                                 size = "standard") {
   
   # nocov start
   
@@ -319,6 +322,8 @@ get_informant_report <- function(informant) {
   
   # Generate table execution start/end time (and duration)
   # as a table source note
+  # TODO: Add outer div with top and bottom margins set (3px and 5px), then,
+  # the `#pb_information .gt_sourcenote` CSS can be removed
   table_time <- 
     create_table_time_html(
       time_start = time_start,
@@ -326,43 +331,42 @@ get_informant_report <- function(informant) {
     )
   
   # Generate a gt table
-  gt::gt(
-    tbl,
-    groupname_col = "group",
-    id = "pb_information"
-  ) %>%
+  gt_informant_report <- 
+    gt::gt(
+      tbl,
+      groupname_col = "group",
+      id = "pb_information"
+    ) %>%
     gt::tab_header(
       title = "Pointblank Information",
       subtitle = gt::md(combined_subtitle)
     ) %>%
     gt::tab_source_note(source_note = gt::md(table_time)) %>%
     gt::fmt_markdown(columns = gt::vars(item)) %>%
-    gt::cols_width(gt::everything() ~ gt::px(876)) %>%
     gt::tab_options(
-      column_labels.hidden = TRUE,
-      table.font.size = gt::pct(110)
+      column_labels.hidden = TRUE
     ) %>%
     gt::tab_style(
       style = gt::cell_text(
-        size = gt::px(24),
+        size = gt::px(28),
+        weight = 500,
         align = "left",
-        indent = gt::px(5)
+        color = "#444444"
       ),
       locations = gt::cells_title("title")
     ) %>%
     gt::tab_style(
       style = gt::cell_text(
         size = gt::px(12),
-        align = "left",
-        indent = gt::px(5)
+        align = "left"
       ),
       locations = gt::cells_title("subtitle")
     ) %>%
     gt::tab_style(
       style = list(
         gt::cell_text(
-          color = "#666666",
-          weight = "bold",
+          color = "#444444",
+          weight = 500,
           transform = "uppercase" 
         ),
         gt::cell_fill(color = "#FCFCFC"),
@@ -378,8 +382,7 @@ get_informant_report <- function(informant) {
       style = list(
         gt::cell_text(
           color = "#666666",
-          size = "smaller",
-          indent = gt::px(5)
+          size = "smaller"
         ),
         gt::cell_borders(
           sides = "top",
@@ -389,10 +392,23 @@ get_informant_report <- function(informant) {
         )
       ),
       locations = gt::cells_body(columns = gt::everything())
-    ) %>%
-    gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) %>%
-    gt::opt_css(
-      css = "
+    )
+  
+  if (size == "small") {
+    
+    gt_informant_report <-
+      gt_informant_report %>% 
+      gt::cols_width(gt::everything() ~ gt::px(575))
+    
+  } else {
+    
+    gt_informant_report <-
+      gt_informant_report %>% 
+      gt::cols_width(gt::everything() ~ gt::px(875)) %>%
+      gt::tab_options(table.font.size = gt::pct(130)) %>%
+      gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) %>%
+      gt::opt_css(
+        css = "
           #pb_information p {
             overflow: visible;
             margin-top: 2px;
@@ -411,7 +427,8 @@ get_informant_report <- function(informant) {
           }
           #pb_information code {
             font-family: 'IBM Plex Mono', monospace, courier;
-            font-size: 13px;
+            font-size: 90%;
+            font-weight: 500;
           }
           #pb_information .pb_date {
             text-decoration-style: solid;
@@ -432,14 +449,17 @@ get_informant_report <- function(informant) {
             color: #777777;
           }
           #pb_information .pb_col_type {
-            font-size: 11px;
+            font-size: 75%;
           }
           #pb_information .gt_sourcenote {
             height: 35px;
             padding: 0
           }
         "
-    )
+      )
+  }
+  
+  gt_informant_report
   
   # nocov end
 }
@@ -506,7 +526,7 @@ title_text_md <- function(item,
           ifelse(
             title_code,
             paste0(
-              "font-weight:bold;line-height:2em;",
+              "color:#555555;font-weight:500;line-height:2em;",
               "border:solid 1px #499FFE;",
               "padding:2px 8px 3px 8px;background-color:#FAFAFA;"
             ),

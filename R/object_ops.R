@@ -28,6 +28,8 @@
 #'   database tables of the class `tbl_dbi` and for Spark DataFrames
 #'   (`tbl_spark`) the table is always removed (even if `keep_tbl` is set to
 #'   `TRUE`).
+#' @param keep_extracts An option to keep any collected extract data for failing
+#'   rows. By default, this is `FALSE`.
 #'   
 #' @family Object Ops
 #' @section Function ID:
@@ -37,7 +39,13 @@
 x_write_disk <- function(x,
                          filename,
                          path = NULL,
-                         keep_tbl = FALSE) {
+                         keep_tbl = FALSE,
+                         keep_extracts = FALSE) {
+  
+  x$validation_set$tbl_checked <- NULL
+  x$validation_set <-
+    x$validation_set %>%
+    dplyr::mutate(tbl_checked = list(NULL))
   
   if (keep_tbl) {
     
@@ -49,23 +57,27 @@ x_write_disk <- function(x,
       )
       
       x <- remove_tbl(x)
+      x$validation_set$tbl_checked <- list()
+      x$validation_set <-
+        x$validation_set %>%
+        dplyr::mutate(tbl_checked = list(NULL))
     }
     
   } else if (!keep_tbl) {
     x <- remove_tbl(x)
   }
   
+  if (!keep_extracts) {
+    x$extracts <- list()
+  }
 
   if (!is.null(path)) {
     filename <- file.path(path, filename)
   }
     
-  filename <- fs::path_expand(filename)
-  
-  con <- xzfile(filename)
-  on.exit(close(con), add = TRUE)
-  saveRDS(x, con)
-  invisible(x)
+  filename <- as.character(fs::path_expand(filename))
+
+  saveRDS(x, file = filename)
 }
 
 #' Read a **pointblank** *agent* or *informant* from disk

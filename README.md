@@ -87,8 +87,8 @@ agent <-
 
 Should you want to perform validation checks on database or *Spark*
 tables, provide a `tbl_dbi` or `tbl_spark` object to `create_agent()`.
-The **pointblank** package currently supports *MySQL*, *PostgreSQL*,
-*SQLite*, *SQL Server*, and *Spark DataFrames* (through the **sparklyr**
+The **pointblank** package currently supports *PostgreSQL*. *MySQL*,
+*MariaDB*, *SQLite*, and *Spark DataFrames* (through the **sparklyr**
 package).
 
 The reporting’s pretty sweet. We can get a **gt**-based report by

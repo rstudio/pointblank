@@ -53,6 +53,8 @@ exceptionally bad with regard to data quality.
 
 <hr>
 
+##### TABLE VALIDATIONS WITH AN AGENT AND ITS DETAILED REPORTING
+
 The **pointblank** package is designed to be both straightforward yet
 powerful. And fast\! Local data frames don’t take very long to validate
 extensively and all validation checks on remote tables are done entirely
@@ -98,6 +100,8 @@ printing an *agent*.
 <img src="man/figures/agent_report.png">
 
 <hr>
+
+##### VALIDATIONS DIRECTLY ON DATA
 
 Next up is an example that follows the second, *agent*-less workflow.
 It’s the same three validation functions as before but, this time, we
@@ -161,6 +165,8 @@ thresholds and side effects for each failure state. However, the
 
 <hr>
 
+##### VALIDATIONS IN R MARKDOWN DOCUMENTS
+
 Using **pointblank** in an R Markdown workflow is enabled by default
 once the **pointblank** library is loaded. The framework allows for
 validation testing within specialized validation code chunks where the
@@ -182,6 +188,8 @@ The above R Markdown document is available as a template in the RStudio
 IDE (it’s called `Pointblank Validation`). Try it out\!
 
 <hr>
+
+##### TABLE SCANS
 
 While data validation is important, one has to be familiar with the data
 first. To that end, the `scan_data()` function is provided in
@@ -223,6 +231,8 @@ assembly](https://img.shields.io/static/v1?label=Table%20Scan&message=Ensembl:%2
 
 <hr>
 
+##### PACKAGE FUNCTIONS
+
 There are many functions available in **pointblank** for making
 comprehensive table validations. Each validation function is associated
 with an expectation function (of the form `expect_*()`). They are
@@ -234,7 +244,7 @@ logical value (`TRUE` or `FALSE`).
 
 <p align="center">
 
-<img src="man/figures/pointblank_functions.svg" width="80%">
+<img src="man/figures/pointblank_functions.svg" width="100%">
 
 </p>
 
@@ -258,7 +268,7 @@ make this package better, feel free to file an
 
 <hr>
 
-#### How **pointblank** Fits in with Other Packages that Validate Tabular Data
+##### How **pointblank** Fits in with Other Packages that Validate Tabular Data
 
 The **pointblank** package isn’t the only one of its kind available for
 **R**. The reason for introducing yet another has to do with
@@ -271,6 +281,8 @@ The **pointblank** package isn’t the only one of its kind available for
     data tables in unit tests (with the set of `expect_*()` functions),
     and (4) validation of data tables to support conditional expressions
     (with the set of `test_*()` functions)
+  - enabling a workflow for collecting and reporting on useful
+    information about your data tables
   - extra tools for understanding new datasets (`scan_data()`) and
     validating data in specialized R Markdown code chunks
     (`validate_rmd()`)
@@ -299,6 +311,6 @@ Code of
 Conduct](https://www.contributor-covenant.org/version/1/0/0/code-of-conduct/).<br>By
 participating in this project you agree to abide by its terms.
 
-#### License
+##### License
 
 MIT © Richard Iannone

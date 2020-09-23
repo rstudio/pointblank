@@ -41,11 +41,9 @@ x_write_disk <- function(x,
                          path = NULL,
                          keep_tbl = FALSE,
                          keep_extracts = FALSE) {
-  
+
   x$validation_set$tbl_checked <- NULL
-  x$validation_set <-
-    x$validation_set %>%
-    dplyr::mutate(tbl_checked = list(NULL))
+  x$validation_set <- x$validation_set %>% dplyr::mutate(tbl_checked = list(NULL))
   
   if (keep_tbl) {
     
@@ -55,12 +53,8 @@ x_write_disk <- function(x,
         "A table of class `tbl_dbi` or `tbl_spark` cannot be kept with the object.",
         call. = FALSE
       )
-      
+
       x <- remove_tbl(x)
-      x$validation_set$tbl_checked <- list()
-      x$validation_set <-
-        x$validation_set %>%
-        dplyr::mutate(tbl_checked = list(NULL))
     }
     
   } else if (!keep_tbl) {

@@ -508,8 +508,8 @@ tbl_val_comparison <- function(table, column, operator, value, na_pass) {
   expression <- paste(column, operator, value)
 
   table_sql_server <- any(grepl("sql server|sqlserver", tolower(class(table))))
-  
-  if(table_sql_server) {
+
+  if (table_sql_server) {
     table %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         !!rlang::parse_expr(expression) ~ 1,

@@ -530,7 +530,7 @@ table_scan:
     it: "Fetta superiore e inferiore"
     es: "Divisiones superior e inferior"
     pt: "Divisiones Máx/Mín"
-    zh: "最大/最小切片"
+    zh: "高/低值"
     ru: "Макс./мин. срезы"
   subsection_title_overview_table_overview:
     en: "Table Overview"
@@ -584,7 +584,7 @@ table_scan:
     it: "Valori massimi"
     es: "Valores máximos"
     pt: "Valores máximos"
-    zh: "最大值"
+    zh: "高价值"
     ru: "Максимальные значения"
   subsection_title_variables_minimum_values:
     en: "Minimum Values"
@@ -593,7 +593,7 @@ table_scan:
     it: "Valori minimi"
     es: "Valores mínimos"
     pt: "Valores mínimos"
-    zh: "最小值"
+    zh: "低值"
     ru: "Минимальные значения"
   subsection_title_variables_string_lengths:
     en: "String Lengths"
@@ -719,7 +719,7 @@ table_scan:
     it: "Minimo"
     es: "Mínimo"
     pt: "Mínimo"
-    zh: "最小值"
+    zh: "低价值"
     ru: "Минимум"
   tbl_lab_maximum:
     en: "Maximum"
@@ -728,7 +728,7 @@ table_scan:
     it: "Massimo"
     es: "Máximo"
     pt: "Máximo"
-    zh: "最大值"
+    zh: "高价值"
     ru: "Максимум"
   tbl_lab_5_percentile:
     en: "5th Percentile"

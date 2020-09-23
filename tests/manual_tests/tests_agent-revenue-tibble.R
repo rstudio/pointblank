@@ -1,14 +1,15 @@
 library(pointblank)
 library(intendo)
+library(here)
 
 # Create an `action_levels` object, setting
 # *warn* and *stop* thresholds at 0.01 and 0.10
 al <- action_levels(warn_at = 0.01, stop_at = 0.10)
 
-agent <-
+agent_revenue_data_frame <-
   create_agent(
-    tbl = intendo_revenue,
-    tbl_name = "intendo::intendo_revenue",
+    read_fn = ~ as.data.frame(intendo::intendo_revenue, stringsAsFactors = FALSE),
+    tbl_name = "intendo_revenue",
     label = "The **intendo** revenue table.", 
     actions = al
   ) %>%
@@ -56,16 +57,8 @@ agent <-
   ) %>%
   interrogate()
 
-agent
-
-get_agent_report(agent, arrange_by = "severity")
-
-get_agent_report(agent, arrange_by = "severity", keep = "fail_states")
-
-extracts <- agent %>% get_data_extracts()
-
-x_list <- get_agent_x_list(agent)
-
-email <- email_create(agent)
-
-sundered <- get_sundered_data(agent)
+x_write_disk(
+  agent_revenue_data_frame,
+  filename = "agent_revenue_data_frame.rds",
+  path = here::here("tests/manual_tests")
+)

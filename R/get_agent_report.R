@@ -86,9 +86,9 @@
 #'   summary table that provides the validation plan and the results from the
 #'   interrogation. By default, `NULL` will create English (`"en"`) text. Other
 #'   options include French (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish
-#'   (`"es"`), Portuguese, (`"pt"`), and Chinese (`"zh"`). This `lang` option
-#'   will override any previously set lang value (e.g., by the [create_agent()]
-#'   call).
+#'   (`"es"`), Portuguese, (`"pt"`), Chinese (`"zh"`), and Russian (`"ru"`).
+#'   This `lang` option will override any previously set lang value (e.g., by
+#'   the [create_agent()] call).
 #' @param locale An optional locale ID to use for formatting values in the
 #'   *agent report* summary table according the locale's rules. Examples include
 #'   `"en_US"` for English (United States) and `"fr_FR"` for French (France);

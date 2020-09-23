@@ -4,10 +4,13 @@
 \alias{get_informant_report}
 \title{Get a table information report from an \emph{informant} object}
 \usage{
-get_informant_report(informant)
+get_informant_report(informant, size = "standard")
 }
 \arguments{
 \item{informant}{An informant object of class \code{ptblank_informant}.}
+
+\item{size}{The size of the display table, which can be either \code{"standard"}
+(the default, with a width of 875px) or \code{"small"} (width of 575px).}
 }
 \value{
 A \strong{gt} table object.

@@ -1346,6 +1346,7 @@ create_table_type_html <- function(tbl_src, tbl_name) {
       data.frame = c("#9933CC", "#FFFFFF", "A data frame"),
       tbl_df = c("#F1D35A", "#222222", "A tibble"),
       sqlite = c("#BACBEF", "#222222", "SQLite table"),
+      duckdb = c("#000000", "#FFFFFF", "DuckDB table"),
       mysql = c("#EBAD40", "#222222", "MySQL table"),
       postgres = c("#3E638B", "#FFFFFF", "PostgreSQL table"),
       tbl_spark = c("#E66F21", "#FFFFFF", "Spark DataFrame"),

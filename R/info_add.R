@@ -482,7 +482,7 @@ info_snippet <- function(x,
 #' @export
 snip_list <- function(column, limit = 5) {
   
-  as.formula(
+  stats::as.formula(
     as.character(
       glue::glue(
         "~ . %>% dplyr::select(<<column>>) %>% dplyr::distinct() %>% dplyr::pull(<<column>>) %>%

@@ -88,8 +88,9 @@ agent <-
 Should you want to perform validation checks on database or *Spark*
 tables, provide a `tbl_dbi` or `tbl_spark` object to `create_agent()`.
 The **pointblank** package currently supports *PostgreSQL*. *MySQL*,
-*MariaDB*, *SQLite*, and *Spark DataFrames* (through the **sparklyr**
-package).
+*MariaDB*, *DuckDB*, *SQLite*, and *Spark DataFrames* (through the
+**sparklyr** package). The `db_tbl()` function is provided by
+**pointblank** to make accessing a DB table insanely easy.
 
 The reporting’s pretty sweet. We can get a **gt**-based report by
 printing an *agent*.
@@ -187,11 +188,11 @@ first. To that end, the `scan_data()` function is provided in
 **pointblank** for generating a comprehensive summary of a tabular
 dataset. The report content is customizable, can be used inside an R
 Markdown document, and (as with the validation report) it can be
-produced in five different languages: *English*, *French*, *German*,
-*Italian*, and *Spanish*. Here are several published examples of a
-**Table Scan** for each of these languages using the `dplyr::storms`
-dataset. Clicking any of these will take you to a highly interactive
-**RPubs** document.
+produced in eight different languages: *English*, *French*, *German*,
+*Italian*, *Spanish*, *Portuguese*, *Chinese* (China mainland), and
+*Russian*. Here are several published examples of a **Table Scan** for
+each of these languages using the `dplyr::storms` dataset. Clicking any
+of these will take you to a highly interactive **RPubs** document.
 
 [![Table Scan in
 English](https://img.shields.io/static/v1?label=Table%20Scan&message=English&color=blue)](https://rpubs.com/rich_i/pointblank_storms_english)   
@@ -202,7 +203,13 @@ German](https://img.shields.io/static/v1?label=Table%20Scan&message=German&color
 [![Table Scan in
 Italian](https://img.shields.io/static/v1?label=Table%20Scan&message=Italian&color=blue)](https://rpubs.com/rich_i/pointblank_storms_italian)   
 [![Table Scan in
-Spanish](https://img.shields.io/static/v1?label=Table%20Scan&message=Spanish&color=blue)](https://rpubs.com/rich_i/pointblank_storms_spanish)
+Spanish](https://img.shields.io/static/v1?label=Table%20Scan&message=Spanish&color=blue)](https://rpubs.com/rich_i/pointblank_storms_spanish)   
+[![Table Scan in
+Portuguese](https://img.shields.io/static/v1?label=Table%20Scan&message=Portuguese&color=blue)](https://rpubs.com/rich_i/pointblank_storms_portuguese)   
+[![Table Scan in
+Chinese](https://img.shields.io/static/v1?label=Table%20Scan&message=Chinese&color=blue)](https://rpubs.com/rich_i/pointblank_storms_chinese)   
+[![Table Scan in
+Russian](https://img.shields.io/static/v1?label=Table%20Scan&message=Russian&color=blue)](https://rpubs.com/rich_i/pointblank_storms_russian)   
 
 Database tables can be used with `scan_data()` as well. Here are two
 examples using the `full_region` table of the **Rfam** database (hosted

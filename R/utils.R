@@ -7,7 +7,15 @@ is_ptblank_informant <- function(x) {
 }
 
 is_a_table_object <- function(x) {
-  inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))
+  inherits(x, c("data.frame", "tbl_df", "tbl_dbi", "tbl_spark"))
+}
+
+is_tbl_spark <- function(x) {
+  inherits(x, "tbl_spark")
+}
+
+is_tbl_dbi <- function(x) {
+  inherits(x, "tbl_dbi")
 }
 
 get_tbl_object <- function(agent) {

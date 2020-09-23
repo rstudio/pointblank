@@ -141,7 +141,7 @@ is required in the YAML file). The additional auto-invocation of
 been updated with the latest information from the target table.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>yaml_informant_incorporate</span>(<span class='kw'>path</span>)</pre>
+    <pre class="usage"><span class='fu'>yaml_informant_incorporate</span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,38 +183,38 @@ been updated with the latest information from the target table.</p>
 <span class='co'># object; the data will be referenced</span>
 <span class='co'># in a `read_fn` (a requirement for</span>
 <span class='co'># writing to YAML)</span>
-<span class='kw'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='create_informant.html'>create_informant</a></span>(
-    read_fn = <span class='op'>~</span><span class='kw'>small_table</span>,
-    label = <span class='st'>"A simple example with the `small_table`."</span>
-  )
+<span class='va'>informant</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span><span class='va'>small_table</span>,
+    label <span class='op'>=</span> <span class='st'>"A simple example with the `small_table`."</span>
+  <span class='op'>)</span>
 
 <span class='co'># Then, as with any `informant` object, we</span>
 <span class='co'># can add information by using as many</span>
 <span class='co'># `info_*()` functions as we want</span>
-<span class='kw'>informant</span> <span class='op'>&lt;-</span>
-  <span class='kw'>informant</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_columns.html'>info_columns</a></span>(
-   columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>),
-   info = <span class='st'>"In the range of 1 to 10. (SIMPLE)"</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_columns.html'>info_columns</a></span>(
-    columns = <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"date"</span>),
-    info = <span class='st'>"Time-based values (e.g., `Sys.time()`)."</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_columns.html'>info_columns</a></span>(
-    columns = <span class='st'>"date"</span>,
-    info = <span class='st'>"The date part of `date_time`. (CALC)"</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_section.html'>info_section</a></span>(
-    section_name = <span class='st'>"rows"</span>,
-    row_count = <span class='st'>"There are {row_count} rows available."</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_snippet.html'>info_snippet</a></span>(
-    snippet_name = <span class='st'>"row_count"</span>,
-    fn = <span class='op'>~</span> <span class='kw'>.</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='incorporate.html'>incorporate</a></span>()
+<span class='va'>informant</span> <span class='op'>&lt;-</span>
+  <span class='va'>informant</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
+   columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>,
+   info <span class='op'>=</span> <span class='st'>"In the range of 1 to 10. (SIMPLE)"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"date"</span><span class='op'>)</span>,
+    info <span class='op'>=</span> <span class='st'>"Time-based values (e.g., `Sys.time()`)."</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='st'>"date"</span>,
+    info <span class='op'>=</span> <span class='st'>"The date part of `date_time`. (CALC)"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='info_section.html'>info_section</a></span><span class='op'>(</span>
+    section_name <span class='op'>=</span> <span class='st'>"rows"</span>,
+    row_count <span class='op'>=</span> <span class='st'>"There are {row_count} rows available."</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='info_snippet.html'>info_snippet</a></span><span class='op'>(</span>
+    snippet_name <span class='op'>=</span> <span class='st'>"row_count"</span>,
+    fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='incorporate.html'>incorporate</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># The informant can be written to a pointblank</span>
 <span class='co'># YAML file with `yaml_write()`</span>
@@ -226,31 +226,31 @@ been updated with the latest information from the target table.</p>
 <span class='co'># The 'informant-small_table.yml' file</span>
 <span class='co'># is available in the package through</span>
 <span class='co'># `system.file()`</span>
-<span class='kw'>yml_file</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(
+<span class='va'>yml_file</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
     <span class='st'>"informant-small_table.yml"</span>,
-    package = <span class='st'>"pointblank"</span>
-  )
+    package <span class='op'>=</span> <span class='st'>"pointblank"</span>
+  <span class='op'>)</span>
 
 <span class='co'># We can incorporate the data (which</span>
 <span class='co'># is accessible through the `read_fn`)</span>
 <span class='co'># into the info text through direct</span>
 <span class='co'># use of the YAML file with</span>
 <span class='co'># `yaml_informant_incorporate()`</span>
-<span class='kw'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>yaml_informant_incorporate</span>(path = <span class='kw'>yml_file</span>)
+<span class='va'>informant</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>yaml_informant_incorporate</span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>informant</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>informant</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "ptblank_informant"</div><div class='input'>
 <span class='co'># If it's desired to only create a new</span>
 <span class='co'># informant with the information in place</span>
 <span class='co'># (stopping short of processing), then the</span>
 <span class='co'># `yaml_read_informant()` function will</span>
 <span class='co'># be useful</span>
-<span class='kw'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='yaml_read_informant.html'>yaml_read_informant</a></span>(path = <span class='kw'>yml_file</span>)
+<span class='va'>informant</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='yaml_read_informant.html'>yaml_read_informant</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>informant</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>informant</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "ptblank_informant"</div><div class='input'>
 </div></pre>
   </div>

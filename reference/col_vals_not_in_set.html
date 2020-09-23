@@ -145,33 +145,33 @@ operate over the number of test units that is equal to the number of rows in
 the table (after any <code>preconditions</code> have been applied).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>col_vals_not_in_set</span>(
-  <span class='kw'>x</span>,
-  <span class='kw'>columns</span>,
-  <span class='kw'>set</span>,
-  preconditions = <span class='kw'>NULL</span>,
-  actions = <span class='kw'>NULL</span>,
-  step_id = <span class='kw'>NULL</span>,
-  label = <span class='kw'>NULL</span>,
-  brief = <span class='kw'>NULL</span>,
-  active = <span class='fl'>TRUE</span>
-)
+    <pre class="usage"><span class='fu'>col_vals_not_in_set</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>columns</span>,
+  <span class='va'>set</span>,
+  preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  actions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  step_id <span class='op'>=</span> <span class='cn'>NULL</span>,
+  label <span class='op'>=</span> <span class='cn'>NULL</span>,
+  brief <span class='op'>=</span> <span class='cn'>NULL</span>,
+  active <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>expect_col_vals_not_in_set</span>(
-  <span class='kw'>object</span>,
-  <span class='kw'>columns</span>,
-  <span class='kw'>set</span>,
-  preconditions = <span class='kw'>NULL</span>,
-  threshold = <span class='fl'>1</span>
-)
+<span class='fu'>expect_col_vals_not_in_set</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  <span class='va'>columns</span>,
+  <span class='va'>set</span>,
+  preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  threshold <span class='op'>=</span> <span class='fl'>1</span>
+<span class='op'>)</span>
 
-<span class='fu'>test_col_vals_not_in_set</span>(
-  <span class='kw'>object</span>,
-  <span class='kw'>columns</span>,
-  <span class='kw'>set</span>,
-  preconditions = <span class='kw'>NULL</span>,
-  threshold = <span class='fl'>1</span>
-)</pre>
+<span class='fu'>test_col_vals_not_in_set</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  <span class='va'>columns</span>,
+  <span class='va'>set</span>,
+  preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  threshold <span class='op'>=</span> <span class='fl'>1</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -344,17 +344,17 @@ then be automatically generated.</p>
 <span class='co'># Validate that values in column `f`</span>
 <span class='co'># contain none of the values `lows`,</span>
 <span class='co'># `mids`, and `highs`</span>
-<span class='kw'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='kw'>small_table</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_not_in_set</span>(
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>f</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lows"</span>, <span class='st'>"mids"</span>, <span class='st'>"highs"</span>)
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
+<span class='va'>agent</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span><span class='va'>small_table</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_not_in_set</span><span class='op'>(</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lows"</span>, <span class='st'>"mids"</span>, <span class='st'>"highs"</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
   
 <span class='co'># Determine if this validation</span>
 <span class='co'># had no failing test units (there</span>
 <span class='co'># are 13 test units, one for each row)</span>
-<span class='fu'><a href='all_passed.html'>all_passed</a></span>(<span class='kw'>agent</span>)
+<span class='fu'><a href='all_passed.html'>all_passed</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># Calling `agent` in the console</span>
 <span class='co'># prints the agent's report; but we</span>
@@ -370,12 +370,12 @@ then be automatically generated.</p>
 <span class='co'># is a single test unit failing; the</span>
 <span class='co'># behavior of side effects can be</span>
 <span class='co'># customized with the `actions` option</span>
-<span class='kw'>small_table</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_not_in_set</span>(
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>f</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lows"</span>, <span class='st'>"mids"</span>, <span class='st'>"highs"</span>)
-  ) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='kw'>f</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>()
+<span class='va'>small_table</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_not_in_set</span><span class='op'>(</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lows"</span>, <span class='st'>"mids"</span>, <span class='st'>"highs"</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "high" "low"  "mid" </div><div class='input'>
 <span class='co'># C: Using the expectation function</span>
 
@@ -383,20 +383,20 @@ then be automatically generated.</p>
 <span class='co'># typically perform one validation at a</span>
 <span class='co'># time; this is primarily used in</span>
 <span class='co'># testthat tests</span>
-<span class='fu'>expect_col_vals_not_in_set</span>(
-  <span class='kw'>small_table</span>,
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>f</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lows"</span>, <span class='st'>"mids"</span>, <span class='st'>"highs"</span>)
-)
+<span class='fu'>expect_col_vals_not_in_set</span><span class='op'>(</span>
+  <span class='va'>small_table</span>,
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lows"</span>, <span class='st'>"mids"</span>, <span class='st'>"highs"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># D: Using the test function</span>
 
 <span class='co'># With the `test_*()` form, we should</span>
 <span class='co'># get a single logical value returned</span>
 <span class='co'># to us</span>
-<span class='kw'>small_table</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>test_col_vals_not_in_set</span>(
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>f</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lows"</span>, <span class='st'>"mids"</span>, <span class='st'>"highs"</span>)
-  )
+<span class='va'>small_table</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>test_col_vals_not_in_set</span><span class='op'>(</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lows"</span>, <span class='st'>"mids"</span>, <span class='st'>"highs"</span><span class='op'>)</span>
+  <span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 </div></pre>
   </div>

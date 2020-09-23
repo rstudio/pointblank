@@ -141,7 +141,7 @@ to open the file directly. Alternatively, we can provide an <em>agent</em> to th
 without needing to write the YAML to disk beforehand.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>yaml_agent_string</span>(agent = <span class='kw'>NULL</span>, path = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>yaml_agent_string</span><span class='op'>(</span>agent <span class='op'>=</span> <span class='cn'>NULL</span>, path <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,28 +178,28 @@ without needing to write the YAML to disk beforehand.</p>
 <span class='co'># dataset; we need an agent and its</span>
 <span class='co'># table-reading function enables retrieval</span>
 <span class='co'># of the target table</span>
-<span class='kw'>agent</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(
-    read_fn = <span class='op'>~</span><span class='kw'>small_table</span>,
-    label = <span class='st'>"A simple example with the `small_table`."</span>,
-    actions = <span class='fu'><a href='action_levels.html'>action_levels</a></span>(
-      warn_at = <span class='fl'>0.10</span>,
-      stop_at = <span class='fl'>0.25</span>,
-      notify_at = <span class='fl'>0.35</span>
-    )
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_exists.html'>col_exists</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>date</span>, <span class='kw'>date_time</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_regex.html'>col_vals_regex</a></span>(
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>b</span>), <span class='st'>"[0-9]-[a-z]{3}-[0-9]{3}"</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='rows_distinct.html'>rows_distinct</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>d</span>), <span class='fl'>100</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_lte.html'>col_vals_lte</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>c</span>), <span class='fl'>5</span>)
+<span class='va'>agent</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span><span class='va'>small_table</span>,
+    label <span class='op'>=</span> <span class='st'>"A simple example with the `small_table`."</span>,
+    actions <span class='op'>=</span> <span class='fu'><a href='action_levels.html'>action_levels</a></span><span class='op'>(</span>
+      warn_at <span class='op'>=</span> <span class='fl'>0.10</span>,
+      stop_at <span class='op'>=</span> <span class='fl'>0.25</span>,
+      notify_at <span class='op'>=</span> <span class='fl'>0.35</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_exists.html'>col_exists</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>date_time</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_regex.html'>col_vals_regex</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, <span class='st'>"[0-9]-[a-z]{3}-[0-9]{3}"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='rows_distinct.html'>rows_distinct</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>, <span class='fl'>100</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_lte.html'>col_vals_lte</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>c</span><span class='op'>)</span>, <span class='fl'>5</span><span class='op'>)</span>
 
 <span class='co'># We can view the YAML file in the console</span>
 <span class='co'># with the `yaml_agent_string()` function,</span>
 <span class='co'># providing the `agent` object as the input</span>
-<span class='fu'>yaml_agent_string</span>(agent = <span class='kw'>agent</span>)
+<span class='fu'>yaml_agent_string</span><span class='op'>(</span>agent <span class='op'>=</span> <span class='va'>agent</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>read_fn: ~small_table</span>
 #&gt; <span class='message'>tbl_name: .na.character</span>
 #&gt; <span class='message'>label: A simple example with the `small_table`.</span>
@@ -233,15 +233,15 @@ without needing to write the YAML to disk beforehand.</p>
 
 <span class='co'># The 'agent-small_table.yml' file is</span>
 <span class='co'># available in the package through `system.file()`</span>
-<span class='kw'>yml_file</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(
+<span class='va'>yml_file</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
     <span class='st'>"agent-small_table.yml"</span>,
-    package = <span class='st'>"pointblank"</span>
-  )
+    package <span class='op'>=</span> <span class='st'>"pointblank"</span>
+  <span class='op'>)</span>
 
 <span class='co'># The `yaml_agent_string()` function can</span>
 <span class='co'># be used with the YAML file as well</span>
-<span class='fu'>yaml_agent_string</span>(path = <span class='kw'>yml_file</span>)
+<span class='fu'>yaml_agent_string</span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>read_fn: ~small_table</span>
 #&gt; <span class='message'>tbl_name: small_table</span>
 #&gt; <span class='message'>label: A simple example with the `small_table`.</span>
@@ -268,8 +268,8 @@ without needing to write the YAML to disk beforehand.</p>
 <span class='co'># At a later time, the YAML file can</span>
 <span class='co'># be read into a new agent with the</span>
 <span class='co'># `yaml_read_agent()` function</span>
-<span class='kw'>agent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='yaml_read_agent.html'>yaml_read_agent</a></span>(path = <span class='kw'>yml_file</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>agent</span>)
+<span class='va'>agent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='yaml_read_agent.html'>yaml_read_agent</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "ptblank_agent"</div><div class='input'>  
 </div></pre>
   </div>

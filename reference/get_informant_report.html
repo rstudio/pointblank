@@ -133,7 +133,7 @@ extent of that added via the use of the <code>info_*()</code> functions or throu
 direct editing of a <strong>pointblank</strong> YAML file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_informant_report</span>(<span class='kw'>informant</span>)</pre>
+    <pre class="usage"><span class='fu'>get_informant_report</span><span class='op'>(</span><span class='va'>informant</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,7 +160,7 @@ direct editing of a <strong>pointblank</strong> YAML file.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Generate an informant object using</span>
 <span class='co'># the `small_table` dataset</span>
-<span class='kw'>informant</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create_informant.html'>create_informant</a></span>(<span class='kw'>small_table</span>)
+<span class='va'>informant</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span><span class='va'>small_table</span><span class='op'>)</span>
 
 <span class='co'># This function creates some information</span>
 <span class='co'># without any extra help by profiling</span>
@@ -171,8 +171,8 @@ direct editing of a <strong>pointblank</strong> YAML file.</p>
 
 <span class='co'># Alternatively, we can get the same report</span>
 <span class='co'># by using `get_informant_report()`</span>
-<span class='kw'>report</span> <span class='op'>&lt;-</span> <span class='fu'>get_informant_report</span>(<span class='kw'>informant</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>report</span>)
+<span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>get_informant_report</span><span class='op'>(</span><span class='va'>informant</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>report</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "gt_tbl" "list"  </div><div class='input'>
 </div></pre>
   </div>

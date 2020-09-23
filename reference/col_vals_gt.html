@@ -147,36 +147,36 @@ expectation will operate over the number of test units that is equal to the
 number of rows in the table (after any <code>preconditions</code> have been applied).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>col_vals_gt</span>(
-  <span class='kw'>x</span>,
-  <span class='kw'>columns</span>,
-  <span class='kw'>value</span>,
-  na_pass = <span class='fl'>FALSE</span>,
-  preconditions = <span class='kw'>NULL</span>,
-  actions = <span class='kw'>NULL</span>,
-  step_id = <span class='kw'>NULL</span>,
-  label = <span class='kw'>NULL</span>,
-  brief = <span class='kw'>NULL</span>,
-  active = <span class='fl'>TRUE</span>
-)
+    <pre class="usage"><span class='fu'>col_vals_gt</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>columns</span>,
+  <span class='va'>value</span>,
+  na_pass <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  actions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  step_id <span class='op'>=</span> <span class='cn'>NULL</span>,
+  label <span class='op'>=</span> <span class='cn'>NULL</span>,
+  brief <span class='op'>=</span> <span class='cn'>NULL</span>,
+  active <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>expect_col_vals_gt</span>(
-  <span class='kw'>object</span>,
-  <span class='kw'>columns</span>,
-  <span class='kw'>value</span>,
-  na_pass = <span class='fl'>FALSE</span>,
-  preconditions = <span class='kw'>NULL</span>,
-  threshold = <span class='fl'>1</span>
-)
+<span class='fu'>expect_col_vals_gt</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  <span class='va'>columns</span>,
+  <span class='va'>value</span>,
+  na_pass <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  threshold <span class='op'>=</span> <span class='fl'>1</span>
+<span class='op'>)</span>
 
-<span class='fu'>test_col_vals_gt</span>(
-  <span class='kw'>object</span>,
-  <span class='kw'>columns</span>,
-  <span class='kw'>value</span>,
-  na_pass = <span class='fl'>FALSE</span>,
-  preconditions = <span class='kw'>NULL</span>,
-  threshold = <span class='fl'>1</span>
-)</pre>
+<span class='fu'>test_col_vals_gt</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  <span class='va'>columns</span>,
+  <span class='va'>value</span>,
+  na_pass <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  threshold <span class='op'>=</span> <span class='fl'>1</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -352,17 +352,17 @@ then be automatically generated.</p>
 <span class='co'># use a simple table with three numeric</span>
 <span class='co'># columns (`a`, `b`, and `c`) and three</span>
 <span class='co'># character columns (`d`, `e`, and `f`)</span>
-<span class='kw'>tbl</span> <span class='op'>&lt;-</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
-    a = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>),
-    b = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>2</span>),
-    c = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>),
-    d = <span class='kw'>LETTERS</span>[<span class='kw'>a</span>],
-    e = <span class='kw'>LETTERS</span>[<span class='kw'>b</span>],
-    f = <span class='kw'>LETTERS</span>[<span class='kw'>c</span>]
-  )
+<span class='va'>tbl</span> <span class='op'>&lt;-</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+    a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span>,
+    b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span>,
+    c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span>,
+    d <span class='op'>=</span> <span class='va'>LETTERS</span><span class='op'>[</span><span class='va'>a</span><span class='op'>]</span>,
+    e <span class='op'>=</span> <span class='va'>LETTERS</span><span class='op'>[</span><span class='va'>b</span><span class='op'>]</span>,
+    f <span class='op'>=</span> <span class='va'>LETTERS</span><span class='op'>[</span><span class='va'>c</span><span class='op'>]</span>
+  <span class='op'>)</span>
   
-<span class='kw'>tbl</span>
+<span class='va'>tbl</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 6</span><span>
 #&gt;       a     b     c d     e     f    
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
@@ -377,15 +377,15 @@ then be automatically generated.</p>
 
 <span class='co'># Validate that values in column `a`</span>
 <span class='co'># are all greater than the value of `4`</span>
-<span class='kw'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(<span class='kw'>tbl</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_gt</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), <span class='fl'>4</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
+<span class='va'>agent</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span><span class='va'>tbl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_gt</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, <span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Determine if this validation</span>
 <span class='co'># had no failing test units (there</span>
 <span class='co'># are 6 test units, one for each row)</span>
-<span class='fu'><a href='all_passed.html'>all_passed</a></span>(<span class='kw'>agent</span>)
+<span class='fu'><a href='all_passed.html'>all_passed</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># Calling `agent` in the console</span>
 <span class='co'># prints the agent's report; but we</span>
@@ -401,9 +401,9 @@ then be automatically generated.</p>
 <span class='co'># is a single test unit failing; the</span>
 <span class='co'># behavior of side effects can be</span>
 <span class='co'># customized with the `actions` option</span>
-<span class='kw'>tbl</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>col_vals_gt</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), <span class='fl'>4</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>(<span class='kw'>a</span>)
+<span class='va'>tbl</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>col_vals_gt</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, <span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 5 5 5 5 5 5</div><div class='input'>  
 <span class='co'># C: Using the expectation function</span>
 
@@ -411,14 +411,14 @@ then be automatically generated.</p>
 <span class='co'># typically perform one validation at a</span>
 <span class='co'># time; this is primarily used in</span>
 <span class='co'># testthat tests</span>
-<span class='fu'>expect_col_vals_gt</span>(<span class='kw'>tbl</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), <span class='fl'>4</span>)
+<span class='fu'>expect_col_vals_gt</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, <span class='fl'>4</span><span class='op'>)</span>
 
 <span class='co'># D: Using the test function</span>
 
 <span class='co'># With the `test_*()` form, we should</span>
 <span class='co'># get a single logical value returned</span>
 <span class='co'># to us</span>
-<span class='fu'>test_col_vals_gt</span>(<span class='kw'>tbl</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), <span class='fl'>4</span>)
+<span class='fu'>test_col_vals_gt</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, <span class='fl'>4</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 </div></span></pre>
   </div>

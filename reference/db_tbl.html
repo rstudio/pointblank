@@ -143,7 +143,7 @@ leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> (e.g,. <c
 desired, these can be supplied directly by enclosing those values in <code><a href='https://rdrr.io/r/base/AsIs.html'>I()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>db_tbl</span>(<span class='kw'>db</span>, <span class='kw'>dbname</span>, <span class='kw'>table</span>, <span class='kw'>user</span>, <span class='kw'>password</span>, host = <span class='kw'>NULL</span>, port = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>db_tbl</span><span class='op'>(</span><span class='va'>db</span>, <span class='va'>dbname</span>, <span class='va'>table</span>, <span class='va'>user</span>, <span class='va'>password</span>, host <span class='op'>=</span> <span class='cn'>NULL</span>, port <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,7 +164,11 @@ the <code><a href='https://rpostgres.r-dbi.org/reference/Postgres.html'>RPostgre
     <tr>
       <th>table</th>
       <td><p>The name of the table, or, a reference to a table in a schema
-(two-element vector with the names of schema and table).</p></td>
+(two-element vector with the names of schema and table). Alternatively,
+this can be supplied as a data table to copy into an in-memory database
+connection. This only works if: (1) the <code>db</code> is either <code>"sqlite"</code> or
+<code>"duckdb"</code>, (2) the <code>dbname</code> was chosen as <code>":memory:"</code>, and (3) the
+<code>data_tbl</code> is a data frame or a tibble object.</p></td>
     </tr>
     <tr>
       <th>user, password</th>

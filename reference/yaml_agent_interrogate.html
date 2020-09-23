@@ -139,7 +139,7 @@ default options of that function. As with <code><a href='yaml_read_agent.html'>y
 returned except, this time, it has intel from the interrogation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>yaml_agent_interrogate</span>(<span class='kw'>path</span>)</pre>
+    <pre class="usage"><span class='fu'>yaml_agent_interrogate</span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,12 +182,12 @@ to an <em>agent</em>.</p></td>
 <span class='co'># let's designate proportional failure</span>
 <span class='co'># thresholds to the `warn`, `stop`, and</span>
 <span class='co'># `notify` states using `action_levels()`</span>
-<span class='kw'>al</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='action_levels.html'>action_levels</a></span>(
-    warn_at = <span class='fl'>0.10</span>,
-    stop_at = <span class='fl'>0.25</span>,
-    notify_at = <span class='fl'>0.35</span>
-  )
+<span class='va'>al</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='action_levels.html'>action_levels</a></span><span class='op'>(</span>
+    warn_at <span class='op'>=</span> <span class='fl'>0.10</span>,
+    stop_at <span class='op'>=</span> <span class='fl'>0.25</span>,
+    notify_at <span class='op'>=</span> <span class='fl'>0.35</span>
+  <span class='op'>)</span>
 
 <span class='co'># Now create a pointblank `agent` object</span>
 <span class='co'># and give it the `al` object (which</span>
@@ -195,26 +195,26 @@ to an <em>agent</em>.</p></td>
 <span class='co'># steps which can be overridden); the</span>
 <span class='co'># data will be referenced in a `read_fn`</span>
 <span class='co'># (a requirement for writing to YAML)</span>
-<span class='kw'>agent</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(
-    read_fn = <span class='op'>~</span><span class='kw'>small_table</span>,
-    label = <span class='st'>"A simple example with the `small_table`."</span>,
-    actions = <span class='kw'>al</span>
-  )
+<span class='va'>agent</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span><span class='va'>small_table</span>,
+    label <span class='op'>=</span> <span class='st'>"A simple example with the `small_table`."</span>,
+    actions <span class='op'>=</span> <span class='va'>al</span>
+  <span class='op'>)</span>
 
 <span class='co'># Then, as with any `agent` object, we</span>
 <span class='co'># can add steps to the validation plan by</span>
 <span class='co'># using as many validation functions as we</span>
 <span class='co'># want</span>
-<span class='kw'>agent</span> <span class='op'>&lt;-</span>
-  <span class='kw'>agent</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='col_exists.html'>col_exists</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>date</span>, <span class='kw'>date_time</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_regex.html'>col_vals_regex</a></span>(
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>b</span>), <span class='st'>"[0-9]-[a-z]{3}-[0-9]{3}"</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='rows_distinct.html'>rows_distinct</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>d</span>), <span class='fl'>100</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_lte.html'>col_vals_lte</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>c</span>), <span class='fl'>5</span>)
+<span class='va'>agent</span> <span class='op'>&lt;-</span>
+  <span class='va'>agent</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='col_exists.html'>col_exists</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>date_time</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_regex.html'>col_vals_regex</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, <span class='st'>"[0-9]-[a-z]{3}-[0-9]{3}"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='rows_distinct.html'>rows_distinct</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>, <span class='fl'>100</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_lte.html'>col_vals_lte</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>c</span><span class='op'>)</span>, <span class='fl'>5</span><span class='op'>)</span>
 
 <span class='co'># The agent can be written to a pointblank</span>
 <span class='co'># YAML file with `yaml_write()`</span>
@@ -225,15 +225,15 @@ to an <em>agent</em>.</p></td>
 
 <span class='co'># The 'agent-small_table.yml' file is</span>
 <span class='co'># available in the package through `system.file()`</span>
-<span class='kw'>yml_file</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(
+<span class='va'>yml_file</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
     <span class='st'>"agent-small_table.yml"</span>,
-    package = <span class='st'>"pointblank"</span>
-  )
+    package <span class='op'>=</span> <span class='st'>"pointblank"</span>
+  <span class='op'>)</span>
 
 <span class='co'># We can view the YAML file in the console</span>
 <span class='co'># with the `yaml_agent_string()` function</span>
-<span class='fu'><a href='yaml_agent_string.html'>yaml_agent_string</a></span>(path = <span class='kw'>yml_file</span>)
+<span class='fu'><a href='yaml_agent_string.html'>yaml_agent_string</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>read_fn: ~small_table</span>
 #&gt; <span class='message'>tbl_name: small_table</span>
 #&gt; <span class='message'>label: A simple example with the `small_table`.</span>
@@ -259,7 +259,7 @@ to an <em>agent</em>.</p></td>
 #&gt; <span class='message'>    value: 5.0</span></div><div class='input'>
 <span class='co'># The YAML can also be printed in the console</span>
 <span class='co'># by supplying the agent as the input</span>
-<span class='fu'><a href='yaml_agent_string.html'>yaml_agent_string</a></span>(agent = <span class='kw'>agent</span>)
+<span class='fu'><a href='yaml_agent_string.html'>yaml_agent_string</a></span><span class='op'>(</span>agent <span class='op'>=</span> <span class='va'>agent</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>read_fn: ~small_table</span>
 #&gt; <span class='message'>tbl_name: .na.character</span>
 #&gt; <span class='message'>label: A simple example with the `small_table`.</span>
@@ -288,18 +288,18 @@ to an <em>agent</em>.</p></td>
 <span class='co'># is accessible through the `read_fn`)</span>
 <span class='co'># through direct use of the YAML file</span>
 <span class='co'># with `yaml_agent_interrogate()`</span>
-<span class='kw'>agent</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>yaml_agent_interrogate</span>(path = <span class='kw'>yml_file</span>)
+<span class='va'>agent</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>yaml_agent_interrogate</span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>agent</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "has_intel"     "ptblank_agent"</div><div class='input'>
 <span class='co'># If it's desired to only create a new</span>
 <span class='co'># agent with the validation plan in place</span>
 <span class='co'># (stopping short of interrogating the data),</span>
 <span class='co'># then the `yaml_read_agent()` function</span>
 <span class='co'># will be useful</span>
-<span class='kw'>agent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='yaml_read_agent.html'>yaml_read_agent</a></span>(path = <span class='kw'>yml_file</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>agent</span>)
+<span class='va'>agent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='yaml_read_agent.html'>yaml_read_agent</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "ptblank_agent"</div><div class='input'>
 </div></pre>
   </div>

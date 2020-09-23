@@ -163,11 +163,11 @@ to <code>1</code>), and, they do so with informative warning or error messages. 
 directly on data (more information on this is provided in <em>Details</em>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>action_levels</span>(warn_at = <span class='kw'>NULL</span>, stop_at = <span class='kw'>NULL</span>, notify_at = <span class='kw'>NULL</span>, fns = <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>action_levels</span><span class='op'>(</span>warn_at <span class='op'>=</span> <span class='cn'>NULL</span>, stop_at <span class='op'>=</span> <span class='cn'>NULL</span>, notify_at <span class='op'>=</span> <span class='cn'>NULL</span>, fns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>warn_on_fail</span>(warn_at = <span class='fl'>1</span>)
+<span class='fu'>warn_on_fail</span><span class='op'>(</span>warn_at <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
-<span class='fu'>stop_on_fail</span>(stop_at = <span class='fl'>1</span>)</pre>
+<span class='fu'>stop_on_fail</span><span class='op'>(</span>stop_at <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -237,16 +237,16 @@ reducing potential for duplicating any side effects.</p>
     <pre class="examples"><div class='input'><span class='co'># Create an `action_levels()` list</span>
 <span class='co'># with fractional values for the</span>
 <span class='co'># `warn`, `stop`, and `notify` states</span>
-<span class='kw'>al</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>action_levels</span>(
-    warn_at = <span class='fl'>0.2</span>,
-    stop_at = <span class='fl'>0.8</span>,
-    notify_at = <span class='fl'>0.5</span>
-  )
+<span class='va'>al</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>action_levels</span><span class='op'>(</span>
+    warn_at <span class='op'>=</span> <span class='fl'>0.2</span>,
+    stop_at <span class='op'>=</span> <span class='fl'>0.8</span>,
+    notify_at <span class='op'>=</span> <span class='fl'>0.5</span>
+  <span class='op'>)</span>
   
 <span class='co'># Use the included `small_table` dataset</span>
 <span class='co'># for the validation example</span>
-<span class='kw'>small_table</span>
+<span class='va'>small_table</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 13 x 8</span><span>
 #&gt;    date_time           date           a b             c      d e     f    
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
@@ -266,10 +266,10 @@ reducing potential for duplicating any side effects.</p>
 <span class='co'># Validate that values in column</span>
 <span class='co'># `a` are always greater than `2` and</span>
 <span class='co'># apply the list of action levels (`al`)</span>
-<span class='kw'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span>(tbl = <span class='kw'>small_table</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), <span class='fl'>2</span>, actions = <span class='kw'>al</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
+<span class='va'>agent</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>tbl <span class='op'>=</span> <span class='va'>small_table</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, <span class='fl'>2</span>, actions <span class='op'>=</span> <span class='va'>al</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># The report from the agent will show</span>
 <span class='co'># that the `warn` state has been entered</span>
@@ -277,8 +277,8 @@ reducing potential for duplicating any side effects.</p>
 <span class='co'># Let's look at the *tibble* version of the</span>
 <span class='co'># agent report (accessible through the use</span>
 <span class='co'># of the `get_agent_report()` function)</span>
-<span class='kw'>agent</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='get_agent_report.html'>get_agent_report</a></span>(display_table = <span class='fl'>FALSE</span>)
+<span class='va'>agent</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='get_agent_report.html'>get_agent_report</a></span><span class='op'>(</span>display_table <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 14</span><span>
 #&gt;       i type  columns values precon active eval  units n_pass f_pass W     S    
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>
@@ -291,10 +291,10 @@ reducing potential for duplicating any side effects.</p>
 <span class='co'># provide a warning (but that's</span>
 <span class='co'># suppressed here) and the `small_table`</span>
 <span class='co'># data will be returned</span>
-<span class='fu'><a href='https://rdrr.io/r/base/warning.html'>suppressWarnings</a></span>(
-  <span class='kw'>small_table</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), <span class='fl'>2</span>, actions = <span class='kw'>al</span>)
-)
+<span class='fu'><a href='https://rdrr.io/r/base/warning.html'>suppressWarnings</a></span><span class='op'>(</span>
+  <span class='va'>small_table</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, <span class='fl'>2</span>, actions <span class='op'>=</span> <span class='va'>al</span><span class='op'>)</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 13 x 8</span><span>
 #&gt;    date_time           date           a b             c      d e     f    
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>

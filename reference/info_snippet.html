@@ -139,7 +139,7 @@ defined through the <code>info_*()</code> functions. Just use curly braces with 
 <code>snippet_name</code> inside (e.g., <code>"This column has {n_cat} categories."</code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>info_snippet</span>(<span class='kw'>x</span>, <span class='kw'>snippet_name</span>, <span class='kw'>fn</span>)</pre>
+    <pre class="usage"><span class='fu'>info_snippet</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>snippet_name</span>, <span class='va'>fn</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,7 +183,7 @@ snippet itself into info text.</p></td>
     <pre class="examples"><div class='input'><span class='co'># Take the `small_table` and</span>
 <span class='co'># assign it to `test_table`; we'll</span>
 <span class='co'># modify it later</span>
-<span class='kw'>test_table</span> <span class='op'>&lt;-</span> <span class='kw'>small_table</span>
+<span class='va'>test_table</span> <span class='op'>&lt;-</span> <span class='va'>small_table</span>
 
 <span class='co'># Generate an informant object, add</span>
 <span class='co'># two snippets with `info_snippet()`,</span>
@@ -191,52 +191,52 @@ snippet itself into info text.</p></td>
 <span class='co'># `info_*()` functions and then</span>
 <span class='co'># `incorporate()` the snippets into</span>
 <span class='co'># the info text</span>
-<span class='kw'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='create_informant.html'>create_informant</a></span>(
-    read_fn = <span class='op'>~</span><span class='kw'>test_table</span>,
-    tbl_name = <span class='st'>"test_table"</span>,
-    label = <span class='st'>"An example."</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'>info_snippet</span>(
-    snippet_name = <span class='st'>"row_count"</span>,
-    fn = <span class='op'>~</span> <span class='kw'>.</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>()
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'>info_snippet</span>(
-    snippet_name = <span class='st'>"col_count"</span>,
-    fn = <span class='op'>~</span> <span class='kw'>.</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>()
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_columns.html'>info_columns</a></span>(
-    columns = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>),
-    info = <span class='st'>"In the range of 1 to 10. (SIMPLE)"</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_columns.html'>info_columns</a></span>(
-    columns = <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"date"</span>),
-    info = <span class='st'>"Time-based values (e.g., `Sys.time()`)."</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_columns.html'>info_columns</a></span>(
-    columns = <span class='st'>"date"</span>,
-    info = <span class='st'>"The date part of `date_time`. (CALC)"</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_section.html'>info_section</a></span>(
-    section_name = <span class='st'>"rows"</span>,
-    row_count = <span class='st'>"There are {row_count} rows available."</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='incorporate.html'>incorporate</a></span>()
+<span class='va'>informant</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span><span class='va'>test_table</span>,
+    tbl_name <span class='op'>=</span> <span class='st'>"test_table"</span>,
+    label <span class='op'>=</span> <span class='st'>"An example."</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>info_snippet</span><span class='op'>(</span>
+    snippet_name <span class='op'>=</span> <span class='st'>"row_count"</span>,
+    fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>info_snippet</span><span class='op'>(</span>
+    snippet_name <span class='op'>=</span> <span class='st'>"col_count"</span>,
+    fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>,
+    info <span class='op'>=</span> <span class='st'>"In the range of 1 to 10. (SIMPLE)"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"date"</span><span class='op'>)</span>,
+    info <span class='op'>=</span> <span class='st'>"Time-based values (e.g., `Sys.time()`)."</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='st'>"date"</span>,
+    info <span class='op'>=</span> <span class='st'>"The date part of `date_time`. (CALC)"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='info_section.html'>info_section</a></span><span class='op'>(</span>
+    section_name <span class='op'>=</span> <span class='st'>"rows"</span>,
+    row_count <span class='op'>=</span> <span class='st'>"There are {row_count} rows available."</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='incorporate.html'>incorporate</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='error'>Error in rlang::eval_tidy(.): object 'test_table' not found</span></div><div class='input'>
 <span class='co'># We can print the `informant` object</span>
 <span class='co'># to see the information report</span>
 
 <span class='co'># Let's modify `test_table` to give</span>
 <span class='co'># it more rows and an extra column</span>
-<span class='kw'>test_table</span> <span class='op'>&lt;-</span> 
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='kw'>test_table</span>, <span class='kw'>test_table</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(h = <span class='kw'>a</span> <span class='op'>+</span> <span class='kw'>c</span>)
+<span class='va'>test_table</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>test_table</span>, <span class='va'>test_table</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>h <span class='op'>=</span> <span class='va'>a</span> <span class='op'>+</span> <span class='va'>c</span><span class='op'>)</span>
 
 <span class='co'># Using `incorporate()` will cause</span>
 <span class='co'># the snippets to be reprocessed, and,</span>
 <span class='co'># the info text to be updated</span>
-<span class='kw'>informant</span> <span class='op'>&lt;-</span>
-  <span class='kw'>informant</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='incorporate.html'>incorporate</a></span>()
+<span class='va'>informant</span> <span class='op'>&lt;-</span>
+  <span class='va'>informant</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='incorporate.html'>incorporate</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='error'>Error in eval(lhs, parent, parent): object 'informant' not found</span></div><div class='input'>  
 </div></pre>
   </div>

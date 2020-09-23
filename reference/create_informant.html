@@ -137,15 +137,15 @@ particular data table. The <em>informant</em> object created by the
 <code>info_*()</code> series of functions).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_informant</span>(
-  tbl = <span class='kw'>NULL</span>,
-  read_fn = <span class='kw'>NULL</span>,
-  agent = <span class='kw'>NULL</span>,
-  tbl_name = <span class='kw'>NULL</span>,
-  label = <span class='kw'>NULL</span>,
-  lang = <span class='kw'>NULL</span>,
-  locale = <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>create_informant</span><span class='op'>(</span>
+  tbl <span class='op'>=</span> <span class='cn'>NULL</span>,
+  read_fn <span class='op'>=</span> <span class='cn'>NULL</span>,
+  agent <span class='op'>=</span> <span class='cn'>NULL</span>,
+  tbl_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  label <span class='op'>=</span> <span class='cn'>NULL</span>,
+  lang <span class='op'>=</span> <span class='cn'>NULL</span>,
+  locale <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -230,7 +230,7 @@ for Spanish (Spain, same as <code>"es_ES"</code>).</p></td>
 <span class='co'># really small table; it's actually</span>
 <span class='co'># called `small_table` and we can find</span>
 <span class='co'># it as a dataset in this package</span>
-<span class='kw'>small_table</span>
+<span class='va'>small_table</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 13 x 8</span><span>
 #&gt;    date_time           date           a b             c      d e     f    
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
@@ -250,12 +250,12 @@ for Spanish (Spain, same as <code>"es_ES"</code>).</p></td>
 <span class='co'># Create a pointblank `informant`</span>
 <span class='co'># object with `create_informant()`</span>
 <span class='co'># and the `small_table` dataset</span>
-<span class='kw'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>create_informant</span>(
-    read_fn = <span class='op'>~</span><span class='kw'>small_table</span>,
-    tbl_name = <span class='st'>"small_table"</span>,
-    label = <span class='st'>"An example."</span>
-  )
+<span class='va'>informant</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>create_informant</span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span><span class='va'>small_table</span>,
+    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,
+    label <span class='op'>=</span> <span class='st'>"An example."</span>
+  <span class='op'>)</span>
 
 <span class='co'># This function creates some information</span>
 <span class='co'># without any extra help by profiling</span>
@@ -266,8 +266,8 @@ for Spanish (Spain, same as <code>"es_ES"</code>).</p></td>
 
 <span class='co'># Alternatively, we can get the same report</span>
 <span class='co'># by using `get_informant_report()`</span>
-<span class='kw'>report</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_informant_report.html'>get_informant_report</a></span>(<span class='kw'>informant</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>report</span>)
+<span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_informant_report.html'>get_informant_report</a></span><span class='op'>(</span><span class='va'>informant</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>report</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "gt_tbl" "list"  </div><div class='input'>
 </div></span></pre>
   </div>

@@ -137,7 +137,7 @@ this only works in the case where the table is not of the <code>tbl_dbi</code> o
 <code>tbl_spark</code> class.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>x_write_disk</span>(<span class='kw'>x</span>, <span class='kw'>filename</span>, path = <span class='kw'>NULL</span>, keep_tbl = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>x_write_disk</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>filename</span>, path <span class='op'>=</span> <span class='cn'>NULL</span>, keep_tbl <span class='op'>=</span> <span class='cn'>FALSE</span>, keep_extracts <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,6 +166,11 @@ created using <code>create_agent(tbl = &lt;data table, ...)</code>). The default
 database tables of the class <code>tbl_dbi</code> and for Spark DataFrames
 (<code>tbl_spark</code>) the table is always removed (even if <code>keep_tbl</code> is set to
 <code>TRUE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>keep_extracts</th>
+      <td><p>An option to keep any collected extract data for failing
+rows. By default, this is <code>FALSE</code>.</p></td>
     </tr>
     </table>
 

@@ -153,17 +153,17 @@ table. This reporting of the interrogation can also be accessed with the
 <code><a href='get_agent_report.html'>get_agent_report()</a></code> function, where there are more reporting options.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_agent</span>(
-  tbl = <span class='kw'>NULL</span>,
-  read_fn = <span class='kw'>NULL</span>,
-  actions = <span class='kw'>NULL</span>,
-  end_fns = <span class='kw'>NULL</span>,
-  tbl_name = <span class='kw'>NULL</span>,
-  label = <span class='kw'>NULL</span>,
-  embed_report = <span class='fl'>FALSE</span>,
-  lang = <span class='kw'>NULL</span>,
-  locale = <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>create_agent</span><span class='op'>(</span>
+  tbl <span class='op'>=</span> <span class='cn'>NULL</span>,
+  read_fn <span class='op'>=</span> <span class='cn'>NULL</span>,
+  actions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  end_fns <span class='op'>=</span> <span class='cn'>NULL</span>,
+  tbl_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  label <span class='op'>=</span> <span class='cn'>NULL</span>,
+  embed_report <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  lang <span class='op'>=</span> <span class='cn'>NULL</span>,
+  locale <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -281,7 +281,7 @@ validation steps are free from any failing units.</p>
 <span class='co'># it's actually called `small_table` and</span>
 <span class='co'># we can find it as a dataset in this</span>
 <span class='co'># package</span>
-<span class='kw'>small_table</span>
+<span class='va'>small_table</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 13 x 8</span><span>
 #&gt;    date_time           date           a b             c      d e     f    
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
@@ -303,12 +303,12 @@ validation steps are free from any failing units.</p>
 <span class='co'># let's designate proportional failure</span>
 <span class='co'># thresholds to the `warn`, `stop`, and</span>
 <span class='co'># `notify` states using `action_levels()`</span>
-<span class='kw'>al</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='action_levels.html'>action_levels</a></span>(
-      warn_at = <span class='fl'>0.10</span>,
-      stop_at = <span class='fl'>0.25</span>,
-    notify_at = <span class='fl'>0.35</span>
-  )
+<span class='va'>al</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='action_levels.html'>action_levels</a></span><span class='op'>(</span>
+      warn_at <span class='op'>=</span> <span class='fl'>0.10</span>,
+      stop_at <span class='op'>=</span> <span class='fl'>0.25</span>,
+    notify_at <span class='op'>=</span> <span class='fl'>0.35</span>
+  <span class='op'>)</span>
 
 <span class='co'># Now create a pointblank `agent` object</span>
 <span class='co'># and give it the `al` object (which</span>
@@ -316,12 +316,12 @@ validation steps are free from any failing units.</p>
 <span class='co'># steps which can be overridden); the</span>
 <span class='co'># static thresholds provided by `al` will</span>
 <span class='co'># make the reporting a bit more useful</span>
-<span class='kw'>agent</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>create_agent</span>(
-    read_fn = <span class='op'>~</span> <span class='kw'>small_table</span>,
-    label = <span class='st'>"An example."</span>,
-    actions = <span class='kw'>al</span>
-  )
+<span class='va'>agent</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>create_agent</span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
+    label <span class='op'>=</span> <span class='st'>"An example."</span>,
+    actions <span class='op'>=</span> <span class='va'>al</span>
+  <span class='op'>)</span>
 
 <span class='co'># Then, as with any `agent` object, we</span>
 <span class='co'># can add steps to the validation plan by</span>
@@ -329,32 +329,32 @@ validation steps are free from any failing units.</p>
 <span class='co'># want; then, we use `interrogate()` to</span>
 <span class='co'># physically perform the validations and</span>
 <span class='co'># gather intel</span>
-<span class='kw'>agent</span> <span class='op'>&lt;-</span>
-  <span class='kw'>agent</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='col_exists.html'>col_exists</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>date</span>, <span class='kw'>date_time</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_regex.html'>col_vals_regex</a></span>(
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>b</span>), <span class='st'>"[0-9]-[a-z]{3}-[0-9]{3}"</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='rows_distinct.html'>rows_distinct</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>d</span>), <span class='fl'>100</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_lte.html'>col_vals_lte</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>c</span>), <span class='fl'>5</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_equal.html'>col_vals_equal</a></span>(
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>d</span>), <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>d</span>),
-    na_pass = <span class='fl'>TRUE</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_between.html'>col_vals_between</a></span>(
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>c</span>),
-    left = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>a</span>), right = <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span>(<span class='kw'>d</span>),
-    na_pass = <span class='fl'>TRUE</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span>()
+<span class='va'>agent</span> <span class='op'>&lt;-</span>
+  <span class='va'>agent</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='col_exists.html'>col_exists</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>date_time</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_regex.html'>col_vals_regex</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, <span class='st'>"[0-9]-[a-z]{3}-[0-9]{3}"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='rows_distinct.html'>rows_distinct</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>, <span class='fl'>100</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_lte.html'>col_vals_lte</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>c</span><span class='op'>)</span>, <span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_equal.html'>col_vals_equal</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>,
+    na_pass <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_between.html'>col_vals_between</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>c</span><span class='op'>)</span>,
+    left <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, right <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>,
+    na_pass <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
   
 <span class='co'># Calling `agent` in the console</span>
 <span class='co'># prints the agent's report; but we</span>
 <span class='co'># can get a `gt_tbl` object directly</span>
 <span class='co'># with `get_agent_report(agent)`</span>
-<span class='kw'>report</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_agent_report.html'>get_agent_report</a></span>(<span class='kw'>agent</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>report</span>)
+<span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_agent_report.html'>get_agent_report</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>report</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "gt_tbl" "list"  </div><div class='input'>
 <span class='co'># What can you do with the report?</span>
 <span class='co'># Print it from an R Markdown code</span>
@@ -366,7 +366,7 @@ validation steps are free from any failing units.</p>
 <span class='co'># 4 had two test units (rows, really)</span>
 <span class='co'># that failed; we can see those rows</span>
 <span class='co'># with `get_data_extracts()` </span>
-<span class='kw'>agent</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='get_data_extracts.html'>get_data_extracts</a></span>(i = <span class='fl'>4</span>)
+<span class='va'>agent</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='get_data_extracts.html'>get_data_extracts</a></span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 8</span><span>
 #&gt;   date_time           date           a b             c     d e     f    
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
@@ -375,17 +375,17 @@ validation steps are free from any failing units.</p>
 <span class='co'># We can get an x-list for the whole</span>
 <span class='co'># validation (8 steps), or, just for</span>
 <span class='co'># the 4th step with `get_agent_x_list()`</span>
-<span class='kw'>xl_step_4</span> <span class='op'>&lt;-</span>
-  <span class='kw'>agent</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='get_agent_x_list.html'>get_agent_x_list</a></span>(i = <span class='fl'>4</span>)
+<span class='va'>xl_step_4</span> <span class='op'>&lt;-</span>
+  <span class='va'>agent</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='get_agent_x_list.html'>get_agent_x_list</a></span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
  
 <span class='co'># And then we can peruse the different</span>
 <span class='co'># parts of the list; let's get the</span>
 <span class='co'># fraction of test units that failed</span>
-<span class='kw'>xl_step_4</span><span class='op'>$</span><span class='kw'>f_failed</span>
+<span class='va'>xl_step_4</span><span class='op'>$</span><span class='va'>f_failed</span>
 </div><div class='output co'>#&gt; [1] 0.15385</div><div class='input'>
 <span class='co'># Just printing the x-list will tell</span>
 <span class='co'># us what's available therein</span>
-<span class='kw'>xl_step_4</span>
+<span class='va'>xl_step_4</span>
 </div><div class='output co'>#&gt; <span class='message'>── The x-list for `` ───────────────────────────────────────────────── STEP 4 ──</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$time_start $time_end</span><span> (</span><span style='color: #BB0000;'>POSIXct [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$label $tbl_name $tbl_src $tbl_src_details</span><span> (</span><span style='color: #BB0000;'>chr [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$tbl</span><span> (</span><span style='color: #0000BB;'>spec_tbl_df</span><span>, </span><span style='color: #0000BB;'>tbl_df</span><span>, </span><span style='color: #0000BB;'>tbl</span><span>, and </span><span style='color: #0000BB;'>data.frame</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$col_names $col_types</span><span> (</span><span style='color: #BB0000;'>chr [8]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$i $type $columns $values $label $briefs</span><span> (</span><span style='color: #00BB00;'>mixed [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$eval_error $eval_warning</span><span> (</span><span style='color: #BBBB00;'>lgl [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$capture_stack</span><span> (</span><span style='color: #BBBB00;'>list [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$n $n_passed $n_failed $f_passed $f_failed</span><span> (</span><span style='color: #00BB00;'>num [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$warn $stop $notify</span><span> (</span><span style='color: #BBBB00;'>lgl [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>$lang</span><span> (</span><span style='color: #BB0000;'>chr [1]</span><span>)</span></div><div class='output co'>#&gt; <span class='message'>────────────────────────────────────────────────── NO INTERROGATION PERFORMED ──</span></div><div class='input'>
 <span class='co'># An x-list not specific to any step</span>
 <span class='co'># will have way more information and a</span>

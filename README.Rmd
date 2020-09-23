@@ -155,7 +155,7 @@ Should you need more fine-grained thresholds and resultant actions, the `action_
 
 Using **pointblank** in an R Markdown workflow is enabled by default once the **pointblank** library is loaded. The framework allows for validation testing within specialized validation code chunks where the `validate = TRUE` option is set. Using **pointblank** validation functions on data in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere. All errors are reported in the validation code chunk after rendering the document to HTML, where green or red status buttons indicate whether all validations succeeded or failures occurred. Click them to reveal the otherwise hidden validation statements and any associated error messages.
 
-<p align="center"><img src="man/figures/pointblank_rmarkdown.png" width="80%" style="border:2px solid #021a40;"></p>
+<p align="center"><img src="man/figures/pointblank_rmarkdown.png" width="100%" style="border:2px solid #021a40;"></p>
 
 The above R Markdown document is available as a template in the RStudio IDE (it's called `Pointblank Validation`). Try it out!
 

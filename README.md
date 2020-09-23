@@ -180,7 +180,7 @@ validation statements and any associated error messages.
 
 <p align="center">
 
-<img src="man/figures/pointblank_rmarkdown.png" width="80%" style="border:2px solid #021a40;">
+<img src="man/figures/pointblank_rmarkdown.png" width="100%" style="border:2px solid #021a40;">
 
 </p>
 

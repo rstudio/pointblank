@@ -447,10 +447,10 @@ info_snippet <- function(x,
                          fn) {
   
   metadata <- x
-  
+
   if (!(snippet_name %in% names(metadata$meta_snippets))) {
     # Case where `snippet_name` doesn't exist in `meta_snippets`
-    
+
     meta_snippet <- list(a = fn)
     names(meta_snippet) <- snippet_name
     
@@ -463,4 +463,32 @@ info_snippet <- function(x,
   }
   
   metadata
+}
+
+
+#' A `fn` for `info_snippet()`: get a list of column categories
+#' 
+#' The `snip_list()` function can be used as an [info_snippet()] function (i.e.,
+#' provided to `fn`) to get a catalog list from a table column. You can limit
+#' the of items in that list with the `limit` value.
+#' 
+#' @param column The name of the column in the target table that contains
+#'   categorical values.
+#' @param limit A limit of items put into the generated list. The returned text
+#'   will state the remaining number of items beyond the `limit`.
+#'   
+#' @return A formula needed for [info_snippet()]'s `fn` argument.
+#' 
+#' @export
+snip_list <- function(column, limit = 5) {
+  
+  as.formula(
+    as.character(
+      glue::glue(
+        "~ . %>% dplyr::select(<<column>>) %>% dplyr::distinct() %>% dplyr::pull(<<column>>) %>%
+        pb_str_catalog(limit = <<limit>>)",
+        .open = "<<", .close = ">>"   
+      )
+    )
+  )
 }

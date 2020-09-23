@@ -11,6 +11,21 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
     rows_distinct() %>%
     interrogate()
   
+  # Expect `extracts` to contain entries in the agent object
+  expect_length(agent$extracts, 1)
+  expect_equal(names(agent$extracts), "1")
+  expect_equal(
+    names(agent$extracts[[1]]),
+    c("date_time", "date", "a", "b", "c", "d", "e", "f")
+  )
+  
+  # Expect the first entry of the `tbl_checked` column in the `validation_set`
+  # tibble to itself be a tibble
+  expect_s3_class(
+    agent %>% unclass() %>% .$validation_set %>% .$tbl_checked %>% .[[1]] %>% .[[1]],
+    "tbl_df"
+  )
+  
   # Write the agent to disk, don't elect to keep the table
   agent %>% x_write_disk(filename = "agent_test_1", path = temp_dir)
   
@@ -35,6 +50,12 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   # Don't expect the `extracts` to be in the agent object
   expect_null(agent_test_1$extracts)
   
+  # Expect the first entry of the `tbl_checked` column in the `validation_set`
+  # tibble to be NULL
+  expect_null(
+    agent_test_1 %>% unclass() %>% .$validation_set %>% .$tbl_checked %>% .[[1]]
+  )
+  
   # Write the agent to disk again, but choose to keep the table
   agent %>% x_write_disk(filename = "agent_test_2", path = temp_dir, keep_tbl = TRUE)
   
@@ -52,6 +73,7 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   expect_s3_class(agent_test_2$tbl, "tbl_df")
   
   # Expect the `extracts` list to be available in the agent object
+  # TODO: expect it to be empty
   expect_type(agent_test_2$extracts, "list")
   
   # Create an agent with a single validation step, using

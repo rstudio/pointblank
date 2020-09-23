@@ -20,7 +20,11 @@
 #'   `RMariaDB::MariaDB()`); and `"sqlite"` (SQLite, using `RSQLite::SQLite()`).
 #' @param dbname The database name.
 #' @param table The name of the table, or, a reference to a table in a schema
-#'   (two-element vector with the names of schema and table).
+#'   (two-element vector with the names of schema and table). Alternatively,
+#'   this can be supplied as a data table to copy into an in-memory database
+#'   connection. This only works if: (1) the `db` is either `"sqlite"` or
+#'   `"duckdb"`, (2) the `dbname` was chosen as `":memory:"`, and (3) the
+#'   `data_tbl` is a data frame or a tibble object.
 #' @param user,password The environment variables used to access the username
 #'   and password for the database.
 #' @param host,port The database host and optional port number.
@@ -59,6 +63,7 @@ db_tbl <- function(db,
         mysql = RMySQL_driver(),
         maria = ,
         mariadb = RMariaDB_driver(),
+        duckdb = DuckDB_driver(),
         sqlite = RSQLite_driver(),
         unknown_driver()
       )
@@ -67,22 +72,43 @@ db_tbl <- function(db,
     driver_function <- db
   }
 
+  # Create the DB connection object
   connection <-
     DBI::dbConnect(
       drv = driver_function,
       user = ifelse(inherits(user, "AsIs"), user, Sys.getenv(user)),
-      password = ifelse(inherits(password, "AsIs"), user, Sys.getenv(password)),
+      password = ifelse(inherits(password, "AsIs"), password, Sys.getenv(password)),
       host = host,
       dbname = dbname
     )
   
-  if (length(table) == 1) {
-    table_stmt <- table
-  } else if (length(table) == 2) {
-    table_stmt <- dbplyr::in_schema(schema = table[1], table = table[2])
-  } else {
-    stop("The length of `table` should be either 1 or 2.",
-         call. = FALSE)
+  # Insert data if is supplied, in the right format, and
+  # if the DB connection is in-memory
+  if (dbname == ":memory:" &&
+      is.data.frame(table) && 
+      tolower(db) %in% c("duckdb", "sqlite")) {
+
+    # Obtain the name of the data table
+    tbl_name <- table_stmt <- deparse(match.call()$table)
+    
+    # Copy the tabular data into the `connection` object
+    dplyr::copy_to(
+      dest = connection, 
+      df = table,
+      name = tbl_name,
+      temporary = FALSE
+    )
+  }
+  
+  if (is.character(table)) {
+    if (length(table) == 1) {
+      table_stmt <- table
+    } else if (length(table) == 2) {
+      table_stmt <- dbplyr::in_schema(schema = table[1], table = table[2])
+    } else {
+      stop("The length of `table` should be either 1 or 2.",
+           call. = FALSE)
+    }
   }
   
   dplyr::tbl(src = connection, table_stmt)
@@ -120,6 +146,17 @@ RMariaDB_driver <- function() {
   }
   
   RMariaDB::MariaDB()
+}
+
+DuckDB_driver <- function() {
+  
+  if (!requireNamespace("duckdb", quietly = TRUE)) {
+    stop("Accessing a DuckDB table requires the duckdb package:\n",
+         " * It can be installed with `install.packages(\"duckdb\")`.",
+         call. = FALSE)
+  }
+  
+  duckdb::duckdb()
 }
 
 RSQLite_driver <- function() {

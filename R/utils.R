@@ -543,3 +543,57 @@ add_icon_svg <- function(icon,
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
   gsub(pattern, replacement, x, fixed = fixed)
 }
+
+pb_str_catalog <- function(item_vector,
+                           conj = "and",
+                           more = "more",
+                           surround = c("\"", "`"),
+                           sep = ",",
+                           limit = 5,
+                           oxford = TRUE) {
+  
+  item_count <- length(item_vector)
+  
+  if (item_count > 2 && item_count > limit) {
+    n_overlimit <- paste0("(+", paste(item_count - limit, more), ")")
+    item_vector <- item_vector[1:limit]
+  } else {
+    n_overlimit <- ""
+  }
+  
+  surround_str_1 <- rev(surround) %>% paste(collapse = "")
+  surround_str_2 <- surround %>% paste(collapse = "")
+  
+  cat_str <- paste0(surround_str_1, item_vector, surround_str_2)
+  
+  if (item_count == 1) {
+    
+    return(cat_str)
+    
+  } else if (item_count == 2) {
+    
+    return(paste(cat_str[1], conj, cat_str[2]))
+    
+  } else {
+    
+    separators <- rep(paste0(sep, " "), length(item_vector) - 1)
+    
+    if (!oxford) {
+      separators[length(separators)] <- ""
+    }
+    
+    if (n_overlimit == "") {
+      separators[length(separators)] <- paste0(separators[length(separators)], conj, " ")
+    }
+    
+    separators[length(separators) + 1] <- ""
+    
+    cat_str <-
+      paste0(cat_str, separators) %>%
+      paste(collapse = "")
+    
+    cat_str <- paste(cat_str, n_overlimit)
+    
+    return(cat_str)
+  }
+}

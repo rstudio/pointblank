@@ -292,7 +292,7 @@ get_r_column_names_types <- function(tbl) {
 }
 
 get_tbl_information <- function(tbl) {
-  
+
   if (is.data.frame(tbl)) {
     
     tbl_information <- get_tbl_information_df(tbl)
@@ -352,7 +352,7 @@ get_tbl_information_spark <- function(tbl) {
 }
 
 get_tbl_information_dbi <- function(tbl) {
-  
+
   tbl_connection <- tbl$src$con
 
   tbl_src_details <- tolower(get_tbl_dbi_src_details(tbl))
@@ -396,7 +396,8 @@ get_tbl_information_dbi <- function(tbl) {
       tolower()
   }
   
-  if (tbl_src == "sqlite") {
+  if (tbl_src %in% c("duckdb", "sqlite")) {
+    
     db_col_types <-
       vapply(
         r_column_names_types$col_names,
@@ -417,7 +418,7 @@ get_tbl_information_dbi <- function(tbl) {
       tolower()
   }
   
-  if (tbl_src != "sqlite" & tbl_src != "postgres") {
+  if (!(tbl_src %in% c("duckdb", "sqlite", "postgres"))) {
 
     db_col_types <- 
       DBI::dbGetQuery(tbl_connection, q_types) %>%

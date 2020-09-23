@@ -256,36 +256,3 @@ test_rows_distinct <- function(object,
   
   all(!vs$notify)
 }
-
-#' Verify that row data are not duplicated (deprecated)
-#'
-#' @inheritParams col_vals_gt
-#' @param x An agent object of class `ptblank_agent`.
-#'   
-#' @return A `ptblank_agent` object.
-#'
-#' @export
-rows_not_duplicated <- function(x,
-                                columns = NULL,
-                                preconditions = NULL,
-                                brief = NULL,
-                                actions = NULL,
-                                active = TRUE) {
-  
-  # nocov start
-
-  warning("The `rows_not_duplicated()` function is deprecated and will soon be removed\n",
-          " * Use the `rows_distinct()` function instead",
-          call. = FALSE)
-  
-  rows_distinct(
-    x = x,
-    columns = {{ columns }},
-    preconditions = preconditions,
-    actions = actions,
-    brief = brief,
-    active = active
-  )
-
-  # nocov end
-}

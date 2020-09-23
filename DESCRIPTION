@@ -50,6 +50,7 @@ Imports:
     yaml (>= 2.2.1)
 Suggests:
     covr,
+    duckdb,
     lubridate,
     RSQLite,
     RMariaDB,

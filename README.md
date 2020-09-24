@@ -1,66 +1,55 @@
+<div align="center">
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<a href='http://rich-iannone.github.io/pointblank/'><img src="man/figures/logo.svg" height="350px"/></a>
 
-# pointblank <a href='http://rich-iannone.github.io/pointblank/'><img src="man/figures/logo.svg" align="right" height="250px" /></a>
+<br />
 
-[![CRAN
-status](https://www.r-pkg.org/badges/version/pointblank)](https://cran.r-project.org/package=pointblank)
-[![R build
-status](https://github.com/rich-iannone/pointblank/workflows/R-CMD-check/badge.svg)](https://github.com/rich-iannone/pointblank/actions)
-[![Coverage
-status](https://codecov.io/gh/rich-iannone/pointblank/branch/master/graph/badge.svg)](https://codecov.io/gh/rich-iannone/pointblank?branch=master)
+<a href="https://cran.r-project.org/package=pointblank"><img src="https://www.r-pkg.org/badges/version/pointblank" alt="CRAN status" /></a>
+<a href="https://CRAN.R-project.org/package=pointblank"><img src="https://cranlogs.r-pkg.org/badges/pointblank" alt="downloads"></a>
 
-With the **pointblank** package it’s really easy to validate your data
-with workflows attuned to your data quality needs. The **pointblank**
-philosophy: a set of validation functions should work seamlessly with
-data in local data tables and with data in databases.
+<a href="https://github.com/rich-iannone/pointblank/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/R-CMD-check/badge.svg" alt="R build status" /></a>
+<a href="https://codecov.io/gh/rich-iannone/pointblank?branch=master"><img src="https://codecov.io/gh/rich-iannone/pointblank/branch/master/graph/badge.svg" alt="Coverage status" /></a>
 
-The two dominant workflows that **pointblank** enables are *data quality
-reporting* and *pipeline-based data validations*. Both workflows make
-use of a large collection of simple validation functions (e.g., are
-values in a specific column greater than those in another column or some
-fixed value?), and, both allow for stepwise, temporary
-mutation/alteration of the input table (through `preconditions`) to
-enable much more sophisticated validation checks.
+<a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing" /></a>
+
+
+<br />
+</div>
+
+With the **pointblank** package it’s really easy to methodically validate your
+data whether in the form of data frames or as database tables. On top of the
+validation toolset, the package gives you the means to define and keep current
+with the information that *defines* your tables.
+
+For table *validation*, the *agent* object works with a large collection of
+simple (yet powerful!) validation functions. We can enable much more
+sophisticated validation checks by using custom expressions and also through
+stepwise mutation of the target table (through something we call
+`preconditions`).
+
+Sometimes we want to maintain table *information* and update it when the table
+goes through changes. For that, we can use an *informant* object + associated
+functions to help define the metadata entries and present it in a way that suits
+you.
 
 <hr>
 
 <img src="man/figures/data_quality_reporting_workflow.png">
 
-The first workflow, *data quality reporting* allows for the easy
-creation of a data quality analysis report. This is most useful in a
-non-interactive mode where data quality for database tables and on-disk
-data files must be periodically checked. The reporting component
-(through a **pointblank** agent) allows for the collection of detailed
-validation measures for each validation step, the optional extraction of
-data rows that failed validation (with options on limits), and custom
-functions that are invoked by exceeding set threshold failure rates.
-Want to email the report regularly (or, only if certain conditions are
-met)? Yep, you can do all that.
-
-<hr>
-
-<img src="man/figures/pipeline_based_data_validations.png">
-
-The second workflow, *pipeline-based data validations* gives us a
-different validation scheme that is valuable for data validation checks
-during an ETL process. With **pointblank**’s validation functions, we
-can directly operate on data and trigger warnings, raise errors, or
-write out logs when exceeding specified failure thresholds. It’s a cinch
-to perform checks on import of the data and at key points during the
-transformation process, perhaps stopping everything if things are
-exceptionally bad with regard to data quality.
-
-<hr>
-
 ##### TABLE VALIDATIONS WITH AN AGENT AND ITS DETAILED REPORTING
 
-The **pointblank** package is designed to be both straightforward yet
-powerful. And fast\! Local data frames don’t take very long to validate
-extensively and all validation checks on remote tables are done entirely
-in-database. So we can add dozens or even hundreds of validation steps
-without any long waits for reporting. Here is an example of how to use
-**pointblank** to validate a local table with an agent.
+Data validation can be carried out in *data quality reporting* workflow, 
+ultimately resulting in the production of of a data quality analysis report.
+This is most useful in a non-interactive mode where data quality for database
+tables and on-disk data files must be periodically checked. The **pointblank**
+*agent* is given a collection of validation functions to define validation
+steps. We can get extracts of data rows that failed validation, set up custom
+functions that are invoked by exceeding set threshold failure rates, etc. Want
+to email the report regularly (or, only if certain conditions are met)? Yep,
+you can do all that.
+
+Here is an example of how to use **pointblank** to validate a local table
+with an agent.
 
 ``` r
 # Generate a simple `action_levels` object to
@@ -81,11 +70,23 @@ agent <-
     label = "A very *simple* example.",
     actions = al
   ) %>%
-  col_vals_between(vars(a), 1, 9, na_pass = TRUE) %>%
-  col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b)) %>%
+  col_vals_between(
+    vars(a), 1, 9,
+    na_pass = TRUE
+  ) %>%
+  col_vals_lt(
+    vars(c), 12,
+    preconditions = ~ . %>% dplyr::mutate(c = a + b)
+  ) %>%
   col_is_numeric(vars(a, b)) %>%
   interrogate()
 ```
+
+The **pointblank** package is designed to be both straightforward yet
+powerful. And fast\! Local data frames don’t take very long to validate
+extensively and all validation checks on remote tables are done entirely
+in-database. So we can add dozens or even hundreds of validation steps
+without any long waits for reporting.
 
 Should you want to perform validation checks on database or *Spark*
 tables, provide a `tbl_dbi` or `tbl_spark` object to `create_agent()`.
@@ -101,20 +102,35 @@ printing an *agent*.
 
 <hr>
 
+<img src="man/figures/pipeline_based_data_validations.png">
+
 ##### VALIDATIONS DIRECTLY ON DATA
 
-Next up is an example that follows the second, *agent*-less workflow.
-It’s the same three validation functions as before but, this time, we
-use them directly on the data\! In this workflow, by default, an error
-will occur if there is a single ‘fail’ test unit in any validation step:
+We can perform pipeline-based data validations using the same collection of
+validation functions. This is useful for an ETL process where and we
+directly operate on data and trigger warnings, raise errors, or
+write out logs when exceeding specified failure thresholds. It’s a cinch
+to perform checks on import of the data and at key points during the
+transformation process, perhaps stopping everything if things are
+exceptionally bad with regard to data quality.
+
+The following example uses the same three validation functions as before but,
+this time, we use them directly on the data\! In this workflow, by default, an
+error will occur if there is a single ‘fail’ test unit in any validation step:
 
 ``` r
 dplyr::tibble(
     a = c(5, 7, 6, 5, NA, 7),
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
-  col_vals_between(vars(a), 1, 9, na_pass = TRUE) %>%
-  col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b)) %>%
+  col_vals_between(
+    vars(a), 1, 9,
+    na_pass = TRUE
+  ) %>%
+  col_vals_lt(
+    vars(c), 12,
+    preconditions = ~ . %>% dplyr::mutate(c = a + b)
+  ) %>%
   col_is_numeric(vars(a, b))
 ```
 
@@ -137,8 +153,16 @@ dplyr::tibble(
     a = c(5, 7, 6, 5, NA, 7),
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
-  col_vals_between(vars(a), 1, 9, na_pass = TRUE, actions = al) %>%
-  col_vals_lt(vars(c), 12, preconditions = ~ . %>% dplyr::mutate(c = a + b), actions = al) %>%
+  col_vals_between(
+    vars(a), 1, 9,
+    na_pass = TRUE,
+    actions = warn_on_fail()
+  ) %>%
+  col_vals_lt(
+    vars(c), 12,
+    preconditions = ~ . %>% dplyr::mutate(c = a + b),
+    actions = warn_on_fail()
+  ) %>%
   col_is_numeric(vars(a, b))
 ```
 
@@ -247,6 +271,10 @@ logical value (`TRUE` or `FALSE`).
 <img src="man/figures/pointblank_functions.svg" width="100%">
 
 </p>
+
+<hr>
+
+##### INSTALLATION
 
 Want to try this out? The **pointblank** package is available on
 **CRAN**:

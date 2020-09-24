@@ -1011,17 +1011,17 @@ get_agent_report <- function(agent,
     ) %>%
     gt::tab_style(
       style = gt::cell_text(
-        size = gt::px(24),
+        size = gt::px(28),
+        weight = 500,
         align = "left",
-        indent = gt::px(5)
+        color = "#444444"
       ),
       locations = gt::cells_title("title")
     ) %>%
     gt::tab_style(
       style = gt::cell_text(
         size = gt::px(12),
-        align = "left",
-        indent = gt::px(5)
+        align = "left"
       ),
       locations = gt::cells_title("subtitle")
     ) %>%

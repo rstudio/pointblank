@@ -107,8 +107,8 @@ printing an *agent*.
 ##### VALIDATIONS DIRECTLY ON DATA
 
 We can perform pipeline-based data validations using the same collection of
-validation functions. This is useful for an ETL process where and we
-directly operate on data and trigger warnings, raise errors, or
+validation functions. This is useful for an ETL process where we
+want to directly operate on data and trigger warnings, raise errors, or
 write out logs when exceeding specified failure thresholds. It’s a cinch
 to perform checks on import of the data and at key points during the
 transformation process, perhaps stopping everything if things are
@@ -138,8 +138,8 @@ dplyr::tibble(
     The `col_vals_lt()` validation failed beyond the absolute threshold level (1).
     * failure level (2) >= failure threshold (1) 
 
-We can downgrade this to a warning with the `warn_on_fail()` helper
-function (assigning to `actions`). In this way, the data will be
+We can downgrade this error to a warning with the `warn_on_fail()` helper
+function (assigning it to `actions`). In this way, the data will be
 returned, but warnings will appear.
 
 ``` r
@@ -183,9 +183,10 @@ dplyr::tibble(
 
 Should you need more fine-grained thresholds and resultant actions, the
 `action_levels()` function can be used to specify multiple failure
-thresholds and side effects for each failure state. However, the
-`warn_on_fail()` and `stop_on_fail()` (applied by default, with `stop_at
-= 1`) helpers should in most cases suffice for this workflow.
+thresholds and side effects for each failure state. However, with
+`warn_on_fail()` and `stop_on_fail()` (applied by default, with
+`stop_at = 1`), you should have good enough options for this validation
+workflow.
 
 <hr>
 
@@ -255,7 +256,7 @@ assembly](https://img.shields.io/static/v1?label=Table%20Scan&message=Ensembl:%2
 
 <hr>
 
-##### PACKAGE FUNCTIONS
+##### OVERVIEW OF PACKAGE FUNCTIONS
 
 There are many functions available in **pointblank** for making
 comprehensive table validations. Each validation function is associated

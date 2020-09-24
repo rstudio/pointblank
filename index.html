@@ -98,7 +98,7 @@
 <h5 class="hasAnchor">
 <a href="#table-validations-with-an-agent-and-its-detailed-reporting" class="anchor"></a>TABLE VALIDATIONS WITH AN AGENT AND ITS DETAILED REPORTING</h5>
 <p>Data validation can be carried out in <em>data quality reporting</em> workflow, ultimately resulting in the production of of a data quality analysis report. This is most useful in a non-interactive mode where data quality for database tables and on-disk data files must be periodically checked. The <strong>pointblank</strong> <em>agent</em> is given a collection of validation functions to define validation steps. We can get extracts of data rows that failed validation, set up custom functions that are invoked by exceeding set threshold failure rates, etc. Want to email the report regularly (or, only if certain conditions are met)? Yep, you can do all that.</p>
-<p>Here is an example of how to use <strong>pointblank</strong> to validate a local table with an agent.</p>
+<p>Here is an example of how to use <strong>pointblank</strong> to validate a local table with an <em>agent</em>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="co"># Generate a simple `action_levels` object to</span>
 <span class="co"># set the `warn` state if a validation step</span>
@@ -208,12 +208,48 @@
 <p>The above R Markdown document is available as a template in the RStudio IDE (it’s called <code>Pointblank Validation</code>). Try it out!</p>
 <hr>
 </div>
+<div id="table-information" class="section level5">
+<h5 class="hasAnchor">
+<a href="#table-information" class="anchor"></a>TABLE INFORMATION</h5>
+<p>Table information can be synthesized in an <em>information management</em> workflow, giving us a snapshot of a data table we care to collect information on. The <strong>pointblank</strong> <em>informant</em> is fed a series of information functions to define bits of information about a table. This info text can pertain to individual columns, the table as a whole, and whatever additional information makes sense for your organization. We can even glean little snippets of information from the target table and mix them into the info text at will.</p>
+<p>Here is an example of how to use <strong>pointblank</strong> to incorporate pieces of info text into an <em>informant</em> object.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+
+<span class="co"># Create a pointblank `informant` object, with the</span>
+<span class="co"># tibble as the target table. Use three information</span>
+<span class="co"># functions, then, `incorporate()`. The informant</span>
+<span class="co"># will then show you information about the tibble</span>
+<span class="va">informant</span> <span class="op">&lt;-</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
+    a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="cn">NA</span>, <span class="fl">7</span><span class="op">)</span>,
+    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>,  <span class="fl">0</span>, <span class="fl">7</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/create_informant.html">create_informant</a></span><span class="op">(</span>
+    label <span class="op">=</span> <span class="st">"A very *simple* example."</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>description <span class="op">=</span> <span class="st">"This two-column table is nothing all that
+               interesting, but, it's fine for examples on **GitHub**
+               `README` pages. Column names are `a` and `b`. (COOL) (STUFF)"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span><span class="st">"a"</span>, info <span class="op">=</span> <span class="st">"This column has an `NA` value. Watch out!"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span><span class="st">"b"</span>, info <span class="op">=</span> <span class="st">"Like column `a`. The lowest value is `{lowest}`."</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span><span class="st">"b"</span>, info <span class="op">=</span> <span class="st">"The highest value is `{highest}`."</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_snippet.html">info_snippet</a></span><span class="op">(</span><span class="st">"lowest"</span>, fn <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_snippet.html">info_snippet</a></span><span class="op">(</span><span class="st">"highest"</span>, fn <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_section.html">info_section</a></span><span class="op">(</span><span class="st">"further information"</span>, 
+               `examples and documentation` <span class="op">=</span> <span class="st">"Examples for how to use the
+               `info_*()` functions (and many more) are available at the
+               [**pointblank** site](https://rich-iannone.github.io/pointblank/reference/)."</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<p>By printing the <em>informant</em> we get the table information report!</p>
+<p><img src="reference/figures/informant_report.png"></p>
+<hr>
+</div>
 <div id="table-scans" class="section level5">
 <h5 class="hasAnchor">
 <a href="#table-scans" class="anchor"></a>TABLE SCANS</h5>
 <p>While data validation is important, one has to be familiar with the data first. To that end, the <code><a href="reference/scan_data.html">scan_data()</a></code> function is provided in <strong>pointblank</strong> for generating a comprehensive summary of a tabular dataset. The report content is customizable, can be used inside an R Markdown document, and (as with the validation report) it can be produced in eight different languages: <em>English</em>, <em>French</em>, <em>German</em>, <em>Italian</em>, <em>Spanish</em>, <em>Portuguese</em>, <em>Chinese</em> (China mainland), and <em>Russian</em>. Here are several published examples of a <strong>Table Scan</strong> for each of these languages using the <code><a href="https://dplyr.tidyverse.org/reference/storms.html">dplyr::storms</a></code> dataset. Clicking any of these will take you to a highly interactive <strong>RPubs</strong> document.</p>
 <p><a href="https://rpubs.com/rich_i/pointblank_storms_english"><img src="https://img.shields.io/static/v1?label=Table%20Scan&amp;message=English&amp;color=blue" alt="Table Scan in English"></a>    <a href="https://rpubs.com/rich_i/pointblank_storms_french"><img src="https://img.shields.io/static/v1?label=Table%20Scan&amp;message=French&amp;color=blue" alt="Table Scan in French"></a>    <a href="https://rpubs.com/rich_i/pointblank_storms_german"><img src="https://img.shields.io/static/v1?label=Table%20Scan&amp;message=German&amp;color=blue" alt="Table Scan in German"></a>    <a href="https://rpubs.com/rich_i/pointblank_storms_italian"><img src="https://img.shields.io/static/v1?label=Table%20Scan&amp;message=Italian&amp;color=blue" alt="Table Scan in Italian"></a>    <a href="https://rpubs.com/rich_i/pointblank_storms_spanish"><img src="https://img.shields.io/static/v1?label=Table%20Scan&amp;message=Spanish&amp;color=blue" alt="Table Scan in Spanish"></a>    <a href="https://rpubs.com/rich_i/pointblank_storms_portuguese"><img src="https://img.shields.io/static/v1?label=Table%20Scan&amp;message=Portuguese&amp;color=blue" alt="Table Scan in Portuguese"></a>    <a href="https://rpubs.com/rich_i/pointblank_storms_chinese"><img src="https://img.shields.io/static/v1?label=Table%20Scan&amp;message=Chinese&amp;color=blue" alt="Table Scan in Chinese"></a>    <a href="https://rpubs.com/rich_i/pointblank_storms_russian"><img src="https://img.shields.io/static/v1?label=Table%20Scan&amp;message=Russian&amp;color=blue" alt="Table Scan in Russian"></a>   </p>
-<p>Database tables can be used with <code><a href="reference/scan_data.html">scan_data()</a></code> as well. Here are two examples using the <code>full_region</code> table of the <strong>Rfam</strong> database (hosted publicly at “mysql-rfam-public.ebi.ac.uk”) and the <code>assembly</code> table of the <strong>Ensembl</strong> database (hosted publicly at “ensembldb.ensembl.org”).</p>
+<p>Database tables can be used with <code><a href="reference/scan_data.html">scan_data()</a></code> as well. Here are two examples using the <code>full_region</code> table of the <strong>Rfam</strong> database (hosted publicly at <code>mysql-rfam-public.ebi.ac.uk</code>) and the <code>assembly</code> table of the <strong>Ensembl</strong> database (hosted publicly at <code>ensembldb.ensembl.org</code>).</p>
 <p><a href="https://rpubs.com/rich_i/rfam_full_region"><img src="https://img.shields.io/static/v1?label=Table%20Scan&amp;message=Rfam:%20full_region&amp;color=green" alt="Rfam: full_region"></a>    <a href="https://rpubs.com/rich_i/ensembl_assembly"><img src="https://img.shields.io/static/v1?label=Table%20Scan&amp;message=Ensembl:%20assembly&amp;color=green" alt="Ensembl: assembly"></a></p>
 <hr>
 </div>
@@ -231,10 +267,10 @@
 <h5 class="hasAnchor">
 <a href="#installation" class="anchor"></a>INSTALLATION</h5>
 <p>Want to try this out? The <strong>pointblank</strong> package is available on <strong>CRAN</strong>:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
+<div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"pointblank"</span><span class="op">)</span></pre></div>
 <p>You can also install the development version of <strong>pointblank</strong> from <strong>GitHub</strong>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
+<div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rich-iannone/pointblank"</span><span class="op">)</span></pre></div>
 <p>If you encounter a bug, have usage questions, or want to share ideas to make this package better, feel free to file an <a href="https://github.com/rich-iannone/pointblank/issues">issue</a>.</p>
 <hr>

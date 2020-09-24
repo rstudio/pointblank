@@ -49,7 +49,7 @@ to email the report regularly (or, only if certain conditions are met)? Yep,
 you can do all that.
 
 Here is an example of how to use **pointblank** to validate a local table
-with an agent.
+with an *agent*.
 
 ``` r
 # Generate a simple `action_levels` object to
@@ -211,6 +211,54 @@ validation statements and any associated error messages.
 
 The above R Markdown document is available as a template in the RStudio
 IDE (it’s called `Pointblank Validation`). Try it out\!
+
+<hr>
+
+##### TABLE INFORMATION
+
+Table information can be synthesized in an *information management* workflow, 
+giving us a snapshot of a data table we care to collect information on. The
+**pointblank** *informant* is fed a series of information functions to define
+bits of information about a table. This info text can pertain to individual
+columns, the table as a whole, and whatever additional information makes sense
+for your organization. We can even glean little snippets of information from the
+target table and mix them into the info text at will.
+
+Here is an example of how to use **pointblank** to incorporate pieces of info
+text into an *informant* object.
+
+``` r
+
+# Create a pointblank `informant` object, with the
+# tibble as the target table. Use three information
+# functions, then, `incorporate()`. The informant
+# will then show you information about the tibble
+informant <- 
+  dplyr::tibble(
+    a = c(5, 7, 6, 5, NA, 7),
+    b = c(6, 1, 0, 6,  0, 7)
+  ) %>%
+  create_informant(
+    label = "A very *simple* example."
+  ) %>%
+  info_tabular(description = "This two-column table is nothing all that
+               interesting, but, it's fine for examples on **GitHub**
+               `README` pages. Column names are `a` and `b`. (COOL) (STUFF)") %>%
+  info_columns("a", info = "This column has an `NA` value. Watch out!") %>%
+  info_columns("b", info = "Like column `a`. The lowest value is `{lowest}`.") %>%
+  info_columns("b", info = "The highest value is `{highest}`.") %>%
+  info_snippet("lowest", fn = ~ . %>% dplyr::pull(b) %>% min(na.rm = TRUE)) %>%
+  info_snippet("highest", fn = ~ . %>% dplyr::pull(a) %>% max(na.rm = TRUE)) %>%
+  info_section("further information", 
+               `examples and documentation` = "Examples for how to use the
+               `info_*()` functions (and many more) are available at the
+               [**pointblank** site](https://rich-iannone.github.io/pointblank/reference/).") %>%
+  incorporate()
+```
+
+By printing the *informant* we get the table information report!
+
+<img src="man/figures/informant_report.png">
 
 <hr>
 

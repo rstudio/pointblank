@@ -108,6 +108,7 @@ utils::globalVariables(
 .onLoad <- function(libname, pkgname, ...) {
   
   register_s3_method("knitr", "knit_print", "ptblank_agent")
+  register_s3_method("knitr", "knit_print", "ptblank_informant")
   
   if ("knitr" %in% loadedNamespaces()) {
     validate_rmd_setup()

@@ -56,6 +56,26 @@ print.ptblank_informant <- function(x, view = interactive(), ...) {
   # nocov end 
 }
 
+#' Knit print the table information report
+#'
+#' This facilitates printing of the table information report within a knitr code
+#' chunk.
+#'
+#' @param x An object of class `ptblank_informant`.
+#' @param ... Any additional parameters.
+#'
+#' @keywords internal
+#' @noRd
+knit_print.ptblank_informant <- function(x, ...) {
+  
+  # nocov start 
+  
+  # Use `knit_print()` to print in a code chunk
+  knitr::knit_print(get_informant_report(x), ...)
+  
+  # nocov end 
+}
+
 
 #' Print a single-step x-list to the console
 #'

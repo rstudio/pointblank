@@ -3,7 +3,7 @@
 <a href='http://rich-iannone.github.io/pointblank/'><img src="man/figures/logo.svg" height="350px"/></a>
 
 <br />
-
+<!-- badges: start -->
 <a href="https://cran.r-project.org/package=pointblank"><img src="https://www.r-pkg.org/badges/version/pointblank" alt="CRAN status" /></a>
 <a href="https://CRAN.R-project.org/package=pointblank"><img src="https://cranlogs.r-pkg.org/badges/pointblank" alt="downloads"></a>
 
@@ -11,15 +11,15 @@
 <a href="https://codecov.io/gh/rich-iannone/pointblank?branch=master"><img src="https://codecov.io/gh/rich-iannone/pointblank/branch/master/graph/badge.svg" alt="Coverage status" /></a>
 
 <a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing" /></a>
-
+<!-- badges: end -->
 
 <br />
 </div>
 
 With the **pointblank** package it’s really easy to methodically validate your
 data whether in the form of data frames or as database tables. On top of the
-validation toolset, the package gives you the means to define and keep current
-with the information that *defines* your tables.
+validation toolset, the package gives you the means to provide and keep
+up-to-date with the information that *defines* your tables.
 
 For table *validation*, the *agent* object works with a large collection of
 simple (yet powerful!) validation functions. We can enable much more

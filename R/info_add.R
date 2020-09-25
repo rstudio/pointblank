@@ -472,15 +472,15 @@ info_snippet <- function(x,
 #' provided to `fn`) to get a catalog list from a table column. You can limit
 #' the of items in that list with the `limit` value.
 #' 
-#' @param column The name of the column in the target table that contains
-#'   categorical values.
+#' @param column The name of the column that contains the target values.
 #' @param limit A limit of items put into the generated list. The returned text
 #'   will state the remaining number of items beyond the `limit`.
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 
 #' @export
-snip_list <- function(column, limit = 5) {
+snip_list <- function(column,
+                      limit = 5) {
   
   stats::as.formula(
     as.character(

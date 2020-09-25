@@ -83,6 +83,8 @@ reference:
     - info_section
     - info_snippet
     - snip_list
+    - snip_lowest
+    - snip_highest
     
   - title: Emailing
     desc: >

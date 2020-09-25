@@ -239,20 +239,23 @@ informant <-
     b = c(6, 1, 0, 6,  0, 7)
   ) %>%
   create_informant(
-    label = "A very *simple* example."
+    label = "A very *simple* example.",
+    tbl_name = "example_tbl"
   ) %>%
   info_tabular(description = "This two-column table is nothing all that
                interesting, but, it's fine for examples on **GitHub**
                `README` pages. Column names are `a` and `b`. (COOL) (STUFF)") %>%
   info_columns("a", info = "This column has an `NA` value. Watch out!") %>%
-  info_columns("b", info = "Like column `a`. The lowest value is `{lowest}`.") %>%
-  info_columns("b", info = "The highest value is `{highest}`.") %>%
-  info_snippet("lowest", fn = ~ . %>% dplyr::pull(b) %>% min(na.rm = TRUE)) %>%
-  info_snippet("highest", fn = ~ . %>% dplyr::pull(a) %>% max(na.rm = TRUE)) %>%
+  info_columns("a", info = "Mean value is `{a_mean}`.") %>%
+  info_columns("b", info = "Like column `a`. The lowest value is `{b_lowest}`.") %>%
+  info_columns("b", info = "The highest value is `{b_highest}`.") %>%
+  info_snippet("a_mean", fn = ~ . %>% .$b %>% mean(na.rm = TRUE) %>% round(2)) %>%
+  info_snippet("b_lowest", fn = snip_lowest("a")) %>%
+  info_snippet("b_highest", fn = snip_highest("a")) %>%
   info_section("further information", 
                `examples and documentation` = "Examples for how to use the
                `info_*()` functions (and many more) are available at the
-               [**pointblank** site](https://rich-iannone.github.io/pointblank/reference/).") %>%
+               [**pointblank** site](https://rich-iannone.github.io/pointblank/).") %>%
   incorporate()
 ```
 

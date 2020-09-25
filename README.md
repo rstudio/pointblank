@@ -250,8 +250,8 @@ informant <-
   info_columns("b", info = "Like column `a`. The lowest value is `{b_lowest}`.") %>%
   info_columns("b", info = "The highest value is `{b_highest}`.") %>%
   info_snippet("a_mean", fn = ~ . %>% .$a %>% mean(na.rm = TRUE) %>% round(2)) %>%
-  info_snippet("b_lowest", fn = snip_lowest("a")) %>%
-  info_snippet("b_highest", fn = snip_highest("a")) %>%
+  info_snippet("b_lowest", fn = snip_lowest("b")) %>%
+  info_snippet("b_highest", fn = snip_highest("b")) %>%
   info_section("further information", 
                `examples and documentation` = "Examples for how to use the
                `info_*()` functions (and many more) are available at the

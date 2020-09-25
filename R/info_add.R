@@ -492,3 +492,55 @@ snip_list <- function(column,
     )
   )
 }
+
+#' A `fn` for `info_snippet()`: get the lowest value from a column
+#' 
+#' The `snip_lowest()` function can be used as an [info_snippet()] function
+#' (i.e., provided to `fn`) to get the lowest numerical, time value, or
+#' alphabetical value from a column in the target table.
+#' 
+#' @param column The name of the column that contains the target values.
+#'   
+#' @return A formula needed for [info_snippet()]'s `fn` argument.
+#' 
+#' @export
+snip_lowest <- function(column) {
+  
+  stats::as.formula(
+    as.character(
+      glue::glue(
+        "~ . %>%
+    dplyr::select(<<column>>) %>% dplyr::distinct() %>%
+    dplyr::summarize(`pb_summary` = min(<<column>>, na.rm = TRUE)) %>%
+    dplyr::pull(`pb_summary`) %>% as.character()",
+    .open = "<<", .close = ">>"
+      )
+    )
+  )
+}
+
+#' A `fn` for `info_snippet()`: get the highest value from a column
+#' 
+#' The `snip_lowest()` function can be used as an [info_snippet()] function
+#' (i.e., provided to `fn`) to get the highest numerical, time value, or
+#' alphabetical value from a column in the target table.
+#' 
+#' @param column The name of the column that contains the target values.
+#'   
+#' @return A formula needed for [info_snippet()]'s `fn` argument.
+#' 
+#' @export
+snip_highest <- function(column) {
+  
+  stats::as.formula(
+    as.character(
+      glue::glue(
+        "~ . %>%
+    dplyr::select(<<column>>) %>% dplyr::distinct() %>%
+    dplyr::summarize(`pb_summary` = max(<<column>>, na.rm = TRUE)) %>%
+    dplyr::pull(`pb_summary`) %>% as.character()",
+    .open = "<<", .close = ">>"
+      )
+    )
+  )
+}

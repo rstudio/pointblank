@@ -7,8 +7,7 @@
 snip_list(column, limit = 5)
 }
 \arguments{
-\item{column}{The name of the column in the target table that contains
-categorical values.}
+\item{column}{The name of the column that contains the target values.}
 
 \item{limit}{A limit of items put into the generated list. The returned text
 will state the remaining number of items beyond the \code{limit}.}

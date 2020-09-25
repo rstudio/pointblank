@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A fn for info_snippet(): get a list of column categories — snip_list • pointblank</title>
+<title>A fn for info_snippet(): get the highest value from a column — snip_highest • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,10 +46,10 @@
 
 
 
-<meta property="og:title" content="A fn for info_snippet(): get a list of column categories — snip_list" />
-<meta property="og:description" content="The snip_list() function can be used as an info_snippet() function (i.e.,
-provided to fn) to get a catalog list from a table column. You can limit
-the of items in that list with the limit value." />
+<meta property="og:title" content="A fn for info_snippet(): get the highest value from a column — snip_highest" />
+<meta property="og:description" content="The snip_lowest() function can be used as an info_snippet() function
+(i.e., provided to fn) to get the highest numerical, time value, or
+alphabetical value from a column in the target table." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -118,18 +118,18 @@ the of items in that list with the limit value." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A <code>fn</code> for <code>info_snippet()</code>: get a list of column categories</h1>
+    <h1>A <code>fn</code> for <code>info_snippet()</code>: get the highest value from a column</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/info_add.R'><code>R/info_add.R</code></a></small>
-    <div class="hidden name"><code>snip_list.Rd</code></div>
+    <div class="hidden name"><code>snip_highest.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>snip_list()</code> function can be used as an <code><a href='info_snippet.html'>info_snippet()</a></code> function (i.e.,
-provided to <code>fn</code>) to get a catalog list from a table column. You can limit
-the of items in that list with the <code>limit</code> value.</p>
+    <p>The <code><a href='snip_lowest.html'>snip_lowest()</a></code> function can be used as an <code><a href='info_snippet.html'>info_snippet()</a></code> function
+(i.e., provided to <code>fn</code>) to get the highest numerical, time value, or
+alphabetical value from a column in the target table.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>snip_list</span><span class='op'>(</span><span class='va'>column</span>, limit <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>snip_highest</span><span class='op'>(</span><span class='va'>column</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,11 +137,6 @@ the of items in that list with the <code>limit</code> value.</p>
     <tr>
       <th>column</th>
       <td><p>The name of the column that contains the target values.</p></td>
-    </tr>
-    <tr>
-      <th>limit</th>
-      <td><p>A limit of items put into the generated list. The returned text
-will state the remaining number of items beyond the <code>limit</code>.</p></td>
     </tr>
     </table>
 

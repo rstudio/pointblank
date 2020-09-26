@@ -4,13 +4,29 @@
 \alias{get_informant_report}
 \title{Get a table information report from an \emph{informant} object}
 \usage{
-get_informant_report(informant, size = "standard")
+get_informant_report(informant, size = "standard", lang = NULL, locale = NULL)
 }
 \arguments{
 \item{informant}{An informant object of class \code{ptblank_informant}.}
 
 \item{size}{The size of the display table, which can be either \code{"standard"}
 (the default, with a width of 875px) or \code{"small"} (width of 575px).}
+
+\item{lang}{The language to use for the \emph{information report} (a summary table
+that provides the validation plan and the results from the interrogation.
+By default, \code{NULL} will create English (\code{"en"}) text. Other options include
+French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish (\code{"es"}),
+Portuguese, (\code{"pt"}), Chinese (\code{"zh"}), and Russian (\code{"ru"}). This \code{lang}
+option will override any previously set lang value (e.g., by the
+\code{\link[=create_agent]{create_agent()}} call).}
+
+\item{locale}{An optional locale ID to use for formatting values in the
+\emph{information report} summary table according the locale's rules. Examples
+include \code{"en_US"} for English (United States) and \code{"fr_FR"} for French
+(France); more simply, this can be a language identifier without a country
+designation, like \code{"es"} for Spanish (Spain, same as \code{"es_ES"}). This
+\code{locale} option will override any previously set locale value (e.g., by the
+\code{\link[=create_agent]{create_agent()}} call).}
 }
 \value{
 A \strong{gt} table object.

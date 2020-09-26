@@ -135,7 +135,7 @@ direct editing of a <strong>pointblank</strong> YAML file (an informant can be w
 to <strong>pointblank</strong> YAML with <code>yaml_write(informant = &lt;informant&gt;, ...)</code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_informant_report</span><span class='op'>(</span><span class='va'>informant</span>, size <span class='op'>=</span> <span class='st'>"standard"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_informant_report</span><span class='op'>(</span><span class='va'>informant</span>, size <span class='op'>=</span> <span class='st'>"standard"</span>, lang <span class='op'>=</span> <span class='cn'>NULL</span>, locale <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,6 +148,26 @@ to <strong>pointblank</strong> YAML with <code>yaml_write(informant = &lt;inform
       <th>size</th>
       <td><p>The size of the display table, which can be either <code>"standard"</code>
 (the default, with a width of 875px) or <code>"small"</code> (width of 575px).</p></td>
+    </tr>
+    <tr>
+      <th>lang</th>
+      <td><p>The language to use for the <em>information report</em> (a summary table
+that provides the validation plan and the results from the interrogation.
+By default, <code>NULL</code> will create English (<code>"en"</code>) text. Other options include
+French (<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), Spanish (<code>"es"</code>),
+Portuguese, (<code>"pt"</code>), Chinese (<code>"zh"</code>), and Russian (<code>"ru"</code>). This <code>lang</code>
+option will override any previously set lang value (e.g., by the
+<code><a href='create_agent.html'>create_agent()</a></code> call).</p></td>
+    </tr>
+    <tr>
+      <th>locale</th>
+      <td><p>An optional locale ID to use for formatting values in the
+<em>information report</em> summary table according the locale's rules. Examples
+include <code>"en_US"</code> for English (United States) and <code>"fr_FR"</code> for French
+(France); more simply, this can be a language identifier without a country
+designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</code>). This
+<code>locale</code> option will override any previously set locale value (e.g., by the
+<code><a href='create_agent.html'>create_agent()</a></code> call).</p></td>
     </tr>
     </table>
 

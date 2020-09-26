@@ -39,8 +39,12 @@ informant_revenue_postgres <-
   info_columns("revenue", info = "The reported revenue (in USD) for the product.
                The value may change up to 3-4 weeks after the sale date due
                to processing of refunds.") %>%
+  info_columns("revenue", info = "The revenue total is ${revenue_total}.") %>%
   info_columns(vars(price, revenue), info = "(PARTNER)") %>%
-  info_snippet("columns", fn = ~ . %>% ncol()) %>%
+  info_snippet("revenue_total",
+               fn = ~ . %>%
+                 dplyr::summarize(total = sum(revenue, na.rm = TRUE)) %>%
+                 dplyr::pull(total)) %>%
   info_columns(vars(name, type), `person responsible` = "Rita Mercer (r.mercer@example.com)") %>%
   info_columns("time", TODO = "Ensure that this becomes a `DATETIME` column.") %>%
   info_section("source", 

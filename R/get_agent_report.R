@@ -1348,12 +1348,12 @@ create_table_type_html <- function(tbl_src, tbl_name) {
   text <- 
     switch(
       tbl_src,
-      data.frame = c("#9933CC", "#FFFFFF", "A data frame"),
-      tbl_df = c("#F1D35A", "#222222", "A tibble"),
-      sqlite = c("#BACBEF", "#222222", "SQLite table"),
-      duckdb = c("#000000", "#FFFFFF", "DuckDB table"),
-      mysql = c("#EBAD40", "#222222", "MySQL table"),
-      postgres = c("#3E638B", "#FFFFFF", "PostgreSQL table"),
+      data.frame = c("#9933CC", "#FFFFFF", "data frame"),
+      tbl_df = c("#F1D35A", "#222222", "tibble"),
+      sqlite = c("#BACBEF", "#222222", "SQLite"),
+      duckdb = c("#000000", "#FFFFFF", "DuckDB"),
+      mysql = c("#EBAD40", "#222222", "MySQL"),
+      postgres = c("#3E638B", "#FFFFFF", "PostgreSQL"),
       tbl_spark = c("#E66F21", "#FFFFFF", "Spark DataFrame"),
       c("#E2E2E2", "#222222", tbl_src)
     )

@@ -55,7 +55,6 @@ get_informant_report <- function(informant,
                                  locale = NULL) {
   
   # nocov start
-  
   time_start <- Sys.time()
   
   if (is.null(lang)) {
@@ -259,6 +258,17 @@ get_informant_report <- function(informant,
     }
   }
   
+
+  # Modify `tbl` so that `group` values correspond to
+  # the set `lang`
+  tbl <-
+    tbl %>%
+    dplyr::mutate(group = dplyr::case_when(
+      group == "Table" ~ get_lsv("informant_report/pointblank_table_text")[[lang]],
+      group == "Columns" ~ get_lsv("table_scan/tbl_lab_columns")[[lang]],
+      TRUE ~ group
+    ))
+  
   if (length(names_others) > 0) {
     
     for (o_name in names_others) {
@@ -335,6 +345,7 @@ get_informant_report <- function(informant,
     make_table_dims_html(
       columns = meta_columns,
       rows = meta_rows,
+      lang = lang,
       locale = locale
     )
   
@@ -372,7 +383,7 @@ get_informant_report <- function(informant,
       id = "pb_information"
     ) %>%
     gt::tab_header(
-      title = "Pointblank Information",
+      title = get_lsv("informant_report/pointblank_information_title_text")[[lang]],
       subtitle = gt::md(combined_subtitle)
     ) %>%
     gt::tab_source_note(source_note = gt::md(table_time)) %>%
@@ -640,6 +651,7 @@ make_info_label_html <- function(info_label) {
 
 make_table_dims_html <- function(columns = NULL,
                                  rows = NULL,
+                                 lang = NULL,
                                  locale = NULL) {
   
   if (is.null(columns) && is.null(rows)) {
@@ -675,7 +687,7 @@ make_table_dims_html <- function(columns = NULL,
           padding = "2px 15px 2px 15px",
           `font-size` = "smaller"
         ),
-        "ROWS"
+        get_lsv("table_scan/tbl_lab_rows")[[lang]]
       ),
       htmltools::tags$span(
         style = htmltools::css(
@@ -704,7 +716,7 @@ make_table_dims_html <- function(columns = NULL,
           padding = "2px 15px 2px 15px",
           `font-size` = "smaller"
         ),
-        "COLUMNS"
+        get_lsv("table_scan/tbl_lab_columns")[[lang]]
       ),
       htmltools::tags$span(
         style = htmltools::css(

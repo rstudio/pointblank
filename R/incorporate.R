@@ -79,7 +79,7 @@
 incorporate <- function(informant) {
   
   # Get the target table for this informant object
-  # TODO: Use the same scheme as the `agent` does
+  # TODO: Use the same scheme that the `agent` does
   tbl <- informant$tbl
   read_fn <- informant$read_fn
   
@@ -129,7 +129,7 @@ incorporate <- function(informant) {
   meta_snippets <- informant$meta_snippets
 
   for (i in seq_along(meta_snippets)) {
-    
+
     snippet_fn <- 
       informant$meta_snippets[[i]] %>%
       rlang::f_rhs() %>%
@@ -138,6 +138,16 @@ incorporate <- function(informant) {
     if (inherits(snippet_fn, "fseq")) {
       
       snippet <- snippet_fn(tbl)
+      
+      # The following stmt always assumes that numeric
+      # values should be formatted with the default options
+      # of `pb_fmt_number()` in the informant's locale
+      # TODO: provide option to format as numeric (w/ option for
+      # decimal places) or as currency (w/ option for currency code)
+      if (is.numeric(snippet)) {
+        snippet <- snippet %>% pb_fmt_number(locale = informant$locale)
+      }
+      
       assign(x = names(informant$meta_snippets[i]), value = snippet)
     }
   }

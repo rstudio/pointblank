@@ -10,6 +10,20 @@
 #' @param informant An informant object of class `ptblank_informant`.
 #' @param size The size of the display table, which can be either `"standard"`
 #'   (the default, with a width of 875px) or `"small"` (width of 575px).
+#' @param lang The language to use for the *information report* (a summary table
+#'   that provides the validation plan and the results from the interrogation.
+#'   By default, `NULL` will create English (`"en"`) text. Other options include
+#'   French (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish (`"es"`),
+#'   Portuguese, (`"pt"`), Chinese (`"zh"`), and Russian (`"ru"`). This `lang`
+#'   option will override any previously set lang value (e.g., by the
+#'   [create_agent()] call).
+#' @param locale An optional locale ID to use for formatting values in the
+#'   *information report* summary table according the locale's rules. Examples
+#'   include `"en_US"` for English (United States) and `"fr_FR"` for French
+#'   (France); more simply, this can be a language identifier without a country
+#'   designation, like `"es"` for Spanish (Spain, same as `"es_ES"`). This
+#'   `locale` option will override any previously set locale value (e.g., by the
+#'   [create_agent()] call).
 #' 
 #' @return A **gt** table object.
 #' 
@@ -36,12 +50,27 @@
 #' 
 #' @export
 get_informant_report <- function(informant,
-                                 size = "standard") {
+                                 size = "standard",
+                                 lang = NULL,
+                                 locale = NULL) {
   
   # nocov start
   
   time_start <- Sys.time()
   
+  if (is.null(lang)) {
+    
+    lang <- informant$lang
+    if (is.null(locale)) locale <- informant$locale
+    
+  } else {
+    
+    normalize_reporting_language(lang = lang)
+    
+    # Set the `locale` to the `lang` value if `locale` isn't set
+    if (is.null(locale)) locale <- lang
+  }
+
   if ("metadata_rev" %in% names(informant)) {
     y <- informant$metadata_rev
   } else {
@@ -303,7 +332,11 @@ get_informant_report <- function(informant,
   
   # Generate table dimensions HTML
   table_dims <- 
-    make_table_dims_html(columns = meta_columns, rows = meta_rows)
+    make_table_dims_html(
+      columns = meta_columns,
+      rows = meta_rows,
+      locale = locale
+    )
   
   # Combine label, table type, and table dimensions into
   # a table subtitle <div>
@@ -410,6 +443,18 @@ get_informant_report <- function(informant,
       gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) %>%
       gt::opt_css(
         css = "
+          #pb_information {
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: .15px;
+          }
+          #pb_information a {
+            color: #375F84;
+            text-decoration: none;
+          }
+          #pb_information a:hover {
+            color: #375F84;
+            text-decoration: underline;
+          }
           #pb_information p {
             overflow: visible;
             margin-top: 2px;
@@ -426,10 +471,17 @@ get_informant_report <- function(informant,
           #pb_information li {
             text-indent: -1px;
           }
+          #pb_information h4 {
+            font-weight: 500;
+            color: #444444;
+          }
           #pb_information code {
             font-family: 'IBM Plex Mono', monospace, courier;
             font-size: 90%;
             font-weight: 500;
+            color: #666666;
+            background-color: transparent;
+            padding: 0;
           }
           #pb_information .pb_date {
             text-decoration-style: solid;
@@ -455,6 +507,9 @@ get_informant_report <- function(informant,
           #pb_information .gt_sourcenote {
             height: 35px;
             padding: 0
+          }
+          #pb_information .gt_group_heading {
+            text-ident: -3px;
           }
         "
       )
@@ -583,19 +638,31 @@ make_info_label_html <- function(info_label) {
   ) %>% as.character()
 }
 
-make_table_dims_html <- function(columns = NULL, rows = NULL) {
+make_table_dims_html <- function(columns = NULL,
+                                 rows = NULL,
+                                 locale = NULL) {
   
   if (is.null(columns) && is.null(rows)) {
     return("")
   }
   
   columns <- columns %||% "&mdash;"
-  rows <- rows %||% "&mdash;"
+  
+  if (is.null(columns)) {
+    columns <- "&mdash;"
+  } else {
+    columns <- pb_fmt_number(columns, decimals = 0, locale = locale)
+  }
+  
+  if (is.null(rows)) {
+    rows <- "&mdash;"
+  } else {
+    rows <- pb_fmt_number(rows, decimals = 0, locale = locale)
+  }
   
   as.character(
     htmltools::tagList(
       htmltools::tags$span(
-        "ROWS",
         style = htmltools::css(
           `background-color` = "#eecbff",
           color = "#333333",
@@ -607,10 +674,10 @@ make_table_dims_html <- function(columns = NULL, rows = NULL) {
           border = paste0("solid 1px #eecbff"),
           padding = "2px 15px 2px 15px",
           `font-size` = "smaller"
-        )
+        ),
+        "ROWS"
       ),
       htmltools::tags$span(
-        htmltools::HTML(rows),
         style = htmltools::css(
           `background-color` = "none",
           color = "#333333",
@@ -621,10 +688,10 @@ make_table_dims_html <- function(columns = NULL, rows = NULL) {
           border = paste0("solid 1px #eecbff"),
           padding = "2px 15px 2px 15px",
           `font-size` = "smaller"
-        )
+        ),
+        htmltools::HTML(rows)
       ),
       htmltools::tags$span(
-        "COLUMNS",
         style = htmltools::css(
           `background-color` = "#BDE7B4",
           color = "#333333",
@@ -636,10 +703,10 @@ make_table_dims_html <- function(columns = NULL, rows = NULL) {
           border = paste0("solid 1px #BDE7B4"),
           padding = "2px 15px 2px 15px",
           `font-size` = "smaller"
-        )
+        ),
+        "COLUMNS"
       ),
       htmltools::tags$span(
-        htmltools::HTML(columns),
         style = htmltools::css(
           `background-color` = "none",
           color = "#333333",
@@ -650,7 +717,8 @@ make_table_dims_html <- function(columns = NULL, rows = NULL) {
           border = paste0("solid 1px #BDE7B4"),
           padding = "2px 15px 2px 15px",
           `font-size` = "smaller"
-        )
+        ),
+        htmltools::HTML(columns)
       )
     )
   )

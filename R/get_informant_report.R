@@ -36,12 +36,27 @@
 #' 
 #' @export
 get_informant_report <- function(informant,
-                                 size = "standard") {
+                                 size = "standard",
+                                 lang = NULL,
+                                 locale = NULL) {
   
   # nocov start
   
   time_start <- Sys.time()
   
+  if (is.null(lang)) {
+    
+    lang <- informant$lang
+    if (is.null(locale)) locale <- informant$locale
+    
+  } else {
+    
+    normalize_reporting_language(lang = lang)
+    
+    # Set the `locale` to the `lang` value if `locale` isn't set
+    if (is.null(locale)) locale <- lang
+  }
+
   if ("metadata_rev" %in% names(informant)) {
     y <- informant$metadata_rev
   } else {
@@ -303,7 +318,11 @@ get_informant_report <- function(informant,
   
   # Generate table dimensions HTML
   table_dims <- 
-    make_table_dims_html(columns = meta_columns, rows = meta_rows)
+    make_table_dims_html(
+      columns = meta_columns,
+      rows = meta_rows,
+      locale = locale
+    )
   
   # Combine label, table type, and table dimensions into
   # a table subtitle <div>
@@ -605,19 +624,31 @@ make_info_label_html <- function(info_label) {
   ) %>% as.character()
 }
 
-make_table_dims_html <- function(columns = NULL, rows = NULL) {
+make_table_dims_html <- function(columns = NULL,
+                                 rows = NULL,
+                                 locale = NULL) {
   
   if (is.null(columns) && is.null(rows)) {
     return("")
   }
   
   columns <- columns %||% "&mdash;"
-  rows <- rows %||% "&mdash;"
+  
+  if (is.null(columns)) {
+    columns <- "&mdash;"
+  } else {
+    columns <- pb_fmt_number(columns, decimals = 0, locale = locale)
+  }
+  
+  if (is.null(rows)) {
+    rows <- "&mdash;"
+  } else {
+    rows <- pb_fmt_number(rows, decimals = 0, locale = locale)
+  }
   
   as.character(
     htmltools::tagList(
       htmltools::tags$span(
-        "ROWS",
         style = htmltools::css(
           `background-color` = "#eecbff",
           color = "#333333",
@@ -629,10 +660,10 @@ make_table_dims_html <- function(columns = NULL, rows = NULL) {
           border = paste0("solid 1px #eecbff"),
           padding = "2px 15px 2px 15px",
           `font-size` = "smaller"
-        )
+        ),
+        "ROWS"
       ),
       htmltools::tags$span(
-        htmltools::HTML(rows),
         style = htmltools::css(
           `background-color` = "none",
           color = "#333333",
@@ -643,10 +674,10 @@ make_table_dims_html <- function(columns = NULL, rows = NULL) {
           border = paste0("solid 1px #eecbff"),
           padding = "2px 15px 2px 15px",
           `font-size` = "smaller"
-        )
+        ),
+        htmltools::HTML(rows)
       ),
       htmltools::tags$span(
-        "COLUMNS",
         style = htmltools::css(
           `background-color` = "#BDE7B4",
           color = "#333333",
@@ -658,10 +689,10 @@ make_table_dims_html <- function(columns = NULL, rows = NULL) {
           border = paste0("solid 1px #BDE7B4"),
           padding = "2px 15px 2px 15px",
           `font-size` = "smaller"
-        )
+        ),
+        "COLUMNS"
       ),
       htmltools::tags$span(
-        htmltools::HTML(columns),
         style = htmltools::css(
           `background-color` = "none",
           color = "#333333",
@@ -672,7 +703,8 @@ make_table_dims_html <- function(columns = NULL, rows = NULL) {
           border = paste0("solid 1px #BDE7B4"),
           padding = "2px 15px 2px 15px",
           `font-size` = "smaller"
-        )
+        ),
+        htmltools::HTML(columns)
       )
     )
   )

@@ -423,6 +423,25 @@ agent_report:
     pt: "TIPOS SQL"
     zh: "SQL类型"
     ru: "ВИДЫ SQL"
+informant_report:
+  pointblank_information_title_text:
+    en: "Pointblank Information"
+    fr: "Informations Pointblank"
+    de: "Pointblank Informationen"
+    it: "Informazioni su Pointblank"
+    es: "Información de Pointblank"
+    pt: "Informações de Pointblank"
+    zh: "Pointblank信息"
+    ru: "Pointblank Информация"
+  pointblank_table_text:
+    en: "Table"
+    fr: "Table"
+    de: "Tabelle"
+    it: "Tabella"
+    es: "Tabla"
+    pt: "Tabela"
+    zh: "制表"
+    ru: "Таблица"
 table_scan:
   nav_title_ts:
     en: "Table Scan"

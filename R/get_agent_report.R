@@ -1244,6 +1244,9 @@ get_agent_report <- function(agent,
       gt::opt_css("@import url(\"https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap\");") %>%
       gt::opt_css(
         css = "
+          #pb_information {
+            -webkit-font-smoothing: antialiased;
+          }
           #report .gt_row {
             overflow: visible;
           }
@@ -1254,6 +1257,8 @@ get_agent_report <- function(agent,
           #report code {
             font-family: 'IBM Plex Mono', monospace, courier;
             font-size: 11px;
+            background-color: transparent;
+            padding: 0;
           }
         "
       )

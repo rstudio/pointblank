@@ -410,6 +410,18 @@ get_informant_report <- function(informant,
       gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) %>%
       gt::opt_css(
         css = "
+          #pb_information {
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: .15px;
+          }
+          #pb_information a {
+            color: #375F84;
+            text-decoration: none;
+          }
+          #pb_information a:hover {
+            color: #375F84;
+            text-decoration: underline;
+          }
           #pb_information p {
             overflow: visible;
             margin-top: 2px;
@@ -426,10 +438,17 @@ get_informant_report <- function(informant,
           #pb_information li {
             text-indent: -1px;
           }
+          #pb_information h4 {
+            font-weight: 500;
+            color: #444444;
+          }
           #pb_information code {
             font-family: 'IBM Plex Mono', monospace, courier;
             font-size: 90%;
             font-weight: 500;
+            color: #666666;
+            background-color: transparent;
+            padding: 0;
           }
           #pb_information .pb_date {
             text-decoration-style: solid;
@@ -455,6 +474,9 @@ get_informant_report <- function(informant,
           #pb_information .gt_sourcenote {
             height: 35px;
             padding: 0
+          }
+          #pb_information .gt_group_heading {
+            text-ident: -3px;
           }
         "
       )

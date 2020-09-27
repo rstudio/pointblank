@@ -145,11 +145,36 @@ interrogate <- function(agent,
     } else if (assertion_type == "conjointly") {
       
       validation_formulas <- get_values_at_idx(agent = agent, idx = i)
-      
       validation_n <- length(validation_formulas)
+      
+      validation_fns <- 
+        validation_formulas %>% 
+        lapply(rlang::f_rhs) %>%
+        vapply(
+          FUN.VALUE = character(1),
+          USE.NAMES = FALSE,
+          FUN = function(x) {
+            as.character(x)[1]
+          }
+        )
+      
+      any_1_unit <- any(grepl("col_is|col_exists", validation_fns))
+      any_n_unit <- any(grepl("col_vals", validation_fns))
+
+      if (any_1_unit && any_n_unit) {
+
+        col_is_idx <- which(grepl("col_is|col_exists", validation_fns))
+        col_vals_idx <- which(grepl("col_vals", validation_fns))
+        
+        validation_formulas <- 
+          c(
+            validation_formulas[col_vals_idx], 
+            validation_formulas[col_is_idx]
+          )
+      }
 
       # Create a double agent
-      double_agent <- create_agent(tbl = agent$tbl)
+      double_agent <- create_agent(tbl = table)
 
       for (formula in validation_formulas) {
 
@@ -175,15 +200,30 @@ interrogate <- function(agent,
         
         new_col <- paste0("pb_is_good_", j)
 
-        tbl_checked <- 
+        tbl_check_t <- 
           check_table_with_assertion(
             agent = double_agent,
             idx = j,
             table = tbl_checked,
             assertion_type
           )
+        
+        tbl_check_t <- tbl_check_t$value
+        
+       if (grepl("col_vals", assertion_type)) {
+         
+         tbl_checked <- tbl_check_t
+         
+       } else {
 
-        tbl_checked <- tbl_checked$value
+         tbl_checked <-
+           tbl_checked %>%
+           dplyr::mutate(
+             pb_is_good_ = {{ tbl_check_t }} %>%
+               utils::head(1) %>%
+               dplyr::pull(pb_is_good_)
+           )
+       }
 
         tbl_checked <-
           tbl_checked %>%
@@ -194,10 +234,13 @@ interrogate <- function(agent,
       columns_str_add <- paste0("pb_is_good_", seq(j), collapse = " + ")
 
       # Create function for validating step functions conjointly
-      tbl_val_conjointly <- function(table,
-                                     columns_str_add,
+      tbl_val_conjointly <- function(columns_str_add,
                                      columns_str_vec,
                                      validation_n) {
+       
+        # TODO: Require check to ensure that the validation functions used
+        # are entirely of the combined set of `col_vals_*()`, `col_is_*()`,
+        # and `col_exists()`
         
         tbl_checked %>%
           dplyr::mutate(pb_is_good_ = !!rlang::parse_expr(columns_str_add)) %>%
@@ -212,7 +255,7 @@ interrogate <- function(agent,
       tbl_checked <-
         pointblank_try_catch(
           tbl_val_conjointly(
-            table, columns_str_add, columns_str_vec, validation_n
+            columns_str_add, columns_str_vec, validation_n
           )
         )
     }

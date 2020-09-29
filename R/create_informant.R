@@ -217,4 +217,3 @@ create_informant <- function(tbl = NULL,
   
   metadata
 }
-

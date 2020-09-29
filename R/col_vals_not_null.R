@@ -154,7 +154,8 @@ col_vals_not_null <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x, label = "::QUIET::") %>%
+    secret_agent <-
+      create_agent(x, label = "::QUIET::") %>%
       col_vals_not_null(
         columns = columns,
         preconditions = preconditions,
@@ -162,7 +163,8 @@ col_vals_not_null <- function(x,
         brief = brief,
         actions = prime_actions(actions),
         active = active
-      ) %>% interrogate()
+      ) %>%
+      interrogate()
     
     return(x)
   }
@@ -218,7 +220,8 @@ expect_col_vals_not_null <- function(object,
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
     ) %>%
-    interrogate() %>% .$validation_set
+    interrogate() %>%
+    .$validation_set
   
   x <- vs$notify %>% all()
   
@@ -266,7 +269,8 @@ test_col_vals_not_null <- function(object,
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
     ) %>%
-    interrogate() %>% .$validation_set
+    interrogate() %>%
+    .$validation_set
   
   if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
     warning(conditionMessage(vs$capture_stack[[1]]$warning))

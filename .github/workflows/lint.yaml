@@ -1,0 +1,63 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+name: lint
+
+jobs:
+  lint:
+    runs-on: macOS-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@master
+        with:
+          r-version: 'release'
+
+      - uses: r-lib/actions/setup-pandoc@master
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+        shell: Rscript {0}
+  
+      - name: Cache R packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: macOS-r-4.0-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: macOS-r-4.0-1-
+
+      - name: Install dependencies
+        run: |
+          install.packages(c("remotes"))
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("lintr")
+        shell: Rscript {0}
+
+      - name: Lint
+        run: |
+          out <- 
+            lintr::lint_package(
+              linters = lintr::with_defaults(
+                object_usage_linter = NULL,
+                trailing_whitespace_linter = NULL
+              ),
+            exclusions = c(
+              list.files("data",      recursive = TRUE, full.names = TRUE),
+              list.files("docs",      recursive = TRUE, full.names = TRUE),
+              list.files("inst/doc",  recursive = TRUE, full.names = TRUE),
+              list.files("man",       recursive = TRUE, full.names = TRUE),
+              list.files("vignettes", recursive = TRUE, full.names = TRUE)
+              )
+            )
+          print(out)
+          if (length(out)) stop("lints found")
+        shell: Rscript {0}
+        

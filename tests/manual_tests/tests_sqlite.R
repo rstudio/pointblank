@@ -20,14 +20,23 @@ agent <-
   create_agent(tbl = tbl_sqlite) %>%
   col_vals_gt(vars(d), 100) %>%
   col_vals_gte(vars(c), 2, na_pass = TRUE) %>%
-  col_vals_equal(vars(e), 1, preconditions = ~ . %>% dplyr::filter(e == 1)) %>%
+  col_vals_equal(
+    vars(e), 1,
+    preconditions = ~ . %>% dplyr::filter(e == 1)
+  ) %>%
   col_vals_not_equal(vars(e), 0) %>%
-  col_vals_lt(vars(a), 10, preconditions = ~ . %>% dplyr::mutate(a = a + 9)) %>%
+  col_vals_lt(
+    vars(a), 10,
+    preconditions = ~ . %>% dplyr::mutate(a = a + 9)
+  ) %>%
   col_vals_in_set(vars(f), c("low", "medium", "high")) %>%
   col_vals_not_in_set(vars(e), 3:5) %>%
   col_vals_between(vars(d), 0, 10000) %>%
   col_vals_not_between(vars(d), 15000, 20000) %>%
-  col_vals_null(vars(c), preconditions = ~ . %>% dplyr::filter(b == "5-jdo-903")) %>%
+  col_vals_null(
+    vars(c),
+    preconditions = ~ . %>% dplyr::filter(b == "5-jdo-903")
+  ) %>%
   col_is_character(vars(b)) %>%
   col_is_numeric(vars(d, e)) %>%
   col_is_integer(vars(e)) %>%

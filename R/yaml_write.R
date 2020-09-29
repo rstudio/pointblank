@@ -267,7 +267,7 @@ yaml_agent_string <- function(agent = NULL,
 }
 
 as_vars_fn <- function(columns) {
-  paste0("vars(", columns,")")
+  paste0("vars(", columns, ")")
 }
 
 as_list_preconditions <- function(preconditions) {
@@ -365,7 +365,7 @@ to_list_tbl_name <- function(tbl_name) {
 get_arg_value <- function(value) {
   
   if (inherits(value, "list") && inherits(value[[1]], "quosures")) {
-    out <- paste0("vars(", rlang::as_label(value[[1]][[1]]),")")
+    out <- paste0("vars(", rlang::as_label(value[[1]][[1]]), ")")
   } else if (inherits(value, "list") && inherits(value[[1]], "numeric")) {
     out <- value[[1]] 
   } else {
@@ -378,7 +378,7 @@ get_arg_value <- function(value) {
 get_arg_value_lr <- function(value) {
 
   if (inherits(value, "quosure")) {
-    out <- paste0("vars(", rlang::as_label(value),")")
+    out <- paste0("vars(", rlang::as_label(value), ")")
   } else if (inherits(value, "numeric")) {
     out <- value
   } else {
@@ -500,7 +500,10 @@ as_agent_yaml_list <- function(agent) {
             value = get_arg_value(step_list$values),
             na_pass = step_list$na_pass,
             preconditions = as_list_preconditions(step_list$preconditions),
-            actions = as_action_levels(step_list$actions[[1]], action_levels_default),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
             active = step_list$active
           )
         )
@@ -513,10 +516,18 @@ as_agent_yaml_list <- function(agent) {
             columns = as_vars_fn(step_list$column[[1]]),
             left = get_arg_value_lr(step_list$values[[1]][[1]]),
             right = get_arg_value_lr(step_list$values[[1]][[2]]),
-            inclusive = as.logical(c(names(step_list$values[[1]][1]), names(step_list$values[[1]][1]))),
+            inclusive = as.logical(
+              c(
+                names(step_list$values[[1]][1]),
+                names(step_list$values[[1]][1])
+              )
+            ),
             na_pass = step_list$na_pass,
             preconditions = as_list_preconditions(step_list$preconditions),
-            actions = as_action_levels(step_list$actions[[1]], action_levels_default),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
             active = step_list$active
           )
         )
@@ -529,7 +540,10 @@ as_agent_yaml_list <- function(agent) {
             columns = as_vars_fn(step_list$column[[1]]),
             set = step_list$values[[1]],
             preconditions = as_list_preconditions(step_list$preconditions),
-            actions = as_action_levels(step_list$actions[[1]], action_levels_default),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
             active = step_list$active
           )
         )
@@ -541,7 +555,10 @@ as_agent_yaml_list <- function(agent) {
           validation_fn = list(
             columns = as_vars_fn(step_list$column[[1]]),
             preconditions = as_list_preconditions(step_list$preconditions),
-            actions = as_action_levels(step_list$actions[[1]], action_levels_default),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
             active = step_list$active
           )
         )
@@ -554,7 +571,10 @@ as_agent_yaml_list <- function(agent) {
             columns = as_vars_fn(step_list$column[[1]]),
             regex = get_arg_value(step_list$values),
             preconditions = as_list_preconditions(step_list$preconditions),
-            actions = as_action_levels(step_list$actions[[1]], action_levels_default),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
             active = step_list$active
           )
         )
@@ -565,7 +585,10 @@ as_agent_yaml_list <- function(agent) {
         list(
           validation_fn = list(
             columns = as_vars_fn(step_list$column[[1]]),
-            actions = as_action_levels(step_list$actions[[1]], action_levels_default),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
             active = step_list$active
           )
         )
@@ -577,7 +600,10 @@ as_agent_yaml_list <- function(agent) {
           validation_fn = list(
             expr = paste0("~", rlang::as_label(step_list$values[[1]])),
             preconditions = as_list_preconditions(step_list$preconditions),
-            actions = as_action_levels(step_list$actions[[1]], action_levels_default),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
             active = step_list$active
           )
         )
@@ -595,7 +621,10 @@ as_agent_yaml_list <- function(agent) {
           validation_fn = list(
             columns = vars_cols,
             preconditions = as_list_preconditions(step_list$preconditions),
-            actions = as_action_levels(step_list$actions[[1]], action_levels_default),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
             active = step_list$active
           )
         )
@@ -610,7 +639,10 @@ as_agent_yaml_list <- function(agent) {
             schema = schema_list$schema,
             complete = schema_list$complete,
             in_order = schema_list$in_order,
-            actions = as_action_levels(step_list$actions[[1]], action_levels_default),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
             active = step_list$active
           )
         )
@@ -622,7 +654,10 @@ as_agent_yaml_list <- function(agent) {
           validation_fn = list(
             fns = as.character(step_list$values[[1]]),
             preconditions = as_list_preconditions(step_list$preconditions),
-            actions = as_action_levels(step_list$actions[[1]], action_levels_default),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
             active = step_list$active
           )
         )
@@ -666,15 +701,16 @@ as_informant_yaml_list <- function(informant) {
     lst_meta_snippets <- 
       list(
         meta_snippets = 
-          lapply(informant$meta_snippets, FUN = function(x) {
-            paste(as.character(x), collapse = "")
-          })
+          lapply(
+            informant$meta_snippets,
+            FUN = function(x) {
+              paste(as.character(x), collapse = "")
+            }
+          )
       )
   } else {
     lst_meta_snippets <- NULL
   }
-  
-  #list(read_fn = paste(as.character(read_fn), collapse = ""))
   
   if (is.null(informant$lang) || 
       (!is.null(informant$lang) && informant$lang == "en")) {
@@ -697,4 +733,3 @@ as_informant_yaml_list <- function(informant) {
     informant$metadata
   )
 }
-

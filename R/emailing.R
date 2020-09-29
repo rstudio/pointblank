@@ -312,7 +312,9 @@ Validation performed via the <code>pointblank</code> <strong>R<strong> package.
 <div>
 <a style=\"background-color: #999999; color: white; padding: 1em 1.5em; \\
 position: relative; text-decoration: none; text-transform: uppercase; \\
-cursor: pointer;\" href=\"https://rich-iannone.github.io/pointblank/\">Information and package documentation</a></div>
+cursor: pointer;\" \\
+href=\"https://rich-iannone.github.io/pointblank/\">Information and package \\
+documentation</a></div>
 "
 }
 

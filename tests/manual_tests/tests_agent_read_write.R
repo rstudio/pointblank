@@ -117,4 +117,3 @@ agent_3new <- agent_3new %>% interrogate()
 
 # This is the revised agent report
 agent_3new
-

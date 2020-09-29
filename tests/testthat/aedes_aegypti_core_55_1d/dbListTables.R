@@ -15,5 +15,6 @@ c("alt_allele", "analysis", "analysis_description", "assembly",
 "splicing_event", "splicing_event_feature", "splicing_transcript_pair", 
 "stable_id_event", "supporting_feature", "transcript", "transcript_attrib", 
 "transcript_stable_id", "transcript_supporting_feature", "translation", 
-"translation_attrib", "translation_stable_id", "unconventional_transcript_association", 
+"translation_attrib", "translation_stable_id",
+"unconventional_transcript_association", 
 "unmapped_object", "unmapped_reason", "xref")

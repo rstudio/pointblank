@@ -43,14 +43,18 @@ x_write_disk <- function(x,
                          keep_extracts = FALSE) {
 
   x$validation_set$tbl_checked <- NULL
-  x$validation_set <- x$validation_set %>% dplyr::mutate(tbl_checked = list(NULL))
+  
+  x$validation_set <- 
+    x$validation_set %>%
+    dplyr::mutate(tbl_checked = list(NULL))
   
   if (keep_tbl) {
     
     if (inherits(x$tbl, "tbl_dbi") || inherits(x$tbl, "tbl_spark")) {
       
       warning(
-        "A table of class `tbl_dbi` or `tbl_spark` cannot be kept with the object.",
+        "A table of class `tbl_dbi` or `tbl_spark` cannot be ",
+        "kept with the object.",
         call. = FALSE
       )
 

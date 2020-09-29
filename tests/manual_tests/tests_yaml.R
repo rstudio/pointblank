@@ -15,7 +15,10 @@ agent <-
   ) %>%
   col_vals_between(vars(a), 2, 8) %>%
   col_vals_gt(vars(d), 100) %>%
-  col_vals_lt(vars(a), vars(d), na_pass = TRUE, preconditions = ~ . %>% dplyr::filter(a > 3)) %>%
+  col_vals_lt(
+    vars(a), vars(d), na_pass = TRUE,
+    preconditions = ~ . %>% dplyr::filter(a > 3)
+  ) %>%
   col_vals_equal(vars(d), vars(d), na_pass = TRUE) %>%
   col_vals_null(
     vars(c),

@@ -72,7 +72,7 @@ validate_rmd_setup <- function() {
   knitr::opts_hooks$set(
     error = function(options) {
       if (isTRUE(options$validate)) {
-        options$error = TRUE
+        options$error <- TRUE
       }
       options
     }
@@ -174,7 +174,8 @@ render_template <- function(template_name, data) {
       text <- pb_glue_data(data, "{error_count} {noun} failed.")
     }
     
-    rendered <- pb_glue_data(c(data, list(state = state, text = text)), template)
+    rendered <- 
+      pb_glue_data(c(data, list(state = state, text = text)), template)
     
   } else if (template_name == "document") {
     
@@ -293,7 +294,11 @@ knitr_chunk_hook <- function(x, options) {
     
     if (grepl("<!--html_preserve-->", x)) {
       
-      matches <- gregexpr(pattern = "<!--html_preserve-->(.|\n)*?<!--/html_preserve-->", x)
+      matches <- 
+        gregexpr(
+          pattern = "<!--html_preserve-->(.|\n)*?<!--/html_preserve-->",
+          x
+        )
 
       output <- regmatches(x = x, m = matches) %>% unlist()
       

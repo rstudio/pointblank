@@ -82,7 +82,8 @@ get_sundered_data <- function(agent,
   tbl_src <- agent$tbl_src
   
   if (!(tbl_src %in% c("tbl_df", "data.frame")) && is.null(id_cols)) {
-    stop("This table needs to have `id_cols` specified, otherwise sundering cannot be done",
+    stop("This table needs to have `id_cols` specified, otherwise ",
+         "sundering cannot be done",
          call. = FALSE)
   }
   
@@ -93,8 +94,7 @@ get_sundered_data <- function(agent,
     dplyr::pull(n) %>%
     as.numeric()
   
-  # Get the row count of the input table after using
-  # `dplyr::distinct()`
+  # Get the row count of the input table after using `dplyr::distinct()`
   row_count_input_tbl_distinct <- 
     input_tbl %>%
     dplyr::distinct() %>%
@@ -107,8 +107,13 @@ get_sundered_data <- function(agent,
   validation_steps_i <- 
     agent$validation_set %>%
     dplyr::filter(eval_error == FALSE) %>%
-    dplyr::filter(assertion_type %in% base::setdiff(row_based_step_fns_vector(), "rows_distinct")) %>%
-    dplyr::filter(vapply(preconditions, FUN = is.null, FUN.VALUE = logical(1))) %>%
+    dplyr::filter(
+      assertion_type %in%
+        base::setdiff(row_based_step_fns_vector(), "rows_distinct")
+    ) %>%
+    dplyr::filter(
+      vapply(preconditions, FUN = is.null, FUN.VALUE = logical(1))
+    ) %>%
     dplyr::pull(i)
   
   if (length(validation_steps_i) == 0) {
@@ -167,11 +172,15 @@ get_sundered_data <- function(agent,
       
       tbl_check_join <- 
         tbl_check_join %>%
-        dplyr::select(dplyr::one_of(by_cols), dplyr::starts_with("pb_is_good_")) %>%
+        dplyr::select(
+          dplyr::one_of(by_cols), dplyr::starts_with("pb_is_good_")
+        ) %>%
         dplyr::left_join(
           tbl_check_join_r %>%
             dplyr::rename(!!new_col_ii := pb_is_good_) %>%
-            dplyr::select(dplyr::one_of(by_cols), dplyr::starts_with("pb_is_good_")),
+            dplyr::select(
+              dplyr::one_of(by_cols), dplyr::starts_with("pb_is_good_")
+            ),
           by = by_cols
         ) %>%
         dplyr::left_join(

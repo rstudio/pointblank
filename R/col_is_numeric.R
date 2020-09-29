@@ -151,7 +151,10 @@ col_is_numeric <- function(x,
   agent <- x
   
   if (is.null(brief)) {
-    brief <- generate_autobriefs(agent, columns, preconditions, values, "col_is_numeric")
+    brief <- 
+      generate_autobriefs(
+        agent, columns, preconditions, values, "col_is_numeric"
+      )
   }
   
   # Normalize any provided `step_id` value(s)
@@ -224,7 +227,11 @@ expect_col_is_numeric <- function(object,
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue(failure_message_gluestring(fn_name = fn_name, lang = "en"))
+    failure_message = glue::glue(
+      failure_message_gluestring(
+        fn_name = fn_name, lang = "en"
+      )
+    )
   )
   
   act$val <- object

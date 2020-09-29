@@ -6,7 +6,8 @@ normalize_reporting_language <- function(lang) {
   if (is.null(lang)) return("en")
   
   if (!(tolower(lang) %in% reporting_languages)) {
-    stop("The text ", lang, " doesn't correspond to a pointblank reporting language",
+    stop("The text ", lang, " doesn't correspond to a pointblank ",
+         "reporting language.",
          call. = FALSE)
   }
   
@@ -14,7 +15,9 @@ normalize_reporting_language <- function(lang) {
 }
 
 get_lsv <- function(text,
-                    file = system.file("text", "translations_built", package = "pointblank")) {
+                    file = system.file(
+                      "text", "translations_built", package = "pointblank"
+                    )) {
 
   x <- readRDS(file = file)
   
@@ -33,4 +36,3 @@ get_lsv <- function(text,
     stop("The length of `text` must be either 1 or 2.")
   }
 }
-

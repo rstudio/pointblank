@@ -241,7 +241,8 @@ get_agent_x_list <- function(agent,
     }
     
     if (!is.null(.report_object_small)) {
-      .report_html_small <- gt::as_raw_html(.report_object_small, inline_css = TRUE)
+      .report_html_small <- 
+        gt::as_raw_html(.report_object_small, inline_css = TRUE)
     } else {
       .report_html_small <- NULL
     }

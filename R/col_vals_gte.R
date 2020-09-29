@@ -184,7 +184,10 @@ col_vals_gte <- function(x,
   agent <- x
   
   if (is.null(brief)) {
-    brief <- generate_autobriefs(agent, columns, preconditions, values = value, "col_vals_gte")
+    brief <- 
+      generate_autobriefs(
+        agent, columns, preconditions, values = value, "col_vals_gte"
+      )
   }
   
   # Normalize any provided `step_id` value(s)
@@ -266,7 +269,11 @@ expect_col_vals_gte <- function(object,
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue(failure_message_gluestring(fn_name = fn_name, lang = "en"))
+    failure_message = glue::glue(
+      failure_message_gluestring(
+        fn_name = fn_name, lang = "en"
+      )
+    )
   )
   
   act$val <- object

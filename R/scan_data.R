@@ -112,6 +112,7 @@ scan_data <- function(tbl,
 }
 
 # nocov start
+# nolint start
 
 #' Print the reporting produced by [scan_data()]
 #'
@@ -147,6 +148,8 @@ knit_print.examination_page <- function(x, ...) {
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(x, ...)
 }
+
+# nolint end
 
 #
 # Generate section components such as tables and plots
@@ -1840,7 +1843,7 @@ probe_columns_assemble <- function(data,
   
   columns_data <- probe_columns(data = data, lang = lang, locale = locale)
   
-  columns_tagLists <- 
+  columns_tag_lists <- 
     lapply(
       columns_data, 
       function(x) {
@@ -2217,7 +2220,7 @@ probe_columns_assemble <- function(data,
     row_header,
     htmltools::tags$div(
       class = "section-items",
-      columns_tagLists
+      columns_tag_lists
     )
   )
 }

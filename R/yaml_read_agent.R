@@ -382,13 +382,19 @@ make_action_levels_str <- function(al) {
   top_args <- c()
   
   if (!is.null(al$warn_fraction) || !is.null(al$warn_count)) {
-    top_args <- c(top_args, paste0("warn_at = ", c(al$warn_fraction, al$warn_count)))
+    top_args <- 
+      c(top_args, paste0("warn_at = ", c(al$warn_fraction, al$warn_count)))
   }
   if (!is.null(al$stop_fraction) || !is.null(al$stop_count)) {
-    top_args <- c(top_args, paste0("stop_at = ", c(al$stop_fraction, al$stop_count)))
+    top_args <- 
+      c(top_args, paste0("stop_at = ", c(al$stop_fraction, al$stop_count)))
   }
   if (!is.null(al$notify_fraction) || !is.null(al$notify_count)) {
-    top_args <- c(top_args, paste0("notify_at = ", c(al$notify_fraction, al$notify_count)))
+    top_args <- 
+      c(
+        top_args,
+        paste0("notify_at = ", c(al$notify_fraction, al$notify_count))
+      )
   }
 
   fns_args <- c()
@@ -404,7 +410,8 @@ make_action_levels_str <- function(al) {
   }
   
   if (length(fns_args) > 0) {
-    fns_args <- paste0("    fns = list(\n", paste0("      ", fns_args), "\n    )")
+    fns_args <-
+      paste0("    fns = list(\n", paste0("      ", fns_args), "\n    )")
   }
   
   paste0(
@@ -490,9 +497,16 @@ make_validation_steps <- function(steps) {
                     USE.NAMES = FALSE,
                     FUN = function(x) {
                       if (length(x) > 1) {
-                        val <- paste0("c(", paste0(paste0("\"", as.character(x), "\""), collapse = ", "), ")")
+                        val <- 
+                          paste0(
+                            "c(", paste0(
+                              paste0("\"", as.character(x), "\""),
+                              collapse = ", "),
+                            ")"
+                          )
                       } else {
-                        val <- paste0("\"", as.character(x), "\"")
+                        val <- 
+                          paste0("\"", as.character(x), "\"")
                       }
                       val
                     }
@@ -515,7 +529,11 @@ make_validation_steps <- function(steps) {
               }
               
               if (length(val) > 1) {
-                val <- paste0("c(", paste(as.character(val), collapse = ", "), ")")
+                val <- 
+                  paste0(
+                    "c(", paste(as.character(val), collapse = ", "),
+                    ")"
+                  )
               } else {
                 val <- as.character(val)
               }
@@ -535,5 +553,9 @@ make_validation_steps <- function(steps) {
     paste(collapse = " ") %>%
     paste0(., " ")
   
-  gsub("rows_distinct(\n  columns = NULL\n)", "rows_distinct()", str_exprs, fixed = TRUE)
+  gsub(
+    "rows_distinct(\n  columns = NULL\n)", "rows_distinct()",
+    str_exprs,
+    fixed = TRUE
+  )
 }

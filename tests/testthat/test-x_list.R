@@ -2,8 +2,14 @@ al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 
 agent <-
   create_agent(tbl = small_table, actions = al) %>%
-  col_vals_gt(vars(g), 100, preconditions = ~ . %>% dplyr::mutate(g = a + 95)) %>%
-  col_vals_lt(vars(c), vars(d), preconditions = ~ . %>% dplyr::mutate(d = d - 200)) %>%
+  col_vals_gt(
+    vars(g), 100,
+    preconditions = ~ . %>% dplyr::mutate(g = a + 95)
+  ) %>%
+  col_vals_lt(
+    vars(c), vars(d),
+    preconditions = ~ . %>% dplyr::mutate(d = d - 200)
+  ) %>%
   col_vals_in_set(vars(f), c("low", "mid", "high", "higher"))
 
 test_that("An x-list for a step is structurally correct", {
@@ -142,8 +148,14 @@ test_that("An x-list for a step is structurally correct", {
   expect_is(x_list_after$eval_warning, "logical")
   expect_equal(x_list_after$eval_warning, FALSE)
   expect_is(x_list_after$capture_stack, "list")
-  expect_equal(length(x_list_after$capture_stack %>% unlist(recursive = FALSE)), 2)
-  expect_equal(names(x_list_after$capture_stack %>% unlist(recursive = FALSE)), c("warning", "error"))
+  expect_equal(
+    length(x_list_after$capture_stack %>% unlist(recursive = FALSE)),
+    2
+  )
+  expect_equal(
+    names(x_list_after$capture_stack %>% unlist(recursive = FALSE)),
+    c("warning", "error")
+  )
   expect_is(x_list_after$n, "numeric")
   expect_equal(x_list_after$n, 13)
   expect_is(x_list_after$n_passed, "numeric")
@@ -203,7 +215,10 @@ test_that("A complete x-list is structurally correct", {
   expect_is(x_list_before$i, "integer")
   expect_equal(x_list_before$i, 1:3)
   expect_is(x_list_before$type, "character")
-  expect_equal(x_list_before$type, c("col_vals_gt", "col_vals_lt", "col_vals_in_set"))
+  expect_equal(
+    x_list_before$type,
+    c("col_vals_gt", "col_vals_lt", "col_vals_in_set")
+  )
   expect_is(x_list_before$columns, "list")
   expect_equal(length(x_list_before$columns), 3)
   expect_equal(x_list_before$columns %>% unlist(), c("g", "c", "f"))
@@ -212,7 +227,10 @@ test_that("A complete x-list is structurally correct", {
   expect_equal(unlist(x_list_before$values[1]), 100)
   expect_is(unlist(x_list_before$values[2]), "list")
   expect_is(unlist(x_list_before$values[2])[[1]], "quosure")
-  expect_equal(unlist(x_list_before$values[3]), c("low", "mid", "high", "higher"))
+  expect_equal(
+    unlist(x_list_before$values[3]),
+    c("low", "mid", "high", "higher")
+  )
   expect_is(x_list_before$label, "character")
   expect_is(x_list_before$briefs, "character")
   expect_equal(
@@ -300,7 +318,10 @@ test_that("A complete x-list is structurally correct", {
   expect_is(x_list_after$i, "integer")
   expect_equal(x_list_after$i, 1:3)
   expect_is(x_list_after$type, "character")
-  expect_equal(x_list_after$type, c("col_vals_gt", "col_vals_lt", "col_vals_in_set"))
+  expect_equal(
+    x_list_after$type,
+    c("col_vals_gt", "col_vals_lt", "col_vals_in_set")
+  )
   expect_is(x_list_after$columns, "list")
   expect_equal(length(x_list_after$columns), 3)
   expect_equal(x_list_after$columns %>% unlist(), c("g", "c", "f"))
@@ -309,7 +330,10 @@ test_that("A complete x-list is structurally correct", {
   expect_equal(unlist(x_list_after$values[1]), 100)
   expect_is(unlist(x_list_after$values[2]), "list")
   expect_is(unlist(x_list_after$values[2])[[1]], "quosure")
-  expect_equal(unlist(x_list_after$values[3]), c("low", "mid", "high", "higher"))
+  expect_equal(
+    unlist(x_list_after$values[3]),
+    c("low", "mid", "high", "higher")
+  )
   expect_is(x_list_after$label, "character")
   expect_is(x_list_after$briefs, "character")
   expect_equal(

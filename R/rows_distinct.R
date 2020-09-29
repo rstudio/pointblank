@@ -100,9 +100,6 @@ rows_distinct <- function(x,
                           brief = NULL,
                           active = TRUE) {
 
-  # Capture the `columns` expression
-  #columns <- rlang::enquo(columns)
-  
   # Normalize the `columns` expression
   if (inherits(columns, "quosures")) {
     
@@ -122,7 +119,8 @@ rows_distinct <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x, label = "::QUIET::") %>%
+    secret_agent <- 
+      create_agent(x, label = "::QUIET::") %>%
       rows_distinct(
         columns = columns,
         preconditions = preconditions,
@@ -130,7 +128,8 @@ rows_distinct <- function(x,
         brief = brief,
         actions = prime_actions(actions),
         active = active
-      ) %>% interrogate()
+      ) %>%
+      interrogate()
     
     return(x)
   }
@@ -223,7 +222,11 @@ expect_rows_distinct <- function(object,
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue(failure_message_gluestring(fn_name = fn_name, lang = "en"))
+    failure_message = glue::glue(
+      failure_message_gluestring(
+        fn_name = fn_name, lang = "en"
+      )
+    )
   )
   
   act$val <- object

@@ -5,7 +5,8 @@ test_that("The `action_levels()` helper function works as expected", {
   al <- action_levels()
   
   al %>% expect_is("list")
-  al %>% names() %>% 
+  al %>% 
+    names() %>% 
     expect_equal(
       c(
         "warn_fraction", "warn_count", "stop_fraction", "stop_count", 
@@ -55,7 +56,8 @@ test_that("The `action_levels()` helper function works as expected", {
   al <- action_levels(warn_at = 20, stop_at = 80, notify_at = 34.6)
   
   al %>% expect_is("list")
-  al %>% names() %>% 
+  al %>%
+    names() %>% 
     expect_equal(
       c(
         "warn_fraction", "warn_count", "stop_fraction", "stop_count", 
@@ -92,7 +94,8 @@ test_that("The `action_levels()` helper function works as expected", {
     )
   
   al %>% expect_is("list")
-  al %>% names() %>% 
+  al %>% 
+    names() %>% 
     expect_equal(
       c(
         "warn_fraction", "warn_count", "stop_fraction", "stop_count", 
@@ -100,7 +103,8 @@ test_that("The `action_levels()` helper function works as expected", {
     )
   al[[7]] %>% names() %>% expect_equal("warn")
   al[[7]][[1]] %>% expect_is("formula")
-  al[[7]][[1]] %>% as.character() %>%
+  al[[7]][[1]] %>%
+    as.character() %>%
     expect_equal(c("~", "my_great_function(vl = .vars_list)"))
   
   al$warn_fraction %>% expect_null()

@@ -858,7 +858,7 @@ get_agent_report <- function(agent,
   # Reformat W, S, and N
   #
   
-  W_upd <- 
+  w_upd <- 
     validation_set$warn %>%
     vapply(
       FUN.VALUE = character(1),
@@ -875,7 +875,7 @@ get_agent_report <- function(agent,
       }
     )
   
-  S_upd <- 
+  s_upd <- 
     validation_set$stop %>%
     vapply(
       FUN.VALUE = character(1),
@@ -892,7 +892,7 @@ get_agent_report <- function(agent,
       }
     )
   
-  N_upd <- 
+  n_upd <- 
     validation_set$notify %>%
     vapply(
       FUN.VALUE = character(1),
@@ -937,9 +937,9 @@ get_agent_report <- function(agent,
       W_val = W,
       S_val = S,
       N_val = N,
-      W = W_upd,
-      S = S_upd,
-      N = N_upd,
+      W = w_upd,
+      S = s_upd,
+      N = n_upd,
       extract = extract_upd
     ) %>%
     dplyr::select(

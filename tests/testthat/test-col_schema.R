@@ -8,27 +8,36 @@ tbl <-
 test_that("`col_schema_match()` works properly", {
   
   # Incorrect schema (column `d` doesn't exist)
-  schema_obj_i_1 <- col_schema(a = "integer", b = "character", d = "numeric")
+  schema_obj_i_1 <- 
+    col_schema(a = "integer", b = "character", d = "numeric")
   
   # Incorrect schema (class in column `c` doesn't match)
-  schema_obj_i_2 <- col_schema(a = "integer", b = "character", c = "character")
+  schema_obj_i_2 <- 
+    col_schema(a = "integer", b = "character", c = "character")
   
   # Incorrect schema (too many columns in column `c` doesn't match)
-  schema_obj_i_3 <- col_schema(a = "integer", b = "character", c = "numeric", d = "numeric")
+  schema_obj_i_3 <- 
+    col_schema(a = "integer", b = "character", c = "numeric", d = "numeric")
   
   # Schema with correct classes, complete columns, in order
-  schema_obj_1_1 <- col_schema(a = "integer", b = "character", c = "numeric")
+  schema_obj_1_1 <- 
+    col_schema(a = "integer", b = "character", c = "numeric")
   
   # Schema with incorrect classes, complete columns, in order
-  schema_obj_1_1_i <- col_schema(a = "integer_i", b = "character_i", c = "numeric_i")
+  schema_obj_1_1_i <- 
+    col_schema(a = "integer_i", b = "character_i", c = "numeric_i")
   
   # Schemas with correct classes, complete columns, out of order
-  schema_obj_2_1 <- col_schema(b = "character", c = "numeric", a = "integer")
-  schema_obj_2_2 <- col_schema(c = "numeric", a = "integer", b = "character")
+  schema_obj_2_1 <- 
+    col_schema(b = "character", c = "numeric", a = "integer")
+  schema_obj_2_2 <- 
+    col_schema(c = "numeric", a = "integer", b = "character")
   
   # Schemas with incorrect classes, complete columns, out of order
-  schema_obj_2_1_i <- col_schema(b = "character_i", c = "numeric_i", a = "integer_i")
-  schema_obj_2_2_i <- col_schema(c = "numeric_i", a = "integer_i", b = "character_i")
+  schema_obj_2_1_i <- 
+    col_schema(b = "character_i", c = "numeric_i", a = "integer_i")
+  schema_obj_2_2_i <- 
+    col_schema(c = "numeric_i", a = "integer_i", b = "character_i")
   
   # Schemas with correct classes, incomplete columns, in order
   schema_obj_3_1 <- col_schema(b = "character", c = "numeric")

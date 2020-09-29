@@ -39,7 +39,9 @@ safely_transformer <- function(otherwise = NA) {
   }
 }
 
-glue_safely <- function(..., .otherwise = NA, .envir = parent.frame()) {
+glue_safely <- function(...,
+                        .otherwise = NA,
+                        .envir = parent.frame()) {
   as.character(
     glue::glue(
       ...,
@@ -71,7 +73,11 @@ get_assertion_type_at_idx <- function(agent, idx) {
 }
 
 get_column_as_sym_at_idx <- function(agent, idx) {
-  rlang::sym(agent$validation_set[[idx, "column"]] %>% unlist() %>% gsub("'", "", .))
+  rlang::sym(
+    agent$validation_set[[idx, "column"]] %>%
+      unlist() %>%
+      gsub("'", "", .)
+  )
 }
 
 get_values_at_idx <- function(agent, idx) {
@@ -102,7 +108,8 @@ resolve_expr_to_cols <- function(tbl, var_expr) {
 resolve_columns <- function(x, var_expr, preconditions) {
   
   # Return an empty character vector if the expr is NULL
-  if (inherits(var_expr, "quosure") && var_expr %>% rlang::as_label() == "NULL") {
+  if (inherits(var_expr, "quosure") &&
+      var_expr %>% rlang::as_label() == "NULL") {
     return(character(0))
   } 
   
@@ -200,7 +207,8 @@ normalize_step_id <- function(step_id, columns, agent) {
 
       # Issue warning about length of `step_id`
       warning(
-        "The number of `step_id` values is neither `1` nor the number of `columns`:\n",
+        "The number of `step_id` values is neither `1` nor the ",
+        "number of `columns`:\n",
         "* Only the first `step_id` element will be used.",
         call. = FALSE
       )
@@ -220,7 +228,8 @@ check_step_id_duplicates <- function(step_id, agent) {
     a_duplicate_step_id <- step_id[step_id %in% agent$validation_set$step_id][1]
     
     stop(
-      "Just after step index `", error_at_index, "`, the following `step_id` has been ",
+      "Just after step index `", error_at_index,
+      "`, the following `step_id` has been ",
       "seen as used in a previous validation step:\n",
       " * \"", a_duplicate_step_id, "\"",
       call. = FALSE
@@ -371,7 +380,7 @@ get_tbl_information_dbi <- function(tbl) {
   
   if (tbl_src == "postgres") {
     
-    db_tbl_name_no_schema <- gsub('.*\\.', '', db_tbl_name)
+    db_tbl_name_no_schema <- gsub(".*\\.", "", db_tbl_name)
     
     q_types <- 
       glue::glue(
@@ -537,7 +546,8 @@ add_icon_svg <- function(icon,
         tidy_gsub("width=\"[0-9]*?px", paste0("width=\"", height, "px")) %>%
         tidy_gsub("height=\"[0-9]*?px", paste0("height=\"", height, "px"))
     )
-  ) %>% as.character()
+  ) %>%
+    as.character()
 }
 
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
@@ -583,7 +593,8 @@ pb_str_catalog <- function(item_vector,
     }
     
     if (n_overlimit == "") {
-      separators[length(separators)] <- paste0(separators[length(separators)], conj, " ")
+      separators[length(separators)] <- 
+        paste0(separators[length(separators)], conj, " ")
     }
     
     separators[length(separators) + 1] <- ""

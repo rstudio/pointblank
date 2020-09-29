@@ -5,11 +5,11 @@ library(intendo)
 
 # Set an environment variable for the location of
 # Java 8 JDK; this library was obtained by using
-# `brew cask install homebrew/cask-versions/adoptopenjdk8`
-Sys.setenv(JAVA_HOME="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home")
-
-# Install Spark if necessary
-# spark_install(version = "2.4.3", hadoop_version = "2.7")
+# brew cask install homebrew/cask-versions/adoptopenjdk8
+Sys.setenv(
+  JAVA_HOME = 
+    "/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home"
+)
 
 # Generate a Spark table with `intendo::intendo_revenue`
 sc <- spark_connect(master = "local")

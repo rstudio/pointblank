@@ -54,6 +54,7 @@ db_tbl <- function(db,
     
     db <- tolower(db)
     
+    # nolint start
     driver_function <- 
       switch(
         db,
@@ -67,6 +68,7 @@ db_tbl <- function(db,
         sqlite = RSQLite_driver(),
         unknown_driver()
       )
+    # nolint end
     
   } else {
     driver_function <- db
@@ -117,6 +119,7 @@ db_tbl <- function(db,
   dplyr::tbl(src = connection, table_stmt)
 }
 
+# nolint start
 
 RPostgres_driver <- function() {
   
@@ -172,6 +175,8 @@ RSQLite_driver <- function() {
   
   RSQLite::SQLite()
 }
+
+# nolint end
 
 unknown_driver <- function() {
     stop("The supplied value for `db` doesn't correspond to database type:\n",

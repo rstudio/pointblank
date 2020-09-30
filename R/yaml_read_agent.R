@@ -441,6 +441,8 @@ make_validation_steps <- function(steps) {
   
   if (length(steps) == 0) return("")
   
+  # nolint start
+  
   str_exprs <- 
     lapply(
       seq_along(steps),
@@ -553,6 +555,8 @@ make_validation_steps <- function(steps) {
     unlist() %>%
     paste(collapse = " ") %>%
     paste0(., " ")
+  
+  # nolint end
   
   gsub(
     "rows_distinct(\n  columns = NULL\n)", "rows_distinct()",

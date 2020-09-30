@@ -115,7 +115,10 @@ interrogate <- function(agent,
   validation_steps <- unique(agent$validation_set$i)
   
   # Add start of interrogation console status
-  create_cli_header(validation_steps, quiet)
+  create_cli_header(
+    validation_steps = validation_steps,
+    quiet = quiet
+  )
   
   for (i in validation_steps) {
 
@@ -131,18 +134,24 @@ interrogate <- function(agent,
     validation_start_time <- Sys.time()
     
     # Get the table object for interrogation 
-    table <- get_tbl_object(agent)
+    table <- get_tbl_object(agent = agent)
     
     # Use preconditions to modify the table
-    table <- apply_preconditions_to_tbl(agent, idx = i, tbl = table)
+    table <- apply_preconditions_to_tbl(agent = agent, idx = i, tbl = table)
 
     # Get the assertion type for this verification step
-    assertion_type <- get_assertion_type_at_idx(agent, idx = i)
+    assertion_type <- get_assertion_type_at_idx(agent = agent, idx = i)
 
     if (assertion_type != "conjointly") {
 
       # Perform table checking based on assertion type
-      tbl_checked <- check_table_with_assertion(agent, idx = i, table, assertion_type)
+      tbl_checked <- 
+        check_table_with_assertion(
+          agent = agent,
+          idx = i,
+          table = table,
+          assertion_type = assertion_type
+        )
       
     } else if (assertion_type == "conjointly") {
       
@@ -198,7 +207,11 @@ interrogate <- function(agent,
       for (j in seq(nrow(double_agent$validation_set))) {
         
         # Get the assertion type for this verification step
-        assertion_type <- get_assertion_type_at_idx(agent = double_agent, idx = j)
+        assertion_type <- 
+          get_assertion_type_at_idx(
+            agent = double_agent,
+            idx = j
+          )
         
         new_col <- paste0("pb_is_good_", j)
 
@@ -257,18 +270,25 @@ interrogate <- function(agent,
       tbl_checked <-
         pointblank_try_catch(
           tbl_val_conjointly(
-            columns_str_add, columns_str_vec, validation_n
+            columns_str_add = columns_str_add,
+            columns_str_vec = columns_str_vec,
+            validation_n = validation_n
           )
         )
     }
 
     # Add in the necessary reporting data for the validation
-    agent <- add_reporting_data(agent, idx = i, tbl_checked = tbl_checked)
+    agent <- 
+      add_reporting_data(
+        agent = agent,
+        idx = i,
+        tbl_checked = tbl_checked
+      )
     
     # Perform any necessary actions if threshold levels are exceeded
-    perform_action(agent, idx = i, type = "warn")
-    perform_action(agent, idx = i, type = "notify")
-    perform_action(agent, idx = i, type = "stop")
+    perform_action(agent = agent, idx = i, type = "warn")
+    perform_action(agent = agent, idx = i, type = "notify")
+    perform_action(agent = agent, idx = i, type = "stop")
 
     # Add extracts of failed rows if validation function operates on
     # values in rows and `extract_failed` is TRUE
@@ -291,13 +311,22 @@ interrogate <- function(agent,
     validation_end_time <- Sys.time()
     
     # Get the time duration for the validation step (in seconds)    
-    time_diff_s <- get_time_duration(validation_start_time, validation_end_time)
+    time_diff_s <- 
+      get_time_duration(
+        start_time = validation_start_time,
+        end_time = validation_end_time
+      )
 
     # Add the timing information to the `agent` object
     agent$validation_set$time_processed[i] <- validation_start_time
     agent$validation_set$proc_duration_s[i] <- time_diff_s
     
-    create_post_step_cli_output(agent, i, time_diff_s, quiet)
+    create_post_step_cli_output(
+      agent = agent,
+      i = i,
+      time_diff_s = time_diff_s,
+      quiet = quiet
+    )
   }
   
   class(agent) <- c("has_intel", "ptblank_agent")
@@ -307,8 +336,8 @@ interrogate <- function(agent,
   # Generate gt-based reporting objects
   if (agent$embed_report) {
     
-    gt_agent_report <- get_agent_report(agent)
-    gt_agent_report_email <- get_agent_report(agent, size = "small")
+    gt_agent_report <- get_agent_report(agent = agent)
+    gt_agent_report_email <- get_agent_report(agent = agent, size = "small")
     
     agent$reporting <-
       list(
@@ -339,14 +368,13 @@ get_time_duration <- function(start_time,
                               round = 4) {
   
   round(
-    as.numeric(
-      difftime(end_time, start_time, units = units)
-    ),
+    as.numeric(difftime(time1 = end_time, time2 = start_time, units = units)),
     digits = round
   )
 }
 
-create_cli_header <- function(validation_steps, quiet) {
+create_cli_header <- function(validation_steps,
+                              quiet) {
   
   if (quiet) return()
   
@@ -374,7 +402,10 @@ create_cli_footer <- function(quiet) {
   cli::cli_h1(interrogation_progress_footer)
 }
 
-create_post_step_cli_output <- function(agent, i, time_diff_s, quiet) {
+create_post_step_cli_output <- function(agent,
+                                        i,
+                                        time_diff_s,
+                                        quiet) {
   
   if (quiet) return()
   
@@ -465,14 +496,16 @@ create_post_step_cli_output <- function(agent, i, time_diff_s, quiet) {
     if (validation_condition == "STOP") {
       cli::cli_alert_danger(
         c(
-          "Step {.field {i}}: {.red STOP} and {.blue NOTIFY} conditions met.",
+          "Step {.field {i}}: {.red STOP} and ",
+          "{.blue NOTIFY} conditions met.",
           print_time(time_diff_s)
         )
       )
     } else {
       cli::cli_alert_warning(
         c(
-          "Step {.field {i}}: {.yellow WARNING} and {.blue NOTIFY} conditions met.",
+          "Step {.field {i}}: {.yellow WARNING} and ",
+          "{.blue NOTIFY} conditions met.",
           print_time(time_diff_s)
         )
       )
@@ -490,7 +523,10 @@ create_post_step_cli_output <- function(agent, i, time_diff_s, quiet) {
 
 # nocov end
 
-check_table_with_assertion <- function(agent, idx, table, assertion_type) {
+check_table_with_assertion <- function(agent,
+                                       idx,
+                                       table,
+                                       assertion_type) {
   
   # nolint start
   
@@ -501,31 +537,82 @@ check_table_with_assertion <- function(agent, idx, table, assertion_type) {
       "col_vals_lt" =,
       "col_vals_lte" =,
       "col_vals_equal" =,
-      "col_vals_not_equal" = interrogate_comparison(agent, idx, table, assertion_type),
+      "col_vals_not_equal" = interrogate_comparison(
+        agent = agent,
+        idx = idx,
+        table = table,
+        assertion_type = assertion_type
+      ),
       "col_vals_between" =,
-      "col_vals_not_between" = interrogate_between(agent, idx, table, assertion_type),
+      "col_vals_not_between" = interrogate_between(
+        agent = agent,
+        idx = idx,
+        table = table,
+        assertion_type = assertion_type
+      ),
       "col_vals_in_set" =,
-      "col_vals_not_in_set" = interrogate_set(agent, idx, table, assertion_type),
-      "col_vals_null" = interrogate_null(agent, idx, table),
-      "col_vals_not_null" = interrogate_not_null(agent, idx, table),
-      "col_vals_regex" = interrogate_regex(agent, idx, table),
-      "col_vals_expr" = interrogate_expr(agent, idx, table),
-      "col_exists" = interrogate_col_exists(agent, idx, table),
+      "col_vals_not_in_set" = interrogate_set(
+        agent = agent,
+        idx = idx,
+        table = table,
+        assertion_type = assertion_type
+      ),
+      "col_vals_null" = interrogate_null(
+        agent = agent,
+        idx = idx,
+        table = table
+      ),
+      "col_vals_not_null" = interrogate_not_null(
+        agent = agent,
+        idx = idx,
+        table = table
+      ),
+      "col_vals_regex" = interrogate_regex(
+        agent = agent,
+        idx = idx,
+        table = table
+      ),
+      "col_vals_expr" = interrogate_expr(
+        agent = agent,
+        idx = idx,
+        table = table
+      ),
+      "col_exists" = interrogate_col_exists(
+        agent = agent,
+        idx = idx,
+        table = table
+      ),
       "col_is_numeric" =,
       "col_is_integer" =,
       "col_is_character" =,
       "col_is_logical" =,
       "col_is_posix" =,
       "col_is_date" =,
-      "col_is_factor" = interrogate_col_type(agent, idx, table, assertion_type),
-      "rows_distinct" = interrogate_distinct(agent, idx, table),
-      "col_schema_match" = interrogate_col_schema_match(agent, idx, table)
+      "col_is_factor" = interrogate_col_type(
+        agent = agent,
+        idx = idx,
+        table = table,
+        assertion_type = assertion_type
+      ),
+      "rows_distinct" = interrogate_distinct(
+        agent = agent,
+        idx = idx,
+        table = table
+      ),
+      "col_schema_match" = interrogate_col_schema_match(
+        agent = agent,
+        idx = idx,
+        table = table
+      )
     )
   
   # nolint end
 }
 
-interrogate_comparison <- function(agent, idx, table, assertion_type) {
+interrogate_comparison <- function(agent,
+                                   idx,
+                                   table,
+                                   assertion_type) {
 
   # Get operator values for all assertion types involving
   # simple operator comparisons
@@ -562,7 +649,13 @@ interrogate_comparison <- function(agent, idx, table, assertion_type) {
   
   # Perform rowwise validations for the column
   pointblank_try_catch(
-    tbl_val_comparison(table, column, operator, value, na_pass)
+    tbl_val_comparison(
+      table = table,
+      column = column,
+      operator = operator,
+      value = value,
+      na_pass = na_pass
+    )
   )
 }
 
@@ -574,7 +667,9 @@ tbl_val_comparison <- function(table,
                                na_pass) {
 
   column_validity_checks_column_value(
-    table = table, column = {{ column }}, value = {{ value }}
+    table = table,
+    column = {{ column }},
+    value = {{ value }}
   )
   
   # Construct a string-based expression for the validation
@@ -629,7 +724,10 @@ interrogate_between <- function(agent,
   }
 
   incl_str <- 
-    paste(ifelse(names(set) %>% as.logical(), "incl", "excl"), collapse = "_")
+    paste(
+      ifelse(names(set) %>% as.logical(), "incl", "excl"),
+      collapse = "_"
+    )
 
   if (assertion_type == "col_vals_between") {
     
@@ -640,22 +738,42 @@ interrogate_between <- function(agent,
         "incl_incl" = 
           pointblank_try_catch(
             tbl_val_ib_incl_incl(
-              table, {{ column }}, {{ left }}, {{ right }}, na_pass)
+              table = table,
+              column = {{ column }},
+              left = {{ left }},
+              right = {{ right }},
+              na_pass = na_pass
+            )
           ),
         "excl_incl" = 
           pointblank_try_catch(
             tbl_val_ib_excl_incl(
-              table, {{ column }}, {{ left }}, {{ right }}, na_pass)
+              table = table,
+              column = {{ column }},
+              left = {{ left }},
+              right = {{ right }},
+              na_pass = na_pass
+            )
           ),
         "incl_excl" = 
           pointblank_try_catch(
             tbl_val_ib_incl_excl(
-              table, {{ column }}, {{ left }}, {{ right }}, na_pass)
+              table = table,
+              column = {{ column }},
+              left = {{ left }},
+              right = {{ right }},
+              na_pass = na_pass
+            )
           ),
         "excl_excl" = 
           pointblank_try_catch(
             tbl_val_ib_excl_excl(
-              table, {{ column }}, {{ left }}, {{ right }}, na_pass)
+              table = table,
+              column = {{ column }},
+              left = {{ left }},
+              right = {{ right }},
+              na_pass = na_pass
+            )
           )
       )
   }
@@ -669,25 +787,41 @@ interrogate_between <- function(agent,
         "incl_incl" = 
           pointblank_try_catch(
             tbl_val_nb_incl_incl(
-              table, {{ column }}, {{ left }}, {{ right }}, na_pass
+              table = table,
+              column = {{ column }},
+              left = {{ left }},
+              right = {{ right }},
+              na_pass = na_pass
             )
           ),
         "excl_incl" = 
           pointblank_try_catch(
             tbl_val_nb_excl_incl(
-              table, {{ column }}, {{ left }}, {{ right }}, na_pass
+              table = table,
+              column = {{ column }},
+              left = {{ left }},
+              right = {{ right }},
+              na_pass = na_pass
             )
           ),
         "incl_excl" = 
           pointblank_try_catch(
             tbl_val_nb_incl_excl(
-              table, {{ column }}, {{ left }}, {{ right }}, na_pass
+              table = table,
+              column = {{ column }},
+              left = {{ left }},
+              right = {{ right }},
+              na_pass = na_pass
             )
           ),
         "excl_excl" = 
           pointblank_try_catch(
             tbl_val_nb_excl_excl(
-              table, {{ column }}, {{ left }}, {{ right }}, na_pass
+              table = table,
+              column = {{ column }},
+              left = {{ left }},
+              right = {{ right }},
+              na_pass = na_pass
             )
           )
       )
@@ -702,7 +836,10 @@ tbl_val_ib_incl_incl <- function(table,
                                  na_pass) {
   
   column_validity_checks_ib_nb(
-    table = table, column = {{ column }}, left = {{ left }}, right = {{ right }}
+    table = table,
+    column = {{ column }},
+    left = {{ left }},
+    right = {{ right }}
   )
   
   table %>%
@@ -720,7 +857,10 @@ tbl_val_ib_excl_incl <- function(table,
                                  na_pass) {
   
   column_validity_checks_ib_nb(
-    table = table, column = {{ column }}, left = {{ left }}, right = {{ right }}
+    table = table,
+    column = {{ column }},
+    left = {{ left }},
+    right = {{ right }}
   )
   
   table %>%
@@ -738,7 +878,10 @@ tbl_val_ib_incl_excl <- function(table,
                                  na_pass) {
   
   column_validity_checks_ib_nb(
-    table = table, column = {{ column }}, left = {{ left }}, right = {{ right }}
+    table = table,
+    column = {{ column }},
+    left = {{ left }},
+    right = {{ right }}
   )
   
   table %>%
@@ -756,7 +899,10 @@ tbl_val_ib_excl_excl <- function(table,
                                  na_pass) {
   
   column_validity_checks_ib_nb(
-    table = table, column = {{ column }}, left = {{ left }}, right = {{ right }}
+    table = table,
+    column = {{ column }},
+    left = {{ left }},
+    right = {{ right }}
   )
   
   table %>%
@@ -774,7 +920,10 @@ tbl_val_nb_incl_incl <- function(table,
                                  na_pass) {
   
   column_validity_checks_ib_nb(
-    table = table, column = {{ column }}, left = {{ left }}, right = {{ right }}
+    table = table,
+    column = {{ column }},
+    left = {{ left }},
+    right = {{ right }}
   )
   
   table %>%
@@ -792,7 +941,10 @@ tbl_val_nb_excl_incl <- function(table,
                                  na_pass) {
   
   column_validity_checks_ib_nb(
-    table = table, column = {{ column }}, left = {{ left }}, right = {{ right }}
+    table = table,
+    column = {{ column }},
+    left = {{ left }},
+    right = {{ right }}
   )
   
   table %>%
@@ -810,7 +962,10 @@ tbl_val_nb_incl_excl <- function(table,
                                  na_pass) {
   
   column_validity_checks_ib_nb(
-    table = table, column = {{ column }}, left = {{ left }}, right = {{ right }}
+    table = table,
+    column = {{ column }},
+    left = {{ left }},
+    right = {{ right }}
   )
   
   table %>%
@@ -828,7 +983,10 @@ tbl_val_nb_excl_excl <- function(table,
                                  na_pass) {
   
   column_validity_checks_ib_nb(
-    table = table, column = {{ column }}, left = {{ left }}, right = {{ right }}
+    table = table,
+    column = {{ column }},
+    left = {{ left }},
+    right = {{ right }}
   )
   
   table %>%
@@ -876,7 +1034,13 @@ interrogate_set <- function(agent,
     
     # Perform rowwise validations for the column
     tbl_evaled <- 
-      pointblank_try_catch(tbl_val_in_set(table, {{ column }}, na_pass))
+      pointblank_try_catch(
+        tbl_val_in_set(
+          table = table,
+          column = {{ column }},
+          na_pass = na_pass
+        )
+      )
   }
   
   if (assertion_type == "col_vals_not_in_set") {
@@ -901,7 +1065,13 @@ interrogate_set <- function(agent,
   
     # Perform rowwise validations for the column
     tbl_evaled <- 
-      pointblank_try_catch(tbl_val_not_in_set(table, {{ column }}, na_pass))
+      pointblank_try_catch(
+        tbl_val_not_in_set(
+          table = table,
+          column = {{ column }},
+          na_pass = na_pass
+        )
+      )
   }
   
   tbl_evaled
@@ -931,13 +1101,14 @@ interrogate_regex <- function(agent,
     
     column_validity_checks_column(table = table, column = {{ column }})
     
-    if (tbl_type == "sqlite") { 
+    if (tbl_type == "sqlite") {
+      
       stop("Regex-based validations are currently not supported on SQLite ",
            "database tables",
            call. = FALSE)
     }
     
-    if (tbl_type == "tbl_spark") { 
+    if (tbl_type == "tbl_spark") {
       
       tbl <- 
         table %>%
@@ -981,7 +1152,13 @@ interrogate_regex <- function(agent,
   
   # Perform rowwise validations for the column
   pointblank_try_catch(
-    tbl_val_regex(table, tbl_type, {{ column }}, regex, na_pass)
+    tbl_val_regex(
+      table = table,
+      tbl_type = tbl_type,
+      column = {{ column }},
+      regex = regex,
+      na_pass = na_pass
+    )
   )
 }
 
@@ -1004,7 +1181,7 @@ interrogate_expr <- function(agent,
   }
   
   # Perform rowwise validations for the column
-  pointblank_try_catch(tbl_val_expr(table, expr))
+  pointblank_try_catch(tbl_val_expr(table = table, expr = expr))
 }
 
 interrogate_null <- function(agent,
@@ -1024,7 +1201,7 @@ interrogate_null <- function(agent,
   }
   
   # Perform rowwise validations for the column
-  pointblank_try_catch(tbl_val_null(table, {{ column }}))
+  pointblank_try_catch(tbl_val_null(table = table, column = {{ column }}))
 }
 
 interrogate_not_null <- function(agent,
@@ -1044,7 +1221,7 @@ interrogate_not_null <- function(agent,
   }
   
   # Perform rowwise validations for the column
-  pointblank_try_catch(tbl_val_not_null(table, {{ column }}))
+  pointblank_try_catch(tbl_val_not_null(table = table, column = {{ column }}))
 }
 
 interrogate_col_exists <- function(agent,
@@ -1066,7 +1243,13 @@ interrogate_col_exists <- function(agent,
   }
   
   # Perform the validation of the column
-  pointblank_try_catch(tbl_col_exists(table, {{ column }}, column_names))
+  pointblank_try_catch(
+    tbl_col_exists(
+      table = table,
+      column = {{ column }},
+      column_names = column_names
+    )
+  )
 }
 
 interrogate_col_type <- function(agent,
@@ -1109,7 +1292,13 @@ interrogate_col_type <- function(agent,
   }
   
   # Perform the validation of the column
-  pointblank_try_catch(tbl_col_is(table, {{ column }}, assertion_type))
+  pointblank_try_catch(
+    tbl_col_is(
+      table = table,
+      column = {{ column }},
+      assertion_type = assertion_type
+    )
+  )
 }
 
 interrogate_distinct <- function(agent,
@@ -1171,11 +1360,19 @@ interrogate_distinct <- function(agent,
   # Perform the validation of the table
   if (agent$tbl_src == "mysql") {
     pointblank_try_catch(
-      tbl_rows_distinct_mysql(table, {{ column_names }}, col_syms)
+      tbl_rows_distinct_mysql(
+        table = table,
+        column_names = {{ column_names }},
+        col_syms = col_syms
+      )
     )
   } else {
     pointblank_try_catch(
-      tbl_rows_distinct(table, {{ column_names }}, col_syms)
+      tbl_rows_distinct(
+        table = table,
+        column_names = {{ column_names }},
+        col_syms = col_syms
+      )
     )
   }
 }
@@ -1361,8 +1558,7 @@ pointblank_try_catch <- function(expr) {
         invokeRestart("muffleWarning")
       })
   
-  eval_list <- 
-    list(value = value, warning = warn, error = err)
+  eval_list <- list(value = value, warning = warn, error = err)
 
   class(eval_list) <- "table_eval"
   eval_list
@@ -1451,7 +1647,7 @@ add_reporting_data <- function(agent,
     agent$validation_set$all_passed[idx] <- TRUE
   }
     
-  determine_action(agent, idx, false_count = n_failed)
+  determine_action(agent = agent, idx = idx, false_count = n_failed)
 }
 
 perform_action <- function(agent,
@@ -1638,7 +1834,7 @@ perform_end_action <- function(agent) {
       report_html_small = .report_html_small
     )
 
-  lapply(actions, function(y) {
+  lapply(actions, FUN = function(y) {
     y %>% rlang::f_rhs() %>% rlang::eval_tidy()
   })
   

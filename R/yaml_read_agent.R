@@ -457,6 +457,7 @@ make_validation_steps <- function(steps) {
               
               arg_name <- names(step_i[[1]][x])
               val <- step_i[[1]][[x]]
+              others <- c("preconditions", "expr", "schema")
               
               if (arg_name == "fns") {
                 return(paste("  ", val, collapse = ",\n"))
@@ -523,7 +524,7 @@ make_validation_steps <- function(steps) {
               } else if (!is.null(val[1]) &&
                          is.character(val[1]) &&
                          !grepl("^vars\\(.*?\\)$", val[1]) &&
-                         !(arg_name %in% c("preconditions", "expr", "schema"))) {
+                         !(arg_name %in% others)) {
                 
                 val <- paste0("\"", val, "\"")
               }

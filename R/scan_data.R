@@ -738,7 +738,11 @@ get_common_values_gt <- function(data_column,
           dplyr::rename(value = 1) %>%
           dplyr::mutate(value = as.character(value)),
         dplyr::tibble(
-          value = paste0("**", get_lsv("table_scan/other_values_text")[[lang]], "** (", other_values_distinct , ")"),
+          value = paste0(
+            "**",
+            get_lsv("table_scan/other_values_text")[[lang]],
+            "** (", other_values_distinct, ")"
+          ),
           n = other_values_n,
           frequency = other_values_n / n_rows
         )
@@ -1198,8 +1202,7 @@ probe_columns_other <- function(data,
 probe_interactions <- function(data) {
   
   category_cutoff <- 5
-  #max_dim <- 8
-  
+
   tbl_info <- get_tbl_information(tbl = data)
   col_names <- tbl_info$col_names
   col_types <- tbl_info$r_col_types

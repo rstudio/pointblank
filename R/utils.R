@@ -32,10 +32,12 @@ generate_label <- function(label = NULL) {
 
 safely_transformer <- function(otherwise = NA) {
   
+  oth <- otherwise
+  
   function(text, envir) {
     tryCatch(
       eval(parse(text = text, keep.source = FALSE), envir),
-      error = function(e) if (is.language(otherwise)) eval(otherwise) else otherwise)
+      error = function(e) if (is.language(oth)) eval(oth) else oth)
   }
 }
 
@@ -378,24 +380,47 @@ get_tbl_information_dbi <- function(tbl) {
   
   n_cols <- length(r_column_names_types$col_names)
   
+  # nolint start
+  
   if (tbl_src == "postgres") {
     
     db_tbl_name_no_schema <- gsub(".*\\.", "", db_tbl_name)
     
-    q_types <- 
-      glue::glue(
-        "select column_name,data_type from information_schema.columns where table_name = '{db_tbl_name_no_schema}'"
+    q_types <-
+      as.character(
+        glue::glue(
+          "select column_name,data_type from \\
+        information_schema.columns where \\
+        table_name = '{db_tbl_name_no_schema}'"
+        )
       )
 
   } else {
-    
-    q_types <- 
-      ifelse(
-        tbl_src == "mssql",
-        glue::glue("SELECT TOP 9 {n_cols} DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}'"),
-        glue::glue("SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}' LIMIT {n_cols}")
-      )
+
+    if (tbl_src == "mssql") {
+      
+      q_types <-
+        as.character(
+          glue::glue(
+            "SELECT TOP 9 {n_cols} DATA_TYPE \\
+          FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}'"
+          )
+        )
+      
+    } else { 
+      
+      q_types <-
+        as.character(
+          glue::glue(
+            "SELECT DATA_TYPE FROM \\
+          INFORMATION_SCHEMA.COLUMNS WHERE \\
+          table_name = '{db_tbl_name}' LIMIT {n_cols}"
+          )
+        )
+    }
   }
+  
+  # nolint end
   
   if (tbl_src == "postgres") {
     
@@ -465,7 +490,8 @@ pb_fmt_number <- function(x,
   
   if (is.null(x)) return(NULL)
   
-  if (length(x) == 1 && (!inherits(x, "numeric") && !inherits(x, "integer"))) {
+  if (length(x) == 1 &&
+      (!inherits(x, "numeric") && !inherits(x, "integer"))) {
     return(x)
   } 
   
@@ -550,7 +576,11 @@ add_icon_svg <- function(icon,
     as.character()
 }
 
-tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
+tidy_gsub <- function(x,
+                      pattern,
+                      replacement,
+                      fixed = FALSE) {
+  
   gsub(pattern, replacement, x, fixed = fixed)
 }
 

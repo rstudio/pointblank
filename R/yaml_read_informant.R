@@ -378,7 +378,11 @@ check_info_yaml_columns <- function(y) {
           for (z in x_names) {
             
             if (is.list(y[["columns"]][[z]])) {
-              if (!all(unname(unlist(lapply(y[["columns"]][[z]], is.character))))) {
+              
+              components_are_char <-
+                unname(unlist(lapply(y[["columns"]][[z]], is.character)))
+              
+              if (!all(components_are_char)) {
                 stop("All components inside of `columns/", z,
                      "` should either be text or text under a single heading.",
                      call. = FALSE)

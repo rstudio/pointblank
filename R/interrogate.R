@@ -1492,6 +1492,8 @@ interrogate_col_schema_match <- function(agent,
   )
 }
 
+# nolint start
+
 # Validity checks for the column and value 
 column_validity_checks_column_value <- function(table,
                                                 column,
@@ -1508,6 +1510,8 @@ column_validity_checks_column_value <- function(table,
     }
   }
 }
+
+# nolint end
 
 # Validity check for the column
 column_validity_checks_column <- function(table,

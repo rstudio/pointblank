@@ -182,10 +182,10 @@ footer components of the HTML email message.</p></td>
 of length 1. If <code>TRUE</code> then the email will be sent, if <code>FALSE</code> then that
 won't happen. The expression can use x-list variables (e.g., <code>x$notify</code>,
 <code>x$type</code>, etc.) and all of those variables can be viewed using the
-<code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function. The default expression is <code>~TRUE %in% x$notify</code>,
-which results in <code>TRUE</code> if there are any <code>TRUE</code> values in the <code>x$notify</code>
-logical vector (i.e., any validation step results in a 'notify'
-condition).</p></td>
+<code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function. The default expression is
+<code>~TRUE %in% x$notify</code>, which results in <code>TRUE</code> if there are any <code>TRUE</code>
+values in the <code>x$notify</code> logical vector (i.e., any validation step results
+in a 'notify' condition).</p></td>
     </tr>
     </table>
 

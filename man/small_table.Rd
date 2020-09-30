@@ -13,7 +13,8 @@ randomized but all 'seconds' values are \code{00}.}
 \item{date}{A \code{Date} column with dates from \code{2016-01-04} to \code{2016-01-30}.}
 \item{a}{An \code{integer} column with values ranging from \code{1} to \code{8}.}
 \item{b}{A \code{character} column with values that adhere to a common pattern.}
-\item{c}{An \code{integer} column with values ranging from \code{2} to \code{9}. Contains two \code{NA} values.}
+\item{c}{An \code{integer} column with values ranging from \code{2} to \code{9}. Contains
+two \code{NA} values.}
 \item{d}{A numeric column with values ranging from \code{108} to \code{10000}.}
 \item{e}{A \code{logical} column.}
 \item{f}{A \code{character} column with \code{"low"}, \code{"mid"}, and \code{"high"} values.}

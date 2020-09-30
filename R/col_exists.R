@@ -141,14 +141,16 @@ col_exists <- function(x,
 
   if (is_a_table_object(x)) {
     
-    secret_agent <- create_agent(x, label = "::QUIET::") %>%
+    secret_agent <- 
+      create_agent(x, label = "::QUIET::") %>%
       col_exists(
         columns = columns,
         actions = prime_actions(actions),
         label = label,
         brief = brief,
         active = active
-      ) %>% interrogate()
+      ) %>% 
+      interrogate()
     
     return(x)
   }
@@ -156,7 +158,8 @@ col_exists <- function(x,
   agent <- x
 
   if (is.null(brief)) {
-    brief <- generate_autobriefs(agent, columns, preconditions, values, "col_exists")
+    brief <- 
+      generate_autobriefs(agent, columns, preconditions, values, "col_exists")
   }
   
   # Normalize any provided `step_id` value(s)
@@ -202,7 +205,8 @@ expect_col_exists <- function(object,
       columns = {{ columns }},
       actions = action_levels(notify_at = threshold)
     ) %>%
-    interrogate() %>% .$validation_set
+    interrogate() %>%
+    .$validation_set
   
   x <- vs$notify %>% all()
   
@@ -227,7 +231,9 @@ expect_col_exists <- function(object,
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue(failure_message_gluestring(fn_name = fn_name, lang = "en"))
+    failure_message = glue::glue(
+      failure_message_gluestring(fn_name = fn_name, lang = "en")
+    )
   )
   
   act$val <- object
@@ -248,7 +254,8 @@ test_col_exists <- function(object,
       columns = {{ columns }},
       actions = action_levels(notify_at = threshold)
     ) %>%
-    interrogate() %>% .$validation_set
+    interrogate() %>%
+    .$validation_set
 
   if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
     warning(conditionMessage(vs$capture_stack[[1]]$warning))

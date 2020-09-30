@@ -22,7 +22,12 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   # Expect the first entry of the `tbl_checked` column in the `validation_set`
   # tibble to itself be a tibble
   expect_s3_class(
-    agent %>% unclass() %>% .$validation_set %>% .$tbl_checked %>% .[[1]] %>% .[[1]],
+    agent %>% 
+      unclass() %>% 
+      .$validation_set %>% 
+      .$tbl_checked %>% 
+      .[[1]] %>% 
+      .[[1]],
     "tbl_df"
   )
   
@@ -53,7 +58,11 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   # Expect the first entry of the `tbl_checked` column in the `validation_set`
   # tibble to be NULL
   expect_null(
-    agent_test_1 %>% unclass() %>% .$validation_set %>% .$tbl_checked %>% .[[1]]
+    agent_test_1 %>% 
+      unclass() %>% 
+      .$validation_set %>% 
+      .$tbl_checked %>% 
+      .[[1]]
   )
   
   # Write the agent to disk again, but choose to keep the table

@@ -8,7 +8,9 @@ al <- action_levels(warn_at = 0.01, stop_at = 0.10)
 
 agent_revenue_data_frame <-
   create_agent(
-    read_fn = ~ as.data.frame(intendo::intendo_revenue, stringsAsFactors = FALSE),
+    read_fn = ~ as.data.frame(
+      intendo::intendo_revenue, stringsAsFactors = FALSE
+    ),
     tbl_name = "intendo_revenue",
     label = "The **intendo** revenue table.", 
     actions = al

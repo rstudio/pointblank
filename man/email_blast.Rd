@@ -37,10 +37,10 @@ footer components of the HTML email message.}
 of length 1. If \code{TRUE} then the email will be sent, if \code{FALSE} then that
 won't happen. The expression can use x-list variables (e.g., \code{x$notify},
 \code{x$type}, etc.) and all of those variables can be viewed using the
-\code{\link[=get_agent_x_list]{get_agent_x_list()}} function. The default expression is \code{~TRUE \%in\% x$notify},
-which results in \code{TRUE} if there are any \code{TRUE} values in the \code{x$notify}
-logical vector (i.e., any validation step results in a 'notify'
-condition).}
+\code{\link[=get_agent_x_list]{get_agent_x_list()}} function. The default expression is
+\code{~TRUE \%in\% x$notify}, which results in \code{TRUE} if there are any \code{TRUE}
+values in the \code{x$notify} logical vector (i.e., any validation step results
+in a 'notify' condition).}
 }
 \description{
 The \code{email_blast()} function is useful for sending an email message that

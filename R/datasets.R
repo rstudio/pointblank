@@ -12,7 +12,8 @@
 #' \item{date}{A `Date` column with dates from `2016-01-04` to `2016-01-30`.}
 #' \item{a}{An `integer` column with values ranging from `1` to `8`.}
 #' \item{b}{A `character` column with values that adhere to a common pattern.}
-#' \item{c}{An `integer` column with values ranging from `2` to `9`. Contains two `NA` values.}
+#' \item{c}{An `integer` column with values ranging from `2` to `9`. Contains
+#' two `NA` values.}
 #' \item{d}{A numeric column with values ranging from `108` to `10000`.}
 #' \item{e}{A `logical` column.}
 #' \item{f}{A `character` column with `"low"`, `"mid"`, and `"high"` values.}
@@ -55,8 +56,10 @@ small_table_sqlite <- function() {
   if (!requireNamespace("DBI", quietly = TRUE) &&
       !requireNamespace("RSQLite", quietly = TRUE)) {
     
-    stop("Creating the SQLite table object requires both the DBI and RSQLite packages:\n",
-         " * Install them with `install.packages(\"DBI\")` and `install.packages(\"RSQLite\")`.",
+    stop("Creating the SQLite table object requires both the DBI and RSQLite ",
+         "packages:\n",
+         " * Install them with `install.packages(\"DBI\")` and ",
+         "`install.packages(\"RSQLite\")`.",
          call. = FALSE)
   }
   

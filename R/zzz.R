@@ -1,4 +1,5 @@
-#nocov start
+# nocov start
+# nolint start
 
 register_s3_method <- function(pkg, generic, class, fun = NULL) {
   stopifnot(is.character(pkg), length(pkg) == 1)
@@ -122,4 +123,5 @@ utils::globalVariables(
   invisible()
 }
 
-#nocov end
+# nocov end
+# nolint end

@@ -54,11 +54,12 @@ db_tbl <- function(db,
     
     db <- tolower(db)
     
+    # nolint start
     driver_function <- 
       switch(
         db,
-        postgresql =,
-        postgres =,
+        postgresql = ,
+        postgres = ,
         pgsql = RPostgres_driver(),
         mysql = RMySQL_driver(),
         maria = ,
@@ -67,6 +68,7 @@ db_tbl <- function(db,
         sqlite = RSQLite_driver(),
         unknown_driver()
       )
+    # nolint end
     
   } else {
     driver_function <- db
@@ -77,7 +79,10 @@ db_tbl <- function(db,
     DBI::dbConnect(
       drv = driver_function,
       user = ifelse(inherits(user, "AsIs"), user, Sys.getenv(user)),
-      password = ifelse(inherits(password, "AsIs"), password, Sys.getenv(password)),
+      password = ifelse(
+        inherits(password, "AsIs"),
+        password, Sys.getenv(password)
+      ),
       host = host,
       dbname = dbname
     )
@@ -114,6 +119,7 @@ db_tbl <- function(db,
   dplyr::tbl(src = connection, table_stmt)
 }
 
+# nolint start
 
 RPostgres_driver <- function() {
   
@@ -170,8 +176,11 @@ RSQLite_driver <- function() {
   RSQLite::SQLite()
 }
 
+# nolint end
+
 unknown_driver <- function() {
     stop("The supplied value for `db` doesn't correspond to database type:\n",
-         " * Acceptable values are: \"pgsql\", \"mysql\", \"mariadb\", and \"sqlite\"", 
+         " * Acceptable values are: \"postgres\", \"mysql\", \"mariadb\", ",
+         "\"sqlite\", and \"duckdb\".", 
          call. = FALSE)
 }

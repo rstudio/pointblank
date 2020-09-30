@@ -131,14 +131,26 @@ get_informant_report <- function(informant,
       table_type_html <- ""
     }
     
-    if ("columns" %in% section_names) meta_columns <- as.numeric(section[["columns"]][1])
-    if ("_columns" %in% section_names) meta_columns <- as.numeric(section[["_columns"]][1])
+    if ("columns" %in% section_names) {
+      meta_columns <- as.numeric(section[["columns"]][1])
+    }
     
-    if ("rows" %in% section_names) meta_rows <- as.numeric(section[["rows"]][1])
-    if ("_rows" %in% section_names) meta_rows <- as.numeric(section[["_rows"]][1])
+    if ("_columns" %in% section_names) {
+      meta_columns <- as.numeric(section[["_columns"]][1])
+    }
+    
+    if ("rows" %in% section_names) {
+      meta_rows <- as.numeric(section[["rows"]][1])
+    }
+    
+    if ("_rows" %in% section_names) {
+      meta_rows <- as.numeric(section[["_rows"]][1])
+    }
     
     section_names <- 
-      section_names[!(section_names %in% c("columns", "_columns", "rows", "_rows"))]
+      section_names[
+        !(section_names %in% c("columns", "_columns", "rows", "_rows"))
+      ]
     
     if (length(section_names) > 0) {
       
@@ -152,6 +164,7 @@ get_informant_report <- function(informant,
           )
       }
     }
+    
   } else {
     table_type_html <- ""
   }

@@ -32,8 +32,8 @@ get_data_extracts(agent)
 tbl <-
   dplyr::tibble(
     a = c(1, NA, NA),
-    b = c(1, NA, 1 ),
-    c = c(1, 1,  1 )
+    b = c(1, NA, 1),
+    c = c(1, 1,  1)
   )
 
 create_agent(tbl = tbl) %>%

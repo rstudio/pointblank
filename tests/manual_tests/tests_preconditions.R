@@ -11,8 +11,14 @@ agent <-
     actions = al,
     lang = "it"
   ) %>%
-  col_vals_gt(vars(g), 100, preconditions = ~ . %>% dplyr::mutate(g = a + 95)) %>%
-  col_vals_lt(vars(c), vars(d), preconditions = ~ . %>% dplyr::mutate(d = d - 200)) %>%
+  col_vals_gt(
+    vars(g), 100,
+    preconditions = ~ . %>% dplyr::mutate(g = a + 95)
+  ) %>%
+  col_vals_lt(
+    vars(c), vars(d),
+    preconditions = ~ . %>% dplyr::mutate(d = d - 200)
+  ) %>%
   col_vals_in_set(vars(f), c("low", "mid", "high", "higher")) %>%
   col_vals_not_in_set(vars(f), LETTERS[1:8]) %>%
   col_vals_between(vars(c), 0, 10) %>%

@@ -207,7 +207,8 @@ col_vals_gt <- function(x,
 
   if (is_a_table_object(x)) {
 
-    secret_agent <- create_agent(x, label = "::QUIET::") %>%
+    secret_agent <-
+      create_agent(x, label = "::QUIET::") %>%
       col_vals_gt(
         columns = columns,
         value = value,
@@ -217,7 +218,8 @@ col_vals_gt <- function(x,
         brief = brief,
         actions = prime_actions(actions),
         active = active
-      ) %>% interrogate()
+      ) %>%
+      interrogate()
     
     return(x)
   }
@@ -225,7 +227,10 @@ col_vals_gt <- function(x,
   agent <- x
   
   if (is.null(brief)) {
-    brief <- generate_autobriefs(agent, columns, preconditions, values = value, "col_vals_gt")
+    brief <- 
+      generate_autobriefs(
+        agent, columns, preconditions, values = value, "col_vals_gt"
+      )
   }
   
   # Normalize any provided `step_id` value(s)
@@ -279,7 +284,8 @@ expect_col_vals_gt <- function(object,
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
     ) %>%
-    interrogate() %>% .$validation_set
+    interrogate() %>%
+    .$validation_set
   
   x <- vs$notify %>% all()
   
@@ -306,7 +312,11 @@ expect_col_vals_gt <- function(object,
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue(failure_message_gluestring(fn_name = fn_name, lang = "en"))
+    failure_message = glue::glue(
+      failure_message_gluestring(
+        fn_name = fn_name, lang = "en"
+      )
+    )
   )
   
   act$val <- object
@@ -333,7 +343,8 @@ test_col_vals_gt <- function(object,
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
     ) %>%
-    interrogate() %>% .$validation_set
+    interrogate() %>%
+    .$validation_set
   
   if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
     warning(conditionMessage(vs$capture_stack[[1]]$warning))

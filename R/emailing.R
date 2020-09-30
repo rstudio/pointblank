@@ -26,10 +26,10 @@
 #'   of length 1. If `TRUE` then the email will be sent, if `FALSE` then that
 #'   won't happen. The expression can use x-list variables (e.g., `x$notify`,
 #'   `x$type`, etc.) and all of those variables can be viewed using the
-#'   [get_agent_x_list()] function. The default expression is `~TRUE %in% x$notify`,
-#'   which results in `TRUE` if there are any `TRUE` values in the `x$notify`
-#'   logical vector (i.e., any validation step results in a 'notify'
-#'   condition).
+#'   [get_agent_x_list()] function. The default expression is
+#'   `~TRUE %in% x$notify`, which results in `TRUE` if there are any `TRUE`
+#'   values in the `x$notify` logical vector (i.e., any validation step results
+#'   in a 'notify' condition).
 #'   
 #' @examples
 #' # Create a simple table with two
@@ -312,7 +312,9 @@ Validation performed via the <code>pointblank</code> <strong>R<strong> package.
 <div>
 <a style=\"background-color: #999999; color: white; padding: 1em 1.5em; \\
 position: relative; text-decoration: none; text-transform: uppercase; \\
-cursor: pointer;\" href=\"https://rich-iannone.github.io/pointblank/\">Information and package documentation</a></div>
+cursor: pointer;\" \\
+href=\"https://rich-iannone.github.io/pointblank/\">Information and package \\
+documentation</a></div>
 "
 }
 

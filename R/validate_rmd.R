@@ -72,7 +72,7 @@ validate_rmd_setup <- function() {
   knitr::opts_hooks$set(
     error = function(options) {
       if (isTRUE(options$validate)) {
-        options$error = TRUE
+        options$error <- TRUE
       }
       options
     }
@@ -174,7 +174,8 @@ render_template <- function(template_name, data) {
       text <- pb_glue_data(data, "{error_count} {noun} failed.")
     }
     
-    rendered <- pb_glue_data(c(data, list(state = state, text = text)), template)
+    rendered <- 
+      pb_glue_data(c(data, list(state = state, text = text)), template)
     
   } else if (template_name == "document") {
     
@@ -196,7 +197,8 @@ render_template <- function(template_name, data) {
       alert <- ""
     }
     
-    rendered <- pb_glue_data(c(data, list(alert = alert)), template)
+    rendered <-
+      pb_glue_data(c(data, list(alert = alert)), template)
   }
   
   rendered
@@ -211,7 +213,11 @@ knitr_error_hook <- function(previous_hook) {
 
       increment_count("error")
       
-      error_message <- x %>% tidy_gsub("##", "") %>% tidy_gsub("\n", "")
+      error_message <-
+        x %>%
+        tidy_gsub("##", "") %>%
+        tidy_gsub("\n", "")
+      
       log4r_error(message = error_message)
     }
     
@@ -293,7 +299,11 @@ knitr_chunk_hook <- function(x, options) {
     
     if (grepl("<!--html_preserve-->", x)) {
       
-      matches <- gregexpr(pattern = "<!--html_preserve-->(.|\n)*?<!--/html_preserve-->", x)
+      matches <- 
+        gregexpr(
+          pattern = "<!--html_preserve-->(.|\n)*?<!--/html_preserve-->",
+          x
+        )
 
       output <- regmatches(x = x, m = matches) %>% unlist()
       
@@ -336,7 +346,10 @@ knitr_chunk_hook <- function(x, options) {
     }
   }
   
-  remix_content <- function(code_vec, output_vec, error_vec, agent_tbl_vec) {
+  remix_content <- function(code_vec,
+                            output_vec,
+                            error_vec,
+                            agent_tbl_vec) {
     
     pass_svg <- 
       htmltools::HTML(
@@ -431,8 +444,9 @@ knitr_chunk_hook <- function(x, options) {
           )
       }
       
-      content <-  c(content, as.character(output_content)) %>% as.character()
-        
+      content <-  
+        c(content, as.character(output_content)) %>%
+        as.character()
     }
     
     content <- paste(content, collapse = "")

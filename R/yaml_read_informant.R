@@ -344,7 +344,8 @@ check_info_yaml_table <- function(y) {
           
           for (z in x_names) {
             if (is.list(y[["table"]][[z]])) {
-              stop("All subcomponents inside of `table` should be a character vector.",
+              stop("All subcomponents inside of `table` should be a ",
+                   "character vector.",
                    call. = FALSE)
             }
           }
@@ -377,8 +378,13 @@ check_info_yaml_columns <- function(y) {
           for (z in x_names) {
             
             if (is.list(y[["columns"]][[z]])) {
-              if (!all(unname(unlist(lapply(y[["columns"]][[z]], is.character))))) {
-                stop("All components inside of `columns/", z, "` should either be text or text under a single heading.",
+              
+              components_are_char <-
+                unname(unlist(lapply(y[["columns"]][[z]], is.character)))
+              
+              if (!all(components_are_char)) {
+                stop("All components inside of `columns/", z,
+                     "` should either be text or text under a single heading.",
                      call. = FALSE)
               }
             }
@@ -409,14 +415,15 @@ check_info_yaml_others <- function(y) {
               
               idx <- which(unname(unlist(lapply(y[[x]], Negate(is.character)))))
               
-              stop("All components inside `",x, "/", names(y[[x]][idx]),
+              stop("All components inside `", x, "/", names(y[[x]][idx]),
                    "` should be a character vector.",
                    call. = FALSE)
             }
             
           } else if (!is.list(y[[x]])) {
             if (!is.character(y[[x]])) {
-              stop("The component inside `", x, "` should be a character vector.",
+              stop("The component inside `", x,
+                   "` should be a character vector.",
                    call. = FALSE)
             }
           }
@@ -434,7 +441,7 @@ make_info_snippets <- function(snippets) {
       seq_along(snippets),
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
-      FUN = function(x) { 
+      FUN = function(x) {
         
         snippet_name <- names(snippets[x])
         snippet_fun <- snippets[[x]]
@@ -444,7 +451,8 @@ make_info_snippets <- function(snippets) {
           "snippet_name = \"", snippet_name, "\", ",
           "fn = ", snippet_fun, ")"
         )
-      })
+      }
+    )
   
-  str_exprs %>% paste(collapse = " ")
+  paste(str_exprs, collapse = " ")
 }

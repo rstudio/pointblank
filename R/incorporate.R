@@ -153,7 +153,10 @@ incorporate <- function(informant) {
   }
   
   metadata_meta_label <- 
-    glue_safely(informant$metadata[["info_label"]], .otherwise = "(SNIPPET MISSING)")
+    glue_safely(
+      informant$metadata[["info_label"]],
+      .otherwise = "(SNIPPET MISSING)"
+    )
   
   metadata_table <-
     lapply(informant$metadata[["table"]], function(x) {
@@ -190,9 +193,11 @@ incorporate <- function(informant) {
       list(updated = Sys.time())
     )
   
+  # nolint start
   metadata_rev$table$`_columns` <- as.character(table.columns)
   metadata_rev$table$`_rows` <- as.character(table.rows)
   metadata_rev$table$`_type` <- table.type
+  # nolint end
   
   informant$metadata_rev <- metadata_rev
   informant

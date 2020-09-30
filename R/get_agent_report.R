@@ -219,7 +219,8 @@ get_agent_report <- function(agent,
     
   } else {
     
-    extract_count <- as.character(validation_set[["i"]]) %in% names(agent$extracts)
+    extract_count <- 
+      as.character(validation_set[["i"]]) %in% names(agent$extracts)
     
     extract_count[extract_count == FALSE] <- NA_integer_
     
@@ -383,7 +384,7 @@ get_agent_report <- function(agent,
             paste0(
               "<div aria-label=\"", briefs[x], "\" data-balloon-pos=\"right\"",
               "style=\"width: fit-content\">",
-              "<img>",add_icon_svg(icon = assertion_type[x]), "</img>",
+              "<img>", add_icon_svg(icon = assertion_type[x]), "</img>",
               "<code style=\"font-size: ", text_size,
               "px;\">&nbsp;", assertion_type[x], "()</code>",
               "</div>"
@@ -420,7 +421,8 @@ get_agent_report <- function(agent,
           if (size == "small") {
             x <- 
               paste0(
-                "<div><p title=\"", paste(title, collapse = ", "), "\"style=\"margin-top: 0px;margin-bottom: 0px; ",
+                "<div><p title=\"", paste(title, collapse = ", "),
+                "\"style=\"margin-top: 0px;margin-bottom: 0px; ",
                 "font-family: monospace; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
                 text,
@@ -429,7 +431,8 @@ get_agent_report <- function(agent,
           } else {
             x <- 
               paste0(
-                "<div aria-label=\"", paste(title, collapse = ", "), "\" data-balloon-pos=\"left\">",
+                "<div aria-label=\"", paste(title, collapse = ", "), 
+                "\" data-balloon-pos=\"left\">",
                 "<p style=\"margin-top: 0px;margin-bottom: 0px; ",
                 "font-size: 11px; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden; line-height: 2em;\">",
@@ -450,7 +453,9 @@ get_agent_report <- function(agent,
       USE.NAMES = FALSE,
       FUN = function(x) {
         
-        if (!is.null(x) && !is.null(names(x)) && all(names(x) %in% c("TRUE", "FALSE"))) {
+        if (!is.null(x) &&
+            !is.null(names(x)) &&
+            all(names(x) %in% c("TRUE", "FALSE"))) {
 
           # Case of in-between comparison validation where there are
           # one or two columns specified as bounds
@@ -568,7 +573,7 @@ get_agent_report <- function(agent,
           if (size == "small") {
             x <- 
               paste0(
-                "<div><p title=\"", text , "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "<div><p title=\"", text, "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
                 "font-family: monospace; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
                 text,
@@ -853,7 +858,7 @@ get_agent_report <- function(agent,
   # Reformat W, S, and N
   #
   
-  W_upd <- 
+  w_upd <- 
     validation_set$warn %>%
     vapply(
       FUN.VALUE = character(1),
@@ -870,7 +875,7 @@ get_agent_report <- function(agent,
       }
     )
   
-  S_upd <- 
+  s_upd <- 
     validation_set$stop %>%
     vapply(
       FUN.VALUE = character(1),
@@ -887,7 +892,7 @@ get_agent_report <- function(agent,
       }
     )
   
-  N_upd <- 
+  n_upd <- 
     validation_set$notify %>%
     vapply(
       FUN.VALUE = character(1),
@@ -932,9 +937,9 @@ get_agent_report <- function(agent,
       W_val = W,
       S_val = S,
       N_val = N,
-      W = W_upd,
-      S = S_upd,
-      N = N_upd,
+      W = w_upd,
+      S = s_upd,
+      N = n_upd,
       extract = extract_upd
     ) %>%
     dplyr::select(

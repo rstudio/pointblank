@@ -1,3 +1,5 @@
+# nolint start
+
 #' Print the agent information to the console
 #'
 #' This function will allow the agent to print a useful report.
@@ -19,7 +21,8 @@ print.ptblank_agent <- function(x, view = interactive(), ...) {
 
 #' Knit print the agent information table
 #'
-#' This facilitates printing of the agent report table within a knitr code chunk.
+#' This facilitates printing of the agent report table within a knitr code
+#' chunk.
 #'
 #' @param x An object of class `ptblank_agent`.
 #' @param ... Any additional parameters.
@@ -103,18 +106,45 @@ print.x_list_i <- function(x, ...) {
   
   length_rows <- length(x$warn)
 
-  cli::cli_rule(left = "The x-list for `{x$name}`", right = "STEP {x$i}")
-  cli::cli_text("{.cyan $time_start $time_end} ({.red POSIXct [{length(x$time_start)}]})")
-  cli::cli_text("{.cyan $label $tbl_name $tbl_src $tbl_src_details} ({.red chr [1]})")
-  cli::cli_text("{.cyan $tbl} ({.blue {class(x$tbl)}})")
-  cli::cli_text("{.cyan $col_names $col_types} ({.red chr [{length(x$col_names)}]})")
-  cli::cli_text("{.cyan $i $type $columns $values $label $briefs} ({.green mixed [{length(x$i)}]})")
-  cli::cli_text("{.cyan $eval_error $eval_warning} ({.yellow lgl [{length(x$i)}]})")
-  cli::cli_text("{.cyan $capture_stack} ({.orange list [{length(x$capture_stack)}]})")
-  cli::cli_text("{.cyan $n $n_passed $n_failed $f_passed $f_failed} ({.green num [{length_rows}]})")
-  cli::cli_text("{.cyan $warn $stop $notify} ({.yellow lgl [{length_rows}]})")
-  cli::cli_text("{.cyan $lang} ({.red chr [1]})")
-  cli::cli_rule(right = ifelse(length(x$time) == 0, "NO INTERROGATION PERFORMED", ""))
+  cli::cli_rule(
+    left = "The x-list for `{x$name}`",
+    right = "STEP {x$i}"
+  )
+  cli::cli_text(
+    "{.cyan $time_start $time_end} ({.red POSIXct [{length(x$time_start)}]})"
+  )
+  cli::cli_text(
+    "{.cyan $label $tbl_name $tbl_src $tbl_src_details} ({.red chr [1]})"
+  )
+  cli::cli_text(
+    "{.cyan $tbl} ({.blue {class(x$tbl)}})"
+  )
+  cli::cli_text(
+    "{.cyan $col_names $col_types} ({.red chr [{length(x$col_names)}]})"
+  )
+  cli::cli_text(
+    "{.cyan $i $type $columns $values $label $briefs} ",
+    "({.green mixed [{length(x$i)}]})"
+  )
+  cli::cli_text(
+    "{.cyan $eval_error $eval_warning} ({.yellow lgl [{length(x$i)}]})"
+  )
+  cli::cli_text(
+    "{.cyan $capture_stack} ({.orange list [{length(x$capture_stack)}]})"
+  )
+  cli::cli_text(
+    "{.cyan $n $n_passed $n_failed $f_passed $f_failed} ",
+    "({.green num [{length_rows}]})"
+  )
+  cli::cli_text(
+    "{.cyan $warn $stop $notify} ({.yellow lgl [{length_rows}]})"
+  )
+  cli::cli_text(
+    "{.cyan $lang} ({.red chr [1]})"
+  )
+  cli::cli_rule(
+    right = ifelse(length(x$time) == 0, "NO INTERROGATION PERFORMED", "")
+  )
 
   # nocov end 
 }
@@ -150,22 +180,60 @@ print.x_list_n <- function(x, ...) {
   validation_set_rows <- nrow(x$validation_set)
   validation_set_cols <- ncol(x$validation_set)
   
-  cli::cli_rule(left = "The x-list for `{x$name}`", right = "ALL STEPS")
-  cli::cli_text("{.cyan $time_start $time_end} ({.red POSIXct [{length(x$time_start)}]})")
-  cli::cli_text("{.cyan $label $tbl_name $tbl_src $tbl_src_details} ({.red chr [1]})")
-  cli::cli_text("{.cyan $tbl} ({.blue {class(x$tbl)}})")
-  cli::cli_text("{.cyan $col_names $col_types} ({.red chr [{length(x$col_names)}]})")
-  cli::cli_text("{.cyan $i $type $columns $values $label $briefs} ({.green mixed [{length(x$i)}]})")
-  cli::cli_text("{.cyan $eval_error $eval_warning} ({.yellow lgl [{length(x$i)}]})")
-  cli::cli_text("{.cyan $capture_stack} ({.orange list [{length(x$capture_stack)}]})")
-  cli::cli_text("{.cyan $n $n_passed $n_failed $f_passed $f_failed} ({.green num [{length_rows}]})")
-  cli::cli_text("{.cyan $warn $stop $notify} ({.yellow lgl [{length_rows}]})")
-  cli::cli_text("{.cyan $validation_set} ({.blue tbl_df [{validation_set_rows}, {validation_set_cols}]})")
-  cli::cli_text("{.cyan $lang} ({.red chr [1]})")
-  cli::cli_text("{.cyan $report_object} ({.pink gt_tbl})")
-  cli::cli_text("{.cyan $email_object} ({.pink blastula_message})")
-  cli::cli_text("{.cyan $report_html $report_html_small} ({.red chr [1]})")
-  cli::cli_rule(right = ifelse(length(x$time) == 0, "NO INTERROGATION PERFORMED", ""))
+  cli::cli_rule(
+    left = "The x-list for `{x$name}`",
+    right = "ALL STEPS"
+  )
+  cli::cli_text(
+    "{.cyan $time_start $time_end} ({.red POSIXct [{length(x$time_start)}]})"
+  )
+  cli::cli_text(
+    "{.cyan $label $tbl_name $tbl_src $tbl_src_details} ({.red chr [1]})"
+  )
+  cli::cli_text(
+    "{.cyan $tbl} ({.blue {class(x$tbl)}})"
+  )
+  cli::cli_text(
+    "{.cyan $col_names $col_types} ({.red chr [{length(x$col_names)}]})"
+  )
+  cli::cli_text(
+    "{.cyan $i $type $columns $values $label $briefs} ",
+    "({.green mixed [{length(x$i)}]})"
+  )
+  cli::cli_text(
+    "{.cyan $eval_error $eval_warning} ({.yellow lgl [{length(x$i)}]})"
+  )
+  cli::cli_text(
+    "{.cyan $capture_stack} ({.orange list [{length(x$capture_stack)}]})"
+  )
+  cli::cli_text(
+    "{.cyan $n $n_passed $n_failed $f_passed $f_failed} ",
+    "({.green num [{length_rows}]})"
+  )
+  cli::cli_text(
+    "{.cyan $warn $stop $notify} ({.yellow lgl [{length_rows}]})"
+  )
+  cli::cli_text(
+    "{.cyan $validation_set} ",
+    "({.blue tbl_df [{validation_set_rows}, {validation_set_cols}]})"
+  )
+  cli::cli_text(
+    "{.cyan $lang} ({.red chr [1]})"
+  )
+  cli::cli_text(
+    "{.cyan $report_object} ({.pink gt_tbl})"
+  )
+  cli::cli_text(
+    "{.cyan $email_object} ({.pink blastula_message})"
+  )
+  cli::cli_text(
+    "{.cyan $report_html $report_html_small} ({.red chr [1]})"
+  )
+  cli::cli_rule(
+    right = ifelse(length(x$time) == 0, "NO INTERROGATION PERFORMED", "")
+  )
     
   # nocov end 
 }
+
+# nolint end

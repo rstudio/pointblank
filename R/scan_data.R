@@ -112,6 +112,7 @@ scan_data <- function(tbl,
 }
 
 # nocov start
+# nolint start
 
 #' Print the reporting produced by [scan_data()]
 #'
@@ -148,6 +149,8 @@ knit_print.examination_page <- function(x, ...) {
   knitr::knit_print(x, ...)
 }
 
+# nolint end
+
 #
 # Generate section components such as tables and plots
 #
@@ -157,14 +160,19 @@ probe_overview_stats <- function(data,
                                  locale) {
   
   n_cols <- ncol(data)
-  n_rows <- data %>% dplyr::count(name = "n") %>% dplyr::pull(n) %>% as.numeric()
+  
+  n_rows <-
+    data %>%
+    dplyr::count(name = "n") %>%
+    dplyr::pull(n) %>%
+    as.numeric()
   
   suppressWarnings(
-    na_cells <- 
+    na_cells <-
       data %>%
       dplyr::select(dplyr::everything()) %>%
       dplyr::summarise_all(~ sum(ifelse(is.na(.), 1, 0))) %>%
-      dplyr::collect() %>% 
+      dplyr::collect() %>%
       t() %>%
       as.vector() %>%
       sum()
@@ -175,7 +183,7 @@ probe_overview_stats <- function(data,
   tbl_src <- tbl_info$tbl_src
   r_col_types <- tbl_info$r_col_types
   
-  n_rows_distinct <- 
+  n_rows_distinct <-
     data %>%
     dplyr::distinct() %>%
     dplyr::count(name = "n") %>%
@@ -292,7 +300,10 @@ probe_columns <- function(data,
   tbl_info <- get_tbl_information(tbl = data)
   
   col_names <- tbl_info$col_names
-  col_types <- tbl_info$r_col_types %>% gsub("integer64", "integer", ., fixed = TRUE)
+  
+  col_types <- 
+    tbl_info$r_col_types %>%
+    gsub("integer64", "integer", ., fixed = TRUE)
   
   column_descriptions <- 
     lapply(
@@ -304,16 +315,63 @@ probe_columns <- function(data,
         
         switch(
           col_type,
-          character = probe_columns_character(data = data, column = col_name, n_rows = n_rows, lang = lang, locale = locale),
-          Date = probe_columns_date(data = data, column = col_name, n_rows = n_rows, lang = lang, locale = locale),
-          factor = probe_columns_factor(data = data, column = col_name, n_rows = n_rows, lang = lang, locale = locale),
-          integer = probe_columns_integer(data = data, column = col_name, n_rows = n_rows, lang = lang, locale = locale),
-          logical = probe_columns_logical(data = data, column = col_name, n_rows = n_rows, lang = lang, locale = locale),
-          numeric = probe_columns_numeric(data = data, column = col_name, n_rows = n_rows, lang = lang, locale = locale),
-          POSIXct = probe_columns_posix(data = data, column = col_name, n_rows = n_rows, lang = lang, locale = locale),
-          probe_columns_other(data = data, column = col_name, n_rows = n_rows)
+          character = probe_columns_character(
+            data = data,
+            column = col_name,
+            n_rows = n_rows,
+            lang = lang,
+            locale = locale
+          ),
+          Date = probe_columns_date(
+            data = data,
+            column = col_name,
+            n_rows = n_rows,
+            lang = lang,
+            locale = locale
+          ),
+          factor = probe_columns_factor(
+            data = data,
+            column = col_name,
+            n_rows = n_rows,
+            lang = lang,
+            locale = locale
+          ),
+          integer = probe_columns_integer(
+            data = data,
+            column = col_name,
+            n_rows = n_rows,
+            lang = lang,
+            locale = locale
+          ),
+          logical = probe_columns_logical(
+            data = data,
+            column = col_name,
+            n_rows = n_rows,
+            lang = lang,
+            locale = locale
+          ),
+          numeric = probe_columns_numeric(
+            data = data,
+            column = col_name,
+            n_rows = n_rows,
+            lang = lang,
+            locale = locale
+          ),
+          POSIXct = probe_columns_posix(
+            data = data,
+            column = col_name,
+            n_rows = n_rows,
+            lang = lang,
+            locale = locale
+          ),
+          probe_columns_other(
+            data = data,
+            column = col_name,
+            n_rows = n_rows
+          )
         )
-      })
+      }
+    )
   
   column_descriptions
 }
@@ -646,10 +704,7 @@ get_descriptive_stats_gt <- function(data_column,
           mean = ~ mean(., na.rm = TRUE),
           variance = ~ stats::var(., na.rm = TRUE),
           sd = ~ stats::sd(., na.rm = TRUE),
-          cv = ~ cv(.)#,
-          #mad = ,
-          #kur = ,
-          #skwns = 
+          cv = ~ cv(.)
         )
       ) %>%
       dplyr::summarize_all(~ round(., 2)) %>%
@@ -690,7 +745,10 @@ get_common_values_gt <- function(data_column,
                                  lang,
                                  locale) {
   
-  n_rows <- data_column %>% dplyr::count(name = "n") %>% dplyr::pull(n)
+  n_rows <- 
+    data_column %>%
+    dplyr::count(name = "n") %>%
+    dplyr::pull(n)
   
   common_values_tbl <- 
     data_column %>%
@@ -706,7 +764,7 @@ get_common_values_gt <- function(data_column,
   
   if (n_rows_common_values_tbl > 10) {
     
-    top_ten_rows <- common_values_tbl %>% utils::head(10)
+    top_ten_rows <- utils::head(common_values_tbl, 10)
     
     other_values_tbl <-
       common_values_tbl %>% 
@@ -714,7 +772,9 @@ get_common_values_gt <- function(data_column,
       dplyr::arrange(desc(n))
     
     other_values_distinct <- 
-      other_values_tbl %>% dplyr::count(name = "n", wt = n) %>% dplyr::pull(n)
+      other_values_tbl %>%
+      dplyr::count(name = "n", wt = n) %>%
+      dplyr::pull(n)
     
     other_values_n <- 
       other_values_tbl %>%
@@ -735,7 +795,11 @@ get_common_values_gt <- function(data_column,
           dplyr::rename(value = 1) %>%
           dplyr::mutate(value = as.character(value)),
         dplyr::tibble(
-          value = paste0("**", get_lsv("table_scan/other_values_text")[[lang]], "** (", other_values_distinct , ")"),
+          value = paste0(
+            "**",
+            get_lsv("table_scan/other_values_text")[[lang]],
+            "** (", other_values_distinct, ")"
+          ),
           n = other_values_n,
           frequency = other_values_n / n_rows
         )
@@ -807,7 +871,10 @@ get_top_bottom_slice <- function(data_column,
                                  lang,
                                  locale) {
   
-  n_rows <- data_column %>% dplyr::count(name = "n") %>% dplyr::pull(n)
+  n_rows <-
+    data_column %>%
+    dplyr::count(name = "n") %>%
+    dplyr::pull(n)
   
   data_column_freq <-
     data_column %>%
@@ -829,7 +896,9 @@ get_top_bottom_slice <- function(data_column,
     dplyr::collect()
   
   data_column_top_n[, 3] <- data_column_top_n[, 2, drop = TRUE] / n_rows
-  colnames(data_column_top_n)[3] <- get_lsv("table_scan/tbl_lab_frequency")[[lang]]
+  
+  colnames(data_column_top_n)[3] <- 
+    get_lsv("table_scan/tbl_lab_frequency")[[lang]]
   
   data_column_bottom_n <- 
     data_column_freq %>%
@@ -837,10 +906,14 @@ get_top_bottom_slice <- function(data_column,
     utils::head(10) %>%
     dplyr::collect()
   
-  data_column_bottom_n[, 3] <- data_column_bottom_n[, 2, drop = TRUE] / n_rows
-  colnames(data_column_bottom_n)[3] <- get_lsv("table_scan/tbl_lab_frequency")[[lang]]
+  data_column_bottom_n[, 3] <- 
+    data_column_bottom_n[, 2, drop = TRUE] / n_rows
   
-  get_slice_gt <- function(data_column, slice = "max") {
+  colnames(data_column_bottom_n)[3] <- 
+    get_lsv("table_scan/tbl_lab_frequency")[[lang]]
+  
+  get_slice_gt <- function(data_column,
+                           slice = "max") {
     
     data_column %>%
       gt::gt() %>%
@@ -1195,8 +1268,7 @@ probe_columns_other <- function(data,
 probe_interactions <- function(data) {
   
   category_cutoff <- 5
-  #max_dim <- 8
-  
+
   tbl_info <- get_tbl_information(tbl = data)
   col_names <- tbl_info$col_names
   col_types <- tbl_info$r_col_types
@@ -1369,8 +1441,6 @@ get_corr_plot <- function(mat,
   
   image_html
 }
-
-# TODO: report missing values based on user input (e.g., "9999", empty strings)
 
 probe_missing <- function(data) {
   
@@ -1657,17 +1727,6 @@ build_examination_page <- function(data,
       } 
     )
   
-  # htmltools::attachDependencies(
-  #   htmltools::tags$html(
-  #     lang = "en",
-  #     htmltools::tags$body(
-  #       probe_overview_stats_assemble(data = data),
-  #       probe_overview_stats_assemble(data = data)
-  #     )
-  #   ),
-  #   bootstrap_lib()
-  # )
-  
   bootstrap_lib <- 
     readr::read_file(
       file = system.file(
@@ -1840,7 +1899,7 @@ probe_columns_assemble <- function(data,
   
   columns_data <- probe_columns(data = data, lang = lang, locale = locale)
   
-  columns_tagLists <- 
+  columns_tag_lists <- 
     lapply(
       columns_data, 
       function(x) {
@@ -2217,11 +2276,10 @@ probe_columns_assemble <- function(data,
     row_header,
     htmltools::tags$div(
       class = "section-items",
-      columns_tagLists
+      columns_tag_lists
     )
   )
 }
-
 
 probe_interactions_assemble <- function(data,
                                         lang) {
@@ -2247,7 +2305,6 @@ probe_interactions_assemble <- function(data,
     )
   )
 }
-
 
 probe_correlations_assemble <- function(data,
                                         lang) {
@@ -2434,7 +2491,9 @@ navbar <- function(sections,
   )
 }
 
-tab_panel <- function(id, panel_component_list, active = FALSE) {
+tab_panel <- function(id,
+                      panel_component_list,
+                      active = FALSE) {
   
   htmltools::tags$div(
     role = "tabpanel",
@@ -2444,7 +2503,8 @@ tab_panel <- function(id, panel_component_list, active = FALSE) {
   )
 }
 
-row_header <- function(id, header) {
+row_header <- function(id,
+                       header) {
   
   htmltools::tags$div(
     class = "row header",
@@ -2459,7 +2519,9 @@ row_header <- function(id, header) {
   )
 }
 
-panel_component <- function(size, content, title = NULL) {
+panel_component <- function(size,
+                            content,
+                            title = NULL) {
   
   glue_list <- list(size = size, title = title)
   
@@ -2473,7 +2535,9 @@ panel_component <- function(size, content, title = NULL) {
   )
 }
 
-nav_pill_li <- function(label, id, active = FALSE) { 
+nav_pill_li <- function(label,
+                        id,
+                        active = FALSE) { 
   
   glue_list <- list(label = label, id = id)
   
@@ -2491,7 +2555,8 @@ nav_pill_li <- function(label, id, active = FALSE) {
   )
 }
 
-pb_glue_data <- function(.x, ...) {
+pb_glue_data <- function(.x,
+                         ...) {
   glue::glue_data(.x, ..., .transformer = get, .envir = emptyenv())
 }
 

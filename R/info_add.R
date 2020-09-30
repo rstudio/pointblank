@@ -465,7 +465,6 @@ info_snippet <- function(x,
   metadata
 }
 
-
 #' A `fn` for `info_snippet()`: get a list of column categories
 #' 
 #' The `snip_list()` function can be used as an [info_snippet()] function (i.e.,
@@ -485,8 +484,8 @@ snip_list <- function(column,
   stats::as.formula(
     as.character(
       glue::glue(
-        "~ . %>% dplyr::select(<<column>>) %>% dplyr::distinct() %>% dplyr::pull(<<column>>) %>%
-        pb_str_catalog(limit = <<limit>>)",
+        "~ . %>% dplyr::select(<<column>>) %>% dplyr::distinct() %>%
+        dplyr::pull(<<column>>) %>% pb_str_catalog(limit = <<limit>>)",
         .open = "<<", .close = ">>"   
       )
     )

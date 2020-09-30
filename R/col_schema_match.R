@@ -179,7 +179,8 @@ col_schema_match <- function(x,
         brief = brief,
         actions = prime_actions(actions),
         active = active
-      ) %>% interrogate()
+      ) %>%
+      interrogate()
     
     return(x)
   }
@@ -235,7 +236,8 @@ expect_col_schema_match <- function(object,
       schema = {{ schema }},
       actions = action_levels(notify_at = threshold)
     ) %>%
-    interrogate() %>% .$validation_set
+    interrogate() %>%
+    .$validation_set
   
   x <- vs$notify %>% all()
   
@@ -258,7 +260,11 @@ expect_col_schema_match <- function(object,
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
-    failure_message = glue::glue(failure_message_gluestring(fn_name = fn_name, lang = "en"))
+    failure_message = glue::glue(
+      failure_message_gluestring(
+        fn_name = fn_name, lang = "en"
+      )
+    )
   )
   
   act$val <- object
@@ -281,7 +287,8 @@ test_col_schema_match <- function(object,
       schema = {{ schema }},
       actions = action_levels(notify_at = threshold)
     ) %>%
-    interrogate() %>% .$validation_set
+    interrogate() %>%
+    .$validation_set
   
   if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
     warning(conditionMessage(vs$capture_stack[[1]]$warning))
@@ -411,8 +418,14 @@ col_schema <- function(...,
       x <- 
         switch(
           db_col_types,
-          "r" = create_col_schema_from_names_types(tbl_info$col_names, tbl_info$r_col_types),
-          "sql" = create_col_schema_from_names_types(tbl_info$col_names, tbl_info$db_col_types)
+          "r" = col_schema_from_names_types(
+            names = tbl_info$col_names,
+            types = tbl_info$r_col_types
+          ),
+          "sql" = col_schema_from_names_types(
+            names = tbl_info$col_names,
+            types = tbl_info$db_col_types
+          )
         )
       
       # Apply the `col_schema` and the `r_type`/`sql_type` classes
@@ -437,7 +450,8 @@ create_col_schema_from_df <- function(tbl) {
   lapply(tbl, class)
 }
 
-create_col_schema_from_names_types <- function(names, types) {
+col_schema_from_names_types <- function(names,
+                                        types) {
   
   as.list(stats::setNames(types, names))
 }

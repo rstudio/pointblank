@@ -32,14 +32,18 @@ generate_label <- function(label = NULL) {
 
 safely_transformer <- function(otherwise = NA) {
   
+  oth <- otherwise
+  
   function(text, envir) {
     tryCatch(
       eval(parse(text = text, keep.source = FALSE), envir),
-      error = function(e) if (is.language(otherwise)) eval(otherwise) else otherwise)
+      error = function(e) if (is.language(oth)) eval(oth) else oth)
   }
 }
 
-glue_safely <- function(..., .otherwise = NA, .envir = parent.frame()) {
+glue_safely <- function(...,
+                        .otherwise = NA,
+                        .envir = parent.frame()) {
   as.character(
     glue::glue(
       ...,
@@ -71,7 +75,11 @@ get_assertion_type_at_idx <- function(agent, idx) {
 }
 
 get_column_as_sym_at_idx <- function(agent, idx) {
-  rlang::sym(agent$validation_set[[idx, "column"]] %>% unlist() %>% gsub("'", "", .))
+  rlang::sym(
+    agent$validation_set[[idx, "column"]] %>%
+      unlist() %>%
+      gsub("'", "", .)
+  )
 }
 
 get_values_at_idx <- function(agent, idx) {
@@ -102,7 +110,8 @@ resolve_expr_to_cols <- function(tbl, var_expr) {
 resolve_columns <- function(x, var_expr, preconditions) {
   
   # Return an empty character vector if the expr is NULL
-  if (inherits(var_expr, "quosure") && var_expr %>% rlang::as_label() == "NULL") {
+  if (inherits(var_expr, "quosure") &&
+      var_expr %>% rlang::as_label() == "NULL") {
     return(character(0))
   } 
   
@@ -200,7 +209,8 @@ normalize_step_id <- function(step_id, columns, agent) {
 
       # Issue warning about length of `step_id`
       warning(
-        "The number of `step_id` values is neither `1` nor the number of `columns`:\n",
+        "The number of `step_id` values is neither `1` nor the ",
+        "number of `columns`:\n",
         "* Only the first `step_id` element will be used.",
         call. = FALSE
       )
@@ -220,7 +230,8 @@ check_step_id_duplicates <- function(step_id, agent) {
     a_duplicate_step_id <- step_id[step_id %in% agent$validation_set$step_id][1]
     
     stop(
-      "Just after step index `", error_at_index, "`, the following `step_id` has been ",
+      "Just after step index `", error_at_index,
+      "`, the following `step_id` has been ",
       "seen as used in a previous validation step:\n",
       " * \"", a_duplicate_step_id, "\"",
       call. = FALSE
@@ -369,24 +380,47 @@ get_tbl_information_dbi <- function(tbl) {
   
   n_cols <- length(r_column_names_types$col_names)
   
+  # nolint start
+  
   if (tbl_src == "postgres") {
     
-    db_tbl_name_no_schema <- gsub('.*\\.', '', db_tbl_name)
+    db_tbl_name_no_schema <- gsub(".*\\.", "", db_tbl_name)
     
-    q_types <- 
-      glue::glue(
-        "select column_name,data_type from information_schema.columns where table_name = '{db_tbl_name_no_schema}'"
+    q_types <-
+      as.character(
+        glue::glue(
+          "select column_name,data_type from \\
+        information_schema.columns where \\
+        table_name = '{db_tbl_name_no_schema}'"
+        )
       )
 
   } else {
-    
-    q_types <- 
-      ifelse(
-        tbl_src == "mssql",
-        glue::glue("SELECT TOP 9 {n_cols} DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}'"),
-        glue::glue("SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}' LIMIT {n_cols}")
-      )
+
+    if (tbl_src == "mssql") {
+      
+      q_types <-
+        as.character(
+          glue::glue(
+            "SELECT TOP 9 {n_cols} DATA_TYPE \\
+          FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}'"
+          )
+        )
+      
+    } else { 
+      
+      q_types <-
+        as.character(
+          glue::glue(
+            "SELECT DATA_TYPE FROM \\
+          INFORMATION_SCHEMA.COLUMNS WHERE \\
+          table_name = '{db_tbl_name}' LIMIT {n_cols}"
+          )
+        )
+    }
   }
+  
+  # nolint end
   
   if (tbl_src == "postgres") {
     
@@ -456,7 +490,8 @@ pb_fmt_number <- function(x,
   
   if (is.null(x)) return(NULL)
   
-  if (length(x) == 1 && (!inherits(x, "numeric") && !inherits(x, "integer"))) {
+  if (length(x) == 1 &&
+      (!inherits(x, "numeric") && !inherits(x, "integer"))) {
     return(x)
   } 
   
@@ -537,10 +572,15 @@ add_icon_svg <- function(icon,
         tidy_gsub("width=\"[0-9]*?px", paste0("width=\"", height, "px")) %>%
         tidy_gsub("height=\"[0-9]*?px", paste0("height=\"", height, "px"))
     )
-  ) %>% as.character()
+  ) %>%
+    as.character()
 }
 
-tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
+tidy_gsub <- function(x,
+                      pattern,
+                      replacement,
+                      fixed = FALSE) {
+  
   gsub(pattern, replacement, x, fixed = fixed)
 }
 
@@ -583,7 +623,8 @@ pb_str_catalog <- function(item_vector,
     }
     
     if (n_overlimit == "") {
-      separators[length(separators)] <- paste0(separators[length(separators)], conj, " ")
+      separators[length(separators)] <- 
+        paste0(separators[length(separators)], conj, " ")
     }
     
     separators[length(separators) + 1] <- ""

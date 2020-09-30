@@ -387,6 +387,8 @@ prep_values_text <- function(values,
   values_str
 }
 
+# nolint start
+
 prep_compare_expectation_text <- function(column_text,
                                           column_computed_text,
                                           operator,
@@ -485,6 +487,8 @@ prep_col_vals_expr_expectation_text <- function(lang) {
   
   glue::glue(get_lsv("autobriefs/col_vals_expr_expectation_text")[[lang]])
 }
+
+# nolint end
 
 failure_message_gluestring <- function(fn_name,
                                        lang) {

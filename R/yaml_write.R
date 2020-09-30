@@ -579,7 +579,8 @@ as_agent_yaml_list <- function(agent) {
           )
         )
       
-    } else if (grepl("col_is_", validation_fn) || validation_fn == "col_exists") {
+    } else if (grepl("col_is_", validation_fn) ||
+               validation_fn == "col_exists") {
 
       lst_step <- 
         list(

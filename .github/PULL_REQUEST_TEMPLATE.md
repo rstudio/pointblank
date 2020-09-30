@@ -8,6 +8,6 @@ Thank you for contributing to **pointblank**! To make this process easier for ev
 
 # Checklist
 
-- [ ] I understand and agree to the [Code of Conduct](https://www.contributor-covenant.org/version/1/0/0/code-of-conduct/).
+- [ ] I understand and agree to the [Code of Conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).
 - [ ] I have listed any major changes in the [NEWS](https://github.com/rich-iannone/pointblank/blob/master/NEWS.md).
 - [ ] I have added [`testthat`](https://github.com/r-lib/testthat) unit tests to [`tests/testthat`](https://github.com/rich-iannone/pointblank/tree/master/tests/testthat) for any new functionality.

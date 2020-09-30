@@ -508,7 +508,7 @@ as_agent_yaml_list <- function(agent) {
           )
         )
       
-    } else if (validation_fn %in% c("col_vals_between", "col_vals_not_between")) {
+    } else if (grepl("between", validation_fn)) {
 
       lst_step <- 
         list(
@@ -532,7 +532,7 @@ as_agent_yaml_list <- function(agent) {
           )
         )
       
-    } else if (validation_fn %in% c("col_vals_in_set", "col_vals_not_in_set")) {
+    } else if (grepl("in_set", validation_fn)) {
 
       lst_step <- 
         list(
@@ -548,7 +548,7 @@ as_agent_yaml_list <- function(agent) {
           )
         )
 
-    } else if (validation_fn %in% c("col_vals_null", "col_vals_not_null")) {
+    } else if (grepl("null", validation_fn)) {
       
       lst_step <- 
         list(

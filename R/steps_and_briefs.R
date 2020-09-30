@@ -529,10 +529,11 @@ failure_message_gluestring <- function(fn_name,
     )
   
   # nolint end
-  
+
   paste0(
     failure_text, "\n",
-    "The `{fn_name}()` validation failed beyond the {threshold_type} threshold level ({threshold}).
-* failure level ({failed_amount}) >= failure threshold ({threshold})"
+    "The `{fn_name}()` validation failed beyond the {threshold_type} ",
+    "threshold level ({threshold}).\n",
+    "* failure level ({failed_amount}) >= failure threshold ({threshold})"
   )
 }

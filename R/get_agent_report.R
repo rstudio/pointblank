@@ -1000,8 +1000,17 @@ get_agent_report <- function(agent,
       decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE,
       locale = locale
     ) %>%
-    gt::fmt_number(columns = gt::vars(f_pass, f_fail), decimals = 2, locale = locale) %>%
-    gt::fmt_markdown(columns = gt::vars(type, columns, values, precon, eval_sym, W, S, N, extract)) %>%
+    gt::fmt_number(
+      columns = gt::vars(f_pass, f_fail),
+      decimals = 2,
+      locale = locale
+    ) %>%
+    gt::fmt_markdown(
+      columns = gt::vars(
+        type, columns, values, precon,
+        eval_sym, W, S, N, extract
+      )
+    ) %>%
     gt::fmt_missing(columns = gt::vars(columns, values, units, extract)) %>%
     gt::fmt_missing(columns = gt::vars(status_color), missing_text = "") %>%
     gt::cols_hide(columns = gt::vars(W_val, S_val, N_val, active, eval)) %>%

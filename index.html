@@ -130,6 +130,8 @@
 <p>Should you want to perform validation checks on database or <em>Spark</em> tables, provide a <code>tbl_dbi</code> or <code>tbl_spark</code> object to <code><a href="reference/create_agent.html">create_agent()</a></code>. The <strong>pointblank</strong> package currently supports <em>PostgreSQL</em>. <em>MySQL</em>, <em>MariaDB</em>, <em>DuckDB</em>, <em>SQLite</em>, and <em>Spark DataFrames</em> (through the <strong>sparklyr</strong> package). The <code><a href="reference/db_tbl.html">db_tbl()</a></code> function is provided by <strong>pointblank</strong> to make accessing a DB table insanely easy.</p>
 <p>The reporting’s pretty sweet. We can get a <strong>gt</strong>-based report by printing an <em>agent</em>.</p>
 <p><img src="reference/figures/agent_report.png"></p>
+<p>Here are some validation reports for the considerably larger <code>intendo::intendo_revenue</code> table.</p>
+<p><a href="https://rpubs.com/rich_i/intendo_rev_postgres"><img src="https://img.shields.io/static/v1?label=Validation%20Report&amp;message=postgres&amp;color=466288" alt="postgres"></a>    <a href="https://rpubs.com/rich_i/intendo_rev_mysql"><img src="https://img.shields.io/static/v1?label=Validation%20Report&amp;message=mysql&amp;color=e2af55" alt="mysql"></a>    <a href="https://rpubs.com/rich_i/intendo_rev_duckdb"><img src="https://img.shields.io/static/v1?label=Validation%20Report&amp;message=duckdb&amp;color=black" alt="duckdb"></a></p>
 <hr>
 <p><img src="reference/figures/pipeline_based_data_validations.png"></p>
 </div>

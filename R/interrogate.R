@@ -1133,6 +1133,18 @@ interrogate_regex <- function(agent,
           TRUE ~ pb_is_good_
         ))
       
+    } else if (tbl_type == "duckdb") {
+
+      tbl <- 
+        table %>%
+        dplyr::mutate(pb_is_good_ = ifelse(
+          !is.na({{ column }}), regexp_matches({{ column }}, regex), NA)
+        ) %>%
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          is.na(pb_is_good_) ~ na_pass,
+          TRUE ~ pb_is_good_
+        ))
+      
     } else {
       
       # This works for postgres and local tables; untested so far in other DBs

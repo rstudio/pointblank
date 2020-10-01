@@ -28,7 +28,7 @@ agent_revenue_postgres <-
   ) %>%
   col_vals_equal(
     vars(time), value = 2015,
-    preconditions = ~ . %>% dplyr::mutate(time = YEAR(as.Date(time))),
+    preconditions = ~ . %>% dplyr::mutate(time = EXTRACT(NULL %YEAR FROM% as.Date(time))),
     label = "Comparison."
   ) %>%
   col_vals_not_equal(

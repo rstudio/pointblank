@@ -274,6 +274,10 @@ By printing the *informant* we get the table information report!
 
 <img src="man/figures/informant_report.png">
 
+Here is an information report for the `intendo::intendo_revenue` table.
+
+<a href="https://rpubs.com/rich_i/info_revenue_postgres"><img src="https://img.shields.io/static/v1?label=Information%20Report&amp;message=postgres&amp;color=466288" alt="postgres" /></a>
+
 <hr>
 
 ##### TABLE SCANS

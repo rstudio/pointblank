@@ -104,6 +104,13 @@ printing an *agent*.
 
 <img src="man/figures/agent_report.png">
 
+Here are some validation reports for the considerably larger 
+`intendo::intendo_revenue` table.
+
+<a href="https://rpubs.com/rich_i/intendo_rev_postgres"><img src="https://img.shields.io/static/v1?label=Validation%20Report&amp;message=postgres&amp;color=466288" alt="postgres" /></a>   
+<a href="https://rpubs.com/rich_i/intendo_rev_mysql"><img src="https://img.shields.io/static/v1?label=Validation%20Report&amp;message=mysql&amp;color=e2af55" alt="mysql" /></a>   
+<a href="https://rpubs.com/rich_i/intendo_rev_duckdb"><img src="https://img.shields.io/static/v1?label=Validation%20Report&amp;message=duckdb&amp;color=black" alt="duckdb" /></a>
+
 <hr>
 
 <img src="man/figures/pipeline_based_data_validations.png">

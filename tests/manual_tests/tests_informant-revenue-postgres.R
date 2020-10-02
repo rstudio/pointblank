@@ -60,6 +60,7 @@ informant_revenue_postgres <-
                [intendo repo](https://github.com/rich-iannone/intendo)") %>%
   incorporate()
 
+informant_revenue_postgres
 
 get_informant_report(informant_revenue_postgres, size = "standard")
 

@@ -1,3 +1,5 @@
+# nocov start
+
 #' Thoroughly scan a table to better understand it
 #' 
 #' Generate an HTML report that scours the input table data. Before calling up
@@ -62,14 +64,14 @@ scan_data <- function(tbl,
                       lang = NULL,
                       locale = NULL) {
 
-  # nocov start
+  
   
   # Limit components if a `tbl_dbi` object is supplied as the `tbl`
   if (inherits(tbl, "tbl_dbi") || inherits(tbl, "tbl_spark")) {
     sections <- setdiff(sections, c("interactions", "correlations"))
   }
   
-  # nocov end
+
   
   # Stop function if the length of `sections` is 0
   if (length(sections) == 0) {
@@ -111,7 +113,6 @@ scan_data <- function(tbl,
   )
 }
 
-# nocov start
 # nolint start
 
 #' Print the reporting produced by [scan_data()]

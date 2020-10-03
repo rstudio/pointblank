@@ -1,3 +1,5 @@
+# nocov start
+
 #' Get a table from a database
 #' 
 #' @description If your target table is in a database, the `db_tbl()` function
@@ -184,3 +186,6 @@ unknown_driver <- function() {
          "\"sqlite\", and \"duckdb\".", 
          call. = FALSE)
 }
+
+# nocov end
+

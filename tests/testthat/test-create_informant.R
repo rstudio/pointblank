@@ -1,0 +1,123 @@
+test_that("Creating a valid `informant` object is possible", {
+  
+  tbl <-
+    dplyr::tibble(
+      a = c(1, 1, 1, 2, 2, 2),
+      b = c(5, 5, 5, 3, 6, 3)
+    )
+  
+  # Create an informant object
+  informant <- create_informant(tbl = tbl)
+  
+  # Expect that names in an agent object match a
+  # prescribed set of names
+  expect_true(
+    all(
+      names(informant) ==
+        c("tbl", "read_fn", "tbl_name", "info_label",
+          "meta_snippets", "lang", "locale", "metadata"
+        )
+    )
+  )
+  
+  # Expect an informant object of class `ptblank_informant`
+  expect_is(informant, "ptblank_informant")
+  
+  # Expect certain classes for the different `ptblank_informant` components
+  expect_is(informant$tbl, class(tbl))
+  expect_null(informant$read_fn)
+  expect_is(informant$tbl_name, "character")
+  expect_is(informant$info_label, "character")
+  expect_is(informant$meta_snippets, "list")
+  expect_is(informant$lang, "character")
+  expect_is(informant$locale, "character")
+  expect_is(informant$metadata, "list")
+  expect_is(informant$metadata$info_label, "character")
+  expect_is(informant$metadata$table, "list")
+  expect_is(informant$metadata$table$name, "character")
+  expect_is(informant$metadata$table$`_columns`, "integer")
+  expect_is(informant$metadata$table$`_rows`, "numeric")
+  expect_is(informant$metadata$table$`_type`, "character")
+  expect_equal(informant$metadata$table$name, "tbl")
+  expect_equal(informant$metadata$table$`_columns`, 2)
+  expect_equal(informant$metadata$table$`_rows`, 6)
+  expect_equal(informant$metadata$table$`_type`, "tbl_df")
+  expect_is(informant$metadata$columns, "list")
+  expect_equal(names(informant$metadata$columns), c("a", "b"))
+  expect_is(informant$metadata$columns$a, "list")
+  expect_is(informant$metadata$columns$b, "list")
+  expect_equal(names(informant$metadata$columns$a), "_type")
+  expect_equal(names(informant$metadata$columns$b), "_type")
+  expect_equal(informant$metadata$columns$a$`_type`, "numeric")
+  expect_equal(informant$metadata$columns$b$`_type`, "numeric")
+  
+  # Expect an error if nothing is provided for
+  # either `tbl`, `read_fn`, or `agent`
+  expect_error(
+    create_informant()
+  )
+  
+  # Expect an error if both a table and an agent are provided 
+  expect_error(
+    create_informant(
+      tbl = small_table,
+      agent = create_agent(tbl = small_table)
+    )
+  )
+  
+  # Expect that when a table is piped into `create_informant()`
+  # and also when `tbl_name` isn't provided, the table
+  # name isn't known so it's assigned as `NA`
+  expect_equal(
+    small_table %>% create_informant() %>% .$tbl_name,
+    NA_character_
+  )
+  
+  # Expect that using a `read_fn` to read in a table name but
+  # not specifying `tbl_name` results in an `NA` for `tbl_name`
+  expect_equal(
+    create_informant(read_fn = ~ pointblank::small_table) %>% .$tbl_name,
+    NA_character_
+  )
+  
+  # Expect that there is a preference for reading a table from
+  # a `read_fn` if it's available (i.e., disregards `tbl` value)
+  informant_2 <- 
+    create_informant(
+      tbl = tbl,
+      read_fn = ~ pointblank::small_table
+    )
+  
+  expect_equal(informant_2$metadata$table$`_columns`, 8)
+  expect_equal(informant_2$metadata$table$`_rows`, 13)
+  
+  informant_3 <- 
+    create_informant(
+      tbl = tbl,
+      read_fn = function() pointblank::small_table
+    )
+  
+  expect_equal(informant_3$metadata$table$`_columns`, 8)
+  expect_equal(informant_3$metadata$table$`_rows`, 13)
+  
+  # Expect an error if the `read_fn` isn't a function
+  # or an R formula
+  expect_error(
+    create_informant(
+      read_fn = pointblank::small_table
+    )
+  )
+  
+  # Expect that agent passed in to `create_informant()`
+  # will use the agent's `read_fn`, if available
+  informant_4 <-
+    create_informant(
+      agent = create_agent(read_fn = ~ pointblank::small_table)
+    )
+  
+  expect_is(informant_4$read_fn, "formula")
+  expect_equal(
+    as.character(informant_4$read_fn),
+    c("~", "pointblank::small_table")
+  )
+})

@@ -84,4 +84,69 @@ test_that("Creating a valid `agent` object is possible", {
   # Expect that the agent label has been set
   expect_equivalent(agent_name$tbl_name, "table")
   expect_equivalent(agent_name$label, "test")
+  
+  # Expect an error if nothing is provided for
+  # either `tbl` or `read_fn`
+  expect_error(
+    create_agent()
+  )
+  
+  # Expect that when a table is piped into `create_agent()`
+  # and also when `tbl_name` isn't provided, the table
+  # name isn't known so it's assigned as `NA`
+  expect_equal(
+    small_table %>% create_agent() %>% .$tbl_name,
+    NA_character_
+  )
+  
+  # Expect that using a `read_fn` to read in a table name but
+  # not specifying `tbl_name` results in an `NA` for `tbl_name`
+  expect_equal(
+    create_agent(read_fn = ~ pointblank::small_table) %>% .$tbl_name,
+    NA_character_
+  )
+  
+  # Expect that there is a preference for reading a table from
+  # a `read_fn` if it's available (i.e., disregards `tbl` value)
+  agent_2 <- 
+    create_agent(
+      tbl = tbl,
+      read_fn = ~ pointblank::small_table
+    )
+  
+  expect_equal(
+    agent_2$col_names,
+    c("date_time", "date", "a", "b", "c", "d", "e", "f")
+  )
+  
+  agent_3 <- 
+    create_agent(
+      tbl = tbl,
+      read_fn = function() pointblank::small_table
+    )
+  
+  expect_equal(
+    agent_3$col_names,
+    c("date_time", "date", "a", "b", "c", "d", "e", "f")
+  )
+  
+  # Expect an error if the `read_fn` isn't a function
+  # or an R formula
+  expect_error(
+    create_agent(
+      read_fn = pointblank::small_table
+    )
+  )
+  
+  # Expect that the `embed_report` option will always
+  # be TRUE if we use any `end_fns` (even if we set
+  # it to FALSE)
+  agent_4 <- 
+    create_agent(
+      read_fn = ~ pointblank::small_table,
+      end_fns = ~ print(Sys.time()),
+      embed_report = FALSE
+    )
+  
+  expect_true(agent_4$embed_report)
 })

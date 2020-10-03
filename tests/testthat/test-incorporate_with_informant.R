@@ -17,6 +17,9 @@ test_that("Incorporating an informant yields the correct results", {
       snippet_name = "col_count",
       fn = ~ . %>% ncol()
     ) %>%
+    info_tabular(
+      info = "Table is obtained from `test_table.csv`."
+    ) %>%
     info_columns(
       columns = vars(a),
       info = "In the range of 1 to 10. (SIMPLE)"

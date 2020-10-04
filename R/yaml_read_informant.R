@@ -256,21 +256,21 @@ expr_from_informant_yaml <- function(path,
   check_info_yaml_table(y)
   check_info_yaml_columns(y)
   check_info_yaml_others(y)
-  
+
   if ("read_fn" %in% names(y)) {
     read_fn <- paste0("  read_fn = ", y$read_fn)
   } else {
     read_fn <- NULL
   }
   
-  if (!is.null(y$tbl_name)) {
-    tbl_name <- paste0("  tbl_name = \"", y$tbl_name, "\"")
+  if (!is.null(y$table$name)) {
+    tbl_name <- paste0("  tbl_name = \"", y$table$name, "\"")
   } else {
     tbl_name <- NULL
   }
   
-  if (!is.null(y$label)) {
-    label <- paste0("  label = \"", y$label, "\"")
+  if (!is.null(y$info_label)) {
+    label <- paste0("  label = \"", y$info_label, "\"")
   } else {
     label <- NULL
   }

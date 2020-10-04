@@ -84,6 +84,7 @@ utils::globalVariables(
     "q_1",
     "q_3",
     "%REGEXP%",
+    "regexp_matches",
     "RLIKE",
     "S",
     "schema",

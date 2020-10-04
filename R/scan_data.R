@@ -1484,6 +1484,8 @@ probe_missing <- function(data) {
   
   if (inherits(data, "tbl_dbi") || inherits(data, "tbl_spark")) {
     
+    # nolint start
+    
     frequency_list <- 
       lapply(
         col_names,
@@ -1538,6 +1540,8 @@ probe_missing <- function(data) {
             col_name = `_x_`
           )
         })
+    
+    # nolint end
     
   } else {
     
@@ -2539,6 +2543,8 @@ row_header <- function(id,
   )
 }
 
+# nolint start
+
 panel_component <- function(size,
                             content,
                             title = NULL) {
@@ -2554,6 +2560,8 @@ panel_component <- function(size,
     content
   )
 }
+
+# nolint end
 
 nav_pill_li <- function(label,
                         id,

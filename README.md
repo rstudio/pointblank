@@ -413,6 +413,4 @@ See the [`LICENSE.md`](LICENSE.md) file for more details.
 
 ##### 🏛️ Governance
 
-This project is primarily maintained by [Rich Iannone][@riannnone]. Other authors may occasionally assist with some of these duties.
-
-[@riannone]: https://www.twitter.com/riannone
+This project is primarily maintained by [Rich Iannone](https://www.twitter.com/riannone). Other authors may occasionally assist with some of these duties.

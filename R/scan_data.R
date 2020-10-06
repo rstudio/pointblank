@@ -1482,9 +1482,9 @@ probe_missing <- function(data) {
   cuts <- floor(seq(from = 1, to = n_rows, length.out = n_breaks + 1))[-1]
   bin_size <- cuts[1]
   
+  # nolint start
+  
   if (inherits(data, "tbl_dbi") || inherits(data, "tbl_spark")) {
-    
-    # nolint start
     
     frequency_list <- 
       lapply(
@@ -1539,9 +1539,8 @@ probe_missing <- function(data) {
             bin_num = bin_num,
             col_name = `_x_`
           )
-        })
-    
-    # nolint end
+        }
+      )
     
   } else {
     
@@ -1583,14 +1582,19 @@ probe_missing <- function(data) {
             dplyr::mutate(bin_num = 1:n_breaks) %>%
             dplyr::mutate(col_name = `_x_`) %>%
             dplyr::rename(value = 1)
-        })
+        }
+      )
   }
+  
+  # nolint end
   
   frequency_tbl <-
     frequency_list %>%
     dplyr::bind_rows() %>%
     dplyr::mutate(value = ifelse(value == 0, NA_real_, value)) %>%
     dplyr::mutate(col_name = factor(col_name, levels = colnames(data)))
+  
+  # nolint start
   
   missing_tbl <- 
     lapply(
@@ -1608,6 +1612,8 @@ probe_missing <- function(data) {
     dplyr::bind_rows() %>%
     dplyr::mutate(value = round(value, 2)) %>%
     dplyr::mutate(col_name = factor(col_name, levels = colnames(data)))
+  
+  # nolint end
   
   plot_missing <- 
     frequency_tbl %>%

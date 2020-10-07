@@ -37,15 +37,14 @@ functions to help define the metadata entries and present it in a way that suits
 you.
 
 <hr>
-<hr>
 
 <img src="man/figures/data_quality_reporting_workflow.svg">
 
 <br>
 
-##### TABLE VALIDATIONS WITH AN AGENT AND ITS DETAILED REPORTING
+##### TABLE VALIDATIONS WITH AN AGENT AND DATA QUALITY REPORTING
 
-Data validation can be carried out in *data quality reporting* workflow, 
+Data validation can be carried out in *Data Quality Reporting* workflow, 
 ultimately resulting in the production of of a data quality analysis report.
 This is most useful in a non-interactive mode where data quality for database
 tables and on-disk data files must be periodically checked. The **pointblank**
@@ -116,21 +115,25 @@ Here are some validation reports for the considerably larger
 
 <hr>
 
-<img src="man/figures/pipeline_based_data_validations.png">
+<img src="man/figures/pipeline_data_validation_workflow.svg">
+
+<br>
 
 ##### VALIDATIONS DIRECTLY ON DATA
 
-We can perform pipeline-based data validations using the same collection of
-validation functions. This is useful for an ETL process where we
-want to directly operate on data and trigger warnings, raise errors, or
-write out logs when exceeding specified failure thresholds. It’s a cinch
-to perform checks on import of the data and at key points during the
-transformation process, perhaps stopping everything if things are
-exceptionally bad with regard to data quality.
+The *Pipeline Data Validation* workflow uses the same collection of validation
+functions but without need of an *agent*. This is useful for an ETL process
+where we want to periodically check data and trigger warnings, raise errors, or
+write out logs when exceeding specified failure thresholds. It’s a cinch to
+perform checks on import of the data and at key points during the transformation
+process, perhaps stopping data flow if things are unacceptable with regard to
+data quality.
 
 The following example uses the same three validation functions as before but,
-this time, we use them directly on the data\! In this workflow, by default, an
-error will occur if there is a single ‘fail’ test unit in any validation step:
+this time, we use them directly on the data. The validation functions act as a
+filter, passing data through unless execution is stopped by failing validations
+beyond the set threshold. In this workflow, by default, an error will occur if
+there is a single ‘fail’ test unit in any validation step:
 
 ``` r
 dplyr::tibble(
@@ -153,7 +156,7 @@ dplyr::tibble(
     * failure level (2) >= failure threshold (1) 
 
 We can downgrade this error to a warning with the `warn_on_fail()` helper
-function (assigning it to `actions`). In this way, the data will be
+function (assigning it to `actions`). In this way, the data will always be
 returned, but warnings will appear.
 
 ``` r

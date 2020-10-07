@@ -42,7 +42,6 @@ you.
 <img src="man/figures/data_quality_reporting_workflow.svg">
 
 <br>
-<br>
 
 ##### TABLE VALIDATIONS WITH AN AGENT AND ITS DETAILED REPORTING
 

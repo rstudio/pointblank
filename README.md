@@ -37,8 +37,12 @@ functions to help define the metadata entries and present it in a way that suits
 you.
 
 <hr>
+<hr>
 
-<img src="man/figures/data_quality_reporting_workflow.png">
+<img src="man/figures/data_quality_reporting_workflow.svg">
+
+<br>
+<br>
 
 ##### TABLE VALIDATIONS WITH AN AGENT AND ITS DETAILED REPORTING
 
@@ -154,12 +158,10 @@ function (assigning it to `actions`). In this way, the data will be
 returned, but warnings will appear.
 
 ``` r
-# This `warn_on_fail()` function is a nice
+# The `warn_on_fail()` function is a nice
 # shortcut for `action_levels(warn_at = 1)`;
 # it works great in this data checking workflow
 # (and the threshold can still be adjusted)
-al <- warn_on_fail()
-
 dplyr::tibble(
     a = c(5, 7, 6, 5, NA, 7),
     b = c(6, 1, 0, 6,  0, 7)
@@ -174,7 +176,10 @@ dplyr::tibble(
     preconditions = ~ . %>% dplyr::mutate(c = a + b),
     actions = warn_on_fail()
   ) %>%
-  col_is_numeric(vars(a, b))
+  col_is_numeric(
+    vars(a, b),
+    actions = warn_on_fail()
+  )
 ```
 
     #> # A tibble: 6 x 2

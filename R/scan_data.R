@@ -2567,7 +2567,7 @@ panel_component <- function(size,
   )
 }
 
-# nolint end
+
 
 nav_pill_li <- function(label,
                         id,
@@ -2593,5 +2593,7 @@ pb_glue_data <- function(.x,
                          ...) {
   glue::glue_data(.x, ..., .transformer = get, .envir = emptyenv())
 }
+
+# nolint end
 
 # nocov end

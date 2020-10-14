@@ -1,4 +1,9 @@
-<svg fill="none" viewBox="0 0 900 2100" width="900" height="2100" xmlns="http://www.w3.org/2000/svg">
+<svg fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="height: 2200px;">
+
+  <style>
+      table { position: relative; overflow-y: visible }
+  </style>
+
   <foreignObject width="100%" height="100%">
   <div xmlns="http://www.w3.org/1999/xhtml">
 <table style="font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif; display: table; border-collapse: collapse; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: none; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; table-layout: fixed;; width: 0px">
@@ -14,7 +19,7 @@
     <tr>
       <th colspan="6" style="background-color: #FFFFFF; text-align: left; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; border-bottom-width: 0; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; font-weight: normal;">Upcoming Tasks and Milestones for <strong>pointblank</strong></th>
     </tr>
-    
+
   </thead>
   <thead style="border-top-style: none; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3;">
     <tr>
@@ -289,8 +294,8 @@
       <td style="padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; text-align: center; background-color: rgba(217,63,11,0.6); color: black; font-weight: 600;">3</td>
     </tr>
   </tbody>
-  
-  
+
+
 </table>
 </div>
 </foreignObject>

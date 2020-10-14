@@ -376,38 +376,69 @@ get_agent_report <- function(agent,
         text_size <- ifelse(size == "small", 11, text_size)
         
         if (size == "small") {
-          
-          paste0(
-            "<code style=\"font-size: ", text_size,
-            "px;\">&nbsp;", assertion_type[x], "()</code>"
-          )
+
+          htmltools::tags$code(
+            style = htmltools::css(
+              `font-size` = paste0(text_size, "px")
+            ),
+            htmltools::HTML(paste0("&nbsp;", assertion_type[x], "()"))
+          ) %>%
+            as.character()
           
         } else {
           
           if (!is.na(label[x])) {
-            
-            paste0(
-              "<div aria-label=\"", briefs[x], "\" data-balloon-pos=\"right\"",
-              "style=\"width: fit-content\"><div style=\"float: left; width: 30px;\">",
-              add_icon_svg(icon = assertion_type[x]),
-              "</div>",
-              "<div style=\"line-height: 0.7em; margin-left: 32px; padding-left: 3px;\">",
-              "<p style=\"margin: 0; padding-top: 4px; font-size: 9px; \">",
-              htmltools::htmlEscape(label[x]), "</p>",
-              "<p style=\"margin: 0;\"><code style=\"font-size: 11px;\">",
-              assertion_type[x], "()</code></p></div></div>"
-            )
-            
+
+            htmltools::tags$div(
+              `aria-label` = briefs[x],
+              `data-balloon-pos` = "right",
+              style = htmltools::css(width = "fit-content"),
+              htmltools::tags$div(
+                style = htmltools::css(
+                  float = "left",
+                  width = "30px"
+                ),
+                htmltools::HTML(add_icon_svg(icon = assertion_type[x]))
+              ),
+              htmltools::tags$div(
+                style = htmltools::css(
+                  `line-height` = "0.7em",
+                  `margin-left` = "32px",
+                  `padding-left` = "3px"
+                ),
+                htmltools::tags$p(
+                  style = htmltools::css(
+                    margin = "0",
+                    `padding-top` = "4px",
+                    `font-size` = "9px"
+                  ),
+                  htmltools::htmlEscape(label[x])
+                ),
+                htmltools::tags$p(
+                  style = htmltools::css(margin = "0"),
+                  htmltools::tags$code(
+                    style = htmltools::css(`font-size` = "11px"),
+                    paste0(assertion_type[x], "()")
+                  )
+                )
+              )
+            ) %>% 
+              as.character()
+
           } else {
 
-            paste0(
-              "<div aria-label=\"", briefs[x], "\" data-balloon-pos=\"right\"",
-              "style=\"width: fit-content\">",
-              "<img>", add_icon_svg(icon = assertion_type[x]), "</img>",
-              "<code style=\"font-size: ", text_size,
-              "px;\">&nbsp;", assertion_type[x], "()</code>",
-              "</div>"
-            )
+            htmltools::tags$div(
+              `aria-label` = briefs[x],
+              `data-balloon-pos` = "right",
+              style = htmltools::css(width = "fit-content"),
+              htmltools::HTML(add_icon_svg(icon = assertion_type[x])),
+              htmltools::tags$code(
+                style = htmltools::css(`font-size` = paste0(text_size, "px")),
+                htmltools::HTML(paste0("&nbsp;", assertion_type[x], "()"))
+              )
+            ) %>%
+              as.character()
+            
           }
         }
       }

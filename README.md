@@ -406,8 +406,6 @@ suit your specific needs. Here is a listing of some other validation
 
 <hr>
 
-##### Milestones
-
 <img src="man/figures/pointblank-milestones.svg" width="100%">
 
 <hr>

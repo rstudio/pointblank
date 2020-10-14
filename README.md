@@ -406,10 +406,6 @@ suit your specific needs. Here is a listing of some other validation
 
 <hr>
 
-<img src="man/figures/pointblank-milestones.svg" width="100%">
-
-<hr>
-
 ##### Code of Conduct
 
 Please note that the pointblank project is released with a [contributor
@@ -425,3 +421,8 @@ See the [`LICENSE.md`](LICENSE.md) file for more details.
 ##### 🏛️ Governance
 
 This project is primarily maintained by [Rich Iannone](https://www.twitter.com/riannone). Other authors may occasionally assist with some of these duties.
+
+<hr>
+
+<img src="man/figures/pointblank-milestones.svg" width="100%">
+

@@ -109,8 +109,12 @@ get_informant_report <- function(informant,
   y_names <- names(y)
 
   priority_items <- c("table",  "columns")
-  names_ordered <- sort(base::intersect(y_names, priority_items), decreasing = TRUE)
+  
+  names_ordered <- 
+    sort(base::intersect(y_names, priority_items), decreasing = TRUE)
+  
   names_others <- base::setdiff(y_names, priority_items)
+  
   y <- y[c(names_ordered, names_others)]
   
   # Create empty table  
@@ -145,7 +149,9 @@ get_informant_report <- function(informant,
         )
       
       # Remove `name`, `type`, and `_type` from `section_names`
-      section_names <- section_names[!(section_names %in% c("name", "type", "_type"))]
+      section_names <- 
+        section_names[!(section_names %in% c("name", "type", "_type"))]
+      
     } else {
       table_type_html <- ""
     }
@@ -205,7 +211,10 @@ get_informant_report <- function(informant,
           
           list_item <- 
             list(
-              a = paste0("<strong class=\"pb_sub_label\">INFO</strong> ", unlist(col_meta))
+              a = paste0(
+                "<strong class=\"pb_sub_label\">INFO</strong> ",
+                unlist(col_meta)
+              )
             )
           
           names(list_item) <- column
@@ -291,13 +300,16 @@ get_informant_report <- function(informant,
   }
   
 
-  # Modify `tbl` so that `group` values correspond to
-  # the set `lang`
+  # Modify `tbl` so that `group` values correspond to the set `lang`
   tbl <-
     tbl %>%
     dplyr::mutate(group = dplyr::case_when(
-      group == "Table" ~ get_lsv("informant_report/pointblank_table_text")[[lang]],
-      group == "Columns" ~ get_lsv("table_scan/tbl_lab_columns")[[lang]],
+      group == "Table" ~ get_lsv(text = c(
+        "informant_report", "pointblank_table_text"
+      ))[[lang]],
+      group == "Columns" ~ get_lsv(text = c(
+        "table_scan", "tbl_lab_columns"
+      ))[[lang]],
       TRUE ~ group
     ))
   
@@ -415,7 +427,10 @@ get_informant_report <- function(informant,
       id = "pb_information"
     ) %>%
     gt::tab_header(
-      title = get_lsv("informant_report/pointblank_information_title_text")[[lang]],
+      title = get_lsv(text = c(
+        "informant_report",
+        "pointblank_information_title_text"
+        ))[[lang]],
       subtitle = gt::md(combined_subtitle)
     ) %>%
     gt::tab_source_note(source_note = gt::md(table_time)) %>%
@@ -651,7 +666,11 @@ title_text_md <- function(item,
       item <- 
         paste0(
           "<span style=\"font-size:1.17em;font-weight:bold;\">",
-          ifelse(title_code, "<code style=\"font-weight:bold;margin-bottom:2px;\">", ""),
+          ifelse(
+            title_code,
+            "<code style=\"font-weight:bold;margin-bottom:2px;\">",
+            ""
+          ),
           title,
           ifelse(title_code, "</code>", ""),
           "</span>&nbsp;&nbsp;",

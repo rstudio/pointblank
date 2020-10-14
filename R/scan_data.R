@@ -102,8 +102,9 @@ scan_data <- function(tbl,
                            "correlations", "missing", "sample"))) {
     
     stop("All values provided in `sections` must be a valid keyword:\n",
-         " * Allowed values are \"overview\", \"variables\", \"interactions\", ",
-         "\"correlations\", \"missing\", and \"sample\".",
+         " * Allowed values are \"overview\", \"variables\", ",
+         "\"interactions\", \"correlations\", \"missing\", and ",
+         "\"sample\".",
          call. = FALSE)
   }
   
@@ -557,13 +558,44 @@ get_quantile_stats_gt <- function(data_column,
       
       quantile_stats <-
         dplyr::tibble(
-          min = data_arranged %>% dplyr::summarize(a = min(a, na.rm = TRUE)) %>% dplyr::pull(a) %>% as.numeric(),
-          p05 = data_arranged %>% utils::head(quantile_rows[1]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
-          q_1 = data_arranged %>% utils::head(quantile_rows[2]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
-          med = data_arranged %>% utils::head(quantile_rows[3]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
-          q_3 = data_arranged %>% utils::head(quantile_rows[4]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
-          p95 = data_arranged %>% utils::head(quantile_rows[5]) %>% dplyr::arrange(desc(a)) %>% utils::head(1) %>% dplyr::pull(a) %>% as.numeric(),
-          max = data_arranged %>% dplyr::summarize(a = max(a, na.rm = TRUE)) %>% dplyr::pull(a) %>% as.numeric()
+          min = data_arranged %>% 
+            dplyr::summarize(a = min(a, na.rm = TRUE)) %>%
+            dplyr::pull(a) %>%
+            as.numeric(),
+          p05 = data_arranged %>% 
+            utils::head(quantile_rows[1]) %>%
+            dplyr::arrange(desc(a)) %>%
+            utils::head(1) %>%
+            dplyr::pull(a) %>%
+            as.numeric(),
+          q_1 = data_arranged %>% 
+            utils::head(quantile_rows[2]) %>%
+            dplyr::arrange(desc(a)) %>%
+            utils::head(1) %>%
+            dplyr::pull(a) %>%
+            as.numeric(),
+          med = data_arranged %>% 
+            utils::head(quantile_rows[3]) %>%
+            dplyr::arrange(desc(a)) %>%
+            utils::head(1) %>%
+            dplyr::pull(a) %>%
+            as.numeric(),
+          q_3 = data_arranged %>%
+            utils::head(quantile_rows[4]) %>%
+            dplyr::arrange(desc(a)) %>%
+            utils::head(1) %>%
+            dplyr::pull(a) %>%
+            as.numeric(),
+          p95 = data_arranged %>%
+            utils::head(quantile_rows[5]) %>%
+            dplyr::arrange(desc(a)) %>%
+            utils::head(1) %>%
+            dplyr::pull(a) %>%
+            as.numeric(),
+          max = data_arranged %>%
+            dplyr::summarize(a = max(a, na.rm = TRUE)) %>%
+            dplyr::pull(a) %>%
+            as.numeric()
         ) %>%
         dplyr::mutate(
           range = max - min,
@@ -1036,7 +1068,10 @@ get_character_nchar_histogram <- function(data_column,
     htmltools::tags$div(
       style = "text-align: center",
       htmltools::HTML(
-        gt::local_image(filename = "temp_histogram_ggplot.png", height = "500px") %>%
+        gt::local_image(
+          filename = "temp_histogram_ggplot.png",
+          height = "500px"
+        ) %>%
           gsub("height:500px", "width: 100%", .)
       )
     )
@@ -1327,7 +1362,12 @@ probe_interactions <- function(data) {
       grid.y.diag = FALSE) +
     ggplot2::theme_minimal() + 
     ggplot2::theme(
-      axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1, size = 8),
+      axis.text.x = ggplot2::element_text(
+        angle = 90,
+        vjust = 0.5,
+        hjust = 1,
+        size = 8
+      ),
       axis.text.y = ggplot2::element_text(size = 8)
     )
   
@@ -1348,7 +1388,10 @@ probe_interactions <- function(data) {
     htmltools::tags$div(
       style = "text-align: center",
       htmltools::HTML(
-        gt::local_image(filename = "temp_matrix_ggplot.png", height = "500px") %>%
+        gt::local_image(
+          filename = "temp_matrix_ggplot.png",
+          height = "500px"
+        ) %>%
           gsub("height:500px", "width: 100%", .)
       )
     )
@@ -1381,9 +1424,15 @@ probe_correlations <- function(data) {
   }
   
   data_corr <- dplyr::select(data, dplyr::one_of(columns_numeric))
-  corr_pearson <- stats::cor(data_corr, method = "pearson", use = "pairwise.complete.obs")
-  corr_kendall <- stats::cor(data_corr, method = "kendall", use = "pairwise.complete.obs")
-  corr_spearman <- stats::cor(data_corr, method = "spearman", use = "pairwise.complete.obs")
+  
+  corr_pearson <- 
+    stats::cor(data_corr, method = "pearson", use = "pairwise.complete.obs")
+  
+  corr_kendall <- 
+    stats::cor(data_corr, method = "kendall", use = "pairwise.complete.obs")
+  
+  corr_spearman <- 
+    stats::cor(data_corr, method = "spearman", use = "pairwise.complete.obs")
   
   labels_vec <- seq_along(columns_numeric)
   names(labels_vec) <- columns_numeric
@@ -1465,7 +1514,12 @@ get_corr_plot <- function(mat,
 probe_missing <- function(data) {
   
   n_cols <- ncol(data)
-  n_rows <- data %>% dplyr::count(name = "n") %>% dplyr::pull(n) %>% as.numeric()
+  
+  n_rows <- 
+    data %>%
+    dplyr::count(name = "n") %>%
+    dplyr::pull(n) %>%
+    as.numeric()
   
   if (n_rows < 20) {
     n_breaks <- n_rows
@@ -1480,6 +1534,7 @@ probe_missing <- function(data) {
   col_names <- colnames(data)
   
   cuts <- floor(seq(from = 1, to = n_rows, length.out = n_breaks + 1))[-1]
+  
   bin_size <- cuts[1]
   
   # nolint start
@@ -1630,7 +1685,12 @@ probe_missing <- function(data) {
     ) +
     ggplot2::geom_label(
       data = missing_tbl,
-      mapping = ggplot2::aes(x = col_name, y = -0.2, label = value, color = value),
+      mapping = ggplot2::aes(
+        x = col_name,
+        y = -0.2,
+        label = value,
+        color = value
+      ),
       fill = "white",
       show.legend = FALSE
     ) +
@@ -1638,10 +1698,16 @@ probe_missing <- function(data) {
     ggplot2::theme_minimal() +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(
-        angle = 90, vjust = 0.5, hjust = 1, size = 10, margin = ggplot2::margin(t = -1)
+        angle = 90,
+        vjust = 0.5,
+        hjust = 1,
+        size = 10,
+        margin = ggplot2::margin(t = -1)
       ),
       axis.text.y = ggplot2::element_text(
-        angle = 90, hjust = 0, margin = ggplot2::margin(r = -3)
+        angle = 90,
+        hjust = 0,
+        margin = ggplot2::margin(r = -3)
       ),
       panel.grid = ggplot2::element_blank(),
       legend.direction = "horizontal",
@@ -1669,7 +1735,10 @@ probe_missing <- function(data) {
     htmltools::tags$div(
       style = "text-align: center",
       htmltools::HTML(
-        gt::local_image(filename = "temp_missing_ggplot.png", height = "500px") %>%
+        gt::local_image(
+          filename = "temp_missing_ggplot.png",
+          height = "500px"
+        ) %>%
           gsub("height:500px", "width: 100%", .)
       )
     )
@@ -1797,7 +1866,10 @@ build_examination_page <- function(data,
         htmltools::HTML(
           "<head>\n",
           "   <meta charset=\"utf-8\">\n",
-          "   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n",
+          paste0(
+            "   <meta name=\"viewport\" content=\"width=device-width, ",
+            "initial-scale=1, shrink-to-fit=no\">\n"
+          ),
           "   <style>\n",
           "     ", bootstrap_lib, "\n",
           "   </style>\n",
@@ -1854,14 +1926,17 @@ probe_overview_stats_assemble <- function(data,
                                           locale) {
   
   if (is.na(tbl_name)) {
-    header <- get_lsv("table_scan/nav_overview_ts")[[lang]]
+    header <- 
+      get_lsv("table_scan/nav_overview_ts")[[lang]]
   } else {
-    header <- glue::glue(get_lsv("table_scan/section_title_overview_of_ts")[[lang]])
+    header <- 
+      glue::glue(get_lsv("table_scan/section_title_overview_of_ts")[[lang]])
   }
   
   row_header <- row_header(id = "overview", header = htmltools::HTML(header))
   
-  overview_stats <- probe_overview_stats(data = data, lang = lang, locale = locale)
+  overview_stats <- 
+    probe_overview_stats(data = data, lang = lang, locale = locale)
   
   htmltools::tagList(
     row_header,
@@ -1878,7 +1953,10 @@ probe_overview_stats_assemble <- function(data,
             active = TRUE
           ),
           nav_pill_li(
-            label = get_lsv("table_scan/button_label_overview_reproducibility_ts")[[lang]],
+            label = get_lsv(text = c(
+              "table_scan",
+              "button_label_overview_reproducibility_ts"
+            ))[[lang]],
             id = "overview-reproducibility",
             active = FALSE
           )
@@ -1892,12 +1970,18 @@ probe_overview_stats_assemble <- function(data,
             panel_component_list = list(
               panel_component(
                 size = 6,
-                title = get_lsv("table_scan/subsection_title_overview_table_overview")[[lang]],
+                title = get_lsv(text = c(
+                  "table_scan",
+                  "subsection_title_overview_table_overview"
+                ))[[lang]],
                 content = overview_stats$data_overview_gt
               ),
               panel_component(
                 size = 6,
-                title = get_lsv("table_scan/subsection_title_overview_column_types")[[lang]],
+                title = get_lsv(text = c(
+                  "table_scan",
+                  "subsection_title_overview_column_types"
+                ))[[lang]],
                 content = overview_stats$r_col_types_gt
               )
             )
@@ -1908,7 +1992,10 @@ probe_overview_stats_assemble <- function(data,
             panel_component_list = list(
               panel_component(
                 size = 12,
-                title = get_lsv("table_scan/subsection_title_overview_reproducibility_information")[[lang]],
+                title = get_lsv(text = c(
+                  "table_scan",
+                  "subsection_title_overview_reproducibility_information"
+                ))[[lang]],
                 content = overview_stats$reproducibility_gt
               )
             )
@@ -1999,11 +2086,19 @@ probe_columns_assemble <- function(data,
                           class = "active",
                           style = "padding-top: 5px;",
                           htmltools::tags$a(
-                            href = paste0("#", id_val, "bottom-", id_val, "statistics"),
-                            `aria-controls` = paste0(id_val, "bottom-", id_val, "statistics"),
+                            href = paste0(
+                              "#", id_val, "bottom-",
+                              id_val, "statistics"
+                            ),
+                            `aria-controls` = paste0(
+                              id_val, "bottom-", id_val, "statistics"
+                            ),
                             role = "tab",
                             `data-toggle` = "tab",
-                            get_lsv("table_scan/tab_label_variables_statistics_ts")[[lang]]
+                            get_lsv(text = c(
+                              "table_scan",
+                              "tab_label_variables_statistics_ts"
+                            ))[[lang]]
                           )
                         ),
                         htmltools::tags$li(
@@ -2011,11 +2106,20 @@ probe_columns_assemble <- function(data,
                           class = "",
                           style = "padding-top: 5px;",
                           htmltools::tags$a(
-                            href = paste0("#", id_val, "bottom-", id_val, "common_values"),
-                            `aria-controls` = paste0(id_val, "bottom-", id_val, "common_values"),
+                            href = paste0(
+                              "#", id_val, "bottom-",
+                              id_val, "common_values"
+                            ),
+                            `aria-controls` = paste0(
+                              id_val, "bottom-",
+                              id_val, "common_values"
+                            ),
                             role = "tab",
                             `data-toggle` = "tab",
-                            get_lsv("table_scan/tab_label_variables_common_values_ts")[[lang]]
+                            get_lsv(text = c(
+                              "table_scan",
+                              "tab_label_variables_common_values_ts"
+                            ))[[lang]]
                           )
                         ),
                         htmltools::tags$li(
@@ -2023,11 +2127,20 @@ probe_columns_assemble <- function(data,
                           class = "",
                           style = "padding-top: 5px;",
                           htmltools::tags$a(
-                            href = paste0("#", id_val, "bottom-", id_val, "max_min_slices"),
-                            `aria-controls` = paste0(id_val, "bottom-", id_val, "max_min_slices"),
+                            href = paste0(
+                              "#", id_val, "bottom-",
+                              id_val, "max_min_slices"
+                            ),
+                            `aria-controls` = paste0(
+                              id_val, "bottom-",
+                              id_val, "max_min_slices"
+                            ),
                             role = "tab",
                             `data-toggle` = "tab",
-                            get_lsv("table_scan/tab_label_variables_max_min_slices_ts")[[lang]]
+                            get_lsv(text = c(
+                              "table_scan",
+                              "tab_label_variables_max_min_slices_ts"
+                            ))[[lang]]
                           )
                         )
                       ),
@@ -2037,12 +2150,18 @@ probe_columns_assemble <- function(data,
                         htmltools::tags$div(
                           role = "tabpanel",
                           class = "tab-pane col-sm-12 active",
-                          id = paste0(id_val, "bottom-", id_val, "statistics"),
+                          id = paste0(
+                            id_val, "bottom-",
+                            id_val, "statistics"
+                          ),
                           htmltools::tags$div(
                             class = "col-sm-6",
                             htmltools::tags$p(
                               class = "h4",
-                              get_lsv("table_scan/subsection_title_variables_quantile_statistics")[[lang]]
+                              get_lsv(text = c(
+                                "table_scan",
+                                "subsection_title_variables_quantile_statistics"
+                              ))[[lang]]
                             ),
                             x$column_quantile_gt
                           ),
@@ -2050,7 +2169,13 @@ probe_columns_assemble <- function(data,
                             class = "col-sm-6",
                             htmltools::tags$p(
                               class = "h4",
-                              get_lsv("table_scan/subsection_title_variables_descriptive_statistics")[[lang]]
+                              get_lsv(text = c(
+                                "table_scan",
+                                paste0(
+                                  "subsection_title_variables_",
+                                  "descriptive_statistics"
+                                )
+                              ))[[lang]]
                             ),
                             x$column_descriptive_gt
                           )
@@ -2059,12 +2184,18 @@ probe_columns_assemble <- function(data,
                         htmltools::tags$div(
                           role = "tabpanel",
                           class = "tab-pane col-sm-12",
-                          id = paste0(id_val, "bottom-", id_val, "common_values"),
+                          id = paste0(
+                            id_val, "bottom-",
+                            id_val, "common_values"
+                          ),
                           htmltools::tags$div(
                             class = "col-sm-12",
                             htmltools::tags$p(
                               class = "h4",
-                              get_lsv("table_scan/subsection_title_variables_common_values")[[lang]]
+                              get_lsv(text = c(
+                                "table_scan",
+                                "subsection_title_variables_common_values"
+                              ))[[lang]]
                             ),
                             x$column_common_gt
                           )
@@ -2073,12 +2204,18 @@ probe_columns_assemble <- function(data,
                         htmltools::tags$div(
                           role = "tabpanel",
                           class = "tab-pane col-sm-12",
-                          id = paste0(id_val, "bottom-", id_val, "max_min_slices"),
+                          id = paste0(
+                            id_val, "bottom-",
+                            id_val, "max_min_slices"
+                          ),
                           htmltools::tags$div(
                             class = "col-sm-6",
                             htmltools::tags$p(
                               class = "h4",
-                              get_lsv("table_scan/subsection_title_variables_maximum_values")[[lang]]
+                              get_lsv(text = c(
+                                "table_scan",
+                                "subsection_title_variables_maximum_values"
+                              ))[[lang]]
                             ),
                             x$column_top_slice_gt
                           ),
@@ -2086,12 +2223,14 @@ probe_columns_assemble <- function(data,
                             class = "col-sm-6",
                             htmltools::tags$p(
                               class = "h4",
-                              get_lsv("table_scan/subsection_title_variables_minimum_values")[[lang]]
+                              get_lsv(text = c(
+                                "table_scan",
+                                "subsection_title_variables_minimum_values"
+                              ))[[lang]]
                             ),
                             x$column_bottom_slice_gt
                           )
                         )
-                        
                       )
                     )
                   )
@@ -2163,11 +2302,20 @@ probe_columns_assemble <- function(data,
                           class = "active",
                           style = "padding-top: 5px;",
                           htmltools::tags$a(
-                            href = paste0("#", id_val, "bottom-", id_val, "common_values"),
-                            `aria-controls` = paste0(id_val, "bottom-", id_val, "common_values"),
+                            href = paste0(
+                              "#", id_val, "bottom-",
+                              id_val, "common_values"
+                            ),
+                            `aria-controls` = paste0(
+                              id_val, "bottom-",
+                              id_val, "common_values"
+                            ),
                             role = "tab",
                             `data-toggle` = "tab",
-                            get_lsv("table_scan/tab_label_variables_common_values_ts")[[lang]]
+                            get_lsv(text = c(
+                              "table_scan",
+                              "tab_label_variables_common_values_ts"
+                            ))[[lang]]
                           )
                         ),
                         
@@ -2176,11 +2324,20 @@ probe_columns_assemble <- function(data,
                           class = "",
                           style = "padding-top: 5px;",
                           htmltools::tags$a(
-                            href = paste0("#", id_val, "bottom-", id_val, "lengths"),
-                            `aria-controls` = paste0(id_val, "bottom-", id_val, "lengths"),
+                            href = paste0(
+                              "#", id_val, "bottom-",
+                              id_val, "lengths"
+                            ),
+                            `aria-controls` = paste0(
+                              id_val, "bottom-",
+                              id_val, "lengths"
+                            ),
                             role = "tab",
                             `data-toggle` = "tab",
-                            get_lsv("table_scan/subsection_title_variables_string_lengths")[[lang]]
+                            get_lsv(text = c(
+                              "table_scan",
+                              "subsection_title_variables_string_lengths"
+                            ))[[lang]]
                           )
                         ),
                         
@@ -2191,12 +2348,18 @@ probe_columns_assemble <- function(data,
                         htmltools::tags$div(
                           role = "tabpanel",
                           class = "tab-pane col-sm-12 active",
-                          id = paste0(id_val, "bottom-", id_val, "common_values"),
+                          id = paste0(
+                            id_val, "bottom-",
+                            id_val, "common_values"
+                          ),
                           htmltools::tags$div(
                             class = "col-sm-12",
                             htmltools::tags$p(
                               class = "h4",
-                              get_lsv("table_scan/subsection_title_variables_common_values")[[lang]]
+                              get_lsv(text = c(
+                                "table_scan",
+                                "subsection_title_variables_common_values"
+                              ))[[lang]]
                             ),
                             x$column_common_gt
                           )
@@ -2205,12 +2368,18 @@ probe_columns_assemble <- function(data,
                         htmltools::tags$div(
                           role = "tabpanel",
                           class = "tab-pane col-sm-12",
-                          id = paste0(id_val, "bottom-", id_val, "lengths"),
+                          id = paste0(
+                            id_val, "bottom-",
+                            id_val, "lengths"
+                          ),
                           htmltools::tags$div(
                             class = "col-sm-4",
                             htmltools::tags$p(
                               class = "h4",
-                              get_lsv("table_scan/subsection_title_variables_string_lengths")[[lang]]
+                              get_lsv(text = c(
+                                "table_scan",
+                                "subsection_title_variables_string_lengths"
+                              ))[[lang]]
                             ),
                             x$column_nchar_gt
                           ),
@@ -2218,7 +2387,10 @@ probe_columns_assemble <- function(data,
                             class = "col-sm-8",
                             htmltools::tags$p(
                               class = "h4",
-                              get_lsv("table_scan/subsection_title_variables_histogram")[[lang]]
+                              get_lsv(text = c(
+                                "table_scan",
+                                "subsection_title_variables_histogram"
+                              ))[[lang]]
                             ),
                             x$column_nchar_plot
                           )
@@ -2232,7 +2404,8 @@ probe_columns_assemble <- function(data,
             )
           )
           
-        } else if (x$column_type %in% c("logical", "factor", "date", "datetime")) {
+        } else if (x$column_type %in% 
+                   c("logical", "factor", "date", "datetime")) {
           
           htmltools::tagList(
             htmltools::tags$div(
@@ -2354,9 +2527,21 @@ probe_correlations_assemble <- function(data,
         htmltools::tags$ul(
           class = "nav nav-pills",
           role = "tablist",
-          nav_pill_li(label = "Pearson", id = "correlations-pearson", active = TRUE),
-          nav_pill_li(label = "Kendall", id = "correlations-kendall", active = FALSE),
-          nav_pill_li(label = "Spearman", id = "correlations-spearman", active = FALSE),
+          nav_pill_li(
+            label = "Pearson",
+            id = "correlations-pearson",
+            active = TRUE
+          ),
+          nav_pill_li(
+            label = "Kendall",
+            id = "correlations-kendall",
+            active = FALSE
+          ),
+          nav_pill_li(
+            label = "Spearman",
+            id = "correlations-spearman",
+            active = FALSE
+          ),
         ),
         htmltools::tags$div(
           class = "tab-content",

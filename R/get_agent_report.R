@@ -438,7 +438,6 @@ get_agent_report <- function(agent,
               )
             ) %>%
               as.character()
-            
           }
         }
       }
@@ -457,38 +456,62 @@ get_agent_report <- function(agent,
         } else if (is.na(x)) {
           x <- NA_character_
         } else {
-          text <- x %>% unlist() %>% strsplit(", ") %>% unlist()
-          title <- text
+
           text <- 
-            paste(
-              paste0(
-                "<span style=\"color: purple;\">&marker;</span>",
-                text
-              ),
-              collapse = ", "
+            x %>%
+            unlist() %>%
+            strsplit(", ") %>%
+            unlist()
+          
+          title <- text
+          
+          text_fragments <- 
+            paste0(
+              htmltools::tags$span(
+                style = htmltools::css(color = "purple"),
+                htmltools::HTML("&marker;")
+              ), text, collapse = ", "
             )
           
           if (size == "small") {
+            
             x <- 
-              paste0(
-                "<div><p title=\"", paste(title, collapse = ", "),
-                "\"style=\"margin-top: 0px;margin-bottom: 0px; ",
-                "font-family: monospace; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
-                "</p></div>"
-              )
+              htmltools::tags$div(
+                htmltools::tags$p(
+                  title = paste(title, collapse = ", "),
+                  style = htmltools::css(
+                    `margin-top` = "0",
+                    `margin-bottom` = "0",
+                    `font-family` = "monospace",
+                    `white-space` = "nowrap",
+                    `text-overflow` = "ellipsis",
+                    overflow = "hidden"
+                  ),
+                  htmltools::HTML(text_fragments)
+                )
+              ) %>% 
+              as.character()
+            
           } else {
-            x <- 
-              paste0(
-                "<div aria-label=\"", paste(title, collapse = ", "), 
-                "\" data-balloon-pos=\"left\">",
-                "<p style=\"margin-top: 0px;margin-bottom: 0px; ",
-                "font-size: 11px; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden; line-height: 2em;\">",
-                "<code>", text, "</code>",
-                "</p></div>"
-              )
+            
+            x <-
+              htmltools::tags$div(
+                `aria-label` = paste(title, collapse = ", "),
+                `data-balloon-pos` = "left",
+                htmltools::tags$p(
+                  style = htmltools::css(
+                    `margin-top` = "0",
+                    `margin-bottom` = "0",
+                    `font-size` = "11px",
+                    `white-space` = "nowrap",
+                    `text-overflow` = "ellipsis",
+                    overflow = "hidden",
+                    `line-height` = "2em"
+                  ),
+                  htmltools::tags$code(htmltools::HTML(text_fragments))
+                )
+              ) %>% 
+              as.character()
           }
         }
         x
@@ -572,15 +595,19 @@ get_agent_report <- function(agent,
             )
           
           if (size == "small") {
+            
             x <-
               paste0(
-                "<div><p title=\"", title, "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "<div><p title=\"", title, "\" style=\"margin-top: 0px; ",
+                "margin-bottom: 0px; ",
                 "font-family: monospace; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
                 text,
                 "</p></div>"
               )
+            
           } else {
+            
             x <- 
               paste0(
                 "<div aria-label=\"", title, "\" data-balloon-pos=\"left\">",
@@ -623,7 +650,8 @@ get_agent_report <- function(agent,
           if (size == "small") {
             x <- 
               paste0(
-                "<div><p title=\"", text, "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "<div><p title=\"", text, "\" style=\"margin-top: 0px; ",
+                "margin-bottom: 0px; ",
                 "font-family: monospace; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
                 text,
@@ -645,12 +673,22 @@ get_agent_report <- function(agent,
           
           # Conjointly case
           
-          step_text <- 
-            if (length(x) > 1) {
-              paste0(length(x), " ", get_lsv("agent_report/report_col_steps")[[lang]])
-            } else {
-              paste0(length(x), " ", get_lsv("agent_report/report_col_step")[[lang]])
-            }
+          if (length(x) > 1) {
+            
+            step_text <- 
+              paste0(
+                length(x), " ",
+                get_lsv("agent_report/report_col_steps")[[lang]]
+              )
+            
+          } else {
+            
+            step_text <- 
+              paste0(
+                length(x), " ",
+                get_lsv("agent_report/report_col_step")[[lang]]
+              )
+          }
           
           x <- 
             paste0(
@@ -677,7 +715,9 @@ get_agent_report <- function(agent,
           if (size == "small") {
             x <- 
               paste0(
-                "<div><p title=\"", x %>% tidy_gsub("~", "") %>% paste(., collapse = ", "), "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "<div><p title=\"",
+                x %>% tidy_gsub("~", "") %>% paste(., collapse = ", "),
+                "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
                 "font-family: monospace; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
                 text,
@@ -686,8 +726,10 @@ get_agent_report <- function(agent,
           } else {
             x <- 
               paste0(
-                "<div aria-label=\"", x %>% tidy_gsub("~", "") %>% paste(., collapse = ", "),
-                "\" data-balloon-pos=\"left\"><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "<div aria-label=\"",
+                x %>% tidy_gsub("~", "") %>% paste(., collapse = ", "),
+                "\" data-balloon-pos=\"left\"><p style=\"margin-top: 0px; ",
+                "margin-bottom: 0px; ",
                 "font-family: monospace; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
                 "<code>", text, "</code>",
@@ -708,6 +750,7 @@ get_agent_report <- function(agent,
       FUN = function(x) {
         
         if (is.null(x)) {
+          
           x <- 
             make_boxed_text_html(
               x = "&#x02192;",
@@ -716,7 +759,10 @@ get_agent_report <- function(agent,
               background = "transparent",
               font_size = "18px",
               padding = 0,
-              tt_text = get_lsv("agent_report/report_no_table_preconditions")[[lang]],
+              tt_text = get_lsv(text = c(
+                "agent_report",
+                "report_no_table_preconditions"
+              ))[[lang]],
               border_radius = "4px"
             )
           
@@ -736,7 +782,10 @@ get_agent_report <- function(agent,
               background = "transparent",
               font_size = "18px",
               padding = 0,
-              tt_text = get_lsv("agent_report/report_some_table_preconditions")[[lang]],
+              tt_text = get_lsv(text = c(
+                "agent_report",
+                "report_some_table_preconditions"
+              ))[[lang]],
               border_radius = "4px"
             )
         }
@@ -764,7 +813,10 @@ get_agent_report <- function(agent,
               size = size,
               color = "#4CA64C",
               background = "transparent",
-              tt_text = get_lsv("agent_report/report_no_evaluation_issues")[[lang]],
+              tt_text = get_lsv(text = c(
+                "agent_report",
+                "report_no_evaluation_issues"
+              ))[[lang]],
             )
           
         } else if (eval[x] == "W + E") {
@@ -869,7 +921,14 @@ get_agent_report <- function(agent,
             pb_fmt_number(nrow(df), decimals = 0, locale = locale)
           
           title_text <- 
-            glue::glue(get_lsv("agent_report/report_fail_rows_available")[[lang]])
+            glue::glue(
+              get_lsv(
+                text = c(
+                  "agent_report",
+                  "report_fail_rows_available"
+                )
+              )[[lang]]
+            )
           
           temp_file <- 
             tempfile(pattern = paste0("csv_file_", x), fileext = ".csv")
@@ -894,7 +953,15 @@ get_agent_report <- function(agent,
               htmltools::tags$button(
                 `aria-label` = title_text,
                 `data-balloon-pos` = "left",
-                style = "background-color: #67C2DC; color: #FFFFFF; border: none; padding: 5px; font-weight: bold; cursor: pointer; border-radius: 4px;",
+                style = htmltools::css(
+                  `background-color` = "#67C2DC",
+                  color = "#FFFFFF",
+                  border = "none",
+                  padding = "5px",
+                  `font-weight` = "bold",
+                  cursor = "pointer",
+                  `border-radius` = "4px"
+                ),
                 "CSV"
               )
             ) %>%
@@ -998,8 +1065,14 @@ get_agent_report <- function(agent,
       W_val, S_val, N_val, eval, active
     ) %>%
     gt::gt(id = "report") %>%
-    gt::cols_merge(columns = gt::vars(n_pass, f_pass), hide_columns = gt::vars(f_pass)) %>%
-    gt::cols_merge(columns = gt::vars(n_fail, f_fail), hide_columns = gt::vars(f_fail)) %>%
+    gt::cols_merge(
+      columns = gt::vars(n_pass, f_pass),
+      hide_columns = gt::vars(f_pass)
+    ) %>%
+    gt::cols_merge(
+      columns = gt::vars(n_fail, f_fail),
+      hide_columns = gt::vars(f_fail)
+    ) %>%
     gt::text_transform(
       locations = gt::cells_body(columns = gt::vars(n_pass, n_fail)),
       fn = function(x) {
@@ -1133,7 +1206,11 @@ get_agent_report <- function(agent,
       locations = gt::cells_body(columns = vars(precon, W))
     ) %>%
     gt::tab_style(
-      style = gt::cell_borders(sides = "left", color = "#E5E5E5", style = "dashed"),
+      style = gt::cell_borders(
+        sides = "left",
+        color = "#E5E5E5",
+        style = "dashed"
+      ),
       locations = gt::cells_body(columns = vars(n_pass, n_fail))
     ) %>%
     gt::tab_style(
@@ -1148,7 +1225,11 @@ get_agent_report <- function(agent,
       locations = gt::cells_body(columns = vars(S))
     ) %>%
     gt::tab_style(
-      style = gt::cell_borders(sides = "left", color = "#E5E5E5", style = "dashed"),
+      style = gt::cell_borders(
+        sides = "left",
+        color = "#E5E5E5",
+        style = "dashed"
+      ),
       locations = list(
         gt::cells_body(columns = vars(columns, values))
       )
@@ -1189,7 +1270,11 @@ get_agent_report <- function(agent,
       gt::tab_style(
         style = list(
           gt::cell_fill(color = "#F2F2F2"),
-          gt::cell_borders(sides = "right", style = "solid", color = "#F2F2F2")
+          gt::cell_borders(
+            sides = "right",
+            style = "solid",
+            color = "#F2F2F2"
+          )
         ),
         locations = gt::cells_body(
           columns = gt::vars(
@@ -1264,7 +1349,9 @@ get_agent_report <- function(agent,
               "</div>"
             )
           ),
-          subtitle = gt::md(paste0(agent_label_styled, " ", table_type, " <br><br>"))
+          subtitle = gt::md(
+            paste0(agent_label_styled, " ", table_type, " <br><br>")
+          )
         )
       
     } else {
@@ -1272,8 +1359,12 @@ get_agent_report <- function(agent,
       gt_agent_report <- 
         gt_agent_report %>%
         gt::tab_header(
-          title = get_lsv("agent_report/pointblank_validation_title_text")[[lang]],
-          subtitle = gt::md(paste0(agent_label_styled, " ", table_type, " <br><br>"))
+          title = get_lsv(text = c(
+            "agent_report", "pointblank_validation_title_text"
+          ))[[lang]],
+          subtitle = gt::md(
+            paste0(agent_label_styled, " ", table_type, " <br><br>")
+          )
         )
     }
     
@@ -1304,8 +1395,18 @@ get_agent_report <- function(agent,
         style = "height: 40px"
       ) %>%
       gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) %>%
-      gt::opt_css("@import url(\"https://unpkg.com/balloon-css/balloon.min.css\");") %>%
-      gt::opt_css("@import url(\"https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap\");") %>%
+      gt::opt_css(
+        paste0(
+          "@import url(\"https://unpkg.com/",
+          "balloon-css/balloon.min.css\");"
+        )
+      ) %>%
+      gt::opt_css(
+        paste0(
+          "@import url(\"https://fonts.googleapis.com/",
+          "css2?family=IBM+Plex+Mono&display=swap\");"
+        )
+      ) %>%
       gt::opt_css(
         css = "
           #pb_information {

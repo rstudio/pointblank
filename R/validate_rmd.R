@@ -370,6 +370,8 @@ knitr_chunk_hook <- function(x, options) {
                             error_vec,
                             agent_tbl_vec) {
     
+    # nolint start
+    
     pass_svg <- 
       htmltools::HTML(
         "<svg height=\"1.5em\" viewBox=\"0 0 32 32\" style=\"margin-top: 1px; fill: green;\"><path d=\"M 28.28125 6.28125 L 11 23.5625 L 3.71875 16.28125 L 2.28125 17.71875 L 10.28125 25.71875 L 11 26.40625 L 11.71875 25.71875 L 29.71875 7.71875 Z\"></path></svg>"
@@ -379,6 +381,8 @@ knitr_chunk_hook <- function(x, options) {
       htmltools::HTML(
         "<svg height=\"1.5em\" viewBox=\"0 0 32 32\" style=\"margin-top: 3px; fill: red;\"><path d=\"M 16 3 C 8.832031 3 3 8.832031 3 16 C 3 23.167969 8.832031 29 16 29 C 23.167969 29 29 23.167969 29 16 C 29 8.832031 23.167969 3 16 3 Z M 16 5 C 22.085938 5 27 9.914063 27 16 C 27 22.085938 22.085938 27 16 27 C 9.914063 27 5 22.085938 5 16 C 5 9.914063 9.914063 5 16 5 Z M 12.21875 10.78125 L 10.78125 12.21875 L 14.5625 16 L 10.78125 19.78125 L 12.21875 21.21875 L 16 17.4375 L 19.78125 21.21875 L 21.21875 19.78125 L 17.4375 16 L 21.21875 12.21875 L 19.78125 10.78125 L 16 14.5625 Z\"/></svg>"
       )
+    
+    # nolint end
     
     content <- c()
     
@@ -401,17 +405,39 @@ knitr_chunk_hook <- function(x, options) {
               class = "panel panel-success",
               htmltools::tags$div(
                 class = "panel-heading",
-                style = "color: #333; border-color: transparent;",
+                style = htmltools::css(
+                  color = "#333",
+                  `border-color` = "transparent"
+                ),
                 htmltools::tags$div(
-                  style = "display: inline-flex; width: 100%",
+                  style = htmltools::css(
+                    display = "inline-flex",
+                    width = "100%"
+                  ),
                   htmltools::tags$div(
-                    style = "margin-top: 2px; padding-left: 5px; background: #FAFAFA;",
+                    style = htmltools::css(
+                      `margin-top` = "2px",
+                      `padding-left` = "5px",
+                      background = "#FAFAFA"
+                    ),
                     pass_svg
                   ),
                   htmltools::tags$div(
-                    style = "padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 4px; margin-top: 2px; background: #FAFAFA; width: 100%; overflow-x: scroll;",
+                    style = htmltools::css(
+                      `padding-left` = "2px",
+                      `padding-right` = "2px",
+                      `padding-top` = "2px",
+                      `padding-bottom` = "4px",
+                      `margin-top` = "2px",
+                      background = "#FAFAFA",
+                      width = "100%",
+                      `overflow-x` = "scroll"
+                    ),
                     htmltools::tags$code(
-                      style = "background-color: #FAFAFA; padding-left: 0;",
+                      style = htmltools::css(
+                        `background-color` = "#FAFAFA",
+                        `padding-left` = "0"
+                      ),
                       code_vec[i]
                     )
                   )
@@ -429,35 +455,77 @@ knitr_chunk_hook <- function(x, options) {
               class = "panel panel-danger",
               htmltools::tags$div(
                 class = "panel-heading",
-                style = "color: #333; border-color: transparent;",
+                style = htmltools::css(
+                  color = "#333",
+                  `border-color` = "transparent"
+                ),
                 htmltools::tags$div(
-                  style = "display: inline-flex; width: 100%",
+                  style = htmltools::css(
+                    display = "inline-flex",
+                    width = "100%"
+                  ),
                   htmltools::tags$div(
-                    style = "margin-top: 2px; padding-left: 5px; background: #FAFAFA;",
+                    style = htmltools::css(
+                      `margin-top` = "2px",
+                      `padding-left` = "5px",
+                      background = "#FAFAFA"
+                    ),
                     fail_svg
                   ),
                   htmltools::tags$div(
-                    style = "padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 4px; margin-top: 2px; background: #FAFAFA; width: 100%; overflow-x: scroll;",
+                    style = htmltools::css(
+                      `padding-left` = "2px",
+                      `padding-right` = "2px",
+                      `padding-top` = "2px",
+                      `padding-bottom` = "4px",
+                      `margin-top` = "2px",
+                      background = "#FAFAFA",
+                      width = "100%",
+                      `overflow-x` = "scroll"
+                    ),
                     htmltools::tags$code(
-                      style = "background-color: #FAFAFA; padding-left: 0;",
+                      style = htmltools::css(
+                        `background-color` = "#FAFAFA",
+                        `padding-left` = "0"
+                      ),
                       code_vec[i]
                     )
                   )
                 ),
                 htmltools::tags$hr(
-                  style = "margin-top: 10px; margin-bottom: 0; border: 1px solid #EBCCD1;"
+                  style = htmltools::css(
+                    `margin-top` = "10px",
+                    `margin-bottom` = "0",
+                    border = "1px solid #EBCCD1"
+                  )
                 ),
                 htmltools::tags$div(
                   class = "panel-body",
-                  style = "padding-left: 15px; padding-top: 15px; padding-right: 15px; padding-bottom: 15px; background: #FAFAFA; width: 100%; overflow-x: scroll;",
+                  style = htmltools::css(
+                    `padding-left` = "15px",
+                    `padding-top` = "15px",
+                    `padding-right` = "15px",
+                    `padding-bottom` = "15px",
+                    background = "#FAFAFA",
+                    width = "100%",
+                    `overflow-x` = "scroll"
+                  ),
                   htmltools::tags$code(
-                    style = "background-color: #FAFAFA; padding-left: 0; overflow-x: scroll;",
+                    style = htmltools::css(
+                      `background-color` = "#FAFAFA",
+                      `padding-left` = "0",
+                      `overflow-x` = "scroll"
+                    ),
                     output_vec[i]
                   )
                 ),
                 htmltools::tags$hr(
-                  style = "margin-top: 0; margin-bottom: 0; border: 1px solid #EBCCD1;"
-                ),
+                  style = htmltools::css(
+                    `margin-top` = "0",
+                    `margin-bottom` = "0",
+                    border = "1px solid #EBCCD1"
+                  )
+                )
               )
             )
           )

@@ -99,7 +99,7 @@ get_sundered_data <- function(agent,
   
   input_tbl <- agent$tbl
   tbl_src <- agent$tbl_src
-  
+
   if (!(tbl_src %in% c("tbl_df", "data.frame")) && is.null(id_cols)) {
     stop("This table needs to have `id_cols` specified, otherwise ",
          "sundering cannot be done",
@@ -113,28 +113,42 @@ get_sundered_data <- function(agent,
     dplyr::pull(n) %>%
     as.numeric()
   
-  # Get the row count of the input table after using `dplyr::distinct()`
-  row_count_input_tbl_distinct <- 
-    input_tbl %>%
-    dplyr::distinct() %>%
-    dplyr::summarize(n = dplyr::n()) %>%
-    dplyr::pull(n) %>%
-    as.numeric()
-  
-  # Get the validation steps that are row-based, and,
-  # did not result in evaluation errors
-  validation_steps_i <- 
+  # Keep only the validation steps that:
+  # - did not result in evaluation errors
+  # - are row-based (not including `rows_distinct()`)
+  # - are `active`
+  validation_set_prefiltered <- 
     agent$validation_set %>%
     dplyr::filter(eval_error == FALSE) %>%
     dplyr::filter(
       assertion_type %in%
         base::setdiff(row_based_step_fns_vector(), "rows_distinct")
     ) %>%
-    dplyr::filter(
-      vapply(preconditions, FUN = is.null, FUN.VALUE = logical(1))
-    ) %>%
-    dplyr::pull(i)
+    dplyr::filter(active == TRUE)
   
+  # Get a character vector of preconditions
+  preconditions_vec <- 
+    vapply(
+      validation_set_prefiltered[["preconditions"]],
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        paste(as.character(x), collapse = "")
+      }
+    )
+  
+  if (!all(preconditions_vec == preconditions_vec[1])) {
+    stop("Using `get_sundered_data()` requires that either:\n",
+         "* No `preconditions` are used, or\n",
+         "* All specified `preconditions` are the same",
+         call. = FALSE)
+  }
+  
+  # Obtain the validation steps that are to be used for sundering
+  validation_steps_i <- 
+    validation_set_prefiltered %>%
+    dplyr::pull(i)
+    
   if (length(validation_steps_i) == 0) {
     
     if (!is.null(type) && type == "pass") {
@@ -160,7 +174,7 @@ get_sundered_data <- function(agent,
     agent$validation_set %>%
     dplyr::filter(i %in% validation_steps_i) %>%
     dplyr::pull(tbl_checked)
-    
+
   for (i in seq(tbl_check_obj)) {
     
     if (i == min(seq(tbl_check_obj))) {

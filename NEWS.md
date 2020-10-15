@@ -46,6 +46,8 @@
 
 * The `set_tbl()`, `remove_tbl()`, `set_read_fn()`, and `remove_read_fn()` functions can now also be used with an *informant* object.
 
+* The `get_sundered_data()` function is more clear with regard to which validation steps are considered for splitting of the data. Using validation steps with `preconditions` must fulfill the rule that the target table only have a single form across steps.
+
 * Refactored a large portion of the code that produces the agent report to increase rendering speed.
 
 * Improved printing of errors/warnings (in the tooltips of the `EVAL` column in the agent report) thanks to implementation of HTML escaping.

@@ -25,10 +25,21 @@
 #' `interrogate()`) and gets either the 'pass' data piece (rows with no failing
 #' test units across all row-based validation functions), or, the 'fail' data
 #' piece (rows with at least one failing test unit across the same series of
-#' validations). There are some caveats, only those validation steps with no
-#' `preconditions` are considered. And, the validation steps used for this
-#' splitting must be of the row-based variety (e.g., the `col_vals_*()`
-#' functions or [conjointly()]).
+#' validations).
+#' 
+#' There are some caveats to sundering. The validation steps considered for this
+#' splitting has to be of the row-based variety (e.g., the `col_vals_*()`
+#' functions or [conjointly()], but not `rows_distinct()`). Furthermore,
+#' validation steps that experienced evaluation issues during interrogation are
+#' not considered, and, validation steps where `active = FALSE` will be
+#' disregarded. The collection of validation steps that fulfill the above
+#' requirements for sundering are termed in-consideration validation steps.
+#'
+#' If using any `preconditions` for validation steps, we must ensure that all
+#' in-consideration validation steps use the same specified `preconditions`
+#' function. Put another way, we cannot split the target table using a
+#' collection of in-consideration validation steps that use different forms of
+#' the input table.
 #'
 #' @param agent An agent object of class `ptblank_agent`. It should have had
 #'   [interrogate()] called on it, such that the validation steps were actually
@@ -48,7 +59,8 @@
 #'   other options could be `c(TRUE, FALSE)`, `c(1, 0)`, or `c(1L, 0L)`.
 #' @param id_cols An optional specification of one or more identifying columns.
 #'   When taken together, we can count on this single column or grouping of
-#'   columns to distinguish rows.
+#'   columns to distinguish rows. If the table undergoing validation is not a
+#'   data frame or tibble, then columns need to be specified for `id_cols`.
 #' @return A list of table objects if `type` is `NULL`, or, a single table if a
 #'   `type` is given.
 #' 

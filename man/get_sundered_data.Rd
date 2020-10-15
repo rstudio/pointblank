@@ -33,7 +33,8 @@ other options could be \code{c(TRUE, FALSE)}, \code{c(1, 0)}, or \code{c(1L, 0L)
 
 \item{id_cols}{An optional specification of one or more identifying columns.
 When taken together, we can count on this single column or grouping of
-columns to distinguish rows.}
+columns to distinguish rows. If the table undergoing validation is not a
+data frame or tibble, then columns need to be specified for \code{id_cols}.}
 }
 \value{
 A list of table objects if \code{type} is \code{NULL}, or, a single table if a
@@ -46,10 +47,22 @@ function works with an agent object that has intel (i.e., post
 \code{interrogate()}) and gets either the 'pass' data piece (rows with no failing
 test units across all row-based validation functions), or, the 'fail' data
 piece (rows with at least one failing test unit across the same series of
-validations). There are some caveats, only those validation steps with no
-\code{preconditions} are considered. And, the validation steps used for this
-splitting must be of the row-based variety (e.g., the \verb{col_vals_*()}
-functions or \code{\link[=conjointly]{conjointly()}}).
+validations).
+}
+\details{
+There are some caveats to sundering. The validation steps considered for this
+splitting has to be of the row-based variety (e.g., the \verb{col_vals_*()}
+functions or \code{\link[=conjointly]{conjointly()}}, but not \code{rows_distinct()}). Furthermore,
+validation steps that experienced evaluation issues during interrogation are
+not considered, and, validation steps where \code{active = FALSE} will be
+disregarded. The collection of validation steps that fulfill the above
+requirements for sundering are termed in-consideration validation steps.
+
+If using any \code{preconditions} for validation steps, we must ensure that all
+in-consideration validation steps use the same specified \code{preconditions}
+function. Put another way, we cannot split the target table using a
+collection of in-consideration validation steps that use different forms of
+the input table.
 }
 \section{Function ID}{
 

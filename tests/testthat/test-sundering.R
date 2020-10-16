@@ -25,6 +25,49 @@ agent_zero <-
   create_agent(tbl = small_table) %>%
   interrogate()
 
+# Create a precondition formula
+p_fn <- ~ . %>% dplyr::filter(f == "high")
+
+# Create an agent, add validation steps with the same
+# preconditions applied at each step, perform interrogation
+agent_p_equal <-
+  create_agent(tbl = small_table) %>%
+  col_vals_gt(vars(date_time), vars(date), na_pass = TRUE, preconditions = p_fn) %>%
+  col_vals_gt(vars(b), vars(g), na_pass = TRUE, preconditions = p_fn) %>%
+  rows_distinct(vars(d, e), preconditions = p_fn) %>%
+  rows_distinct(vars(a, f), preconditions = p_fn) %>%
+  col_vals_gt(vars(d), 100, preconditions = p_fn) %>%
+  col_vals_equal(vars(d), vars(d), na_pass = TRUE, preconditions = p_fn) %>%
+  col_vals_between(vars(c), left = vars(a), right = vars(d), na_pass = TRUE, preconditions = p_fn) %>%
+  interrogate()
+
+# Create an agent, add validation steps with preconditions
+# applied at certain steps, perform interrogation
+agent_p_mixed <-
+  create_agent(tbl = small_table) %>%
+  col_vals_gt(vars(date_time), vars(date), na_pass = TRUE, preconditions = p_fn) %>%
+  col_vals_gt(vars(b), vars(g), na_pass = TRUE, preconditions = p_fn) %>%
+  rows_distinct(vars(d, e)) %>%
+  rows_distinct(vars(a, f), preconditions = p_fn) %>%
+  col_vals_gt(vars(d), 100) %>%
+  col_vals_equal(vars(d), vars(d), na_pass = TRUE, preconditions = p_fn) %>%
+  col_vals_between(vars(c), left = vars(a), right = vars(d), na_pass = TRUE) %>%
+  interrogate()
+
+# Create an agent, add validation steps with preconditions
+# applied at non-considered steps (i.e., those steps that
+# are not used to determine splitting), perform interrogation
+agent_p_unused <-
+  create_agent(tbl = small_table) %>%
+  col_vals_gt(vars(date_time), vars(date), na_pass = TRUE) %>%
+  col_vals_gt(vars(b), vars(g), na_pass = TRUE) %>%
+  rows_distinct(vars(d, e)) %>%
+  rows_distinct(vars(a, f), preconditions = p_fn) %>%
+  col_vals_gt(vars(d), 100) %>%
+  col_vals_equal(vars(d), vars(d), na_pass = TRUE, preconditions = p_fn, active = FALSE) %>%
+  col_vals_between(vars(c), left = vars(a), right = vars(d), na_pass = TRUE) %>%
+  interrogate()
+
 # Create an in-memory SQLite database and connection
 con <- DBI::dbConnect(RSQLite::SQLite(), dbname = ":memory:")
 
@@ -300,6 +343,124 @@ test_that("sundered data can be generated and retrieved with a `tbl_df` (no step
     ) %>%
     nrow() %>%
     expect_equal(0L)
+})
+
+test_that("sundering can occur (with exceptions) when there are preconditions", {
+  
+  # Get the 'pass' data piece using `get_sundered_data()`
+  pass_data_tbl <- agent_p_equal %>% get_sundered_data(type = "pass")
+  
+  # Get the 'fail' data piece using `get_sundered_data()`
+  fail_data_tbl <- agent_p_equal %>% get_sundered_data(type = "fail")
+  
+  # Get the 'combined' data table using `get_sundered_data()`
+  combined_data_tbl <- agent_p_equal %>% get_sundered_data(type = "combined")
+  
+  # Expect that all tables are of the same type as the
+  # input data
+  expect_is(small_table, "tbl_df")
+  expect_is(pass_data_tbl, "tbl_df")
+  expect_is(fail_data_tbl, "tbl_df")
+  expect_is(combined_data_tbl, "tbl_df")
+  
+  # Expect certain dimensions for each table
+  expect_equal(dim(pass_data_tbl), c(4, 8))
+  expect_equal(dim(fail_data_tbl), c(2, 8))
+  expect_equal(dim(combined_data_tbl), c(6, 9))
+  
+  # Expect that the last column of `combined_data_tbl` is named `.pb_combined`
+  expect_equal(rev(names(combined_data_tbl))[1], ".pb_combined")
+  
+  # Expect that the last column of `combined_data_tbl` contains
+  # only `"pass"` and `"fail"` entries
+  expect_equal(
+    combined_data_tbl %>% dplyr::pull(.pb_combined) %>% unique(),
+    c("pass", "fail")
+  )
+  
+  # Expect that the sum of rows from each data piece
+  # should equal the number of rows in the input table
+  # after preconditions are applied
+  expect_equal(
+    nrow(pass_data_tbl) + nrow(fail_data_tbl),
+    nrow(small_table %>% dplyr::filter(f == "high"))
+  )
+  
+  # Expect no common rows between the two
+  # data pieces
+  pass_data_tbl %>%
+    dplyr::semi_join(
+      fail_data_tbl,
+      by = c("date_time", "date", "a", "b", "c", "d", "e", "f")
+    ) %>%
+    nrow() %>%
+    expect_equal(0L)
+  
+  # Expect all column names to be the same between the
+  # input table and the two data pieces
+  expect_equal(
+    colnames(small_table),
+    colnames(pass_data_tbl),
+    colnames(fail_data_tbl)
+  )
+  
+  # Expect a list of data pieces if `NULL` provided
+  # to the `type` argument
+  data_tbl_list <- get_sundered_data(agent_p_equal, type = NULL)
+  
+  # Expect the resulting list to hold the
+  # same two data pieces as before
+  expect_is(data_tbl_list, "list")
+  expect_equal(names(data_tbl_list), c("pass", "fail"))
+  expect_equal(length(data_tbl_list), 2)
+  expect_equal(data_tbl_list$pass, pass_data_tbl)
+  expect_equal(data_tbl_list$fail, fail_data_tbl)
+  
+  # Expect no common rows between the two
+  # data pieces in the list object
+  data_tbl_list$pass %>%
+    dplyr::semi_join(
+      data_tbl_list$fail,
+      by = c("date_time", "date", "a", "b", "c", "d", "e", "f")
+    ) %>%
+    nrow() %>%
+    expect_equal(0L)
+  
+  # Expect an error when sundering if there are 
+  # mixed preconditions on the validations that
+  # are ultimately used for splitting
+  expect_error(agent_p_mixed %>% get_sundered_data(type = "pass"))
+  expect_error(agent_p_mixed %>% get_sundered_data(type = "fail"))
+  expect_error(agent_p_mixed %>% get_sundered_data(type = "combined"))
+  expect_error(agent_p_mixed %>% get_sundered_data(type = NULL))
+  
+  # Expect no error if there are mixed preconditions across
+  # the validations but the validation steps actually used for
+  # sundering don't have mixed preconditions
+  expect_error(regexp = NA, agent_p_unused %>% get_sundered_data(type = "pass"))
+  expect_error(regexp = NA, agent_p_unused %>% get_sundered_data(type = "fail"))
+  expect_error(regexp = NA, agent_p_unused %>% get_sundered_data(type = "combined"))
+  expect_error(regexp = NA, agent_p_unused %>% get_sundered_data(type = NULL))
+  
+  # Get the 'pass' data piece using `get_sundered_data()` and `agent_p_unused`
+  pass_data_tbl_u <- agent_p_unused %>% get_sundered_data(type = "pass")
+  
+  # Get the 'fail' data piece using `get_sundered_data()` and `agent_p_unused`
+  fail_data_tbl_u <- agent_p_unused %>% get_sundered_data(type = "fail")
+  
+  # Get the 'combined' data table using `get_sundered_data()` and `agent_p_unused`
+  combined_data_tbl_u <- agent_p_unused %>% get_sundered_data(type = "combined")
+  
+  # Expect that all tables are of the same type as the
+  # input data
+  expect_is(pass_data_tbl_u, "tbl_df")
+  expect_is(fail_data_tbl_u, "tbl_df")
+  expect_is(combined_data_tbl_u, "tbl_df")
+  
+  # Expect certain dimensions for each table
+  expect_equal(dim(pass_data_tbl_u), c(9, 8))
+  expect_equal(dim(fail_data_tbl_u), c(4, 8))
+  expect_equal(dim(combined_data_tbl_u), c(13, 9))
 })
 
 test_that("sundered data can be generated and retrieved with a `tbl_dbi` (SQLite)", {

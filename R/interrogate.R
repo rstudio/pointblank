@@ -1120,6 +1120,8 @@ interrogate_regex <- function(agent,
     
     column_validity_checks_column(table = table, column = {{ column }})
     
+    # nocov start
+    
     if (tbl_type == "sqlite") {
       
       stop("Regex-based validations are currently not supported on SQLite ",
@@ -1177,6 +1179,8 @@ interrogate_regex <- function(agent,
           TRUE ~ pb_is_good_
         ))
     }
+    
+    # nocov end
     
     tbl
   }
@@ -1368,6 +1372,8 @@ interrogate_distinct <- function(agent,
       dplyr::ungroup()
   }
   
+  # nocov start
+  
   # Create another variation of `tbl_rows_distinct_1()` that works for MySQL
   tbl_rows_distinct_mysql <- function(table,
                                       column_names,
@@ -1406,6 +1412,8 @@ interrogate_distinct <- function(agent,
       )
     )
   }
+  
+  # nocov end
 }
 
 interrogate_col_schema_match <- function(agent,
@@ -1414,6 +1422,8 @@ interrogate_col_schema_match <- function(agent,
 
   # Get the reference `col_schema` object (this is user-supplied)
   table_schema_y <- agent$validation_set$values[[idx]]
+  
+  # nocov start
   
   # Get the `table` `col_schema` object (this is constructed from the table)
   if (inherits(table, "tbl_dbi") || inherits(table, "tbl_spark")) {
@@ -1448,6 +1458,8 @@ interrogate_col_schema_match <- function(agent,
         table_schema_x <- col_schema(.tbl = table, .db_col_types = "r")
       }
     }
+    
+  # nocov end
     
   } else {
     table_schema_x <- col_schema(.tbl = table)
@@ -1638,13 +1650,20 @@ add_reporting_data <- function(agent,
   
   # Get total count of TRUE rows
   if (tbl_checked_sql_server) {
+    
+    # nocov start
+    
     n_passed <-
       tbl_checked %>%
       dplyr::filter(pb_is_good_ == 1) %>%
       dplyr::summarize(n = dplyr::n()) %>%
       dplyr::pull(n) %>%
-      as.numeric()    
+      as.numeric()
+    
+    # nocov end
+    
   } else {
+    
     n_passed <-
       tbl_checked %>%
       dplyr::filter(pb_is_good_ == TRUE) %>%
@@ -1655,12 +1674,18 @@ add_reporting_data <- function(agent,
   
   # Get total count of FALSE rows
   if (tbl_checked_sql_server) {
+    
+    # nocov start
+    
     n_failed <-
       tbl_checked %>%
       dplyr::filter(pb_is_good_ == 0) %>%
       dplyr::summarize(n = dplyr::n()) %>%
       dplyr::pull(n) %>%
       as.numeric()
+    
+    # nocov end
+    
   } else {
     n_failed <-
       tbl_checked %>%
@@ -1898,11 +1923,18 @@ add_table_extract <- function(agent,
   tbl_type <- tbl_checked %>% class()
   
   if (grepl("sql server|sqlserver", agent$tbl_src_details)) {
+    
+    # nocov start
+    
     problem_rows <- 
       tbl_checked %>%
       dplyr::filter(pb_is_good_ == 0) %>%
       dplyr::select(-pb_is_good_)
+    
+    # nocov end
+    
   } else {
+    
     problem_rows <- 
       tbl_checked %>%
       dplyr::filter(pb_is_good_ == FALSE) %>%

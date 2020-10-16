@@ -232,17 +232,48 @@ get_informant_report <- function(informant,
           
         } else {
           
-          # TODO: process names in `col_meta` 
-          # - specially process `_type` or `type`
-          # - specially process `_sql_type` or `sql_type`
-          
           if ("_type" %in% col_meta_names ||
               "type" %in% col_meta_names) {
             
+            col_type_vec <- c("type", "_type", "sql_type", "_sql_type")
+            
             col_type <- NULL
-            if ("type" %in% col_meta_names) col_type <- col_meta[["type"]][1]
-            if ("_type" %in% col_meta_names) col_type <- col_meta[["_type"]][1]
-            col_meta <- col_meta[!(col_meta_names %in% c("type", "_type"))]
+            
+            if ("_type" %in% col_meta_names) {
+              col_type <- col_meta[["_type"]][1]
+            }
+            if ("type" %in% col_meta_names) {
+              col_type <- col_meta[["type"]][1]
+            }
+            
+            if ("_sql_type" %in% col_meta_names ||
+                "sql_type" %in% col_meta_names) {
+              
+              if ("_sql_type" %in% col_meta_names) {
+                sql_col_type <- col_meta[["_sql_type"]][1]
+              }
+              if ("sql_type" %in% col_meta_names) {
+                sql_col_type <- col_meta[["sql_type"]][1]
+              }
+              
+              # Fashion the `col_type` text to show the SQL
+              # column type (LHS) and then the column type in R (RHS)
+              col_type <- 
+                paste(
+                  sql_col_type,
+                  htmltools::tags$span(
+                    style = htmltools::css(
+                      `font-family` = "initial",
+                      `font-size` = "large"
+                    ),
+                    htmltools::HTML("&rarr;")
+                  ) %>%
+                    as.character(),
+                  col_type
+                )
+            }
+            
+            col_meta <- col_meta[!(col_meta_names %in% col_type_vec)]
             miniheader_vec <- c(miniheader_vec, col_type = col_type)
           }
           
@@ -564,7 +595,8 @@ get_informant_report <- function(informant,
           }
           #pb_information .gt_sourcenote {
             height: 35px;
-            padding: 0
+            font-size: 60%;
+            padding: 0;
           }
           #pb_information .gt_group_heading {
             text-ident: -3px;

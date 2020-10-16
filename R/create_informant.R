@@ -182,7 +182,8 @@ create_informant <- function(tbl = NULL,
   
   column_names <- x$col_names
   column_types_r <- x$col_types
-  
+  column_types_sql <- x$db_col_types
+
   .tbl <- x$tbl
   
   table.columns <- length(column_names)
@@ -201,6 +202,18 @@ create_informant <- function(tbl = NULL,
         unlist(column_list[["columns"]][[column_names[i]]]),
         collapse = ", "
       ))
+  }
+  
+  if (!all(is.na(column_types_sql))) {
+    
+    for (i in seq_along(column_names)) {
+
+      column_list[["columns"]][[i]] <- 
+        c(
+          column_list[["columns"]][[i]],
+          list(`_sql_type` = column_types_sql[i])
+        )
+    }
   }
   
   metadata_list <-

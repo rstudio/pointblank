@@ -53,10 +53,7 @@ function works with an agent object that has intel (i.e., post
 interrogate()) and gets either the 'pass' data piece (rows with no failing
 test units across all row-based validation functions), or, the 'fail' data
 piece (rows with at least one failing test unit across the same series of
-validations). There are some caveats, only those validation steps with no
-preconditions are considered. And, the validation steps used for this
-splitting must be of the row-based variety (e.g., the col_vals_*()
-functions or conjointly())." />
+validations)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -137,10 +134,7 @@ function works with an agent object that has intel (i.e., post
 <code><a href='interrogate.html'>interrogate()</a></code>) and gets either the 'pass' data piece (rows with no failing
 test units across all row-based validation functions), or, the 'fail' data
 piece (rows with at least one failing test unit across the same series of
-validations). There are some caveats, only those validation steps with no
-<code>preconditions</code> are considered. And, the validation steps used for this
-splitting must be of the row-based variety (e.g., the <code>col_vals_*()</code>
-functions or <code><a href='conjointly.html'>conjointly()</a></code>).</p>
+validations).</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_sundered_data</span><span class='op'>(</span>
@@ -182,7 +176,8 @@ other options could be <code><a href='https://rdrr.io/r/base/c.html'>c(TRUE, FAL
       <th>id_cols</th>
       <td><p>An optional specification of one or more identifying columns.
 When taken together, we can count on this single column or grouping of
-columns to distinguish rows.</p></td>
+columns to distinguish rows. If the table undergoing validation is not a
+data frame or tibble, then columns need to be specified for <code>id_cols</code>.</p></td>
     </tr>
     </table>
 
@@ -190,6 +185,20 @@ columns to distinguish rows.</p></td>
 
     <p>A list of table objects if <code>type</code> is <code>NULL</code>, or, a single table if a
 <code>type</code> is given.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>There are some caveats to sundering. The validation steps considered for this
+splitting has to be of the row-based variety (e.g., the <code>col_vals_*()</code>
+functions or <code><a href='conjointly.html'>conjointly()</a></code>, but not <code><a href='rows_distinct.html'>rows_distinct()</a></code>). Furthermore,
+validation steps that experienced evaluation issues during interrogation are
+not considered, and, validation steps where <code>active = FALSE</code> will be
+disregarded. The collection of validation steps that fulfill the above
+requirements for sundering are termed in-consideration validation steps.</p>
+<p>If using any <code>preconditions</code> for validation steps, we must ensure that all
+in-consideration validation steps use the same specified <code>preconditions</code>
+function. Put another way, we cannot split the target table using a
+collection of in-consideration validation steps that use different forms of
+the input table.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     

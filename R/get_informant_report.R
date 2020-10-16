@@ -595,7 +595,8 @@ get_informant_report <- function(informant,
           }
           #pb_information .gt_sourcenote {
             height: 35px;
-            padding: 0
+            font-size: 60%;
+            padding: 0;
           }
           #pb_information .gt_group_heading {
             text-ident: -3px;

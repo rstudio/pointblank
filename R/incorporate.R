@@ -164,7 +164,19 @@ incorporate <- function(informant) {
       # TODO: provide option to format as numeric (w/ option for
       # decimal places) or as currency (w/ option for currency code)
       if (is.numeric(snippet)) {
-        snippet <- snippet %>% pb_fmt_number(locale = informant$locale)
+        
+        if (is.integer(snippet)) {
+          
+          snippet <- 
+            snippet %>%
+            pb_fmt_number(locale = informant$locale, decimals = 0)
+          
+        } else {
+          
+          snippet <- 
+            snippet %>%
+            pb_fmt_number(locale = informant$locale)
+        }
       }
       
       assign(x = names(informant$meta_snippets[i]), value = snippet)

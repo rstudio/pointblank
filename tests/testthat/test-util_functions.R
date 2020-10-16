@@ -65,6 +65,10 @@ test_that("Utility functions won't fail us", {
   agent %>% get_values_at_idx(idx = 1) %>% expect_is("character")
   agent %>% get_values_at_idx(idx = 1) %>% expect_equal("[0-9]-[a-z]*?-[0-9]*?")
   
+  #
+  # get_column_na_pass_at_idx
+  #
+  
   # Use range-based validation step functions to create
   # an agent with two validation steps 
   agent <-
@@ -76,6 +80,10 @@ test_that("Utility functions won't fail us", {
   agent %>% get_column_na_pass_at_idx(idx = 1) %>% expect_equal(TRUE)
   agent %>% get_column_na_pass_at_idx(idx = 2) %>% expect_is("logical")
   agent %>% get_column_na_pass_at_idx(idx = 2) %>% expect_equal(FALSE)
+  
+  #
+  # col_schema_from_names_types
+  #
   
   # Expect that the `col_schema_from_names_types()` function generates
   # named list object from a character vector and an unnamed list
@@ -92,6 +100,10 @@ test_that("Utility functions won't fail us", {
   expect_equal(names(cs), col_names)
   expect_equal(unname(cs), col_types)
   expect_equal(length(cs), length(col_names), length(col_types))
+  
+  #
+  # normalize_step_id
+  #
   
   # Expect that the `normalize_step_id()` function will make suitable
   # transformations of `step_id` based on the number of columns
@@ -208,10 +220,12 @@ test_that("Utility functions won't fail us", {
   # Expect a warning to be emitted for the previous statement
   expect_warning(normalize_step_id(step_id = c("one", "two", "one"), columns = columns, agent_0))
   
+  #
+  # check_step_id_duplicates
+  #
+  
   # Expect that the `check_step_id_duplicates()` function will generate
   # an error if a `step_id` has been recorded in previous validation steps
-  
-  
   agent_0 <- create_agent(tbl = small_table)
   agent_1 <- create_agent(tbl = small_table) %>% col_exists(vars(a))
   agent_3 <- create_agent(tbl = small_table) %>% col_exists(vars(a, b, c))
@@ -260,4 +274,114 @@ test_that("Utility functions won't fail us", {
       col_vals_gt(vars(d), 100) %>%
       col_vals_not_null(vars(date_time))
   )
+  
+  #
+  # normalize_reporting_language
+  #
+  
+  # Expect different forms of two-letter language codes to be
+  # accepted and transformed into lowercase versions
+  expect_equal(normalize_reporting_language(lang = NULL), "en")
+  expect_equal(normalize_reporting_language(lang = "en"), "en")
+  expect_equal(normalize_reporting_language(lang = "EN"), "en")
+  expect_equal(normalize_reporting_language(lang = "fr"), "fr")
+  expect_equal(normalize_reporting_language(lang = "FR"), "fr")
+  expect_equal(normalize_reporting_language(lang = "de"), "de")
+  expect_equal(normalize_reporting_language(lang = "DE"), "de")
+  expect_equal(normalize_reporting_language(lang = "it"), "it")
+  expect_equal(normalize_reporting_language(lang = "IT"), "it")
+  expect_equal(normalize_reporting_language(lang = "es"), "es")
+  expect_equal(normalize_reporting_language(lang = "ES"), "es")
+  expect_equal(normalize_reporting_language(lang = "pt"), "pt")
+  expect_equal(normalize_reporting_language(lang = "PT"), "pt")
+  expect_equal(normalize_reporting_language(lang = "zh"), "zh")
+  expect_equal(normalize_reporting_language(lang = "ZH"), "zh")
+  expect_equal(normalize_reporting_language(lang = "ru"), "ru")
+  expect_equal(normalize_reporting_language(lang = "RU"), "ru")
+
+  # Expect an error if the input doesn't correspond to
+  # a supported reporting language
+  expect_error(normalize_reporting_language(lang = "za"))
+  
+  #
+  # get_lsv
+  #
+  
+  # Obtain all of the available string vector names
+  x <- readRDS(file = system.file("text", "translations_built", package = "pointblank"))
+  
+  autobriefs_names <- names(x$autobriefs)
+  agent_report_names <- names(x$agent_report)
+  informant_report_names <- names(x$informant_report)
+  
+  expect_equal(
+    autobriefs_names,
+    c("precondition_text", "column_computed_text", "values_text", 
+      "compare_expectation_text", "compare_failure_text", "in_set_expectation_text", 
+      "in_set_failure_text", "not_in_set_expectation_text", "not_in_set_failure_text", 
+      "between_expectation_text", "between_failure_text", "not_between_expectation_text", 
+      "not_between_failure_text", "null_expectation_text", "null_failure_text", 
+      "not_null_expectation_text", "not_null_failure_text", "col_vals_expr_expectation_text", 
+      "col_vals_expr_failure_text", "regex_expectation_text", "regex_failure_text", 
+      "conjointly_expectation_text", "conjointly_failure_text", "col_exists_expectation_text", 
+      "col_exists_failure_text", "col_is_expectation_text", "col_is_failure_text", 
+      "all_row_distinct_expectation_text", "all_row_distinct_failure_text", 
+      "across_row_distinct_expectation_text", "across_row_distinct_failure_text", 
+      "col_schema_match_expectation_text", "col_schema_match_failure_text"
+    )
+  )
+  
+  expect_equal(
+    agent_report_names,
+    c("pointblank_validation_title_text", "pointblank_validation_plan_text", 
+      "no_interrogation_performed_text", "report_fail_rows_available", 
+      "report_no_table_preconditions", "report_some_table_preconditions", 
+      "report_no_evaluation_issues", "report_col_step", "report_col_steps", 
+      "report_col_columns", "report_col_values", "report_column_schema", 
+      "report_r_col_types", "report_r_sql_types")
+  )
+  
+  expect_equal(
+    informant_report_names,
+    c("pointblank_information_title_text", "pointblank_table_text")
+  )
+  
+  # Get a localized string vectors for all items in 'autobriefs' and
+  # determine that the same number of components exists in each
+  for (i in seq_along(autobriefs_names)) {
+    expect_equal(
+      get_lsv(text = c("autobriefs", autobriefs_names[i])) %>% length(),
+      length(reporting_languages)
+    )
+  }
+  
+  # Get a localized string vectors for all items in 'agent_report' and
+  # determine that the same number of components exists in each
+  for (i in seq_along(agent_report_names)) {
+    expect_equal(
+      get_lsv(text = c("agent_report", agent_report_names[i])) %>% length(),
+      length(reporting_languages)
+    )
+  }
+  
+  # Get a localized string vectors for all items in 'informant_report' and
+  # determine that the same number of components exists in each
+  for (i in seq_along(informant_report_names)) {
+    expect_equal(
+      get_lsv(text = c("informant_report", informant_report_names[i])) %>% length(),
+      length(reporting_languages)
+    )
+  }
+  
+  # Perform the same tests for all items in 'autobriefs' but express
+  # the text as a length 1 vector
+  for (i in seq_along(autobriefs_names)) {
+    expect_equal(
+      get_lsv(text = paste0("autobriefs/", autobriefs_names[i])) %>% length(),
+      length(reporting_languages)
+    )
+  }
+  
+  # Expect an error if providing `text` in a length 3 vector
+  expect_error(get_lsv(text = c("autobriefs", "/", autobriefs_names[1])))
 })

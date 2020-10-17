@@ -384,4 +384,59 @@ test_that("Utility functions won't fail us", {
   
   # Expect an error if providing `text` in a length 3 vector
   expect_error(get_lsv(text = c("autobriefs", "/", autobriefs_names[1])))
+  
+  #
+  # pb_str_catalog
+  #
+  
+  l_vector <- letters[1:6]
+  
+  expect_equal(
+    pb_str_catalog(l_vector),
+    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"` (+1 more)"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector, limit = 20),
+    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"` "
+  )
+  expect_equal(
+    pb_str_catalog(l_vector, limit = Inf),
+    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"` "
+  )
+  expect_equal(
+    pb_str_catalog(l_vector, limit = 7),
+    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"` "
+  )
+  expect_equal(
+    pb_str_catalog(l_vector, limit = 2),
+    "`\"a\"`, `\"b\"` (+4 more)"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:2], limit = 1),
+    "`\"a\"` and `\"b\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:2], conj = "et"),
+    "`\"a\"` et `\"b\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector, limit = 2, more = "de plus"),
+    "`\"a\"`, `\"b\"` (+4 de plus)"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], oxford = FALSE),
+    "`\"a\"`, `\"b\"`and `\"c\"` "
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], sep = " |", conj = ""),
+    "`\"a\"` | `\"b\"` |  `\"c\"` "
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:2], surround = ""),
+    "a and b"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector, surround = ""),
+    "a, b, c, d, e (+1 more)"
+  )
 })

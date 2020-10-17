@@ -57,4 +57,58 @@ test_that("the `snip_list()` function works", {
   )
 })
 
+test_that("the `snip_lowest()` function works", {
+  
+  expect_equal(
+    run_snip(snip_lowest(column = "a"), small_table),
+    "1"
+  )
+  expect_equal(
+    run_snip(snip_lowest(column = "b"), small_table),
+    "1-bcd-345"
+  )
+  expect_equal(
+    run_snip(snip_lowest(column = "c"), small_table),
+    "2"
+  )
+  expect_equal(
+    run_snip(snip_lowest(column = "d"), small_table),
+    "108.34"
+  )
+  expect_equal(
+    run_snip(snip_lowest(column = "e"), small_table),
+    "0"
+  )
+  expect_equal(
+    run_snip(snip_lowest(column = "f"), small_table),
+    "high"
+  )
+})
 
+test_that("the `snip_highest()` function works", {
+  
+  expect_equal(
+    run_snip(snip_highest(column = "a"), small_table),
+    "8"
+  )
+  expect_equal(
+    run_snip(snip_highest(column = "b"), small_table),
+    "8-kdg-938"
+  )
+  expect_equal(
+    run_snip(snip_highest(column = "c"), small_table),
+    "9"
+  )
+  expect_equal(
+    run_snip(snip_highest(column = "d"), small_table),
+    "9999.99"
+  )
+  expect_equal(
+    run_snip(snip_highest(column = "e"), small_table),
+    "1"
+  )
+  expect_equal(
+    run_snip(snip_highest(column = "f"), small_table),
+    "mid"
+  )
+})

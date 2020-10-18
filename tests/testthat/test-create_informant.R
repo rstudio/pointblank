@@ -22,6 +22,13 @@ test_that("Creating a valid `informant` object is possible", {
   
   # Expect an informant object of class `ptblank_informant`
   expect_is(informant, "ptblank_informant")
+  expect_true(is_ptblank_informant(informant))
+  
+  # Expect that the `is_ptblank_informant()` returns FALSE
+  # for any other type of object
+  expect_false(is_ptblank_informant(create_agent(small_table)))
+  expect_false(is_ptblank_informant(letters))
+  expect_false(is_ptblank_informant(dplyr::tibble(a = 5)))
   
   # Expect certain classes for the different `ptblank_informant` components
   expect_is(informant$tbl, class(tbl))

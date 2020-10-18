@@ -359,6 +359,8 @@ get_tbl_information_df <- function(tbl) {
   )
 }
 
+# nocov start
+
 get_tbl_information_spark <- function(tbl) {
   
   r_column_names_types <- get_r_column_names_types(tbl)
@@ -380,6 +382,8 @@ get_tbl_information_spark <- function(tbl) {
     db_col_types = db_col_types
   )
 }
+
+# nocov end
 
 get_tbl_information_dbi <- function(tbl) {
 
@@ -403,6 +407,8 @@ get_tbl_information_dbi <- function(tbl) {
   
   if (tbl_src == "postgres") {
     
+    # nocov start
+    
     db_tbl_name_no_schema <- gsub(".*\\.", "", db_tbl_name)
     
     q_types <-
@@ -413,10 +419,14 @@ get_tbl_information_dbi <- function(tbl) {
         table_name = '{db_tbl_name_no_schema}'"
         )
       )
+    
+    # nocov end
 
   } else {
 
     if (tbl_src == "mssql") {
+      
+      # nocov start
       
       q_types <-
         as.character(
@@ -425,6 +435,8 @@ get_tbl_information_dbi <- function(tbl) {
           FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}'"
           )
         )
+      
+      # nocov end
       
     } else { 
       
@@ -443,10 +455,14 @@ get_tbl_information_dbi <- function(tbl) {
   
   if (tbl_src == "postgres") {
     
+    # nocov start
+    
     db_col_types <- 
       DBI::dbGetQuery(tbl_connection, q_types) %>%
       dplyr::pull(data_type) %>%
       tolower()
+    
+    # nocov end
   }
   
   if (tbl_src %in% c("duckdb", "sqlite")) {
@@ -473,16 +489,24 @@ get_tbl_information_dbi <- function(tbl) {
   
   if (!(tbl_src %in% c("duckdb", "sqlite", "postgres"))) {
 
+    # nocov start
+    
     db_col_types <- 
       DBI::dbGetQuery(tbl_connection, q_types) %>%
       dplyr::collect() %>%
       dplyr::pull(DATA_TYPE) %>%
       tolower()
+    
+    # nocov end
   }
+  
+  # nocov start
   
   if (!exists("db_col_types")) {
     db_col_types <- NA_character_
   }
+  
+  # nocov end
 
   list(
     tbl_src = tbl_src,

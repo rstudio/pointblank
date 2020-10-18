@@ -13,6 +13,85 @@ on.exit(DBI::dbDisconnect(conn = con))
 
 test_that("Interrogating with an agent yields the correct results", {
   
+  # Use the `col_schema_match()` function to create
+  # a validation step, then, `interrogate()`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_schema_match(schema = col_schema(.tbl = small_table)) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "col_schema_match")
+  expect_true(is.na(validation$validation_set$column %>% unlist()))
+  expect_is(validation$validation_set[["values"]][[1]], "col_schema")
+  expect_is(validation$validation_set[["values"]][[1]], "r_type")
+  expect_true(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 1)
+  expect_equivalent(validation$validation_set$n_passed, 1)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  
+  # Use the `col_schema_match()` function with a `col_schema` object
+  # to create a validation step, then, `interrogate()`
+  schema <- 
+    col_schema(
+      date_time = "numeric", date = "numeric", 
+      a = "integer", b = "character", c = "numeric",
+      d = "numeric", e = "integer", f = "character"
+    )
+  
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_schema_match(schema = schema) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "col_schema_match")
+  expect_true(is.na(validation$validation_set$column %>% unlist()))
+  expect_is(validation$validation_set[["values"]][[1]], "col_schema")
+  expect_is(validation$validation_set[["values"]][[1]], "r_type")
+  expect_true(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 1)
+  expect_equivalent(validation$validation_set$n_passed, 1)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Use the `col_schema_match()` function with a `col_schema` object
+  # to create a validation step, then, `interrogate()`
+  schema <- 
+    col_schema(
+      date_time = "REAL", date = "REAL", 
+      a = "INTEGER", b = "TEXT", c = "REAL",
+      d = "REAL", e = "INTEGER", f = "TEXT",
+      .db_col_types = "sql"
+    )
+  
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_schema_match(schema = schema) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "col_schema_match")
+  expect_true(is.na(validation$validation_set$column %>% unlist()))
+  expect_is(validation$validation_set[["values"]][[1]], "col_schema")
+  expect_is(validation$validation_set[["values"]][[1]], "sql_type")
+  expect_true(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 1)
+  expect_equivalent(validation$validation_set$n_passed, 1)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
+  expect_equivalent(nrow(validation$validation_set), 1)
+
   # Use the `col_exists()` function to create
   # a validation step, then, `interrogate()`
   validation <-

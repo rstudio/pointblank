@@ -1328,6 +1328,7 @@ test_that("The inclusivity options work well for the range-based validations", {
         actions = warn_on_fail()
       )
   )
+  
   expect_warning(
     regexp = NA,
     simple_tbl %>%
@@ -1337,6 +1338,7 @@ test_that("The inclusivity options work well for the range-based validations", {
         actions = warn_on_fail()
       )
   )
+  
   expect_warning(
     regexp = NA,
     simple_tbl %>%
@@ -1347,7 +1349,6 @@ test_that("The inclusivity options work well for the range-based validations", {
       )
   )
   
-  
   expect_warning(
     regexp = NULL,
     simple_tbl %>%
@@ -1357,6 +1358,7 @@ test_that("The inclusivity options work well for the range-based validations", {
         actions = warn_on_fail()
       )
   )
+  
   expect_warning(
     regexp = NA,
     simple_tbl %>%
@@ -1366,6 +1368,7 @@ test_that("The inclusivity options work well for the range-based validations", {
         actions = warn_on_fail()
       )
   )
+  
   expect_warning(
     regexp = NA,
     simple_tbl %>%

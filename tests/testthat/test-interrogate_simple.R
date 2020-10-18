@@ -19,11 +19,18 @@ schema_correct <-
 
 test_that("Interrogating simply returns the expected results", {
   
+  #
+  # col_schema_match
+  #
+  
   # Use the `col_schema_match()` function to perform
   # a simple validation step
   tbl_result <- 
     tbl[1:2, ] %>%
-    col_schema_match(schema = col_schema(.tbl = tbl), actions = warn_on_fail())
+    col_schema_match(
+      schema = col_schema(.tbl = tbl),
+      actions = warn_on_fail()
+    )
   
   # Expect that `tbl_result` is equivalent to `tbl[1:2, ]`
   expect_equivalent(tbl[1:2, ], tbl_result)
@@ -39,7 +46,10 @@ test_that("Interrogating simply returns the expected results", {
   expect_warning(
     tbl_result <- 
       tbl %>%
-      col_schema_match(schema = schema_incorrect, actions = warn_on_fail())
+      col_schema_match(
+        schema = schema_incorrect,
+        actions = warn_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -58,6 +68,10 @@ test_that("Interrogating simply returns the expected results", {
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
+  
+  #
+  # rows_distinct
+  #
   
   # Use the `rows_distinct()` function to perform
   # a simple validation step
@@ -84,6 +98,10 @@ test_that("Interrogating simply returns the expected results", {
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
   
+  #
+  # col_is_character
+  #
+  
   # Use the `col_is_character()` function to perform
   # a simple validation step
   tbl_result <- tbl %>% col_is_character(columns = vars(b))
@@ -95,7 +113,10 @@ test_that("Interrogating simply returns the expected results", {
   expect_warning(
     tbl_result <- 
       tbl %>%
-      col_is_character(columns = vars(a), actions = warn_on_fail())
+      col_is_character(
+        columns = vars(a),
+        actions = warn_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -107,11 +128,18 @@ test_that("Interrogating simply returns the expected results", {
   expect_error(
     tbl_result <- 
       tbl %>%
-      col_is_character(columns = vars(a), actions = stop_on_fail())
+      col_is_character(
+        columns = vars(a),
+        actions = stop_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
+  
+  #
+  # col_is_factor
+  #
   
   # Use the `col_is_factor()` function to perform
   # a simple validation step
@@ -124,7 +152,10 @@ test_that("Interrogating simply returns the expected results", {
   expect_warning(
     tbl_result <- 
       tbl %>% 
-      col_is_factor(columns = vars(a), actions = warn_on_fail())
+      col_is_factor(
+        columns = vars(a),
+        actions = warn_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -136,11 +167,18 @@ test_that("Interrogating simply returns the expected results", {
   expect_error(
     tbl_result <- 
       tbl %>% 
-      col_is_factor(columns = vars(a), actions = stop_on_fail())
+      col_is_factor(
+        columns = vars(a),
+        actions = stop_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
+  
+  #
+  # col_is_character
+  #
   
   # Use the `col_is_character()` function to perform
   # a simple validation step
@@ -153,7 +191,10 @@ test_that("Interrogating simply returns the expected results", {
   expect_warning(
     tbl_result <- 
       tbl %>%
-      col_is_character(columns = vars(a), actions = warn_on_fail())
+      col_is_character(
+        columns = vars(a),
+        actions = warn_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -165,22 +206,41 @@ test_that("Interrogating simply returns the expected results", {
   expect_error(
     tbl_result <- 
       tbl %>%
-      col_is_character(columns = vars(a), actions = stop_on_fail())
+      col_is_character(
+        columns = vars(a),
+        actions = stop_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
   
+  #
+  # col_is_numeric
+  #
+  
   # Use the `col_is_numeric()` function to perform
   # a simple validation step
-  suppressWarnings(tbl_result <- tbl %>% col_is_numeric(columns = vars(a), actions = warn_on_fail()))
+  suppressWarnings(
+    tbl_result <-
+      tbl %>%
+      col_is_numeric(
+        columns = vars(a),
+        actions = warn_on_fail()
+      )
+  )
   
   # Expect that `tbl_result` is equivalent to `tbl`
   expect_equivalent(tbl, tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
-    tbl_result <- tbl %>% col_is_numeric(columns = vars(b), actions = warn_on_fail())
+    tbl_result <- 
+      tbl %>%
+      col_is_numeric(
+        columns = vars(b),
+        actions = warn_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -192,17 +252,27 @@ test_that("Interrogating simply returns the expected results", {
   expect_error(
     tbl_result <- 
       tbl %>%
-      col_is_numeric(columns = vars(b), actions = stop_on_fail())
+      col_is_numeric(
+        columns = vars(b),
+        actions = stop_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
+  
+  #
+  # col_is_posix
+  #
   
   # Use the `col_is_posix()` function to perform
   # a simple validation step
   tbl_result <- 
     tbl %>%
-    col_is_posix(columns = vars(date_time), actions = warn_on_fail())
+    col_is_posix(
+      columns = vars(date_time),
+      actions = warn_on_fail()
+    )
   
   # Expect that `tbl_result` is equivalent to `tbl`
   expect_equivalent(tbl, tbl_result)
@@ -211,7 +281,10 @@ test_that("Interrogating simply returns the expected results", {
   expect_warning(
     tbl_result <- 
       tbl %>%
-      col_is_posix(columns = vars(b), actions = warn_on_fail())
+      col_is_posix(
+        columns = vars(b),
+        actions = warn_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -223,17 +296,27 @@ test_that("Interrogating simply returns the expected results", {
   expect_error(
     tbl_result <- 
       tbl %>%
-      col_is_posix(columns = vars(b), actions = stop_on_fail())
+      col_is_posix(
+        columns = vars(b),
+        actions = stop_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
+  
+  #
+  # col_is_date
+  #
   
   # Use the `col_is_date()` function to perform
   # a simple validation step
   tbl_result <- 
     tbl %>%
-    col_is_date(columns = vars(date), actions = warn_on_fail())
+    col_is_date(
+      columns = vars(date),
+      actions = warn_on_fail()
+    )
   
   # Expect that `tbl_result` is equivalent to `tbl`
   expect_equivalent(tbl, tbl_result)
@@ -242,7 +325,10 @@ test_that("Interrogating simply returns the expected results", {
   expect_warning(
     tbl_result <- 
       tbl %>%
-      col_is_date(columns = vars(b), actions = warn_on_fail())
+      col_is_date(
+        columns = vars(b),
+        actions = warn_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -254,17 +340,27 @@ test_that("Interrogating simply returns the expected results", {
   expect_error(
     tbl_result <- 
       tbl %>%
-      col_is_date(columns = vars(b), actions = stop_on_fail())
+      col_is_date(
+        columns = vars(b),
+        actions = stop_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
+  
+  #
+  # col_is_integer
+  #
   
   # Use the `col_is_integer()` function to perform
   # a simple validation step
   tbl_result <- 
     tbl %>%
-    col_is_integer(columns = vars(a), actions = warn_on_fail())
+    col_is_integer(
+      columns = vars(a),
+      actions = warn_on_fail()
+    )
   
   # Expect that `tbl_result` is equivalent to `tbl`
   expect_equivalent(tbl, tbl_result)
@@ -273,7 +369,10 @@ test_that("Interrogating simply returns the expected results", {
   expect_warning(
     tbl_result <- 
       tbl %>%
-      col_is_integer(columns = vars(b), actions = warn_on_fail())
+      col_is_integer(
+        columns = vars(b),
+        actions = warn_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -285,11 +384,18 @@ test_that("Interrogating simply returns the expected results", {
   expect_error(
     tbl_result <- 
       tbl %>%
-      col_is_integer(columns = vars(b), actions = stop_on_fail())
+      col_is_integer(
+        columns = vars(b),
+        actions = stop_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
+  
+  #
+  # col_is_logical
+  #
   
   # Use the `col_is_logical()` function to perform
   # a simple validation step
@@ -316,11 +422,18 @@ test_that("Interrogating simply returns the expected results", {
   expect_error(
     tbl_result <- 
       tbl %>%
-      col_is_logical(columns = vars(b), actions = stop_on_fail())
+      col_is_logical(
+        columns = vars(b),
+        actions = stop_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
+  
+  #
+  # col_vals_between
+  #
   
   # Use the `col_vals_between()` function to perform
   # a simple validation step
@@ -364,6 +477,10 @@ test_that("Interrogating simply returns the expected results", {
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
+  
+  #
+  # col_vals_not_between
+  #
   
   # Use the `col_vals_not_between()` function to perform
   # a simple validation step
@@ -454,12 +571,20 @@ test_that("Interrogating simply returns the expected results", {
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
   
+  #
+  # col_vals_equal
+  #
+  
   # Use the `col_vals_equal()` function to perform
   # a simple validation step
   suppressWarnings(
     tbl_result <- 
       tbl %>%
-      col_vals_equal(columns = vars(d), value = 283.94, actions = warn_on_fail())
+      col_vals_equal(
+        columns = vars(d),
+        value = 283.94,
+        actions = warn_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -484,18 +609,30 @@ test_that("Interrogating simply returns the expected results", {
   expect_error(
     tbl_result <- 
       tbl %>%
-      col_vals_equal(columns = vars(d), value = 283.94, actions = stop_on_fail())
+      col_vals_equal(
+        columns = vars(d),
+        value = 283.94,
+        actions = stop_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
+  
+  #
+  # col_vals_not_equal
+  #
   
   # Use the `col_vals_not_equal()` function to perform
   # a simple validation step
   suppressWarnings(
     tbl_result <- 
       tbl %>%
-      col_vals_not_equal(columns = vars(d), value = 283.94, actions = warn_on_fail())
+      col_vals_not_equal(
+        columns = vars(d),
+        value = 283.94,
+        actions = warn_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -505,7 +642,11 @@ test_that("Interrogating simply returns the expected results", {
   expect_warning(
     tbl_result <- 
       tbl %>%
-      col_vals_not_equal(columns = vars(d), value = 283.94, actions = warn_on_fail())
+      col_vals_not_equal(
+        columns = vars(d),
+        value = 283.94,
+        actions = warn_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -517,17 +658,29 @@ test_that("Interrogating simply returns the expected results", {
   expect_error(
     tbl_result <- 
       tbl %>%
-      col_vals_not_equal(columns = vars(d), value = 283.94, actions = stop_on_fail())
+      col_vals_not_equal(
+        columns = vars(d),
+        value = 283.94,
+        actions = stop_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
   
+  #
+  # col_vals_in_set
+  #
+  
   # Use the `col_vals_in_set()` function to perform
   # a simple validation step
   tbl_result <- 
     tbl %>%
-    col_vals_in_set(columns = vars(f), set = c("low", "mid", "high"), actions = warn_on_fail())
+    col_vals_in_set(
+      columns = vars(f),
+      set = c("low", "mid", "high"),
+      actions = warn_on_fail()
+    )
   
   # Expect that `tbl_result` is equivalent to `tbl`
   expect_equivalent(tbl, tbl_result)
@@ -561,6 +714,10 @@ test_that("Interrogating simply returns the expected results", {
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
+  
+  #
+  # col_vals_not_in_set
+  #
   
   # Use the `col_vals_not_in_set()` function to perform
   # a simple validation step
@@ -605,11 +762,18 @@ test_that("Interrogating simply returns the expected results", {
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
   
+  #
+  # col_vals_not_null
+  #
+  
   # Use the `col_vals_not_null()` function to perform
   # a simple validation step
   tbl_result <- 
     tbl %>%
-    col_vals_not_null(columns = vars(a), actions = warn_on_fail())
+    col_vals_not_null(
+      columns = vars(a),
+      actions = warn_on_fail()
+    )
   
   # Expect that `tbl_result` is equivalent to `tbl`
   expect_equivalent(tbl, tbl_result)
@@ -618,7 +782,10 @@ test_that("Interrogating simply returns the expected results", {
   expect_warning(
     tbl_result <- 
       tbl %>%
-      col_vals_not_null(columns = vars(c), actions = warn_on_fail())
+      col_vals_not_null(
+        columns = vars(c),
+        actions = warn_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is equivalent to `tbl`
@@ -630,13 +797,20 @@ test_that("Interrogating simply returns the expected results", {
   expect_error(
     tbl_result <- 
       tbl %>%
-      col_vals_not_null(columns = vars(c), actions = stop_on_fail())
+      col_vals_not_null(
+        columns = vars(c),
+        actions = stop_on_fail()
+      )
   )
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
   
-  # Use the `col_vals_not_null()` function to perform
+  #
+  # col_vals_null
+  #
+  
+  # Use the `col_vals_null()` function to perform
   # a simple validation step (with a precondition)
   tbl_result <- 
     tbl %>%
@@ -679,6 +853,10 @@ test_that("Interrogating simply returns the expected results", {
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
   
+  #
+  # col_vals_regex
+  #
+  
   # Use the `col_vals_regex()` function to perform
   # a simple validation step (with a precondition)
   tbl_result <- 
@@ -715,6 +893,50 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_regex(
         columns = vars(b),
         regex = "[0-9]-dmx-[0-9]{3}",
+        actions = stop_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
+  
+  #
+  # col_vals_expr
+  #
+  
+  # Use the `col_vals_expr()` function to perform
+  # a simple validation step (with a precondition)
+  tbl_result <- 
+    tbl %>%
+    col_vals_expr(
+      expr = ~ a %% 1 == 0,
+      actions = warn_on_fail()
+    )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- 
+      tbl %>%
+      col_vals_expr(
+        expr = ~ a %% 2 == 0,
+        actions = warn_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- 
+      tbl %>%
+      col_vals_expr(
+        expr = ~ a %% 2 == 0,
         actions = stop_on_fail()
       )
   )

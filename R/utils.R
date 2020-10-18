@@ -329,15 +329,24 @@ get_tbl_information <- function(tbl) {
     
   } else if (is_tbl_spark(tbl)) {
     
+    # nocov start
+    
     tbl_information <- get_tbl_information_spark(tbl)
+    
+    # nocov end
     
   } else if (is_tbl_dbi(tbl)) {
     
     tbl_information <- get_tbl_information_dbi(tbl)
     
   } else {
+    
+    # nocov start
+    
     warning("Information on this table type cannot be obtained at present.",
             call. = FALSE)
+    
+    # nocov end
   } 
   
   tbl_information
@@ -392,8 +401,15 @@ get_tbl_information_dbi <- function(tbl) {
   tbl_src_details <- tolower(get_tbl_dbi_src_details(tbl))
   
   if (grepl("sql server|sqlserver", tbl_src_details)) {
+    
+    # nocov start
+    
     tbl_src <- "mssql"
+    
+    # nocov end
+    
   } else {
+    
     tbl_src <- gsub("^([a-z]*).*", "\\1", get_tbl_dbi_src_details(tbl))
   }
   

@@ -61,14 +61,6 @@
 #'   the `read_fn` takes priority). There are two ways to specify a `read_fn`:
 #'   (1) using a function (e.g., `function() { <table reading code> }`) or, (2)
 #'   with an R formula expression.
-#' @param actions A list containing threshold levels so that all validation
-#'   steps can react accordingly when exceeding the set levels. This is to be
-#'   created with the [action_levels()] helper function. Should an action levels
-#'   list be used for specific validation step, any default set here will be
-#'   overridden.
-#' @param end_fns A list of functions that should be performed at the end of an
-#'   interrogation.
-#'   (e.g., `~ { <table reading code> }`).
 #' @param tbl_name A optional name to assign to the input table object. If no
 #'   value is provided, a name will be generated based on whatever information
 #'   is available. This table name will be displayed in the header area of the
@@ -78,6 +70,14 @@
 #'   provided, a label will be generated based on the current system time.
 #'   Markdown can be used here to make the label more visually appealing (it
 #'   will appear in the header area of the agent report).
+#' @param actions A option to include a list with threshold levels so that all
+#'   validation steps can react accordingly when exceeding the set levels. This
+#'   is to be created with the [action_levels()] helper function. Should an
+#'   action levels list be used for a specific validation step, the default set
+#'   specified here will be overridden.
+#' @param end_fns A list of functions that should be performed at the end of an
+#'   interrogation.
+#'   (e.g., `~ { <table reading code> }`).
 #' @param embed_report An option to embed a **gt**-based validation report into
 #'   the `ptblank_agent` object. If `FALSE` (the default) then the table object
 #'   will be not generated and available with the *agent* upon returning from
@@ -205,10 +205,10 @@
 #' @export
 create_agent <- function(tbl = NULL,
                          read_fn = NULL,
-                         actions = NULL,
-                         end_fns = NULL,
                          tbl_name = NULL,
                          label = NULL,
+                         actions = NULL,
+                         end_fns = NULL,
                          embed_report = FALSE,
                          lang = NULL,
                          locale = NULL) {

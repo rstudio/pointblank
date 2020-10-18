@@ -128,11 +128,16 @@ resolve_expr_to_cols <- function(tbl, var_expr) {
 
 resolve_columns <- function(x, var_expr, preconditions) {
   
+  # nocov start
+  
   # Return an empty character vector if the expr is NULL
   if (inherits(var_expr, "quosure") &&
       var_expr %>% rlang::as_label() == "NULL") {
+    
     return(character(0))
   } 
+  
+  # nocov end
   
   # Get the column names
   if (is.null(preconditions)) {

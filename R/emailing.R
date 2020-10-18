@@ -250,7 +250,7 @@ email_create <- function(x,
                          msg_header = NULL,
                          msg_body = stock_msg_body(),
                          msg_footer = stock_msg_footer()) {
-  
+
   if (is_ptblank_agent(x)) {
     x <- get_agent_x_list(agent = x)
   }
@@ -285,27 +285,42 @@ check_msg_components_all_null <- function(msg_header, msg_body, msg_footer) {
 #' @export
 stock_msg_body <- function() {
 
-paste0(
-  blastula::add_image(
-    system.file("img", "pointblank_logo.png", package = "pointblank"),
-    width = 150
-  ),
-"
-<br>
-<div style=\"text-align: center; font-size: larger;\">
-This <strong>pointblank</strong> validation report, \\
-containing <strong>{nrow(x$validation_set)}</strong> validation step\\
-{ifelse(nrow(x$validation_set) != 1, 's', '')},<br>\\
-was initiated on {blastula::add_readable_time(x$time_start)}.
-</div>
-<br><br>
-{x$report_html_small}
-<br>
-<div style=\"text-align: center; font-size: larger;\">
-&#9678;
-</div>
-"
-)
+  htmltools::tagList(
+    htmltools::HTML("<!-- pointblank stock-msg-body -en- -->"),
+    htmltools::HTML(
+      blastula::add_image(
+        system.file("img", "pointblank_logo.png", package = "pointblank"),
+        width = 150
+      )
+    ),
+    htmltools::tags$br(),
+    htmltools::tags$div(
+      style = htmltools::css(
+        `text-align` = "center",
+        `font-size` = "larger"
+      ),
+      htmltools::HTML(
+        paste0(
+          "This <strong>pointblank</strong> validation report ",
+          "containing <strong>{nrow(x$validation_set)}</strong> validation step",
+          "{ifelse(nrow(x$validation_set) != 1, 's', '')} ",
+          "was initiated on {blastula::add_readable_time(x$time_start)}."
+        )
+      )
+    ),
+    htmltools::tags$br(),
+    htmltools::tags$br(),
+    htmltools::HTML("{x$report_html_small}"),
+    htmltools::tags$br(),
+    htmltools::tags$div(
+      style = htmltools::css(
+        `text-align` = "center",
+        `font-size` = "larger"
+      ),
+      htmltools::HTML("&#9678;")
+    )
+  ) %>%
+    as.character()
 }
 
 #' Provide simple email message body components: footer

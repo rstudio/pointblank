@@ -439,4 +439,39 @@ test_that("Utility functions won't fail us", {
     pb_str_catalog(l_vector, surround = ""),
     "a, b, c, d, e (+1 more)"
   )
+  
+  #
+  # add_icon_img / add_icon_svg
+  #
+
+  function_icons <-
+    c(
+      "col_exists", "col_is_character", "col_is_date", "col_is_factor",
+      "col_is_integer", "col_is_logical", "col_is_numeric", "col_is_posix",
+      "col_schema_match", "col_vals_between", "col_vals_equal", "col_vals_expr",
+      "col_vals_gt", "col_vals_gte", "col_vals_in_set", "col_vals_lt",
+      "col_vals_lte", "col_vals_not_between", "col_vals_not_equal",
+      "col_vals_not_in_set", "col_vals_not_null", "col_vals_null",
+      "col_vals_regex", "conjointly", "rows_distinct"
+    )
+
+  for (i in seq(function_icons)) {
+
+    expect_match(
+      add_icon_img(icon = function_icons[i]),
+      regexp = "^<img src=\"data:image/png;base64,"
+    )
+  }
+
+  for (i in seq(function_icons)) {
+
+    expect_match(
+      add_icon_svg(icon = function_icons[i]),
+      regexp = paste0(
+        "<div style=\"margin:0;padding:0;display:inline-block;height:30px;",
+        "vertical-align:middle;\"><svg width=\"30px\" height=\"30px\".*",
+        "</svg></div>"
+      )
+    )
+  }
 })

@@ -512,4 +512,19 @@ test_that("Utility functions won't fail us", {
       )
     )
   }
+  
+  #
+  # glue_safely
+  #
+  
+  one <- 1
+  two <- 2
+  three <- 3
+  
+  expect_equal(
+    glue_safely("Easy as {one}, {two}, {three}."),
+    "Easy as 1, 2, 3."
+  )
+  expect_error(regexp = NA, glue_safely("Easy as {one}, {two}, {three}."))
+  expect_error(regexp = NA, glue_safely("Easy as {LETTERS[1]}, B, C."))
 })

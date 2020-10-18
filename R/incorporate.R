@@ -158,11 +158,9 @@ incorporate <- function(informant) {
       
       snippet <- snippet_fn(tbl)
       
-      # The following stmt always assumes that numeric
+      # The following stmts always assume that numeric
       # values should be formatted with the default options
       # of `pb_fmt_number()` in the informant's locale
-      # TODO: provide option to format as numeric (w/ option for
-      # decimal places) or as currency (w/ option for currency code)
       if (is.numeric(snippet)) {
         
         if (is.integer(snippet)) {

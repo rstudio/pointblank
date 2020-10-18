@@ -439,6 +439,44 @@ test_that("Utility functions won't fail us", {
     pb_str_catalog(l_vector, surround = ""),
     "a, b, c, d, e (+1 more)"
   )
+  expect_equal(
+    pb_str_catalog(l_vector[1], surround = ""),
+    "a"
+  )
+  
+  #
+  # pb_fmt_number
+  #
+  
+  expect_equal(pb_fmt_number(5.235), "5.24")
+  expect_equal(pb_fmt_number(5.235, decimals = 5), "5.23500")
+  expect_equal(pb_fmt_number(5L, decimals = 5), "5.00000")
+  expect_equal(pb_fmt_number(5.235, n_sigfig = 2), "5.2")
+  expect_equal(pb_fmt_number(5L, n_sigfig = 2), "5.0")
+  expect_equal(pb_fmt_number(5L, n_sigfig = 1), "5")
+  expect_equal(
+    pb_fmt_number(5L, n_sigfig = 1, drop_trailing_dec_mark = FALSE),
+    "5."
+  )
+  expect_equal(pb_fmt_number(24245, decimals = 1), "24,245.0")
+  expect_equal(pb_fmt_number(24245, decimals = 1, use_seps = FALSE), "24245.0")
+  expect_equal(pb_fmt_number(24245, decimals = 1, suffixing = TRUE), "24.2K")
+  expect_equal(pb_fmt_number(242, decimals = 1, pattern = "-{x}-"), "-242.0-")
+  expect_equal(
+    pb_fmt_number(24245, decimals = 1, dec_mark = ",", sep_mark = "."),
+    "24.245,0"
+  )
+  expect_equal(pb_fmt_number(24245, decimals = 1, locale = "en"), "24,245.0")
+  expect_equal(pb_fmt_number(24245, decimals = 1, locale = "fr"), "24 245,0")
+  expect_equal(pb_fmt_number(24245, decimals = 1, locale = "de"), "24.245,0")
+  expect_equal(pb_fmt_number(24245, decimals = 1, locale = "it"), "24.245,0")
+  expect_equal(pb_fmt_number(24245, decimals = 1, locale = "es"), "24.245,0")
+  expect_equal(pb_fmt_number(24245, decimals = 1, locale = "pt"), "24.245,0")
+  expect_equal(pb_fmt_number(24245, decimals = 1, locale = "zh"), "24,245.0")
+  expect_equal(pb_fmt_number(24245, decimals = 1, locale = "ru"), "24 245,0")
+  
+  expect_null(pb_fmt_number(NULL))
+  expect_equal(pb_fmt_number("text"), "text")
   
   #
   # add_icon_img / add_icon_svg

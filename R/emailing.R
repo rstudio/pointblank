@@ -250,15 +250,15 @@ email_create <- function(x,
                          msg_header = NULL,
                          msg_body = stock_msg_body(),
                          msg_footer = stock_msg_footer()) {
-
+  
   if (is_ptblank_agent(x)) {
     x <- get_agent_x_list(agent = x)
   }
 
   blastula::compose_email(
-    header = glue::glue(msg_header) %>% blastula::md(),
-    body = glue::glue(msg_body) %>% blastula::md(),
-    footer = glue::glue(msg_footer) %>% blastula::md(),
+    header = blastula::md(glue::glue(msg_header)),
+    body = blastula::md(glue::glue(glue::glue(msg_body))),
+    footer = blastula::md(glue::glue(glue::glue(msg_footer)))
   )
 }
 

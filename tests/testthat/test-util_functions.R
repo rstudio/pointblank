@@ -313,6 +313,7 @@ test_that("Utility functions won't fail us", {
   autobriefs_names <- names(x$autobriefs)
   agent_report_names <- names(x$agent_report)
   informant_report_names <- names(x$informant_report)
+  email_names <- names(x$email)
   
   expect_equal(
     autobriefs_names,
@@ -346,6 +347,11 @@ test_that("Utility functions won't fail us", {
     c("pointblank_information_title_text", "pointblank_table_text")
   )
   
+  expect_equal(
+    email_names,
+    c("agent_body", "footer_1", "footer_2")
+  )
+  
   # Get a localized string vectors for all items in 'autobriefs' and
   # determine that the same number of components exists in each
   for (i in seq_along(autobriefs_names)) {
@@ -369,6 +375,15 @@ test_that("Utility functions won't fail us", {
   for (i in seq_along(informant_report_names)) {
     expect_equal(
       get_lsv(text = c("informant_report", informant_report_names[i])) %>% length(),
+      length(reporting_languages)
+    )
+  }
+  
+  # Perform the same tests for all items in 'email' but express
+  # the text as a length 1 vector
+  for (i in seq_along(email_names)) {
+    expect_equal(
+      get_lsv(text = c("email", email_names[i])) %>% length(),
       length(reporting_languages)
     )
   }

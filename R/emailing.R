@@ -286,7 +286,7 @@ check_msg_components_all_null <- function(msg_header, msg_body, msg_footer) {
 stock_msg_body <- function() {
 
   htmltools::tagList(
-    htmltools::HTML("<!-- pointblank stock-msg-body -en- -->"),
+    htmltools::HTML("<!-- pointblank stock-msg-body -->"),
     htmltools::HTML(
       blastula::add_image(
         system.file("img", "pointblank_logo.png", package = "pointblank"),
@@ -299,14 +299,7 @@ stock_msg_body <- function() {
         `text-align` = "center",
         `font-size` = "larger"
       ),
-      htmltools::HTML(
-        paste0(
-          "This <strong>pointblank</strong> validation report ",
-          "containing <strong>{nrow(x$validation_set)}</strong> validation step",
-          "{ifelse(nrow(x$validation_set) != 1, 's', '')} ",
-          "was initiated on {blastula::add_readable_time(x$time_start)}."
-        )
-      )
+      htmltools::HTML("{get_lsv('email/agent_body')[[x$lang]]}")
     ),
     htmltools::tags$br(),
     htmltools::tags$br(),
@@ -339,17 +332,29 @@ stock_msg_body <- function() {
 #' @export
 stock_msg_footer <- function() {
   
-"
-<br>
-Validation performed via the <code>pointblank</code> <strong>R<strong> package.
-<br><br><br>
-<div>
-<a style=\"background-color: #999999; color: white; padding: 1em 1.5em; \\
-position: relative; text-decoration: none; text-transform: uppercase; \\
-cursor: pointer;\" \\
-href=\"https://rich-iannone.github.io/pointblank/\">Information and package \\
-documentation</a></div>
-"
+  htmltools::tagList(
+    htmltools::tags$br(),
+    htmltools::HTML("{get_lsv('email/footer_1')[[x$lang]]}"),
+    htmltools::tags$br(),
+    htmltools::tags$br(),
+    htmltools::tags$br(),
+    htmltools::tags$div(
+      htmltools::tags$a(
+        style = htmltools::css(
+          `background-color` = "#999999",
+          color = "white",
+          padding = "1em 1.5em",
+          position = "relative",
+          `text-decoration` = "none",
+          `text-transform` = "uppercase",
+          cursor = "pointer"
+        ),
+        href = "https://rich-iannone.github.io/pointblank/",
+        htmltools::HTML("{get_lsv('email/footer_2')[[x$lang]]}")
+      )
+    )
+  ) %>%
+    as.character()
 }
 
 # nocov end

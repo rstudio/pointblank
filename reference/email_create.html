@@ -47,12 +47,12 @@
 
 
 <meta property="og:title" content="Create an email object from a pointblank agent — email_create" />
-<meta property="og:description" content="The email_create() function produce an email message object that would
-normally be produced and sent through the email_blast() function. The x
-that we need for this is the agent x-list that is produced by the
-get_agent_x_list() function. Or, we can supply an agent object. In both
-cases, the email message with appear in the Viewer and a blastula
-email_message object will be returned." />
+<meta property="og:description" content="The email_create() function produces an email message object that could be
+sent using the blastula package. The x that we need for this could
+either be a pointblank agent, the agent x-list (produced from the
+agent with the get_agent_x_list() function), or a pointblank
+informant. In all casesm, the email message will appear in the Viewer and a
+blastula email_message object will be returned." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -127,12 +127,12 @@ email_message object will be returned." />
     </div>
 
     <div class="ref-description">
-    <p>The <code>email_create()</code> function produce an email message object that would
-normally be produced and sent through the <code><a href='email_blast.html'>email_blast()</a></code> function. The <code>x</code>
-that we need for this is the agent x-list that is produced by the
-<code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function. Or, we can supply an agent object. In both
-cases, the email message with appear in the Viewer and a <strong>blastula</strong>
-<code>email_message</code> object will be returned.</p>
+    <p>The <code>email_create()</code> function produces an email message object that could be
+sent using the <strong>blastula</strong> package. The <code>x</code> that we need for this could
+either be a <strong>pointblank</strong> agent, the <em>agent</em> x-list (produced from the
+<em>agent</em> with the <code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function), or a <strong>pointblank</strong>
+<em>informant</em>. In all casesm, the email message will appear in the Viewer and a
+<strong>blastula</strong> <code>email_message</code> object will be returned.</p>
     </div>
 
     <pre class="usage"><span class='fu'>email_create</span><span class='op'>(</span>
@@ -147,12 +147,12 @@ cases, the email message with appear in the Viewer and a <strong>blastula</stron
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A pointblank agent or an agent x-list. The x-list object can be
-created with the <code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function. It is recommended that the
-option <code>i = NULL</code> be used with <code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> if supplying an x-list
-as <code>x</code>. Furthermore, The option <code>generate_report = TRUE</code> should be used
-with <code><a href='create_agent.html'>create_agent()</a></code> so that the agent report is available within the
-email.</p></td>
+      <td><p>A <strong>pointblank</strong> <em>agent</em>, an <em>agent</em> x-list, or a <strong>pointblank</strong>
+<em>informant</em>. The x-list object can be created with the <code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code>
+function. It is recommended that the option <code>i = NULL</code> be used with
+<code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> if supplying an x-list as <code>x</code>. Furthermore, The option
+<code>generate_report = TRUE</code> could be used with <code><a href='create_agent.html'>create_agent()</a></code> so that the
+agent report is available within the email.</p></td>
     </tr>
     <tr>
       <th>msg_header, msg_body, msg_footer</th>
@@ -196,14 +196,16 @@ footer components of the HTML email message.</p></td>
   <span class='op'>)</span>
 
 <span class='co'># In a workflow that involves an</span>
-<span class='co'># `agent` object, we can set up a</span>
-<span class='co'># series of `end_fns` and have report</span>
-<span class='co'># emailing with `email_blast()` but,</span>
-<span class='co'># first, we can look at the email</span>
-<span class='co'># message object beforehand by using</span>
-<span class='co'># the `email_create()` function</span>
-<span class='co'># on an `agent` object</span>
-<span class='co'># email_object &lt;-</span>
+<span class='co'># `agent` object, we can make use of</span>
+<span class='co'># the `end_fns` argument and</span>
+<span class='co'># programmatically email the report</span>
+<span class='co'># with the `email_blast()` function,</span>
+<span class='co'># however, an alternate workflow is to</span>
+<span class='co'># produce the email object and choose</span>
+<span class='co'># to send outside of the pointblank API;</span>
+<span class='co'># the `email_create()` function lets</span>
+<span class='co'># us do this with an `agent` object</span>
+<span class='co'># email_object_1 &lt;-</span>
 <span class='co'>#   create_agent(</span>
 <span class='co'>#     tbl = tbl,</span>
 <span class='co'>#     actions = al</span>
@@ -213,10 +215,14 @@ footer components of the HTML email message.</p></td>
 <span class='co'>#   interrogate() %&gt;%</span>
 <span class='co'>#   email_create()</span>
 
+<span class='co'># We can view the HTML email just</span>
+<span class='co'># by printing `email_object`; it</span>
+<span class='co'># should appear in the Viewer</span>
+
 <span class='co'># The `email_create()` function can</span>
 <span class='co'># also be used on an agent x-list to</span>
 <span class='co'># get the same email message object</span>
-<span class='co'># email_object &lt;-</span>
+<span class='co'># email_object_2 &lt;-</span>
 <span class='co'>#   create_agent(</span>
 <span class='co'>#     tbl = tbl,</span>
 <span class='co'>#     actions = al</span>
@@ -227,9 +233,30 @@ footer components of the HTML email message.</p></td>
 <span class='co'>#   get_agent_x_list() %&gt;%</span>
 <span class='co'>#   email_create()</span>
 
-<span class='co'># We can view the HTML email just</span>
-<span class='co'># by printing `email_object`; it</span>
-<span class='co'># should appear in the Viewer</span>
+<span class='co'># An information report that's</span>
+<span class='co'># produced by the informant can</span>
+<span class='co'># made into an email message object;</span>
+<span class='co'># let's create an informant and use</span>
+<span class='co'># `email_create()`</span>
+<span class='co'># email_object_3 &lt;-</span>
+<span class='co'>#   create_informant(</span>
+<span class='co'>#     tbl = tbl</span>
+<span class='co'>#   ) %&gt;%</span>
+<span class='co'>#   info_tabular(</span>
+<span class='co'>#     info = "A simple table in the</span>
+<span class='co'>#     *Examples* section of the function</span>
+<span class='co'>#     called `email_create()`."</span>
+<span class='co'>#   ) %&gt;%</span>
+<span class='co'>#   info_columns(</span>
+<span class='co'>#     columns = vars(a),</span>
+<span class='co'>#     info = "Numbers. On the high side."</span>
+<span class='co'>#   ) %&gt;%</span>
+<span class='co'>#   info_columns(</span>
+<span class='co'>#     columns = vars(b),</span>
+<span class='co'>#     info = "Lower numbers. Zeroes, even."</span>
+<span class='co'>#   ) %&gt;%</span>
+<span class='co'>#   incorporate() %&gt;%</span>
+<span class='co'>#   email_create()</span>
 
 </div></pre>
   </div>

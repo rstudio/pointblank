@@ -23,6 +23,7 @@ test_that("An x-list for a step is structurally correct", {
   # and `x_list_i`
   expect_is(x_list_before, "x_list")
   expect_is(x_list_before, "x_list_i")
+  expect_true(is_ptblank_x_list(x_list_before))
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -100,6 +101,7 @@ test_that("An x-list for a step is structurally correct", {
   # and `x_list_i`
   expect_is(x_list_after, "x_list")
   expect_is(x_list_after, "x_list_i")
+  expect_true(is_ptblank_x_list(x_list_after))
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -188,6 +190,7 @@ test_that("A complete x-list is structurally correct", {
   # and `x_list_i`
   expect_is(x_list_before, "x_list")
   expect_is(x_list_before, "x_list_n")
+  expect_true(is_ptblank_x_list(x_list_before))
   
   # Expect elements of the object to be equivalent
   # to specific parameters
@@ -291,6 +294,7 @@ test_that("A complete x-list is structurally correct", {
   # and `x_list_i`
   expect_is(x_list_after, "x_list")
   expect_is(x_list_after, "x_list_n")
+  expect_true(is_ptblank_x_list(x_list_after))
   
   # Expect elements of the object to be equivalent
   # to specific parameters

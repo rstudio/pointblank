@@ -349,7 +349,7 @@ test_that("Utility functions won't fail us", {
   
   expect_equal(
     email_names,
-    c("agent_body", "footer_1", "footer_2")
+    c("agent_body", "footer_1", "footer_2", "footer_i", "informant_body")
   )
   
   # Get a localized string vectors for all items in 'autobriefs' and

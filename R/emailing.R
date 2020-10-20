@@ -168,19 +168,19 @@ email_blast <- function(x,
 
 #' Create an email object from a **pointblank** *agent*
 #' 
-#' The `email_create()` function produce an email message object that would
-#' normally be produced and sent through the [email_blast()] function. The `x`
-#' that we need for this is the agent x-list that is produced by the
-#' [get_agent_x_list()] function. Or, we can supply an agent object. In both
-#' cases, the email message with appear in the Viewer and a **blastula**
-#' `email_message` object will be returned.
+#' The `email_create()` function produces an email message object that could be
+#' sent using the **blastula** package. The `x` that we need for this could
+#' either be a **pointblank** agent, the *agent* x-list (produced from the
+#' *agent* with the [get_agent_x_list()] function), or a **pointblank**
+#' *informant*. In all casesm, the email message will appear in the Viewer and a
+#' **blastula** `email_message` object will be returned.
 #'
-#' @param x A pointblank agent or an agent x-list. The x-list object can be
-#'   created with the [get_agent_x_list()] function. It is recommended that the
-#'   option `i = NULL` be used with [get_agent_x_list()] if supplying an x-list
-#'   as `x`. Furthermore, The option `generate_report = TRUE` should be used
-#'   with [create_agent()] so that the agent report is available within the
-#'   email.
+#' @param x A **pointblank** *agent*, an *agent* x-list, or a **pointblank**
+#'   *informant*. The x-list object can be created with the [get_agent_x_list()]
+#'   function. It is recommended that the option `i = NULL` be used with
+#'   [get_agent_x_list()] if supplying an x-list as `x`. Furthermore, The option
+#'   `generate_report = TRUE` could be used with [create_agent()] so that the
+#'   agent report is available within the email.
 #' @param msg_header,msg_body,msg_footer Content for the header, body, and
 #'   footer components of the HTML email message.
 #'   
@@ -206,14 +206,16 @@ email_blast <- function(x,
 #'   )
 #' 
 #' # In a workflow that involves an
-#' # `agent` object, we can set up a
-#' # series of `end_fns` and have report
-#' # emailing with `email_blast()` but,
-#' # first, we can look at the email
-#' # message object beforehand by using
-#' # the `email_create()` function
-#' # on an `agent` object
-#' # email_object <-
+#' # `agent` object, we can make use of
+#' # the `end_fns` argument and
+#' # programmatically email the report
+#' # with the `email_blast()` function,
+#' # however, an alternate workflow is to
+#' # produce the email object and choose
+#' # to send outside of the pointblank API;
+#' # the `email_create()` function lets
+#' # us do this with an `agent` object
+#' # email_object_1 <-
 #' #   create_agent(
 #' #     tbl = tbl,
 #' #     actions = al
@@ -223,10 +225,14 @@ email_blast <- function(x,
 #' #   interrogate() %>%
 #' #   email_create()
 #' 
+#' # We can view the HTML email just
+#' # by printing `email_object`; it
+#' # should appear in the Viewer
+#' 
 #' # The `email_create()` function can
 #' # also be used on an agent x-list to
 #' # get the same email message object
-#' # email_object <-
+#' # email_object_2 <-
 #' #   create_agent(
 #' #     tbl = tbl,
 #' #     actions = al
@@ -237,9 +243,30 @@ email_blast <- function(x,
 #' #   get_agent_x_list() %>%
 #' #   email_create()
 #' 
-#' # We can view the HTML email just
-#' # by printing `email_object`; it
-#' # should appear in the Viewer
+#' # An information report that's
+#' # produced by the informant can
+#' # made into an email message object;
+#' # let's create an informant and use
+#' # `email_create()`
+#' # email_object_3 <-
+#' #   create_informant(
+#' #     tbl = tbl
+#' #   ) %>%
+#' #   info_tabular(
+#' #     info = "A simple table in the
+#' #     *Examples* section of the function
+#' #     called `email_create()`."
+#' #   ) %>%
+#' #   info_columns(
+#' #     columns = vars(a),
+#' #     info = "Numbers. On the high side."
+#' #   ) %>%
+#' #   info_columns(
+#' #     columns = vars(b),
+#' #     info = "Lower numbers. Zeroes, even."
+#' #   ) %>%
+#' #   incorporate() %>%
+#' #   email_create()
 #' 
 #' @family Emailing
 #' @section Function ID:

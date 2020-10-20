@@ -25,6 +25,10 @@ is_ptblank_informant <- function(x) {
   inherits(x, "ptblank_informant")
 }
 
+is_ptblank_x_list <- function(x) {
+  inherits(x, "x_list")
+}
+
 is_a_table_object <- function(x) {
   inherits(x, c("data.frame", "tbl_df", "tbl_dbi", "tbl_spark"))
 }

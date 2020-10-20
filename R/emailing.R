@@ -251,15 +251,57 @@ email_create <- function(x,
                          msg_body = stock_msg_body(),
                          msg_footer = stock_msg_footer()) {
   
+  if (!is_ptblank_agent(x) &&
+      !is_ptblank_x_list(x) &&
+      !is_ptblank_informant(x)) {
+    
+    stop("Email creation requires either:\n",
+         "* a pointblank agent\n",
+         "* an agent x-list, or\n",
+         "* a pointblank informant",
+         call. = FALSE)
+  }
+  
+  if (is_ptblank_informant(x)) {
+    
+    if (grepl("<!-- pointblank stock-msg-body", msg_body, fixed = TRUE)) {
+      msg_body <- gsub("email/agent_body", "email/informant_body", msg_body)
+    }
+    
+    if (grepl("<!-- pointblank stock-msg-footer", msg_footer, fixed = TRUE)) {
+      msg_footer <- gsub("email/footer_1", "email/footer_i", msg_footer)
+    }
+    
+    x$report_html_small <- get_informant_report(x, size = "small")
+    
+    x$report_html_small$`_source_notes` <- list()
+
+    x$report_html_small <-
+      x$report_html_small %>%
+      gt::as_raw_html()
+    
+    x$time_start <- Sys.time()
+
+    return(
+      blastula::compose_email(
+        header = blastula::md(glue::glue(msg_header)),
+        body = blastula::md(glue::glue(glue::glue(msg_body))),
+        footer = blastula::md(glue::glue(glue::glue(msg_footer)))
+      )
+    )
+  }
+  
   if (is_ptblank_agent(x)) {
     x <- get_agent_x_list(agent = x)
+    
+    return(
+      blastula::compose_email(
+        header = blastula::md(glue::glue(msg_header)),
+        body = blastula::md(glue::glue(glue::glue(msg_body))),
+        footer = blastula::md(glue::glue(glue::glue(msg_footer)))
+      )
+    )
   }
-
-  blastula::compose_email(
-    header = blastula::md(glue::glue(msg_header)),
-    body = blastula::md(glue::glue(glue::glue(msg_body))),
-    footer = blastula::md(glue::glue(glue::glue(msg_footer)))
-  )
 }
 
 check_msg_components_all_null <- function(msg_header, msg_body, msg_footer) {
@@ -333,6 +375,7 @@ stock_msg_body <- function() {
 stock_msg_footer <- function() {
   
   htmltools::tagList(
+    htmltools::HTML("<!-- pointblank stock-msg-footer -->"),
     htmltools::tags$br(),
     htmltools::HTML("{get_lsv('email/footer_1')[[x$lang]]}"),
     htmltools::tags$br(),

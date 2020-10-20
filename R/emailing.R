@@ -300,8 +300,8 @@ email_create <- function(x,
     }
     
     x$report_html_small <- get_informant_report(x, size = "small")
-    
-    x$report_html_small$`_source_notes` <- list()
+
+    x$report_html_small[["_source_notes"]] <- list()
 
     x$report_html_small <-
       x$report_html_small %>%

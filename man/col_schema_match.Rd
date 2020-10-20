@@ -11,6 +11,7 @@ col_schema_match(
   schema,
   complete = TRUE,
   in_order = TRUE,
+  is_exact = TRUE,
   actions = NULL,
   step_id = NULL,
   label = NULL,
@@ -43,15 +44,25 @@ with \code{\link[=create_agent]{create_agent()}}.}
 using the \code{\link[=col_schema]{col_schema()}} function.}
 
 \item{complete}{A requirement to account for all table columns in the
-\code{schema}. By default, this is \code{TRUE} and so that all column names in the
-target table must be present in the schema object. This restriction can be
-relaxed by using \code{FALSE}, where we can provide a subset of table columns in
-the schema.}
+provided \code{schema}. By default, this is \code{TRUE} and so that all column names
+in the target table must be present in the schema object. This restriction
+can be relaxed by using \code{FALSE}, where we can provide a subset of table
+columns in the schema.}
 
 \item{in_order}{A stringent requirement for enforcing the order of columns in
 the provided \code{schema}. By default, this is \code{TRUE} and the order of columns
 in both the schema and the target table must match. By setting to \code{FALSE},
 this strict order requirement is removed.}
+
+\item{is_exact}{Determines whether the check for column types should be exact
+or even performed at all. For example, columns in R data frames may have
+multiple classes (e.g., a date-time column can have both the \code{"POSIXct"}
+and the \code{"POSIXt"} classes). If using \code{is_exact == FALSE}, the column type
+in the user-defined schema for a date-time value can be set as either
+\code{"POSIXct"} \emph{or} \code{"POSIXt"} and pass validation (with this column, at
+least). This can be taken a step further and using \code{NULL} for a column type
+in the user-defined schema will skip the validation check of a column type.
+By default, \code{is_exact} is set to \code{TRUE}.}
 
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
@@ -110,18 +121,27 @@ data table or with an \emph{agent} object (technically, a \code{ptblank_agent} o
 whereas the expectation and test functions can only be used with a data
 table. The types of data tables that can be used include data frames,
 tibbles, database tables (\code{tbl_dbi}), and Spark DataFrames (\code{tbl_spark}).
-Each validation step or expectation will operate over a single test unit,
-which is whether the column is an integer-type column or not. The validation
-step or expectation operates over a single test unit, which is whether the
-schema matches that of the table (within the constraints enforced by the
-\code{complete} and \code{in_order} options). If the target table is a \code{tbl_dbi} or a
-\code{tbl_spark} object, we can choose to validate the column schema that is based
-on R column types (e.g., \code{"numeric"}, \code{"character"}, etc.), SQL column types
-(e.g., \code{"double"}, \code{"varchar"}, etc.), or Spark SQL types (e.g,.
-\code{"DoubleType"}, \code{"StringType"}, etc.). That option is defined in the
-\code{\link[=col_schema]{col_schema()}} function (it is the \code{.db_col_types} argument).
 }
 \details{
+The validation step or expectation operates over a single test unit, which is
+whether the schema matches that of the table (within the constraints enforced
+by the \code{complete}, \code{in_order}, and \code{is_exact} options). If the target table
+is a \code{tbl_dbi} or a \code{tbl_spark} object, we can choose to validate the column
+schema that is based on R column types (e.g., \code{"numeric"}, \code{"character"},
+etc.), SQL column types (e.g., \code{"double"}, \code{"varchar"}, etc.), or Spark SQL
+types (e.g,. \code{"DoubleType"}, \code{"StringType"}, etc.). That option is defined in
+the \code{\link[=col_schema]{col_schema()}} function (it is the \code{.db_col_types} argument).
+
+There are options to make schema checking less stringent (by default, this
+validation operates with highest level of strictness). With the \code{complete}
+option set to \code{FALSE}, we can supply a \code{col_schema} object with a partial
+inclusion of columns. Using \code{in_order} set to \code{FALSE} means that there is no
+requirement for the columns defined in the \code{schema} object to be in the same
+order as in the target table. Finally, the \code{is_exact} option set to \code{FALSE}
+means that all column classes/types don't have to be provided for a
+particular column. It can even be \code{NULL}, skipping the check of the column
+type.
+
 Often, we will want to specify \code{actions} for the validation. This argument,
 present in every validation function, takes a specially-crafted list object
 that is best produced by the \code{\link[=action_levels]{action_levels()}} function. Read that function's

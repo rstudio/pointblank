@@ -12,12 +12,12 @@ email_create(
 )
 }
 \arguments{
-\item{x}{A pointblank agent or an agent x-list. The x-list object can be
-created with the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function. It is recommended that the
-option \code{i = NULL} be used with \code{\link[=get_agent_x_list]{get_agent_x_list()}} if supplying an x-list
-as \code{x}. Furthermore, The option \code{generate_report = TRUE} should be used
-with \code{\link[=create_agent]{create_agent()}} so that the agent report is available within the
-email.}
+\item{x}{A \strong{pointblank} \emph{agent}, an \emph{agent} x-list, or a \strong{pointblank}
+\emph{informant}. The x-list object can be created with the \code{\link[=get_agent_x_list]{get_agent_x_list()}}
+function. It is recommended that the option \code{i = NULL} be used with
+\code{\link[=get_agent_x_list]{get_agent_x_list()}} if supplying an x-list as \code{x}. Furthermore, The option
+\code{generate_report = TRUE} could be used with \code{\link[=create_agent]{create_agent()}} so that the
+agent report is available within the email.}
 
 \item{msg_header, msg_body, msg_footer}{Content for the header, body, and
 footer components of the HTML email message.}
@@ -26,12 +26,12 @@ footer components of the HTML email message.}
 A \strong{blastula} \code{email_message} object.
 }
 \description{
-The \code{email_create()} function produce an email message object that would
-normally be produced and sent through the \code{\link[=email_blast]{email_blast()}} function. The \code{x}
-that we need for this is the agent x-list that is produced by the
-\code{\link[=get_agent_x_list]{get_agent_x_list()}} function. Or, we can supply an agent object. In both
-cases, the email message with appear in the Viewer and a \strong{blastula}
-\code{email_message} object will be returned.
+The \code{email_create()} function produces an email message object that could be
+sent using the \strong{blastula} package. The \code{x} that we need for this could
+either be a \strong{pointblank} agent, the \emph{agent} x-list (produced from the
+\emph{agent} with the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function), or a \strong{pointblank}
+\emph{informant}. In all casesm, the email message will appear in the Viewer and a
+\strong{blastula} \code{email_message} object will be returned.
 }
 \section{Function ID}{
 
@@ -58,14 +58,16 @@ al <-
   )
 
 # In a workflow that involves an
-# `agent` object, we can set up a
-# series of `end_fns` and have report
-# emailing with `email_blast()` but,
-# first, we can look at the email
-# message object beforehand by using
-# the `email_create()` function
-# on an `agent` object
-# email_object <-
+# `agent` object, we can make use of
+# the `end_fns` argument and
+# programmatically email the report
+# with the `email_blast()` function,
+# however, an alternate workflow is to
+# produce the email object and choose
+# to send outside of the pointblank API;
+# the `email_create()` function lets
+# us do this with an `agent` object
+# email_object_1 <-
 #   create_agent(
 #     tbl = tbl,
 #     actions = al
@@ -75,10 +77,14 @@ al <-
 #   interrogate() \%>\%
 #   email_create()
 
+# We can view the HTML email just
+# by printing `email_object`; it
+# should appear in the Viewer
+
 # The `email_create()` function can
 # also be used on an agent x-list to
 # get the same email message object
-# email_object <-
+# email_object_2 <-
 #   create_agent(
 #     tbl = tbl,
 #     actions = al
@@ -89,9 +95,30 @@ al <-
 #   get_agent_x_list() \%>\%
 #   email_create()
 
-# We can view the HTML email just
-# by printing `email_object`; it
-# should appear in the Viewer
+# An information report that's
+# produced by the informant can
+# made into an email message object;
+# let's create an informant and use
+# `email_create()`
+# email_object_3 <-
+#   create_informant(
+#     tbl = tbl
+#   ) \%>\%
+#   info_tabular(
+#     info = "A simple table in the
+#     *Examples* section of the function
+#     called `email_create()`."
+#   ) \%>\%
+#   info_columns(
+#     columns = vars(a),
+#     info = "Numbers. On the high side."
+#   ) \%>\%
+#   info_columns(
+#     columns = vars(b),
+#     info = "Lower numbers. Zeroes, even."
+#   ) \%>\%
+#   incorporate() \%>\%
+#   email_create()
 
 }
 \seealso{

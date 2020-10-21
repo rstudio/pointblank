@@ -220,6 +220,9 @@ col_schema_match <- function(x,
       create_agent(x, label = "::QUIET::") %>%
       col_schema_match(
         schema = schema,
+        complete = complete,
+        in_order = in_order,
+        is_exact = is_exact,
         label = label,
         brief = brief,
         actions = prime_actions(actions),
@@ -271,6 +274,7 @@ expect_col_schema_match <- function(object,
                                     schema,
                                     complete = TRUE,
                                     in_order = TRUE,
+                                    is_exact = TRUE,
                                     threshold = 1) {
   
   fn_name <- "expect_col_schema_match"
@@ -279,6 +283,9 @@ expect_col_schema_match <- function(object,
     create_agent(tbl = object, label = "::QUIET::") %>%
     col_schema_match(
       schema = {{ schema }},
+      complete = complete,
+      in_order = in_order,
+      is_exact = is_exact,
       actions = action_levels(notify_at = threshold)
     ) %>%
     interrogate() %>%
@@ -324,12 +331,16 @@ test_col_schema_match <- function(object,
                                   schema,
                                   complete = TRUE,
                                   in_order = TRUE,
+                                  is_exact = TRUE,
                                   threshold = 1) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
     col_schema_match(
       schema = {{ schema }},
+      complete = complete,
+      in_order = in_order,
+      is_exact = is_exact,
       actions = action_levels(notify_at = threshold)
     ) %>%
     interrogate() %>%

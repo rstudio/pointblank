@@ -24,6 +24,7 @@ expect_col_schema_match(
   schema,
   complete = TRUE,
   in_order = TRUE,
+  is_exact = TRUE,
   threshold = 1
 )
 
@@ -32,6 +33,7 @@ test_col_schema_match(
   schema,
   complete = TRUE,
   in_order = TRUE,
+  is_exact = TRUE,
   threshold = 1
 )
 }

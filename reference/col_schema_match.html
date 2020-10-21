@@ -55,17 +55,7 @@ that of the target table. The validation function can be used directly on a
 data table or with an agent object (technically, a ptblank_agent object)
 whereas the expectation and test functions can only be used with a data
 table. The types of data tables that can be used include data frames,
-tibbles, database tables (tbl_dbi), and Spark DataFrames (tbl_spark).
-Each validation step or expectation will operate over a single test unit,
-which is whether the column is an integer-type column or not. The validation
-step or expectation operates over a single test unit, which is whether the
-schema matches that of the table (within the constraints enforced by the
-complete and in_order options). If the target table is a tbl_dbi or a
-tbl_spark object, we can choose to validate the column schema that is based
-on R column types (e.g., &quot;numeric&quot;, &quot;character&quot;, etc.), SQL column types
-(e.g., &quot;double&quot;, &quot;varchar&quot;, etc.), or Spark SQL types (e.g,.
-&quot;DoubleType&quot;, &quot;StringType&quot;, etc.). That option is defined in the
-col_schema() function (it is the .db_col_types argument)." />
+tibbles, database tables (tbl_dbi), and Spark DataFrames (tbl_spark)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -148,17 +138,7 @@ that of the target table. The validation function can be used directly on a
 data table or with an <em>agent</em> object (technically, a <code>ptblank_agent</code> object)
 whereas the expectation and test functions can only be used with a data
 table. The types of data tables that can be used include data frames,
-tibbles, database tables (<code>tbl_dbi</code>), and Spark DataFrames (<code>tbl_spark</code>).
-Each validation step or expectation will operate over a single test unit,
-which is whether the column is an integer-type column or not. The validation
-step or expectation operates over a single test unit, which is whether the
-schema matches that of the table (within the constraints enforced by the
-<code>complete</code> and <code>in_order</code> options). If the target table is a <code>tbl_dbi</code> or a
-<code>tbl_spark</code> object, we can choose to validate the column schema that is based
-on R column types (e.g., <code>"numeric"</code>, <code>"character"</code>, etc.), SQL column types
-(e.g., <code>"double"</code>, <code>"varchar"</code>, etc.), or Spark SQL types (e.g,.
-<code>"DoubleType"</code>, <code>"StringType"</code>, etc.). That option is defined in the
-<code><a href='col_schema.html'>col_schema()</a></code> function (it is the <code>.db_col_types</code> argument).</p>
+tibbles, database tables (<code>tbl_dbi</code>), and Spark DataFrames (<code>tbl_spark</code>).</p>
     </div>
 
     <pre class="usage"><span class='fu'>col_schema_match</span><span class='op'>(</span>
@@ -166,6 +146,7 @@ on R column types (e.g., <code>"numeric"</code>, <code>"character"</code>, etc.)
   <span class='va'>schema</span>,
   complete <span class='op'>=</span> <span class='cn'>TRUE</span>,
   in_order <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  is_exact <span class='op'>=</span> <span class='cn'>TRUE</span>,
   actions <span class='op'>=</span> <span class='cn'>NULL</span>,
   step_id <span class='op'>=</span> <span class='cn'>NULL</span>,
   label <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -178,6 +159,7 @@ on R column types (e.g., <code>"numeric"</code>, <code>"character"</code>, etc.)
   <span class='va'>schema</span>,
   complete <span class='op'>=</span> <span class='cn'>TRUE</span>,
   in_order <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  is_exact <span class='op'>=</span> <span class='cn'>TRUE</span>,
   threshold <span class='op'>=</span> <span class='fl'>1</span>
 <span class='op'>)</span>
 
@@ -186,6 +168,7 @@ on R column types (e.g., <code>"numeric"</code>, <code>"character"</code>, etc.)
   <span class='va'>schema</span>,
   complete <span class='op'>=</span> <span class='cn'>TRUE</span>,
   in_order <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  is_exact <span class='op'>=</span> <span class='cn'>TRUE</span>,
   threshold <span class='op'>=</span> <span class='fl'>1</span>
 <span class='op'>)</span></pre>
 
@@ -206,10 +189,10 @@ using the <code><a href='col_schema.html'>col_schema()</a></code> function.</p><
     <tr>
       <th>complete</th>
       <td><p>A requirement to account for all table columns in the
-<code>schema</code>. By default, this is <code>TRUE</code> and so that all column names in the
-target table must be present in the schema object. This restriction can be
-relaxed by using <code>FALSE</code>, where we can provide a subset of table columns in
-the schema.</p></td>
+provided <code>schema</code>. By default, this is <code>TRUE</code> and so that all column names
+in the target table must be present in the schema object. This restriction
+can be relaxed by using <code>FALSE</code>, where we can provide a subset of table
+columns in the schema.</p></td>
     </tr>
     <tr>
       <th>in_order</th>
@@ -217,6 +200,18 @@ the schema.</p></td>
 the provided <code>schema</code>. By default, this is <code>TRUE</code> and the order of columns
 in both the schema and the target table must match. By setting to <code>FALSE</code>,
 this strict order requirement is removed.</p></td>
+    </tr>
+    <tr>
+      <th>is_exact</th>
+      <td><p>Determines whether the check for column types should be exact
+or even performed at all. For example, columns in R data frames may have
+multiple classes (e.g., a date-time column can have both the <code>"POSIXct"</code>
+and the <code>"POSIXt"</code> classes). If using <code>is_exact == FALSE</code>, the column type
+in the user-defined schema for a date-time value can be set as either
+<code>"POSIXct"</code> <em>or</em> <code>"POSIXt"</code> and pass validation (with this column, at
+least). This can be taken a step further and using <code>NULL</code> for a column type
+in the user-defined schema will skip the validation check of a column type.
+By default, <code>is_exact</code> is set to <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>actions</th>
@@ -283,7 +278,24 @@ called primarily for its potential side-effects (e.g., signaling failure).
 The test function returns a logical value.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Often, we will want to specify <code>actions</code> for the validation. This argument,
+    <p>The validation step or expectation operates over a single test unit, which is
+whether the schema matches that of the table (within the constraints enforced
+by the <code>complete</code>, <code>in_order</code>, and <code>is_exact</code> options). If the target table
+is a <code>tbl_dbi</code> or a <code>tbl_spark</code> object, we can choose to validate the column
+schema that is based on R column types (e.g., <code>"numeric"</code>, <code>"character"</code>,
+etc.), SQL column types (e.g., <code>"double"</code>, <code>"varchar"</code>, etc.), or Spark SQL
+types (e.g,. <code>"DoubleType"</code>, <code>"StringType"</code>, etc.). That option is defined in
+the <code><a href='col_schema.html'>col_schema()</a></code> function (it is the <code>.db_col_types</code> argument).</p>
+<p>There are options to make schema checking less stringent (by default, this
+validation operates with highest level of strictness). With the <code>complete</code>
+option set to <code>FALSE</code>, we can supply a <code>col_schema</code> object with a partial
+inclusion of columns. Using <code>in_order</code> set to <code>FALSE</code> means that there is no
+requirement for the columns defined in the <code>schema</code> object to be in the same
+order as in the target table. Finally, the <code>is_exact</code> option set to <code>FALSE</code>
+means that all column classes/types don't have to be provided for a
+particular column. It can even be <code>NULL</code>, skipping the check of the column
+type.</p>
+<p>Often, we will want to specify <code>actions</code> for the validation. This argument,
 present in every validation function, takes a specially-crafted list object
 that is best produced by the <code><a href='action_levels.html'>action_levels()</a></code> function. Read that function's
 documentation for the lowdown on how to create reactions to above-threshold

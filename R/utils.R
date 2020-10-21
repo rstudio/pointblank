@@ -41,6 +41,10 @@ is_tbl_dbi <- function(x) {
   inherits(x, "tbl_dbi")
 }
 
+has_agent_intel <- function(agent) {
+  inherits(agent, "has_intel")
+}
+
 get_tbl_object <- function(agent) {
   agent$tbl
 }
@@ -74,10 +78,6 @@ glue_safely <- function(...,
       .envir = .envir
     )
   )
-}
-
-has_agent_intel <- function(agent) {
-  inherits(agent, "has_intel")
 }
 
 is_agent_empty <- function(agent) {

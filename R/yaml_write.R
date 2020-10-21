@@ -350,13 +350,15 @@ as_action_levels <- function(actions, actions_default = NULL) {
 get_schema_list <- function(schema) {
 
   vals <- schema
-  
+
   complete <- schema$`__complete__`
   in_order <- schema$`__in_order__`
+  is_exact <- schema$`__is_exact__`
   
   type <- ifelse(inherits(schema, "r_type"), "r", "sql")
   
-  vals <- vals[!(names(vals) %in% c("__complete__", "__in_order__"))]
+  vals <- 
+    vals[!(names(vals) %in% c("__complete__", "__in_order__", "__is_exact__"))]
   
   if (type == "sql") {
     vals <- c(vals, list(`.db_col_types` = "sql"))
@@ -365,7 +367,8 @@ get_schema_list <- function(schema) {
   list(
     schema = vals, 
     complete = complete,
-    in_order = in_order
+    in_order = in_order,
+    is_exact = is_exact
   )
 }
 
@@ -428,6 +431,10 @@ prune_lst_step <- function(lst_step) {
   if ("in_order" %in% names(lst_step[[1]]) &&
       lst_step[[1]][["in_order"]]) {
     lst_step[[1]]["in_order"] <- NULL
+  }
+  if ("is_exact" %in% names(lst_step[[1]]) &&
+      lst_step[[1]][["is_exact"]]) {
+    lst_step[[1]]["is_exact"] <- NULL
   }
   if ("actions" %in% names(lst_step[[1]])) {
     if (length(lst_step[[1]][["actions"]][["action_levels"]]) == 1 &&
@@ -652,13 +659,14 @@ as_agent_yaml_list <- function(agent) {
     } else if (validation_fn == "col_schema_match") {
       
       schema_list <- get_schema_list(schema = step_list$values[[1]])
-      
+
       lst_step <- 
         list(
           validation_fn = list(
             schema = schema_list$schema,
             complete = schema_list$complete,
             in_order = schema_list$in_order,
+            is_exact = schema_list$is_exact,
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default

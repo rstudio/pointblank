@@ -1475,9 +1475,11 @@ interrogate_col_schema_match <- function(agent,
     # Extract options from `table_schema_y`
     complete <- table_schema_y$`__complete__`
     in_order <- table_schema_y$`__in_order__`
+    is_exact <- table_schema_y$`__is_exact__`
 
     table_schema_y$`__complete__` <- NULL
     table_schema_y$`__in_order__` <- NULL
+    table_schema_y$`__is_exact__` <- NULL
     
     # nolint end
     
@@ -1516,12 +1518,40 @@ interrogate_col_schema_match <- function(agent,
         )
     }
     
-    # Check for exact matching between the reference schema and
-    # the user-defined schema
-    if (identical(table_schema_x, table_schema_y)) {
-      dplyr::tibble(pb_is_good_ = TRUE)
+    if (!is_exact) {
+      
+      # Check that matching between the reference schema (x) and
+      # the user-defined schema (y) occurs with looser matching
+      # of types for each column
+      
+      unit_results <- c()
+      
+      for (i in seq_along(length(table_schema_y))) {
+        
+        unit_results <-
+          c(
+            unit_results,
+            names(table_schema_y[i]) == names(table_schema_x[i])
+          )
+        
+        unit_results <-
+          c(
+            unit_results,
+            table_schema_y[[i]] %in% table_schema_x[[i]]
+          )
+      }
+
+      dplyr::tibble(pb_is_good_ = all(unit_results))
+      
     } else {
-      dplyr::tibble(pb_is_good_ = FALSE)
+    
+      # Check for exact matching between the reference schema and
+      # the user-defined schema
+      if (identical(table_schema_x, table_schema_y)) {
+        dplyr::tibble(pb_is_good_ = TRUE)
+      } else {
+        dplyr::tibble(pb_is_good_ = FALSE)
+      }
     }
   }
 

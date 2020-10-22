@@ -16,6 +16,8 @@
 
 * The *informant* object can be written to **pointblank** YAML using the revised `yaml_write()` (previously `agent_yaml_write()`) function. We can actually write both the *agent* and the *informant* to the same YAML file which is useful since both objects share the same target table. Reading is done with the `yaml_read_agent()` and `yaml_read_informant()` functions.
 
+* The *informant* can be emailed using the `email_create()` function; this emailing can be done in one of eight languages for the stock message text.
+
 ## Translations and Locales
 
 * More text in the agent report is translated now.
@@ -25,6 +27,8 @@
 * Added the Portuguese (`"pt"`, Brazil), Chinese (`"zh"`, China mainland), and Russian (`"ru"`) translations.
 
 * Added a locale option for reporting; the locale will match the language (using the base locale) unless a different locale is specified. The locale is used to format numeric values according to the locale's rules. This also applies to the reporting offered by the `scan_data()` function.
+
+* All stock email message parts (used when emailing the agent report or the information report) have been translated to the eight supported languages. The language setting in the respective objects is used to determine the language of the stock message parts.
 
 ## Breaking changes
 
@@ -47,6 +51,8 @@
 * The `set_tbl()`, `remove_tbl()`, `set_read_fn()`, and `remove_read_fn()` functions can now also be used with an *informant* object.
 
 * The `get_sundered_data()` function is more clear with regard to which validation steps are considered for splitting of the data. Using validation steps with `preconditions` must fulfill the rule that the target table only have a single form across steps.
+
+* The `is_exact` argument is new in the `col_schema_match()`, `expect_col_schema_match()`, and `test_col_schema_match()` functions, further allowing these types of validations to be less stringent. This argument loosens the requirement to include all class names for a column that may have multiple. Also, we can specify `NULL` to entirely skip the checking of a class/type.
 
 * Refactored a large portion of the code that produces the agent report to increase rendering speed.
 

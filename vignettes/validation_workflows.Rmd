@@ -1,0 +1,34 @@
+---
+title: "VALID-I: Data Quality Reporting Workflow"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{VALID-I: Data Quality Reporting Workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r options, message=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(pointblank)
+```
+
+There are six validation workflows:
+
+1. **VALID-I: Data Quality Reporting**
+2. **VALID-II: Pipeline Data Validation**
+3. **VALID-III: R Markdown Document Validation**
+4. **VALID-IV: Table Scan**
+5. **VALID-V: Expectations in Unit Tests**
+6. **VALID-VI: Data Tests for Conditionals**
+
+The purpose of the first (**VALID-I**) is for comprehensive reporting of the data quality of a target table. This typically uses as many validation functions as the user wishes to write to get an adequate level of validation coverage for that table. 
+
+The second workflow (**VALID-II**) is meant for repeated data-quality checks in a data-transformation pipeline that involves tabular data. The principal mode of operation there is to use validation functions to either warn the user of unforeseen data integrity problems or stop the pipeline dead so that dependent, downstream processes (that would use the data to some extent) are never initiated. Both the **Data Quality Reporting** and the **Pipeline Data Validation** workflows use a common set of validation functions, but latter doesn't use an *agent*, and the validations eagerly interrogate the data at each invocation.
+
+
+
+

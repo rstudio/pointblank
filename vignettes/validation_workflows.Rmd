@@ -1,8 +1,8 @@
 ---
-title: "VALID-I: Data Quality Reporting Workflow"
+title: "Overview of Validation Workflows"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{VALID-I: Data Quality Reporting Workflow}
+  %\VignetteIndexEntry{Overview of Validation Workflows}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -33,7 +33,6 @@ Data can be tested like function output is tested by using the **Expectations in
 
 Evaluation of data can produce logical output (`TRUE`/`FALSE`) through use of the **Data Tests for Conditionals** workflow (**VALID-IV**). This uses the analogous suite of `test_*()` functions. This workflow is suitable in programming contexts where the result of data validation can be the alteration of a codepath. Like the **VALID-III** workflow, the function's signature is simplified. In fact, the arguments for the complementary `expect_*()` and `test_*()` functions are the same.
 
-A target table can be scanned and described with the **Table Scan** workflow (**VALID-V**). This is useful for getting table dimensions, important statistical values by column, interactions by column, and a view of missingness in an easy-to-parse HTML output.
+A target table can be scanned and described with the **Table Scan** workflow (**VALID-V**). This is useful for getting table dimensions, important statistical values by column, interactions by column, and a view of missingness in an easy-to-parse HTML output. Components of this HTML report can be reordered or omitted as needed.
 
-The **R Markdown Document Validation** workflow (**VALID-VI**) can contain any combination of the first five workflows and specially display their outputs in an R Markdown document.
-
+The **R Markdown Document Validation** workflow (**VALID-VI**) can contain a combination of workflow elements. The ideal workflow to use here is that from **VALID-II** (**Pipeline Data Validation**) since that in combination with chunks having the option `validation = TRUE` set results in a special display of validation results in a rendered HTML document. The **VALID-I** workflow can also be used since the agent report prints nicely as an HTML table and `table_scan()` function of the **VALID-V** workflow also has compatible output and. Finally the `test_*()` functions of the **VALID-IV** workflow can be used throughout.

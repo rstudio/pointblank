@@ -16,11 +16,13 @@ knitr::opts_chunk$set(
 library(pointblank)
 ```
 
+<img src="images/VALID-II.svg" width=100%>
+
 ### Introduction to the **Pipeline Data Validation** workflow (**VALID-II**)
 
 The second data validation workflow, *VALID-II: Pipeline Data Validation*, somewhat simplifies the process for checking data directly. There is no *agent* involved here and we instead call validation functions directly on the data table objects. Because no *agent*, there is no report, and the idea is that the side effects are most important here. We can trigger warnings, raise errors, or write out logs when exceeding specified failure thresholds. The data just passes through the validation functions (some data in, the same data out). Where would we do this? When importing data, for instance, we could pass the incoming data through a few validation functions, possibly with customized threshold levels set (by default, any test units failing will result in an error). We could also use a set of validation functions further down the script on transformed data as a QA/QC measure. If bad data quality might be ruinous for a downstream report (especially in an automated context), it's better to stop the process through **pointblank** validation tests and get to the heart of the matter.
 
-Let's adapt the previous example to optimize it to the pipeline-based data validation workflow:
+Let's adapt the example shown in the *VALID-I: Data Quality Reporting Workflow* article to the pipeline data validation workflow:
 
 ```{r pipeline_small_table, eval=FALSE, paged.print=FALSE}
 small_table %>%

@@ -1,0 +1,24 @@
+---
+title: "VALID-III: Expectations in Unit Tests"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{VALID-III: Expectations in Unit Tests}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r options, message=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(pointblank)
+```
+
+<img src="images/VALID-III.svg" width=100%>
+
+### Introduction to the **Expectations in Unit Tests** Workflow (**VALID-III**)
+
+The *VALID-III: Expectations in Unit Tests* workflow is all about checking your data alongside your usual **testthat** tests.
+

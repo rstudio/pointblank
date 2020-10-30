@@ -1,0 +1,24 @@
+---
+title: "VALID-IV: Data Tests for Conditionals"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{VALID-IV: Data Tests for Conditionals}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r options, message=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(pointblank)
+```
+
+<img src="images/VALID-IV.svg" width=100%>
+
+### Introduction to the **Data Tests for Conditionals** Workflow (**VALID-IV**)
+
+The *VALID-IV: Data Tests for Conditionals* workflow is probably not much of a workflow really. But maybe you consider programming and control flow a sort of workflow. If that's the case and you are programming with data, the functions of this workflow might be useful for that. A set of `test_*()` functions, with the same options as the `expect_*()` functions of *VALID-III*, are used with data tables and the result of each call returns a single logical value (`TRUE` or `FALSE`).
+

@@ -1,0 +1,24 @@
+---
+title: "VALID-VI: R Markdown Document Validation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{VALID-VI: R Markdown Document Validation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r options, message=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(pointblank)
+```
+
+<img src="images/VALID-VI.svg" width=100%>
+
+### Introduction to the **R Markdown Document Validation** Workflow (**VALID-VI**)
+
+The *R Markdown Document Validation* workflow involves interspersing bits of different workflows in the larger R Markdown workflow.
+

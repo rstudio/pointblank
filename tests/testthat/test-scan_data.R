@@ -1,6 +1,7 @@
 test_that("Using `scan_data()` results in an HTML document", {
   
   skip_on_cran()
+  skip_on_ci()
   
   scan_data_html <- 
     scan_data(

@@ -177,4 +177,6 @@ agent
 
 <img src="images/agent_report_2.png" width=100%>
 
+It's possible to invoke a function when a particular failure condition is met and this can be set in the `action_levels()` function and made part of the `action_levels` object. One example of a function that can be used is logging results of validation steps to a file.
+
 

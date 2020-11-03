@@ -2,11 +2,11 @@ library(projmgr)
 library(gt)
 library(tidyverse)
 
-myrepo <- create_repo_ref('rich-iannone', 'pointblank')
+myrepo <- create_repo_ref("rich-iannone", "pointblank")
 issues <- get_issues(myrepo, state = "open")
 issues_df <- parse_issues(issues)
 
-tasks_gt <- 
+tbl <- 
   issues_df %>%
   tidyr::separate(
     col = labels_name,
@@ -29,7 +29,10 @@ tasks_gt <-
   dplyr::arrange(milestone_title, desc(priority, type, difficulty, effort)) %>%
   dplyr::mutate_at(.vars = vars(priority, difficulty, effort), .funs = as.numeric) %>%
   dplyr::mutate(number = paste0("#", number)) %>%
-  dplyr::as_tibble() %>%
+  dplyr::as_tibble()
+
+gt_tbl <- 
+  tbl %>%
   gt(
     rowname_col = "number",
     groupname_col = "milestone_title",
@@ -66,7 +69,6 @@ tasks_gt <-
     vars(priority, difficulty, effort) ~ px(75),
     TRUE ~ px(140)
   ) %>%
-  opt_table_font(font = google_font("IBM Plex Sans")) %>%
   opt_align_table_header("left") %>%
   opt_all_caps() %>%
   opt_table_outline(style = "none") %>%
@@ -81,11 +83,22 @@ tasks_gt <-
     fn = function(x) {
       ifelse(x == "4", "♨︎", x)
     } 
-  )
+  ) %>%
+  tab_style(style = "height: 50px", locations = cells_body())
 
+# Height Calculation
+tbl_rows <- nrow(tbl)
+row_group_labels <- tbl %>% dplyr::pull(milestone_title) %>% unique() %>% length()
+
+est_height <- 
+  31 + 25 +
+  (tbl_rows * 49) +
+  (row_group_labels * 33) + 10
+
+# Generation of SVG
 svg_object <-
   glue::glue(
-    "<svg fill=\"none\" viewBox=\"0 0 900 2200\" width=\"900\" height=\"2200\" xmlns=\"http://www.w3.org/2000/svg\">
+    "<svg fill=\"none\" viewBox=\"0 0 830 {est_height}\" width=\"830\" height=\"{est_height}\" xmlns=\"http://www.w3.org/2000/svg\">
       <foreignObject width=\"100%\" height=\"100%\">
       <div xmlns=\"http://www.w3.org/1999/xhtml\">
     {gt::as_raw_html(tasks_gt)}
@@ -95,6 +108,7 @@ svg_object <-
     "
   ) %>%
   as.character() %>%
-  gsub("style>", ">", ., fixed = TRUE) %>% cat()
+  gsub("style>", ">", ., fixed = TRUE) %>%
+  gsub("<p>", "<p style='margin:0'>", ., fixed = TRUE)
 
 cat(svg_object, file = "./man/figures/pointblank-milestones.svg")

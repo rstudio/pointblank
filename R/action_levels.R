@@ -147,15 +147,22 @@ action_levels <- function(warn_at = NULL,
   stop_list <- normalize_fraction_count(stop_at)
   notify_list <- normalize_fraction_count(notify_at)
   
-  list(
-    warn_fraction = warn_list$fraction,
-    warn_count = warn_list$count,
-    stop_fraction = stop_list$fraction,
-    stop_count = stop_list$count,
-    notify_fraction = notify_list$fraction,
-    notify_count = notify_list$count,
-    fns = fns
-  )
+  action_levels <- 
+    list(
+      warn_fraction = warn_list$fraction,
+      warn_count = warn_list$count,
+      stop_fraction = stop_list$fraction,
+      stop_count = stop_list$count,
+      notify_fraction = notify_list$fraction,
+      notify_count = notify_list$count,
+      fns = fns
+    )
+  
+  # Assign the class attribute value `action_levels` to
+  # the `action_levels` object
+  attr(action_levels, "class") <- "action_levels"
+  
+  action_levels
 }
 
 #' @rdname action_levels

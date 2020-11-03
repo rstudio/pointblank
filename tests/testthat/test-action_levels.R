@@ -4,7 +4,7 @@ test_that("The `action_levels()` helper function works as expected", {
   # all of the elements will be NULL
   al <- action_levels()
   
-  al %>% expect_is("list")
+  al %>% expect_is("action_levels")
   al %>% 
     names() %>% 
     expect_equal(
@@ -30,7 +30,7 @@ test_that("The `action_levels()` helper function works as expected", {
   # Create an `action_levels()` list with fractional values
   al <- action_levels(warn_at = 0.2, stop_at = 0.8, notify_at = 0.345)
   
-  al %>% expect_is("list")
+  al %>% expect_is("action_levels")
   al %>% names() %>% 
     expect_equal(
       c(
@@ -55,7 +55,7 @@ test_that("The `action_levels()` helper function works as expected", {
   # Create an `action_levels()` list with count values
   al <- action_levels(warn_at = 20, stop_at = 80, notify_at = 34.6)
   
-  al %>% expect_is("list")
+  al %>% expect_is("action_levels")
   al %>%
     names() %>% 
     expect_equal(
@@ -93,7 +93,7 @@ test_that("The `action_levels()` helper function works as expected", {
       fns = list(warn = ~ my_great_function(vl = .vars_list))
     )
   
-  al %>% expect_is("list")
+  al %>% expect_is("action_levels")
   al %>% 
     names() %>% 
     expect_equal(

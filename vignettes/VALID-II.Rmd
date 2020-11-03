@@ -20,17 +20,19 @@ library(pointblank)
 
 ### Introduction to the **Pipeline Data Validation** Workflow (**VALID-II**)
 
-The second data validation workflow, *VALID-II: Pipeline Data Validation*, somewhat simplifies the process for checking data directly. There is no *agent* involved here and we instead call validation functions directly on the data table objects. Because no *agent*, there is no report, and the idea is that the side effects are most important here. We can trigger warnings, raise errors, or write out logs when exceeding specified failure thresholds. The data just passes through the validation functions (some data in, the same data out). Where would we do this? When importing data, for instance, we could pass the incoming data through a few validation functions, possibly with customized threshold levels set (by default, any test units failing will result in an error). We could also use a set of validation functions further down the script on transformed data as a QA/QC measure. If bad data quality might be ruinous for a downstream report (especially in an automated context), it's better to stop the process through **pointblank** validation tests and get to the heart of the matter.
+The second data validation workflow, *VALID-II: Pipeline Data Validation*, somewhat simplifies the process for checking data directly. There is no *agent* involved here and we instead call validation functions directly on the data table objects. Because no *agent*, there is no report, and the idea is that the side effects are most important here. We can trigger warnings, raise errors, or write out logs when exceeding specified failure thresholds. The data just passes through the validation functions (some data in, the same data out).
+
+Where would we do this? When importing data, for instance, we could pass the incoming data through a few validation functions, possibly with customized threshold levels set (by default, any test units failing will result in an error). We could also use a set of validation functions further down the script on transformed data as a QA/QC measure. If bad data quality might be ruinous for a downstream report (especially in an automated context), it's better to stop the process through **pointblank** validation tests and get to the heart of the matter.
 
 Let's adapt the example shown in the *VALID-I: Data Quality Reporting Workflow* article to the pipeline data validation workflow:
 
 ```{r pipeline_small_table, eval=FALSE, paged.print=FALSE}
 small_table %>%
-  col_is_posix(vars(date_time), actions = al) %>%
-  col_vals_in_set(vars(f), set = c("low", "mid", "high"), actions = al) %>%
-  col_vals_lt(vars(a), value = 10, actions = al) %>%
-  col_vals_regex(vars(b), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$", actions = al) %>%
-  col_vals_between(vars(d), left = 0, right = 5000, actions = al)
+  col_is_posix(vars(date_time)) %>%
+  col_vals_in_set(vars(f), set = c("low", "mid", "high")) %>%
+  col_vals_lt(vars(a), value = 10) %>%
+  col_vals_regex(vars(b), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$") %>%
+  col_vals_between(vars(d), left = 0, right = 5000)
 ```
 
 ```
@@ -39,4 +41,7 @@ The `col_vals_between()` validation failed beyond the absolute threshold level (
 * failure level (1) >= failure threshold (1) 
 ```
 
-This stringent threshold setting stopped the evaluation of the pipeline and, in turn, stops the running script if it's deployed and automatically running on the regular. The `action_levels()` function is quite powerful and it allows us to define custom functions to react to entering each of the three states. In this type of workflow we don't need to define those functions, **pointblank** will automatically do the sensible thing and provide a stock `warning()` or `stop()` message.
+This stringent threshold setting stopped the evaluation of the pipeline and, in turn, stops the running script if it's deployed and automatically running on the regular. In this type of workflow we don't need to define those functions, **pointblank** will automatically do the sensible thing and provide a stock `warning()` or `stop()` message.
+
+
+But the `action_levels()` function is quite powerful and it allows us to define custom functions to react to entering each of the three states. There are two helper functions that are convenient when using validation functions directly on data (in this `agent`-less workflow): `warn_on_fail()` and `stop_on_fail()`. These helpers either warn or stop (default failure threshold for each is set to `1`), and, they do so with informative warning or error messages. The `stop_on_fail()` helper is applied by default when using validation functions directly on data.

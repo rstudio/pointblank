@@ -255,4 +255,123 @@ print.x_list_n <- function(x, ...) {
   # nocov end 
 }
 
+#' Print the `action_levels` object
+#'
+#' This function will allow the `action_levels` to be nicely printed.
+#' 
+#' @param x An object of class `action_levels`.
+#' @param ... Any additional parameters.
+#' 
+#' @keywords internal
+#' @export
+print.action_levels <- function(x, ...) {
+  
+  has_warn_fns <- if (!is.null(x$fns$warn)) TRUE else FALSE
+  has_stop_fns <- if (!is.null(x$fns$stop)) TRUE else FALSE
+  has_notify_fns <- if (!is.null(x$fns$notify)) TRUE else FALSE
+  
+  # nocov start 
+  cli::cli_div(
+    theme = list(
+      span.cyan = list(color = "cyan"),
+      span.red = list(color = "red"),
+      span.blue = list(color = "blue"),
+      span.green = list(color = "green"),
+      span.yellow = list(color = "yellow"),
+      span.orange = list(color = "orange"),
+      span.pink = list(color = "pink"),
+      span.brown = list(color = "brown")
+    )
+  )
+  
+  cli::cli_rule(
+    left = "The `action_levels` settings",
+  )
+  
+  if (!is.null(x$warn_fraction)) {
+    cli::cli_text(
+      "{.yellow WARN} failure threshold of {x$warn_fraction} of all test units."
+    )
+  }
+  if (!is.null(x$warn_count)) {
+    cli::cli_text(
+      "{.yellow WARN} failure threshold of ",
+      "{pb_fmt_number(x$warn_count, decimals = 0)} test units."
+    )
+  }
+  if (has_warn_fns) {
+    if (is.null(x$warn_fraction) && is.null(x$warn_count)) {
+      cli::cli_alert_warning(
+        "{.yellow WARN} fns provided without a failure threshold."
+      )
+      cli::cli_alert_info(
+        "Set the {.yellow WARN} threshold using the `warn_at` argument."
+      )
+      cli::cli_text()
+    } else {
+      cli::cli_text(
+        "{.yellow \\fns\\} {paste(as.character(x$fns$warn), collapse = ' ')}"
+      )
+    }
+  }
+  
+  if (!is.null(x$stop_fraction)) {
+    cli::cli_text(
+      "{.red STOP} failure threshold of {x$stop_fraction} of all test units."
+    )
+  }
+  if (!is.null(x$stop_count)) {
+    cli::cli_text(
+      "{.red STOP} failure threshold of ",
+      "{pb_fmt_number(x$stop_count, decimals = 0)} test units."
+    )
+  }
+  if (has_stop_fns) {
+    if (is.null(x$stop_fraction) && is.null(x$stop_count)) {
+      cli::cli_alert_warning(
+        "{.red STOP} fns provided without a failure threshold."
+      )
+      cli::cli_alert_info(
+        "Set the {.red STOP} threshold using the `stop_at` argument."
+      )
+      cli::cli_text()
+    } else {
+      cli::cli_text(
+        "{.red \\fns\\} {paste(as.character(x$fns$stop), collapse = ' ')}"
+      )
+    }
+  }
+  
+  if (!is.null(x$notify_fraction)) {
+    cli::cli_text(
+      "{.blue NOTIFY} failure threshold of {x$notify_fraction} of all test units."
+    )
+  }
+  if (!is.null(x$notify_count)) {
+    cli::cli_text(
+      "{.blue NOTIFY} failure threshold of ",
+      "{pb_fmt_number(x$notify_count, decimals = 0)} test units."
+    )
+  }
+  if (has_notify_fns) {
+    if (is.null(x$notify_fraction) && is.null(x$notify_count)) {
+      cli::cli_alert_warning(
+        "{.blue NOTIFY} fns provided without a failure threshold."
+      )
+      cli::cli_alert_info(
+        "Set the {.blue NOTIFY} threshold using the `notify_at` argument."
+      )
+      cli::cli_text()
+    } else {
+      cli::cli_text(
+        "{.blue \\fns\\} {paste(as.character(x$fns$notify), collapse = ' ')}"
+      )
+    }
+  }
+  
+  cli::cli_rule()
+  
+  # nocov end 
+}
+
 # nolint end

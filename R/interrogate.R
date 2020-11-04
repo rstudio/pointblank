@@ -1808,22 +1808,26 @@ perform_action <- function(agent,
       n_passed = .n_passed,
       n_failed = .n_failed,
       f_passed = .f_passed,
-      f_failed = .f_failed
+      f_failed = .f_failed,
+      this_type = NA_character_
     )
 
   if (type == "warn") {
+    x$this_type <- "warn"
     if (!is.na(.warn) && .warn) {
       if ("warn" %in% names(actions$fns) && !is.null(actions$fns$warn)) {
         actions$fns$warn %>% rlang::f_rhs() %>% rlang::eval_tidy()
       }
     }
   } else if (type == "notify") {
+    x$this_type <- "notify"
     if (!is.na(.notify) && .notify) {
       if ("notify" %in% names(actions$fns) && !is.null(actions$fns$notify)) {
         actions$fns$notify %>% rlang::f_rhs() %>% rlang::eval_tidy()
       }
     }
   } else if (type == "stop") {
+    x$this_type <- "stop"
     if (!is.na(.stop) && .stop) {
       if ("stop" %in% names(actions$fns) && !is.null(actions$fns$stop)) {
         actions$fns$stop %>% rlang::f_rhs() %>% rlang::eval_tidy()

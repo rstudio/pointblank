@@ -25,5 +25,9 @@ appended. This can alternatively be one or more \strong{log4r} appenders.}
 }
 \description{
 The \code{log4r_step()} function can be used as an action in the \code{\link[=action_levels]{action_levels()}}
-function (as a list component for the \code{fns} list).
+function (as a list component for the \code{fns} list). Place a call to this
+function in every condition that should produce a log (i.e., \code{warn}, \code{stop},
+\code{notify}). Only the highest severity condition in a given validation step
+will produce a log (skipping lower severities) so long as the call to
+\code{log4r_step()} is present.
 }

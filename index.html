@@ -98,8 +98,8 @@
 <a href="#table-validations-with-an-agent-and-data-quality-reporting" class="anchor"></a>TABLE VALIDATIONS WITH AN AGENT AND DATA QUALITY REPORTING</h5>
 <p>Data validation can be carried out in <em>Data Quality Reporting</em> workflow, ultimately resulting in the production of of a data quality analysis report. This is most useful in a non-interactive mode where data quality for database tables and on-disk data files must be periodically checked. The <strong>pointblank</strong> <em>agent</em> is given a collection of validation functions to define validation steps. We can get extracts of data rows that failed validation, set up custom functions that are invoked by exceeding set threshold failure rates, etc. Want to email the report regularly (or, only if certain conditions are met)? Yep, you can do all that.</p>
 <p>Here is an example of how to use <strong>pointblank</strong> to validate a local table with an <em>agent</em>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># Generate a simple `action_levels` object to</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Generate a simple `action_levels` object to</span>
 <span class="co"># set the `warn` state if a validation step</span>
 <span class="co"># has a single 'fail' test unit</span>
 <span class="va">al</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/action_levels.html">action_levels</a></span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
@@ -126,7 +126,7 @@
     preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>c <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="va">b</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="reference/interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>The <strong>pointblank</strong> package is designed to be both straightforward yet powerful. And fast! Local data frames don’t take very long to validate extensively and all validation checks on remote tables are done entirely in-database. So we can add dozens or even hundreds of validation steps without any long waits for reporting.</p>
 <p>Should you want to perform validation checks on database or <em>Spark</em> tables, provide a <code>tbl_dbi</code> or <code>tbl_spark</code> object to <code><a href="reference/create_agent.html">create_agent()</a></code>. The <strong>pointblank</strong> package currently supports <em>PostgreSQL</em>. <em>MySQL</em>, <em>MariaDB</em>, <em>DuckDB</em>, <em>SQLite</em>, and <em>Spark DataFrames</em> (through the <strong>sparklyr</strong> package). The <code><a href="reference/db_tbl.html">db_tbl()</a></code> function is provided by <strong>pointblank</strong> to make accessing a DB table insanely easy.</p>
 <p>The reporting’s pretty sweet. We can get a <strong>gt</strong>-based report by printing an <em>agent</em>.</p>
@@ -142,8 +142,8 @@
 <a href="#validations-directly-on-data" class="anchor"></a>VALIDATIONS DIRECTLY ON DATA</h5>
 <p>The <em>Pipeline Data Validation</em> workflow uses the same collection of validation functions but without need of an <em>agent</em>. This is useful for an ETL process where we want to periodically check data and trigger warnings, raise errors, or write out logs when exceeding specified failure thresholds. It’s a cinch to perform checks on import of the data and at key points during the transformation process, perhaps stopping data flow if things are unacceptable with regard to data quality.</p>
 <p>The following example uses the same three validation functions as before but, this time, we use them directly on the data. The validation functions act as a filter, passing data through unless execution is stopped by failing validations beyond the set threshold. In this workflow, by default, an error will occur if there is a single ‘fail’ test unit in any validation step:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
     a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="cn">NA</span>, <span class="fl">7</span><span class="op">)</span>,
     b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">6</span>,  <span class="fl">0</span>, <span class="fl">7</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
@@ -155,13 +155,13 @@
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">12</span>,
     preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>c <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="va">b</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>Error<span class="op">:</span><span class="st"> </span>Exceedance of failed test units where values <span class="cf">in</span> <span class="st">`</span><span class="dt">c</span><span class="st">`</span> should have been <span class="op">&lt;</span><span class="st"> `</span><span class="dt">12</span><span class="st">`</span>.</span>
 <span id="cb3-2"><a href="#cb3-2"></a>The <span class="st">`</span><span class="dt">col_vals_lt()</span><span class="st">`</span> validation failed beyond the absolute threshold <span class="kw">level</span> (<span class="dv">1</span>).</span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="op">*</span><span class="st"> </span>failure <span class="kw">level</span> (<span class="dv">2</span>) <span class="op">&gt;=</span><span class="st"> </span>failure <span class="kw">threshold</span> (<span class="dv">1</span>) </span></code></pre></div>
 <p>We can downgrade this error to a warning with the <code><a href="reference/action_levels.html">warn_on_fail()</a></code> helper function (assigning it to <code>actions</code>). In this way, the data will always be returned, but warnings will appear.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="co"># The `warn_on_fail()` function is a nice</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># The `warn_on_fail()` function is a nice</span>
 <span class="co"># shortcut for `action_levels(warn_at = 1)`;</span>
 <span class="co"># it works great in this data checking workflow</span>
 <span class="co"># (and the threshold can still be adjusted)</span>
@@ -182,7 +182,7 @@
   <span class="fu"><a href="reference/col_is_numeric.html">col_is_numeric</a></span><span class="op">(</span>
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span>,
     actions <span class="op">=</span> <span class="fu"><a href="reference/action_levels.html">warn_on_fail</a></span><span class="op">(</span><span class="op">)</span>
-  <span class="op">)</span></pre></div>
+  <span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt;       a     b</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></span>
@@ -216,8 +216,8 @@
 <a href="#table-information" class="anchor"></a>TABLE INFORMATION</h5>
 <p>Table information can be synthesized in an <em>information management</em> workflow, giving us a snapshot of a data table we care to collect information on. The <strong>pointblank</strong> <em>informant</em> is fed a series of information functions to define bits of information about a table. This info text can pertain to individual columns, the table as a whole, and whatever additional information makes sense for your organization. We can even glean little snippets of information from the target table and mix them into the info text at will.</p>
 <p>Here is an example of how to use <strong>pointblank</strong> to incorporate pieces of info text into an <em>informant</em> object.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="co"># Create a pointblank `informant` object, with the</span>
 <span class="co"># tibble as the target table. Use three information</span>
 <span class="co"># functions, then, `incorporate()`. The informant</span>
@@ -245,7 +245,7 @@
                `examples and documentation` <span class="op">=</span> <span class="st">"Examples for how to use the
                `info_*()` functions (and many more) are available at the
                [**pointblank** site](https://rich-iannone.github.io/pointblank/)."</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>By printing the <em>informant</em> we get the table information report!</p>
 <p><img src="reference/figures/informant_report.png"></p>
 <p>Here is an information report for the <code>intendo::intendo_revenue</code> table.</p>
@@ -275,11 +275,11 @@
 <h5 class="hasAnchor">
 <a href="#installation" class="anchor"></a>INSTALLATION</h5>
 <p>Want to try this out? The <strong>pointblank</strong> package is available on <strong>CRAN</strong>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"pointblank"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"pointblank"</span><span class="op">)</span></code></pre></div>
 <p>You can also install the development version of <strong>pointblank</strong> from <strong>GitHub</strong>:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rich-iannone/pointblank"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rich-iannone/pointblank"</span><span class="op">)</span></code></pre></div>
 <p>If you encounter a bug, have usage questions, or want to share ideas to make this package better, feel free to file an <a href="https://github.com/rich-iannone/pointblank/issues">issue</a>.</p>
 <hr>
 </div>

@@ -12,7 +12,7 @@
 
 * Added the `get_informant_report()` function for printing the information report (a **gt** table object!).
 
-* You can also just print the *informant* object to show the information report thanks to a new print method for this purpose. 
+* You can also just print the *informant* object to show the information report thanks to a print method for this purpose. 
 
 * The *informant* object can be written to **pointblank** YAML using the revised `yaml_write()` (previously `agent_yaml_write()`) function. We can actually write both the *agent* and the *informant* to the same YAML file which is useful since both objects share the same target table. Reading is done with the `yaml_read_agent()` and `yaml_read_informant()` functions.
 
@@ -41,6 +41,10 @@
 * The `x_read_disk()` function replaces the `agent_read()` function. The new function works to read both the *agent* or the *metadata* objects written to disk.
 
 * The `email_preview()` function has been renamed to `email_create()`.
+
+## New features
+
+* Added the `log4r_step()` function which can be used as an action in an `action_levels()` function call (i.e., a list component for the `fns` list). We can place a call to this function in every condition that should produce a log (i.e., `warn`, `stop`, `notify`). 
 
 ## Minor improvements and bug fixes
 

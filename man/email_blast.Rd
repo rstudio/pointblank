@@ -17,8 +17,10 @@ email_blast(
 )
 }
 \arguments{
-\item{x}{A reference to list object prepared by the agent. It's only
-available in an internal evaluation context.}
+\item{x}{A reference to the x-list object prepared by the agent. This version
+of the x-list is the same as that generated via \verb{get_agent_x_list(<agent>)}
+except this version is internally generated and hence only available in an
+internal evaluation context.}
 
 \item{to, from}{The email addresses for the recipients and the sender.}
 

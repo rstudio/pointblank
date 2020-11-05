@@ -7,8 +7,8 @@
 log4r_step(x, message = NULL, append_to = "pb_log_file")
 }
 \arguments{
-\item{x}{A reference to the x-list object prepared by the agent. This version
-of the x-list is the same as that generated via
+\item{x}{A reference to the x-list object prepared by the \code{agent}. This
+version of the x-list is the same as that generated via
 \verb{get_agent_x_list(<agent>, i = <step>)} except this version is internally
 generated and hence only available in an internal evaluation context.}
 

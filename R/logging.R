@@ -23,27 +23,29 @@ log4r_step <- function(x,
                        message = NULL,
                        append_to = "pb_log_file") {
   
+  # nocov start
+  
   type <- x$this_type
   warn_val <- x$warn
   stop_val <- x$stop
   notify_val <- x$notify
-  
-  warn_log <- 
-    grepl(
-      "log4r_step(x", paste(as.character(x$actions$fns.warn), collapse = ""),
-      fixed = TRUE
+
+  log4r_fn_present <-
+    vapply(
+      c("warn", "stop", "notify"),
+      FUN.VALUE = logical(1),
+      USE.NAMES = FALSE,
+      FUN = function(y) {
+        grepl(
+          "log4r_step(x",
+          paste(
+            as.character(x$actions[[paste0("fns.", y)]]),
+            collapse = ""
+          ),
+          fixed = TRUE
+        )
+      }
     )
-  stop_log <- 
-    grepl(
-      "log4r_step(x", paste(as.character(x$actions$fns.stop), collapse = ""),
-      fixed = TRUE
-    )
-  notify_log <- 
-    grepl(
-      "log4r_step(x", paste(as.character(x$actions$fns.notify), collapse = ""),
-      fixed = TRUE
-    )
-  
   level <- toupper(type)
   
   level_val <-
@@ -54,14 +56,17 @@ log4r_step <- function(x,
       "NOTIFY" = 5,
       3
     )
+
+  # Skip logging at this level if a higher severity
+  # condition is present for this validation step *and*
+  # there is a `log4r_step()` function ready for
+  # evaluation at those higher severities
+  if (warn_val   && log4r_fn_present[1]) highest_level <- 3
+  if (stop_val   && log4r_fn_present[2]) highest_level <- 4
+  if (notify_val && log4r_fn_present[3]) highest_level <- 5
   
-  if (warn_val && warn_log) highest_level <- 3
-  if (stop_val && stop_log) highest_level <- 4
-  if (notify_val && notify_log) highest_level <- 5
-  
-  # TODO: skip logging at this level if a higher severity condition is present
   if (highest_level > level_val) {
-    return(NULL)
+    return(invisible(NULL))
   }
   
   if (is.character(append_to)) {
@@ -78,4 +83,6 @@ log4r_step <- function(x,
       (f_failed = {x$f_failed}) ['{x$type}']"
     )
   )
+  
+  # nocov stop
 }

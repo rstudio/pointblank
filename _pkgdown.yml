@@ -103,7 +103,7 @@ reference:
     desc: >
       Logging validation failure conditions makes for a good practice during
       data quality analysis. The `log4r_step()` function allows for simple
-      generation of log entries and specification of loggging destinations.
+      generation of log entries and specification of logging destinations.
     contents:
     - log4r_step
 

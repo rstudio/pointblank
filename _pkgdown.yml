@@ -99,6 +99,14 @@ reference:
     - stock_msg_body
     - stock_msg_footer
     
+  - title: Logging
+    desc: >
+      Logging validation failure conditions makes for a good practice during
+      data quality analysis. The `log4r_step()` function allows for simple
+      generation of log entries and specification of loggging destinations.
+    contents:
+    - log4r_step
+
   - title: "Agent: Interrogate and Report"
     desc: >
       If we have an *agent* object that has a plan (i.e., validation steps),

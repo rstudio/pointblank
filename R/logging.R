@@ -1,7 +1,11 @@
 #' Enable logging of WARN conditions at the validation step level
 #' 
 #' The `log4r_step()` function can be used as an action in the [action_levels()]
-#' function (as a list component for the `fns` list).
+#' function (as a list component for the `fns` list). Place a call to this
+#' function in every condition that should produce a log (i.e., `warn`, `stop`,
+#' `notify`). Only the highest severity condition in a given validation step
+#' will produce a log (skipping lower severities) so long as the call to
+#' `log4r_step()` is present.
 #' 
 #' @param x A reference to the x-list object prepared by the agent. This version
 #'   of the x-list is the same as that generated via

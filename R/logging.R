@@ -88,5 +88,5 @@ log4r_step <- function(x,
     )
   )
   
-  # nocov stop
+  # nocov end
 }

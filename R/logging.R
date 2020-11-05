@@ -7,8 +7,8 @@
 #' given validation step will produce a log entry (skipping failure conditions
 #' with lower severity) so long as the call to `log4r_step()` is present.
 #' 
-#' @param x A reference to the x-list object prepared by the agent. This version
-#'   of the x-list is the same as that generated via
+#' @param x A reference to the x-list object prepared by the `agent`. This
+#'   version of the x-list is the same as that generated via
 #'   `get_agent_x_list(<agent>, i = <step>)` except this version is internally
 #'   generated and hence only available in an internal evaluation context.
 #' @param message The message to use for the log entry. When not provided, a

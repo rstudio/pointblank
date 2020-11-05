@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Enable logging of WARN conditions at the validation step level — log4r_step • pointblank</title>
+<title>Enable logging of failure conditions at the validation step level — log4r_step • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,13 +46,13 @@
 
 
 
-<meta property="og:title" content="Enable logging of WARN conditions at the validation step level — log4r_step" />
+<meta property="og:title" content="Enable logging of failure conditions at the validation step level — log4r_step" />
 <meta property="og:description" content="The log4r_step() function can be used as an action in the action_levels()
 function (as a list component for the fns list). Place a call to this
-function in every condition that should produce a log (i.e., warn, stop,
-notify). Only the highest severity condition in a given validation step
-will produce a log (skipping lower severities) so long as the call to
-log4r_step() is present." />
+function in every failure condition that should produce a log (i.e., warn,
+stop, notify). Only the failure condition with the highest severity for a
+given validation step will produce a log entry (skipping failure conditions
+with lower severity) so long as the call to log4r_step() is present." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -121,7 +121,7 @@ log4r_step() is present." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Enable logging of WARN conditions at the validation step level</h1>
+    <h1>Enable logging of failure conditions at the validation step level</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/logging.R'><code>R/logging.R</code></a></small>
     <div class="hidden name"><code>log4r_step.Rd</code></div>
     </div>
@@ -129,10 +129,10 @@ log4r_step() is present." />
     <div class="ref-description">
     <p>The <code>log4r_step()</code> function can be used as an action in the <code><a href='action_levels.html'>action_levels()</a></code>
 function (as a list component for the <code>fns</code> list). Place a call to this
-function in every condition that should produce a log (i.e., <code>warn</code>, <code>stop</code>,
-<code>notify</code>). Only the highest severity condition in a given validation step
-will produce a log (skipping lower severities) so long as the call to
-<code>log4r_step()</code> is present.</p>
+function in every failure condition that should produce a log (i.e., <code>warn</code>,
+<code>stop</code>, <code>notify</code>). Only the failure condition with the highest severity for a
+given validation step will produce a log entry (skipping failure conditions
+with lower severity) so long as the call to <code>log4r_step()</code> is present.</p>
     </div>
 
     <pre class="usage"><span class='fu'>log4r_step</span><span class='op'>(</span><span class='va'>x</span>, message <span class='op'>=</span> <span class='cn'>NULL</span>, append_to <span class='op'>=</span> <span class='st'>"pb_log_file"</span><span class='op'>)</span></pre>

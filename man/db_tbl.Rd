@@ -12,7 +12,8 @@ db_tbl(db, dbname, table, user, password, host = NULL, port = NULL)
 names are: \code{"postgresql"}, \code{"postgres"}, or \code{"pgsql"} (PostgreSQL, using
 the \code{RPostgres::Postgres()} driver function); \code{"mysql"} (MySQL, using
 \code{RMySQL::MySQL()}); \code{"maria"} or \code{"mariadb"} (MariaDB, using
-\code{RMariaDB::MariaDB()}); and \code{"sqlite"} (SQLite, using \code{RSQLite::SQLite()}).}
+\code{RMariaDB::MariaDB()}); \code{"duckdb"} (DuckDB, using \code{duckdb::duckdb()}); and
+\code{"sqlite"} (SQLite, using \code{RSQLite::SQLite()}).}
 
 \item{dbname}{The database name.}
 

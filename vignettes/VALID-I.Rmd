@@ -290,5 +290,5 @@ glue::glue(
 In Step 2, there were 13 test units and 46.154% failed. STOP condition met: true.
 ```
 
-This is a great way to test a function for use as a validation step 'action' because it will be evaluated in an environment that contains `x` with the same structure (but only if the failure condition is met).
+This is a great way to test a function for use as a validation step 'action' because when invoked it will undergo evaluation in an environment that contains `x` (which will have the same structure).
 

@@ -1,6 +1,7 @@
 library(projmgr)
 library(gt)
 library(tidyverse)
+library(png)
 
 myrepo <- create_repo_ref("rich-iannone", "pointblank")
 issues <- get_issues(myrepo, state = "open")
@@ -16,6 +17,7 @@ tbl <-
   ) %>%
   dplyr::filter(!grepl("Question", labels_name)) %>%
   dplyr::filter(!grepl("Help", labels_name)) %>%
+  dplyr::filter(!grepl("Good", labels_name)) %>%
   dplyr::filter(!is.na(milestone_title)) %>%
   dplyr::select(
     number, title, milestone_title,
@@ -58,6 +60,11 @@ gt_tbl <-
       sides = "left", style = "dashed", weight = px(2), color = "#F0F1F3"),
     locations = cells_body(columns = vars(type))
   ) %>%
+  tab_style(
+    style = cell_borders(
+      sides = "right", style = "solid", weight = px(1), color = "#F0F1F3"),
+    locations = cells_body(columns = vars(priority, difficulty))
+  ) %>%
   cols_label(
     title = "",
     type = ""
@@ -86,22 +93,22 @@ gt_tbl <-
   ) %>%
   tab_style(style = "height: 50px", locations = cells_body())
 
-# Height Calculation
-tbl_rows <- nrow(tbl)
-row_group_labels <- tbl %>% dplyr::pull(milestone_title) %>% unique() %>% length()
+temp_file <- tempfile(fileext = ".png")
 
-est_height <- 
-  31 + 25 +
-  (tbl_rows * 49) +
-  (row_group_labels * 33) + 10
+# Save image with `gtsave()` and obtain the image dimensions
+gtsave(gt_tbl, filename = temp_file)
+tbl_img <- png::readPNG(temp_file, native = TRUE, info = TRUE)
+tbl_dim <- attr(tbl_img, "info")[["dim"]]
+tbl_w <- ceiling(tbl_dim[1] / 2)
+tbl_h <- ceiling(tbl_dim[2] / 2) + 5
 
 # Generation of SVG
 svg_object <-
   glue::glue(
-    "<svg fill=\"none\" viewBox=\"0 0 830 {est_height}\" width=\"830\" height=\"{est_height}\" xmlns=\"http://www.w3.org/2000/svg\">
+    "<svg fill=\"none\" viewBox=\"0 0 {tbl_w} {tbl_h}\" width=\"{tbl_w}\" height=\"{tbl_h}\" xmlns=\"http://www.w3.org/2000/svg\">
       <foreignObject width=\"100%\" height=\"100%\">
       <div xmlns=\"http://www.w3.org/1999/xhtml\">
-    {gt::as_raw_html(tasks_gt)}
+    {gt::as_raw_html(gt_tbl)}
     </div>
     </foreignObject>
     </svg>

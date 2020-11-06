@@ -30,8 +30,10 @@
 #' [email_create()] can be used with a **pointblank** agent object or the
 #' output obtained from using the [get_agent_x_list()] function.
 #' 
-#' @param x A reference to list object prepared by the agent. It's only
-#'   available in an internal evaluation context.
+#' @param x A reference to the x-list object prepared by the agent. This version
+#'   of the x-list is the same as that generated via `get_agent_x_list(<agent>)`
+#'   except this version is internally generated and hence only available in an
+#'   internal evaluation context.
 #' @param to,from The email addresses for the recipients and the sender.
 #' @param credentials A credentials list object that is produced by either of
 #'   the [blastula::creds()], [blastula::creds_anonymous()],

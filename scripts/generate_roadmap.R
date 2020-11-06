@@ -93,9 +93,9 @@ gt_tbl <-
   ) %>%
   tab_style(style = "height: 50px", locations = cells_body())
 
-temp_file <- tempfile(fileext = ".png")
 
 # Save image with `gtsave()` and obtain the image dimensions
+temp_file <- tempfile(fileext = ".png")
 gtsave(gt_tbl, filename = temp_file)
 tbl_img <- png::readPNG(temp_file, native = TRUE, info = TRUE)
 tbl_dim <- attr(tbl_img, "info")[["dim"]]

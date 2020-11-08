@@ -60,6 +60,8 @@
 
 * The `is_exact` argument is new in the `col_schema_match()`, `expect_col_schema_match()`, and `test_col_schema_match()` functions, further allowing these types of validations to be less stringent. This argument loosens the requirement to include all class names for a column that may have multiple. Also, we can specify `NULL` to entirely skip the checking of a class/type.
 
+* Simplified the `sections` argument of `scan_data()` to be a length-1 character vector containing key characters representing section names.
+
 * Refactored a large portion of the code that produces the agent report to increase rendering speed.
 
 * Improved printing of errors/warnings (in the tooltips of the `EVAL` column in the agent report) thanks to implementation of HTML escaping.

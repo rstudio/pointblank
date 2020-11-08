@@ -167,14 +167,7 @@ complete HTML document where <strong>Bootstrap</strong> and <strong>jQuery</stro
 within.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>scan_data</span><span class='op'>(</span>
-  <span class='va'>tbl</span>,
-  sections <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"overview"</span>, <span class='st'>"variables"</span>, <span class='st'>"interactions"</span>, <span class='st'>"correlations"</span>, <span class='st'>"missing"</span>,
-    <span class='st'>"sample"</span><span class='op'>)</span>,
-  navbar <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  lang <span class='op'>=</span> <span class='cn'>NULL</span>,
-  locale <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>scan_data</span><span class='op'>(</span><span class='va'>tbl</span>, sections <span class='op'>=</span> <span class='st'>"OVICMS"</span>, navbar <span class='op'>=</span> <span class='cn'>TRUE</span>, lang <span class='op'>=</span> <span class='cn'>NULL</span>, locale <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,12 +180,14 @@ object, or a <code>tbl_spark</code> object.</p></td>
     <tr>
       <th>sections</th>
       <td><p>The sections to include in the finalized <code>Table Scan</code> report.
-A character vector with section names is required here. The sections in
-their default order are: <code>"overview"</code>, <code>"variables"</code>, <code>"interactions"</code>,
-<code>"correlations"</code>, <code>"missing"</code>, and <code>"sample"</code>. This vector can be comprised
-of less elements and the order can be changed to suit the desired layout of
-the report. For <code>tbl_dbi</code> and <code>tbl_spark</code> objects, the <code>"interactions"</code> and
-<code>"correlations"</code> sections are currently excluded.</p></td>
+A string with key characters representing section names is required here.
+The default string is <code>"OVICMS"</code> wherein each letter stands for the
+following sections in their default order: <code>"O"</code>: <code>"overview"</code>; <code>"V"</code>:
+<code>"variables"</code>; <code>"I"</code>: <code>"interactions"</code>; <code>"C"</code>: <code>"correlations"</code>; <code>"M"</code>:
+<code>"missing"</code>; and <code>"S"</code>: <code>"sample"</code>. This string can be comprised of less
+characters and the order can be changed to suit the desired layout of the
+report. For <code>tbl_dbi</code> and <code>tbl_spark</code> objects supplied to <code>tbl</code>, the
+<code>"interactions"</code> and <code>"correlations"</code> sections are currently excluded.</p></td>
     </tr>
     <tr>
       <th>navbar</th>

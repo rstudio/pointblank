@@ -6,7 +6,7 @@ test_that("Using `scan_data()` results in an HTML document", {
   scan_data_html <- 
     scan_data(
       tbl = small_table, 
-      sections = c("overview", "variables")
+      sections = "OV"
     ) %>%
     as.character()
   
@@ -22,7 +22,7 @@ test_that("Using `scan_data()` results in an HTML document", {
   scan_data_sqlite_html <- 
     scan_data(
       tbl = small_table_sqlite(), 
-      sections = c("overview", "variables")
+      sections = "OV"
     ) %>%
     as.character()
   
@@ -52,7 +52,21 @@ test_that("Using `scan_data()` results in an HTML document", {
   expect_error(
     scan_data(
       tbl = small_table,
-      sections = "extra"
+      sections = ""
+    )
+  )
+  
+  expect_error(
+    scan_data(
+      tbl = small_table,
+      sections = c("OVA", "DB")
+    )
+  )
+  
+  expect_error(
+    scan_data(
+      tbl = small_table,
+      sections = "E"
     )
   )
 })

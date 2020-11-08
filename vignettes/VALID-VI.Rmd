@@ -1,24 +1,54 @@
 ---
 title: "VALID-VI: R Markdown Document Validation"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{VALID-VI: R Markdown Document Validation}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output: html_document
 ---
 
-```{r options, message=FALSE, warning=FALSE, include=FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-
+```{r setup, include=FALSE}
 library(pointblank)
+validate_rmd(summary = FALSE)
 ```
 
-<img src="images/VALID-VI.svg" width=100%>
+<img src="images/VALID-VI.svg" width="100%"/>
 
 ### Introduction to the **R Markdown Document Validation** Workflow (**VALID-VI**)
 
 The *R Markdown Document Validation* workflow involves interspersing bits of different workflows in the larger R Markdown workflow.
 
+#### How It Works
+
+Using **pointblank** in the **VALID-VI** is enabled by default once the **pointblank** library is loaded. The framework allows for validation testing within specialized validation code chunks where the `validate = TRUE` option is set. Using **pointblank** validation functions on data (the **VALID-II** workflow) in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere.
+
+All errors are shown after rendering the document to HTML. Green status buttons indicate that all validations succeeded, red buttons indicate that one or more validation failures occurred. Clicking any such button reveals the otherwise hidden validation statements and associated messaging.
+
+It's much better to demonstrate how this workflow works in a series of examples, as the resulting output is interactive and varies quite a bit depending on the input. In all of the following examples, a code chunk will shown and the rendered result will be subsequently placed. The result will typically be a button that can be pressed to reveal the validation result and the code chunk itself is hidden upon rendering (so there's no need to use `include = FALSE` as a chunk option).
+
+To start things off, here's an example that uses an expression that takes the `small_table` dataset and pipes it to two validation functions: `col_is_date()` and `col_vals_in_set()`. The `col_is_date()` validation passes whereas the `col_vals_in_set()` validation fails (because the set of values in column `f` also has the `"high"` value.
+
+<img src="images/code_block_1.png" />
+
+```{r validate = TRUE}
+small_table %>% 
+  col_is_date("date") %>% 
+  col_vals_in_set(vars(f), set = c("low", "mid"))
+```
+
+Clicking the above `1 validation failed.` button will reveal that the *expression* failed validation because of a validation function failing within it. If you break it down, really one validation step in the chain passed (the first one) and one failed (the second). If there were additional validation steps that would otherwise pass, we'd still get the same result and output because the failing step ends execution.
+
+Because this workflow is meant to stop an expression from executing at the first validation function that fails, it's advisable to break down these validations to single steps. That way, each expression is a single validation that either passes or fails and is reported accordingly. Let's rewrite the above example as two expressions, one per validation.
+
+<img src="images/code_block_2.png" />
+
+```{r validate = TRUE}
+col_is_date(small_table, "date")
+col_vals_in_set(small_table, vars(f), set = c("low", "mid"))
+```
+
+It still says that `1 validation failed.` (this workflow focuses on the negatives) but pressing the button reveals that the first one passed and the second failed. This is much clearer and we don't run the risk of not evaluating validations because a validation failed earlier in a pipeline.
+
+#### Setting Up Options with the `validate_rmd()` Function
+
+We can modify the **pointblank** validation testing options within R Markdown documents with the `validate_rmd()` function. While the framework for such testing is set up by default, the `validate_rmd()` function offers an opportunity to set UI and logging options.
+
+With the `summary` argument, if `TRUE` (the default), then there will be a leading summary of all validations in the rendered R Markdown document. With `FALSE`, this element is not shown.
+
+With the `log_to_file` argument, there's the option to log errors to a text file. By default, no logging is done but setting `log_to_file == TRUE` will write log entries to `"validation_errors.log"` in the working directory. To both enable logging and to specify a file name, include a path to a log file of the desired name to `log_to_file`.

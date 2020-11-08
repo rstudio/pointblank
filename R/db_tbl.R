@@ -38,7 +38,8 @@
 #'   names are: `"postgresql"`, `"postgres"`, or `"pgsql"` (PostgreSQL, using
 #'   the `RPostgres::Postgres()` driver function); `"mysql"` (MySQL, using
 #'   `RMySQL::MySQL()`); `"maria"` or `"mariadb"` (MariaDB, using
-#'   `RMariaDB::MariaDB()`); and `"sqlite"` (SQLite, using `RSQLite::SQLite()`).
+#'   `RMariaDB::MariaDB()`); `"duckdb"` (DuckDB, using `duckdb::duckdb()`); and
+#'   `"sqlite"` (SQLite, using `RSQLite::SQLite()`).
 #' @param dbname The database name.
 #' @param table The name of the table, or, a reference to a table in a schema
 #'   (two-element vector with the names of schema and table). Alternatively,

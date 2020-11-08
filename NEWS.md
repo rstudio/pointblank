@@ -44,6 +44,8 @@
 
 ## New features
 
+* The new `db_tbl()` function makes it ridiculously easy to access a database table from the selection of databases that **pointblank** supports for validation; they are accessible with the supplied keywords `"postgres"` (PostgreSQL), `"mysql"` (MySQL), `"maria"` (MariaDB), `"duckdb"` (DuckDB), `"sqlite"` (SQLite), or, with any driver function you'd like to supply.
+
 * Added the `log4r_step()` function which can be used as an action in an `action_levels()` function call (i.e., a list component for the `fns` list). We can place a call to this function in every condition that should produce a log (i.e., `warn`, `stop`, `notify`). 
 
 ## Minor improvements and bug fixes
@@ -57,6 +59,8 @@
 * The `get_sundered_data()` function is more clear with regard to which validation steps are considered for splitting of the data. Using validation steps with `preconditions` must fulfill the rule that the target table only have a single form across steps.
 
 * The `is_exact` argument is new in the `col_schema_match()`, `expect_col_schema_match()`, and `test_col_schema_match()` functions, further allowing these types of validations to be less stringent. This argument loosens the requirement to include all class names for a column that may have multiple. Also, we can specify `NULL` to entirely skip the checking of a class/type.
+
+* Simplified the `sections` argument of `scan_data()` to be a length-1 character vector containing key characters representing section names.
 
 * Refactored a large portion of the code that produces the agent report to increase rendering speed.
 

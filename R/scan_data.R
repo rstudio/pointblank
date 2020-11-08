@@ -48,12 +48,14 @@
 #' @param tbl The input table. This can be a data frame, tibble, a `tbl_dbi`
 #'   object, or a `tbl_spark` object.
 #' @param sections The sections to include in the finalized `Table Scan` report.
-#'   A character vector with section names is required here. The sections in
-#'   their default order are: `"overview"`, `"variables"`, `"interactions"`,
-#'   `"correlations"`, `"missing"`, and `"sample"`. This vector can be comprised
-#'   of less elements and the order can be changed to suit the desired layout of
-#'   the report. For `tbl_dbi` and `tbl_spark` objects, the `"interactions"` and
-#'   `"correlations"` sections are currently excluded.
+#'   A string with key characters representing section names is required here.
+#'   The default string is `"OVICMS"` wherein each letter stands for the
+#'   following sections in their default order: `"O"`: `"overview"`; `"V"`:
+#'   `"variables"`; `"I"`: `"interactions"`; `"C"`: `"correlations"`; `"M"`:
+#'   `"missing"`; and `"S"`: `"sample"`. This string can be comprised of less
+#'   characters and the order can be changed to suit the desired layout of the
+#'   report. For `tbl_dbi` and `tbl_spark` objects supplied to `tbl`, the
+#'   `"interactions"` and `"correlations"` sections are currently excluded.
 #' @param navbar Should there be a navigation bar anchored to the top of the
 #'   report page? By default this is `TRUE`.
 #' @param lang The language to use for label text in the report. By default,
@@ -77,35 +79,58 @@
 #' 
 #' @export
 scan_data <- function(tbl,
-                      sections = c("overview", "variables", "interactions",
-                                   "correlations", "missing", "sample"),
+                      sections = "OVICMS",
                       navbar = TRUE,
                       lang = NULL,
                       locale = NULL) {
 
-  
-  
-  # Limit components if a `tbl_dbi` object is supplied as the `tbl`
-  if (inherits(tbl, "tbl_dbi") || inherits(tbl, "tbl_spark")) {
-    sections <- setdiff(sections, c("interactions", "correlations"))
+  # Stop function if the length of the `sections` vector is not 1
+  if (length(sections) != 1) {
+    stop("The length of the `section` vector must be 1.",
+         call. = FALSE)
   }
   
-
+  # Stop function if the `sections` vector is not of the `character` type
+  if (!is.character(sections)) {
+    stop("The `section` vector must be of the `character` class.",
+         call. = FALSE)
+  }
   
-  # Stop function if the length of `sections` is 0
-  if (length(sections) == 0) {
+  # Stop function if the length of `sections` string is not at least 1
+  if (nchar(sections) < 1) {
     stop("At least one `section` is required.", call. = FALSE)
   }
   
   # Stop function if their are unrecognized sections in `sections`
-  if (!all(sections %in% c("overview", "variables", "interactions",
-                           "correlations", "missing", "sample"))) {
-    
-    stop("All values provided in `sections` must be a valid keyword:\n",
-         " * Allowed values are \"overview\", \"variables\", ",
-         "\"interactions\", \"correlations\", \"missing\", and ",
-         "\"sample\".",
+  if (!all(unique(unlist(strsplit(toupper(sections), ""))) %in% 
+           c("O", "V", "I", "C", "M", "S"))) {
+    stop("All key characters provided in `sections` must be valid:\n",
+         " * Allowed values are \"O\", \"V\", \"I\", \"C\", \"M\", and \"S\".",
          call. = FALSE)
+  }
+  
+  # Transform the `sections` string to a vector of section names
+  sections <- 
+    vapply(
+      unique(unlist(strsplit(toupper(sections), ""))),
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        switch(
+          x,
+          O = "overview",
+          V = "variables",
+          I = "interactions",
+          C = "correlations",
+          M = "missing",
+          S = "sample"
+        )
+      }
+    )
+  
+  # Limit components if a `tbl_dbi` object is supplied as the `tbl`
+  if (inherits(tbl, "tbl_dbi") || inherits(tbl, "tbl_spark")) {
+    sections <- setdiff(sections, c("interactions", "correlations"))
   }
   
   # Normalize the reporting language identifier and stop if necessary

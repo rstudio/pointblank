@@ -4,26 +4,21 @@
 \alias{scan_data}
 \title{Thoroughly scan a table to better understand it}
 \usage{
-scan_data(
-  tbl,
-  sections = c("overview", "variables", "interactions", "correlations", "missing",
-    "sample"),
-  navbar = TRUE,
-  lang = NULL,
-  locale = NULL
-)
+scan_data(tbl, sections = "OVICMS", navbar = TRUE, lang = NULL, locale = NULL)
 }
 \arguments{
 \item{tbl}{The input table. This can be a data frame, tibble, a \code{tbl_dbi}
 object, or a \code{tbl_spark} object.}
 
 \item{sections}{The sections to include in the finalized \verb{Table Scan} report.
-A character vector with section names is required here. The sections in
-their default order are: \code{"overview"}, \code{"variables"}, \code{"interactions"},
-\code{"correlations"}, \code{"missing"}, and \code{"sample"}. This vector can be comprised
-of less elements and the order can be changed to suit the desired layout of
-the report. For \code{tbl_dbi} and \code{tbl_spark} objects, the \code{"interactions"} and
-\code{"correlations"} sections are currently excluded.}
+A string with key characters representing section names is required here.
+The default string is \code{"OVICMS"} wherein each letter stands for the
+following sections in their default order: \code{"O"}: \code{"overview"}; \code{"V"}:
+\code{"variables"}; \code{"I"}: \code{"interactions"}; \code{"C"}: \code{"correlations"}; \code{"M"}:
+\code{"missing"}; and \code{"S"}: \code{"sample"}. This string can be comprised of less
+characters and the order can be changed to suit the desired layout of the
+report. For \code{tbl_dbi} and \code{tbl_spark} objects supplied to \code{tbl}, the
+\code{"interactions"} and \code{"correlations"} sections are currently excluded.}
 
 \item{navbar}{Should there be a navigation bar anchored to the top of the
 report page? By default this is \code{TRUE}.}

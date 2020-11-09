@@ -10,7 +10,7 @@ knitr::opts_chunk$set(
 )
 
 library(pointblank)
-library(palmerpenguins)
+library(readr)
 ```
 
 <img src="images/VALID-V.svg" width=100%>
@@ -32,8 +32,12 @@ The reporting output contains several sections to make everything more digestibl
 
 The output HTML report will appear in the RStudio Viewer and can also be integrated in R Markdown HTML output. Here's an example that uses the `penguins_raw` dataset from the **palmerpenguins** package. In the `scan_data()` call, the option to deactivate the display of the navigation bar has been taken with `navbar = FALSE`, which makes some sense when integrating this type of output in a larger document.
 
-```{r}
+```{r eval=FALSE}
 scan_data(palmerpenguins::penguins_raw, navbar = FALSE)
+```
+
+```{r echo=FALSE, results='asis'}
+readr::read_file("penguin_scan.html")
 ```
 
 As could be seen, the first two sections had a lot of additional information tucked behind detail views (with the `Toggle details` buttons) and within tab sets. Should this amount of information be a little overwhelming, there is the option to disable one or more sections. With `scan_data()`'s `sections` argument, you can specify just the sections that are needed for a specific scan. 

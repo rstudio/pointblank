@@ -189,8 +189,23 @@ reference:
 navbar:
   type: default
   left:
-  - text: Intro
-    href: articles/intro-to-pointblank.html
+  - text: Articles
+    menu:
+    - text: Validation Workflows
+    - text: 'Overview'
+      href: articles/validation_workflows.html
+    - text: 'VALID-I: Data Quality Reporting'
+      href: articles/VALID-I.html
+    - text: 'VALID-II: Pipeline Data Validation'
+      href: articles/VALID-II.html
+    - text: 'VALID-III: Expectations in Unit Tests'
+      href: articles/VALID-III.html
+    - text: 'VALID-IV: Data Tests for Conditionals'
+      href: articles/VALID-IV.html
+    - text: 'VALID-V: Table Scan'
+      href: articles/VALID-V.html
+    - text: 'VALID-VI: R Markdown Document Validation'
+      href: articles/VALID-VI.html
   - text: Reference
     href: reference/index.html
   - text: News

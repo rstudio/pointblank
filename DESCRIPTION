@@ -52,6 +52,7 @@ Suggests:
     covr,
     duckdb,
     lubridate,
+    palmerpenguins,
     RSQLite,
     RMariaDB,
     RMySQL,

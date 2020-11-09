@@ -37,7 +37,7 @@ scan_data(palmerpenguins::penguins_raw, navbar = FALSE)
 ```
 
 ```{r echo=FALSE, results='asis'}
-readr::read_file("penguin_scan.html")
+readr::read_file("images/penguin_scan.htm")
 ```
 
 As could be seen, the first two sections had a lot of additional information tucked behind detail views (with the `Toggle details` buttons) and within tab sets. Should this amount of information be a little overwhelming, there is the option to disable one or more sections. With `scan_data()`'s `sections` argument, you can specify just the sections that are needed for a specific scan. 

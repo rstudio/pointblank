@@ -2,6 +2,9 @@ pandoc: 2.7.3
 pkgdown: 1.6.1.9000
 pkgdown_sha: 6094ac3dd80a1f3f1d4e2f47d0ed4716d51362b0
 articles:
-  intro-to-pointblank: intro-to-pointblank.html
-last_built: 2020-11-08T00:33Z
+  VALID-I: VALID-I.html
+  VALID-II: VALID-II.html
+  VALID-III: VALID-III.html
+  validation_workflows: validation_workflows.html
+last_built: 2020-11-09T22:30Z
 

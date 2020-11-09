@@ -241,7 +241,7 @@ x Step 4: STOP condition met.
 ── Interrogation Completed ─────────────────────────────────────────────────
 ```
 
-and the file `"pb_log_file"` can be looked at with `readLines()`, showing us four entries (one for each validation step with at least a `WARN` condition)
+and the file `"pb_log_file"` can be looked at with `readLines()`, showing us four entries (one for each validation step with at least a `WARN` condition).
 
 ```{r read_log_file, eval=FALSE}
 readLines("pb_log_file")

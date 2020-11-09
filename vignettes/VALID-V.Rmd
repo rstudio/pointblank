@@ -1,10 +1,6 @@
 ---
 title: "VALID-V: Table Scan"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{VALID-V: Table Scan}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output: html_document
 ---
 
 ```{r options, message=FALSE, warning=FALSE, include=FALSE}

@@ -7,7 +7,7 @@ output: html_document
 library(pointblank)
 ```
 
-There are six validation workflows:
+There are six validation workflows in **pointblank**:
 
 1. **VALID-I: Data Quality Reporting**
 2. **VALID-II: Pipeline Data Validation**

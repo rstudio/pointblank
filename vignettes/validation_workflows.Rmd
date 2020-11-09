@@ -1,18 +1,9 @@
 ---
 title: "Overview of Validation Workflows"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Overview of Validation Workflows}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output: html_document
 ---
 
 ```{r options, message=FALSE, warning=FALSE, include=FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-
 library(pointblank)
 ```
 

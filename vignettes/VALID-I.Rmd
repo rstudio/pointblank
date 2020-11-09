@@ -1,18 +1,9 @@
 ---
 title: "VALID-I: Data Quality Reporting"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{VALID-I: Data Quality Reporting}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output: html_document
 ---
 
 ```{r options, message=FALSE, warning=FALSE, include=FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-
 library(pointblank)
 library(glue)
 ```

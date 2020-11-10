@@ -35,7 +35,7 @@ The output HTML report will appear in the RStudio Viewer and can also be integra
 scan_data(palmerpenguins::penguins_raw, navbar = FALSE)
 ```
 
-<iframe style="margin:0 auto; min-width: 100%;" id="palmerpenguins" title="Table Scan of Palmer Penguins data" height="800" src="https://rpubs.com/rich_i/palmerpenguins_scan"></iframe>
+<iframe style="margin:0 auto; min-width: 100%;" id="palmerpenguins" title="Table Scan of Palmer Penguins data" height="800" src="https://naughty-blackwell-e9eb67.netlify.app"></iframe>
 
 As could be seen, the first two sections had a lot of additional information tucked behind detail views (with the `Toggle details` buttons) and within tab sets. Should this amount of information be a little overwhelming, there is the option to disable one or more sections. With `scan_data()`'s `sections` argument, you can specify just the sections that are needed for a specific scan. 
 

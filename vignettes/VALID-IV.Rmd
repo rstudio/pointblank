@@ -3,12 +3,7 @@ title: "VALID-IV: Data Tests for Conditionals"
 output: html_document
 ---
 
-```{r options, message=FALSE, warning=FALSE, include=FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-
+```{r setup, message=FALSE, warning=FALSE, include=FALSE}
 library(pointblank)
 ```
 

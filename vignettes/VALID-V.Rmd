@@ -3,7 +3,7 @@ title: "VALID-V: Table Scan"
 output: html_document
 ---
 
-<img src="images/VALID-V.png" width=100%>
+<img src="images/VALID-5.png" width=100%>
 
 ### Introduction to the **Table Scan** Workflow (**VALID-V**)
 

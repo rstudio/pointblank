@@ -3,10 +3,6 @@ title: "VALID-V: Table Scan"
 output: html_document
 ---
 
-```{r options, message=FALSE, warning=FALSE, include=FALSE}
-library(pointblank)
-```
-
 <img src="images/VALID-V.png" width=100%>
 
 ### Introduction to the **Table Scan** Workflow (**VALID-V**)

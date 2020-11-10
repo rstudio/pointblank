@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 library(pointblank)
 ```
 
-<img src="images/VALID-V.svg" width=100%>
+<img src="images/VALID-V.png" width=100%>
 
 ### Introduction to the **Table Scan** Workflow (**VALID-V**)
 

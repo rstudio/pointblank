@@ -3,7 +3,7 @@ title: "VALID-I: Data Quality Reporting"
 output: html_document
 ---
 
-```{r options, message=FALSE, warning=FALSE, include=FALSE}
+```{r setup, message=FALSE, warning=FALSE, include=FALSE}
 library(pointblank)
 library(glue)
 ```

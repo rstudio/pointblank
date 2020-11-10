@@ -3,7 +3,7 @@ title: "VALID-VI: R Markdown Document Validation"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, message=FALSE, warning=FALSE, include=FALSE}
 library(pointblank)
 validate_rmd(summary = FALSE)
 ```

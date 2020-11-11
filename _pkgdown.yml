@@ -207,8 +207,8 @@ navbar:
     - text: 'VALID-VI: R Markdown Document Validation'
       href: articles/VALID-VI.html
     - text: Information Management
-    - text: 'Overview'
-      href: articles/INFO.html
+    - text: 'I. Intro to Information Management'
+      href: 'articles/INFO-1.html'
   - text: Reference
     href: reference/index.html
   - text: News

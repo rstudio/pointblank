@@ -39,7 +39,8 @@ Printing the *informant* will show us the automatically-generated information on
 informant
 ```
 
-<div style="text-align: center;"><img src="images/informant_report_1.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_1.png" width=80%></div>
+<br>
 
 Alternatively we can get the same report with `get_informant_report()` and have access to additional output options, like producing a narrower version of the output.
 
@@ -47,7 +48,7 @@ Alternatively we can get the same report with `get_informant_report()` and have 
 get_informant_report(informant, size = "small")
 ```
 
-<div style="text-align: center;"><img src="images/informant_report_2.png" width=50%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_2.png" width=50%></div>
 <br>
 
 Either way, what we get in the initial reporting is very basic. What should be done next is to add information with the following set of `info_*()` functions:
@@ -80,7 +81,7 @@ informant <-
 informant
 ```
 
-<div style="text-align: center;"><img src="images/informant_report_c.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_c.png" width=80%></div>
 <br>
 
 As can be seen, the report is a bit more filled out with information. The **TABLE** and **COLUMNS** sections are in their prescribed order and the new section we named **FURTHER INFORMATION** follows those (and it has one subsection called **EXAMPLES and DOCUMENTATION**). Let's explore how each of the three different `info_*()` functions work.
@@ -94,7 +95,7 @@ informant %>%
   info_tabular(`🔄 updates` = "This table is not regularly updated.")
 ```
 
-<div style="text-align: center;"><img src="images/informant_report_4.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_4.png" width=80%></div>
 <p align="center">This is an excerpt of the complete report, showing just the report header and the <strong>TABLE</strong> section.</p>
 <br>
 
@@ -159,7 +160,7 @@ informant_pp <-
 informant_pp
 ```
 
-<div style="text-align: center;"><img src="images/informant_report_e.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_e.png" width=80%></div>
 <br>
 
 We are able to provide subsections with the name `ℹ️` and, furthermore, use **tidyselect** functions like `ends_with()` to append *info text* to a common subsection across multiple columns. This was useful for stating the units which were common across three columns: `bill_length_mm`, `bill_depth_mm`, and `flipper_length_mm`.
@@ -191,7 +192,7 @@ Originally published in: Gorman KB, Williams TD, Fraser WR (2014) Ecological Sex
 informant_pp
 ```
 
-<div style="text-align: center;"><img src="images/informant_report_6.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_6.png" width=80%></div>
 <p align="center">This is an excerpt of the complete report, showing just the <strong>SOURCE</strong> section and the footer.</p>
 <br>
 

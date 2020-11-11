@@ -155,13 +155,14 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant</span></code></pre></div>
 <div style="text-align: center;">
-<img src="images/informant_report_1.png" width="80%">
+<img src="https://silly-jackson-b3dec8.netlify.app/informant_report_1.png" width="80%">
 </div>
+<p><br></p>
 <p>Alternatively we can get the same report with <code><a href="../reference/get_informant_report.html">get_informant_report()</a></code> and have access to additional output options, like producing a narrower version of the output.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_informant_report.html">get_informant_report</a></span><span class="op">(</span><span class="va">informant</span>, size <span class="op">=</span> <span class="st">"small"</span><span class="op">)</span></code></pre></div>
 <div style="text-align: center;">
-<img src="images/informant_report_2.png" width="50%">
+<img src="https://silly-jackson-b3dec8.netlify.app/informant_report_2.png" width="50%">
 </div>
 <p><br></p>
 <p>Either way, what we get in the initial reporting is very basic. What should be done next is to add information with the following set of <code>info_*()</code> functions:</p>
@@ -195,7 +196,7 @@
 
 <span class="va">informant</span></code></pre></div>
 <div style="text-align: center;">
-<img src="images/informant_report_c.png" width="80%">
+<img src="https://silly-jackson-b3dec8.netlify.app/informant_report_c.png" width="80%">
 </div>
 <p><br></p>
 <p>As can be seen, the report is a bit more filled out with information. The <strong>TABLE</strong> and <strong>COLUMNS</strong> sections are in their prescribed order and the new section we named <strong>FURTHER INFORMATION</strong> follows those (and it has one subsection called <strong>EXAMPLES and DOCUMENTATION</strong>). Let’s explore how each of the three different <code>info_*()</code> functions work.</p>
@@ -209,7 +210,7 @@
 <code class="sourceCode R"><span class="va">informant</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>`🔄 updates` <span class="op">=</span> <span class="st">"This table is not regularly updated."</span><span class="op">)</span></code></pre></div>
 <div style="text-align: center;">
-<img src="images/informant_report_4.png" width="80%">
+<img src="https://silly-jackson-b3dec8.netlify.app/informant_report_4.png" width="80%">
 </div>
 <p align="center">
 This is an excerpt of the complete report, showing just the report header and the <strong>TABLE</strong> section.
@@ -276,7 +277,7 @@ This is an excerpt of the complete report, showing just the report header and th
 
 <span class="va">informant_pp</span></code></pre></div>
 <div style="text-align: center;">
-<img src="images/informant_report_e.png" width="80%">
+<img src="https://silly-jackson-b3dec8.netlify.app/informant_report_e.png" width="80%">
 </div>
 <p><br></p>
 <p>We are able to provide subsections with the name <code>ℹ️</code> and, furthermore, use <strong>tidyselect</strong> functions like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with()</a></code> to append <em>info text</em> to a common subsection across multiple columns. This was useful for stating the units which were common across three columns: <code>bill_length_mm</code>, <code>bill_depth_mm</code>, and <code>flipper_length_mm</code>.</p>
@@ -299,7 +300,7 @@ Originally published in: Gorman KB, Williams TD, Fraser WR (2014) Ecological Sex
 
 <span class="va">informant_pp</span></code></pre></div>
 <div style="text-align: center;">
-<img src="images/informant_report_6.png" width="80%">
+<img src="https://silly-jackson-b3dec8.netlify.app/informant_report_6.png" width="80%">
 </div>
 <p align="center">
 This is an excerpt of the complete report, showing just the <strong>SOURCE</strong> section and the footer.

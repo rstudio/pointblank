@@ -1,5 +1,5 @@
 ---
-title: "The Information Management Workflow"
+title: "I. Intro to Information Management"
 output: html_document
 ---
 
@@ -8,7 +8,7 @@ library(pointblank)
 validate_rmd(summary = FALSE)
 ```
 
-### Introduction to the **Information Management** Workflow
+### I. Intro to the **Information Management** Workflow
 
 With the *Information Management* workflow table information can be synthesized, giving us a snapshot of a data table we care to collect information on. The **pointblank** *informant* is given a series of information functions to define portions of information about a table. This *info text* can pertain to individual columns, the table as a whole, and whatever additional information makes sense for your organization. We can even glean little snippets of information from the target table and mix them into the *info text* to make the overall information more dynamic.
 

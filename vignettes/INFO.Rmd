@@ -80,7 +80,7 @@ informant <-
 informant
 ```
 
-<div style="text-align: center;"><img src="images/informant_report_3.png" width=80%></div>
+<div style="text-align: center;"><img src="images/informant_report_c.png" width=80%></div>
 <br>
 
 As can be seen, the report is a bit more filled out with information. The **TABLE** and **COLUMNS** sections are in their prescribed order and the new section we named **FURTHER INFORMATION** follows those (and it has one subsection called **EXAMPLES and DOCUMENTATION**). Let's explore how each of the three different `info_*()` functions work.
@@ -159,7 +159,7 @@ informant_pp <-
 informant_pp
 ```
 
-<div style="text-align: center;"><img src="images/informant_report_5.png" width=80%></div>
+<div style="text-align: center;"><img src="images/informant_report_e.png" width=80%></div>
 <br>
 
 We are able to provide subsections with the name `ℹ️` and, furthermore, use **tidyselect** functions like `ends_with()` to append *info text* to a common subsection across multiple columns. This was useful for stating the units which were common across three columns: `bill_length_mm`, `bill_depth_mm`, and `flipper_length_mm`.

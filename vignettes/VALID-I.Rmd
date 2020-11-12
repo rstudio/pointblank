@@ -1,5 +1,5 @@
 ---
-title: "VALID-I: Data Quality Reporting"
+title: "Introduction to the **Data Quality Reporting** Workflow (**VALID-I**)"
 output: html_document
 ---
 
@@ -10,11 +10,9 @@ library(glue)
 
 <img src="images/VALID-I.svg" width=100%>
 
-### Introduction to the **Data Quality Reporting** Workflow (**VALID-I**)
-
 When trying to assess the state of data quality for tabular data, we want to perform a full accounting of assertions on the data without stopping anywhere in the interrogation of the data. We use an object called an *agent* to collect our validation instructions, perform the interrogation, and then serve as an artifact for reporting or further analysis. We give that agent the name or a function that retrieves the target table. The types of data tables that can be used include data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames (`tbl_spark`).
 
-#### The Elements of this Workflow: an *agent*, validation functions, and `interrogate()`
+# The Elements of this Workflow: an *agent*, validation functions, and `interrogate()`
 
 The *agent* that we need for this workflow is created with the `create_agent()` function. An agent can handle one target table at any given time and two different arguments can be used to specify that table. The first is `tbl`, where the input table is directly supplied to the *agent*. Alternatively, a function can be used to read in the input data table with the `read_fn` argument in one of two ways: (1) using a function (e.g., `function() { <table reading code> }`) or, (2) with an **R** formula expression (e.g., `~ <table reading code>`).
 
@@ -48,7 +46,7 @@ The *agent* needs directives on what to do with the table, so, we provide valida
 
 The final function that needs to be called is the `interrogate()` function. The validation functions, when called on an *agent* object, don't act on the target table until `interrogate()` is used. Until interrogation, the usage of validation functions serves as instructions. During the interrogation phase those instructions turn into actions, with the *agent* then carrying out all steps of the interrogation plan.
 
-#### A Simple Example with the Basics
+# A Simple Example with the Basics
 
 For our examples going forward, we'll use the `small_table` dataset. It's included in the **pointblank** package. It isn't very large, which makes it great for simple examples. Here it is in its entirety:
 
@@ -112,7 +110,7 @@ get_data_extracts(agent, i = 5)
 
 Recall that validation *step 5* asserted that all values in column `d` should be between `0` and `5000`, however, this extract of `small_table` shows that column `d` has a value of `10000` which lies outside the specified range.
 
-#### Using Threshold Levels and Actions
+# Using Threshold Levels and Actions
 
 It can be useful to gauge data quality by setting failure thresholds for validation steps. For example, it may be acceptable at some point in time to tolerate up to 5% of failing test units for a given validation. Or, having several levels of data quality might be useful and instructive, where failing test units across validations are grouped into the 0-5%, 5-10%, and 10%- bands.
 

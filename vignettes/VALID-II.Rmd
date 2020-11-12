@@ -15,7 +15,7 @@ Where would we do this? When importing data, for instance, we could pass the inc
 
 # An Example of This Workflow
 
-Let's adapt an example used in the *VALID-I: Data Quality Reporting Workflow* article to the pipeline data validation workflow:
+Let's adapt an example used in the [*VALID-I: Data Quality Reporting Workflow*](../articles/VALID-I.html) article to the pipeline data validation workflow:
 
 ```{r error=TRUE, paged.print=FALSE}
 small_table %>%
@@ -92,9 +92,9 @@ While `warn_on_fail()` and `stop_on_fail()` are handy ways to generate `action_l
 
 ## Using `action_levels()` for More Control
 
-The `action_levels()` function can be as useful here as it is for the *VALID-I* workflow with an *agent*. The function creates an `action_levels` object which can have two roles: (1) specification of threshold failure levels for entering certain conditions (`WARN`, `STOP`, and `NOTIFY`), and (2) setting of actions (i.e., function calls to invoke) when entering a specific condition. The `fns` argument of `action_levels()` allows us to define those custom functions that are evaluated upon entering each of the three states (and this acts on the 'step' level, per each validation function).
+The `action_levels()` function can be as useful here as it is for the [**VALID-I**](../articles/VALID-I.html) workflow with an *agent*. The function creates an `action_levels` object which can have two roles: (1) specification of threshold failure levels for entering certain conditions (`WARN`, `STOP`, and `NOTIFY`), and (2) setting of actions (i.e., function calls to invoke) when entering a specific condition. The `fns` argument of `action_levels()` allows us to define those custom functions that are evaluated upon entering each of the three states (and this acts on the 'step' level, per each validation function).
 
-Compared to the *VALID-I* workflow, which deals more with reporting, having actions triggered by failures in the *VALID-II* workflow is probably more useful and important. We can imagine a situation where an **R** script is deployed with data validation interspersed throughout. Depending on the deployment, we may desire a hard stop (affecting the downstream components), or, we may want a softer approach with warning and logging.
+Compared to the [**VALID-I**](../articles/VALID-I.html) workflow, which deals more with reporting, having actions triggered by failures in the **VALID-II** workflow is probably more useful and important. We can imagine a situation where an **R** script is deployed with data validation interspersed throughout. Depending on the deployment, we may desire a hard stop (affecting the downstream components), or, we may want a softer approach with warning and logging.
 
 Let's try a hybrid approach where each of three available conditions have failure threshold levels set and an associated function to invoke. The functions to invoke at each condition can be whatever makes sense for the workflow (i.e., we don't have to issue warnings in the `WARN` condition if we want something else). Here, we will use a `warning()` for `WARN`, a `stop()` for `STOP`, and a logging function (`log4r_step()`) for `NOTIFY`. Here's how we might create such an `action_levels` object with `action_levels()`:
 
@@ -150,4 +150,4 @@ readLines("pb_log_file")
 FATAL [2020-11-09 00:23:48] Step 1 exceeded the NOTIFY failure threshold (f_failed = 0.46154) ['col_vals_in_set']
 ```
 
-The `log4r_step()` function offered by **pointblank** is shown in examples and explained in more detail in the article for **Data Quality Reporting** Workflow (**VALID-I**).
+The `log4r_step()` function offered by **pointblank** is shown in examples and explained in more detail in the [*VALID-I: Data Quality Reporting Workflow*](../articles/VALID-I.html) article.

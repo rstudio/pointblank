@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VALID-V: Table Scan • pointblank</title>
+<title>Introduction to the **Table Scan** Workflow (**VALID-V**) • pointblank</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="VALID-V: Table Scan">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to the **Table Scan** Workflow (**VALID-V**)">
 <meta property="og:description" content="pointblank">
 <meta property="og:image" content="/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -106,7 +106,7 @@
       </header><script src="VALID-V_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>VALID-V: Table Scan</h1>
+      <h1 data-toc-skip>Introduction to the <strong>Table Scan</strong> Workflow (<strong>VALID-V</strong>)</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/vignettes/VALID-V.Rmd"><code>vignettes/VALID-V.Rmd</code></a></small>
@@ -117,9 +117,6 @@
     
     
 <p><img src="images/VALID-5.png" width="100%"></p>
-<div id="introduction-to-the-table-scan-workflow-valid-v" class="section level3">
-<h3 class="hasAnchor">
-<a href="#introduction-to-the-table-scan-workflow-valid-v" class="anchor"></a>Introduction to the <strong>Table Scan</strong> Workflow (<strong>VALID-V</strong>)</h3>
 <p>The <em>VALID-V: Table Scan</em> workflow consists of a single function: <code><a href="../reference/scan_data.html">scan_data()</a></code>. So simple, and it gives you so much information on a data table. The function generates an HTML report that scours the input table data. This is great to use before diving into the other workflows because it’s a good idea to first understand the target table with some level of precision.</p>
 <p>The reporting output contains several sections to make everything more digestible, and these are:</p>
 <ul>
@@ -130,10 +127,10 @@
 <li>Missing Values: A summary figure that shows the degree of missingness across variables</li>
 <li>Sample: A table that provides the head and tail rows of the dataset</li>
 </ul>
-<div id="an-example-with-the-palmer-penguins" class="section level4">
-<h4 class="hasAnchor">
-<a href="#an-example-with-the-palmer-penguins" class="anchor"></a>An Example with the Palmer Penguins</h4>
-<p>The output HTML report will appear in the RStudio Viewer and can also be integrated in R Markdown HTML output. Here’s an example that uses the <code>penguins_raw</code> dataset from the <strong>palmerpenguins</strong> package. In the <code><a href="../reference/scan_data.html">scan_data()</a></code> call, the option to deactivate the display of the navigation bar has been taken with <code>navbar = FALSE</code>, which makes some sense when integrating this type of output in a larger document.</p>
+<div id="an-example-with-the-palmer-penguins-dataset" class="section level1">
+<h1 class="hasAnchor">
+<a href="#an-example-with-the-palmer-penguins-dataset" class="anchor"></a>An Example with the Palmer Penguins Dataset</h1>
+<p>The output HTML report will appear in the RStudio Viewer and can also be integrated in <strong>R Markdown</strong> HTML output. Here’s an example that uses the <code>penguins_raw</code> dataset from the <strong>palmerpenguins</strong> package. In the <code><a href="../reference/scan_data.html">scan_data()</a></code> call, the option to deactivate the display of the navigation bar has been taken with <code>navbar = FALSE</code>, which makes some sense when integrating this type of output in a larger document.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/scan_data.html">scan_data</a></span><span class="op">(</span><span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins_raw.html">penguins_raw</a></span>, navbar <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <iframe style="margin:0 auto; min-width: 100%;" id="palmerpenguins" title="Table Scan of Palmer Penguins data" height="800" src="https://naughty-blackwell-e9eb67.netlify.app">
@@ -162,18 +159,19 @@
 <p>This string can contain less key characters and the order can be changed to suit the desired layout of the report. For example, if you just need the <code>Overview</code>, a <code>Sample</code>, and the description of <code>Variables</code> in the target table, the string to use for <code>sections</code> would be <code>"OSV"</code>.</p>
 <p>Just as with all the other workflows, the <code>tbl</code> supplied could be a data frame, tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object. However, there is one limitation here for <code><a href="../reference/scan_data.html">scan_data()</a></code>: for <code>tbl_dbi</code> and <code>tbl_spark</code> objects, the <code>Interactions</code> and <code>Correlations</code> sections are currently excluded.</p>
 </div>
-<div id="languages-and-locales" class="section level4">
-<h4 class="hasAnchor">
-<a href="#languages-and-locales" class="anchor"></a>Languages and Locales</h4>
+<div id="languages-and-locales" class="section level1">
+<h1 class="hasAnchor">
+<a href="#languages-and-locales" class="anchor"></a>Languages and Locales</h1>
 <p>The reporting generated by <code><a href="../reference/scan_data.html">scan_data()</a></code> can be presented in one of eight spoken languages: English (<code>"en"</code>, the default), French (<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), Spanish (<code>"es"</code>), Portuguese, (<code>"pt"</code>), Chinese (<code>"zh"</code>), and Russian (<code>"ru"</code>). These two-letter language codes can be used as an argument to the <code>lang</code> argument. When applied, all label text and other non-data elements will be set to the language of choice. We have checked the translations with native speakers of the respective languages but if you find an error that should be corrected, please <a href="https://github.com/rich-iannone/pointblank/issues">file an issue</a>.</p>
 <p>Along with translations, numerical values that are generated as part of the reporting (e.g., table dimensions, summary statistics, etc.) are automatically formatted in the locale of the language (given in <code>lang</code>). This can be overridden with the <code>locale</code> argument which accepts a locale ID. Examples include <code>"en_US"</code> for English (United States) and <code>"fr_FR"</code> for French (France). More simply, this can be a language identifier without a country designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</code>). More than 700 locales are currently accepted.</p>
-</div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

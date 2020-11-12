@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VALID-II: Pipeline Data Validation • pointblank</title>
+<title>Introduction to the **Pipeline Data Validation** Workflow (**VALID-II**) • pointblank</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="VALID-II: Pipeline Data Validation">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to the **Pipeline Data Validation** Workflow (**VALID-II**)">
 <meta property="og:description" content="pointblank">
 <meta property="og:image" content="/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -106,7 +106,7 @@
       </header><script src="VALID-II_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>VALID-II: Pipeline Data Validation</h1>
+      <h1 data-toc-skip>Introduction to the <strong>Pipeline Data Validation</strong> Workflow (<strong>VALID-II</strong>)</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/vignettes/VALID-II.Rmd"><code>vignettes/VALID-II.Rmd</code></a></small>
@@ -117,15 +117,12 @@
     
     
 <p><img src="images/VALID-II.svg" width="100%"></p>
-<div id="introduction-to-the-pipeline-data-validation-workflow-valid-ii" class="section level3">
-<h3 class="hasAnchor">
-<a href="#introduction-to-the-pipeline-data-validation-workflow-valid-ii" class="anchor"></a>Introduction to the <strong>Pipeline Data Validation</strong> Workflow (<strong>VALID-II</strong>)</h3>
 <p>The second data validation workflow, <em>VALID-II: Pipeline Data Validation</em>, somewhat simplifies the process for checking data directly. There is no <em>agent</em> involved here and we instead call validation functions directly on the data table objects. Because no <em>agent</em>, there is no report, and the idea is that the side effects are most important here. We can trigger warnings, raise errors, or write out logs when exceeding specified failure thresholds. The data just passes through the validation functions (some data in, the same data out).</p>
-<p>Where would we do this? When importing data, for instance, we could pass the incoming data through a few validation functions, possibly with customized threshold levels set (by default, any test units failing will result in an error). We could also use a set of validation functions further down the script on transformed data as a QA/QC measure. If bad data quality might be ruinous for a downstream report (especially in an automated context), it’s better to stop the process through <strong>pointblank</strong> validation tests and get to the heart of the matter.</p>
-<div id="an-example" class="section level4">
-<h4 class="hasAnchor">
-<a href="#an-example" class="anchor"></a>An Example</h4>
-<p>Let’s adapt the example shown in the <em>VALID-I: Data Quality Reporting Workflow</em> article to the pipeline data validation workflow:</p>
+<p>Where would we do this? When importing data, for instance, we could pass the incoming data through a few validation functions, possibly with customized threshold levels set (by default, any test units failing will result in an error). We could also use a set of validation functions further down the script on transformed data as a QA/QC measure. If bad data quality might be ruinous for a downstream report (especially in an automated context), it’s better to stop the process through <strong>pointblank</strong> validation tests and get to the heart of the matter. And, just like every workflow in <strong>pointblank</strong>, the target table can be a data frame or tibble, a database table (a <code>tbl_dbi</code> object), or a Spark DataFrame (a <code>tbl_spark</code> object, by way of the <strong>sparklyr</strong> package).</p>
+<div id="an-example-of-this-workflow" class="section level1">
+<h1 class="hasAnchor">
+<a href="#an-example-of-this-workflow" class="anchor"></a>An Example of This Workflow</h1>
+<p>Let’s adapt an example used in the <em>VALID-I: Data Quality Reporting Workflow</em> article to the pipeline data validation workflow:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">small_table</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/col_is_posix.html">col_is_posix</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -136,13 +133,17 @@
 <pre><code>## Error: Exceedance of failed test units where values in `d` should have been between `0` and `5000`.
 ## The `col_vals_between()` validation failed beyond the absolute threshold level (1).
 ## * failure level (1) &gt;= failure threshold (1)</code></pre>
-<p>This stringent threshold setting stopped the evaluation of the pipeline and, in turn, stops the running script if it’s deployed and automatically running on the regular. In this type of workflow we don’t need to define those functions, <strong>pointblank</strong> will automatically do the sensible thing by stopping evaluation and providing a stock message. So, in the first instance of such a stoppage due to validation failing, <strong>R</strong> scripts will stop at that point and <strong>R Markdown</strong> documents will corresponding cease to render.</p>
-<p>There are ways to counteract the stopping behavior. In an <strong>R Markdown</strong> document, we could set the chunk option <code>error = TRUE</code> where we might expect an error might occur due to validation failure but allowing execution to continue. That’s what was done in the <code>small_table</code> example, with the error message printed below the input. Another way is to disable evaluation at the step level by setting <code>active = FALSE</code> with every validation function that shouldn’t be evaluated. This works for both <strong>R</strong> scripts and <strong>R Markdown</strong> documents but it is quite different since we can’t determine whether a validation passed or failed since it doesn’t undergo evaluation. It is useful, however, if you want to enable staged checks use data validations in a debug mode since global variables that are logical can be passed to the <code>active</code> argument in specific validation functions. Another strategy is to not <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code> but instead <code>warn()</code>.</p>
+<p>In terms of the expressions used in the pipeline, you might notice that the <code><a href="../reference/create_agent.html">create_agent()</a></code> and <code><a href="../reference/interrogate.html">interrogate()</a></code> functions are absent. This is due to the secondary role of the validation functions, where they can operate directly and immediately on the data, acting as a sort of filter. If all validations in this pipeline pass (i.e., there are no failing test units in any of the validation steps), then the <code>small_table</code> data is returned. Otherwise, as it’s currently written, a stoppage will occur on any such failure.</p>
+<p>As it turns out, the above validation pipeline did result in an error. The stringent default threshold setting stops the evaluation of the pipeline at the point of failure (one or more test units failing). This, in turn, stops the running script (a key consideration if the script is deployed and automatically running on some sort of schedule). In this type of workflow we don’t need to define those functions, <strong>pointblank</strong> will automatically do the sensible thing by stopping evaluation and providing a stock message. So, in the first instance of such a stoppage due to validation failing, <strong>R</strong> scripts will stop at that point and <strong>R Markdown</strong> documents will correspondingly cease to render.</p>
 </div>
-<div id="using-warn_on_fail-and-stop_on_fail-functions-to-generate-simple-action_levels" class="section level4">
-<h4 class="hasAnchor">
+<div id="modifying-the-behavior-of-validation-failures" class="section level1">
+<h1 class="hasAnchor">
+<a href="#modifying-the-behavior-of-validation-failures" class="anchor"></a>Modifying the Behavior of Validation Failures</h1>
+<p>There are ways to counteract the stopping behavior seen in the previous example. In an <strong>R Markdown</strong> document, we could set the chunk option <code>error = TRUE</code> where we might expect an error to occur due to validation failure (allowing execution to continue no matter what happens). That’s what was done for the <code>small_table</code> example in this very document, giving us the error message printed below the input. Another way is to disable evaluation at the step level is to use the <code>active = FALSE</code> option on every validation function that shouldn’t be evaluated. This works for both <strong>R</strong> scripts and <strong>R Markdown</strong> documents but it is quite different since we can’t determine whether a validation passed or failed since it doesn’t actually perform the check (it simply skips it). It is useful, however, if you want to enable staged checks use data validations in a sort of ‘debug mode’ since global variables that are logical can be passed to the <code>active</code> argument in specific validation functions. Another strategy is to not <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code> but instead <code>warn()</code>.</p>
+<div id="using-warn_on_fail-and-stop_on_fail-functions-to-generate-simple-action_levels" class="section level2">
+<h2 class="hasAnchor">
 <a href="#using-warn_on_fail-and-stop_on_fail-functions-to-generate-simple-action_levels" class="anchor"></a>Using <code>warn_on_fail()</code> and <code>stop_on_fail()</code> functions to generate simple <code>action_levels</code>
-</h4>
+</h2>
 <p>There are two helper functions that are convenient for this workflow: <code><a href="../reference/action_levels.html">warn_on_fail()</a></code> and <code><a href="../reference/action_levels.html">stop_on_fail()</a></code>. These functions return an <code>action_levels</code> object that either warns or stops, doing so with informative warning or error messages. The default failure threshold for each is set to <code>1</code>: one <em>fail</em> unit means that the threshold for the <code>WARN</code> or <code>FAIL</code> condition will be met. The <code><a href="../reference/action_levels.html">stop_on_fail()</a></code> helper is (behind the scenes) applied by default when using validation functions in the <em>VALID-II</em> workflow. So, the previous example is exactly the same as this expanded form:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">small_table</span> <span class="op">%&gt;%</span>
@@ -213,9 +214,9 @@
 ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high</code></pre>
 <p>While <code><a href="../reference/action_levels.html">warn_on_fail()</a></code> and <code><a href="../reference/action_levels.html">stop_on_fail()</a></code> are handy ways to generate <code>action_levels</code> objects for the <code>actions</code> argument in every validation function, it doesn’t provide a way to specify any actions. For that, we’ll need to use the <code><a href="../reference/action_levels.html">action_levels()</a></code> function directly.</p>
 </div>
-<div id="using-action_levels-for-more-control" class="section level4">
-<h4 class="hasAnchor">
-<a href="#using-action_levels-for-more-control" class="anchor"></a>Using <code>action_levels()</code> for More Control</h4>
+<div id="using-action_levels-for-more-control" class="section level2">
+<h2 class="hasAnchor">
+<a href="#using-action_levels-for-more-control" class="anchor"></a>Using <code>action_levels()</code> for More Control</h2>
 <p>The <code><a href="../reference/action_levels.html">action_levels()</a></code> function can be as useful here as it is for the <em>VALID-I</em> workflow with an <em>agent</em>. The function creates an <code>action_levels</code> object which can have two roles: (1) specification of threshold failure levels for entering certain conditions (<code>WARN</code>, <code>STOP</code>, and <code>NOTIFY</code>), and (2) setting of actions (i.e., function calls to invoke) when entering a specific condition. The <code>fns</code> argument of <code><a href="../reference/action_levels.html">action_levels()</a></code> allows us to define those custom functions that are evaluated upon entering each of the three states (and this acts on the ‘step’ level, per each validation function).</p>
 <p>Compared to the <em>VALID-I</em> workflow, which deals more with reporting, having actions triggered by failures in the <em>VALID-II</em> workflow is probably more useful and important. We can imagine a situation where an <strong>R</strong> script is deployed with data validation interspersed throughout. Depending on the deployment, we may desire a hard stop (affecting the downstream components), or, we may want a softer approach with warning and logging.</p>
 <p>Let’s try a hybrid approach where each of three available conditions have failure threshold levels set and an associated function to invoke. The functions to invoke at each condition can be whatever makes sense for the workflow (i.e., we don’t have to issue warnings in the <code>WARN</code> condition if we want something else). Here, we will use a <code><a href="https://rdrr.io/r/base/warning.html">warning()</a></code> for <code>WARN</code>, a <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code> for <code>STOP</code>, and a logging function (<code><a href="../reference/log4r_step.html">log4r_step()</a></code>) for <code>NOTIFY</code>. Here’s how we might create such an <code>action_levels</code> object with <code><a href="../reference/action_levels.html">action_levels()</a></code>:</p>
@@ -263,7 +264,9 @@ NOTIFY failure threshold of 0.3 of all test units.
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

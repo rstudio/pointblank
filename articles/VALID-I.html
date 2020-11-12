@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VALID-I: Data Quality Reporting • pointblank</title>
+<title>Introduction to the **Data Quality Reporting** Workflow (**VALID-I**) • pointblank</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="VALID-I: Data Quality Reporting">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to the **Data Quality Reporting** Workflow (**VALID-I**)">
 <meta property="og:description" content="pointblank">
 <meta property="og:image" content="/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -106,7 +106,7 @@
       </header><script src="VALID-I_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>VALID-I: Data Quality Reporting</h1>
+      <h1 data-toc-skip>Introduction to the <strong>Data Quality Reporting</strong> Workflow (<strong>VALID-I</strong>)</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/vignettes/VALID-I.Rmd"><code>vignettes/VALID-I.Rmd</code></a></small>
@@ -117,14 +117,11 @@
     
     
 <p><img src="images/VALID-I.svg" width="100%"></p>
-<div id="introduction-to-the-data-quality-reporting-workflow-valid-i" class="section level3">
-<h3 class="hasAnchor">
-<a href="#introduction-to-the-data-quality-reporting-workflow-valid-i" class="anchor"></a>Introduction to the <strong>Data Quality Reporting</strong> Workflow (<strong>VALID-I</strong>)</h3>
 <p>When trying to assess the state of data quality for tabular data, we want to perform a full accounting of assertions on the data without stopping anywhere in the interrogation of the data. We use an object called an <em>agent</em> to collect our validation instructions, perform the interrogation, and then serve as an artifact for reporting or further analysis. We give that agent the name or a function that retrieves the target table. The types of data tables that can be used include data frames, tibbles, database tables (<code>tbl_dbi</code>), and Spark DataFrames (<code>tbl_spark</code>).</p>
-<div id="the-elements-of-this-workflow-an-agent-validation-functions-and-interrogate" class="section level4">
-<h4 class="hasAnchor">
+<div id="the-elements-of-this-workflow-an-agent-validation-functions-and-interrogate" class="section level1">
+<h1 class="hasAnchor">
 <a href="#the-elements-of-this-workflow-an-agent-validation-functions-and-interrogate" class="anchor"></a>The Elements of this Workflow: an <em>agent</em>, validation functions, and <code>interrogate()</code>
-</h4>
+</h1>
 <p>The <em>agent</em> that we need for this workflow is created with the <code><a href="../reference/create_agent.html">create_agent()</a></code> function. An agent can handle one target table at any given time and two different arguments can be used to specify that table. The first is <code>tbl</code>, where the input table is directly supplied to the <em>agent</em>. Alternatively, a function can be used to read in the input data table with the <code>read_fn</code> argument in one of two ways: (1) using a function (e.g., <code>function() { &lt;table reading code&gt; }</code>) or, (2) with an <strong>R</strong> formula expression (e.g., <code>~ &lt;table reading code&gt;</code>).</p>
 <p>The <em>agent</em> needs directives on what to do with the table, so, we provide validation functions. Some check for the existence or type of column (<code><a href="../reference/col_exists.html">col_exists()</a></code> or the group of <code>col_is_*()</code> functions). Others check each cell in a column for satisfying a specific condition (the <code>col_vals_*()</code> functions). We can use as many of these as necessary for satisfactory validation testing of the table in question. There are certainly quite a few of them, so here’s a list of the validation functions with a questioning phrase for each function’s purpose:</p>
 <ul>
@@ -181,9 +178,9 @@
 </ul>
 <p>The final function that needs to be called is the <code><a href="../reference/interrogate.html">interrogate()</a></code> function. The validation functions, when called on an <em>agent</em> object, don’t act on the target table until <code><a href="../reference/interrogate.html">interrogate()</a></code> is used. Until interrogation, the usage of validation functions serves as instructions. During the interrogation phase those instructions turn into actions, with the <em>agent</em> then carrying out all steps of the interrogation plan.</p>
 </div>
-<div id="a-simple-example-with-the-basics" class="section level4">
-<h4 class="hasAnchor">
-<a href="#a-simple-example-with-the-basics" class="anchor"></a>A Simple Example with the Basics</h4>
+<div id="a-simple-example-with-the-basics" class="section level1">
+<h1 class="hasAnchor">
+<a href="#a-simple-example-with-the-basics" class="anchor"></a>A Simple Example with the Basics</h1>
 <p>For our examples going forward, we’ll use the <code>small_table</code> dataset. It’s included in the <strong>pointblank</strong> package. It isn’t very large, which makes it great for simple examples. Here it is in its entirety:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">small_table</span></code></pre></div>
@@ -250,9 +247,9 @@
 ## 1 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low</code></pre>
 <p>Recall that validation <em>step 5</em> asserted that all values in column <code>d</code> should be between <code>0</code> and <code>5000</code>, however, this extract of <code>small_table</code> shows that column <code>d</code> has a value of <code>10000</code> which lies outside the specified range.</p>
 </div>
-<div id="using-threshold-levels-and-actions" class="section level4">
-<h4 class="hasAnchor">
-<a href="#using-threshold-levels-and-actions" class="anchor"></a>Using Threshold Levels and Actions</h4>
+<div id="using-threshold-levels-and-actions" class="section level1">
+<h1 class="hasAnchor">
+<a href="#using-threshold-levels-and-actions" class="anchor"></a>Using Threshold Levels and Actions</h1>
 <p>It can be useful to gauge data quality by setting failure thresholds for validation steps. For example, it may be acceptable at some point in time to tolerate up to 5% of failing test units for a given validation. Or, having several levels of data quality might be useful and instructive, where failing test units across validations are grouped into the 0-5%, 5-10%, and 10%- bands.</p>
 <p>We can specify failure threshold levels with the <code><a href="../reference/action_levels.html">action_levels()</a></code> function. Using the function generates an <code>action_levels</code> object that can be passed to the <code>actions</code> argument of <code><a href="../reference/create_agent.html">create_agent()</a></code> (thereby creating a default for every validation step). In the following, we use relative values (as real numbers between <code>0</code> and <code>1</code>) to define thresholds for the <code>WARN</code> and <code>STOP</code> conditions.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -368,12 +365,13 @@ $lang (chr [1])
 <pre><code>In Step 2, there were 13 test units and 46.154% failed. STOP condition met: true.</code></pre>
 <p>This is a great way to test a function for use as a validation step ‘action’ because when invoked it will undergo evaluation in an environment that contains <code>x</code> (which will have the same structure).</p>
 </div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

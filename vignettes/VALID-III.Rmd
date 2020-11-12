@@ -10,7 +10,7 @@ library(testthat)
 
 <img src="images/VALID-III.svg" width=100%>
 
-The *VALID-III: Expectations in Unit Tests* workflow is all about checking your data alongside your usual **testthat** tests. The functions used for this workflow all begin with the `expect_` prefix and are based on the set of validation functions used in the **VALID-I** and **VALID-II** workflows. Here's the complete list of functions with a phrase for each function's expectation:
+The *VALID-III: Expectations in Unit Tests* workflow is all about checking your data alongside your usual **testthat** tests. The functions used for this workflow all begin with the `expect_` prefix and are based on the set of validation functions used in the [**VALID-I**](../articles/VALID-I.html) and [**VALID-II**](../articles/VALID-II.html) workflows. Here's the complete list of functions with a phrase for each function's expectation:
 
 - `expect_col_vals_lt()`: Expect that column data are less than a specified value.
 - `expect_col_vals_lte()`: Expect that column data are less than or equal to a specified value.

@@ -1,5 +1,5 @@
 ---
-title: "VALID-IV: Data Tests for Conditionals"
+title: "Introduction to the **Data Tests for Conditionals** Workflow (**VALID-IV**)"
 output: html_document
 ---
 
@@ -9,9 +9,7 @@ library(pointblank)
 
 <img src="images/VALID-IV.svg" width=100%>
 
-### Introduction to the **Data Tests for Conditionals** Workflow (**VALID-IV**)
-
-The *VALID-IV: Data Tests for Conditionals* workflow is probably not much of a workflow really. But maybe you consider programming and control flow a sort of workflow. If that's the case and you are programming with data, the functions of this workflow might be useful for that. A set of `test_*()` functions, with the same arguments as the `expect_*()` functions of the **VALID-III** workflow, are used with data tables and the result of each call returns a single logical value (`TRUE` or `FALSE`). Here's the complete list of functions with a phrase for what each function tests:
+The *VALID-IV: Data Tests for Conditionals* workflow is probably not much of a workflow really. But maybe you consider programming and control flow a sort of workflow. If that's the case and you are programming with data, the functions of this workflow might be useful for that. A set of `test_*()` functions, with the same arguments as the corresponding `expect_*()` functions of the **VALID-III** workflow, are used with data tables and the result of each call returns a single logical value (`TRUE` or `FALSE`). Here's the complete list of functions with a phrase for what each function tests:
 
 - `test_col_vals_lt()`: Test whether column data are less than a specified value.
 - `test_col_vals_lte()`: Test whether column data are less than or equal to a specified value.
@@ -39,7 +37,7 @@ The *VALID-IV: Data Tests for Conditionals* workflow is probably not much of a w
 - `test_col_exists()`: Test whether one or more columns actually exist.
 - `test_col_schema_match()`: Test whether columns in the table (and their types) match a predefined schema.
 
-#### Exactly Like the `expect_*()` Functions Except You Get a `TRUE` or `FALSE`
+# Exactly Like the `expect_*()` Functions Except You Get a `TRUE` or `FALSE`
 
 The interface of each `test_*()` function is an exact match to the `expect_*()` counterpart. If you haven't used either of those but have used the standard validation functions, here's a quick rundown.
 

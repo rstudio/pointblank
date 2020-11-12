@@ -14,7 +14,7 @@ The *R Markdown Document Validation* workflow involves interspersing bits of dif
 
 # How It Works
 
-Using **pointblank** in the **VALID-VI** workflow is enabled by default once the **pointblank** library is loaded (best done in the `setup` chunk). The framework allows for validation testing within specialized validation code chunks where the `validate = TRUE` option is set. Using **pointblank** validation functions on data (the **VALID-II** workflow) in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere.
+Using **pointblank** in the **VALID-VI** workflow is enabled by default once the **pointblank** library is loaded (best done in the `setup` chunk). The framework allows for validation testing within specialized validation code chunks where the `validate = TRUE` option is set. Using **pointblank** validation functions on data (the [**VALID-II**](../articles/VALID-II.html) workflow) in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere.
 
 All errors are shown after rendering the document to HTML. Green status buttons indicate that all validations succeeded, red buttons indicate that one or more validation failures occurred. Clicking any such button reveals the otherwise hidden validation statements and associated messaging.
 
@@ -75,7 +75,7 @@ Keep in mind that `stop_if_not()` (like `stopifnot()`) can be used for any type 
 
 #### Including Data Quality Reporting from the **VALID-I** Workflow
 
-Code chunks can include data quality reporting expressions (i.e., the *agent*-based **VALID-I** workflow) but it's important to ensure two things. Here's the interesting thing about that: we can opt to use `validate = TRUE` as a chunk option or omit that entirely, each choice has different effect. If you'd like to hide the validation output (the *agent* report) behind a button (in this case, a light blue one) then `validate = TRUE` should be used.
+Code chunks can include data quality reporting expressions (i.e., the *agent*-based [**VALID-I**](../articles/VALID-I.html) workflow) but it's important to ensure two things. Here's the interesting thing about that: we can opt to use `validate = TRUE` as a chunk option or omit that entirely, each choice has different effect. If you'd like to hide the validation output (the *Agent Report*) behind a button (in this case, a light blue one) then `validate = TRUE` should be used.
 
 Here's an example of a data quality validation workflow being executed in a single code chunk.
 
@@ -102,7 +102,7 @@ create_agent(
 
 If this code chunk were to exclude the `validate = TRUE` option, then the output would appear as output normally does (where the input appears above output report table). Should you just want the output reporting table to shown without the input expressions, you could use the `include = FALSE` chunk option here.
 
-As a final note for this, it's important not to use any other expressions that result in output, just stick to the typical `create_agent()` -> <validation functions> -> `interrogate()` pattern. In other words, dedicate this code chunk just to the *agent* and put other validation expressions elsewhere in the document.
+As a final note for this, it's important not to use any other expressions that result in output, just stick to the typical `create_agent()` &rarr; `<validation functions>` &rarr; `interrogate()` pattern. In other words, dedicate this code chunk just to the *agent* and put other validation expressions elsewhere in the document.
 
 # Setting Up Options with the `validate_rmd()` Function
 

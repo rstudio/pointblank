@@ -121,16 +121,16 @@
 <div id="how-it-works" class="section level1">
 <h1 class="hasAnchor">
 <a href="#how-it-works" class="anchor"></a>How It Works</h1>
-<p>Using <strong>pointblank</strong> in the <strong>VALID-VI</strong> workflow is enabled by default once the <strong>pointblank</strong> library is loaded (best done in the <code>setup</code> chunk). The framework allows for validation testing within specialized validation code chunks where the <code>validate = TRUE</code> option is set. Using <strong>pointblank</strong> validation functions on data (the <strong>VALID-II</strong> workflow) in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere.</p>
+<p>Using <strong>pointblank</strong> in the <strong>VALID-VI</strong> workflow is enabled by default once the <strong>pointblank</strong> library is loaded (best done in the <code>setup</code> chunk). The framework allows for validation testing within specialized validation code chunks where the <code>validate = TRUE</code> option is set. Using <strong>pointblank</strong> validation functions on data (the <a href="../articles/VALID-II.html"><strong>VALID-II</strong></a> workflow) in these marked code chunks will flag overall failure if the stop threshold is exceeded anywhere.</p>
 <p>All errors are shown after rendering the document to HTML. Green status buttons indicate that all validations succeeded, red buttons indicate that one or more validation failures occurred. Clicking any such button reveals the otherwise hidden validation statements and associated messaging.</p>
 <p>It’s much better to demonstrate how this workflow works in a series of examples, as the resulting output is interactive and varies quite a bit depending on the input. In all of the following examples, a code chunk will shown and the rendered result will be subsequently placed. The result will typically be a button that can be pressed to reveal the validation result and the code chunk itself is hidden upon rendering (so there’s no need to use <code>include = FALSE</code> as a chunk option).</p>
 <p>To start things off, here’s an example that uses an expression that takes the <code>small_table</code> dataset and pipes it to two validation functions: <code><a href="../reference/col_is_date.html">col_is_date()</a></code> and <code><a href="../reference/col_vals_in_set.html">col_vals_in_set()</a></code>. The <code><a href="../reference/col_is_date.html">col_is_date()</a></code> validation passes whereas the <code><a href="../reference/col_vals_in_set.html">col_vals_in_set()</a></code> validation fails (because the set of values in column <code>f</code> also has the <code>"high"</code> value.</p>
 <p><img src="images/code_block_1.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
-  <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-1099758" aria-expanded="false" aria-controls="chunk-1099758" style="cursor: pointer;">1 validation failed.</span>
+  <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-4467920" aria-expanded="false" aria-controls="chunk-4467920" style="cursor: pointer;">1 validation failed.</span>
 </div>
-<div id="chunk-1099758" class="pointblank-chunk panel panel-danger collapse">
+<div id="chunk-4467920" class="pointblank-chunk panel panel-danger collapse">
   <div class="panel" style="margin-bottom: 0px;">
     <div class="panel-body" style="padding-left: 18px; padding-top: 18px; padding-right: 18px; padding-bottom: 0px; background: #FAFAFA;">
       <div class="panel panel-danger">
@@ -161,9 +161,9 @@
 <p><img src="images/code_block_2.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
-  <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-2801398" aria-expanded="false" aria-controls="chunk-2801398" style="cursor: pointer;">1 validation failed.</span>
+  <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-5550845" aria-expanded="false" aria-controls="chunk-5550845" style="cursor: pointer;">1 validation failed.</span>
 </div>
-<div id="chunk-2801398" class="pointblank-chunk panel panel-danger collapse">
+<div id="chunk-5550845" class="pointblank-chunk panel panel-danger collapse">
   <div class="panel" style="margin-bottom: 0px;">
     <div class="panel-body" style="padding-left: 18px; padding-top: 18px; padding-right: 18px; padding-bottom: 0px; background: #FAFAFA;">
       <div class="panel panel-success">
@@ -202,9 +202,9 @@
 <p><img src="images/code_block_3.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
-  <span class="pointblank-badge label label-success" data-toggle="collapse" data-target="#chunk-0165267" aria-expanded="false" aria-controls="chunk-0165267" style="cursor: pointer;">All validations passed.</span>
+  <span class="pointblank-badge label label-success" data-toggle="collapse" data-target="#chunk-0310539" aria-expanded="false" aria-controls="chunk-0310539" style="cursor: pointer;">All validations passed.</span>
 </div>
-<div id="chunk-0165267" class="pointblank-chunk panel panel-success collapse">
+<div id="chunk-0310539" class="pointblank-chunk panel panel-success collapse">
   <div class="panel" style="margin-bottom: 0px;">
     <div class="panel-body" style="padding-left: 18px; padding-top: 18px; padding-right: 18px; padding-bottom: 0px; background: #FAFAFA;">
       <div class="panel panel-success">
@@ -281,9 +281,9 @@
 <p><img src="images/code_block_4.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
-  <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-4125310" aria-expanded="false" aria-controls="chunk-4125310" style="cursor: pointer;">1 validation failed.</span>
+  <span class="pointblank-badge label label-danger" data-toggle="collapse" data-target="#chunk-4527184" aria-expanded="false" aria-controls="chunk-4527184" style="cursor: pointer;">1 validation failed.</span>
 </div>
-<div id="chunk-4125310" class="pointblank-chunk panel panel-danger collapse">
+<div id="chunk-4527184" class="pointblank-chunk panel panel-danger collapse">
   <div class="panel" style="margin-bottom: 0px;">
     <div class="panel-body" style="padding-left: 18px; padding-top: 18px; padding-right: 18px; padding-bottom: 0px; background: #FAFAFA;">
       <div class="panel panel-success">
@@ -319,14 +319,14 @@
 <div id="including-data-quality-reporting-from-the-valid-i-workflow" class="section level4">
 <h4 class="hasAnchor">
 <a href="#including-data-quality-reporting-from-the-valid-i-workflow" class="anchor"></a>Including Data Quality Reporting from the <strong>VALID-I</strong> Workflow</h4>
-<p>Code chunks can include data quality reporting expressions (i.e., the <em>agent</em>-based <strong>VALID-I</strong> workflow) but it’s important to ensure two things. Here’s the interesting thing about that: we can opt to use <code>validate = TRUE</code> as a chunk option or omit that entirely, each choice has different effect. If you’d like to hide the validation output (the <em>agent</em> report) behind a button (in this case, a light blue one) then <code>validate = TRUE</code> should be used.</p>
+<p>Code chunks can include data quality reporting expressions (i.e., the <em>agent</em>-based <a href="../articles/VALID-I.html"><strong>VALID-I</strong></a> workflow) but it’s important to ensure two things. Here’s the interesting thing about that: we can opt to use <code>validate = TRUE</code> as a chunk option or omit that entirely, each choice has different effect. If you’d like to hide the validation output (the <em>Agent Report</em>) behind a button (in this case, a light blue one) then <code>validate = TRUE</code> should be used.</p>
 <p>Here’s an example of a data quality validation workflow being executed in a single code chunk.</p>
 <p><img src="images/code_block_5.png"></p>
 
 <div class="pointblank-badge-container-inner" style="text-align: center; padding-bottom: 12px; font-size: 16px;">
-  <span class="pointblank-badge label label-info" data-toggle="collapse" data-target="#chunk-5641845" aria-expanded="false" aria-controls="chunk-5641845" style="cursor: pointer;">Agent Report</span>
+  <span class="pointblank-badge label label-info" data-toggle="collapse" data-target="#chunk-4169199" aria-expanded="false" aria-controls="chunk-4169199" style="cursor: pointer;">Agent Report</span>
 </div>
-<div id="chunk-5641845" class="pointblank-chunk panel panel-info collapse">
+<div id="chunk-4169199" class="pointblank-chunk panel panel-info collapse">
   <div class="panel" style="margin-bottom: 0px;">
     <div class="panel-body" style="padding-left: 18px; padding-top: 18px; padding-right: 18px; padding-bottom: 0px; background: #FAFAFA;">
       <style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
@@ -975,7 +975,7 @@ html {
 </tbody>
 <tfoot class="gt_sourcenotes"><tr>
 <td class="gt_sourcenote" colspan="14">
-<span style="background-color: #FFF;color: #444;padding: 0.5em 0.5em;position: inherit;text-transform: uppercase;margin-left: 10px;border: solid 1px #999999;font-variant-numeric: tabular-nums;border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;">2020-11-12 01:33:08 UTC</span><span style="background-color: #FFF;color: #444;padding: 0.5em 0.5em;position: inherit;margin: 5px 1px 5px 0;border: solid 1px #999999;border-left: none;font-variant-numeric: tabular-nums;border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;">&lt; 1 s</span><span style="background-color: #FFF;color: #444;padding: 0.5em 0.5em;position: inherit;text-transform: uppercase;margin: 5px 1px 5px -1px;border: solid 1px #999999;border-left: none;border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;">2020-11-12 01:33:08 UTC</span>
+<span style="background-color: #FFF;color: #444;padding: 0.5em 0.5em;position: inherit;text-transform: uppercase;margin-left: 10px;border: solid 1px #999999;font-variant-numeric: tabular-nums;border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;">2020-11-12 01:44:08 UTC</span><span style="background-color: #FFF;color: #444;padding: 0.5em 0.5em;position: inherit;margin: 5px 1px 5px 0;border: solid 1px #999999;border-left: none;font-variant-numeric: tabular-nums;border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;">&lt; 1 s</span><span style="background-color: #FFF;color: #444;padding: 0.5em 0.5em;position: inherit;text-transform: uppercase;margin: 5px 1px 5px -1px;border: solid 1px #999999;border-left: none;border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;">2020-11-12 01:44:09 UTC</span>
 </td>
     </tr></tfoot>
 </table></div>
@@ -985,7 +985,7 @@ html {
 </div>
 
 <p>If this code chunk were to exclude the <code>validate = TRUE</code> option, then the output would appear as output normally does (where the input appears above output report table). Should you just want the output reporting table to shown without the input expressions, you could use the <code>include = FALSE</code> chunk option here.</p>
-<p>As a final note for this, it’s important not to use any other expressions that result in output, just stick to the typical <code><a href="../reference/create_agent.html">create_agent()</a></code> -&gt; <validation functions> -&gt; <code><a href="../reference/interrogate.html">interrogate()</a></code> pattern. In other words, dedicate this code chunk just to the <em>agent</em> and put other validation expressions elsewhere in the document.</validation></p>
+<p>As a final note for this, it’s important not to use any other expressions that result in output, just stick to the typical <code><a href="../reference/create_agent.html">create_agent()</a></code> → <code>&lt;validation functions&gt;</code> → <code><a href="../reference/interrogate.html">interrogate()</a></code> pattern. In other words, dedicate this code chunk just to the <em>agent</em> and put other validation expressions elsewhere in the document.</p>
 </div>
 </div>
 <div id="setting-up-options-with-the-validate_rmd-function" class="section level1">

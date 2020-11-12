@@ -9,7 +9,7 @@ library(pointblank)
 
 <img src="images/VALID-IV.svg" width=100%>
 
-The *VALID-IV: Data Tests for Conditionals* workflow is probably not much of a workflow really. But maybe you consider programming and control flow a sort of workflow. If that's the case and you are programming with data, the functions of this workflow might be useful for that. A set of `test_*()` functions, with the same arguments as the corresponding `expect_*()` functions of the **VALID-III** workflow, are used with data tables and the result of each call returns a single logical value (`TRUE` or `FALSE`). Here's the complete list of functions with a phrase for what each function tests:
+The *VALID-IV: Data Tests for Conditionals* workflow is probably not much of a workflow really. But maybe you consider programming and control flow a sort of workflow. If that's the case and you are programming with data, the functions of this workflow might be useful for that. A set of `test_*()` functions, with the same arguments as the corresponding `expect_*()` functions of the [**VALID-III**](../articles/VALID-III.html) workflow, are used with data tables and the result of each call returns a single logical value (`TRUE` or `FALSE`). Here's the complete list of functions with a phrase for what each function tests:
 
 - `test_col_vals_lt()`: Test whether column data are less than a specified value.
 - `test_col_vals_lte()`: Test whether column data are less than or equal to a specified value.

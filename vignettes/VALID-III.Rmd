@@ -1,5 +1,5 @@
 ---
-title: "VALID-III: Expectations in Unit Tests"
+title: "Introduction to the **Expectations in Unit Tests** Workflow (**VALID-III**)"
 output: html_document
 ---
 
@@ -9,8 +9,6 @@ library(testthat)
 ```
 
 <img src="images/VALID-III.svg" width=100%>
-
-### Introduction to the **Expectations in Unit Tests** Workflow (**VALID-III**)
 
 The *VALID-III: Expectations in Unit Tests* workflow is all about checking your data alongside your usual **testthat** tests. The functions used for this workflow all begin with the `expect_` prefix and are based on the set of validation functions used in the **VALID-I** and **VALID-II** workflows. Here's the complete list of functions with a phrase for each function's expectation:
 
@@ -42,7 +40,7 @@ The *VALID-III: Expectations in Unit Tests* workflow is all about checking your 
 
 Now that we know that the functions are similar in intent but different in name, let's learn how to use these functions effectively.
 
-#### Using `expect_*()` Functions in the **testthat** Way
+# Using `expect_*()` Functions in the **testthat** Way
 
 The **testthat** package has collection of functions that begin with `expect_`. It's no coincidence that the **pointblank** for the **VALID-III** workflow adopts the same naming convention. The idea is to use these functions interchangeably with those from **testthat** in the standard **testthat** workflow (in a `test-<name>.R` file, inside the `tests/testthat` folder). The big difference here is that instead of testing function outputs, we are testing data tables. However, tables may be returned from function calls and the `expect_*()` functions offered up by **pointblank** might offer more flexibility for testing that data. For instance `expect_col_vals_between()` allows us to write an expectation with fine control on boundary values (and whether they are inclusive bounds), whether `NA` values should be ignored, and we can even set a failure threshold if that makes sense for the expectation.
 
@@ -63,7 +61,7 @@ expect_col_vals_between(small_table, vars(c), 2, 9, na_pass = TRUE)
 
 The arguments in the `expect_col_vals_between()` give us everything we need to check tabular data without having to do subsetting and perform other transformations. There are a few added benefits. Should data come from a data source other than locals data frame, the SQL expressions are handled internally and they have been tested extensively across the supported database types and in Spark DataFrames as well.
 
-#### Other Features of the `expect_*()` Functions
+# These `expect_*()` Functions Are Simpler Than Their Counterparts
 
 All of the `expect_*()` functions have the same leading arguments of their validation function counterparts but they omit the following arguments at the end of their signatures:
 

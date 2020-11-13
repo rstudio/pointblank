@@ -109,7 +109,7 @@ dim(target_table)
 
 Let's allow an informant to access the `target_table` through the `read_fn` argument. In this case, the expression is `~ target_table` (it simply gets the table from the global workspace). After using `incorporate()` and printing the `informant_tt` object, let's just examine the header.
 
-```{r}
+```{r eval=FALSE}
 informant_tt <- 
   create_informant(
     read_fn = ~ target_table,
@@ -139,7 +139,7 @@ dim(target_table)
 
 We've got our informant object, let's see how `incorporate()` keeps pace with the change.
 
-```{r}
+```{r eval=FALSE}
 informant_tt %>% incorporate()
 ```
 

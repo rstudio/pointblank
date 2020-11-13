@@ -1,5 +1,5 @@
 ---
-title: "I. Intro to Information Management"
+title: "Intro to Information Management"
 output: html_document
 ---
 

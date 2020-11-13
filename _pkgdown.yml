@@ -209,6 +209,8 @@ navbar:
     - text: Information Management
     - text: 'Intro to Information Management'
       href: 'articles/INFO-1.html'
+    - text: 'Advanced Information Management'
+      href: 'articles/INFO-2.html'
   - text: Reference
     href: reference/index.html
   - text: News

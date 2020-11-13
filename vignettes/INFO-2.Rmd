@@ -150,3 +150,126 @@ informant_tt %>% incorporate()
 Great! Using `incorporate()` has accurately updated the reporting of row and column counts in the header. And it's also very much worth noting that the use of a `read_fn` is important here. Had `target_table` been given to the `tbl` argument of `create_informant()`, that table would be bound to the informant in its initial state (with 13 rows and 8 columns) and any updates to the table wouldn't be reflected in the reporting upon using `incorporate()`. The table-reading function is meant for obtaining the table each and every time the table is needed. 
 
 In short, unless you have no uses of `info_snippet()` and the table isn't expected to change, it's recommended to use `incorporate()` as the final call in this workflow.
+
+# Helpful **pointblank** Functions that Work Exceedingly Well with `info_snippet()`
+
+There are a few functions available in **pointblank** that make it much easier to get commonly-used text snippets. All of them begin with the `snip_` prefix and they are:
+
+- `snip_list()`: Gets a list of column categories
+- `snip_lowest()`: Gets the lowest value from a column
+- `snip_highest()`: Gets the highest value from a column
+
+Each of these functions can be used directly as a `fn` value and we don't have to specify the table since its assumed that the target table is where we'll be snipping data from. Let's have a look at each of these in action.
+
+## The `snip_list()` Function
+
+When describing some aspect of the target table, we may want to extract some values from a column and include them as a piece of info text. We'd want the values to be nicely formatted as a list (with commas) and we'd probably prefer that this be constrained to a certain size (so as to not potentially generate massive amounts of text). This can be efficiently done with `snip_list()`. Let's experiment with the combination of `snip_list()` and `info_snippet()`, extending the **palmerpenguins** example from the [*Intro to Information Management*](../articles/INFO-I.html) article.
+
+```{r eval=FALSE}
+informant_pp <- 
+  create_informant(
+    read_fn = ~ palmerpenguins::penguins,
+    tbl_name = "penguins",
+    label = "The `penguins` dataset from the **palmerpenguins** 📦."
+  ) %>% 
+  info_columns(
+    columns = "species",
+    `ℹ️` = "A factor denoting penguin species ({species_snippet})."
+  ) %>%
+  info_columns(
+    columns = "island",
+    `ℹ️` = "A factor denoting island in Palmer Archipelago, Antarctica
+    ({island_snippet})."
+  ) %>%
+  info_snippet(
+    snippet_name = "species_snippet",
+    fn = snip_list(column = "species")
+  ) %>%
+  info_snippet(
+    snippet_name = "island_snippet",
+    fn = snip_list(column = "island")
+  ) %>%
+  incorporate()
+
+informant_pp
+```
+
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_11.png" width=80%></div>
+<p align="center">This is an excerpt of the complete report, showing just the header and part of the <strong>COLUMNS</strong> section.</p>
+<br>
+
+This seemed to work out quite well. No need for determining what these strings are and then hardcoding them to the *info text*, `snip_list()` did all the work here.
+
+This also works for numeric values. Let's use `snip_list()` to provide a text snippet based on values in the `year` column (which is an `integer` column):
+
+```{r eval=FALSE}
+informant_pp <-
+  informant_pp %>%
+  info_columns(
+    columns = "year",
+    `ℹ️` = "The study year ({year_snippet})."
+  ) %>%
+  info_snippet(
+    snippet_name = "year_snippet",
+    fn = snip_list(column = "year")
+  ) %>%
+  incorporate()
+
+informant_pp
+```
+
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_12.png" width=80%></div>
+<p align="center">This is an excerpt of the complete report, showing just the bottom of the <strong>COLUMNS</strong> section and the footer.</p>
+<br>
+
+Again, no issues with the formatting and display of values. We got the *info text* `"The study year ("2007", "2008", and "2009" )."` for our efforts here and it saved us from having to determine this, plus, should the data be updated with new `year` values, that will be reflected in this info text upon using `incorporate()`. Refreshed *info text* really provides huge benefits, especially when the data changes a lot (e.g., database tables).
+
+## The `snip_lowest()` and `snip_highest()` Functions
+
+We can get the lowest and highest values from a column and inject those formatted values into some *info_text*. Let's do that for some of the measured values in the `penguins` dataset with `snip_lowest()` and `snip_highest()`.
+
+```{r eval=FALSE}
+informant_pp <-
+  informant_pp %>%
+  info_columns(
+    columns = "bill_length_mm",
+    `ℹ️` = "A number denoting bill length"
+  ) %>%
+  info_columns(
+    columns = "bill_depth_mm",
+    `ℹ️` = "A number denoting bill depth (in the range of
+    {min_depth} to {max_depth} millimeters)."
+  ) %>%
+  info_columns(
+    columns = "flipper_length_mm",
+    `ℹ️` = "An integer denoting flipper length"
+  ) %>%
+  info_columns(
+    columns = matches("length"),
+    `ℹ️` = "(in units of millimeters)."
+  ) %>%
+  info_columns(
+    columns = "flipper_length_mm",
+    `ℹ️` = "Largest observed is {largest_flipper_length} mm."
+  ) %>%
+  info_snippet(
+    snippet_name = "min_depth",
+    fn = snip_lowest(column = "bill_depth_mm")
+  ) %>%
+  info_snippet(
+    snippet_name = "max_depth",
+    fn = snip_highest(column = "bill_depth_mm")
+  ) %>%
+  info_snippet(
+    snippet_name = "largest_flipper_length",
+    fn = snip_highest(column = "flipper_length_mm")
+  ) %>%
+  incorporate()
+
+informant_pp
+```
+
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_13.png" width=80%></div>
+<br>
+
+We can see from the report output that we can creatively use the lowest and highest values obtained by `snip_lowest()` and `snip_highest()` to specify a range or simply show some maximum value. While the ordering of the `info_columns()` calls in the example affects the overall layout of the text (through the text appending behavior), the placement of `info_snippet()` calls *does not* matter. And, again, we must use `incorporate()` to update all of the text snippets and render them in their appropriate locations (inside each `{<snippet_name>}`).

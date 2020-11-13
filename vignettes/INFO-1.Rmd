@@ -164,7 +164,13 @@ informant_pp
 <div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_5.png" width=80%></div>
 <br>
 
-We are able to provide subsections with the name `ℹ️` and, furthermore, use **tidyselect** functions like `ends_with()` to append *info text* to a common subsection across multiple columns. This was useful for stating the units which were common across three columns: `bill_length_mm`, `bill_depth_mm`, and `flipper_length_mm`.
+We are able to provide subsections with the name `ℹ️` and, furthermore, use **tidyselect** functions like `ends_with()` to append *info text* to a common subsection that exists across multiple columns. This was useful for stating the units which were common across three columns: `bill_length_mm`, `bill_depth_mm`, and `flipper_length_mm`. The following **tidyselect** functions are available in **pointblank** to make this process easier:
+
+- `starts_with()`: Match columns that start with a prefix.
+- `ends_with()`: Match columns that end with a suffix.
+- `contains()`: Match columns that contain a literal string.
+- `matches()`: Perform matching with a regular expression.
+- `everything()`: Select all columns.
 
 # Extra Sections and `info_section()`
 

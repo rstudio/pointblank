@@ -257,6 +257,133 @@ This is an excerpt of the complete report, showing just the header.
 <p>Great! Using <code><a href="../reference/incorporate.html">incorporate()</a></code> has accurately updated the reporting of row and column counts in the header. And it’s also very much worth noting that the use of a <code>read_fn</code> is important here. Had <code>target_table</code> been given to the <code>tbl</code> argument of <code><a href="../reference/create_informant.html">create_informant()</a></code>, that table would be bound to the informant in its initial state (with 13 rows and 8 columns) and any updates to the table wouldn’t be reflected in the reporting upon using <code><a href="../reference/incorporate.html">incorporate()</a></code>. The table-reading function is meant for obtaining the table each and every time the table is needed.</p>
 <p>In short, unless you have no uses of <code><a href="../reference/info_snippet.html">info_snippet()</a></code> and the table isn’t expected to change, it’s recommended to use <code><a href="../reference/incorporate.html">incorporate()</a></code> as the final call in this workflow.</p>
 </div>
+<div id="helpful-pointblank-functions-that-work-exceedingly-well-with-info_snippet" class="section level1">
+<h1 class="hasAnchor">
+<a href="#helpful-pointblank-functions-that-work-exceedingly-well-with-info_snippet" class="anchor"></a>Helpful <strong>pointblank</strong> Functions that Work Exceedingly Well with <code>info_snippet()</code>
+</h1>
+<p>There are a few functions available in <strong>pointblank</strong> that make it much easier to get commonly-used text snippets. All of them begin with the <code>snip_</code> prefix and they are:</p>
+<ul>
+<li>
+<code><a href="../reference/snip_list.html">snip_list()</a></code>: Gets a list of column categories</li>
+<li>
+<code><a href="../reference/snip_lowest.html">snip_lowest()</a></code>: Gets the lowest value from a column</li>
+<li>
+<code><a href="../reference/snip_highest.html">snip_highest()</a></code>: Gets the highest value from a column</li>
+</ul>
+<p>Each of these functions can be used directly as a <code>fn</code> value and we don’t have to specify the table since its assumed that the target table is where we’ll be snipping data from. Let’s have a look at each of these in action.</p>
+<div id="the-snip_list-function" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-snip_list-function" class="anchor"></a>The <code>snip_list()</code> Function</h2>
+<p>When describing some aspect of the target table, we may want to extract some values from a column and include them as a piece of info text. We’d want the values to be nicely formatted as a list (with commas) and we’d probably prefer that this be constrained to a certain size (so as to not potentially generate massive amounts of text). This can be efficiently done with <code><a href="../reference/snip_list.html">snip_list()</a></code>. Let’s experiment with the combination of <code><a href="../reference/snip_list.html">snip_list()</a></code> and <code><a href="../reference/info_snippet.html">info_snippet()</a></code>, extending the <strong>palmerpenguins</strong> example from the <a href="../articles/INFO-I.html"><em>Intro to Information Management</em></a> article.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
+    read_fn <span class="op">=</span> <span class="op">~</span> <span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html">penguins</a></span>,
+    tbl_name <span class="op">=</span> <span class="st">"penguins"</span>,
+    label <span class="op">=</span> <span class="st">"The `penguins` dataset from the **palmerpenguins** 📦."</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"species"</span>,
+    `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting penguin species ({species_snippet})."</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"island"</span>,
+    `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting island in Palmer Archipelago, Antarctica
+    ({island_snippet})."</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span>
+    snippet_name <span class="op">=</span> <span class="st">"species_snippet"</span>,
+    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_list.html">snip_list</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"species"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span>
+    snippet_name <span class="op">=</span> <span class="st">"island_snippet"</span>,
+    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_list.html">snip_list</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"island"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">informant_pp</span></code></pre></div>
+<div style="text-align: center;">
+<img src="https://silly-jackson-b3dec8.netlify.app/informant_report_11.png" width="80%">
+</div>
+<p align="center">
+This is an excerpt of the complete report, showing just the header and part of the <strong>COLUMNS</strong> section.
+</p>
+<p><br></p>
+<p>This seemed to work out quite well. No need for determining what these strings are and then hardcoding them to the <em>info text</em>, <code><a href="../reference/snip_list.html">snip_list()</a></code> did all the work here.</p>
+<p>This also works for numeric values. Let’s use <code><a href="../reference/snip_list.html">snip_list()</a></code> to provide a text snippet based on values in the <code>year</code> column (which is an <code>integer</code> column):</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span>
+  <span class="va">informant_pp</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"year"</span>,
+    `ℹ️` <span class="op">=</span> <span class="st">"The study year ({year_snippet})."</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span>
+    snippet_name <span class="op">=</span> <span class="st">"year_snippet"</span>,
+    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_list.html">snip_list</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">informant_pp</span></code></pre></div>
+<div style="text-align: center;">
+<img src="https://silly-jackson-b3dec8.netlify.app/informant_report_12.png" width="80%">
+</div>
+<p align="center">
+This is an excerpt of the complete report, showing just the bottom of the <strong>COLUMNS</strong> section and the footer.
+</p>
+<p><br></p>
+<p>Again, no issues with the formatting and display of values. We got the <em>info text</em> <code>"The study year ("2007", "2008", and "2009" )."</code> for our efforts here and it saved us from having to determine this, plus, should the data be updated with new <code>year</code> values, that will be reflected in this info text upon using <code><a href="../reference/incorporate.html">incorporate()</a></code>. Refreshed <em>info text</em> really provides huge benefits, especially when the data changes a lot (e.g., database tables).</p>
+</div>
+<div id="the-snip_lowest-and-snip_highest-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-snip_lowest-and-snip_highest-functions" class="anchor"></a>The <code>snip_lowest()</code> and <code>snip_highest()</code> Functions</h2>
+<p>We can get the lowest and highest values from a column and inject those formatted values into some <em>info_text</em>. Let’s do that for some of the measured values in the <code>penguins</code> dataset with <code><a href="../reference/snip_lowest.html">snip_lowest()</a></code> and <code><a href="../reference/snip_highest.html">snip_highest()</a></code>.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span>
+  <span class="va">informant_pp</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"bill_length_mm"</span>,
+    `ℹ️` <span class="op">=</span> <span class="st">"A number denoting bill length"</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"bill_depth_mm"</span>,
+    `ℹ️` <span class="op">=</span> <span class="st">"A number denoting bill depth (in the range of
+    {min_depth} to {max_depth} millimeters)."</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"flipper_length_mm"</span>,
+    `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting flipper length"</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches</a></span><span class="op">(</span><span class="st">"length"</span><span class="op">)</span>,
+    `ℹ️` <span class="op">=</span> <span class="st">"(in units of millimeters)."</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"flipper_length_mm"</span>,
+    `ℹ️` <span class="op">=</span> <span class="st">"Largest observed is {largest_flipper_length} mm."</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span>
+    snippet_name <span class="op">=</span> <span class="st">"min_depth"</span>,
+    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_lowest.html">snip_lowest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"bill_depth_mm"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span>
+    snippet_name <span class="op">=</span> <span class="st">"max_depth"</span>,
+    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_highest.html">snip_highest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"bill_depth_mm"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_snippet.html">info_snippet</a></span><span class="op">(</span>
+    snippet_name <span class="op">=</span> <span class="st">"largest_flipper_length"</span>,
+    fn <span class="op">=</span> <span class="fu"><a href="../reference/snip_highest.html">snip_highest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"flipper_length_mm"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">informant_pp</span></code></pre></div>
+<div style="text-align: center;">
+<img src="https://silly-jackson-b3dec8.netlify.app/informant_report_13.png" width="80%">
+</div>
+<p><br></p>
+<p>We can see from the report output that we can creatively use the lowest and highest values obtained by <code><a href="../reference/snip_lowest.html">snip_lowest()</a></code> and <code><a href="../reference/snip_highest.html">snip_highest()</a></code> to specify a range or simply show some maximum value. While the ordering of the <code><a href="../reference/info_columns.html">info_columns()</a></code> calls in the example affects the overall layout of the text (through the text appending behavior), the placement of <code><a href="../reference/info_snippet.html">info_snippet()</a></code> calls <em>does not</em> matter. And, again, we must use <code><a href="../reference/incorporate.html">incorporate()</a></code> to update all of the text snippets and render them in their appropriate locations (inside each <code>{&lt;snippet_name&gt;}</code>).</p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

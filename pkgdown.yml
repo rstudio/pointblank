@@ -3,6 +3,7 @@ pkgdown: 1.6.1.9000
 pkgdown_sha: 6094ac3dd80a1f3f1d4e2f47d0ed4716d51362b0
 articles:
   INFO-1: INFO-1.html
+  INFO-2: INFO-2.html
   VALID-I: VALID-I.html
   VALID-II: VALID-II.html
   VALID-III: VALID-III.html
@@ -10,5 +11,5 @@ articles:
   VALID-V: VALID-V.html
   VALID-VI: VALID-VI.html
   validation_workflows: validation_workflows.html
-last_built: 2020-11-13T05:12Z
+last_built: 2020-11-13T07:28Z
 

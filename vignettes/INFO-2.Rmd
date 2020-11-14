@@ -7,7 +7,7 @@ output: html_document
 library(pointblank)
 ```
 
-In the [*Intro to Information Management*](../articles/INFO-I.html) article, we learned all about how to synthesize information on a table, giving us a useful report that can be published and widely shared. We used a **pointblank** *informant* with a set of information functions to generate *info text* and put that text into the appropriate report sections. We're going to take this a few steps further and look into some more functionality makes *info text* more dynamic and also include a finalizing step in this workflow that accounts for evolving data. 
+In the [*Intro to Information Management*](../articles/INFO-1.html) article, we learned all about how to synthesize information on a table, giving us a useful report that can be published and widely shared. We used a **pointblank** *informant* with a set of information functions to generate *info text* and put that text into the appropriate report sections. We're going to take this a few steps further and look into some more functionality makes *info text* more dynamic and also include a finalizing step in this workflow that accounts for evolving data. 
 
 # Getting Snippets of Useful Text With the `info_snippet()` Function
 

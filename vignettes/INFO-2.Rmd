@@ -17,7 +17,7 @@ A great source of information about the table can be the table itself. Suppose y
 small_table
 ```
 
-If you wanted the mean value of data in column `d` rounded to one decimal place, one such we could do it is with this expression:
+If you wanted the mean value of data in column `d` rounded to one decimal place, one such way we could do it is with this expression:
 
 ```{r}
 small_table %>% .$d %>% mean() %>% round(1)

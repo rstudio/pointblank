@@ -142,7 +142,7 @@
 ## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
 ## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
 ## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high</code></pre>
-<p>If you wanted the mean value of data in column <code>d</code> rounded to one decimal place, one such we could do it is with this expression:</p>
+<p>If you wanted the mean value of data in column <code>d</code> rounded to one decimal place, one such way we could do it is with this expression:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">small_table</span> <span class="op">%&gt;%</span> <span class="va">.</span><span class="op">$</span><span class="va">d</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 2304.7</code></pre>

@@ -224,4 +224,4 @@ What other types of information go well in these separate sections? Some ideas a
 - links to other information artifacts that pertain to the table
 - information to do with the report itself (how meta!); this might include things like the update history, persons responsible, instructions on how to contribute, etc.
 
-Really, the sky is the limit here! We can incorporate a great deal of useful information here and use this process to generate reports on all of the important tables within an organization.
+Really, the sky is the limit here! We can incorporate a great deal of useful information here and use this process to generate reports on all of the important tables within an organization. But there's more that can be done, and to learn about that you have to go on the the next phase (the [*Advanced Information Management*](../articles/INFO-2.html) article). You'll want to go all the way now: total transformation. Do you think you're ready? The aforelinked article will show you how.

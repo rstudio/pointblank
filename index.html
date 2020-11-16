@@ -252,11 +252,10 @@
 <p>Table information can be synthesized in an <em>information management</em> workflow, giving us a snapshot of a data table we care to collect information on. The <strong>pointblank</strong> <em>informant</em> is fed a series of information functions to define bits of information about a table. This info text can pertain to individual columns, the table as a whole, and whatever additional information makes sense for your organization. We can even glean little snippets of information from the target table and mix them into the info text at will.</p>
 <p>Here is an example of how to use <strong>pointblank</strong> to incorporate pieces of info text into an <em>informant</em> object.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co"># Create a pointblank `informant` object, with the</span>
-<span class="co"># tibble as the target table. Use three information</span>
-<span class="co"># functions, then, `incorporate()`. The informant</span>
-<span class="co"># will then show you information about the tibble</span>
+<code class="sourceCode R"><span class="co"># Create a pointblank `informant` object, with the</span>
+<span class="co"># tibble as the target table. Use a few information</span>
+<span class="co"># functions and end with `incorporate()`. The informant</span>
+<span class="co"># will then show you information about the tibble.</span>
 <span class="va">informant</span> <span class="op">&lt;-</span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
     a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="cn">NA</span>, <span class="fl">7</span><span class="op">)</span>,
@@ -266,22 +265,41 @@
     label <span class="op">=</span> <span class="st">"A very *simple* example."</span>,
     tbl_name <span class="op">=</span> <span class="st">"example_tbl"</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>description <span class="op">=</span> <span class="st">"This two-column table is nothing all that
-               interesting, but, it's fine for examples on **GitHub**
-               `README` pages. Column names are `a` and `b`. (COOL) (STUFF)"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span><span class="st">"a"</span>, info <span class="op">=</span> <span class="st">"This column has an `NA` value. Watch out!"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span><span class="st">"a"</span>, info <span class="op">=</span> <span class="st">"Mean value is `{a_mean}`."</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span><span class="st">"b"</span>, info <span class="op">=</span> <span class="st">"Like column `a`. The lowest value is `{b_lowest}`."</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span><span class="st">"b"</span>, info <span class="op">=</span> <span class="st">"The highest value is `{b_highest}`."</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/info_snippet.html">info_snippet</a></span><span class="op">(</span><span class="st">"a_mean"</span>, fn <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op">%&gt;%</span> <span class="va">.</span><span class="op">$</span><span class="va">a</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/info_snippet.html">info_snippet</a></span><span class="op">(</span><span class="st">"b_lowest"</span>, fn <span class="op">=</span> <span class="fu"><a href="reference/snip_lowest.html">snip_lowest</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/info_snippet.html">info_snippet</a></span><span class="op">(</span><span class="st">"b_highest"</span>, fn <span class="op">=</span> <span class="fu"><a href="reference/snip_highest.html">snip_highest</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/info_section.html">info_section</a></span><span class="op">(</span><span class="st">"further information"</span>, 
-               `examples and documentation` <span class="op">=</span> <span class="st">"Examples for how to use the
-               `info_*()` functions (and many more) are available at the
-               [**pointblank** site](https://rich-iannone.github.io/pointblank/)."</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>
+    description <span class="op">=</span> <span class="st">"This two-column table is nothing all that
+    interesting, but, it's fine for examples on **GitHub**
+    `README` pages. Column names are `a` and `b`. ((Cool stuff))"</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"a"</span>,
+    info <span class="op">=</span> <span class="st">"This column has an `NA` value. [[Watch out!]]&lt;&lt;color: red;&gt;&gt;"</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"a"</span>,
+    info <span class="op">=</span> <span class="st">"Mean value is `{a_mean}`."</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"b"</span>,
+    info <span class="op">=</span> <span class="st">"Like column `a`. The lowest value is `{b_lowest}`."</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="st">"b"</span>,
+    info <span class="op">=</span> <span class="st">"The highest value is `{b_highest}`."</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_snippet.html">info_snippet</a></span><span class="op">(</span>
+    snippet_name <span class="op">=</span> <span class="st">"a_mean"</span>,
+    fn <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op">%&gt;%</span> <span class="va">.</span><span class="op">$</span><span class="va">a</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_snippet.html">info_snippet</a></span><span class="op">(</span>snippet_name <span class="op">=</span> <span class="st">"b_lowest"</span>, fn <span class="op">=</span> <span class="fu"><a href="reference/snip_lowest.html">snip_lowest</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_snippet.html">info_snippet</a></span><span class="op">(</span>snippet_name <span class="op">=</span> <span class="st">"b_highest"</span>, fn <span class="op">=</span> <span class="fu"><a href="reference/snip_highest.html">snip_highest</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/info_section.html">info_section</a></span><span class="op">(</span>
+    section_name <span class="op">=</span> <span class="st">"further information"</span>, 
+    `examples and documentation` <span class="op">=</span> <span class="st">"Examples for how to use the
+    `info_*()` functions (and many more) are available at the
+    [**pointblank** site](https://rich-iannone.github.io/pointblank/)."</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>By printing the <em>informant</em> we get the table information report!</p>
+<p>By printing the <em>informant</em> we get the table information report.</p>
 <p><img src="reference/figures/informant_report.png"></p>
 <p>Here is an information report for the <code>intendo::intendo_revenue</code> table.</p>
 <p><a href="https://rpubs.com/rich_i/info_revenue_postgres"><img src="https://img.shields.io/static/v1?label=Information%20Report&amp;message=postgres&amp;color=466288" alt="postgres"></a></p>

@@ -247,11 +247,10 @@ Here is an example of how to use **pointblank** to incorporate pieces of info
 text into an *informant* object.
 
 ``` r
-
 # Create a pointblank `informant` object, with the
-# tibble as the target table. Use three information
-# functions, then, `incorporate()`. The informant
-# will then show you information about the tibble
+# tibble as the target table. Use a few information
+# functions and end with `incorporate()`. The informant
+# will then show you information about the tibble.
 informant <- 
   dplyr::tibble(
     a = c(5, 7, 6, 5, NA, 7),
@@ -261,24 +260,43 @@ informant <-
     label = "A very *simple* example.",
     tbl_name = "example_tbl"
   ) %>%
-  info_tabular(description = "This two-column table is nothing all that
-               interesting, but, it's fine for examples on **GitHub**
-               `README` pages. Column names are `a` and `b`. (COOL) (STUFF)") %>%
-  info_columns("a", info = "This column has an `NA` value. Watch out!") %>%
-  info_columns("a", info = "Mean value is `{a_mean}`.") %>%
-  info_columns("b", info = "Like column `a`. The lowest value is `{b_lowest}`.") %>%
-  info_columns("b", info = "The highest value is `{b_highest}`.") %>%
-  info_snippet("a_mean", fn = ~ . %>% .$a %>% mean(na.rm = TRUE) %>% round(2)) %>%
-  info_snippet("b_lowest", fn = snip_lowest("b")) %>%
-  info_snippet("b_highest", fn = snip_highest("b")) %>%
-  info_section("further information", 
-               `examples and documentation` = "Examples for how to use the
-               `info_*()` functions (and many more) are available at the
-               [**pointblank** site](https://rich-iannone.github.io/pointblank/).") %>%
+  info_tabular(
+    description = "This two-column table is nothing all that
+    interesting, but, it's fine for examples on **GitHub**
+    `README` pages. Column names are `a` and `b`. ((Cool stuff))"
+  ) %>%
+  info_columns(
+    columns = "a",
+    info = "This column has an `NA` value. [[Watch out!]]<<color: red;>>"
+  ) %>%
+  info_columns(
+    columns = "a",
+    info = "Mean value is `{a_mean}`."
+  ) %>%
+  info_columns(
+    columns = "b",
+    info = "Like column `a`. The lowest value is `{b_lowest}`."
+  ) %>%
+  info_columns(
+    columns = "b",
+    info = "The highest value is `{b_highest}`."
+  ) %>%
+  info_snippet(
+    snippet_name = "a_mean",
+    fn = ~ . %>% .$a %>% mean(na.rm = TRUE) %>% round(2)
+  ) %>%
+  info_snippet(snippet_name = "b_lowest", fn = snip_lowest("b")) %>%
+  info_snippet(snippet_name = "b_highest", fn = snip_highest("b")) %>%
+  info_section(
+    section_name = "further information", 
+    `examples and documentation` = "Examples for how to use the
+    `info_*()` functions (and many more) are available at the
+    [**pointblank** site](https://rich-iannone.github.io/pointblank/)."
+  ) %>%
   incorporate()
 ```
 
-By printing the *informant* we get the table information report!
+By printing the *informant* we get the table information report.
 
 <img src="man/figures/informant_report.png">
 

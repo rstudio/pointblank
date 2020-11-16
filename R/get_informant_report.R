@@ -690,8 +690,8 @@ title_text_md <- function(item,
           
           re <- 
             paste0(
-              "(?:\\G(?!^)|", left,")[^",
-              right, "]*?\\K", what ,"(?=[^",
+              "(?:\\G(?!^)|", left, ")[^",
+              right, "]*?\\K", what, "(?=[^",
               right, "]*", right, ")"
             )
           

@@ -88,7 +88,7 @@ get_informant_report <- function(informant,
     # Set the `locale` to the `lang` value if `locale` isn't set
     if (is.null(locale)) locale <- lang
   }
-
+  
   if ("metadata_rev" %in% names(informant)) {
     y <- informant$metadata_rev
   } else {
@@ -107,7 +107,7 @@ get_informant_report <- function(informant,
   meta_rows <- NULL
   
   y_names <- names(y)
-
+  
   priority_items <- c("table",  "columns")
   
   names_ordered <- 
@@ -330,7 +330,7 @@ get_informant_report <- function(informant,
     }
   }
   
-
+  
   # Modify `tbl` so that `group` values correspond to the set `lang`
   tbl <-
     tbl %>%
@@ -461,7 +461,7 @@ get_informant_report <- function(informant,
       title = get_lsv(text = c(
         "informant_report",
         "pointblank_information_title_text"
-        ))[[lang]],
+      ))[[lang]],
       subtitle = gt::md(combined_subtitle)
     ) %>%
     gt::tab_source_note(source_note = gt::md(table_time)) %>%
@@ -581,10 +581,15 @@ get_informant_report <- function(informant,
             margin-right: 4px;
           }
           #pb_information .pb_label {
-            border: solid 1px gray;
+            border: solid 1px;
+            border-color: inherit;
             padding: 0px 3px 0px 3px;
-            margin-left: 2px;
-            margin-right: 2px;
+          }
+          #pb_information .pb_label_rounded {
+            border: solid 1px;
+            border-color: inherit;
+            border-radius: 8px;
+            padding: 0px 8px 0px 8px;
           }
           #pb_information .pb_sub_label {
             font-size: smaller;
@@ -614,6 +619,7 @@ add_to_tbl <- function(tbl, item, group) {
   dplyr::bind_rows(tbl, dplyr::tibble(group = group, item = item))
 }
 
+# Process titles and text
 title_text_md <- function(item,
                           use_title = TRUE,
                           title_level = 4,
@@ -626,7 +632,8 @@ title_text_md <- function(item,
   # Process item with text transformers
   for (i in seq_along(item)) {
     
-    # Dates
+    # Dates are automatically set in the `pb_date` class if they can
+    # be parsed as ISO-8601 dates 
     if (grepl("\\([1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]\\)", item[i])) {
       
       for (j in 1:10) {
@@ -639,16 +646,139 @@ title_text_md <- function(item,
       }
     }
     
-    # Labels
-    if (grepl("\\([A-Z][A-Z_]{1,}[A-Z]\\)", item[i])) {
+    # Rounded labels are generated when there is text surrounded by `((( )))` 
+    if (grepl("\\(\\(\\(.*?\\)\\)\\)", item[i])) {
       
       for (j in 1:10) {
         item[i] <-
           gsub(
-            "(.*)\\(([A-Z][A-Z_]{1,}[A-Z])\\)(.*)",
+            "(.*)\\(\\(\\((.*?)\\)\\)\\)(.*)",
+            "\\1<span class=\"pb_label_rounded\">\\2</span>\\3",
+            item[i]
+          )
+      }
+    }
+    
+    # Square labels are generated when there is text surrounded by `(( ))` 
+    if (grepl("\\(\\(.*?\\)\\)", item[i])) {
+      
+      for (j in 1:10) {
+        item[i] <-
+          gsub(
+            "(.*)\\(\\((.*?)\\)\\)(.*)",
             "\\1<span class=\"pb_label\">\\2</span>\\3",
             item[i]
           )
+      }
+    }
+
+    # Constructions with style and class declarations when there is
+    # text in this form: `[[ text ]]<< classes, styles >>` 
+    if (grepl("\\[\\[.*?\\]\\](\\n?)<<.*?>>", item[i])) {
+
+      # Strip any `\n` characters
+      item[i] <- item[i] %>% gsub("\\n", "", .)
+      
+      for (j in 1:10) {
+
+        text_content <-
+          item[i] %>%
+          gsub("(.*)(\\[\\[.*?\\]\\]<<.*?>>)(.*)", "\\2", .) %>%
+          gsub("\\[\\[(.*?)\\]\\]<<(.*?)>>", "\\1", .)
+        
+        replace_within_anchor_chars <- function(x, left, right, what, repl) {
+          
+          re <- 
+            paste0(
+              "(?:\\G(?!^)|", left,")[^",
+              right, "]*?\\K", what ,"(?=[^",
+              right, "]*", right, ")"
+            )
+          
+          gsub(re, repl, x, perl = TRUE)
+        }
+        
+        tag_content <-
+          item[i] %>%
+          gsub("(.*)(\\[\\[.*?\\]\\]<<.*?>>)(.*)", "\\2", .) %>%
+          gsub("\\[\\[(.*?)\\]\\]<<(.*?)>>", "\\2", .) %>%
+          gsub(":\\s+?", ":", .) %>%
+          gsub(";\\s+?", ";", .) %>%
+          replace_within_anchor_chars(
+            left = ":", right = ";", what = "\\s+", repl = "&nbsp;") %>%
+          strsplit(" ")
+        
+        id_values <-
+          vapply(
+            tag_content,
+            USE.NAMES = FALSE,
+            FUN.VALUE = character(1),
+            FUN = function(x) {
+              
+              if (all(!grepl("^\\#", x))) {
+                return("")
+              }
+              
+              paste0(
+                "id=\"",
+                paste(x[grepl("^\\#", x)], collapse = " "),
+                "\""
+              )
+            }
+          )
+        
+        class_values <-
+          vapply(
+            tag_content,
+            USE.NAMES = FALSE,
+            FUN.VALUE = character(1),
+            FUN = function(x) {
+              
+              if (all(!grepl("^\\.", x))) {
+                return("")
+              }
+              
+              paste0(
+                "class=\"",
+                paste(x[grepl("^\\.", x)], collapse = " "),
+                "\""
+              )
+            }
+          )
+        
+        style_values <-
+          vapply(
+            tag_content,
+            USE.NAMES = FALSE,
+            FUN.VALUE = character(1),
+            FUN = function(x) {
+              
+              if (all(!(grepl(":", x) & grepl(";$", x)))) {
+                return("")
+              }
+              
+              styles_idx <- which(grepl(":", x) & grepl(";$", x))
+              
+              paste0(
+                "style=\"",
+                paste(gsub("&nbsp;", " ", x[styles_idx]), collapse = " "),
+                "\""
+              )
+            }
+          )
+        
+        item[i] <-
+          gsub(
+            "(.*)(\\[\\[.*?\\]\\]<<.*?>>)(.*)",
+            paste0(
+              "\\1<",
+              paste(
+                "span", id_values, class_values, style_values, collapse = " "
+              ),
+              ">", text_content, "</span>\\3"
+            ),
+            item[i]
+          ) 
       }
     }
   }

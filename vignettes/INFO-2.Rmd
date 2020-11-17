@@ -340,3 +340,63 @@ informant_pp
 <div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_15.png" width=80%></div>
 <p align="center">This is an excerpt of the complete report, showing just the <strong>COLUMNS</strong> and <strong>ADDITIONAL NOTES</strong> sections.</p>
 <br>
+
+## Get Stylin'
+
+If you want to use CSS styles on spans of *info text*, it's possible with the following construction:
+
+`[[ info text ]]<< CSS style rules >>`
+
+It's important to ensure that each CSS rule is concluded with a `;` character in this syntax. Styling the word `factor` inside a piece of *info text* might look like this:
+
+`This is a [[factor]]<<color: red; font-weight: 300;>> value.`
+
+Where the result looks something like this:
+
+<div style="text-align: center;"><img src="images/info_text_styled.png" width=40%></div>
+<br>
+
+There are many CSS style rules that can be used. Here's a sample of a few useful ones:
+
+- `color: <a color value>;` (text color)
+- `background-color: <a color value>;` (the text's background color)
+- `text-decoration: (overline | line-through | underline);`
+- `text-transform: (uppercase | lowercase | capitalize);`
+- `letter-spacing: <a +/- length value>;`
+- `word-spacing: <a +/- length value>;`
+- `font-style: (normal | italic | oblique);`
+- `font-weight: (normal | bold | 100-900);`
+- `font-variant: (normal | bold | 100-900);`
+- `border: <a color value> <a length value> (solid | dashed | dotted);`
+
+Continuing with our **palmerpenguins** reporting, we'll add some more *info text* and take the opportunity to add CSS style rules using the `[[ ]]<< >>` syntax.
+
+```{r eval=FALSE}
+informant_pp <-
+  informant_pp %>%
+  info_columns(
+    columns = vars(sex), 
+    `ℹ️` = "A [[factor]]<<text-decoration: underline;>> 
+    denoting penguin sex (female or male)."
+  ) %>%
+  info_section(
+    section_name = "additional notes",
+    keywords = "
+    [[((penguins))]]
+    <<border-color: platinum; background-color: #F0F8FF;>>
+     [[((Antarctica))]]
+    <<border-color: #800080; background-color: #F2F2F2;>>
+     [[((measurements))]]
+    <<border-color: #FFB3B3; background-color: #FFFEF4;>>
+    "
+  ) %>%
+  incorporate()
+
+informant_pp
+```
+
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_16.png" width=80%></div>
+<p align="center">This is an excerpt of the complete report, showing just the bottom of the <strong>COLUMNS</strong> section, the <strong>ADDITIONAL NOTES</strong> section, and the footer.</p>
+<br>
+
+With the above `info_columns()` and `info_section()` function calls, we are able to style a single word (with an underline) and even style labels (changing the border and background colors). The syntax is somewhat forgiving, allowing for a line break between `]]` and `<<` so that lines of markup don't have to be overly long.

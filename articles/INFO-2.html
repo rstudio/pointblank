@@ -384,6 +384,80 @@ This is an excerpt of the complete report, showing just the bottom of the <stron
 <p>We can see from the report output that we can creatively use the lowest and highest values obtained by <code><a href="../reference/snip_lowest.html">snip_lowest()</a></code> and <code><a href="../reference/snip_highest.html">snip_highest()</a></code> to specify a range or simply show some maximum value. While the ordering of the <code><a href="../reference/info_columns.html">info_columns()</a></code> calls in the example affects the overall layout of the text (through the text appending behavior), the placement of <code><a href="../reference/info_snippet.html">info_snippet()</a></code> calls <em>does not</em> matter. And, again, we must use <code><a href="../reference/incorporate.html">incorporate()</a></code> to update all of the text snippets and render them in their appropriate locations (inside each <code>{&lt;snippet_name&gt;}</code>).</p>
 </div>
 </div>
+<div id="text-tricks" class="section level1">
+<h1 class="hasAnchor">
+<a href="#text-tricks" class="anchor"></a><em>Text Tricks</em>
+</h1>
+<p>While your <em>info text</em> can be jazzed up with Markdown, there are a few extra tricks that make authoring the text a bit more pleasurable. Once you know about these <em>text tricks</em> you’ll be able to express information in many more interesting ways.</p>
+<div id="links-and-dates" class="section level2">
+<h2 class="hasAnchor">
+<a href="#links-and-dates" class="anchor"></a>Links and Dates</h2>
+<p>If you have links in your text, <strong>pointblank</strong> will try to identify them and style them nicely. This amounts to using a pleasing, light-blue color and underlines that appear on hover. It doesn’t take much to style links but it does require <em>something</em>. So, Markdown links written as <code>&lt; link url &gt;</code> or <code>[ link text ]( link url )</code> will both get the transformation treatment.</p>
+<p>Sometimes you want dates to stand out from text. Try enclosing a date expressed in the ISO-8601 standard with parentheses, like this: <code>(2004-12-01)</code>. What will happen is that date will be set in a monospaced variation of the reporting font, and, it will be underlined in a striking shade of purple.</p>
+<p>Here’s how we might use these features while otherwise adding more information to the <strong>palmerpenguins</strong> reporting:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span>
+  <span class="va">informant_pp</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>
+    `R dataset` <span class="op">=</span> <span class="st">"The goal of `palmerpenguins` is to provide a great dataset
+    for data exploration &amp; visualization, as an alternative to `iris`. The
+    latest CRAN release was published on (2020-07-25)."</span>,
+    `data collection` <span class="op">=</span> <span class="st">"Data were collected and made available by Dr. Kristen
+    Gorman and the [Palmer Station, Antarctica LTER](https://pal.lternet.edu),
+    a member of the [Long Term Ecological Research Network](https://lternet.edu)."</span>,
+    citation <span class="op">=</span> <span class="st">"Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer 
+    Archipelago (Antarctica) penguin data. R package version 0.1.0.
+    &lt;https://allisonhorst.github.io/palmerpenguins/&gt;. 
+    doi: 10.5281/zenodo.3960218."</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">informant_pp</span></code></pre></div>
+<div style="text-align: center;">
+<img src="https://silly-jackson-b3dec8.netlify.app/informant_report_14.png" width="80%">
+</div>
+<p align="center">
+This is an excerpt of the complete report, showing just the <strong>TABLE</strong> section and the header.
+</p>
+<p><br></p>
+</div>
+<div id="labels" class="section level2">
+<h2 class="hasAnchor">
+<a href="#labels" class="anchor"></a>Labels</h2>
+<p>We can style portions of text as labels. These will help you call out important attributes in short form and may eliminate the need for oft-repeated statements. You might apply to labels to signify priority, category, or any other information you find useful. To do this we have two options</p>
+<ol style="list-style-type: decimal">
+<li>Use double parentheses around text to capture it in a rectangular label: <code>((label text))</code>
+</li>
+<li>Use triple parentheses to capture text into a rounded-rectangular label: <code>(((label text)))</code>
+</li>
+</ol>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span>
+  <span class="va">informant_pp</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">body_mass_g</span><span class="op">)</span>, 
+    `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting body mass."</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
+    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"mm"</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"g"</span><span class="op">)</span><span class="op">)</span>,
+    `ℹ️` <span class="op">=</span> <span class="st">"((measured))"</span>    
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/info_section.html">info_section</a></span><span class="op">(</span>
+    section_name <span class="op">=</span> <span class="st">"additional notes"</span>,
+    `data types` <span class="op">=</span> <span class="st">"(((factor))) (((numeric))) (((integer)))"</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">informant_pp</span></code></pre></div>
+<div style="text-align: center;">
+<img src="https://silly-jackson-b3dec8.netlify.app/informant_report_15.png" width="80%">
+</div>
+<p align="center">
+This is an excerpt of the complete report, showing just the <strong>COLUMNS</strong> and <strong>ADDITIONAL NOTES</strong> sections.
+</p>
+<p><br></p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

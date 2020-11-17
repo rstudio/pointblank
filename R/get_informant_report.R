@@ -633,7 +633,8 @@ title_text_md <- function(item,
   for (i in seq_along(item)) {
     
     # Dates are automatically set in the `pb_date` class if they can
-    # be parsed as ISO-8601 dates 
+    # be parsed as ISO-8601 dates, and, if the date is enclosed in
+    # parentheses
     if (grepl("\\([1-2][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]\\)", item[i])) {
       
       for (j in 1:10) {

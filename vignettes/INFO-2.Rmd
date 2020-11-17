@@ -273,3 +273,70 @@ informant_pp
 <br>
 
 We can see from the report output that we can creatively use the lowest and highest values obtained by `snip_lowest()` and `snip_highest()` to specify a range or simply show some maximum value. While the ordering of the `info_columns()` calls in the example affects the overall layout of the text (through the text appending behavior), the placement of `info_snippet()` calls *does not* matter. And, again, we must use `incorporate()` to update all of the text snippets and render them in their appropriate locations (inside each `{<snippet_name>}`).
+
+# *Text Tricks*
+
+While your *info text* can be jazzed up with Markdown, there are a few extra tricks that make authoring the text a bit more pleasurable. Once you know about these *text tricks* you'll be able to express information in many more interesting ways.
+
+## Links and Dates
+
+If you have links in your text, **pointblank** will try to identify them and style them nicely. This amounts to using a pleasing, light-blue color and underlines that appear on hover. It doesn't take much to style links but it does require *something*. So, Markdown links written as `< link url >` or `[ link text ]( link url )` will both get the transformation treatment.
+
+Sometimes you want dates to stand out from text. Try enclosing a date expressed in the ISO-8601 standard with parentheses, like this: `(2004-12-01)`. What will happen is that date will be set in a monospaced variation of the reporting font, and, it will be underlined in a striking shade of purple.
+
+Here's how we might use these features while otherwise adding more information to the **palmerpenguins** reporting:
+
+```{r eval=FALSE}
+informant_pp <-
+  informant_pp %>%
+  info_tabular(
+    `R dataset` = "The goal of `palmerpenguins` is to provide a great dataset
+    for data exploration & visualization, as an alternative to `iris`. The
+    latest CRAN release was published on (2020-07-25).",
+    `data collection` = "Data were collected and made available by Dr. Kristen
+    Gorman and the [Palmer Station, Antarctica LTER](https://pal.lternet.edu),
+    a member of the [Long Term Ecological Research Network](https://lternet.edu).",
+    citation = "Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer 
+    Archipelago (Antarctica) penguin data. R package version 0.1.0.
+    <https://allisonhorst.github.io/palmerpenguins/>. 
+    doi: 10.5281/zenodo.3960218."
+  ) %>%
+  incorporate()
+
+informant_pp
+```
+
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_14.png" width=80%></div>
+<p align="center">This is an excerpt of the complete report, showing just the <strong>TABLE</strong> section and the header.</p>
+<br>
+
+## Labels
+
+We can style portions of text as labels. These will help you call out important attributes in short form and may eliminate the need for oft-repeated statements. You might apply to labels to signify priority, category, or any other information you find useful. To do this we have two options
+
+1. Use double parentheses around text to capture it in a rectangular label: `((label text))`
+2. Use triple parentheses to capture text into a rounded-rectangular label: `(((label text)))`
+
+```{r eval=FALSE}
+informant_pp <-
+  informant_pp %>%
+  info_columns(
+    columns = vars(body_mass_g), 
+    `ℹ️` = "An integer denoting body mass."
+  ) %>%
+  info_columns(
+    columns = c(ends_with("mm"), ends_with("g")),
+    `ℹ️` = "((measured))"    
+  ) %>%
+  info_section(
+    section_name = "additional notes",
+    `data types` = "(((factor))) (((numeric))) (((integer)))"
+  ) %>%
+  incorporate()
+
+informant_pp
+```
+
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_15.png" width=80%></div>
+<p align="center">This is an excerpt of the complete report, showing just the <strong>COLUMNS</strong> and <strong>ADDITIONAL NOTES</strong> sections.</p>
+<br>

@@ -353,7 +353,7 @@ It's important to ensure that each CSS rule is concluded with a `;` character in
 
 Where the result looks something like this:
 
-<div style="text-align: center;"><img src="images/info_text_styled.png" width=40%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/info_text_styled.png" width=40%></div>
 <br>
 
 There are many CSS style rules that can be used. Here's a sample of a few useful ones:

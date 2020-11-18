@@ -26,7 +26,7 @@ read in the input data table with the \code{read_fn} argument (in which case,
 \code{tbl} is provided, this function will be invoked to obtain the data (i.e.,
 the \code{read_fn} takes priority). There are two ways to specify a \code{read_fn}:
 (1) using a function (e.g., \verb{function() \{ <table reading code> \}}) or, (2)
-with an R formula expression.}
+with an R formula expression (e.g., \verb{~ \{ <table reading code> \}}).}
 
 \item{tbl_name}{A optional name to assign to the input table object. If no
 value is provided, a name will be generated based on whatever information
@@ -45,9 +45,13 @@ is to be created with the \code{\link[=action_levels]{action_levels()}} helper f
 action levels list be used for a specific validation step, the default set
 specified here will be overridden.}
 
-\item{end_fns}{A list of functions that should be performed at the end of an
-interrogation.
-(e.g., \verb{~ \{ <table reading code> \}}).}
+\item{end_fns}{A list of function calls that should be performed at the end
+of an interrogation. Each function call should be in the form of a
+one-sided R formula expression, so overall this construction should be
+used: \verb{end_fns = list(~ <R statements>, ~ <R statements>, ...)}. An example
+of a function that can be sensibly used here is \code{\link[=email_blast]{email_blast()}}, where an
+email of the validation report is generated and sent based on sending
+condition.}
 
 \item{embed_report}{An option to embed a \strong{gt}-based validation report into
 the \code{ptblank_agent} object. If \code{FALSE} (the default) then the table object

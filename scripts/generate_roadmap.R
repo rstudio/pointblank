@@ -15,6 +15,7 @@ tbl <-
     sep = ",",
     remove = FALSE
   ) %>%
+  dplyr::mutate(type = ifelse(labels_name == "Release", "✈ Release", type)) %>%
   dplyr::filter(!grepl("Question", labels_name)) %>%
   dplyr::filter(!grepl("Help", labels_name)) %>%
   dplyr::filter(!grepl("Good", labels_name)) %>%
@@ -42,11 +43,13 @@ gt_tbl <-
   ) %>%
   tab_header(title = md("Upcoming Tasks and Milestones for **pointblank**")) %>%
   fmt_markdown(vars(title)) %>%
+  fmt_missing(vars(priority, difficulty, effort), missing_text = "") %>%
   data_color(
     columns = vars(priority, difficulty, effort),
     colors = scales::col_numeric(
       palette = c("#0e8a16", "#fbca04", "#d93f0b", "#c12e49"),
-      domain = c(1, 4)
+      domain = c(1, 4),
+      na.color = "#FFFFFF"
     ),
     alpha = 0.6,
     apply_to = "fill"
@@ -91,8 +94,41 @@ gt_tbl <-
       ifelse(x == "4", "♨︎", x)
     } 
   ) %>%
-  tab_style(style = "height: 50px", locations = cells_body())
-
+  text_transform(
+    locations = cells_body(columns = vars(priority)),
+    fn = function(x) {
+      ifelse(x == "4", "♨︎", x)
+    } 
+  ) %>%
+  tab_style(
+    style = "height: 50px",
+    locations = cells_body(columns = TRUE, rows = !grepl("Release", type))
+  ) %>%
+  tab_style(
+    style = "
+    height: 75px;
+    background: linear-gradient(180deg, #F5D6F8, #9DFEE5, #CEF5FB);
+    background-size: 100% 100%;
+    -webkit-animation: AnimationName 5s ease infinite;
+    -moz-animation: AnimationName 5s ease infinite;
+    -o-animation: AnimationName 5s ease infinite;
+    animation: AnimationName 5s ease infinite;",
+    locations = cells_body(
+      columns = vars(title, type, priority, difficulty, effort),
+      rows = grepl("Release", type)
+    )
+  ) %>%
+  tab_style(
+    style = cell_borders(
+      sides = c("left", "right"),
+      style = "solid",
+      weight = "0"
+    ),
+    locations = cells_body(
+      columns = vars(title, type, priority, difficulty, effort),
+      rows = grepl("Release", type)
+    )
+  )
 
 # Save image with `gtsave()` and obtain the image dimensions
 temp_file <- tempfile(fileext = ".png")
@@ -106,8 +142,9 @@ tbl_h <- ceiling(tbl_dim[2] / 2) + 5
 svg_object <-
   glue::glue(
     "<svg fill=\"none\" viewBox=\"0 0 {tbl_w} {tbl_h}\" width=\"{tbl_w}\" height=\"{tbl_h}\" xmlns=\"http://www.w3.org/2000/svg\">
-      <foreignObject width=\"100%\" height=\"100%\">
-      <div xmlns=\"http://www.w3.org/1999/xhtml\">
+
+     <foreignObject width=\"100%\" height=\"100%\">
+     <div xmlns=\"http://www.w3.org/1999/xhtml\">
     {gt::as_raw_html(gt_tbl)}
     </div>
     </foreignObject>
@@ -116,6 +153,17 @@ svg_object <-
   ) %>%
   as.character() %>%
   gsub("style>", ">", ., fixed = TRUE) %>%
-  gsub("<p>", "<p style='margin:0'>", ., fixed = TRUE)
+  gsub("<p>", "<p style='margin:0'>", ., fixed = TRUE) %>%
+  gsub(
+    "; width: 0px\">", 
+"; width: 0px; 
+@-webkit-keyframes AnimationName {0% {background-position:50% 0%} 50% {background-position:51% 100%} 100% {background-position:50% 0%}}
+@-moz-keyframes AnimationName {0% {background-position:50% 0%} 50% {background-position:51% 100%} 100% {background-position:50% 0%}}
+@-o-keyframes AnimationName {0% {background-position:50% 0%} 50% {background-position:51% 100%} 100% {background-position:50% 0%}}
+@keyframes AnimationName {0% {background-position:50% 0%} 50% {background-position:51% 100%} 100% {background-position:50% 0%}}
+\">
+",
+., fixed = TRUE)
+
 
 cat(svg_object, file = "./man/figures/pointblank-milestones.svg")

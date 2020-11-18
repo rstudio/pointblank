@@ -396,6 +396,4 @@ informant_pp
 <p align="center">This is an excerpt of the complete report, showing just the bottom of the <strong>COLUMNS</strong> section, the <strong>ADDITIONAL NOTES</strong> section, and the footer.</p>
 <br>
 
-With the above `info_columns()` and `info_section()` function calls, we are able to style a single word (with an underline) and even style labels (changing the border and background colors). The syntax is somewhat forgiving, allowing for a line break between `]]` and `<<` so that lines of markup don't have to be overly long.
-
-
+With the above `info_columns()` and `info_section()` function calls, we are able to style a single word (with an underline) and even style labels (changing the border and background colors). The syntax here is somewhat forgiving, allowing you to put line breaks between `]]` and `<<` and between style rules so that lines of markup don't have to be overly long.

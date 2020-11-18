@@ -60,7 +60,7 @@
 #'   `tbl` is provided, this function will be invoked to obtain the data (i.e.,
 #'   the `read_fn` takes priority). There are two ways to specify a `read_fn`:
 #'   (1) using a function (e.g., `function() { <table reading code> }`) or, (2)
-#'   with an R formula expression.
+#'   with an R formula expression (e.g., `~ { <table reading code> }`).
 #' @param tbl_name A optional name to assign to the input table object. If no
 #'   value is provided, a name will be generated based on whatever information
 #'   is available. This table name will be displayed in the header area of the
@@ -75,9 +75,13 @@
 #'   is to be created with the [action_levels()] helper function. Should an
 #'   action levels list be used for a specific validation step, the default set
 #'   specified here will be overridden.
-#' @param end_fns A list of functions that should be performed at the end of an
-#'   interrogation.
-#'   (e.g., `~ { <table reading code> }`).
+#' @param end_fns A list of function calls that should be performed at the end
+#'   of an interrogation. Each function call should be in the form of a
+#'   one-sided R formula expression, so overall this construction should be
+#'   used: `end_fns = list(~ <R statements>, ~ <R statements>, ...)`. An example
+#'   of a function that can be sensibly used here is [email_blast()], where an
+#'   email of the validation report is generated and sent based on sending
+#'   condition.
 #' @param embed_report An option to embed a **gt**-based validation report into
 #'   the `ptblank_agent` object. If `FALSE` (the default) then the table object
 #'   will be not generated and available with the *agent* upon returning from

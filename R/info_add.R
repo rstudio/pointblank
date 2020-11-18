@@ -25,11 +25,33 @@
 #' supplied table name (`name`) and table dimensions (as `_columns` and
 #' `_rows`). We can add more table-based properties with the `info_tabular()`
 #' function. By providing a series of named arguments (in the form
-#' `entry_name = "The information."`), we can add more information that makes
+#' `entry_name = "The *info text*."`), we can add more information that makes
 #' sense for describing the table as a whole.
 #' 
+#' The *info text* readily accepts Markdown formatting. Also, there are a few
+#' *Text Tricks* that are good to know. Markdown links written as `< link url >`
+#' or `[ link text ]( link url )` will get nicely-styled links. Any dates
+#' expressed in the ISO-8601 standard with parentheses, `"(2004-12-01)"`, will
+#' be styled with a font variation (monospaced) and underlined in purple. Spans
+#' of text can be converted to label text by using: (1) double parentheses
+#' around text for a rectangular label as in `((label text))`, or (2) triple
+#' parentheses around text for a rounded-rectangular label like `(((label
+#' text)))`. Finally, CSS styles can be applied to spans of *info text* with
+#' the following form:
+#' 
+#' `[[ info text ]]<< CSS style rules >>`
+#' 
+#' As an example of this in practice suppose you'd like to change the color of
+#' some text to red and make the font appear somewhat thinner. A variation on
+#' the following might be used:
+#' 
+#' `"This is a [[factor]]<<color: red; font-weight: 300;>> value."`
+#' 
 #' @param x An informant object of class `ptblank_informant`.
-#' @param ... Information entries as a series of named arguments.
+#' @param ... Information entries as a series of named arguments. The names
+#'   refer to subsection titles within the `TABLE` section and the RHS is the
+#'   *info text* (informational text that can be written as Markdown and further
+#'   styled with *Text Tricks*).
 #' 
 #' @return A `ptblank_informant` object.
 #' 
@@ -127,16 +149,37 @@ info_tabular <- function(x,
 #' and their types (as `_type`). Beyond that, it is useful to provide details
 #' about the nature of each column and we can do that with the `info_columns()`
 #' function. A single column (or multiple columns) is targeted, and then a
-#' series of named arguments (in the form 
-#' `entry_name = "The information."`) serves as additional
-#' information for the column or columns.
+#' series of named arguments (in the form `entry_name = "The *info text*."`)
+#' serves as additional information for the column or columns.
+#' 
+#' The *info text* readily accepts Markdown formatting. Also, there are a few
+#' *Text Tricks* that are good to know. Markdown links written as `< link url >`
+#' or `[ link text ]( link url )` will get nicely-styled links. Any dates
+#' expressed in the ISO-8601 standard with parentheses, `"(2004-12-01)"`, will
+#' be styled with a font variation (monospaced) and underlined in purple. Spans
+#' of text can be converted to label text by using: (1) double parentheses
+#' around text for a rectangular label as in `((label text))`, or (2) triple
+#' parentheses around text for a rounded-rectangular label like `(((label
+#' text)))`. Finally, CSS styles can be applied to spans of *info text* with
+#' the following form:
+#' 
+#' `[[ info text ]]<< CSS style rules >>`
+#' 
+#' As an example of this in practice suppose you'd like to change the color of
+#' some text to red and make the font appear somewhat thinner. A variation on
+#' the following might be used:
+#' 
+#' `"This is a [[factor]]<<color: red; font-weight: 300;>> value."`
 #' 
 #' @param x An informant object of class `ptblank_informant`.
 #' @param columns The column or set of columns to focus on. Can be defined as a
 #'   column name in quotes (e.g., `"<column_name>"`), one or more column names
 #'   in `vars()` (e.g., `vars(<column_name>)`), or with a select helper (e.g.,
 #'   `starts_with("date")`).
-#' @param ... Information entries as a series of named arguments.
+#' @param ... Information entries as a series of named arguments. The names
+#'   refer to subsection titles within `COLUMN` -> `<COLUMN_NAME>` and the RHS
+#'   contains the *info text* (informational text that can be written as
+#'   Markdown and further styled with *Text Tricks*).
 #' @param .add Should new text be added to existing text? This is `TRUE` by
 #'   default; setting to `FALSE` replaces any existing text for a property.
 #' 
@@ -264,13 +307,35 @@ info_columns <- function(x,
 #' add/modify info text for specific sections, the `info_section()`
 #' makes it possible to add sections of our own choosing and the information
 #' that make sense for those sections. Define a `section_name` and provide a
-#' series of named arguments (in the form `entry_name = "The information."`) to
+#' series of named arguments (in the form `entry_name = "The *info text*."`) to
 #' build the informational content for that section.
+#' 
+#' The *info text* readily accepts Markdown formatting. Also, there are a few
+#' *Text Tricks* that are good to know. Markdown links written as `< link url >`
+#' or `[ link text ]( link url )` will get nicely-styled links. Any dates
+#' expressed in the ISO-8601 standard with parentheses, `"(2004-12-01)"`, will
+#' be styled with a font variation (monospaced) and underlined in purple. Spans
+#' of text can be converted to label text by using: (1) double parentheses
+#' around text for a rectangular label as in `((label text))`, or (2) triple
+#' parentheses around text for a rounded-rectangular label like `(((label
+#' text)))`. Finally, CSS styles can be applied to spans of *info text* with
+#' the following form:
+#' 
+#' `[[ info text ]]<< CSS style rules >>`
+#' 
+#' As an example of this in practice suppose you'd like to change the color of
+#' some text to red and make the font appear somewhat thinner. A variation on
+#' the following might be used:
+#' 
+#' `"This is a [[factor]]<<color: red; font-weight: 300;>> value."`
 #' 
 #' @param x An informant object of class `ptblank_informant`.
 #' @param section_name The name of the section for which this information
 #'   pertains.
-#' @param ... Information entries as a series of named arguments.
+#' @param ... Information entries as a series of named arguments. The names
+#'   refer to subsection titles within the section defined as `section_name` and
+#'   the RHS is the *info text* (informational text that can be written as
+#'   Markdown and further styled with *Text Tricks*).
 #' 
 #' @return A `ptblank_informant` object.
 #' 

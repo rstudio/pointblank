@@ -53,7 +53,7 @@ it has two starter sections: (1) 'table' and (2) 'columns'. The
 supplied table name (name) and table dimensions (as _columns and
 _rows). We can add more table-based properties with the info_tabular()
 function. By providing a series of named arguments (in the form
-entry_name = &quot;The information.&quot;), we can add more information that makes
+entry_name = &quot;The *info text*.&quot;), we can add more information that makes
 sense for describing the table as a whole." />
 <meta property="og:image" content="/logo.svg" />
 
@@ -170,7 +170,7 @@ it has two starter sections: (1) 'table' and (2) 'columns'. The
 supplied table name (<code>name</code>) and table dimensions (as <code>_columns</code> and
 <code>_rows</code>). We can add more table-based properties with the <code>info_tabular()</code>
 function. By providing a series of named arguments (in the form
-<code>entry_name = "The information."</code>), we can add more information that makes
+<code>entry_name = "The *info text*."</code>), we can add more information that makes
 sense for describing the table as a whole.</p>
     </div>
 
@@ -185,13 +185,32 @@ sense for describing the table as a whole.</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Information entries as a series of named arguments.</p></td>
+      <td><p>Information entries as a series of named arguments. The names
+refer to subsection titles within the <code>TABLE</code> section and the RHS is the
+<em>info text</em> (informational text that can be written as Markdown and further
+styled with <em>Text Tricks</em>).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>ptblank_informant</code> object.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <em>info text</em> readily accepts Markdown formatting. Also, there are a few
+<em>Text Tricks</em> that are good to know. Markdown links written as <code>&lt; link url &gt;</code>
+or <code>[ link text ]( link url )</code> will get nicely-styled links. Any dates
+expressed in the ISO-8601 standard with parentheses, <code>"(2004-12-01)"</code>, will
+be styled with a font variation (monospaced) and underlined in purple. Spans
+of text can be converted to label text by using: (1) double parentheses
+around text for a rectangular label as in <code>((label text))</code>, or (2) triple
+parentheses around text for a rounded-rectangular label like <code>(((label text)))</code>. Finally, CSS styles can be applied to spans of <em>info text</em> with
+the following form:</p>
+<p><code>[[ info text ]]&lt;&lt; CSS style rules &gt;&gt;</code></p>
+<p>As an example of this in practice suppose you'd like to change the color of
+some text to red and make the font appear somewhat thinner. A variation on
+the following might be used:</p>
+<p><code>"This is a [[factor]]&lt;&lt;color: red; font-weight: 300;&gt;&gt; value."</code></p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     

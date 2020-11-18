@@ -53,9 +53,8 @@ function), there are two sections containing properties: (1) 'table' and (2)
 and their types (as _type). Beyond that, it is useful to provide details
 about the nature of each column and we can do that with the info_columns()
 function. A single column (or multiple columns) is targeted, and then a
-series of named arguments (in the form
-entry_name = &quot;The information.&quot;) serves as additional
-information for the column or columns." />
+series of named arguments (in the form entry_name = &quot;The *info text*.&quot;)
+serves as additional information for the column or columns." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -171,9 +170,8 @@ function), there are two sections containing properties: (1) 'table' and (2)
 and their types (as <code>_type</code>). Beyond that, it is useful to provide details
 about the nature of each column and we can do that with the <code>info_columns()</code>
 function. A single column (or multiple columns) is targeted, and then a
-series of named arguments (in the form
-<code>entry_name = "The information."</code>) serves as additional
-information for the column or columns.</p>
+series of named arguments (in the form <code>entry_name = "The *info text*."</code>)
+serves as additional information for the column or columns.</p>
     </div>
 
     <pre class="usage"><span class='fu'>info_columns</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>columns</span>, <span class='va'>...</span>, .add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
@@ -194,7 +192,10 @@ in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></c
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Information entries as a series of named arguments.</p></td>
+      <td><p>Information entries as a series of named arguments. The names
+refer to subsection titles within <code>COLUMN</code> -&gt; <code>&lt;COLUMN_NAME&gt;</code> and the RHS
+contains the <em>info text</em> (informational text that can be written as
+Markdown and further styled with <em>Text Tricks</em>).</p></td>
     </tr>
     <tr>
       <th>.add</th>
@@ -206,6 +207,22 @@ default; setting to <code>FALSE</code> replaces any existing text for a property
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>ptblank_informant</code> object.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <em>info text</em> readily accepts Markdown formatting. Also, there are a few
+<em>Text Tricks</em> that are good to know. Markdown links written as <code>&lt; link url &gt;</code>
+or <code>[ link text ]( link url )</code> will get nicely-styled links. Any dates
+expressed in the ISO-8601 standard with parentheses, <code>"(2004-12-01)"</code>, will
+be styled with a font variation (monospaced) and underlined in purple. Spans
+of text can be converted to label text by using: (1) double parentheses
+around text for a rectangular label as in <code>((label text))</code>, or (2) triple
+parentheses around text for a rounded-rectangular label like <code>(((label text)))</code>. Finally, CSS styles can be applied to spans of <em>info text</em> with
+the following form:</p>
+<p><code>[[ info text ]]&lt;&lt; CSS style rules &gt;&gt;</code></p>
+<p>As an example of this in practice suppose you'd like to change the color of
+some text to red and make the font appear somewhat thinner. A variation on
+the following might be used:</p>
+<p><code>"This is a [[factor]]&lt;&lt;color: red; font-weight: 300;&gt;&gt; value."</code></p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     

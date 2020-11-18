@@ -29,7 +29,7 @@ function. That returns an agent with intel (having already interrogated the
 target data table). An \emph{informant} object can also be written to YAML with
 \code{yaml_write()}.
 
-One requirement for writing the \emph{agent} to YAML is that we need to have
+One requirement for writing the \emph{agent} to YAML is that we need to have a
 table-reading function (\code{read_fn}) specified (it's a function that is used to
 read the target table when \code{\link[=interrogate]{interrogate()}} is called). This option can be set
 when using \code{\link[=create_agent]{create_agent()}} or with \code{\link[=set_read_fn]{set_read_fn()}} (for use with an existing

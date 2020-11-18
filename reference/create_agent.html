@@ -216,7 +216,7 @@ read in the input data table with the <code>read_fn</code> argument (in which ca
 <code>tbl</code> is provided, this function will be invoked to obtain the data (i.e.,
 the <code>read_fn</code> takes priority). There are two ways to specify a <code>read_fn</code>:
 (1) using a function (e.g., <code>function() { &lt;table reading code&gt; }</code>) or, (2)
-with an R formula expression.</p></td>
+with an R formula expression (e.g., <code>~ { &lt;table reading code&gt; }</code>).</p></td>
     </tr>
     <tr>
       <th>tbl_name</th>
@@ -243,9 +243,13 @@ specified here will be overridden.</p></td>
     </tr>
     <tr>
       <th>end_fns</th>
-      <td><p>A list of functions that should be performed at the end of an
-interrogation.
-(e.g., <code>~ { &lt;table reading code&gt; }</code>).</p></td>
+      <td><p>A list of function calls that should be performed at the end
+of an interrogation. Each function call should be in the form of a
+one-sided R formula expression, so overall this construction should be
+used: <code>end_fns = list(~ &lt;R statements&gt;, ~ &lt;R statements&gt;, ...)</code>. An example
+of a function that can be sensibly used here is <code><a href='email_blast.html'>email_blast()</a></code>, where an
+email of the validation report is generated and sent based on sending
+condition.</p></td>
     </tr>
     <tr>
       <th>embed_report</th>

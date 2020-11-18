@@ -312,7 +312,7 @@ informant_pp
 
 ## Labels
 
-We can style portions of text as labels. These will help you call out important attributes in short form and may eliminate the need for oft-repeated statements. You might apply to labels to signify priority, category, or any other information you find useful. To do this we have two options
+We can take portions of text and present them as labels. These will help you call out important attributes in short form and may eliminate the need for oft-repeated statements. You might apply to labels to signify priority, category, or any other information you find useful. To do this we have two options,
 
 1. Use double parentheses around text to capture it in a rectangular label: `((label text))`
 2. Use triple parentheses to capture text into a rounded-rectangular label: `(((label text)))`

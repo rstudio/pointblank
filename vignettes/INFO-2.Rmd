@@ -382,12 +382,9 @@ informant_pp <-
   info_section(
     section_name = "additional notes",
     keywords = "
-    [[((penguins))]]
-    <<border-color: platinum; background-color: #F0F8FF;>>
-     [[((Antarctica))]]
-    <<border-color: #800080; background-color: #F2F2F2;>>
-     [[((measurements))]]
-    <<border-color: #FFB3B3; background-color: #FFFEF4;>>
+    [[((penguins))]]<<border-color: platinum; background-color: #F0F8FF;>>
+     [[((Antarctica))]]<<border-color: #800080; background-color: #F2F2F2;>>
+     [[((measurements))]]<<border-color: #FFB3B3; background-color: #FFFEF4;>>
     "
   ) %>%
   incorporate()
@@ -400,3 +397,5 @@ informant_pp
 <br>
 
 With the above `info_columns()` and `info_section()` function calls, we are able to style a single word (with an underline) and even style labels (changing the border and background colors). The syntax is somewhat forgiving, allowing for a line break between `]]` and `<<` so that lines of markup don't have to be overly long.
+
+

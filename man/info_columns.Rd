@@ -14,7 +14,10 @@ column name in quotes (e.g., \code{"<column_name>"}), one or more column names
 in \code{vars()} (e.g., \verb{vars(<column_name>)}), or with a select helper (e.g.,
 \code{starts_with("date")}).}
 
-\item{...}{Information entries as a series of named arguments.}
+\item{...}{Information entries as a series of named arguments. The names
+refer to subsection titles within \code{COLUMN} -> \verb{<COLUMN_NAME>} and the RHS
+contains the \emph{info text} (informational text that can be written as
+Markdown and further styled with \emph{Text Tricks}).}
 
 \item{.add}{Should new text be added to existing text? This is \code{TRUE} by
 default; setting to \code{FALSE} replaces any existing text for a property.}
@@ -29,9 +32,27 @@ function), there are two sections containing properties: (1) 'table' and (2)
 and their types (as \verb{_type}). Beyond that, it is useful to provide details
 about the nature of each column and we can do that with the \code{info_columns()}
 function. A single column (or multiple columns) is targeted, and then a
-series of named arguments (in the form
-\code{entry_name = "The information."}) serves as additional
-information for the column or columns.
+series of named arguments (in the form \code{entry_name = "The *info text*."})
+serves as additional information for the column or columns.
+}
+\details{
+The \emph{info text} readily accepts Markdown formatting. Also, there are a few
+\emph{Text Tricks} that are good to know. Markdown links written as \verb{< link url >}
+or \verb{[ link text ]( link url )} will get nicely-styled links. Any dates
+expressed in the ISO-8601 standard with parentheses, \code{"(2004-12-01)"}, will
+be styled with a font variation (monospaced) and underlined in purple. Spans
+of text can be converted to label text by using: (1) double parentheses
+around text for a rectangular label as in \verb{((label text))}, or (2) triple
+parentheses around text for a rounded-rectangular label like \verb{(((label text)))}. Finally, CSS styles can be applied to spans of \emph{info text} with
+the following form:
+
+\verb{[[ info text ]]<< CSS style rules >>}
+
+As an example of this in practice suppose you'd like to change the color of
+some text to red and make the font appear somewhat thinner. A variation on
+the following might be used:
+
+\code{"This is a [[factor]]<<color: red; font-weight: 300;>> value."}
 }
 \section{Figures}{
 

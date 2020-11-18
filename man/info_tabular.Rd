@@ -9,7 +9,10 @@ info_tabular(x, ...)
 \arguments{
 \item{x}{An informant object of class \code{ptblank_informant}.}
 
-\item{...}{Information entries as a series of named arguments.}
+\item{...}{Information entries as a series of named arguments. The names
+refer to subsection titles within the \code{TABLE} section and the RHS is the
+\emph{info text} (informational text that can be written as Markdown and further
+styled with \emph{Text Tricks}).}
 }
 \value{
 A \code{ptblank_informant} object.
@@ -21,8 +24,27 @@ it has two starter sections: (1) 'table' and (2) 'columns'. The
 supplied table name (\code{name}) and table dimensions (as \verb{_columns} and
 \verb{_rows}). We can add more table-based properties with the \code{info_tabular()}
 function. By providing a series of named arguments (in the form
-\code{entry_name = "The information."}), we can add more information that makes
+\code{entry_name = "The *info text*."}), we can add more information that makes
 sense for describing the table as a whole.
+}
+\details{
+The \emph{info text} readily accepts Markdown formatting. Also, there are a few
+\emph{Text Tricks} that are good to know. Markdown links written as \verb{< link url >}
+or \verb{[ link text ]( link url )} will get nicely-styled links. Any dates
+expressed in the ISO-8601 standard with parentheses, \code{"(2004-12-01)"}, will
+be styled with a font variation (monospaced) and underlined in purple. Spans
+of text can be converted to label text by using: (1) double parentheses
+around text for a rectangular label as in \verb{((label text))}, or (2) triple
+parentheses around text for a rounded-rectangular label like \verb{(((label text)))}. Finally, CSS styles can be applied to spans of \emph{info text} with
+the following form:
+
+\verb{[[ info text ]]<< CSS style rules >>}
+
+As an example of this in practice suppose you'd like to change the color of
+some text to red and make the font appear somewhat thinner. A variation on
+the following might be used:
+
+\code{"This is a [[factor]]<<color: red; font-weight: 300;>> value."}
 }
 \section{Figures}{
 

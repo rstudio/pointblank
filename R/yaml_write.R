@@ -30,7 +30,7 @@
 #' target data table). An *informant* object can also be written to YAML with
 #' `yaml_write()`.
 #'
-#' One requirement for writing the *agent* to YAML is that we need to have
+#' One requirement for writing the *agent* to YAML is that we need to have a
 #' table-reading function (`read_fn`) specified (it's a function that is used to
 #' read the target table when [interrogate()] is called). This option can be set
 #' when using [create_agent()] or with [set_read_fn()] (for use with an existing

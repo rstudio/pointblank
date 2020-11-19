@@ -212,7 +212,7 @@ info text, etc.) and we can print the <em>informant</em> object or use the
 <span class='co'># the info text</span>
 <span class='va'>informant</span> <span class='op'>&lt;-</span> 
   <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span><span class='va'>test_table</span>,
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>test_table</span>,
     tbl_name <span class='op'>=</span> <span class='st'>"test_table"</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='info_snippet.html'>info_snippet</a></span><span class='op'>(</span>
@@ -255,7 +255,12 @@ info text, etc.) and we can print the <em>informant</em> object or use the
 <span class='co'># the strings to be updated</span>
 <span class='va'>informant</span> <span class='op'>&lt;-</span>
   <span class='va'>informant</span> <span class='op'>%&gt;%</span> <span class='fu'>incorporate</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in incorporate(.): object 'informant' not found</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in incorporate(.): object 'informant' not found</span></div><div class='input'>  
+<span class='co'># When printed again, we'll see that the</span>
+<span class='co'># row and column counts in the header</span>
+<span class='co'># have been updated to reflect the</span>
+<span class='co'># changed `test_table`</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

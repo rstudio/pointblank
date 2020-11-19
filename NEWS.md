@@ -48,6 +48,12 @@
 
 * Added the `log4r_step()` function which can be used as an action in an `action_levels()` function call (i.e., a list component for the `fns` list). We can place a call to this function in every condition that should produce a log entry (i.e., `warn`, `stop`, `notify`). 
 
+## Documentation
+
+* Added several articles that explain the different validation workflows (there are six of 'em) and articles that go over the *Information Management* workflow.
+
+* Improved documentation for almost all functions in the package; added more useful examples.
+
 ## Minor improvements and bug fixes
 
 * Improved appearance of the agent report: (1) more tooltips, (2) the tooltips are much improved (they animate, have larger text, and are snappier than the previous ones), (3) SVGs are now used as symbols for the validation steps instead of blurry PNGs, (4) less confusing glyphs are now used in the `TBL` column, (5) the agent label can be expressed as Markdown and looks nicer in the report, (6) the table type (and name, if supplied as `tbl_name`) is shown in the header, (7) validation threshold levels also shown in the table header, (8) interrogation starting/ending timestamps are shown (along with duration) in the table footer, (9) the table font has been changed to be less default-y, and (10) adjustments to table borders and cell shading were made for better readability.

@@ -68,6 +68,8 @@
 
 * The `is_exact` argument is new in the `col_schema_match()`, `expect_col_schema_match()`, and `test_col_schema_match()` functions, further allowing these types of validations to be less stringent. This argument loosens the requirement to include all class names for a column that may have multiple. Also, we can specify `NULL` to entirely skip the checking of a class/type.
 
+* We can now use more combinations of validation functions in `conjointly()`. Those validation functions that intrinsically operate over a single test unit (e.g., all of the `col_is_*()` functions) now work in combination with validation functions that operate over *n* test units (e.g., the `col_vals_*()` functions). This lets us test for a condition where columns are of a certain type *AND* individual test units fulfill the `col_vals_*()` requirements.
+
 * Simplified the `sections` argument of `scan_data()` to be a length-1 character vector containing key characters standing for section names.
 
 * Refactored a large portion of the code that produces the agent report to increase rendering speed.

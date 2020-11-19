@@ -6,9 +6,9 @@
 
 * Added the `create_informant()` function to create a `ptblank_informant` object (this function is similar to `create_agent()`). It is meant to hold information (as much as you want, really) for a target table, with reporting features geared toward communication.
 
-* Functions for facilitating entry of info text were added because we need them (`info_tabular()`, `info_columns()`, and `info_section()`). These are focused on describing columns, the table proper, and other misc. fields.
+* Functions for facilitating entry of *info text* were added because we need them (`info_tabular()`, `info_columns()`, and `info_section()`). These are focused on describing columns, the table proper, and other misc. fields.
 
-* If all that wasn't enough, this release adds `info_snippet()` to round out the collection of info functions for this workflow. Oh, hang on, there's also the all-important `incorporate()` function. What? To explain, the idea is to have some methodology for acquiring important bits of data from the target table (that's `info_snippet()`'s job) and the use `incorporate()` to grab those morsels of data and stitch them into the info text (via `{ }`).
+* If all that wasn't enough, this release adds `info_snippet()` to round out the collection of `info_*()` functions for this workflow. Oh, hang on, there's also the all-important `incorporate()` function. What? To explain, the idea is to have some methodology for acquiring important bits of data from the target table (that's `info_snippet()`'s job) and then use `incorporate()` to grab those morsels of data and stitch them into the *info text* (via `{ }`).
 
 * Added the `get_informant_report()` function for printing the information report (a **gt** table object!).
 
@@ -32,13 +32,13 @@
 
 ## Breaking changes
 
-* The `yaml_write()` function replaces the `agent_yaml_write()` function. The new function works to write the *agent*, the *metadata* object, or both, to YAML.
+* The `yaml_write()` function replaces the `agent_yaml_write()` function. The new function works to write the *agent*, the *informant* object, or both, to YAML.
 
 * The names of more YAML functions have been changed, the final roster now consists of: `yaml_write()`, `yaml_read_agent()`, `yaml_read_informant()`, `yaml_agent_interrogate()`, `yaml_agent_string()`, and `yaml_agent_show_exprs()`.
 
-* The `x_write_disk()` function replaces the `agent_write()` function. The new function works to write the *agent* or the *metadata* object to disk.
+* The `x_write_disk()` function replaces the `agent_write()` function. The new function works to write the *agent* or the *informant* object to disk.
 
-* The `x_read_disk()` function replaces the `agent_read()` function. The new function works to read both the *agent* or the *metadata* objects written to disk.
+* The `x_read_disk()` function replaces the `agent_read()` function. The new function works to read both the *agent* or the *informant* objects written to disk.
 
 * The `email_preview()` function has been renamed to `email_create()`.
 

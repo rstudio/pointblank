@@ -108,11 +108,20 @@ incorporate <- function(informant) {
   # TODO: Verify that the table is a table object
   # and provide an error if it isn't
   if (!is.null(read_fn)) {
+    
     if (inherits(read_fn, "function")) {
+      
       tbl <- rlang::exec(read_fn)
+      
     } else if (rlang::is_formula(read_fn)) {
-      tbl <- read_fn %>% rlang::f_rhs() %>% rlang::eval_tidy()
+      
+      tbl <- 
+        read_fn %>%
+        rlang::f_rhs() %>%
+        rlang::eval_tidy(env = caller_env(n = 1))
+      
     } else {
+      
       stop(
         "The `read_fn` object must be a function or an R formula.\n",
         "* A function can be made with `function()` {<table reading code>}.\n",

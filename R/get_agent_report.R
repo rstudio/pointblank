@@ -412,7 +412,7 @@ get_agent_report <- function(agent,
                     `padding-top` = "4px",
                     `font-size` = "9px"
                   ),
-                  htmltools::htmlEscape(label[x])
+                  htmltools::HTML(label[x])
                 ),
                 htmltools::tags$p(
                   style = htmltools::css(margin = "0"),

@@ -1092,7 +1092,7 @@ get_agent_report <- function(agent,
       values = get_lsv("agent_report/report_col_values")[[lang]],
       precon = "TBL",
       eval_sym = "EVAL",
-      units = gt::md("&sdot; &sdot; &sdot;"),
+      units = gt::md("&sdot;&nbsp;&sdot;&nbsp;&sdot;"),
       n_pass = "PASS",
       n_fail = "FAIL",
       extract = "EXT"

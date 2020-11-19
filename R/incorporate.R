@@ -46,7 +46,7 @@
 #' # the info text
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~test_table,
+#'     read_fn = ~ test_table,
 #'     tbl_name = "test_table"
 #'   ) %>%
 #'   info_snippet(
@@ -89,6 +89,11 @@
 #' # the strings to be updated
 #' informant <-
 #'   informant %>% incorporate()
+#'   
+#' # When printed again, we'll see that the
+#' # row and column counts in the header
+#' # have been updated to reflect the
+#' # changed `test_table`
 #' 
 #' @family Incorporate and Report
 #' @section Function ID:

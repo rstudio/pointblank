@@ -397,3 +397,5 @@ informant_pp
 <br>
 
 With the above `info_columns()` and `info_section()` function calls, we are able to style a single word (with an underline) and even style labels (changing the border and background colors). The syntax here is somewhat forgiving, allowing you to put line breaks between `]]` and `<<` and between style rules so that lines of markup don't have to be overly long.
+
+So, what do you think of all these *text tricks*? You got to admit they can spice up the proceedings. More of them will inevitably be added as development on **pointblank** proceeds. But that's it for now. *Don't you think you've had enough?*

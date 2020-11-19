@@ -4,12 +4,12 @@ test_table <- small_table
 
 informant <- 
   create_informant(
-    read_fn = ~test_table,
+    read_fn = ~ test_table,
     tbl_name = "test_table"
   ) %>%
   info_columns(
     vars(a),
-    info = "In the range of 1 to 10. (SIMPLE)"
+    info = "In the range of 1 to 10. (((SIMPLE)))"
   ) %>%
   info_snippet(snippet_name = "row_count", fn = ~ . %>% nrow()) %>%
   info_snippet(snippet_name = "col_count", fn = ~ . %>% ncol()) %>%
@@ -19,7 +19,7 @@ informant <-
   ) %>%
   info_columns(
     "date",
-    info = "The date part of `date_time`. (CALC)"
+    info = "The date part of `date_time`. (((calculation)))"
   ) %>%
   info_section(
     section_name = "summary",

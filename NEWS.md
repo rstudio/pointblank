@@ -54,6 +54,8 @@
 
 * Improved documentation for almost all functions in the package; added more useful examples.
 
+* Added a table to the project `README` that keeps everyone apprised of the project milestones and the issues to be closed for each upcoming release.
+
 ## Minor improvements and bug fixes
 
 * Improved appearance of the agent report: (1) more tooltips, (2) the tooltips are much improved (they animate, have larger text, and are snappier than the previous ones), (3) SVGs are now used as symbols for the validation steps instead of blurry PNGs, (4) less confusing glyphs are now used in the `TBL` column, (5) the agent label can be expressed as Markdown and looks nicer in the report, (6) the table type (and name, if supplied as `tbl_name`) is shown in the header, (7) validation threshold levels also shown in the table header, (8) interrogation starting/ending timestamps are shown (along with duration) in the table footer, (9) the table font has been changed to be less default-y, and (10) adjustments to table borders and cell shading were made for better readability.

@@ -46,7 +46,7 @@
 
 * The new `db_tbl()` function makes it ridiculously easy to access a database table from the selection of databases that **pointblank** supports for validation; they are accessible with the supplied keywords `"postgres"` (PostgreSQL), `"mysql"` (MySQL), `"maria"` (MariaDB), `"duckdb"` (DuckDB), `"sqlite"` (SQLite), or, with any driver function you'd like to supply.
 
-* Added the `log4r_step()` function which can be used as an action in an `action_levels()` function call (i.e., a list component for the `fns` list). We can place a call to this function in every condition that should produce a log (i.e., `warn`, `stop`, `notify`). 
+* Added the `log4r_step()` function which can be used as an action in an `action_levels()` function call (i.e., a list component for the `fns` list). We can place a call to this function in every condition that should produce a log entry (i.e., `warn`, `stop`, `notify`). 
 
 ## Minor improvements and bug fixes
 

@@ -1,3 +1,5 @@
+# pointblank 0.6.0
+
 # pointblank (unreleased)
 
 ## Pointblank Information

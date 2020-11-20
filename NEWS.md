@@ -1,7 +1,5 @@
 # pointblank 0.6.0
 
-# pointblank (unreleased)
-
 ## Pointblank Information
 
 * The new *information management* workflow is full of features that help you to describe tables and keep on top of changes to them. To make this work well, a new character enters: the *informant*!

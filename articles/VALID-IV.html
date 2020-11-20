@@ -190,6 +190,158 @@
 <p>The rules for threshold setting (in <code><a href="../reference/action_levels.html">action_levels()</a></code>, <code><a href="../reference/action_levels.html">warn_on_fail()</a></code>, and <code><a href="../reference/action_levels.html">stop_on_fail()</a></code>) will be explained in some detail here. Whole numbers beyond <code>1</code> indicate that any failing units up to that absolute threshold value will result in a <code>TRUE</code>. Likewise, fractional values (between <code>0</code> and <code>1</code>) act as a proportional failure threshold, where <code>0.25</code> means that 25% or more failing test units results in a <code>FALSE</code>.</p>
 <p>We can use the <code>preconditions</code> argument in cases where we’d like to transform the input data before evaluation of the test. If you would like to do things to the input table like summarize it, perform filtering, mutate one or more columns, perform table joins, etc., then this is a good way to go about that.</p>
 </div>
+<div id="heres-several-examples-quick-snap" class="section level1">
+<h1 class="hasAnchor">
+<a href="#heres-several-examples-quick-snap" class="anchor"></a>Here’s Several Examples Quick Snap</h1>
+<p>Let’s have some examples before leaving this article. They will all use our <code>small_table</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">small_table</span></code></pre></div>
+<pre><code>## # A tibble: 13 x 8
+##    date_time           date           a b             c      d e     f    
+##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;
+##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
+##  2 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low  
+##  3 2016-01-05 13:32:00 2016-01-05     6 8-kdg-938     3  2343. TRUE  high 
+##  4 2016-01-06 17:23:00 2016-01-06     2 5-jdo-903    NA  3892. FALSE mid  
+##  5 2016-01-09 12:36:00 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+##  6 2016-01-11 06:15:00 2016-01-11     4 2-dhe-923     4  3291. TRUE  mid  
+##  7 2016-01-15 18:46:00 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+##  8 2016-01-17 11:27:00 2016-01-17     4 5-boe-639     2  1036. FALSE low  
+##  9 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## 10 2016-01-20 04:30:00 2016-01-20     3 5-bce-642     9   838. FALSE high 
+## 11 2016-01-26 20:07:00 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
+## 12 2016-01-28 02:51:00 2016-01-28     2 7-dmx-010     8   108. FALSE low  
+## 13 2016-01-30 11:23:00 2016-01-30     1 3-dka-303    NA  2230. TRUE  high</code></pre>
+<p>If you’d like to test your <strong>pointblank</strong> validation skill, guess whether each of these is <code>TRUE</code> or <code>FALSE</code> before hovering over the line of code. <br><br></p>
+
+<style>
+.btn {
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid gray;
+  color: black;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  text-align: center;
+  width: 90%
+}
+.btn:hover, .btn:focus {
+  color: black;
+  outline: 0;
+}
+
+.true {
+  -webkit-transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out;
+  border-color: gray;
+  color: black;
+  transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out;
+}
+.true:hover {
+  box-shadow: 0 0 40px 40px lightgreen inset;
+  border: 1px solid green;
+}
+.true:hover::after {
+  box-shadow: none;
+  font-weight: 600;
+  content: '&nbsp;&nbsp;TRUE';
+}
+.true code {
+  padding: 1px 4px 2px 4px;
+  background: transparent;
+  text-align: left;
+}
+
+.false {
+  -webkit-transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out;
+  border-color: gray;
+  color: black;
+  transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out;
+}
+.false:hover {
+  box-shadow: 0 0 40px 40px #CC0000 inset;
+  color: white;
+  border: 1px solid #7A0000;
+}
+.false:hover::after {
+  box-shadow: none;
+  font-weight: 600;
+  text-align: right;
+  content: '&nbsp;&nbsp;FALSE';
+}
+.false code {
+  padding: 1px 4px 2px 4px;
+  background: transparent;
+  text-align: left;
+}
+
+
+</style>
+<button class="btn true">
+<code>small_table %&gt;%
+  test_col_is_logical(vars(e))</code>
+</button>
+
+<br><button class="btn false">
+<code>small_table %&gt;% 
+  test_col_vals_between(
+    vars(c), left = 1, right = 10
+  )</code>
+</button>
+
+<br><button class="btn true">
+<code>small_table %&gt;% 
+  test_col_vals_between(
+    vars(c), left = 0, right = vars(d),
+    na_pass = TRUE, threshold = 0.5
+  )</code>
+</button>
+
+<br><button class="btn false">
+<code>small_table %&gt;% 
+  test_col_vals_between(
+    vars(c), left = 0, right = vars(d),
+    na_pass = TRUE, threshold = 3
+  )</code>
+</button>
+
+<br><button class="btn false">
+<code>small_table %&gt;% 
+  test_col_schema_match(
+    col_schema(.tbl = small_table_sqlite())
+  )</code>
+</button>
+
+<br><button class="btn true">
+<code>small_table %&gt;%
+  test_col_vals_regex(vars(b), regex = ".-[a-z]{3}.*")
+</code>
+</button>
+
+<br><button class="btn false">
+<code>small_table %&gt;% test_col_exists(columns = "g")</code>
+</button>
+
+<br><button class="btn false">
+<code>small_table %&gt;% 
+  test_col_vals_gt(
+    vars(z), value = vars(a),
+    preconditions = ~ . %&gt;% dplyr::mutate(z = c + e), threshold = 0.5
+  )</code>
+</button>
+
+<p><br> And there you have it. A nice set of examples revealing their truthy/falsy nature only <code>::after</code> closer inspection.</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

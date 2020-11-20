@@ -54,3 +54,204 @@ Instead of `actions` we do get the `threshold` argument as a simplified replacem
 The rules for threshold setting (in `action_levels()`, `warn_on_fail()`, and `stop_on_fail()`) will be explained in some detail here. Whole numbers beyond `1` indicate that any failing units up to that absolute threshold value will result in a `TRUE`. Likewise, fractional values (between `0` and `1`) act as a proportional failure threshold, where `0.25` means that 25% or more failing test units results in a `FALSE`.
 
 We can use the `preconditions` argument in cases where we'd like to transform the input data before evaluation of the test. If you would like to do things to the input table like summarize it, perform filtering, mutate one or more columns, perform table joins, etc., then this is a good way to go about that.
+
+# Here's Several Examples Quick Snap
+
+Let's have some examples before leaving this article. They will all use our `small_table`:
+
+```{r small_table, paged.print=FALSE}
+small_table
+```
+
+If you'd like to test your **pointblank** validation skill, guess whether each of these is `TRUE` or `FALSE` before hovering over the line of code.
+<br>
+<br>
+
+```{=html}
+
+<style>
+.btn {
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid gray;
+  color: black;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  text-align: center;
+  width: 90%
+}
+.btn:hover, .btn:focus {
+  color: black;
+  outline: 0;
+}
+
+.true {
+  -webkit-transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out;
+  border-color: gray;
+  color: black;
+  transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out;
+}
+.true:hover {
+  box-shadow: 0 0 40px 40px lightgreen inset;
+  border: 1px solid green;
+}
+.true:hover::after {
+  box-shadow: none;
+  font-weight: 600;
+  content: '&nbsp;&nbsp;TRUE';
+}
+.true code {
+  padding: 1px 4px 2px 4px;
+  background: transparent;
+  text-align: left;
+}
+
+.false {
+  -webkit-transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out;
+  border-color: gray;
+  color: black;
+  transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out;
+}
+.false:hover {
+  box-shadow: 0 0 40px 40px #CC0000 inset;
+  color: white;
+  border: 1px solid #7A0000;
+}
+.false:hover::after {
+  box-shadow: none;
+  font-weight: 600;
+  text-align: right;
+  content: '&nbsp;&nbsp;FALSE';
+}
+.false code {
+  padding: 1px 4px 2px 4px;
+  background: transparent;
+  text-align: left;
+}
+
+
+</style>
+
+<button class="btn true">
+<code>small_table %>%
+  test_col_is_logical(vars(e))</code>
+</button>
+
+<br>
+
+<button class="btn false">
+<code>small_table %>% 
+  test_col_vals_between(
+    vars(c), left = 1, right = 10
+  )</code>
+</button>
+
+<br>
+
+<button class="btn true">
+<code>small_table %>% 
+  test_col_vals_between(
+    vars(c), left = 0, right = vars(d),
+    na_pass = TRUE, threshold = 0.5
+  )</code>
+</button>
+
+<br>
+
+<button class="btn false">
+<code>small_table %>% 
+  test_col_vals_between(
+    vars(c), left = 0, right = vars(d),
+    na_pass = TRUE, threshold = 3
+  )</code>
+</button>
+
+<br>
+
+<button class="btn false">
+<code>small_table %>% 
+  test_col_schema_match(
+    col_schema(.tbl = small_table_sqlite())
+  )</code>
+</button>
+
+<br>
+
+<button class="btn true">
+<code>small_table %>%
+  test_col_vals_regex(vars(b), regex = ".-[a-z]{3}.*")
+</code>
+</button>
+
+<br>
+
+<button class="btn false">
+<code>small_table %>% test_col_exists(columns = "g")</code>
+</button>
+
+<br>
+
+<button class="btn false">
+<code>small_table %>% 
+  test_col_vals_gt(
+    vars(z), value = vars(a),
+    preconditions = ~ . %>% dplyr::mutate(z = c + e), threshold = 0.5
+  )</code>
+</button>
+
+```
+
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_is_logical(vars(e))
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_vals_between(vars(c), left = 1, right = 10)
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_vals_between(vars(c), left = 0, right = vars(d), na_pass = TRUE, threshold = 0.5)
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_vals_between(vars(c), left = 0, right = vars(d), na_pass = TRUE, threshold = 3)
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_schema_match(col_schema(.tbl = small_table_sqlite()))
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_vals_in_set(vars(a), set = 1:10)
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_vals_regex(vars(b), regex = ".-[a-z]{3}.*")
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_exists(columns = "g")
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% 
+  test_col_vals_gt(
+    vars(z), value = vars(a),
+    preconditions = ~ . %>% dplyr::mutate(z = c + e), threshold = 0.5
+  )
+```
+
+<br>
+And there you have it. A nice set of examples revealing their truthy/falsy nature only `::after` closer inspection.

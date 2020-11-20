@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pointblank</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.5.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.6.0</span>
       </span>
     </div>
 
@@ -154,6 +154,80 @@
       <small>Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="pointblank-060" class="section level1">
+<h1 class="page-header" data-toc-text="0.6.0">
+<a href="#pointblank-060" class="anchor"></a>pointblank 0.6.0<small> 2020-11-20 </small>
+</h1>
+<div id="pointblank-information" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pointblank-information" class="anchor"></a>Pointblank Information</h2>
+<ul>
+<li><p>The new <em>information management</em> workflow is full of features that help you to describe tables and keep on top of changes to them. To make this work well, a new character enters: the <em>informant</em>!</p></li>
+<li><p>Added the <code><a href="../reference/create_informant.html">create_informant()</a></code> function to create a <code>ptblank_informant</code> object (this function is similar to <code><a href="../reference/create_agent.html">create_agent()</a></code>). It is meant to hold information (as much as you want, really) for a target table, with reporting features geared toward communication.</p></li>
+<li><p>Functions for facilitating entry of <em>info text</em> were added because we need them (<code><a href="../reference/info_tabular.html">info_tabular()</a></code>, <code><a href="../reference/info_columns.html">info_columns()</a></code>, and <code><a href="../reference/info_section.html">info_section()</a></code>). These are focused on describing columns, the table proper, and other misc. fields.</p></li>
+<li><p>If all that wasn’t enough, this release adds <code><a href="../reference/info_snippet.html">info_snippet()</a></code> to round out the collection of <code>info_*()</code> functions for this workflow. Oh, hang on, there’s also the all-important <code><a href="../reference/incorporate.html">incorporate()</a></code> function. What? To explain, the idea is to have some methodology for acquiring important bits of data from the target table (that’s <code><a href="../reference/info_snippet.html">info_snippet()</a></code>’s job) and then use <code><a href="../reference/incorporate.html">incorporate()</a></code> to grab those morsels of data and stitch them into the <em>info text</em> (via <code>{ }</code>).</p></li>
+<li><p>Added the <code><a href="../reference/get_informant_report.html">get_informant_report()</a></code> function for printing the information report (a <strong>gt</strong> table object!).</p></li>
+<li><p>You can also just print the <em>informant</em> object to show the information report thanks to a print method for this purpose.</p></li>
+<li><p>The <em>informant</em> object can be written to <strong>pointblank</strong> YAML using the revised <code><a href="../reference/yaml_write.html">yaml_write()</a></code> (previously <code>agent_yaml_write()</code>) function. We can actually write both the <em>agent</em> and the <em>informant</em> to the same YAML file which is useful since both objects share the same target table. Reading is done with the <code><a href="../reference/yaml_read_agent.html">yaml_read_agent()</a></code> and <code><a href="../reference/yaml_read_informant.html">yaml_read_informant()</a></code> functions.</p></li>
+<li><p>The <em>informant</em> can be emailed using the <code><a href="../reference/email_create.html">email_create()</a></code> function; this emailing can be done in one of eight languages for the stock message text.</p></li>
+</ul>
+</div>
+<div id="translations-and-locales" class="section level2">
+<h2 class="hasAnchor">
+<a href="#translations-and-locales" class="anchor"></a>Translations and Locales</h2>
+<ul>
+<li><p>More text in the agent report is translated now.</p></li>
+<li><p>Improved the Spanish (Spain) translation.</p></li>
+<li><p>Added the Portuguese (<code>"pt"</code>, Brazil), Chinese (<code>"zh"</code>, China mainland), and Russian (<code>"ru"</code>) translations.</p></li>
+<li><p>Added a locale option for reporting; the locale will match the language (using the base locale) unless a different locale is specified. The locale is used to format numeric values according to the locale’s rules. This also applies to the reporting offered by the <code><a href="../reference/scan_data.html">scan_data()</a></code> function.</p></li>
+<li><p>All stock email message parts (used when emailing the agent report or the information report) have been translated to the eight supported languages. The language setting in the respective objects is used to determine the language of the stock message parts.</p></li>
+</ul>
+</div>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li><p>The <code><a href="../reference/yaml_write.html">yaml_write()</a></code> function replaces the <code>agent_yaml_write()</code> function. The new function works to write the <em>agent</em>, the <em>informant</em> object, or both, to YAML.</p></li>
+<li><p>The names of more YAML functions have been changed, the final roster now consists of: <code><a href="../reference/yaml_write.html">yaml_write()</a></code>, <code><a href="../reference/yaml_read_agent.html">yaml_read_agent()</a></code>, <code><a href="../reference/yaml_read_informant.html">yaml_read_informant()</a></code>, <code><a href="../reference/yaml_agent_interrogate.html">yaml_agent_interrogate()</a></code>, <code><a href="../reference/yaml_agent_string.html">yaml_agent_string()</a></code>, and <code><a href="../reference/yaml_agent_show_exprs.html">yaml_agent_show_exprs()</a></code>.</p></li>
+<li><p>The <code><a href="../reference/x_write_disk.html">x_write_disk()</a></code> function replaces the <code>agent_write()</code> function. The new function works to write the <em>agent</em> or the <em>informant</em> object to disk.</p></li>
+<li><p>The <code><a href="../reference/x_read_disk.html">x_read_disk()</a></code> function replaces the <code>agent_read()</code> function. The new function works to read both the <em>agent</em> or the <em>informant</em> objects written to disk.</p></li>
+<li><p>The <code>email_preview()</code> function has been renamed to <code><a href="../reference/email_create.html">email_create()</a></code>.</p></li>
+</ul>
+</div>
+<div id="new-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>New features</h2>
+<ul>
+<li><p>The new <code><a href="../reference/db_tbl.html">db_tbl()</a></code> function makes it ridiculously easy to access a database table from the selection of databases that <strong>pointblank</strong> supports for validation; they are accessible with the supplied keywords <code>"postgres"</code> (PostgreSQL), <code>"mysql"</code> (MySQL), <code>"maria"</code> (MariaDB), <code>"duckdb"</code> (DuckDB), <code>"sqlite"</code> (SQLite), or, with any driver function you’d like to supply.</p></li>
+<li><p>Added the <code><a href="../reference/log4r_step.html">log4r_step()</a></code> function which can be used as an action in an <code><a href="../reference/action_levels.html">action_levels()</a></code> function call (i.e., a list component for the <code>fns</code> list). We can place a call to this function in every condition that should produce a log entry (i.e., <code>warn</code>, <code>stop</code>, <code>notify</code>).</p></li>
+</ul>
+</div>
+<div id="documentation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#documentation" class="anchor"></a>Documentation</h2>
+<ul>
+<li><p>Added several articles that explain the different validation workflows (there are six of ’em) and articles that go over the <em>Information Management</em> workflow.</p></li>
+<li><p>Improved documentation for almost all functions in the package; added more useful examples.</p></li>
+<li><p>Added a table to the project <code>README</code> that keeps everyone apprised of the project milestones and the issues to be closed for each upcoming release.</p></li>
+</ul>
+</div>
+<div id="minor-improvements-and-bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-improvements-and-bug-fixes" class="anchor"></a>Minor improvements and bug fixes</h2>
+<ul>
+<li><p>Improved appearance of the agent report: (1) more tooltips, (2) the tooltips are much improved (they animate, have larger text, and are snappier than the previous ones), (3) SVGs are now used as symbols for the validation steps instead of blurry PNGs, (4) less confusing glyphs are now used in the <code>TBL</code> column, (5) the agent label can be expressed as Markdown and looks nicer in the report, (6) the table type (and name, if supplied as <code>tbl_name</code>) is shown in the header, (7) validation threshold levels also shown in the table header, (8) interrogation starting/ending timestamps are shown (along with duration) in the table footer, (9) the table font has been changed to be less default-y, and (10) adjustments to table borders and cell shading were made for better readability.</p></li>
+<li><p>The <code><a href="../reference/get_agent_report.html">get_agent_report()</a></code> function now has <code>lang</code> and <code>locale</code> arguments to override any of those values set prior (e.g., in <code><a href="../reference/create_agent.html">create_agent()</a></code>). This allows for the reporting language to be changed without the need to re-run everything from scratch.</p></li>
+<li><p>The <code><a href="../reference/set_tbl.html">set_tbl()</a></code>, <code><a href="../reference/remove_tbl.html">remove_tbl()</a></code>, <code><a href="../reference/set_read_fn.html">set_read_fn()</a></code>, and <code><a href="../reference/remove_read_fn.html">remove_read_fn()</a></code> functions can now also be used with an <em>informant</em> object.</p></li>
+<li><p>The <code><a href="../reference/get_sundered_data.html">get_sundered_data()</a></code> function is more clear with regard to which validation steps are considered for splitting of the data. Using validation steps with <code>preconditions</code> must fulfill the rule that the target table only have a single form across steps.</p></li>
+<li><p>The <code>is_exact</code> argument is new in the <code><a href="../reference/col_schema_match.html">col_schema_match()</a></code>, <code><a href="../reference/col_schema_match.html">expect_col_schema_match()</a></code>, and <code><a href="../reference/col_schema_match.html">test_col_schema_match()</a></code> functions, further allowing these types of validations to be less stringent. This argument loosens the requirement to include all class names for a column that may have multiple. Also, we can specify <code>NULL</code> to entirely skip the checking of a class/type.</p></li>
+<li><p>We can now use more combinations of validation functions in <code><a href="../reference/conjointly.html">conjointly()</a></code>. Those validation functions that intrinsically operate over a single test unit (e.g., all of the <code>col_is_*()</code> functions) now work in combination with validation functions that operate over <em>n</em> test units (e.g., the <code>col_vals_*()</code> functions). This lets us test for a condition where columns are of a certain type <em>AND</em> individual test units fulfill the <code>col_vals_*()</code> requirements.</p></li>
+<li><p>Simplified the <code>sections</code> argument of <code><a href="../reference/scan_data.html">scan_data()</a></code> to be a length-1 character vector containing key characters standing for section names.</p></li>
+<li><p>Refactored a large portion of the code that produces the agent report to increase rendering speed.</p></li>
+<li><p>Improved printing of errors/warnings (in the tooltips of the <code>EVAL</code> column in the agent report) thanks to implementation of HTML escaping.</p></li>
+<li><p>The small version of the agent report (perfect for emailing) now has much improved formatting.</p></li>
+</ul>
+</div>
+</div>
     <div id="pointblank-052" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.2">
 <a href="#pointblank-052" class="anchor"></a>pointblank 0.5.2<small> 2020-08-28 </small>

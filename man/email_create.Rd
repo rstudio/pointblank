@@ -2,7 +2,7 @@
 % Please edit documentation in R/emailing.R
 \name{email_create}
 \alias{email_create}
-\title{Create an email object from a \strong{pointblank} \emph{agent}}
+\title{Create an email object from a \strong{pointblank} \emph{agent} or \emph{informant}}
 \usage{
 email_create(
   x,
@@ -30,7 +30,7 @@ The \code{email_create()} function produces an email message object that could b
 sent using the \strong{blastula} package. The \code{x} that we need for this could
 either be a \strong{pointblank} agent, the \emph{agent} x-list (produced from the
 \emph{agent} with the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function), or a \strong{pointblank}
-\emph{informant}. In all casesm, the email message will appear in the Viewer and a
+\emph{informant}. In all cases, the email message will appear in the Viewer and a
 \strong{blastula} \code{email_message} object will be returned.
 }
 \section{Function ID}{

@@ -168,13 +168,13 @@ email_blast <- function(x,
   }
 }
 
-#' Create an email object from a **pointblank** *agent*
+#' Create an email object from a **pointblank** *agent* or *informant*
 #' 
 #' The `email_create()` function produces an email message object that could be
 #' sent using the **blastula** package. The `x` that we need for this could
 #' either be a **pointblank** agent, the *agent* x-list (produced from the
 #' *agent* with the [get_agent_x_list()] function), or a **pointblank**
-#' *informant*. In all casesm, the email message will appear in the Viewer and a
+#' *informant*. In all cases, the email message will appear in the Viewer and a
 #' **blastula** `email_message` object will be returned.
 #'
 #' @param x A **pointblank** *agent*, an *agent* x-list, or a **pointblank**

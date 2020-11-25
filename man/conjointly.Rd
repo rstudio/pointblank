@@ -192,7 +192,7 @@ tbl
 # functions of the `col_vals*` type
 # (all have the same number of test
 # units): (1) values in `a` are less
-# than `4`, (2) values in `c` are
+# than `8`, (2) values in `c` are
 # greater than the adjacent values in
 # `a`, and (3) there aren't any NA
 # values in `b`

@@ -653,12 +653,13 @@ tidy_gsub <- function(x,
 }
 
 pb_str_catalog <- function(item_vector,
-                           conj = "and",
-                           more = "more",
-                           surround = c("\"", "`"),
-                           sep = ",",
                            limit = 5,
-                           oxford = TRUE) {
+                           sep = ",",
+                           and_or = NULL,
+                           more = "more",
+                           oxford = TRUE,
+                           as_code = TRUE,
+                           quot_str = NULL) {
   
   item_count <- length(item_vector)
   
@@ -668,7 +669,46 @@ pb_str_catalog <- function(item_vector,
   } else {
     n_overlimit <- ""
   }
+
+  if (is.null(quot_str)) {
+    
+    if (is.numeric(item_vector) || 
+        is.logical(item_vector) ||
+        inherits(item_vector, "Date") ||
+        inherits(item_vector, "POSIXct")) {
+      
+      quot_str <- FALSE
+    } else {
+      quot_str <- TRUE
+    }
+  }
+
+  surround <- c()
   
+  if (quot_str) {
+    surround <- "\""
+  }
+  
+  if (as_code) {
+    surround <- c(surround, "`")
+  }
+
+  if (is.null(and_or)) {
+    and_or <- "and"
+  }
+  
+  if (!(and_or %in% c("and", "or", ""))) {
+    stop(
+      "The value for `and_or` must be one of the following:\n",
+      "* `\"and\"`, `\"or\"`, or an empty string",
+      call. = FALSE
+    )
+  }
+  
+  if (and_or == "") {
+    oxford <- TRUE
+  }
+
   surround_str_1 <- rev(surround) %>% paste(collapse = "")
   surround_str_2 <- surround %>% paste(collapse = "")
   
@@ -680,19 +720,19 @@ pb_str_catalog <- function(item_vector,
     
   } else if (item_count == 2) {
     
-    return(paste(cat_str[1], conj, cat_str[2]))
+    return(paste(cat_str[1], and_or, cat_str[2]))
     
   } else {
     
     separators <- rep(paste0(sep, " "), length(item_vector) - 1)
     
     if (!oxford) {
-      separators[length(separators)] <- ""
+      separators[length(separators)] <- " "
     }
     
     if (n_overlimit == "") {
       separators[length(separators)] <- 
-        paste0(separators[length(separators)], conj, " ")
+        paste0(separators[length(separators)], and_or, " ")
     }
     
     separators[length(separators) + 1] <- ""
@@ -702,6 +742,8 @@ pb_str_catalog <- function(item_vector,
       paste(collapse = "")
     
     cat_str <- paste(cat_str, n_overlimit)
+    
+    cat_str <- gsub("\\s+$", "", cat_str)
     
     return(cat_str)
   }

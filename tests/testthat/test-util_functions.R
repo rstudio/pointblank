@@ -412,15 +412,15 @@ test_that("Utility functions won't fail us", {
   )
   expect_equal(
     pb_str_catalog(l_vector, limit = 20),
-    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"` "
+    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"`"
   )
   expect_equal(
     pb_str_catalog(l_vector, limit = Inf),
-    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"` "
+    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"`"
   )
   expect_equal(
     pb_str_catalog(l_vector, limit = 7),
-    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"` "
+    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"`"
   )
   expect_equal(
     pb_str_catalog(l_vector, limit = 2),
@@ -431,32 +431,76 @@ test_that("Utility functions won't fail us", {
     "`\"a\"` and `\"b\"`"
   )
   expect_equal(
-    pb_str_catalog(l_vector[1:2], conj = "et"),
-    "`\"a\"` et `\"b\"`"
-  )
-  expect_equal(
     pb_str_catalog(l_vector, limit = 2, more = "de plus"),
     "`\"a\"`, `\"b\"` (+4 de plus)"
   )
   expect_equal(
     pb_str_catalog(l_vector[1:3], oxford = FALSE),
-    "`\"a\"`, `\"b\"`and `\"c\"` "
+    "`\"a\"`, `\"b\"` and `\"c\"`"
   )
   expect_equal(
-    pb_str_catalog(l_vector[1:3], sep = " |", conj = ""),
-    "`\"a\"` | `\"b\"` |  `\"c\"` "
+    pb_str_catalog(l_vector[1:3], sep = " |", and_or = ""),
+    "`\"a\"` | `\"b\"` |  `\"c\"`"
   )
   expect_equal(
-    pb_str_catalog(l_vector[1:2], surround = ""),
+    pb_str_catalog(l_vector[1:2], as_code = FALSE, quot_str = FALSE),
     "a and b"
   )
   expect_equal(
-    pb_str_catalog(l_vector, surround = ""),
+    pb_str_catalog(l_vector, as_code = FALSE, quot_str = FALSE),
     "a, b, c, d, e (+1 more)"
   )
   expect_equal(
-    pb_str_catalog(l_vector[1], surround = ""),
+    pb_str_catalog(l_vector[1], as_code = FALSE, quot_str = FALSE),
     "a"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector, and_or = "", oxford = TRUE),
+    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"` (+1 more)"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector, and_or = "", oxford = FALSE),
+    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"` (+1 more)"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], and_or = "or"),
+    "`\"a\"`, `\"b\"`, or `\"c\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1], and_or = "or"),
+    "`\"a\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1], and_or = "and"),
+    "`\"a\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1], and_or = ""),
+    "`\"a\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1], and_or = NULL),
+    "`\"a\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], and_or = "or", more = "mehr"),
+    pb_str_catalog(l_vector[1:3], and_or = "or")
+  )
+  expect_equal(
+    pb_str_catalog(1:3),
+    "`1`, `2`, and `3`"
+  )
+  expect_equal(
+    pb_str_catalog(c(TRUE, FALSE, TRUE)),
+    "`TRUE`, `FALSE`, and `TRUE`"
+  )
+  expect_equal(
+    pb_str_catalog(as.Date(c("2015-05-26", "2020-06-17"))),
+    "`2015-05-26` and `2020-06-17`"
+  )
+  expect_equal(
+    pb_str_catalog(small_table$date_time[1:2]),
+    "`2016-01-04 11:00:00` and `2016-01-04 00:32:00`"
   )
   
   #

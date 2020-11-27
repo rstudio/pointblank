@@ -198,17 +198,17 @@ incorporate <- function(informant) {
   metadata_meta_label <- 
     glue_safely(
       informant$metadata[["info_label"]],
-      .otherwise = "(SNIPPET MISSING)"
+      .otherwise = "~SNIPPET MISSING~"
     )
   
   metadata_table <-
     lapply(informant$metadata[["table"]], function(x) {
-      glue_safely(x, .otherwise = "(SNIPPET MISSING)")
+      glue_safely(x, .otherwise = "~SNIPPET MISSING~")
     })
   
   metadata_columns <- 
     lapply(informant$metadata[["columns"]], lapply, function(x) {
-      glue_safely(x, .otherwise = "(SNIPPET MISSING)")
+      glue_safely(x, .otherwise = "~SNIPPET MISSING~")
     })
   
   extra_sections <- 

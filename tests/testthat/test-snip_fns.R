@@ -45,16 +45,20 @@ test_that("the `snip_list()` function works", {
     run_snip(snip_list(column = "e", limit = 1), small_table),
     "`TRUE` and `FALSE`"
   )
-  
   expect_equal(
     run_snip(snip_list(column = "date_time", limit = 2), small_table),
     "`2016-01-04 11:00:00`, `2016-01-04 00:32:00` (+10 more)"
   )
-  
   expect_equal(
     run_snip(snip_list(column = "date", limit = 2), small_table),
     "`2016-01-04`, `2016-01-05` (+9 more)"
   )
+  
+  expect_equal(
+    run_snip(snip_list(column = "f", and_or = "or"), small_table),
+    "`\"high\"`, `\"low\"`, or `\"mid\"`"
+  )
+  
 })
 
 test_that("the `snip_lowest()` function works", {

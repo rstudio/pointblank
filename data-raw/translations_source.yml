@@ -442,6 +442,33 @@ informant_report:
     pt: "Tabela"
     zh: "制表"
     ru: "Таблица"
+  snip_list_more:
+    en: "+{n_items} more"
+    fr: "+{n_items} de plus"
+    de: "+{n_items} mehr"
+    it: "+{n_items} di più"
+    es: "+{n_items} más"
+    pt: "+{n_items} mais"
+    zh: "+另外{n_items}个"
+    ru: "+Еще {n_items}"
+  snip_list_and:
+    en: " and "
+    fr: " et "
+    de: " und "
+    it: " e "
+    es: " y "
+    pt: " e "
+    zh: "和"
+    ru: " и "
+  snip_list_or:
+    en: " or "
+    fr: " ou "
+    de: " oder "
+    it: " o "
+    es: " o "
+    pt: " ou "
+    zh: "或"
+    ru: " или "
 table_scan:
   nav_title_ts:
     en: "Table Scan"

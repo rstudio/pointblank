@@ -729,7 +729,7 @@ pb_str_catalog <- function(item_vector,
     # If a conjunction (the and/or types) is used in any language
     # other than English (where its use is definitely incorrect),
     # then force `oxford` to be FALSE (default is TRUE)
-    if (lang != "en") {
+    if (lang != "en" && n_overlimit == "") {
       oxford <- FALSE
     }
   }

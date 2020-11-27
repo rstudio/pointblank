@@ -576,6 +576,14 @@ info_snippet <- function(x,
 #'   with list items derived from `character` or `factor` values; numbers,
 #'   dates, and logical values won't have quotation marks. We can explicitly use
 #'   quotations (or not) with either `TRUE` or `FALSE` here.
+#' @param lang The language to use for any joining words (from the `and_or`
+#'   option) or additional words in the generated list string. By default,
+#'   `NULL` will use whichever `lang` setting is available in the parent
+#'   *informant* object (this is settable in the [create_informant()] `lang`
+#'   argument). If specified here as an override, the language options are
+#'   English (`"en"`), French (`"fr"`), German (`"de"`), Italian (`"it"`),
+#'   Spanish (`"es"`), Portuguese, (`"pt"`), Chinese (`"zh"`), and Russian
+#'   (`"ru"`).
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 
@@ -586,7 +594,8 @@ snip_list <- function(column,
                       and_or = NULL,
                       oxford = TRUE,
                       as_code = TRUE,
-                      quot_str = NULL) {
+                      quot_str = NULL,
+                      lang = NULL) {
 
   if (is.character(and_or)) {
     and_or <- paste0("'", and_or[1], "'")

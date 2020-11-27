@@ -164,7 +164,16 @@ provided to <code>fn</code>) to get a catalog list from a table column. You can 
 the of items in that list with the <code>limit</code> value.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>snip_list</span><span class='op'>(</span><span class='va'>column</span>, limit <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>snip_list</span><span class='op'>(</span>
+  <span class='va'>column</span>,
+  limit <span class='op'>=</span> <span class='fl'>5</span>,
+  sep <span class='op'>=</span> <span class='st'>","</span>,
+  and_or <span class='op'>=</span> <span class='cn'>NULL</span>,
+  oxford <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  as_code <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  quot_str <span class='op'>=</span> <span class='cn'>NULL</span>,
+  lang <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,7 +185,51 @@ the of items in that list with the <code>limit</code> value.</p>
     <tr>
       <th>limit</th>
       <td><p>A limit of items put into the generated list. The returned text
-will state the remaining number of items beyond the <code>limit</code>.</p></td>
+will state the remaining number of items beyond the <code>limit</code>. By default,
+the limit is <code>5</code>.</p></td>
+    </tr>
+    <tr>
+      <th>sep</th>
+      <td><p>The separator to use between list items. By default, this is a
+comma.</p></td>
+    </tr>
+    <tr>
+      <th>and_or</th>
+      <td><p>The type of conjunction to use between the final and
+penultimate list items (should the item length be below the <code>limit</code> value).
+If <code>NULL</code> (the default) is used, then the 'and' conjunction will be used.
+Alternatively, the following keywords can be used: <code>\"and\"</code>, <code>\"or\"</code>, or
+an empty string (for no conjunction at all).</p></td>
+    </tr>
+    <tr>
+      <th>oxford</th>
+      <td><p>Whether to use an Oxford comma under certain conditions. By
+default, this is <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>as_code</th>
+      <td><p>Should each list item appear in a 'code font' (i.e., as
+monospaced text)? By default this is <code>TRUE</code>. Using <code>FALSE</code> keeps all list
+items in the same font as the rest of the information report.</p></td>
+    </tr>
+    <tr>
+      <th>quot_str</th>
+      <td><p>An option for whether list items should be set in double
+quotes. If <code>NULL</code> (the default), the quotation marks are mainly associated
+with list items derived from <code>character</code> or <code>factor</code> values; numbers,
+dates, and logical values won't have quotation marks. We can explicitly use
+quotations (or not) with either <code>TRUE</code> or <code>FALSE</code> here.</p></td>
+    </tr>
+    <tr>
+      <th>lang</th>
+      <td><p>The language to use for any joining words (from the <code>and_or</code>
+option) or additional words in the generated list string. By default,
+<code>NULL</code> will use whichever <code>lang</code> setting is available in the parent
+<em>informant</em> object (this is settable in the <code><a href='create_informant.html'>create_informant()</a></code> <code>lang</code>
+argument). If specified here as an override, the language options are
+English (<code>"en"</code>), French (<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>),
+Spanish (<code>"es"</code>), Portuguese, (<code>"pt"</code>), Chinese (<code>"zh"</code>), and Russian
+(<code>"ru"</code>).</p></td>
     </tr>
     </table>
 

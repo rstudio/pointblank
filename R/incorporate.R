@@ -185,13 +185,13 @@ incorporate <- function(informant) {
           
           snippet <- 
             snippet %>%
-            pb_fmt_number(locale = informant$locale, decimals = 0)
+            pb_fmt_number(locale = locale, decimals = 0)
           
         } else {
           
           snippet <- 
             snippet %>%
-            pb_fmt_number(locale = informant$locale)
+            pb_fmt_number(locale = locale)
         }
       }
       

@@ -602,6 +602,21 @@ snip_list <- function(column,
   } else if (is.null(and_or)) {
     and_or <- "NULL"
   }
+  
+  if (is.character(lang)) {
+    
+    # Normalize the reporting language identifier and stop if necessary
+    if (!(tolower(lang) %in% reporting_languages)) {
+      stop("The text ", lang, " doesn't correspond to a pointblank ",
+           "reporting language.",
+           call. = FALSE)
+    }
+    
+    lang <- paste0("'", tolower(lang[1]), "'")
+    
+  } else if (is.null(lang)) {
+    lang <- "NULL"
+  }
 
   if (is.null(quot_str)) {
     quot_str <- "NULL"
@@ -636,7 +651,8 @@ snip_list <- function(column,
           and_or = <<and_or>>,
           oxford = <<oxford>>,
           as_code = <<as_code>>,
-          quot_str = <<quot_str>>
+          quot_str = <<quot_str>>,
+          lang = <<lang>>
         )",
         .open = "<<", .close = ">>"   
       )

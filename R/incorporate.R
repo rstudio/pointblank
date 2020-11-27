@@ -107,6 +107,10 @@ incorporate <- function(informant) {
   tbl <- informant$tbl
   read_fn <- informant$read_fn
   
+  # Extract the informant's `lang` and `locale` values
+  lang <- informant$lang
+  locale <- informant$locale
+  
   # TODO: Verify that either `tbl` or `read_fn` is available
   
   # Prefer reading a table from a `read_fn` if it's available

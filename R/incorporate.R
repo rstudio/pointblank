@@ -169,8 +169,47 @@ incorporate <- function(informant) {
 
     snippet_fn <- 
       informant$meta_snippets[[i]] %>%
+      rlang::f_rhs()
+    
+    snippet_f_rhs_str <-
+      informant$meta_snippets[[i]] %>%
       rlang::f_rhs() %>%
-      rlang::eval_tidy()
+      as.character()
+
+    if (any(grepl("pb_str_catalog", snippet_f_rhs_str)) &&
+        any(grepl("lang = NULL", snippet_f_rhs_str)) &&
+        lang != "en") {
+
+      # We are inside this conditional because the snippet involves
+      # the use of `pb_str_catalog()` and it requires a resetting
+      # of the `lang` value (from `NULL` to the informant `lang`)
+      
+      select_call_idx <-
+        which(grepl("select", snippet_f_rhs_str))
+      
+      pb_str_catalog_call_idx <-
+        which(grepl("pb_str_catalog", snippet_f_rhs_str))
+      
+      snippet_f_rhs_str[pb_str_catalog_call_idx] <-
+        gsub(
+          "lang = NULL", paste0("lang = \"", lang, "\""),
+          snippet_f_rhs_str[pb_str_catalog_call_idx]
+        )
+      
+      # Put the snippet back together as a formula and
+      # get only the RHS
+      snippet_fn <-
+        paste0(
+          "~",
+          snippet_f_rhs_str[select_call_idx],
+          " %>% ",
+          snippet_f_rhs_str[pb_str_catalog_call_idx]
+        ) %>%
+        stats::as.formula() %>%
+        rlang::f_rhs()
+    }
+    
+    snippet_fn <- snippet_fn %>% rlang::eval_tidy()
     
     if (inherits(snippet_fn, "fseq")) {
       

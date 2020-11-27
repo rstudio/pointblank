@@ -308,7 +308,10 @@ test_that("Utility functions won't fail us", {
   #
   
   # Obtain all of the available string vector names
-  x <- readRDS(file = system.file("text", "translations_built", package = "pointblank"))
+  x <- 
+    readRDS(
+      file = system.file("text", "translations_built", package = "pointblank")
+    )
   
   autobriefs_names <- names(x$autobriefs)
   agent_report_names <- names(x$agent_report)
@@ -317,7 +320,8 @@ test_that("Utility functions won't fail us", {
   
   expect_equal(
     autobriefs_names,
-    c("precondition_text", "column_computed_text", "values_text", 
+    c(
+      "precondition_text", "column_computed_text", "values_text", 
       "compare_expectation_text", "compare_failure_text", "in_set_expectation_text", 
       "in_set_failure_text", "not_in_set_expectation_text", "not_in_set_failure_text", 
       "between_expectation_text", "between_failure_text", "not_between_expectation_text", 
@@ -334,17 +338,22 @@ test_that("Utility functions won't fail us", {
   
   expect_equal(
     agent_report_names,
-    c("pointblank_validation_title_text", "pointblank_validation_plan_text", 
+    c(
+      "pointblank_validation_title_text", "pointblank_validation_plan_text", 
       "no_interrogation_performed_text", "report_fail_rows_available", 
       "report_no_table_preconditions", "report_some_table_preconditions", 
       "report_no_evaluation_issues", "report_col_step", "report_col_steps", 
       "report_col_columns", "report_col_values", "report_column_schema", 
-      "report_r_col_types", "report_r_sql_types")
+      "report_r_col_types", "report_r_sql_types"
+    )
   )
   
   expect_equal(
     informant_report_names,
-    c("pointblank_information_title_text", "pointblank_table_text")
+    c(
+      "pointblank_information_title_text", "pointblank_table_text",
+      "snip_list_more", "snip_list_and", "snip_list_or"
+    )
   )
   
   expect_equal(
@@ -412,15 +421,15 @@ test_that("Utility functions won't fail us", {
   )
   expect_equal(
     pb_str_catalog(l_vector, limit = 20),
-    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"` "
+    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"`"
   )
   expect_equal(
     pb_str_catalog(l_vector, limit = Inf),
-    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"` "
+    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"`"
   )
   expect_equal(
     pb_str_catalog(l_vector, limit = 7),
-    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"` "
+    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"`, and `\"f\"`"
   )
   expect_equal(
     pb_str_catalog(l_vector, limit = 2),
@@ -431,32 +440,160 @@ test_that("Utility functions won't fail us", {
     "`\"a\"` and `\"b\"`"
   )
   expect_equal(
-    pb_str_catalog(l_vector[1:2], conj = "et"),
-    "`\"a\"` et `\"b\"`"
-  )
-  expect_equal(
-    pb_str_catalog(l_vector, limit = 2, more = "de plus"),
+    pb_str_catalog(l_vector, limit = 2, lang = "fr"),
     "`\"a\"`, `\"b\"` (+4 de plus)"
   )
   expect_equal(
     pb_str_catalog(l_vector[1:3], oxford = FALSE),
-    "`\"a\"`, `\"b\"`and `\"c\"` "
+    "`\"a\"`, `\"b\"` and `\"c\"`"
   )
   expect_equal(
-    pb_str_catalog(l_vector[1:3], sep = " |", conj = ""),
-    "`\"a\"` | `\"b\"` |  `\"c\"` "
+    pb_str_catalog(l_vector[1:3], sep = " |", and_or = ""),
+    "`\"a\"` | `\"b\"` |  `\"c\"`"
   )
   expect_equal(
-    pb_str_catalog(l_vector[1:2], surround = ""),
+    pb_str_catalog(l_vector[1:2], as_code = FALSE, quot_str = FALSE),
     "a and b"
   )
   expect_equal(
-    pb_str_catalog(l_vector, surround = ""),
+    pb_str_catalog(l_vector, as_code = FALSE, quot_str = FALSE),
     "a, b, c, d, e (+1 more)"
   )
   expect_equal(
-    pb_str_catalog(l_vector[1], surround = ""),
+    pb_str_catalog(l_vector[1], as_code = FALSE, quot_str = FALSE),
     "a"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector, and_or = "", oxford = TRUE),
+    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"` (+1 more)"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector, and_or = "", oxford = FALSE),
+    "`\"a\"`, `\"b\"`, `\"c\"`, `\"d\"`, `\"e\"` (+1 more)"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], oxford = TRUE, lang = "en"),
+    "`\"a\"`, `\"b\"`, and `\"c\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], oxford = FALSE, lang = "en"),
+    "`\"a\"`, `\"b\"` and `\"c\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], oxford = FALSE, lang = "de"),
+    "`\"a\"`, `\"b\"` und `\"c\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], oxford = FALSE, lang = "de"),
+    pb_str_catalog(l_vector[1:3], oxford = TRUE, lang = "de")
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], and_or = "or"),
+    "`\"a\"`, `\"b\"`, or `\"c\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1], and_or = "or"),
+    "`\"a\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1], and_or = "and"),
+    "`\"a\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1], and_or = ""),
+    "`\"a\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1], and_or = NULL),
+    "`\"a\"`"
+  )
+  expect_equal(
+    pb_str_catalog(1:3),
+    "`1`, `2`, and `3`"
+  )
+  expect_equal(
+    pb_str_catalog(c(TRUE, FALSE, TRUE)),
+    "`TRUE`, `FALSE`, and `TRUE`"
+  )
+  expect_equal(
+    pb_str_catalog(as.Date(c("2015-05-26", "2020-06-17"))),
+    "`2015-05-26` and `2020-06-17`"
+  )
+  expect_equal(
+    pb_str_catalog(small_table$date_time[1:2]),
+    "`2016-01-04 11:00:00` and `2016-01-04 00:32:00`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], limit = 1, and_or = "or", lang = "de"),
+    "`\"a\"` (+2 mehr)"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], limit = 2, and_or = "or", lang = "de"),
+    "`\"a\"`, `\"b\"` (+1 mehr)"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], limit = 3, and_or = "or", lang = "de"),
+    "`\"a\"`, `\"b\"` oder `\"c\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], limit = 3, and_or = "or", lang = "de"),
+    pb_str_catalog(l_vector[1:3], limit = 4, and_or = "or", lang = "de")
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], limit = 1, and_or = "and", lang = "de"),
+    "`\"a\"` (+2 mehr)"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], limit = 2, and_or = "and", lang = "de"),
+    "`\"a\"`, `\"b\"` (+1 mehr)"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], limit = 3, and_or = "and", lang = "de"),
+    "`\"a\"`, `\"b\"` und `\"c\"`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], limit = 3, and_or = "and", lang = "de"),
+    pb_str_catalog(l_vector[1:3], limit = 4, and_or = "and", lang = "de")
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3]),
+    pb_str_catalog(l_vector[1:3], as_code = TRUE, quot_str = TRUE)
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], as_code = TRUE, quot_str = FALSE),
+    "`a`, `b`, and `c`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], as_code = FALSE, quot_str = TRUE),
+    "\"a\", \"b\", and \"c\""
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:3], as_code = FALSE, quot_str = FALSE),
+    "a, b, and c"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:2], as_code = TRUE, quot_str = FALSE),
+    "`a` and `b`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:2], as_code = FALSE, quot_str = TRUE),
+    "\"a\" and \"b\""
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:2], as_code = FALSE, quot_str = FALSE),
+    "a and b"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:2], as_code = TRUE, quot_str = FALSE, lang = "fr"),
+    "`a` et `b`"
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:2], as_code = FALSE, quot_str = TRUE, lang = "fr"),
+    "\"a\" et \"b\""
+  )
+  expect_equal(
+    pb_str_catalog(l_vector[1:2], as_code = FALSE, quot_str = FALSE, lang = "fr"),
+    "a et b"
   )
   
   #

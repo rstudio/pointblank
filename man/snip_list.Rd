@@ -4,13 +4,54 @@
 \alias{snip_list}
 \title{A \code{fn} for \code{info_snippet()}: get a list of column categories}
 \usage{
-snip_list(column, limit = 5)
+snip_list(
+  column,
+  limit = 5,
+  sep = ",",
+  and_or = NULL,
+  oxford = TRUE,
+  as_code = TRUE,
+  quot_str = NULL,
+  lang = NULL
+)
 }
 \arguments{
 \item{column}{The name of the column that contains the target values.}
 
 \item{limit}{A limit of items put into the generated list. The returned text
-will state the remaining number of items beyond the \code{limit}.}
+will state the remaining number of items beyond the \code{limit}. By default,
+the limit is \code{5}.}
+
+\item{sep}{The separator to use between list items. By default, this is a
+comma.}
+
+\item{and_or}{The type of conjunction to use between the final and
+penultimate list items (should the item length be below the \code{limit} value).
+If \code{NULL} (the default) is used, then the 'and' conjunction will be used.
+Alternatively, the following keywords can be used: \verb{\\"and\\"}, \verb{\\"or\\"}, or
+an empty string (for no conjunction at all).}
+
+\item{oxford}{Whether to use an Oxford comma under certain conditions. By
+default, this is \code{TRUE}.}
+
+\item{as_code}{Should each list item appear in a 'code font' (i.e., as
+monospaced text)? By default this is \code{TRUE}. Using \code{FALSE} keeps all list
+items in the same font as the rest of the information report.}
+
+\item{quot_str}{An option for whether list items should be set in double
+quotes. If \code{NULL} (the default), the quotation marks are mainly associated
+with list items derived from \code{character} or \code{factor} values; numbers,
+dates, and logical values won't have quotation marks. We can explicitly use
+quotations (or not) with either \code{TRUE} or \code{FALSE} here.}
+
+\item{lang}{The language to use for any joining words (from the \code{and_or}
+option) or additional words in the generated list string. By default,
+\code{NULL} will use whichever \code{lang} setting is available in the parent
+\emph{informant} object (this is settable in the \code{\link[=create_informant]{create_informant()}} \code{lang}
+argument). If specified here as an override, the language options are
+English (\code{"en"}), French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}),
+Spanish (\code{"es"}), Portuguese, (\code{"pt"}), Chinese (\code{"zh"}), and Russian
+(\code{"ru"}).}
 }
 \value{
 A formula needed for \code{\link[=info_snippet]{info_snippet()}}'s \code{fn} argument.

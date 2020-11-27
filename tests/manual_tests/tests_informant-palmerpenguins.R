@@ -29,7 +29,7 @@ informant_pp <-
   ) %>%
   info_snippet(
     snippet_name = "year_snippet",
-    fn = snip_list(column = "year")
+    fn = snip_list(column = "year", and_or = "")
   ) %>%
   info_columns(
     columns = "bill_length_mm",

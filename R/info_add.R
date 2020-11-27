@@ -557,19 +557,103 @@ info_snippet <- function(x,
 #' 
 #' @param column The name of the column that contains the target values.
 #' @param limit A limit of items put into the generated list. The returned text
-#'   will state the remaining number of items beyond the `limit`.
+#'   will state the remaining number of items beyond the `limit`. By default,
+#'   the limit is `5`.
+#' @param sep The separator to use between list items. By default, this is a
+#'   comma.
+#' @param and_or The type of conjunction to use between the final and
+#'   penultimate list items (should the item length be below the `limit` value).
+#'   If `NULL` (the default) is used, then the 'and' conjunction will be used.
+#'   Alternatively, the following keywords can be used: `\"and\"`, `\"or\"`, or
+#'   an empty string (for no conjunction at all).
+#' @param oxford Whether to use an Oxford comma under certain conditions. By
+#'   default, this is `TRUE`.
+#' @param as_code Should each list item appear in a 'code font' (i.e., as
+#'   monospaced text)? By default this is `TRUE`. Using `FALSE` keeps all list
+#'   items in the same font as the rest of the information report.
+#' @param quot_str An option for whether list items should be set in double
+#'   quotes. If `NULL` (the default), the quotation marks are mainly associated
+#'   with list items derived from `character` or `factor` values; numbers,
+#'   dates, and logical values won't have quotation marks. We can explicitly use
+#'   quotations (or not) with either `TRUE` or `FALSE` here.
+#' @param lang The language to use for any joining words (from the `and_or`
+#'   option) or additional words in the generated list string. By default,
+#'   `NULL` will use whichever `lang` setting is available in the parent
+#'   *informant* object (this is settable in the [create_informant()] `lang`
+#'   argument). If specified here as an override, the language options are
+#'   English (`"en"`), French (`"fr"`), German (`"de"`), Italian (`"it"`),
+#'   Spanish (`"es"`), Portuguese, (`"pt"`), Chinese (`"zh"`), and Russian
+#'   (`"ru"`).
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 
 #' @export
 snip_list <- function(column,
-                      limit = 5) {
+                      limit = 5,
+                      sep = ",",
+                      and_or = NULL,
+                      oxford = TRUE,
+                      as_code = TRUE,
+                      quot_str = NULL,
+                      lang = NULL) {
+
+  if (is.character(and_or)) {
+    and_or <- paste0("'", and_or[1], "'")
+  } else if (is.null(and_or)) {
+    and_or <- "NULL"
+  }
   
+  if (is.character(lang)) {
+    
+    # Normalize the reporting language identifier and stop if necessary
+    if (!(tolower(lang) %in% reporting_languages)) {
+      stop("The text ", lang, " doesn't correspond to a pointblank ",
+           "reporting language.",
+           call. = FALSE)
+    }
+    
+    lang <- paste0("'", tolower(lang[1]), "'")
+    
+  } else if (is.null(lang)) {
+    lang <- "NULL"
+  }
+
+  if (is.null(quot_str)) {
+    quot_str <- "NULL"
+  } else {
+    if (!is.logical(quot_str)) {
+      stop(
+        "The value given to `quot_str` must be one of three things:\n",
+        "* `NULL`: automatically sets quotes depending on the column values\n",
+        "* `TRUE`: uses double quotes for every value.\n",
+        "* `FALSE`: suppresses use of quotes for values.",
+        call. = FALSE
+      )
+    }
+  }
+  
+  if (!is.character(sep)) {
+    stop("A character value must be given for `sep` in `snip_list()`",
+         call. = FALSE)
+  }
+  
+  sep <- paste0("'", sep[1], "'")
+
   stats::as.formula(
     as.character(
       glue::glue(
-        "~ . %>% dplyr::select(<<column>>) %>% dplyr::distinct() %>%
-        dplyr::pull(<<column>>) %>% pb_str_catalog(limit = <<limit>>)",
+        "~ . %>% dplyr::select(<<column>>) %>% 
+        dplyr::distinct() %>%
+        dplyr::pull(<<column>>) %>% 
+        pb_str_catalog(
+          limit = <<limit[1]>>,
+          sep = <<sep>>,
+          and_or = <<and_or>>,
+          oxford = <<oxford>>,
+          as_code = <<as_code>>,
+          quot_str = <<quot_str>>,
+          lang = <<lang>>
+        )",
         .open = "<<", .close = ">>"   
       )
     )

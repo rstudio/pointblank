@@ -653,22 +653,87 @@ tidy_gsub <- function(x,
 }
 
 pb_str_catalog <- function(item_vector,
-                           conj = "and",
-                           more = "more",
-                           surround = c("\"", "`"),
-                           sep = ",",
                            limit = 5,
-                           oxford = TRUE) {
+                           sep = ",",
+                           and_or = NULL,
+                           oxford = TRUE,
+                           as_code = TRUE,
+                           quot_str = NULL,
+                           lang = NULL) {
+  
+  if (is.null(lang)) lang <- "en"
   
   item_count <- length(item_vector)
-  
+
   if (item_count > 2 && item_count > limit) {
-    n_overlimit <- paste0("(+", paste(item_count - limit, more), ")")
+    
+    n_items <- item_count - limit
+    
+    more <- glue::glue(get_lsv("informant_report/snip_list_more")[[lang]])
+    
+    n_overlimit <- paste0("(", more, ")")
+    
     item_vector <- item_vector[1:limit]
+    
   } else {
+    
     n_overlimit <- ""
   }
+
+  if (is.null(quot_str)) {
+    
+    if (is.numeric(item_vector) || 
+        is.logical(item_vector) ||
+        inherits(item_vector, "Date") ||
+        inherits(item_vector, "POSIXct")) {
+      
+      quot_str <- FALSE
+    } else {
+      quot_str <- TRUE
+    }
+  }
+
+  surround <- c()
   
+  if (quot_str) {
+    surround <- "\""
+  }
+  
+  if (as_code) {
+    surround <- c(surround, "`")
+  }
+
+  if (is.null(and_or)) {
+    and_or <- "and"
+  }
+  
+  if (!(and_or %in% c("and", "or", ""))) {
+    stop(
+      "The value for `and_or` must be one of the following:\n",
+      "* `\"and\"`, `\"or\"`, or an empty string",
+      call. = FALSE
+    )
+  }
+  
+  if (and_or == "") {
+    
+    # Force the use of all possible commas where the conjunction
+    # is not used (this is technically not using an Oxford comma but
+    # this proceeds down the same codepath)
+    oxford <- TRUE
+    
+  } else {
+    
+    and_or <- get_lsv(paste0("informant_report/snip_list_", and_or))[[lang]]
+    
+    # If a conjunction (the and/or types) is used in any language
+    # other than English (where its use is definitely incorrect),
+    # then force `oxford` to be FALSE (default is TRUE)
+    if (lang != "en" && n_overlimit == "") {
+      oxford <- FALSE
+    }
+  }
+
   surround_str_1 <- rev(surround) %>% paste(collapse = "")
   surround_str_2 <- surround %>% paste(collapse = "")
   
@@ -680,28 +745,42 @@ pb_str_catalog <- function(item_vector,
     
   } else if (item_count == 2) {
     
-    return(paste(cat_str[1], conj, cat_str[2]))
+    return(paste0(cat_str[1], and_or, cat_str[2]))
     
   } else {
     
     separators <- rep(paste0(sep, " "), length(item_vector) - 1)
     
     if (!oxford) {
-      separators[length(separators)] <- ""
+      separators[length(separators)] <- " "
     }
-    
+
     if (n_overlimit == "") {
       separators[length(separators)] <- 
-        paste0(separators[length(separators)], conj, " ")
+        paste0(
+          separators[length(separators)],
+          gsub("(^ | $)", "", and_or),
+          " "
+        )
     }
     
     separators[length(separators) + 1] <- ""
     
-    cat_str <-
-      paste0(cat_str, separators) %>%
-      paste(collapse = "")
+    if (length(cat_str) == 2) {
+      
+      cat_str <- 
+        paste0(cat_str[1], ", ", cat_str[2])
+      
+    } else {
+      
+      cat_str <-
+        paste0(cat_str, separators) %>%
+        paste(collapse = "")
+    }
     
     cat_str <- paste(cat_str, n_overlimit)
+    
+    cat_str <- gsub("\\s+$", "", cat_str)
     
     return(cat_str)
   }

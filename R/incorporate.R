@@ -107,6 +107,10 @@ incorporate <- function(informant) {
   tbl <- informant$tbl
   read_fn <- informant$read_fn
   
+  # Extract the informant's `lang` and `locale` values
+  lang <- informant$lang
+  locale <- informant$locale
+  
   # TODO: Verify that either `tbl` or `read_fn` is available
   
   # Prefer reading a table from a `read_fn` if it's available
@@ -165,8 +169,47 @@ incorporate <- function(informant) {
 
     snippet_fn <- 
       informant$meta_snippets[[i]] %>%
+      rlang::f_rhs()
+    
+    snippet_f_rhs_str <-
+      informant$meta_snippets[[i]] %>%
       rlang::f_rhs() %>%
-      rlang::eval_tidy()
+      as.character()
+
+    if (any(grepl("pb_str_catalog", snippet_f_rhs_str)) &&
+        any(grepl("lang = NULL", snippet_f_rhs_str)) &&
+        lang != "en") {
+
+      # We are inside this conditional because the snippet involves
+      # the use of `pb_str_catalog()` and it requires a resetting
+      # of the `lang` value (from `NULL` to the informant `lang`)
+      
+      select_call_idx <-
+        which(grepl("select", snippet_f_rhs_str))
+      
+      pb_str_catalog_call_idx <-
+        which(grepl("pb_str_catalog", snippet_f_rhs_str))
+      
+      snippet_f_rhs_str[pb_str_catalog_call_idx] <-
+        gsub(
+          "lang = NULL", paste0("lang = \"", lang, "\""),
+          snippet_f_rhs_str[pb_str_catalog_call_idx]
+        )
+      
+      # Put the snippet back together as a formula and
+      # get only the RHS
+      snippet_fn <-
+        paste0(
+          "~",
+          snippet_f_rhs_str[select_call_idx],
+          " %>% ",
+          snippet_f_rhs_str[pb_str_catalog_call_idx]
+        ) %>%
+        stats::as.formula() %>%
+        rlang::f_rhs()
+    }
+    
+    snippet_fn <- snippet_fn %>% rlang::eval_tidy()
     
     if (inherits(snippet_fn, "fseq")) {
       
@@ -181,13 +224,13 @@ incorporate <- function(informant) {
           
           snippet <- 
             snippet %>%
-            pb_fmt_number(locale = informant$locale, decimals = 0)
+            pb_fmt_number(locale = locale, decimals = 0)
           
         } else {
           
           snippet <- 
             snippet %>%
-            pb_fmt_number(locale = informant$locale)
+            pb_fmt_number(locale = locale)
         }
       }
       
@@ -198,17 +241,17 @@ incorporate <- function(informant) {
   metadata_meta_label <- 
     glue_safely(
       informant$metadata[["info_label"]],
-      .otherwise = "(SNIPPET MISSING)"
+      .otherwise = "~SNIPPET MISSING~"
     )
   
   metadata_table <-
     lapply(informant$metadata[["table"]], function(x) {
-      glue_safely(x, .otherwise = "(SNIPPET MISSING)")
+      glue_safely(x, .otherwise = "~SNIPPET MISSING~")
     })
   
   metadata_columns <- 
     lapply(informant$metadata[["columns"]], lapply, function(x) {
-      glue_safely(x, .otherwise = "(SNIPPET MISSING)")
+      glue_safely(x, .otherwise = "~SNIPPET MISSING~")
     })
   
   extra_sections <- 

@@ -11,7 +11,8 @@ snip_list(
   and_or = NULL,
   oxford = TRUE,
   as_code = TRUE,
-  quot_str = NULL
+  quot_str = NULL,
+  lang = NULL
 )
 }
 \arguments{
@@ -42,6 +43,15 @@ quotes. If \code{NULL} (the default), the quotation marks are mainly associated
 with list items derived from \code{character} or \code{factor} values; numbers,
 dates, and logical values won't have quotation marks. We can explicitly use
 quotations (or not) with either \code{TRUE} or \code{FALSE} here.}
+
+\item{lang}{The language to use for any joining words (from the \code{and_or}
+option) or additional words in the generated list string. By default,
+\code{NULL} will use whichever \code{lang} setting is available in the parent
+\emph{informant} object (this is settable in the \code{\link[=create_informant]{create_informant()}} \code{lang}
+argument). If specified here as an override, the language options are
+English (\code{"en"}), French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}),
+Spanish (\code{"es"}), Portuguese, (\code{"pt"}), Chinese (\code{"zh"}), and Russian
+(\code{"ru"}).}
 }
 \value{
 A formula needed for \code{\link[=info_snippet]{info_snippet()}}'s \code{fn} argument.

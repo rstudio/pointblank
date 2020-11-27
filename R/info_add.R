@@ -564,7 +564,7 @@ info_snippet <- function(x,
 #' @param and_or The type of conjunction to use between the final and
 #'   penultimate list items (should the item length be below the `limit` value).
 #'   If `NULL` (the default) is used, then the 'and' conjunction will be used.
-#'   Alternatively, the following keywords can be used: `\"and\"`, `\"or\"`, or
+#'   Alternatively, the following keywords can be used: `"and"`, `"or"`, or
 #'   an empty string (for no conjunction at all).
 #' @param oxford Whether to use an Oxford comma under certain conditions. By
 #'   default, this is `TRUE`.

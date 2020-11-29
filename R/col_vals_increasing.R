@@ -117,6 +117,15 @@ col_vals_increasing <- function(x,
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
+  # TODO: Ensure that `allow_stationary` is logical
+  # TODO: Ensure that `decreasing_tol` is either `NULL` or numeric
+  
+  # Put `allow_stationary` and `decreasing_tol` into a length-2 numeric vector
+  stat_tol <- 
+    as.numeric(
+      c(allow_stationary, if (is.null(decreasing_tol)) 0 else decreasing_tol)
+    )
+  
   if (is_a_table_object(x)) {
     
     secret_agent <-
@@ -142,7 +151,8 @@ col_vals_increasing <- function(x,
   if (is.null(brief)) {
     brief <- 
       generate_autobriefs(
-        agent, columns, preconditions, values = value, "col_vals_increasing"
+        agent, columns, preconditions,
+        values = decreasing_tol, "col_vals_increasing"
       )
   }
   
@@ -162,7 +172,7 @@ col_vals_increasing <- function(x,
         agent = agent,
         assertion_type = "col_vals_increasing",
         column = columns[i],
-        values = decreasing_tol,
+        values = stat_tol,
         na_pass = na_pass,
         preconditions = preconditions,
         actions = covert_actions(actions, agent),

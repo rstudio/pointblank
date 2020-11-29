@@ -586,6 +586,13 @@ check_table_with_assertion <- function(agent,
         idx = idx,
         table = table
       ),
+      "col_vals_increasing" =,
+      "col_vals_decreasing" = interrogate_direction(
+        agent = agent,
+        idx = idx,
+        table = table,
+        assertion_type = assertion_type
+      ),
       "col_vals_regex" = interrogate_regex(
         agent = agent,
         idx = idx,

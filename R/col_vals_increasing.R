@@ -78,10 +78,10 @@
 #' 
 #' @inheritParams col_vals_gt
 #' @param allow_stationary An option to allow pauses in decreasing values. For
-#'   example if the values for the test units are `[85, 82, 82, 80, 77]` then
+#'   example if the values for the test units are `[80, 82, 82, 85, 88]` then
 #'   the third unit (`82`, appearing a second time) would be marked with *fail*
 #'   when `allow_stationary` is `FALSE` (the default). Using `allow_stationary =
-#'   TRUE` will result in all the test units in `[85, 82, 82, 80, 77]` to be
+#'   TRUE` will result in all the test units in `[80, 82, 82, 85, 88]` to be
 #'   marked with *pass*.
 #' @param decreasing_tol An optional threshold value that allows for movement of
 #'   numerical values in the negative direction. By default this is `NULL` but

@@ -3,6 +3,7 @@
 \name{col_vals_increasing}
 \alias{col_vals_increasing}
 \alias{expect_col_vals_increasing}
+\alias{test_col_vals_increasing}
 \title{Are column data increasing by row?}
 \usage{
 col_vals_increasing(
@@ -20,6 +21,16 @@ col_vals_increasing(
 )
 
 expect_col_vals_increasing(
+  object,
+  columns,
+  allow_stationary = FALSE,
+  decreasing_tol = NULL,
+  na_pass = FALSE,
+  preconditions = NULL,
+  threshold = 1
+)
+
+test_col_vals_increasing(
   object,
   columns,
   allow_stationary = FALSE,
@@ -179,6 +190,7 @@ Other validation functions:
 \code{\link{col_is_posix}()},
 \code{\link{col_schema_match}()},
 \code{\link{col_vals_between}()},
+\code{\link{col_vals_decreasing}()},
 \code{\link{col_vals_equal}()},
 \code{\link{col_vals_expr}()},
 \code{\link{col_vals_gte}()},

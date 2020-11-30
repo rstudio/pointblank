@@ -230,10 +230,8 @@ expect_col_vals_increasing <- function(object,
   }
   
   act <- testthat::quasi_label(enquo(x), arg = "object")
-  # 
-  # column_text <- prep_column_text(vs$column[[1]])
-  # operator <- ">"
-  # values_text <- prep_values_text(values = vs$values, limit = 3, lang = "en")
+  
+  column_text <- prep_column_text(vs$column[[1]])
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),

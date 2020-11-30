@@ -177,7 +177,7 @@ then be automatically generated.
 }
 \seealso{
 The analogous function that moves in the opposite direction:
-\code{\link[=col_vals_decreasing]{col_vals_decreasing()}}.
+\code{\link[=col_vals_increasing]{col_vals_increasing()}}.
 
 Other validation functions: 
 \code{\link{col_exists}()},

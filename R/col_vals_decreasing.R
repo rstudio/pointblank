@@ -91,7 +91,7 @@
 #' @family validation functions
 #' 
 #' @seealso The analogous function that moves in the opposite direction:
-#' [col_vals_decreasing()].
+#' [col_vals_increasing()].
 #' 
 #' @name col_vals_decreasing
 NULL

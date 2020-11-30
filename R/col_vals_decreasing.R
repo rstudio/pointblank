@@ -83,9 +83,9 @@
 #'   when `allow_stationary` is `FALSE` (the default). Using `allow_stationary =
 #'   TRUE` will result in all the test units in `[85, 82, 82, 80, 77]` to be
 #'   marked with *pass*.
-#' @param decreasing_tol An optional threshold value that allows for movement of
-#'   numerical values in the negative direction. By default this is `NULL` but
-#'   using a numerical value with set the absolute threshold of negative travel
+#' @param increasing_tol An optional threshold value that allows for movement of
+#'   numerical values in the positive direction. By default this is `NULL` but
+#'   using a numerical value with set the absolute threshold of positive travel
 #'   allowed across numerical test units.
 #' 
 #' @family validation functions

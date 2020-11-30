@@ -1112,7 +1112,7 @@ interrogate_direction <- function(agent,
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
   # Get the values for `allow_stationary` and either of
-  # `decreasing_tol`/`decreasing_tol`
+  # the tolerance values
   stat_tol <- get_values_at_idx(agent = agent, idx = idx)
 
   # Determine whether NAs should be allowed

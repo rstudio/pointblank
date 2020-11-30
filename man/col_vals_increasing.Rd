@@ -49,9 +49,9 @@ with \code{\link[=create_agent]{create_agent()}}.}
 vector) to which this validation should be applied.}
 
 \item{allow_stationary}{An option to allow pauses in decreasing values. For
-example if the values for the test units are \verb{[85, 82, 82, 80, 77]} then
+example if the values for the test units are \verb{[80, 82, 82, 85, 88]} then
 the third unit (\code{82}, appearing a second time) would be marked with \emph{fail}
-when \code{allow_stationary} is \code{FALSE} (the default). Using \code{allow_stationary = TRUE} will result in all the test units in \verb{[85, 82, 82, 80, 77]} to be
+when \code{allow_stationary} is \code{FALSE} (the default). Using \code{allow_stationary = TRUE} will result in all the test units in \verb{[80, 82, 82, 85, 88]} to be
 marked with \emph{pass}.}
 
 \item{decreasing_tol}{An optional threshold value that allows for movement of

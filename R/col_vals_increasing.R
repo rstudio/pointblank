@@ -246,3 +246,37 @@ expect_col_vals_increasing <- function(object,
   
   invisible(act$val)
 }
+
+#' @rdname col_vals_increasing
+#' @import rlang
+#' @export
+test_col_vals_increasing <- function(object,
+                                     columns,
+                                     allow_stationary = FALSE,
+                                     decreasing_tol = NULL,
+                                     na_pass = FALSE,
+                                     preconditions = NULL,
+                                     threshold = 1) {
+  
+  vs <- 
+    create_agent(tbl = object, label = "::QUIET::") %>%
+    col_vals_increasing(
+      columns = {{ columns }},
+      allow_stationary = allow_stationary,
+      decreasing_tol = decreasing_tol,
+      na_pass = na_pass,
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>%
+    .$validation_set
+  
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
+  
+  all(!vs$notify)
+}

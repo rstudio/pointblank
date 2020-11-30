@@ -1119,15 +1119,16 @@ interrogate_direction <- function(agent,
   na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
   
   if (assertion_type == "col_vals_increasing") {
-    
+    direction <- "increasing"
   } else {
-    
+    direction <- "decreasing"
   }
 
   # Create function for validating the `col_vals_in_set()` step function
-  tbl_val_increasing <- function(table,
-                                 column,
-                                 na_pass) {
+  tbl_val_direction <- function(table,
+                                column,
+                                na_pass,
+                                direction) {
     
     column_validity_checks_column(table = table, column = {{ column }})
 
@@ -1138,36 +1139,74 @@ interrogate_direction <- function(agent,
     
     if (stat_tol[1] == 0) {
       
-      tbl <-
-        tbl %>%
-        dplyr::mutate(pb_is_good_ = dplyr::case_when(
-          pb_lagged_difference_ > 0 ~ TRUE,
-          pb_lagged_difference_ <= 0 ~ FALSE,
-          is.na({{ column }}) & !na_pass ~ FALSE
-        ))
+      if (direction == "increasing") {
+        
+        tbl <-
+          tbl %>%
+          dplyr::mutate(pb_is_good_ = dplyr::case_when(
+            pb_lagged_difference_ > 0 ~ TRUE,
+            pb_lagged_difference_ <= 0 ~ FALSE,
+            is.na({{ column }}) & !na_pass ~ FALSE
+          ))
+        
+      } else {
+        
+        tbl <-
+          tbl %>%
+          dplyr::mutate(pb_is_good_ = dplyr::case_when(
+            pb_lagged_difference_ < 0 ~ TRUE,
+            pb_lagged_difference_ >= 0 ~ FALSE,
+            is.na({{ column }}) & !na_pass ~ FALSE
+          ))
+      }
     }
     
     if (stat_tol[1] == 1) {
 
-      tbl <-
-        tbl %>%
-        dplyr::mutate(pb_is_good_ = dplyr::case_when(
-          pb_lagged_difference_ >= 0 ~ TRUE,
-          pb_lagged_difference_ < 0 ~ FALSE,
-          is.na({{ column }}) & !na_pass ~ FALSE
-        ))
+      if (direction == "increasing") {
+        
+        tbl <-
+          tbl %>%
+          dplyr::mutate(pb_is_good_ = dplyr::case_when(
+            pb_lagged_difference_ >= 0 ~ TRUE,
+            pb_lagged_difference_ < 0 ~ FALSE,
+            is.na({{ column }}) & !na_pass ~ FALSE
+          ))
+        
+      } else {
+        
+        tbl <-
+          tbl %>%
+          dplyr::mutate(pb_is_good_ = dplyr::case_when(
+            pb_lagged_difference_ <= 0 ~ TRUE,
+            pb_lagged_difference_ > 0 ~ FALSE,
+            is.na({{ column }}) & !na_pass ~ FALSE
+          ))
+      }
     }
     
     # If a tolerance is set to some non-zero value, then accept
     # differential values greater than or equal to that tolerance value
     if (stat_tol[2] != 0) {
       
-      tbl <-
-        tbl %>%
-        dplyr::mutate(pb_is_good_ = ifelse(
-          !is.na(pb_lagged_difference_) & 
-            pb_lagged_difference_ >= (-abs(stat_tol[2])), TRUE, pb_is_good_
-        ))
+      if (direction == "increasing") {
+        
+        tbl <-
+          tbl %>%
+          dplyr::mutate(pb_is_good_ = ifelse(
+            !is.na(pb_lagged_difference_) & 
+              pb_lagged_difference_ >= (-abs(stat_tol[2])), TRUE, pb_is_good_
+          ))
+        
+      } else {
+
+        tbl <-
+          tbl %>%
+          dplyr::mutate(pb_is_good_ = ifelse(
+            !is.na(pb_lagged_difference_) & 
+              pb_lagged_difference_ <= abs(stat_tol[2]), TRUE, pb_is_good_
+          ))
+      }
     }
     
     tbl <-
@@ -1181,10 +1220,11 @@ interrogate_direction <- function(agent,
   # Perform rowwise validations for the column
   tbl_evaled <- 
     pointblank_try_catch(
-      tbl_val_increasing(
+      tbl_val_direction(
         table = table,
         column = {{ column }},
-        na_pass = na_pass
+        na_pass = na_pass,
+        direction = direction
       )
     )
 }

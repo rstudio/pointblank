@@ -54,6 +54,11 @@ the third unit (\code{82}, appearing a second time) would be marked with \emph{f
 when \code{allow_stationary} is \code{FALSE} (the default). Using \code{allow_stationary = TRUE} will result in all the test units in \verb{[85, 82, 82, 80, 77]} to be
 marked with \emph{pass}.}
 
+\item{increasing_tol}{An optional threshold value that allows for movement of
+numerical values in the positive direction. By default this is \code{NULL} but
+using a numerical value with set the absolute threshold of positive travel
+allowed across numerical test units.}
+
 \item{na_pass}{Should any encountered \code{NA} values be considered as passing
 test units? This is by default \code{FALSE}. Set to \code{TRUE} to give \code{NA}s
 a pass.}
@@ -110,11 +115,6 @@ result in a succeeding \strong{testthat} test or evaluate to \code{TRUE}. Likewi
 fractional values (between \code{0} and \code{1}) act as a proportional failure
 threshold, where \code{0.15} means that 15 percent of failing test units results
 in an overall test failure.}
-
-\item{decreasing_tol}{An optional threshold value that allows for movement of
-numerical values in the negative direction. By default this is \code{NULL} but
-using a numerical value with set the absolute threshold of negative travel
-allowed across numerical test units.}
 }
 \description{
 The \code{col_vals_decreasing()} validation function, the

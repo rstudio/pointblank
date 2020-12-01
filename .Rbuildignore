@@ -16,3 +16,4 @@
 vignettes
 ^codemeta\.json$
 ^LICENSE\.md$
+index.md

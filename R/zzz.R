@@ -97,6 +97,7 @@ utils::globalVariables(
     ".panel_x",
     ".panel_y",
     "pb_is_good_",
+    "pb_lagged_difference_",
     "pct",
     "precon",
     "preconditions",

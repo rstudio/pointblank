@@ -215,6 +215,30 @@ create_autobrief <- function(agent,
     autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
+  if (assertion_type == "col_vals_increasing") {
+    
+    expectation_text <-
+      prep_increasing_expectation_text(
+        column_text,
+        column_computed_text,
+        lang
+      )
+    
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
+  }
+  
+  if (assertion_type == "col_vals_decreasing") {
+    
+    expectation_text <-
+      prep_decreasing_expectation_text(
+        column_text,
+        column_computed_text,
+        lang
+      )
+    
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
+  }
+  
   if (assertion_type == "col_vals_regex") {
     
     expectation_text <- 
@@ -456,6 +480,21 @@ prep_null_expectation_text <- function(column_text,
   }
 }
 
+prep_increasing_expectation_text <- function(column_text,
+                                             column_computed_text,
+                                             lang) {
+  
+  glue::glue(get_lsv("autobriefs/increasing_expectation_text")[[lang]])
+}
+
+prep_decreasing_expectation_text <- function(column_text,
+                                             column_computed_text,
+                                             lang) {
+  
+  glue::glue(get_lsv("autobriefs/decreasing_expectation_text")[[lang]])
+}
+
+
 prep_regex_expectation_text <- function(column_text,
                                         column_computed_text,
                                         values_text,
@@ -533,6 +572,8 @@ failure_message_gluestring <- function(fn_name,
       "expect_col_vals_not_in_set" = get_lsv("autobriefs/not_in_set_failure_text")[[lang]],
       "expect_col_vals_null" = get_lsv("autobriefs/null_failure_text")[[lang]],
       "expect_col_vals_not_null" = get_lsv("autobriefs/not_null_failure_text")[[lang]],
+      "expect_col_vals_increasing" = get_lsv("autobriefs/increasing_failure_text")[[lang]],
+      "expect_col_vals_decreasing" = get_lsv("autobriefs/decreasing_failure_text")[[lang]],
       "expect_col_vals_regex" = get_lsv("autobriefs/regex_failure_text")[[lang]],
       "expect_conjointly" = get_lsv("autobriefs/conjointly_failure_text")[[lang]],
       "expect_col_exists" = get_lsv("autobriefs/col_exists_failure_text")[[lang]],

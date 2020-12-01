@@ -2,6 +2,22 @@ tbl <-
   small_table %>%
   dplyr::mutate(g = as.factor(f))
 
+increasing_tbl <-
+  dplyr::tibble(
+    a = c(5, 6, 7, 8, 9, 12),
+    b = c(1, 2, NA,3, 4, 5),
+    c = c(1, 2, 2, 4, 5, 7),
+    d = c(1, 2, 1.9999, 4, 5, 7)
+  )
+
+decreasing_tbl <-
+  dplyr::tibble(
+    a = c(12, 9, 8, 7, 6, 5),
+    b = c(6, 5, NA,4, 3, 1),
+    c = c(7, 5, 5, 4, 2, 1),
+    d = c(7, 5, 4, 4.0001, 3, 1)
+  )
+
 schema_incorrect <- 
   col_schema(
     date_time = "POSIXct", date = "Date", 
@@ -854,11 +870,99 @@ test_that("Interrogating simply returns the expected results", {
   expect_false(exists("tbl_result"))
   
   #
+  # col_vals_increasing
+  #
+  
+  # Use the `col_vals_increasing()` function to perform
+  # a simple validation step
+  tbl_result <- 
+    increasing_tbl %>%
+    col_vals_increasing(
+      columns = vars(a),
+      actions = warn_on_fail()
+    )
+  
+  # Expect that `tbl_result` is equivalent to `increasing_tbl`
+  expect_equivalent(increasing_tbl, tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- 
+      increasing_tbl %>%
+      col_vals_increasing(
+        columns = vars(b),
+        actions = warn_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is equivalent to `increasing_tbl`
+  expect_equivalent(increasing_tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- 
+      increasing_tbl %>%
+      col_vals_increasing(
+        columns = vars(b),
+        actions = stop_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
+  
+  #
+  # col_vals_decreasing
+  #
+  
+  # Use the `col_vals_decreasing()` function to perform
+  # a simple validation step
+  tbl_result <- 
+    decreasing_tbl %>%
+    col_vals_decreasing(
+      columns = vars(a),
+      actions = warn_on_fail()
+    )
+  
+  # Expect that `tbl_result` is equivalent to `decreasing_tbl`
+  expect_equivalent(decreasing_tbl, tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- 
+      decreasing_tbl %>%
+      col_vals_decreasing(
+        columns = vars(b),
+        actions = warn_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is equivalent to `decreasing_tbl`
+  expect_equivalent(decreasing_tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- 
+      decreasing_tbl %>%
+      col_vals_decreasing(
+        columns = vars(b),
+        actions = stop_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
+  
+  #
   # col_vals_regex
   #
   
   # Use the `col_vals_regex()` function to perform
-  # a simple validation step (with a precondition)
+  # a simple validation step
   tbl_result <- 
     tbl %>%
     col_vals_regex(

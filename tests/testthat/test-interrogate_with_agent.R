@@ -1,5 +1,21 @@
 library(lubridate)
 
+increasing_tbl <-
+  dplyr::tibble(
+    a = c(5, 6, 7, 8, 9, 12),
+    b = c(1, 2, NA,3, 4, 5),
+    c = c(1, 2, 2, 4, 5, 7),
+    d = c(1, 2, 1.9999, 4, 5, 7)
+  )
+
+decreasing_tbl <-
+  dplyr::tibble(
+    a = c(12, 9, 8, 7, 6, 5),
+    b = c(6, 5, NA,4, 3, 1),
+    c = c(7, 5, 5, 4, 2, 1),
+    d = c(7, 5, 4, 4.0001, 3, 1)
+  )
+
 test_that("Interrogating with an agent yields the correct results", {
   
   # Use the `col_schema_match()` function to create
@@ -841,6 +857,124 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
   expect_equivalent(nrow(validation$validation_set), 1)
+  
+
+  # Use the `col_vals_increasing()` function to create
+  # several validation steps, then, `interrogate()`
+  validation <-
+    create_agent(tbl = increasing_tbl) %>%
+    col_vals_increasing(vars(a)) %>%
+    col_vals_increasing(vars(b)) %>%
+    col_vals_increasing(vars(b), na_pass = TRUE) %>%
+    col_vals_increasing(vars(c)) %>%
+    col_vals_increasing(vars(c), allow_stationary = TRUE) %>%
+    col_vals_increasing(vars(d), allow_stationary = TRUE) %>%
+    col_vals_increasing(vars(d), decreasing_tol = 0.001) %>%
+    col_vals_increasing(vars(d), decreasing_tol = 0.0001) %>%
+    col_vals_increasing(vars(d), decreasing_tol = 0.00001) %>%
+    col_vals_increasing(vars(d), allow_stationary = TRUE, decreasing_tol = 0.001) %>%
+    col_vals_increasing(vars(d), allow_stationary = TRUE, decreasing_tol = 0.00001) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equal(validation$tbl_name, "increasing_tbl")
+  expect_equal(
+    validation$validation_set$assertion_type,
+    rep("col_vals_increasing", 11)
+  )
+  expect_equal(
+    unlist(validation$validation_set$column),
+    c("a", "b", "b", "c", "c", "d", "d", "d", "d", "d", "d")
+  )
+  expect_equal(
+    validation$validation_set[["values"]] %>% sapply(`[[`, 1),
+    c(0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1)
+  )
+  expect_equal(
+    validation$validation_set[["values"]] %>% sapply(`[[`, 2),
+    c(0, 0, 0, 0, 0, 0, 0.001, 1e-04, 1e-05, 0.001, 1e-05)
+  )
+  expect_equal(
+    validation$validation_set$all_passed,
+    c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE)
+  )
+  expect_equal(validation$validation_set$n, rep(6, 11))
+  expect_equal(
+    validation$validation_set$n_passed,
+    c(6, 5, 6, 5, 6, 5, 6, 6, 5, 6, 5)
+  )
+  expect_equal(
+    validation$validation_set$n_failed,
+    c(0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1)
+  )
+  expect_equal(
+    validation$validation_set$f_passed,
+    c(1, 0.83333, 1, 0.83333, 1, 0.83333, 1, 1, 0.83333, 1, 0.83333)
+  )
+  expect_equal(
+    validation$validation_set$f_failed,
+    c(0, 0.16667, 0, 0.16667, 0, 0.16667, 0, 0, 0.16667, 0, 0.16667)
+  )
+  expect_equal(nrow(validation$validation_set), 11)
+  
+  
+  # Use the `col_vals_decreasing()` function to create
+  # several validation steps, then, `interrogate()`
+  validation <-
+    create_agent(tbl = decreasing_tbl) %>%
+    col_vals_decreasing(vars(a)) %>%
+    col_vals_decreasing(vars(b)) %>%
+    col_vals_decreasing(vars(b), na_pass = TRUE) %>%
+    col_vals_decreasing(vars(c)) %>%
+    col_vals_decreasing(vars(c), allow_stationary = TRUE) %>%
+    col_vals_decreasing(vars(d), allow_stationary = TRUE) %>%
+    col_vals_decreasing(vars(d), increasing_tol = 0.001) %>%
+    col_vals_decreasing(vars(d), increasing_tol = 0.0001) %>%
+    col_vals_decreasing(vars(d), increasing_tol = 0.00001) %>%
+    col_vals_decreasing(vars(d), allow_stationary = TRUE, increasing_tol = 0.001) %>%
+    col_vals_decreasing(vars(d), allow_stationary = TRUE, increasing_tol = 0.00001) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equal(validation$tbl_name, "decreasing_tbl")
+  expect_equal(
+    validation$validation_set$assertion_type,
+    rep("col_vals_decreasing", 11)
+  )
+  expect_equal(
+    unlist(validation$validation_set$column),
+    c("a", "b", "b", "c", "c", "d", "d", "d", "d", "d", "d")
+  )
+  expect_equal(
+    validation$validation_set[["values"]] %>% sapply(`[[`, 1),
+    c(0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1)
+  )
+  expect_equal(
+    validation$validation_set[["values"]] %>% sapply(`[[`, 2),
+    c(0, 0, 0, 0, 0, 0, 0.001, 1e-04, 1e-05, 0.001, 1e-05)
+  )
+  expect_equal(
+    validation$validation_set$all_passed,
+    c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE)
+  )
+  expect_equal(validation$validation_set$n, rep(6, 11))
+  expect_equal(
+    validation$validation_set$n_passed,
+    c(6, 5, 6, 5, 6, 5, 6, 6, 5, 6, 5)
+  )
+  expect_equal(
+    validation$validation_set$n_failed,
+    c(0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1)
+  )
+  expect_equal(
+    validation$validation_set$f_passed,
+    c(1, 0.83333, 1, 0.83333, 1, 0.83333, 1, 1, 0.83333, 1, 0.83333)
+  )
+  expect_equal(
+    validation$validation_set$f_failed,
+    c(0, 0.16667, 0, 0.16667, 0, 0.16667, 0, 0, 0.16667, 0, 0.16667)
+  )
+  expect_equal(nrow(validation$validation_set), 11)
   
   
   # Use the `col_vals_regex()` function to create

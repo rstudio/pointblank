@@ -31,6 +31,18 @@ goes through changes. For that, we can use an *informant* object + associated
 functions to help define the metadata entries and present it in a way that suits
 you.
 
+<hr>
+<div style="text-align: center;">
+<section id="video">
+<div class="videoUiWrapper thumbnail">
+<video width="70%" controls="" id="video" poster="img/video.png">
+<source src="https://silly-jackson-b3dec8.netlify.app/pointblank_validation.mp4" type="video/mp4">
+</video>
+</div>
+</div>
+</section>
+<hr>
+
 ## Installation
 
 Want to try this out? The **pointblank** package is available on
@@ -50,7 +62,6 @@ devtools::install_github("rich-iannone/pointblank")
 If you encounter a bug, have usage questions, or want to share ideas to
 make this package better, feel free to file an
 [issue](https://github.com/rich-iannone/pointblank/issues).
-
 
 ## Code of Conduct
 

@@ -152,7 +152,7 @@ yaml_write <- function(agent = NULL,
     stop("An agent or informant object must be supplied to `yaml_write()`.",
          call. = FALSE)
   }
-  
+
   if (!is.null(agent) && !is.null(informant)) {
     x <- c(as_agent_yaml_list(agent), as_informant_yaml_list(informant))
     # TODO: manage conflicts between both YAML representations
@@ -298,7 +298,12 @@ as_list_preconditions <- function(preconditions) {
 }
 
 as_list_active <- function(active) {
-  as.character(active)
+
+  if (is.logical(active[[1]])) {
+    return(active[[1]])
+  } else {
+    return(as.character(active))
+  }
 }
 
 to_list_action_levels <- function(actions) {

@@ -1360,7 +1360,7 @@ test_that("Select validation steps can be `active` or not", {
   
   # Expect the `active` parameter in each validation step
   # to be set as `TRUE`
-  expect_true(all(validation_all_active$validation_set$active))
+  expect_true(all(validation_all_active$validation_set$eval_active))
   
   # Expect validation results to be available in all of the columns
   # where those values are reported
@@ -1410,7 +1410,7 @@ test_that("Select validation steps can be `active` or not", {
   
   # Expect the `active` parameter in each validation step
   # to be set as `FALSE`
-  expect_true(!all(validation_all_not_active$validation_set$active))
+  expect_true(!all(validation_all_not_active$validation_set$eval_active))
   
   # Expect no validation results to be available in any of the columns
   # where those values are normally reported (this is because no interrogations

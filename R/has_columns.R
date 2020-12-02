@@ -17,7 +17,7 @@
 #
 
 
-#' Determine if columns exist in a table. 
+#' Determine if one or more columns exist in a table. 
 #' 
 #' @param x The table object.
 #' @param columns One or more column names that are to be checked for existence

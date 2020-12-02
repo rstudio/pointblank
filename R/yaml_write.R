@@ -297,6 +297,10 @@ as_list_preconditions <- function(preconditions) {
   }
 }
 
+as_list_active <- function(active) {
+  as.character(active)
+}
+
 to_list_action_levels <- function(actions) {
   
   agent_actions <- actions
@@ -421,7 +425,7 @@ prune_lst_step <- function(lst_step) {
     lst_step[[1]]["na_pass"] <- NULL
   }
   if ("active" %in% names(lst_step[[1]]) &&
-      lst_step[[1]][["active"]]) {
+      lst_step[[1]][["active"]] == "TRUE") {
     lst_step[[1]]["active"] <- NULL
   }
   if ("complete" %in% names(lst_step[[1]]) &&
@@ -530,7 +534,7 @@ as_agent_yaml_list <- function(agent) {
               step_list$actions[[1]],
               action_levels_default
             ),
-            active = step_list$active
+            active = as_list_active(step_list$active)
           )
         )
       
@@ -554,7 +558,7 @@ as_agent_yaml_list <- function(agent) {
               step_list$actions[[1]],
               action_levels_default
             ),
-            active = step_list$active
+            active = as_list_active(step_list$active)
           )
         )
       
@@ -570,7 +574,7 @@ as_agent_yaml_list <- function(agent) {
               step_list$actions[[1]],
               action_levels_default
             ),
-            active = step_list$active
+            active = as_list_active(step_list$active)
           )
         )
 
@@ -585,7 +589,7 @@ as_agent_yaml_list <- function(agent) {
               step_list$actions[[1]],
               action_levels_default
             ),
-            active = step_list$active
+            active = as_list_active(step_list$active)
           )
         )
       
@@ -601,7 +605,7 @@ as_agent_yaml_list <- function(agent) {
               step_list$actions[[1]],
               action_levels_default
             ),
-            active = step_list$active
+            active = as_list_active(step_list$active)
           )
         )
       
@@ -616,7 +620,7 @@ as_agent_yaml_list <- function(agent) {
               step_list$actions[[1]],
               action_levels_default
             ),
-            active = step_list$active
+            active = as_list_active(step_list$active)
           )
         )
       
@@ -631,7 +635,7 @@ as_agent_yaml_list <- function(agent) {
               step_list$actions[[1]],
               action_levels_default
             ),
-            active = step_list$active
+            active = as_list_active(step_list$active)
           )
         )
       
@@ -652,7 +656,7 @@ as_agent_yaml_list <- function(agent) {
               step_list$actions[[1]],
               action_levels_default
             ),
-            active = step_list$active
+            active = as_list_active(step_list$active)
           )
         )
     
@@ -671,7 +675,7 @@ as_agent_yaml_list <- function(agent) {
               step_list$actions[[1]],
               action_levels_default
             ),
-            active = step_list$active
+            active = as_list_active(step_list$active)
           )
         )
       
@@ -686,7 +690,7 @@ as_agent_yaml_list <- function(agent) {
               step_list$actions[[1]],
               action_levels_default
             ),
-            active = step_list$active
+            active = as_list_active(step_list$active)
           )
         )
     }

@@ -385,6 +385,11 @@ to_list_label <- function(label) {
 }
 
 to_list_tbl_name <- function(tbl_name) {
+
+  if (is.na(tbl_name)) {
+    tbl_name <- NULL
+  }
+  
   list(tbl_name = tbl_name)
 }
 

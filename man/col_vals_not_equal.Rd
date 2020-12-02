@@ -51,10 +51,10 @@ vector) to which this validation should be applied.}
 test units? This is by default \code{FALSE}. Set to \code{TRUE} to give \code{NA}s
 a pass.}
 
-\item{preconditions}{expressions used for mutating the input table before
-proceeding with the validation. This is ideally as a one-sided R formula
-using a leading \code{~}. In the formula representation, the \code{.} serves as the
-input data table to be transformed (e.g.,
+\item{preconditions}{An optional expression for mutating the input table
+before proceeding with the validation. This is ideally as a one-sided R
+formula using a leading \code{~}. In the formula representation, the \code{.} serves
+as the input data table to be transformed (e.g.,
 \code{~ . \%>\% dplyr::mutate(col = col + 10)}.}
 
 \item{actions}{A list containing threshold levels so that the validation step

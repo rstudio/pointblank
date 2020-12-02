@@ -46,10 +46,10 @@ those with the naming pattern \verb{col_vals_*()}. An example of this is
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
-\item{preconditions}{expressions used for mutating the input table before
-proceeding with the validation. This is ideally as a one-sided R formula
-using a leading \code{~}. In the formula representation, the \code{.} serves as the
-input data table to be transformed (e.g.,
+\item{preconditions}{An optional expression for mutating the input table
+before proceeding with the validation. This is ideally as a one-sided R
+formula using a leading \code{~}. In the formula representation, the \code{.} serves
+as the input data table to be transformed (e.g.,
 \code{~ . \%>\% dplyr::mutate(col = col + 10)}.}
 
 \item{actions}{A list containing threshold levels so that the validation step

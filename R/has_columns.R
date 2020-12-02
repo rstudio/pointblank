@@ -27,7 +27,7 @@
 #'
 #' @export
 has_columns <- function(x, columns) {
-  
+
   # Normalize the `columns` expression
   if (inherits(columns, "quosures")) {
     

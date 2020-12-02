@@ -49,7 +49,7 @@ create_validation_step <- function(agent,
         )
       )
     )
-  
+
   # Create a validation step as a single-row `tbl_df` object
   validation_step_df <-
     dplyr::tibble(
@@ -66,7 +66,10 @@ create_validation_step <- function(agent,
       actions = ifelse(is.null(actions), list(NULL), list(actions)),
       label = ifelse(is.null(label), NA_character_, as.character(label)),
       brief = ifelse(is.null(brief), NA_character_, as.character(brief)),
-      active = ifelse(is.null(active), NA, active),
+      active = ifelse(
+        is.null(active), list(NULL), list(active)
+      ),
+      eval_active = NA,
       eval_error = NA,
       eval_warning = NA,
       capture_stack = list(NULL),

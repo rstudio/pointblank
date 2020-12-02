@@ -481,7 +481,6 @@ make_validation_steps <- function(steps) {
             seq_along(step_i[[1]]),
             FUN.VALUE = character(1), 
             FUN = function(x) {
-              
               arg_name <- names(step_i[[1]][x])
               val <- step_i[[1]][[x]]
               others <- c("preconditions", "expr", "schema")
@@ -489,10 +488,19 @@ make_validation_steps <- function(steps) {
               if (arg_name == "fns") {
                 return(paste("  ", val, collapse = ",\n"))
               }
-              
+
               # Return empty string if seeing default values
-              if (arg_name == "active" && val) {
-                return("")
+              if (arg_name == "active") {
+
+                if (is.logical(val)) {
+                  if (val) {
+                    return("")
+                  } else {
+                    return(paste("  active = FALSE"))
+                  }
+                } else {
+                  return(paste("  active =", val[1]))
+                }
               }
               if (arg_name == "preconditions" && is.null(val)) {
                 return("")

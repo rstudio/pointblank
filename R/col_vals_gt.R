@@ -88,10 +88,10 @@
 #' @param na_pass Should any encountered `NA` values be considered as passing
 #'   test units? This is by default `FALSE`. Set to `TRUE` to give `NA`s
 #'   a pass.
-#' @param preconditions expressions used for mutating the input table before
-#'   proceeding with the validation. This is ideally as a one-sided R formula
-#'   using a leading `~`. In the formula representation, the `.` serves as the
-#'   input data table to be transformed (e.g.,
+#' @param preconditions An optional expression for mutating the input table
+#'   before proceeding with the validation. This is ideally as a one-sided R
+#'   formula using a leading `~`. In the formula representation, the `.` serves
+#'   as the input data table to be transformed (e.g.,
 #'   `~ . %>% dplyr::mutate(col = col + 10)`.
 #' @param actions A list containing threshold levels so that the validation step
 #'   can react accordingly when exceeding the set levels. This is to be created

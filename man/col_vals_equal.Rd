@@ -45,7 +45,9 @@ with \code{\link[=create_agent]{create_agent()}}.}
 \item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
-\item{value}{A numeric value used to test for equality.}
+\item{value}{A value used for this test of equality. This can be a single
+value or a compatible column given in \code{vars()}. Any column values equal to
+what is specified here will pass validation.}
 
 \item{na_pass}{Should any encountered \code{NA} values be considered as passing
 test units? This is by default \code{FALSE}. Set to \code{TRUE} to give \code{NA}s

@@ -450,6 +450,18 @@ prune_lst_step <- function(lst_step) {
       lst_step[[1]][["is_exact"]]) {
     lst_step[[1]]["is_exact"] <- NULL
   }
+  if ("allow_stationary" %in% names(lst_step[[1]]) &&
+      !lst_step[[1]][["allow_stationary"]]) {
+    lst_step[[1]]["allow_stationary"] <- NULL
+  }
+  if ("decreasing_tol" %in% names(lst_step[[1]]) &&
+      is.null(lst_step[[1]][["decreasing_tol"]])) {
+    lst_step[[1]]["decreasing_tol"] <- NULL
+  }
+  if ("increasing_tol" %in% names(lst_step[[1]]) &&
+      is.null(lst_step[[1]][["increasing_tol"]])) {
+    lst_step[[1]]["increasing_tol"] <- NULL
+  }
   if ("actions" %in% names(lst_step[[1]])) {
     if (length(lst_step[[1]][["actions"]][["action_levels"]]) == 1 &&
         length(lst_step[[1]][["actions"]][["action_levels"]][["fns"]]) == 0) {
@@ -594,6 +606,52 @@ as_agent_yaml_list <- function(agent) {
         list(
           validation_fn = list(
             columns = as_vars_fn(step_list$column[[1]]),
+            preconditions = as_list_preconditions(step_list$preconditions),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
+            active = as_list_active(step_list$active)
+          )
+        )
+      
+    } else if (validation_fn == "col_vals_increasing") {
+      
+      if (step_list$values[[1]][2] == 0) {
+        decreasing_tol <- NULL
+      } else {
+        decreasing_tol <- step_list$values[[1]][2]
+      }
+      
+      lst_step <- 
+        list(
+          validation_fn = list(
+            columns = as_vars_fn(step_list$column[[1]]),
+            allow_stationary = ifelse(step_list$values[[1]][1] == 1, TRUE, FALSE),
+            decreasing_tol = decreasing_tol,
+            preconditions = as_list_preconditions(step_list$preconditions),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
+            active = as_list_active(step_list$active)
+          )
+        )
+      
+    } else if (validation_fn == "col_vals_decreasing") {
+      
+      if (step_list$values[[1]][2] == 0) {
+        increasing_tol <- NULL
+      } else {
+        increasing_tol <- step_list$values[[1]][2]
+      }
+      
+      lst_step <- 
+        list(
+          validation_fn = list(
+            columns = as_vars_fn(step_list$column[[1]]),
+            allow_stationary = ifelse(step_list$values[[1]][1] == 1, TRUE, FALSE),
+            increasing_tol = increasing_tol,
             preconditions = as_list_preconditions(step_list$preconditions),
             actions = as_action_levels(
               step_list$actions[[1]],

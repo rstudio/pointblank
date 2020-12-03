@@ -57,7 +57,8 @@ marked with \emph{pass}.}
 \item{decreasing_tol}{An optional threshold value that allows for movement of
 numerical values in the negative direction. By default this is \code{NULL} but
 using a numerical value with set the absolute threshold of negative travel
-allowed across numerical test units.}
+allowed across numerical test units. Note that setting a value here also
+has the effect of setting \code{allow_stationary} to \code{TRUE}.}
 
 \item{na_pass}{Should any encountered \code{NA} values be considered as passing
 test units? This is by default \code{FALSE}. Set to \code{TRUE} to give \code{NA}s

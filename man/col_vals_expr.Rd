@@ -30,10 +30,10 @@ with \code{\link[=create_agent]{create_agent()}}.}
 form of a call made with the \code{expr()} function or as a one-sided \strong{R}
 formula (using a leading \code{~}).}
 
-\item{preconditions}{expressions used for mutating the input table before
-proceeding with the validation. This is ideally as a one-sided R formula
-using a leading \code{~}. In the formula representation, the \code{.} serves as the
-input data table to be transformed (e.g.,
+\item{preconditions}{An optional expression for mutating the input table
+before proceeding with the validation. This is ideally as a one-sided R
+formula using a leading \code{~}. In the formula representation, the \code{.} serves
+as the input data table to be transformed (e.g.,
 \code{~ . \%>\% dplyr::mutate(col = col + 10)}.}
 
 \item{actions}{A list containing threshold levels so that the validation step
@@ -227,6 +227,10 @@ tbl \%>\%
 
 }
 \seealso{
+These reexported functions (from \strong{rlang} and \strong{dplyr}) work
+nicely within \code{col_vals_expr()} and its variants: \code{\link[rlang:nse-defuse]{rlang::expr()}},
+\code{\link[dplyr:between]{dplyr::between()}}, and \code{\link[dplyr:case_when]{dplyr::case_when()}}.
+
 Other validation functions: 
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},

@@ -84,8 +84,13 @@
 #' then be automatically generated.
 #'
 #' @inheritParams col_vals_gt
-#' @param left,right The lower and uppers bounds for the range. The validation
-#'   Any values `>= left` and `<= right` will be considered as failing.
+#' @param left,right The lower (or left) and upper (or right) boundary values
+#'   for the range. These can be expressed as single values, compatible columns
+#'   given in `vars()`, or a combination of both. By default, any column values
+#'   greater than or equal to `left` *and* less than or equal to `right` will
+#'   fail validation. The inclusivity of the bounds can be modified by the
+#'   `inclusive` option.
+#'   
 #' @inheritParams col_vals_between
 #' 
 #' @return For the validation function, the return value is either a

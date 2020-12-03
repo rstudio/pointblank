@@ -17,7 +17,7 @@
 #
 
 
-#' Are column data not equal to a specified value?
+#' Are column data not equal to a fixed value or data in another column?
 #' 
 #' The `col_vals_not_equal()` validation function, the
 #' `expect_col_vals_not_equal()` expectation function, and the
@@ -75,7 +75,9 @@
 #' then be automatically generated.
 #' 
 #' @inheritParams col_vals_gt
-#' @param value a numeric value used to test for non-equality.
+#' @param value A value used for this test of inequality. This can be a single
+#'   value or a compatible column given in `vars()`. Any column values not equal
+#'   to what is specified here will pass validation.
 #' 
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

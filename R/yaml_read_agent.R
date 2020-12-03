@@ -332,11 +332,10 @@ expr_from_agent_yaml <- function(path,
   # Read the YAML file with `yaml::read_yaml()`
   y <- yaml::read_yaml(file = path)
   
-  # Get the `label` and `read_fn` fields from the YAML
-  # file and create argument strings
+  # Get the `table_name`, `read_fn`, `label`, and `active`
+  # fields from the YAML file and create argument strings
   read_fn <- paste0("  read_fn = ", y$read_fn)
   label <- paste0("  label = \"", y$label, "\"")
-  tbl_name <- paste0("  tbl_name = \"", y$tbl_name, "\"")
   
   # Create argument strings for the `actions` and
   # `end_fns` arguments (which could be NULL)
@@ -361,6 +360,12 @@ expr_from_agent_yaml <- function(path,
     locale <- paste0("  locale = \"", y$locale, "\"")
   } else {
     locale <- NULL
+  }
+
+  if (!is.null(y$tbl_name) && !is.na(y$tbl_name)) {
+    tbl_name <- paste0("  tbl_name = \"", y$tbl_name, "\"")
+  } else {
+    tbl_name <- NULL
   }
   
   # Generate all of the validation steps that make up
@@ -475,7 +480,6 @@ make_validation_steps <- function(steps) {
             seq_along(step_i[[1]]),
             FUN.VALUE = character(1), 
             FUN = function(x) {
-              
               arg_name <- names(step_i[[1]][x])
               val <- step_i[[1]][[x]]
               others <- c("preconditions", "expr", "schema")
@@ -483,10 +487,19 @@ make_validation_steps <- function(steps) {
               if (arg_name == "fns") {
                 return(paste("  ", val, collapse = ",\n"))
               }
-              
+
               # Return empty string if seeing default values
-              if (arg_name == "active" && val) {
-                return("")
+              if (arg_name == "active") {
+
+                if (is.logical(val)) {
+                  if (val) {
+                    return("")
+                  } else {
+                    return(paste("  active = FALSE"))
+                  }
+                } else {
+                  return(paste("  active =", val[1]))
+                }
               }
               if (arg_name == "preconditions" && is.null(val)) {
                 return("")

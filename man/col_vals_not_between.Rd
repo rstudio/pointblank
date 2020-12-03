@@ -51,8 +51,12 @@ with \code{\link[=create_agent]{create_agent()}}.}
 \item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
-\item{left, right}{The lower and uppers bounds for the range. The validation
-Any values \verb{>= left} and \verb{<= right} will be considered as failing.}
+\item{left, right}{The lower (or left) and upper (or right) boundary values
+for the range. These can be expressed as single values, compatible columns
+given in \code{vars()}, or a combination of both. By default, any column values
+greater than or equal to \code{left} \emph{and} less than or equal to \code{right} will
+fail validation. The inclusivity of the bounds can be modified by the
+\code{inclusive} option.}
 
 \item{inclusive}{A two-element logical value that indicates whether the
 \code{left} and \code{right} bounds should be inclusive. By default, both bounds
@@ -62,10 +66,10 @@ are inclusive.}
 test units? This is by default \code{FALSE}. Set to \code{TRUE} to give \code{NA}s
 a pass.}
 
-\item{preconditions}{expressions used for mutating the input table before
-proceeding with the validation. This is ideally as a one-sided R formula
-using a leading \code{~}. In the formula representation, the \code{.} serves as the
-input data table to be transformed (e.g.,
+\item{preconditions}{An optional expression for mutating the input table
+before proceeding with the validation. This is ideally as a one-sided R
+formula using a leading \code{~}. In the formula representation, the \code{.} serves
+as the input data table to be transformed (e.g.,
 \code{~ . \%>\% dplyr::mutate(col = col + 10)}.}
 
 \item{actions}{A list containing threshold levels so that the validation step

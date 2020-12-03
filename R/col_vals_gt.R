@@ -17,7 +17,7 @@
 #
 
 
-#' Are column data greater than a specified value?
+#' Are column data greater than a fixed value or data in another column?
 #'
 #' The `col_vals_gt()` validation function, the `expect_col_vals_gt()`
 #' expectation function, and the `test_col_vals_gt()` test function all check
@@ -83,15 +83,16 @@
 #'   function or the test function.
 #' @param columns The column (or a set of columns, provided as a character
 #'   vector) to which this validation should be applied.
-#' @param value A numeric value used for this test. Any column values `> value`
-#'   are considered passing.
+#' @param value A value used for this comparison. This can be a single value or
+#'   a compatible column given in `vars()`. Any column values greater than what
+#'   is specified here will pass validation.
 #' @param na_pass Should any encountered `NA` values be considered as passing
 #'   test units? This is by default `FALSE`. Set to `TRUE` to give `NA`s
 #'   a pass.
-#' @param preconditions expressions used for mutating the input table before
-#'   proceeding with the validation. This is ideally as a one-sided R formula
-#'   using a leading `~`. In the formula representation, the `.` serves as the
-#'   input data table to be transformed (e.g.,
+#' @param preconditions An optional expression for mutating the input table
+#'   before proceeding with the validation. This is ideally as a one-sided R
+#'   formula using a leading `~`. In the formula representation, the `.` serves
+#'   as the input data table to be transformed (e.g.,
 #'   `~ . %>% dplyr::mutate(col = col + 10)`.
 #' @param actions A list containing threshold levels so that the validation step
 #'   can react accordingly when exceeding the set levels. This is to be created

@@ -29,9 +29,9 @@ dplyr::case_when
 #' @export
 dplyr::between
 
-#' @importFrom dplyr expr
+#' @importFrom rlang expr
 #' @export
-dplyr::expr
+rlang::expr
 
 #' @importFrom tidyselect starts_with
 #' @export

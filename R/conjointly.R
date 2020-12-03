@@ -19,23 +19,30 @@
 
 #' Perform multiple rowwise validations for joint validity
 #'
+#' @description 
 #' The `conjointly()` validation function, the `expect_conjointly()` expectation
 #' function, and the `test_conjointly()` test function all check whether test
-#' units at each index (typically each row) all pass multiple validations with
-#' `col_vals_*()`-type functions. Because of the imposed constraint on the
-#' allowed validation functions, all test units are rows of the table (after any
-#' common `preconditions` have been applied). Each of the functions (composed
-#' with multiple validation function calls) ultimately perform a rowwise test of
-#' whether all sub-validations reported a *pass* for the same test units. In
+#' units at each index (typically each row) all pass multiple validations. We
+#' can use validation functions that validate row units (the `col_vals_*()`
+#' series), check for column existence ([col_exists()]), or validate column type
+#' (the `col_is_*()` series). Because of the imposed constraint on the allowed
+#' validation functions, the ensemble of test units are either comprised rows of
+#' the table (after any common `preconditions` have been applied) or are single
+#' test units (for those functions that validate columns).
+#' 
+#' Each of the functions used in a `conjointly()` validation step (composed
+#' using multiple validation function calls) ultimately perform a rowwise test
+#' of whether all sub-validations reported a *pass* for the same test units. In
 #' practice, an example of a joint validation is testing whether values for
-#' column `a` are greater than a specific value while values for column `b` lie
-#' within a specified range. The validation functions to be part of the conjoint
-#' validation are to be supplied as one-sided **R** formulas (using a leading
-#' `~`, and having a `.` stand in as the data object). The validation function
-#' can be used directly on a data table or with an *agent* object (technically,
-#' a `ptblank_agent` object) whereas the expectation and test functions can only
-#' be used with a data table.
+#' column `a` are greater than a specific value while adjacent values in column
+#' `b` lie within a specified range. The validation functions to be part of the
+#' conjoint validation are to be supplied as one-sided **R** formulas (using a
+#' leading `~`, and having a `.` stand in as the data object). The validation
+#' function can be used directly on a data table or with an *agent* object
+#' (technically, a `ptblank_agent` object) whereas the expectation and test
+#' functions can only be used with a data table.
 #'
+#' @details
 #' If providing multiple column names in any of the supplied validation step
 #' functions, the result will be an expansion of sub-validation steps to that
 #' number of column names. Aside from column names in quotes and in `vars()`,
@@ -75,10 +82,11 @@
 #' then be automatically generated.
 #'
 #' @inheritParams col_vals_gt
-#' @param ... a collection one-sided formulas that consist of validation step
-#' functions that validate row units. Specifically, these functions should be
-#' those with the naming pattern `col_vals_*()`. An example of this is
-#' `~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(., vars(b)`).
+#' @param ... a collection one-sided formulas that consist of validation
+#'   functions that validate row units (the `col_vals_*()` series), column
+#'   existence ([col_exists()]), or column type (the `col_is_*()` series). An
+#'   example of this is `~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(.,
+#'   vars(b)`).
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #'
 #' @return For the validation function, the return value is either a

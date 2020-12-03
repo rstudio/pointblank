@@ -96,6 +96,7 @@ interrogate <- function(agent,
   }
 
   if (is.null(agent$tbl) && !is.null(agent$read_fn)) {
+    
     if (inherits(agent$read_fn, "function")) {
       agent$tbl <- rlang::exec(agent$read_fn)
     } else if (rlang::is_formula(agent$read_fn)) {
@@ -140,9 +141,29 @@ interrogate <- function(agent,
   )
   
   for (i in validation_steps) {
+    
+    # Get the table object for interrogation 
+    table <- get_tbl_object(agent = agent)
+    
+    # Evaluate any expression in `agent$validation_set$active`
+    if (rlang::is_formula(agent$validation_set[[i, "active"]][[1]])) {
+      
+      is_active <- 
+        agent$validation_set[[i, "active"]][[1]] %>%
+        rlang::f_rhs() %>%
+        rlang::eval_tidy()
+      
+      agent$validation_set[[i, "eval_active"]] <- is_active(table)
+      rm(is_active)
+      
+    } else {
+      
+      agent$validation_set[[i, "eval_active"]] <- 
+        agent$validation_set[[i, "active"]][[1]]
+    }
 
     # Skip the validation step if `active = FALSE`
-    if (!agent$validation_set[[i, "active"]]) {
+    if (!agent$validation_set[[i, "eval_active"]]) {
       cli::cli_alert_info(
         "Step {.field {i}} is not set as {.field active}. Skipping."
       )
@@ -152,8 +173,7 @@ interrogate <- function(agent,
     # Get the starting time for the validation step
     validation_start_time <- Sys.time()
     
-    # Get the table object for interrogation 
-    table <- get_tbl_object(agent = agent)
+
     
     # Use preconditions to modify the table
     table <- apply_preconditions_to_tbl(agent = agent, idx = i, tbl = table)

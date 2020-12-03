@@ -17,7 +17,7 @@
 #
 
 
-#' Are column data not between two specified values?
+#' Do column data lie outside of two specified values or data in other columns?
 #' 
 #' The `col_vals_not_between()` validation function, the
 #' `expect_col_vals_not_between()` expectation function, and the

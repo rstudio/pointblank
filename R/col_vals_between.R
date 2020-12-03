@@ -17,7 +17,7 @@
 #
 
 
-#' Are column data between two specified values?
+#' Do column data lie between two specified values or data in other columns?
 #'
 #' The `col_vals_between()` validation function, the `expect_col_vals_between()`
 #' expectation function, and the `test_col_vals_between()` test function all

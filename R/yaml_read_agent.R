@@ -334,7 +334,6 @@ expr_from_agent_yaml <- function(path,
   
   # Get the `table_name`, `read_fn`, `label`, and `active`
   # fields from the YAML file and create argument strings
-  #tbl_name <- paste0("  tbl_name = \"", y$tbl_name, "\"")
   read_fn <- paste0("  read_fn = ", y$read_fn)
   label <- paste0("  label = \"", y$label, "\"")
   

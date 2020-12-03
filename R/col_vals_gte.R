@@ -76,8 +76,9 @@
 #' then be automatically generated.
 #'   
 #' @inheritParams col_vals_gt
-#' @param value A numeric value used for this test. Any column values `>=
-#'   value` are considered passing.
+#' @param value A value used for this comparison. This can be a single value or
+#'   a compatible column given in `vars()`. Any column values greater than or
+#'   equal to what is specified here will pass validation.
 #'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

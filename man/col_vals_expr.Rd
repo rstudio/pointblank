@@ -227,9 +227,9 @@ tbl \%>\%
 
 }
 \seealso{
-These reexported \strong{dplyr} functions work nicely within
-\code{col_vals_expr()} and its variants: \code{\link[dplyr:tidyeval-compat]{dplyr::expr()}}, \code{\link[dplyr:between]{dplyr::between()}},
-and \code{\link[dplyr:case_when]{dplyr::case_when()}}.
+These reexported functions (from \strong{rlang} and **dplyr::) work
+nicely within \code{col_vals_expr()} and its variants: \code{\link[rlang:nse-defuse]{rlang::expr()}},
+\code{\link[dplyr:between]{dplyr::between()}}, and \code{\link[dplyr:case_when]{dplyr::case_when()}}.
 
 Other validation functions: 
 \code{\link{col_exists}()},

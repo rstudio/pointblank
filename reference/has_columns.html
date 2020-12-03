@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Objects exported from other packages — reexports • pointblank</title>
+<title>Determine if one or more columns exist in a table. — has_columns • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,19 +46,8 @@
 
 
 
-<meta property="og:title" content="Objects exported from other packages — reexports" />
-<meta property="og:description" content="These objects are imported from other packages. Follow the links
-below to see their documentation.
-
-  blastulacreds, creds_anonymous, creds_file, creds_key
-
-  dplyrbetween, case_when, vars
-
-  rlangexpr
-
-  tidyselectcontains, ends_with, everything, matches, starts_with
-
-" />
+<meta property="og:title" content="Determine if one or more columns exist in a table. — has_columns" />
+<meta property="og:description" content="Determine if one or more columns exist in a table." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -162,28 +151,34 @@ below to see their documentation.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Objects exported from other packages</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/reexports.R'><code>R/reexports.R</code></a></small>
-    <div class="hidden name"><code>reexports.Rd</code></div>
+    <h1>Determine if one or more columns exist in a table.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/has_columns.R'><code>R/has_columns.R</code></a></small>
+    <div class="hidden name"><code>has_columns.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>These objects are imported from other packages. Follow the links
-below to see their documentation.</p>
-<dl>
-  <dt>blastula</dt><dd><p><code><a href='https://rdrr.io/pkg/blastula/man/credential_helpers.html'>creds</a></code>, <code><a href='https://rdrr.io/pkg/blastula/man/credential_helpers.html'>creds_anonymous</a></code>, <code><a href='https://rdrr.io/pkg/blastula/man/credential_helpers.html'>creds_file</a></code>, <code><a href='https://rdrr.io/pkg/blastula/man/credential_helpers.html'>creds_key</a></code></p></dd>
-
-  <dt>dplyr</dt><dd><p><code><a href='https://dplyr.tidyverse.org/reference/between.html'>between</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></code></p></dd>
-
-  <dt>rlang</dt><dd><p><code><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></code></p></dd>
-
-  <dt>tidyselect</dt><dd><p><code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></code></p></dd>
-
-</dl>
+    <p>Determine if one or more columns exist in a table.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>has_columns</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>columns</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>The table object.</p></td>
+    </tr>
+    <tr>
+      <th>columns</th>
+      <td><p>One or more column names that are to be checked for existence
+in the table <code>x</code>.</p></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A length-1 logical vector.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

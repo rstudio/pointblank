@@ -221,10 +221,10 @@ found within this <code>set</code> will be considered as passing.</p></td>
     </tr>
     <tr>
       <th>preconditions</th>
-      <td><p>expressions used for mutating the input table before
-proceeding with the validation. This is ideally as a one-sided R formula
-using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>. In the formula representation, the <code>.</code> serves as the
-input data table to be transformed (e.g.,
+      <td><p>An optional expression for mutating the input table
+before proceeding with the validation. This is ideally as a one-sided R
+formula using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>. In the formula representation, the <code>.</code> serves
+as the input data table to be transformed (e.g.,
 <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code>.</p></td>
     </tr>
     <tr>

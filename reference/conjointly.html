@@ -49,20 +49,24 @@
 <meta property="og:title" content="Perform multiple rowwise validations for joint validity — conjointly" />
 <meta property="og:description" content="The conjointly() validation function, the expect_conjointly() expectation
 function, and the test_conjointly() test function all check whether test
-units at each index (typically each row) all pass multiple validations with
-col_vals_*()-type functions. Because of the imposed constraint on the
-allowed validation functions, all test units are rows of the table (after any
-common preconditions have been applied). Each of the functions (composed
-with multiple validation function calls) ultimately perform a rowwise test of
-whether all sub-validations reported a pass for the same test units. In
+units at each index (typically each row) all pass multiple validations. We
+can use validation functions that validate row units (the col_vals_*()
+series), check for column existence (col_exists()), or validate column type
+(the col_is_*() series). Because of the imposed constraint on the allowed
+validation functions, the ensemble of test units are either comprised rows of
+the table (after any common preconditions have been applied) or are single
+test units (for those functions that validate columns).
+Each of the functions used in a conjointly() validation step (composed
+using multiple validation function calls) ultimately perform a rowwise test
+of whether all sub-validations reported a pass for the same test units. In
 practice, an example of a joint validation is testing whether values for
-column a are greater than a specific value while values for column b lie
-within a specified range. The validation functions to be part of the conjoint
-validation are to be supplied as one-sided R formulas (using a leading
-~, and having a . stand in as the data object). The validation function
-can be used directly on a data table or with an agent object (technically,
-a ptblank_agent object) whereas the expectation and test functions can only
-be used with a data table." />
+column a are greater than a specific value while adjacent values in column
+b lie within a specified range. The validation functions to be part of the
+conjoint validation are to be supplied as one-sided R formulas (using a
+leading ~, and having a . stand in as the data object). The validation
+function can be used directly on a data table or with an agent object
+(technically, a ptblank_agent object) whereas the expectation and test
+functions can only be used with a data table." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -174,20 +178,24 @@ be used with a data table." />
     <div class="ref-description">
     <p>The <code>conjointly()</code> validation function, the <code>expect_conjointly()</code> expectation
 function, and the <code>test_conjointly()</code> test function all check whether test
-units at each index (typically each row) all pass multiple validations with
-<code>col_vals_*()</code>-type functions. Because of the imposed constraint on the
-allowed validation functions, all test units are rows of the table (after any
-common <code>preconditions</code> have been applied). Each of the functions (composed
-with multiple validation function calls) ultimately perform a rowwise test of
-whether all sub-validations reported a <em>pass</em> for the same test units. In
+units at each index (typically each row) all pass multiple validations. We
+can use validation functions that validate row units (the <code>col_vals_*()</code>
+series), check for column existence (<code><a href='col_exists.html'>col_exists()</a></code>), or validate column type
+(the <code>col_is_*()</code> series). Because of the imposed constraint on the allowed
+validation functions, the ensemble of test units are either comprised rows of
+the table (after any common <code>preconditions</code> have been applied) or are single
+test units (for those functions that validate columns).</p>
+<p>Each of the functions used in a <code>conjointly()</code> validation step (composed
+using multiple validation function calls) ultimately perform a rowwise test
+of whether all sub-validations reported a <em>pass</em> for the same test units. In
 practice, an example of a joint validation is testing whether values for
-column <code>a</code> are greater than a specific value while values for column <code>b</code> lie
-within a specified range. The validation functions to be part of the conjoint
-validation are to be supplied as one-sided <strong>R</strong> formulas (using a leading
-<code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>, and having a <code>.</code> stand in as the data object). The validation function
-can be used directly on a data table or with an <em>agent</em> object (technically,
-a <code>ptblank_agent</code> object) whereas the expectation and test functions can only
-be used with a data table.</p>
+column <code>a</code> are greater than a specific value while adjacent values in column
+<code>b</code> lie within a specified range. The validation functions to be part of the
+conjoint validation are to be supplied as one-sided <strong>R</strong> formulas (using a
+leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>, and having a <code>.</code> stand in as the data object). The validation
+function can be used directly on a data table or with an <em>agent</em> object
+(technically, a <code>ptblank_agent</code> object) whereas the expectation and test
+functions can only be used with a data table.</p>
     </div>
 
     <pre class="usage"><span class='fu'>conjointly</span><span class='op'>(</span>
@@ -229,10 +237,10 @@ with <code><a href='create_agent.html'>create_agent()</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>a collection one-sided formulas that consist of validation step
-functions that validate row units. Specifically, these functions should be
-those with the naming pattern <code>col_vals_*()</code>. An example of this is
-<code>~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(., vars(b)</code>).</p></td>
+      <td><p>a collection one-sided formulas that consist of validation
+functions that validate row units (the <code>col_vals_*()</code> series), column
+existence (<code><a href='col_exists.html'>col_exists()</a></code>), or column type (the <code>col_is_*()</code> series). An
+example of this is <code>~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(., vars(b)</code>).</p></td>
     </tr>
     <tr>
       <th>.list</th>
@@ -240,10 +248,10 @@ those with the naming pattern <code>col_vals_*()</code>. An example of this is
     </tr>
     <tr>
       <th>preconditions</th>
-      <td><p>expressions used for mutating the input table before
-proceeding with the validation. This is ideally as a one-sided R formula
-using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>. In the formula representation, the <code>.</code> serves as the
-input data table to be transformed (e.g.,
+      <td><p>An optional expression for mutating the input table
+before proceeding with the validation. This is ideally as a one-sided R
+formula using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>. In the formula representation, the <code>.</code> serves
+as the input data table to be transformed (e.g.,
 <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code>.</p></td>
     </tr>
     <tr>

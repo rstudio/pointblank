@@ -247,7 +247,8 @@ marked with <em>pass</em>.</p></td>
       <td><p>An optional threshold value that allows for movement of
 numerical values in the positive direction. By default this is <code>NULL</code> but
 using a numerical value with set the absolute threshold of positive travel
-allowed across numerical test units.</p></td>
+allowed across numerical test units. Note that setting a value here also
+has the effect of setting <code>allow_stationary</code> to <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>na_pass</th>
@@ -257,10 +258,10 @@ a pass.</p></td>
     </tr>
     <tr>
       <th>preconditions</th>
-      <td><p>expressions used for mutating the input table before
-proceeding with the validation. This is ideally as a one-sided R formula
-using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>. In the formula representation, the <code>.</code> serves as the
-input data table to be transformed (e.g.,
+      <td><p>An optional expression for mutating the input table
+before proceeding with the validation. This is ideally as a one-sided R
+formula using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>. In the formula representation, the <code>.</code> serves
+as the input data table to be transformed (e.g.,
 <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code>.</p></td>
     </tr>
     <tr>

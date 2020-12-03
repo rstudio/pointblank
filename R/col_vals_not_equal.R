@@ -17,7 +17,7 @@
 #
 
 
-#' Are column data not equal to a specified value?
+#' Are column data not equal to a fixed value or data in another column?
 #' 
 #' The `col_vals_not_equal()` validation function, the
 #' `expect_col_vals_not_equal()` expectation function, and the

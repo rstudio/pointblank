@@ -17,7 +17,8 @@
 #
 
 
-#' Are column data less than or equal to a specified value?
+#' Are column data less than or equal to a fixed value or data in another
+#' column?
 #'
 #' The `col_vals_lte()` validation function, the `expect_col_vals_lte()`
 #' expectation function, and the `test_col_vals_lte()` test function all check

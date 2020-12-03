@@ -162,6 +162,10 @@
 #' @section Function ID:
 #' 2-25
 #' 
+#' @seealso These reexported **dplyr** functions work nicely within
+#'   `col_vals_expr()` and its variants: [dplyr::expr()], [dplyr::between()],
+#'   and [dplyr::case_when()].
+#' 
 #' @name col_vals_expr
 NULL
 

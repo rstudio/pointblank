@@ -17,7 +17,7 @@
 #
 
 
-#' Are column data equal to a specified value?
+#' Are column data equal to a fixed value or data in another column?
 #' 
 #' The `col_vals_equal()` validation function, the `expect_col_vals_equal()`
 #' expectation function, and the `test_col_vals_equal()` test function all check

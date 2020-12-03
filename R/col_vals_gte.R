@@ -17,7 +17,8 @@
 #
 
 
-#' Are column data greater than or equal to a specified value?
+#' Are column data greater than or equal to a fixed value or data in another
+#' column?
 #'
 #' The `col_vals_gte()` validation function, the `expect_col_vals_gte()`
 #' expectation function, and the `test_col_vals_gte()` test function all check

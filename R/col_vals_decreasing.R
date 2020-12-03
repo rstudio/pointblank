@@ -86,7 +86,8 @@
 #' @param increasing_tol An optional threshold value that allows for movement of
 #'   numerical values in the positive direction. By default this is `NULL` but
 #'   using a numerical value with set the absolute threshold of positive travel
-#'   allowed across numerical test units.
+#'   allowed across numerical test units. Note that setting a value here also
+#'   has the effect of setting `allow_stationary` to `TRUE`.
 #' 
 #' @family validation functions
 #' 

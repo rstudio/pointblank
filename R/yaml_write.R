@@ -627,7 +627,9 @@ as_agent_yaml_list <- function(agent) {
         list(
           validation_fn = list(
             columns = as_vars_fn(step_list$column[[1]]),
-            allow_stationary = ifelse(step_list$values[[1]][1] == 1, TRUE, FALSE),
+            allow_stationary = ifelse(
+              step_list$values[[1]][1] == 1, TRUE, FALSE
+            ),
             decreasing_tol = decreasing_tol,
             preconditions = as_list_preconditions(step_list$preconditions),
             actions = as_action_levels(
@@ -650,7 +652,9 @@ as_agent_yaml_list <- function(agent) {
         list(
           validation_fn = list(
             columns = as_vars_fn(step_list$column[[1]]),
-            allow_stationary = ifelse(step_list$values[[1]][1] == 1, TRUE, FALSE),
+            allow_stationary = ifelse(
+              step_list$values[[1]][1] == 1, TRUE, FALSE
+            ),
             increasing_tol = increasing_tol,
             preconditions = as_list_preconditions(step_list$preconditions),
             actions = as_action_levels(

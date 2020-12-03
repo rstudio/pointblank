@@ -83,8 +83,9 @@
 #'   function or the test function.
 #' @param columns The column (or a set of columns, provided as a character
 #'   vector) to which this validation should be applied.
-#' @param value A numeric value used for this test. Any column values `> value`
-#'   are considered passing.
+#' @param value A value used for this comparison. This can be a single value or
+#'   a compatible column given in `vars()`. Any column values greater than what
+#'   is specified here will pass validation.
 #' @param na_pass Should any encountered `NA` values be considered as passing
 #'   test units? This is by default `FALSE`. Set to `TRUE` to give `NA`s
 #'   a pass.

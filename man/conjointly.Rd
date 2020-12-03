@@ -39,10 +39,10 @@ test_conjointly(
 (\code{tbl_spark}), or, an agent object of class \code{ptblank_agent} that is created
 with \code{\link[=create_agent]{create_agent()}}.}
 
-\item{...}{a collection one-sided formulas that consist of validation step
-functions that validate row units. Specifically, these functions should be
-those with the naming pattern \verb{col_vals_*()}. An example of this is
-\verb{~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(., vars(b)}).}
+\item{...}{a collection one-sided formulas that consist of validation
+functions that validate row units (the \verb{col_vals_*()} series), column
+existence (\code{\link[=col_exists]{col_exists()}}), or column type (the \verb{col_is_*()} series). An
+example of this is \verb{~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(., vars(b)}).}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
@@ -110,20 +110,25 @@ The test function returns a logical value.
 \description{
 The \code{conjointly()} validation function, the \code{expect_conjointly()} expectation
 function, and the \code{test_conjointly()} test function all check whether test
-units at each index (typically each row) all pass multiple validations with
-\verb{col_vals_*()}-type functions. Because of the imposed constraint on the
-allowed validation functions, all test units are rows of the table (after any
-common \code{preconditions} have been applied). Each of the functions (composed
-with multiple validation function calls) ultimately perform a rowwise test of
-whether all sub-validations reported a \emph{pass} for the same test units. In
+units at each index (typically each row) all pass multiple validations. We
+can use validation functions that validate row units (the \verb{col_vals_*()}
+series), check for column existence (\code{\link[=col_exists]{col_exists()}}), or validate column type
+(the \verb{col_is_*()} series). Because of the imposed constraint on the allowed
+validation functions, the ensemble of test units are either comprised rows of
+the table (after any common \code{preconditions} have been applied) or are single
+test units (for those functions that validate columns).
+
+Each of the functions used in a \code{conjointly()} validation step (composed
+using multiple validation function calls) ultimately perform a rowwise test
+of whether all sub-validations reported a \emph{pass} for the same test units. In
 practice, an example of a joint validation is testing whether values for
-column \code{a} are greater than a specific value while values for column \code{b} lie
-within a specified range. The validation functions to be part of the conjoint
-validation are to be supplied as one-sided \strong{R} formulas (using a leading
-\code{~}, and having a \code{.} stand in as the data object). The validation function
-can be used directly on a data table or with an \emph{agent} object (technically,
-a \code{ptblank_agent} object) whereas the expectation and test functions can only
-be used with a data table.
+column \code{a} are greater than a specific value while adjacent values in column
+\code{b} lie within a specified range. The validation functions to be part of the
+conjoint validation are to be supplied as one-sided \strong{R} formulas (using a
+leading \code{~}, and having a \code{.} stand in as the data object). The validation
+function can be used directly on a data table or with an \emph{agent} object
+(technically, a \code{ptblank_agent} object) whereas the expectation and test
+functions can only be used with a data table.
 }
 \details{
 If providing multiple column names in any of the supplied validation step

@@ -4,7 +4,7 @@
 \alias{col_vals_between}
 \alias{expect_col_vals_between}
 \alias{test_col_vals_between}
-\title{Are column data between two specified values?}
+\title{Do column data lie between two specified values or data in other columns?}
 \usage{
 col_vals_between(
   x,

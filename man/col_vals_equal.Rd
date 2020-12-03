@@ -4,7 +4,7 @@
 \alias{col_vals_equal}
 \alias{expect_col_vals_equal}
 \alias{test_col_vals_equal}
-\title{Are column data equal to a specified value?}
+\title{Are column data equal to a fixed value or data in another column?}
 \usage{
 col_vals_equal(
   x,

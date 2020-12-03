@@ -4,7 +4,7 @@
 \alias{col_vals_lt}
 \alias{expect_col_vals_lt}
 \alias{test_col_vals_lt}
-\title{Are column data less than a specified value?}
+\title{Are column data less than a fixed value or data in another column?}
 \usage{
 col_vals_lt(
   x,

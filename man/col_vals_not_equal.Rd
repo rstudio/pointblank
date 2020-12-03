@@ -4,7 +4,7 @@
 \alias{col_vals_not_equal}
 \alias{expect_col_vals_not_equal}
 \alias{test_col_vals_not_equal}
-\title{Are column data not equal to a specified value?}
+\title{Are column data not equal to a fixed value or data in another column?}
 \usage{
 col_vals_not_equal(
   x,

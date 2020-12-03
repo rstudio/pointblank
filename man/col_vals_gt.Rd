@@ -4,7 +4,7 @@
 \alias{col_vals_gt}
 \alias{expect_col_vals_gt}
 \alias{test_col_vals_gt}
-\title{Are column data greater than a specified value?}
+\title{Are column data greater than a fixed value or data in another column?}
 \usage{
 col_vals_gt(
   x,

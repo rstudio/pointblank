@@ -4,7 +4,8 @@
 \alias{col_vals_gte}
 \alias{expect_col_vals_gte}
 \alias{test_col_vals_gte}
-\title{Are column data greater than or equal to a specified value?}
+\title{Are column data greater than or equal to a fixed value or data in another
+column?}
 \usage{
 col_vals_gte(
   x,

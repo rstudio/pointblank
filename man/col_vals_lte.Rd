@@ -4,7 +4,8 @@
 \alias{col_vals_lte}
 \alias{expect_col_vals_lte}
 \alias{test_col_vals_lte}
-\title{Are column data less than or equal to a specified value?}
+\title{Are column data less than or equal to a fixed value or data in another
+column?}
 \usage{
 col_vals_lte(
   x,

@@ -45,7 +45,9 @@ with \code{\link[=create_agent]{create_agent()}}.}
 \item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
-\item{regex}{A regex pattern to test for matching strings.}
+\item{regex}{A regular expression pattern to test for a match to the target
+column. Any regex matches to values in the target \code{columns} will pass
+validation.}
 
 \item{na_pass}{Should any encountered \code{NA} values be considered as passing
 test units? This is by default \code{FALSE}. Set to \code{TRUE} to give \code{NA}s

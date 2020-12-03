@@ -4,7 +4,7 @@
 \alias{col_vals_not_between}
 \alias{expect_col_vals_not_between}
 \alias{test_col_vals_not_between}
-\title{Are column data not between two specified values?}
+\title{Do column data lie outside of two specified values or data in other columns?}
 \usage{
 col_vals_not_between(
   x,

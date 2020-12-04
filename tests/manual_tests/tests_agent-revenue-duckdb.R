@@ -10,7 +10,9 @@ agent_revenue_duckdb <-
   create_agent(
     read_fn = 
       ~ db_tbl(
-        db = "duckdb", dbname = ":memory:", table = intendo::intendo_revenue,
+        db = "duckdb",
+        dbname = ":memory:",
+        table = intendo::intendo_revenue
       ),
     tbl_name = "revenue",
     label = "The **intendo** revenue table.", 

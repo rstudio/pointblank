@@ -4,11 +4,13 @@
 \alias{yaml_read_agent}
 \title{Read a \strong{pointblank} YAML file to create an \emph{agent} object}
 \usage{
-yaml_read_agent(path)
+yaml_read_agent(filename, path = NULL)
 }
 \arguments{
-\item{path}{A path to a \strong{pointblank} YAML file that contains fields related
-to an \emph{agent}.}
+\item{filename}{The name of the YAML file that contains fields related to an
+\emph{agent}.}
+
+\item{path}{An optional path to the YAML file (combined with \code{filename}).}
 }
 \description{
 With \code{yaml_read_agent()} we can read a \strong{pointblank} YAML file that
@@ -95,7 +97,7 @@ yml_file <-
 
 # We can view the YAML file in the console
 # with the `yaml_agent_string()` function
-yaml_agent_string(path = yml_file)
+yaml_agent_string(filename = yml_file)
 
 # The YAML can also be printed in the console
 # by supplying the agent as the input
@@ -104,7 +106,7 @@ yaml_agent_string(agent = agent)
 # At a later time, the YAML file can
 # be read into a new agent with the
 # `yaml_read_agent()` function
-agent <- yaml_read_agent(path = yml_file)
+agent <- yaml_read_agent(filename = yml_file)
 
 class(agent)
 
@@ -115,7 +117,9 @@ class(agent)
 # interrogate directly from the YAML
 # file with `yaml_agent_interrogate()`
 agent <- 
-  yaml_agent_interrogate(path = yml_file)
+  yaml_agent_interrogate(
+    filename = yml_file
+  )
 
 class(agent)
 

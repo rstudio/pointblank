@@ -4,11 +4,13 @@
 \alias{yaml_agent_show_exprs}
 \title{Display validation expressions using \strong{pointblank} YAML}
 \usage{
-yaml_agent_show_exprs(path)
+yaml_agent_show_exprs(filename, path = NULL)
 }
 \arguments{
-\item{path}{A path to a \strong{pointblank} YAML file that contains fields related
-to an \emph{agent}.}
+\item{filename}{The name of the YAML file that contains fields related to an
+\emph{agent}.}
+
+\item{path}{An optional path to the YAML file (combined with \code{filename}).}
 }
 \description{
 The \code{yaml_agent_show_exprs()} function follows the specifications of a
@@ -67,14 +69,15 @@ yml_file <-
 # At a later time, the YAML file can
 # be read into a new agent with the
 # `yaml_read_agent()` function
-agent <- yaml_read_agent(path = yml_file)
+agent <- 
+  yaml_read_agent(filename = yml_file)
 
 class(agent)
 
 # To get a sense of which expressions are
 # being used to generate the new agent, we
 # can use `yaml_agent_show_exprs()`
-yaml_agent_show_exprs(path = yml_file)
+yaml_agent_show_exprs(filename = yml_file)
   
 }
 \seealso{

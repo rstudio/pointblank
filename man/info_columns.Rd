@@ -112,7 +112,9 @@ informant <-
 # into an informant object with the
 # `yaml_read_informant()` function
 # informant <-
-#   yaml_read_informant(path = "informant.yml")
+#   yaml_read_informant(
+#     filename = "informant.yml"
+#   )
 
 }
 \seealso{

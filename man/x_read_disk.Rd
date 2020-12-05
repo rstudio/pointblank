@@ -4,11 +4,13 @@
 \alias{x_read_disk}
 \title{Read a \strong{pointblank} \emph{agent} or \emph{informant} from disk}
 \usage{
-x_read_disk(path)
+x_read_disk(filename, path = NULL)
 }
 \arguments{
-\item{path}{The path to a file that was previously written by
+\item{filename}{The name of a file that was previously written by
 \code{\link[=x_write_disk]{x_write_disk()}}.}
+
+\item{path}{An optional path to the file (combined with \code{filename}).}
 }
 \description{
 An \emph{agent} or \emph{informant} that has been written to disk (with

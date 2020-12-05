@@ -7,6 +7,8 @@
 snip_list(
   column,
   limit = 5,
+  sorting = c("inorder", "infreq", "inseq"),
+  reverse = FALSE,
   sep = ",",
   and_or = NULL,
   oxford = TRUE,
@@ -21,6 +23,17 @@ snip_list(
 \item{limit}{A limit of items put into the generated list. The returned text
 will state the remaining number of items beyond the \code{limit}. By default,
 the limit is \code{5}.}
+
+\item{sorting}{A keyword used to designate the type of sorting to use for the
+list. The three options are \code{"inorder"} (the default), \code{"infreq"}, and
+\code{"inseq"}. With \code{"inorder"}, distinct items are listed in the order in
+which they firsts appear. Using \code{"infreq"} orders the items by the
+decreasing frequency of each item. The \code{"inseq"} option applies an
+alphanumeric sorting to the distinct list items.}
+
+\item{reverse}{An option to reverse the ordering of list items. By default,
+this is \code{FALSE} but using \code{TRUE} will reverse the items before applying the
+\code{limit}.}
 
 \item{sep}{The separator to use between list items. By default, this is a
 comma.}

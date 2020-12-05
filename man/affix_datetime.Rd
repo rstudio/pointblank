@@ -6,7 +6,7 @@
 \usage{
 affix_datetime(
   filename,
-  position = c("start", "end"),
+  position = c("end", "start"),
   format = "\%Y-\%m-\%dT\%H:\%M:\%S",
   delimiter = "_",
   utc = TRUE

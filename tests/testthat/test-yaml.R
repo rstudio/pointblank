@@ -58,9 +58,9 @@ test_that("YAML writing and reading works as expected", {
 
   # Expect that `yaml_agent_string()` shows a YAML string in the
   # console and returns nothing (when reading from a YAML file)
-  expect_null(suppressMessages(yaml_agent_string(path = file.path(temp_dir, "test.yaml"))))
+  expect_null(suppressMessages(yaml_agent_string(filename = file.path(temp_dir, "test.yaml"))))
   expect_match(
-    as.character(testthat::capture_message(yaml_agent_string(path = file.path(temp_dir, "test.yaml")))),
+    as.character(testthat::capture_message(yaml_agent_string(filename = file.path(temp_dir, "test.yaml")))),
     "read_fn: .*?tbl_name: .*?label: .*?actions:.*?warn_fraction: 0.1.*?stop_fraction: 0.2.*?steps:.*"
   )
 
@@ -110,9 +110,9 @@ test_that("YAML writing and reading works as expected", {
 
   # Expect that `yaml_agent_show_exprs()` shows string with pointblank
   # expression in the console and returns nothing (when reading from an agent)
-  expect_null(suppressMessages(yaml_agent_show_exprs(path = file.path(temp_dir, "test.yaml"))))
+  expect_null(suppressMessages(yaml_agent_show_exprs(filename = file.path(temp_dir, "test.yaml"))))
   expect_match(
-    as.character(testthat::capture_message(yaml_agent_show_exprs(path = file.path(temp_dir, "test.yaml")))),
+    as.character(testthat::capture_message(yaml_agent_show_exprs(filename = file.path(temp_dir, "test.yaml")))),
     paste(
       c(
         "create_agent", "col_vals_in_set", "col_vals_between",
@@ -125,7 +125,7 @@ test_that("YAML writing and reading works as expected", {
   )
 
   # Create the agent from YAML and interrogate immediately
-  agent_intel <- yaml_agent_interrogate(path = file.path(temp_dir, "test.yaml"))
+  agent_intel <- yaml_agent_interrogate(filename = file.path(temp_dir, "test.yaml"))
 
   # Expect a `ptblank_agent` object and also expect it to
   # have intel (the `has_intel` class)
@@ -167,7 +167,12 @@ test_that("YAML writing and reading works as expected", {
   
   # Expect an error if using `yaml_agent_string()` with both an
   # agent and a YAML file
-  expect_error(yaml_agent_string(agent = agent_intel, path = file.path(temp_dir, "test.yaml")))
+  expect_error(
+    yaml_agent_string(
+      agent = agent_intel,
+      filename = file.path(temp_dir, "test.yaml")
+    )
+  )
   
   # Expect an error if using `yaml_agent_string()` with neither an
   # agent nor a YAML file specified

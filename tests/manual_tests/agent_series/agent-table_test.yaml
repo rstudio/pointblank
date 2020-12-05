@@ -1,0 +1,11 @@
+read_fn: ~tbl
+tbl_name: table_test
+label: DQ Check Over Time
+locale: en
+steps:
+- col_vals_not_null:
+    columns: vars(a)
+- col_vals_lte:
+    columns: vars(a)
+    value: 10.0
+    na_pass: true

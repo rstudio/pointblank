@@ -167,6 +167,8 @@ the of items in that list with the <code>limit</code> value.</p>
     <pre class="usage"><span class='fu'>snip_list</span><span class='op'>(</span>
   <span class='va'>column</span>,
   limit <span class='op'>=</span> <span class='fl'>5</span>,
+  sorting <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"inorder"</span>, <span class='st'>"infreq"</span>, <span class='st'>"inseq"</span><span class='op'>)</span>,
+  reverse <span class='op'>=</span> <span class='cn'>FALSE</span>,
   sep <span class='op'>=</span> <span class='st'>","</span>,
   and_or <span class='op'>=</span> <span class='cn'>NULL</span>,
   oxford <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -187,6 +189,21 @@ the of items in that list with the <code>limit</code> value.</p>
       <td><p>A limit of items put into the generated list. The returned text
 will state the remaining number of items beyond the <code>limit</code>. By default,
 the limit is <code>5</code>.</p></td>
+    </tr>
+    <tr>
+      <th>sorting</th>
+      <td><p>A keyword used to designate the type of sorting to use for the
+list. The three options are <code>"inorder"</code> (the default), <code>"infreq"</code>, and
+<code>"inseq"</code>. With <code>"inorder"</code>, distinct items are listed in the order in
+which they firsts appear. Using <code>"infreq"</code> orders the items by the
+decreasing frequency of each item. The <code>"inseq"</code> option applies an
+alphanumeric sorting to the distinct list items.</p></td>
+    </tr>
+    <tr>
+      <th>reverse</th>
+      <td><p>An option to reverse the ordering of list items. By default,
+this is <code>FALSE</code> but using <code>TRUE</code> will reverse the items before applying the
+<code>limit</code>.</p></td>
     </tr>
     <tr>
       <th>sep</th>

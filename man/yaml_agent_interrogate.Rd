@@ -98,7 +98,7 @@ yaml_agent_string(filename = yml_file)
 
 # The YAML can also be printed in the console
 # by supplying the agent as the input
-yaml_agent_string(filename = agent)
+yaml_agent_string(agent = agent)
 
 # We can interrogate the data (which
 # is accessible through the `read_fn`)

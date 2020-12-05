@@ -559,6 +559,15 @@ info_snippet <- function(x,
 #' @param limit A limit of items put into the generated list. The returned text
 #'   will state the remaining number of items beyond the `limit`. By default,
 #'   the limit is `5`.
+#' @param sorting A keyword used to designate the type of sorting to use for the
+#'   list. The three options are `"inorder"` (the default), `"infreq"`, and
+#'   `"inseq"`. With `"inorder"`, distinct items are listed in the order in
+#'   which they firsts appear. Using `"infreq"` orders the items by the
+#'   decreasing frequency of each item. The `"inseq"` option applies an
+#'   alphanumeric sorting to the distinct list items.
+#' @param reverse An option to reverse the ordering of list items. By default,
+#'   this is `FALSE` but using `TRUE` will reverse the items before applying the
+#'   `limit`.
 #' @param sep The separator to use between list items. By default, this is a
 #'   comma.
 #' @param and_or The type of conjunction to use between the final and
@@ -590,6 +599,8 @@ info_snippet <- function(x,
 #' @export
 snip_list <- function(column,
                       limit = 5,
+                      sorting = c("inorder", "infreq", "inseq"),
+                      reverse = FALSE,
                       sep = ",",
                       and_or = NULL,
                       oxford = TRUE,
@@ -597,6 +608,8 @@ snip_list <- function(column,
                       quot_str = NULL,
                       lang = NULL) {
 
+  sorting <- match.arg(sorting)
+  
   if (is.character(and_or)) {
     and_or <- paste0("'", and_or[1], "'")
   } else if (is.null(and_or)) {
@@ -638,26 +651,92 @@ snip_list <- function(column,
   }
   
   sep <- paste0("'", sep[1], "'")
-
-  stats::as.formula(
-    as.character(
-      glue::glue(
-        "~ . %>% dplyr::select(<<column>>) %>% 
-        dplyr::distinct() %>%
-        dplyr::pull(<<column>>) %>% 
-        pb_str_catalog(
-          limit = <<limit[1]>>,
-          sep = <<sep>>,
-          and_or = <<and_or>>,
-          oxford = <<oxford>>,
-          as_code = <<as_code>>,
-          quot_str = <<quot_str>>,
-          lang = <<lang>>
-        )",
-        .open = "<<", .close = ">>"   
+  
+  if (sorting == "inorder") {
+    
+    formula <- 
+      stats::as.formula(
+        as.character(
+          glue::glue(
+            "~ . %>% dplyr::select(<<column>>) %>%",
+            "dplyr::distinct() %>%",
+            "dplyr::pull(<<column>>) %>%",
+            ifelse(reverse, "rev() %>%", ""),
+            "pb_str_catalog(
+            limit = <<limit[1]>>,
+            sep = <<sep>>,
+            and_or = <<and_or>>,
+            oxford = <<oxford>>,
+            as_code = <<as_code>>,
+            quot_str = <<quot_str>>,
+            lang = <<lang>>
+          )",
+          .open = "<<", .close = ">>"   
+          )
+        )
       )
-    )
-  )
+    
+  } else if (sorting == "infreq") {
+    
+    formula <-
+      stats::as.formula(
+        as.character(
+          glue::glue(
+            "~ . %>% dplyr::select(<<column>>) %>%",
+            "dplyr::group_by(<<column>>) %>%",
+            "dplyr::summarize(`_count_` = n(), .groups = 'keep') %>%",
+            ifelse(
+              reverse,
+              "dplyr::arrange(`_count_`) %>%",
+              "dplyr::arrange(dplyr::desc(`_count_`)) %>%"
+            ),
+            "dplyr::select(<<column>>) %>%",
+            "dplyr::pull(<<column>>) %>%",
+            "pb_str_catalog(
+            limit = <<limit[1]>>,
+            sep = <<sep>>,
+            and_or = <<and_or>>,
+            oxford = <<oxford>>,
+            as_code = <<as_code>>,
+            quot_str = <<quot_str>>,
+            lang = <<lang>>
+          )",
+          .open = "<<", .close = ">>"   
+          )
+        )
+      )
+    
+  } else {
+
+    # Arranging with "inseq" option
+    formula <- 
+      stats::as.formula(
+        as.character(
+          glue::glue(
+            "~ . %>% dplyr::select(<<column>>) %>%",
+            "dplyr::distinct() %>%",
+            "dplyr::pull(<<column>>) %>%",
+            ifelse(
+              reverse,
+              "sort(decreasing = TRUE) %>%",
+              "sort() %>%"
+            ),
+            "pb_str_catalog(
+            limit = <<limit[1]>>,
+            sep = <<sep>>,
+            and_or = <<and_or>>,
+            oxford = <<oxford>>,
+            as_code = <<as_code>>,
+            quot_str = <<quot_str>>,
+            lang = <<lang>>
+          )",
+          .open = "<<", .close = ">>"   
+          )
+        )
+      )
+  }
+  
+  formula
 }
 
 #' A `fn` for `info_snippet()`: get the lowest value from a column

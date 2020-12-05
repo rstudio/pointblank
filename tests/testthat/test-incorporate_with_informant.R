@@ -153,7 +153,7 @@ test_that("Incorporating an informant from YAML yields the correct results", {
   
   yaml_write(informant = informant, filename = temp_file)
   
-  informant_from_yaml <- yaml_read_informant(path = temp_file)
+  informant_from_yaml <- yaml_read_informant(filename = temp_file)
   
   informant_inc_yaml <- informant_from_yaml %>% incorporate()
   
@@ -222,7 +222,7 @@ test_that("Incorporating an informant from YAML yields the correct results", {
   
   # Incorporate the informant in the YAML file with
   # `yaml_informant_incorporate()` function
-  informant_inc_yaml_2 <- yaml_informant_incorporate(path = temp_file)
+  informant_inc_yaml_2 <- yaml_informant_incorporate(filename = temp_file)
     
   # Get the row and column count values
   n_row_f <- informant_inc_yaml_2$metadata_rev$table$`_rows`

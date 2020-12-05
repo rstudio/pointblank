@@ -109,7 +109,7 @@
 #' 
 #' # We can view the YAML file in the console
 #' # with the `yaml_agent_string()` function
-#' yaml_agent_string(path = yml_file)
+#' yaml_agent_string(filename = yml_file)
 #' 
 #' # The YAML can also be printed in the console
 #' # by supplying the agent as the input
@@ -119,7 +119,7 @@
 #' # be read into a new agent with the
 #' # `yaml_read_agent()` function
 #' agent <- 
-#'   yaml_read_agent(path = yml_file)
+#'   yaml_read_agent(filename = yml_file)
 #' 
 #' class(agent)
 #' 
@@ -130,7 +130,7 @@
 #' # interrogate directly from the YAML
 #' # file with `yaml_agent_interrogate()`
 #' agent <- 
-#'   yaml_agent_interrogate(path = yml_file)
+#'   yaml_agent_interrogate(filename = yml_file)
 #' 
 #' class(agent)
 #' 
@@ -188,9 +188,12 @@ yaml_write <- function(agent = NULL,
 #' `yaml_agent_string()` and view the YAML representation of the validation plan
 #' without needing to write the YAML to disk beforehand.
 #'
-#' @param agent An *agent* object of class `ptblank_agent`.
-#' @param path A path to a YAML file that specifies a validation plan for an
-#'   *agent*.
+#' @param agent An *agent* object of class `ptblank_agent`. If an object is
+#'   provided here, then `filename` must not be provided.
+#' @param filename The name of the YAML file that contains fields related to an
+#'   *agent*. If a file name is provided here, then *agent* object must not be
+#'   provided in `agent`.
+#' @param path An optional path to the YAML file (combined with `filename`).
 #'   
 #' @examples 
 #' # Let's create a validation plan for the
@@ -238,12 +241,12 @@ yaml_write <- function(agent = NULL,
 #' 
 #' # The `yaml_agent_string()` function can
 #' # be used with the YAML file as well
-#' yaml_agent_string(path = yml_file)
+#' yaml_agent_string(filename = yml_file)
 #' 
 #' # At a later time, the YAML file can
 #' # be read into a new agent with the
 #' # `yaml_read_agent()` function
-#' agent <- yaml_read_agent(path = yml_file)
+#' agent <- yaml_read_agent(filename = yml_file)
 #' class(agent)
 #'   
 #' @family pointblank YAML
@@ -252,16 +255,17 @@ yaml_write <- function(agent = NULL,
 #' 
 #' @export
 yaml_agent_string <- function(agent = NULL,
+                              filename = NULL,
                               path = NULL) {
   
-  if (is.null(agent) && is.null(path)) {
+  if (is.null(agent) && is.null(filename)) {
     stop(
       "An `agent` object or a `path` to a YAML file must be specified.",
       call. = FALSE
     )
   }
   
-  if (!is.null(agent) && !is.null(path)) {
+  if (!is.null(agent) && !is.null(filename)) {
     stop("Only one of `agent` or `path` should be specified.", call. = FALSE)
   }
   
@@ -281,7 +285,12 @@ yaml_agent_string <- function(agent = NULL,
     )
     
   } else {
-    message(readLines(path) %>% paste(collapse = "\n"))
+    
+    if (!is.null(path)) {
+      filename <- file.path(path, filename)
+    }
+    
+    message(readLines(filename) %>% paste(collapse = "\n"))
   }
 }
 

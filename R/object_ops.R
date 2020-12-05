@@ -124,13 +124,23 @@ x_write_disk <- function(x,
 #' @param path The path to a file that was previously written by
 #'   [x_write_disk()].
 #' 
+#' @param filename The name of a file that was previously written by
+#'   [x_write_disk()].
+#' @param path An optional path to the file (combined with `filename`).
+#' 
 #' @family Object Ops
 #' @section Function ID:
 #' 8-2
 #' 
 #' @export
-x_read_disk <- function(path) {
-  readRDS(path)
+x_read_disk <- function(filename,
+                        path = NULL) {
+  
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
+  
+  readRDS(filename)
 }
 
 #' Set a data table to an *agent* or *informant*

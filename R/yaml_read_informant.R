@@ -24,9 +24,10 @@
 #' function. What's returned is a new *informant* object with the information
 #' intact. The *informant* object can be given more information through use of
 #' the `info_*()` functions.
-#' 
-#' @param path A path to a **pointblank** YAML file that contains fields related
-#'   to an *informant*.
+#'   
+#' @param filename The name of the YAML file that contains fields related to an
+#'   *informant*.
+#' @param path An optional path to the YAML file (combined with `filename`).
 #' 
 #' @examples 
 #' # Create a pointblank `informant`
@@ -122,7 +123,7 @@
 #' # as an `informant` object by using
 #' # `yaml_read_informant()`
 #' informant <- 
-#'   yaml_read_informant(path = yml_file)
+#'   yaml_read_informant(filename = yml_file)
 #' 
 #' class(informant)
 #' 
@@ -131,10 +132,15 @@
 #' 9-3
 #' 
 #' @export
-yaml_read_informant <- function(path) {
+yaml_read_informant <- function(filename,
+                                path = NULL) {
 
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
+  
   informant_list <- 
-    expr_from_informant_yaml(path = path, incorporate = FALSE)
+    expr_from_informant_yaml(path = filename, incorporate = FALSE)
 
   informant <- 
     informant_list$expr_str %>%
@@ -157,8 +163,9 @@ yaml_read_informant <- function(path) {
 #' [yaml_read_informant()] the informant is returned except, this time, it has
 #' been updated with the latest information from the target table.
 #'
-#' @param path A path to a YAML file that specifies a information for an
+#' @param filename The name of the YAML file that contains fields related to an
 #'   *informant*.
+#' @param path An optional path to the YAML file (combined with `filename`).
 #'
 #' @examples
 #' # Let's go through the process of
@@ -230,7 +237,7 @@ yaml_read_informant <- function(path) {
 #' # use of the YAML file with
 #' # `yaml_informant_incorporate()`
 #' informant <- 
-#'   yaml_informant_incorporate(path = yml_file)
+#'   yaml_informant_incorporate(filename = yml_file)
 #' 
 #' class(informant)
 #'
@@ -240,7 +247,7 @@ yaml_read_informant <- function(path) {
 #' # `yaml_read_informant()` function will
 #' # be useful
 #' informant <- 
-#'   yaml_read_informant(path = yml_file)
+#'   yaml_read_informant(filename = yml_file)
 #' 
 #' class(informant)
 #'
@@ -249,10 +256,15 @@ yaml_read_informant <- function(path) {
 #' 9-7
 #'
 #' @export
-yaml_informant_incorporate <- function(path) {
+yaml_informant_incorporate <- function(filename,
+                                       path = NULL) {
+  
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
   
   informant_list <- 
-    expr_from_informant_yaml(path = path)
+    expr_from_informant_yaml(path = filename)
   
   informant <- 
     informant_list$expr_str %>%

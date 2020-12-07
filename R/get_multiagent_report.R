@@ -49,7 +49,7 @@
 #' @export
 get_multiagent_report <- function(multiagent,
                                   display_table = TRUE) {
-  
+
   for (i in seq_along(multiagent[["agents"]])) {
     
     time_end <- gsub(" ", "T", multiagent[["agents"]][[i]][["time_end"]])

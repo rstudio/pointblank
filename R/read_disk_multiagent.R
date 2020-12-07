@@ -86,4 +86,3 @@ read_disk_multiagent <- function(filenames = NULL,
   class(agent_series) <- "ptblank_multiagent"
   agent_series
 }
-

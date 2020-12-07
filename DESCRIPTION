@@ -46,6 +46,7 @@ Imports:
     scales (>= 1.1.1),
     testthat (>= 2.3.2),
     tibble (>= 3.0.0),
+    tidyr (>= 1.1.2),
     tidyselect (>= 1.1.0),
     yaml (>= 2.2.1)
 Suggests:

@@ -71,5 +71,41 @@ multiagent_tbl <-
 
 multiagent_tbl
 
-#unpack(multiagent_tbl, cols = starts_with("i")) %>% select(i)
 
+# Add a new step to the agent YAML
+
+agent <- 
+  create_agent(
+    read_fn = ~tbl,
+    tbl_name = "table_test",
+    label = "DQ Check Over Time"
+  ) %>%
+  col_vals_not_null(vars(a)) %>%
+  col_vals_lte(vars(a), value = 10, na_pass = TRUE) %>%
+  col_vals_gt(vars(a), 0)
+
+yaml_write(
+  agent = agent,
+  filename = "agent-table_test.yaml",
+  path = rel_path_outfiles
+)
+
+yaml_agent_interrogate(
+  file = "agent-table_test.yaml",
+  path = rel_path_outfiles
+) %>%
+  x_write_disk(
+    filename = affix_datetime("agent-table_test.rds"),
+    path = rel_path_outfiles
+  )
+
+# Read the saved agents into a series
+multiagent <- 
+  read_disk_multiagent(
+    pattern = ".*rds",
+    path = rel_path_outfiles
+  )
+
+multiagent
+
+#unpack(multiagent_tbl, cols = starts_with("i")) %>% select(i)

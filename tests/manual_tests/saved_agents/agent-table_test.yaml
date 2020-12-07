@@ -9,3 +9,6 @@ steps:
     columns: vars(a)
     value: 10.0
     na_pass: true
+- col_vals_gt:
+    columns: vars(a)
+    value: 0.0

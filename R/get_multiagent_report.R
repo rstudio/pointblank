@@ -181,11 +181,12 @@ get_multiagent_report <- function(multiagent,
                   padding_right = "2px",
                   border_color = "#DDD",
                   border_width = "1px",
-                  border_style = "solid"
+                  border_style = "solid",
+                  height = "32px"
                 ),
                 htmltools::tags$span(
                   style = htmltools::css(
-                    font_size = "x-large",
+                    font_size = ifelse(vars_step_j$i < 100, "x-large", "16px"),
                     color = "#999"
                   ),
                   vars_step_j$i

@@ -4,10 +4,12 @@
 \alias{print.ptblank_multiagent}
 \title{Print the \code{ptblank_multiagent} object}
 \usage{
-\method{print}{ptblank_multiagent}(x, ...)
+\method{print}{ptblank_multiagent}(x, view = interactive(), ...)
 }
 \arguments{
 \item{x}{An object of class \code{ptblank_multiagent}.}
+
+\item{view}{The value for \code{print()}s \code{browse} argument.}
 
 \item{...}{Any additional parameters.}
 }

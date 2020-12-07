@@ -380,12 +380,13 @@ print.action_levels <- function(x, ...) {
 #' This function will allow the `ptblank_multiagent` to be nicely printed.
 #' 
 #' @param x An object of class `ptblank_multiagent`.
+#' @param view The value for `print()`s `browse` argument.
 #' @param ... Any additional parameters.
 #' 
 #' @keywords internal
 #' @export
-print.ptblank_multiagent <- function(x, ...) {
-  
+print.ptblank_multiagent <- function(x, view = interactive(), ...) {
+
   # nocov start 
   
   print(get_multiagent_report(x), view = view, ...)

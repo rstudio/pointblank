@@ -121,9 +121,6 @@ x_write_disk <- function(x,
 #' object, using [incorporate()] will update aspects of the reporting such as
 #' table dimensions, and info snippets/text will be regenerated.
 #' 
-#' @param path The path to a file that was previously written by
-#'   [x_write_disk()].
-#' 
 #' @param filename The name of a file that was previously written by
 #'   [x_write_disk()].
 #' @param path An optional path to the file (combined with `filename`).

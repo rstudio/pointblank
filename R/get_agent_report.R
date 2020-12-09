@@ -1409,7 +1409,7 @@ get_agent_report <- function(agent,
       ) %>%
       gt::opt_css(
         css = "
-          #pb_information {
+          #report {
             -webkit-font-smoothing: antialiased;
           }
           #report .gt_row {

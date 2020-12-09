@@ -284,7 +284,9 @@ get_multiagent_report <- function(multiagent,
     
     green_vals <- floor(mean_f_passed * 255)
     red_vals <- floor((1 - mean_f_passed) * 255)
-    blue_vals <- floor(round(1 - (abs((255 / 2) - green_vals) / (255 / 2)), 1) * 255)
+    blue_vals <- 
+      floor(round(1 - (abs((255 / 2) - green_vals) / (255 / 2)), 1) * 255)
+    
     offsets <- seq(from = 100 / i, to = 100, by = 100 / i) - ((100 / i) / 2)
     
     stop_tags <- 
@@ -296,9 +298,11 @@ get_multiagent_report <- function(multiagent,
 
     gradient_line <-
       paste0(
-        "<svg height=\"10\" width=\"", (length(multiagent[["agents"]]) * 50) - 5, "\">\n",
+        "<svg height=\"10\" width=\"", 
+        (length(multiagent[["agents"]]) * 50) - 5, "\">\n",
         "<defs>\n",
-        "<linearGradient id=\"grad1\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"0%\">\n",
+        "<linearGradient id=\"grad1\" x1=\"0%\" y1=\"0%\" ",
+        "x2=\"100%\" y2=\"0%\">\n",
         paste(stop_tags, collapse = ""),
         "</linearGradient>\n",
         "</defs>\n",
@@ -458,12 +462,6 @@ get_multiagent_report <- function(multiagent,
     ) %>%
     gt::fmt_markdown(columns = 2:n_columns) %>%
     gt::fmt_markdown(columns = vars(sha1)) %>%
-    # gt::text_transform(
-    #   locations = gt::cells_body(columns = 1),
-    #   fn = function(x) {
-    #     substr(x, 1, 6)
-    #   }
-    # ) %>%
     gt::tab_style(
       style = gt::cell_text(font = "'IBM Plex Mono'", size = "small"),
       locations = gt::cells_body(columns = gt::vars(sha1))

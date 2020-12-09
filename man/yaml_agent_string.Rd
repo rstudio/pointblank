@@ -4,13 +4,17 @@
 \alias{yaml_agent_string}
 \title{Display \strong{pointblank} YAML using an agent or a YAML file}
 \usage{
-yaml_agent_string(agent = NULL, path = NULL)
+yaml_agent_string(agent = NULL, filename = NULL, path = NULL)
 }
 \arguments{
-\item{agent}{An \emph{agent} object of class \code{ptblank_agent}.}
+\item{agent}{An \emph{agent} object of class \code{ptblank_agent}. If an object is
+provided here, then \code{filename} must not be provided.}
 
-\item{path}{A path to a YAML file that specifies a validation plan for an
-\emph{agent}.}
+\item{filename}{The name of the YAML file that contains fields related to an
+\emph{agent}. If a file name is provided here, then \emph{agent} object must not be
+provided in \code{agent}.}
+
+\item{path}{An optional path to the YAML file (combined with \code{filename}).}
 }
 \description{
 With \strong{pointblank} YAML, we can serialize an agent's validation plan (with
@@ -74,12 +78,12 @@ yml_file <-
 
 # The `yaml_agent_string()` function can
 # be used with the YAML file as well
-yaml_agent_string(path = yml_file)
+yaml_agent_string(filename = yml_file)
 
 # At a later time, the YAML file can
 # be read into a new agent with the
 # `yaml_read_agent()` function
-agent <- yaml_read_agent(path = yml_file)
+agent <- yaml_read_agent(filename = yml_file)
 class(agent)
   
 }

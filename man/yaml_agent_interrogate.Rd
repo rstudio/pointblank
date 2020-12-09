@@ -4,11 +4,13 @@
 \alias{yaml_agent_interrogate}
 \title{Get an \emph{agent} from \strong{pointblank} YAML and \code{interrogate()}}
 \usage{
-yaml_agent_interrogate(path)
+yaml_agent_interrogate(filename, path = NULL)
 }
 \arguments{
-\item{path}{A path to a \strong{pointblank} YAML file that contains fields related
-to an \emph{agent}.}
+\item{filename}{The name of the YAML file that contains fields related to an
+\emph{agent}.}
+
+\item{path}{An optional path to the YAML file (combined with \code{filename}).}
 }
 \description{
 The \code{yaml_agent_interrogate()} function operates much like the
@@ -92,7 +94,7 @@ yml_file <-
 
 # We can view the YAML file in the console
 # with the `yaml_agent_string()` function
-yaml_agent_string(path = yml_file)
+yaml_agent_string(filename = yml_file)
 
 # The YAML can also be printed in the console
 # by supplying the agent as the input
@@ -103,7 +105,7 @@ yaml_agent_string(agent = agent)
 # through direct use of the YAML file
 # with `yaml_agent_interrogate()`
 agent <- 
-  yaml_agent_interrogate(path = yml_file)
+  yaml_agent_interrogate(filename = yml_file)
 
 class(agent)
 
@@ -112,7 +114,8 @@ class(agent)
 # (stopping short of interrogating the data),
 # then the `yaml_read_agent()` function
 # will be useful
-agent <- yaml_read_agent(path = yml_file)
+agent <- 
+  yaml_read_agent(filename = yml_file)
 class(agent)
 
 }

@@ -40,7 +40,7 @@ test_that("Reading an informant from YAML is possible", {
   
   yaml_write(informant = informant, filename = temp_file)
   
-  informant_from_yaml <- yaml_read_informant(path = temp_file)
+  informant_from_yaml <- yaml_read_informant(filename = temp_file)
   
   # Expect that the original informant and the one read
   # back from YAML are both of the class `ptblank_informant`
@@ -73,7 +73,7 @@ test_that("Reading an informant from YAML is possible", {
   
   yaml_write(informant = informant_inc, filename = temp_file)
   
-  informant_inc_from_yaml <- yaml_read_informant(path = temp_file)
+  informant_inc_from_yaml <- yaml_read_informant(filename = temp_file)
   
   # Expect that the `informant_inc` object has the revised
   # metadata list component but that the derived object from

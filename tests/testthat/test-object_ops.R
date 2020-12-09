@@ -38,7 +38,7 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   expect_true("agent_test_1" %in% list.files(path = temp_dir))
   
   # Read the agent back with `x_read_disk()`
-  agent_test_1 <- x_read_disk(path = file.path(temp_dir, "agent_test_1"))
+  agent_test_1 <- x_read_disk(filename = file.path(temp_dir, "agent_test_1"))
   
   # Expect a `ptblank_agent` object
   expect_s3_class(agent_test_1, "ptblank_agent")
@@ -66,13 +66,14 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   )
   
   # Write the agent to disk again, but choose to keep the table
-  agent %>% x_write_disk(filename = "agent_test_2", path = temp_dir, keep_tbl = TRUE)
+  agent %>% 
+    x_write_disk(filename = "agent_test_2", path = temp_dir, keep_tbl = TRUE)
   
   # Expect that the file was written to the temp directory
   expect_true("agent_test_2" %in% list.files(path = temp_dir))
   
   # Read the agent back with `x_read_disk()`
-  agent_test_2 <- x_read_disk(path = file.path(temp_dir, "agent_test_2"))
+  agent_test_2 <- x_read_disk(filename = file.path(temp_dir, "agent_test_2"))
   
   # Expect a `ptblank_agent` object
   expect_s3_class(agent_test_2, "ptblank_agent")
@@ -100,7 +101,7 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   expect_true("agent_test_3" %in% list.files(path = temp_dir))
   
   # Read the agent back with `x_read_disk()`
-  agent_test_3 <- x_read_disk(path = file.path(temp_dir, "agent_test_3"))
+  agent_test_3 <- x_read_disk(filename = file.path(temp_dir, "agent_test_3"))
   
   # Expect a `ptblank_agent` object
   expect_s3_class(agent_test_3, "ptblank_agent")
@@ -121,14 +122,15 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   # expect a warning since we can't directly keep `tbl_dbi` data
   # even if `keep_tbl = TRUE`
   expect_warning(
-    agent %>% x_write_disk(filename = "agent_test_4", path = temp_dir, keep_tbl = TRUE)
+    agent %>% 
+      x_write_disk(filename = "agent_test_4", path = temp_dir, keep_tbl = TRUE)
   )
   
   # Expect that the file was written to the temp directory
   expect_true("agent_test_4" %in% list.files(path = temp_dir))
   
   # Read the agent back with `x_read_disk()`
-  agent_test_4 <- x_read_disk(path = file.path(temp_dir, "agent_test_4"))
+  agent_test_4 <- x_read_disk(filename = file.path(temp_dir, "agent_test_4"))
   
   # Expect a `ptblank_agent` object
   expect_s3_class(agent_test_4, "ptblank_agent")

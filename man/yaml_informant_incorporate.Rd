@@ -4,11 +4,13 @@
 \alias{yaml_informant_incorporate}
 \title{Get an \emph{informant} from \strong{pointblank} YAML and \code{incorporate()}}
 \usage{
-yaml_informant_incorporate(path)
+yaml_informant_incorporate(filename, path = NULL)
 }
 \arguments{
-\item{path}{A path to a YAML file that specifies a information for an
+\item{filename}{The name of the YAML file that contains fields related to an
 \emph{informant}.}
+
+\item{path}{An optional path to the YAML file (combined with \code{filename}).}
 }
 \description{
 The \code{yaml_informant_incorporate()} function operates much like the
@@ -96,7 +98,7 @@ yml_file <-
 # use of the YAML file with
 # `yaml_informant_incorporate()`
 informant <- 
-  yaml_informant_incorporate(path = yml_file)
+  yaml_informant_incorporate(filename = yml_file)
 
 class(informant)
 
@@ -106,7 +108,7 @@ class(informant)
 # `yaml_read_informant()` function will
 # be useful
 informant <- 
-  yaml_read_informant(path = yml_file)
+  yaml_read_informant(filename = yml_file)
 
 class(informant)
 

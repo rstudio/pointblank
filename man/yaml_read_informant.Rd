@@ -4,11 +4,13 @@
 \alias{yaml_read_informant}
 \title{Read a \strong{pointblank} YAML file to create an \emph{informant} object}
 \usage{
-yaml_read_informant(path)
+yaml_read_informant(filename, path = NULL)
 }
 \arguments{
-\item{path}{A path to a \strong{pointblank} YAML file that contains fields related
-to an \emph{informant}.}
+\item{filename}{The name of the YAML file that contains fields related to an
+\emph{informant}.}
+
+\item{path}{An optional path to the YAML file (combined with \code{filename}).}
 }
 \description{
 With \code{yaml_read_informant()} we can read a \strong{pointblank} YAML file that
@@ -116,7 +118,7 @@ yml_file <-
 # as an `informant` object by using
 # `yaml_read_informant()`
 informant <- 
-  yaml_read_informant(path = yml_file)
+  yaml_read_informant(filename = yml_file)
 
 class(informant)
 

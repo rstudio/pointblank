@@ -1,0 +1,16 @@
+read_fn: ~tbl
+tbl_name: table_test
+label: DQ Check Over Time
+actions:
+  warn_fraction: 0.1
+  stop_fraction: 0.2
+locale: en
+steps:
+- col_vals_not_null:
+    columns: vars(a)
+- col_vals_lte:
+    columns: vars(a)
+    value: 10.0
+- col_vals_gt:
+    columns: vars(a)
+    value: 0.0

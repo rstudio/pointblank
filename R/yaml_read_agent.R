@@ -33,9 +33,10 @@
 #' plan specified in the **pointblank** YAML, we can use the
 #' [yaml_agent_show_exprs()] function. That function shows us (in the console)
 #' the **pointblank** expressions for generating the described validation plan.
-#' 
-#' @param path A path to a **pointblank** YAML file that contains fields related
-#'   to an *agent*.
+#'   
+#' @param filename The name of the YAML file that contains fields related to an
+#'   *agent*.
+#' @param path An optional path to the YAML file (combined with `filename`).
 #'   
 #' @examples
 #' # Let's go through the process of
@@ -102,7 +103,7 @@
 #' 
 #' # We can view the YAML file in the console
 #' # with the `yaml_agent_string()` function
-#' yaml_agent_string(path = yml_file)
+#' yaml_agent_string(filename = yml_file)
 #' 
 #' # The YAML can also be printed in the console
 #' # by supplying the agent as the input
@@ -111,7 +112,7 @@
 #' # At a later time, the YAML file can
 #' # be read into a new agent with the
 #' # `yaml_read_agent()` function
-#' agent <- yaml_read_agent(path = yml_file)
+#' agent <- yaml_read_agent(filename = yml_file)
 #' 
 #' class(agent)
 #' 
@@ -122,7 +123,9 @@
 #' # interrogate directly from the YAML
 #' # file with `yaml_agent_interrogate()`
 #' agent <- 
-#'   yaml_agent_interrogate(path = yml_file)
+#'   yaml_agent_interrogate(
+#'     filename = yml_file
+#'   )
 #' 
 #' class(agent)
 #' 
@@ -131,8 +134,14 @@
 #' 9-2
 #' 
 #' @export
-yaml_read_agent <- function(path) {
-  expr_from_agent_yaml(path = path, interrogate = FALSE) %>%
+yaml_read_agent <- function(filename,
+                            path = NULL) {
+  
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
+  
+  expr_from_agent_yaml(path = filename, interrogate = FALSE) %>%
     rlang::parse_expr() %>%
     rlang::eval_tidy()
 }
@@ -147,9 +156,10 @@ yaml_read_agent <- function(path) {
 #' YAML file). The additional auto-invocation of [interrogate()] uses the
 #' default options of that function. As with [yaml_read_agent()] the agent is
 #' returned except, this time, it has intel from the interrogation.
-#'
-#' @param path A path to a **pointblank** YAML file that contains fields related
-#'   to an *agent*.
+#' 
+#' @param filename The name of the YAML file that contains fields related to an
+#'   *agent*.
+#' @param path An optional path to the YAML file (combined with `filename`).
 #'
 #' @examples
 #' # Let's go through the process of
@@ -218,7 +228,7 @@ yaml_read_agent <- function(path) {
 #' 
 #' # We can view the YAML file in the console
 #' # with the `yaml_agent_string()` function
-#' yaml_agent_string(path = yml_file)
+#' yaml_agent_string(filename = yml_file)
 #' 
 #' # The YAML can also be printed in the console
 #' # by supplying the agent as the input
@@ -229,7 +239,7 @@ yaml_read_agent <- function(path) {
 #' # through direct use of the YAML file
 #' # with `yaml_agent_interrogate()`
 #' agent <- 
-#'   yaml_agent_interrogate(path = yml_file)
+#'   yaml_agent_interrogate(filename = yml_file)
 #' 
 #' class(agent)
 #'
@@ -238,7 +248,8 @@ yaml_read_agent <- function(path) {
 #' # (stopping short of interrogating the data),
 #' # then the `yaml_read_agent()` function
 #' # will be useful
-#' agent <- yaml_read_agent(path = yml_file)
+#' agent <- 
+#'   yaml_read_agent(filename = yml_file)
 #' class(agent)
 #'
 #' @family pointblank YAML
@@ -246,8 +257,14 @@ yaml_read_agent <- function(path) {
 #' 9-4
 #'
 #' @export
-yaml_agent_interrogate <- function(path) {
-  expr_from_agent_yaml(path = path, interrogate = TRUE) %>%
+yaml_agent_interrogate <- function(filename,
+                                   path = NULL) {
+  
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
+  
+  expr_from_agent_yaml(path = filename, interrogate = TRUE) %>%
     rlang::parse_expr() %>%
     rlang::eval_tidy()
 }
@@ -262,8 +279,9 @@ yaml_agent_interrogate <- function(path) {
 #' [yaml_write()] function with a pre-existing *agent*, or, it can be carefully
 #' written by hand.
 #'
-#' @param path A path to a **pointblank** YAML file that contains fields related
-#'   to an *agent*.
+#' @param filename The name of the YAML file that contains fields related to an
+#'   *agent*.
+#' @param path An optional path to the YAML file (combined with `filename`).
 #' 
 #' @examples 
 #' # Let's create a validation plan for the
@@ -308,22 +326,29 @@ yaml_agent_interrogate <- function(path) {
 #' # At a later time, the YAML file can
 #' # be read into a new agent with the
 #' # `yaml_read_agent()` function
-#' agent <- yaml_read_agent(path = yml_file)
+#' agent <- 
+#'   yaml_read_agent(filename = yml_file)
 #' 
 #' class(agent)
 #' 
 #' # To get a sense of which expressions are
 #' # being used to generate the new agent, we
 #' # can use `yaml_agent_show_exprs()`
-#' yaml_agent_show_exprs(path = yml_file)
+#' yaml_agent_show_exprs(filename = yml_file)
 #'   
 #' @family pointblank YAML
 #' @section Function ID:
 #' 9-6
 #'
 #' @export
-yaml_agent_show_exprs <- function(path) {
-  message(expr_from_agent_yaml(path = path, interrogate = FALSE))
+yaml_agent_show_exprs <- function(filename,
+                                  path = NULL) {
+  
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
+  
+  message(expr_from_agent_yaml(path = filename, interrogate = FALSE))
 }
 
 expr_from_agent_yaml <- function(path,

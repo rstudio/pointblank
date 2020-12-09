@@ -97,7 +97,9 @@
 #' # into an informant object with the
 #' # `yaml_read_informant()` function
 #' # informant <-
-#' #   yaml_read_informant(path = "informant.yml")
+#' #   yaml_read_informant(
+#' #     filename = "informant.yml"
+#' #   )
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_info_tabular_1.png}{options: width=100\%}}
@@ -233,7 +235,9 @@ info_tabular <- function(x,
 #' # into an informant object with the
 #' # `yaml_read_informant()` function
 #' # informant <-
-#' #   yaml_read_informant(path = "informant.yml")
+#' #   yaml_read_informant(
+#' #     filename = "informant.yml"
+#' #   )
 #' 
 #' @section Figures:
 #' \if{html}{\figure{man_info_columns_1.png}{options: width=100\%}}
@@ -381,7 +385,9 @@ info_columns <- function(x,
 #' # into an informant object with the
 #' # `yaml_read_informant()` function
 #' # informant <-
-#' #   yaml_read_informant(path = "informant.yml")
+#' #   yaml_read_informant(
+#' #     filename = "informant.yml"
+#' #   )
 #' 
 #' @section Figures:
 #' \if{html}{\figure{man_info_section_1.png}{options: width=100\%}}

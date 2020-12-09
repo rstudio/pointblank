@@ -105,7 +105,7 @@ yml_file <-
 
 # We can view the YAML file in the console
 # with the `yaml_agent_string()` function
-yaml_agent_string(path = yml_file)
+yaml_agent_string(filename = yml_file)
 
 # The YAML can also be printed in the console
 # by supplying the agent as the input
@@ -115,7 +115,7 @@ yaml_agent_string(agent = agent)
 # be read into a new agent with the
 # `yaml_read_agent()` function
 agent <- 
-  yaml_read_agent(path = yml_file)
+  yaml_read_agent(filename = yml_file)
 
 class(agent)
 
@@ -126,7 +126,7 @@ class(agent)
 # interrogate directly from the YAML
 # file with `yaml_agent_interrogate()`
 agent <- 
-  yaml_agent_interrogate(path = yml_file)
+  yaml_agent_interrogate(filename = yml_file)
 
 class(agent)
 

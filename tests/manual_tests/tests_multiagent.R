@@ -229,12 +229,6 @@ read_disk_multiagent(
   path = rel_path_outfiles
 )
 
-
-
-
-
-
-
 # TABLE 9
 tbl <- 
   tbl %>%
@@ -341,14 +335,8 @@ yaml_agent_interrogate(
     path = rel_path_outfiles
   )
 
-# Read the saved agents into a series
-multiagent <- 
-  read_disk_multiagent(
-    pattern = ".*rds",
-    path = rel_path_outfiles
-  )
-
-# Display results of five different interrogations
-multiagent
-
-
+# Display results of the different interrogations
+read_disk_multiagent(
+  pattern = ".*rds",
+  path = rel_path_outfiles
+)

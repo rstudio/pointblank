@@ -27,18 +27,22 @@
 #' multiagent report, the default form, will have the following columns:
 #' 
 #' \itemize{
-#' \item STEP: the SHA1 hash for the validation step, possibly shared amongst
+#' \item STEP: the SHA1 hash for the validation step, possibly shared among
 #' several interrogations.
 #' \item *subsequent columns*: each column beyond `STEP` represents a separate
 #' interrogation from an *agent* object. The time stamp for the completion of
 #' each interrogation is shown as the column label.
 #' }
 #' 
-#' Each step is represented as a SHA1 hash. This is a highly trustworthy way for
-#' ascertaining which validation steps are effectively identical across
-#' interrogations.
+#' Each step is represented with an icon standing in for the name of the
+#' validation function and the associated SHA1 hash. This is a highly
+#' trustworthy way for ascertaining which validation steps are effectively
+#' identical across interrogations. This way of organizing the report is
+#' beneficial because different agents may have used different steps and we want
+#' to track the validation results where the validation step doesn't change but
+#' the target table does.
 #' 
-#' @param multiagent An multiagent object of class `ptblank_multiagent`.
+#' @param multiagent A multiagent object of class `ptblank_multiagent`.
 #' @param display_table Should a display table be generated? If `TRUE` (the
 #'   default) a display table for the report will be shown in the Viewer. If
 #'   `FALSE` then a tibble will be returned.

@@ -367,6 +367,12 @@ logical value (`TRUE` or `FALSE`).
 
 <hr>
 
+##### DISCUSSIONS
+
+Let's talk about data validation and data documentation in
+[**pointblank** Discussions](https://github.com/rich-iannone/pointblank/discussions)! It's a great place to ask questions about how to use the package, discuss
+some ideas, engage with others, and much more!
+
 ##### INSTALLATION
 
 Want to try this out? The **pointblank** package is available on

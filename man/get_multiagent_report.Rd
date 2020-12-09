@@ -7,7 +7,7 @@
 get_multiagent_report(multiagent, display_table = TRUE)
 }
 \arguments{
-\item{multiagent}{An multiagent object of class \code{ptblank_multiagent}.}
+\item{multiagent}{A multiagent object of class \code{ptblank_multiagent}.}
 
 \item{display_table}{Should a display table be generated? If \code{TRUE} (the
 default) a display table for the report will be shown in the Viewer. If

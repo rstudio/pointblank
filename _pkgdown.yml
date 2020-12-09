@@ -122,6 +122,7 @@ reference:
     contents:
     - interrogate
     - get_agent_report
+    - get_multiagent_report
     
   - title: "Informant: Incorporate and Report"
     desc: >
@@ -161,6 +162,7 @@ reference:
     contents:
     - x_write_disk
     - x_read_disk
+    - read_disk_multiagent
     - set_tbl
     - remove_tbl
     - set_read_fn
@@ -183,6 +185,11 @@ reference:
     - yaml_agent_string
     - yaml_agent_show_exprs
     - yaml_informant_incorporate
+    
+  - title: Utility Functions
+    contents:
+    - affix_date
+    - affix_datetime
     
   - title: Datasets
     contents:

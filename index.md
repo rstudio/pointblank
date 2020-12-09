@@ -63,6 +63,12 @@ If you encounter a bug, have usage questions, or want to share ideas to
 make this package better, feel free to file an
 [issue](https://github.com/rich-iannone/pointblank/issues).
 
+## Let's Discuss!
+
+Let's talk about data validation and data documentation in
+[**pointblank** Discussions](https://github.com/rich-iannone/pointblank/discussions)! It's a great place to ask questions about how to use the package, discuss
+some ideas, engage with others, and much more!
+
 ## Code of Conduct
 
 Please note that the pointblank project is released with a [contributor

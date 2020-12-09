@@ -174,15 +174,19 @@ default options of that function. As with <code><a href='yaml_read_agent.html'>y
 returned except, this time, it has intel from the interrogation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>yaml_agent_interrogate</span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>yaml_agent_interrogate</span><span class='op'>(</span><span class='va'>filename</span>, path <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>filename</th>
+      <td><p>The name of the YAML file that contains fields related to an
+<em>agent</em>.</p></td>
+    </tr>
+    <tr>
       <th>path</th>
-      <td><p>A path to a <strong>pointblank</strong> YAML file that contains fields related
-to an <em>agent</em>.</p></td>
+      <td><p>An optional path to the YAML file (combined with <code>filename</code>).</p></td>
     </tr>
     </table>
 
@@ -268,7 +272,7 @@ to an <em>agent</em>.</p></td>
 
 <span class='co'># We can view the YAML file in the console</span>
 <span class='co'># with the `yaml_agent_string()` function</span>
-<span class='fu'><a href='yaml_agent_string.html'>yaml_agent_string</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
+<span class='fu'><a href='yaml_agent_string.html'>yaml_agent_string</a></span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>read_fn: ~small_table</span>
 #&gt; <span class='message'>tbl_name: small_table</span>
 #&gt; <span class='message'>label: A simple example with the `small_table`.</span>
@@ -324,7 +328,7 @@ to an <em>agent</em>.</p></td>
 <span class='co'># through direct use of the YAML file</span>
 <span class='co'># with `yaml_agent_interrogate()`</span>
 <span class='va'>agent</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>yaml_agent_interrogate</span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
+  <span class='fu'>yaml_agent_interrogate</span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "has_intel"     "ptblank_agent"</div><div class='input'>
@@ -333,7 +337,8 @@ to an <em>agent</em>.</p></td>
 <span class='co'># (stopping short of interrogating the data),</span>
 <span class='co'># then the `yaml_read_agent()` function</span>
 <span class='co'># will be useful</span>
-<span class='va'>agent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='yaml_read_agent.html'>yaml_read_agent</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
+<span class='va'>agent</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='yaml_read_agent.html'>yaml_read_agent</a></span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "ptblank_agent"</div><div class='input'>
 </div></pre>

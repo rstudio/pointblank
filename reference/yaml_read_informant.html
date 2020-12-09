@@ -168,15 +168,19 @@ intact. The <em>informant</em> object can be given more information through use 
 the <code>info_*()</code> functions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>yaml_read_informant</span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>yaml_read_informant</span><span class='op'>(</span><span class='va'>filename</span>, path <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>filename</th>
+      <td><p>The name of the YAML file that contains fields related to an
+<em>informant</em>.</p></td>
+    </tr>
+    <tr>
       <th>path</th>
-      <td><p>A path to a <strong>pointblank</strong> YAML file that contains fields related
-to an <em>informant</em>.</p></td>
+      <td><p>An optional path to the YAML file (combined with <code>filename</code>).</p></td>
     </tr>
     </table>
 
@@ -289,7 +293,7 @@ to an <em>informant</em>.</p></td>
 <span class='co'># as an `informant` object by using</span>
 <span class='co'># `yaml_read_informant()`</span>
 <span class='va'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>yaml_read_informant</span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
+  <span class='fu'>yaml_read_informant</span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>informant</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "ptblank_informant"</div><div class='input'>

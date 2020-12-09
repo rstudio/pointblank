@@ -180,15 +180,19 @@ available data extracts with <code><a href='get_data_extracts.html'>get_data_ext
 last interrogation).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>x_read_disk</span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>x_read_disk</span><span class='op'>(</span><span class='va'>filename</span>, path <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>path</th>
-      <td><p>The path to a file that was previously written by
+      <th>filename</th>
+      <td><p>The name of a file that was previously written by
 <code><a href='x_write_disk.html'>x_write_disk()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>path</th>
+      <td><p>An optional path to the file (combined with <code>filename</code>).</p></td>
     </tr>
     </table>
 

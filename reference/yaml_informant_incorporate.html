@@ -176,15 +176,19 @@ is required in the YAML file). The additional auto-invocation of
 been updated with the latest information from the target table.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>yaml_informant_incorporate</span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>yaml_informant_incorporate</span><span class='op'>(</span><span class='va'>filename</span>, path <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>path</th>
-      <td><p>A path to a YAML file that specifies a information for an
+      <th>filename</th>
+      <td><p>The name of the YAML file that contains fields related to an
 <em>informant</em>.</p></td>
+    </tr>
+    <tr>
+      <th>path</th>
+      <td><p>An optional path to the YAML file (combined with <code>filename</code>).</p></td>
     </tr>
     </table>
 
@@ -273,7 +277,7 @@ been updated with the latest information from the target table.</p>
 <span class='co'># use of the YAML file with</span>
 <span class='co'># `yaml_informant_incorporate()`</span>
 <span class='va'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>yaml_informant_incorporate</span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
+  <span class='fu'>yaml_informant_incorporate</span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>informant</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "ptblank_informant"</div><div class='input'>
@@ -283,7 +287,7 @@ been updated with the latest information from the target table.</p>
 <span class='co'># `yaml_read_informant()` function will</span>
 <span class='co'># be useful</span>
 <span class='va'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='yaml_read_informant.html'>yaml_read_informant</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
+  <span class='fu'><a href='yaml_read_informant.html'>yaml_read_informant</a></span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>informant</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "ptblank_informant"</div><div class='input'>

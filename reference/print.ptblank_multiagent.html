@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add information that focuses on some key aspect of the data table — info_section • pointblank</title>
+<title>Print the ptblank_multiagent object — print.ptblank_multiagent • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,13 +46,8 @@
 
 
 
-<meta property="og:title" content="Add information that focuses on some key aspect of the data table — info_section" />
-<meta property="og:description" content="While the info_tabular() and info_columns() functions allow us to
-add/modify info text for specific sections, the info_section()
-makes it possible to add sections of our own choosing and the information
-that make sense for those sections. Define a section_name and provide a
-series of named arguments (in the form entry_name = &quot;The *info text*.&quot;) to
-build the informational content for that section." />
+<meta property="og:title" content="Print the ptblank_multiagent object — print.ptblank_multiagent" />
+<meta property="og:description" content="This function will allow the ptblank_multiagent to be nicely printed." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -156,126 +151,36 @@ build the informational content for that section." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add information that focuses on some key aspect of the data table</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/info_add.R'><code>R/info_add.R</code></a></small>
-    <div class="hidden name"><code>info_section.Rd</code></div>
+    <h1>Print the <code>ptblank_multiagent</code> object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/print.R'><code>R/print.R</code></a></small>
+    <div class="hidden name"><code>print.ptblank_multiagent.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>While the <code><a href='info_tabular.html'>info_tabular()</a></code> and <code><a href='info_columns.html'>info_columns()</a></code> functions allow us to
-add/modify info text for specific sections, the <code>info_section()</code>
-makes it possible to add sections of our own choosing and the information
-that make sense for those sections. Define a <code>section_name</code> and provide a
-series of named arguments (in the form <code>entry_name = "The *info text*."</code>) to
-build the informational content for that section.</p>
+    <p>This function will allow the <code>ptblank_multiagent</code> to be nicely printed.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>info_section</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>section_name</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='co'># S3 method for ptblank_multiagent</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, view <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>An informant object of class <code>ptblank_informant</code>.</p></td>
+      <td><p>An object of class <code>ptblank_multiagent</code>.</p></td>
     </tr>
     <tr>
-      <th>section_name</th>
-      <td><p>The name of the section for which this information
-pertains.</p></td>
+      <th>view</th>
+      <td><p>The value for <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code>s <code>browse</code> argument.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Information entries as a series of named arguments. The names
-refer to subsection titles within the section defined as <code>section_name</code> and
-the RHS is the <em>info text</em> (informational text that can be written as
-Markdown and further styled with <em>Text Tricks</em>).</p></td>
+      <td><p>Any additional parameters.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>ptblank_informant</code> object.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The <em>info text</em> readily accepts Markdown formatting. Also, there are a few
-<em>Text Tricks</em> that are good to know. Markdown links written as <code>&lt; link url &gt;</code>
-or <code>[ link text ]( link url )</code> will get nicely-styled links. Any dates
-expressed in the ISO-8601 standard with parentheses, <code>"(2004-12-01)"</code>, will
-be styled with a font variation (monospaced) and underlined in purple. Spans
-of text can be converted to label text by using: (1) double parentheses
-around text for a rectangular label as in <code>((label text))</code>, or (2) triple
-parentheses around text for a rounded-rectangular label like <code>(((label text)))</code>. Finally, CSS styles can be applied to spans of <em>info text</em> with
-the following form:</p>
-<p><code>[[ info text ]]&lt;&lt; CSS style rules &gt;&gt;</code></p>
-<p>As an example of this in practice suppose you'd like to change the color of
-some text to red and make the font appear somewhat thinner. A variation on
-the following might be used:</p>
-<p><code>"This is a [[factor]]&lt;&lt;color: red; font-weight: 300;&gt;&gt; value."</code></p>
-    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
-
-    
-
-<p><img src='figures/man_info_section_1.png' width=100% /></p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
-    
-
-<p>3-3</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other Information Functions: 
-<code><a href='info_columns.html'>info_columns</a>()</code>,
-<code><a href='info_snippet.html'>info_snippet</a>()</code>,
-<code><a href='info_tabular.html'>info_tabular</a>()</code></p></div>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a pointblank `informant`</span>
-<span class='co'># object with `create_informant()`;</span>
-<span class='co'># we specify a `read_fn` with the</span>
-<span class='co'># `~` followed by a statement that</span>
-<span class='co'># gets the `small_table` dataset</span>
-<span class='va'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
-    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,
-    label <span class='op'>=</span> <span class='st'>"An example."</span>
-  <span class='op'>)</span>
-
-<span class='co'># The `informant` object has the 'table'</span>
-<span class='co'># and 'columns' sections; we can create</span>
-<span class='co'># entirely different sections with their</span>
-<span class='co'># own properties using `info_section()`</span>
-<span class='va'>informant</span> <span class='op'>&lt;-</span>
-  <span class='va'>informant</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>info_section</span><span class='op'>(</span>
-    section_name <span class='op'>=</span> <span class='st'>"notes"</span>,
-    creation <span class='op'>=</span> <span class='st'>"Dataset generated on (2020-01-15)."</span>,
-    usage <span class='op'>=</span> <span class='st'>"`small_table %&gt;% dplyr::glimpse()`"</span>
-  <span class='op'>)</span>
-
-<span class='co'># Upon printing the `informant` object, we see</span>
-<span class='co'># the addition of the 'Notes' section and its</span>
-<span class='co'># own information</span>
-
-<span class='co'># The `informant` object can be written to</span>
-<span class='co'># a YAML file with the `yaml_write()`</span>
-<span class='co'># function; then, information can</span>
-<span class='co'># be directly edited or modified</span>
-<span class='co'># yaml_write(</span>
-<span class='co'>#   informant = informant,</span>
-<span class='co'>#   filename = "informant.yml"</span>
-<span class='co'># )</span>
-
-<span class='co'># The YAML file can then be read back</span>
-<span class='co'># into an informant object with the</span>
-<span class='co'># `yaml_read_informant()` function</span>
-<span class='co'># informant &lt;-</span>
-<span class='co'>#   yaml_read_informant(</span>
-<span class='co'>#     filename = "informant.yml"</span>
-<span class='co'>#   )</span>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

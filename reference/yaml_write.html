@@ -292,7 +292,7 @@ with <code>filename</code>).</p></td>
 
 <span class='co'># We can view the YAML file in the console</span>
 <span class='co'># with the `yaml_agent_string()` function</span>
-<span class='fu'><a href='yaml_agent_string.html'>yaml_agent_string</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
+<span class='fu'><a href='yaml_agent_string.html'>yaml_agent_string</a></span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>read_fn: ~small_table</span>
 #&gt; <span class='message'>tbl_name: small_table</span>
 #&gt; <span class='message'>label: A simple example with the `small_table`.</span>
@@ -347,7 +347,7 @@ with <code>filename</code>).</p></td>
 <span class='co'># be read into a new agent with the</span>
 <span class='co'># `yaml_read_agent()` function</span>
 <span class='va'>agent</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='yaml_read_agent.html'>yaml_read_agent</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
+  <span class='fu'><a href='yaml_read_agent.html'>yaml_read_agent</a></span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "ptblank_agent"</div><div class='input'>
@@ -358,7 +358,7 @@ with <code>filename</code>).</p></td>
 <span class='co'># interrogate directly from the YAML</span>
 <span class='co'># file with `yaml_agent_interrogate()`</span>
 <span class='va'>agent</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
+  <span class='fu'><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate</a></span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "has_intel"     "ptblank_agent"</div><div class='input'>

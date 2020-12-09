@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add information that focuses on some key aspect of the data table — info_section • pointblank</title>
+<title>Put the current date-time into a file name — affix_datetime • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,13 +46,13 @@
 
 
 
-<meta property="og:title" content="Add information that focuses on some key aspect of the data table — info_section" />
-<meta property="og:description" content="While the info_tabular() and info_columns() functions allow us to
-add/modify info text for specific sections, the info_section()
-makes it possible to add sections of our own choosing and the information
-that make sense for those sections. Define a section_name and provide a
-series of named arguments (in the form entry_name = &quot;The *info text*.&quot;) to
-build the informational content for that section." />
+<meta property="og:title" content="Put the current date-time into a file name — affix_datetime" />
+<meta property="og:description" content="This function helps to affix the current date-time to a filename. This is
+useful when writing agent and/or informant objects to disk as part of a
+continuous process. The date-time string can be based on the current UTC time
+or the local system time. The date can be affixed either to the end of the
+filename (before the file extension) or at the beginning with a customizable
+delimiter." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -156,126 +156,74 @@ build the informational content for that section." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add information that focuses on some key aspect of the data table</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/info_add.R'><code>R/info_add.R</code></a></small>
-    <div class="hidden name"><code>info_section.Rd</code></div>
+    <h1>Put the current date-time into a file name</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/file_naming.R'><code>R/file_naming.R</code></a></small>
+    <div class="hidden name"><code>affix_datetime.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>While the <code><a href='info_tabular.html'>info_tabular()</a></code> and <code><a href='info_columns.html'>info_columns()</a></code> functions allow us to
-add/modify info text for specific sections, the <code>info_section()</code>
-makes it possible to add sections of our own choosing and the information
-that make sense for those sections. Define a <code>section_name</code> and provide a
-series of named arguments (in the form <code>entry_name = "The *info text*."</code>) to
-build the informational content for that section.</p>
+    <p>This function helps to affix the current date-time to a filename. This is
+useful when writing <em>agent</em> and/or <em>informant</em> objects to disk as part of a
+continuous process. The date-time string can be based on the current UTC time
+or the local system time. The date can be affixed either to the end of the
+filename (before the file extension) or at the beginning with a customizable
+delimiter.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>info_section</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>section_name</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>affix_datetime</span><span class='op'>(</span>
+  <span class='va'>filename</span>,
+  position <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"end"</span>, <span class='st'>"start"</span><span class='op'>)</span>,
+  format <span class='op'>=</span> <span class='st'>"%Y-%m-%dT%H:%M:%S"</span>,
+  delimiter <span class='op'>=</span> <span class='st'>"_"</span>,
+  utc_time <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  add_tz <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>An informant object of class <code>ptblank_informant</code>.</p></td>
+      <th>filename</th>
+      <td><p>The filename to modify.</p></td>
     </tr>
     <tr>
-      <th>section_name</th>
-      <td><p>The name of the section for which this information
-pertains.</p></td>
+      <th>position</th>
+      <td><p>Where to place the formatted date-time. This could either be
+at the <code>"end"</code> of the filename (the default) or at the <code>"start"</code>.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Information entries as a series of named arguments. The names
-refer to subsection titles within the section defined as <code>section_name</code> and
-the RHS is the <em>info text</em> (informational text that can be written as
-Markdown and further styled with <em>Text Tricks</em>).</p></td>
+      <th>format</th>
+      <td><p>A <code><a href='https://rdrr.io/r/base/strptime.html'>base::strptime()</a></code> format string for formatting the
+date-time. By default, this is <code>"%Y-%m-%dT%H:%M:%S"</code> which expresses the
+date according to the ISO 8601 standard. For example, if the current
+date-time is 2020-12-04 13:11:23, the formatted string would become
+<code>"2020-12-04T13:11:23"</code>. Refer to the documentation on <code><a href='https://rdrr.io/r/base/strptime.html'>base::strptime()</a></code>
+for conversion specifications if planning to use a different format string.</p></td>
+    </tr>
+    <tr>
+      <th>delimiter</th>
+      <td><p>The delimiter characters to use for separating the date-time
+string from the original file name.</p></td>
+    </tr>
+    <tr>
+      <th>utc_time</th>
+      <td><p>An option for whether to use the current UTC time to
+establish the date-time (the default, with <code>TRUE</code>), or, use the system's
+local time (<code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>add_tz</th>
+      <td><p>Should the time zone (as an offset from UTC) be provided? If
+<code>TRUE</code> (the default) then the UTC offset will be either provided as
+<code>&lt;time&gt;Z</code> (if <code>utc_time = TRUE</code>) or <code>&lt;time&gt;(+/-)hhmm</code>.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A <code>ptblank_informant</code> object.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The <em>info text</em> readily accepts Markdown formatting. Also, there are a few
-<em>Text Tricks</em> that are good to know. Markdown links written as <code>&lt; link url &gt;</code>
-or <code>[ link text ]( link url )</code> will get nicely-styled links. Any dates
-expressed in the ISO-8601 standard with parentheses, <code>"(2004-12-01)"</code>, will
-be styled with a font variation (monospaced) and underlined in purple. Spans
-of text can be converted to label text by using: (1) double parentheses
-around text for a rectangular label as in <code>((label text))</code>, or (2) triple
-parentheses around text for a rounded-rectangular label like <code>(((label text)))</code>. Finally, CSS styles can be applied to spans of <em>info text</em> with
-the following form:</p>
-<p><code>[[ info text ]]&lt;&lt; CSS style rules &gt;&gt;</code></p>
-<p>As an example of this in practice suppose you'd like to change the color of
-some text to red and make the font appear somewhat thinner. A variation on
-the following might be used:</p>
-<p><code>"This is a [[factor]]&lt;&lt;color: red; font-weight: 300;&gt;&gt; value."</code></p>
-    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
-
-    
-
-<p><img src='figures/man_info_section_1.png' width=100% /></p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
-    
-
-<p>3-3</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Information Functions: 
-<code><a href='info_columns.html'>info_columns</a>()</code>,
-<code><a href='info_snippet.html'>info_snippet</a>()</code>,
-<code><a href='info_tabular.html'>info_tabular</a>()</code></p></div>
+    <div class='dont-index'><p>The <code><a href='affix_date.html'>affix_date()</a></code> function provides the same features except it
+produces a date string by default.</p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a pointblank `informant`</span>
-<span class='co'># object with `create_informant()`;</span>
-<span class='co'># we specify a `read_fn` with the</span>
-<span class='co'># `~` followed by a statement that</span>
-<span class='co'># gets the `small_table` dataset</span>
-<span class='va'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
-    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,
-    label <span class='op'>=</span> <span class='st'>"An example."</span>
-  <span class='op'>)</span>
-
-<span class='co'># The `informant` object has the 'table'</span>
-<span class='co'># and 'columns' sections; we can create</span>
-<span class='co'># entirely different sections with their</span>
-<span class='co'># own properties using `info_section()`</span>
-<span class='va'>informant</span> <span class='op'>&lt;-</span>
-  <span class='va'>informant</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>info_section</span><span class='op'>(</span>
-    section_name <span class='op'>=</span> <span class='st'>"notes"</span>,
-    creation <span class='op'>=</span> <span class='st'>"Dataset generated on (2020-01-15)."</span>,
-    usage <span class='op'>=</span> <span class='st'>"`small_table %&gt;% dplyr::glimpse()`"</span>
-  <span class='op'>)</span>
-
-<span class='co'># Upon printing the `informant` object, we see</span>
-<span class='co'># the addition of the 'Notes' section and its</span>
-<span class='co'># own information</span>
-
-<span class='co'># The `informant` object can be written to</span>
-<span class='co'># a YAML file with the `yaml_write()`</span>
-<span class='co'># function; then, information can</span>
-<span class='co'># be directly edited or modified</span>
-<span class='co'># yaml_write(</span>
-<span class='co'>#   informant = informant,</span>
-<span class='co'>#   filename = "informant.yml"</span>
-<span class='co'># )</span>
-
-<span class='co'># The YAML file can then be read back</span>
-<span class='co'># into an informant object with the</span>
-<span class='co'># `yaml_read_informant()` function</span>
-<span class='co'># informant &lt;-</span>
-<span class='co'>#   yaml_read_informant(</span>
-<span class='co'>#     filename = "informant.yml"</span>
-<span class='co'>#   )</span>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

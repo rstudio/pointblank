@@ -142,7 +142,7 @@ get_multiagent_report <- function(multiagent,
   
   for (i in seq_along(multiagent[["agents"]])) {
     
-    time_end <- gsub(" ", "T", multiagent[["agents"]][[i]][["time_end"]])
+    time_end <- gsub(" ", "\n", multiagent[["agents"]][[i]][["time_end"]])
     
     i_name <- formatC(i, width = 3, flag = 0)
     i_name <- rlang::quo_name(i_name)
@@ -237,8 +237,81 @@ get_multiagent_report <- function(multiagent,
     
     empty_cols <- i_names
     
+  } else if (i > 8 && i < 16)  {
+    
+    i_names <- formatC((i + 1):16, width = 3, flag = 0)
+    
+    for (j in seq_along(i_names)) {
+      
+      i_name <- rlang::quo_name(i_names[j])
+      
+      report_tbl <-
+        report_tbl %>%
+        dplyr::bind_cols(
+          dplyr::tibble(pb_extra_ = rep(NA_character_, nrow(report_tbl)))
+        ) %>%
+        dplyr::rename(!!i_name := "pb_extra_")
+    }
+    
+    empty_cols <- i_names
+    
   } else {
     empty_cols <- NULL
+  }
+  
+  if (layout_type == "16UP") {
+    
+    mean_f_passed <- 
+      vapply(
+        FUN.VALUE = numeric(1),
+        USE.NAMES = FALSE,
+        multiagent[["agents"]],
+        FUN = function(x) {
+          mean_f_passed <- 
+            mean(x$validation_set$f_passed, na.rm = TRUE)
+          
+          if (is.nan(mean_f_passed)) {
+            mean_f_passed <- NA_real_
+          }
+          
+          mean_f_passed
+        }
+      )
+    
+    green_vals <- floor(mean_f_passed * 255)
+    red_vals <- floor((1 - mean_f_passed) * 255)
+    blue_vals <- floor(round(1 - (abs((255 / 2) - green_vals) / (255 / 2)), 1) * 255)
+    offsets <- seq(from = 100 / i, to = 100, by = 100 / i) - ((100 / i) / 2)
+    
+    stop_tags <- 
+      paste0(
+        "<stop offset=\"",
+        offsets, "%\" style=\"stop-color:rgb(",
+        red_vals, ",", green_vals, ",", blue_vals, ");stop-opacity:1\"/>\n"
+      )
+
+    gradient_line <-
+      paste0(
+        "<svg height=\"10\" width=\"", (length(multiagent[["agents"]]) * 50) - 5, "\">\n",
+        "<defs>\n",
+        "<linearGradient id=\"grad1\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"0%\">\n",
+        paste(stop_tags, collapse = ""),
+        "</linearGradient>\n",
+        "</defs>\n",
+        "<rect x=\"0\" y=\"0\" width=\"", 
+        (length(multiagent[["agents"]]) * 50) - 5,
+        "\" height=\"10\" fill=\"url(#grad1)\" />\n",
+        "</svg>"
+      )
+    
+    gradient_line <-
+      paste0(
+        "<div style=\"padding-bottom: 2px; overflow-x: visible;\">\n",
+        gradient_line,
+        "</div>"
+      )
+    
+    date_time[[1]] <- paste0(gradient_line, "\n", date_time[[1]])
   }
   
   # Complete the list of column label replacements
@@ -255,12 +328,119 @@ get_multiagent_report <- function(multiagent,
   }
     
   date_time <- c(list(sha1 = "STEP"), date_time)
+  n_columns <- ncol(report_tbl)
   
-  # Overall width should be 875px (agent report is 876px)
+  # Insert the icon for each step
+  assertion_tbl <- 
+    dplyr::tibble(
+      sha1 = character(0),
+      assertion_type = character(0)
+    )
+  
+  for (x in seq_along(multiagent[["agents"]])) {
+    
+    assertion_tbl <-
+      dplyr::bind_rows(
+        assertion_tbl,
+        multiagent[["agents"]][[i]][["validation_set"]] %>%
+          dplyr::select(sha1, assertion_type)
+      )
+  }
+  
+  assertion_tbl <-
+    assertion_tbl %>%
+    dplyr::distinct()
   
   report_tbl <-
     report_tbl %>%
-    gt::gt(id = "report") %>%
+    dplyr::left_join(
+      assertion_tbl, by = "sha1"
+    )
+  
+  for (x in seq_len(nrow(report_tbl))) {
+
+    report_tbl$sha1[x] <-
+      gsub(
+        "\\s\\s+", "", 
+        paste0(
+          "<div>",
+          add_icon_svg(icon = report_tbl$assertion_type[x]),
+          "<code style=\"font-size: 8px;\">",
+          "&nbsp;", substr(report_tbl$sha1[x], 1, 6),
+          "</code>",
+          "</div>"
+        )
+      )
+  }
+  
+  # Overall width should be 875px (agent report is 876px)
+  report_tbl <- 
+    report_tbl %>%
+    dplyr::select(-assertion_type) %>%
+    gt::gt(id = "report")
+
+  if (layout_type == "4UP") {
+    report_tbl <- 
+      report_tbl %>%
+      gt::cols_width(
+        gt::matches("[0-9]{3}") ~ gt::px(200),
+        gt::everything() ~ gt::px(75)
+      ) %>%
+      gt::tab_style(
+        style = gt::cell_text(
+          weight = "bold",
+          color = "#666666"
+        ),
+        locations = gt::cells_column_labels(columns = TRUE)
+      )
+    
+  } else if (layout_type == "8UP") {
+
+    report_tbl <- 
+      report_tbl %>%
+      gt::cols_width(
+        gt::matches("[0-9]{3}") ~ gt::px(100),
+        gt::everything() ~ gt::px(75)
+      ) %>%
+      gt::tab_style(
+        list(
+          style = gt::cell_text(
+            weight = "bold",
+            color = "#666666",
+            size = "10px",
+            align = "center"
+          ),
+          "line-height: 1.15em;"
+        ),
+        locations = gt::cells_column_labels(columns = TRUE)
+      )
+    
+  } else {
+    
+    report_tbl <- 
+      report_tbl %>%
+      gt::cols_width(
+        gt::matches("[0-9]{3}") ~ gt::px(50),
+        gt::everything() ~ gt::px(75)
+      ) %>%
+      gt::tab_style(
+        list(
+          style = gt::cell_text(
+            weight = "bold",
+            color = "#666666",
+            size = "8px"
+          ),
+          paste(
+          "line-height: 1.15em;", "padding-left: 3px;",
+          "padding-right: 0;", "height: 30px; overflow-x: visible;"
+          )
+        ),
+        locations = gt::cells_column_labels(columns = TRUE)
+      )
+  }
+  
+  report_tbl <- 
+    report_tbl %>%
     gt::tab_header(
       title = "Pointblank Validation Series",
       subtitle = gt::md(combined_subtitle)
@@ -272,24 +452,21 @@ get_multiagent_report <- function(multiagent,
       table.font.size = gt::pct(90),
       row.striping.include_table_body = FALSE
     ) %>%
-    gt::fmt_markdown(columns = 2:ncol(report_tbl)) %>%
-    gt::cols_width(
-      gt::matches("[0-9]{3}") ~ gt::px(200),
-      gt::everything() ~ gt::px(75)
-    ) %>%
-    gt::text_transform(
-      locations = gt::cells_body(columns = gt::vars(sha1)),
-      fn = function(x) {
-        substr(x, 1, 6)
-      }
-    ) %>%
+    gt::fmt_markdown(columns = 2:n_columns) %>%
+    gt::fmt_markdown(columns = vars(sha1)) %>%
+    # gt::text_transform(
+    #   locations = gt::cells_body(columns = 1),
+    #   fn = function(x) {
+    #     substr(x, 1, 6)
+    #   }
+    # ) %>%
     gt::tab_style(
-      style = gt::cell_text(font = "monospace", size = "small"),
+      style = gt::cell_text(font = "'IBM Plex Mono'", size = "small"),
       locations = gt::cells_body(columns = gt::vars(sha1))
     ) %>%
     gt::tab_style(
-      style = gt::cell_text(weight = "bold", color = "#666666"),
-      locations = gt::cells_column_labels(columns = TRUE)
+      style = gt::cell_text(weight = "bold", color = "#666666", size = "12px"),
+      locations = gt::cells_column_labels(columns = "sha1")
     ) %>%
     gt::tab_style(
       locations = gt::cells_body(columns = gt::everything()),
@@ -346,9 +523,6 @@ get_multiagent_report <- function(multiagent,
           #pb_information {
             -webkit-font-smoothing: antialiased;
           }
-          #report .gt_row {
-            overflow: visible;
-          }
           #report .gt_sourcenote {
             height: 35px;
             padding: 0
@@ -359,8 +533,25 @@ get_multiagent_report <- function(multiagent,
             background-color: transparent;
             padding: 0;
           }
+          #report td {
+            overflow: visible;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+          #report .gt_stub {
+            overflow: visible;
+            font-family: 'IBM Plex Mono', monospace, courier;
+            font-size: 11px;
+            padding-left: 5px !important;
+          }
         "
     )
+
+  if (layout_type == "16UP") {
+    report_tbl <-
+      report_tbl %>% 
+      gt::cols_label(`001` = gt::html(date_time[[2]]))
+  }
   
   report_tbl
 }
@@ -370,19 +561,21 @@ generate_cell_content <- function(layout_type,
   
   
   if (layout_type == "4UP") {
-    
+
     cell_content <- 
       htmltools::tagList(
         htmltools::tags$div(
           style = htmltools::css(
             padding_left = "2px",
-            padding_right = "2px"
+            padding_right = "2px",
+            padding_top = "5px"
           ),
           htmltools::tags$div(
             style = htmltools::css(
               width = "20%",
               float = "left",
-              text_align = "right"
+              text_align = "right",
+              padding_left = "2px"
             ),
             htmltools::tags$div(
               style = htmltools::css(
@@ -419,7 +612,6 @@ generate_cell_content <- function(layout_type,
                   style = htmltools::css(
                     color = "green"
                   ),
-                  
                   htmltools::HTML("&#9679;")
                 ),
                 pb_fmt_number(
@@ -445,36 +637,58 @@ generate_cell_content <- function(layout_type,
                 width = "80%",
                 float = "left",
                 text_align = "left",
-                font_size = "smaller"
+                font_size = "smaller",
+                padding_bottom = "5px"
               ),
               htmltools::tags$span(
                 "W"
               ),
               htmltools::tags$span(
-                htmltools::HTML(ifelse(
-                  is.na(vals_step$warn),
-                  "&mdash;", vals_step$warn
-                ))
+                htmltools::HTML(
+                  ifelse(
+                    is.na(vals_step$warn),
+                    "&mdash;",
+                    ifelse(
+                      !is.na(vals_step$warn) && vals_step$warn,
+                      "<span style=\"color: #F2AA3B;\">&#9679;</span>",
+                      "<span style=\"color: #999;\">&#9711;</span>"
+                    )
+                  )
+                )
               ),
               htmltools::tags$span(
                 htmltools::HTML("&nbsp;"),
                 "S"
               ),
               htmltools::tags$span(
-                htmltools::HTML(ifelse(
-                  is.na(vals_step$stop),
-                  "&mdash;", vals_step$stop
-                ))
+                htmltools::HTML(
+                  ifelse(
+                    is.na(vals_step$stop),
+                    "&mdash;",
+                    ifelse(
+                      !is.na(vals_step$stop) && vals_step$stop,
+                      "<span style=\"color: #CE5B4D;\">&#9679;</span>",
+                      "<span style=\"color: #999;\">&#9711;</span>"
+                    )
+                  )
+                )
               ),
               htmltools::tags$span(
                 htmltools::HTML("&nbsp;"),
                 "N"
               ),
               htmltools::tags$span(
-                htmltools::HTML(ifelse(
-                  is.na(vals_step$notify),
-                  "&mdash;", vals_step$notify
-                ))
+                htmltools::HTML(
+                  ifelse(
+                    is.na(vals_step$notify),
+                    "&mdash;",
+                    ifelse(
+                      !is.na(vals_step$notify) && vals_step$notify,
+                      "<span style=\"color: #52ACE6;\">&#9679;</span>",
+                      "<span style=\"color: #999;\">&#9711;</span>"
+                    )
+                  )
+                )
               )
             )
           )
@@ -485,10 +699,8 @@ generate_cell_content <- function(layout_type,
     return(cell_content) 
   }
   
-  
   if (layout_type == "8UP") {
-    
-    # TODO: Modify content to fit
+
     cell_content <- 
       htmltools::tagList(
         htmltools::tags$div(
@@ -498,46 +710,38 @@ generate_cell_content <- function(layout_type,
           ),
           htmltools::tags$div(
             style = htmltools::css(
-              width = "20%",
-              float = "left",
-              text_align = "right"
+              width = "100%",
+              text_align = "center"
             ),
             htmltools::tags$div(
-              style = htmltools::css(
-                padding_left = "2px",
-                padding_right = "2px",
-                border_color = "#DDD",
-                border_width = "1px",
-                border_style = "solid",
-                height = "32px"
-              ),
               htmltools::tags$span(
                 style = htmltools::css(
-                  font_size = ifelse(vals_step$i < 100, "x-large", "16px"),
+                  font_size = "14px",
                   color = "#999"
                 ),
                 vals_step$i
+              ),
+              htmltools::tags$hr(
+                style = htmltools::css(
+                  border_top = "1px solid #D3D3D3",
+                  margin = "1px"
+                )
               )
             )
           ),
           htmltools::tags$div(
-            style = htmltools::css(
-              float = "right",
-              width = "75%"
-            ),
             htmltools::tags$div(
               style = htmltools::css(
-                width = "80%",
-                float = "left",
-                text_align = "left",
-                font_size = "smaller"
+                width = "100%",
+                font_size = "x-small",
+                text_align = "center",
+                padding_top = "2px"
               ),
               htmltools::tags$span(
                 htmltools::tags$span(
                   style = htmltools::css(
                     color = "green"
                   ),
-                  
                   htmltools::HTML("&#9679;")
                 ),
                 pb_fmt_number(
@@ -557,42 +761,63 @@ generate_cell_content <- function(layout_type,
                 ),
               )
             ),
-            htmltools::tags$br(),
             htmltools::tags$div(
               style = htmltools::css(
-                width = "80%",
-                float = "left",
-                text_align = "left",
-                font_size = "smaller"
+                width = "100%",
+                font_size = "x-small",
+                text_align = "center",
+                padding_top = "0",
+                padding_bottom = "4px"
               ),
               htmltools::tags$span(
                 "W"
               ),
               htmltools::tags$span(
-                htmltools::HTML(ifelse(
-                  is.na(vals_step$warn),
-                  "&mdash;", vals_step$warn
-                ))
+                htmltools::HTML(
+                  ifelse(
+                    is.na(vals_step$warn),
+                    "&mdash;",
+                    ifelse(
+                      !is.na(vals_step$warn) && vals_step$warn,
+                      "<span style=\"color: #F2AA3B;\">&#9679;</span>",
+                      "<span style=\"color: #999;\">&#9711;</span>"
+                    )
+                  )
+                )
               ),
               htmltools::tags$span(
                 htmltools::HTML("&nbsp;"),
                 "S"
               ),
               htmltools::tags$span(
-                htmltools::HTML(ifelse(
-                  is.na(vals_step$stop),
-                  "&mdash;", vals_step$stop
-                ))
+                htmltools::HTML(
+                  ifelse(
+                    is.na(vals_step$stop),
+                    "&mdash;",
+                    ifelse(
+                      !is.na(vals_step$stop) && vals_step$stop,
+                      "<span style=\"color: #CE5B4D;\">&#9679;</span>",
+                      "<span style=\"color: #999;\">&#9711;</span>"
+                    )
+                  )
+                )
               ),
               htmltools::tags$span(
                 htmltools::HTML("&nbsp;"),
                 "N"
               ),
               htmltools::tags$span(
-                htmltools::HTML(ifelse(
-                  is.na(vals_step$notify),
-                  "&mdash;", vals_step$notify
-                ))
+                htmltools::HTML(
+                  ifelse(
+                    is.na(vals_step$notify),
+                    "&mdash;",
+                    ifelse(
+                      !is.na(vals_step$notify) && vals_step$notify,
+                      "<span style=\"color: #52ACE6;\">&#9679;</span>",
+                      "<span style=\"color: #999;\">&#9711;</span>"
+                    )
+                  )
+                )
               )
             )
           )
@@ -600,124 +825,116 @@ generate_cell_content <- function(layout_type,
       ) %>% 
       as.character()
     
-    return(cell_content) 
+    return(cell_content)
   }
   
   if (layout_type == "16UP") {
-    
+
     # TODO: Modify content to fit
     cell_content <- 
       htmltools::tagList(
-        htmltools::tags$div(
-          style = htmltools::css(
-            padding_left = "2px",
-            padding_right = "2px"
-          ),
           htmltools::tags$div(
             style = htmltools::css(
-              width = "20%",
-              float = "left",
-              text_align = "right"
+              width = "100%",
+              text_align = "center"
             ),
             htmltools::tags$div(
-              style = htmltools::css(
-                padding_left = "2px",
-                padding_right = "2px",
-                border_color = "#DDD",
-                border_width = "1px",
-                border_style = "solid",
-                height = "32px"
-              ),
               htmltools::tags$span(
                 style = htmltools::css(
-                  font_size = ifelse(vals_step$i < 100, "x-large", "16px"),
-                  color = "#999"
+                  font_size = "10px",
+                  color = "#999",
+                  vertical_align = "top",
+                  border_bottom_style = "solid",
+                  border_bottom_color = "#D3D3D3",
+                  border_bottom_width = "1px",
+                  padding_left = "10px",
+                  padding_right = "10px",
+                  width = "100%"
                 ),
                 vals_step$i
               )
             )
           ),
           htmltools::tags$div(
-            style = htmltools::css(
-              float = "right",
-              width = "75%"
-            ),
             htmltools::tags$div(
               style = htmltools::css(
-                width = "80%",
-                float = "left",
-                text_align = "left",
-                font_size = "smaller"
+                width = "100%",
+                font_size = "12px",
+                text_align = "center",
+                padding_top = "0",
+                padding_bottom = "2px"
               ),
-              htmltools::tags$span(
-                htmltools::tags$span(
-                  style = htmltools::css(
-                    color = "green"
+              htmltools::HTML(
+                paste0(
+                  "<svg width=\"50\" height=\"10\">",
+                  "<rect x=\"0.75\" y=\"0\" height=\"10\" width=\"",
+                  vals_step$f_passed * 47, "\"",
+                  "style=\"fill: #60C853\"></rect>",
+                  "<rect x=\"",
+                  (vals_step$f_passed * 47) + 0.75, "\" y=\"0\" ",
+                  "height=\"10\" width=\"",
+                  vals_step$f_failed * 47, "\"",
+                  "style=\"fill: #E35A42\"></rect>",
+                  "</svg>"
+                )
+              ),
+              htmltools::HTML(
+                paste0(
+                  "<svg width=\"50\" height=\"10\">",
+                  "<rect x=\"1.25\" y=\"0\" height=\"10\" width=\"14\"",
+                  "style=\"stroke: ",
+                  ifelse(
+                    is.na(vals_step$warn), 
+                    "#E5E5E5;",
+                    "#F2AA3B;" # color: Tulip Tree
+                  ), 
+                  "fill: ",
+                  ifelse(
+                    !is.na(vals_step$warn) && vals_step$warn, 
+                    "#F7CC89;",
+                    "none;"
+                  ), 
+                  "stroke-width: 1.5;\">",
+                  "</rect>",
+                  "<rect x=\"17.25\" y=\"0\" height=\"10\" width=\"14\"",
+                  "style=\"stroke: ",
+                  ifelse(
+                    is.na(vals_step$stop), 
+                    "#E5E5E5;",
+                    "#CE5B4D;" # color: Valencia
                   ),
-                  
-                  htmltools::HTML("&#9679;")
-                ),
-                pb_fmt_number(
-                  vals_step$f_passed,
-                  decimals = 2,
-                ),
-                htmltools::HTML("&nbsp;"),
-                htmltools::tags$span(
-                  style = htmltools::css(
-                    color = "red"
+                  "fill: ",
+                  ifelse(
+                    !is.na(vals_step$stop) && vals_step$stop, 
+                    "#E19C94;",
+                    "none;"
+                  ), 
+                  "stroke-width: 1.5;\">",
+                  "</rect>",
+                  "<rect x=\"33.25\" y=\"0\" height=\"10\" width=\"14\"",
+                  "style=\"stroke: ",
+                  ifelse(
+                    is.na(vals_step$notify), 
+                    "#E5E5E5;",
+                    "#52ACE6;" # color: Picton Blue
                   ),
-                  htmltools::HTML("&#9679;")
-                ),
-                pb_fmt_number(
-                  vals_step$f_failed,
-                  decimals = 2,
-                ),
-              )
-            ),
-            htmltools::tags$br(),
-            htmltools::tags$div(
-              style = htmltools::css(
-                width = "80%",
-                float = "left",
-                text_align = "left",
-                font_size = "smaller"
-              ),
-              htmltools::tags$span(
-                "W"
-              ),
-              htmltools::tags$span(
-                htmltools::HTML(ifelse(
-                  is.na(vals_step$warn),
-                  "&mdash;", vals_step$warn
-                ))
-              ),
-              htmltools::tags$span(
-                htmltools::HTML("&nbsp;"),
-                "S"
-              ),
-              htmltools::tags$span(
-                htmltools::HTML(ifelse(
-                  is.na(vals_step$stop),
-                  "&mdash;", vals_step$stop
-                ))
-              ),
-              htmltools::tags$span(
-                htmltools::HTML("&nbsp;"),
-                "N"
-              ),
-              htmltools::tags$span(
-                htmltools::HTML(ifelse(
-                  is.na(vals_step$notify),
-                  "&mdash;", vals_step$notify
-                ))
+                  "fill: ",
+                  ifelse(
+                    !is.na(vals_step$notify) && vals_step$notify, 
+                    "#97CDF0;",
+                    "none;"
+                  ), 
+                  "stroke-width: 1.5;\">",
+                  "</rect>",
+                  "</svg>"
+                )
               )
             )
           )
-        )
       ) %>% 
       as.character()
     
-    return(cell_content) 
+    return(cell_content)
   }
   
 }

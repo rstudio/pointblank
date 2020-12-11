@@ -94,6 +94,8 @@ get_multiagent_report <- function(multiagent,
   if (!display_table) {
     return(report_tbl)
   }
+  
+  # nocov start
 
   # Generate table type HTML
   table_type <- 
@@ -346,25 +348,22 @@ get_multiagent_report <- function(multiagent,
     )
   
   for (x in seq_along(multiagent[["agents"]])) {
-    
+
     assertion_tbl <-
       dplyr::bind_rows(
         assertion_tbl,
-        multiagent[["agents"]][[i]][["validation_set"]] %>%
+        multiagent[["agents"]][[x]][["validation_set"]] %>%
           dplyr::select(sha1, assertion_type)
       )
   }
-  
-  assertion_tbl <-
-    assertion_tbl %>%
-    dplyr::distinct()
-  
+
   report_tbl <-
     report_tbl %>%
     dplyr::left_join(
-      assertion_tbl, by = "sha1"
+      assertion_tbl %>% dplyr::distinct(),
+      by = "sha1"
     )
-  
+
   for (x in seq_len(nrow(report_tbl))) {
 
     report_tbl$sha1[x] <-
@@ -372,6 +371,7 @@ get_multiagent_report <- function(multiagent,
         "\\s\\s+", "", 
         paste0(
           "<div>",
+          "&nbsp;",
           add_icon_svg(icon = report_tbl$assertion_type[x]),
           "<code style=\"font-size: 8px;\">",
           "&nbsp;", substr(report_tbl$sha1[x], 1, 6),
@@ -395,11 +395,24 @@ get_multiagent_report <- function(multiagent,
         gt::everything() ~ gt::px(75)
       ) %>%
       gt::tab_style(
-        style = gt::cell_text(
-          weight = "bold",
-          color = "#666666"
+        list(
+          style = gt::cell_text(
+            weight = "bold",
+            color = "#666666"
+          ),
+          paste(
+            "padding-top: 8px; padding-bottom: 8px;"
+          )
         ),
         locations = gt::cells_column_labels(columns = TRUE)
+      ) %>%
+      gt::tab_style(
+        style = gt::cell_text(weight = "bold", color = "#666666"),
+        locations = gt::cells_column_labels(columns = "sha1")
+      ) %>%
+      gt::tab_style(
+        locations = gt::cells_body(columns = gt::everything()),
+        style = "height: 56px; margin: 0;"
       )
     
   } else if (layout_type == "8UP") {
@@ -415,12 +428,29 @@ get_multiagent_report <- function(multiagent,
           style = gt::cell_text(
             weight = "bold",
             color = "#666666",
-            size = "10px",
+            size = "12px",
             align = "center"
           ),
-          "line-height: 1.15em;"
+          paste(
+            "line-height: 1.15em; padding-top: 4px;",
+            "padding-bottom: 5px;"
+          )
         ),
         locations = gt::cells_column_labels(columns = TRUE)
+      ) %>%
+      gt::tab_style(
+        style = gt::cell_text(
+          weight = "bold",
+          color = "#666666",
+          size = "100%",
+          v_align = "middle",
+          align = "left"
+        ),
+        locations = gt::cells_column_labels(columns = "sha1")
+      ) %>%
+      gt::tab_style(
+        locations = gt::cells_body(columns = gt::everything()),
+        style = "height: 56px; margin: 0;"
       )
     
   } else {
@@ -439,11 +469,32 @@ get_multiagent_report <- function(multiagent,
             size = "8px"
           ),
           paste(
-          "line-height: 1.15em;", "padding-left: 3px;",
-          "padding-right: 0;", "height: 30px; overflow-x: visible;"
+            "line-height: 1.15em;", "padding-left: 3px;",
+            "padding-right: 0; padding-bottom: 3px;",
+            "padding-top: 0; height: 30px;",
+            "overflow-x: visible;"
           )
         ),
         locations = gt::cells_column_labels(columns = TRUE)
+      ) %>%
+      gt::tab_style(
+        list(
+          style = gt::cell_text(
+            weight = "bold",
+            color = "#666666",
+            size = "100%",
+            v_align = "middle",
+            align = "left"
+          ),
+          paste(
+            "padding-top: 8px; padding-bottom: 8px;"
+          )
+        ),
+        locations = gt::cells_column_labels(columns = "sha1")
+      ) %>%
+      gt::tab_style(
+        locations = gt::cells_body(columns = gt::everything()),
+        style = "height: 56px; margin: 0;"
       )
   }
   
@@ -465,14 +516,6 @@ get_multiagent_report <- function(multiagent,
     gt::tab_style(
       style = gt::cell_text(font = "'IBM Plex Mono'", size = "small"),
       locations = gt::cells_body(columns = gt::vars(sha1))
-    ) %>%
-    gt::tab_style(
-      style = gt::cell_text(weight = "bold", color = "#666666", size = "12px"),
-      locations = gt::cells_column_labels(columns = "sha1")
-    ) %>%
-    gt::tab_style(
-      locations = gt::cells_body(columns = gt::everything()),
-      style = "height: 40px; margin: 0;"
     ) %>%
     gt::tab_style(
       style = gt::cell_text(
@@ -939,4 +982,5 @@ generate_cell_content <- function(layout_type,
     return(cell_content)
   }
   
+  # nocov end
 }

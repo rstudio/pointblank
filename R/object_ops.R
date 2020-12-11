@@ -181,20 +181,20 @@ set_tbl <- function(x,
   }
   
   if (is_ptblank_agent(x)) {
-  
-  # Obtain basic information on the table and
-  # set the relevant list elements
-  tbl_information <- get_tbl_information(tbl = tbl)
-  
-  x$db_tbl_name <- tbl_information$db_tbl_name
-  x$tbl_src <- tbl_information$tbl_src
-  x$tbl_src_details <- tbl_information$tbl_src_details
-  x$col_names <- tbl_information$col_names
-  x$col_types <- tbl_information$r_col_types
-  x$db_col_types <- tbl_information$db_col_types
-  
-  # Remove any data extracts
-  x$extracts <- NULL
+    
+    # Obtain basic information on the table and
+    # set the relevant list elements
+    tbl_information <- get_tbl_information(tbl = tbl)
+    
+    x$db_tbl_name <- tbl_information$db_tbl_name
+    x$tbl_src <- tbl_information$tbl_src
+    x$tbl_src_details <- tbl_information$tbl_src_details
+    x$col_names <- tbl_information$col_names
+    x$col_types <- tbl_information$r_col_types
+    x$db_col_types <- tbl_information$db_col_types
+    
+    # Remove any data extracts
+    x$extracts <- NULL
   }
   
   invisible(x)

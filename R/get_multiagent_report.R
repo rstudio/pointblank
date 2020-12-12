@@ -94,7 +94,7 @@ get_multiagent_report <- function(multiagent,
   if (!display_table) {
     return(report_tbl)
   }
-  
+
   # nocov start
 
   # Generate table type HTML
@@ -613,7 +613,7 @@ generate_cell_content <- function(layout_type,
           style = htmltools::css(
             padding_left = "2px",
             padding_right = "2px",
-            padding_top = "5px"
+            padding_top = "2px"
           ),
           htmltools::tags$div(
             style = htmltools::css(
@@ -629,7 +629,8 @@ generate_cell_content <- function(layout_type,
                 border_color = "#DDD",
                 border_width = "1px",
                 border_style = "solid",
-                height = "32px"
+                height = "32px",
+                background = ifelse(!vals_step$eval_active, "#E5E5E5", "white")
               ),
               htmltools::tags$span(
                 style = htmltools::css(
@@ -643,40 +644,66 @@ generate_cell_content <- function(layout_type,
           htmltools::tags$div(
             style = htmltools::css(
               float = "right",
-              width = "75%"
+              width = "75%",
+              line_height = "1.1em"
             ),
             htmltools::tags$div(
               style = htmltools::css(
                 width = "80%",
                 float = "left",
                 text_align = "left",
-                font_size = "smaller"
+                font_size = "smaller",
+                padding_top = "0"
               ),
               htmltools::tags$span(
-                htmltools::tags$span(
+                htmltools::tags$div(
                   style = htmltools::css(
-                    color = "green"
+                    width = "60px",
+                    display = "inline-block"
                   ),
-                  htmltools::HTML("&#9679;")
+                  htmltools::tags$span(
+                    style = htmltools::css(
+                      color = ifelse(!vals_step$eval_active, "inherit", "green"),
+                      font_size = "x-small"
+                    ),
+                    "PASS"
+                  ),
+                  htmltools::HTML(
+                    ifelse(
+                      !vals_step$eval_active,
+                      "&mdash;",
+                      pb_fmt_number(
+                        vals_step$f_passed,
+                        decimals = 2,
+                      )
+                    )
+                  )
                 ),
-                pb_fmt_number(
-                  vals_step$f_passed,
-                  decimals = 2,
-                ),
-                htmltools::HTML("&nbsp;"),
-                htmltools::tags$span(
+                htmltools::tags$div(
                   style = htmltools::css(
-                    color = "red"
+                    width = "50px",
+                    display = "inline-block"
                   ),
-                  htmltools::HTML("&#9679;")
-                ),
-                pb_fmt_number(
-                  vals_step$f_failed,
-                  decimals = 2,
+                  htmltools::tags$span(
+                    style = htmltools::css(
+                      color = ifelse(!vals_step$eval_active, "inherit", "red"),
+                      font_size = "x-small"
+                    ),
+                    "FAIL"
+                  ),
+                  htmltools::HTML(
+                    ifelse(
+                      !vals_step$eval_active,
+                      "&mdash;",
+                      pb_fmt_number(
+                        vals_step$f_failed,
+                        decimals = 2,
+                      )
+                    )
+                  )
                 ),
               )
             ),
-            htmltools::tags$br(),
             htmltools::tags$div(
               style = htmltools::css(
                 width = "80%",
@@ -685,52 +712,91 @@ generate_cell_content <- function(layout_type,
                 font_size = "smaller",
                 padding_bottom = "5px"
               ),
-              htmltools::tags$span(
-                "W"
-              ),
-              htmltools::tags$span(
-                htmltools::HTML(
-                  ifelse(
-                    is.na(vals_step$warn),
-                    "&mdash;",
+              htmltools::tags$div(
+                style = htmltools::css(
+                  width = "30px",
+                  display = "inline-block",
+                  margin_right = "8px"
+                ),
+                htmltools::tags$span(
+                  style = htmltools::css(
+                    border = "solid 1px #D5D5D5",
+                    padding_left = "3px",
+                    padding_right = "2px",
+                    margin_right = "4px",
+                    font_size = "smaller"
+                  ),
+                  htmltools::tags$code("W")
+                ),
+                htmltools::tags$span(
+                  htmltools::HTML(
                     ifelse(
-                      !is.na(vals_step$warn) && vals_step$warn,
-                      "<span style=\"color: #F2AA3B;\">&#9679;</span>",
-                      "<span style=\"color: #999;\">&#9711;</span>"
+                      is.na(vals_step$warn),
+                      "&ndash;",
+                      ifelse(
+                        !is.na(vals_step$warn) && vals_step$warn,
+                        "<span style=\"color: #F2AA3B; font-size: 11px;\">&#9679;</span>",
+                        "<span style=\"color: #999; font-size: smaller;\">&#9711;</span>"
+                      )
                     )
                   )
                 )
               ),
-              htmltools::tags$span(
-                htmltools::HTML("&nbsp;"),
-                "S"
-              ),
-              htmltools::tags$span(
-                htmltools::HTML(
-                  ifelse(
-                    is.na(vals_step$stop),
-                    "&mdash;",
+              htmltools::tags$div(
+                style = htmltools::css(
+                  width = "30px",
+                  display = "inline-block",
+                  margin_right = "8px"
+                ),
+                htmltools::tags$span(
+                  style = htmltools::css(
+                    border = "solid 1px #D5D5D5",
+                    padding_left = "3px",
+                    padding_right = "2px",
+                    margin_right = "4px",
+                    font_size = "smaller"
+                  ),
+                  htmltools::tags$code("S")
+                ),
+                htmltools::tags$span(
+                  htmltools::HTML(
                     ifelse(
-                      !is.na(vals_step$stop) && vals_step$stop,
-                      "<span style=\"color: #CE5B4D;\">&#9679;</span>",
-                      "<span style=\"color: #999;\">&#9711;</span>"
+                      is.na(vals_step$stop),
+                      "&ndash;",
+                      ifelse(
+                        !is.na(vals_step$stop) && vals_step$stop,
+                        "<span style=\"color: #CE5B4D; font-size: 11px;\">&#9679;</span>",
+                        "<span style=\"color: #999; font-size: smaller;\">&#9711;</span>"
+                      )
                     )
                   )
                 )
               ),
-              htmltools::tags$span(
-                htmltools::HTML("&nbsp;"),
-                "N"
-              ),
-              htmltools::tags$span(
-                htmltools::HTML(
-                  ifelse(
-                    is.na(vals_step$notify),
-                    "&mdash;",
+              htmltools::tags$div(
+                style = htmltools::css(
+                  width = "30px",
+                  display = "inline-block"
+                ),
+                htmltools::tags$span(
+                  style = htmltools::css(
+                    border = "solid 1px #D5D5D5",
+                    padding_left = "3px",
+                    padding_right = "2px",
+                    margin_right = "4px",
+                    font_size = "smaller"
+                  ),
+                  htmltools::tags$code("N")
+                ),
+                htmltools::tags$span(
+                  htmltools::HTML(
                     ifelse(
-                      !is.na(vals_step$notify) && vals_step$notify,
-                      "<span style=\"color: #52ACE6;\">&#9679;</span>",
-                      "<span style=\"color: #999;\">&#9711;</span>"
+                      is.na(vals_step$notify),
+                      "&ndash;",
+                      ifelse(
+                        !is.na(vals_step$notify) && vals_step$notify,
+                        "<span style=\"color: #52ACE6; font-size: 11px;\">&#9679;</span>",
+                        "<span style=\"color: #999; font-size: smaller;\">&#9711;</span>"
+                      )
                     )
                   )
                 )
@@ -751,7 +817,8 @@ generate_cell_content <- function(layout_type,
         htmltools::tags$div(
           style = htmltools::css(
             padding_left = "2px",
-            padding_right = "2px"
+            padding_right = "2px",
+            background_color = ifelse(!vals_step$eval_active, "#F5F5F5", "inherit")
           ),
           htmltools::tags$div(
             style = htmltools::css(
@@ -785,24 +852,38 @@ generate_cell_content <- function(layout_type,
               htmltools::tags$span(
                 htmltools::tags$span(
                   style = htmltools::css(
-                    color = "green"
+                    color = ifelse(!vals_step$eval_active, "inherit", "green"),
+                    font_size = "8px"
                   ),
-                  htmltools::HTML("&#9679;")
+                  "PASS"
                 ),
-                pb_fmt_number(
-                  vals_step$f_passed,
-                  decimals = 2,
+                htmltools::HTML(
+                  ifelse(
+                    !vals_step$eval_active,
+                    "&mdash;",
+                    pb_fmt_number(
+                      vals_step$f_passed,
+                      decimals = 2,
+                    )
+                  )
                 ),
                 htmltools::HTML("&nbsp;"),
                 htmltools::tags$span(
                   style = htmltools::css(
-                    color = "red"
+                    color = ifelse(!vals_step$eval_active, "inherit", "red"),
+                    font_size = "8px"
                   ),
-                  htmltools::HTML("&#9679;")
+                  "FAIL"
                 ),
-                pb_fmt_number(
-                  vals_step$f_failed,
-                  decimals = 2,
+                htmltools::HTML(
+                  ifelse(
+                    !vals_step$eval_active,
+                    "&mdash;",
+                    pb_fmt_number(
+                      vals_step$f_failed,
+                      decimals = 2,
+                    )
+                  )
                 ),
               )
             ),
@@ -825,7 +906,7 @@ generate_cell_content <- function(layout_type,
                     ifelse(
                       !is.na(vals_step$warn) && vals_step$warn,
                       "<span style=\"color: #F2AA3B;\">&#9679;</span>",
-                      "<span style=\"color: #999;\">&#9711;</span>"
+                      "<span style=\"color: #999; font-size: smaller;\">&#9711;</span>"
                     )
                   )
                 )
@@ -842,7 +923,7 @@ generate_cell_content <- function(layout_type,
                     ifelse(
                       !is.na(vals_step$stop) && vals_step$stop,
                       "<span style=\"color: #CE5B4D;\">&#9679;</span>",
-                      "<span style=\"color: #999;\">&#9711;</span>"
+                      "<span style=\"color: #999; font-size: smaller;\">&#9711;</span>"
                     )
                   )
                 )
@@ -859,7 +940,7 @@ generate_cell_content <- function(layout_type,
                     ifelse(
                       !is.na(vals_step$notify) && vals_step$notify,
                       "<span style=\"color: #52ACE6;\">&#9679;</span>",
-                      "<span style=\"color: #999;\">&#9711;</span>"
+                      "<span style=\"color: #999; font-size: smaller;\">&#9711;</span>"
                     )
                   )
                 )
@@ -875,7 +956,6 @@ generate_cell_content <- function(layout_type,
   
   if (layout_type == "16UP") {
 
-    # TODO: Modify content to fit
     cell_content <- 
       htmltools::tagList(
           htmltools::tags$div(

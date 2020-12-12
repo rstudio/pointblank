@@ -63,4 +63,3 @@ create_multiagent <- function(...,
   class(agent_series) <- "ptblank_multiagent"
   agent_series
 }
-

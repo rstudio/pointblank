@@ -663,7 +663,9 @@ generate_cell_content <- function(layout_type,
                   ),
                   htmltools::tags$span(
                     style = htmltools::css(
-                      color = ifelse(!vals_step$eval_active, "inherit", "green"),
+                      color = ifelse(
+                        !vals_step$eval_active, "inherit", "green"
+                      ),
                       font_size = "x-small"
                     ),
                     "PASS"
@@ -735,8 +737,14 @@ generate_cell_content <- function(layout_type,
                       "&ndash;",
                       ifelse(
                         !is.na(vals_step$warn) && vals_step$warn,
-                        "<span style=\"color: #F2AA3B; font-size: 11px;\">&#9679;</span>",
-                        "<span style=\"color: #999; font-size: smaller;\">&#9711;</span>"
+                        paste0(
+                          "<span style=\"color: #F2AA3B; font-size: 11px;\">",
+                          "&#9679;</span>"
+                        ),
+                        paste0(
+                          "<span style=\"color: #999; font-size: smaller;\">",
+                          "&#9711;</span>"
+                        )
                       )
                     )
                   )
@@ -765,8 +773,14 @@ generate_cell_content <- function(layout_type,
                       "&ndash;",
                       ifelse(
                         !is.na(vals_step$stop) && vals_step$stop,
-                        "<span style=\"color: #CE5B4D; font-size: 11px;\">&#9679;</span>",
-                        "<span style=\"color: #999; font-size: smaller;\">&#9711;</span>"
+                        paste0(
+                          "<span style=\"color: #CE5B4D; font-size: 11px;\">",
+                          "&#9679;</span>"
+                        ),
+                        paste0(
+                          "<span style=\"color: #999; font-size: smaller;\">",
+                          "&#9711;</span>"
+                        )
                       )
                     )
                   )
@@ -794,8 +808,14 @@ generate_cell_content <- function(layout_type,
                       "&ndash;",
                       ifelse(
                         !is.na(vals_step$notify) && vals_step$notify,
-                        "<span style=\"color: #52ACE6; font-size: 11px;\">&#9679;</span>",
-                        "<span style=\"color: #999; font-size: smaller;\">&#9711;</span>"
+                        paste0(
+                          "<span style=\"color: #52ACE6; font-size: 11px;\">",
+                          "&#9679;</span>"
+                        ),
+                        paste0(
+                          "<span style=\"color: #999; font-size: smaller;\">",
+                          "&#9711;</span>"
+                        )
                       )
                     )
                   )
@@ -818,7 +838,9 @@ generate_cell_content <- function(layout_type,
           style = htmltools::css(
             padding_left = "2px",
             padding_right = "2px",
-            background_color = ifelse(!vals_step$eval_active, "#F5F5F5", "inherit")
+            background_color = ifelse(
+              !vals_step$eval_active, "#F5F5F5", "inherit"
+            )
           ),
           htmltools::tags$div(
             style = htmltools::css(
@@ -906,7 +928,10 @@ generate_cell_content <- function(layout_type,
                     ifelse(
                       !is.na(vals_step$warn) && vals_step$warn,
                       "<span style=\"color: #F2AA3B;\">&#9679;</span>",
-                      "<span style=\"color: #999; font-size: smaller;\">&#9711;</span>"
+                      paste0(
+                        "<span style=\"color: #999; font-size: smaller;\">",
+                        "&#9711;</span>"
+                      )
                     )
                   )
                 )
@@ -923,7 +948,10 @@ generate_cell_content <- function(layout_type,
                     ifelse(
                       !is.na(vals_step$stop) && vals_step$stop,
                       "<span style=\"color: #CE5B4D;\">&#9679;</span>",
-                      "<span style=\"color: #999; font-size: smaller;\">&#9711;</span>"
+                      paste0(
+                        "<span style=\"color: #999; font-size: smaller;\">",
+                        "&#9711;</span>"
+                      )
                     )
                   )
                 )
@@ -940,7 +968,10 @@ generate_cell_content <- function(layout_type,
                     ifelse(
                       !is.na(vals_step$notify) && vals_step$notify,
                       "<span style=\"color: #52ACE6;\">&#9679;</span>",
-                      "<span style=\"color: #999; font-size: smaller;\">&#9711;</span>"
+                      paste0(
+                        "<span style=\"color: #999; font-size: smaller;\">",
+                        "&#9711;</span>"
+                      )
                     )
                   )
                 )

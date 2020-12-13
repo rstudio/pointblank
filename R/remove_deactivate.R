@@ -37,6 +37,39 @@ remove_steps <- function(agent,
   agent
 }
 
+#' Activate one or more of an *agent*'s validation steps
+#'
+#' If certain validation steps need to be activated after the creation of the
+#' validation plan for an *agent*, use the `activate_steps()` function. This is
+#' equivalent to using the `active = TRUE` for the selected validation steps
+#' (`active` is an argument in all validation functions). This will replace any
+#' function that may have been defined for the `active` argument during creation
+#' of the targeted validation steps.
+#'
+#' @param agent An agent object of class `ptblank_agent`.
+#' @param i The validation step number, which is assigned to each validation
+#'   step in the order of definition.
+#'
+#' @return A `ptblank_agent` object.
+#' 
+#' @seealso For the opposite behavior, use the [deactivate_steps()] function.
+#'
+#' @export
+activate_steps <- function(agent,
+                           i = NULL) {
+  
+  if (!is.null(i)) {
+    agent$validation_set <- 
+      agent$validation_set %>%
+      dplyr::mutate(active = ifelse(i %in% {{ i }}, list(TRUE), active))
+  }
+  
+  # Remove any data extracts
+  agent$extracts <- NULL
+  
+  agent
+}
+
 #' Deactivate one or more of an *agent*'s validation steps
 #'
 #' Should the deactivation of one or more validation steps be necessary after
@@ -63,39 +96,6 @@ deactivate_steps <- function(agent,
     agent$validation_set <- 
       agent$validation_set %>%
       dplyr::mutate(active = ifelse(i %in% {{ i }}, list(FALSE), active))
-  }
-  
-  # Remove any data extracts
-  agent$extracts <- NULL
-  
-  agent
-}
-
-#' Activate one or more of an *agent*'s validation steps
-#'
-#' If certain validation steps need to be activated after the creation of the
-#' validation plan for an *agent*, use the `activate_steps()` function. This is
-#' equivalent to using the `active = TRUE` for the selected validation steps
-#' (`active` is an argument in all validation functions). This will replace any
-#' function that may have been defined for the `active` argument during creation
-#' of the targeted validation steps.
-#'
-#' @param agent An agent object of class `ptblank_agent`.
-#' @param i The validation step number, which is assigned to each validation
-#'   step in the order of definition.
-#'
-#' @return A `ptblank_agent` object.
-#' 
-#' @seealso For the opposite behavior, use the [deactivate_steps()] function.
-#'
-#' @export
-activate_steps <- function(agent,
-                           i = NULL) {
-  
-  if (!is.null(i)) {
-    agent$validation_set <- 
-      agent$validation_set %>%
-      dplyr::mutate(active = ifelse(i %in% {{ i }}, list(TRUE), active))
   }
   
   # Remove any data extracts

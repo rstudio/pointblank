@@ -188,12 +188,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="create_multiagent.html">create_multiagent()</a></code> </p>
-        </td>
-        <td><p>Create a <strong>pointblank</strong> <em>multiagent</em> object</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="create_informant.html">create_informant()</a></code> </p>
         </td>
         <td><p>Create a <strong>pointblank</strong> <em>informant</em> object</p></td>
@@ -221,18 +215,6 @@
           <p><code><a href="db_tbl.html">db_tbl()</a></code> </p>
         </td>
         <td><p>Get a table from a database</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="col_schema.html">col_schema()</a></code> </p>
-        </td>
-        <td><p>Generate a table column schema manually or with a reference table</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="has_columns.html">has_columns()</a></code> </p>
-        </td>
-        <td><p>Determine if one or more columns exist in a table.</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -619,7 +601,7 @@ column?</p></td>
       <tr>
         <th colspan="2">
           <h2 id="section-object-ops" class="hasAnchor"><a href="#section-object-ops" class="anchor"></a>Object Ops</h2>
-          <p class="section-desc"><p>We have options for writing an agent or informant to disk with the <code><a href="../reference/x_write_disk.html">x_write_disk()</a></code> function. The on-disk object can be retrieved with the <code><a href="../reference/x_read_disk.html">x_read_disk()</a></code> function. A set of functions for setting and removing these objects’ association to a data table or a table-reading function is also available in this function family.</p></p>
+          <p class="section-desc"><p>We have options for writing an agent or informant to disk with the <code><a href="../reference/x_write_disk.html">x_write_disk()</a></code> function. The on-disk object can be retrieved with the <code><a href="../reference/x_read_disk.html">x_read_disk()</a></code> function. A set of functions are also available for managing associations to a data table (either directly or with a table-reading function), and, for editing an agent’s validation steps.</p></p>
         </th>
       </tr>
       
@@ -639,30 +621,6 @@ column?</p></td>
           <p><code><a href="x_read_disk.html">x_read_disk()</a></code> </p>
         </td>
         <td><p>Read a <strong>pointblank</strong> <em>agent</em> or <em>informant</em> from disk</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_disk_multiagent.html">read_disk_multiagent()</a></code> </p>
-        </td>
-        <td><p>Read <strong>pointblank</strong> <em>agents</em> stored on disk as a <em>multiagent</em></p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="remove_steps.html">remove_steps()</a></code> </p>
-        </td>
-        <td><p>Remove one or more of an <em>agent</em>'s validation steps</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="activate_steps.html">activate_steps()</a></code> </p>
-        </td>
-        <td><p>Activate one or more of an <em>agent</em>'s validation steps</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="deactivate_steps.html">deactivate_steps()</a></code> </p>
-        </td>
-        <td><p>Deactivate one or more of an <em>agent</em>'s validation steps</p></td>
       </tr><tr>
         
         <td>
@@ -687,6 +645,49 @@ column?</p></td>
           <p><code><a href="remove_read_fn.html">remove_read_fn()</a></code> </p>
         </td>
         <td><p>Remove a table-reading function associated with an <em>agent</em> or <em>informant</em></p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="activate_steps.html">activate_steps()</a></code> </p>
+        </td>
+        <td><p>Activate one or more of an <em>agent</em>'s validation steps</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="deactivate_steps.html">deactivate_steps()</a></code> </p>
+        </td>
+        <td><p>Deactivate one or more of an <em>agent</em>'s validation steps</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="remove_steps.html">remove_steps()</a></code> </p>
+        </td>
+        <td><p>Remove one or more of an <em>agent</em>'s validation steps</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-the-multiagent" class="hasAnchor"><a href="#section-the-multiagent" class="anchor"></a>The multiagent</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="create_multiagent.html">create_multiagent()</a></code> </p>
+        </td>
+        <td><p>Create a <strong>pointblank</strong> <em>multiagent</em> object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="read_disk_multiagent.html">read_disk_multiagent()</a></code> </p>
+        </td>
+        <td><p>Read <strong>pointblank</strong> <em>agents</em> stored on disk as a <em>multiagent</em></p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -746,7 +747,7 @@ column?</p></td>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-utility-functions" class="hasAnchor"><a href="#section-utility-functions" class="anchor"></a>Utility Functions</h2>
+          <h2 id="section-utility-and-helper-functions" class="hasAnchor"><a href="#section-utility-and-helper-functions" class="anchor"></a>Utility and Helper Functions</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -756,6 +757,18 @@ column?</p></td>
       
       
       <tr>
+        
+        <td>
+          <p><code><a href="col_schema.html">col_schema()</a></code> </p>
+        </td>
+        <td><p>Generate a table column schema manually or with a reference table</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="has_columns.html">has_columns()</a></code> </p>
+        </td>
+        <td><p>Determine if one or more columns exist in a table.</p></td>
+      </tr><tr>
         
         <td>
           <p><code><a href="affix_date.html">affix_date()</a></code> </p>

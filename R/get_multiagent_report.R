@@ -204,9 +204,6 @@ get_multiagent_report <- function(multiagent,
       dplyr::full_join(val_set, by = "sha1")
   }
   
-  # TODO: Format `report_tbl` to adhere to 4UP, 8UP, and 16UP+
-  # displays of information
-  
   if (i < 4) {
     # 4UP display
     i_names <- formatC((i + 1):4, width = 3, flag = 0)

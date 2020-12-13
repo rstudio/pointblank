@@ -10,12 +10,20 @@ deactivate_steps(agent, i = NULL)
 \item{agent}{An agent object of class \code{ptblank_agent}.}
 
 \item{i}{The validation step number, which is assigned to each validation
-step in the order of definition. If \code{NULL} (the default) then step
-deactivation won't occur by index.}
+step in the order of definition.}
 }
 \value{
 A \code{ptblank_agent} object.
 }
 \description{
-Deactivate one or more of an \emph{agent}'s validation steps
+Should the deactivation of one or more validation steps be necessary after
+creation of the validation plan for an \emph{agent}, the \code{deactivate_steps()}
+function will be helpful for that. This has the same effect as using the
+\code{active = FALSE} option (\code{active} is an argument in all validation functions)
+for the selected validation steps. Please note that this directly edit the
+validation step, wiping out any function that may have been defined for
+whether the step should be active or not.
+}
+\seealso{
+For the opposite behavior, use the \code{\link[=activate_steps]{activate_steps()}} function.
 }

@@ -17,5 +17,14 @@ won't occur by index.}
 A \code{ptblank_agent} object.
 }
 \description{
-Remove one or more of an \emph{agent}'s validation steps
+Validation steps can be removed from an \emph{agent} object through use of the
+\code{remove_steps()} function. This is useful, for instance, when getting an
+agent from disk (via the \code{\link[=x_read_disk]{x_read_disk()}} function) and omitting one or more
+steps from the \emph{agent}'s validation plan. Please note that when removing
+validation steps all stored data extracts will be removed from the \emph{agent}.
+}
+\seealso{
+Instead of removal, the \code{\link[=deactivate_steps]{deactivate_steps()}} function will simply
+change the \code{active} status of one or more validation steps to \code{FALSE} (and
+\code{\link[=activate_steps]{activate_steps()}} will do the opposite).
 }

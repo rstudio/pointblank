@@ -183,7 +183,7 @@ get_multiagent_report <- function(multiagent,
       
       html_cells <- c(html_cells, cell_content)
     }
-    
+
     val_set <- 
       val_set %>%
       dplyr::mutate(!!i_name := html_cells) %>%
@@ -222,7 +222,7 @@ get_multiagent_report <- function(multiagent,
         ) %>%
         dplyr::rename(!!i_name := "pb_extra_")
     }
-    
+
     empty_cols <- i_names
     
   } else if (i > 4 && i < 8) {
@@ -264,7 +264,7 @@ get_multiagent_report <- function(multiagent,
   } else {
     empty_cols <- NULL
   }
-  
+
   if (layout_type == "16UP") {
     
     mean_f_passed <- 
@@ -339,6 +339,8 @@ get_multiagent_report <- function(multiagent,
     
   date_time <- c(list(sha1 = "STEP"), date_time)
   n_columns <- ncol(report_tbl)
+  columns_used_tbl <- 1 + seq_len(i)
+  columns_not_used <- setdiff(seq(2, n_columns), columns_used_tbl)
   
   # Insert the icon for each step
   assertion_tbl <- 
@@ -388,6 +390,7 @@ get_multiagent_report <- function(multiagent,
     gt::gt(id = "report")
 
   if (layout_type == "4UP") {
+    
     report_tbl <- 
       report_tbl %>%
       gt::cols_width(
@@ -513,6 +516,25 @@ get_multiagent_report <- function(multiagent,
     ) %>%
     gt::fmt_markdown(columns = 2:n_columns) %>%
     gt::fmt_markdown(columns = vars(sha1)) %>%
+    gt::fmt_missing(
+      columns = columns_used_tbl,
+      missing_text = gt::html(
+        as.character(
+          htmltools::tags$hr(
+            style = htmltools::css(
+              transform = "rotate(-10deg)",
+              border_style = "solid",
+              border_width = "1px",
+              border_color = "#F5F5F5"
+            )
+          )
+        )
+      )
+    ) %>%
+    gt::fmt_missing(
+      columns = columns_not_used,
+      missing_text = ""
+    ) %>%
     gt::tab_style(
       style = gt::cell_text(font = "'IBM Plex Mono'", size = "small"),
       locations = gt::cells_body(columns = gt::vars(sha1))
@@ -548,7 +570,6 @@ get_multiagent_report <- function(multiagent,
       locations = gt::cells_body(columns = gt::matches("[0-9]{3}"))
     ) %>%
     gt::cols_label(.list = date_time) %>%
-    gt::fmt_missing(columns = gt::everything(), missing_text = "") %>%
     gt::opt_align_table_header(align = "left") %>%
     gt::opt_table_font(font = gt::google_font("IBM Plex Sans")) %>%
     gt::opt_css(

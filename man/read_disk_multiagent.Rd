@@ -7,13 +7,13 @@
 read_disk_multiagent(filenames = NULL, pattern = NULL, path = NULL)
 }
 \arguments{
-\item{filenames}{The names of files that were previously written by
-\code{\link[=x_write_disk]{x_write_disk()}}}
+\item{filenames}{The names of files (holding \emph{agent} objects) that were
+previously written by \code{\link[=x_write_disk]{x_write_disk()}}.}
 
-\item{pattern}{A regex pattern for accessing relevant, saved \strong{agent} files
-located in a directory specified in the \code{path} argument.}
+\item{pattern}{A regex pattern for accessing saved-to-disk \emph{agent} files
+located in a directory (specified in the \code{path} argument).}
 
-\item{path}{An path to a collection of files. This is either optional in the
+\item{path}{A path to a collection of files. This is either optional in the
 case that files are specified in \code{filenames} (the \code{path} combined with all
 \code{filenames}), or, required when providing a \code{pattern} for file names.}
 }
@@ -21,5 +21,11 @@ case that files are specified in \code{filenames} (the \code{path} combined with
 A \code{ptblank_multiagent} object.
 }
 \description{
-Read \strong{pointblank} \emph{agents} stored on disk as a \emph{multiagent}
+An \emph{agent} or \emph{informant} can be written to disk with the \code{\link[=x_write_disk]{x_write_disk()}}
+function. While useful for later retrieving the stored agent with
+\code{\link[=x_read_disk]{x_read_disk()}} it's also possible to read a series of on-disk agents with
+the \code{read_disk_multiagent()} function, which creates a \code{ptblank_multiagent}
+object. A \emph{multiagent} object can also be generated via the
+\code{\link[=create_multiagent]{create_multiagent()}} function but is less convenient to use if one is just
+using agents that have been previous written to disk.
 }

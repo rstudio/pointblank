@@ -17,6 +17,7 @@ reference:
     contents:
     - scan_data
     - create_agent
+    - create_multiagent
     - create_informant
     - validate_rmd
     - stop_if_not
@@ -163,6 +164,9 @@ reference:
     - x_write_disk
     - x_read_disk
     - read_disk_multiagent
+    - remove_steps
+    - activate_steps
+    - deactivate_steps
     - set_tbl
     - remove_tbl
     - set_read_fn

@@ -19,11 +19,19 @@
 
 #' Read **pointblank** *agents* stored on disk as a *multiagent* 
 #'
-#' @param filenames The names of files that were previously written by
-#'   [x_write_disk()]
-#' @param pattern A regex pattern for accessing relevant, saved **agent** files
-#'   located in a directory specified in the `path` argument.
-#' @param path An path to a collection of files. This is either optional in the
+#' An *agent* or *informant* can be written to disk with the [x_write_disk()]
+#' function. While useful for later retrieving the stored agent with
+#' [x_read_disk()] it's also possible to read a series of on-disk agents with
+#' the `read_disk_multiagent()` function, which creates a `ptblank_multiagent`
+#' object. A *multiagent* object can also be generated via the
+#' [create_multiagent()] function but is less convenient to use if one is just
+#' using agents that have been previous written to disk.
+#'
+#' @param filenames The names of files (holding *agent* objects) that were
+#'   previously written by [x_write_disk()].
+#' @param pattern A regex pattern for accessing saved-to-disk *agent* files
+#'   located in a directory (specified in the `path` argument).
+#' @param path A path to a collection of files. This is either optional in the
 #'   case that files are specified in `filenames` (the `path` combined with all
 #'   `filenames`), or, required when providing a `pattern` for file names.
 #'   

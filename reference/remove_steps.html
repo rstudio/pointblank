@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read pointblank agents stored on disk as a multiagent — read_disk_multiagent • pointblank</title>
+<title>Remove one or more of an agent's validation steps — remove_steps • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,14 +46,12 @@
 
 
 
-<meta property="og:title" content="Read pointblank agents stored on disk as a multiagent — read_disk_multiagent" />
-<meta property="og:description" content="An agent or informant can be written to disk with the x_write_disk()
-function. While useful for later retrieving the stored agent with
-x_read_disk() it's also possible to read a series of on-disk agents with
-the read_disk_multiagent() function, which creates a ptblank_multiagent
-object. A multiagent object can also be generated via the
-create_multiagent() function but is less convenient to use if one is just
-using agents that have been previous written to disk." />
+<meta property="og:title" content="Remove one or more of an agent's validation steps — remove_steps" />
+<meta property="og:description" content="Validation steps can be removed from an agent object through use of the
+remove_steps() function. This is useful, for instance, when getting an
+agent from disk (via the x_read_disk() function) and omitting one or more
+steps from the agent's validation plan. Please note that when removing
+validation steps all stored data extracts will be removed from the agent." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -157,47 +155,44 @@ using agents that have been previous written to disk." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read <strong>pointblank</strong> <em>agents</em> stored on disk as a <em>multiagent</em></h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/read_disk_multiagent.R'><code>R/read_disk_multiagent.R</code></a></small>
-    <div class="hidden name"><code>read_disk_multiagent.Rd</code></div>
+    <h1>Remove one or more of an <em>agent</em>'s validation steps</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/remove_deactivate.R'><code>R/remove_deactivate.R</code></a></small>
+    <div class="hidden name"><code>remove_steps.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>An <em>agent</em> or <em>informant</em> can be written to disk with the <code><a href='x_write_disk.html'>x_write_disk()</a></code>
-function. While useful for later retrieving the stored agent with
-<code><a href='x_read_disk.html'>x_read_disk()</a></code> it's also possible to read a series of on-disk agents with
-the <code>read_disk_multiagent()</code> function, which creates a <code>ptblank_multiagent</code>
-object. A <em>multiagent</em> object can also be generated via the
-<code><a href='create_multiagent.html'>create_multiagent()</a></code> function but is less convenient to use if one is just
-using agents that have been previous written to disk.</p>
+    <p>Validation steps can be removed from an <em>agent</em> object through use of the
+<code>remove_steps()</code> function. This is useful, for instance, when getting an
+agent from disk (via the <code><a href='x_read_disk.html'>x_read_disk()</a></code> function) and omitting one or more
+steps from the <em>agent</em>'s validation plan. Please note that when removing
+validation steps all stored data extracts will be removed from the <em>agent</em>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read_disk_multiagent</span><span class='op'>(</span>filenames <span class='op'>=</span> <span class='cn'>NULL</span>, pattern <span class='op'>=</span> <span class='cn'>NULL</span>, path <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>remove_steps</span><span class='op'>(</span><span class='va'>agent</span>, i <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>filenames</th>
-      <td><p>The names of files (holding <em>agent</em> objects) that were
-previously written by <code><a href='x_write_disk.html'>x_write_disk()</a></code>.</p></td>
+      <th>agent</th>
+      <td><p>An agent object of class <code>ptblank_agent</code>.</p></td>
     </tr>
     <tr>
-      <th>pattern</th>
-      <td><p>A regex pattern for accessing saved-to-disk <em>agent</em> files
-located in a directory (specified in the <code>path</code> argument).</p></td>
-    </tr>
-    <tr>
-      <th>path</th>
-      <td><p>A path to a collection of files. This is either optional in the
-case that files are specified in <code>filenames</code> (the <code>path</code> combined with all
-<code>filenames</code>), or, required when providing a <code>pattern</code> for file names.</p></td>
+      <th>i</th>
+      <td><p>The validation step number, which is assigned to each validation
+step in the order of definition. If <code>NULL</code> (the default) then step removal
+won't occur by index.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>ptblank_multiagent</code> object.</p>
+    <p>A <code>ptblank_agent</code> object.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Instead of removal, the <code><a href='deactivate_steps.html'>deactivate_steps()</a></code> function will simply
+change the <code>active</code> status of one or more validation steps to <code>FALSE</code> (and
+<code><a href='activate_steps.html'>activate_steps()</a></code> will do the opposite).</p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

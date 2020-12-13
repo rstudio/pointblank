@@ -604,9 +604,24 @@ get_multiagent_report <- function(multiagent,
 generate_cell_content <- function(layout_type,
                                   vals_step) {
   
+  if (!vals_step$eval_active) {
+    border_indicator <- "#777777"
+  } else if (vals_step$eval_error) {
+    border_indicator <- "transparent"
+  } else if (vals_step$all_passed) {
+    border_indicator <- "#4CA64C"
+  } else if (vals_step$notify) {
+    border_indicator <- "#499FFE"
+  } else if (vals_step$stop) {
+    border_indicator <- "#CF142B"
+  } else if (vals_step$warn) {
+    border_indicator <- "#FFBF00"
+  } else {
+    border_indicator <- "#A5D2A5"
+  }
   
   if (layout_type == "4UP") {
-
+    
     cell_content <- 
       htmltools::tagList(
         htmltools::tags$div(
@@ -620,22 +635,44 @@ generate_cell_content <- function(layout_type,
               width = "20%",
               float = "left",
               text_align = "right",
-              padding_left = "2px"
+              margin_left = "4px"
             ),
             htmltools::tags$div(
               style = htmltools::css(
                 padding_left = "2px",
                 padding_right = "2px",
-                border_color = "#DDD",
+                margin_top = "1px",
+                border_color = ifelse(
+                  !vals_step$eval_active, "#777777",
+                  ifelse(
+                    vals_step$eval_error, "#FD9893",
+                    ifelse(
+                      vals_step$eval_warning, "#FFC880",
+                      "#DDD"
+                    )
+                  )
+                ),
                 border_width = "1px",
                 border_style = "solid",
+                border_radius = "0 4px 4px 0",
+                border_left_color = border_indicator,
+                border_left_width = "2px",
                 height = "32px",
-                background = ifelse(!vals_step$eval_active, "#E5E5E5", "white")
+                background = ifelse(
+                  !vals_step$eval_active, "#E5E5E5",
+                  ifelse(
+                    vals_step$eval_error, "#FFE9E9",
+                    ifelse(
+                      vals_step$eval_warning, "#FFEAA2",
+                      "white"
+                    )
+                  )
+                )
               ),
               htmltools::tags$span(
                 style = htmltools::css(
                   font_size = ifelse(vals_step$i < 100, "x-large", "16px"),
-                  color = "#999"
+                  color = "#777"
                 ),
                 vals_step$i
               )
@@ -670,13 +707,19 @@ generate_cell_content <- function(layout_type,
                     ),
                     "PASS"
                   ),
-                  htmltools::HTML(
-                    ifelse(
-                      !vals_step$eval_active,
-                      "&mdash;",
-                      pb_fmt_number(
-                        vals_step$f_passed,
-                        decimals = 2,
+                  htmltools::tags$code(
+                    htmltools::HTML(
+                      ifelse(
+                        !vals_step$eval_active,
+                        "&mdash;",
+                        ifelse(
+                          !is.na(vals_step$f_passed),
+                          pb_fmt_number(
+                            vals_step$f_passed,
+                            decimals = 2,
+                          ),
+                          "&mdash;"
+                        )
                       )
                     )
                   )
@@ -693,17 +736,23 @@ generate_cell_content <- function(layout_type,
                     ),
                     "FAIL"
                   ),
-                  htmltools::HTML(
-                    ifelse(
-                      !vals_step$eval_active,
-                      "&mdash;",
-                      pb_fmt_number(
-                        vals_step$f_failed,
-                        decimals = 2,
+                  htmltools::tags$code(
+                    htmltools::HTML(
+                      ifelse(
+                        !vals_step$eval_active,
+                        "&mdash;",
+                        ifelse(
+                          !is.na(vals_step$f_failed),
+                          pb_fmt_number(
+                            vals_step$f_failed,
+                            decimals = 2,
+                          ),
+                          "&mdash;"
+                        )
                       )
                     )
                   )
-                ),
+                )
               )
             ),
             htmltools::tags$div(
@@ -724,7 +773,7 @@ generate_cell_content <- function(layout_type,
                   style = htmltools::css(
                     border = "solid 1px #D5D5D5",
                     padding_left = "3px",
-                    padding_right = "2px",
+                    padding_right = "1px",
                     margin_right = "4px",
                     font_size = "smaller"
                   ),
@@ -760,7 +809,7 @@ generate_cell_content <- function(layout_type,
                   style = htmltools::css(
                     border = "solid 1px #D5D5D5",
                     padding_left = "3px",
-                    padding_right = "2px",
+                    padding_right = "1px",
                     margin_right = "4px",
                     font_size = "smaller"
                   ),
@@ -795,7 +844,7 @@ generate_cell_content <- function(layout_type,
                   style = htmltools::css(
                     border = "solid 1px #D5D5D5",
                     padding_left = "3px",
-                    padding_right = "2px",
+                    padding_right = "1px",
                     margin_right = "4px",
                     font_size = "smaller"
                   ),
@@ -832,15 +881,27 @@ generate_cell_content <- function(layout_type,
   
   if (layout_type == "8UP") {
 
+    if (border_indicator == "transparent") {
+      border_indicator <- "#FD9893"
+    }
+    
+    if (!vals_step$eval_active) {
+      background_color <- "#F5F5F5"
+    } else if (vals_step$eval_error) {
+      background_color <- "#FFE9E9"
+    } else if (vals_step$eval_warning) {
+      background_color <- "#FFEECA"
+    } else {
+      background_color <- "none"
+    }
+
     cell_content <- 
       htmltools::tagList(
         htmltools::tags$div(
           style = htmltools::css(
             padding_left = "2px",
             padding_right = "2px",
-            background_color = ifelse(
-              !vals_step$eval_active, "#F5F5F5", "inherit"
-            )
+            background_color = background_color
           ),
           htmltools::tags$div(
             style = htmltools::css(
@@ -851,13 +912,15 @@ generate_cell_content <- function(layout_type,
               htmltools::tags$span(
                 style = htmltools::css(
                   font_size = "14px",
-                  color = "#999"
+                  color = "#777"
                 ),
                 vals_step$i
               ),
               htmltools::tags$hr(
                 style = htmltools::css(
-                  border_top = "1px solid #D3D3D3",
+                  border_style = "solid",
+                  border_width = "1px",
+                  border_color = border_indicator,
                   margin = "1px"
                 )
               )
@@ -879,13 +942,22 @@ generate_cell_content <- function(layout_type,
                   ),
                   "PASS"
                 ),
-                htmltools::HTML(
-                  ifelse(
-                    !vals_step$eval_active,
-                    "&mdash;",
-                    pb_fmt_number(
-                      vals_step$f_passed,
-                      decimals = 2,
+                htmltools::tags$code(
+                  style = htmltools::css(
+                    font_size = "smaller"
+                  ),
+                  htmltools::HTML(
+                    ifelse(
+                      !vals_step$eval_active,
+                      "&mdash;",
+                      ifelse(
+                        !is.na(vals_step$f_passed),
+                        pb_fmt_number(
+                          vals_step$f_passed,
+                          decimals = 2,
+                        ),
+                        "&mdash;"
+                      )
                     )
                   )
                 ),
@@ -897,16 +969,25 @@ generate_cell_content <- function(layout_type,
                   ),
                   "FAIL"
                 ),
-                htmltools::HTML(
-                  ifelse(
-                    !vals_step$eval_active,
-                    "&mdash;",
-                    pb_fmt_number(
-                      vals_step$f_failed,
-                      decimals = 2,
+                htmltools::tags$code(
+                  style = htmltools::css(
+                    font_size = "smaller"
+                  ),
+                  htmltools::HTML(
+                    ifelse(
+                      !vals_step$eval_active,
+                      "&mdash;",
+                      ifelse(
+                        !is.na(vals_step$f_failed),
+                        pb_fmt_number(
+                          vals_step$f_failed,
+                          decimals = 2,
+                        ),
+                        "&mdash;"
+                      )
                     )
                   )
-                ),
+                )
               )
             ),
             htmltools::tags$div(
@@ -918,6 +999,9 @@ generate_cell_content <- function(layout_type,
                 padding_bottom = "4px"
               ),
               htmltools::tags$span(
+                style = htmltools::css(
+                  font_family = "'IBM Plex Mono'"
+                ),
                 "W"
               ),
               htmltools::tags$span(
@@ -936,8 +1020,11 @@ generate_cell_content <- function(layout_type,
                   )
                 )
               ),
+              htmltools::HTML("&nbsp;"),
               htmltools::tags$span(
-                htmltools::HTML("&nbsp;"),
+                style = htmltools::css(
+                  font_family = "'IBM Plex Mono'"
+                ),
                 "S"
               ),
               htmltools::tags$span(
@@ -956,8 +1043,11 @@ generate_cell_content <- function(layout_type,
                   )
                 )
               ),
+              htmltools::HTML("&nbsp;"),
               htmltools::tags$span(
-                htmltools::HTML("&nbsp;"),
+                style = htmltools::css(
+                  font_family = "'IBM Plex Mono'"
+                ),
                 "N"
               ),
               htmltools::tags$span(
@@ -987,6 +1077,10 @@ generate_cell_content <- function(layout_type,
   
   if (layout_type == "16UP") {
 
+    if (border_indicator == "transparent") {
+      border_indicator <- "#FD9893"
+    }
+    
     cell_content <- 
       htmltools::tagList(
           htmltools::tags$div(
@@ -998,13 +1092,13 @@ generate_cell_content <- function(layout_type,
               htmltools::tags$span(
                 style = htmltools::css(
                   font_size = "10px",
-                  color = "#999",
+                  color = "#777",
                   vertical_align = "top",
                   border_bottom_style = "solid",
-                  border_bottom_color = "#D3D3D3",
-                  border_bottom_width = "1px",
-                  padding_left = "10px",
-                  padding_right = "10px",
+                  border_bottom_color = border_indicator,
+                  border_bottom_width = "2px",
+                  padding_left = "12px",
+                  padding_right = "12px",
                   width = "100%"
                 ),
                 vals_step$i

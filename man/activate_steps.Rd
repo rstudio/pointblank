@@ -10,12 +10,19 @@ activate_steps(agent, i = NULL)
 \item{agent}{An agent object of class \code{ptblank_agent}.}
 
 \item{i}{The validation step number, which is assigned to each validation
-step in the order of definition. If \code{NULL} (the default) then step
-activation won't occur by index.}
+step in the order of definition.}
 }
 \value{
 A \code{ptblank_agent} object.
 }
 \description{
-Activate one or more of an \emph{agent}'s validation steps
+If certain validation steps need to be activated after the creation of the
+validation plan for an \emph{agent}, use the \code{activate_steps()} function. This is
+equivalent to using the \code{active = TRUE} for the selected validation steps
+(\code{active} is an argument in all validation functions). This will replace any
+function that may have been defined for the \code{active} argument during creation
+of the targeted validation steps.
+}
+\seealso{
+For the opposite behavior, use the \code{\link[=deactivate_steps]{deactivate_steps()}} function.
 }

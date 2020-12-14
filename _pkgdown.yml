@@ -168,7 +168,7 @@ reference:
     - deactivate_steps
     - remove_steps
     
-  - title: The multiagent
+  - title: The Multiagent
     contents:
     - create_multiagent
     - read_disk_multiagent

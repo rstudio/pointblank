@@ -1,5 +1,5 @@
-library(tidyverse)
 library(pointblank)
+library(tidyverse)
 library(here)
 
 here::i_am(path = "tests/manual_tests/tests_multiagent.R")

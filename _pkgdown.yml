@@ -19,7 +19,6 @@ reference:
     - create_agent
     - create_informant
     - validate_rmd
-    - stop_if_not
     - action_levels
     - db_tbl
 
@@ -202,6 +201,7 @@ reference:
     - has_columns
     - affix_date
     - affix_datetime
+    - stop_if_not
     
   - title: Datasets
     contents:

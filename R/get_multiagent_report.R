@@ -621,18 +621,18 @@ get_multiagent_report <- function(multiagent,
 
 generate_cell_content <- function(layout_type,
                                   vals_step) {
-  
+
   if (!vals_step$eval_active) {
     border_indicator <- "#777777"
   } else if (vals_step$eval_error) {
     border_indicator <- "transparent"
-  } else if (vals_step$all_passed) {
+  } else if (!is.na(vals_step$all_passed) && vals_step$all_passed) {
     border_indicator <- "#4CA64C"
-  } else if (vals_step$notify) {
+  } else if (!is.na(vals_step$notify) && vals_step$notify) {
     border_indicator <- "#499FFE"
-  } else if (vals_step$stop) {
+  } else if (!is.na(vals_step$stop) && vals_step$stop) {
     border_indicator <- "#CF142B"
-  } else if (vals_step$warn) {
+  } else if (!is.na(vals_step$warn) && vals_step$warn) {
     border_indicator <- "#FFBF00"
   } else {
     border_indicator <- "#A5D2A5"

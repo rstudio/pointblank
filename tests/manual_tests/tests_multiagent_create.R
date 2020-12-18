@@ -83,5 +83,12 @@ multiagent
 # 8UP report
 create_multiagent(agent_1, agent_2, agent_3, agent_2, agent_3)
 
+# 16UP report
 create_multiagent(agent_1, agent_2, agent_3, agent_2, agent_3, agent_2, agent_3, agent_2, agent_3)
 
+# 16+ report
+create_multiagent(
+  agent_1, agent_2, agent_3, agent_2, agent_3, agent_2, agent_3, agent_2, agent_3,
+  agent_1, agent_2, agent_3, agent_2, agent_3, agent_2, agent_3, agent_2, agent_3,
+  agent_1, agent_2, agent_3, agent_2, agent_3, agent_2, agent_3, agent_2, agent_3
+)

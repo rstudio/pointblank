@@ -500,6 +500,21 @@ get_multiagent_report <- function(multiagent,
       )
   }
   
+  if (n_columns > 16) {
+    
+    report_tbl <- 
+      report_tbl %>%
+      gt::tab_style(
+        style = "left: 0; position: sticky; background: white; z-index: 1;",
+        locations = gt::cells_body(columns = 1)
+      ) %>%
+      gt::tab_style(
+        style = "left: 0; position: sticky; background: white; z-index: 1;",
+        locations = gt::cells_column_labels(columns = 1)
+      ) %>%
+      gt::tab_options(container.width = gt::px(875))
+  }
+  
   report_tbl <- 
     report_tbl %>%
     gt::tab_header(

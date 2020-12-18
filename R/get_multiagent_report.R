@@ -550,7 +550,7 @@ get_multiagent_report <- function(multiagent,
       missing_text = ""
     ) %>%
     gt::tab_style(
-      style = gt::cell_text(font = "'IBM Plex Mono'", size = "small"),
+      style = gt::cell_text(font = "IBM Plex Mono", size = "small"),
       locations = gt::cells_body(columns = gt::vars(sha1))
     ) %>%
     gt::tab_style(

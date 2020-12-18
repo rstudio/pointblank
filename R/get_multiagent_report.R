@@ -468,6 +468,7 @@ get_multiagent_report <- function(multiagent,
             color = "#666666",
             size = "8px"
           ),
+          style = gt::cell_fill(color = "#FFFFFF"),
           paste(
             "line-height: 1.15em;", "padding-left: 3px;",
             "padding-right: 0; padding-bottom: 3px;",
@@ -486,6 +487,7 @@ get_multiagent_report <- function(multiagent,
             v_align = "middle",
             align = "left"
           ),
+          style = gt::cell_fill(color = "#FFFFFF"),
           paste(
             "padding-top: 8px; padding-bottom: 8px;"
           )

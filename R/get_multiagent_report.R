@@ -500,7 +500,7 @@ get_multiagent_report <- function(multiagent,
       )
   }
   
-  if (n_columns > 16) {
+  if (n_columns > 17) {
     
     report_tbl <- 
       report_tbl %>%

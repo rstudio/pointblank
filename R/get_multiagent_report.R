@@ -468,6 +468,7 @@ get_multiagent_report <- function(multiagent,
             color = "#666666",
             size = "8px"
           ),
+          style = gt::cell_fill(color = "#FFFFFF"),
           paste(
             "line-height: 1.15em;", "padding-left: 3px;",
             "padding-right: 0; padding-bottom: 3px;",
@@ -486,6 +487,7 @@ get_multiagent_report <- function(multiagent,
             v_align = "middle",
             align = "left"
           ),
+          style = gt::cell_fill(color = "#FFFFFF"),
           paste(
             "padding-top: 8px; padding-bottom: 8px;"
           )
@@ -496,6 +498,21 @@ get_multiagent_report <- function(multiagent,
         locations = gt::cells_body(columns = gt::everything()),
         style = "height: 56px; margin: 0;"
       )
+  }
+  
+  if (n_columns > 17) {
+    
+    report_tbl <- 
+      report_tbl %>%
+      gt::tab_style(
+        style = "left: 0; position: sticky; background: white; z-index: 1;",
+        locations = gt::cells_body(columns = 1)
+      ) %>%
+      gt::tab_style(
+        style = "left: 0; position: sticky; background: white; z-index: 1;",
+        locations = gt::cells_column_labels(columns = 1)
+      ) %>%
+      gt::tab_options(container.width = gt::px(875))
   }
   
   report_tbl <- 
@@ -533,7 +550,7 @@ get_multiagent_report <- function(multiagent,
       missing_text = ""
     ) %>%
     gt::tab_style(
-      style = gt::cell_text(font = "'IBM Plex Mono'", size = "small"),
+      style = gt::cell_text(font = "IBM Plex Mono", size = "small"),
       locations = gt::cells_body(columns = gt::vars(sha1))
     ) %>%
     gt::tab_style(

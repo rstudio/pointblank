@@ -327,6 +327,14 @@ in an overall test failure.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>For the validation function, the return value is either a
+<code>ptblank_agent</code> object or a table object (depending on whether an agent
+object or a table was passed to <code>x</code>). The expectation function invisibly
+returns its input but, in the context of testing data, the function is
+called primarily for its potential side-effects (e.g., signaling failure).
+The test function returns a logical value.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If providing multiple column names to <code>columns</code>, the result will be an

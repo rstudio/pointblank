@@ -42,7 +42,7 @@ Imports:
     log4r (>= 0.3.2),
     knitr (>= 1.30),
     magrittr,
-    mgcv (>= 1.8-33),
+    mgcv,
     rlang (>= 0.4.9),
     scales (>= 1.1.1),
     testthat (>= 2.3.2),

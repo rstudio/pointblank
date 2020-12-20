@@ -117,6 +117,14 @@ fractional values (between \code{0} and \code{1}) act as a proportional failure
 threshold, where \code{0.15} means that 15 percent of failing test units results
 in an overall test failure.}
 }
+\value{
+For the validation function, the return value is either a
+\code{ptblank_agent} object or a table object (depending on whether an agent
+object or a table was passed to \code{x}). The expectation function invisibly
+returns its input but, in the context of testing data, the function is
+called primarily for its potential side-effects (e.g., signaling failure).
+The test function returns a logical value.
+}
 \description{
 The \code{col_vals_increasing()} validation function, the
 \code{expect_col_vals_increasing()} expectation function, and the

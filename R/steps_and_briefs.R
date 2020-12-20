@@ -282,6 +282,12 @@ create_autobrief <- function(agent,
     autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
+  if (assertion_type == "col_anomaly_check") {
+    
+    # TODO: replace with prepared text
+    autobrief <- "The expectation is that anomalies are not present."
+  }
+  
   if (assertion_type == "conjointly") {
 
     values_text <- values_text %>% tidy_gsub("\"", "'")

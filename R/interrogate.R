@@ -649,6 +649,11 @@ check_table_with_assertion <- function(agent,
         agent = agent,
         idx = idx,
         table = table
+      ),
+      "col_anomaly_check" = interrogate_col_anomaly_check(
+        agent = agent,
+        idx = idx,
+        table = table
       )
     )
   
@@ -1714,6 +1719,74 @@ interrogate_col_schema_match <- function(agent,
       table = table,
       table_schema_x = table_schema_x,
       table_schema_y = table_schema_y
+    )
+  )
+}
+
+interrogate_col_anomaly_check <- function(agent,
+                                          idx,
+                                          table) {
+  # Obtain the `x_column` as a symbol
+  x_column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
+  
+  # Convert the symbol to a character vector
+  x_column <- as.character(x_column)
+  
+  # Obtain the `y_column` as a symbol
+  y_column <- get_values_at_idx(agent = agent, idx = idx)
+
+  # nocov start
+  
+  # Create function for validating the `col_anomaly_check()` step function
+  tbl_col_anomaly_check <- function(table,
+                                    x_column,
+                                    y_column) {
+    
+    # Stop function if `x_column` is not a time column
+    x_column_value_1 <-
+      table %>% 
+      dplyr::select({{ x_column }}) %>%
+      utils::head(1) %>%
+      dplyr::pull(1)
+    
+    if (!inherits(x_column_value_1, "POSIXct")) {
+      stop(
+        "The column provided as the `x_column` must contain date-time values.",
+        call. = FALSE
+      )
+    }
+    
+    # Stop function if `y_column` is not numeric
+    y_column_value_1 <-
+      table %>% 
+      dplyr::select({{ y_column }}) %>%
+      utils::head(1) %>%
+      dplyr::pull(1)
+    
+    if (!is.numeric(y_column_value_1)) {
+      stop(
+        "The column provided as the `y_column` must contain numeric values.",
+        call. = FALSE
+      )
+    }
+    
+    # Get the augmented table with anomalies values
+    table_anomalies <- 
+      anomaly_detection_ts(
+        data_tbl = table,
+        time_col = x_column,
+        value_col = y_column
+      )
+    
+    table_anomalies
+  }
+  
+  # Perform the validation of the table 
+  pointblank_try_catch(
+    tbl_col_anomaly_check(
+      table = table,
+      x_column = x_column,
+      y_column = y_column
     )
   )
 }

@@ -246,6 +246,7 @@ test_col_vals_gt(tbl, vars(a), 4)
 The analogous function with a left-closed bound: \code{\link[=col_vals_gte]{col_vals_gte()}}.
 
 Other validation functions: 
+\code{\link{col_anomaly_check}()},
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},

@@ -177,6 +177,7 @@ all_passed(agent)
 }
 \seealso{
 Other validation functions: 
+\code{\link{col_anomaly_check}()},
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},

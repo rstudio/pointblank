@@ -292,6 +292,7 @@ small_table \%>\%
 The analogue to this function: \code{\link[=col_vals_between]{col_vals_between()}}.
 
 Other validation functions: 
+\code{\link{col_anomaly_check}()},
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},

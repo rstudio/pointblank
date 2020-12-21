@@ -46,12 +46,15 @@ with the \code{\link[=set_tbl]{set_tbl()}} function.
 }
 \section{Function ID}{
 
-8-1
+9-1
 }
 
 \seealso{
 Other Object Ops: 
+\code{\link{activate_steps}()},
+\code{\link{deactivate_steps}()},
 \code{\link{remove_read_fn}()},
+\code{\link{remove_steps}()},
 \code{\link{remove_tbl}()},
 \code{\link{set_read_fn}()},
 \code{\link{set_tbl}()},

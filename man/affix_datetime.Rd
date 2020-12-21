@@ -45,7 +45,19 @@ or the local system time. The date can be affixed either to the end of the
 filename (before the file extension) or at the beginning with a customizable
 delimiter.
 }
+\section{Function ID}{
+
+12-4
+}
+
 \seealso{
 The \code{\link[=affix_date]{affix_date()}} function provides the same features except it
 produces a date string by default.
+
+Other Utility and Helper Functions: 
+\code{\link{affix_date}()},
+\code{\link{col_schema}()},
+\code{\link{has_columns}()},
+\code{\link{stop_if_not}()}
 }
+\concept{Utility and Helper Functions}

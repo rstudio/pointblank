@@ -21,7 +21,7 @@ the \verb{info_*()} functions.
 }
 \section{Function ID}{
 
-9-3
+11-3
 }
 
 \examples{

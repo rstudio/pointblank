@@ -17,3 +17,18 @@ The \code{snip_lowest()} function can be used as an \code{\link[=info_snippet]{i
 (i.e., provided to \code{fn}) to get the highest numerical, time value, or
 alphabetical value from a column in the target table.
 }
+\section{Function ID}{
+
+3-7
+}
+
+\seealso{
+Other Information Functions: 
+\code{\link{info_columns}()},
+\code{\link{info_section}()},
+\code{\link{info_snippet}()},
+\code{\link{info_tabular}()},
+\code{\link{snip_list}()},
+\code{\link{snip_lowest}()}
+}
+\concept{Information Functions}

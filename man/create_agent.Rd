@@ -221,7 +221,6 @@ xl_step_4
 \seealso{
 Other Planning and Prep: 
 \code{\link{action_levels}()},
-\code{\link{col_schema}()},
 \code{\link{create_informant}()},
 \code{\link{db_tbl}()},
 \code{\link{scan_data}()},

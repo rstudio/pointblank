@@ -24,6 +24,22 @@ for the selected validation steps. Please note that this directly edit the
 validation step, wiping out any function that may have been defined for
 whether the step should be active or not.
 }
+\section{Function ID}{
+
+9-7
+}
+
 \seealso{
 For the opposite behavior, use the \code{\link[=activate_steps]{activate_steps()}} function.
+
+Other Object Ops: 
+\code{\link{activate_steps}()},
+\code{\link{remove_read_fn}()},
+\code{\link{remove_steps}()},
+\code{\link{remove_tbl}()},
+\code{\link{set_read_fn}()},
+\code{\link{set_tbl}()},
+\code{\link{x_read_disk}()},
+\code{\link{x_write_disk}()}
 }
+\concept{Object Ops}

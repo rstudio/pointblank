@@ -21,12 +21,15 @@ association to a table can be set again with \code{\link[=set_tbl]{set_tbl()}}.
 }
 \section{Function ID}{
 
-8-4
+9-4
 }
 
 \seealso{
 Other Object Ops: 
+\code{\link{activate_steps}()},
+\code{\link{deactivate_steps}()},
 \code{\link{remove_read_fn}()},
+\code{\link{remove_steps}()},
 \code{\link{set_read_fn}()},
 \code{\link{set_tbl}()},
 \code{\link{x_read_disk}()},

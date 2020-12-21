@@ -53,7 +53,6 @@ desired, these can be supplied directly by enclosing those values in \code{I()}.
 \seealso{
 Other Planning and Prep: 
 \code{\link{action_levels}()},
-\code{\link{col_schema}()},
 \code{\link{create_agent}()},
 \code{\link{create_informant}()},
 \code{\link{scan_data}()},

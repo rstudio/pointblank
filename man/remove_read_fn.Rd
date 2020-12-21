@@ -20,11 +20,14 @@ or with \code{\link[=set_tbl]{set_tbl()}}). The table-reading function can be se
 }
 \section{Function ID}{
 
-8-6
+9-6
 }
 
 \seealso{
 Other Object Ops: 
+\code{\link{activate_steps}()},
+\code{\link{deactivate_steps}()},
+\code{\link{remove_steps}()},
 \code{\link{remove_tbl}()},
 \code{\link{set_read_fn}()},
 \code{\link{set_tbl}()},

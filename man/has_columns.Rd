@@ -18,3 +18,16 @@ A length-1 logical vector.
 \description{
 Determine if one or more columns exist in a table.
 }
+\section{Function ID}{
+
+12-2
+}
+
+\seealso{
+Other Utility and Helper Functions: 
+\code{\link{affix_datetime}()},
+\code{\link{affix_date}()},
+\code{\link{col_schema}()},
+\code{\link{stop_if_not}()}
+}
+\concept{Utility and Helper Functions}

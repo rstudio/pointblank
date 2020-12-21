@@ -184,6 +184,11 @@ with some text that fits. Don't worry if you don't want to do it. The
 \emph{autobrief} protocol is kicked in when \code{brief = NULL} and a simple brief will
 then be automatically generated.
 }
+\section{Function ID}{
+
+2-11
+}
+
 \seealso{
 The analogous function that moves in the opposite direction:
 \code{\link[=col_vals_decreasing]{col_vals_decreasing()}}.

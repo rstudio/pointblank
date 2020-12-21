@@ -23,8 +23,24 @@ agent from disk (via the \code{\link[=x_read_disk]{x_read_disk()}} function) and
 steps from the \emph{agent}'s validation plan. Please note that when removing
 validation steps all stored data extracts will be removed from the \emph{agent}.
 }
+\section{Function ID}{
+
+9-8
+}
+
 \seealso{
 Instead of removal, the \code{\link[=deactivate_steps]{deactivate_steps()}} function will simply
 change the \code{active} status of one or more validation steps to \code{FALSE} (and
 \code{\link[=activate_steps]{activate_steps()}} will do the opposite).
+
+Other Object Ops: 
+\code{\link{activate_steps}()},
+\code{\link{deactivate_steps}()},
+\code{\link{remove_read_fn}()},
+\code{\link{remove_tbl}()},
+\code{\link{set_read_fn}()},
+\code{\link{set_tbl}()},
+\code{\link{x_read_disk}()},
+\code{\link{x_write_disk}()}
 }
+\concept{Object Ops}

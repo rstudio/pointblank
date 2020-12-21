@@ -74,3 +74,18 @@ The \code{snip_list()} function can be used as an \code{\link[=info_snippet]{inf
 provided to \code{fn}) to get a catalog list from a table column. You can limit
 the of items in that list with the \code{limit} value.
 }
+\section{Function ID}{
+
+3-5
+}
+
+\seealso{
+Other Information Functions: 
+\code{\link{info_columns}()},
+\code{\link{info_section}()},
+\code{\link{info_snippet}()},
+\code{\link{info_tabular}()},
+\code{\link{snip_highest}()},
+\code{\link{snip_lowest}()}
+}
+\concept{Information Functions}

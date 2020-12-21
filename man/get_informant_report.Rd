@@ -41,7 +41,7 @@ to \strong{pointblank} YAML with \verb{yaml_write(informant = <informant>, ...)}
 }
 \section{Function ID}{
 
-6-2
+7-2
 }
 
 \examples{

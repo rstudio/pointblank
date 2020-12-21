@@ -31,3 +31,9 @@ function in every failure condition that should produce a log (i.e., \code{warn}
 given validation step will produce a log entry (skipping failure conditions
 with lower severity) so long as the call to \code{log4r_step()} is present.
 }
+\section{Function ID}{
+
+5-1
+}
+
+\concept{Logging}

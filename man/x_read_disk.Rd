@@ -38,12 +38,15 @@ table dimensions, and info snippets/text will be regenerated.
 }
 \section{Function ID}{
 
-8-2
+9-2
 }
 
 \seealso{
 Other Object Ops: 
+\code{\link{activate_steps}()},
+\code{\link{deactivate_steps}()},
 \code{\link{remove_read_fn}()},
+\code{\link{remove_steps}()},
 \code{\link{remove_tbl}()},
 \code{\link{set_read_fn}()},
 \code{\link{set_tbl}()},

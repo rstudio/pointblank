@@ -23,6 +23,22 @@ equivalent to using the \code{active = TRUE} for the selected validation steps
 function that may have been defined for the \code{active} argument during creation
 of the targeted validation steps.
 }
+\section{Function ID}{
+
+9-6
+}
+
 \seealso{
 For the opposite behavior, use the \code{\link[=deactivate_steps]{deactivate_steps()}} function.
+
+Other Object Ops: 
+\code{\link{deactivate_steps}()},
+\code{\link{remove_read_fn}()},
+\code{\link{remove_steps}()},
+\code{\link{remove_tbl}()},
+\code{\link{set_read_fn}()},
+\code{\link{set_tbl}()},
+\code{\link{x_read_disk}()},
+\code{\link{x_write_disk}()}
 }
+\concept{Object Ops}

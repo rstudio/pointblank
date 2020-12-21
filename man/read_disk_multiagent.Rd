@@ -29,3 +29,14 @@ object. A \emph{multiagent} object can also be generated via the
 \code{\link[=create_multiagent]{create_multiagent()}} function but is less convenient to use if one is just
 using agents that have been previous written to disk.
 }
+\section{Function ID}{
+
+10-2
+}
+
+\seealso{
+Other The multiagent: 
+\code{\link{create_multiagent}()},
+\code{\link{get_multiagent_report}()}
+}
+\concept{The multiagent}

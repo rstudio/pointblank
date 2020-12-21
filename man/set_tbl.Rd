@@ -26,12 +26,15 @@ be removed with with \code{\link[=remove_tbl]{remove_tbl()}}.
 }
 \section{Function ID}{
 
-8-3
+9-3
 }
 
 \seealso{
 Other Object Ops: 
+\code{\link{activate_steps}()},
+\code{\link{deactivate_steps}()},
 \code{\link{remove_read_fn}()},
+\code{\link{remove_steps}()},
 \code{\link{remove_tbl}()},
 \code{\link{set_read_fn}()},
 \code{\link{x_read_disk}()},

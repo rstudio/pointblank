@@ -36,3 +36,14 @@ by using the \code{\link[=get_multiagent_report]{get_multiagent_report()}} funct
 the interrogation time and it automatically recognizes which validation steps
 are equivalent across interrogations.
 }
+\section{Function ID}{
+
+10-1
+}
+
+\seealso{
+Other The multiagent: 
+\code{\link{get_multiagent_report}()},
+\code{\link{read_disk_multiagent}()}
+}
+\concept{The multiagent}

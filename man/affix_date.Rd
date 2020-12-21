@@ -38,7 +38,19 @@ continuous process. The date can be in terms of UTC time or the local system
 time. The date can be affixed either to the end of the filename (before the
 file extension) or at the beginning with a customizable delimiter.
 }
+\section{Function ID}{
+
+12-3
+}
+
 \seealso{
 The \code{\link[=affix_datetime]{affix_datetime()}} function provides the same features except it
 produces a date-time string by default.
+
+Other Utility and Helper Functions: 
+\code{\link{affix_datetime}()},
+\code{\link{col_schema}()},
+\code{\link{has_columns}()},
+\code{\link{stop_if_not}()}
 }
+\concept{Utility and Helper Functions}

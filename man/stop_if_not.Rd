@@ -21,6 +21,11 @@ checks in R Markdown documents where \strong{pointblank} is loaded. Using
 will yield the correct reporting of successes and failures whereas
 \code{stopifnot()} \emph{does not}.
 }
+\section{Function ID}{
+
+12-5
+}
+
 \examples{
 # This checks whether the number of
 # rows in `small_table` is greater
@@ -39,3 +44,11 @@ stop_if_not(nrow(small_table) > 10)
 stop_if_not(1:5 < 20:25)
 
 }
+\seealso{
+Other Utility and Helper Functions: 
+\code{\link{affix_datetime}()},
+\code{\link{affix_date}()},
+\code{\link{col_schema}()},
+\code{\link{has_columns}()}
+}
+\concept{Utility and Helper Functions}

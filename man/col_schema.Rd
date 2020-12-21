@@ -33,7 +33,7 @@ is collected and loaded into R.
 }
 \section{Function ID}{
 
-1-7
+12-1
 }
 
 \examples{
@@ -90,12 +90,10 @@ create_agent(tbl = tbl) \%>\%
   
 }
 \seealso{
-Other Planning and Prep: 
-\code{\link{action_levels}()},
-\code{\link{create_agent}()},
-\code{\link{create_informant}()},
-\code{\link{db_tbl}()},
-\code{\link{scan_data}()},
-\code{\link{validate_rmd}()}
+Other Utility and Helper Functions: 
+\code{\link{affix_datetime}()},
+\code{\link{affix_date}()},
+\code{\link{has_columns}()},
+\code{\link{stop_if_not}()}
 }
-\concept{Planning and Prep}
+\concept{Utility and Helper Functions}

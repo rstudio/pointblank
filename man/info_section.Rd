@@ -108,6 +108,9 @@ informant <-
 Other Information Functions: 
 \code{\link{info_columns}()},
 \code{\link{info_snippet}()},
-\code{\link{info_tabular}()}
+\code{\link{info_tabular}()},
+\code{\link{snip_highest}()},
+\code{\link{snip_list}()},
+\code{\link{snip_lowest}()}
 }
 \concept{Information Functions}

@@ -48,10 +48,10 @@ reference:
     - col_vals_not_between
     - col_vals_in_set
     - col_vals_not_in_set
-    - col_vals_null
-    - col_vals_not_null
     - col_vals_increasing
     - col_vals_decreasing
+    - col_vals_null
+    - col_vals_not_null
     - col_vals_regex
     - col_vals_expr
     - conjointly
@@ -171,7 +171,10 @@ reference:
       The multiagent is a group of agents, each tasked with their own
       interrogation to perform. As a group, they provide an interesting and
       informative bit of reporting that tracks the evolution of data quality
-      checks over time.
+      checks over time. With a *multiagent* object, we can get a data quality
+      report that handles changes in the target data and matches data validation
+      steps across all agent. The predominant application is retrospective
+      analysis of data quality for a target table.
     contents:
     - create_multiagent
     - read_disk_multiagent

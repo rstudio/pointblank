@@ -89,6 +89,11 @@ agent <-
   interrogate()
 ```
 
+The reporting’s pretty sweet. We can get a **gt**-based report by
+printing an *agent*.
+
+<img src="man/figures/agent_report.png">
+
 The **pointblank** package is designed to be both straightforward yet
 powerful. And fast\! Local data frames don’t take very long to validate
 extensively and all validation checks on remote tables are done entirely
@@ -101,11 +106,6 @@ The **pointblank** package currently supports *PostgreSQL*. *MySQL*,
 *MariaDB*, *DuckDB*, *SQLite*, and *Spark DataFrames* (through the
 **sparklyr** package). The `db_tbl()` function is provided by
 **pointblank** to make accessing a DB table insanely easy.
-
-The reporting’s pretty sweet. We can get a **gt**-based report by
-printing an *agent*.
-
-<img src="man/figures/agent_report.png">
 
 Here are some validation reports for the considerably larger 
 `intendo::intendo_revenue` table.

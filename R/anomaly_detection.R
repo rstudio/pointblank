@@ -65,11 +65,6 @@ anomaly_detection_ts <- function(data_tbl,
       fit = unname(mgcv::predict.gam(gam_model)),
     )
   
-  # # Plot the sampled data points along with the model fit
-  # ggplot(data_tbl_standardized_sample) +
-  #   geom_point(aes(x = time, y = z)) +
-  #   geom_line(aes(x = time, y = fit), data = gam_model_tbl, color = "blue")
-  
   # Perform an analysis on the standardized data; this focuses only on the
   # unchanged `time` variable, giving us columns that indicate how many data
   # points are in each time grouping
@@ -108,7 +103,8 @@ anomaly_detection_ts <- function(data_tbl,
   
   if (nrow(time_int_gt_20) < 1) {
     stop(
-      "There aren't enough data points in any of the possible time granularity types.",
+      "There aren't enough data points in any of the available time ",
+      "granularity types.",
       call. = FALSE
     )
   }
@@ -242,7 +238,7 @@ anomaly_detection_ts <- function(data_tbl,
   unified_data <-
     encoded_points %>%
     dplyr::left_join(
-      encoded_windows, by = "time_1d"
+      encoded_windows, by = paste0("time_", timespan_select)
     ) %>%
     dplyr::mutate(code_n_dist = abs(code_n_p - code_n_w)) %>%
     dplyr::mutate(
@@ -261,42 +257,6 @@ anomaly_detection_ts <- function(data_tbl,
       outlier_sd_z | outlier_dist, TRUE, FALSE
     )) %>%
     dplyr::mutate(`pb_is_good_` = !outlier)
-  
-  
-  # plot_data <-
-  #   unified_data %>%
-  #   dplyr::select(1, 2, z, z_detrend, sd_z_detrend_ul, sd_z_detrend_ll, outlier) %>%
-  #   dplyr::collect()
-  # 
-  # # Plot of actual data values with seeded values and marked outliers
-  # ggplot() +
-  #   geom_point(
-  #     data = plot_data %>% dplyr::filter(outlier),
-  #     aes(x = time, y = value), color = "red"
-  #   ) +
-  #   geom_point(
-  #     data = plot_data %>% dplyr::filter(!outlier),
-  #     aes(x = time, y = value)
-  #   ) +
-  #   scale_x_datetime(date_breaks = "1 month")
-  # 
-  # # Plot of standardized data values with seeded values and marked outliers
-  # ggplot() +
-  #   geom_point(
-  #     data = plot_data %>% dplyr::filter(outlier),
-  #     aes(x = time, y = z_detrend), color = "red"
-  #   ) +
-  #   geom_point(
-  #     data = plot_data %>% dplyr::filter(!outlier),
-  #     aes(x = time, y = z_detrend)
-  #   ) +
-  #   geom_hline(yintercept = 1, color = "gray") +
-  #   geom_hline(yintercept = -1, color = "gray") +
-  #   geom_line(data = plot_data, aes(x = time, y = sd_z_detrend_ul), color = "red") +
-  #   geom_line(data = plot_data, aes(x = time, y = sd_z_detrend_ll), color = "red") +
-  #   scale_y_continuous(breaks = seq(-5.0, 5.0, 0.5)) +
-  #   scale_x_datetime(date_breaks = "1 month")
-  
   
   unified_data
 }
@@ -416,4 +376,58 @@ add_time_granularity_cols <- function(data_tbl) {
     dplyr::group_by(time_1m) %>%
     dplyr::mutate(n_1m = n()) %>%
     dplyr::ungroup()
+}
+
+plot_fit_standardized_sample <- function(data_tbl_standardized_sample) {
+  
+  # Plot the sampled data points along with the model fit
+  ggplot(data_tbl_standardized_sample) +
+    geom_point(aes(x = time, y = z)) +
+    geom_line(aes(x = time, y = fit), data = gam_model_tbl, color = "blue")
+}
+
+plot_anomalies <- function(unified_data) {
+  
+  plot_data <-
+    unified_data %>%
+    dplyr::select(
+      1, 2, z, z_detrend,
+      sd_z_detrend_ul, sd_z_detrend_ll, outlier
+    ) %>%
+    dplyr::collect()
+
+  # Plot of actual data values with seeded values and marked outliers
+  ggplot() +
+    geom_point(
+      data = plot_data %>% dplyr::filter(outlier),
+      aes(x = time, y = value), color = "red"
+    ) +
+    geom_point(
+      data = plot_data %>% dplyr::filter(!outlier),
+      aes(x = time, y = value)
+    ) +
+    scale_x_datetime(date_breaks = "1 month")
+
+  # Plot of standardized data values with seeded values and marked outliers
+  ggplot() +
+    geom_point(
+      data = plot_data %>% dplyr::filter(outlier),
+      aes(x = time, y = z_detrend), color = "red"
+    ) +
+    geom_point(
+      data = plot_data %>% dplyr::filter(!outlier),
+      aes(x = time, y = z_detrend)
+    ) +
+    geom_hline(yintercept = 1, color = "gray") +
+    geom_hline(yintercept = -1, color = "gray") +
+    geom_line(
+      data = plot_data,
+      aes(x = time, y = sd_z_detrend_ul), color = "red"
+    ) +
+    geom_line(
+      data = plot_data, aes(x = time, y = sd_z_detrend_ll),
+      color = "red"
+    ) +
+    scale_y_continuous(breaks = seq(-5.0, 5.0, 0.5)) +
+    scale_x_datetime(date_breaks = "1 month")
 }

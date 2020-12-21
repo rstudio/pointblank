@@ -41,8 +41,6 @@ you.
 
 <img src="man/figures/data_quality_reporting_workflow.svg">
 
-<br>
-
 ##### TABLE VALIDATIONS WITH AN AGENT AND DATA QUALITY REPORTING
 
 Data validation can be carried out in *Data Quality Reporting* workflow, 
@@ -117,8 +115,6 @@ Here are some validation reports for the considerably larger
 <hr>
 
 <img src="man/figures/pipeline_data_validation_workflow.svg">
-
-<br>
 
 ##### VALIDATIONS DIRECTLY ON DATA
 

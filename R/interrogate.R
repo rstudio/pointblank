@@ -1801,6 +1801,8 @@ interrogate_col_anomaly_check <- function(agent,
     table_anomalies
   }
   
+  # nocov end
+  
   # Perform the validation of the table 
   pointblank_try_catch(
     tbl_col_anomaly_check(

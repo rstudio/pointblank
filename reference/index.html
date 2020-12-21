@@ -287,18 +287,6 @@ column?</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="col_vals_null.html">col_vals_null()</a></code> <code><a href="col_vals_null.html">expect_col_vals_null()</a></code> <code><a href="col_vals_null.html">test_col_vals_null()</a></code> </p>
-        </td>
-        <td><p>Are column data <code>NULL</code>/<code>NA</code>?</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="col_vals_not_null.html">col_vals_not_null()</a></code> <code><a href="col_vals_not_null.html">expect_col_vals_not_null()</a></code> <code><a href="col_vals_not_null.html">test_col_vals_not_null()</a></code> </p>
-        </td>
-        <td><p>Are column data not <code>NULL</code>/<code>NA</code>?</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="col_vals_increasing.html">col_vals_increasing()</a></code> <code><a href="col_vals_increasing.html">expect_col_vals_increasing()</a></code> <code><a href="col_vals_increasing.html">test_col_vals_increasing()</a></code> </p>
         </td>
         <td><p>Are column data increasing by row?</p></td>
@@ -308,6 +296,18 @@ column?</p></td>
           <p><code><a href="col_vals_decreasing.html">col_vals_decreasing()</a></code> <code><a href="col_vals_decreasing.html">expect_col_vals_decreasing()</a></code> <code><a href="col_vals_decreasing.html">test_col_vals_decreasing()</a></code> </p>
         </td>
         <td><p>Are column data decreasing by row?</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="col_vals_null.html">col_vals_null()</a></code> <code><a href="col_vals_null.html">expect_col_vals_null()</a></code> <code><a href="col_vals_null.html">test_col_vals_null()</a></code> </p>
+        </td>
+        <td><p>Are column data <code>NULL</code>/<code>NA</code>?</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="col_vals_not_null.html">col_vals_not_null()</a></code> <code><a href="col_vals_not_null.html">expect_col_vals_not_null()</a></code> <code><a href="col_vals_not_null.html">test_col_vals_not_null()</a></code> </p>
+        </td>
+        <td><p>Are column data not <code>NULL</code>/<code>NA</code>?</p></td>
       </tr><tr>
         
         <td>
@@ -656,7 +656,7 @@ column?</p></td>
       <tr>
         <th colspan="2">
           <h2 id="section-the-multiagent" class="hasAnchor"><a href="#section-the-multiagent" class="anchor"></a>The Multiagent</h2>
-          <p class="section-desc"><p>The multiagent is a group of agents, each tasked with their own interrogation to perform. As a group, they provide an interesting and informative bit of reporting that tracks the evolution of data quality checks over time.</p></p>
+          <p class="section-desc"><p>The multiagent is a group of agents, each tasked with their own interrogation to perform. As a group, they provide an interesting and informative bit of reporting that tracks the evolution of data quality checks over time. With a <em>multiagent</em> object, we can get a data quality report that handles changes in the target data and matches data validation steps across all agent. The predominant application is retrospective analysis of data quality for a target table.</p></p>
         </th>
       </tr>
       

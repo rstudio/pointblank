@@ -346,6 +346,26 @@ interrogate <- function(agent,
         )
     }
     
+    # Add extracts of rows for anomalous values
+    if (assertion_type == "col_anomaly_check") {
+
+      tbl_checked$value <-
+        tbl_checked$value %>%
+        dplyr::select(time, value, pb_is_good_)
+      
+      agent <- 
+        add_table_extract(
+          agent = agent,
+          idx = i,
+          tbl_checked = tbl_checked,
+          extract_failed = extract_failed,
+          get_first_n = get_first_n,
+          sample_n = sample_n,
+          sample_frac = sample_frac,
+          sample_limit = sample_limit
+        )
+    }
+    
     # Get the ending time for the validation step
     validation_end_time <- Sys.time()
     

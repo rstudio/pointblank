@@ -215,6 +215,7 @@ tbl \%>\% test_col_vals_null(vars(c))
 The analogue to this function: \code{\link[=col_vals_not_null]{col_vals_not_null()}}.
 
 Other validation functions: 
+\code{\link{col_anomaly_check}()},
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},

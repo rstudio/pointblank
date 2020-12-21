@@ -189,6 +189,7 @@ The analogous function that moves in the opposite direction:
 \code{\link[=col_vals_decreasing]{col_vals_decreasing()}}.
 
 Other validation functions: 
+\code{\link{col_anomaly_check}()},
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},

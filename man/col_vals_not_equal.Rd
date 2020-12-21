@@ -246,6 +246,7 @@ test_col_vals_not_equal(tbl, vars(a), 6)
 The analogue to this function: \code{\link[=col_vals_equal]{col_vals_equal()}}.
 
 Other validation functions: 
+\code{\link{col_anomaly_check}()},
 \code{\link{col_exists}()},
 \code{\link{col_is_character}()},
 \code{\link{col_is_date}()},

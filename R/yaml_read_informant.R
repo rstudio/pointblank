@@ -129,7 +129,7 @@
 #' 
 #' @family pointblank YAML
 #' @section Function ID:
-#' 9-3
+#' 11-3
 #' 
 #' @export
 yaml_read_informant <- function(filename,
@@ -253,7 +253,7 @@ yaml_read_informant <- function(filename,
 #'
 #' @family pointblank YAML
 #' @section Function ID:
-#' 9-7
+#' 11-7
 #'
 #' @export
 yaml_informant_incorporate <- function(filename,

@@ -136,7 +136,7 @@
 #' 
 #' @family pointblank YAML
 #' @section Function ID:
-#' 9-1
+#' 11-1
 #' 
 #' @export
 yaml_write <- function(agent = NULL,
@@ -251,7 +251,7 @@ yaml_write <- function(agent = NULL,
 #'   
 #' @family pointblank YAML
 #' @section Function ID:
-#' 9-5
+#' 11-5
 #' 
 #' @export
 yaml_agent_string <- function(agent = NULL,

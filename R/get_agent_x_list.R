@@ -140,7 +140,7 @@
 #' 
 #' @family Post-interrogation
 #' @section Function ID:
-#' 7-1
+#' 8-1
 #' 
 #' @export
 get_agent_x_list <- function(agent,

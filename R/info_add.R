@@ -602,6 +602,10 @@ info_snippet <- function(x,
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 
+#' @family Information Functions
+#' @section Function ID:
+#' 3-5
+#' 
 #' @export
 snip_list <- function(column,
                       limit = 5,
@@ -755,6 +759,10 @@ snip_list <- function(column,
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 
+#' @family Information Functions
+#' @section Function ID:
+#' 3-6
+#' 
 #' @export
 snip_lowest <- function(column) {
   
@@ -780,6 +788,10 @@ snip_lowest <- function(column) {
 #' @param column The name of the column that contains the target values.
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
+#' 
+#' @family Information Functions
+#' @section Function ID:
+#' 3-7
 #' 
 #' @export
 snip_highest <- function(column) {

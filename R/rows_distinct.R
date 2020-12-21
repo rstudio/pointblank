@@ -102,7 +102,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-15
+#' 2-17
 #' 
 #' @name rows_distinct
 NULL

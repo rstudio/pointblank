@@ -1,42 +1,3 @@
-#' Remove one or more of an *agent*'s validation steps
-#'
-#' Validation steps can be removed from an *agent* object through use of the
-#' `remove_steps()` function. This is useful, for instance, when getting an
-#' agent from disk (via the [x_read_disk()] function) and omitting one or more
-#' steps from the *agent*'s validation plan. Please note that when removing
-#' validation steps all stored data extracts will be removed from the *agent*.
-#'
-#' @param agent An agent object of class `ptblank_agent`.
-#' @param i The validation step number, which is assigned to each validation
-#'   step in the order of definition. If `NULL` (the default) then step removal
-#'   won't occur by index.
-#'
-#' @return A `ptblank_agent` object.
-#' 
-#' @seealso Instead of removal, the [deactivate_steps()] function will simply
-#'   change the `active` status of one or more validation steps to `FALSE` (and
-#'   [activate_steps()] will do the opposite).
-#'
-#' @export
-remove_steps <- function(agent,
-                         i = NULL) {
-  
-  if (!is.null(i)) {
-    agent$validation_set <- 
-      agent$validation_set %>%
-      dplyr::slice(-{{ i }})
-  }
-  
-  # Renumber steps
-  agent$validation_set$i <- 
-    as.integer(seq(from = 1, to = nrow(agent$validation_set), by = 1))
-  
-  # Remove any data extracts
-  agent$extracts <- NULL
-  
-  agent
-}
-
 #' Activate one or more of an *agent*'s validation steps
 #'
 #' If certain validation steps need to be activated after the creation of the
@@ -51,6 +12,10 @@ remove_steps <- function(agent,
 #'   step in the order of definition.
 #'
 #' @return A `ptblank_agent` object.
+#' 
+#' @family Object Ops
+#' @section Function ID:
+#' 9-6
 #' 
 #' @seealso For the opposite behavior, use the [deactivate_steps()] function.
 #'
@@ -86,6 +51,10 @@ activate_steps <- function(agent,
 #'
 #' @return A `ptblank_agent` object.
 #'
+#' @family Object Ops
+#' @section Function ID:
+#' 9-7
+#'
 #' @seealso For the opposite behavior, use the [activate_steps()] function.
 #'
 #' @export
@@ -97,6 +66,49 @@ deactivate_steps <- function(agent,
       agent$validation_set %>%
       dplyr::mutate(active = ifelse(i %in% {{ i }}, list(FALSE), active))
   }
+  
+  # Remove any data extracts
+  agent$extracts <- NULL
+  
+  agent
+}
+
+#' Remove one or more of an *agent*'s validation steps
+#'
+#' Validation steps can be removed from an *agent* object through use of the
+#' `remove_steps()` function. This is useful, for instance, when getting an
+#' agent from disk (via the [x_read_disk()] function) and omitting one or more
+#' steps from the *agent*'s validation plan. Please note that when removing
+#' validation steps all stored data extracts will be removed from the *agent*.
+#'
+#' @param agent An agent object of class `ptblank_agent`.
+#' @param i The validation step number, which is assigned to each validation
+#'   step in the order of definition. If `NULL` (the default) then step removal
+#'   won't occur by index.
+#'
+#' @return A `ptblank_agent` object.
+#' 
+#' @family Object Ops
+#' @section Function ID:
+#' 9-8
+#' 
+#' @seealso Instead of removal, the [deactivate_steps()] function will simply
+#'   change the `active` status of one or more validation steps to `FALSE` (and
+#'   [activate_steps()] will do the opposite).
+#'
+#' @export
+remove_steps <- function(agent,
+                         i = NULL) {
+  
+  if (!is.null(i)) {
+    agent$validation_set <- 
+      agent$validation_set %>%
+      dplyr::slice(-{{ i }})
+  }
+  
+  # Renumber steps
+  agent$validation_set$i <- 
+    as.integer(seq(from = 1, to = nrow(agent$validation_set), by = 1))
   
   # Remove any data extracts
   agent$extracts <- NULL

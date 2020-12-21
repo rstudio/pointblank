@@ -144,7 +144,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-12
+#' 2-14
 #' 
 #' @seealso The analogue to this function: [col_vals_null()].
 #' 

@@ -598,6 +598,10 @@ knitr_chunk_hook <- function(x, options) {
 #' # evaluate to logical vectors will work
 #' stop_if_not(1:5 < 20:25)
 #' 
+#' @family Utility and Helper Functions
+#' @section Function ID:
+#' 12-5
+#' 
 #' @export
 stop_if_not <- function(...) {
   

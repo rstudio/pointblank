@@ -37,6 +37,10 @@
 #' @param utc_time An option for whether to use the current UTC time to
 #'   establish the date (the default, with `TRUE`), or, use the system's local
 #'   time (`FALSE`).
+#'   
+#' @family Utility and Helper Functions
+#' @section Function ID:
+#' 12-3
 #' 
 #' @seealso The [affix_datetime()] function provides the same features except it
 #'   produces a date-time string by default.
@@ -86,6 +90,10 @@ affix_date <- function(filename,
 #' @param add_tz Should the time zone (as an offset from UTC) be provided? If
 #'   `TRUE` (the default) then the UTC offset will be either provided as
 #'   `<time>Z` (if `utc_time = TRUE`) or `<time>(+/-)hhmm`.
+#'
+#' @family Utility and Helper Functions
+#' @section Function ID:
+#' 12-4
 #'
 #' @seealso The [affix_date()] function provides the same features except it
 #'   produces a date string by default.

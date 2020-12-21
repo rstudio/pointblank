@@ -97,6 +97,8 @@
 #'   The test function returns a logical value.
 #' 
 #' @family validation functions
+#' @section Function ID:
+#' 2-12
 #' 
 #' @seealso The analogous function that moves in the opposite direction:
 #' [col_vals_increasing()].

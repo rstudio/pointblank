@@ -50,6 +50,10 @@
 #' @return A **gt** table object if `display_table = TRUE` or a tibble if
 #'   `display_table = FALSE`.
 #'
+#' @family The multiagent
+#' @section Function ID:
+#' 10-3
+#'
 #' @export
 get_multiagent_report <- function(multiagent,
                                   display_table = TRUE) {

@@ -128,7 +128,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-23
+#' 2-25
 #' @name col_exists
 NULL
 

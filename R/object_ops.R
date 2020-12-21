@@ -52,7 +52,7 @@
 #'   
 #' @family Object Ops
 #' @section Function ID:
-#' 8-1
+#' 9-1
 #' 
 #' @export
 x_write_disk <- function(x,
@@ -127,7 +127,7 @@ x_write_disk <- function(x,
 #' 
 #' @family Object Ops
 #' @section Function ID:
-#' 8-2
+#' 9-2
 #' 
 #' @export
 x_read_disk <- function(filename,
@@ -159,7 +159,7 @@ x_read_disk <- function(filename,
 #' 
 #' @family Object Ops
 #' @section Function ID:
-#' 8-3
+#' 9-3
 #' 
 #' @export
 set_tbl <- function(x,
@@ -215,7 +215,7 @@ set_tbl <- function(x,
 #'   
 #' @family Object Ops
 #' @section Function ID:
-#' 8-4
+#' 9-4
 #'   
 #' @export
 remove_tbl <- function(x) {
@@ -242,7 +242,7 @@ remove_tbl <- function(x) {
 #'
 #' @family Object Ops
 #' @section Function ID:
-#' 8-5
+#' 9-5
 #'
 #' @export
 set_read_fn <- function(x,
@@ -266,7 +266,7 @@ set_read_fn <- function(x,
 #'   
 #' @family Object Ops
 #' @section Function ID:
-#' 8-6
+#' 9-6
 #'   
 #' @export
 remove_read_fn <- function(x) {

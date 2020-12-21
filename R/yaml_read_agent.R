@@ -131,7 +131,7 @@
 #' 
 #' @family pointblank YAML
 #' @section Function ID:
-#' 9-2
+#' 11-2
 #' 
 #' @export
 yaml_read_agent <- function(filename,
@@ -254,7 +254,7 @@ yaml_read_agent <- function(filename,
 #'
 #' @family pointblank YAML
 #' @section Function ID:
-#' 9-4
+#' 11-4
 #'
 #' @export
 yaml_agent_interrogate <- function(filename,
@@ -338,7 +338,7 @@ yaml_agent_interrogate <- function(filename,
 #'   
 #' @family pointblank YAML
 #' @section Function ID:
-#' 9-6
+#' 11-6
 #'
 #' @export
 yaml_agent_show_exprs <- function(filename,

@@ -127,7 +127,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-22
+#' 2-24
 #' 
 #' @name col_is_factor
 NULL

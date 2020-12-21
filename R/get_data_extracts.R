@@ -73,7 +73,7 @@
 #' 
 #' @family Post-interrogation
 #' @section Function ID:
-#' 7-2
+#' 8-2
 #' 
 #' @export
 get_data_extracts <- function(agent,

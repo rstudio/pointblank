@@ -163,7 +163,7 @@
 #' 
 #' @family Interrogate and Report
 #' @section Function ID:
-#' 5-2
+#' 6-2
 #' 
 #' @export
 get_agent_report <- function(agent,

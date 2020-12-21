@@ -36,6 +36,10 @@
 #'   `filenames`), or, required when providing a `pattern` for file names.
 #'   
 #' @return A `ptblank_multiagent` object.
+#' 
+#' @family The multiagent
+#' @section Function ID:
+#' 10-2
 #'
 #' @export
 read_disk_multiagent <- function(filenames = NULL,

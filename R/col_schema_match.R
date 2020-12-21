@@ -170,7 +170,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-24
+#' 2-26
 #' 
 #' @name col_schema_match
 NULL
@@ -431,9 +431,9 @@ test_col_schema_match <- function(object,
 #'   interrogate() %>%
 #'   all_passed()
 #'   
-#' @family Planning and Prep
+#' @family Utility and Helper Functions
 #' @section Function ID:
-#' 1-7
+#' 12-1
 #' 
 #' @export
 col_schema <- function(...,
@@ -491,7 +491,6 @@ col_schema <- function(...,
   
   x
 }
-
 
 r_col_type <- function(type) {
   # Generate a standardized vector for an `r_type`

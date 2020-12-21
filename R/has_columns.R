@@ -24,6 +24,10 @@
 #' in the table `x`.
 #'   
 #' @return A length-1 logical vector.
+#' 
+#' @family Utility and Helper Functions
+#' @section Function ID:
+#' 12-2
 #'
 #' @export
 has_columns <- function(x, columns) {

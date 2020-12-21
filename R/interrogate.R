@@ -70,7 +70,7 @@
 #' 
 #' @family Interrogate and Report
 #' @section Function ID:
-#' 5-1
+#' 6-1
 #' 
 #' @export
 interrogate <- function(agent,

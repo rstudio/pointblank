@@ -43,6 +43,10 @@
 #'   for Spanish (Spain, same as `"es_ES"`).
 #'   
 #' @return A `ptblank_multiagent` object.
+#' 
+#' @family The multiagent
+#' @section Function ID:
+#' 10-1
 #'
 #' @export
 create_multiagent <- function(...,

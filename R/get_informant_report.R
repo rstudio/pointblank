@@ -65,7 +65,7 @@
 #' 
 #' @family Incorporate and Report
 #' @section Function ID:
-#' 6-2
+#' 7-2
 #' 
 #' @export
 get_informant_report <- function(informant,

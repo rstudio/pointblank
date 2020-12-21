@@ -122,7 +122,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-16
+#' 2-18
 #' 
 #' @name col_is_character
 NULL

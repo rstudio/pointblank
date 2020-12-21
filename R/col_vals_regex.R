@@ -155,7 +155,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-13
+#' 2-15
 #' 
 #' @name col_vals_regex
 NULL

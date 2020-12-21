@@ -22,6 +22,10 @@
 #' @param append_to The file to which log entries at the warn level are
 #'   appended. This can alternatively be one or more **log4r** appenders.
 #' 
+#' @family Logging
+#' @section Function ID:
+#' 5-1
+#' 
 #' @export
 log4r_step <- function(x,
                        message = NULL,

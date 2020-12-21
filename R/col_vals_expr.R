@@ -160,7 +160,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-25
+#' 2-15
 #' 
 #' @seealso These reexported functions (from **rlang** and **dplyr**) work
 #'   nicely within `col_vals_expr()` and its variants: [rlang::expr()],

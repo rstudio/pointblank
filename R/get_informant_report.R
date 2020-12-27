@@ -604,7 +604,7 @@ get_informant_report <- function(informant,
             padding: 0;
           }
           #pb_information .gt_group_heading {
-            text-ident: -3px;
+            text-indent: -3px;
           }
         "
       )

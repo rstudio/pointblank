@@ -136,7 +136,7 @@ affix_time_to_filename <- function(filename,
   }
 
   curr_time <- format(curr_time, ifelse(add_tz, paste0(format, "%z"), format))
-  curr_time <- gsub("\\+0000$", "Z", curr_time)
+  curr_time <- gsub("\\+0000", "Z", curr_time)
   
   if (position == "end") {
     

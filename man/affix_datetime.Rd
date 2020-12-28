@@ -44,15 +44,73 @@ A character vector.
 This function helps to affix the current date-time to a filename. This is
 useful when writing \emph{agent} and/or \emph{informant} objects to disk as part of a
 continuous process. The date-time string can be based on the current UTC time
-or the local system time. The date can be affixed either to the end of the
-filename (before the file extension) or at the beginning with a customizable
-delimiter.
+or the local system time. The date-time can be affixed either to the end of
+the filename (before the file extension) or at the beginning with a
+customizable delimiter. Optionally, the time zone information can be
+included. If the date-time is based on the local system time, the user system
+time zone is shown with the format \verb{<time>(+/-)hhmm}. If using UTC time, then
+the \verb{<time>Z} format is adopted.
+}
+\details{
+The \code{\link[=x_write_disk]{x_write_disk()}}, \code{\link[=yaml_write]{yaml_write()}} functions allow for the writing of
+\strong{pointblank} objects to disk. The modification of the filename string takes
+effect immediately but not at the time of writing a file to disk. In most
+cases, especially when using \code{affix_datetime()} with the aforementioned
+file-writing functions, the file timestamps should approximate the time
+components affixed to the filenames.
 }
 \section{Function ID}{
 
 12-4
 }
 
+\examples{
+# Taking the generic `pb_file` name for
+# a file, we add the current date-time to it
+# as a suffix
+affix_datetime("pb_file")
+
+# File extensions won't get in the way:
+affix_datetime("pb_file.rds")
+
+# The date-time can be used as a prefix
+affix_datetime("pb_file", position = "start")
+
+# The date-time pattern can be changed and so
+# can the delimiter
+affix_datetime(
+  "pb_file.yml",
+  format = "\%Y\%m\%d_\%H\%M\%S",
+  delimiter = "-"
+)
+
+# Time zone information can be included
+affix_datetime(
+  "pb_file.yml",
+  add_tz = TRUE
+)
+
+# We can use a file-naming convention
+# involving date-times when writing output
+# files immediately after interrogating;
+# useful when interrogating directly
+# from YAML in a scheduled process
+# yaml_agent_interrogate(
+#   filename = system.file(
+#     "agent-small_table.yml",
+#     package = "pointblank"
+#   )
+# ) \%>\% 
+#   x_write_disk(
+#     filename = affix_datetime(
+#       "small_table_agent.rds",
+#       delimiter = "-"
+#     ),
+#     keep_tbl = TRUE,
+#     keep_extracts = TRUE
+#   )
+
+}
 \seealso{
 The \code{\link[=affix_date]{affix_date()}} function provides the same features except it
 produces a date string by default.

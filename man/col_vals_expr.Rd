@@ -23,8 +23,8 @@ test_col_vals_expr(object, expr, preconditions = NULL, threshold = 1)
 }
 \arguments{
 \item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), Spark DataFrame
-(\code{tbl_spark}), or, an \emph{agent} object of class \code{ptblank_agent} that is created
-with \code{\link[=create_agent]{create_agent()}}.}
+(\code{tbl_spark}), or, an \emph{agent} object of class \code{ptblank_agent} that is
+created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{expr}{An expression to use for this test. This can either be in the
 form of a call made with the \code{expr()} function or as a one-sided \strong{R}
@@ -33,8 +33,7 @@ formula (using a leading \code{~}).}
 \item{preconditions}{An optional expression for mutating the input table
 before proceeding with the validation. This is ideally as a one-sided R
 formula using a leading \code{~}. In the formula representation, the \code{.} serves
-as the input data table to be transformed (e.g.,
-\code{~ . \%>\% dplyr::mutate(col = col + 10)}.}
+as the input data table to be transformed (e.g., \code{~ . \%>\% dplyr::mutate(col = col + 10)}.}
 
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created

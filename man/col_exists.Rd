@@ -22,8 +22,8 @@ test_col_exists(object, columns, threshold = 1)
 }
 \arguments{
 \item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), Spark DataFrame
-(\code{tbl_spark}), or, an \emph{agent} object of class \code{ptblank_agent} that is created
-with \code{\link[=create_agent]{create_agent()}}.}
+(\code{tbl_spark}), or, an \emph{agent} object of class \code{ptblank_agent} that is
+created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{columns}{One or more columns from the table in focus. This can be
 provided as a vector of column names using \code{c()} or bare column names

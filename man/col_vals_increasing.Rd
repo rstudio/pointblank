@@ -42,8 +42,8 @@ test_col_vals_increasing(
 }
 \arguments{
 \item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), Spark DataFrame
-(\code{tbl_spark}), or, an \emph{agent} object of class \code{ptblank_agent} that is created
-with \code{\link[=create_agent]{create_agent()}}.}
+(\code{tbl_spark}), or, an \emph{agent} object of class \code{ptblank_agent} that is
+created with \code{\link[=create_agent]{create_agent()}}.}
 
 \item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
@@ -61,14 +61,12 @@ allowed across numerical test units. Note that setting a value here also
 has the effect of setting \code{allow_stationary} to \code{TRUE}.}
 
 \item{na_pass}{Should any encountered \code{NA} values be considered as passing
-test units? This is by default \code{FALSE}. Set to \code{TRUE} to give \code{NA}s
-a pass.}
+test units? This is by default \code{FALSE}. Set to \code{TRUE} to give \code{NA}s a pass.}
 
 \item{preconditions}{An optional expression for mutating the input table
 before proceeding with the validation. This is ideally as a one-sided R
 formula using a leading \code{~}. In the formula representation, the \code{.} serves
-as the input data table to be transformed (e.g.,
-\code{~ . \%>\% dplyr::mutate(col = col + 10)}.}
+as the input data table to be transformed (e.g., \code{~ . \%>\% dplyr::mutate(col = col + 10)}.}
 
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created

@@ -10,7 +10,7 @@ affix_datetime(
   format = "\%Y-\%m-\%dT\%H:\%M:\%S",
   delimiter = "_",
   utc_time = TRUE,
-  add_tz = TRUE
+  add_tz = FALSE
 )
 }
 \arguments{
@@ -22,7 +22,7 @@ at the \code{"end"} of the filename (the default) or at the \code{"start"}.}
 \item{format}{A \code{\link[base:strptime]{base::strptime()}} format string for formatting the
 date-time. By default, this is \code{"\%Y-\%m-\%dT\%H:\%M:\%S"} which expresses the
 date according to the ISO 8601 standard. For example, if the current
-date-time is 2020-12-04 13:11:23, the formatted string would become
+date-time is \verb{2020-12-04 13:11:23}, the formatted string would become
 \code{"2020-12-04T13:11:23"}. Refer to the documentation on \code{\link[base:strptime]{base::strptime()}}
 for conversion specifications if planning to use a different format string.}
 
@@ -34,8 +34,11 @@ establish the date-time (the default, with \code{TRUE}), or, use the system's
 local time (\code{FALSE}).}
 
 \item{add_tz}{Should the time zone (as an offset from UTC) be provided? If
-\code{TRUE} (the default) then the UTC offset will be either provided as
-\verb{<time>Z} (if \code{utc_time = TRUE}) or \verb{<time>(+/-)hhmm}.}
+\code{TRUE} then the UTC offset will be either provided as \verb{<time>Z} (if
+\code{utc_time = TRUE}) or \verb{<time>(+/-)hhmm}. By default, this is \code{FALSE}.}
+}
+\value{
+A character vector.
 }
 \description{
 This function helps to affix the current date-time to a filename. This is

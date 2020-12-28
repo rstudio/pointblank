@@ -31,6 +31,9 @@ string from the original file name.}
 establish the date (the default, with \code{TRUE}), or, use the system's local
 time (\code{FALSE}).}
 }
+\value{
+A character vector.
+}
 \description{
 This function helps to affix the current date to a filename. This is useful
 when writing \emph{agent} and/or \emph{informant} objects to disk as part of a

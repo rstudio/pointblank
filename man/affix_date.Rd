@@ -41,11 +41,62 @@ continuous process. The date can be in terms of UTC time or the local system
 time. The date can be affixed either to the end of the filename (before the
 file extension) or at the beginning with a customizable delimiter.
 }
+\details{
+The \code{\link[=x_write_disk]{x_write_disk()}}, \code{\link[=yaml_write]{yaml_write()}} functions allow for the writing of
+\strong{pointblank} objects to disk. Furthermore the \code{\link[=log4r_step]{log4r_step()}} function has
+the \code{append_to} argument that accepts filenames, and, it's reasonable that a
+series of log files could be differentiated by a date component in the naming
+scheme. The modification of the filename string takes effect immediately but
+not at the time of writing a file to disk. In most cases, especially when
+using \code{affix_date()} with the aforementioned file-writing functions, the file
+timestamps should approximate the time components affixed to the filenames.
+}
 \section{Function ID}{
 
 12-3
 }
 
+\examples{
+# Taking the generic `pb_file` name for
+# a file, we add the current date to it
+# as a suffix
+affix_date("pb_file")
+
+# File extensions won't get in the way:
+affix_date("pb_file.rds")
+
+# The date can be used as a prefix
+affix_date("pb_file", position = "start")
+
+# The date pattern can be changed and so
+# can the delimiter
+affix_date(
+  "pb_file.yml",
+  format = "\%Y\%m\%d",
+  delimiter = "-"
+)
+
+# We can use a file-naming convention
+# involving dates when writing output
+# files immediately after interrogating;
+# useful when interrogating directly
+# from YAML in a scheduled process
+# yaml_agent_interrogate(
+#   filename = system.file(
+#     "agent-small_table.yml",
+#     package = "pointblank"
+#   )
+# ) \%>\% 
+#   x_write_disk(
+#     filename = affix_date(
+#       "small_table_agent.rds",
+#       delimiter = "-"
+#     ),
+#     keep_tbl = TRUE,
+#     keep_extracts = TRUE
+#   )
+
+}
 \seealso{
 The \code{\link[=affix_datetime]{affix_datetime()}} function provides the same features except it
 produces a date-time string by default.

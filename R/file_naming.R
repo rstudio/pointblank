@@ -40,6 +40,46 @@
 #'   
 #' @return A character vector.
 #'   
+#' @examples 
+#' # Taking the generic `pb_file` name for
+#' # a file, we add the current date to it
+#' # as a suffix
+#' affix_date("pb_file")
+#' 
+#' # File extensions won't get in the way:
+#' affix_date("pb_file.rds")
+#' 
+#' # The date can be used as a prefix
+#' affix_date("pb_file", position = "start")
+#' 
+#' # The date pattern can be changed and so
+#' # can the delimiter
+#' affix_date(
+#'   "pb_file.yml",
+#'   format = "%Y%m%d",
+#'   delimiter = "-"
+#' )
+#' 
+#' # We can use a file-naming convention
+#' # involving dates when writing output
+#' # files immediately after interrogating;
+#' # useful when interrogating directly
+#' # from YAML in a scheduled process
+#' # yaml_agent_interrogate(
+#' #   filename = system.file(
+#' #     "agent-small_table.yml",
+#' #     package = "pointblank"
+#' #   )
+#' # ) %>% 
+#' #   x_write_disk(
+#' #     filename = affix_date(
+#' #       "small_table_agent.rds",
+#' #       delimiter = "-"
+#' #     ),
+#' #     keep_tbl = TRUE,
+#' #     keep_extracts = TRUE
+#' #   )
+#' 
 #' @family Utility and Helper Functions
 #' @section Function ID:
 #' 12-3
@@ -94,6 +134,51 @@ affix_date <- function(filename,
 #'   `utc_time = TRUE`) or `<time>(+/-)hhmm`. By default, this is `FALSE`.
 #'
 #' @return A character vector. 
+#' @examples 
+#' # Taking the generic `pb_file` name for
+#' # a file, we add the current date-time to it
+#' # as a suffix
+#' affix_datetime("pb_file")
+#' 
+#' # File extensions won't get in the way:
+#' affix_datetime("pb_file.rds")
+#' 
+#' # The date-time can be used as a prefix
+#' affix_datetime("pb_file", position = "start")
+#' 
+#' # The date-time pattern can be changed and so
+#' # can the delimiter
+#' affix_datetime(
+#'   "pb_file.yml",
+#'   format = "%Y%m%d_%H%M%S",
+#'   delimiter = "-"
+#' )
+#' 
+#' # Time zone information can be included
+#' affix_datetime(
+#'   "pb_file.yml",
+#'   add_tz = TRUE
+#' )
+#' 
+#' # We can use a file-naming convention
+#' # involving date-times when writing output
+#' # files immediately after interrogating;
+#' # useful when interrogating directly
+#' # from YAML in a scheduled process
+#' # yaml_agent_interrogate(
+#' #   filename = system.file(
+#' #     "agent-small_table.yml",
+#' #     package = "pointblank"
+#' #   )
+#' # ) %>% 
+#' #   x_write_disk(
+#' #     filename = affix_datetime(
+#' #       "small_table_agent.rds",
+#' #       delimiter = "-"
+#' #     ),
+#' #     keep_tbl = TRUE,
+#' #     keep_extracts = TRUE
+#' #   )
 #'
 #' @family Utility and Helper Functions
 #' @section Function ID:

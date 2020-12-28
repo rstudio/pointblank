@@ -38,6 +38,8 @@
 #'   establish the date (the default, with `TRUE`), or, use the system's local
 #'   time (`FALSE`).
 #'   
+#' @return A character vector.
+#'   
 #' @family Utility and Helper Functions
 #' @section Function ID:
 #' 12-3
@@ -79,7 +81,7 @@ affix_date <- function(filename,
 #' @param format A [base::strptime()] format string for formatting the
 #'   date-time. By default, this is `"%Y-%m-%dT%H:%M:%S"` which expresses the
 #'   date according to the ISO 8601 standard. For example, if the current
-#'   date-time is 2020-12-04 13:11:23, the formatted string would become
+#'   date-time is `2020-12-04 13:11:23`, the formatted string would become
 #'   `"2020-12-04T13:11:23"`. Refer to the documentation on [base::strptime()]
 #'   for conversion specifications if planning to use a different format string.
 #' @param delimiter The delimiter characters to use for separating the date-time
@@ -88,8 +90,10 @@ affix_date <- function(filename,
 #'   establish the date-time (the default, with `TRUE`), or, use the system's
 #'   local time (`FALSE`).
 #' @param add_tz Should the time zone (as an offset from UTC) be provided? If
-#'   `TRUE` (the default) then the UTC offset will be either provided as
-#'   `<time>Z` (if `utc_time = TRUE`) or `<time>(+/-)hhmm`.
+#'   `TRUE` then the UTC offset will be either provided as `<time>Z` (if
+#'   `utc_time = TRUE`) or `<time>(+/-)hhmm`. By default, this is `FALSE`.
+#'
+#' @return A character vector. 
 #'
 #' @family Utility and Helper Functions
 #' @section Function ID:
@@ -104,7 +108,7 @@ affix_datetime <- function(filename,
                            format = "%Y-%m-%dT%H:%M:%S",
                            delimiter = "_",
                            utc_time = TRUE,
-                           add_tz = TRUE) {
+                           add_tz = FALSE) {
   
   position <- match.arg(position)
   

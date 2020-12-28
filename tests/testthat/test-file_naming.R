@@ -240,7 +240,7 @@ test_that("affixing a datetime to a filename works well", {
       filename = file_name_ext, position = "start",
       delimiter = "--", utc_time = FALSE, add_tz = TRUE
     ),
-    "20[0-9]{2}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}-[0-9]{4}--the_file.txt"
+    "20[0-9]{2}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}((+|-)[0-9]{4}|Z)--the_file.txt"
   )
   expect_match(
     affix_datetime(

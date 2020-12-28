@@ -24,6 +24,15 @@
 #' time. The date can be affixed either to the end of the filename (before the
 #' file extension) or at the beginning with a customizable delimiter.
 #' 
+#' The [x_write_disk()], [yaml_write()] functions allow for the writing of
+#' **pointblank** objects to disk. Furthermore the [log4r_step()] function has
+#' the `append_to` argument that accepts filenames, and, it's reasonable that a
+#' series of log files could be differentiated by a date component in the naming
+#' scheme. The modification of the filename string takes effect immediately but
+#' not at the time of writing a file to disk. In most cases, especially when
+#' using `affix_date()` with the aforementioned file-writing functions, the file
+#' timestamps should approximate the time components affixed to the filenames.
+#' 
 #' @param filename The filename to modify.
 #' @param position Where to place the formatted date. This could either be at
 #'   the `"end"` of the filename (the default) or at the `"start"`.
@@ -111,9 +120,19 @@ affix_date <- function(filename,
 #' This function helps to affix the current date-time to a filename. This is
 #' useful when writing *agent* and/or *informant* objects to disk as part of a
 #' continuous process. The date-time string can be based on the current UTC time
-#' or the local system time. The date can be affixed either to the end of the
-#' filename (before the file extension) or at the beginning with a customizable
-#' delimiter.
+#' or the local system time. The date-time can be affixed either to the end of
+#' the filename (before the file extension) or at the beginning with a
+#' customizable delimiter. Optionally, the time zone information can be
+#' included. If the date-time is based on the local system time, the user system
+#' time zone is shown with the format `<time>(+/-)hhmm`. If using UTC time, then
+#' the `<time>Z` format is adopted.
+#' 
+#' The [x_write_disk()], [yaml_write()] functions allow for the writing of
+#' **pointblank** objects to disk. The modification of the filename string takes
+#' effect immediately but not at the time of writing a file to disk. In most
+#' cases, especially when using `affix_datetime()` with the aforementioned
+#' file-writing functions, the file timestamps should approximate the time
+#' components affixed to the filenames.
 #' 
 #' @inheritParams affix_date
 #' @param position Where to place the formatted date-time. This could either be
@@ -133,7 +152,8 @@ affix_date <- function(filename,
 #'   `TRUE` then the UTC offset will be either provided as `<time>Z` (if
 #'   `utc_time = TRUE`) or `<time>(+/-)hhmm`. By default, this is `FALSE`.
 #'
-#' @return A character vector. 
+#' @return A character vector.
+#' 
 #' @examples 
 #' # Taking the generic `pb_file` name for
 #' # a file, we add the current date-time to it

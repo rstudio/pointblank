@@ -100,6 +100,7 @@ deactivate_steps <- function(agent,
 remove_steps <- function(agent,
                          i = NULL) {
   
+  # TODO: Allow for removal of multiple steps (e.g., `i = 1:3`)
   if (!is.null(i)) {
     agent$validation_set <- 
       agent$validation_set %>%

@@ -694,7 +694,7 @@ snip_list <- function(column,
           glue::glue(
             "~ . %>% dplyr::select(<<column>>) %>%",
             "dplyr::group_by(<<column>>) %>%",
-            "dplyr::summarize(`_count_` = n(), .groups = 'keep') %>%",
+            "dplyr::summarize(`_count_` = dplyr::n(), .groups = 'keep') %>%",
             ifelse(
               reverse,
               "dplyr::arrange(`_count_`) %>%",

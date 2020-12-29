@@ -1,4 +1,3 @@
-
 run_snip <- function(snip_call, tbl) {
   (snip_call %>%
      rlang::f_rhs() %>%
@@ -203,6 +202,231 @@ test_that("the `snip_list()` function works", {
       small_table[2:4, ]
     ),
     "2016-01-04, 2016-01-05 and 2016-01-06"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "date", limit = 3, as_code = FALSE,
+        quot_str = FALSE, lang = "en", oxford = TRUE, sep = ";"
+      ),
+      small_table[2:4, ]
+    ),
+    "2016-01-04; 2016-01-05; and 2016-01-06"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "date", limit = 3, as_code = FALSE,
+        quot_str = FALSE, lang = "en", oxford = FALSE, sep = ";"
+      ),
+      small_table[2:4, ]
+    ),
+    "2016-01-04; 2016-01-05 and 2016-01-06"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "date", as_code = FALSE,
+        quot_str = FALSE, lang = "en", oxford = TRUE, sep = "..."
+      ),
+      small_table
+    ),
+    "2016-01-04... 2016-01-05... 2016-01-06... 2016-01-09... 2016-01-11 (+6 more)"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "date", limit = 3, reverse = TRUE, as_code = FALSE,
+        quot_str = FALSE, lang = "en", oxford = FALSE, sep = ";"
+      ),
+      small_table[2:4, ]
+    ),
+    "2016-01-06; 2016-01-05 and 2016-01-04"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "date", reverse = TRUE, as_code = FALSE,
+        quot_str = FALSE, lang = "en", oxford = TRUE
+      ),
+      small_table
+    ),
+    "2016-01-30, 2016-01-28, 2016-01-26, 2016-01-20, 2016-01-17 (+6 more)"
+  )
+  
+  # Tests of the `sorting` options
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "inorder", reverse = FALSE,
+        as_code = FALSE, quot_str = FALSE, oxford = TRUE
+      ),
+      small_table
+    ),
+    "2, 3, 6, 8, 4 (+2 more)"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "inorder", reverse = TRUE,
+        as_code = FALSE, quot_str = FALSE, oxford = TRUE
+      ),
+      small_table
+    ),
+    "1, 7, 4, 8, 6 (+2 more)"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "infreq", reverse = FALSE,
+        as_code = FALSE, quot_str = FALSE, oxford = TRUE
+      ),
+      small_table
+    ),
+    "2, 3, 4, 1, 6 (+2 more)"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "infreq", reverse = TRUE,
+        as_code = FALSE, quot_str = FALSE, oxford = TRUE
+      ),
+      small_table
+    ),
+    "1, 6, 7, 8, 2 (+2 more)"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "inseq", reverse = FALSE,
+        as_code = FALSE, quot_str = FALSE, oxford = TRUE
+      ),
+      small_table
+    ),
+    "1, 2, 3, 4, 6 (+2 more)"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "inseq", reverse = TRUE,
+        as_code = FALSE, quot_str = FALSE, oxford = TRUE
+      ),
+      small_table
+    ),
+    "8, 7, 6, 4, 3 (+2 more)"
+  )
+  
+  
+  for (lang in reporting_languages) {
+    expect_match(
+      run_snip(
+        snip_list(
+          column = "date", limit = 3,
+          as_code = FALSE, quot_str = FALSE,
+          and_or = "and", lang = lang
+        ),
+        small_table[2:4,]
+      ),
+      gsub(" ", "", get_lsv("informant_report/snip_list_and")[[lang]])
+    )
+  }
+  
+  for (lang in reporting_languages) {
+    expect_match(
+      run_snip(
+        snip_list(
+          column = "date", limit = 3,
+          as_code = FALSE, quot_str = FALSE,
+          and_or = "or", lang = lang
+        ),
+        small_table[2:4,]
+      ),
+      gsub(" ", "", get_lsv("informant_report/snip_list_or")[[lang]])
+    )
+  }
+  
+  for (lang in reporting_languages) {
+    expect_match(
+      run_snip(
+        snip_list(
+          column = "date", limit = 3,
+          as_code = FALSE, quot_str = FALSE,
+          and_or = "or", lang = lang
+        ),
+        small_table[2:4,]
+      ),
+      gsub(" ", "", get_lsv("informant_report/snip_list_or")[[lang]])
+    )
+  }
+  
+  for (lang in reporting_languages) {
+    expect_match(
+      run_snip(
+        snip_list(
+          column = "a", sorting = "inseq", reverse = TRUE,
+          as_code = FALSE, quot_str = FALSE,
+          lang = lang
+        ),
+        small_table
+      ),
+      gsub(
+        "{n_items}", "2",
+        get_lsv("informant_report/snip_list_more")[[lang]],
+        fixed = TRUE
+      )
+    )
+  }
+  
+  # Expect an error if the `sep` value is not character
+  expect_error(
+    run_snip(
+      snip_list(
+        column = "date", limit = 3, as_code = FALSE,
+        quot_str = FALSE, lang = "en", oxford = TRUE, sep = 5
+      ),
+      small_table[2:4, ]
+    )
+  )
+  
+  # Expect an error if `quot_str` isn't TRUE, FALSE, or NULL
+  expect_error(
+    run_snip(
+      snip_list(
+        column = "date", limit = 3, as_code = FALSE,
+        quot_str = "~", lang = "fr"
+      ),
+      small_table[2:4, ]
+    )
+  )
+  
+  # Expect an error if `sorting` isn't `"inorder"`, `"infreq"`, or `"inseq"`
+  expect_error(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "frequency"
+      ),
+      small_table
+    )
+  )
+  
+  # Expect an error if `sorting` isn't of length 1
+  expect_error(
+    run_snip(
+      snip_list(
+        column = "a", sorting = c("inorder", "inseq")
+      ),
+      small_table
+    )
+  )
+  
+  # Expect an error if `lang` isn't one of the supported languages
+  expect_error(
+    run_snip(
+      snip_list(
+        column = "a", lang = "aa"
+      ),
+      small_table
+    )
   )
 })
 

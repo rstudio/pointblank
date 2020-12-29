@@ -266,21 +266,17 @@ print.x_list_n <- function(x, ...) {
 #' @export
 print.action_levels <- function(x, ...) {
   
-  has_warn_fns <- if (!is.null(x$fns$warn)) TRUE else FALSE
-  has_stop_fns <- if (!is.null(x$fns$stop)) TRUE else FALSE
-  has_notify_fns <- if (!is.null(x$fns$notify)) TRUE else FALSE
+  # nocov start
   
-  # nocov start 
+  has_warn_fns <- !is.null(x$fns$warn)
+  has_stop_fns <- !is.null(x$fns$stop)
+  has_notify_fns <- !is.null(x$fns$notify)
+  
   cli::cli_div(
     theme = list(
-      span.cyan = list(color = "cyan"),
-      span.red = list(color = "red"),
-      span.blue = list(color = "blue"),
-      span.green = list(color = "green"),
       span.yellow = list(color = "yellow"),
-      span.orange = list(color = "orange"),
-      span.pink = list(color = "pink"),
-      span.brown = list(color = "brown")
+      span.red = list(color = "red"),
+      span.blue = list(color = "blue")
     )
   )
   

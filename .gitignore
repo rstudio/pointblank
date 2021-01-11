@@ -33,8 +33,11 @@ vignettes/*.pdf
 *.knit.md
 .Rproj.user
 
-# RDS files
+# RDS and RDA files
 *.rds
+*.rda
+
+# docs in `inst
 inst/doc
 
 # Movies

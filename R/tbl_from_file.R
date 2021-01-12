@@ -38,9 +38,9 @@
 #'   for a repository.
 #' 
 #' @param file The complete file path leading to a compatible data table either
-#'   in the user system or at a `http://` or `https://` URL. For a file hosted
-#'   in a GitHub repository, a call to the [from_github()] function can be used
-#'   here.
+#'   in the user system or at a `http://`, `https://`, `ftp://`, or `ftps://`
+#'   URL. For a file hosted in a GitHub repository, a call to the
+#'   [from_github()] function can be used here.
 #' @param type The file type. This is normally inferred by file extension and is
 #'   by default `NULL` to indicate that the extension will dictate the type of
 #'   file reading that is performed internally. However, if there is no

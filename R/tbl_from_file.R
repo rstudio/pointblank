@@ -180,11 +180,11 @@ from_github <- function(file,
 
   if (grepl("@*", repo, fixed = TRUE)) {
 
-    ref_resolved <- unlist(strsplit(repo, "@\\*"))[2]
+    ref_res <- unlist(strsplit(repo, "@\\*"))[2]
     
   } else if (grepl("@", repo, fixed = TRUE)) {
     
-    ref_resolved <- unlist(strsplit(repo, "@"))[2]
+    ref_res <- unlist(strsplit(repo, "@"))[2]
     
   } else if (grepl("#", repo, fixed = TRUE)) {
     
@@ -214,14 +214,14 @@ from_github <- function(file,
     )
     
     # Resolve the PR number to a merge commit SHA
-    ref_resolved <-
+    ref_res <-
       (jsonlite::fromJSON(pulls_doc_tempfile, flatten = TRUE) %>%
          dplyr::select(number, merge_commit_sha, head.ref) %>%
          dplyr::filter(number == as.integer(pr_number)) %>%
          dplyr::pull(merge_commit_sha))[1]
     
   } else {
-    ref_resolved <- "master"
+    ref_res <- "master"
   }
   
   if (!is.null(subdir_file)) {
@@ -235,7 +235,7 @@ from_github <- function(file,
   url <-
     as.character(
       glue::glue(
-        "https://github.com/{username}/{repository}/raw/{ref_resolved}/{file_path}"
+        "https://github.com/{username}/{repository}/raw/{ref_res}/{file_path}"
       )
     )
   
@@ -247,11 +247,11 @@ download_remote_file <- function(url,
   
   if (grepl("^https?://", url)) {
     
-    isR32 <- getRversion() >= "3.2"
+    is_r32 <- getRversion() >= "3.2"
     
     if (.Platform$OS.type == "windows") {
       
-      if (isR32) {
+      if (is_r32) {
         
         method <- "wininet"
         
@@ -273,7 +273,7 @@ download_remote_file <- function(url,
       
     } else {
       
-      if (isR32 && capabilities("libcurl")) {
+      if (is_r32 && capabilities("libcurl")) {
         
         method <- "libcurl"
         

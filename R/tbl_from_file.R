@@ -133,7 +133,7 @@ file_tbl <- function(file,
       } else {
         stop(
           "File has no secondary extension to indicate the file type:\n",
-          " * Use the `type` argument to explicitly state type of file this is", 
+          " * Use the `type` argument to explicitly state the file type", 
           call. = FALSE
         )
       }

@@ -72,7 +72,7 @@ file_tbl <- function(file,
     )
   }
   
-  file_ext <- tolower(tools::file_ext(file))
+  file_extension <- tolower(tools::file_ext(file))
   file_name <- basename(file)
 
   if (grepl("^https?://", file)) {
@@ -98,40 +98,70 @@ file_tbl <- function(file,
     download_remote_file(url = file, destfile = file_path)
     
   } else {
-    
     file_path <- file
   }
   
   # Unless specified by `type`, the `file_type` will be determined
-  # by the file extension
-  
+  # by the file extension (or inner extension if the file is compressed)
   if (!is.null(type)) {
     
     # Check that the `type` provided is valid for this function
     if (!(tolower(type) %in% c("rda", "rdata", "rds", "csv", "tsv"))) {
       stop(
         "If specifying the file `type`, it must be one of the following:\n",
-        "* `rda`, `rds`, `csv`, or `tsv`.",
+        " * `rda`, `rds`, `csv`, or `tsv`.",
         call. = FALSE
       )
     }
     
     file_type <- tolower(type)
+    
   } else {
-    file_type <- file_ext
+    
+    if (file_extension %in% c("gz", "bz2", "xz", "zip")) {
+      
+      file_basename_no_ext <- 
+        gsub(
+          paste0("\\.(", paste("gz", "bz2", "xz", "zip", sep = "|"), ")"),
+          "", basename(file)
+        )
+      
+      secondary_file_ext <- tolower(tools::file_ext(file_basename_no_ext))
+      
+      if (secondary_file_ext != "") {
+        file_type <- secondary_file_ext
+      } else {
+        stop(
+          "File has no secondary extension to indicate the file type:\n",
+          " * Use the `type` argument to explicitly state type of file this is", 
+          call. = FALSE
+        )
+      }
+    } else {
+      file_type <- file_extension
+    }
   }
   
   if (file_type %in% c("rda", "rdata")) {
     
     x <- load_rda_object(file = file_path)
-  
+    
   } else if (file_type == "rds") {
     
     x <- readr::read_rds(file = file_path)
-
+    
   } else if (file_type %in% c("csv", "tsv")) {
     
     x <- readr::read_csv(file = file_path, ...)
+    
+  } else {
+    
+    stop(
+      "The file type is incompatible with `file_tbl()`, the following work:\n",
+      " * Comma or tab separated values (`.csv` or `.tsv`)\n",
+      " * RDA or RDS files (`.rda`/`.rdata` or `.rds`)",
+      call. = FALSE
+    )
   }
   
   x
@@ -294,8 +324,7 @@ download_remote_file <- function(url,
         method <- "lynx"
         
       } else {
-        
-        stop("no download method found")
+        stop("No download method can be found.")
       }
       
       utils::download.file(url, method = method, ...)

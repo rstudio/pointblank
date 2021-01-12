@@ -8,9 +8,9 @@ file_tbl(file, type = NULL, ..., keep = FALSE)
 }
 \arguments{
 \item{file}{The complete file path leading to a compatible data table either
-in the user system or at a \verb{http://} or \verb{https://} URL. For a file hosted
-in a GitHub repository, a call to the \code{\link[=from_github]{from_github()}} function can be used
-here.}
+in the user system or at a \verb{http://}, \verb{https://}, \verb{ftp://}, or \verb{ftps://}
+URL. For a file hosted in a GitHub repository, a call to the
+\code{\link[=from_github]{from_github()}} function can be used here.}
 
 \item{type}{The file type. This is normally inferred by file extension and is
 by default \code{NULL} to indicate that the extension will dictate the type of

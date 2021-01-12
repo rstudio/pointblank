@@ -75,7 +75,7 @@ file_tbl <- function(file,
   file_extension <- tolower(tools::file_ext(file))
   file_name <- basename(file)
 
-  if (grepl("^https?://", file)) {
+  if (grepl("^(ht|f)tps?://", file)) {
     remote_file <- TRUE
   } else {
     remote_file <- FALSE

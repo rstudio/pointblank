@@ -164,6 +164,11 @@ file_tbl <- function(file,
     )
   }
   
+  attr(x, "pb_tbl_name") <- file_name
+  attr(x, "pb_full_path") <- file
+  attr(x, "pb_dir_name") <- dirname(file)
+  attr(x, "pb_file_type") <- file_type
+  
   x
 }
 

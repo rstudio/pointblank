@@ -49,6 +49,7 @@ Other Utility and Helper Functions:
 \code{\link{affix_datetime}()},
 \code{\link{affix_date}()},
 \code{\link{col_schema}()},
+\code{\link{from_github}()},
 \code{\link{has_columns}()}
 }
 \concept{Utility and Helper Functions}

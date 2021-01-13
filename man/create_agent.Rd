@@ -223,6 +223,7 @@ Other Planning and Prep:
 \code{\link{action_levels}()},
 \code{\link{create_informant}()},
 \code{\link{db_tbl}()},
+\code{\link{file_tbl}()},
 \code{\link{scan_data}()},
 \code{\link{validate_rmd}()}
 }

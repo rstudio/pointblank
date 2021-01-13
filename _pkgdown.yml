@@ -21,6 +21,7 @@ reference:
     - validate_rmd
     - action_levels
     - db_tbl
+    - file_tbl
 
   - title: Validation, Expectation, and Test Functions
     desc: >
@@ -205,6 +206,7 @@ reference:
     - affix_date
     - affix_datetime
     - stop_if_not
+    - from_github
     
   - title: Datasets
     contents:

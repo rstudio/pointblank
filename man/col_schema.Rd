@@ -93,6 +93,7 @@ create_agent(tbl = tbl) \%>\%
 Other Utility and Helper Functions: 
 \code{\link{affix_datetime}()},
 \code{\link{affix_date}()},
+\code{\link{from_github}()},
 \code{\link{has_columns}()},
 \code{\link{stop_if_not}()}
 }

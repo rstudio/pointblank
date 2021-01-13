@@ -104,6 +104,7 @@ produces a date-time string by default.
 Other Utility and Helper Functions: 
 \code{\link{affix_datetime}()},
 \code{\link{col_schema}()},
+\code{\link{from_github}()},
 \code{\link{has_columns}()},
 \code{\link{stop_if_not}()}
 }

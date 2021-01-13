@@ -52,6 +52,7 @@ Imports:
 Suggests:
     covr,
     duckdb,
+    jsonlite,
     lubridate,
     RSQLite,
     RMariaDB,

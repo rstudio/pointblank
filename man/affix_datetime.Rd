@@ -118,6 +118,7 @@ produces a date string by default.
 Other Utility and Helper Functions: 
 \code{\link{affix_date}()},
 \code{\link{col_schema}()},
+\code{\link{from_github}()},
 \code{\link{has_columns}()},
 \code{\link{stop_if_not}()}
 }

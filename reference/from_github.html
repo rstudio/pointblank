@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Thoroughly scan a table to better understand it — scan_data • pointblank</title>
+<title>Specify a file for download from GitHub — from_github • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,29 +46,11 @@
 
 
 
-<meta property="og:title" content="Thoroughly scan a table to better understand it — scan_data" />
-<meta property="og:description" content="Generate an HTML report that scours the input table data. Before calling up
-an agent to validate the data, it's a good idea to understand the data with
-some level of precision. Make this the initial step of a well-balanced
-data quality reporting workflow. The reporting output contains several
-sections to make everything more digestible, and these are:
-OverviewTable dimensions, duplicate row counts, column types, and
-reproducibility information
-VariablesA summary for each table variable and further statistics and
-summaries depending on the variable type
-InteractionsA matrix plot that shows interactions between variables
-CorrelationsA set of correlation matrix plots for numerical
-variables
-Missing ValuesA summary figure that shows the degree of missingness
-across variables
-SampleA table that provides the head and tail rows of the dataset
-
-The output HTML report will appear in the RStudio Viewer and can also be
-integrated in R Markdown HTML output. If you need the output HTML as a
-string, it's possible to get that by using as.character() (e.g.,
-scan_data(tbl = mtcars) %&amp;gt;% as.character()). The resulting HTML string is a
-complete HTML document where Bootstrap and jQuery are embedded
-within." />
+<meta property="og:title" content="Specify a file for download from GitHub — from_github" />
+<meta property="og:description" content="The from_github() function is helpful for generating a valid URL that
+points to a data file in a public GitHub repository. This function can be
+used in the file argument of the file_tbl() function or anywhere else
+where GitHub URLs for raw user content are needed." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -174,101 +156,58 @@ within." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Thoroughly scan a table to better understand it</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/scan_data.R'><code>R/scan_data.R</code></a></small>
-    <div class="hidden name"><code>scan_data.Rd</code></div>
+    <h1>Specify a file for download from GitHub</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/tbl_from_file.R'><code>R/tbl_from_file.R</code></a></small>
+    <div class="hidden name"><code>from_github.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Generate an HTML report that scours the input table data. Before calling up
-an <em>agent</em> to validate the data, it's a good idea to understand the data with
-some level of precision. Make this the initial step of a well-balanced
-<em>data quality reporting</em> workflow. The reporting output contains several
-sections to make everything more digestible, and these are:</p><dl>
-<dt>Overview</dt><dd><p>Table dimensions, duplicate row counts, column types, and
-reproducibility information</p></dd>
-<dt>Variables</dt><dd><p>A summary for each table variable and further statistics and
-summaries depending on the variable type</p></dd>
-<dt>Interactions</dt><dd><p>A matrix plot that shows interactions between variables</p></dd>
-<dt>Correlations</dt><dd><p>A set of correlation matrix plots for numerical
-variables</p></dd>
-<dt>Missing Values</dt><dd><p>A summary figure that shows the degree of missingness
-across variables</p></dd>
-<dt>Sample</dt><dd><p>A table that provides the head and tail rows of the dataset</p></dd>
-
-</dl><p>The output HTML report will appear in the RStudio Viewer and can also be
-integrated in R Markdown HTML output. If you need the output HTML as a
-string, it's possible to get that by using <code><a href='https://rdrr.io/r/base/character.html'>as.character()</a></code> (e.g.,
-<code>scan_data(tbl = mtcars) %&gt;% as.character()</code>). The resulting HTML string is a
-complete HTML document where <strong>Bootstrap</strong> and <strong>jQuery</strong> are embedded
-within.</p>
+    <p>The <code>from_github()</code> function is helpful for generating a valid URL that
+points to a data file in a public GitHub repository. This function can be
+used in the <code>file</code> argument of the <code><a href='file_tbl.html'>file_tbl()</a></code> function or anywhere else
+where GitHub URLs for raw user content are needed.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>scan_data</span><span class='op'>(</span><span class='va'>tbl</span>, sections <span class='op'>=</span> <span class='st'>"OVICMS"</span>, navbar <span class='op'>=</span> <span class='cn'>TRUE</span>, lang <span class='op'>=</span> <span class='cn'>NULL</span>, locale <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>from_github</span><span class='op'>(</span><span class='va'>file</span>, <span class='va'>repo</span>, subdir <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>tbl</th>
-      <td><p>The input table. This can be a data frame, tibble, a <code>tbl_dbi</code>
-object, or a <code>tbl_spark</code> object.</p></td>
+      <th>file</th>
+      <td><p>The name of the file to target in a GitHub repository. This can
+be a path leading to and including the file. This is combined with any path
+given in <code>subdir</code>.</p></td>
     </tr>
     <tr>
-      <th>sections</th>
-      <td><p>The sections to include in the finalized <code>Table Scan</code> report.
-A string with key characters representing section names is required here.
-The default string is <code>"OVICMS"</code> wherein each letter stands for the
-following sections in their default order: <code>"O"</code>: <code>"overview"</code>; <code>"V"</code>:
-<code>"variables"</code>; <code>"I"</code>: <code>"interactions"</code>; <code>"C"</code>: <code>"correlations"</code>; <code>"M"</code>:
-<code>"missing"</code>; and <code>"S"</code>: <code>"sample"</code>. This string can be comprised of less
-characters and the order can be changed to suit the desired layout of the
-report. For <code>tbl_dbi</code> and <code>tbl_spark</code> objects supplied to <code>tbl</code>, the
-<code>"interactions"</code> and <code>"correlations"</code> sections are currently excluded.</p></td>
+      <th>repo</th>
+      <td><p>The GitHub repository address in the format
+<code>username/repo[/subdir][@ref|#pull|@*release]</code>.</p></td>
     </tr>
     <tr>
-      <th>navbar</th>
-      <td><p>Should there be a navigation bar anchored to the top of the
-report page? By default this is <code>TRUE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>lang</th>
-      <td><p>The language to use for label text in the report. By default,
-<code>NULL</code> will create English (<code>"en"</code>) text. Other options include French
-(<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), Spanish (<code>"es"</code>), Portuguese,
-(<code>"pt"</code>), Chinese (<code>"zh"</code>), and Russian (<code>"ru"</code>).</p></td>
-    </tr>
-    <tr>
-      <th>locale</th>
-      <td><p>An optional locale ID to use for formatting values in the
-report according the locale's rules. Examples include <code>"en_US"</code> for English
-(United States) and <code>"fr_FR"</code> for French (France); more simply, this can be
-a language identifier without a country designation, like <code>"es"</code> for
-Spanish (Spain, same as <code>"es_ES"</code>).</p></td>
+      <th>subdir</th>
+      <td><p>A path string representing a subdirectory in the GitHub
+repository. This is combined with any path components included in <code>file</code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A character vector of length 1 that contains a URL.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
 
-<p>1-1</p>
+<p>12-6</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Planning and Prep: 
-<code><a href='action_levels.html'>action_levels</a>()</code>,
-<code><a href='create_agent.html'>create_agent</a>()</code>,
-<code><a href='create_informant.html'>create_informant</a>()</code>,
-<code><a href='db_tbl.html'>db_tbl</a>()</code>,
-<code><a href='file_tbl.html'>file_tbl</a>()</code>,
-<code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
+    <div class='dont-index'><p>Other Utility and Helper Functions: 
+<code><a href='affix_datetime.html'>affix_datetime</a>()</code>,
+<code><a href='affix_date.html'>affix_date</a>()</code>,
+<code><a href='col_schema.html'>col_schema</a>()</code>,
+<code><a href='has_columns.html'>has_columns</a>()</code>,
+<code><a href='stop_if_not.html'>stop_if_not</a>()</code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Get an HTML report that describes all of</span>
-<span class='co'># the data in the `dplyr::storms` dataset</span>
-<span class='co'># scan_data(tbl = dplyr::storms)</span>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

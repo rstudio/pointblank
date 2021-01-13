@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Thoroughly scan a table to better understand it — scan_data • pointblank</title>
+<title>Get a table from a local or remote file — file_tbl • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,29 +46,21 @@
 
 
 
-<meta property="og:title" content="Thoroughly scan a table to better understand it — scan_data" />
-<meta property="og:description" content="Generate an HTML report that scours the input table data. Before calling up
-an agent to validate the data, it's a good idea to understand the data with
-some level of precision. Make this the initial step of a well-balanced
-data quality reporting workflow. The reporting output contains several
-sections to make everything more digestible, and these are:
-OverviewTable dimensions, duplicate row counts, column types, and
-reproducibility information
-VariablesA summary for each table variable and further statistics and
-summaries depending on the variable type
-InteractionsA matrix plot that shows interactions between variables
-CorrelationsA set of correlation matrix plots for numerical
-variables
-Missing ValuesA summary figure that shows the degree of missingness
-across variables
-SampleA table that provides the head and tail rows of the dataset
-
-The output HTML report will appear in the RStudio Viewer and can also be
-integrated in R Markdown HTML output. If you need the output HTML as a
-string, it's possible to get that by using as.character() (e.g.,
-scan_data(tbl = mtcars) %&amp;gt;% as.character()). The resulting HTML string is a
-complete HTML document where Bootstrap and jQuery are embedded
-within." />
+<meta property="og:title" content="Get a table from a local or remote file — file_tbl" />
+<meta property="og:description" content="If your target table is in a file, stored either locally or
+remotely, the file_tbl() function can make it possible to access it in a
+single function call. Compatible file types for this function are: CSV
+(.csv), TSV (.tsv), RDA (.rda), and RDS (.rds) files. This function
+generates an in-memory tbl_dbl object, which can be used as a target
+table for create_agent() and create_informant(). The ideal option for
+data access with file_tbl() is using this function as the read_fn
+parameter in either of the aforementioned create_*() functions. This can
+be done by using a leading ~ (e.g,. read_fn = ~file_tbl(...)).
+In the remote data use case, we can specify a URL starting with http://
+or https:// and ending with the file containing the data table. If data
+files are available in a GitHub repository then we can use the
+from_github() function to specify the name and location of the table data
+for a repository." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -174,85 +166,74 @@ within." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Thoroughly scan a table to better understand it</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/scan_data.R'><code>R/scan_data.R</code></a></small>
-    <div class="hidden name"><code>scan_data.Rd</code></div>
+    <h1>Get a table from a local or remote file</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/tbl_from_file.R'><code>R/tbl_from_file.R</code></a></small>
+    <div class="hidden name"><code>file_tbl.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Generate an HTML report that scours the input table data. Before calling up
-an <em>agent</em> to validate the data, it's a good idea to understand the data with
-some level of precision. Make this the initial step of a well-balanced
-<em>data quality reporting</em> workflow. The reporting output contains several
-sections to make everything more digestible, and these are:</p><dl>
-<dt>Overview</dt><dd><p>Table dimensions, duplicate row counts, column types, and
-reproducibility information</p></dd>
-<dt>Variables</dt><dd><p>A summary for each table variable and further statistics and
-summaries depending on the variable type</p></dd>
-<dt>Interactions</dt><dd><p>A matrix plot that shows interactions between variables</p></dd>
-<dt>Correlations</dt><dd><p>A set of correlation matrix plots for numerical
-variables</p></dd>
-<dt>Missing Values</dt><dd><p>A summary figure that shows the degree of missingness
-across variables</p></dd>
-<dt>Sample</dt><dd><p>A table that provides the head and tail rows of the dataset</p></dd>
-
-</dl><p>The output HTML report will appear in the RStudio Viewer and can also be
-integrated in R Markdown HTML output. If you need the output HTML as a
-string, it's possible to get that by using <code><a href='https://rdrr.io/r/base/character.html'>as.character()</a></code> (e.g.,
-<code>scan_data(tbl = mtcars) %&gt;% as.character()</code>). The resulting HTML string is a
-complete HTML document where <strong>Bootstrap</strong> and <strong>jQuery</strong> are embedded
-within.</p>
+    <p>If your target table is in a file, stored either locally or
+remotely, the <code>file_tbl()</code> function can make it possible to access it in a
+single function call. Compatible file types for this function are: CSV
+(<code>.csv</code>), TSV (<code>.tsv</code>), RDA (<code>.rda</code>), and RDS (<code>.rds</code>) files. This function
+generates an in-memory <code>tbl_dbl</code> object, which can be used as a target
+table for <code><a href='create_agent.html'>create_agent()</a></code> and <code><a href='create_informant.html'>create_informant()</a></code>. The ideal option for
+data access with <code>file_tbl()</code> is using this function as the <code>read_fn</code>
+parameter in either of the aforementioned <code>create_*()</code> functions. This can
+be done by using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> (e.g,. <code>read_fn = ~file_tbl(...)</code>).</p>
+<p>In the remote data use case, we can specify a URL starting with <code>http://</code>
+or <code>https://</code> and ending with the file containing the data table. If data
+files are available in a GitHub repository then we can use the
+<code><a href='from_github.html'>from_github()</a></code> function to specify the name and location of the table data
+for a repository.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>scan_data</span><span class='op'>(</span><span class='va'>tbl</span>, sections <span class='op'>=</span> <span class='st'>"OVICMS"</span>, navbar <span class='op'>=</span> <span class='cn'>TRUE</span>, lang <span class='op'>=</span> <span class='cn'>NULL</span>, locale <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>file_tbl</span><span class='op'>(</span><span class='va'>file</span>, type <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span>, keep <span class='op'>=</span> <span class='cn'>FALSE</span>, verify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>tbl</th>
-      <td><p>The input table. This can be a data frame, tibble, a <code>tbl_dbi</code>
-object, or a <code>tbl_spark</code> object.</p></td>
+      <th>file</th>
+      <td><p>The complete file path leading to a compatible data table either
+in the user system or at a <code>http://</code>, <code>https://</code>, <code>ftp://</code>, or <code>ftps://</code>
+URL. For a file hosted in a GitHub repository, a call to the
+<code><a href='from_github.html'>from_github()</a></code> function can be used here.</p></td>
     </tr>
     <tr>
-      <th>sections</th>
-      <td><p>The sections to include in the finalized <code>Table Scan</code> report.
-A string with key characters representing section names is required here.
-The default string is <code>"OVICMS"</code> wherein each letter stands for the
-following sections in their default order: <code>"O"</code>: <code>"overview"</code>; <code>"V"</code>:
-<code>"variables"</code>; <code>"I"</code>: <code>"interactions"</code>; <code>"C"</code>: <code>"correlations"</code>; <code>"M"</code>:
-<code>"missing"</code>; and <code>"S"</code>: <code>"sample"</code>. This string can be comprised of less
-characters and the order can be changed to suit the desired layout of the
-report. For <code>tbl_dbi</code> and <code>tbl_spark</code> objects supplied to <code>tbl</code>, the
-<code>"interactions"</code> and <code>"correlations"</code> sections are currently excluded.</p></td>
+      <th>type</th>
+      <td><p>The file type. This is normally inferred by file extension and is
+by default <code>NULL</code> to indicate that the extension will dictate the type of
+file reading that is performed internally. However, if there is no
+extension (and valid extensions are <code>.csv</code>, <code>.tsv</code>, <code>.rda</code>, and <code>.rds</code>), we
+can provide the type as either of <code>csv</code>, <code>tsv</code>, <code>rda</code>, or <code>rds</code>.</p></td>
     </tr>
     <tr>
-      <th>navbar</th>
-      <td><p>Should there be a navigation bar anchored to the top of the
-report page? By default this is <code>TRUE</code>.</p></td>
+      <th>...</th>
+      <td><p>Options passed to <strong>readr</strong>'s <code>read_csv()</code> or <code>read_tsv()</code>
+function.</p></td>
     </tr>
     <tr>
-      <th>lang</th>
-      <td><p>The language to use for label text in the report. By default,
-<code>NULL</code> will create English (<code>"en"</code>) text. Other options include French
-(<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), Spanish (<code>"es"</code>), Portuguese,
-(<code>"pt"</code>), Chinese (<code>"zh"</code>), and Russian (<code>"ru"</code>).</p></td>
+      <th>keep</th>
+      <td><p>In the case of a downloaded file, should it be stored in the
+working directory (<code>keep = TRUE</code>) or should it be downloaded to a temporary
+directory? By default, this is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
-      <th>locale</th>
-      <td><p>An optional locale ID to use for formatting values in the
-report according the locale's rules. Examples include <code>"en_US"</code> for English
-(United States) and <code>"fr_FR"</code> for French (France); more simply, this can be
-a language identifier without a country designation, like <code>"es"</code> for
-Spanish (Spain, same as <code>"es_ES"</code>).</p></td>
+      <th>verify</th>
+      <td><p>If <code>TRUE</code> (the default) then a verification of the data object
+having the <code>data.frame</code> class will be carried out.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <code>tbl_df</code> object.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
 
-<p>1-1</p>
+<p>1-7</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Planning and Prep: 
@@ -260,15 +241,9 @@ Spanish (Spain, same as <code>"es_ES"</code>).</p></td>
 <code><a href='create_agent.html'>create_agent</a>()</code>,
 <code><a href='create_informant.html'>create_informant</a>()</code>,
 <code><a href='db_tbl.html'>db_tbl</a>()</code>,
-<code><a href='file_tbl.html'>file_tbl</a>()</code>,
+<code><a href='scan_data.html'>scan_data</a>()</code>,
 <code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Get an HTML report that describes all of</span>
-<span class='co'># the data in the `dplyr::storms` dataset</span>
-<span class='co'># scan_data(tbl = dplyr::storms)</span>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

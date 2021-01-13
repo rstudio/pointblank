@@ -4,7 +4,7 @@
 \alias{file_tbl}
 \title{Get a table from a local or remote file}
 \usage{
-file_tbl(file, type = NULL, ..., keep = FALSE)
+file_tbl(file, type = NULL, ..., keep = FALSE, verify = TRUE)
 }
 \arguments{
 \item{file}{The complete file path leading to a compatible data table either
@@ -24,6 +24,9 @@ function.}
 \item{keep}{In the case of a downloaded file, should it be stored in the
 working directory (\code{keep = TRUE}) or should it be downloaded to a temporary
 directory? By default, this is \code{FALSE}.}
+
+\item{verify}{If \code{TRUE} (the default) then a verification of the data object
+having the \code{data.frame} class will be carried out.}
 }
 \value{
 A \code{tbl_df} object.

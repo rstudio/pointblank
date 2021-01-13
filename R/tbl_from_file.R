@@ -51,6 +51,8 @@
 #' @param keep In the case of a downloaded file, should it be stored in the
 #'   working directory (`keep = TRUE`) or should it be downloaded to a temporary
 #'   directory? By default, this is `FALSE`.
+#' @param verify If `TRUE` (the default) then a verification of the data object
+#'   having the `data.frame` class will be carried out.
 #'   
 #' @return A `tbl_df` object.
 #'
@@ -62,7 +64,8 @@
 file_tbl <- function(file,
                      type = NULL,
                      ...,
-                     keep = FALSE) {
+                     keep = FALSE,
+                     verify = TRUE) {
   
   if (!requireNamespace("readr", quietly = TRUE)) {
     stop(
@@ -160,6 +163,18 @@ file_tbl <- function(file,
       "The file type is incompatible with `file_tbl()`, the following work:\n",
       " * Comma or tab separated values (`.csv` or `.tsv`)\n",
       " * RDA or RDS files (`.rda`/`.rdata` or `.rds`)",
+      call. = FALSE
+    )
+  }
+  
+  # If `verify = TRUE` then ensure that the data object inherits
+  # from `data.frame`; this can either be a data frame proper or
+  # a tibble (`tbl_df`)
+  if (verify && !inherits(x, "data.frame")) {
+    
+    stop(
+      "The data object is not a data table:\n",
+      " * It is an object of class `", class(x)[1], "`.",
       call. = FALSE
     )
   }

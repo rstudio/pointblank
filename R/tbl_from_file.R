@@ -347,4 +347,16 @@ load_rda_object <- function(file) {
   env[[nm]]
 }
 
+get_attr_file_tbl <- function(x,
+                              attr) {
+
+  # Possible `attr` values are:
+  # * "tbl_name"
+  # * "full_path"
+  # * "dir_name"
+  # * "file_type"
+  
+  attr(x, which = paste0("pb_", attr), exact = TRUE)
+}
+
 # nocov end

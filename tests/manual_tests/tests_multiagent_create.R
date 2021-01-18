@@ -80,6 +80,8 @@ multiagent <-
 # 4UP report
 multiagent
 
+get_multiagent_report(multiagent)
+
 # 8UP report
 create_multiagent(agent_1, agent_2, agent_3, agent_2, agent_3)
 

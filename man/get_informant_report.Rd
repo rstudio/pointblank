@@ -4,13 +4,31 @@
 \alias{get_informant_report}
 \title{Get a table information report from an \emph{informant} object}
 \usage{
-get_informant_report(informant, size = "standard", lang = NULL, locale = NULL)
+get_informant_report(
+  informant,
+  size = "standard",
+  title = ":default:",
+  lang = NULL,
+  locale = NULL
+)
 }
 \arguments{
 \item{informant}{An informant object of class \code{ptblank_informant}.}
 
 \item{size}{The size of the display table, which can be either \code{"standard"}
 (the default, with a width of 875px) or \code{"small"} (width of 575px).}
+
+\item{title}{Options for customizing the title of the report. The default is
+the keyword \code{":default:"} which produces generic title text that refers to
+the \strong{pointblank} package in the language governed by the \code{lang} option.
+Another keyword option is \code{":tbl_name:"}, and that presents the name of the
+table as the title for the report. If no title is wanted, then the
+\code{":none:"} keyword option can be used. Aside from keyword options, text can
+be provided for the title and \code{glue::glue()} calls can be used to construct
+the text string. If providing text, it will be interpreted as Markdown text
+and transformed internally to HTML. To circumvent such a transformation,
+use text in \code{\link[=I]{I()}} to explicitly state that the supplied text should not be
+transformed.}
 
 \item{lang}{The language to use for the \emph{information report} (a summary table
 that provides the validation plan and the results from the interrogation.

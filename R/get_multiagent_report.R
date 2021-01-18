@@ -46,6 +46,14 @@
 #' @param display_table Should a display table be generated? If `TRUE` (the
 #'   default) a display table for the report will be shown in the Viewer. If
 #'   `FALSE` then a tibble will be returned.
+#' @param title Options for customizing the title of the report. The default is
+#'   the keyword `":default:"` which produces generic title text. If no title is
+#'   wanted, then the `":none:"` keyword option can be used. Aside from keyword
+#'   options, text can be provided for the title and `glue::glue()` calls can be
+#'   used to construct the text string. If providing text, it will be
+#'   interpreted as Markdown text and transformed internally to HTML. To
+#'   circumvent such a transformation, use text in [I()] to explicitly state
+#'   that the supplied text should not be transformed.
 #' 
 #' @return A **gt** table object if `display_table = TRUE` or a tibble if
 #'   `display_table = FALSE`.
@@ -56,7 +64,8 @@
 #'
 #' @export
 get_multiagent_report <- function(multiagent,
-                                  display_table = TRUE) {
+                                  display_table = TRUE,
+                                  title = ":default:") {
 
   for (i in seq_along(multiagent[["agents"]])) {
     
@@ -519,10 +528,19 @@ get_multiagent_report <- function(multiagent,
       gt::tab_options(container.width = gt::px(875))
   }
   
+  # Generate the report title with the `title` option
+  title_text <- 
+    process_title_text(
+      title = title,
+      tbl_name = NULL,
+      report_type = "multiagent",
+      lang = "en"
+    )
+  
   report_tbl <- 
     report_tbl %>%
     gt::tab_header(
-      title = "Pointblank Validation Series",
+      title = title_text,
       subtitle = gt::md(combined_subtitle)
     ) %>%
     gt::tab_source_note(

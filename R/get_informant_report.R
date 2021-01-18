@@ -29,6 +29,17 @@
 #' @param informant An informant object of class `ptblank_informant`.
 #' @param size The size of the display table, which can be either `"standard"`
 #'   (the default, with a width of 875px) or `"small"` (width of 575px).
+#' @param title Options for customizing the title of the report. The default is
+#'   the keyword `":default:"` which produces generic title text that refers to
+#'   the **pointblank** package in the language governed by the `lang` option.
+#'   Another keyword option is `":tbl_name:"`, and that presents the name of the
+#'   table as the title for the report. If no title is wanted, then the
+#'   `":none:"` keyword option can be used. Aside from keyword options, text can
+#'   be provided for the title and `glue::glue()` calls can be used to construct
+#'   the text string. If providing text, it will be interpreted as Markdown text
+#'   and transformed internally to HTML. To circumvent such a transformation,
+#'   use text in [I()] to explicitly state that the supplied text should not be
+#'   transformed.
 #' @param lang The language to use for the *information report* (a summary table
 #'   that provides the validation plan and the results from the interrogation.
 #'   By default, `NULL` will create English (`"en"`) text. Other options include
@@ -70,6 +81,7 @@
 #' @export
 get_informant_report <- function(informant,
                                  size = "standard",
+                                 title = ":default:",
                                  lang = NULL,
                                  locale = NULL) {
   
@@ -449,6 +461,15 @@ get_informant_report <- function(informant,
       time_start = time_start,
       time_end = time_end
     )
+
+  # Generate the report title with the `title` option
+  title_text <- 
+    process_title_text(
+      title = title,
+      tbl_name = tbl_name,
+      report_type = "informant",
+      lang = lang
+    )
   
   # Generate a gt table
   gt_informant_report <- 
@@ -458,10 +479,7 @@ get_informant_report <- function(informant,
       id = "pb_information"
     ) %>%
     gt::tab_header(
-      title = get_lsv(text = c(
-        "informant_report",
-        "pointblank_information_title_text"
-      ))[[lang]],
+      title = title_text,
       subtitle = gt::md(combined_subtitle)
     ) %>%
     gt::tab_source_note(source_note = gt::md(table_time)) %>%

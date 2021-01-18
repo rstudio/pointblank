@@ -100,6 +100,17 @@
 #' @param size The size of the display table, which can be either `"standard"`
 #'   (the default) or `"small"`. This only applies to a display table (where
 #'   `display_table = TRUE`).
+#' @param title Options for customizing the title of the report. The default is
+#'   the keyword `":default:"` which produces generic title text that refers to
+#'   the **pointblank** package in the language governed by the `lang` option.
+#'   Another keyword option is `":tbl_name:"`, and that presents the name of the
+#'   table as the title for the report. If no title is wanted, then the
+#'   `":none:"` keyword option can be used. Aside from keyword options, text can
+#'   be provided for the title and `glue::glue()` calls can be used to construct
+#'   the text string. If providing text, it will be interpreted as Markdown text
+#'   and transformed internally to HTML. To circumvent such a transformation,
+#'   use text in [I()] to explicitly state that the supplied text should not be
+#'   transformed.
 #' @param lang The language to use for automatic creation of briefs (short
 #'   descriptions for each validation step) and for the *agent report* (a
 #'   summary table that provides the validation plan and the results from the
@@ -171,6 +182,7 @@ get_agent_report <- function(agent,
                              keep = c("all", "fail_states"),
                              display_table = TRUE,
                              size = "standard",
+                             title = ":default:",
                              lang = NULL,
                              locale = NULL) {
   
@@ -326,6 +338,8 @@ get_agent_report <- function(agent,
   briefs <- validation_set$brief
   assertion_type <- validation_set$assertion_type
   label <- validation_set$label
+  tbl_src <- agent$tbl_src
+  tbl_name <- agent$tbl_name
   
   # Generate agent label HTML
   agent_label_styled <- create_agent_label_html(agent)
@@ -333,8 +347,8 @@ get_agent_report <- function(agent,
   # Generate table type HTML
   table_type <- 
     create_table_type_html(
-      tbl_src = agent$tbl_src,
-      tbl_name = agent$tbl_name
+      tbl_src = tbl_src,
+      tbl_name = tbl_name
     )
 
   # Generate action levels HTML
@@ -718,7 +732,7 @@ get_agent_report <- function(agent,
                 "<div><p title=\"",
                 x %>% tidy_gsub("~", "") %>% paste(., collapse = ", "),
                 "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
-                "font-family: monospace; white-space: nowrap; ",
+                "font-size: 11px; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
                 text,
                 "</p></div>"
@@ -730,7 +744,7 @@ get_agent_report <- function(agent,
                 x %>% tidy_gsub("~", "") %>% paste(., collapse = ", "),
                 "\" data-balloon-pos=\"left\"><p style=\"margin-top: 0px; ",
                 "margin-bottom: 0px; ",
-                "font-family: monospace; white-space: nowrap; ",
+                "font-size: 11px; white-space: nowrap; ",
                 "text-overflow: ellipsis; overflow: hidden;\">",
                 "<code>", text, "</code>",
                 "</p></div>"
@@ -1036,6 +1050,16 @@ get_agent_report <- function(agent,
   f_fail_val <- ifelse(f_fail_val < 1 & f_fail_val > 0.99, 0.99, f_fail_val)
   f_fail_val <- as.numeric(f_fail_val)
 
+  
+  # Generate the report title with the `title` option
+  title_text <- 
+    process_title_text(
+      title = title,
+      tbl_name = tbl_name,
+      report_type = "agent",
+      lang = lang
+    )
+  
   # Generate a gt table
   gt_agent_report <- 
     report_tbl %>%
@@ -1064,7 +1088,11 @@ get_agent_report <- function(agent,
       n_pass, f_pass, n_fail, f_fail, W, S, N, extract,
       W_val, S_val, N_val, eval, active
     ) %>%
-    gt::gt(id = "report") %>%
+    gt::gt(id = "pb_agent") %>%
+    gt::tab_header(
+      title = title_text,
+      subtitle = gt::md(combined_subtitle)
+    ) %>%
     gt::cols_merge(
       columns = gt::vars(n_pass, f_pass),
       hide_columns = gt::vars(f_pass)
@@ -1096,10 +1124,6 @@ get_agent_report <- function(agent,
       n_pass = "PASS",
       n_fail = "FAIL",
       extract = "EXT"
-    ) %>%
-    gt::tab_header(
-      title = get_lsv("agent_report/pointblank_validation_title_text")[[lang]],
-      subtitle = gt::md(combined_subtitle)
     ) %>%
     gt::tab_source_note(source_note = gt::md(table_time)) %>%
     gt::tab_options(
@@ -1249,6 +1273,12 @@ get_agent_report <- function(agent,
       locations = gt::cells_body(
         columns = TRUE,
         rows = eval == "ERROR"
+      )
+    ) %>%
+    gt::tab_style(
+      style = gt::cell_text(size = gt::px(11)),
+      locations = gt::cells_body(
+        columns = gt::vars(units, n_pass, n_fail)
       )
     )
   
@@ -1402,26 +1432,19 @@ get_agent_report <- function(agent,
         )
       ) %>%
       gt::opt_css(
-        paste0(
-          "@import url(\"https://fonts.googleapis.com/",
-          "css2?family=IBM+Plex+Mono&display=swap\");"
-        )
-      ) %>%
-      gt::opt_css(
         css = "
-          #report {
+          #pb_agent {
             -webkit-font-smoothing: antialiased;
           }
-          #report .gt_row {
+          #pb_agent .gt_row {
             overflow: visible;
           }
-          #report .gt_sourcenote {
+          #pb_agent .gt_sourcenote {
             height: 35px;
             padding: 0
           }
-          #report code {
+          #pb_agent code {
             font-family: 'IBM Plex Mono', monospace, courier;
-            font-size: 11px;
             background-color: transparent;
             padding: 0;
           }
@@ -1429,9 +1452,69 @@ get_agent_report <- function(agent,
       )
   }
   
+
+  
   # nocov end
   
   gt_agent_report
+}
+
+get_default_title_text <- function(report_type,
+                                   lang) {
+  
+  if (report_type == "informant") {
+    title_text <- 
+      get_lsv(text = c(
+        "informant_report",
+        "pointblank_information_title_text"
+      ))[[lang]]
+  } else if (report_type == "agent") {
+    title_text <- 
+      get_lsv(text = c(
+        "agent_report",
+        "pointblank_validation_title_text"
+      ))[[lang]]
+  } else if (report_type == "multiagent") {
+    title_text <- "Pointblank Validation Series"
+  }
+  
+  title_text
+}
+
+process_title_text <- function(title,
+                               tbl_name,
+                               report_type,
+                               lang) {
+  
+  if (report_type == "multiagent") {
+    if (title == ":tbl_name:") {
+      stop(
+        "The `:tbl_name:` option can't be used with `get_multiagent_report()`.",
+        call. = FALSE
+      )
+    }
+  }
+  
+  if (is.null(title)) {
+    title_text <- ""
+  } else if (is.na(title)) {
+    title_text <- ""
+  } else if (title == ":default:") {
+    title_text <- get_default_title_text(report_type = report_type, lang = lang)
+  } else if (title == ":none:") {
+    title_text <- ""
+  } else if (title == ":tbl_name:") {
+    if (!is.na(tbl_name) && tbl_name != "NA") {
+      title_text <- gt::md(paste0("<code>", tbl_name, "</code>"))
+    } else {
+      title_text <- ""
+    }
+  } else if (inherits(title, "AsIs")) {
+    title_text <- unclass(title)
+  } else if (inherits(title, "character")) {
+    title_text <- gt::md(title)
+  }
+  title_text
 }
 
 create_table_time_html <- function(time_start,
@@ -1451,7 +1534,7 @@ create_table_time_html <- function(time_start,
     "color: #444;padding: 0.5em 0.5em;",
     "position: inherit;text-transform: uppercase;margin-left: 10px;",
     "border: solid 1px #999999;font-variant-numeric: tabular-nums;",
-    "border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;\">",
+    "border-radius: 0;padding: 2px 10px 2px 10px;\">",
     format(time_start, "%Y-%m-%d %H:%M:%S %Z"),
     "</span>",
     
@@ -1460,7 +1543,7 @@ create_table_time_html <- function(time_start,
     "position: inherit;margin: 5px 1px 5px 0;",
     "border: solid 1px #999999;border-left: none;",
     "font-variant-numeric: tabular-nums;",
-    "border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;\">",
+    "border-radius: 0;padding: 2px 10px 2px 10px;\">",
     time_duration_formatted,
     "</span>",
     
@@ -1468,7 +1551,7 @@ create_table_time_html <- function(time_start,
     "color: #444;padding: 0.5em 0.5em;",
     "position: inherit;text-transform: uppercase;margin: 5px 1px 5px -1px;",
     "border: solid 1px #999999;border-left: none;",
-    "border-radius: 0;padding: 2px 10px 2px 10px;font-size: smaller;\">",
+    "border-radius: 0;padding: 2px 10px 2px 10px;\">",
     format(time_end, "%Y-%m-%d %H:%M:%S %Z"),
     "</span>"
   )
@@ -1522,8 +1605,8 @@ create_table_type_html <- function(tbl_src, tbl_name) {
       tbl_spark = c("#E66F21", "#FFFFFF", "Spark DataFrame"),
       c("#E2E2E2", "#222222", tbl_src)
     )
-  
-  if (all(!is.na(text)) && is.na(tbl_name)) {
+
+  if (all(!is.na(text)) && (is.na(tbl_name) || tbl_name == "NA")) {
     
     paste0(
       "<span style=\"background-color: ", text[1], ";",

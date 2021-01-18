@@ -4,7 +4,7 @@
 \alias{get_multiagent_report}
 \title{Get a summary report using multiple agents}
 \usage{
-get_multiagent_report(multiagent, display_table = TRUE)
+get_multiagent_report(multiagent, display_table = TRUE, title = ":default:")
 }
 \arguments{
 \item{multiagent}{A multiagent object of class \code{ptblank_multiagent}.}
@@ -12,6 +12,15 @@ get_multiagent_report(multiagent, display_table = TRUE)
 \item{display_table}{Should a display table be generated? If \code{TRUE} (the
 default) a display table for the report will be shown in the Viewer. If
 \code{FALSE} then a tibble will be returned.}
+
+\item{title}{Options for customizing the title of the report. The default is
+the keyword \code{":default:"} which produces generic title text. If no title is
+wanted, then the \code{":none:"} keyword option can be used. Aside from keyword
+options, text can be provided for the title and \code{glue::glue()} calls can be
+used to construct the text string. If providing text, it will be
+interpreted as Markdown text and transformed internally to HTML. To
+circumvent such a transformation, use text in \code{\link[=I]{I()}} to explicitly state
+that the supplied text should not be transformed.}
 }
 \value{
 A \strong{gt} table object if \code{display_table = TRUE} or a tibble if

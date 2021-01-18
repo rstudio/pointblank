@@ -76,16 +76,24 @@ agent_5 <-
 multiagent <-
   create_multiagent(agent_1, agent_2, agent_3, agent_5)
 
-# 4UP report
+## 4UP report
+
+# Standard printing
+multiagent
+
+# Printing with options in `get_multiagent_report()`
 get_multiagent_report(multiagent, title = "Report with **Multiple** Table Validations")
 
-# 8UP report
+# Option for tibble output
+get_multiagent_report(multiagent, display_table = FALSE)
+
+## 8UP report
 create_multiagent(agent_1, agent_2, agent_3, agent_2, agent_3)
 
-# 16UP report
+## 16UP report
 create_multiagent(agent_1, agent_2, agent_3, agent_2, agent_3, agent_2, agent_3, agent_2, agent_3)
 
-# 16+ report
+## 16UP+ report
 create_multiagent(
   agent_1, agent_2, agent_3, agent_2, agent_3, agent_2, agent_3, agent_2, agent_3,
   agent_1, agent_2, agent_3, agent_2, agent_3, agent_2, agent_3, agent_2, agent_3,

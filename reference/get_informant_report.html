@@ -172,7 +172,13 @@ direct editing of a <strong>pointblank</strong> YAML file (an informant can be w
 to <strong>pointblank</strong> YAML with <code>yaml_write(informant = &lt;informant&gt;, ...)</code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_informant_report</span><span class='op'>(</span><span class='va'>informant</span>, size <span class='op'>=</span> <span class='st'>"standard"</span>, lang <span class='op'>=</span> <span class='cn'>NULL</span>, locale <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_informant_report</span><span class='op'>(</span>
+  <span class='va'>informant</span>,
+  size <span class='op'>=</span> <span class='st'>"standard"</span>,
+  title <span class='op'>=</span> <span class='st'>":default:"</span>,
+  lang <span class='op'>=</span> <span class='cn'>NULL</span>,
+  locale <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,6 +191,20 @@ to <strong>pointblank</strong> YAML with <code>yaml_write(informant = &lt;inform
       <th>size</th>
       <td><p>The size of the display table, which can be either <code>"standard"</code>
 (the default, with a width of 875px) or <code>"small"</code> (width of 575px).</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>Options for customizing the title of the report. The default is
+the keyword <code>":default:"</code> which produces generic title text that refers to
+the <strong>pointblank</strong> package in the language governed by the <code>lang</code> option.
+Another keyword option is <code>":tbl_name:"</code>, and that presents the name of the
+table as the title for the report. If no title is wanted, then the
+<code>":none:"</code> keyword option can be used. Aside from keyword options, text can
+be provided for the title and <code><a href='https://glue.tidyverse.org/reference/glue.html'>glue::glue()</a></code> calls can be used to construct
+the text string. If providing text, it will be interpreted as Markdown text
+and transformed internally to HTML. To circumvent such a transformation,
+use text in <code><a href='https://rdrr.io/r/base/AsIs.html'>I()</a></code> to explicitly state that the supplied text should not be
+transformed.</p></td>
     </tr>
     <tr>
       <th>lang</th>

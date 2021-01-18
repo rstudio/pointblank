@@ -200,7 +200,7 @@ to track the validation results where the validation step doesn't change but
 the target table does.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_multiagent_report</span><span class='op'>(</span><span class='va'>multiagent</span>, display_table <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_multiagent_report</span><span class='op'>(</span><span class='va'>multiagent</span>, display_table <span class='op'>=</span> <span class='cn'>TRUE</span>, title <span class='op'>=</span> <span class='st'>":default:"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -214,6 +214,17 @@ the target table does.</p>
       <td><p>Should a display table be generated? If <code>TRUE</code> (the
 default) a display table for the report will be shown in the Viewer. If
 <code>FALSE</code> then a tibble will be returned.</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>Options for customizing the title of the report. The default is
+the keyword <code>":default:"</code> which produces generic title text. If no title is
+wanted, then the <code>":none:"</code> keyword option can be used. Aside from keyword
+options, text can be provided for the title and <code><a href='https://glue.tidyverse.org/reference/glue.html'>glue::glue()</a></code> calls can be
+used to construct the text string. If providing text, it will be
+interpreted as Markdown text and transformed internally to HTML. To
+circumvent such a transformation, use text in <code><a href='https://rdrr.io/r/base/AsIs.html'>I()</a></code> to explicitly state
+that the supplied text should not be transformed.</p></td>
     </tr>
     </table>
 

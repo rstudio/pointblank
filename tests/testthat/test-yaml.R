@@ -7,12 +7,13 @@ test_that("YAML writing and reading works as expected", {
   agent <-
     create_agent(read_fn = ~ small_table, actions = al) %>%
     col_vals_in_set(vars(f), set = c("low", "mid", "high")) %>%
-    col_vals_between(vars(a), 2, 8) %>%
+    col_vals_between("a", 2, 8) %>%
     col_vals_lt(vars(a), vars(d), na_pass = TRUE, preconditions = ~. %>% dplyr::filter(a > 3)) %>%
     col_vals_gt(vars(d), 100) %>%
     col_vals_equal(vars(d), vars(d), na_pass = TRUE) %>%
     col_vals_null(vars(c)) %>%
-    col_vals_regex(vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}") %>%
+    col_vals_not_null(matches("^.$")) %>%
+    col_vals_regex("b", regex = "[0-9]-[a-z]{3}-[0-9]{3}") %>%
     col_is_character(vars(b)) %>%
     col_exists(vars(a, b)) %>%
     col_vals_expr(expr(a %% 1 == 0)) %>%
@@ -46,7 +47,7 @@ test_that("YAML writing and reading works as expected", {
   # console and returns nothing (when reading from an agent)
   expect_null(suppressMessages(yaml_agent_string(agent = agent)))
   expect_match(
-    as.character(testthat::capture_message(yaml_agent_string(agent = agent))),
+    as.character(testthat::capture_messages(yaml_agent_string(agent = agent))),
     "read_fn: .*?tbl_name: .*?label: .*?actions:.*?warn_fraction: 0.1.*?stop_fraction: 0.2.*?steps:.*"
   )
 
@@ -60,7 +61,7 @@ test_that("YAML writing and reading works as expected", {
   # console and returns nothing (when reading from a YAML file)
   expect_null(suppressMessages(yaml_agent_string(filename = file.path(temp_dir, "test.yaml"))))
   expect_match(
-    as.character(testthat::capture_message(yaml_agent_string(filename = file.path(temp_dir, "test.yaml")))),
+    as.character(testthat::capture_messages(yaml_agent_string(filename = file.path(temp_dir, "test.yaml")))),
     "read_fn: .*?tbl_name: .*?label: .*?actions:.*?warn_fraction: 0.1.*?stop_fraction: 0.2.*?steps:.*"
   )
 
@@ -78,16 +79,17 @@ test_that("YAML writing and reading works as expected", {
   expect_true(inherits(agent_plan$read_fn, "formula"))
 
   # Expect there to be 16 validation steps available in the validation set
-  expect_length(agent_plan$validation_set$i, n = 16)
+  expect_length(agent_plan$validation_set$i, n = 22)
 
   # Expect specific validation functions used as the bases for these
   # validation steps
   expect_equal(
     agent_plan$validation_set$assertion_type,
     c("col_vals_in_set", "col_vals_between", "col_vals_lt", "col_vals_gt",
-      "col_vals_equal", "col_vals_null", "col_vals_regex", "col_is_character",
-      "col_exists", "col_exists", "col_vals_expr", "rows_distinct",
-      "rows_distinct", "col_schema_match", "conjointly", "col_vals_between"
+      "col_vals_equal", "col_vals_null", rep("col_vals_not_null", 6),
+      "col_vals_regex", "col_is_character", "col_exists", "col_exists",
+      "col_vals_expr", "rows_distinct", "rows_distinct", "col_schema_match",
+      "conjointly", "col_vals_between"
     )
   )
 
@@ -112,12 +114,12 @@ test_that("YAML writing and reading works as expected", {
   # expression in the console and returns nothing (when reading from an agent)
   expect_null(suppressMessages(yaml_agent_show_exprs(filename = file.path(temp_dir, "test.yaml"))))
   expect_match(
-    as.character(testthat::capture_message(yaml_agent_show_exprs(filename = file.path(temp_dir, "test.yaml")))),
+    as.character(testthat::capture_messages(yaml_agent_show_exprs(filename = file.path(temp_dir, "test.yaml")))),
     paste(
       c(
         "create_agent", "col_vals_in_set", "col_vals_between",
         "col_vals_lt", "col_vals_gt", "col_vals_equal", "col_vals_null",
-        "col_vals_regex", "col_is_character", "col_exists", "col_exists",
+        "col_vals_not_null", "col_vals_regex", "col_is_character", "col_exists",
         "col_vals_expr", "rows_distinct", "rows_distinct", "col_schema_match",
         "conjointly", "col_vals_between"),
       collapse = ".*?"
@@ -138,31 +140,35 @@ test_that("YAML writing and reading works as expected", {
   expect_true(inherits(agent_intel$read_fn, "formula"))
 
   # Expect there to be 16 validation steps available in the validation set
-  expect_length(agent_intel$validation_set$i, n = 16)
+  expect_length(agent_intel$validation_set$i, n = 22)
 
   # Expect specific validation functions used as the bases for these
   # validation steps
   expect_equal(
     agent_intel$validation_set$assertion_type,
     c("col_vals_in_set", "col_vals_between", "col_vals_lt", "col_vals_gt",
-      "col_vals_equal", "col_vals_null", "col_vals_regex", "col_is_character",
-      "col_exists", "col_exists", "col_vals_expr", "rows_distinct",
-      "rows_distinct", "col_schema_match", "conjointly", "col_vals_between"
+      "col_vals_equal", "col_vals_null", rep("col_vals_not_null", 6),
+      "col_vals_regex", "col_is_character", "col_exists", "col_exists",
+      "col_vals_expr", "rows_distinct", "rows_distinct", "col_schema_match",
+      "conjointly", "col_vals_between"
     )
   )
 
   # Expect interrogation data to be present in the validation set
   expect_equal(
     agent_intel$validation_set$n,
-    c(13, 13, 6, 13, 13, 13, 13, 1, 1, 1, 13, 13, 13, 1, 13, 13)
+    c(13, 13, 6, rep(13, 10), 1, 1, 1, 13, 13, 13, 1, 13, 13)
   )
   expect_equal(
     agent_intel$validation_set$n_passed,
-    c(13, 12, 6, 13, 13, 2, 13, 1, 1, 1, 13, 11, 11, 1, 6, 12)
+    c(
+      13, 12, 6, 13, 13, 2, 13, 13, 11, 13, 13, 13, 13, 1, 1,
+      1, 13, 11, 11, 1, 6, 12
+    )
   )
   expect_equal(
     agent_intel$validation_set$n_failed,
-    c(0, 1, 0, 0, 0, 11, 0, 0, 0, 0, 0, 2, 2, 0, 7, 1)
+    c(0, 1, 0, 0, 0, 11, 0, 0, 2, rep(0, 8), 2, 2, 0, 7, 1)
   )
   
   # Expect an error if using `yaml_agent_string()` with both an

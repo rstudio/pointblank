@@ -165,6 +165,11 @@ col_vals_not_null <- function(x,
   
   values <- NULL
   
+  # Get `columns` as a label
+  columns_expr <- 
+    rlang::as_label(rlang::quo(!!enquo(columns))) %>%
+    gsub("^\"|\"$", "", .)
+  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   
@@ -204,6 +209,9 @@ col_vals_not_null <- function(x,
   # Normalize any provided `step_id` value(s)
   step_id <- normalize_step_id(step_id, columns, agent)
   
+  # Get the next step number for the `validation_set` tibble
+  i_o <- get_next_validation_set_row(agent)
+  
   # Check `step_id` value(s) against all other `step_id`
   # values in earlier validation steps
   check_step_id_duplicates(step_id, agent)
@@ -216,6 +224,8 @@ col_vals_not_null <- function(x,
       create_validation_step(
         agent = agent,
         assertion_type = "col_vals_not_null",
+        i_o = i_o,
+        columns_expr = columns_expr,
         column = columns[i],
         preconditions = preconditions,
         actions = covert_actions(actions, agent),

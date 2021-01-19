@@ -490,6 +490,13 @@ make_validation_steps <- function(steps) {
   
   if (length(steps) == 0) return("")
   
+  tidyselect_regex <- 
+    paste0(
+      "^(",
+      paste(c("vars", exported_tidyselect_fns()), collapse = "|"),
+      ")\\(.*?\\)$"
+    )
+  
   # nolint start
   
   str_exprs <- 
@@ -505,10 +512,11 @@ make_validation_steps <- function(steps) {
             seq_along(step_i[[1]]),
             FUN.VALUE = character(1), 
             FUN = function(x) {
+              
               arg_name <- names(step_i[[1]][x])
               val <- step_i[[1]][[x]]
               others <- c("preconditions", "expr", "schema")
-              
+
               if (arg_name == "fns") {
                 return(paste("  ", val, collapse = ",\n"))
               }
@@ -582,7 +590,7 @@ make_validation_steps <- function(steps) {
                 
               } else if (!is.null(val[1]) &&
                          is.character(val[1]) &&
-                         !grepl("^vars\\(.*?\\)$", val[1]) &&
+                         !grepl(tidyselect_regex, val[1]) &&
                          !(arg_name %in% others)) {
                 
                 val <- paste0("\"", val, "\"")

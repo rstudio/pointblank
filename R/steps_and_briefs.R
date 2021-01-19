@@ -19,6 +19,8 @@
 
 create_validation_step <- function(agent,
                                    assertion_type,
+                                   i_o = NULL,
+                                   columns_expr = NULL,
                                    column = NULL,
                                    values = NULL,
                                    na_pass = NULL,
@@ -30,11 +32,7 @@ create_validation_step <- function(agent,
                                    active = NULL) {
   
   # Get the next step number (i)
-  if (nrow(agent$validation_set) == 0) {
-    i <- 1L
-  } else {
-    i <- max(agent$validation_set$i) + 1L
-  }
+  i <- get_next_validation_set_row(agent)
   
   # Calculate the SHA1 hash for the validation step
   sha1 <-
@@ -54,9 +52,13 @@ create_validation_step <- function(agent,
   validation_step_df <-
     dplyr::tibble(
       i = i,
+      i_o = ifelse(is.null(i_o), NA_integer_, as.integer(i_o)),
       step_id = step_id,
       sha1 = sha1,
       assertion_type = assertion_type,
+      columns_expr = ifelse(
+        is.null(columns_expr), NA_character_, as.character(columns_expr)
+      ),
       column = ifelse(is.null(column), list(NULL), list(column)),
       values = ifelse(is.null(values), list(NULL), list(values)),
       na_pass = ifelse(is.null(na_pass), as.logical(NA), as.logical(na_pass)),
@@ -66,9 +68,7 @@ create_validation_step <- function(agent,
       actions = ifelse(is.null(actions), list(NULL), list(actions)),
       label = ifelse(is.null(label), NA_character_, as.character(label)),
       brief = ifelse(is.null(brief), NA_character_, as.character(brief)),
-      active = ifelse(
-        is.null(active), list(NULL), list(active)
-      ),
+      active = ifelse(is.null(active), list(NULL), list(active)),
       eval_active = NA,
       eval_error = NA,
       eval_warning = NA,

@@ -93,6 +93,21 @@ number_of_validation_steps <- function(agent) {
   if (is_ptblank_agent(agent)) agent$validation_set %>% nrow() else NA
 }
 
+# Get the next step number for the `validation_set` tibble
+get_next_validation_set_row <- function(agent) {
+  
+  if (nrow(agent$validation_set) == 0) {
+    step <- 1L
+  } else {
+    step <- max(agent$validation_set$i) + 1L
+  }
+  step
+}
+
+exported_tidyselect_fns <- function() {
+  c("starts_with", "ends_with", "contains", "matches", "everything")
+}
+
 get_assertion_type_at_idx <- function(agent, idx) {
   agent$validation_set[[idx, "assertion_type"]]
 }

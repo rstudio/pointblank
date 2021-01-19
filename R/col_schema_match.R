@@ -448,7 +448,7 @@ col_schema <- function(...,
   db_col_types <- match.arg(.db_col_types)
 
   x <- list(...)
-  
+
   # Transform SQL column types to lowercase to allow
   # both uppercase and lowercase conventions while
   # standardizing the input
@@ -472,7 +472,9 @@ col_schema <- function(...,
       class(x) <- c("r_type", "col_schema")
     }
     
-    if (inherits(.tbl, "tbl_dbi") || inherits(.tbl, "tbl_spark")) {
+    if (inherits(.tbl, "tbl_dbi") || 
+        inherits(.tbl, "tbl_spark") ||
+        inherits(.tbl, "ArrowObject")) {
       
       tbl_info <- get_tbl_information(tbl = .tbl)
       

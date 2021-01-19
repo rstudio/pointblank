@@ -1603,6 +1603,7 @@ create_table_type_html <- function(tbl_src, tbl_name) {
       mysql = c("#EBAD40", "#222222", "MySQL"),
       postgres = c("#3E638B", "#FFFFFF", "PostgreSQL"),
       tbl_spark = c("#E66F21", "#FFFFFF", "Spark DataFrame"),
+      Arrow = c("#353A3F", "#FFFFFF", "Apache Arrow"),
       c("#E2E2E2", "#222222", tbl_src)
     )
 

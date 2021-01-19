@@ -808,3 +808,22 @@ snip_highest <- function(column) {
     )
   )
 }
+
+#' @export
+snip_stats <- function(column,
+                       type = c("5num", "7num", "bowley")) {
+  
+  type <- match.arg(type)
+  
+  stats::as.formula(
+    as.character(
+      glue::glue(
+        "~ . %>%
+    dplyr::select(<<column>>) %>%
+    pb_str_summary(type = '<<type>>')",
+    .open = "<<", .close = ">>"
+      )
+    )
+  )
+  
+}

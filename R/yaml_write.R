@@ -536,9 +536,13 @@ as_agent_yaml_list <- function(agent) {
   agent_validation_set <- 
     agent$validation_set %>% 
     dplyr::select(
-      assertion_type, column, values, na_pass,
+      i_o, assertion_type, columns_expr, column, values, na_pass,
       preconditions, actions, brief, active
-    )
+    ) %>%
+    dplyr::group_by(i_o) %>%
+    dplyr::filter(dplyr::row_number() == 1) %>%
+    dplyr::ungroup() %>%
+    dplyr::rename(i = i_o)
   
   all_steps <- list()
   
@@ -554,10 +558,12 @@ as_agent_yaml_list <- function(agent) {
       "col_vals_gte", "col_vals_gt"
     )) {
       
+      column_text <- get_column_text(step_list)
+      
       lst_step <- 
         list(
           validation_fn = list(
-            columns = as_vars_fn(step_list$column[[1]]),
+            columns = column_text,
             value = get_arg_value(step_list$values),
             na_pass = step_list$na_pass,
             preconditions = as_list_preconditions(step_list$preconditions),
@@ -571,10 +577,12 @@ as_agent_yaml_list <- function(agent) {
       
     } else if (grepl("between", validation_fn)) {
 
+      column_text <- get_column_text(step_list)
+      
       lst_step <- 
         list(
           validation_fn = list(
-            columns = as_vars_fn(step_list$column[[1]]),
+            columns = column_text,
             left = get_arg_value_lr(step_list$values[[1]][[1]]),
             right = get_arg_value_lr(step_list$values[[1]][[2]]),
             inclusive = as.logical(
@@ -595,10 +603,12 @@ as_agent_yaml_list <- function(agent) {
       
     } else if (grepl("in_set", validation_fn)) {
 
+      column_text <- get_column_text(step_list)
+      
       lst_step <- 
         list(
           validation_fn = list(
-            columns = as_vars_fn(step_list$column[[1]]),
+            columns = column_text,
             set = step_list$values[[1]],
             preconditions = as_list_preconditions(step_list$preconditions),
             actions = as_action_levels(
@@ -611,10 +621,12 @@ as_agent_yaml_list <- function(agent) {
 
     } else if (grepl("null", validation_fn)) {
       
+      column_text <- get_column_text(step_list)
+      
       lst_step <- 
         list(
           validation_fn = list(
-            columns = as_vars_fn(step_list$column[[1]]),
+            columns = column_text,
             preconditions = as_list_preconditions(step_list$preconditions),
             actions = as_action_levels(
               step_list$actions[[1]],
@@ -632,10 +644,12 @@ as_agent_yaml_list <- function(agent) {
         decreasing_tol <- step_list$values[[1]][2]
       }
       
+      column_text <- get_column_text(step_list)
+      
       lst_step <- 
         list(
           validation_fn = list(
-            columns = as_vars_fn(step_list$column[[1]]),
+            columns = column_text,
             allow_stationary = ifelse(
               step_list$values[[1]][1] == 1, TRUE, FALSE
             ),
@@ -657,10 +671,12 @@ as_agent_yaml_list <- function(agent) {
         increasing_tol <- step_list$values[[1]][2]
       }
       
+      column_text <- get_column_text(step_list)
+      
       lst_step <- 
         list(
           validation_fn = list(
-            columns = as_vars_fn(step_list$column[[1]]),
+            columns = column_text,
             allow_stationary = ifelse(
               step_list$values[[1]][1] == 1, TRUE, FALSE
             ),
@@ -676,10 +692,12 @@ as_agent_yaml_list <- function(agent) {
       
     } else if (validation_fn == "col_vals_regex") {
 
+      column_text <- get_column_text(step_list)
+      
       lst_step <- 
         list(
           validation_fn = list(
-            columns = as_vars_fn(step_list$column[[1]]),
+            columns = column_text,
             regex = get_arg_value(step_list$values),
             preconditions = as_list_preconditions(step_list$preconditions),
             actions = as_action_levels(
@@ -693,10 +711,12 @@ as_agent_yaml_list <- function(agent) {
     } else if (grepl("col_is_", validation_fn) ||
                validation_fn == "col_exists") {
 
+      column_text <- get_column_text(step_list)
+      
       lst_step <- 
         list(
           validation_fn = list(
-            columns = as_vars_fn(step_list$column[[1]]),
+            columns = column_text,
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default
@@ -796,6 +816,17 @@ as_agent_yaml_list <- function(agent) {
     lst_locale,
     list(steps = all_steps)
   )
+}
+
+get_column_text <- function(step_list) {
+  
+  if (step_list$column[[1]] == step_list$columns_expr) {
+    column_text <- as_vars_fn(step_list$column[[1]])
+  } else {
+    column_text <- step_list$columns_expr
+  }
+  
+  column_text
 }
 
 as_informant_yaml_list <- function(informant) {

@@ -573,10 +573,18 @@ get_tbl_information_dbi <- function(tbl) {
 }
 
 get_tbl_information_arrow <- function(tbl) {
-  
-  col_names <- colnames(tbl)
-  
+
   schema_cap <- capture.output(tbl$schema)[-1]
+  
+  col_names <-
+    vapply(
+      schema_cap,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        unlist(strsplit(x, split = ": "))[1]
+      }
+    )
   
   db_col_types <-
     vapply(
@@ -598,7 +606,7 @@ get_tbl_information_arrow <- function(tbl) {
   
   list(
     tbl_src = "Arrow",
-    tbl_src_details = NA_character_,
+    tbl_src_details = class(tbl)[1],
     db_tbl_name = NA_character_,
     col_names = col_names,
     r_col_types = r_col_types,

@@ -574,7 +574,7 @@ get_tbl_information_dbi <- function(tbl) {
 
 get_tbl_information_arrow <- function(tbl) {
 
-  schema_cap <- capture.output(tbl$schema)[-1][1:ncol(tbl)]
+  schema_cap <- utils::capture.output(tbl$schema)[-1][1:ncol(tbl)]
   
   col_names <-
     vapply(
@@ -598,7 +598,7 @@ get_tbl_information_arrow <- function(tbl) {
   
   r_col_types <-
     vapply(
-      dplyr::as_tibble(head(tbl, 1)),
+      dplyr::as_tibble(utils::head(tbl, 1)),
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) class(x)[1]

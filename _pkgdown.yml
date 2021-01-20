@@ -77,13 +77,15 @@ reference:
       `info_section()` function. Snippets of information can be gleaned from the
       target table by using the `info_snippet()` function. These bits of
       information can be incorporated in text defined by the other `info_*()`
-      functions via `{ }`.
+      functions via `{ }`. Some great `snip_*()` functions are included to make
+      info-snipping as easy (and useful!) as can be.
     contents:
     - info_tabular
     - info_columns
     - info_section
     - info_snippet
     - snip_list
+    - snip_stats
     - snip_lowest
     - snip_highest
     

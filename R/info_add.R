@@ -749,6 +749,51 @@ snip_list <- function(column,
   formula
 }
 
+#' A `fn` for `info_snippet()`: get an inline statistical summary
+#'
+#' @description
+#' The `snip_stats()` function can be used as an [info_snippet()] function
+#' (i.e., provided to `fn`) to produce a five- or seven-number statistical
+#' summary. This inline summary works well within a paragraph of text and can
+#' help in describing the distribution of numerical values in a column.
+#'
+#' For a given column, three different types of inline statistical summaries can
+#' be provided:
+#' 
+#' 1. a five-number summary (`"5num"`): minimum, Q1, median, Q3, maximum
+#' 2. a seven-number summary (`"7num"`): P2, P9, Q1, median, Q3, P91, P98
+#' 3. Bowley's seven-figure summary: minimum, P10, Q1, median, Q3, P90, maximum
+#'
+#' @param column The name of the column that contains the target values.
+#' @param type The type of summary. By default, the `"5num"` keyword is used to
+#'   generate a five-number summary. Two other options provide seven-number
+#'   summaries: `"7num"` and `"bowley"`.
+#'   
+#' @return A formula needed for [info_snippet()]'s `fn` argument.
+#' 
+#' @family Information Functions
+#' @section Function ID:
+#' 3-6
+#' 
+#' @export
+snip_stats <- function(column,
+                       type = c("5num", "7num", "bowley")) {
+  
+  type <- match.arg(type)
+  
+  stats::as.formula(
+    as.character(
+      glue::glue(
+        "~ . %>%
+    dplyr::select(<<column>>) %>%
+    pb_str_summary(type = '<<type>>')",
+    .open = "<<", .close = ">>"
+      )
+    )
+  )
+  
+}
+
 #' A `fn` for `info_snippet()`: get the lowest value from a column
 #' 
 #' The `snip_lowest()` function can be used as an [info_snippet()] function
@@ -761,7 +806,7 @@ snip_list <- function(column,
 #' 
 #' @family Information Functions
 #' @section Function ID:
-#' 3-6
+#' 3-7
 #' 
 #' @export
 snip_lowest <- function(column) {
@@ -791,7 +836,7 @@ snip_lowest <- function(column) {
 #' 
 #' @family Information Functions
 #' @section Function ID:
-#' 3-7
+#' 3-8
 #' 
 #' @export
 snip_highest <- function(column) {

@@ -19,7 +19,7 @@ alphabetical value from a column in the target table.
 }
 \section{Function ID}{
 
-3-6
+3-7
 }
 
 \seealso{
@@ -29,6 +29,7 @@ Other Information Functions:
 \code{\link{info_snippet}()},
 \code{\link{info_tabular}()},
 \code{\link{snip_highest}()},
-\code{\link{snip_list}()}
+\code{\link{snip_list}()},
+\code{\link{snip_stats}()}
 }
 \concept{Information Functions}

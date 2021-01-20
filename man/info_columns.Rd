@@ -124,6 +124,7 @@ Other Information Functions:
 \code{\link{info_tabular}()},
 \code{\link{snip_highest}()},
 \code{\link{snip_list}()},
-\code{\link{snip_lowest}()}
+\code{\link{snip_lowest}()},
+\code{\link{snip_stats}()}
 }
 \concept{Information Functions}

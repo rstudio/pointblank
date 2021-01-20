@@ -574,7 +574,7 @@ get_tbl_information_dbi <- function(tbl) {
 
 get_tbl_information_arrow <- function(tbl) {
 
-  schema_cap <- utils::capture.output(tbl$schema)[-1][1:ncol(tbl)]
+  schema_cap <- utils::capture.output(tbl$schema)[-1][seq_len(ncol(tbl))]
   
   col_names <-
     vapply(

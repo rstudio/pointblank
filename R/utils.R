@@ -991,7 +991,7 @@ pb_quantile_stats <- function(data_column,
         dplyr::rename(a = 1) %>%
         dplyr::filter(!is.na(a)) %>%
         dplyr::arrange(a) %>%
-        head(6E8)
+        utils::head(6E8)
       
       n_rows_data <-  
         data_arranged %>%

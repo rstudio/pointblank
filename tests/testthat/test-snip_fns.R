@@ -430,6 +430,55 @@ test_that("the `snip_list()` function works", {
   )
 })
 
+test_that("the `snip_stats()` function works", {
+  
+  expect_match(
+    as.character(
+      run_snip(snip_stats(column = "a"), small_table)
+    ),
+    paste0(
+      ".*?",
+      "Minimum.*?&#10122;.*?1.*?",
+      "Q1.*?&#10123;.*?2.*?",
+      "Median.*?&#10124;.*?3.*?",
+      "Q3.*?&#10125;.*?4.*?",
+      "Maximum.*?&#10126;.*?8.*?"
+    )
+  )
+  
+  expect_match(
+    as.character(
+      run_snip(snip_stats(column = "a", type = "7num"), small_table)
+    ),
+    paste0(
+      ".*?",
+      "P2.*?&#10122;.*?1.24.*?",
+      "P9.*?&#10123;.*?2.*?",
+      "Q1.*?&#10124;.*?2.*?",
+      "Median.*?&#10125;.*?3.*?",
+      "Q3.*?&#10126;.*?4.*?",
+      "P91.*?&#10127;.*?6.92.*?",
+      "P98.*?&#10128;.*?7.76.*?"
+    )
+  )
+  
+  expect_match(
+    as.character(
+      run_snip(snip_stats(column = "a", type = "bowley"), small_table)
+    ),
+    paste0(
+      ".*?",
+      "Minimum.*?&#10122;.*?1.*?",
+      "P10.*?&#10123;.*?2.*?",
+      "Q1.*?&#10124;.*?2.*?",
+      "Median.*?&#10125;.*?3.*?",
+      "Q3.*?&#10126;.*?4.*?",
+      "P90.*?&#10127;.*?6.8.*?",
+      "Maximum.*?&#10128;.*?8.*?"
+    )
+  )
+})
+
 test_that("the `snip_lowest()` function works", {
   
   expect_equal(

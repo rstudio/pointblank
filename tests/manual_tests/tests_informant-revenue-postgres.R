@@ -1,6 +1,5 @@
 library(pointblank)
 library(here)
-library(intendo)
 
 informant_revenue_postgres <- 
   create_informant(
@@ -77,7 +76,8 @@ informant_revenue_postgres <-
   info_columns(
     columns = "revenue",
     info = "The reported revenue (in USD) for the product. The value may
-    change up to 3-4 weeks after the sale date due to processing of refunds."
+    change up to 3-4 weeks after the sale date due to processing of refunds.
+    Summary statistics: {summary_stats_rev}."
   ) %>%
   info_columns(
     columns = "revenue",
@@ -86,6 +86,10 @@ informant_revenue_postgres <-
   info_columns(
     columns = vars(price, revenue),
     info = "((PARTNER))"
+  ) %>%
+  info_snippet(
+    snippet_name = "summary_stats_rev",
+    fn = snip_stats(column = "revenue", type = "7num")
   ) %>%
   info_snippet(
     snippet_name = "revenue_total",

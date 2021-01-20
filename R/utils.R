@@ -856,3 +856,232 @@ pb_str_catalog <- function(item_vector,
     return(cat_str)
   }
 }
+
+pb_str_summary <- function(column,
+                           type) {
+
+  if (type == "5num") {
+    
+    color <- "dodgerblue"
+    
+    min_max <- pb_min_max_stats(column)
+    
+    minimum <- min_max$min
+    q1 <- pb_quantile_stats(column, quantile = 0.25)
+    median <- pb_quantile_stats(column, quantile = 0.5)
+    q3 <- pb_quantile_stats(column, quantile = 0.75)
+    maximum <- min_max$max
+    
+    summary_str <-
+      htmltools::tags$span(
+        class = "pb_label",
+        style = htmltools::css(
+          padding = "0 5px 0 5px",
+          font_size = "smaller",
+          border_color = "lightgray"
+        ),
+        htmltools::HTML(
+          paste(
+            generate_number(1, color, "Minimum"), minimum,
+            generate_number(2, color, "Q1"), q1,
+            generate_number(3, color, "Median"), median,
+            generate_number(4, color, "Q3"), q3,
+            generate_number(5, color, "Maximum"), maximum
+          )
+        )
+      )
+    
+  } else if (type == "7num") {
+    
+    color <- "darkviolet"
+    
+    p2 <- pb_quantile_stats(column, quantile = 0.02)
+    p9 <- pb_quantile_stats(column, quantile = 0.09)
+    q1 <- pb_quantile_stats(column, quantile = 0.25)
+    median <- pb_quantile_stats(column, quantile = 0.5)
+    q3 <- pb_quantile_stats(column, quantile = 0.75)
+    p91 <- pb_quantile_stats(column, quantile = 0.91)
+    p98 <- pb_quantile_stats(column, quantile = 0.98)
+    
+    summary_str <-
+      htmltools::tags$span(
+        class = "pb_label",
+        style = htmltools::css(
+          padding = "0 5px 0 5px",
+          font_size = "smaller",
+          border_color = "lightgray"
+        ),
+        htmltools::HTML(
+          paste(
+            generate_number(1, color, "P2"), p2,
+            generate_number(2, color, "P9"), p9,
+            generate_number(3, color, "Q1"), q1,
+            generate_number(4, color, "Median"), median,
+            generate_number(5, color, "Q3"), q3,
+            generate_number(6, color, "P91"), p91,
+            generate_number(7, color, "P98"), p98
+          )
+        )
+      )
+    
+  } else if (type == "bowley") {
+    
+    color <- "orangered"
+    
+    min_max <- pb_min_max_stats(column)
+    
+    minimum <- min_max$min
+    p10 <- pb_quantile_stats(column, quantile = 0.10)
+    q1 <- pb_quantile_stats(column, quantile = 0.25)
+    median <- pb_quantile_stats(column, quantile = 0.5)
+    q3 <- pb_quantile_stats(column, quantile = 0.75)
+    p90 <- pb_quantile_stats(column, quantile = 0.90)
+    maximum <- min_max$max
+    
+    summary_str <-
+      htmltools::tags$span(
+        class = "pb_label",
+        style = htmltools::css(
+          padding = "0 5px 0 5px",
+          font_size = "smaller",
+          border_color = "lightgray"
+        ),
+        htmltools::HTML(
+          paste(
+            generate_number(1, color, "Minimum"), minimum,
+            generate_number(2, color, "P10"), p10,
+            generate_number(3, color, "Q1"), q1,
+            generate_number(4, color, "Median"), median,
+            generate_number(5, color, "Q3"), q3,
+            generate_number(6, color, "P90"), p90,
+            generate_number(7, color, "Maximum"), maximum
+          )
+        )
+      )
+  }
+  
+  summary_str
+}
+
+generate_number <- function(number,
+                            color,
+                            title) {
+  
+  number <- as.character(number)
+  
+  u_char <-
+    switch(
+      number,
+      "1" = "&#10122;",
+      "2" = "&#10123;",
+      "3" = "&#10124;",
+      "4" = "&#10125;",
+      "5" = "&#10126;",
+      "6" = "&#10127;",
+      "7" = "&#10128;",
+      "8" = "&#10129;",
+      "9" = "&#10130;",
+      "10" = "&#10131;"
+    )
+
+  as.character(
+    htmltools::tags$span(
+      style = paste0("color: ", color, "; cursor: default;"),
+      title = title,
+      htmltools::HTML(u_char)
+    )
+  )
+}
+
+pb_quantile_stats <- function(data_column,
+                              quantile) {
+  
+  if (is_tbl_spark(data_column)) {
+    
+    column_name <- colnames(data_column)
+    
+    quantile <- 
+      sparklyr::sdf_quantile(
+        data_column, column_name,
+        probabilities = quantile
+      ) %>% 
+      unname() %>%
+      round(2)
+    
+    return(quantile)
+    
+  } else if (inherits(data_column, "data.frame")) {
+    
+    quantile <- 
+      data_column %>%
+      stats::quantile(probs = quantile, na.rm = TRUE) %>%
+      unname() %>%
+      round(2)
+    
+  } else if (is_tbl_dbi(data_column)) {
+    
+    data_column <- data_column %>% dplyr::filter(!is.na(1))
+    
+    n_rows <- 
+      data_column %>%
+      dplyr::count(name = "n") %>%
+      dplyr::pull(n) %>%
+      as.numeric()
+    
+    if (n_rows <= 5000) {
+      
+      data_column <- data_column %>% dplyr::collect()
+      
+      quantile <- 
+        data_column %>%
+        stats::quantile(probs = quantile, na.rm = TRUE) %>%
+        unname() %>%
+        round(2)
+      
+    } else {
+      
+      data_arranged <- 
+        data_column %>%
+        dplyr::rename(a = 1) %>%
+        dplyr::filter(!is.na(a)) %>%
+        dplyr::arrange(a) %>%
+        utils::head(6E8)
+      
+      n_rows_data <-  
+        data_arranged %>%
+        dplyr::count(name = "n") %>%
+        dplyr::pull(n) %>%
+        as.numeric()
+      
+      quantile_row <- floor(quantile * n_rows_data)
+      
+      quantile <- 
+        data_arranged %>%
+        utils::head(quantile_row) %>%
+        dplyr::arrange(desc(a)) %>%
+        utils::head(1) %>%
+        dplyr::pull(a) %>%
+        as.numeric() %>%
+        round(2)
+    }
+  } else {
+    stop("The table type isn't yet supported", call. = FALSE)
+  }
+  
+  quantile
+}
+
+pb_min_max_stats <- function(data_column) {
+  
+  data_column %>%
+    dplyr::summarize_all(
+      .funs = list(
+        ~ min(., na.rm = TRUE),
+        ~ max(., na.rm = TRUE)
+      )
+    ) %>%
+    dplyr::collect() %>%
+    dplyr::summarize_all(~ round(., 2)) %>%
+    dplyr::mutate_all(.funs = as.numeric) %>%
+    as.list()
+}

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A fn for info_snippet(): get the lowest value from a column — snip_lowest • pointblank</title>
+<title>A fn for info_snippet(): get an inline statistical summary — snip_stats • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,10 +46,18 @@
 
 
 
-<meta property="og:title" content="A fn for info_snippet(): get the lowest value from a column — snip_lowest" />
-<meta property="og:description" content="The snip_lowest() function can be used as an info_snippet() function
-(i.e., provided to fn) to get the lowest numerical, time value, or
-alphabetical value from a column in the target table." />
+<meta property="og:title" content="A fn for info_snippet(): get an inline statistical summary — snip_stats" />
+<meta property="og:description" content="The snip_stats() function can be used as an info_snippet() function
+(i.e., provided to fn) to produce a five- or seven-number statistical
+summary. This inline summary works well within a paragraph of text and can
+help in describing the distribution of numerical values in a column.
+For a given column, three different types of inline statistical summaries can
+be provided:
+a five-number summary (&quot;5num&quot;): minimum, Q1, median, Q3, maximum
+a seven-number summary (&quot;7num&quot;): P2, P9, Q1, median, Q3, P91, P98
+Bowley's seven-figure summary: minimum, P10, Q1, median, Q3, P90, maximum
+
+" />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -155,18 +163,26 @@ alphabetical value from a column in the target table." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A <code>fn</code> for <code>info_snippet()</code>: get the lowest value from a column</h1>
+    <h1>A <code>fn</code> for <code>info_snippet()</code>: get an inline statistical summary</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/info_add.R'><code>R/info_add.R</code></a></small>
-    <div class="hidden name"><code>snip_lowest.Rd</code></div>
+    <div class="hidden name"><code>snip_stats.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>snip_lowest()</code> function can be used as an <code><a href='info_snippet.html'>info_snippet()</a></code> function
-(i.e., provided to <code>fn</code>) to get the lowest numerical, time value, or
-alphabetical value from a column in the target table.</p>
+    <p>The <code>snip_stats()</code> function can be used as an <code><a href='info_snippet.html'>info_snippet()</a></code> function
+(i.e., provided to <code>fn</code>) to produce a five- or seven-number statistical
+summary. This inline summary works well within a paragraph of text and can
+help in describing the distribution of numerical values in a column.</p>
+<p>For a given column, three different types of inline statistical summaries can
+be provided:</p><ol>
+<li><p>a five-number summary (<code>"5num"</code>): minimum, Q1, median, Q3, maximum</p></li>
+<li><p>a seven-number summary (<code>"7num"</code>): P2, P9, Q1, median, Q3, P91, P98</p></li>
+<li><p>Bowley's seven-figure summary: minimum, P10, Q1, median, Q3, P90, maximum</p></li>
+</ol>
+
     </div>
 
-    <pre class="usage"><span class='fu'>snip_lowest</span><span class='op'>(</span><span class='va'>column</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>snip_stats</span><span class='op'>(</span><span class='va'>column</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"5num"</span>, <span class='st'>"7num"</span>, <span class='st'>"bowley"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,6 +190,12 @@ alphabetical value from a column in the target table.</p>
     <tr>
       <th>column</th>
       <td><p>The name of the column that contains the target values.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>The type of summary. By default, the <code>"5num"</code> keyword is used to
+generate a five-number summary. Two other options provide seven-number
+summaries: <code>"7num"</code> and <code>"bowley"</code>.</p></td>
     </tr>
     </table>
 
@@ -184,7 +206,7 @@ alphabetical value from a column in the target table.</p>
 
     
 
-<p>3-7</p>
+<p>3-6</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Information Functions: 
@@ -194,7 +216,7 @@ alphabetical value from a column in the target table.</p>
 <code><a href='info_tabular.html'>info_tabular</a>()</code>,
 <code><a href='snip_highest.html'>snip_highest</a>()</code>,
 <code><a href='snip_list.html'>snip_list</a>()</code>,
-<code><a href='snip_stats.html'>snip_stats</a>()</code></p></div>
+<code><a href='snip_lowest.html'>snip_lowest</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

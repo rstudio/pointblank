@@ -399,7 +399,7 @@ column?</p></td>
       <tr>
         <th colspan="2">
           <h2 id="section-information-functions" class="hasAnchor"><a href="#section-information-functions" class="anchor"></a>Information Functions</h2>
-          <p class="section-desc"><p>We can progressively add information to an <em>informant</em> object by using the collection of <code>info_*()</code> functions. We can add more table-based properties with the <code><a href="../reference/info_tabular.html">info_tabular()</a></code> function, details about the nature of each column with the <code><a href="../reference/info_columns.html">info_columns()</a></code> function, and add sections of our own choosing (and the info that make sense for those sections) with the <code><a href="../reference/info_section.html">info_section()</a></code> function. Snippets of information can be gleaned from the target table by using the <code><a href="../reference/info_snippet.html">info_snippet()</a></code> function. These bits of information can be incorporated in text defined by the other <code>info_*()</code> functions via <code>{ }</code>.</p></p>
+          <p class="section-desc"><p>We can progressively add information to an <em>informant</em> object by using the collection of <code>info_*()</code> functions. We can add more table-based properties with the <code><a href="../reference/info_tabular.html">info_tabular()</a></code> function, details about the nature of each column with the <code><a href="../reference/info_columns.html">info_columns()</a></code> function, and add sections of our own choosing (and the info that make sense for those sections) with the <code><a href="../reference/info_section.html">info_section()</a></code> function. Snippets of information can be gleaned from the target table by using the <code><a href="../reference/info_snippet.html">info_snippet()</a></code> function. These bits of information can be incorporated in text defined by the other <code>info_*()</code> functions via <code>{ }</code>. Some great <code>snip_*()</code> functions are included to make info-snipping as easy (and useful!) as can be.</p></p>
         </th>
       </tr>
       
@@ -437,6 +437,12 @@ column?</p></td>
           <p><code><a href="snip_list.html">snip_list()</a></code> </p>
         </td>
         <td><p>A <code>fn</code> for <code>info_snippet()</code>: get a list of column categories</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="snip_stats.html">snip_stats()</a></code> </p>
+        </td>
+        <td><p>A <code>fn</code> for <code>info_snippet()</code>: get an inline statistical summary</p></td>
       </tr><tr>
         
         <td>

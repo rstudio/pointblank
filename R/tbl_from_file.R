@@ -47,7 +47,9 @@
 #'   extension (and valid extensions are `.csv`, `.tsv`, `.rda`, and `.rds`), we
 #'   can provide the type as either of `csv`, `tsv`, `rda`, or `rds`.
 #' @param ... Options passed to **readr**'s `read_csv()` or `read_tsv()`
-#'   function.
+#'   function. Both functions have the same arguments and one or the other will
+#'   be used internally based on the file extension or an explicit value given
+#'   to `type`.
 #' @param keep In the case of a downloaded file, should it be stored in the
 #'   working directory (`keep = TRUE`) or should it be downloaded to a temporary
 #'   directory? By default, this is `FALSE`.

@@ -41,6 +41,10 @@ is_tbl_dbi <- function(x) {
   inherits(x, "tbl_dbi")
 }
 
+is_arrow_object <- function(x) {
+  inherits(x, "ArrowObject")
+}
+
 has_agent_intel <- function(agent) {
   inherits(agent, "has_intel")
 }
@@ -365,6 +369,14 @@ get_tbl_information <- function(tbl) {
     
     tbl_information <- get_tbl_information_dbi(tbl)
     
+  } else if (is_arrow_object(tbl)) {
+    
+    # nocov start
+
+    tbl_information <- get_tbl_information_arrow(tbl)
+    
+    # nocov end
+    
   } else {
     
     # nocov start
@@ -559,6 +571,48 @@ get_tbl_information_dbi <- function(tbl) {
     db_col_types = db_col_types
   )
 }
+
+get_tbl_information_arrow <- function(tbl) {
+
+  schema_cap <- utils::capture.output(tbl$schema)[-1][seq_len(ncol(tbl))]
+  
+  col_names <-
+    vapply(
+      schema_cap,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        unlist(strsplit(x, split = ": "))[1]
+      }
+    )
+  
+  db_col_types <-
+    vapply(
+      schema_cap,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        unlist(strsplit(x, split = ": "))[2]
+      }
+    )
+  
+  r_col_types <-
+    vapply(
+      dplyr::as_tibble(utils::head(tbl, 1)),
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) class(x)[1]
+    )
+  
+  list(
+    tbl_src = "Arrow",
+    tbl_src_details = class(tbl)[1],
+    db_tbl_name = NA_character_,
+    col_names = col_names,
+    r_col_types = r_col_types,
+    db_col_types = db_col_types
+  )
+} 
 
 pb_fmt_number <- function(x,
                           decimals = 2,

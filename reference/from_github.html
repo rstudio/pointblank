@@ -208,6 +208,67 @@ repository. This is combined with any path components included in <code>file</co
 <code><a href='has_columns.html'>has_columns</a>()</code>,
 <code><a href='stop_if_not.html'>stop_if_not</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># A valid URL to a data file in GitHub can be</span>
+<span class='co'># obtained from the HEAD of the default branch</span>
+<span class='co'># from_github(</span>
+<span class='co'>#   file = "inst/data_files/small_table.csv",</span>
+<span class='co'>#   repo = "rich-iannone/pointblank"</span>
+<span class='co'># )</span>
+
+<span class='co'># The path to the file location can be supplied</span>
+<span class='co'># fully or partially to `subdir`</span>
+<span class='co'># from_github(</span>
+<span class='co'>#   file = "small_table.csv",</span>
+<span class='co'>#   repo = "rich-iannone/pointblank",</span>
+<span class='co'>#   subdir = "inst/data_files"</span>
+<span class='co'># )</span>
+
+<span class='co'># We can use the first call in combination with</span>
+<span class='co'># `file_tbl()` and `create_agent()`; this</span>
+<span class='co'># supplies a table-reading function that gets</span>
+<span class='co'># a CSV file from the GitHub repository for the</span>
+<span class='co'># pointblank package </span>
+<span class='co'># agent &lt;- </span>
+<span class='co'>#   create_agent(</span>
+<span class='co'>#     read_fn = ~ file_tbl(</span>
+<span class='co'>#       file = from_github(</span>
+<span class='co'>#         file = "inst/data_files/small_table.csv",</span>
+<span class='co'>#         repo = "rich-iannone/pointblank"</span>
+<span class='co'>#       ),</span>
+<span class='co'>#       col_types = "TDdcddlc"</span>
+<span class='co'>#     )</span>
+<span class='co'>#   ) %&gt;%</span>
+<span class='co'>#   col_vals_gt(vars(a), 0) %&gt;%</span>
+<span class='co'>#   interrogate()</span>
+
+<span class='co'># The `from_github()` helper function is</span>
+<span class='co'># pretty powerful and can get at lots of</span>
+<span class='co'># different files in a repository</span>
+
+<span class='co'># A data file from GitHub can be obtained from</span>
+<span class='co'># a commit at release time</span>
+<span class='co'># from_github(</span>
+<span class='co'>#   file = "inst/extdata/small_table.csv",</span>
+<span class='co'>#   repo = "rich-iannone/pointblank@v0.2.1"</span>
+<span class='co'># )</span>
+
+<span class='co'># A file may also be obtained from a repo at the</span>
+<span class='co'># point in time of a specific commit (partial or</span>
+<span class='co'># full SHA-1 hash for the commit can be used)</span>
+<span class='co'># from_github(</span>
+<span class='co'>#   file = "data-raw/small_table.csv",</span>
+<span class='co'>#   repo = "rich-iannone/pointblank@e04a71"</span>
+<span class='co'># )</span>
+
+<span class='co'># A file may also be obtained from an</span>
+<span class='co'># *open* pull request</span>
+<span class='co'># from_github(</span>
+<span class='co'>#   file = "data-raw/small_table.csv",</span>
+<span class='co'>#   repo = "rich-iannone/pointblank#248"</span>
+<span class='co'># )</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

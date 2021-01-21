@@ -85,7 +85,10 @@ small_table_sqlite <- function() {
   con <- 
     DBI::dbConnect(
       RSQLite::SQLite(), 
-      dbname = system.file("small_table.db", package = "pointblank")
+      dbname = system.file(
+        "data_files", "small_table.db",
+        package = "pointblank"
+      )
     )
   
   dplyr::tbl(con, "small_table")

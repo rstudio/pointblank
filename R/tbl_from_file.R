@@ -286,6 +286,66 @@ file_tbl <- function(file,
 #' @section Function ID:
 #' 12-6
 #' 
+#' @examples
+#' # A valid URL to a data file in GitHub can be
+#' # obtained from the HEAD of the default branch
+#' # from_github(
+#' #   file = "inst/data_files/small_table.csv",
+#' #   repo = "rich-iannone/pointblank"
+#' # )
+#' 
+#' # The path to the file location can be supplied
+#' # fully or partially to `subdir`
+#' # from_github(
+#' #   file = "small_table.csv",
+#' #   repo = "rich-iannone/pointblank",
+#' #   subdir = "inst/data_files"
+#' # )
+#' 
+#' # We can use the first call in combination with
+#' # `file_tbl()` and `create_agent()`; this
+#' # supplies a table-reading function that gets
+#' # a CSV file from the GitHub repository for the
+#' # pointblank package 
+#' # agent <- 
+#' #   create_agent(
+#' #     read_fn = ~ file_tbl(
+#' #       file = from_github(
+#' #         file = "inst/data_files/small_table.csv",
+#' #         repo = "rich-iannone/pointblank"
+#' #       ),
+#' #       col_types = "TDdcddlc"
+#' #     )
+#' #   ) %>%
+#' #   col_vals_gt(vars(a), 0) %>%
+#' #   interrogate()
+#' 
+#' # The `from_github()` helper function is
+#' # pretty powerful and can get at lots of
+#' # different files in a repository
+#' 
+#' # A data file from GitHub can be obtained from
+#' # a commit at release time
+#' # from_github(
+#' #   file = "inst/extdata/small_table.csv",
+#' #   repo = "rich-iannone/pointblank@v0.2.1"
+#' # )
+#' 
+#' # A file may also be obtained from a repo at the
+#' # point in time of a specific commit (partial or
+#' # full SHA-1 hash for the commit can be used)
+#' # from_github(
+#' #   file = "data-raw/small_table.csv",
+#' #   repo = "rich-iannone/pointblank@e04a71"
+#' # )
+#' 
+#' # A file may also be obtained from an
+#' # *open* pull request
+#' # from_github(
+#' #   file = "data-raw/small_table.csv",
+#' #   repo = "rich-iannone/pointblank#248"
+#' # )
+#' 
 #' @export
 from_github <- function(file,
                         repo,

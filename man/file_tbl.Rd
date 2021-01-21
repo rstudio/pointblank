@@ -19,7 +19,9 @@ extension (and valid extensions are \code{.csv}, \code{.tsv}, \code{.rda}, and \
 can provide the type as either of \code{csv}, \code{tsv}, \code{rda}, or \code{rds}.}
 
 \item{...}{Options passed to \strong{readr}'s \code{read_csv()} or \code{read_tsv()}
-function.}
+function. Both functions have the same arguments and one or the other will
+be used internally based on the file extension or an explicit value given
+to \code{type}.}
 
 \item{keep}{In the case of a downloaded file, should it be stored in the
 working directory (\code{keep = TRUE}) or should it be downloaded to a temporary
@@ -53,6 +55,83 @@ for a repository.
 1-7
 }
 
+\examples{
+# A local CSV file can be obtained as
+# a tbl object by supplying a path to
+# the file and some CSV reading options
+# (the ones used by `readr::read_csv()`)
+# to the `file_tbl()` function; for
+# this example we could obtain a path
+# to a CSV file in the pointblank
+# package with `system.file()`:
+csv_path <- 
+  system.file(
+    "data_files", "small_table.csv",
+    package = "pointblank"
+  )
+
+# Then use that path in `file_tbl()`
+# with the option to specify the column
+# types in that CSV  
+tbl <- 
+  file_tbl(
+    file = csv_path,
+    col_types = "TDdcddlc"
+  )
+  
+# Now that we have a `tbl` object that
+# is a tibble, it can be introduced to
+# `create_agent()` for validation
+agent <- create_agent(tbl = tbl)
+
+# A different strategy is to provide
+# the data-reading function call
+# directly to `create_agent()`:
+agent <- 
+  create_agent(
+    read_fn = ~ file_tbl(
+      file = system.file(
+        "data_files", "small_table.csv",
+        package = "pointblank"
+      ),
+      col_types = "TDdcddlc"
+    )
+  ) \%>\%
+  col_vals_gt(vars(a), 0)
+
+# All of the file-reading instructions
+# are encapsulated in the `read_fn` so
+# the agent will always obtain the most
+# recent version of the dataset (and the
+# logic can be translated to YAML, for
+# later use)
+
+# A CSV can be obtained from a public
+# GitHub repo by using the `from_github()`
+# helper function; let's create an agent
+# a supply a table-reading function that
+# gets the same CSV file from the GitHub
+# repository for the pointblank package 
+# agent <- 
+#   create_agent(
+#     read_fn = ~ file_tbl(
+#       file = from_github(
+#         file = "inst/data_files/small_table.csv",
+#         repo = "rich-iannone/pointblank"
+#       ),
+#       col_types = "TDdcddlc"
+#     )
+#   ) \%>\%
+#   col_vals_gt(vars(a), 0) \%>\%
+#   interrogate()
+
+# This interrogated the data that was
+# obtained from the remote source file,
+# and, there's nothing to clean up (by
+# default, the downloaded file goes into
+# a system temp directory)
+
+}
 \seealso{
 Other Planning and Prep: 
 \code{\link{action_levels}()},

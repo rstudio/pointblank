@@ -211,7 +211,9 @@ can provide the type as either of <code>csv</code>, <code>tsv</code>, <code>rda<
     <tr>
       <th>...</th>
       <td><p>Options passed to <strong>readr</strong>'s <code>read_csv()</code> or <code>read_tsv()</code>
-function.</p></td>
+function. Both functions have the same arguments and one or the other will
+be used internally based on the file extension or an explicit value given
+to <code>type</code>.</p></td>
     </tr>
     <tr>
       <th>keep</th>
@@ -244,6 +246,83 @@ having the <code>data.frame</code> class will be carried out.</p></td>
 <code><a href='scan_data.html'>scan_data</a>()</code>,
 <code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># A local CSV file can be obtained as</span>
+<span class='co'># a tbl object by supplying a path to</span>
+<span class='co'># the file and some CSV reading options</span>
+<span class='co'># (the ones used by `readr::read_csv()`)</span>
+<span class='co'># to the `file_tbl()` function; for</span>
+<span class='co'># this example we could obtain a path</span>
+<span class='co'># to a CSV file in the pointblank</span>
+<span class='co'># package with `system.file()`:</span>
+<span class='va'>csv_path</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
+    <span class='st'>"data_files"</span>, <span class='st'>"small_table.csv"</span>,
+    package <span class='op'>=</span> <span class='st'>"pointblank"</span>
+  <span class='op'>)</span>
+
+<span class='co'># Then use that path in `file_tbl()`</span>
+<span class='co'># with the option to specify the column</span>
+<span class='co'># types in that CSV  </span>
+<span class='va'>tbl</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>file_tbl</span><span class='op'>(</span>
+    file <span class='op'>=</span> <span class='va'>csv_path</span>,
+    col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span>
+  <span class='op'>)</span>
+  
+<span class='co'># Now that we have a `tbl` object that</span>
+<span class='co'># is a tibble, it can be introduced to</span>
+<span class='co'># `create_agent()` for validation</span>
+<span class='va'>agent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>tbl <span class='op'>=</span> <span class='va'>tbl</span><span class='op'>)</span>
+
+<span class='co'># A different strategy is to provide</span>
+<span class='co'># the data-reading function call</span>
+<span class='co'># directly to `create_agent()`:</span>
+<span class='va'>agent</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'>file_tbl</span><span class='op'>(</span>
+      file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
+        <span class='st'>"data_files"</span>, <span class='st'>"small_table.csv"</span>,
+        package <span class='op'>=</span> <span class='st'>"pointblank"</span>
+      <span class='op'>)</span>,
+      col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, <span class='fl'>0</span><span class='op'>)</span>
+
+<span class='co'># All of the file-reading instructions</span>
+<span class='co'># are encapsulated in the `read_fn` so</span>
+<span class='co'># the agent will always obtain the most</span>
+<span class='co'># recent version of the dataset (and the</span>
+<span class='co'># logic can be translated to YAML, for</span>
+<span class='co'># later use)</span>
+
+<span class='co'># A CSV can be obtained from a public</span>
+<span class='co'># GitHub repo by using the `from_github()`</span>
+<span class='co'># helper function; let's create an agent</span>
+<span class='co'># a supply a table-reading function that</span>
+<span class='co'># gets the same CSV file from the GitHub</span>
+<span class='co'># repository for the pointblank package </span>
+<span class='co'># agent &lt;- </span>
+<span class='co'>#   create_agent(</span>
+<span class='co'>#     read_fn = ~ file_tbl(</span>
+<span class='co'>#       file = from_github(</span>
+<span class='co'>#         file = "inst/data_files/small_table.csv",</span>
+<span class='co'>#         repo = "rich-iannone/pointblank"</span>
+<span class='co'>#       ),</span>
+<span class='co'>#       col_types = "TDdcddlc"</span>
+<span class='co'>#     )</span>
+<span class='co'>#   ) %&gt;%</span>
+<span class='co'>#   col_vals_gt(vars(a), 0) %&gt;%</span>
+<span class='co'>#   interrogate()</span>
+
+<span class='co'># This interrogated the data that was</span>
+<span class='co'># obtained from the remote source file,</span>
+<span class='co'># and, there's nothing to clean up (by</span>
+<span class='co'># default, the downloaded file goes into</span>
+<span class='co'># a system temp directory)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

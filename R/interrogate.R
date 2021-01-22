@@ -370,6 +370,9 @@ interrogate <- function(agent,
   
   class(agent) <- c("has_intel", "ptblank_agent")
   
+  # Add the ending time to the `agent` object
+  agent$time_end <- Sys.time()
+  
   # nocov start
   
   # Generate gt-based reporting objects
@@ -393,7 +396,7 @@ interrogate <- function(agent,
   # Add closing rule of interrogation console status
   create_cli_footer(quiet)
   
-  # Add the ending time to the `agent` object
+  # Update the ending time to the `agent` object
   agent$time_end <- Sys.time()
   
   agent

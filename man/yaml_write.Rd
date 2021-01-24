@@ -4,7 +4,13 @@
 \alias{yaml_write}
 \title{Write an \emph{agent} and \emph{informant} to a \strong{pointblank} YAML file}
 \usage{
-yaml_write(agent = NULL, informant = NULL, filename, path = NULL)
+yaml_write(
+  agent = NULL,
+  informant = NULL,
+  filename,
+  path = NULL,
+  expanded = FALSE
+)
 }
 \arguments{
 \item{agent}{An \emph{agent} object of class \code{ptblank_agent}.}
@@ -17,6 +23,12 @@ file.}
 
 \item{path}{An optional path to which the YAML file should be saved (combined
 with \code{filename}).}
+
+\item{expanded}{Should the written validation expressions for an \emph{agent} be
+expanded such that \strong{tidyselect} and \code{\link[=vars]{vars()}} expressions for columns are
+evaluated, yielding a validation function per column? By default, this is
+\code{FALSE} so expressions as written will be retained in the YAML
+representation.}
 }
 \description{
 With \code{yaml_write()} we can take an existing \emph{agent} and write that \emph{agent}'s

@@ -278,7 +278,7 @@ yaml_agent_string <- function(agent = NULL,
   if (!is.null(agent)) {
     
     message(
-      as_agent_yaml_list(agent) %>%
+      as_agent_yaml_list(agent = agent, expanded = expanded) %>%
         yaml::as.yaml(
           handlers = list(
             logical = function(x) {

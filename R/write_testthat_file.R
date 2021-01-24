@@ -66,7 +66,7 @@ write_testthat_file <- function(agent,
   # that the expanded form of the validation steps is available
   # (same number of steps as in the validation report)
   agent_exprs_raw <- 
-    agent_get_exprs(agent) %>%
+    agent_get_exprs(agent, expanded = TRUE) %>%
     strsplit("%>%") %>%
     unlist() %>%
     gsub("^\n", "", .)
@@ -94,8 +94,6 @@ write_testthat_file <- function(agent,
     gsub("(Expect that |Expect )", "", .) %>%
     gsub(" $", "", .) %>%
     gsub("\\.$", "", .)
- 
-  browser()
   
   # Initialize vector of `test_that()` tests 
   test_that_tests <- c()

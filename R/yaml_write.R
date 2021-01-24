@@ -155,13 +155,17 @@ yaml_write <- function(agent = NULL,
   }
 
   if (!is.null(agent) && !is.null(informant)) {
-    x <- c(as_agent_yaml_list(agent), as_informant_yaml_list(informant))
+    x <- 
+      c(
+        as_agent_yaml_list(agent = agent, expanded = expanded),
+        as_informant_yaml_list(informant = informant)
+      )
     # TODO: manage conflicts between both YAML representations
     
   } else if (!is.null(agent)) {
-    x <- as_agent_yaml_list(agent)
+    x <- as_agent_yaml_list(agent = agent, expanded = expanded)
   } else {
-    x <- as_informant_yaml_list(informant)
+    x <- as_informant_yaml_list(informant = informant)
   }
   
   yaml::write_yaml(

@@ -21,6 +21,8 @@
 #' @param skip_on_cran This option will include a [testthat::skip_on_cran()]
 #'   call at the top of the file to avoid running the data validation test on
 #'   CRAN.
+#'   
+#' @return Invisibly returns `TRUE` if the **testthat** file has been written. 
 #' 
 #' @export
 write_testthat_file <- function(agent,

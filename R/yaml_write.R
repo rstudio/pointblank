@@ -204,6 +204,11 @@ yaml_write <- function(agent = NULL,
 #'   *agent*. If a file name is provided here, then *agent* object must not be
 #'   provided in `agent`.
 #' @param path An optional path to the YAML file (combined with `filename`).
+#' @param expanded Should the written validation expressions for an *agent* be
+#'   expanded such that **tidyselect** and [vars()] expressions for columns are
+#'   evaluated, yielding a validation function per column? By default, this is
+#'   `FALSE` so expressions as written will be retained in the YAML
+#'   representation.
 #'   
 #' @examples 
 #' # Let's create a validation plan for the

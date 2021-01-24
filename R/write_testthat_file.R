@@ -67,9 +67,9 @@ write_testthat_file <- function(agent,
   # Obtain expressions from the agent that correspond to the
   # validation function calls
   
-  # TODO: in underlying `as_agent_yaml_list` we need to have an
-  # argument that allows for the expanded form of the validation steps
-  # because that would be most useful here (briefs would line up by step)
+  # Using the `expanded = TRUE` option in `agent_get_exprs()` so that
+  # that the expanded form of the validation steps is available
+  # (same number of steps as in the validation report)
   agent_exprs_raw <- 
     agent_get_exprs(agent) %>%
     strsplit("%>%") %>%

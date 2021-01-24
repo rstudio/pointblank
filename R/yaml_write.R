@@ -257,7 +257,8 @@ yaml_write <- function(agent = NULL,
 #' @export
 yaml_agent_string <- function(agent = NULL,
                               filename = NULL,
-                              path = NULL) {
+                              path = NULL,
+                              expanded = FALSE) {
   
   if (is.null(agent) && is.null(filename)) {
     stop(

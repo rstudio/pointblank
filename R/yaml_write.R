@@ -846,12 +846,19 @@ as_agent_yaml_list <- function(agent,
   )
 }
 
-get_column_text <- function(step_list) {
+get_column_text <- function(step_list, expanded) {
   
-  if (step_list$column[[1]] == step_list$columns_expr) {
-    column_text <- as_vars_fn(step_list$column[[1]])
+  if (!expanded) {
+    
+    if (step_list$column[[1]] == step_list$columns_expr) {
+      column_text <- as_vars_fn(step_list$column[[1]])
+    } else {
+      column_text <- step_list$columns_expr
+    }
+    
   } else {
-    column_text <- step_list$columns_expr
+    
+    column_text <- as_vars_fn(columns = step_list$column[[1]])
   }
   
   column_text

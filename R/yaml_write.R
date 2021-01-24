@@ -142,7 +142,8 @@
 yaml_write <- function(agent = NULL,
                        informant = NULL,
                        filename,
-                       path = NULL) {
+                       path = NULL,
+                       expanded = FALSE) {
 
   if (!is.null(path)) {
     filename <- file.path(path, filename)

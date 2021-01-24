@@ -539,17 +539,38 @@ as_agent_yaml_list <- function(agent,
     lst_locale <- list(locale = agent$locale)
   }
 
-  # Select only the necessary columns from the agent's `validation_set` 
-  agent_validation_set <- 
-    agent$validation_set %>% 
-    dplyr::select(
-      i_o, assertion_type, columns_expr, column, values, na_pass,
-      preconditions, actions, brief, active
-    ) %>%
-    dplyr::group_by(i_o) %>%
-    dplyr::filter(dplyr::row_number() == 1) %>%
-    dplyr::ungroup() %>%
-    dplyr::rename(i = i_o)
+  # Select only the necessary columns from the agent's `validation_set`
+  if (!expanded) {
+    
+    # This subset of `agent$validation_set` will depend on the value of
+    # `expanded` (default is FALSE, which preserves tidyselect expressions
+    # and doesn't split `vars()`)
+  
+    agent_validation_set <- 
+      agent$validation_set %>% 
+      dplyr::select(
+        i_o, assertion_type, columns_expr, column, values, na_pass,
+        preconditions, actions, brief, active
+      ) %>%
+      dplyr::group_by(i_o) %>%
+      dplyr::filter(dplyr::row_number() == 1) %>%
+      dplyr::ungroup() %>%
+      dplyr::rename(i = i_o)
+  
+  } else {
+    
+    # This subset of `agent$validation_set` has the same number of
+    # validation steps (i) as the agent report; in this, tidyselect
+    # expressions and `vars()` expressions with multiple columns are
+    # evaluated and split into a validation step per target column
+    
+    agent_validation_set <- 
+      agent$validation_set %>% 
+      dplyr::select(
+        i, assertion_type, columns_expr, column, values, na_pass,
+        preconditions, actions, brief, active
+      )
+  }
   
   all_steps <- list()
   

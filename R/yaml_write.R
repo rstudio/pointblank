@@ -43,6 +43,11 @@
 #'   file.
 #' @param path An optional path to which the YAML file should be saved (combined
 #'   with `filename`).
+#' @param expanded Should the written validation expressions for an *agent* be
+#'   expanded such that **tidyselect** and [vars()] expressions for columns are
+#'   evaluated, yielding a validation function per column? By default, this is
+#'   `FALSE` so expressions as written will be retained in the YAML
+#'   representation.
 #'   
 #' @examples
 #' # Let's go through the process of

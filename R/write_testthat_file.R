@@ -43,13 +43,18 @@ write_testthat_file <- function(agent,
       call. = FALSE
     )
   }
-  
+
   # Select only the necessary columns from the agent's `validation_set` 
   agent_validation_set <- 
     agent$validation_set %>% 
     dplyr::select(
-      i, assertion_type, brief, eval_active
-    )
+      i_o, assertion_type, brief, eval_active
+    ) %>%
+    dplyr::group_by(i_o) %>%
+    dplyr::filter(dplyr::row_number() == 1) %>%
+    dplyr::ungroup() %>%
+    dplyr::rename(i = i_o) %>%
+    dplyr::mutate(i = seq_len(nrow(.)))
   
   # Create a string that will be used to read the table (at the top
   # of the testthat test file)
@@ -61,6 +66,10 @@ write_testthat_file <- function(agent,
   
   # Obtain expressions from the agent that correspond to the
   # validation function calls
+  
+  # TODO: in underlying `as_agent_yaml_list` we need to have an
+  # argument that allows for the expanded form of the validation steps
+  # because that would be most useful here (briefs would line up by step)
   agent_exprs_raw <- 
     agent_get_exprs(agent) %>%
     strsplit("%>%") %>%
@@ -91,6 +100,8 @@ write_testthat_file <- function(agent,
     gsub(" $", "", .) %>%
     gsub("\\.$", "", .)
  
+  browser()
+  
   # Initialize vector of `test_that()` tests 
   test_that_tests <- c()
   

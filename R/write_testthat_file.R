@@ -48,13 +48,8 @@ write_testthat_file <- function(agent,
   agent_validation_set <- 
     agent$validation_set %>% 
     dplyr::select(
-      i_o, assertion_type, brief, eval_active
-    ) %>%
-    dplyr::group_by(i_o) %>%
-    dplyr::filter(dplyr::row_number() == 1) %>%
-    dplyr::ungroup() %>%
-    dplyr::rename(i = i_o) %>%
-    dplyr::mutate(i = seq_len(nrow(.)))
+      i, assertion_type, brief, eval_active
+    )
   
   # Create a string that will be used to read the table (at the top
   # of the testthat test file)

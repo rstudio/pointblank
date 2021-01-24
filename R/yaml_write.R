@@ -490,7 +490,8 @@ prune_lst_step <- function(lst_step) {
   lst_step
 }
 
-as_agent_yaml_list <- function(agent) {
+as_agent_yaml_list <- function(agent,
+                               expanded) {
 
   if (is.null(agent$read_fn)) {
     stop(

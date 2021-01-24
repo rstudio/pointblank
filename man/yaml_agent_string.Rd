@@ -4,7 +4,7 @@
 \alias{yaml_agent_string}
 \title{Display \strong{pointblank} YAML using an agent or a YAML file}
 \usage{
-yaml_agent_string(agent = NULL, filename = NULL, path = NULL)
+yaml_agent_string(agent = NULL, filename = NULL, path = NULL, expanded = FALSE)
 }
 \arguments{
 \item{agent}{An \emph{agent} object of class \code{ptblank_agent}. If an object is
@@ -15,6 +15,12 @@ provided here, then \code{filename} must not be provided.}
 provided in \code{agent}.}
 
 \item{path}{An optional path to the YAML file (combined with \code{filename}).}
+
+\item{expanded}{Should the written validation expressions for an \emph{agent} be
+expanded such that \strong{tidyselect} and \code{\link[=vars]{vars()}} expressions for columns are
+evaluated, yielding a validation function per column? By default, this is
+\code{FALSE} so expressions as written will be retained in the YAML
+representation.}
 }
 \description{
 With \strong{pointblank} YAML, we can serialize an agent's validation plan (with

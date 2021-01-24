@@ -577,7 +577,7 @@ as_agent_yaml_list <- function(agent,
   for (i in seq_len(nrow(agent_validation_set))) {
     
     step_list <- agent_validation_set[i, ] %>% as.list()
-    
+
     validation_fn <- step_list$assertion_type
     
     if (validation_fn %in% c(
@@ -586,7 +586,11 @@ as_agent_yaml_list <- function(agent,
       "col_vals_gte", "col_vals_gt"
     )) {
       
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
@@ -605,7 +609,11 @@ as_agent_yaml_list <- function(agent,
       
     } else if (grepl("between", validation_fn)) {
 
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
@@ -631,7 +639,11 @@ as_agent_yaml_list <- function(agent,
       
     } else if (grepl("in_set", validation_fn)) {
 
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
@@ -649,7 +661,11 @@ as_agent_yaml_list <- function(agent,
 
     } else if (grepl("null", validation_fn)) {
       
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
@@ -699,7 +715,11 @@ as_agent_yaml_list <- function(agent,
         increasing_tol <- step_list$values[[1]][2]
       }
       
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
@@ -720,7 +740,11 @@ as_agent_yaml_list <- function(agent,
       
     } else if (validation_fn == "col_vals_regex") {
 
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
@@ -739,7 +763,11 @@ as_agent_yaml_list <- function(agent,
     } else if (grepl("col_is_", validation_fn) ||
                validation_fn == "col_exists") {
 
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(

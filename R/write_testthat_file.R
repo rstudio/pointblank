@@ -157,6 +157,9 @@ write_testthat_file <- function(agent,
         collapse = ""
       )
   }
+
+  # Remove trailing newlines  
+  test_that_tests <- gsub("\n\n$", "", test_that_tests)
   
   # Create the filename for the testthat test file
   file_name <- resolve_test_filename(agent = agent, name = name)

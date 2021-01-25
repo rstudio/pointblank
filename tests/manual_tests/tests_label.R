@@ -3,7 +3,7 @@ library(pointblank)
 agent <-
   create_agent(
     read_fn = ~ small_table,
-    actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+    actions = action_levels(stop_at = 0.1)
   ) %>%
   col_vals_gt(
     vars(date_time), vars(date),
@@ -23,7 +23,8 @@ agent <-
   ) %>%
   col_is_integer(
     vars(a),
-    label = "`a` must be an integer"
+    label = "`a` must be an integer",
+    active = FALSE
   ) %>%
   interrogate()
 

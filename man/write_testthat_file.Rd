@@ -9,7 +9,6 @@ write_testthat_file(
   name = NULL,
   path = NULL,
   overwrite = FALSE,
-  make_read_only = TRUE,
   skips = NULL
 )
 }
@@ -26,10 +25,6 @@ place the file in \code{testthat/tests}.}
 
 \item{overwrite}{Should a \strong{testthat} file of the same name be overwritten?
 By default, this is \code{FALSE}.}
-
-\item{make_read_only}{Should the file to be written be read only? If \code{TRUE}
-(the default), it will be read-only and text at the top of the file will
-indicate this.}
 
 \item{skips}{This is an optional vector of test-skipping keywords modeled
 after the \strong{testthat} \verb{skip_on_*()} functions. The following keywords can
@@ -75,11 +70,6 @@ Any inactive validation steps can be forced into an active state by using the
 \code{\link[=activate_steps]{activate_steps()}} on an \emph{agent} (the opposite is possible with the
 \code{\link[=deactivate_steps]{deactivate_steps()}} function).
 
-The default \code{TRUE} setting of the \code{make_read_only} option means that the
-generated \strong{testthat} test file will be written as a read-only file. This is
-to avoid accidental editing but this behavior can be changed by setting
-\code{make_read_only} to \code{FALSE}.
-
 The \strong{testthat} package comes with a series of \verb{skip_on_*()} functions which
 conveniently cause the test file to be skipped entirely if certain conditions
 are met. We can quickly set any number of these at the top of the
@@ -87,4 +77,53 @@ are met. We can quickly set any number of these at the top of the
 option of \code{write_testthat_file()}. For instance, setting \verb{skips = c("cran", "windows)} will add the \strong{testthat} \code{skip_on_cran()} and
 \code{skip_on_os("windows")} statements, meaning that the generated test file
 won't run on a CRAN system or if the system OS is Windows.
+}
+\examples{
+# Creating an `action_levels` object is a
+# common workflow step when creating a
+# pointblank agent; we designate failure
+# thresholds to the `warn`, `stop`, and
+# `notify` states using `action_levels()`
+al <- 
+  action_levels(
+    warn_at = 0.10,
+    stop_at = 0.25,
+    notify_at = 0.35
+  )
+
+# A pointblank `agent` object is now
+# created and the `al` object is provided
+# to the agent; the static thresholds
+# provided by `al` make reports a bit
+# more useful after interrogation
+agent <- 
+  create_agent(
+    read_fn = ~ small_table,
+    label = "An example.",
+    actions = al
+  ) \%>\%
+  col_exists(vars(date, date_time)) \%>\%
+  col_vals_regex(
+    vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+  ) \%>\%
+  col_vals_gt(vars(d), 100) \%>\%
+  col_vals_lte(vars(c), 5) \%>\%
+  interrogate()
+
+# This agent and all of the checks can
+# be transformed into a testthat file
+# with `write_testthat_file()`; the `stop`
+# thresholds will be ported over
+# write_testthat_file(
+#   agent,
+#   name = "small_table",
+#   path = "."
+# )
+
+# The above code will generate a file with
+# the name `test-small_table.R`; the path
+# was specified with `"."` but, by default,
+# the function will place the file in the
+# `tests/testthat` folder if it's available
+
 }

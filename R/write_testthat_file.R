@@ -5,7 +5,7 @@
 #' to place it in the `testthat/tests` if it is available in the project path
 #' (we can specify an alternate path as well). This works by transforming the
 #' validation steps to a series of `expect_*()` calls inside individual
-#' [testthat::test_that()] statements. 
+#' [testthat::test_that()] statements.
 #' 
 #' A hard requirement for using `write_testthat_file()` on an agent is the
 #' presence of a `read_fn`, which is a function that is invoked to obtain the
@@ -28,11 +28,6 @@
 #' [activate_steps()] on an *agent* (the opposite is possible with the
 #' [deactivate_steps()] function).
 #' 
-#' The default `TRUE` setting of the `make_read_only` option means that the
-#' generated **testthat** test file will be written as a read-only file. This is
-#' to avoid accidental editing but this behavior can be changed by setting
-#' `make_read_only` to `FALSE`.
-#' 
 #' The **testthat** package comes with a series of `skip_on_*()` functions which
 #' conveniently cause the test file to be skipped entirely if certain conditions
 #' are met. We can quickly set any number of these at the top of the
@@ -51,9 +46,6 @@
 #'   place the file in `testthat/tests`.
 #' @param overwrite Should a **testthat** file of the same name be overwritten?
 #'   By default, this is `FALSE`.
-#' @param make_read_only Should the file to be written be read only? If `TRUE`
-#'   (the default), it will be read-only and text at the top of the file will
-#'   indicate this.
 #' @param skips This is an optional vector of test-skipping keywords modeled
 #'   after the **testthat** `skip_on_*()` functions. The following keywords can
 #'   be used to include `skip_on_*()` statements: `"cran"`
@@ -68,6 +60,54 @@
 #'   calls will be placed at the top of the generated **testthat** test file.
 #'   
 #' @return Invisibly returns `TRUE` if the **testthat** file has been written. 
+#' 
+#' @examples 
+#' # Creating an `action_levels` object is a
+#' # common workflow step when creating a
+#' # pointblank agent; we designate failure
+#' # thresholds to the `warn`, `stop`, and
+#' # `notify` states using `action_levels()`
+#' al <- 
+#'   action_levels(
+#'     warn_at = 0.10,
+#'     stop_at = 0.25,
+#'     notify_at = 0.35
+#'   )
+#' 
+#' # A pointblank `agent` object is now
+#' # created and the `al` object is provided
+#' # to the agent; the static thresholds
+#' # provided by `al` make reports a bit
+#' # more useful after interrogation
+#' agent <- 
+#'   create_agent(
+#'     read_fn = ~ small_table,
+#'     label = "An example.",
+#'     actions = al
+#'   ) %>%
+#'   col_exists(vars(date, date_time)) %>%
+#'   col_vals_regex(
+#'     vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+#'   ) %>%
+#'   col_vals_gt(vars(d), 100) %>%
+#'   col_vals_lte(vars(c), 5) %>%
+#'   interrogate()
+#' 
+#' # This agent and all of the checks can
+#' # be transformed into a testthat file
+#' # with `write_testthat_file()`; the `stop`
+#' # thresholds will be ported over
+#' # write_testthat_file(
+#' #   agent,
+#' #   name = "small_table",
+#' #   path = "."
+#' # )
+#' 
+#' # The above code will generate a file with
+#' # the name `test-small_table.R`; the path
+#' # was specified with `"."` but, by default,
+#' # the function will place the file in the
+#' # `tests/testthat` folder if it's available
 #' 
 #' @export
 write_testthat_file <- function(agent,

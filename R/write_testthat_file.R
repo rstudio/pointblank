@@ -62,6 +62,12 @@ write_testthat_file <- function(agent,
       i, assertion_type, brief, eval_active
     )
   
+  # Get the stop threshold values
+  stop_thresholds <- get_thresholds(agent = agent, type = "stop")
+  
+  # Get the `eval_active` values
+  step_inactive <- !agent_validation_set$eval_active
+  
   # Create a string that will be used to read the table (at the top
   # of the testthat test file)
   read_tbl_str <-
@@ -100,6 +106,40 @@ write_testthat_file <- function(agent,
       }
     )
   
+  # Insert any `stop` threshold values into
+  # the `agent_exprs_raw` vector
+  agent_exprs_raw <- 
+    insert_threshold_values(
+      agent_exprs_raw,
+      threshold_vals = stop_thresholds
+    )
+  
+  # Process any skipped tests by commenting out the
+  # generated statements
+  for (i in seq_along(agent_exprs_raw)) {
+    
+    if (step_inactive[i]) {
+
+      agent_exprs_raw[i] <-
+        paste0(
+          "skip(\"This test is not active.\")\n\n",
+          agent_exprs_raw[i] %>%
+            gsub("^", "  # ", .) %>%
+            gsub("\n  ", "\n  #   ", .) %>%
+            gsub("\n\\)", "\n  # )", .),
+          collapse = ""
+        )
+      
+    } else {
+      
+      agent_exprs_raw[i] %>%
+        gsub("^", "  ", .) %>%
+        gsub("\n  ", "\n    ", .) %>%
+        gsub("\n\\)", "\n  )", .)
+    }
+  }
+  
+  # Generate descriptions for each test
   test_that_desc <- 
     agent_validation_set$brief %>%
     gsub("(Expect that |Expect )", "", .) %>%
@@ -108,10 +148,10 @@ write_testthat_file <- function(agent,
   
   # Initialize vector of `test_that()` tests 
   test_that_tests <- c()
-  
-  for (i in seq_along(agent_exprs_raw)) {
     
-    # TODO: insert threshold value
+  # Assemble the sequence of `test_that()` tests
+  for (i in seq_along(agent_exprs_raw)) {
+
     test_that_tests <-
       c(test_that_tests,
         paste0(
@@ -121,7 +161,8 @@ write_testthat_file <- function(agent,
           agent_exprs_raw[i] %>%
             gsub("^", "  ", .) %>%
             gsub("\n  ", "\n    ", .) %>%
-            gsub("\n\\)", "\n  )", .),
+            gsub("\n\\)", "\n  )", .) %>%
+            gsub("    #", "  #", .),
           "\n})\n\n"
         )
       )
@@ -131,9 +172,7 @@ write_testthat_file <- function(agent,
   test_that_tests <- 
     paste0(
       paste0(read_tbl_str, "\n", "\n"),
-      paste(test_that_tests,
-            collapse = ""
-      ),
+      paste0(test_that_tests, collapse = ""),
       collapse = ""
     )
   

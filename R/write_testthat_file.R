@@ -4,7 +4,13 @@
 #' to place it in the `testthat/tests` if it is available in the project path
 #' (we can specify an alternate path as well). This works by transforming the
 #' validation steps to a series of `expect_*()` calls inside individual
-#' [testthat::test_that()] statements.
+#' [testthat::test_that()] statements. A hard requirement for using
+#' `write_testthat_file()` on an agent is the presence of a `read_fn`, which is
+#' a function that is invoked to obtain the target table. The `read_fn`
+#' statement will be placed at the top of the **testthat** test file so that the
+#' target table is available for each of the [testthat::test_that()] statements
+#' that follow. If an *agent* does not have a `read_fn` it can be added via the
+#' [set_read_fn()].
 #' 
 #' @param agent An agent object of class `ptblank_agent`.
 #' @param name An optional name for for the **testhat** test file. This should
@@ -41,8 +47,6 @@ write_testthat_file <- function(agent,
                                 make_read_only = TRUE,
                                 skips = NULL) {
 
-  # TODO: Add `skip_on_cran()` statement if `skip_on_cran = TRUE`
-  
   # Enforce that the agent must have a `read_fn`
   if (is.null(agent$read_fn)) {
     stop(

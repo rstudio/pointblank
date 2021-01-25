@@ -196,6 +196,30 @@ write_testthat_file <- function(agent,
   invisible(TRUE)
 }
 
+get_thresholds <- function(agent, type) {
+  
+  vapply(
+    agent$validation_set$actions,
+    FUN.VALUE = numeric(1), 
+    USE.NAMES = FALSE,
+    FUN = function(x) {
+      
+      type_fraction <- x[[paste0(type, "_fraction")]]
+      type_count <- x[[paste0(type, "_count")]]
+      
+      if (is.null(type_fraction) && is.null(type_count)) {
+        x <- NA_real_
+      } else if (!is.null(type_fraction)) {
+        x <- type_fraction
+      } else {
+        x <- type_count
+      }
+      
+      x
+    }
+  )
+}
+
 resolve_test_filename <- function(agent,
                                   name) {
   

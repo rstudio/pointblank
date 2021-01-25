@@ -52,5 +52,11 @@ With a \strong{pointblank} \emph{agent}, we can write a \strong{testthat} test f
 to place it in the \code{testthat/tests} if it is available in the project path
 (we can specify an alternate path as well). This works by transforming the
 validation steps to a series of \verb{expect_*()} calls inside individual
-\code{\link[testthat:test_that]{testthat::test_that()}} statements.
+\code{\link[testthat:test_that]{testthat::test_that()}} statements. A hard requirement for using
+\code{write_testthat_file()} on an agent is the presence of a \code{read_fn}, which is
+a function that is invoked to obtain the target table. The \code{read_fn}
+statement will be placed at the top of the \strong{testthat} test file so that the
+target table is available for each of the \code{\link[testthat:test_that]{testthat::test_that()}} statements
+that follow. If an \emph{agent} does not have a \code{read_fn} it can be added via the
+\code{\link[=set_read_fn]{set_read_fn()}}.
 }

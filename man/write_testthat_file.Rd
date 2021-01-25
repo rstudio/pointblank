@@ -37,8 +37,8 @@ be used to include \verb{skip_on_*()} statements: \code{"cran"}
 (\code{\link[testthat:skip]{testthat::skip_on_cran()}}), \code{"travis"} (\code{\link[testthat:skip]{testthat::skip_on_travis()}}),
 \code{"appveyor"} (\code{\link[testthat:skip]{testthat::skip_on_appveyor()}}), \code{"ci"}
 (\code{\link[testthat:skip]{testthat::skip_on_ci()}}), \code{"covr"} (\code{\link[testthat:skip]{testthat::skip_on_covr()}}), \code{"bioc"}
-(\code{\link[testthat:skip]{testthat::skip_on_bioc()}}). There are keywords for skipping testing on
-certain operating systems and all of them insert a specific
+(\code{\link[testthat:skip]{testthat::skip_on_bioc()}}). There are keywords for skipping tests on
+certain operating systems and all of them will insert a specific
 \code{\link[testthat:skip]{testthat::skip_on_os()}} call. These are \code{"windows"}
 (\code{skip_on_os("windows")}), \code{"mac"} (\code{skip_on_os("mac")}), \code{"linux"}
 (\code{skip_on_os("linux")}), and \code{"solaris"} (\code{skip_on_os("solaris")}). These

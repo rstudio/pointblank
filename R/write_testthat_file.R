@@ -92,6 +92,8 @@ write_testthat_file <- function(agent,
     agent_exprs_raw <- agent_exprs_raw[-1]
   }
   
+  # Remove the `create_agent()` statement and perform
+  # some initial mutations to the testing statements
   agent_exprs_raw <-
     vapply(
       agent_exprs_raw,

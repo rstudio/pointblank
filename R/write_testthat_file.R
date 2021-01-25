@@ -133,6 +133,18 @@ write_testthat_file <- function(agent,
       collapse = ""
     )
   
+  # Process the `skips` vector
+  skips_text <- process_skips_text(skips)
+  
+  if (!is.null(skips_text)) {
+    test_that_tests <-
+      paste0(
+        skips_text,
+        test_that_tests,
+        collapse = ""
+      )
+  }
+  
   if (make_read_only) {
     test_that_tests <-
       paste0(

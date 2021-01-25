@@ -266,13 +266,28 @@ write_testthat_file <- function(agent,
     )
   }
   
+  if (fs::file_exists(path) && overwrite) {
+
+    # Determine if the file to overwrite is a read-only file and
+    # stop the function if it is
+    if (fs::file_info(path)$permissions %>% as.character() == "r--r--r--") {
+      stop(
+        "The testthat file of the same name already as a read-only file:\n",
+        "* it cannot be overwritten even though `overwrite = TRUE`\n",
+        "* after manually deleting the file, the new version can be written\n",
+        call. = FALSE
+      )
+    }
+  }
   
+  # Write the testthat file to the resulting `path`
   pb_write_file(
     path = path,
     lines = test_that_tests,
     append = FALSE
   )
   
+  # Make the newly written file a read-only file if `make_read_only = TRUE`
   if (make_read_only) {
     fs::file_chmod(path = path, mode = "0444")
   }

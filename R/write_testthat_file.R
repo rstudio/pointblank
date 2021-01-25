@@ -30,7 +30,7 @@ write_testthat_file <- function(agent,
                                 path = NULL,
                                 overwrite = FALSE,
                                 make_read_only = TRUE,
-                                skip_on_cran = TRUE) {
+                                skips = NULL) {
 
   # TODO: Add `skip_on_cran()` statement if `skip_on_cran = TRUE`
   

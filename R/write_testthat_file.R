@@ -32,13 +32,9 @@ write_testthat_file <- function(agent,
                                 make_read_only = TRUE,
                                 skip_on_cran = TRUE) {
 
-  # TODO: Add `skip_on_cran()`
+  # TODO: Add `skip_on_cran()` statement if `skip_on_cran = TRUE`
   
-  # TODO: Add readonly comment 
-  
-  # TODO: Get warning and 
-  
-  # TODO: Enforce that the agent must have a `read_fn`
+  # Enforce that the agent must have a `read_fn`
   if (is.null(agent$read_fn)) {
     stop(
       "The agent must have a `read_fn` value when transforming into tests.",

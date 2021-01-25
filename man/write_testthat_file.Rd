@@ -10,7 +10,7 @@ write_testthat_file(
   path = NULL,
   overwrite = FALSE,
   make_read_only = TRUE,
-  skip_on_cran = TRUE
+  skips = NULL
 )
 }
 \arguments{
@@ -31,9 +31,18 @@ By default, this is \code{FALSE}.}
 (the default), it will be read-only and text at the top of the file will
 indicate this.}
 
-\item{skip_on_cran}{This option will include a \code{\link[testthat:skip]{testthat::skip_on_cran()}}
-call at the top of the file to avoid running the data validation test on
-CRAN.}
+\item{skips}{This is an optional vector of test-skipping keywords modeled
+after the \strong{testthat} \verb{skip_on_*()} functions. The following keywords can
+be used to include \verb{skip_on_*()} statements: \code{"cran"}
+(\code{\link[testthat:skip]{testthat::skip_on_cran()}}), \code{"travis"} (\code{\link[testthat:skip]{testthat::skip_on_travis()}}),
+\code{"appveyor"} (\code{\link[testthat:skip]{testthat::skip_on_appveyor()}}), \code{"ci"}
+(\code{\link[testthat:skip]{testthat::skip_on_ci()}}), \code{"covr"} (\code{\link[testthat:skip]{testthat::skip_on_covr()}}), \code{"bioc"}
+(\code{\link[testthat:skip]{testthat::skip_on_bioc()}}). There are keywords for skipping testing on
+certain operating systems and all of them insert a specific
+\code{\link[testthat:skip]{testthat::skip_on_os()}} call. These are \code{"windows"}
+(\code{skip_on_os("windows")}), \code{"mac"} (\code{skip_on_os("mac")}), \code{"linux"}
+(\code{skip_on_os("linux")}), and \code{"solaris"} (\code{skip_on_os("solaris")}). These
+calls will be placed at the top of the generated \strong{testthat} test file.}
 }
 \value{
 Invisibly returns \code{TRUE} if the \strong{testthat} file has been written.

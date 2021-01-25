@@ -186,5 +186,9 @@ test_that("YAML writing and reading works as expected", {
   
   # Expect an error if using `as_agent_yaml_list()` with an agent
   # that doesn't have a table-reading function specified
-  expect_error(agent_plan %>% remove_read_fn() %>% as_agent_yaml_list())
+  expect_error(
+    agent_plan %>%
+      remove_read_fn() %>%
+      as_agent_yaml_list(expanded = FALSE)
+  )
 })

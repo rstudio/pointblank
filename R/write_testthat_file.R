@@ -24,8 +24,8 @@
 #'   ([testthat::skip_on_cran()]), `"travis"` ([testthat::skip_on_travis()]),
 #'   `"appveyor"` ([testthat::skip_on_appveyor()]), `"ci"`
 #'   ([testthat::skip_on_ci()]), `"covr"` ([testthat::skip_on_covr()]), `"bioc"`
-#'   ([testthat::skip_on_bioc()]). There are keywords for skipping testing on
-#'   certain operating systems and all of them insert a specific
+#'   ([testthat::skip_on_bioc()]). There are keywords for skipping tests on
+#'   certain operating systems and all of them will insert a specific
 #'   [testthat::skip_on_os()] call. These are `"windows"`
 #'   (`skip_on_os("windows")`), `"mac"` (`skip_on_os("mac")`), `"linux"`
 #'   (`skip_on_os("linux")`), and `"solaris"` (`skip_on_os("solaris")`). These

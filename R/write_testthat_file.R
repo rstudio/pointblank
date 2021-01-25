@@ -254,8 +254,18 @@ write_testthat_file <- function(agent,
   # Create path that contains the testthat test file name
   path <- as.character(fs::path_wd(file_path, file_name))
   
-  # TODO: check if file exists; if it does, don't write file 
-  # if `overwrite` is FALSE
+  # Check if the file to write already exists; if it does, don't
+  # write the new file if `overwrite` is FALSE
+  if (fs::file_exists(path) && !overwrite) {
+    stop(
+      "The testthat file of the same name already exists:\n",
+      "* set `overwrite = TRUE` and ensure that `make_read_only = TRUE, or\n",
+      "* choose a different `name`, or\n",
+      "* define another `path` for the file",
+      call. = FALSE
+    )
+  }
+  
   
   pb_write_file(
     path = path,

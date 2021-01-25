@@ -1,16 +1,46 @@
 #' Transform a **pointblank** agent to a testthat test file
 #' 
+#' @description
 #' With a **pointblank** *agent*, we can write a **testthat** test file and opt
 #' to place it in the `testthat/tests` if it is available in the project path
 #' (we can specify an alternate path as well). This works by transforming the
 #' validation steps to a series of `expect_*()` calls inside individual
-#' [testthat::test_that()] statements. A hard requirement for using
-#' `write_testthat_file()` on an agent is the presence of a `read_fn`, which is
-#' a function that is invoked to obtain the target table. The `read_fn`
-#' statement will be placed at the top of the **testthat** test file so that the
-#' target table is available for each of the [testthat::test_that()] statements
-#' that follow. If an *agent* does not have a `read_fn` it can be added via the
-#' [set_read_fn()].
+#' [testthat::test_that()] statements. 
+#' 
+#' A hard requirement for using `write_testthat_file()` on an agent is the
+#' presence of a `read_fn`, which is a function that is invoked to obtain the
+#' target table. The `read_fn` statement will be placed at the top of the
+#' **testthat** test file so that the target table is available for each of the
+#' [testthat::test_that()] statements that follow. If an *agent* does not have a
+#' `read_fn` it can be added via the [set_read_fn()].
+#' 
+#' Thresholds will be obtained from those set up for the `stop` state. This can
+#' be set up for a **pointblank** *agent* by passing an `action_levels` object
+#' to the `actions` argument of [create_agent()] or the same argument of any
+#' included validation function. If `stop` thresholds are not available, then a
+#' threshold value of `1` will be used for each generated `expect_*()` statement
+#' in the resulting **testthat** test file.
+#' 
+#' @details 
+#' Tests for inactive validation steps will be skipped with a clear message
+#' indicating that the reason for skipping was due to the test not being active.
+#' Any inactive validation steps can be forced into an active state by using the
+#' [activate_steps()] on an *agent* (the opposite is possible with the
+#' [deactivate_steps()] function).
+#' 
+#' The default `TRUE` setting of the `make_read_only` option means that the
+#' generated **testthat** test file will be written as a read-only file. This is
+#' to avoid accidental editing but this behavior can be changed by setting
+#' `make_read_only` to `FALSE`.
+#' 
+#' The **testthat** package comes with a series of `skip_on_*()` functions which
+#' conveniently cause the test file to be skipped entirely if certain conditions
+#' are met. We can quickly set any number of these at the top of the
+#' **testthat** test file by supplying keywords as a vector to the `skips`
+#' option of `write_testthat_file()`. For instance, setting `skips = c("cran",
+#' "windows)` will add the **testthat** `skip_on_cran()` and
+#' `skip_on_os("windows")` statements, meaning that the generated test file
+#' won't run on a CRAN system or if the system OS is Windows.
 #' 
 #' @param agent An agent object of class `ptblank_agent`.
 #' @param name An optional name for for the **testhat** test file. This should

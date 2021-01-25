@@ -35,6 +35,9 @@ indicate this.}
 call at the top of the file to avoid running the data validation test on
 CRAN.}
 }
+\value{
+Invisibly returns \code{TRUE} if the \strong{testthat} file has been written.
+}
 \description{
 With a \strong{pointblank} \emph{agent}, we can write a \strong{testthat} test file and opt
 to place it in the \code{testthat/tests} if it is available in the project path

@@ -220,6 +220,48 @@ resolve_test_filename <- function(agent,
   file_name
 }
 
+process_skips_text <- function(skips) {
+  
+  if (is.null(skips) || !is.character(skips) || skips == "") {
+    return(NULL)
+  }
+  
+  skips_keywords <-
+    c(
+      "cran", "travis", "appveyor", "ci", "covr", "bioc",
+      "windows", "mac", "linux", "solaris"
+    )
+  
+  skips_keywords_os <- c("windows", "mac", "linux", "solaris")
+  skips_keywords_non_os <- base::setdiff(skips_keywords, skips_keywords_os)
+  
+  if (!all(skips %in% skips_keywords)) {
+    stop("All values provided in `skips` must be valid skipping keywords.",
+         call. = FALSE)
+  }
+  
+  skips_text <- 
+    vapply(
+      unique(skips),
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        
+        if (x %in% skips_keywords_non_os) {
+          x <- paste0("skip_on_", x, "()\n")
+        }
+        
+        if (x %in% skips_keywords_os) {
+          x <- paste0("skip_on_os(\"", x, "\")\n")
+        }
+        
+        x
+      }
+    )
+  
+  paste0(paste0(skips_text, collapse = ""), "\n")
+}
+
 pb_write_file <- function(path,
                           lines,
                           append = FALSE,

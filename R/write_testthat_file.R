@@ -220,6 +220,36 @@ get_thresholds <- function(agent, type) {
   )
 }
 
+insert_threshold_values <- function(agent_exprs_raw,
+                                    threshold_vals) {
+  
+  vapply(
+    seq_along(agent_exprs_raw),
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    FUN = function(x) {
+      
+      if (
+        grepl(
+          "(^expect_col_is_|^expect_col_exists|^expect_col_schema_match)",
+          agent_exprs_raw[x]
+        )
+      ) {
+        threshold_val <- 1
+      } else {
+        threshold_val <- threshold_vals[x]
+      }
+      
+      if (is.na(threshold_vals[x])) {
+        threshold_val <- 1
+      }
+      
+      agent_exprs_raw[x] %>% 
+        gsub("\n\\)", paste0(",\n  threshold = ", threshold_val, "\n\\)"), .)
+    }
+  )
+}
+
 resolve_test_filename <- function(agent,
                                   name) {
   

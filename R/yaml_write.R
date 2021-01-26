@@ -43,6 +43,11 @@
 #'   file.
 #' @param path An optional path to which the YAML file should be saved (combined
 #'   with `filename`).
+#' @param expanded Should the written validation expressions for an *agent* be
+#'   expanded such that **tidyselect** and [vars()] expressions for columns are
+#'   evaluated, yielding a validation function per column? By default, this is
+#'   `FALSE` so expressions as written will be retained in the YAML
+#'   representation.
 #'   
 #' @examples
 #' # Let's go through the process of
@@ -142,7 +147,8 @@
 yaml_write <- function(agent = NULL,
                        informant = NULL,
                        filename,
-                       path = NULL) {
+                       path = NULL,
+                       expanded = FALSE) {
 
   if (!is.null(path)) {
     filename <- file.path(path, filename)
@@ -154,13 +160,17 @@ yaml_write <- function(agent = NULL,
   }
 
   if (!is.null(agent) && !is.null(informant)) {
-    x <- c(as_agent_yaml_list(agent), as_informant_yaml_list(informant))
+    x <- 
+      c(
+        as_agent_yaml_list(agent = agent, expanded = expanded),
+        as_informant_yaml_list(informant = informant)
+      )
     # TODO: manage conflicts between both YAML representations
     
   } else if (!is.null(agent)) {
-    x <- as_agent_yaml_list(agent)
+    x <- as_agent_yaml_list(agent = agent, expanded = expanded)
   } else {
-    x <- as_informant_yaml_list(informant)
+    x <- as_informant_yaml_list(informant = informant)
   }
   
   yaml::write_yaml(
@@ -194,6 +204,11 @@ yaml_write <- function(agent = NULL,
 #'   *agent*. If a file name is provided here, then *agent* object must not be
 #'   provided in `agent`.
 #' @param path An optional path to the YAML file (combined with `filename`).
+#' @param expanded Should the written validation expressions for an *agent* be
+#'   expanded such that **tidyselect** and [vars()] expressions for columns are
+#'   evaluated, yielding a validation function per column? By default, this is
+#'   `FALSE` so expressions as written will be retained in the YAML
+#'   representation.
 #'   
 #' @examples 
 #' # Let's create a validation plan for the
@@ -256,7 +271,8 @@ yaml_write <- function(agent = NULL,
 #' @export
 yaml_agent_string <- function(agent = NULL,
                               filename = NULL,
-                              path = NULL) {
+                              path = NULL,
+                              expanded = FALSE) {
   
   if (is.null(agent) && is.null(filename)) {
     stop(
@@ -272,7 +288,7 @@ yaml_agent_string <- function(agent = NULL,
   if (!is.null(agent)) {
     
     message(
-      as_agent_yaml_list(agent) %>%
+      as_agent_yaml_list(agent = agent, expanded = expanded) %>%
         yaml::as.yaml(
           handlers = list(
             logical = function(x) {
@@ -484,7 +500,8 @@ prune_lst_step <- function(lst_step) {
   lst_step
 }
 
-as_agent_yaml_list <- function(agent) {
+as_agent_yaml_list <- function(agent,
+                               expanded) {
 
   if (is.null(agent$read_fn)) {
     stop(
@@ -532,24 +549,45 @@ as_agent_yaml_list <- function(agent) {
     lst_locale <- list(locale = agent$locale)
   }
 
-  # Select only the necessary columns from the agent's `validation_set` 
-  agent_validation_set <- 
-    agent$validation_set %>% 
-    dplyr::select(
-      i_o, assertion_type, columns_expr, column, values, na_pass,
-      preconditions, actions, brief, active
-    ) %>%
-    dplyr::group_by(i_o) %>%
-    dplyr::filter(dplyr::row_number() == 1) %>%
-    dplyr::ungroup() %>%
-    dplyr::rename(i = i_o)
+  # Select only the necessary columns from the agent's `validation_set`
+  if (!expanded) {
+    
+    # This subset of `agent$validation_set` will depend on the value of
+    # `expanded` (default is FALSE, which preserves tidyselect expressions
+    # and doesn't split `vars()`)
+  
+    agent_validation_set <- 
+      agent$validation_set %>% 
+      dplyr::select(
+        i_o, assertion_type, columns_expr, column, values, na_pass,
+        preconditions, actions, brief, active
+      ) %>%
+      dplyr::group_by(i_o) %>%
+      dplyr::filter(dplyr::row_number() == 1) %>%
+      dplyr::ungroup() %>%
+      dplyr::rename(i = i_o)
+  
+  } else {
+    
+    # This subset of `agent$validation_set` has the same number of
+    # validation steps (i) as the agent report; in this, tidyselect
+    # expressions and `vars()` expressions with multiple columns are
+    # evaluated and split into a validation step per target column
+    
+    agent_validation_set <- 
+      agent$validation_set %>% 
+      dplyr::select(
+        i, assertion_type, columns_expr, column, values, na_pass,
+        preconditions, actions, brief, active
+      )
+  }
   
   all_steps <- list()
   
   for (i in seq_len(nrow(agent_validation_set))) {
     
     step_list <- agent_validation_set[i, ] %>% as.list()
-    
+
     validation_fn <- step_list$assertion_type
     
     if (validation_fn %in% c(
@@ -558,7 +596,11 @@ as_agent_yaml_list <- function(agent) {
       "col_vals_gte", "col_vals_gt"
     )) {
       
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
@@ -577,7 +619,11 @@ as_agent_yaml_list <- function(agent) {
       
     } else if (grepl("between", validation_fn)) {
 
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
@@ -603,7 +649,11 @@ as_agent_yaml_list <- function(agent) {
       
     } else if (grepl("in_set", validation_fn)) {
 
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
@@ -621,7 +671,11 @@ as_agent_yaml_list <- function(agent) {
 
     } else if (grepl("null", validation_fn)) {
       
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
@@ -671,7 +725,11 @@ as_agent_yaml_list <- function(agent) {
         increasing_tol <- step_list$values[[1]][2]
       }
       
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
@@ -692,7 +750,11 @@ as_agent_yaml_list <- function(agent) {
       
     } else if (validation_fn == "col_vals_regex") {
 
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
@@ -711,7 +773,11 @@ as_agent_yaml_list <- function(agent) {
     } else if (grepl("col_is_", validation_fn) ||
                validation_fn == "col_exists") {
 
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
@@ -818,12 +884,19 @@ as_agent_yaml_list <- function(agent) {
   )
 }
 
-get_column_text <- function(step_list) {
+get_column_text <- function(step_list, expanded) {
   
-  if (step_list$column[[1]] == step_list$columns_expr) {
-    column_text <- as_vars_fn(step_list$column[[1]])
+  if (!expanded) {
+    
+    if (step_list$column[[1]] == step_list$columns_expr) {
+      column_text <- as_vars_fn(step_list$column[[1]])
+    } else {
+      column_text <- step_list$columns_expr
+    }
+    
   } else {
-    column_text <- step_list$columns_expr
+    
+    column_text <- as_vars_fn(columns = step_list$column[[1]])
   }
   
   column_text

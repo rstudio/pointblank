@@ -630,13 +630,19 @@ make_validation_steps <- function(steps) {
   )
 }
 
-agent_get_exprs <- function(agent) {
+agent_get_exprs <- function(agent,
+                            expanded) {
   
   temp_dir <- tempdir()
   
   yaml_name <- paste0(gt::random_id(), ".yaml")
   
-  yaml_write(agent = agent, filename = yaml_name, path = temp_dir)
+  yaml_write(
+    agent = agent,
+    filename = yaml_name,
+    path = temp_dir,
+    expanded = expanded
+  )
 
   expr_from_agent_yaml(path = file.path(temp_dir, yaml_name))
 }

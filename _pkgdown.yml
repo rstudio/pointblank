@@ -161,6 +161,7 @@ reference:
     contents:
     - x_write_disk
     - x_read_disk
+    - write_testthat_file
     - set_tbl
     - remove_tbl
     - set_read_fn

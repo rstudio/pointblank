@@ -174,6 +174,10 @@ write_testthat_file <- function(agent,
         }
         x <- gsub("\\(\n\\s+", "(\n  tbl,\n  ", x)
         x <- gsub("^", "expect_", x)
+        if (grepl("expect_rows_distinct\\(\\)", x)) {
+          x <- "expect_rows_distinct(tbl)"
+        }
+        x
       }
     )
   

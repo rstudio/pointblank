@@ -178,7 +178,7 @@ to open the file directly. Alternatively, we can provide an <em>agent</em> to th
 without needing to write the YAML to disk beforehand.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>yaml_agent_string</span><span class='op'>(</span>agent <span class='op'>=</span> <span class='cn'>NULL</span>, filename <span class='op'>=</span> <span class='cn'>NULL</span>, path <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>yaml_agent_string</span><span class='op'>(</span>agent <span class='op'>=</span> <span class='cn'>NULL</span>, filename <span class='op'>=</span> <span class='cn'>NULL</span>, path <span class='op'>=</span> <span class='cn'>NULL</span>, expanded <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,6 +197,14 @@ provided in <code>agent</code>.</p></td>
     <tr>
       <th>path</th>
       <td><p>An optional path to the YAML file (combined with <code>filename</code>).</p></td>
+    </tr>
+    <tr>
+      <th>expanded</th>
+      <td><p>Should the written validation expressions for an <em>agent</em> be
+expanded such that <strong>tidyselect</strong> and <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code> expressions for columns are
+evaluated, yielding a validation function per column? By default, this is
+<code>FALSE</code> so expressions as written will be retained in the YAML
+representation.</p></td>
     </tr>
     </table>
 

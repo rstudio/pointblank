@@ -10,6 +10,8 @@ col_vals_in_set(
   x,
   columns,
   set,
+  complete = FALSE,
+  in_order = FALSE,
   preconditions = NULL,
   actions = NULL,
   step_id = NULL,
@@ -22,11 +24,21 @@ expect_col_vals_in_set(
   object,
   columns,
   set,
+  complete = FALSE,
+  in_order = FALSE,
   preconditions = NULL,
   threshold = 1
 )
 
-test_col_vals_in_set(object, columns, set, preconditions = NULL, threshold = 1)
+test_col_vals_in_set(
+  object,
+  columns,
+  set,
+  complete = FALSE,
+  in_order = FALSE,
+  preconditions = NULL,
+  threshold = 1
+)
 }
 \arguments{
 \item{x}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), Spark DataFrame
@@ -38,6 +50,18 @@ vector) to which this validation should be applied.}
 
 \item{set}{A vector of numeric or string-based elements, where column values
 found within this \code{set} will be considered as passing.}
+
+\item{complete}{A requirement to account for all column values in the
+provided \code{set}. When this is \code{TRUE} all unique column values must be part
+of the \code{set} (by default this is \code{FALSE}). If this mode is activated then
+the number of test units reported will be the number of elements in the
+\code{set}. This change is necessary since the perspective will be flipped.}
+
+\item{in_order}{A stringent requirement for enforcing the order of column
+values to match that of the elements provided in the \code{set}. If \code{TRUE} (and
+by default this is \code{FALSE}) the order of first-seen column values must
+match the order given in the \code{set}. Furthermore, the column values need to
+form contiguous blocks of each \code{set} element.}
 
 \item{preconditions}{An optional expression for mutating the input table
 before proceeding with the validation. This is ideally as a one-sided R

@@ -71,6 +71,16 @@
 #' @inheritParams col_vals_gt
 #' @param set A vector of numeric or string-based elements, where column values
 #'   found within this `set` will be considered as passing.
+#' @param complete A requirement to account for all column values in the
+#'   provided `set`. When this is `TRUE` all unique column values must be part
+#'   of the `set` (by default this is `FALSE`). If this mode is activated then
+#'   the number of test units reported will be the number of elements in the
+#'   `set`. This change is necessary since the perspective will be flipped.
+#' @param in_order A stringent requirement for enforcing the order of column
+#'   values to match that of the elements provided in the `set`. If `TRUE` (and
+#'   by default this is `FALSE`) the order of first-seen column values must
+#'   match the order given in the `set`. Furthermore, the column values need to
+#'   form contiguous blocks of each `set` element.
 #'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
@@ -159,6 +169,8 @@ NULL
 col_vals_in_set <- function(x,
                             columns,
                             set,
+                            complete = FALSE,
+                            in_order = FALSE,
                             preconditions = NULL,
                             actions = NULL,
                             step_id = NULL,
@@ -177,13 +189,21 @@ col_vals_in_set <- function(x,
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
+  # Put `set`, `complete`, and `in_order` into a list
+  set_options <- 
+    list(
+      set = set,
+      complete = complete,
+      in_order = in_order
+    )
+  
   if (is_a_table_object(x)) {
     
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       col_vals_in_set(
         columns = columns,
-        set = set,
+        set = set_options,
         preconditions = preconditions,
         label = label,
         brief = brief,
@@ -225,7 +245,7 @@ col_vals_in_set <- function(x,
         i_o = i_o,
         columns_expr = columns_expr,
         column = columns[i],
-        values = set,
+        values = set_options,
         preconditions = preconditions,
         actions = covert_actions(actions, agent),
         step_id = step_id[i],
@@ -244,6 +264,8 @@ col_vals_in_set <- function(x,
 expect_col_vals_in_set <- function(object,
                                    columns,
                                    set,
+                                   complete = FALSE,
+                                   in_order = FALSE,
                                    preconditions = NULL,
                                    threshold = 1) {
   
@@ -302,6 +324,8 @@ expect_col_vals_in_set <- function(object,
 test_col_vals_in_set <- function(object,
                                  columns,
                                  set,
+                                 complete = FALSE,
+                                 in_order = FALSE,
                                  preconditions = NULL,
                                  threshold = 1) {
   

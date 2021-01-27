@@ -32,7 +32,9 @@ reencode_utf8 <- function(x) {
         
         bytes_nz <- x[x > 0]
 
-        if (length(bytes_nz) > 1) {
+        if (length(bytes_nz) > 2) {
+          out <- paste("\\U", paste(as.hexmode(x), collapse = ""), sep = "")
+        } else if (length(bytes_nz) > 1) {
           out <- paste("\\u", paste(as.hexmode(bytes_nz), collapse = ""), sep = "")
         } else if (length(bytes_nz) == 1 && bytes_nz > 127) {
           out <- paste("\\u", sprintf("%04s", paste(as.hexmode(bytes_nz)), collapse = ""), sep = "")

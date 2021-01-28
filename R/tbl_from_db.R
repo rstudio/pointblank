@@ -52,6 +52,17 @@
 #' @param host,port The database host and optional port number.
 #'   
 #' @return A `tbl_dbi` object.
+#' 
+#' @examples 
+#' # You can use an in-memory database
+#' # table and supply an in-memory table
+#' # to it too:
+#' # small_table_duckdb <- 
+#' #   pointblank::db_tbl(
+#' #     db = "duckdb",
+#' #     dbname = ":memory:",
+#' #     table = small_table
+#' #   )
 #'
 #' @family Planning and Prep
 #' @section Function ID:

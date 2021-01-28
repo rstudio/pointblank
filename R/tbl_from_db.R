@@ -64,6 +64,23 @@
 #' #     table = small_table
 #' #   )
 #'
+#' # It's also possible to obtain a remote
+#' # file and shove it into an in-memory
+#' # database; use the all-powerful `file_tbl()`
+#' # + `db_tbl()` combo
+#' # all_revenue_large_duckdb <-
+#' #   db_tbl(
+#' #     db = "duckdb",
+#' #     dbname = ":memory:",
+#' #     table = file_tbl(
+#' #       file = from_github(
+#' #         file = "all_revenue_large.rds",
+#' #         repo = "rich-iannone/intendo",
+#' #         subdir = "data-large"
+#' #       )
+#' #     )
+#' #   )
+#' 
 #' @family Planning and Prep
 #' @section Function ID:
 #' 1-6

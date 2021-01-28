@@ -53,8 +53,8 @@ getting a tbl_dbi object, which usually involves a combination of building
 a connection to a database and using the dplyr::tbl() function with the
 connection and the table name (or a reference to a table in a schema). A
 better option is to use this function as the read_fn parameter in
-create_agent() and create_informant(). This can be done by using a
-leading ~ (e.g,. read_fn = ~db_tbl(...)).
+create_agent() or create_informant(). This can be done by using a
+leading ~ before the db_tbl() call (e.g,. read_fn = ~db_tbl(...)).
 The username and password are supplied though environment variables. If
 desired, these can be supplied directly by enclosing those values in I()." />
 <meta property="og:image" content="/logo.svg" />
@@ -174,8 +174,8 @@ getting a <code>tbl_dbi</code> object, which usually involves a combination of b
 a connection to a database and using the <code><a href='https://dplyr.tidyverse.org/reference/tbl.html'>dplyr::tbl()</a></code> function with the
 connection and the table name (or a reference to a table in a schema). A
 better option is to use this function as the <code>read_fn</code> parameter in
-<code><a href='create_agent.html'>create_agent()</a></code> and <code><a href='create_informant.html'>create_informant()</a></code>. This can be done by using a
-leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> (e.g,. <code>read_fn = ~db_tbl(...)</code>).</p>
+<code><a href='create_agent.html'>create_agent()</a></code> or <code><a href='create_informant.html'>create_informant()</a></code>. This can be done by using a
+leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> before the <code>db_tbl()</code> call (e.g,. <code>read_fn = ~db_tbl(...)</code>).</p>
 <p>The username and password are supplied though environment variables. If
 desired, these can be supplied directly by enclosing those values in <code><a href='https://rdrr.io/r/base/AsIs.html'>I()</a></code>.</p>
     </div>
@@ -188,9 +188,9 @@ desired, these can be supplied directly by enclosing those values in <code><a hr
     <tr>
       <th>db</th>
       <td><p>Either an appropriate driver function (e.g.,
-<code><a href='https://rpostgres.r-dbi.org/reference/Postgres.html'>RPostgres::Postgres()</a></code>) or a shorthand name for the database type. Valid
-names are: <code>"postgresql"</code>, <code>"postgres"</code>, or <code>"pgsql"</code> (PostgreSQL, using
-the <code><a href='https://rpostgres.r-dbi.org/reference/Postgres.html'>RPostgres::Postgres()</a></code> driver function); <code>"mysql"</code> (MySQL, using
+<code><a href='https://rpostgres.r-dbi.org/reference/Postgres.html'>RPostgres::Postgres()</a></code>) or a shortname for the database type. Valid names
+are: <code>"postgresql"</code>, <code>"postgres"</code>, or <code>"pgsql"</code> (PostgreSQL, using the
+<code><a href='https://rpostgres.r-dbi.org/reference/Postgres.html'>RPostgres::Postgres()</a></code> driver function); <code>"mysql"</code> (MySQL, using
 <code><a href='https://rdrr.io/pkg/RMySQL/man/MySQLDriver-class.html'>RMySQL::MySQL()</a></code>); <code>"maria"</code> or <code>"mariadb"</code> (MariaDB, using
 <code><a href='https://rmariadb.r-dbi.org/reference/dbConnect-MariaDBDriver-method.html'>RMariaDB::MariaDB()</a></code>); <code>"duckdb"</code> (DuckDB, using <code><a href='https://rdrr.io/pkg/duckdb/man/duckdb.html'>duckdb::duckdb()</a></code>); and
 <code>"sqlite"</code> (SQLite, using <code><a href='https://rsqlite.r-dbi.org/reference/SQLite.html'>RSQLite::SQLite()</a></code>).</p></td>
@@ -242,7 +242,7 @@ and password for the database.</p></td>
 <span class='co'># table and supply an in-memory table</span>
 <span class='co'># to it too:</span>
 <span class='co'># small_table_duckdb &lt;- </span>
-<span class='co'>#   pointblank::db_tbl(</span>
+<span class='co'>#   db_tbl(</span>
 <span class='co'>#     db = "duckdb",</span>
 <span class='co'>#     dbname = ":memory:",</span>
 <span class='co'>#     table = small_table</span>
@@ -290,7 +290,7 @@ and password for the database.</p></td>
 <span class='co'># database... like this:</span>
 <span class='co'># example_db_tbl &lt;- </span>
 <span class='co'>#   db_tbl(</span>
-<span class='co'>#     db = "&lt;database_shortcode&gt;", </span>
+<span class='co'>#     db = "&lt;database_type_shortname&gt;", </span>
 <span class='co'>#     dbname = "&lt;database_name&gt;",</span>
 <span class='co'>#     table = "&lt;table_name&gt;",</span>
 <span class='co'>#     user = "&lt;DB_USER_NAME&gt;",</span>

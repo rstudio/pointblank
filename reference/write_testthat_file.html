@@ -169,7 +169,7 @@ in the resulting testthat test file." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Transform a <strong>pointblank</strong> agent to a testthat test file</h1>
+    <h1>Transform a <strong>pointblank</strong> agent to a <strong>testthat</strong> test file</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/write_testthat_file.R'><code>R/write_testthat_file.R</code></a></small>
     <div class="hidden name"><code>write_testthat_file.Rd</code></div>
     </div>
@@ -257,9 +257,22 @@ Any inactive validation steps can be forced into an active state by using the
 conveniently cause the test file to be skipped entirely if certain conditions
 are met. We can quickly set any number of these at the top of the
 <strong>testthat</strong> test file by supplying keywords as a vector to the <code>skips</code>
-option of <code>write_testthat_file()</code>. For instance, setting <code>skips = c("cran", "windows)</code> will add the <strong>testthat</strong> <code>skip_on_cran()</code> and
+option of <code>write_testthat_file()</code>. For instance, setting
+<code>skips = c("cran", "windows)</code> will add the <strong>testthat</strong> <code>skip_on_cran()</code> and
 <code>skip_on_os("windows")</code> statements, meaning that the generated test file
 won't run on a CRAN system or if the system OS is Windows.</p>
+    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
+
+    
+
+<p>8-4</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Post-interrogation: 
+<code><a href='all_passed.html'>all_passed</a>()</code>,
+<code><a href='get_agent_x_list.html'>get_agent_x_list</a>()</code>,
+<code><a href='get_data_extracts.html'>get_data_extracts</a>()</code>,
+<code><a href='get_sundered_data.html'>get_sundered_data</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Creating an `action_levels` object is a</span>

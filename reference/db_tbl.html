@@ -237,6 +237,74 @@ and password for the database.</p></td>
 <code><a href='scan_data.html'>scan_data</a>()</code>,
 <code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># You can use an in-memory database</span>
+<span class='co'># table and supply an in-memory table</span>
+<span class='co'># to it too:</span>
+<span class='co'># small_table_duckdb &lt;- </span>
+<span class='co'>#   pointblank::db_tbl(</span>
+<span class='co'>#     db = "duckdb",</span>
+<span class='co'>#     dbname = ":memory:",</span>
+<span class='co'>#     table = small_table</span>
+<span class='co'>#   )</span>
+
+<span class='co'># It's also possible to obtain a remote</span>
+<span class='co'># file and shove it into an in-memory</span>
+<span class='co'># database; use the all-powerful `file_tbl()`</span>
+<span class='co'># + `db_tbl()` combo</span>
+<span class='co'># all_revenue_large_duckdb &lt;-</span>
+<span class='co'>#   db_tbl(</span>
+<span class='co'>#     db = "duckdb",</span>
+<span class='co'>#     dbname = ":memory:",</span>
+<span class='co'>#     table = file_tbl(</span>
+<span class='co'>#       file = from_github(</span>
+<span class='co'>#         file = "all_revenue_large.rds",</span>
+<span class='co'>#         repo = "rich-iannone/intendo",</span>
+<span class='co'>#         subdir = "data-large"</span>
+<span class='co'>#       )</span>
+<span class='co'>#     )</span>
+<span class='co'>#   )</span>
+
+<span class='co'># For remote databases, it's just as</span>
+<span class='co'># simple (I think); you can get access</span>
+<span class='co'># to the `rna` table that's in the</span>
+<span class='co'># RNA Central public database with the</span>
+<span class='co'># following `db_tbl()` call</span>
+<span class='co'># rna_db_tbl &lt;- </span>
+<span class='co'>#   db_tbl(</span>
+<span class='co'>#     db = "postgres", </span>
+<span class='co'>#     dbname = "pfmegrnargs",</span>
+<span class='co'>#     table = "rna",</span>
+<span class='co'>#     user = I("reader"),</span>
+<span class='co'>#     password = I("NWDMCE5xdipIjRrp"),</span>
+<span class='co'>#     host = "hh-pgsql-public.ebi.ac.uk",</span>
+<span class='co'>#     port = 5432</span>
+<span class='co'>#   )</span>
+
+<span class='co'># Using `I()` for the user name and</span>
+<span class='co'># password means that you're passing in</span>
+<span class='co'># the actual values but, normally, you</span>
+<span class='co'># would use names of environment variables</span>
+<span class='co'># (envvars) to access the username and</span>
+<span class='co'># password values when connecting to a</span>
+<span class='co'># database... like this:</span>
+<span class='co'># example_db_tbl &lt;- </span>
+<span class='co'>#   db_tbl(</span>
+<span class='co'>#     db = "&lt;database_shortcode&gt;", </span>
+<span class='co'>#     dbname = "&lt;database_name&gt;",</span>
+<span class='co'>#     table = "&lt;table_name&gt;",</span>
+<span class='co'>#     user = "&lt;DB_USER_NAME&gt;",</span>
+<span class='co'>#     password = "&lt;DB_PASSWORD&gt;",</span>
+<span class='co'>#     host = "&lt;connection_url&gt;",</span>
+<span class='co'>#     port = "&lt;connection_port&gt;"</span>
+<span class='co'>#   )</span>
+
+<span class='co'># Environment variables can be created</span>
+<span class='co'># by editing the user `.Renviron` file and</span>
+<span class='co'># the `usethis::edit_r_environ()` function</span>
+<span class='co'># makes this pretty easy to do</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

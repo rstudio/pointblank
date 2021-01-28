@@ -97,6 +97,7 @@ agent \%>\% get_sundered_data()
 Other Post-interrogation: 
 \code{\link{all_passed}()},
 \code{\link{get_agent_x_list}()},
-\code{\link{get_data_extracts}()}
+\code{\link{get_data_extracts}()},
+\code{\link{write_testthat_file}()}
 }
 \concept{Post-interrogation}

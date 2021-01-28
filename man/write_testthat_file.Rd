@@ -2,7 +2,7 @@
 % Please edit documentation in R/write_testthat_file.R
 \name{write_testthat_file}
 \alias{write_testthat_file}
-\title{Transform a \strong{pointblank} agent to a testthat test file}
+\title{Transform a \strong{pointblank} agent to a \strong{testthat} test file}
 \usage{
 write_testthat_file(
   agent,
@@ -74,10 +74,16 @@ The \strong{testthat} package comes with a series of \verb{skip_on_*()} function
 conveniently cause the test file to be skipped entirely if certain conditions
 are met. We can quickly set any number of these at the top of the
 \strong{testthat} test file by supplying keywords as a vector to the \code{skips}
-option of \code{write_testthat_file()}. For instance, setting \verb{skips = c("cran", "windows)} will add the \strong{testthat} \code{skip_on_cran()} and
+option of \code{write_testthat_file()}. For instance, setting
+\verb{skips = c("cran", "windows)} will add the \strong{testthat} \code{skip_on_cran()} and
 \code{skip_on_os("windows")} statements, meaning that the generated test file
 won't run on a CRAN system or if the system OS is Windows.
 }
+\section{Function ID}{
+
+8-4
+}
+
 \examples{
 # Creating an `action_levels` object is a
 # common workflow step when creating a
@@ -127,3 +133,11 @@ agent <-
 # `tests/testthat` folder if it's available
 
 }
+\seealso{
+Other Post-interrogation: 
+\code{\link{all_passed}()},
+\code{\link{get_agent_x_list}()},
+\code{\link{get_data_extracts}()},
+\code{\link{get_sundered_data}()}
+}
+\concept{Post-interrogation}

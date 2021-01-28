@@ -48,7 +48,7 @@
 #' 
 #' @family Post-interrogation
 #' @section Function ID:
-#' 8-4
+#' 8-5
 #' 
 #' @export
 all_passed <- function(agent) {

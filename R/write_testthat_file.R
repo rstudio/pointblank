@@ -1,4 +1,4 @@
-#' Transform a **pointblank** agent to a testthat test file
+#' Transform a **pointblank** agent to a **testthat** test file
 #' 
 #' @description
 #' With a **pointblank** *agent*, we can write a **testthat** test file and opt

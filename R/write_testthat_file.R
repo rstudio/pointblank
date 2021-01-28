@@ -32,8 +32,8 @@
 #' conveniently cause the test file to be skipped entirely if certain conditions
 #' are met. We can quickly set any number of these at the top of the
 #' **testthat** test file by supplying keywords as a vector to the `skips`
-#' option of `write_testthat_file()`. For instance, setting `skips = c("cran",
-#' "windows)` will add the **testthat** `skip_on_cran()` and
+#' option of `write_testthat_file()`. For instance, setting 
+#' `skips = c("cran", "windows)` will add the **testthat** `skip_on_cran()` and
 #' `skip_on_os("windows")` statements, meaning that the generated test file
 #' won't run on a CRAN system or if the system OS is Windows.
 #' 

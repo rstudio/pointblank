@@ -118,7 +118,11 @@ db_tbl <- function(db,
       tolower(db) %in% c("duckdb", "sqlite")) {
 
     # Obtain the name of the data table
-    tbl_name <- table_stmt <- deparse(match.call()$table)
+    if ("pb_tbl_name" %in% names(attributes(table))) {
+      tbl_name <- table_stmt <- attr(table, "pb_tbl_name", exact = TRUE)
+    } else {
+      tbl_name <- table_stmt <- deparse(match.call()$table)[1]
+    }
     
     # Copy the tabular data into the `connection` object
     dplyr::copy_to(

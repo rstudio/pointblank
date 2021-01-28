@@ -27,8 +27,8 @@
 #' a connection to a database and using the `dplyr::tbl()` function with the
 #' connection and the table name (or a reference to a table in a schema). A
 #' better option is to use this function as the `read_fn` parameter in
-#' [create_agent()] and [create_informant()]. This can be done by using a
-#' leading `~` (e.g,. `read_fn = ~db_tbl(...)`).
+#' [create_agent()] or [create_informant()]. This can be done by using a
+#' leading `~` before the `db_tbl()` call (e.g,. `read_fn = ~db_tbl(...)`).
 #'
 #' The username and password are supplied though environment variables. If
 #' desired, these can be supplied directly by enclosing those values in `I()`.

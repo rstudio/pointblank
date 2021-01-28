@@ -106,7 +106,7 @@
 #' # database... like this:
 #' # example_db_tbl <- 
 #' #   db_tbl(
-#' #     db = "<database_shortname>", 
+#' #     db = "<database_type_shortname>", 
 #' #     dbname = "<database_name>",
 #' #     table = "<table_name>",
 #' #     user = "<DB_USER_NAME>",

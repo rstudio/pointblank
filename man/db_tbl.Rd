@@ -50,6 +50,74 @@ desired, these can be supplied directly by enclosing those values in \code{I()}.
 1-6
 }
 
+\examples{
+# You can use an in-memory database
+# table and supply an in-memory table
+# to it too:
+# small_table_duckdb <- 
+#   pointblank::db_tbl(
+#     db = "duckdb",
+#     dbname = ":memory:",
+#     table = small_table
+#   )
+
+# It's also possible to obtain a remote
+# file and shove it into an in-memory
+# database; use the all-powerful `file_tbl()`
+# + `db_tbl()` combo
+# all_revenue_large_duckdb <-
+#   db_tbl(
+#     db = "duckdb",
+#     dbname = ":memory:",
+#     table = file_tbl(
+#       file = from_github(
+#         file = "all_revenue_large.rds",
+#         repo = "rich-iannone/intendo",
+#         subdir = "data-large"
+#       )
+#     )
+#   )
+
+# For remote databases, it's just as
+# simple (I think); you can get access
+# to the `rna` table that's in the
+# RNA Central public database with the
+# following `db_tbl()` call
+# rna_db_tbl <- 
+#   db_tbl(
+#     db = "postgres", 
+#     dbname = "pfmegrnargs",
+#     table = "rna",
+#     user = I("reader"),
+#     password = I("NWDMCE5xdipIjRrp"),
+#     host = "hh-pgsql-public.ebi.ac.uk",
+#     port = 5432
+#   )
+
+# Using `I()` for the user name and
+# password means that you're passing in
+# the actual values but, normally, you
+# would use names of environment variables
+# (envvars) to access the username and
+# password values when connecting to a
+# database... like this:
+# example_db_tbl <- 
+#   db_tbl(
+#     db = "<database_shortcode>", 
+#     dbname = "<database_name>",
+#     table = "<table_name>",
+#     user = "<DB_USER_NAME>",
+#     password = "<DB_PASSWORD>",
+#     host = "<connection_url>",
+#     port = "<connection_port>"
+#   )
+
+# Environment variables can be created
+# by editing the user `.Renviron` file and
+# the `usethis::edit_r_environ()` function
+# makes this pretty easy to do
+
+}
 \seealso{
 Other Planning and Prep: 
 \code{\link{action_levels}()},

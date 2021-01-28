@@ -58,7 +58,7 @@
 #' # table and supply an in-memory table
 #' # to it too:
 #' # small_table_duckdb <- 
-#' #   pointblank::db_tbl(
+#' #   db_tbl(
 #' #     db = "duckdb",
 #' #     dbname = ":memory:",
 #' #     table = small_table

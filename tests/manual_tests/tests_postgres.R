@@ -3,8 +3,9 @@ library(pointblank)
 library(DBI)
 library(RPostgres)
 
-# Create a connection to the `pfmegrnargs`
-# database hosted publicly at "hh-pgsql-public.ebi.ac.uk"
+# Create a connection to the `pfmegrnargs` database hosted
+# publicly at "hh-pgsql-public.ebi.ac.uk"; this is an
+# RNAcentral joint (https://rnacentral.org/help/public-database)
 con <- 
   DBI::dbConnect(
     drv = RPostgres::Postgres(),

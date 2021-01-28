@@ -34,9 +34,9 @@
 #' desired, these can be supplied directly by enclosing those values in `I()`.
 #' 
 #' @param db Either an appropriate driver function (e.g.,
-#'   `RPostgres::Postgres()`) or a shorthand name for the database type. Valid
-#'   names are: `"postgresql"`, `"postgres"`, or `"pgsql"` (PostgreSQL, using
-#'   the `RPostgres::Postgres()` driver function); `"mysql"` (MySQL, using
+#'   `RPostgres::Postgres()`) or a shortname for the database type. Valid names
+#'   are: `"postgresql"`, `"postgres"`, or `"pgsql"` (PostgreSQL, using the
+#'   `RPostgres::Postgres()` driver function); `"mysql"` (MySQL, using
 #'   `RMySQL::MySQL()`); `"maria"` or `"mariadb"` (MariaDB, using
 #'   `RMariaDB::MariaDB()`); `"duckdb"` (DuckDB, using `duckdb::duckdb()`); and
 #'   `"sqlite"` (SQLite, using `RSQLite::SQLite()`).

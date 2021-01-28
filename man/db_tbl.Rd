@@ -8,9 +8,9 @@ db_tbl(db, dbname, table, user, password, host = NULL, port = NULL)
 }
 \arguments{
 \item{db}{Either an appropriate driver function (e.g.,
-\code{RPostgres::Postgres()}) or a shorthand name for the database type. Valid
-names are: \code{"postgresql"}, \code{"postgres"}, or \code{"pgsql"} (PostgreSQL, using
-the \code{RPostgres::Postgres()} driver function); \code{"mysql"} (MySQL, using
+\code{RPostgres::Postgres()}) or a shortname for the database type. Valid names
+are: \code{"postgresql"}, \code{"postgres"}, or \code{"pgsql"} (PostgreSQL, using the
+\code{RPostgres::Postgres()} driver function); \code{"mysql"} (MySQL, using
 \code{RMySQL::MySQL()}); \code{"maria"} or \code{"mariadb"} (MariaDB, using
 \code{RMariaDB::MariaDB()}); \code{"duckdb"} (DuckDB, using \code{duckdb::duckdb()}); and
 \code{"sqlite"} (SQLite, using \code{RSQLite::SQLite()}).}
@@ -39,8 +39,8 @@ getting a \code{tbl_dbi} object, which usually involves a combination of buildin
 a connection to a database and using the \code{dplyr::tbl()} function with the
 connection and the table name (or a reference to a table in a schema). A
 better option is to use this function as the \code{read_fn} parameter in
-\code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}. This can be done by using a
-leading \code{~} (e.g,. \code{read_fn = ~db_tbl(...)}).
+\code{\link[=create_agent]{create_agent()}} or \code{\link[=create_informant]{create_informant()}}. This can be done by using a
+leading \code{~} before the \code{db_tbl()} call (e.g,. \code{read_fn = ~db_tbl(...)}).
 
 The username and password are supplied though environment variables. If
 desired, these can be supplied directly by enclosing those values in \code{I()}.
@@ -55,7 +55,7 @@ desired, these can be supplied directly by enclosing those values in \code{I()}.
 # table and supply an in-memory table
 # to it too:
 # small_table_duckdb <- 
-#   pointblank::db_tbl(
+#   db_tbl(
 #     db = "duckdb",
 #     dbname = ":memory:",
 #     table = small_table
@@ -103,7 +103,7 @@ desired, these can be supplied directly by enclosing those values in \code{I()}.
 # database... like this:
 # example_db_tbl <- 
 #   db_tbl(
-#     db = "<database_shortcode>", 
+#     db = "<database_type_shortname>", 
 #     dbname = "<database_name>",
 #     table = "<table_name>",
 #     user = "<DB_USER_NAME>",

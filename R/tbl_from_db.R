@@ -81,6 +81,22 @@
 #' #     )
 #' #   )
 #' 
+#' # For remote databases, it's just as
+#' # simple (I think); you can get access
+#' # to the `rna` table that's in the
+#' # RNA Central public database with the
+#' # following `db_tbl()` call
+#' # rna_db_tbl <- 
+#' #   db_tbl(
+#' #     db = "postgres", 
+#' #     dbname = "pfmegrnargs",
+#' #     table = "rna",
+#' #     user = I("reader"),
+#' #     password = I("NWDMCE5xdipIjRrp"),
+#' #     host = "hh-pgsql-public.ebi.ac.uk",
+#' #     port = 5432
+#' #   )
+#' 
 #' @family Planning and Prep
 #' @section Function ID:
 #' 1-6

@@ -97,6 +97,29 @@
 #' #     port = 5432
 #' #   )
 #' 
+#' # Using `I()` for the user name and
+#' # password means that you're passing in
+#' # the actual values but, normally, you
+#' # would use names of environment variables
+#' # (envvars) to access the username and
+#' # password values when connecting to a
+#' # database... like this:
+#' # example_db_tbl <- 
+#' #   db_tbl(
+#' #     db = "<database_shortcode>", 
+#' #     dbname = "<database_name>",
+#' #     table = "<table_name>",
+#' #     user = "<DB_USER_NAME>",
+#' #     password = "<DB_PASSWORD>",
+#' #     host = "<connection_url>",
+#' #     port = "<connection_port>"
+#' #   )
+#'
+#' # Environment variables can be created
+#' # by editing the user `.Renviron` file and
+#' # the `usethis::edit_r_environ()` function
+#' # makes this pretty easy to do
+#'
 #' @family Planning and Prep
 #' @section Function ID:
 #' 1-6

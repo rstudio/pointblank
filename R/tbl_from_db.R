@@ -66,6 +66,8 @@ db_tbl <- function(db,
                    host = NULL,
                    port = NULL) {
   
+  force(table)
+  
   if (!requireNamespace("DBI", quietly = TRUE)) {
     stop("Accessing a database table requires the DBI package:\n",
          " * It can be installed with `install.packages(\"DBI\")`.",

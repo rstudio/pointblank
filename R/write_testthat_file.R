@@ -109,6 +109,10 @@
 #' # the function will place the file in the
 #' # `tests/testthat` folder if it's available
 #' 
+#' @family Post-interrogation
+#' @section Function ID:
+#' 8-4
+#' 
 #' @export
 write_testthat_file <- function(agent,
                                 name = NULL,

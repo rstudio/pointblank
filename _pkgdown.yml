@@ -149,6 +149,7 @@ reference:
     - get_agent_x_list
     - get_data_extracts
     - get_sundered_data
+    - write_testthat_file
     - all_passed
     
   - title: Object Ops
@@ -161,7 +162,6 @@ reference:
     contents:
     - x_write_disk
     - x_read_disk
-    - write_testthat_file
     - set_tbl
     - remove_tbl
     - set_read_fn

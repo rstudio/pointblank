@@ -311,6 +311,8 @@ row_based_step_fns_vector <- function() {
     "col_vals_between",
     "col_vals_not_between",
     "col_vals_in_set",
+    "col_vals_make_set",
+    "col_vals_include_subset",
     "col_vals_not_in_set",
     "col_vals_null",
     "col_vals_not_null",

@@ -169,8 +169,6 @@ NULL
 col_vals_in_set <- function(x,
                             columns,
                             set,
-                            complete = FALSE,
-                            in_order = FALSE,
                             preconditions = NULL,
                             actions = NULL,
                             step_id = NULL,
@@ -189,21 +187,13 @@ col_vals_in_set <- function(x,
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
-  # Put `set`, `complete`, and `in_order` into a list
-  set_options <- 
-    list(
-      set = set,
-      complete = complete,
-      in_order = in_order
-    )
-  
   if (is_a_table_object(x)) {
     
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
       col_vals_in_set(
         columns = columns,
-        set = set_options,
+        set = set,
         preconditions = preconditions,
         label = label,
         brief = brief,
@@ -216,7 +206,7 @@ col_vals_in_set <- function(x,
   }
   
   agent <- x
-
+  
   if (is.null(brief)) {
     brief <- 
       generate_autobriefs(
@@ -245,7 +235,7 @@ col_vals_in_set <- function(x,
         i_o = i_o,
         columns_expr = columns_expr,
         column = columns[i],
-        values = set_options,
+        values = set,
         preconditions = preconditions,
         actions = covert_actions(actions, agent),
         step_id = step_id[i],
@@ -254,9 +244,10 @@ col_vals_in_set <- function(x,
         active = active
       )
   }
-
+  
   agent
 }
+
 
 #' @rdname col_vals_in_set
 #' @import rlang
@@ -264,8 +255,6 @@ col_vals_in_set <- function(x,
 expect_col_vals_in_set <- function(object,
                                    columns,
                                    set,
-                                   complete = FALSE,
-                                   in_order = FALSE,
                                    preconditions = NULL,
                                    threshold = 1) {
   
@@ -324,8 +313,6 @@ expect_col_vals_in_set <- function(object,
 test_col_vals_in_set <- function(object,
                                  columns,
                                  set,
-                                 complete = FALSE,
-                                 in_order = FALSE,
                                  preconditions = NULL,
                                  threshold = 1) {
   

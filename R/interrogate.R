@@ -173,8 +173,6 @@ interrogate <- function(agent,
     # Get the starting time for the validation step
     validation_start_time <- Sys.time()
     
-
-    
     # Use preconditions to modify the table
     table <- apply_preconditions_to_tbl(agent = agent, idx = i, tbl = table)
 
@@ -593,6 +591,8 @@ check_table_with_assertion <- function(agent,
         assertion_type = assertion_type
       ),
       "col_vals_in_set" =,
+      "col_vals_make_set" =,
+      "col_vals_include_subset" =,
       "col_vals_not_in_set" = interrogate_set(
         agent = agent,
         idx = idx,
@@ -1053,11 +1053,7 @@ interrogate_set <- function(agent,
                             assertion_type) {
 
   # Get the set values for the expression
-  set_options <- get_values_at_idx(agent = agent, idx = idx)
-  
-  set <- set_options$set
-  complete <- set_options$complete
-  in_order <- set_options$in_order
+  set <- get_values_at_idx(agent = agent, idx = idx)
   
   # Determine if an NA value is part of the set
   na_pass <- any(is.na(set))
@@ -1065,9 +1061,9 @@ interrogate_set <- function(agent,
   # Obtain the target column as a symbol
   column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
   
-  if (assertion_type == "col_vals_in_set" && !complete && !in_order) {
+  if (assertion_type == "col_vals_in_set") {
     
-    # Create function for validating the `col_vals_in_set()` step function
+    # Create function for validating the `col_vals_in_set()` step
     tbl_val_in_set <- function(table,
                                column,
                                na_pass) {
@@ -1096,14 +1092,11 @@ interrogate_set <- function(agent,
       )
   }
   
-  if (assertion_type == "col_vals_in_set" && (complete || in_order)) {
+  if (assertion_type == "col_vals_make_set") {
     
-    # Create function for validating the `col_vals_not_in_set()` step with
-    # options `complete` and `in_order`
-    tbl_val_in_set_strict <- function(table,
-                                      column,
-                                      complete,
-                                      in_order) {
+    # Create function for validating the `col_vals_make_set()` step
+    tbl_vals_make_set <- function(table,
+                                  column) {
       
       column_validity_checks_column(table = table, column = {{ column }})
       
@@ -1125,15 +1118,8 @@ interrogate_set <- function(agent,
       
       table_col_distinct_values_in_set <-
         base::intersect(table_col_distinct_values, set)
-      
+
       dplyr::bind_rows(
-        dplyr::tibble(
-          n = 0,
-          set_element = "::outside_values::",
-          col_element = NA
-        ) %>%
-          dplyr::mutate(pb_is_good_1_ = length(extra_variables) == 0) %>%
-          dplyr::mutate(pb_is_good_2_ = length(extra_variables) == 0),
         dplyr::tibble(n = seq_along(set), set_element = set) %>%
           dplyr::left_join(
             dplyr::tibble(
@@ -1147,24 +1133,77 @@ interrogate_set <- function(agent,
           ) %>%
           dplyr::mutate(
             pb_is_good_2_ = is.na(col_element) || set_element == col_element
-          )
+          ),
+        dplyr::tibble(
+          n = 0,
+          set_element = "::outside_values::",
+          col_element = NA
+        ) %>%
+          dplyr::mutate(pb_is_good_1_ = length(extra_variables) == 0) %>%
+          dplyr::mutate(pb_is_good_2_ = length(extra_variables) == 0)
       ) %>%
-        dplyr::mutate(pb_is_good_ = dplyr::case_when(
-          {{ complete }} & !{{ in_order }} ~ pb_is_good_1_,
-          !{{ complete }} & {{ in_order }} ~ pb_is_good_2_,
-          {{ complete }} & {{ in_order }} ~ pb_is_good_1_ && pb_is_good_2_
-        )) %>%
-        dplyr::select(-c(pb_is_good_1_, pb_is_good_2_))
+        dplyr::mutate(pb_is_good_ = pb_is_good_1_ & pb_is_good_2_) %>%
+        dplyr::select(-c(pb_is_good_1_, pb_is_good_2_, n, col_element))
     }
     
     # Perform rowwise validations for the column
     tbl_evaled <- 
       pointblank_try_catch(
-        tbl_val_in_set_strict(
+        tbl_vals_make_set(
           table = table,
-          column = {{ column }},
-          complete = complete,
-          in_order = in_order
+          column = {{ column }}
+        )
+      )
+  }
+  
+  if (assertion_type == "col_vals_include_subset") {
+    
+    # Create function for validating the `col_vals_make_set()` step
+    tbl_vals_include_subset <- function(table,
+                                        column) {
+      
+      column_validity_checks_column(table = table, column = {{ column }})
+      
+      # Define function to get distinct values from a column in the
+      # order of first appearance
+      table_col_distinct_values <-
+        table %>%
+        dplyr::select({{ column }}) %>%
+        dplyr::distinct({{ column }}) %>%
+        dplyr::collect() %>%
+        dplyr::pull({{ column }})
+      
+      # Remove any NA values from the vector
+      table_col_distinct_values <-
+        table_col_distinct_values[!is.na(table_col_distinct_values)]
+      
+      table_col_distinct_values_in_set <-
+        base::intersect(table_col_distinct_values, set)
+      
+      dplyr::tibble(n = seq_along(set), set_element = set) %>%
+        dplyr::left_join(
+          dplyr::tibble(
+            n = seq_along(table_col_distinct_values_in_set),
+            col_element = table_col_distinct_values_in_set
+          ),
+          by = "n"
+        ) %>%
+        dplyr::mutate(
+          pb_is_good_1_ = set_element %in% {{ table_col_distinct_values }}
+        ) %>%
+        dplyr::mutate(
+          pb_is_good_2_ = is.na(col_element) || set_element == col_element
+        ) %>%
+        dplyr::mutate(pb_is_good_ = pb_is_good_1_ & pb_is_good_2_) %>%
+        dplyr::select(-c(pb_is_good_1_, pb_is_good_2_, n, col_element))
+    }
+    
+    # Perform rowwise validations for the column
+    tbl_evaled <- 
+      pointblank_try_catch(
+        tbl_vals_include_subset(
+          table = table,
+          column = {{ column }}
         )
       )
   }

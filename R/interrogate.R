@@ -1108,7 +1108,6 @@ interrogate_set <- function(agent,
         dplyr::distinct({{ column }}) %>%
         dplyr::collect() %>%
         dplyr::pull({{ column }})
-      
       # Remove any NA values from the vector
       table_col_distinct_values <-
         table_col_distinct_values[!is.na(table_col_distinct_values)]
@@ -1120,30 +1119,23 @@ interrogate_set <- function(agent,
         base::intersect(table_col_distinct_values, set)
 
       dplyr::bind_rows(
-        dplyr::tibble(n = seq_along(set), set_element = set) %>%
+        dplyr::tibble(set_element = set) %>%
           dplyr::left_join(
             dplyr::tibble(
-              n = seq_along(table_col_distinct_set),
-              col_element = table_col_distinct_set
+              col_element = table_col_distinct_set,
+              pb_is_good_ = TRUE
             ),
-            by = "n"
+            by = c("set_element" = "col_element")
           ) %>%
           dplyr::mutate(
-            pb_is_good_1_ = set_element %in% {{ table_col_distinct_values }}
-          ) %>%
-          dplyr::mutate(
-            pb_is_good_2_ = is.na(col_element) || set_element == col_element
+            pb_is_good_ = ifelse(is.na(pb_is_good_), FALSE, pb_is_good_)
           ),
         dplyr::tibble(
-          n = 0,
           set_element = "::outside_values::",
-          col_element = NA
+          pb_is_good_ = NA
         ) %>%
-          dplyr::mutate(pb_is_good_1_ = length(extra_variables) == 0) %>%
-          dplyr::mutate(pb_is_good_2_ = length(extra_variables) == 0)
-      ) %>%
-        dplyr::mutate(pb_is_good_ = pb_is_good_1_ & pb_is_good_2_) %>%
-        dplyr::select(-c(pb_is_good_1_, pb_is_good_2_, n, col_element))
+          dplyr::mutate(pb_is_good_ = length(extra_variables) == 0)
+      )
     }
     
     # Perform rowwise validations for the column
@@ -1180,22 +1172,17 @@ interrogate_set <- function(agent,
       table_col_distinct_set <-
         base::intersect(table_col_distinct_values, set)
       
-      dplyr::tibble(n = seq_along(set), set_element = set) %>%
+      dplyr::tibble(set_element = set) %>%
         dplyr::left_join(
           dplyr::tibble(
-            n = seq_along(table_col_distinct_set),
-            col_element = table_col_distinct_set
+            col_element = table_col_distinct_set,
+            pb_is_good_ = TRUE
           ),
-          by = "n"
+          by = c("set_element" = "col_element")
         ) %>%
         dplyr::mutate(
-          pb_is_good_1_ = set_element %in% {{ table_col_distinct_values }}
-        ) %>%
-        dplyr::mutate(
-          pb_is_good_2_ = is.na(col_element) || set_element == col_element
-        ) %>%
-        dplyr::mutate(pb_is_good_ = pb_is_good_1_ & pb_is_good_2_) %>%
-        dplyr::select(-c(pb_is_good_1_, pb_is_good_2_, n, col_element))
+          pb_is_good_ = ifelse(is.na(pb_is_good_), FALSE, pb_is_good_)
+        )
     }
     
     # Perform rowwise validations for the column

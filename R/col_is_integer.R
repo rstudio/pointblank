@@ -123,7 +123,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-20
+#' 2-23
 #' 
 #' @name col_is_integer
 NULL

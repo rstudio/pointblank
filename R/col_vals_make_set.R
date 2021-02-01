@@ -151,7 +151,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-x
+#' 2-11
 #' 
 #' @name col_vals_make_set
 NULL

@@ -98,7 +98,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-11
+#' 2-13
 #' 
 #' @seealso The analogous function that moves in the opposite direction:
 #' [col_vals_decreasing()].

@@ -777,6 +777,141 @@ test_that("Interrogating simply returns the expected results", {
   
   # Expect that `tbl_result` is never created
   expect_false(exists("tbl_result"))
+
+  #
+  # col_vals_make_set
+  #
+  
+  # Use the `col_vals_make_set()` function to perform
+  # a simple validation step
+  tbl_result <- 
+    tbl %>%
+    col_vals_make_set(
+      columns = vars(f),
+      set = c("low", "mid", "high"),
+      actions = warn_on_fail()
+    )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- 
+      tbl %>%
+      col_vals_make_set(
+        columns = vars(f),
+        set = c("low", "mid", "higher", "highest"),
+        actions = warn_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- 
+      tbl %>%
+      col_vals_in_set(
+        columns = vars(f),
+        set = c("low", "mid", "higher", "highest"),
+        actions = stop_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
+  
+  # Perform another simple validation step that results in stopping
+  expect_error(
+    tbl_result <- 
+      tbl %>%
+      col_vals_in_set(
+        columns = vars(f),
+        set = c("low", "mid"),
+        actions = stop_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
+  
+  #
+  # col_vals_make_subset
+  #
+  
+  # Use the `col_vals_make_subset()` function to perform
+  # a simple validation step
+  tbl_result <- 
+    tbl %>%
+    col_vals_make_subset(
+      columns = vars(f),
+      set = c("low", "mid", "high"),
+      actions = warn_on_fail()
+    )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  # Use the `col_vals_make_subset()` function to perform
+  # another simple validation step
+  tbl_result <- 
+    tbl %>%
+    col_vals_make_subset(
+      columns = vars(f),
+      set = c("low", "mid"),
+      actions = warn_on_fail()
+    )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- 
+      tbl %>%
+      col_vals_make_subset(
+        columns = vars(f),
+        set = c("low", "mid", "highest"),
+        actions = warn_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- 
+      tbl %>%
+      col_vals_make_subset(
+        columns = vars(f),
+        set = c("lower", "mid", "higher", "highest"),
+        actions = stop_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
+  
+  # Perform another simple validation step that results in stopping
+  expect_error(
+    tbl_result <- 
+      tbl %>%
+      col_vals_make_subset(
+        columns = vars(f),
+        set = c("low", "mid", "highly"),
+        actions = stop_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
   
   #
   # col_vals_not_null

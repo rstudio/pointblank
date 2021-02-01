@@ -31,8 +31,9 @@
 #' functions can only be used with a data table. The types of data tables that
 #' can be used include data frames, tibbles, database tables (`tbl_dbi`), and
 #' Spark DataFrames (`tbl_spark`). Each validation step or expectation will
-#' operate over the number of test units that is equal to the number of rows in
-#' the table (after any `preconditions` have been applied).
+#' operate over the number of test units that is equal to the number of elements
+#' in the `set` plus a test unit reserved for detecting column values outside of
+#' the `set` (any outside value seen will make this additional test unit fail).
 #'
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
@@ -73,8 +74,8 @@
 #' then be automatically generated.
 #'   
 #' @inheritParams col_vals_gt
-#' @param set A vector of numeric or string-based elements, where column values
-#'   found within this `set` will be considered as passing.
+#' @param set A vector of elements that is expected to be equal to the set of
+#'   unique values in the target column.
 #'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
@@ -92,18 +93,18 @@
 #' #    functions and then `interrogate()`
 #' 
 #' # Validate that values in column `f`
-#' # are all part of the set of values
-#' # containing `low`, `mid`, and `high`
+#' # comprise the values of `low`, `mid`,
+#' # and `high`, and, no other values
 #' agent <-
 #'   create_agent(small_table) %>%
-#'   col_vals_in_set(
+#'   col_vals_make_set(
 #'     vars(f), c("low", "mid", "high")
 #'   ) %>%
 #'   interrogate()
 #'   
 #' # Determine if this validation
 #' # had no failing test units (there
-#' # are 13 test units, one for each row)
+#' # are 4 test units)
 #' all_passed(agent)
 #' 
 #' # Calling `agent` in the console
@@ -121,7 +122,7 @@
 #' # behavior of side effects can be
 #' # customized with the `actions` option
 #' small_table %>%
-#'   col_vals_in_set(
+#'   col_vals_make_set(
 #'     vars(f), c("low", "mid", "high")
 #'   ) %>%
 #'   dplyr::pull(f) %>%
@@ -133,7 +134,7 @@
 #' # typically perform one validation at a
 #' # time; this is primarily used in
 #' # testthat tests
-#' expect_col_vals_in_set(
+#' expect_col_vals_make_set(
 #'   small_table,
 #'   vars(f), c("low", "mid", "high")
 #' )
@@ -144,7 +145,7 @@
 #' # get a single logical value returned
 #' # to us
 #' small_table %>%
-#'   test_col_vals_in_set(
+#'   test_col_vals_make_set(
 #'     vars(f), c("low", "mid", "high")
 #'   )
 #' 

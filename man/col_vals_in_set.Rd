@@ -97,18 +97,6 @@ result in a succeeding \strong{testthat} test or evaluate to \code{TRUE}. Likewi
 fractional values (between \code{0} and \code{1}) act as a proportional failure
 threshold, where \code{0.15} means that 15 percent of failing test units results
 in an overall test failure.}
-
-\item{complete}{A requirement to account for all column values in the
-provided \code{set}. When this is \code{TRUE} all unique column values must be part
-of the \code{set} (by default this is \code{FALSE}). If this mode is activated then
-the number of test units reported will be the number of elements in the
-\code{set}. This change is necessary since the perspective will be flipped.}
-
-\item{in_order}{A stringent requirement for enforcing the order of column
-values to match that of the elements provided in the \code{set}. If \code{TRUE} (and
-by default this is \code{FALSE}) the order of first-seen column values must
-match the order given in the \code{set}. Furthermore, the column values need to
-form contiguous blocks of each \code{set} element.}
 }
 \value{
 For the validation function, the return value is either a

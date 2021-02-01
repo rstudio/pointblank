@@ -259,6 +259,51 @@ test_that("pointblank expectation function produce the correct results", {
   )
   
   #
+  # expect_col_vals_make_set()
+  #
+  
+  expect_col_vals_make_set(tbl, columns = vars(c), set = tbl$c %>% unique())
+  expect_col_vals_make_set(tbl, columns = vars(c), set = tbl$c)
+  expect_success(expect_col_vals_make_set(tbl, columns = vars(b), set = tbl$b))
+  expect_success(expect_col_vals_make_set(tbl, columns = vars(c), set = c(2, 3, 4, 7, 9, NA), threshold = 3))
+  
+  expect_failure(expect_col_vals_make_set(tbl, columns = vars(c), set = c(2, 3, 4, 7, 9, NA)))
+  expect_failure(expect_col_vals_make_set(tbl, columns = vars(e), set = TRUE))
+  
+  expect_error(expect_col_vals_make_set(tbl, columns = vars(e), set = TRUE), class = "expectation_failure")
+  
+  expect_failure(expect_col_vals_make_set(tbl, columns = vars(e), set = TRUE, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_make_set(tbl, columns = vars(e), set = TRUE, threshold = 0.01), failed_beyond_proportional)
+  
+  expect_failure(
+    expect_col_vals_make_set(tbl, columns = vars(e), set = TRUE),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  #
+  # expect_col_vals_make_subset()
+  #
+  
+  expect_col_vals_make_subset(tbl, columns = vars(c), set = tbl$c %>% unique())
+  expect_col_vals_make_subset(tbl, columns = vars(c), set = c(3, 8, 7))
+  expect_col_vals_make_subset(tbl, columns = vars(c), set = c(3, 8, 7, NA))
+  expect_success(expect_col_vals_make_subset(tbl, columns = vars(b), set = tbl$b))
+  expect_success(expect_col_vals_make_subset(tbl, columns = vars(c), set = c(2, 3, 4, 7, 9, NA), threshold = 3))
+  
+  expect_failure(expect_col_vals_make_subset(tbl, columns = vars(c), set = c(2, 3, 4, 7, 25, NA)))
+  expect_failure(expect_col_vals_make_subset(tbl, columns = vars(e), set = 99))
+  
+  expect_error(expect_col_vals_make_subset(tbl, columns = vars(e), set = ""), class = "expectation_failure")
+  
+  expect_failure(expect_col_vals_make_subset(tbl, columns = vars(e), set = "", threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_make_subset(tbl, columns = vars(e), set = "", threshold = 0.01), failed_beyond_proportional)
+  
+  expect_failure(
+    expect_col_vals_make_subset(tbl, columns = vars(e), set = ""),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  #
   # expect_col_vals_increasing()
   #
   

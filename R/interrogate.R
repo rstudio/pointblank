@@ -592,7 +592,7 @@ check_table_with_assertion <- function(agent,
       ),
       "col_vals_in_set" =,
       "col_vals_make_set" =,
-      "col_vals_include_subset" =,
+      "col_vals_make_subset" =,
       "col_vals_not_in_set" = interrogate_set(
         agent = agent,
         idx = idx,
@@ -1156,11 +1156,11 @@ interrogate_set <- function(agent,
       )
   }
   
-  if (assertion_type == "col_vals_include_subset") {
+  if (assertion_type == "col_vals_make_subset") {
     
-    # Create function for validating the `col_vals_make_set()` step
-    tbl_vals_include_subset <- function(table,
-                                        column) {
+    # Create function for validating the `col_vals_make_subset()` step
+    tbl_vals_make_subset <- function(table,
+                                     column) {
       
       column_validity_checks_column(table = table, column = {{ column }})
       
@@ -1201,7 +1201,7 @@ interrogate_set <- function(agent,
     # Perform rowwise validations for the column
     tbl_evaled <- 
       pointblank_try_catch(
-        tbl_vals_include_subset(
+        tbl_vals_make_subset(
           table = table,
           column = {{ column }}
         )

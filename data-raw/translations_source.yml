@@ -80,7 +80,7 @@ autobriefs:
     pt: "Excedeu o número de unidades de teste com falha onde os valores em {valores_texto} deveriam corresponder exatamente ao conjunto único de valores em {column_text}."
     zh: "超过失败的测试单元，其中{values_text}中的值应与{column_text}中的唯一值集完全匹配。"
     ru: "Превышение количества неудачных тестовых единиц, где значения в {values_text} должны точно соответствовать уникальному набору значений в {column_text}."
-  include_subset_expectation_text:
+  make_subset_expectation_text:
     en: "Expect that values in {values_text} are a subset of the unique set of values in {column_text} {column_computed_text}."
     fr: "Attendez-vous à ce que les valeurs de {values_text} soient un sous-ensemble de l'ensemble unique de valeurs de {column_text} {column_computed_text}."
     de: "Erwarten Sie, dass die Werte in {values_text} eine Teilmenge der eindeutigen Wertemenge in {column_text} {column_computed_text} sind."
@@ -89,7 +89,7 @@ autobriefs:
     pt: "Espera-se que os valores em {values_text} sejam um subconjunto do conjunto único de valores em {column_text} {column_computed_text}."
     zh: "期望{values_text}中的值是{column_text} {column_computed_text}中唯一值集的子集。"
     ru: "Ожидайте, что значения в {values_text} являются подмножеством уникального набора значений в {column_text} {column_computed_text}. "
-  include_subset_failure_text:
+  make_subset_failure_text:
     en: "Exceedance of failed test units where values in {values_text} should have been a subset of the unique set of values in {column_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs de {values_text} auraient dû être un sous-ensemble de l'ensemble unique de valeurs de {column_text}."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen Werte in {values_text} eine Teilmenge der eindeutigen Wertemenge in {column_text} sein sollten."

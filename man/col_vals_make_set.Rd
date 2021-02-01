@@ -130,7 +130,7 @@ The \code{col_vals_make_set()} validation function, the
 \code{test_col_vals_make_set()} test function all check whether \code{set} values are
 all seen at least once in a table column. A necessary criterion here is that
 no \emph{additional} values (outside those definied in the \code{set}) should be seen
-(this requirement is relaxed in the \code{\link[=col_vals_include_subset]{col_vals_include_subset()}} validation
+(this requirement is relaxed in the \code{\link[=col_vals_make_subset]{col_vals_make_subset()}} validation
 function and in its expectation and test variants). The validation step
 function can be used directly on a data table or with an \emph{agent} object
 (technically, a \code{ptblank_agent} object) whereas the expectation and test
@@ -268,10 +268,10 @@ Other validation functions:
 \code{\link{col_vals_gte}()},
 \code{\link{col_vals_gt}()},
 \code{\link{col_vals_in_set}()},
-\code{\link{col_vals_include_subset}()},
 \code{\link{col_vals_increasing}()},
 \code{\link{col_vals_lte}()},
 \code{\link{col_vals_lt}()},
+\code{\link{col_vals_make_subset}()},
 \code{\link{col_vals_not_between}()},
 \code{\link{col_vals_not_equal}()},
 \code{\link{col_vals_not_in_set}()},

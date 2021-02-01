@@ -19,20 +19,17 @@
 
 #' Is a set of values a subset of a column of values?
 #'
-#' The `col_vals_include_subset()` validation function, the
-#' `expect_col_vals_include_subset()` expectation function, and the
-#' `test_col_vals_include_subset()` test function all check whether `set` values
-#' are all seen at least once in a table column. A necessary criterion here is
-#' that no *additional* values (outside those definied in the `set`) should be
-#' seen (this requirement is relaxed in the [col_vals_include_subset()]
-#' validation function and in the expectation and test variants). The validation
-#' step function can be used directly on a data table or with an *agent* object
-#' (technically, a `ptblank_agent` object) whereas the expectation and test
-#' functions can only be used with a data table. The types of data tables that
-#' can be used include data frames, tibbles, database tables (`tbl_dbi`), and
-#' Spark DataFrames (`tbl_spark`). Each validation step or expectation will
-#' operate over the number of test units that is equal to the number of rows in
-#' the table (after any `preconditions` have been applied).
+#' The `col_vals_make_subset()` validation function, the
+#' `expect_col_vals_make_subset()` expectation function, and the
+#' `test_col_vals_make_subset()` test function all check whether `set` values
+#' are all seen at least once in a table column. The validation step function
+#' can be used directly on a data table or with an *agent* object (technically,
+#' a `ptblank_agent` object) whereas the expectation and test functions can only
+#' be used with a data table. The types of data tables that can be used include
+#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
+#' (`tbl_spark`). Each validation step or expectation will operate over the
+#' number of test units that is equal to the number of rows in the table (after
+#' any `preconditions` have been applied).
 #'
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
@@ -162,21 +159,21 @@
 #' @section Function ID:
 #' 2-x
 #' 
-#' @name col_vals_include_subset
+#' @name col_vals_make_subset
 NULL
 
-#' @rdname col_vals_include_subset
+#' @rdname col_vals_make_subset
 #' @import rlang
 #' @export
-col_vals_include_subset <- function(x,
-                                    columns,
-                                    set,
-                                    preconditions = NULL,
-                                    actions = NULL,
-                                    step_id = NULL,
-                                    label = NULL,
-                                    brief = NULL,
-                                    active = TRUE) {
+col_vals_make_subset <- function(x,
+                                 columns,
+                                 set,
+                                 preconditions = NULL,
+                                 actions = NULL,
+                                 step_id = NULL,
+                                 label = NULL,
+                                 brief = NULL,
+                                 active = TRUE) {
   
   # Get `columns` as a label
   columns_expr <- 
@@ -193,7 +190,7 @@ col_vals_include_subset <- function(x,
     
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
-      col_vals_include_subset(
+      col_vals_make_subset(
         columns = columns,
         set = set,
         preconditions = preconditions,
@@ -212,7 +209,7 @@ col_vals_include_subset <- function(x,
   if (is.null(brief)) {
     brief <- 
       generate_autobriefs(
-        agent, columns, preconditions, values = set, "col_vals_include_subset"
+        agent, columns, preconditions, values = set, "col_vals_make_subset"
       )
   }
   
@@ -233,7 +230,7 @@ col_vals_include_subset <- function(x,
     agent <-
       create_validation_step(
         agent = agent,
-        assertion_type = "col_vals_include_subset",
+        assertion_type = "col_vals_make_subset",
         i_o = i_o,
         columns_expr = columns_expr,
         column = columns[i],
@@ -251,20 +248,20 @@ col_vals_include_subset <- function(x,
 }
 
 
-#' @rdname col_vals_include_subset
+#' @rdname col_vals_make_subset
 #' @import rlang
 #' @export
-expect_col_vals_include_subset <- function(object,
-                                     columns,
-                                     set,
-                                     preconditions = NULL,
-                                     threshold = 1) {
+expect_col_vals_make_subset <- function(object,
+                                        columns,
+                                        set,
+                                        preconditions = NULL,
+                                        threshold = 1) {
   
-  fn_name <- "expect_col_vals_include_subset"
+  fn_name <- "expect_col_vals_make_subset"
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
-    col_vals_include_subset(
+    col_vals_make_subset(
       columns = {{ columns }},
       set = {{ set }}, 
       preconditions = {{ preconditions }},
@@ -309,18 +306,18 @@ expect_col_vals_include_subset <- function(object,
   invisible(act$val)
 }
 
-#' @rdname col_vals_include_subset
+#' @rdname col_vals_make_subset
 #' @import rlang
 #' @export
-test_col_vals_include_subset <- function(object,
-                                         columns,
-                                         set,
-                                         preconditions = NULL,
-                                         threshold = 1) {
+test_col_vals_make_subset <- function(object,
+                                      columns,
+                                      set,
+                                      preconditions = NULL,
+                                      threshold = 1) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
-    col_valsinclude_subset(
+    col_valsmake_subset(
       columns = {{ columns }},
       set = {{ set }}, 
       preconditions = {{ preconditions }},

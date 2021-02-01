@@ -24,7 +24,7 @@
 #' `test_col_vals_make_set()` test function all check whether `set` values are
 #' all seen at least once in a table column. A necessary criterion here is that
 #' no *additional* values (outside those definied in the `set`) should be seen
-#' (this requirement is relaxed in the [col_vals_include_subset()] validation
+#' (this requirement is relaxed in the [col_vals_make_subset()] validation
 #' function and in its expectation and test variants). The validation step
 #' function can be used directly on a data table or with an *agent* object
 #' (technically, a `ptblank_agent` object) whereas the expectation and test

@@ -42,8 +42,8 @@ created with \code{\link[=create_agent]{create_agent()}}.}
 \item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
-\item{set}{A vector of numeric or string-based elements, where column values
-found within this \code{set} will be considered as passing.}
+\item{set}{A vector of elements that is expected to be a subset of the unique
+values in the target column.}
 
 \item{preconditions}{An optional expression for mutating the input table
 before proceeding with the validation. This is ideally as a one-sided R
@@ -115,15 +115,14 @@ The test function returns a logical value.
 \description{
 The \code{col_vals_make_subset()} validation function, the
 \code{expect_col_vals_make_subset()} expectation function, and the
-\code{test_col_vals_make_subset()} test function all check whether \code{set} values
-are all seen at least once in a table column. The validation step function
+\code{test_col_vals_make_subset()} test function all check whether all \code{set}
+values are seen at least once in a table column. The validation step function
 can be used directly on a data table or with an \emph{agent} object (technically,
 a \code{ptblank_agent} object) whereas the expectation and test functions can only
 be used with a data table. The types of data tables that can be used include
 data frames, tibbles, database tables (\code{tbl_dbi}), and Spark DataFrames
 (\code{tbl_spark}). Each validation step or expectation will operate over the
-number of test units that is equal to the number of rows in the table (after
-any \code{preconditions} have been applied).
+number of test units that is equal to the number of elements in the \code{set}.
 }
 \details{
 If providing multiple column names, the result will be an expansion of
@@ -177,19 +176,22 @@ then be automatically generated.
 # A: Using an `agent` with validation
 #    functions and then `interrogate()`
 
-# Validate that values in column `f`
-# are all part of the set of values
-# containing `low`, `mid`, and `high`
+# Validate that the distinct set of values
+# in column `f` contains at least the
+# subset defined as `low` and `high` (the
+# column actually has both of those and
+# some `mid` values)
 agent <-
   create_agent(small_table) \%>\%
-  col_vals_in_set(
-    vars(f), c("low", "mid", "high")
+  col_vals_make_subset(
+    vars(f), c("low", "high")
   ) \%>\%
   interrogate()
   
 # Determine if this validation
 # had no failing test units (there
-# are 13 test units, one for each row)
+# are 2 test units, one for element
+# in the `set`)
 all_passed(agent)
 
 # Calling `agent` in the console
@@ -207,8 +209,8 @@ all_passed(agent)
 # behavior of side effects can be
 # customized with the `actions` option
 small_table \%>\%
-  col_vals_in_set(
-    vars(f), c("low", "mid", "high")
+  col_vals_make_subset(
+    vars(f), c("low", "high")
   ) \%>\%
   dplyr::pull(f) \%>\%
   unique()
@@ -219,9 +221,9 @@ small_table \%>\%
 # typically perform one validation at a
 # time; this is primarily used in
 # testthat tests
-expect_col_vals_in_set(
+expect_col_vals_make_subset(
   small_table,
-  vars(f), c("low", "mid", "high")
+  vars(f), c("low", "high")
 )
 
 # D: Using the test function
@@ -230,8 +232,8 @@ expect_col_vals_in_set(
 # get a single logical value returned
 # to us
 small_table \%>\%
-  test_col_vals_in_set(
-    vars(f), c("low", "mid", "high")
+  test_col_vals_make_subset(
+    vars(f), c("low", "high")
   )
 
 }

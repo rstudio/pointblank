@@ -149,6 +149,30 @@ test_that("pointblank expectation functions produce the correct results", {
   expect_false(test_col_vals_not_in_set(tbl, columns = vars(b), set = tbl$b, threshold = 0.01))
 
   #
+  # expect_col_vals_make_set()
+  #
+  
+  expect_true(test_col_vals_make_set(tbl, columns = vars(c), set = tbl$c %>% unique()))
+  expect_true(test_col_vals_make_set(tbl, columns = vars(c), set = tbl$c))
+  expect_true(test_col_vals_make_set(tbl, columns = vars(b), set = tbl$b))
+  expect_true(test_col_vals_make_set(tbl, columns = vars(c), set = c(2, 3, 4, 7, 9, NA), threshold = 3))
+  expect_false(test_col_vals_make_set(tbl, columns = vars(c), set = c(2, 3, 4, 7, 9, NA)))
+  expect_false(test_col_vals_make_set(tbl, columns = vars(e), set = TRUE))
+  
+  
+  #
+  # expect_col_vals_make_subset()
+  #
+  
+  expect_true(test_col_vals_make_subset(tbl, columns = vars(c), set = tbl$c %>% unique()))
+  expect_true(test_col_vals_make_subset(tbl, columns = vars(c), set = tbl$c))
+  expect_true(test_col_vals_make_subset(tbl, columns = vars(b), set = tbl$b))
+  expect_true(test_col_vals_make_subset(tbl, columns = vars(c), set = c(3, 8)))
+  expect_true(test_col_vals_make_subset(tbl, columns = vars(c), set = c(2, 3, 4, 7, 9, NA), threshold = 3))
+  expect_false(test_col_vals_make_subset(tbl, columns = vars(c), set = c(99, 2, 3, 4, 7, 9, NA)))
+  expect_false(test_col_vals_make_subset(tbl, columns = vars(e), set = ""))
+  
+  #
   # expect_col_vals_increasing()
   #
   

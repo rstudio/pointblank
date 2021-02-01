@@ -1096,7 +1096,8 @@ interrogate_set <- function(agent,
     
     # Create function for validating the `col_vals_make_set()` step
     tbl_vals_make_set <- function(table,
-                                  column) {
+                                  column,
+                                  na_pass) {
       
       column_validity_checks_column(table = table, column = {{ column }})
       
@@ -1108,9 +1109,15 @@ interrogate_set <- function(agent,
         dplyr::distinct({{ column }}) %>%
         dplyr::collect() %>%
         dplyr::pull({{ column }})
-      # Remove any NA values from the vector
-      table_col_distinct_values <-
-        table_col_distinct_values[!is.na(table_col_distinct_values)]
+
+      if (na_pass) {
+        # Remove any NA values from the vector
+        table_col_distinct_values <-
+          table_col_distinct_values[!is.na(table_col_distinct_values)]
+        
+        # Remove any NA values from the set
+        set <- set[!is.na(set)]
+      }
       
       extra_variables <- 
         base::setdiff(table_col_distinct_values, set)
@@ -1119,10 +1126,10 @@ interrogate_set <- function(agent,
         base::intersect(table_col_distinct_values, set)
 
       dplyr::bind_rows(
-        dplyr::tibble(set_element = set) %>%
+        dplyr::tibble(set_element = as.character(set)) %>%
           dplyr::left_join(
             dplyr::tibble(
-              col_element = table_col_distinct_set,
+              col_element = as.character(table_col_distinct_set),
               pb_is_good_ = TRUE
             ),
             by = c("set_element" = "col_element")
@@ -1135,7 +1142,11 @@ interrogate_set <- function(agent,
           pb_is_good_ = NA
         ) %>%
           dplyr::mutate(pb_is_good_ = length(extra_variables) == 0)
-      )
+      ) %>%
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          is.na(pb_is_good_) ~ na_pass,
+          TRUE ~ pb_is_good_
+        ))
     }
     
     # Perform rowwise validations for the column
@@ -1143,7 +1154,8 @@ interrogate_set <- function(agent,
       pointblank_try_catch(
         tbl_vals_make_set(
           table = table,
-          column = {{ column }}
+          column = {{ column }},
+          na_pass = na_pass
         )
       )
   }
@@ -1152,7 +1164,8 @@ interrogate_set <- function(agent,
     
     # Create function for validating the `col_vals_make_subset()` step
     tbl_vals_make_subset <- function(table,
-                                     column) {
+                                     column,
+                                     na_pass) {
       
       column_validity_checks_column(table = table, column = {{ column }})
       
@@ -1165,24 +1178,33 @@ interrogate_set <- function(agent,
         dplyr::collect() %>%
         dplyr::pull({{ column }})
       
-      # Remove any NA values from the vector
-      table_col_distinct_values <-
-        table_col_distinct_values[!is.na(table_col_distinct_values)]
+      if (na_pass) {
+        # Remove any NA values from the vector
+        table_col_distinct_values <-
+          table_col_distinct_values[!is.na(table_col_distinct_values)]
+        
+        # Remove any NA values from the set
+        set <- set[!is.na(set)]
+      }
       
       table_col_distinct_set <-
         base::intersect(table_col_distinct_values, set)
       
-      dplyr::tibble(set_element = set) %>%
+      dplyr::tibble(set_element = as.character(set)) %>%
         dplyr::left_join(
           dplyr::tibble(
-            col_element = table_col_distinct_set,
+            col_element = as.character(table_col_distinct_set),
             pb_is_good_ = TRUE
           ),
           by = c("set_element" = "col_element")
         ) %>%
         dplyr::mutate(
           pb_is_good_ = ifelse(is.na(pb_is_good_), FALSE, pb_is_good_)
-        )
+        ) %>%
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          is.na(pb_is_good_) ~ na_pass,
+          TRUE ~ pb_is_good_
+        ))
     }
     
     # Perform rowwise validations for the column
@@ -1190,7 +1212,8 @@ interrogate_set <- function(agent,
       pointblank_try_catch(
         tbl_vals_make_subset(
           table = table,
-          column = {{ column }}
+          column = {{ column }},
+          na_pass = na_pass
         )
       )
   }

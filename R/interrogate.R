@@ -1116,15 +1116,15 @@ interrogate_set <- function(agent,
       extra_variables <- 
         base::setdiff(table_col_distinct_values, set)
       
-      table_col_distinct_values_in_set <-
+      table_col_distinct_set <-
         base::intersect(table_col_distinct_values, set)
 
       dplyr::bind_rows(
         dplyr::tibble(n = seq_along(set), set_element = set) %>%
           dplyr::left_join(
             dplyr::tibble(
-              n = seq_along(table_col_distinct_values_in_set),
-              col_element = table_col_distinct_values_in_set
+              n = seq_along(table_col_distinct_set),
+              col_element = table_col_distinct_set
             ),
             by = "n"
           ) %>%
@@ -1177,14 +1177,14 @@ interrogate_set <- function(agent,
       table_col_distinct_values <-
         table_col_distinct_values[!is.na(table_col_distinct_values)]
       
-      table_col_distinct_values_in_set <-
+      table_col_distinct_set <-
         base::intersect(table_col_distinct_values, set)
       
       dplyr::tibble(n = seq_along(set), set_element = set) %>%
         dplyr::left_join(
           dplyr::tibble(
-            n = seq_along(table_col_distinct_values_in_set),
-            col_element = table_col_distinct_values_in_set
+            n = seq_along(table_col_distinct_set),
+            col_element = table_col_distinct_set
           ),
           by = "n"
         ) %>%

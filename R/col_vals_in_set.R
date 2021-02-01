@@ -71,16 +71,6 @@
 #' @inheritParams col_vals_gt
 #' @param set A vector of numeric or string-based elements, where column values
 #'   found within this `set` will be considered as passing.
-#' @param complete A requirement to account for all column values in the
-#'   provided `set`. When this is `TRUE` all unique column values must be part
-#'   of the `set` (by default this is `FALSE`). If this mode is activated then
-#'   the number of test units reported will be the number of elements in the
-#'   `set`. This change is necessary since the perspective will be flipped.
-#' @param in_order A stringent requirement for enforcing the order of column
-#'   values to match that of the elements provided in the `set`. If `TRUE` (and
-#'   by default this is `FALSE`) the order of first-seen column values must
-#'   match the order given in the `set`. Furthermore, the column values need to
-#'   form contiguous blocks of each `set` element.
 #'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

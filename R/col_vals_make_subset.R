@@ -317,7 +317,7 @@ test_col_vals_make_subset <- function(object,
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
-    col_valsmake_subset(
+    col_vals_make_subset(
       columns = {{ columns }},
       set = {{ set }}, 
       preconditions = {{ preconditions }},

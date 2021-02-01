@@ -324,6 +324,8 @@ test_that("Utility functions won't fail us", {
       "precondition_text", "column_computed_text", "values_text", 
       "compare_expectation_text", "compare_failure_text", 
       "in_set_expectation_text", "in_set_failure_text",
+      "make_set_expectation_text", "make_set_failure_text",
+      "make_subset_expectation_text", "make_subset_failure_text",
       "not_in_set_expectation_text", "not_in_set_failure_text", 
       "between_expectation_text", "between_failure_text",
       "not_between_expectation_text", "not_between_failure_text",

@@ -42,8 +42,8 @@ created with \code{\link[=create_agent]{create_agent()}}.}
 \item{columns}{The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.}
 
-\item{set}{A vector of numeric or string-based elements, where column values
-found within this \code{set} will be considered as passing.}
+\item{set}{A vector of elements that is expected to be equal to the set of
+unique values in the target column.}
 
 \item{preconditions}{An optional expression for mutating the input table
 before proceeding with the validation. This is ideally as a one-sided R
@@ -125,8 +125,9 @@ function can be used directly on a data table or with an \emph{agent} object
 functions can only be used with a data table. The types of data tables that
 can be used include data frames, tibbles, database tables (\code{tbl_dbi}), and
 Spark DataFrames (\code{tbl_spark}). Each validation step or expectation will
-operate over the number of test units that is equal to the number of rows in
-the table (after any \code{preconditions} have been applied).
+operate over the number of test units that is equal to the number of elements
+in the \code{set} plus a test unit reserved for detecting column values outside of
+the \code{set} (any outside value seen will make this additional test unit fail).
 }
 \details{
 If providing multiple column names, the result will be an expansion of
@@ -181,18 +182,18 @@ then be automatically generated.
 #    functions and then `interrogate()`
 
 # Validate that values in column `f`
-# are all part of the set of values
-# containing `low`, `mid`, and `high`
+# comprise the values of `low`, `mid`,
+# and `high`, and, no other values
 agent <-
   create_agent(small_table) \%>\%
-  col_vals_in_set(
+  col_vals_make_set(
     vars(f), c("low", "mid", "high")
   ) \%>\%
   interrogate()
   
 # Determine if this validation
 # had no failing test units (there
-# are 13 test units, one for each row)
+# are 4 test units)
 all_passed(agent)
 
 # Calling `agent` in the console
@@ -210,7 +211,7 @@ all_passed(agent)
 # behavior of side effects can be
 # customized with the `actions` option
 small_table \%>\%
-  col_vals_in_set(
+  col_vals_make_set(
     vars(f), c("low", "mid", "high")
   ) \%>\%
   dplyr::pull(f) \%>\%
@@ -222,7 +223,7 @@ small_table \%>\%
 # typically perform one validation at a
 # time; this is primarily used in
 # testthat tests
-expect_col_vals_in_set(
+expect_col_vals_make_set(
   small_table,
   vars(f), c("low", "mid", "high")
 )
@@ -233,7 +234,7 @@ expect_col_vals_in_set(
 # get a single logical value returned
 # to us
 small_table \%>\%
-  test_col_vals_in_set(
+  test_col_vals_make_set(
     vars(f), c("low", "mid", "high")
   )
 

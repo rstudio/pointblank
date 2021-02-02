@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Are column data decreasing by row? — col_vals_decreasing • pointblank</title>
+<title>Is a set of values entirely accounted for in a column of values? — col_vals_make_set • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,21 +46,22 @@
 
 
 
-<meta property="og:title" content="Are column data decreasing by row? — col_vals_decreasing" />
-<meta property="og:description" content="The col_vals_decreasing() validation function, the
-expect_col_vals_decreasing() expectation function, and the
-test_col_vals_decreasing() test function all check whether column values in
-a table are decreasing when moving down a table. There are options for
-allowing NA values in the target column, allowing stationary phases (where
-consecutive values don't change), and even on for allowing increasing
-movements up to a certain threshold. The validation function can be used
-directly on a data table or with an agent object (technically, a
-ptblank_agent object) whereas the expectation and test functions can only
-be used with a data table. The types of data tables that can be used include
-data frames, tibbles, database tables (tbl_dbi), and Spark DataFrames
-(tbl_spark). Each validation step or expectation will operate over the
-number of test units that is equal to the number of rows in the table (after
-any preconditions have been applied)." />
+<meta property="og:title" content="Is a set of values entirely accounted for in a column of values? — col_vals_make_set" />
+<meta property="og:description" content="The col_vals_make_set() validation function, the
+expect_col_vals_make_set() expectation function, and the
+test_col_vals_make_set() test function all check whether set values are
+all seen at least once in a table column. A necessary criterion here is that
+no additional values (outside those definied in the set) should be seen
+(this requirement is relaxed in the col_vals_make_subset() validation
+function and in its expectation and test variants). The validation step
+function can be used directly on a data table or with an agent object
+(technically, a ptblank_agent object) whereas the expectation and test
+functions can only be used with a data table. The types of data tables that
+can be used include data frames, tibbles, database tables (tbl_dbi), and
+Spark DataFrames (tbl_spark). Each validation step or expectation will
+operate over the number of test units that is equal to the number of elements
+in the set plus a test unit reserved for detecting column values outside of
+the set (any outside value seen will make this additional test unit fail)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -166,34 +167,33 @@ any preconditions have been applied)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Are column data decreasing by row?</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/col_vals_decreasing.R'><code>R/col_vals_decreasing.R</code></a></small>
-    <div class="hidden name"><code>col_vals_decreasing.Rd</code></div>
+    <h1>Is a set of values entirely accounted for in a column of values?</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/col_vals_make_set.R'><code>R/col_vals_make_set.R</code></a></small>
+    <div class="hidden name"><code>col_vals_make_set.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>col_vals_decreasing()</code> validation function, the
-<code>expect_col_vals_decreasing()</code> expectation function, and the
-<code>test_col_vals_decreasing()</code> test function all check whether column values in
-a table are decreasing when moving down a table. There are options for
-allowing <code>NA</code> values in the target column, allowing stationary phases (where
-consecutive values don't change), and even on for allowing increasing
-movements up to a certain threshold. The validation function can be used
-directly on a data table or with an <em>agent</em> object (technically, a
-<code>ptblank_agent</code> object) whereas the expectation and test functions can only
-be used with a data table. The types of data tables that can be used include
-data frames, tibbles, database tables (<code>tbl_dbi</code>), and Spark DataFrames
-(<code>tbl_spark</code>). Each validation step or expectation will operate over the
-number of test units that is equal to the number of rows in the table (after
-any <code>preconditions</code> have been applied).</p>
+    <p>The <code>col_vals_make_set()</code> validation function, the
+<code>expect_col_vals_make_set()</code> expectation function, and the
+<code>test_col_vals_make_set()</code> test function all check whether <code>set</code> values are
+all seen at least once in a table column. A necessary criterion here is that
+no <em>additional</em> values (outside those definied in the <code>set</code>) should be seen
+(this requirement is relaxed in the <code><a href='col_vals_make_subset.html'>col_vals_make_subset()</a></code> validation
+function and in its expectation and test variants). The validation step
+function can be used directly on a data table or with an <em>agent</em> object
+(technically, a <code>ptblank_agent</code> object) whereas the expectation and test
+functions can only be used with a data table. The types of data tables that
+can be used include data frames, tibbles, database tables (<code>tbl_dbi</code>), and
+Spark DataFrames (<code>tbl_spark</code>). Each validation step or expectation will
+operate over the number of test units that is equal to the number of elements
+in the <code>set</code> plus a test unit reserved for detecting column values outside of
+the <code>set</code> (any outside value seen will make this additional test unit fail).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>col_vals_decreasing</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>col_vals_make_set</span><span class='op'>(</span>
   <span class='va'>x</span>,
   <span class='va'>columns</span>,
-  allow_stationary <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  increasing_tol <span class='op'>=</span> <span class='cn'>NULL</span>,
-  na_pass <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>set</span>,
   preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
   actions <span class='op'>=</span> <span class='cn'>NULL</span>,
   step_id <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -202,22 +202,18 @@ any <code>preconditions</code> have been applied).</p>
   active <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
 
-<span class='fu'>expect_col_vals_decreasing</span><span class='op'>(</span>
+<span class='fu'>expect_col_vals_make_set</span><span class='op'>(</span>
   <span class='va'>object</span>,
   <span class='va'>columns</span>,
-  allow_stationary <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  increasing_tol <span class='op'>=</span> <span class='cn'>NULL</span>,
-  na_pass <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>set</span>,
   preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
   threshold <span class='op'>=</span> <span class='fl'>1</span>
 <span class='op'>)</span>
 
-<span class='fu'>test_col_vals_decreasing</span><span class='op'>(</span>
+<span class='fu'>test_col_vals_make_set</span><span class='op'>(</span>
   <span class='va'>object</span>,
   <span class='va'>columns</span>,
-  allow_stationary <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  increasing_tol <span class='op'>=</span> <span class='cn'>NULL</span>,
-  na_pass <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>set</span>,
   preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
   threshold <span class='op'>=</span> <span class='fl'>1</span>
 <span class='op'>)</span></pre>
@@ -237,25 +233,9 @@ created with <code><a href='create_agent.html'>create_agent()</a></code>.</p></t
 vector) to which this validation should be applied.</p></td>
     </tr>
     <tr>
-      <th>allow_stationary</th>
-      <td><p>An option to allow pauses in decreasing values. For
-example if the values for the test units are <code>[85, 82, 82, 80, 77]</code> then
-the third unit (<code>82</code>, appearing a second time) would be marked with <em>fail</em>
-when <code>allow_stationary</code> is <code>FALSE</code> (the default). Using <code>allow_stationary = TRUE</code> will result in all the test units in <code>[85, 82, 82, 80, 77]</code> to be
-marked with <em>pass</em>.</p></td>
-    </tr>
-    <tr>
-      <th>increasing_tol</th>
-      <td><p>An optional threshold value that allows for movement of
-numerical values in the positive direction. By default this is <code>NULL</code> but
-using a numerical value with set the absolute threshold of positive travel
-allowed across numerical test units. Note that setting a value here also
-has the effect of setting <code>allow_stationary</code> to <code>TRUE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>na_pass</th>
-      <td><p>Should any encountered <code>NA</code> values be considered as passing
-test units? This is by default <code>FALSE</code>. Set to <code>TRUE</code> to give <code>NA</code>s a pass.</p></td>
+      <th>set</th>
+      <td><p>A vector of elements that is expected to be equal to the set of
+unique values in the target column.</p></td>
     </tr>
     <tr>
       <th>preconditions</th>
@@ -344,15 +324,12 @@ called primarily for its potential side-effects (e.g., signaling failure).
 The test function returns a logical value.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>If providing multiple column names to <code>columns</code>, the result will be an
-expansion of validation steps to that number of column names (e.g.,
-<code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars(col_a, col_b)</a></code> will result in the entry of two validation steps). Aside
-from column names in quotes and in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, <strong>tidyselect</strong> helper functions
-are available for specifying columns. They are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p>
-<p>This validation function supports special handling of <code>NA</code> values. The
-<code>na_pass</code> argument will determine whether an <code>NA</code> value appearing in a test
-unit should be counted as a <em>pass</em> or a <em>fail</em>. The default of <code>na_pass = FALSE</code> means that any <code>NA</code>s encountered will accumulate failing test units.</p>
+    <p>If providing multiple column names, the result will be an expansion of
+validation steps to that number of column names (e.g., <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars(col_a, col_b)</a></code>
+will result in the entry of two validation steps). Aside from column names in
+quotes and in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, <strong>tidyselect</strong> helper functions are available for
+specifying columns. They are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>,
+<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p>
 <p>Having table <code>preconditions</code> means <strong>pointblank</strong> will mutate the table just
 before interrogation. Such a table mutation is isolated in scope to the
 validation step(s) produced by the validation function call. Using
@@ -385,12 +362,10 @@ then be automatically generated.</p>
 
     
 
-<p>2-14</p>
+<p>2-11</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>The analogous function that moves in the opposite direction:
-<code><a href='col_vals_increasing.html'>col_vals_increasing()</a></code>.</p>
-<p>Other validation functions: 
+    <div class='dont-index'><p>Other validation functions: 
 <code><a href='col_exists.html'>col_exists</a>()</code>,
 <code><a href='col_is_character.html'>col_is_character</a>()</code>,
 <code><a href='col_is_date.html'>col_is_date</a>()</code>,
@@ -401,6 +376,7 @@ then be automatically generated.</p>
 <code><a href='col_is_posix.html'>col_is_posix</a>()</code>,
 <code><a href='col_schema_match.html'>col_schema_match</a>()</code>,
 <code><a href='col_vals_between.html'>col_vals_between</a>()</code>,
+<code><a href='col_vals_decreasing.html'>col_vals_decreasing</a>()</code>,
 <code><a href='col_vals_equal.html'>col_vals_equal</a>()</code>,
 <code><a href='col_vals_expr.html'>col_vals_expr</a>()</code>,
 <code><a href='col_vals_gte.html'>col_vals_gte</a>()</code>,
@@ -409,7 +385,6 @@ then be automatically generated.</p>
 <code><a href='col_vals_increasing.html'>col_vals_increasing</a>()</code>,
 <code><a href='col_vals_lte.html'>col_vals_lte</a>()</code>,
 <code><a href='col_vals_lt.html'>col_vals_lt</a>()</code>,
-<code><a href='col_vals_make_set.html'>col_vals_make_set</a>()</code>,
 <code><a href='col_vals_make_subset.html'>col_vals_make_subset</a>()</code>,
 <code><a href='col_vals_not_between.html'>col_vals_not_between</a>()</code>,
 <code><a href='col_vals_not_equal.html'>col_vals_not_equal</a>()</code>,
@@ -420,6 +395,72 @@ then be automatically generated.</p>
 <code><a href='conjointly.html'>conjointly</a>()</code>,
 <code><a href='rows_distinct.html'>rows_distinct</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># The `small_table` dataset in the</span>
+<span class='co'># package will be used to validate that</span>
+<span class='co'># column values are part of a given set</span>
+
+<span class='co'># A: Using an `agent` with validation</span>
+<span class='co'>#    functions and then `interrogate()`</span>
+
+<span class='co'># Validate that values in column `f`</span>
+<span class='co'># comprise the values of `low`, `mid`,</span>
+<span class='co'># and `high`, and, no other values</span>
+<span class='va'>agent</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span><span class='va'>small_table</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_make_set</span><span class='op'>(</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"low"</span>, <span class='st'>"mid"</span>, <span class='st'>"high"</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
+  
+<span class='co'># Determine if this validation</span>
+<span class='co'># had no failing test units (there</span>
+<span class='co'># are 4 test units)</span>
+<span class='fu'><a href='all_passed.html'>all_passed</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># Calling `agent` in the console</span>
+<span class='co'># prints the agent's report; but we</span>
+<span class='co'># can get a `gt_tbl` object directly</span>
+<span class='co'># with `get_agent_report(agent)`</span>
+
+<span class='co'># B: Using the validation function</span>
+<span class='co'>#    directly on the data (no `agent`)</span>
+
+<span class='co'># This way of using validation functions</span>
+<span class='co'># acts as a data filter: data is passed</span>
+<span class='co'># through but should `stop()` if there</span>
+<span class='co'># is a single test unit failing; the</span>
+<span class='co'># behavior of side effects can be</span>
+<span class='co'># customized with the `actions` option</span>
+<span class='va'>small_table</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>col_vals_make_set</span><span class='op'>(</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"low"</span>, <span class='st'>"mid"</span>, <span class='st'>"high"</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "high" "low"  "mid" </div><div class='input'>
+<span class='co'># C: Using the expectation function</span>
+
+<span class='co'># With the `expect_*()` form, we would</span>
+<span class='co'># typically perform one validation at a</span>
+<span class='co'># time; this is primarily used in</span>
+<span class='co'># testthat tests</span>
+<span class='fu'>expect_col_vals_make_set</span><span class='op'>(</span>
+  <span class='va'>small_table</span>,
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"low"</span>, <span class='st'>"mid"</span>, <span class='st'>"high"</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='co'># D: Using the test function</span>
+
+<span class='co'># With the `test_*()` form, we should</span>
+<span class='co'># get a single logical value returned</span>
+<span class='co'># to us</span>
+<span class='va'>small_table</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>test_col_vals_make_set</span><span class='op'>(</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"low"</span>, <span class='st'>"mid"</span>, <span class='st'>"high"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

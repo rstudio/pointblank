@@ -113,3 +113,36 @@ test_that("a testthat test file can be written using an agent", {
 if (fs::dir_exists(path = work_path)) {
   fs::dir_delete(path = work_path)
 }
+
+test_that("the `process_skips_text()` creates the correct text strings", {
+  
+  skips_keywords <-
+    c(
+      "cran", "travis", "appveyor", "ci", "covr", "bioc",
+      "windows", "mac", "linux", "solaris"
+    )
+  
+  skips_text <-
+    c(
+      "skip_on_cran()\n\n", "skip_on_travis()\n\n", "skip_on_appveyor()\n\n", 
+      "skip_on_ci()\n\n", "skip_on_covr()\n\n", "skip_on_bioc()\n\n", 
+      "skip_on_os(\"windows\")\n\n", "skip_on_os(\"mac\")\n\n",
+      "skip_on_os(\"linux\")\n\n", "skip_on_os(\"solaris\")\n\n"
+    )
+  
+  # Expect that the above keywords generate the corresponding text
+  for (i in seq_along(skips_keywords)) {
+    expect_equal(process_skips_text(skips_keywords[i]), skips_text[i])
+  }
+  
+  # Expect no text (`NULL`) if certain inputs are provided
+  expect_null(process_skips_text(NULL))
+  expect_null(process_skips_text(3))
+  expect_null(process_skips_text(3:5))
+  expect_null(process_skips_text(""))
+  expect_null(process_skips_text(c("", "")))
+  
+  # Expect an error if invalid keywords are supplied
+  expect_error(process_skips_text("crane"))
+  expect_error(process_skips_text(c("cran", "covr", "crane")))
+})

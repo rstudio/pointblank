@@ -738,6 +738,12 @@ pb_str_catalog <- function(item_vector,
   
   item_count <- length(item_vector)
 
+  # If there is nothing in the `item_vector`, return
+  # a text string with three hyphens
+  if (item_count < 1) {
+    return("---")
+  }
+  
   if (item_count > 2 && item_count > limit) {
     
     n_items <- item_count - limit

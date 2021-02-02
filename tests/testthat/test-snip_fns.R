@@ -316,6 +316,89 @@ test_that("the `snip_list()` function works", {
     "8, 7, 6, 4, 3 (+2 more)"
   )
   
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "inorder"
+      ),
+      data.frame(a = rep(NA_character_, 5))
+    ),
+    "`\"NA\"`"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "inorder"
+      ),
+      data.frame(a = rep(NA, 5))
+    ),
+    "`NA`"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "inorder"
+      ),
+      data.frame(a = rep(NA_real_, 5))
+    ),
+    "`NA`"
+  )
+  
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "inseq"
+      ),
+      data.frame(a = rep(NA_character_, 5))
+    ),
+    "---"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "inseq"
+      ),
+      data.frame(a = rep(NA, 5))
+    ),
+    "---"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "inseq"
+      ),
+      data.frame(a = rep(NA_real_, 5))
+    ),
+    "---"
+  )
+  
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "infreq"
+      ),
+      data.frame(a = rep(NA_character_, 5))
+    ),
+    "`\"NA\"`"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "infreq"
+      ),
+      data.frame(a = rep(NA, 5))
+    ),
+    "`NA`"
+  )
+  expect_equal(
+    run_snip(
+      snip_list(
+        column = "a", sorting = "infreq"
+      ),
+      data.frame(a = rep(NA_real_, 5))
+    ),
+    "`NA`"
+  )
   
   for (lang in reporting_languages) {
     expect_match(

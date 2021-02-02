@@ -151,8 +151,8 @@ reference:
     - get_agent_x_list
     - get_data_extracts
     - get_sundered_data
-    - write_testthat_file
     - all_passed
+    - write_testthat_file
     
   - title: Object Ops
     desc: >

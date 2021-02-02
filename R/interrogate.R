@@ -173,8 +173,6 @@ interrogate <- function(agent,
     # Get the starting time for the validation step
     validation_start_time <- Sys.time()
     
-
-    
     # Use preconditions to modify the table
     table <- apply_preconditions_to_tbl(agent = agent, idx = i, tbl = table)
 
@@ -593,6 +591,8 @@ check_table_with_assertion <- function(agent,
         assertion_type = assertion_type
       ),
       "col_vals_in_set" =,
+      "col_vals_make_set" =,
+      "col_vals_make_subset" =,
       "col_vals_not_in_set" = interrogate_set(
         agent = agent,
         idx = idx,
@@ -1063,7 +1063,7 @@ interrogate_set <- function(agent,
   
   if (assertion_type == "col_vals_in_set") {
     
-    # Create function for validating the `col_vals_in_set()` step function
+    # Create function for validating the `col_vals_in_set()` step
     tbl_val_in_set <- function(table,
                                column,
                                na_pass) {
@@ -1085,6 +1085,132 @@ interrogate_set <- function(agent,
     tbl_evaled <- 
       pointblank_try_catch(
         tbl_val_in_set(
+          table = table,
+          column = {{ column }},
+          na_pass = na_pass
+        )
+      )
+  }
+  
+  if (assertion_type == "col_vals_make_set") {
+    
+    # Create function for validating the `col_vals_make_set()` step
+    tbl_vals_make_set <- function(table,
+                                  column,
+                                  na_pass) {
+      
+      column_validity_checks_column(table = table, column = {{ column }})
+      
+      # Define function to get distinct values from a column in the
+      # order of first appearance
+      table_col_distinct_values <-
+        table %>%
+        dplyr::select({{ column }}) %>%
+        dplyr::distinct({{ column }}) %>%
+        dplyr::collect() %>%
+        dplyr::pull({{ column }})
+
+      if (na_pass) {
+        # Remove any NA values from the vector
+        table_col_distinct_values <-
+          table_col_distinct_values[!is.na(table_col_distinct_values)]
+        
+        # Remove any NA values from the set
+        set <- set[!is.na(set)]
+      }
+      
+      extra_variables <- 
+        base::setdiff(table_col_distinct_values, set)
+      
+      table_col_distinct_set <-
+        base::intersect(table_col_distinct_values, set)
+
+      dplyr::bind_rows(
+        dplyr::tibble(set_element = as.character(set)) %>%
+          dplyr::left_join(
+            dplyr::tibble(
+              col_element = as.character(table_col_distinct_set),
+              pb_is_good_ = TRUE
+            ),
+            by = c("set_element" = "col_element")
+          ) %>%
+          dplyr::mutate(
+            pb_is_good_ = ifelse(is.na(pb_is_good_), FALSE, pb_is_good_)
+          ),
+        dplyr::tibble(
+          set_element = "::outside_values::",
+          pb_is_good_ = NA
+        ) %>%
+          dplyr::mutate(pb_is_good_ = length(extra_variables) == 0)
+      ) %>%
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          is.na(pb_is_good_) ~ na_pass,
+          TRUE ~ pb_is_good_
+        ))
+    }
+    
+    # Perform rowwise validations for the column
+    tbl_evaled <- 
+      pointblank_try_catch(
+        tbl_vals_make_set(
+          table = table,
+          column = {{ column }},
+          na_pass = na_pass
+        )
+      )
+  }
+  
+  if (assertion_type == "col_vals_make_subset") {
+    
+    # Create function for validating the `col_vals_make_subset()` step
+    tbl_vals_make_subset <- function(table,
+                                     column,
+                                     na_pass) {
+      
+      column_validity_checks_column(table = table, column = {{ column }})
+      
+      # Define function to get distinct values from a column in the
+      # order of first appearance
+      table_col_distinct_values <-
+        table %>%
+        dplyr::select({{ column }}) %>%
+        dplyr::distinct({{ column }}) %>%
+        dplyr::collect() %>%
+        dplyr::pull({{ column }})
+      
+      if (na_pass) {
+        # Remove any NA values from the vector
+        table_col_distinct_values <-
+          table_col_distinct_values[!is.na(table_col_distinct_values)]
+        
+        # Remove any NA values from the set
+        set <- set[!is.na(set)]
+      }
+      
+      table_col_distinct_set <-
+        base::intersect(table_col_distinct_values, set)
+      
+      dplyr::tibble(set_element = as.character(set)) %>%
+        dplyr::left_join(
+          dplyr::tibble(
+            col_element = as.character(table_col_distinct_set),
+            pb_is_good_ = TRUE
+          ),
+          by = c("set_element" = "col_element")
+        ) %>%
+        dplyr::mutate(
+          pb_is_good_ = ifelse(is.na(pb_is_good_), FALSE, pb_is_good_)
+        ) %>%
+        dplyr::mutate(pb_is_good_ = dplyr::case_when(
+          is.na(pb_is_good_) ~ na_pass,
+          TRUE ~ pb_is_good_
+        ))
+    }
+    
+    # Perform rowwise validations for the column
+    tbl_evaled <- 
+      pointblank_try_catch(
+        tbl_vals_make_subset(
           table = table,
           column = {{ column }},
           na_pass = na_pass

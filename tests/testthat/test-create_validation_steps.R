@@ -746,6 +746,95 @@ test_that("Creating a `col_vals_not_in_set()` step is possible", {
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
+test_that("Creating a `col_vals_make_set()` step is possible", {
+  
+  # Use `col_vals_make_set()` function to create
+  # a validation step
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_vals_make_set(columns = vars(f), set = c("low", "high", "mid"))
+  
+  # Expect the class name for the object
+  # to be `ptblank_agent`
+  expect_is(validation, "ptblank_agent")
+  
+  # Expect elements of the object to be equivalent
+  # to specific parameters
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_make_set")
+  expect_equivalent(validation$validation_set$column, "f")
+  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), c("low", "high", "mid"))
+  expect_true(is.na(validation$validation_set$all_passed))
+  expect_true(is.na(validation$validation_set$n))
+  expect_true(is.na(validation$validation_set$n_passed))
+  expect_true(is.na(validation$validation_set$n_failed))
+  expect_true(is.na(validation$validation_set$f_passed))
+  expect_true(is.na(validation$validation_set$f_failed))
+  expect_true(is.na(validation$validation_set$warn))
+  expect_true(is.na(validation$validation_set$notify))
+  expect_true(is.na(validation$validation_set$row_sample))
+  
+  # Validate all available columns using the
+  # `everything()` helper function
+  validation_all <-
+    create_agent(tbl = small_table) %>%
+    col_vals_make_set(columns = everything(), set = c("low", "high", "mid"))
+  
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
+  
+  # Expect all column names in `validation_all$validation_set$column`
+  expect_equivalent(
+    validation_all$validation_set$column,
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+})
+
+test_that("Creating a `col_vals_make_subset()` step is possible", {
+  
+  # Use `col_vals_make_subset()` function to create
+  # a validation step
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_vals_make_subset(columns = vars(f), set = c("low", "high"))
+  
+  # Expect the class name for the object
+  # to be `ptblank_agent`
+  expect_is(validation, "ptblank_agent")
+  
+  # Expect elements of the object to be equivalent
+  # to specific parameters
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$col_names, c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_make_subset")
+  expect_equivalent(validation$validation_set$column, "f")
+  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), c("low", "high"))
+  expect_true(is.na(validation$validation_set$all_passed))
+  expect_true(is.na(validation$validation_set$n))
+  expect_true(is.na(validation$validation_set$n_passed))
+  expect_true(is.na(validation$validation_set$n_failed))
+  expect_true(is.na(validation$validation_set$f_passed))
+  expect_true(is.na(validation$validation_set$f_failed))
+  expect_true(is.na(validation$validation_set$warn))
+  expect_true(is.na(validation$validation_set$notify))
+  expect_true(is.na(validation$validation_set$row_sample))
+  
+  # Validate all available columns using the
+  # `everything()` helper function
+  validation_all <-
+    create_agent(tbl = small_table) %>%
+    col_vals_make_subset(columns = everything(), set = c("low", "high"))
+  
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 8)
+  
+  # Expect all column names in `validation_all$validation_set$column`
+  expect_equivalent(
+    validation_all$validation_set$column,
+    c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+})
+
+
 test_that("Creating a `col_vals_regex()` step is possible", {
   
   # Use `col_vals_regex()` function to create

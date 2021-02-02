@@ -130,7 +130,7 @@ then be automatically generated.
 }
 \section{Function ID}{
 
-2-25
+2-28
 }
 
 \examples{
@@ -214,6 +214,8 @@ Other validation functions:
 \code{\link{col_vals_increasing}()},
 \code{\link{col_vals_lte}()},
 \code{\link{col_vals_lt}()},
+\code{\link{col_vals_make_set}()},
+\code{\link{col_vals_make_subset}()},
 \code{\link{col_vals_not_between}()},
 \code{\link{col_vals_not_equal}()},
 \code{\link{col_vals_not_in_set}()},

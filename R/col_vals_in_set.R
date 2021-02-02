@@ -196,7 +196,7 @@ col_vals_in_set <- function(x,
   }
   
   agent <- x
-
+  
   if (is.null(brief)) {
     brief <- 
       generate_autobriefs(
@@ -234,9 +234,10 @@ col_vals_in_set <- function(x,
         active = active
       )
   }
-
+  
   agent
 }
+
 
 #' @rdname col_vals_in_set
 #' @import rlang

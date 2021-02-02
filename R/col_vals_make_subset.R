@@ -17,20 +17,18 @@
 #
 
 
-#' Do the columns contain logical values?
+#' Is a set of values a subset of a column of values?
 #'
-#' The `col_is_logical()` validation function, the `expect_col_is_logical()`
-#' expectation function, and the `test_col_is_logical()` test function all check
-#' whether one or more columns in a table is of the logical (`TRUE`/`FALSE`)
-#' type. Like many of the `col_is_*()`-type functions in **pointblank**, the
-#' only requirement is a specification of the column names. The validation
-#' function can be used directly on a data table or with an *agent* object
-#' (technically, a `ptblank_agent` object) whereas the expectation and test
-#' functions can only be used with a data table. The types of data tables that
-#' can be used include data frames, tibbles, database tables (`tbl_dbi`), and
-#' Spark DataFrames (`tbl_spark`). Each validation step or expectation will
-#' operate over a single test unit, which is whether the column is an
-#' logical-type column or not.
+#' The `col_vals_make_subset()` validation function, the
+#' `expect_col_vals_make_subset()` expectation function, and the
+#' `test_col_vals_make_subset()` test function all check whether all `set`
+#' values are seen at least once in a table column. The validation step function
+#' can be used directly on a data table or with an *agent* object (technically,
+#' a `ptblank_agent` object) whereas the expectation and test functions can only
+#' be used with a data table. The types of data tables that can be used include
+#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
+#' (`tbl_spark`). Each validation step or expectation will operate over the
+#' number of test units that is equal to the number of elements in the `set`.
 #'
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
@@ -39,27 +37,41 @@
 #' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, and `everything()`.
 #' 
+#' Having table `preconditions` means **pointblank** will mutate the table just
+#' before interrogation. Such a table mutation is isolated in scope to the
+#' validation step(s) produced by the validation function call. Using
+#' **dplyr** code is suggested here since the statements can be translated to
+#' SQL if necessary. The code is most easily supplied as a one-sided **R**
+#' formula (using a leading `~`). In the formula representation, the `.` serves
+#' as the input data table to be transformed (e.g., 
+#' `~ . %>% dplyr::mutate(col_a = col_b + 10)`). Alternatively, a function could
+#' instead be supplied (e.g., 
+#' `function(x) dplyr::mutate(x, col_a = col_b + 10)`).
+#' 
 #' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list object
-#' that is best produced by the [action_levels()] function. Read that function's
-#' documentation for the lowdown on how to create reactions to above-threshold
-#' failure levels in validation. The basic gist is that you'll want at least a
-#' single threshold level (specified as either the fraction of test units
-#' failed, or, an absolute value), often using the `warn_at` argument. This is
-#' especially true when `x` is a table object because, otherwise, nothing
-#' happens. For the `col_is_*()`-type functions, using 
-#' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
-#' depending on the situation (the first produces a warning, the other
-#' `stop()`s).
+#' present in every validation function, takes a specially-crafted list
+#' object that is best produced by the [action_levels()] function. Read that
+#' function's documentation for the lowdown on how to create reactions to
+#' above-threshold failure levels in validation. The basic gist is that you'll
+#' want at least a single threshold level (specified as either the fraction of
+#' test units failed, or, an absolute value), often using the `warn_at`
+#' argument. This is especially true when `x` is a table object because,
+#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
+#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
+#' choices depending on the situation (the first produces a warning when a
+#' quarter of the total test units fails, the other `stop()`s at the same
+#' threshold level).
 #' 
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The
 #' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
 #' then be automatically generated.
-#'
+#'   
 #' @inheritParams col_vals_gt
-#' 
+#' @param set A vector of elements that is expected to be a subset of the unique
+#'   values in the target column.
+#'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
 #'   object or a table was passed to `x`). The expectation function invisibly
@@ -69,23 +81,28 @@
 #'   
 #' @examples
 #' # The `small_table` dataset in the
-#' # package has an `e` column which has
-#' # logical values; the following examples
-#' # will validate that that column is of
-#' # the `logical` class
+#' # package will be used to validate that
+#' # column values are part of a given set
 #' 
 #' # A: Using an `agent` with validation
 #' #    functions and then `interrogate()`
 #' 
-#' # Validate that the column `e` has the
-#' # `logical` class
+#' # Validate that the distinct set of values
+#' # in column `f` contains at least the
+#' # subset defined as `low` and `high` (the
+#' # column actually has both of those and
+#' # some `mid` values)
 #' agent <-
 #'   create_agent(small_table) %>%
-#'   col_is_logical(vars(e)) %>%
+#'   col_vals_make_subset(
+#'     vars(f), c("low", "high")
+#'   ) %>%
 #'   interrogate()
 #'   
 #' # Determine if this validation
-#' # had no failing test units (1)
+#' # had no failing test units (there
+#' # are 2 test units, one for element
+#' # in the `set`)
 #' all_passed(agent)
 #' 
 #' # Calling `agent` in the console
@@ -103,17 +120,21 @@
 #' # behavior of side effects can be
 #' # customized with the `actions` option
 #' small_table %>%
-#'   col_is_logical(vars(e)) %>%
-#'   dplyr::slice(1:5)
-#' 
+#'   col_vals_make_subset(
+#'     vars(f), c("low", "high")
+#'   ) %>%
+#'   dplyr::pull(f) %>%
+#'   unique()
+#'
 #' # C: Using the expectation function
 #' 
 #' # With the `expect_*()` form, we would
 #' # typically perform one validation at a
 #' # time; this is primarily used in
 #' # testthat tests
-#' expect_col_is_logical(
-#'   small_table, vars(e)
+#' expect_col_vals_make_subset(
+#'   small_table,
+#'   vars(f), c("low", "high")
 #' )
 #' 
 #' # D: Using the test function
@@ -122,28 +143,29 @@
 #' # get a single logical value returned
 #' # to us
 #' small_table %>%
-#'   test_col_is_logical(vars(e))
+#'   test_col_vals_make_subset(
+#'     vars(f), c("low", "high")
+#'   )
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-25
+#' 2-12
 #' 
-#' @name col_is_logical
+#' @name col_vals_make_subset
 NULL
 
-#' @rdname col_is_logical
+#' @rdname col_vals_make_subset
 #' @import rlang
 #' @export
-col_is_logical <- function(x,
-                           columns,
-                           actions = NULL,
-                           step_id = NULL,
-                           label = NULL,
-                           brief = NULL,
-                           active = TRUE) {
-  
-  preconditions <- NULL
-  values <- NULL
+col_vals_make_subset <- function(x,
+                                 columns,
+                                 set,
+                                 preconditions = NULL,
+                                 actions = NULL,
+                                 step_id = NULL,
+                                 label = NULL,
+                                 brief = NULL,
+                                 active = TRUE) {
   
   # Get `columns` as a label
   columns_expr <- 
@@ -154,14 +176,16 @@ col_is_logical <- function(x,
   columns <- rlang::enquo(columns)
   
   # Resolve the columns based on the expression
-  columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
+  columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
   if (is_a_table_object(x)) {
     
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
-      col_is_logical(
+      col_vals_make_subset(
         columns = columns,
+        set = set,
+        preconditions = preconditions,
         label = label,
         brief = brief,
         actions = prime_actions(actions),
@@ -173,11 +197,11 @@ col_is_logical <- function(x,
   }
   
   agent <- x
-
+  
   if (is.null(brief)) {
     brief <- 
       generate_autobriefs(
-        agent, columns, preconditions, values, "col_is_logical"
+        agent, columns, preconditions, values = set, "col_vals_make_subset"
       )
   }
   
@@ -198,11 +222,12 @@ col_is_logical <- function(x,
     agent <-
       create_validation_step(
         agent = agent,
-        assertion_type = "col_is_logical",
+        assertion_type = "col_vals_make_subset",
         i_o = i_o,
         columns_expr = columns_expr,
         column = columns[i],
-        preconditions = NULL,
+        values = set,
+        preconditions = preconditions,
         actions = covert_actions(actions, agent),
         step_id = step_id[i],
         label = label,
@@ -210,23 +235,28 @@ col_is_logical <- function(x,
         active = active
       )
   }
-
+  
   agent
 }
 
-#' @rdname col_is_logical
+
+#' @rdname col_vals_make_subset
 #' @import rlang
 #' @export
-expect_col_is_logical <- function(object,
-                                  columns,
-                                  threshold = 1) {
+expect_col_vals_make_subset <- function(object,
+                                        columns,
+                                        set,
+                                        preconditions = NULL,
+                                        threshold = 1) {
   
-  fn_name <- "expect_col_is_logical"
+  fn_name <- "expect_col_vals_make_subset"
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
-    col_is_logical(
+    col_vals_make_subset(
       columns = {{ columns }},
+      set = {{ set }}, 
+      preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
     ) %>%
     interrogate() %>%
@@ -247,12 +277,12 @@ expect_col_is_logical <- function(object,
   }
   if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
     stop(conditionMessage(vs$capture_stack[[1]]$error))
-  }  
+  }
   
   act <- testthat::quasi_label(enquo(x), arg = "object")
   
   column_text <- prep_column_text(vs$column[[1]])
-  col_type <- "logical"
+  values_text <- prep_values_text(values = vs$values, limit = 3, lang = "en")
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),
@@ -268,17 +298,21 @@ expect_col_is_logical <- function(object,
   invisible(act$val)
 }
 
-#' @rdname col_is_logical
+#' @rdname col_vals_make_subset
 #' @import rlang
 #' @export
-test_col_is_logical <- function(object,
-                                columns,
-                                threshold = 1) {
+test_col_vals_make_subset <- function(object,
+                                      columns,
+                                      set,
+                                      preconditions = NULL,
+                                      threshold = 1) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
-    col_is_logical(
+    col_vals_make_subset(
       columns = {{ columns }},
+      set = {{ set }}, 
+      preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
     ) %>%
     interrogate() %>%

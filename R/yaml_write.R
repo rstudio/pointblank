@@ -647,7 +647,7 @@ as_agent_yaml_list <- function(agent,
           )
         )
       
-    } else if (grepl("in_set", validation_fn)) {
+    } else if (grepl("(in_set|make_set|make_subset)", validation_fn)) {
 
       column_text <- 
         get_column_text(

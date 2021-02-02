@@ -187,6 +187,32 @@ create_autobrief <- function(agent,
     autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
+  if (assertion_type == "col_vals_make_set") {
+    
+    expectation_text <- 
+      prep_make_set_expectation_text(
+        column_text,
+        column_computed_text,
+        values_text,
+        lang = lang
+      )
+    
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
+  }
+  
+  if (assertion_type == "col_vals_make_subset") {
+    
+    expectation_text <- 
+      prep_make_subset_expectation_text(
+        column_text,
+        column_computed_text,
+        values_text,
+        lang = lang
+      )
+    
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
+  }
+  
   if (assertion_type %in% c("col_vals_null", "col_vals_not_null")) {
     
     expectation_text <- 
@@ -455,6 +481,22 @@ prep_in_set_expectation_text <- function(column_text,
   } else {
     glue::glue(get_lsv("autobriefs/not_in_set_expectation_text")[[lang]])
   }
+}
+
+prep_make_set_expectation_text <- function(column_text,
+                                           column_computed_text,
+                                           values_text,
+                                           lang) {
+  
+  glue::glue(get_lsv("autobriefs/make_set_expectation_text")[[lang]])
+}
+
+prep_make_subset_expectation_text <- function(column_text,
+                                              column_computed_text,
+                                              values_text,
+                                              lang) {
+  
+  glue::glue(get_lsv("autobriefs/make_subset_expectation_text")[[lang]])
 }
 
 prep_between_expectation_text <- function(column_text,

@@ -606,6 +606,138 @@ test_that("Interrogating for valid row values", {
   # Expect a single row in `validation$validation_set`
   expect_equivalent(nrow(validation$validation_set), 1)
   
+  # Use the `col_vals_make_set()` function to create
+  # a validation step, then, `interrogate()`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_vals_make_set(columns = vars(f), set = c("low", "mid", "high")) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_make_set")
+  expect_equivalent(validation$validation_set$column, "f")
+  expect_true(is.list(validation$validation_set[["values"]]))
+  expect_true(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 4)
+  expect_equivalent(validation$validation_set$n_passed, 4)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
+  
+  # Expect a single row in `validation$validation_set`
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Make another pass with `col_vals_make_set()` function to create
+  # a validation step, then, `interrogate()`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_vals_make_set(columns = vars(f), set = c("low", "mid")) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_make_set")
+  expect_equivalent(validation$validation_set$column, "f")
+  expect_true(is.list(validation$validation_set[["values"]]))
+  expect_false(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 3)
+  expect_equivalent(validation$validation_set$n_passed, 2)
+  expect_equivalent(validation$validation_set$n_failed, 1)
+  expect_equivalent(validation$validation_set$f_passed, 0.66667)
+  expect_equivalent(validation$validation_set$f_failed, 0.33333)
+  
+  # Expect a single row in `validation$validation_set`
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Make another pass with `col_vals_make_set()` function to create
+  # a validation step, then, `interrogate()`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_vals_make_set(columns = vars(f), set = c("low", "middle")) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_make_set")
+  expect_equivalent(validation$validation_set$column, "f")
+  expect_true(is.list(validation$validation_set[["values"]]))
+  expect_false(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 3)
+  expect_equivalent(validation$validation_set$n_passed, 1)
+  expect_equivalent(validation$validation_set$n_failed, 2)
+  expect_equivalent(validation$validation_set$f_passed, 0.33333)
+  expect_equivalent(validation$validation_set$f_failed, 0.66667)
+  
+  # Expect a single row in `validation$validation_set`
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Use the `col_vals_make_subset()` function to create
+  # a validation step, then, `interrogate()`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_vals_make_subset(columns = vars(f), set = c("low", "mid", "high")) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_make_subset")
+  expect_equivalent(validation$validation_set$column, "f")
+  expect_true(is.list(validation$validation_set[["values"]]))
+  expect_true(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 3)
+  expect_equivalent(validation$validation_set$n_passed, 3)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
+  
+  # Expect a single row in `validation$validation_set`
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Make another pass with the `col_vals_make_subset()` function to create
+  # a validation step, then, `interrogate()`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_vals_make_subset(columns = vars(f), set = c("low", "mid")) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_make_subset")
+  expect_equivalent(validation$validation_set$column, "f")
+  expect_true(is.list(validation$validation_set[["values"]]))
+  expect_true(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 2)
+  expect_equivalent(validation$validation_set$n_passed, 2)
+  expect_equivalent(validation$validation_set$n_failed, 0)
+  expect_equivalent(validation$validation_set$f_passed, 1)
+  expect_equivalent(validation$validation_set$f_failed, 0)
+  
+  # Expect a single row in `validation$validation_set`
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Make another pass with the `col_vals_make_subset()` function to create
+  # a validation step, then, `interrogate()`
+  validation <-
+    create_agent(tbl = small_table) %>%
+    col_vals_make_subset(columns = vars(f), set = c("low", "mid", "high", "higher")) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "small_table")
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_make_subset")
+  expect_equivalent(validation$validation_set$column, "f")
+  expect_true(is.list(validation$validation_set[["values"]]))
+  expect_false(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 4)
+  expect_equivalent(validation$validation_set$n_passed, 3)
+  expect_equivalent(validation$validation_set$n_failed, 1)
+  expect_equivalent(validation$validation_set$f_passed, 0.75)
+  expect_equivalent(validation$validation_set$f_failed, 0.25)
+  
+  # Expect a single row in `validation$validation_set`
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
   # Use the `col_vals_not_null()` function to create
   # a validation step, then, `interrogate()`
   validation <-

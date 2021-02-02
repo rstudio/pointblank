@@ -417,7 +417,7 @@ resolve_test_filename <- function(agent,
 
 process_skips_text <- function(skips) {
   
-  if (is.null(skips) || !is.character(skips) || skips == "") {
+  if (is.null(skips) || any(!is.character(skips))) {
     return(NULL)
   }
   

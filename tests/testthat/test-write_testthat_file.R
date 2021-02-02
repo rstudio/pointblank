@@ -138,9 +138,7 @@ test_that("the `process_skips_text()` creates the correct text strings", {
   # Expect no text (`NULL`) if certain inputs are provided
   expect_null(process_skips_text(NULL))
   expect_null(process_skips_text(3))
-  expect_null(process_skips_text(3:5))
   expect_null(process_skips_text(""))
-  expect_null(process_skips_text(c("", "")))
   
   # Expect an error if invalid keywords are supplied
   expect_error(process_skips_text("crane"))

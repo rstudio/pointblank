@@ -111,7 +111,7 @@
 #' 
 #' @family Post-interrogation
 #' @section Function ID:
-#' 8-4
+#' 8-5
 #' 
 #' @export
 write_testthat_file <- function(agent,

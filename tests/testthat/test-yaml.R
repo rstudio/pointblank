@@ -1,4 +1,12 @@
-temp_dir <- tempdir()
+skip_on_cran()
+
+work_path <- "./generated_testthat_files"
+
+if (fs::dir_exists(path = work_path)) {
+  fs::dir_delete(path = work_path)
+}
+
+fs::dir_create(path = work_path)
 
 test_that("YAML writing and reading works as expected", {
   
@@ -52,21 +60,21 @@ test_that("YAML writing and reading works as expected", {
   )
 
   # Write the agent to a pointblank YAML file in the temp directory
-  yaml_write(agent = agent, filename = "test.yaml", path = temp_dir)
+  yaml_write(agent = agent, filename = "test.yaml", path = work_path)
 
   # Expect that the file was written to the temp directory
-  expect_true("test.yaml" %in% list.files(path = temp_dir))
+  expect_true("test.yaml" %in% list.files(path = work_path))
 
   # Expect that `yaml_agent_string()` shows a YAML string in the
   # console and returns nothing (when reading from a YAML file)
-  expect_null(suppressMessages(yaml_agent_string(filename = file.path(temp_dir, "test.yaml"))))
+  expect_null(suppressMessages(yaml_agent_string(filename = file.path(work_path, "test.yaml"))))
   expect_match(
-    as.character(testthat::capture_messages(yaml_agent_string(filename = file.path(temp_dir, "test.yaml")))),
+    as.character(testthat::capture_messages(yaml_agent_string(filename = file.path(work_path, "test.yaml")))),
     "read_fn: .*?tbl_name: .*?label: .*?actions:.*?warn_fraction: 0.1.*?stop_fraction: 0.2.*?steps:.*"
   )
 
   # Generate an agent with a plan defined by the YAML file
-  agent_plan <- yaml_read_agent(file.path(temp_dir, "test.yaml"))
+  agent_plan <- yaml_read_agent(file.path(work_path, "test.yaml"))
 
   # Expect a `ptblank_agent` object but don't expect it to
   # have any intel (the `has_intel` class)
@@ -112,9 +120,9 @@ test_that("YAML writing and reading works as expected", {
 
   # Expect that `yaml_agent_show_exprs()` shows string with pointblank
   # expression in the console and returns nothing (when reading from an agent)
-  expect_null(suppressMessages(yaml_agent_show_exprs(filename = file.path(temp_dir, "test.yaml"))))
+  expect_null(suppressMessages(yaml_agent_show_exprs(filename = file.path(work_path, "test.yaml"))))
   expect_match(
-    as.character(testthat::capture_messages(yaml_agent_show_exprs(filename = file.path(temp_dir, "test.yaml")))),
+    as.character(testthat::capture_messages(yaml_agent_show_exprs(filename = file.path(work_path, "test.yaml")))),
     paste(
       c(
         "create_agent", "col_vals_in_set", "col_vals_between",
@@ -127,7 +135,7 @@ test_that("YAML writing and reading works as expected", {
   )
 
   # Create the agent from YAML and interrogate immediately
-  agent_intel <- yaml_agent_interrogate(filename = file.path(temp_dir, "test.yaml"))
+  agent_intel <- yaml_agent_interrogate(filename = file.path(work_path, "test.yaml"))
 
   # Expect a `ptblank_agent` object and also expect it to
   # have intel (the `has_intel` class)
@@ -192,3 +200,7 @@ test_that("YAML writing and reading works as expected", {
       as_agent_yaml_list(expanded = FALSE)
   )
 })
+
+if (fs::dir_exists(path = work_path)) {
+  fs::dir_delete(path = work_path)
+}

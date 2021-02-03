@@ -8,6 +8,15 @@ if (fs::dir_exists(path = work_path)) {
 
 fs::dir_create(path = work_path)
 
+get_oneline_expr_str <- function(agent, expanded = FALSE) {
+  
+  agent %>%
+    agent_get_exprs(expanded = expanded) %>%
+    gsub("create_agent\\(.*?%>%\n", "", .) %>%
+    gsub("\\s+$", "", .) %>%
+    gsub("\n\\s*", "", .)
+}
+
 test_that("YAML writing and reading works as expected", {
   
   al <- action_levels(warn_at = 0.1, stop_at = 0.2)
@@ -204,3 +213,35 @@ test_that("YAML writing and reading works as expected", {
 if (fs::dir_exists(path = work_path)) {
   fs::dir_delete(path = work_path)
 }
+
+test_that("Individual validation steps make the YAML round-trip successfully", {
+  
+  agent <- create_agent(read_fn = ~ small_table, label = "testthat")
+
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_lt(vars(a), 1)),
+    "col_vals_lt(columns = vars(a),value = 1)"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_lt(vars(a), vars(c))),
+    "col_vals_lt(columns = vars(a),value = vars(c))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_lt(vars(a, c), 1)),
+    "col_vals_lt(columns = vars(a, c),value = 1)"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_lt(vars(a, c), 1, na_pass = TRUE)),
+    "col_vals_lt(columns = vars(a, c),value = 1,na_pass = TRUE)"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>% 
+        col_vals_lt(
+          vars(a), 1, na_pass = TRUE,
+          preconditions = ~ . %>% dplyr::filter(a > 2)
+          )
+      ),
+    "col_vals_lt(columns = vars(a),value = 1,na_pass = TRUE,preconditions = ~. %>% dplyr::filter(a > 2))"
+  )
+})

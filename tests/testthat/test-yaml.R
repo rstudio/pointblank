@@ -244,4 +244,167 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
       ),
     "col_vals_lt(columns = vars(a),value = 1,na_pass = TRUE,preconditions = ~. %>% dplyr::filter(a > 2))"
   )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>%
+        col_vals_lt(
+          vars(a, c), 1,
+          actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+        )
+    ),
+    "col_vals_lt(columns = vars(a, c),value = 1,actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+  )
+  # expect_equal(
+  #   get_oneline_expr_str(agent %>% col_vals_lt(vars(a), 1, brief = "Expect `a` < `1`.")),
+  #   "col_vals_lt(columns = vars(a, c),value = 1,brief = \"Expect `a` < `1`.\")"
+  # )
+  # expect_equal(
+  #   get_oneline_expr_str(agent %>% col_vals_lt(vars(a, c), 1, label = "my_label")),
+  #   "col_vals_lt(columns = vars(a, c),value = 1,label = \"my_label\")"
+  # )
+  # expect_equal(
+  #   get_oneline_expr_str(agent %>% col_vals_lt(vars(a, c), 1, active = TRUE)),
+  #   "col_vals_lt(columns = vars(a, c),value = 1,active = TRUE)"
+  # )
+  # expect_equal(
+  #   get_oneline_expr_str(agent %>% col_vals_lt(vars(a, c), 1, step_id = "my_id")),
+  #   "col_vals_lt(columns = vars(a, c),value = 1,step_id = \"my_id\")"
+  # )
+  
+  #
+  # col_vals_between
+  #
+  
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_between(vars(a), left = -5, right = 15)),
+    "col_vals_between(columns = vars(a),left = -5,right = 15)"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = vars(a), right = 15)),
+    "col_vals_between(columns = vars(c),left = vars(a),right = 15)"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = -5.2342, right = vars(d))),
+    "col_vals_between(columns = vars(c),left = -5.2342,right = vars(d))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = vars(a), right = vars(d))),
+    "col_vals_between(columns = vars(c),left = vars(a),right = vars(d))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = vars(a), right = vars(d), na_pass = TRUE)),
+    "col_vals_between(columns = vars(c),left = vars(a),right = vars(d),na_pass = TRUE)"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>% 
+        col_vals_between(
+          vars(c), left = vars(a), right = vars(d), na_pass = TRUE,
+          preconditions = ~ . %>% dplyr::filter(a > 2)
+        )
+    ),
+    "col_vals_between(columns = vars(c),left = vars(a),right = vars(d),na_pass = TRUE,preconditions = ~. %>% dplyr::filter(a > 2))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>%
+        col_vals_between(
+          vars(c), left = vars(a), right = vars(d),
+          actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+        )
+    ),
+    "col_vals_between(columns = vars(c),left = vars(a),right = vars(d),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+  )
+  # expect_equal(
+  #   get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = vars(a), right = vars(d), inclusive = c(TRUE, FALSE))),
+  #   "col_vals_between(columns = vars(a),left = vars(a),right = vars(d),inclusive = c(TRUE, FALSE))"
+  # )
+  
+  #
+  # col_vals_not_between
+  #
+  
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_not_between(vars(a), left = -5, right = 15)),
+    "col_vals_not_between(columns = vars(a),left = -5,right = 15)"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_not_between(vars(c), left = vars(a), right = 15)),
+    "col_vals_not_between(columns = vars(c),left = vars(a),right = 15)"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_not_between(vars(c), left = -5.2342, right = vars(d))),
+    "col_vals_not_between(columns = vars(c),left = -5.2342,right = vars(d))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_not_between(vars(c), left = vars(a), right = vars(d))),
+    "col_vals_not_between(columns = vars(c),left = vars(a),right = vars(d))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_not_between(vars(c), left = vars(a), right = vars(d), na_pass = TRUE)),
+    "col_vals_not_between(columns = vars(c),left = vars(a),right = vars(d),na_pass = TRUE)"
+  )
+  
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>% 
+        col_vals_not_between(
+          vars(c), left = vars(a), right = vars(d), na_pass = TRUE,
+          preconditions = ~ . %>% dplyr::filter(a > 2)
+        )
+    ),
+    "col_vals_not_between(columns = vars(c),left = vars(a),right = vars(d),na_pass = TRUE,preconditions = ~. %>% dplyr::filter(a > 2))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>%
+        col_vals_not_between(
+          vars(c), left = vars(a), right = vars(d),
+          actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+        )
+    ),
+    "col_vals_not_between(columns = vars(c),left = vars(a),right = vars(d),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+  )
+  
+  #
+  # col_vals_in_set
+  #
+  
+  
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_in_set(vars(f), set = c("low", "high"))),
+    "col_vals_in_set(columns = vars(f),set = c(\"low\", \"high\"))"
+  )
+  # expect_equal(
+  #   get_oneline_expr_str(agent %>% col_vals_in_set(vars(f), set = c("low", "high", NA))),
+  #   "col_vals_in_set(columns = vars(f),set = c(\"low\", \"high\", NA))"
+  # )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_in_set(vars(c), set = c(1:10))),
+    "col_vals_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_in_set(vars(c), set = c(1:10, NA))),
+    "col_vals_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, NA))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>% 
+        col_vals_in_set(
+          vars(c), set = c(1:10),
+          preconditions = ~ . %>% dplyr::filter(a > 2)
+        )
+    ),
+    "col_vals_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),preconditions = ~. %>% dplyr::filter(a > 2))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>% 
+        col_vals_in_set(
+          vars(c), set = c(1:10),
+          actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+        )
+    ),
+    "col_vals_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+  )
 })

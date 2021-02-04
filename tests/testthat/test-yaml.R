@@ -370,7 +370,6 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   # col_vals_in_set
   #
   
-  
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_in_set(vars(f), set = c("low", "high"))),
     "col_vals_in_set(columns = vars(f),set = c(\"low\", \"high\"))"
@@ -406,5 +405,328 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
         )
     ),
     "col_vals_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+  )
+  
+  #
+  # col_vals_not_in_set
+  #
+  
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_not_in_set(vars(f), set = c("low", "high"))),
+    "col_vals_not_in_set(columns = vars(f),set = c(\"low\", \"high\"))"
+  )
+  # expect_equal(
+  #   get_oneline_expr_str(agent %>% col_vals_not_in_set(vars(f), set = c("low", "high", NA))),
+  #   "col_vals_not_in_set(columns = vars(f),set = c(\"low\", \"high\", NA))"
+  # )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_not_in_set(vars(c), set = c(1:10))),
+    "col_vals_not_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_not_in_set(vars(c), set = c(1:10, NA))),
+    "col_vals_not_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, NA))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>% 
+        col_vals_not_in_set(
+          vars(c), set = c(1:10),
+          preconditions = ~ . %>% dplyr::filter(a > 2)
+        )
+    ),
+    "col_vals_not_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),preconditions = ~. %>% dplyr::filter(a > 2))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>% 
+        col_vals_not_in_set(
+          vars(c), set = c(1:10),
+          actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+        )
+    ),
+    "col_vals_not_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+  )
+  
+  #
+  # col_vals_make_set
+  #
+  
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_make_set(vars(f), set = c("low", "high"))),
+    "col_vals_make_set(columns = vars(f),set = c(\"low\", \"high\"))"
+  )
+  # expect_equal(
+  #   get_oneline_expr_str(agent %>% col_vals_make_set(vars(f), set = c("low", "high", NA))),
+  #   "col_vals_make_set(columns = vars(f),set = c(\"low\", \"high\", NA))"
+  # )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_make_set(vars(c), set = c(1:10))),
+    "col_vals_make_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_make_set(vars(c), set = c(1:10, NA))),
+    "col_vals_make_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, NA))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>% 
+        col_vals_make_set(
+          vars(c), set = c(1:10),
+          preconditions = ~ . %>% dplyr::filter(a > 2)
+        )
+    ),
+    "col_vals_make_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),preconditions = ~. %>% dplyr::filter(a > 2))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>% 
+        col_vals_make_set(
+          vars(c), set = c(1:10),
+          actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+        )
+    ),
+    "col_vals_make_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+  )
+  
+  #
+  # col_vals_make_subset
+  #
+  
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_make_subset(vars(f), set = c("low", "high"))),
+    "col_vals_make_subset(columns = vars(f),set = c(\"low\", \"high\"))"
+  )
+  # expect_equal(
+  #   get_oneline_expr_str(agent %>% col_vals_make_subset(vars(f), set = c("low", "high", NA))),
+  #   "col_vals_make_subset(columns = vars(f),set = c(\"low\", \"high\", NA))"
+  # )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_make_subset(vars(c), set = c(1:10))),
+    "col_vals_make_subset(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_make_subset(vars(c), set = c(1:10, NA))),
+    "col_vals_make_subset(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, NA))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>% 
+        col_vals_make_subset(
+          vars(c), set = c(1:10),
+          preconditions = ~ . %>% dplyr::filter(a > 2)
+        )
+    ),
+    "col_vals_make_subset(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),preconditions = ~. %>% dplyr::filter(a > 2))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>% 
+        col_vals_make_subset(
+          vars(c), set = c(1:10),
+          actions = action_levels(warn_at = 0.1, stop_at = 0.2)
+        )
+    ),
+    "col_vals_make_subset(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+  )
+  
+  #
+  # col_vals_increasing
+  #
+  
+  # expect_equal(
+  #   get_oneline_expr_str(agent %>% col_vals_increasing(vars(a))),
+  #   "col_vals_increasing(columns = vars(a))"
+  # )
+  
+  #
+  # col_vals_decreasing
+  #
+  
+  # expect_equal(
+  #   get_oneline_expr_str(agent %>% col_vals_decreasing(vars(a))),
+  #   "col_vals_decreasing(columns = vars(a))"
+  # )
+  
+  #
+  # col_vals_null
+  #
+  
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_null(vars(c))),
+    "col_vals_null(columns = vars(c))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_null(vars(a, c))),
+    "col_vals_null(columns = vars(a, c))"
+  )
+  
+  #
+  # col_vals_not_null
+  #
+  
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_not_null(vars(c))),
+    "col_vals_not_null(columns = vars(c))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_not_null(vars(a, c))),
+    "col_vals_not_null(columns = vars(a, c))"
+  )
+  
+  #
+  # col_vals_regex
+  #
+  
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_regex(vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}")),
+    "col_vals_regex(columns = vars(b),regex = \"[0-9]-[a-z]{3}-[0-9]{3}\")"
+  )
+  
+  #
+  # col_vals_expr
+  #
+  
+  tbl_1 <<-
+    dplyr::tibble(
+      a = c(1, 2, 1, 7, 8, 6),
+      b = c(0, 0, 0, 1, 1, 1),
+      c = c(0.5, 0.3, 0.8, 1.4, 1.9, 1.2),
+    )
+  
+  agent_expr <- create_agent(read_fn = ~ tbl_1, label = "testthat")
+  
+  expect_equal(
+    get_oneline_expr_str(agent_expr %>% col_vals_expr(expr(a %% 1 == 0))),
+    "col_vals_expr(expr = ~a%%1 == 0)"
+  )
+  # expect_equal(
+  #   get_oneline_expr_str(
+  #     agent_expr %>%
+  #       col_vals_expr(~ case_when(
+  #         b == 0 ~ a %>% between(0, 5) & c < 1,
+  #         b == 1 ~ a > 5 & c >= 1
+  #       ))
+  #   ),
+  #   "col_vals_expr(~ case_when(b == 0 ~ a %>% between(0, 5) & c < 1, b == 1 ~ a > 5 & c >= 1))"
+  # )
+  expect_equal(
+    get_oneline_expr_str(agent_expr %>% col_vals_expr(expr = ~ dplyr::between(a, 1, 10))),
+    "col_vals_expr(expr = ~dplyr::between(a, 1, 10))"
+  )
+
+  #
+  # conjointly
+  #
+  
+  tbl_2 <<-
+    dplyr::tibble(
+      a = c(5, 2, 6),
+      b = c(3, 4, 6),
+      c = c(9, 8, 7)
+    )
+  
+  agent_conjointly <- create_agent(read_fn = ~ tbl_2, label = "testthat")
+  
+  expect_equal(
+    get_oneline_expr_str(
+      agent_conjointly %>%
+        conjointly(
+          ~ col_vals_lt(., vars(a), 8),
+          ~ col_vals_gt(., vars(c), vars(a)),
+          ~ col_vals_not_null(., vars(b))
+        )
+    ),
+    "conjointly(~col_vals_lt(., vars(a), 8),~col_vals_gt(., vars(c), vars(a)),~col_vals_not_null(., vars(b)))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent_conjointly %>%
+        conjointly(
+          ~ col_vals_lt(., vars(a), 8),
+          ~ col_vals_gt(., vars(c), vars(a)),
+          ~ col_vals_not_null(., vars(b)),
+          preconditions = ~ . %>% dplyr::filter(a > 0)
+        )
+    ),
+    "conjointly(~col_vals_lt(., vars(a), 8),~col_vals_gt(., vars(c), vars(a)),~col_vals_not_null(., vars(b)),preconditions = ~. %>% dplyr::filter(a > 0))"
+  )
+  
+  #
+  # rows_distinct()
+  #
+  
+  expect_equal(
+    get_oneline_expr_str(agent %>% rows_distinct()),
+    "rows_distinct()"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% rows_distinct(columns = vars(a, b))),
+    "rows_distinct(columns = vars(a, b))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% rows_distinct(columns = vars(a, b), preconditions = ~ . %>% dplyr::filter(a > 0))),
+    "rows_distinct(columns = vars(a, b),preconditions = ~. %>% dplyr::filter(a > 0))"
+  )
+  
+  #
+  # col_is_character()
+  #
+  
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_is_character(vars(b))),
+    "col_is_character(columns = vars(b))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_is_character(vars(b, f))),
+    "col_is_character(columns = vars(b, f))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>% col_is_character(vars(b, f), actions = action_levels(warn_at = 0.1, stop_at = 0.2))
+    ),
+    "col_is_character(columns = vars(b, f),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+  )
+  
+  #
+  # col_exists()
+  #
+  
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_exists(vars(b))),
+    "col_exists(columns = vars(b))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_exists(vars(b, f))),
+    "col_exists(columns = vars(b, f))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>% col_exists(vars(b, f), actions = action_levels(warn_at = 0.1, stop_at = 0.2))
+    ),
+    "col_exists(columns = vars(b, f),actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
+  )
+  
+  #
+  # col_schema()
+  #
+  
+  tbl_3 <<- 
+    dplyr::tibble(
+      a = 1:5,
+      b = letters[1:5]
+    )
+  
+  schema_obj <- 
+    col_schema(
+      a = "integer",
+      b = "character"
+    )
+  
+  agent_col_schema <- create_agent(read_fn = ~ tbl_3, label = "testthat")
+  
+  expect_equal(
+    get_oneline_expr_str(agent_col_schema %>% col_schema_match(schema_obj)),
+    "col_schema_match(schema = col_schema(a = \"integer\",b = \"character\"))"
   )
 })

@@ -146,7 +146,7 @@ write_testthat_file <- function(agent,
   read_tbl_str <-
     paste0(
       "tbl <- ",
-      capture.output(rlang::f_rhs(agent$read_fn))
+      utils::capture.output(rlang::f_rhs(agent$read_fn))
     )
   
   # Obtain expressions from the agent that correspond to the

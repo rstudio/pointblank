@@ -450,7 +450,7 @@ get_arg_value_lr <- function(value) {
 }
 
 prune_lst_step <- function(lst_step) {
-  
+
   if ("preconditions" %in% names(lst_step[[1]]) &&
       is.null(lst_step[[1]][["preconditions"]])) {
     lst_step[[1]]["preconditions"] <- NULL
@@ -629,7 +629,7 @@ as_agent_yaml_list <- function(agent,
           step_list = step_list,
           expanded = expanded
         )
-      
+
       lst_step <- 
         list(
           validation_fn = list(
@@ -639,7 +639,7 @@ as_agent_yaml_list <- function(agent,
             inclusive = as.logical(
               c(
                 names(step_list$values[[1]][1]),
-                names(step_list$values[[1]][1])
+                names(step_list$values[[1]][2])
               )
             ),
             na_pass = step_list$na_pass,
@@ -706,7 +706,11 @@ as_agent_yaml_list <- function(agent,
         decreasing_tol <- step_list$values[[1]][2]
       }
       
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(

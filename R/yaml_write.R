@@ -496,6 +496,10 @@ prune_lst_step <- function(lst_step) {
       lst_step[[1]][["actions"]] <- NULL
     }
   }
+  if ("label" %in% names(lst_step[[1]]) &&
+      is.na(lst_step[[1]][["label"]])) {
+    lst_step[[1]]["label"] <- NULL
+  }
   
   lst_step
 }
@@ -560,7 +564,7 @@ as_agent_yaml_list <- function(agent,
       agent$validation_set %>% 
       dplyr::select(
         i_o, assertion_type, columns_expr, column, values, na_pass,
-        preconditions, actions, brief, active
+        preconditions, actions, label, brief, active
       ) %>%
       dplyr::group_by(i_o) %>%
       dplyr::filter(dplyr::row_number() == 1) %>%
@@ -578,7 +582,7 @@ as_agent_yaml_list <- function(agent,
       agent$validation_set %>% 
       dplyr::select(
         i, assertion_type, columns_expr, column, values, na_pass,
-        preconditions, actions, brief, active
+        preconditions, actions, label, brief, active
       )
   }
   
@@ -613,6 +617,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -643,6 +648,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -665,6 +671,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -686,6 +693,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -713,6 +721,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -744,6 +753,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -766,6 +776,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -787,6 +798,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -802,6 +814,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -823,6 +836,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -842,6 +856,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -857,6 +872,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )

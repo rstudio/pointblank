@@ -254,17 +254,25 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     ),
     "col_vals_lt(columns = vars(a, c),value = 1,actions = action_levels(warn_at = 0.1,stop_at = 0.2))"
   )
-  # expect_equal(
-  #   get_oneline_expr_str(agent %>% col_vals_lt(vars(a), 1, brief = "Expect `a` < `1`.")),
-  #   "col_vals_lt(columns = vars(a, c),value = 1,brief = \"Expect `a` < `1`.\")"
-  # )
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_lt(vars(a, c), 1, label = "my_label")),
     "col_vals_lt(columns = vars(a, c),value = 1,label = \"my_label\")"
   )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_lt(vars(a, c), 1, active = FALSE)),
+    "col_vals_lt(columns = vars(a, c),value = 1,active = FALSE)"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_lt(vars(a, c), 1, active = TRUE)),
+    "col_vals_lt(columns = vars(a, c),value = 1)"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_lt(vars(a, c), 1, active = ~ . %>% has_columns(vars(a, c)))),
+    "col_vals_lt(columns = vars(a, c),value = 1,active = ~. %>% has_columns(vars(a, c)))"
+  )
   # expect_equal(
-  #   get_oneline_expr_str(agent %>% col_vals_lt(vars(a, c), 1, active = TRUE)),
-  #   "col_vals_lt(columns = vars(a, c),value = 1,active = TRUE)"
+  #   get_oneline_expr_str(agent %>% col_vals_lt(vars(a), 1, brief = "Expect `a` < `1`.")),
+  #   "col_vals_lt(columns = vars(a, c),value = 1,brief = \"Expect `a` < `1`.\")"
   # )
   # expect_equal(
   #   get_oneline_expr_str(agent %>% col_vals_lt(vars(a, c), 1, step_id = "my_id")),

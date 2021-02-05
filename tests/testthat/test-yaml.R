@@ -327,10 +327,10 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = -5, right = 15, label = "my_label")),
     "col_vals_between(columns = vars(c),left = -5,right = 15,label = \"my_label\")"
   )
-  # expect_equal(
-  #   get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = vars(a), right = vars(d), inclusive = c(TRUE, FALSE))),
-  #   "col_vals_between(columns = vars(a),left = vars(a),right = vars(d),inclusive = c(TRUE, FALSE))"
-  # )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = vars(a), right = vars(d), inclusive = c(TRUE, FALSE))),
+    "col_vals_between(columns = vars(c),left = vars(a),right = vars(d),inclusive = c(TRUE, FALSE))"
+  )
   
   #
   # col_vals_not_between
@@ -356,7 +356,6 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_not_between(vars(c), left = vars(a), right = vars(d), na_pass = TRUE)),
     "col_vals_not_between(columns = vars(c),left = vars(a),right = vars(d),na_pass = TRUE)"
   )
-  
   expect_equal(
     get_oneline_expr_str(
       agent %>% 
@@ -390,10 +389,10 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_in_set(vars(f), set = c("low", "high"))),
     "col_vals_in_set(columns = vars(f),set = c(\"low\", \"high\"))"
   )
-  # expect_equal(
-  #   get_oneline_expr_str(agent %>% col_vals_in_set(vars(f), set = c("low", "high", NA))),
-  #   "col_vals_in_set(columns = vars(f),set = c(\"low\", \"high\", NA))"
-  # )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_in_set(vars(f), set = c("low", "high", NA))),
+    "col_vals_in_set(columns = vars(f),set = c(\"low\", \"high\", NA))"
+  )
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_in_set(vars(c), set = c(1:10))),
     "col_vals_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))"
@@ -435,10 +434,10 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_not_in_set(vars(f), set = c("low", "high"))),
     "col_vals_not_in_set(columns = vars(f),set = c(\"low\", \"high\"))"
   )
-  # expect_equal(
-  #   get_oneline_expr_str(agent %>% col_vals_not_in_set(vars(f), set = c("low", "high", NA))),
-  #   "col_vals_not_in_set(columns = vars(f),set = c(\"low\", \"high\", NA))"
-  # )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_not_in_set(vars(f), set = c("low", "high", NA))),
+    "col_vals_not_in_set(columns = vars(f),set = c(\"low\", \"high\", NA))"
+  )
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_not_in_set(vars(c), set = c(1:10))),
     "col_vals_not_in_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))"
@@ -480,10 +479,10 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_make_set(vars(f), set = c("low", "high"))),
     "col_vals_make_set(columns = vars(f),set = c(\"low\", \"high\"))"
   )
-  # expect_equal(
-  #   get_oneline_expr_str(agent %>% col_vals_make_set(vars(f), set = c("low", "high", NA))),
-  #   "col_vals_make_set(columns = vars(f),set = c(\"low\", \"high\", NA))"
-  # )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_make_set(vars(f), set = c("low", "high", NA))),
+    "col_vals_make_set(columns = vars(f),set = c(\"low\", \"high\", NA))"
+  )
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_make_set(vars(c), set = c(1:10))),
     "col_vals_make_set(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))"
@@ -525,10 +524,10 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_make_subset(vars(f), set = c("low", "high"))),
     "col_vals_make_subset(columns = vars(f),set = c(\"low\", \"high\"))"
   )
-  # expect_equal(
-  #   get_oneline_expr_str(agent %>% col_vals_make_subset(vars(f), set = c("low", "high", NA))),
-  #   "col_vals_make_subset(columns = vars(f),set = c(\"low\", \"high\", NA))"
-  # )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_make_subset(vars(f), set = c("low", "high", NA))),
+    "col_vals_make_subset(columns = vars(f),set = c(\"low\", \"high\", NA))"
+  )
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_make_subset(vars(c), set = c(1:10))),
     "col_vals_make_subset(columns = vars(c),set = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))"
@@ -566,19 +565,47 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   # col_vals_increasing
   #
   
-  # expect_equal(
-  #   get_oneline_expr_str(agent %>% col_vals_increasing(vars(a))),
-  #   "col_vals_increasing(columns = vars(a))"
-  # )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_increasing(vars(a))),
+    "col_vals_increasing(columns = vars(a))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>%
+        col_vals_increasing(vars(a), allow_stationary = TRUE)
+    ),
+    "col_vals_increasing(columns = vars(a),allow_stationary = TRUE)"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>%
+        col_vals_increasing(vars(a), decreasing_tol = 0.52)
+    ),
+    "col_vals_increasing(columns = vars(a),decreasing_tol = 0.52)"
+  )
   
   #
   # col_vals_decreasing
   #
   
-  # expect_equal(
-  #   get_oneline_expr_str(agent %>% col_vals_decreasing(vars(a))),
-  #   "col_vals_decreasing(columns = vars(a))"
-  # )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_decreasing(vars(a))),
+    "col_vals_decreasing(columns = vars(a))"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>%
+        col_vals_decreasing(vars(a), allow_stationary = TRUE)
+    ),
+    "col_vals_decreasing(columns = vars(a),allow_stationary = TRUE)"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>%
+        col_vals_decreasing(vars(a), increasing_tol = 0.52)
+    ),
+    "col_vals_decreasing(columns = vars(a),increasing_tol = 0.52)"
+  )
   
   #
   # col_vals_null

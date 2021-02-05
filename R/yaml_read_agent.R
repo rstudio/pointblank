@@ -506,19 +506,32 @@ make_validation_steps <- function(steps) {
         
         step_i <- steps[[x]]
         step_fn <- names(step_i)
-        
+
         args <- 
           vapply(
             seq_along(step_i[[1]]),
             FUN.VALUE = character(1), 
             FUN = function(x) {
-              
               arg_name <- names(step_i[[1]][x])
               val <- step_i[[1]][[x]]
               others <- c("preconditions", "expr", "schema")
-
+              
               if (arg_name == "fns") {
                 return(paste("  ", val, collapse = ",\n"))
+              }
+              
+              if (arg_name == "inclusive") {
+                if (all(val)) {
+                  return("")
+                } else {
+                  return(
+                    paste0(
+                      "  inclusive = c(",
+                      paste(as.character(val), collapse = ", "),
+                      ")"
+                    )
+                  )
+                }
               }
 
               # Return empty string if seeing default values
@@ -593,15 +606,26 @@ make_validation_steps <- function(steps) {
                          !grepl(tidyselect_regex, val[1]) &&
                          !(arg_name %in% others)) {
                 
-                val <- paste0("\"", val, "\"")
+                val <- 
+                  vapply(
+                    val,
+                    FUN.VALUE = character(1),
+                    USE.NAMES = FALSE,
+                    FUN = function(x) {
+                      if (is.na(x)) {
+                        return(x)
+                      } else {
+                        paste0("\"", x, "\"")
+                      }
+                    }
+                  )
+                
+                #val <- paste0("\"", val, "\"")
               }
               
               if (length(val) > 1) {
                 val <- 
-                  paste0(
-                    "c(", paste(as.character(val), collapse = ", "),
-                    ")"
-                  )
+                  paste0("c(", paste(as.character(val), collapse = ", "), ")")
               } else {
                 val <- as.character(val)
               }

@@ -450,7 +450,7 @@ get_arg_value_lr <- function(value) {
 }
 
 prune_lst_step <- function(lst_step) {
-  
+
   if ("preconditions" %in% names(lst_step[[1]]) &&
       is.null(lst_step[[1]][["preconditions"]])) {
     lst_step[[1]]["preconditions"] <- NULL
@@ -495,6 +495,10 @@ prune_lst_step <- function(lst_step) {
     } else if (is.null(lst_step[[1]][["actions"]])) {
       lst_step[[1]][["actions"]] <- NULL
     }
+  }
+  if ("label" %in% names(lst_step[[1]]) &&
+      is.na(lst_step[[1]][["label"]])) {
+    lst_step[[1]]["label"] <- NULL
   }
   
   lst_step
@@ -560,7 +564,7 @@ as_agent_yaml_list <- function(agent,
       agent$validation_set %>% 
       dplyr::select(
         i_o, assertion_type, columns_expr, column, values, na_pass,
-        preconditions, actions, brief, active
+        preconditions, actions, label, brief, active
       ) %>%
       dplyr::group_by(i_o) %>%
       dplyr::filter(dplyr::row_number() == 1) %>%
@@ -578,7 +582,7 @@ as_agent_yaml_list <- function(agent,
       agent$validation_set %>% 
       dplyr::select(
         i, assertion_type, columns_expr, column, values, na_pass,
-        preconditions, actions, brief, active
+        preconditions, actions, label, brief, active
       )
   }
   
@@ -613,6 +617,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -624,7 +629,7 @@ as_agent_yaml_list <- function(agent,
           step_list = step_list,
           expanded = expanded
         )
-      
+
       lst_step <- 
         list(
           validation_fn = list(
@@ -634,7 +639,7 @@ as_agent_yaml_list <- function(agent,
             inclusive = as.logical(
               c(
                 names(step_list$values[[1]][1]),
-                names(step_list$values[[1]][1])
+                names(step_list$values[[1]][2])
               )
             ),
             na_pass = step_list$na_pass,
@@ -643,6 +648,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -665,6 +671,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -686,6 +693,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -698,7 +706,11 @@ as_agent_yaml_list <- function(agent,
         decreasing_tol <- step_list$values[[1]][2]
       }
       
-      column_text <- get_column_text(step_list)
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
       
       lst_step <- 
         list(
@@ -713,6 +725,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -744,6 +757,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -766,6 +780,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -787,6 +802,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -802,6 +818,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -823,6 +840,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -842,6 +860,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )
@@ -857,6 +876,7 @@ as_agent_yaml_list <- function(agent,
               step_list$actions[[1]],
               action_levels_default
             ),
+            label = step_list$label,
             active = as_list_active(step_list$active)
           )
         )

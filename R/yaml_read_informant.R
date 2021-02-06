@@ -115,7 +115,7 @@
 #' # `system.file()`
 #' yml_file <- 
 #'   system.file(
-#'     "informant-small_table.yml",
+#'     "yaml", "informant-small_table.yml",
 #'     package = "pointblank"
 #'   )
 #' 
@@ -227,7 +227,7 @@ yaml_read_informant <- function(filename,
 #' # `system.file()`
 #' yml_file <- 
 #'   system.file(
-#'     "informant-small_table.yml",
+#'     "yaml", "informant-small_table.yml",
 #'     package = "pointblank"
 #'   )
 #' 

@@ -83,7 +83,7 @@ affix_date(
 # from YAML in a scheduled process
 # yaml_agent_interrogate(
 #   filename = system.file(
-#     "agent-small_table.yml",
+#     "yaml", "agent-small_table.yml",
 #     package = "pointblank"
 #   )
 # ) \%>\% 

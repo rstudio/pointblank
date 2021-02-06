@@ -97,7 +97,7 @@
 #' # available in the package through `system.file()`
 #' yml_file <- 
 #'   system.file(
-#'     "agent-small_table.yml",
+#'     "yaml", "agent-small_table.yml",
 #'     package = "pointblank"
 #'   )
 #' 
@@ -222,7 +222,7 @@ yaml_read_agent <- function(filename,
 #' # available in the package through `system.file()`
 #' yml_file <- 
 #'   system.file(
-#'     "agent-small_table.yml",
+#'     "yaml", "agent-small_table.yml",
 #'     package = "pointblank"
 #'   )
 #' 
@@ -319,7 +319,7 @@ yaml_agent_interrogate <- function(filename,
 #' # `system.file()`
 #' yml_file <- 
 #'   system.file(
-#'     "agent-small_table.yml",
+#'     "yaml", "agent-small_table.yml",
 #'     package = "pointblank"
 #'   )
 #' 

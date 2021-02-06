@@ -33,6 +33,8 @@
 #' @return A `ptblank_informant` object.
 #' 
 #' @examples 
+#' if (interactive()) {
+#' 
 #' # Take the `small_table` and
 #' # assign it to `test_table`; we'll
 #' # modify it later
@@ -94,6 +96,8 @@
 #' # row and column counts in the header
 #' # have been updated to reflect the
 #' # changed `test_table`
+#' 
+#' }
 #' 
 #' @family Incorporate and Report
 #' @section Function ID:

@@ -78,7 +78,7 @@ yaml_agent_string(agent = agent)
 # available in the package through `system.file()`
 yml_file <- 
   system.file(
-    "agent-small_table.yml",
+    "yaml", "agent-small_table.yml",
     package = "pointblank"
   )
 

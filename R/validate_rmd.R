@@ -610,7 +610,7 @@ knitr_chunk_hook <- function(x, options) {
 #' # You're not bound to using tabular
 #' # data here, any statements that
 #' # evaluate to logical vectors will work
-#' stop_if_not(1:5 < 20:25)
+#' stop_if_not(1 < 20:25 - 18)
 #' 
 #' @family Utility and Helper Functions
 #' @section Function ID:

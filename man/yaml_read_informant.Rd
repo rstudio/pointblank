@@ -110,7 +110,7 @@ informant <- create_informant(small_table)
 # `system.file()`
 yml_file <- 
   system.file(
-    "informant-small_table.yml",
+    "yaml", "informant-small_table.yml",
     package = "pointblank"
   )
 

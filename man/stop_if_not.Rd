@@ -41,7 +41,7 @@ stop_if_not(nrow(small_table) > 10)
 # You're not bound to using tabular
 # data here, any statements that
 # evaluate to logical vectors will work
-stop_if_not(1:5 < 20:25)
+stop_if_not(1 < 20:25 - 18)
 
 }
 \seealso{

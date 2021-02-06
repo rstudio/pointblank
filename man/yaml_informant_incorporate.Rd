@@ -88,7 +88,7 @@ informant <-
 # `system.file()`
 yml_file <- 
   system.file(
-    "informant-small_table.yml",
+    "yaml", "informant-small_table.yml",
     package = "pointblank"
   )
 

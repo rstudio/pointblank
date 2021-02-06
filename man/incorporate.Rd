@@ -28,6 +28,8 @@ info text, etc.) and we can print the \emph{informant} object or use the
 }
 
 \examples{
+if (interactive()) {
+
 # Take the `small_table` and
 # assign it to `test_table`; we'll
 # modify it later
@@ -89,6 +91,8 @@ informant <-
 # row and column counts in the header
 # have been updated to reflect the
 # changed `test_table`
+
+}
 
 }
 \seealso{

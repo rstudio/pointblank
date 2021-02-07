@@ -36,6 +36,7 @@ vignettes/*.pdf
 # docs in `inst
 inst/doc
 
+# RDS files in certain directories
 tests/manual_tests/*.rds
 tests/manual_tests/saved_agents/*.rds
 

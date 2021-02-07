@@ -33,12 +33,11 @@ vignettes/*.pdf
 *.knit.md
 .Rproj.user
 
-# RDS and RDA files
-*.rds
-*.rda
-
 # docs in `inst
 inst/doc
+
+tests/manual_tests/*.rds
+tests/manual_tests/saved_agents/*.rds
 
 # Movies
 *.mp4

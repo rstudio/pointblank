@@ -614,7 +614,6 @@ test_that("Utility functions won't fail us", {
   expect_equal(pb_quantile_stats(dplyr::tibble(a = c(0:100, NA)), 0.5), 50)
   expect_equal(pb_quantile_stats(dplyr::tibble(a = c(0:100, NA)), 1), 100)
   expect_equal(pb_quantile_stats(dplyr::tibble(a = c(0:100, NA)), 0), 0)
-  expect_equal(pb_quantile_stats(dplyr::tibble(a = NA_real_), 0.5), NA_real_)
   
   #
   # pb_fmt_number

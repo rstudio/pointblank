@@ -467,6 +467,10 @@ prune_lst_step <- function(lst_step) {
       lst_step[[1]][["complete"]]) {
     lst_step[[1]]["complete"] <- NULL
   }
+  if ("inclusive" %in% names(lst_step[[1]]) &&
+      (lst_step[[1]][["inclusive"]][1] & lst_step[[1]][["inclusive"]][2])) {
+    lst_step[[1]]["inclusive"] <- NULL
+  }
   if ("in_order" %in% names(lst_step[[1]]) &&
       lst_step[[1]][["in_order"]]) {
     lst_step[[1]]["in_order"] <- NULL

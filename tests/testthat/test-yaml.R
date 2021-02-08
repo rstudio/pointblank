@@ -331,6 +331,14 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = vars(a), right = vars(d), inclusive = c(TRUE, FALSE))),
     "col_vals_between(columns = vars(c),left = vars(a),right = vars(d),inclusive = c(TRUE, FALSE))"
   )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = vars(a), right = vars(d), inclusive = c(FALSE, TRUE))),
+    "col_vals_between(columns = vars(c),left = vars(a),right = vars(d),inclusive = c(FALSE, TRUE))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = vars(a), right = vars(d), inclusive = c(FALSE, FALSE))),
+    "col_vals_between(columns = vars(c),left = vars(a),right = vars(d),inclusive = c(FALSE, FALSE))"
+  )
   
   #
   # col_vals_not_between

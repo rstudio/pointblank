@@ -103,13 +103,17 @@ data frames, tibbles, database tables (\code{tbl_dbi}), and Spark DataFrames
 (\code{tbl_spark}). Each validation step or expectation will operate over a single
 test unit, which is whether the column is a factor-type column or not.
 }
-\details{
+\section{Column Names}{
+
 If providing multiple column names, the result will be an expansion of
 validation steps to that number of column names (e.g., \code{vars(col_a, col_b)}
 will result in the entry of two validation steps). Aside from column names in
 quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
 specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{contains()},
 \code{matches()}, and \code{everything()}.
+}
+
+\section{Actions}{
 
 Often, we will want to specify \code{actions} for the validation. This argument,
 present in every validation function, takes a specially-crafted list
@@ -123,6 +127,9 @@ otherwise, nothing happens. For the \verb{col_is_*()}-type functions, using
 \code{action_levels(warn_at = 1)} or \code{action_levels(stop_at = 1)} are good choices
 depending on the situation (the first produces a warning, the other
 \code{stop()}s).
+}
+
+\section{Briefs}{
 
 Want to describe this validation step in some detail? Keep in mind that this
 is only useful if \code{x} is an \emph{agent}. If that's the case, \code{brief} the agent
@@ -130,6 +137,7 @@ with some text that fits. Don't worry if you don't want to do it. The
 \emph{autobrief} protocol is kicked in when \code{brief = NULL} and a simple brief will
 then be automatically generated.
 }
+
 \section{Function ID}{
 
 2-27

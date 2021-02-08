@@ -19,6 +19,7 @@
 
 #' Do the columns contain R `Date` objects?
 #'
+#' @description
 #' The `col_is_date()` validation function, the `expect_col_is_date()`
 #' expectation function, and the `test_col_is_date()` test function all check
 #' whether one or more columns in a table is of the **R** `Date` type. Like many
@@ -31,6 +32,7 @@
 #' (`tbl_spark`). Each validation step or expectation will operate over a single
 #' test unit, which is whether the column is a `Date`-type column or not.
 #' 
+#' @section Column Names:
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
 #' will result in the entry of two validation steps). Aside from column names in
@@ -38,6 +40,7 @@
 #' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, and `everything()`.
 #' 
+#' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list
 #' object that is best produced by the [action_levels()] function. Read that
@@ -51,6 +54,7 @@
 #' depending on the situation (the first produces a warning, the other
 #' `stop()`s).
 #' 
+#' @section Briefs:
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The

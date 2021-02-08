@@ -124,13 +124,17 @@ data frames, tibbles, database tables (\code{tbl_dbi}), and Spark DataFrames
 (\code{tbl_spark}). Each validation step or expectation will operate over the
 number of test units that is equal to the number of elements in the \code{set}.
 }
-\details{
+\section{Column Names}{
+
 If providing multiple column names, the result will be an expansion of
 validation steps to that number of column names (e.g., \code{vars(col_a, col_b)}
 will result in the entry of two validation steps). Aside from column names in
 quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
 specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{contains()},
 \code{matches()}, and \code{everything()}.
+}
+
+\section{Preconditions}{
 
 Having table \code{preconditions} means \strong{pointblank} will mutate the table just
 before interrogation. Such a table mutation is isolated in scope to the
@@ -142,6 +146,9 @@ as the input data table to be transformed (e.g.,
 \code{~ . \%>\% dplyr::mutate(col_a = col_b + 10)}). Alternatively, a function could
 instead be supplied (e.g.,
 \code{function(x) dplyr::mutate(x, col_a = col_b + 10)}).
+}
+
+\section{Actions}{
 
 Often, we will want to specify \code{actions} for the validation. This argument,
 present in every validation function, takes a specially-crafted list
@@ -156,6 +163,9 @@ otherwise, nothing happens. For the \verb{col_vals_*()}-type functions, using
 choices depending on the situation (the first produces a warning when a
 quarter of the total test units fails, the other \code{stop()}s at the same
 threshold level).
+}
+
+\section{Briefs}{
 
 Want to describe this validation step in some detail? Keep in mind that this
 is only useful if \code{x} is an \emph{agent}. If that's the case, \code{brief} the agent
@@ -163,6 +173,7 @@ with some text that fits. Don't worry if you don't want to do it. The
 \emph{autobrief} protocol is kicked in when \code{brief = NULL} and a simple brief will
 then be automatically generated.
 }
+
 \section{Function ID}{
 
 2-12

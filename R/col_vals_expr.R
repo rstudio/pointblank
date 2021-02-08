@@ -19,16 +19,19 @@
 
 #' Do column data agree with a predicate expression?
 #'
-#' The `col_vals_expr()` validation function checks for whether column values in
-#' a table match a user-defined predicate expression. The validation function
-#' can be used directly on a data table or with an *agent* object (technically,
-#' a `ptblank_agent` object) whereas the expectation and test functions can only
-#' be used with a data table. The types of data tables that can be used include
-#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
-#' (`tbl_spark`). Each validation step or expectation will operate over the
-#' number of test units that is equal to the number of rows in the table (after
-#' any `preconditions` have been applied).
+#' @description
+#' The `col_vals_expr()` validation function, the `expect_col_vals_expr()`
+#' expectation function, and the `test_col_vals_expr()` test function all check
+#' whether column values in a table agree with a user-defined predicate
+#' expression. The validation function can be used directly on a data table or
+#' with an *agent* object (technically, a `ptblank_agent` object) whereas the
+#' expectation and test functions can only be used with a data table. The types
+#' of data tables that can be used include data frames, tibbles, database tables
+#' (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). Each validation step or
+#' expectation will operate over the number of test units that is equal to the
+#' number of rows in the table (after any `preconditions` have been applied).
 #' 
+#' @section Preconditions:
 #' Having table `preconditions` means **pointblank** will mutate the table just
 #' before interrogation. Such a table mutation is isolated in scope to the
 #' validation step(s) produced by the validation function call. Using
@@ -40,6 +43,7 @@
 #' instead be supplied (e.g., 
 #' `function(x) dplyr::mutate(x, col_a = col_b + 10)`).
 #' 
+#' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list
 #' object that is best produced by the [action_levels()] function. Read that
@@ -54,6 +58,7 @@
 #' quarter of the total test units fails, the other `stop()`s at the same
 #' threshold level).
 #' 
+#' @section Briefs:
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The

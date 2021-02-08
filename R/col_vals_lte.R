@@ -20,6 +20,7 @@
 #' Are column data less than or equal to a fixed value or data in another
 #' column?
 #'
+#' @description
 #' The `col_vals_lte()` validation function, the `expect_col_vals_lte()`
 #' expectation function, and the `test_col_vals_lte()` test function all check
 #' whether column values in a table are *less than or equal to* a specified
@@ -34,6 +35,7 @@
 #' units that is equal to the number of rows in the table (after any
 #' `preconditions` have been applied).
 #'
+#' @section Column Names:
 #' If providing multiple column names to `columns`, the result will be an
 #' expansion of validation steps to that number of column names (e.g.,
 #' `vars(col_a, col_b)` will result in the entry of two validation steps). Aside
@@ -41,11 +43,13 @@
 #' are available for specifying columns. They are: `starts_with()`,
 #' `ends_with()`, `contains()`, `matches()`, and `everything()`.
 #'
+#' @section Missing Values:
 #' This validation function supports special handling of `NA` values. The
 #' `na_pass` argument will determine whether an `NA` value appearing in a test
 #' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
 #' FALSE` means that any `NA`s encountered will accumulate failing test units.
 #' 
+#' @section Preconditions:
 #' Having table `preconditions` means **pointblank** will mutate the table just
 #' before interrogation. Such a table mutation is isolated in scope to the
 #' validation step(s) produced by the validation function call. Using
@@ -57,6 +61,7 @@
 #' instead be supplied (e.g., 
 #' `function(x) dplyr::mutate(x, col_a = col_b + 10)`).
 #' 
+#' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list
 #' object that is best produced by the [action_levels()] function. Read that
@@ -71,6 +76,7 @@
 #' quarter of the total test units fails, the other `stop()`s at the same
 #' threshold level).
 #' 
+#' @section Briefs:
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The

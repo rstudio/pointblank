@@ -781,6 +781,7 @@ as_agent_yaml_list <- function(agent,
           validation_fn = list(
             columns = column_text,
             regex = get_arg_value(step_list$values),
+            na_pass = step_list$na_pass,
             preconditions = as_list_preconditions(step_list$preconditions),
             actions = as_action_levels(
               step_list$actions[[1]],

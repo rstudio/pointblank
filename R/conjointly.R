@@ -83,6 +83,51 @@
 #' with some text that fits. Don't worry if you don't want to do it. The
 #' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
 #' then be automatically generated.
+#' 
+#' @section YAML:
+#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
+#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
+#' or interrogate the target table (via [yaml_agent_interrogate()]). When
+#' `conjointly()` is represented in YAML (under the top-level `steps` key as a
+#' list member), the syntax closely follows the signature of the validation
+#' function. Here is an example of how a complex call of `conjointly()` as a
+#' validation step is expressed in R code and in the corresponding YAML
+#' representation.
+#' 
+#' ```
+#' # R statement
+#' agent %>% 
+#'   conjointly(
+#'     ~ col_vals_lt(., vars(a), 8),
+#'     ~ col_vals_gt(., vars(c), vars(a)),
+#'     ~ col_vals_not_null(., vars(b)),
+#'     preconditions = ~ . %>% dplyr::filter(a < 10),
+#'     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
+#'     label = "The `conjointly()` step.",
+#'     active = FALSE
+#'   )
+#' 
+#' # YAML representation
+#' steps:
+#' - conjointly:
+#'     fns:
+#'     - ~col_vals_lt(., vars(a), 8)
+#'     - ~col_vals_gt(., vars(c), vars(a))
+#'     - ~col_vals_not_null(., vars(b))
+#'     preconditions: ~. %>% dplyr::filter(a < 10)
+#'     actions:
+#'       warn_fraction: 0.1
+#'       stop_fraction: 0.2
+#'     label: The `conjointly()` step.
+#'     active: false
+#' ```
+#' 
+#' In practice, both of these will often be shorter as only the expressions for
+#' validation steps are necessary. Arguments with default values won't be
+#' written to YAML when using [yaml_write()] (though it is acceptable to include
+#' them with their default when generating the YAML by other means). It is also
+#' possible to preview the transformation of an agent to YAML without any
+#' writing to disk by using the [yaml_agent_string()] function.
 #'
 #' @inheritParams col_vals_gt
 #' @param ... a collection one-sided formulas that consist of validation

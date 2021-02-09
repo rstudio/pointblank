@@ -314,14 +314,20 @@ object or a table was passed to <code>x</code>). The expectation function invisi
 returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
 The test function returns a logical value.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="column-names"><a class="anchor" href="#column-names"></a>Column Names</h2>
 
-    <p>If providing multiple column names, the result will be an expansion of
+    
+
+<p>If providing multiple column names, the result will be an expansion of
 validation steps to that number of column names (e.g., <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars(col_a, col_b)</a></code>
 will result in the entry of two validation steps). Aside from column names in
 quotes and in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, <strong>tidyselect</strong> helper functions are available for
 specifying columns. They are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>,
 <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p>
+    <h2 class="hasAnchor" id="preconditions"><a class="anchor" href="#preconditions"></a>Preconditions</h2>
+
+    
+
 <p>Having table <code>preconditions</code> means <strong>pointblank</strong> will mutate the table just
 before interrogation. Such a table mutation is isolated in scope to the
 validation step(s) produced by the validation function call. Using
@@ -332,6 +338,10 @@ as the input data table to be transformed (e.g.,
 <code>~ . %&gt;% dplyr::mutate(col_a = col_b + 10)</code>). Alternatively, a function could
 instead be supplied (e.g.,
 <code>function(x) dplyr::mutate(x, col_a = col_b + 10)</code>).</p>
+    <h2 class="hasAnchor" id="actions"><a class="anchor" href="#actions"></a>Actions</h2>
+
+    
+
 <p>Often, we will want to specify <code>actions</code> for the validation. This argument,
 present in every validation function, takes a specially-crafted list object
 that is best produced by the <code><a href='action_levels.html'>action_levels()</a></code> function. Read that function's
@@ -345,11 +355,60 @@ happens. For the <code>col_vals_*()</code>-type functions, using
 choices depending on the situation (the first produces a warning when a
 quarter of the total test units fails, the other <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>s at the same
 threshold level).</p>
+    <h2 class="hasAnchor" id="briefs"><a class="anchor" href="#briefs"></a>Briefs</h2>
+
+    
+
 <p>Want to describe this validation step in some detail? Keep in mind that this
 is only useful if <code>x</code> is an <em>agent</em>. If that's the case, <code>brief</code> the agent
 with some text that fits. Don't worry if you don't want to do it. The
 <em>autobrief</em> protocol is kicked in when <code>brief = NULL</code> and a simple brief will
 then be automatically generated.</p>
+    <h2 class="hasAnchor" id="yaml"><a class="anchor" href="#yaml"></a>YAML</h2>
+
+    
+
+<p>A <strong>pointblank</strong> agent can be written to YAML with <code><a href='yaml_write.html'>yaml_write()</a></code> and the
+resulting YAML can be used to regenerate an agent (with <code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code>)
+or interrogate the target table (via <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></code>). When
+<code>col_vals_not_in_set()</code> is represented in YAML (under the top-level <code>steps</code>
+key as a list member), the syntax closely follows the signature of the
+validation function. Here is an example of how a complex call of
+<code>col_vals_not_in_set()</code> as a validation step is expressed in R code and in
+the corresponding YAML representation.</p><pre># R statement
+agent %&gt;% 
+  col_vals_not_in_set(
+    columns = vars(a),
+    set = c(1, 2, 3, 4),
+    preconditions = ~ . %&gt;% dplyr::filter(a &lt; 10),
+    actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+    label = "The `col_vals_not_in_set()` step.",
+    active = FALSE
+  )
+
+# YAML representation
+steps:
+- col_vals_not_in_set:
+    columns: vars(a)
+   set:
+   - 1.0
+   - 2.0
+   - 3.0
+   - 4.0
+   preconditions: ~. %&gt;% dplyr::filter(a &lt; 10)
+   actions:
+     warn_fraction: 0.1
+     stop_fraction: 0.2
+   label: The `col_vals_not_in_set()` step.
+   active: false
+</pre>
+
+<p>In practice, both of these will often be shorter as only the <code>columns</code>, and
+<code>set</code> arguments require values. Arguments with default values won't be
+written to YAML when using <code><a href='yaml_write.html'>yaml_write()</a></code> (though it is acceptable to include
+them with their default when generating the YAML by other means). It is also
+possible to preview the transformation of an agent to YAML without any
+writing to disk by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></code> function.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     

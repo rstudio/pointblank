@@ -55,7 +55,24 @@ that of the target table. The validation function can be used directly on a
 data table or with an agent object (technically, a ptblank_agent object)
 whereas the expectation and test functions can only be used with a data
 table. The types of data tables that can be used include data frames,
-tibbles, database tables (tbl_dbi), and Spark DataFrames (tbl_spark)." />
+tibbles, database tables (tbl_dbi), and Spark DataFrames (tbl_spark).
+The validation step or expectation operates over a single test unit, which is
+whether the schema matches that of the table (within the constraints enforced
+by the complete, in_order, and is_exact options). If the target table
+is a tbl_dbi or a tbl_spark object, we can choose to validate the column
+schema that is based on R column types (e.g., &quot;numeric&quot;, &quot;character&quot;,
+etc.), SQL column types (e.g., &quot;double&quot;, &quot;varchar&quot;, etc.), or Spark SQL
+types (e.g,. &quot;DoubleType&quot;, &quot;StringType&quot;, etc.). That option is defined in
+the col_schema() function (it is the .db_col_types argument).
+There are options to make schema checking less stringent (by default, this
+validation operates with highest level of strictness). With the complete
+option set to FALSE, we can supply a col_schema object with a partial
+inclusion of columns. Using in_order set to FALSE means that there is no
+requirement for the columns defined in the schema object to be in the same
+order as in the target table. Finally, the is_exact option set to FALSE
+means that all column classes/types don't have to be provided for a
+particular column. It can even be NULL, skipping the check of the column
+type." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -176,6 +193,23 @@ data table or with an <em>agent</em> object (technically, a <code>ptblank_agent<
 whereas the expectation and test functions can only be used with a data
 table. The types of data tables that can be used include data frames,
 tibbles, database tables (<code>tbl_dbi</code>), and Spark DataFrames (<code>tbl_spark</code>).</p>
+<p>The validation step or expectation operates over a single test unit, which is
+whether the schema matches that of the table (within the constraints enforced
+by the <code>complete</code>, <code>in_order</code>, and <code>is_exact</code> options). If the target table
+is a <code>tbl_dbi</code> or a <code>tbl_spark</code> object, we can choose to validate the column
+schema that is based on R column types (e.g., <code>"numeric"</code>, <code>"character"</code>,
+etc.), SQL column types (e.g., <code>"double"</code>, <code>"varchar"</code>, etc.), or Spark SQL
+types (e.g,. <code>"DoubleType"</code>, <code>"StringType"</code>, etc.). That option is defined in
+the <code><a href='col_schema.html'>col_schema()</a></code> function (it is the <code>.db_col_types</code> argument).</p>
+<p>There are options to make schema checking less stringent (by default, this
+validation operates with highest level of strictness). With the <code>complete</code>
+option set to <code>FALSE</code>, we can supply a <code>col_schema</code> object with a partial
+inclusion of columns. Using <code>in_order</code> set to <code>FALSE</code> means that there is no
+requirement for the columns defined in the <code>schema</code> object to be in the same
+order as in the target table. Finally, the <code>is_exact</code> option set to <code>FALSE</code>
+means that all column classes/types don't have to be provided for a
+particular column. It can even be <code>NULL</code>, skipping the check of the column
+type.</p>
     </div>
 
     <pre class="usage"><span class='fu'>col_schema_match</span><span class='op'>(</span>
@@ -328,25 +362,10 @@ object or a table was passed to <code>x</code>). The expectation function invisi
 returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
 The test function returns a logical value.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="actions"><a class="anchor" href="#actions"></a>Actions</h2>
 
-    <p>The validation step or expectation operates over a single test unit, which is
-whether the schema matches that of the table (within the constraints enforced
-by the <code>complete</code>, <code>in_order</code>, and <code>is_exact</code> options). If the target table
-is a <code>tbl_dbi</code> or a <code>tbl_spark</code> object, we can choose to validate the column
-schema that is based on R column types (e.g., <code>"numeric"</code>, <code>"character"</code>,
-etc.), SQL column types (e.g., <code>"double"</code>, <code>"varchar"</code>, etc.), or Spark SQL
-types (e.g,. <code>"DoubleType"</code>, <code>"StringType"</code>, etc.). That option is defined in
-the <code><a href='col_schema.html'>col_schema()</a></code> function (it is the <code>.db_col_types</code> argument).</p>
-<p>There are options to make schema checking less stringent (by default, this
-validation operates with highest level of strictness). With the <code>complete</code>
-option set to <code>FALSE</code>, we can supply a <code>col_schema</code> object with a partial
-inclusion of columns. Using <code>in_order</code> set to <code>FALSE</code> means that there is no
-requirement for the columns defined in the <code>schema</code> object to be in the same
-order as in the target table. Finally, the <code>is_exact</code> option set to <code>FALSE</code>
-means that all column classes/types don't have to be provided for a
-particular column. It can even be <code>NULL</code>, skipping the check of the column
-type.</p>
+    
+
 <p>Often, we will want to specify <code>actions</code> for the validation. This argument,
 present in every validation function, takes a specially-crafted list object
 that is best produced by the <code><a href='action_levels.html'>action_levels()</a></code> function. Read that function's
@@ -357,11 +376,62 @@ failed, or, an absolute value), often using the <code>warn_at</code> argument. U
 <code><a href='action_levels.html'>action_levels(warn_at = 1)</a></code> or <code><a href='action_levels.html'>action_levels(stop_at = 1)</a></code> are good choices
 depending on the situation (the first produces a warning, the other
 <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>s).</p>
+    <h2 class="hasAnchor" id="briefs"><a class="anchor" href="#briefs"></a>Briefs</h2>
+
+    
+
 <p>Want to describe this validation step in some detail? Keep in mind that this
 is only useful if <code>x</code> is an <em>agent</em>. If that's the case, <code>brief</code> the agent
 with some text that fits. Don't worry if you don't want to do it. The
 <em>autobrief</em> protocol is kicked in when <code>brief = NULL</code> and a simple brief will
 then be automatically generated.</p>
+    <h2 class="hasAnchor" id="yaml"><a class="anchor" href="#yaml"></a>YAML</h2>
+
+    
+
+<p>A <strong>pointblank</strong> agent can be written to YAML with <code><a href='yaml_write.html'>yaml_write()</a></code> and the
+resulting YAML can be used to regenerate an agent (with <code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code>)
+or interrogate the target table (via <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></code>). When
+<code>col_schema_match()</code> is represented in YAML (under the top-level <code>steps</code> key
+as a list member), the syntax closely follows the signature of the validation
+function. Here is an example of how a complex call of <code>col_schema_match()</code> as
+a validation step is expressed in R code and in the corresponding YAML
+representation.</p><pre># R statement
+agent %&gt;% 
+  col_schema_match(
+    schema = col_schema(
+      a = "integer",
+      b = "character"
+    ), 
+    complete = FALSE,
+    in_order = FALSE,
+    is_exact = FALSE,
+    actions = action_levels(stop_at = 1),
+    label = "The `col_schema_match()` step.",
+    active = FALSE
+  )
+
+# YAML representation
+steps:
+- col_schema_match:
+    schema:
+      a: integer
+      b: character
+    complete: false
+    in_order: false
+    is_exact: false
+    actions:
+      stop_count: 1.0
+    label: The `col_schema_match()` step.
+    active: false
+</pre>
+
+<p>In practice, both of these will often be shorter as only the <code>schema</code>
+argument requires a value. Arguments with default values won't be written to
+YAML when using <code><a href='yaml_write.html'>yaml_write()</a></code> (though it is acceptable to include them with
+their default when generating the YAML by other means). It is also possible
+to preview the transformation of an agent to YAML without any writing to disk
+by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></code> function.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     

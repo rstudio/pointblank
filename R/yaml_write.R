@@ -724,6 +724,7 @@ as_agent_yaml_list <- function(agent,
               step_list$values[[1]][1] == 1, TRUE, FALSE
             ),
             decreasing_tol = decreasing_tol,
+            na_pass = step_list$na_pass,
             preconditions = as_list_preconditions(step_list$preconditions),
             actions = as_action_levels(
               step_list$actions[[1]],
@@ -756,6 +757,7 @@ as_agent_yaml_list <- function(agent,
               step_list$values[[1]][1] == 1, TRUE, FALSE
             ),
             increasing_tol = increasing_tol,
+            na_pass = step_list$na_pass,
             preconditions = as_list_preconditions(step_list$preconditions),
             actions = as_action_levels(
               step_list$actions[[1]],

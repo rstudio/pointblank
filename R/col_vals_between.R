@@ -104,8 +104,9 @@
 #' # R statement
 #' agent %>% 
 #'   col_vals_between(
-#'     vars(a),
-#'     left = 1, right = 2,
+#'     columns = vars(a),
+#'     left = 1,
+#'     right = 2,
 #'     inclusive = c(TRUE, FALSE),
 #'     na_pass = TRUE,
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),

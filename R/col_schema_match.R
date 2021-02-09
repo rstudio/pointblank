@@ -19,6 +19,7 @@
 
 #' Do columns in the table (and their types) match a predefined schema?
 #'
+#' @description
 #' The `col_schema_match()` validation function, the `expect_col_schema_match()`
 #' expectation function, and the `test_col_schema_match()` test function all
 #' work in conjunction with a `col_schema` object (generated through the
@@ -48,6 +49,7 @@
 #' particular column. It can even be `NULL`, skipping the check of the column
 #' type.
 #'
+#' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list object
 #' that is best produced by the [action_levels()] function. Read that function's
@@ -59,11 +61,60 @@
 #' depending on the situation (the first produces a warning, the other
 #' `stop()`s).
 #'
+#' @section Briefs:
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The
 #' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
 #' then be automatically generated.
+#' 
+#' @section YAML:
+#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
+#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
+#' or interrogate the target table (via [yaml_agent_interrogate()]). When
+#' `col_schema_match()` is represented in YAML (under the top-level `steps` key
+#' as a list member), the syntax closely follows the signature of the validation
+#' function. Here is an example of how a complex call of `col_schema_match()` as
+#' a validation step is expressed in R code and in the corresponding YAML
+#' representation.
+#' 
+#' ```
+#' # R statement
+#' agent %>% 
+#'   col_schema_match(
+#'     schema = col_schema(
+#'       a = "integer",
+#'       b = "character"
+#'     ), 
+#'     complete = FALSE,
+#'     in_order = FALSE,
+#'     is_exact = FALSE,
+#'     actions = action_levels(stop_at = 1),
+#'     label = "The `col_schema_match()` step.",
+#'     active = FALSE
+#'   )
+#' 
+#' # YAML representation
+#' steps:
+#' - col_schema_match:
+#'     schema:
+#'       a: integer
+#'       b: character
+#'     complete: false
+#'     in_order: false
+#'     is_exact: false
+#'     actions:
+#'       stop_count: 1.0
+#'     label: The `col_schema_match()` step.
+#'     active: false
+#' ```
+#' 
+#' In practice, both of these will often be shorter as only the `schema`
+#' argument requires a value. Arguments with default values won't be written to
+#' YAML when using [yaml_write()] (though it is acceptable to include them with
+#' their default when generating the YAML by other means). It is also possible
+#' to preview the transformation of an agent to YAML without any writing to disk
+#' by using the [yaml_agent_string()] function.
 #' 
 #' @inheritParams col_vals_gt
 #' @param schema A table schema of type `col_schema` which can be generated

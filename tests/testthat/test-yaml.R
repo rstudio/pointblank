@@ -218,6 +218,10 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   
   agent <- create_agent(read_fn = ~ small_table, label = "testthat")
 
+  #
+  # col_vals_lt()
+  #
+  
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_lt(vars(a), 1)),
     "col_vals_lt(columns = vars(a),value = 1)"
@@ -280,7 +284,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   # )
   
   #
-  # col_vals_between
+  # col_vals_between()
   #
   
   expect_equal(
@@ -331,9 +335,17 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
     get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = vars(a), right = vars(d), inclusive = c(TRUE, FALSE))),
     "col_vals_between(columns = vars(c),left = vars(a),right = vars(d),inclusive = c(TRUE, FALSE))"
   )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = vars(a), right = vars(d), inclusive = c(FALSE, TRUE))),
+    "col_vals_between(columns = vars(c),left = vars(a),right = vars(d),inclusive = c(FALSE, TRUE))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_between(vars(c), left = vars(a), right = vars(d), inclusive = c(FALSE, FALSE))),
+    "col_vals_between(columns = vars(c),left = vars(a),right = vars(d),inclusive = c(FALSE, FALSE))"
+  )
   
   #
-  # col_vals_not_between
+  # col_vals_not_between()
   #
   
   expect_equal(
@@ -382,7 +394,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   
   #
-  # col_vals_in_set
+  # col_vals_in_set()
   #
   
   expect_equal(
@@ -427,7 +439,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   
   #
-  # col_vals_not_in_set
+  # col_vals_not_in_set()
   #
   
   expect_equal(
@@ -472,7 +484,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   
   #
-  # col_vals_make_set
+  # col_vals_make_set()
   #
   
   expect_equal(
@@ -517,7 +529,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   
   #
-  # col_vals_make_subset
+  # col_vals_make_subset()
   #
   
   expect_equal(
@@ -562,12 +574,16 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   
   #
-  # col_vals_increasing
+  # col_vals_increasing()
   #
   
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_increasing(vars(a))),
     "col_vals_increasing(columns = vars(a))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_increasing(vars(a), na_pass = TRUE)),
+    "col_vals_increasing(columns = vars(a),na_pass = TRUE)"
   )
   expect_equal(
     get_oneline_expr_str(
@@ -585,12 +601,16 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   
   #
-  # col_vals_decreasing
+  # col_vals_decreasing()
   #
   
   expect_equal(
     get_oneline_expr_str(agent %>% col_vals_decreasing(vars(a))),
     "col_vals_decreasing(columns = vars(a))"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent %>% col_vals_decreasing(vars(a), na_pass = TRUE)),
+    "col_vals_decreasing(columns = vars(a),na_pass = TRUE)"
   )
   expect_equal(
     get_oneline_expr_str(
@@ -608,7 +628,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   
   #
-  # col_vals_null
+  # col_vals_null()
   #
   
   expect_equal(
@@ -625,7 +645,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   
   #
-  # col_vals_not_null
+  # col_vals_not_null()
   #
   
   expect_equal(
@@ -642,7 +662,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   
   #
-  # col_vals_regex
+  # col_vals_regex()
   #
   
   expect_equal(
@@ -655,7 +675,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   
   #
-  # col_vals_expr
+  # col_vals_expr()
   #
   
   tbl_1 <<-
@@ -691,7 +711,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
 
   #
-  # conjointly
+  # conjointly()
   #
   
   tbl_2 <<-

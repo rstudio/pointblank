@@ -19,6 +19,7 @@
 
 #' Are row data distinct?
 #'
+#' @description
 #' The `rows_distinct()` validation function, the `expect_rows_distinct()`
 #' expectation function, and the `test_rows_distinct()` test function all check
 #' whether row values (optionally constrained to a selection of specified
@@ -36,6 +37,7 @@
 #' the following **tidyselect** helper functions: `starts_with()`,
 #' `ends_with()`, `contains()`, `matches()`, and `everything()`.
 #' 
+#' @section Preconditions:
 #' Having table `preconditions` means **pointblank** will mutate the table just
 #' before interrogation. Such a table mutation is isolated in scope to the
 #' validation step(s) produced by the validation function call. Using
@@ -47,6 +49,7 @@
 #' instead be supplied (e.g., 
 #' `function(x) dplyr::mutate(x, col_a = col_b + 10)`).
 #' 
+#' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list
 #' object that is best produced by the [action_levels()] function. Read that
@@ -61,11 +64,53 @@
 #' quarter of the total test units fails, the other `stop()`s at the same
 #' threshold level).
 #' 
+#' @section Briefs:
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The
 #' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
 #' then be automatically generated.
+#' 
+#' @section YAML:
+#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
+#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
+#' or interrogate the target table (via [yaml_agent_interrogate()]). When
+#' `rows_distinct()` is represented in YAML (under the top-level `steps` key as
+#' a list member), the syntax closely follows the signature of the validation
+#' function. Here is an example of how a complex call of `rows_distinct()` as a
+#' validation step is expressed in R code and in the corresponding YAML
+#' representation.
+#' 
+#' ```
+#' # R statement
+#' agent %>% 
+#'   rows_distinct(
+#'     columns = vars(a, b),
+#'     preconditions = ~ . %>% dplyr::filter(a < 10),
+#'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+#'     label = "The `rows_distinct()` step.",
+#'     active = FALSE
+#'   )
+#' 
+#' # YAML representation
+#' steps:
+#' - rows_distinct:
+#'     columns: vars(a, b)
+#'     preconditions: ~. %>% dplyr::filter(a < 10)
+#'     actions:
+#'       warn_fraction: 0.1
+#'       stop_fraction: 0.2
+#'     label: The `rows_distinct()` step.
+#'     active: false
+#' ```
+#' 
+#' In practice, both of these will often be shorter. A value `columns` for
+#' columns is only necessary if checking for unique values across the some
+#' specification of columns. Arguments with default values won't be written to
+#' YAML when using [yaml_write()] (though it is acceptable to include them with
+#' their default when generating the YAML by other means). It is also possible
+#' to preview the transformation of an agent to YAML without any writing to disk
+#' by using the [yaml_agent_string()] function.
 #'
 #' @inheritParams col_vals_gt
 #'   

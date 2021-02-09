@@ -103,13 +103,17 @@ data frames, tibbles, database tables (\code{tbl_dbi}), and Spark DataFrames
 (\code{tbl_spark}). Each validation step or expectation will operate over a single
 test unit, which is whether the column is a \code{Date}-type column or not.
 }
-\details{
+\section{Column Names}{
+
 If providing multiple column names, the result will be an expansion of
 validation steps to that number of column names (e.g., \code{vars(col_a, col_b)}
 will result in the entry of two validation steps). Aside from column names in
 quotes and in \code{vars()}, \strong{tidyselect} helper functions are available for
 specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{contains()},
 \code{matches()}, and \code{everything()}.
+}
+
+\section{Actions}{
 
 Often, we will want to specify \code{actions} for the validation. This argument,
 present in every validation function, takes a specially-crafted list
@@ -123,6 +127,9 @@ otherwise, nothing happens. For the \verb{col_is_*()}-type functions, using
 \code{action_levels(warn_at = 1)} or \code{action_levels(stop_at = 1)} are good choices
 depending on the situation (the first produces a warning, the other
 \code{stop()}s).
+}
+
+\section{Briefs}{
 
 Want to describe this validation step in some detail? Keep in mind that this
 is only useful if \code{x} is an \emph{agent}. If that's the case, \code{brief} the agent
@@ -130,6 +137,44 @@ with some text that fits. Don't worry if you don't want to do it. The
 \emph{autobrief} protocol is kicked in when \code{brief = NULL} and a simple brief will
 then be automatically generated.
 }
+
+\section{YAML}{
+
+A \strong{pointblank} agent can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
+resulting YAML can be used to regenerate an agent (with \code{\link[=yaml_read_agent]{yaml_read_agent()}})
+or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}). When
+\code{col_is_date()} is represented in YAML (under the top-level \code{steps} key as a
+list member), the syntax closely follows the signature of the validation
+function. Here is an example of how a complex call of \code{col_is_date()} as a
+validation step is expressed in R code and in the corresponding YAML
+representation.\preformatted{# R statement
+agent \%>\% 
+  col_is_date(
+    vars(a),
+    actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+    label = "The `col_is_date()` step.",
+    active = FALSE
+  )
+
+# YAML representation
+steps:
+- col_is_date:
+    columns: vars(a)
+    actions:
+      warn_fraction: 0.1
+      stop_fraction: 0.2
+    label: The `col_is_date()` step.
+    active: false
+}
+
+In practice, both of these will often be shorter as only the \code{columns},
+argument requires a value. Arguments with default values won't be written to
+YAML when using \code{\link[=yaml_write]{yaml_write()}} (though it is acceptable to include them with
+their default when generating the YAML by other means). It is also possible
+to preview the transformation of an agent to YAML without any writing to disk
+by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
+}
+
 \section{Function ID}{
 
 2-26

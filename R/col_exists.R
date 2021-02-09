@@ -19,6 +19,7 @@
 
 #' Do one or more columns actually exist?
 #'
+#' @description
 #' The `col_exists()` validation function, the `expect_col_exists()` expectation
 #' function, and the `test_col_exists()` test function all check whether one or
 #' more columns exist in the target table. The only requirement is specification
@@ -30,6 +31,7 @@
 #' Each validation step or expectation will operate over a single test unit,
 #' which is whether the column exists or not.
 #'
+#' @section Column Names:
 #' If providing multiple column names, the result will be an expansion of
 #' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
 #' will result in the entry of two validation steps). Aside from column names in
@@ -37,6 +39,7 @@
 #' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, and `everything()`.
 #'
+#' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list object
 #' that is best produced by the [action_levels()] function. Read that function's
@@ -48,11 +51,50 @@
 #' depending on the situation (the first produces a warning, the other
 #' `stop()`s).
 #'
+#' @section Briefs:
 #' Want to describe this validation step in some detail? Keep in mind that this
 #' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
 #' with some text that fits. Don't worry if you don't want to do it. The
 #' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
 #' then be automatically generated.
+#' 
+#' @section YAML:
+#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
+#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
+#' or interrogate the target table (via [yaml_agent_interrogate()]). When
+#' `col_exists()` is represented in YAML (under the top-level `steps` key as a
+#' list member), the syntax closely follows the signature of the validation
+#' function. Here is an example of how a complex call of `col_exists()` as a
+#' validation step is expressed in R code and in the corresponding YAML
+#' representation.
+#' 
+#' ```
+#' # R statement
+#' agent %>% 
+#'   col_exists(
+#'     vars(a),
+#'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+#'     label = "The `col_exists()` step.",
+#'     active = FALSE
+#'   )
+#' 
+#' # YAML representation
+#' steps:
+#' - col_exists:
+#'     columns: vars(a)
+#'     actions:
+#'       warn_fraction: 0.1
+#'       stop_fraction: 0.2
+#'     label: The `col_exists()` step.
+#'     active: false
+#' ```
+#' 
+#' In practice, both of these will often be shorter as only the `columns`,
+#' argument requires a value. Arguments with default values won't be written to
+#' YAML when using [yaml_write()] (though it is acceptable to include them with
+#' their default when generating the YAML by other means). It is also possible
+#' to preview the transformation of an agent to YAML without any writing to disk
+#' by using the [yaml_agent_string()] function.
 #'
 #' @inheritParams col_vals_gt
 #' @param columns One or more columns from the table in focus. This can be

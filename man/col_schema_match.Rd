@@ -138,8 +138,7 @@ data table or with an \emph{agent} object (technically, a \code{ptblank_agent} o
 whereas the expectation and test functions can only be used with a data
 table. The types of data tables that can be used include data frames,
 tibbles, database tables (\code{tbl_dbi}), and Spark DataFrames (\code{tbl_spark}).
-}
-\details{
+
 The validation step or expectation operates over a single test unit, which is
 whether the schema matches that of the table (within the constraints enforced
 by the \code{complete}, \code{in_order}, and \code{is_exact} options). If the target table
@@ -158,6 +157,8 @@ order as in the target table. Finally, the \code{is_exact} option set to \code{F
 means that all column classes/types don't have to be provided for a
 particular column. It can even be \code{NULL}, skipping the check of the column
 type.
+}
+\section{Actions}{
 
 Often, we will want to specify \code{actions} for the validation. This argument,
 present in every validation function, takes a specially-crafted list object
@@ -169,6 +170,9 @@ failed, or, an absolute value), often using the \code{warn_at} argument. Using
 \code{action_levels(warn_at = 1)} or \code{action_levels(stop_at = 1)} are good choices
 depending on the situation (the first produces a warning, the other
 \code{stop()}s).
+}
+
+\section{Briefs}{
 
 Want to describe this validation step in some detail? Keep in mind that this
 is only useful if \code{x} is an \emph{agent}. If that's the case, \code{brief} the agent
@@ -176,6 +180,54 @@ with some text that fits. Don't worry if you don't want to do it. The
 \emph{autobrief} protocol is kicked in when \code{brief = NULL} and a simple brief will
 then be automatically generated.
 }
+
+\section{YAML}{
+
+A \strong{pointblank} agent can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
+resulting YAML can be used to regenerate an agent (with \code{\link[=yaml_read_agent]{yaml_read_agent()}})
+or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}). When
+\code{col_schema_match()} is represented in YAML (under the top-level \code{steps} key
+as a list member), the syntax closely follows the signature of the validation
+function. Here is an example of how a complex call of \code{col_schema_match()} as
+a validation step is expressed in R code and in the corresponding YAML
+representation.\preformatted{# R statement
+agent \%>\% 
+  col_schema_match(
+    schema = col_schema(
+      a = "integer",
+      b = "character"
+    ), 
+    complete = FALSE,
+    in_order = FALSE,
+    is_exact = FALSE,
+    actions = action_levels(stop_at = 1),
+    label = "The `col_schema_match()` step.",
+    active = FALSE
+  )
+
+# YAML representation
+steps:
+- col_schema_match:
+    schema:
+      a: integer
+      b: character
+    complete: false
+    in_order: false
+    is_exact: false
+    actions:
+      stop_count: 1.0
+    label: The `col_schema_match()` step.
+    active: false
+}
+
+In practice, both of these will often be shorter as only the \code{schema}
+argument requires a value. Arguments with default values won't be written to
+YAML when using \code{\link[=yaml_write]{yaml_write()}} (though it is acceptable to include them with
+their default when generating the YAML by other means). It is also possible
+to preview the transformation of an agent to YAML without any writing to disk
+by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
+}
+
 \section{Function ID}{
 
 2-29

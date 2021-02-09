@@ -114,5 +114,4 @@ test_that("Getting a multiagent report is possible", {
     expect_is(tbl_c$notify, "logical")
     expect_is(tbl_c$stop, "logical")
   }
-  
 })

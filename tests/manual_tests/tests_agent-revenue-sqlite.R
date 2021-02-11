@@ -10,7 +10,9 @@ agent_revenue_sqlite <-
   create_agent(
     read_fn = 
       ~ db_tbl(
-        db = "sqlite", dbname = ":memory:", table = intendo::intendo_revenue,
+        table = intendo::intendo_revenue,
+        dbname = ":memory:",
+        dbtype = "sqlite"
       ),
     tbl_name = "revenue",
     label = "The **intendo** revenue table.", 

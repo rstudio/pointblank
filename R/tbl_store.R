@@ -117,5 +117,23 @@ tbl_get <- function(tbl,
   # Obtain the table object
   tbl_obj <- rlang::f_rhs(tbl_entry) %>% rlang::eval_tidy()
   
+  # Add the in-store table name to the `pb_tbl_name` attribute
+  # of the retrieved table
+  if (
+    !is.null(rlang::f_lhs(tbl_entry)) &&
+    is.null(attr(tbl, "pb_tbl_name", exact = TRUE))
+  ) {
+    table_name <- as.character(rlang::f_lhs(tbl_entry))
+    attr(tbl_obj, "pb_tbl_name") <- table_name
+  }
+  
+  # Add the retrieval time to the `pb_tbl_name` attribute
+  # of the table if it isn't present
+  if (is.null(attr(tbl, "pb_access_time", exact = TRUE))) {
+    
+    access_time <- Sys.time()
+    attr(tbl_obj, "pb_access_time") <- access_time
+  }
+  
   suppressWarnings(tbl_obj)
 }

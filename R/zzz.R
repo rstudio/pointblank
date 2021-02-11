@@ -83,6 +83,7 @@ utils::globalVariables(
     "f_failed",
     "f_pass",
     "f_passed",
+    "file_name",
     "Freq",
     "frequency",
     "Frequency",

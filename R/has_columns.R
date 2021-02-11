@@ -99,7 +99,7 @@ has_columns <- function(x, columns) {
       "The input for `has_columns()` should be a table object of any of ",
       "these types:\n",
       "* `data.frame` or `tbl_df` (tibble)\n",
-      "* a `tbl_dbi` object (generated with `db_tbl()` or `dplyr::tbl()`\n",
+      "* a `tbl_dbi` object (generated with `db_tbl()` or `dplyr::tbl()`)\n",
       "* a `tbl_spark` object (using the sparklyr package)",
       call. = FALSE
     )

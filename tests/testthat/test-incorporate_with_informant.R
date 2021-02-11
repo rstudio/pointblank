@@ -151,7 +151,7 @@ test_that("Incorporating an informant from YAML yields the correct results", {
   
   temp_file <- tempfile(fileext = ".yaml")
   
-  yaml_write(informant = informant, filename = temp_file)
+  yaml_write(informant, filename = temp_file)
   
   informant_from_yaml <- yaml_read_informant(filename = temp_file)
   

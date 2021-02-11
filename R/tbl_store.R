@@ -50,8 +50,8 @@ tbl_store <- function(...,
     
     if (is.null(rlang::f_lhs(tbl_list[[i]]))) {
       
-      # TODO: Try to get the name if present; for now, just use the
-      # index number formatted as string
+      # TODO: Try to get the name if present in `db_tbl()` or `file_tbl()`;
+      # for now, just use the index number formatted as string
       name_list <- c(name_list, formatC(i, width = 3, flag = "0"))
       has_given_name <- c(has_given_name, FALSE)
       

@@ -75,7 +75,7 @@ tbl_store <- function(...,
 #' Obtain a table from a `tbl_store` object
 #' 
 #' With a `tbl_store` object at the ready, any table referenced in that store
-#' can be materialized by providing a matching table name. The [table_store()]
+#' can be materialized by providing a matching table name. The [tbl_store()]
 #' function is used to create a store of tables, which is a catalog of table-
 #' reading functions with names supplied for each of the tables. The `tbl_get()`
 #' function does the work of evaluating a table-reading function and returning

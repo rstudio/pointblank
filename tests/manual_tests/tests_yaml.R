@@ -4,7 +4,6 @@ al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 
 agent <- 
   create_agent(
-    tbl = small_table,
     read_fn = ~ small_table,
     actions = al,
     lang = "de"
@@ -51,16 +50,16 @@ agent <-
   ) %>%
   col_vals_between(vars(c), left = 2.03, right = vars(d), na_pass = TRUE)
 
-yaml_agent_string(agent = agent)
+yaml_agent_string(agent)
 
-yaml_write(agent = agent, filename = "test.yaml")
+yaml_write(agent, filename = "test.yaml")
 
-yaml_agent_string(path = "test.yaml")
+yaml_agent_string(filename = "test.yaml")
 
-yaml_agent_show_exprs(path = "test.yaml")
+yaml_agent_show_exprs(filename = "test.yaml")
 
-agent_plan <- yaml_read_agent(path = "test.yaml")
+agent_plan <- yaml_read_agent(filename = "test.yaml")
 agent_plan
 
-agent_intel <- yaml_agent_interrogate(path = "test.yaml")
+agent_intel <- yaml_agent_interrogate(filename = "test.yaml")
 agent_intel

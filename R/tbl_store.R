@@ -21,6 +21,10 @@
 #' 
 #' @return A `tbl_store` object that contains table-reading functions.
 #' 
+#' @family Planning and Prep
+#' @section Function ID:
+#' 1-8
+#' 
 #' @export
 tbl_store <- function(...,
                       .list = list2(...)) {
@@ -74,6 +78,7 @@ tbl_store <- function(...,
 
 #' Obtain a table from a `tbl_store` object
 #' 
+#' @description
 #' With a `tbl_store` object at the ready, any table referenced in that store
 #' can be materialized by providing a matching table name. The [tbl_store()]
 #' function is used to create a store of tables, which is a catalog of table-
@@ -89,6 +94,10 @@ tbl_store <- function(...,
 #' @param store The table store object created by the [tbl_store()] function.
 #' 
 #' @return A table object.
+#' 
+#' @family Planning and Prep
+#' @section Function ID:
+#' 1-9
 #' 
 #' @export
 tbl_get <- function(tbl,

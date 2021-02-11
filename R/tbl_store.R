@@ -21,6 +21,62 @@
 #' 
 #' @return A `tbl_store` object that contains table-reading functions.
 #' 
+#' @examples 
+#' # Define a `tbl_store` object by adding
+#' # table-reading functions inside the
+#' # `tbl_store()` call
+#' # tbls <- 
+#' #   tbl_store(
+#' #     small_table_duck ~ db_tbl(
+#' #       table = small_table,
+#' #       dbname = ":memory:",
+#' #       dbtype = "duckdb"
+#' #     ),
+#' #     ~ db_tbl(
+#' #       table = "rna",
+#' #       dbname = "pfmegrnargs",
+#' #       dbtype = "postgres",
+#' #       host = "hh-pgsql-public.ebi.ac.uk",
+#' #       port = 5432,
+#' #       user = I("reader"),
+#' #       password = I("NWDMCE5xdipIjRrp")
+#' #     ),
+#' #     all_revenue ~ db_tbl(
+#' #       table = file_tbl(
+#' #         file = from_github(
+#' #           file = "all_revenue_large.rds",
+#' #           repo = "rich-iannone/intendo",
+#' #           subdir = "data-large"
+#' #         )
+#' #       ),
+#' #       dbname = ":memory:",
+#' #       dbtype = "duckdb"
+#' #     ),
+#' #     sml_table ~ pointblank::small_table
+#' #   )
+#' 
+#' # Once this object is available, you can
+#' # check that the table of interest is
+#' # produced to your specification with the
+#' # `tbl_get()` function
+#' # tbl_get(
+#' #   tbl = "small_table_duck",
+#' #   store = tbls
+#' # )
+#' 
+#' # Another simpler way to get the same
+#' # table materialized is by using `$` to
+#' # get the entry of choice for `tbl_get()`
+#' # tbls$small_table_duck %>% tbl_get()
+#' 
+#' # Creating an agent is easy when all
+#' # table-reading functions are encapsulated
+#' # in a `tbl_store` object; use `$` notation
+#' # to pass the appropriate procedure for
+#' # reading a table to the `read_fn` argument
+#' # agent <-
+#' #   create_agent(read_fn = tbls$small_table_duck)
+#' 
 #' @family Planning and Prep
 #' @section Function ID:
 #' 1-8
@@ -94,6 +150,61 @@ tbl_store <- function(...,
 #' @param store The table store object created by the [tbl_store()] function.
 #' 
 #' @return A table object.
+#' 
+#' @examples 
+#' # Define a `tbl_store` object by adding
+#' # table-reading functions inside the
+#' # `tbl_store()` call
+#' # tbls <- 
+#' #   tbl_store(
+#' #     small_table_duck ~ db_tbl(
+#' #       table = small_table,
+#' #       dbname = ":memory:",
+#' #       dbtype = "duckdb"
+#' #     ),
+#' #     ~ db_tbl(
+#' #       table = "rna",
+#' #       dbname = "pfmegrnargs",
+#' #       dbtype = "postgres",
+#' #       host = "hh-pgsql-public.ebi.ac.uk",
+#' #       port = 5432,
+#' #       user = I("reader"),
+#' #       password = I("NWDMCE5xdipIjRrp")
+#' #     ),
+#' #     all_revenue ~ db_tbl(
+#' #       table = file_tbl(
+#' #         file = from_github(
+#' #           file = "all_revenue_large.rds",
+#' #           repo = "rich-iannone/intendo",
+#' #           subdir = "data-large"
+#' #         )
+#' #       ),
+#' #       dbname = ":memory:",
+#' #       dbtype = "duckdb"
+#' #     ),
+#' #     sml_table ~ pointblank::small_table
+#' #   )
+#' 
+#' # Once this object is available, you can
+#' # check that the table of interest is
+#' # produced to your specification
+#' # tbl_get(
+#' #   tbl = "small_table_duck",
+#' #   store = tbls
+#' # )
+#' 
+#' # Another simpler way to get the same
+#' # table materialized is by using `$` to
+#' # get the entry of choice for `tbl_get()`
+#' # tbls$small_table_duck %>% tbl_get()
+#' 
+#' # Creating an agent is easy when all
+#' # table-reading functions are encapsulated
+#' # in a `tbl_store` object; use `$` notation
+#' # to pass the appropriate procedure for
+#' # reading a table to the `read_fn` argument
+#' # agent <-
+#' #   create_agent(read_fn = tbls$small_table_duck)
 #' 
 #' @family Planning and Prep
 #' @section Function ID:

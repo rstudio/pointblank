@@ -41,4 +41,4 @@ informant <-
 
 get_informant_report(informant = informant)
 
-yaml_write(informant = informant, filename = "informant-test.yml")
+yaml_write(informant, filename = "informant-test.yml")

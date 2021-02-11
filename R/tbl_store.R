@@ -111,9 +111,6 @@ tbl_get <- function(tbl,
     tbl_entry <- tbl
   }
   
-  # TODO: Add retrieval metadata for table objects not obtained
-  # through `file_tbl()` or `db_tbl()`
-  
   # Obtain the table object
   tbl_obj <- rlang::f_rhs(tbl_entry) %>% rlang::eval_tidy()
   

@@ -20,7 +20,7 @@ A table object.
 }
 \description{
 With a \code{tbl_store} object at the ready, any table referenced in that store
-can be materialized by providing a matching table name. The \code{\link[=table_store]{table_store()}}
+can be materialized by providing a matching table name. The \code{\link[=tbl_store]{tbl_store()}}
 function is used to create a store of tables, which is a catalog of table-
 reading functions with names supplied for each of the tables. The \code{tbl_get()}
 function does the work of evaluating a table-reading function and returning

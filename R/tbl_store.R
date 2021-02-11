@@ -214,13 +214,8 @@ tbl_store <- function(...,
 tbl_get <- function(tbl,
                     store = NULL) {
   
-  # TODO: store can be a `tbl_store` object or a
-  # YAML file with entries under `tbls` or `tbl_store`
-  if (is.character(tbl) && tbl %in% names(store)) {
-    tbl_entry <- store[[tbl]]
-  } else if (inherits(tbl, "read_fn")) {
-    tbl_entry <- tbl
-  }
+  # Get the table-reading function
+  tbl_entry <- tbl_source(tbl = tbl, store = store)
   
   # Obtain the table object
   tbl_obj <- rlang::f_rhs(tbl_entry) %>% rlang::eval_tidy()
@@ -244,4 +239,41 @@ tbl_get <- function(tbl,
   }
   
   suppressWarnings(tbl_obj)
+}
+
+#' Obtain a table-prep function from a `tbl_store` object
+#' 
+#' @description
+#' With a `tbl_store` object at the ready, any table referenced in that store
+#' can be materialized by providing a matching table name. The [tbl_store()]
+#' function is used to create a store of tables, which is a catalog of table-
+#' reading functions with names supplied for each of the tables. The `tbl_get()`
+#' function does the work of evaluating a table-reading function and returning
+#' the requested table.
+#' 
+#' @param tbl The table name associated with a table-prep formula. This is part
+#'   of the table `store`. This table could be identified by its name (e.g.,
+#'   `tbl = "large_table"`) or by supplying a reference using a subset (with
+#'   `$`) of the `tbl_store` object (e.g., `tbl = store$large_table`). If using
+#'   the latter method then nothing needs to be supplied to `store`.
+#' @param store The table store object created by the [tbl_store()] function.
+#' 
+#' @return A table-prep formula.
+#' @family Planning and Prep
+#' @section Function ID:
+#' 1-10
+#' 
+#' @export
+tbl_source <- function(tbl,
+                       store = NULL) {
+  
+  # TODO: store can be a `tbl_store` object or a
+  # YAML file with entries under `tbls` or `tbl_store`
+  if (is.character(tbl) && tbl %in% names(store)) {
+    tbl_entry <- store[[tbl]]
+  } else if (inherits(tbl, "read_fn")) {
+    tbl_entry <- tbl
+  }
+  
+  tbl_entry
 }

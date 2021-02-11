@@ -183,19 +183,19 @@ db_tbl <- function(table,
   if (dbname == ":memory:" &&
       is.data.frame(table) && 
       tolower(dbtype) %in% c("duckdb", "sqlite")) {
-
+    
     # Obtain the name of the data table
     if ("pb_tbl_name" %in% names(attributes(table))) {
-      tbl_name <- table_stmt <- attr(table, "pb_tbl_name", exact = TRUE)
+      table_name <- table_stmt <- attr(table, "pb_tbl_name", exact = TRUE)
     } else {
-      tbl_name <- table_stmt <- deparse(match.call()$table)[1]
+      table_name <- table_stmt <- deparse(match.call()$table)[1]
     }
     
     # Copy the tabular data into the `connection` object
     dplyr::copy_to(
       dest = connection, 
       df = table,
-      name = tbl_name,
+      name = table_name,
       temporary = FALSE
     )
   }
@@ -203,8 +203,10 @@ db_tbl <- function(table,
   if (is.character(table)) {
     if (length(table) == 1) {
       table_stmt <- table
+      table_name <- table
     } else if (length(table) == 2) {
       table_stmt <- dbplyr::in_schema(schema = table[1], table = table[2])
+      table_name <- table[2]
     } else {
       stop("The length of `table` should be either 1 or 2.",
            call. = FALSE)
@@ -217,7 +219,7 @@ db_tbl <- function(table,
   
   con_desc <- dbplyr::db_connection_describe(con = connection)
   
-  attr(x, "pb_tbl_name") <- file_name
+  attr(x, "pb_tbl_name") <- table_name
   attr(x, "pb_con_desc") <- con_desc
   attr(x, "pb_access_time") <- access_time
   

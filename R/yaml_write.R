@@ -36,8 +36,9 @@
 #' when using [create_agent()] or with [set_read_fn()] (for use with an existing
 #' *agent*).
 #' 
-#' @param agent An *agent* object of class `ptblank_agent`.
-#' @param informant An *informant* object of class `ptblank_informant`.
+#' @param ... Any mix of **pointblank** objects such as the *agent*
+#'   (`ptblank_agent`) or the *informant* (`ptblank_informant`).
+#' @param .list Allows for the use of a list as an input alternative to `...`.
 #' @param filename The name of the YAML file to create on disk. It is
 #'   recommended that either the `.yaml` or `.yml` extension be used for this
 #'   file.
@@ -99,7 +100,7 @@
 #' # The agent can be written to a pointblank
 #' # YAML file with `yaml_write()`
 #' # yaml_write(
-#' #   agent = agent,
+#' #   agent,
 #' #   filename = "agent-small_table.yml"
 #' # )
 #' 
@@ -144,12 +145,50 @@
 #' 11-1
 #' 
 #' @export
-yaml_write <- function(agent = NULL,
-                       informant = NULL,
-                       filename,
+yaml_write <- function(...,
+                       .list = list2(...),
+                       filename = NULL,
                        path = NULL,
                        expanded = FALSE) {
 
+  # Collect a list of pointblank objects
+  obj_list <- .list
+  
+  # Determine which types of pointblank objects
+  # are available in `obj_list`
+  object_types <- 
+    vapply(
+      obj_list,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        if (inherits(x, "ptblank_agent")) {
+          x <- "agent"
+        } else if (inherits(x, "ptblank_informant")) {
+          x <- "informant"
+        } else if (inherits(x, "tbl_store")) {
+          x <- "tbl_store"
+        } else {
+          x <- NA_character_
+        }
+      }
+    )
+
+  if ("agent" %in% object_types) {
+    agent <- obj_list[[object_types == "agent"]]
+  } else {
+    agent <- NULL
+  }
+  if ("informant" %in% object_types) {
+    informant <- obj_list[[object_types == "informant"]]
+  } else {
+    informant <- NULL
+  }
+  
+  if (is.null(filename)) {
+    filename <- "pointblank.yml"
+  }
+  
   if (!is.null(path)) {
     filename <- file.path(path, filename)
   }

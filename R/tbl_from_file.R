@@ -223,6 +223,8 @@ file_tbl <- function(file,
     }
   }
   
+  access_time <- Sys.time()
+  
   if (file_type %in% c("rda", "rdata")) {
     
     x <- load_rda_object(file = file_path)
@@ -261,6 +263,7 @@ file_tbl <- function(file,
   attr(x, "pb_full_path") <- file
   attr(x, "pb_dir_name") <- dirname(file)
   attr(x, "pb_file_type") <- file_type
+  attr(x, "pb_access_time") <- access_time
   
   x
 }

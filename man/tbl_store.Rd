@@ -30,3 +30,20 @@ aspect of organizing table-reading functions in a single object is supplying
 it to the \code{read_fn} argument of \code{\link[=create_agent]{create_agent()}} or \code{\link[=create_informant]{create_informant()}} via
 \code{$} notation (e.g, \verb{create_agent(read_fn = <tbl_store>$<name>)}).
 }
+\section{Function ID}{
+
+1-8
+}
+
+\seealso{
+Other Planning and Prep: 
+\code{\link{action_levels}()},
+\code{\link{create_agent}()},
+\code{\link{create_informant}()},
+\code{\link{db_tbl}()},
+\code{\link{file_tbl}()},
+\code{\link{scan_data}()},
+\code{\link{tbl_get}()},
+\code{\link{validate_rmd}()}
+}
+\concept{Planning and Prep}

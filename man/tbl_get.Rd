@@ -26,3 +26,20 @@ reading functions with names supplied for each of the tables. The \code{tbl_get(
 function does the work of evaluating a table-reading function and returning
 the requested table.
 }
+\section{Function ID}{
+
+1-9
+}
+
+\seealso{
+Other Planning and Prep: 
+\code{\link{action_levels}()},
+\code{\link{create_agent}()},
+\code{\link{create_informant}()},
+\code{\link{db_tbl}()},
+\code{\link{file_tbl}()},
+\code{\link{scan_data}()},
+\code{\link{tbl_store}()},
+\code{\link{validate_rmd}()}
+}
+\concept{Planning and Prep}

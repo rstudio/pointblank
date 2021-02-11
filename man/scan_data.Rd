@@ -77,6 +77,8 @@ Other Planning and Prep:
 \code{\link{create_informant}()},
 \code{\link{db_tbl}()},
 \code{\link{file_tbl}()},
+\code{\link{tbl_get}()},
+\code{\link{tbl_store}()},
 \code{\link{validate_rmd}()}
 }
 \concept{Planning and Prep}

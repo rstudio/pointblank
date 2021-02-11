@@ -241,15 +241,13 @@ tbl_get <- function(tbl,
   suppressWarnings(tbl_obj)
 }
 
-#' Obtain a table-prep function from a `tbl_store` object
+#' Obtain a table-prep formula from a `tbl_store` object
 #' 
 #' @description
-#' With a `tbl_store` object at the ready, any table referenced in that store
-#' can be materialized by providing a matching table name. The [tbl_store()]
-#' function is used to create a store of tables, which is a catalog of table-
-#' reading functions with names supplied for each of the tables. The `tbl_get()`
-#' function does the work of evaluating a table-reading function and returning
-#' the requested table.
+#' With a `tbl_store` object at the ready, any table-prep formula within it can
+#' be extracted with the `tbl_source()` function. Should you need to obtain the
+#' table itself (generated via the table-prep formula), then the [tbl_get()]
+#' function is useful for that.
 #' 
 #' @param tbl The table name associated with a table-prep formula. This is part
 #'   of the table `store`. This table could be identified by its name (e.g.,
@@ -259,6 +257,7 @@ tbl_get <- function(tbl,
 #' @param store The table store object created by the [tbl_store()] function.
 #' 
 #' @return A table-prep formula.
+#' 
 #' @family Planning and Prep
 #' @section Function ID:
 #' 1-10

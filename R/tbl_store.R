@@ -276,3 +276,31 @@ tbl_source <- function(tbl,
   
   tbl_entry
 }
+
+yaml_read_tbl_store <- function(filename) {
+  
+  # Read the YAML file with `yaml::read_yaml()`
+  y <- yaml::read_yaml(file = filename)
+  
+  table_names <- names(y[[1]])
+  table_formulas <- 
+    unlist(y, recursive = FALSE, use.names = FALSE) %>%
+    unlist()
+  
+  statements <- paste(table_names, table_formulas)
+  
+  # Generate the expression string
+  expr_str <-
+    paste0(
+      "tbl_store(\n",
+      paste(paste0("  ", statements), collapse = ",\n"), "\n",
+      ")"
+    )
+
+  tbl_store <- 
+    expr_str %>%
+    rlang::parse_expr() %>%
+    rlang::eval_tidy()
+    
+  tbl_store
+}

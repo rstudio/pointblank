@@ -267,6 +267,18 @@ create_agent <- function(tbl = NULL,
         rlang::f_rhs() %>% 
         rlang::eval_tidy(env = caller_env(n = 1))
       
+      if (inherits(tbl, "read_fn")) {
+
+        if (inherits(tbl, "with_tbl_name") && is.na(tbl_name)) {
+          tbl_name <- tbl %>% rlang::f_lhs() %>% as.character()
+        }
+        
+        tbl <-
+          tbl %>%
+          rlang::f_rhs() %>%
+          rlang::eval_tidy(env = caller_env(n = 1))
+      }
+      
     } else {
       
       stop(

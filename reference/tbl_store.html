@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Set a table-reading function to an agent or informant — set_read_fn • pointblank</title>
+<title>Define a store of tables with table-prep formulas — tbl_store • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,14 +46,18 @@
 
 
 
-<meta property="og:title" content="Set a table-reading function to an agent or informant — set_read_fn" />
-<meta property="og:description" content="A table-reading function can be associated with an agent or informant
-with set_read_fn(). Should both a tbl and a read_fn be associated
-with the agent or informant, the read_fn will take priority. There are
-two ways to specify a read_fn: (1) using a function (e.g.,
-function() { &amp;lt;table reading code&amp;gt; }) or, (2) with an R formula expression
-(e.g., ~ { &amp;lt;table reading code&amp;gt; }). The table-reading function can removed
-with remove_read_fn()." />
+<meta property="og:title" content="Define a store of tables with table-prep formulas — tbl_store" />
+<meta property="og:description" content="It can be useful to set up all the data sources you need and just draw from
+them when necessary. This upfront configuration with tbl_store() can be
+quite useful since we can define the methods for obtaining tabular data from
+mixed sources (e.g., database tables, tables generated from flat files, etc.)
+and provide names for these data pulling procedures as a way to access the
+data with tbl_get(). Data preparation could be a part of what's in the
+store (imagine procuring several mutated variations of the same source table
+or pre-filtering a database table according to the system time). Another nice
+aspect of organizing table-prep formulas in a single object is supplying
+it to the read_fn argument of create_agent() or create_informant() via
+$ notation (e.g, create_agent(read_fn = &amp;lt;tbl_store&amp;gt;$&amp;lt;name&amp;gt;))." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -165,56 +169,121 @@ with remove_read_fn()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Set a table-reading function to an <em>agent</em> or <em>informant</em></h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/object_ops.R'><code>R/object_ops.R</code></a></small>
-    <div class="hidden name"><code>set_read_fn.Rd</code></div>
+    <h1>Define a store of tables with table-prep formulas</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/tbl_store.R'><code>R/tbl_store.R</code></a></small>
+    <div class="hidden name"><code>tbl_store.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A table-reading function can be associated with an <em>agent</em> or <em>informant</em>
-with <code>set_read_fn()</code>. Should both a <code>tbl</code> <em>and</em> a <code>read_fn</code> be associated
-with the <em>agent</em> or <em>informant</em>, the <code>read_fn</code> will take priority. There are
-two ways to specify a <code>read_fn</code>: (1) using a function (e.g.,
-<code>function() { &lt;table reading code&gt; }</code>) or, (2) with an R formula expression
-(e.g., <code>~ { &lt;table reading code&gt; }</code>). The table-reading function can removed
-with <code><a href='remove_read_fn.html'>remove_read_fn()</a></code>.</p>
+    <p>It can be useful to set up all the data sources you need and just draw from
+them when necessary. This upfront configuration with <code>tbl_store()</code> can be
+quite useful since we can define the methods for obtaining tabular data from
+mixed sources (e.g., database tables, tables generated from flat files, etc.)
+and provide names for these data pulling procedures as a way to access the
+data with <code><a href='tbl_get.html'>tbl_get()</a></code>. Data preparation could be a part of what's in the
+store (imagine procuring several mutated variations of the same source table
+or pre-filtering a database table according to the system time). Another nice
+aspect of organizing table-prep formulas in a single object is supplying
+it to the <code>read_fn</code> argument of <code><a href='create_agent.html'>create_agent()</a></code> or <code><a href='create_informant.html'>create_informant()</a></code> via
+<code><a href='https://rdrr.io/r/base/Extract.html'>$</a></code> notation (e.g, <code>create_agent(read_fn = &lt;tbl_store&gt;$&lt;name&gt;)</code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>set_read_fn</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>read_fn</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tbl_store</span><span class='op'>(</span><span class='va'>...</span>, .list <span class='op'>=</span> <span class='fu'>list2</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>An <em>agent</em> object of class <code>ptblank_agent</code>, or, an <em>informant</em> of
-class <code>ptblank_informant</code>.</p></td>
+      <th>...</th>
+      <td><p>Expressions that contain table-prep formulas and table names for
+data retrieval. Two-sided formulas (e.g, <code>&lt;LHS&gt; ~ &lt;RHS&gt;</code>) are to be used,
+where the left-hand side is a given name and the right-hand is the portion
+that is is used to obtain the table.</p></td>
     </tr>
     <tr>
-      <th>read_fn</th>
-      <td><p>A function that's used for reading in the data. This can be
-specified by using a function (e.g., <code>function() { &lt;table reading code&gt; }</code>)
-or an R formula expression (e.g., <code>~ { &lt;table reading code&gt; }</code>).</p></td>
+      <th>.list</th>
+      <td><p>Allows for the use of a list as an input alternative to <code>...</code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <code>tbl_store</code> object that contains table-prep formulas.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
 
-<p>9-5</p>
+<p>1-8</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Object Ops: 
-<code><a href='activate_steps.html'>activate_steps</a>()</code>,
-<code><a href='deactivate_steps.html'>deactivate_steps</a>()</code>,
-<code><a href='remove_read_fn.html'>remove_read_fn</a>()</code>,
-<code><a href='remove_steps.html'>remove_steps</a>()</code>,
-<code><a href='remove_tbl.html'>remove_tbl</a>()</code>,
-<code><a href='set_tbl.html'>set_tbl</a>()</code>,
-<code><a href='x_read_disk.html'>x_read_disk</a>()</code>,
-<code><a href='x_write_disk.html'>x_write_disk</a>()</code></p></div>
+    <div class='dont-index'><p>Other Planning and Prep: 
+<code><a href='action_levels.html'>action_levels</a>()</code>,
+<code><a href='create_agent.html'>create_agent</a>()</code>,
+<code><a href='create_informant.html'>create_informant</a>()</code>,
+<code><a href='db_tbl.html'>db_tbl</a>()</code>,
+<code><a href='file_tbl.html'>file_tbl</a>()</code>,
+<code><a href='scan_data.html'>scan_data</a>()</code>,
+<code><a href='tbl_get.html'>tbl_get</a>()</code>,
+<code><a href='tbl_source.html'>tbl_source</a>()</code>,
+<code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Define a `tbl_store` object by adding</span>
+<span class='co'># table-prep formulas inside the</span>
+<span class='co'># `tbl_store()` call</span>
+<span class='co'># tbls &lt;- </span>
+<span class='co'>#   tbl_store(</span>
+<span class='co'>#     small_table_duck ~ db_tbl(</span>
+<span class='co'>#       table = small_table,</span>
+<span class='co'>#       dbname = ":memory:",</span>
+<span class='co'>#       dbtype = "duckdb"</span>
+<span class='co'>#     ),</span>
+<span class='co'>#     ~ db_tbl(</span>
+<span class='co'>#       table = "rna",</span>
+<span class='co'>#       dbname = "pfmegrnargs",</span>
+<span class='co'>#       dbtype = "postgres",</span>
+<span class='co'>#       host = "hh-pgsql-public.ebi.ac.uk",</span>
+<span class='co'>#       port = 5432,</span>
+<span class='co'>#       user = I("reader"),</span>
+<span class='co'>#       password = I("NWDMCE5xdipIjRrp")</span>
+<span class='co'>#     ),</span>
+<span class='co'>#     all_revenue ~ db_tbl(</span>
+<span class='co'>#       table = file_tbl(</span>
+<span class='co'>#         file = from_github(</span>
+<span class='co'>#           file = "all_revenue_large.rds",</span>
+<span class='co'>#           repo = "rich-iannone/intendo",</span>
+<span class='co'>#           subdir = "data-large"</span>
+<span class='co'>#         )</span>
+<span class='co'>#       ),</span>
+<span class='co'>#       dbname = ":memory:",</span>
+<span class='co'>#       dbtype = "duckdb"</span>
+<span class='co'>#     ),</span>
+<span class='co'>#     sml_table ~ pointblank::small_table</span>
+<span class='co'>#   )</span>
+
+<span class='co'># Once this object is available, you can</span>
+<span class='co'># check that the table of interest is</span>
+<span class='co'># produced to your specification with the</span>
+<span class='co'># `tbl_get()` function</span>
+<span class='co'># tbl_get(</span>
+<span class='co'>#   tbl = "small_table_duck",</span>
+<span class='co'>#   store = tbls</span>
+<span class='co'># )</span>
+
+<span class='co'># Another simpler way to get the same</span>
+<span class='co'># table materialized is by using `$` to</span>
+<span class='co'># get the entry of choice for `tbl_get()`</span>
+<span class='co'># tbls$small_table_duck %&gt;% tbl_get()</span>
+
+<span class='co'># Creating an agent is easy when all</span>
+<span class='co'># table-prep formulas are encapsulated</span>
+<span class='co'># in a `tbl_store` object; use `$` notation</span>
+<span class='co'># to pass the appropriate procedure for</span>
+<span class='co'># reading a table to the `read_fn` argument</span>
+<span class='co'># agent &lt;-</span>
+<span class='co'>#   create_agent(read_fn = tbls$small_table_duck)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

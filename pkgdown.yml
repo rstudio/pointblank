@@ -1,6 +1,6 @@
 pandoc: 2.7.3
 pkgdown: 1.6.1.9000
-pkgdown_sha: c931fe24c135c6ca704ae9f300470e9c66d8bfe7
+pkgdown_sha: a3116bdc25a2ff881b7d7ba2b094b29349595295
 articles:
   INFO-1: INFO-1.html
   INFO-2: INFO-2.html
@@ -11,5 +11,5 @@ articles:
   VALID-V: VALID-V.html
   VALID-VI: VALID-VI.html
   validation_workflows: validation_workflows.html
-last_built: 2021-02-09T04:53Z
+last_built: 2021-02-12T18:50Z
 

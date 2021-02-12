@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Did all of the validations fully pass? — all_passed • pointblank</title>
+<title>Obtain a table-prep formula from a tbl_store object — tbl_source • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,11 +46,11 @@
 
 
 
-<meta property="og:title" content="Did all of the validations fully pass? — all_passed" />
-<meta property="og:description" content="Given an agent's validation plan that had undergone interrogation via
-interrogate(), did every single validation step result in zero fail
-levels? Using the all_passed() function will let us know whether that's
-TRUE or not." />
+<meta property="og:title" content="Obtain a table-prep formula from a tbl_store object — tbl_source" />
+<meta property="og:description" content="With a tbl_store object at the ready, any table-prep formula within it can
+be extracted with the tbl_source() function. Should you need to obtain the
+table itself (generated via the table-prep formula), then the tbl_get()
+function is useful for that." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -162,63 +162,113 @@ TRUE or not." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Did all of the validations fully <em>pass</em>?</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/all_passed.R'><code>R/all_passed.R</code></a></small>
-    <div class="hidden name"><code>all_passed.Rd</code></div>
+    <h1>Obtain a table-prep formula from a <code>tbl_store</code> object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/tbl_store.R'><code>R/tbl_store.R</code></a></small>
+    <div class="hidden name"><code>tbl_source.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Given an agent's validation plan that had undergone interrogation via
-<code><a href='interrogate.html'>interrogate()</a></code>, did every single validation step result in zero <em>fail</em>
-levels? Using the <code>all_passed()</code> function will let us know whether that's
-<code>TRUE</code> or not.</p>
+    <p>With a <code>tbl_store</code> object at the ready, any table-prep formula within it can
+be extracted with the <code>tbl_source()</code> function. Should you need to obtain the
+table itself (generated via the table-prep formula), then the <code><a href='tbl_get.html'>tbl_get()</a></code>
+function is useful for that.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>all_passed</span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tbl_source</span><span class='op'>(</span><span class='va'>tbl</span>, store <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>agent</th>
-      <td><p>An agent object of class <code>ptblank_agent</code>.</p></td>
+      <th>tbl</th>
+      <td><p>The table name associated with a table-prep formula. This is part
+of the table <code>store</code>. This table could be identified by its name (e.g.,
+<code>tbl = "large_table"</code>) or by supplying a reference using a subset (with
+<code><a href='https://rdrr.io/r/base/Extract.html'>$</a></code>) of the <code>tbl_store</code> object (e.g., <code>tbl = store$large_table</code>). If using
+the latter method then nothing needs to be supplied to <code>store</code>.</p></td>
+    </tr>
+    <tr>
+      <th>store</th>
+      <td><p>Either a table store object created by the <code><a href='tbl_store.html'>tbl_store()</a></code>
+function or a path to a table store YAML file created by <code><a href='yaml_write.html'>yaml_write()</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A logical value.</p>
+    <p>A table-prep formula.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
 
-<p>8-4</p>
+<p>1-9</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Post-interrogation: 
-<code><a href='get_agent_x_list.html'>get_agent_x_list</a>()</code>,
-<code><a href='get_data_extracts.html'>get_data_extracts</a>()</code>,
-<code><a href='get_sundered_data.html'>get_sundered_data</a>()</code>,
-<code><a href='write_testthat_file.html'>write_testthat_file</a>()</code></p></div>
+    <div class='dont-index'><p>Other Planning and Prep: 
+<code><a href='action_levels.html'>action_levels</a>()</code>,
+<code><a href='create_agent.html'>create_agent</a>()</code>,
+<code><a href='create_informant.html'>create_informant</a>()</code>,
+<code><a href='db_tbl.html'>db_tbl</a>()</code>,
+<code><a href='file_tbl.html'>file_tbl</a>()</code>,
+<code><a href='scan_data.html'>scan_data</a>()</code>,
+<code><a href='tbl_get.html'>tbl_get</a>()</code>,
+<code><a href='tbl_store.html'>tbl_store</a>()</code>,
+<code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a simple table with</span>
-<span class='co'># a column of numerical values</span>
-<span class='va'>tbl</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'># Let's create a `tbl_store` object by</span>
+<span class='co'># giving two table-prep formulas to</span>
+<span class='co'># `tbl_store()`</span>
+<span class='va'>tbls</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='tbl_store.html'>tbl_store</a></span><span class='op'>(</span>
+    <span class='va'>small_table_duck</span> <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span>
+      table <span class='op'>=</span> <span class='va'>small_table</span>,
+      dbname <span class='op'>=</span> <span class='st'>":memory:"</span>,
+      dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span>
+    <span class='op'>)</span>,
+    <span class='va'>sml_table</span> <span class='op'>~</span> <span class='fu'>pointblank</span><span class='fu'>::</span><span class='va'><a href='small_table.html'>small_table</a></span>
+  <span class='op'>)</span>
 
-<span class='co'># Validate that values in column</span>
-<span class='co'># `a` are always greater than 4</span>
-<span class='va'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>tbl <span class='op'>=</span> <span class='va'>tbl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, <span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='co'># We can pass a table-prep formula</span>
+<span class='co'># to `create_agent()` and interrogate</span>
+<span class='co'># the table shortly thereafter</span>
+<span class='va'>agent</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'>tbl_source</span><span class='op'>(</span><span class='st'>"sml_table"</span>, <span class='va'>tbls</span><span class='op'>)</span>,
+    label <span class='op'>=</span> <span class='st'>"An example that uses a table store."</span>,
+    actions <span class='op'>=</span> <span class='fu'><a href='action_levels.html'>action_levels</a></span><span class='op'>(</span>warn_at <span class='op'>=</span> <span class='fl'>0.10</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='col_exists.html'>col_exists</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>date_time</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_regex.html'>col_vals_regex</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, <span class='st'>"[0-9]-[a-z]{3}-[0-9]{3}"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in tbl_source("sml_table", tbls): object 'tbls' not found</span></div><div class='input'>
+<span class='co'># Both the `tbl_store` object and the</span>
+<span class='co'># `agent` can be transformed to YAML with</span>
+<span class='co'># the `yaml_write()` function</span>
 
-<span class='co'># Determine if these column</span>
-<span class='co'># validations have all passed</span>
-<span class='co'># by using `all_passed()`</span>
-<span class='fu'>all_passed</span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># This writes the `tbl_store.yml` file</span>
+<span class='co'># by default (a different name could be used)</span>
+<span class='co'># yaml_write(tbls)</span>
+
+<span class='co'># Let's modify the agent's `read_fn` to point</span>
+<span class='co'># to the YAML representation of the `tbl_store`</span>
+<span class='va'>agent</span> <span class='op'>&lt;-</span>
+  <span class='va'>agent</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='set_read_fn.html'>set_read_fn</a></span><span class='op'>(</span>
+    <span class='op'>~</span><span class='fu'>tbl_source</span><span class='op'>(</span><span class='st'>"sml_table"</span>, <span class='st'>"tbl_store.yml"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in set_read_fn(., ~tbl_source("sml_table", "tbl_store.yml")): object 'agent' not found</span></div><div class='input'>
+<span class='co'># Then we can write agent to a YAML file</span>
+<span class='co'># (it's `agent-sml_table.yml` by default)</span>
+<span class='co'># yaml_write(agent)</span>
+
+<span class='co'># Now that both are in this on-disk format</span>
+<span class='co'># an interrogation can be done by accessing</span>
+<span class='co'># the agent YAML</span>
+<span class='co'># yaml_agent_interrogate("agent-sml_table.yml")</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

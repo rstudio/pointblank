@@ -79,9 +79,15 @@ agent)." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -189,9 +195,9 @@ when using <code><a href='create_agent.html'>create_agent()</a></code> or with <
     </div>
 
     <pre class="usage"><span class='fu'>yaml_write</span><span class='op'>(</span>
-  agent <span class='op'>=</span> <span class='cn'>NULL</span>,
-  informant <span class='op'>=</span> <span class='cn'>NULL</span>,
-  <span class='va'>filename</span>,
+  <span class='va'>...</span>,
+  .list <span class='op'>=</span> <span class='fu'>list2</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>,
+  filename <span class='op'>=</span> <span class='cn'>NULL</span>,
   path <span class='op'>=</span> <span class='cn'>NULL</span>,
   expanded <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
@@ -200,12 +206,13 @@ when using <code><a href='create_agent.html'>create_agent()</a></code> or with <
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>agent</th>
-      <td><p>An <em>agent</em> object of class <code>ptblank_agent</code>.</p></td>
+      <th>...</th>
+      <td><p>Any mix of <strong>pointblank</strong> objects such as the <em>agent</em>
+(<code>ptblank_agent</code>) or the <em>informant</em> (<code>ptblank_informant</code>).</p></td>
     </tr>
     <tr>
-      <th>informant</th>
-      <td><p>An <em>informant</em> object of class <code>ptblank_informant</code>.</p></td>
+      <th>.list</th>
+      <td><p>Allows for the use of a list as an input alternative to <code>...</code>.</p></td>
     </tr>
     <tr>
       <th>filename</th>
@@ -293,7 +300,7 @@ representation.</p></td>
 <span class='co'># The agent can be written to a pointblank</span>
 <span class='co'># YAML file with `yaml_write()`</span>
 <span class='co'># yaml_write(</span>
-<span class='co'>#   agent = agent,</span>
+<span class='co'>#   agent,</span>
 <span class='co'>#   filename = "agent-small_table.yml"</span>
 <span class='co'># )</span>
 
@@ -400,6 +407,8 @@ representation.</p></td>
 
   
 
+
+  
 
   </body>
 </html>

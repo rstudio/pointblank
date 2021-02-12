@@ -226,6 +226,13 @@ yaml_write <- function(...,
         as_agent_yaml_list(agent = agent, expanded = expanded),
         as_informant_yaml_list(informant = informant)
       )
+    
+    # TODO: combine with tbl name (e.g., `pointblank-<tbl_name>.yml`)
+    
+    if (is.null(filename)) {
+      filename <- "pointblank.yml"
+    }
+    
     # TODO: manage conflicts between both YAML representations
     
   } else if (!is.null(agent)) {
@@ -266,6 +273,8 @@ yaml_write <- function(...,
       }
     )
   )
+  
+  # TODO: Generate message w.r.t. written YAML file
 }
 
 #' Display **pointblank** YAML using an agent or a YAML file

@@ -23,19 +23,18 @@ A table object.
 With a \code{tbl_store} object at the ready, any table referenced in that store
 can be materialized by providing a matching table name. The \code{\link[=tbl_store]{tbl_store()}}
 function is used to create a store of tables, which is a catalog of table-
-reading functions with names supplied for each of the tables. The \code{tbl_get()}
-function does the work of evaluating a table-reading function and returning
-the requested table.
+prep formulas with names supplied for each of the tables. The \code{tbl_get()}
+function does the work of evaluating a table-prep formula and returning the
+requested table.
 }
 \section{Function ID}{
 
-1-9
+1-10
 }
 
 \examples{
 # Define a `tbl_store` object by adding
-# table-reading functions inside the
-# `tbl_store()` call
+# table-prep formulas in `tbl_store()`
 # tbls <- 
 #   tbl_store(
 #     small_table_duck ~ db_tbl(
@@ -74,18 +73,10 @@ the requested table.
 #   store = tbls
 # )
 
-# Another simpler way to get the same
-# table materialized is by using `$` to
-# get the entry of choice for `tbl_get()`
+# An alternative method for getting the
+# same table materialized is by using `$`
+# to get the formula of choice from `tbls`
 # tbls$small_table_duck \%>\% tbl_get()
-
-# Creating an agent is easy when all
-# table-reading functions are encapsulated
-# in a `tbl_store` object; use `$` notation
-# to pass the appropriate procedure for
-# reading a table to the `read_fn` argument
-# agent <-
-#   create_agent(read_fn = tbls$small_table_duck)
 
 }
 \seealso{

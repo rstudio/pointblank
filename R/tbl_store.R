@@ -70,7 +70,7 @@
 #' # tbls$small_table_duck %>% tbl_get()
 #' 
 #' # Creating an agent is easy when all
-#' # table-reading functions are encapsulated
+#' # table-prep formulas are encapsulated
 #' # in a `tbl_store` object; use `$` notation
 #' # to pass the appropriate procedure for
 #' # reading a table to the `read_fn` argument
@@ -132,15 +132,112 @@ tbl_store <- function(...,
   tbl_list
 }
 
+#' Obtain a table-prep formula from a `tbl_store` object
+#' 
+#' @description
+#' With a `tbl_store` object at the ready, any table-prep formula within it can
+#' be extracted with the `tbl_source()` function. Should you need to obtain the
+#' table itself (generated via the table-prep formula), then the [tbl_get()]
+#' function is useful for that.
+#' 
+#' @param tbl The table name associated with a table-prep formula. This is part
+#'   of the table `store`. This table could be identified by its name (e.g.,
+#'   `tbl = "large_table"`) or by supplying a reference using a subset (with
+#'   `$`) of the `tbl_store` object (e.g., `tbl = store$large_table`). If using
+#'   the latter method then nothing needs to be supplied to `store`.
+#' @param store Either a table store object created by the [tbl_store()]
+#'   function or a path to a table store YAML file created by [yaml_write()].
+#' 
+#' @return A table-prep formula.
+#' 
+#' @examples 
+#' # Let's create a `tbl_store` object by
+#' # giving two table-prep formulas to
+#' # `tbl_store()`
+#' tbls <- 
+#'   tbl_store(
+#'     small_table_duck ~ db_tbl(
+#'       table = small_table,
+#'       dbname = ":memory:",
+#'       dbtype = "duckdb"
+#'     ),
+#'     sml_table ~ pointblank::small_table
+#'   )
+#' 
+#' # We can pass a table-prep formula
+#' # to `create_agent()` and interrogate
+#' # the table shortly thereafter
+#' agent <- 
+#'   create_agent(
+#'     read_fn = ~ tbl_source("sml_table", tbls),
+#'     label = "An example that uses a table store.",
+#'     actions = action_levels(warn_at = 0.10)
+#'   ) %>% 
+#'   col_exists(vars(date, date_time)) %>%
+#'   col_vals_regex(
+#'     vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+#'   ) %>%
+#'   interrogate()
+#'
+#' # Both the `tbl_store` object and the
+#' # `agent` can be transformed to YAML with
+#' # the `yaml_write()` function
+#' 
+#' # This writes the `tbl_store.yml` file
+#' # by default (a different name could be used)
+#' # yaml_write(tbls)
+#' 
+#' # Let's modify the agent's `read_fn` to point
+#' # to the YAML representation of the `tbl_store`
+#' agent <-
+#'   agent %>% 
+#'   set_read_fn(
+#'     ~tbl_source("sml_table", "tbl_store.yml")
+#'   )
+#' 
+#' # Then we can write agent to a YAML file
+#' # (it's `agent-sml_table.yml` by default)
+#' # yaml_write(agent)
+#' 
+#' # Now that both are in this on-disk format
+#' # an interrogation can be done by accessing
+#' # the agent YAML
+#' # yaml_agent_interrogate("agent-sml_table.yml")
+#' 
+#' @family Planning and Prep
+#' @section Function ID:
+#' 1-9
+#' 
+#' @export
+tbl_source <- function(tbl,
+                       store = NULL) {
+  
+  # If `store` is supplied as a character vector, assume it is a
+  # file path to a YAML file
+  if (is.character(store)) {
+    store <- yaml_read_tbl_store(filename = store)
+  }
+  
+  # TODO: store can be a `tbl_store` object or a
+  # YAML file with entries under `tbls` or `tbl_store`
+  if (is.character(tbl) && tbl %in% names(store)) {
+    tbl_entry <- store[[tbl]]
+  } else if (inherits(tbl, "read_fn")) {
+    tbl_entry <- tbl
+  }
+  
+  tbl_entry
+}
+
 #' Obtain a table from a `tbl_store` object
 #' 
 #' @description
 #' With a `tbl_store` object at the ready, any table referenced in that store
 #' can be materialized by providing a matching table name. The [tbl_store()]
 #' function is used to create a store of tables, which is a catalog of table-
-#' reading functions with names supplied for each of the tables. The `tbl_get()`
-#' function does the work of evaluating a table-reading function and returning
-#' the requested table.
+#' prep formulas with names supplied for each of the tables. The `tbl_get()`
+#' function does the work of evaluating a table-prep formula and returning the
+#' requested table.
 #' 
 #' @param tbl The table to retrieve from a table `store`. This table could be
 #'   identified by its name (e.g., `tbl = "large_table"`) or by supplying a
@@ -154,8 +251,7 @@ tbl_store <- function(...,
 #' 
 #' @examples 
 #' # Define a `tbl_store` object by adding
-#' # table-reading functions inside the
-#' # `tbl_store()` call
+#' # table-prep formulas in `tbl_store()`
 #' # tbls <- 
 #' #   tbl_store(
 #' #     small_table_duck ~ db_tbl(
@@ -194,32 +290,26 @@ tbl_store <- function(...,
 #' #   store = tbls
 #' # )
 #' 
-#' # Another simpler way to get the same
-#' # table materialized is by using `$` to
-#' # get the entry of choice for `tbl_get()`
+#' # An alternative method for getting the
+#' # same table materialized is by using `$`
+#' # to get the formula of choice from `tbls`
 #' # tbls$small_table_duck %>% tbl_get()
-#' 
-#' # Creating an agent is easy when all
-#' # table-reading functions are encapsulated
-#' # in a `tbl_store` object; use `$` notation
-#' # to pass the appropriate procedure for
-#' # reading a table to the `read_fn` argument
-#' # agent <-
-#' #   create_agent(read_fn = tbls$small_table_duck)
 #' 
 #' @family Planning and Prep
 #' @section Function ID:
-#' 1-9
+#' 1-10
 #' 
 #' @export
 tbl_get <- function(tbl,
                     store = NULL) {
   
-  # Get the table-reading function
+  # Get the table-prep formula with the `tbl_source()` function
   tbl_entry <- tbl_source(tbl = tbl, store = store)
   
   # Obtain the table object
-  tbl_obj <- rlang::f_rhs(tbl_entry) %>% rlang::eval_tidy()
+  tbl_obj <- 
+    rlang::f_rhs(tbl_entry) %>%
+    rlang::eval_tidy()
   
   # Add the in-store table name to the `pb_tbl_name` attribute
   # of the retrieved table
@@ -242,48 +332,7 @@ tbl_get <- function(tbl,
   suppressWarnings(tbl_obj)
 }
 
-#' Obtain a table-prep formula from a `tbl_store` object
-#' 
-#' @description
-#' With a `tbl_store` object at the ready, any table-prep formula within it can
-#' be extracted with the `tbl_source()` function. Should you need to obtain the
-#' table itself (generated via the table-prep formula), then the [tbl_get()]
-#' function is useful for that.
-#' 
-#' @param tbl The table name associated with a table-prep formula. This is part
-#'   of the table `store`. This table could be identified by its name (e.g.,
-#'   `tbl = "large_table"`) or by supplying a reference using a subset (with
-#'   `$`) of the `tbl_store` object (e.g., `tbl = store$large_table`). If using
-#'   the latter method then nothing needs to be supplied to `store`.
-#' @param store Either a table store object created by the [tbl_store()]
-#'   function or a path to a table store YAML file created by [yaml_write()].
-#' 
-#' @return A table-prep formula.
-#' 
-#' @family Planning and Prep
-#' @section Function ID:
-#' 1-10
-#' 
-#' @export
-tbl_source <- function(tbl,
-                       store = NULL) {
-  
-  # If `store` is supplied as a character vector, assume it is a
-  # file path to a YAML file
-  if (is.character(store)) {
-    store <- yaml_read_tbl_store(filename = store)
-  }
-  
-  # TODO: store can be a `tbl_store` object or a
-  # YAML file with entries under `tbls` or `tbl_store`
-  if (is.character(tbl) && tbl %in% names(store)) {
-    tbl_entry <- store[[tbl]]
-  } else if (inherits(tbl, "read_fn")) {
-    tbl_entry <- tbl
-  }
-  
-  tbl_entry
-}
+
 
 yaml_read_tbl_store <- function(filename) {
   

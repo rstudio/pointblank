@@ -27,9 +27,64 @@ function is useful for that.
 }
 \section{Function ID}{
 
-1-10
+1-9
 }
 
+\examples{
+# Let's create a `tbl_store` object by
+# giving two table-prep formulas to
+# `tbl_store()`
+tbls <- 
+  tbl_store(
+    small_table_duck ~ db_tbl(
+      table = small_table,
+      dbname = ":memory:",
+      dbtype = "duckdb"
+    ),
+    sml_table ~ pointblank::small_table
+  )
+
+# We can pass a table-prep formula
+# to `create_agent()` and interrogate
+# the table shortly thereafter
+agent <- 
+  create_agent(
+    read_fn = ~ tbl_source("sml_table", tbls),
+    label = "An example that uses a table store.",
+    actions = action_levels(warn_at = 0.10)
+  ) \%>\% 
+  col_exists(vars(date, date_time)) \%>\%
+  col_vals_regex(
+    vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+  ) \%>\%
+  interrogate()
+
+# Both the `tbl_store` object and the
+# `agent` can be transformed to YAML with
+# the `yaml_write()` function
+
+# This writes the `tbl_store.yml` file
+# by default (a different name could be used)
+# yaml_write(tbls)
+
+# Let's modify the agent's `read_fn` to point
+# to the YAML representation of the `tbl_store`
+agent <-
+  agent \%>\% 
+  set_read_fn(
+    ~tbl_source("sml_table", "tbl_store.yml")
+  )
+
+# Then we can write agent to a YAML file
+# (it's `agent-sml_table.yml` by default)
+# yaml_write(agent)
+
+# Now that both are in this on-disk format
+# an interrogation can be done by accessing
+# the agent YAML
+# yaml_agent_interrogate("agent-sml_table.yml")
+
+}
 \seealso{
 Other Planning and Prep: 
 \code{\link{action_levels}()},

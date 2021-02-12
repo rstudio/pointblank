@@ -266,6 +266,12 @@ tbl_get <- function(tbl,
 tbl_source <- function(tbl,
                        store = NULL) {
   
+  # If `store` is supplied as a character vector, assume it is a
+  # file path to a YAML file
+  if (is.character(store)) {
+    store <- yaml_read_tbl_store(filename = store)
+  }
+  
   # TODO: store can be a `tbl_store` object or a
   # YAML file with entries under `tbls` or `tbl_store`
   if (is.character(tbl) && tbl %in% names(store)) {

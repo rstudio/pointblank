@@ -1,0 +1,3 @@
+tbls:
+  small_table_duck: ~ db_tbl(table = small_table, dbname = ":memory:", dbtype = "duckdb")
+  sml_table: ~ pointblank::small_table

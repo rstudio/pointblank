@@ -1,4 +1,4 @@
-#' Define a store of tables with table-reading functions
+#' Define a store of tables with table-prep formulas
 #' 
 #' @description
 #' It can be useful to set up all the data sources you need and just draw from
@@ -9,21 +9,21 @@
 #' data with [tbl_get()]. Data preparation could be a part of what's in the
 #' store (imagine procuring several mutated variations of the same source table
 #' or pre-filtering a database table according to the system time). Another nice
-#' aspect of organizing table-reading functions in a single object is supplying
+#' aspect of organizing table-prep formulas in a single object is supplying
 #' it to the `read_fn` argument of [create_agent()] or [create_informant()] via
 #' `$` notation (e.g, `create_agent(read_fn = <tbl_store>$<name>)`).
 #' 
-#' @param ... Expressions that contain table-reading functions and table names
-#'   for data retrieval. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) are to be
-#'   used, where the left-hand side is a given name and the right-hand is a
-#'   table-reading function call (i.e., code that is used to obtain the table).
+#' @param ... Expressions that contain table-prep formulas and table names for
+#'   data retrieval. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) are to be used,
+#'   where the left-hand side is a given name and the right-hand is the portion
+#'   that is is used to obtain the table.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #' 
-#' @return A `tbl_store` object that contains table-reading functions.
+#' @return A `tbl_store` object that contains table-prep formulas.
 #' 
 #' @examples 
 #' # Define a `tbl_store` object by adding
-#' # table-reading functions inside the
+#' # table-prep formulas inside the
 #' # `tbl_store()` call
 #' # tbls <- 
 #' #   tbl_store(
@@ -147,7 +147,8 @@ tbl_store <- function(...,
 #'   reference using a subset (with `$`) of the `tbl_store` object (e.g.,
 #'   `tbl = store$large_table`). If using the latter method then nothing needs
 #'   to be supplied to `store`.
-#' @param store The table store object created by the [tbl_store()] function.
+#' @param store Either a table store object created by the [tbl_store()]
+#'   function or a path to a table store YAML file created by [yaml_write()].
 #' 
 #' @return A table object.
 #' 
@@ -254,7 +255,8 @@ tbl_get <- function(tbl,
 #'   `tbl = "large_table"`) or by supplying a reference using a subset (with
 #'   `$`) of the `tbl_store` object (e.g., `tbl = store$large_table`). If using
 #'   the latter method then nothing needs to be supplied to `store`.
-#' @param store The table store object created by the [tbl_store()] function.
+#' @param store Either a table store object created by the [tbl_store()]
+#'   function or a path to a table store YAML file created by [yaml_write()].
 #' 
 #' @return A table-prep formula.
 #' 

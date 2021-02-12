@@ -13,7 +13,8 @@ reference using a subset (with \code{$}) of the \code{tbl_store} object (e.g.,
 \code{tbl = store$large_table}). If using the latter method then nothing needs
 to be supplied to \code{store}.}
 
-\item{store}{The table store object created by the \code{\link[=tbl_store]{tbl_store()}} function.}
+\item{store}{Either a table store object created by the \code{\link[=tbl_store]{tbl_store()}}
+function or a path to a table store YAML file created by \code{\link[=yaml_write]{yaml_write()}}.}
 }
 \value{
 A table object.

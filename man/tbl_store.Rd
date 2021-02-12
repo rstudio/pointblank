@@ -84,7 +84,7 @@ it to the \code{read_fn} argument of \code{\link[=create_agent]{create_agent()}}
 # tbls$small_table_duck \%>\% tbl_get()
 
 # Creating an agent is easy when all
-# table-reading functions are encapsulated
+# table-prep formulas are encapsulated
 # in a `tbl_store` object; use `$` notation
 # to pass the appropriate procedure for
 # reading a table to the `read_fn` argument

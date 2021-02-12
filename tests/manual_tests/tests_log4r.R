@@ -31,13 +31,13 @@ agent <-
   col_vals_gt(vars(d), 1000) %>%
   col_vals_in_set(vars(f), c("low", "high"))
 
-agent %>% agent_yaml_write(filename = "test_log4r.yaml")
+agent %>% yaml_write(filename = "test_log4r.yaml")
 
-agent_yaml_string(path = "test_log4r.yaml")
+yaml_agent_string(filename = "test_log4r.yaml")
 
-agent_yaml_show_exprs(path = "test_log4r.yaml")
+yaml_agent_show_exprs(filename = "test_log4r.yaml")
 
-agent_read <- agent_yaml_read(path = "test_log4r.yaml")
+agent_read <- yaml_read_agent(filename = "test_log4r.yaml")
 
-agent_intel <- agent_yaml_interrogate(path = "test_log4r.yaml")
+agent_intel <- yaml_agent_interrogate(filename = "test_log4r.yaml")
 agent_intel

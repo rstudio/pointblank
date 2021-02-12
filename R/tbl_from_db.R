@@ -33,23 +33,23 @@
 #' The username and password are supplied though environment variables. If
 #' desired, these can be supplied directly by enclosing those values in `I()`.
 #' 
-#' @param db Either an appropriate driver function (e.g.,
-#'   `RPostgres::Postgres()`) or a shortname for the database type. Valid names
-#'   are: `"postgresql"`, `"postgres"`, or `"pgsql"` (PostgreSQL, using the
-#'   `RPostgres::Postgres()` driver function); `"mysql"` (MySQL, using
-#'   `RMySQL::MySQL()`); `"maria"` or `"mariadb"` (MariaDB, using
-#'   `RMariaDB::MariaDB()`); `"duckdb"` (DuckDB, using `duckdb::duckdb()`); and
-#'   `"sqlite"` (SQLite, using `RSQLite::SQLite()`).
-#' @param dbname The database name.
 #' @param table The name of the table, or, a reference to a table in a schema
 #'   (two-element vector with the names of schema and table). Alternatively,
 #'   this can be supplied as a data table to copy into an in-memory database
 #'   connection. This only works if: (1) the `db` is either `"sqlite"` or
 #'   `"duckdb"`, (2) the `dbname` was chosen as `":memory:"`, and (3) the
 #'   `data_tbl` is a data frame or a tibble object.
+#' @param dbname The database name.
+#' @param dbtype Either an appropriate driver function (e.g.,
+#'   `RPostgres::Postgres()`) or a shortname for the database type. Valid names
+#'   are: `"postgresql"`, `"postgres"`, or `"pgsql"` (PostgreSQL, using the
+#'   `RPostgres::Postgres()` driver function); `"mysql"` (MySQL, using
+#'   `RMySQL::MySQL()`); `"maria"` or `"mariadb"` (MariaDB, using
+#'   `RMariaDB::MariaDB()`); `"duckdb"` (DuckDB, using `duckdb::duckdb()`); and
+#'   `"sqlite"` (SQLite, using `RSQLite::SQLite()`).
+#' @param host,port The database host and optional port number.
 #' @param user,password The environment variables used to access the username
 #'   and password for the database.
-#' @param host,port The database host and optional port number.
 #'   
 #' @return A `tbl_dbi` object.
 #' 
@@ -59,9 +59,9 @@
 #' # to it too:
 #' # small_table_duckdb <- 
 #' #   db_tbl(
-#' #     db = "duckdb",
+#' #     table = small_table,
 #' #     dbname = ":memory:",
-#' #     table = small_table
+#' #     dbtype = "duckdb"
 #' #   )
 #'
 #' # It's also possible to obtain a remote
@@ -70,15 +70,15 @@
 #' # + `db_tbl()` combo
 #' # all_revenue_large_duckdb <-
 #' #   db_tbl(
-#' #     db = "duckdb",
-#' #     dbname = ":memory:",
 #' #     table = file_tbl(
 #' #       file = from_github(
 #' #         file = "all_revenue_large.rds",
 #' #         repo = "rich-iannone/intendo",
 #' #         subdir = "data-large"
 #' #       )
-#' #     )
+#' #     ),
+#' #     dbname = ":memory:",
+#' #     dbtype = "duckdb"
 #' #   )
 #' 
 #' # For remote databases, it's just as
@@ -88,13 +88,13 @@
 #' # following `db_tbl()` call
 #' # rna_db_tbl <- 
 #' #   db_tbl(
-#' #     db = "postgres", 
-#' #     dbname = "pfmegrnargs",
 #' #     table = "rna",
-#' #     user = I("reader"),
-#' #     password = I("NWDMCE5xdipIjRrp"),
+#' #     dbname = "pfmegrnargs",
+#' #     dbtype = "postgres", 
 #' #     host = "hh-pgsql-public.ebi.ac.uk",
-#' #     port = 5432
+#' #     port = 5432,
+#' #     user = I("reader"),
+#' #     password = I("NWDMCE5xdipIjRrp")
 #' #   )
 #' 
 #' # Using `I()` for the user name and
@@ -106,13 +106,13 @@
 #' # database... like this:
 #' # example_db_tbl <- 
 #' #   db_tbl(
-#' #     db = "<database_type_shortname>", 
-#' #     dbname = "<database_name>",
 #' #     table = "<table_name>",
-#' #     user = "<DB_USER_NAME>",
-#' #     password = "<DB_PASSWORD>",
+#' #     dbname = "<database_name>",
+#' #     dbtype = "<database_type_shortname>", 
 #' #     host = "<connection_url>",
-#' #     port = "<connection_port>"
+#' #     port = "<connection_port>",
+#' #     user = "<DB_USER_NAME>",
+#' #     password = "<DB_PASSWORD>"
 #' #   )
 #'
 #' # Environment variables can be created
@@ -125,13 +125,13 @@
 #' 1-6
 #'
 #' @export
-db_tbl <- function(db,
+db_tbl <- function(table,
                    dbname,
-                   table,
-                   user,
-                   password,
+                   dbtype,
                    host = NULL,
-                   port = NULL) {
+                   port = NULL,
+                   user = NULL,
+                   password = NULL) {
   
   force(table)
   
@@ -141,14 +141,14 @@ db_tbl <- function(db,
          call. = FALSE)
   }
   
-  if (is.character(db)) {
+  if (is.character(dbtype)) {
     
-    db <- tolower(db)
+    dbtype <- tolower(dbtype)
     
     # nolint start
     driver_function <- 
       switch(
-        db,
+        dbtype,
         postgresql = ,
         postgres = ,
         pgsql = RPostgres_driver(),
@@ -162,7 +162,7 @@ db_tbl <- function(db,
     # nolint end
     
   } else {
-    driver_function <- db
+    driver_function <- dbtype
   }
 
   # Create the DB connection object
@@ -182,20 +182,20 @@ db_tbl <- function(db,
   # if the DB connection is in-memory
   if (dbname == ":memory:" &&
       is.data.frame(table) && 
-      tolower(db) %in% c("duckdb", "sqlite")) {
-
+      tolower(dbtype) %in% c("duckdb", "sqlite")) {
+    
     # Obtain the name of the data table
     if ("pb_tbl_name" %in% names(attributes(table))) {
-      tbl_name <- table_stmt <- attr(table, "pb_tbl_name", exact = TRUE)
+      table_name <- table_stmt <- attr(table, "pb_tbl_name", exact = TRUE)
     } else {
-      tbl_name <- table_stmt <- deparse(match.call()$table)[1]
+      table_name <- table_stmt <- deparse(match.call()$table)[1]
     }
     
     # Copy the tabular data into the `connection` object
     dplyr::copy_to(
       dest = connection, 
       df = table,
-      name = tbl_name,
+      name = table_name,
       temporary = FALSE
     )
   }
@@ -203,15 +203,27 @@ db_tbl <- function(db,
   if (is.character(table)) {
     if (length(table) == 1) {
       table_stmt <- table
+      table_name <- table
     } else if (length(table) == 2) {
       table_stmt <- dbplyr::in_schema(schema = table[1], table = table[2])
+      table_name <- table[2]
     } else {
       stop("The length of `table` should be either 1 or 2.",
            call. = FALSE)
     }
   }
   
-  dplyr::tbl(src = connection, table_stmt)
+  access_time <- Sys.time()
+  
+  x <- dplyr::tbl(src = connection, table_stmt)
+  
+  con_desc <- dbplyr::db_connection_describe(con = connection)
+  
+  attr(x, "pb_tbl_name") <- table_name
+  attr(x, "pb_con_desc") <- con_desc
+  attr(x, "pb_access_time") <- access_time
+  
+  x
 }
 
 # nolint start

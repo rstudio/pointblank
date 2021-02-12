@@ -9,9 +9,12 @@ agent_revenue_mysql <-
   create_agent(
     read_fn = 
       ~ db_tbl(
-        db = "mysql", dbname = "intendo", table = "revenue",
-        user = "PG_P_DB_USER", password = "PG_P_DB_PASS",
-        host = "134.122.40.123"
+        table = "revenue",
+        dbname = "intendo",
+        dbtype = "mysql",
+        host = "134.122.40.123",
+        user = "PG_P_DB_USER",
+        password = "PG_P_DB_PASS"
       ),
     tbl_name = "revenue",
     label = "The **intendo** revenue table.", 

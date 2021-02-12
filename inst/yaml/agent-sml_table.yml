@@ -1,0 +1,12 @@
+read_fn: ~tbl_source("sml_table", tbls)
+tbl_name: sml_table
+label: An example that uses a table store.
+actions:
+  warn_fraction: 0.1
+locale: en
+steps:
+- col_exists:
+    columns: vars(date, date_time)
+- col_vals_regex:
+    columns: vars(b)
+    regex: '[0-9]-[a-z]{3}-[0-9]{3}'

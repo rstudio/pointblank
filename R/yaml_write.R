@@ -36,8 +36,9 @@
 #' when using [create_agent()] or with [set_read_fn()] (for use with an existing
 #' *agent*).
 #' 
-#' @param agent An *agent* object of class `ptblank_agent`.
-#' @param informant An *informant* object of class `ptblank_informant`.
+#' @param ... Any mix of **pointblank** objects such as the *agent*
+#'   (`ptblank_agent`) or the *informant* (`ptblank_informant`).
+#' @param .list Allows for the use of a list as an input alternative to `...`.
 #' @param filename The name of the YAML file to create on disk. It is
 #'   recommended that either the `.yaml` or `.yml` extension be used for this
 #'   file.
@@ -99,7 +100,7 @@
 #' # The agent can be written to a pointblank
 #' # YAML file with `yaml_write()`
 #' # yaml_write(
-#' #   agent = agent,
+#' #   agent,
 #' #   filename = "agent-small_table.yml"
 #' # )
 #' 
@@ -144,14 +145,74 @@
 #' 11-1
 #' 
 #' @export
-yaml_write <- function(agent = NULL,
-                       informant = NULL,
-                       filename,
+yaml_write <- function(...,
+                       .list = list2(...),
+                       filename = NULL,
                        path = NULL,
                        expanded = FALSE) {
 
-  if (!is.null(path)) {
-    filename <- file.path(path, filename)
+  # Collect a list of pointblank objects
+  obj_list <- .list
+  
+  # Determine which types of pointblank objects
+  # are available in `obj_list`
+  object_types <- 
+    vapply(
+      obj_list,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        if (inherits(x, "ptblank_agent")) {
+          x <- "agent"
+        } else if (inherits(x, "ptblank_informant")) {
+          x <- "informant"
+        } else if (inherits(x, "tbl_store")) {
+          x <- "tbl_store"
+        } else {
+          x <- NA_character_
+        }
+      }
+    )
+  
+  if ("tbl_store" %in% object_types) {
+    tbl_store <- obj_list[[object_types == "tbl_store"]]
+    
+    x <- as_tbl_store_yaml_list(tbl_store = tbl_store)
+    
+    if (is.null(filename)) {
+      filename <- "tbl_store.yml"
+    }
+    
+    if (!is.null(path)) {
+      filename <- file.path(path, filename)
+    }
+    
+    yaml::write_yaml(
+      x = x,
+      file = filename,
+      handlers = list(
+        logical = function(x) {
+          result <- ifelse(x, "true", "false")
+          class(result) <- "verbatim"
+          result
+        }
+      )
+    )
+    
+    # TODO: Generate message w.r.t. written YAML file
+    
+    return(invisible(NULL))
+  }
+  
+  if ("agent" %in% object_types) {
+    agent <- obj_list[[object_types == "agent"]]
+  } else {
+    agent <- NULL
+  }
+  if ("informant" %in% object_types) {
+    informant <- obj_list[[object_types == "informant"]]
+  } else {
+    informant <- NULL
   }
   
   if (is.null(agent) && is.null(informant)) {
@@ -165,12 +226,40 @@ yaml_write <- function(agent = NULL,
         as_agent_yaml_list(agent = agent, expanded = expanded),
         as_informant_yaml_list(informant = informant)
       )
+    
+    # TODO: combine with tbl name (e.g., `pointblank-<tbl_name>.yml`)
+    
+    if (is.null(filename)) {
+      filename <- "pointblank.yml"
+    }
+    
     # TODO: manage conflicts between both YAML representations
     
   } else if (!is.null(agent)) {
     x <- as_agent_yaml_list(agent = agent, expanded = expanded)
+    
+    if (is.null(filename)) {
+      if (!is.null(agent$tbl_name) && !is.na(agent$tbl_name)) {
+        filename <- paste0("agent-", agent$tbl_name, ".yml")
+      } else {
+        filename <- "agent.yml"
+      }
+    }
+    
   } else {
     x <- as_informant_yaml_list(informant = informant)
+    
+    if (is.null(filename)) {
+      if (!is.null(informant$tbl_name) && !is.na(informant$tbl_name)) {
+        filename <- paste0("informant-", informant$tbl_name, ".yml")
+      } else {
+        filename <- "informant.yml"
+      }
+    }
+  }
+  
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
   }
   
   yaml::write_yaml(
@@ -184,6 +273,8 @@ yaml_write <- function(agent = NULL,
       }
     )
   )
+  
+  # TODO: Generate message w.r.t. written YAML file
 }
 
 #' Display **pointblank** YAML using an agent or a YAML file
@@ -976,4 +1067,22 @@ as_informant_yaml_list <- function(informant) {
     lst_meta_snippets,
     informant$metadata
   )
+}
+
+as_tbl_store_yaml_list <- function(tbl_store) {
+
+  tbl_list <- list()
+  
+  for (i in seq_along(tbl_store)) {
+    
+    formula_rhs <- capture_formula(tbl_store[[i]])[2]
+    tbl_name <- names(tbl_store[i])
+    
+    list_element <- list(formula_rhs)
+    tbl_list[i] <- list_element
+    
+    names(tbl_list)[i] <- tbl_name
+  }
+  
+  list(tbls = tbl_list)
 }

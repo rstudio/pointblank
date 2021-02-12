@@ -5,9 +5,12 @@ informant_revenue_postgres <-
   create_informant(
     read_fn = 
       ~ db_tbl(
-        db = "postgres", dbname = "intendo", table = "revenue",
-        user = "PG_P_DB_USER", password = "PG_P_DB_PASS",
-        host = "134.122.40.123"
+        table = "revenue",
+        dbname = "intendo",
+        dbtype = "postgres",
+        host = "134.122.40.123",
+        user = "PG_P_DB_USER",
+        password = "PG_P_DB_PASS"
       ),
     tbl_name = "intendo::revenue", 
     label = "The **intendo** revenue table."

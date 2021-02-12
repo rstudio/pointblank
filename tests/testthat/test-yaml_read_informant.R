@@ -38,7 +38,7 @@ test_that("Reading an informant from YAML is possible", {
   
   temp_file <- tempfile(fileext = ".yaml")
   
-  yaml_write(informant = informant, filename = temp_file)
+  yaml_write(informant, filename = temp_file)
   
   informant_from_yaml <- yaml_read_informant(filename = temp_file)
   
@@ -71,7 +71,7 @@ test_that("Reading an informant from YAML is possible", {
   
   temp_file <- tempfile(fileext = ".yaml")
   
-  yaml_write(informant = informant_inc, filename = temp_file)
+  yaml_write(informant_inc, filename = temp_file)
   
   informant_inc_from_yaml <- yaml_read_informant(filename = temp_file)
   

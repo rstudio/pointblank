@@ -27,6 +27,8 @@ get_agent_report(agent, arrange_by = "severity")
 
 get_agent_report(agent, arrange_by = "severity", keep = "fail_states")
 
+get_agent_report(agent, title = "Validation Report: `small_table`")
+
 extracts <- agent %>% get_data_extracts()
 
 x_list <- get_agent_x_list(agent)

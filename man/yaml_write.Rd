@@ -5,17 +5,18 @@
 \title{Write an \emph{agent} and \emph{informant} to a \strong{pointblank} YAML file}
 \usage{
 yaml_write(
-  agent = NULL,
-  informant = NULL,
-  filename,
+  ...,
+  .list = list2(...),
+  filename = NULL,
   path = NULL,
   expanded = FALSE
 )
 }
 \arguments{
-\item{agent}{An \emph{agent} object of class \code{ptblank_agent}.}
+\item{...}{Any mix of \strong{pointblank} objects such as the \emph{agent}
+(\code{ptblank_agent}) or the \emph{informant} (\code{ptblank_informant}).}
 
-\item{informant}{An \emph{informant} object of class \code{ptblank_informant}.}
+\item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
 \item{filename}{The name of the YAML file to create on disk. It is
 recommended that either the \code{.yaml} or \code{.yml} extension be used for this
@@ -102,7 +103,7 @@ agent <-
 # The agent can be written to a pointblank
 # YAML file with `yaml_write()`
 # yaml_write(
-#   agent = agent,
+#   agent,
 #   filename = "agent-small_table.yml"
 # )
 

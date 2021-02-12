@@ -4,19 +4,17 @@
 \alias{db_tbl}
 \title{Get a table from a database}
 \usage{
-db_tbl(db, dbname, table, user, password, host = NULL, port = NULL)
+db_tbl(
+  table,
+  dbname,
+  dbtype,
+  host = NULL,
+  port = NULL,
+  user = NULL,
+  password = NULL
+)
 }
 \arguments{
-\item{db}{Either an appropriate driver function (e.g.,
-\code{RPostgres::Postgres()}) or a shortname for the database type. Valid names
-are: \code{"postgresql"}, \code{"postgres"}, or \code{"pgsql"} (PostgreSQL, using the
-\code{RPostgres::Postgres()} driver function); \code{"mysql"} (MySQL, using
-\code{RMySQL::MySQL()}); \code{"maria"} or \code{"mariadb"} (MariaDB, using
-\code{RMariaDB::MariaDB()}); \code{"duckdb"} (DuckDB, using \code{duckdb::duckdb()}); and
-\code{"sqlite"} (SQLite, using \code{RSQLite::SQLite()}).}
-
-\item{dbname}{The database name.}
-
 \item{table}{The name of the table, or, a reference to a table in a schema
 (two-element vector with the names of schema and table). Alternatively,
 this can be supplied as a data table to copy into an in-memory database
@@ -24,10 +22,20 @@ connection. This only works if: (1) the \code{db} is either \code{"sqlite"} or
 \code{"duckdb"}, (2) the \code{dbname} was chosen as \code{":memory:"}, and (3) the
 \code{data_tbl} is a data frame or a tibble object.}
 
-\item{user, password}{The environment variables used to access the username
-and password for the database.}
+\item{dbname}{The database name.}
+
+\item{dbtype}{Either an appropriate driver function (e.g.,
+\code{RPostgres::Postgres()}) or a shortname for the database type. Valid names
+are: \code{"postgresql"}, \code{"postgres"}, or \code{"pgsql"} (PostgreSQL, using the
+\code{RPostgres::Postgres()} driver function); \code{"mysql"} (MySQL, using
+\code{RMySQL::MySQL()}); \code{"maria"} or \code{"mariadb"} (MariaDB, using
+\code{RMariaDB::MariaDB()}); \code{"duckdb"} (DuckDB, using \code{duckdb::duckdb()}); and
+\code{"sqlite"} (SQLite, using \code{RSQLite::SQLite()}).}
 
 \item{host, port}{The database host and optional port number.}
+
+\item{user, password}{The environment variables used to access the username
+and password for the database.}
 }
 \value{
 A \code{tbl_dbi} object.
@@ -56,9 +64,9 @@ desired, these can be supplied directly by enclosing those values in \code{I()}.
 # to it too:
 # small_table_duckdb <- 
 #   db_tbl(
-#     db = "duckdb",
+#     table = small_table,
 #     dbname = ":memory:",
-#     table = small_table
+#     dbtype = "duckdb"
 #   )
 
 # It's also possible to obtain a remote
@@ -67,15 +75,15 @@ desired, these can be supplied directly by enclosing those values in \code{I()}.
 # + `db_tbl()` combo
 # all_revenue_large_duckdb <-
 #   db_tbl(
-#     db = "duckdb",
-#     dbname = ":memory:",
 #     table = file_tbl(
 #       file = from_github(
 #         file = "all_revenue_large.rds",
 #         repo = "rich-iannone/intendo",
 #         subdir = "data-large"
 #       )
-#     )
+#     ),
+#     dbname = ":memory:",
+#     dbtype = "duckdb"
 #   )
 
 # For remote databases, it's just as
@@ -85,13 +93,13 @@ desired, these can be supplied directly by enclosing those values in \code{I()}.
 # following `db_tbl()` call
 # rna_db_tbl <- 
 #   db_tbl(
-#     db = "postgres", 
-#     dbname = "pfmegrnargs",
 #     table = "rna",
-#     user = I("reader"),
-#     password = I("NWDMCE5xdipIjRrp"),
+#     dbname = "pfmegrnargs",
+#     dbtype = "postgres", 
 #     host = "hh-pgsql-public.ebi.ac.uk",
-#     port = 5432
+#     port = 5432,
+#     user = I("reader"),
+#     password = I("NWDMCE5xdipIjRrp")
 #   )
 
 # Using `I()` for the user name and
@@ -103,13 +111,13 @@ desired, these can be supplied directly by enclosing those values in \code{I()}.
 # database... like this:
 # example_db_tbl <- 
 #   db_tbl(
-#     db = "<database_type_shortname>", 
-#     dbname = "<database_name>",
 #     table = "<table_name>",
-#     user = "<DB_USER_NAME>",
-#     password = "<DB_PASSWORD>",
+#     dbname = "<database_name>",
+#     dbtype = "<database_type_shortname>", 
 #     host = "<connection_url>",
-#     port = "<connection_port>"
+#     port = "<connection_port>",
+#     user = "<DB_USER_NAME>",
+#     password = "<DB_PASSWORD>"
 #   )
 
 # Environment variables can be created
@@ -125,6 +133,9 @@ Other Planning and Prep:
 \code{\link{create_informant}()},
 \code{\link{file_tbl}()},
 \code{\link{scan_data}()},
+\code{\link{tbl_get}()},
+\code{\link{tbl_source}()},
+\code{\link{tbl_store}()},
 \code{\link{validate_rmd}()}
 }
 \concept{Planning and Prep}

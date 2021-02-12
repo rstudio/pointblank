@@ -725,6 +725,26 @@ tidy_gsub <- function(x,
   gsub(pattern, replacement, x, fixed = fixed)
 }
 
+capture_formula <- function(formula, separate = TRUE) {
+  
+  attributes(formula) <- NULL
+  
+  output <- utils::capture.output(formula) %>% 
+    gsub("^\\s+", "", .) %>%
+    paste(collapse = "")
+
+  if (separate) {
+    if (grepl("^~", output)) {
+      output <- c(NA_character_, output)
+    } else {
+      output <- strsplit(output, " ~ ") %>% unlist()
+      output[2] <- paste("~", output[2])
+    }
+  }
+  
+  output
+}
+
 pb_str_catalog <- function(item_vector,
                            limit = 5,
                            sep = ",",

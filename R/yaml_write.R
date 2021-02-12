@@ -1068,3 +1068,21 @@ as_informant_yaml_list <- function(informant) {
     informant$metadata
   )
 }
+
+as_tbl_store_yaml_list <- function(tbl_store) {
+
+  tbl_list <- list()
+  
+  for (i in seq_along(tbl_store)) {
+    
+    formula_rhs <- capture_formula(tbl_store[[i]])[2]
+    tbl_name <- names(tbl_store[i])
+    
+    list_element <- list(formula_rhs)
+    tbl_list[i] <- list_element
+    
+    names(tbl_list)[i] <- tbl_name
+  }
+  
+  list(tbls = tbl_list)
+}

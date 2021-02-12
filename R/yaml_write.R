@@ -185,14 +185,6 @@ yaml_write <- function(...,
     informant <- NULL
   }
   
-  if (is.null(filename)) {
-    filename <- "pointblank.yml"
-  }
-  
-  if (!is.null(path)) {
-    filename <- file.path(path, filename)
-  }
-  
   if (is.null(agent) && is.null(informant)) {
     stop("An agent or informant object must be supplied to `yaml_write()`.",
          call. = FALSE)
@@ -208,8 +200,29 @@ yaml_write <- function(...,
     
   } else if (!is.null(agent)) {
     x <- as_agent_yaml_list(agent = agent, expanded = expanded)
+    
+    if (is.null(filename)) {
+      if (!is.null(agent$tbl_name) && !is.na(agent$tbl_name)) {
+        filename <- paste0("agent-", agent$tbl_name, ".yml")
+      } else {
+        filename <- "agent.yml"
+      }
+    }
+    
   } else {
     x <- as_informant_yaml_list(informant = informant)
+    
+    if (is.null(filename)) {
+      if (!is.null(informant$tbl_name) && !is.na(informant$tbl_name)) {
+        filename <- paste0("informant-", informant$tbl_name, ".yml")
+      } else {
+        filename <- "informant.yml"
+      }
+    }
+  }
+  
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
   }
   
   yaml::write_yaml(

@@ -2,20 +2,20 @@
 % Please edit documentation in R/tbl_store.R
 \name{tbl_store}
 \alias{tbl_store}
-\title{Define a store of tables with table-reading functions}
+\title{Define a store of tables with table-prep formulas}
 \usage{
 tbl_store(..., .list = list2(...))
 }
 \arguments{
-\item{...}{Expressions that contain table-reading functions and table names
-for data retrieval. Two-sided formulas (e.g, \verb{<LHS> ~ <RHS>}) are to be
-used, where the left-hand side is a given name and the right-hand is a
-table-reading function call (i.e., code that is used to obtain the table).}
+\item{...}{Expressions that contain table-prep formulas and table names for
+data retrieval. Two-sided formulas (e.g, \verb{<LHS> ~ <RHS>}) are to be used,
+where the left-hand side is a given name and the right-hand is the portion
+that is is used to obtain the table.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 }
 \value{
-A \code{tbl_store} object that contains table-reading functions.
+A \code{tbl_store} object that contains table-prep formulas.
 }
 \description{
 It can be useful to set up all the data sources you need and just draw from
@@ -26,7 +26,7 @@ and provide names for these data pulling procedures as a way to access the
 data with \code{\link[=tbl_get]{tbl_get()}}. Data preparation could be a part of what's in the
 store (imagine procuring several mutated variations of the same source table
 or pre-filtering a database table according to the system time). Another nice
-aspect of organizing table-reading functions in a single object is supplying
+aspect of organizing table-prep formulas in a single object is supplying
 it to the \code{read_fn} argument of \code{\link[=create_agent]{create_agent()}} or \code{\link[=create_informant]{create_informant()}} via
 \code{$} notation (e.g, \verb{create_agent(read_fn = <tbl_store>$<name>)}).
 }
@@ -37,7 +37,7 @@ it to the \code{read_fn} argument of \code{\link[=create_agent]{create_agent()}}
 
 \examples{
 # Define a `tbl_store` object by adding
-# table-reading functions inside the
+# table-prep formulas inside the
 # `tbl_store()` call
 # tbls <- 
 #   tbl_store(

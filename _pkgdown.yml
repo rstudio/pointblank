@@ -22,6 +22,9 @@ reference:
     - action_levels
     - db_tbl
     - file_tbl
+    - tbl_store
+    - tbl_source
+    - tbl_get
 
   - title: Validation, Expectation, and Test Functions
     desc: >

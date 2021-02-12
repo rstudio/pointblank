@@ -173,7 +173,37 @@ yaml_write <- function(...,
         }
       }
     )
-
+  
+  if ("tbl_store" %in% object_types) {
+    tbl_store <- obj_list[[object_types == "tbl_store"]]
+    
+    x <- as_tbl_store_yaml_list(tbl_store = tbl_store)
+    
+    if (is.null(filename)) {
+      filename <- "tbl_store.yml"
+    }
+    
+    if (!is.null(path)) {
+      filename <- file.path(path, filename)
+    }
+    
+    yaml::write_yaml(
+      x = x,
+      file = filename,
+      handlers = list(
+        logical = function(x) {
+          result <- ifelse(x, "true", "false")
+          class(result) <- "verbatim"
+          result
+        }
+      )
+    )
+    
+    # TODO: Generate message w.r.t. written YAML file
+    
+    return(invisible(NULL))
+  }
+  
   if ("agent" %in% object_types) {
     agent <- obj_list[[object_types == "agent"]]
   } else {

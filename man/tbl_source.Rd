@@ -69,7 +69,7 @@ function is useful for that.
 # agent <-
 #   agent \%>\% 
 #   set_read_fn(
-#     ~tbl_source("sml_table", "tbl_store.yml")
+#     ~ tbl_source("sml_table", "tbl_store.yml")
 #   )
 
 # Then we can write agent to a YAML file

@@ -32,6 +32,64 @@
 #' it to the `read_fn` argument of [create_agent()] or [create_informant()] via
 #' `$` notation (e.g, `create_agent(read_fn = <tbl_store>$<name>)`).
 #' 
+#' @section YAML:
+#' A **pointblank** table store can be written to YAML with [yaml_write()] and
+#' the resulting YAML can be used in several ways. The ideal scenario is to have
+#' pointblank agents and informants also in YAML form. This way the agent and
+#' informant can refer to the table store YAML (via [tbl_source()]), and, the
+#' processing of both agents and informants can be performed with
+#' [yaml_agent_interrogate()] and [yaml_informant_incorporate()]. With the
+#' following R code, a table store with two table-prep formulas is generated and
+#' written to YAML (if no filename is given then the YAML is written to
+#' `"tbl_store.yml"`).
+#' 
+#' ```
+#' # R statement for generating the "tbl_store.yml" file
+#' tbl_store(
+#'   tbl_duckdb ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb"),
+#'   sml_table_high ~ small_table %>% dplyr::filter(f == "high")
+#' ) %>%
+#'   yaml_write()
+#' 
+#' # YAML representation ("tbl_store.yml")
+#' tbls:
+#'   tbl_duckdb: ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb")
+#'   sml_table_high: ~ small_table %>% dplyr::filter(f == "high")
+#' ```
+#' 
+#' This is useful when you want to get fresh pulls of prepared data from a
+#' source materialized in an R session (with the [tbl_get()] function. For
+#' example, the `sml_table_high` table can be obtained by using
+#' `tbl_get("sml_table_high", "tbl_store.yml")`. To get an agent to check this
+#' prepared data periodically, then the following example with [tbl_source()]
+#' will be useful:
+#' 
+#' ```
+#' # Generate agent that checks `sml_table_high`, write it to YAML
+#' create_agent(
+#'   read_fn = ~ tbl_source("sml_table_high", "tbl_store.yml"),
+#'   label = "An example that uses a table store.",
+#'   actions = action_levels(warn_at = 0.10)
+#' ) %>% 
+#'   col_exists(vars(date, date_time)) %>%
+#'   write_yaml()
+#'   
+#' # YAML representation ("agent-sml_table_high.yml")
+#' read_fn: ~tbl_source("sml_table_high", "tbl_store.yml")
+#' tbl_name: sml_table_high
+#' label: An example that uses a table store.
+#' actions:
+#'   warn_fraction: 0.1
+#' locale: en
+#' steps:
+#'   - col_exists:
+#'     columns: vars(date, date_time)
+#' ```
+#' 
+#' Now, whenever the `sml_table_high` table needs to be validated, it can be
+#' done with [yaml_agent_interrogate()] (e.g., 
+#' `yaml_agent_interrogate("agent-sml_table_high.yml")`).
+#' 
 #' @param ... Expressions that contain table-prep formulas and table names for
 #'   data retrieval. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) are to be used,
 #'   where the left-hand side is a given name and the right-hand is the portion

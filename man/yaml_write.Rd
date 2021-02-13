@@ -2,7 +2,7 @@
 % Please edit documentation in R/yaml_write.R
 \name{yaml_write}
 \alias{yaml_write}
-\title{Write an \emph{agent} and \emph{informant} to a \strong{pointblank} YAML file}
+\title{Write \strong{pointblank} objects to YAML files}
 \usage{
 yaml_write(
   ...,
@@ -14,13 +14,19 @@ yaml_write(
 }
 \arguments{
 \item{...}{Any mix of \strong{pointblank} objects such as the \emph{agent}
-(\code{ptblank_agent}) or the \emph{informant} (\code{ptblank_informant}).}
+(\code{ptblank_agent}), the \emph{informant} (\code{ptblank_informant}), or the table
+store (\code{tbl_store}). The agent and informant can be combined into a single
+YAML file (so as both objects have the same value for \code{read_fn}). A table
+store cannot be combined with either an agent or an informant so it must
+undergo conversion alone.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
 \item{filename}{The name of the YAML file to create on disk. It is
 recommended that either the \code{.yaml} or \code{.yml} extension be used for this
-file.}
+file. If not provided then default names will be used (\code{"tbl_store.yml"})
+for a table store and the other objects will get default naming to the
+effect of \code{"<object>-<tbl_name>.yml"}.}
 
 \item{path}{An optional path to which the YAML file should be saved (combined
 with \code{filename}).}
@@ -32,21 +38,24 @@ evaluated, yielding a validation function per column? By default, this is
 representation.}
 }
 \description{
-With \code{yaml_write()} we can take an existing \emph{agent} and write that \emph{agent}'s
-validation plan to a YAML file. With \strong{pointblank} YAML, we can modify the
-YAML markup if so desired, or, use as is to create a new agent with the
-\code{\link[=yaml_read_agent]{yaml_read_agent()}} function. That \emph{agent} will have a validation plan and is
-ready to \code{\link[=interrogate]{interrogate()}} the data. We can go a step further and perform an
-interrogation directly from the YAML file with the \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}
-function. That returns an agent with intel (having already interrogated the
-target data table). An \emph{informant} object can also be written to YAML with
-\code{yaml_write()}.
+With \code{yaml_write()} we can take different \strong{pointblank} objects (these are
+the \code{ptblank_agent}, \code{ptblank_informant}, and \code{tbl_store}) and write them to
+YAML. With an \emph{agent}, for example, \code{yaml_write()} will write that everything
+that is needed to specify an \emph{agent} and it's validation plan to a YAML file.
+With YAML, we can modify the YAML markup if so desired, or, use as is to
+create a new agent with the \code{\link[=yaml_read_agent]{yaml_read_agent()}} function. That \emph{agent} will
+have a validation plan and is ready to \code{\link[=interrogate]{interrogate()}} the data. We can go a
+step further and perform an interrogation directly from the YAML file with
+the \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}} function. That returns an agent with intel
+(having already interrogated the target data table). An \emph{informant} object
+can also be written to YAML with \code{yaml_write()}.
 
-One requirement for writing the \emph{agent} to YAML is that we need to have a
-table-reading function (\code{read_fn}) specified (it's a function that is used to
-read the target table when \code{\link[=interrogate]{interrogate()}} is called). This option can be set
-when using \code{\link[=create_agent]{create_agent()}} or with \code{\link[=set_read_fn]{set_read_fn()}} (for use with an existing
-\emph{agent}).
+One requirement for writing an \emph{agent} or an \emph{informant} to YAML is that we
+need to have a table-reading function (\code{read_fn}) specified (it's a function
+that is used to read the target table when \code{\link[=interrogate]{interrogate()}} or \code{\link[=incorporate]{incorporate()}}
+is called). This option can be set when using
+\code{\link[=create_agent]{create_agent()}}/\code{\link[=create_informant]{create_informant()}} or with \code{\link[=set_read_fn]{set_read_fn()}} (useful with an
+existing agent or informant object).
 }
 \section{Function ID}{
 

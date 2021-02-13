@@ -30,6 +30,60 @@ aspect of organizing table-prep formulas in a single object is supplying
 it to the \code{read_fn} argument of \code{\link[=create_agent]{create_agent()}} or \code{\link[=create_informant]{create_informant()}} via
 \code{$} notation (e.g, \verb{create_agent(read_fn = <tbl_store>$<name>)}).
 }
+\section{YAML}{
+
+A \strong{pointblank} table store can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and
+the resulting YAML can be used in several ways. The ideal scenario is to have
+pointblank agents and informants also in YAML form. This way the agent and
+informant can refer to the table store YAML (via \code{\link[=tbl_source]{tbl_source()}}), and, the
+processing of both agents and informants can be performed with
+\code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}} and \code{\link[=yaml_informant_incorporate]{yaml_informant_incorporate()}}. With the
+following R code, a table store with two table-prep formulas is generated and
+written to YAML (if no filename is given then the YAML is written to
+\code{"tbl_store.yml"}).\preformatted{# R statement for generating the "tbl_store.yml" file
+tbl_store(
+  tbl_duckdb ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb"),
+  sml_table_high ~ small_table \%>\% dplyr::filter(f == "high")
+) \%>\%
+  yaml_write()
+
+# YAML representation ("tbl_store.yml")
+tbls:
+  tbl_duckdb: ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb")
+  sml_table_high: ~ small_table \%>\% dplyr::filter(f == "high")
+}
+
+This is useful when you want to get fresh pulls of prepared data from a
+source materialized in an R session (with the \code{\link[=tbl_get]{tbl_get()}} function. For
+example, the \code{sml_table_high} table can be obtained by using
+\code{tbl_get("sml_table_high", "tbl_store.yml")}. To get an agent to check this
+prepared data periodically, then the following example with \code{\link[=tbl_source]{tbl_source()}}
+will be useful:\preformatted{# Generate agent that checks `sml_table_high`, write it to YAML
+create_agent(
+  read_fn = ~ tbl_source("sml_table_high", "tbl_store.yml"),
+  label = "An example that uses a table store.",
+  actions = action_levels(warn_at = 0.10)
+) \%>\% 
+  col_exists(vars(date, date_time)) \%>\%
+  write_yaml()
+  
+# YAML representation ("agent-sml_table_high.yml")
+read_fn: ~tbl_source("sml_table_high", "tbl_store.yml")
+tbl_name: sml_table_high
+label: An example that uses a table store.
+actions:
+  warn_fraction: 0.1
+locale: en
+steps:
+  - col_exists:
+    columns: vars(date, date_time)
+}
+
+Now, whenever the \code{sml_table_high} table needs to be validated, it can be
+done with \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}} (e.g.,
+\code{yaml_agent_interrogate("agent-sml_table_high.yml")}).
+}
+
 \section{Function ID}{
 
 1-8

@@ -17,31 +17,40 @@
 #
 
 
-#' Write an *agent* and *informant* to a **pointblank** YAML file
+#' Write **pointblank** objects to YAML files
 #' 
-#' @description 
-#' With `yaml_write()` we can take an existing *agent* and write that *agent*'s
-#' validation plan to a YAML file. With **pointblank** YAML, we can modify the
-#' YAML markup if so desired, or, use as is to create a new agent with the
-#' [yaml_read_agent()] function. That *agent* will have a validation plan and is
-#' ready to [interrogate()] the data. We can go a step further and perform an
-#' interrogation directly from the YAML file with the [yaml_agent_interrogate()]
-#' function. That returns an agent with intel (having already interrogated the
-#' target data table). An *informant* object can also be written to YAML with
-#' `yaml_write()`.
+#' @description
+#' With `yaml_write()` we can take different **pointblank** objects (these are
+#' the `ptblank_agent`, `ptblank_informant`, and `tbl_store`) and write them to
+#' YAML. With an *agent*, for example, `yaml_write()` will write that everything
+#' that is needed to specify an *agent* and it's validation plan to a YAML file.
+#' With YAML, we can modify the YAML markup if so desired, or, use as is to
+#' create a new agent with the [yaml_read_agent()] function. That *agent* will
+#' have a validation plan and is ready to [interrogate()] the data. We can go a
+#' step further and perform an interrogation directly from the YAML file with
+#' the [yaml_agent_interrogate()] function. That returns an agent with intel
+#' (having already interrogated the target data table). An *informant* object
+#' can also be written to YAML with `yaml_write()`.
 #'
-#' One requirement for writing the *agent* to YAML is that we need to have a
-#' table-reading function (`read_fn`) specified (it's a function that is used to
-#' read the target table when [interrogate()] is called). This option can be set
-#' when using [create_agent()] or with [set_read_fn()] (for use with an existing
-#' *agent*).
+#' One requirement for writing an *agent* or an *informant* to YAML is that we
+#' need to have a table-reading function (`read_fn`) specified (it's a function
+#' that is used to read the target table when [interrogate()] or [incorporate()]
+#' is called). This option can be set when using
+#' [create_agent()]/[create_informant()] or with [set_read_fn()] (useful with an
+#' existing agent or informant object).
 #' 
 #' @param ... Any mix of **pointblank** objects such as the *agent*
-#'   (`ptblank_agent`) or the *informant* (`ptblank_informant`).
+#'   (`ptblank_agent`), the *informant* (`ptblank_informant`), or the table
+#'   store (`tbl_store`). The agent and informant can be combined into a single
+#'   YAML file (so as both objects have the same value for `read_fn`). A table
+#'   store cannot be combined with either an agent or an informant so it must
+#'   undergo conversion alone.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #' @param filename The name of the YAML file to create on disk. It is
 #'   recommended that either the `.yaml` or `.yml` extension be used for this
-#'   file.
+#'   file. If not provided then default names will be used (`"tbl_store.yml"`)
+#'   for a table store and the other objects will get default naming to the
+#'   effect of `"<object>-<tbl_name>.yml"`.
 #' @param path An optional path to which the YAML file should be saved (combined
 #'   with `filename`).
 #' @param expanded Should the written validation expressions for an *agent* be

@@ -20,15 +20,18 @@ A \code{tbl_store} object that contains table-prep formulas.
 \description{
 It can be useful to set up all the data sources you need and just draw from
 them when necessary. This upfront configuration with \code{tbl_store()} can be
-quite useful since we can define the methods for obtaining tabular data from
-mixed sources (e.g., database tables, tables generated from flat files, etc.)
-and provide names for these data pulling procedures as a way to access the
-data with \code{\link[=tbl_get]{tbl_get()}}. Data preparation could be a part of what's in the
-store (imagine procuring several mutated variations of the same source table
-or pre-filtering a database table according to the system time). Another nice
-aspect of organizing table-prep formulas in a single object is supplying
-it to the \code{read_fn} argument of \code{\link[=create_agent]{create_agent()}} or \code{\link[=create_informant]{create_informant()}} via
-\code{$} notation (e.g, \verb{create_agent(read_fn = <tbl_store>$<name>)}).
+lets us define the methods for obtaining tabular data from mixed sources
+(e.g., database tables, tables generated from flat files, etc.) and provide
+names for these data pulling procedures as a way to access the data with
+\code{\link[=tbl_get]{tbl_get()}} or get table-prep formula with \code{\link[=tbl_source]{tbl_source()}}. Data preparation
+could be a part of what's in the store (imagine procuring several mutated
+variations of the same source table, generating a table from multiple
+sources, or pre-filtering a database table according to the system time).
+Another nice aspect of organizing table-prep formulas in a single object is
+supplying it to the \code{read_fn} argument of \code{\link[=create_agent]{create_agent()}} or
+\code{\link[=create_informant]{create_informant()}} via \code{$} notation (e.g,
+\verb{create_agent(read_fn = <tbl_store>$<name>)}) or with \code{\link[=tbl_source]{tbl_source()}} (e.g.,
+\verb{create_agent(read_fn = ~ tbl_source("<name>", <tbl_store>))}).
 }
 \section{YAML}{
 
@@ -68,7 +71,7 @@ create_agent(
   write_yaml()
   
 # YAML representation ("agent-sml_table_high.yml")
-read_fn: ~tbl_source("sml_table_high", "tbl_store.yml")
+read_fn: ~ tbl_source("sml_table_high", "tbl_store.yml")
 tbl_name: sml_table_high
 label: An example that uses a table store.
 actions:

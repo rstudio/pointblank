@@ -49,15 +49,18 @@
 <meta property="og:title" content="Define a store of tables with table-prep formulas — tbl_store" />
 <meta property="og:description" content="It can be useful to set up all the data sources you need and just draw from
 them when necessary. This upfront configuration with tbl_store() can be
-quite useful since we can define the methods for obtaining tabular data from
-mixed sources (e.g., database tables, tables generated from flat files, etc.)
-and provide names for these data pulling procedures as a way to access the
-data with tbl_get(). Data preparation could be a part of what's in the
-store (imagine procuring several mutated variations of the same source table
-or pre-filtering a database table according to the system time). Another nice
-aspect of organizing table-prep formulas in a single object is supplying
-it to the read_fn argument of create_agent() or create_informant() via
-$ notation (e.g, create_agent(read_fn = &amp;lt;tbl_store&amp;gt;$&amp;lt;name&amp;gt;))." />
+lets us define the methods for obtaining tabular data from mixed sources
+(e.g., database tables, tables generated from flat files, etc.) and provide
+names for these data pulling procedures as a way to access the data with
+tbl_get() or get table-prep formula with tbl_source(). Data preparation
+could be a part of what's in the store (imagine procuring several mutated
+variations of the same source table, generating a table from multiple
+sources, or pre-filtering a database table according to the system time).
+Another nice aspect of organizing table-prep formulas in a single object is
+supplying it to the read_fn argument of create_agent() or
+create_informant() via $ notation (e.g,
+create_agent(read_fn = &amp;lt;tbl_store&amp;gt;$&amp;lt;name&amp;gt;)) or with tbl_source() (e.g.,
+create_agent(read_fn = ~ tbl_source(&quot;&amp;lt;name&amp;gt;&quot;, &amp;lt;tbl_store&amp;gt;)))." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -177,15 +180,18 @@ $ notation (e.g, create_agent(read_fn = &amp;lt;tbl_store&amp;gt;$&amp;lt;name&a
     <div class="ref-description">
     <p>It can be useful to set up all the data sources you need and just draw from
 them when necessary. This upfront configuration with <code>tbl_store()</code> can be
-quite useful since we can define the methods for obtaining tabular data from
-mixed sources (e.g., database tables, tables generated from flat files, etc.)
-and provide names for these data pulling procedures as a way to access the
-data with <code><a href='tbl_get.html'>tbl_get()</a></code>. Data preparation could be a part of what's in the
-store (imagine procuring several mutated variations of the same source table
-or pre-filtering a database table according to the system time). Another nice
-aspect of organizing table-prep formulas in a single object is supplying
-it to the <code>read_fn</code> argument of <code><a href='create_agent.html'>create_agent()</a></code> or <code><a href='create_informant.html'>create_informant()</a></code> via
-<code><a href='https://rdrr.io/r/base/Extract.html'>$</a></code> notation (e.g, <code>create_agent(read_fn = &lt;tbl_store&gt;$&lt;name&gt;)</code>).</p>
+lets us define the methods for obtaining tabular data from mixed sources
+(e.g., database tables, tables generated from flat files, etc.) and provide
+names for these data pulling procedures as a way to access the data with
+<code><a href='tbl_get.html'>tbl_get()</a></code> or get table-prep formula with <code><a href='tbl_source.html'>tbl_source()</a></code>. Data preparation
+could be a part of what's in the store (imagine procuring several mutated
+variations of the same source table, generating a table from multiple
+sources, or pre-filtering a database table according to the system time).
+Another nice aspect of organizing table-prep formulas in a single object is
+supplying it to the <code>read_fn</code> argument of <code><a href='create_agent.html'>create_agent()</a></code> or
+<code><a href='create_informant.html'>create_informant()</a></code> via <code><a href='https://rdrr.io/r/base/Extract.html'>$</a></code> notation (e.g,
+<code>create_agent(read_fn = &lt;tbl_store&gt;$&lt;name&gt;)</code>) or with <code><a href='tbl_source.html'>tbl_source()</a></code> (e.g.,
+<code>create_agent(read_fn = ~ tbl_source("&lt;name&gt;", &lt;tbl_store&gt;))</code>).</p>
     </div>
 
     <pre class="usage"><span class='fu'>tbl_store</span><span class='op'>(</span><span class='va'>...</span>, .list <span class='op'>=</span> <span class='fu'>list2</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span></pre>
@@ -249,7 +255,7 @@ create_agent(
   write_yaml()
   
 # YAML representation ("agent-sml_table_high.yml")
-read_fn: ~tbl_source("sml_table_high", "tbl_store.yml")
+read_fn: ~ tbl_source("sml_table_high", "tbl_store.yml")
 tbl_name: sml_table_high
 label: An example that uses a table store.
 actions:

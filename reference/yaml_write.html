@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write an agent and informant to a pointblank YAML file — yaml_write • pointblank</title>
+<title>Write pointblank objects to YAML files — yaml_write • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,21 +46,24 @@
 
 
 
-<meta property="og:title" content="Write an agent and informant to a pointblank YAML file — yaml_write" />
-<meta property="og:description" content="With yaml_write() we can take an existing agent and write that agent's
-validation plan to a YAML file. With pointblank YAML, we can modify the
-YAML markup if so desired, or, use as is to create a new agent with the
-yaml_read_agent() function. That agent will have a validation plan and is
-ready to interrogate() the data. We can go a step further and perform an
-interrogation directly from the YAML file with the yaml_agent_interrogate()
-function. That returns an agent with intel (having already interrogated the
-target data table). An informant object can also be written to YAML with
-yaml_write().
-One requirement for writing the agent to YAML is that we need to have a
-table-reading function (read_fn) specified (it's a function that is used to
-read the target table when interrogate() is called). This option can be set
-when using create_agent() or with set_read_fn() (for use with an existing
-agent)." />
+<meta property="og:title" content="Write pointblank objects to YAML files — yaml_write" />
+<meta property="og:description" content="With yaml_write() we can take different pointblank objects (these are
+the ptblank_agent, ptblank_informant, and tbl_store) and write them to
+YAML. With an agent, for example, yaml_write() will write that everything
+that is needed to specify an agent and it's validation plan to a YAML file.
+With YAML, we can modify the YAML markup if so desired, or, use as is to
+create a new agent with the yaml_read_agent() function. That agent will
+have a validation plan and is ready to interrogate() the data. We can go a
+step further and perform an interrogation directly from the YAML file with
+the yaml_agent_interrogate() function. That returns an agent with intel
+(having already interrogated the target data table). An informant object
+can also be written to YAML with yaml_write().
+One requirement for writing an agent or an informant to YAML is that we
+need to have a table-reading function (read_fn) specified (it's a function
+that is used to read the target table when interrogate() or incorporate()
+is called). This option can be set when using
+create_agent()/create_informant() or with set_read_fn() (useful with an
+existing agent or informant object)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -172,26 +175,29 @@ agent)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write an <em>agent</em> and <em>informant</em> to a <strong>pointblank</strong> YAML file</h1>
+    <h1>Write <strong>pointblank</strong> objects to YAML files</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/yaml_write.R'><code>R/yaml_write.R</code></a></small>
     <div class="hidden name"><code>yaml_write.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>With <code>yaml_write()</code> we can take an existing <em>agent</em> and write that <em>agent</em>'s
-validation plan to a YAML file. With <strong>pointblank</strong> YAML, we can modify the
-YAML markup if so desired, or, use as is to create a new agent with the
-<code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code> function. That <em>agent</em> will have a validation plan and is
-ready to <code><a href='interrogate.html'>interrogate()</a></code> the data. We can go a step further and perform an
-interrogation directly from the YAML file with the <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></code>
-function. That returns an agent with intel (having already interrogated the
-target data table). An <em>informant</em> object can also be written to YAML with
-<code>yaml_write()</code>.</p>
-<p>One requirement for writing the <em>agent</em> to YAML is that we need to have a
-table-reading function (<code>read_fn</code>) specified (it's a function that is used to
-read the target table when <code><a href='interrogate.html'>interrogate()</a></code> is called). This option can be set
-when using <code><a href='create_agent.html'>create_agent()</a></code> or with <code><a href='set_read_fn.html'>set_read_fn()</a></code> (for use with an existing
-<em>agent</em>).</p>
+    <p>With <code>yaml_write()</code> we can take different <strong>pointblank</strong> objects (these are
+the <code>ptblank_agent</code>, <code>ptblank_informant</code>, and <code>tbl_store</code>) and write them to
+YAML. With an <em>agent</em>, for example, <code>yaml_write()</code> will write that everything
+that is needed to specify an <em>agent</em> and it's validation plan to a YAML file.
+With YAML, we can modify the YAML markup if so desired, or, use as is to
+create a new agent with the <code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code> function. That <em>agent</em> will
+have a validation plan and is ready to <code><a href='interrogate.html'>interrogate()</a></code> the data. We can go a
+step further and perform an interrogation directly from the YAML file with
+the <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></code> function. That returns an agent with intel
+(having already interrogated the target data table). An <em>informant</em> object
+can also be written to YAML with <code>yaml_write()</code>.</p>
+<p>One requirement for writing an <em>agent</em> or an <em>informant</em> to YAML is that we
+need to have a table-reading function (<code>read_fn</code>) specified (it's a function
+that is used to read the target table when <code><a href='interrogate.html'>interrogate()</a></code> or <code><a href='incorporate.html'>incorporate()</a></code>
+is called). This option can be set when using
+<code><a href='create_agent.html'>create_agent()</a></code>/<code><a href='create_informant.html'>create_informant()</a></code> or with <code><a href='set_read_fn.html'>set_read_fn()</a></code> (useful with an
+existing agent or informant object).</p>
     </div>
 
     <pre class="usage"><span class='fu'>yaml_write</span><span class='op'>(</span>
@@ -208,7 +214,11 @@ when using <code><a href='create_agent.html'>create_agent()</a></code> or with <
     <tr>
       <th>...</th>
       <td><p>Any mix of <strong>pointblank</strong> objects such as the <em>agent</em>
-(<code>ptblank_agent</code>) or the <em>informant</em> (<code>ptblank_informant</code>).</p></td>
+(<code>ptblank_agent</code>), the <em>informant</em> (<code>ptblank_informant</code>), or the table
+store (<code>tbl_store</code>). The agent and informant can be combined into a single
+YAML file (so as both objects have the same value for <code>read_fn</code>). A table
+store cannot be combined with either an agent or an informant so it must
+undergo conversion alone.</p></td>
     </tr>
     <tr>
       <th>.list</th>
@@ -218,7 +228,9 @@ when using <code><a href='create_agent.html'>create_agent()</a></code> or with <
       <th>filename</th>
       <td><p>The name of the YAML file to create on disk. It is
 recommended that either the <code>.yaml</code> or <code>.yml</code> extension be used for this
-file.</p></td>
+file. If not provided then default names will be used (<code>"tbl_store.yml"</code>)
+for a table store and the other objects will get default naming to the
+effect of <code>"&lt;object&gt;-&lt;tbl_name&gt;.yml"</code>.</p></td>
     </tr>
     <tr>
       <th>path</th>

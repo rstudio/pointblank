@@ -61,33 +61,44 @@ x_write_disk <- function(x,
                          keep_tbl = FALSE,
                          keep_extracts = FALSE) {
 
-  x$validation_set$tbl_checked <- NULL
   
-  x$validation_set <- 
-    x$validation_set %>%
-    dplyr::mutate(tbl_checked = list(NULL))
+  if (!any(inherits(x, "ptblank_agent") | inherits(x, "ptblank_informant"))) {
+    stop(
+      "The object given as `x` is neither an agent nor an informant.", 
+      call. = FALSE
+    )
+  }
   
-  if (keep_tbl) {
-    
-    if (inherits(x$tbl, "tbl_dbi") || inherits(x$tbl, "tbl_spark")) {
-      
-      warning(
-        "A table of class `tbl_dbi` or `tbl_spark` cannot be ",
-        "kept with the object.",
-        call. = FALSE
-      )
+  if (inherits(x, "ptblank_agent")) {
 
+    x$validation_set$tbl_checked <- NULL
+    
+    x$validation_set <- 
+      x$validation_set %>%
+      dplyr::mutate(tbl_checked = list(NULL))
+    
+    if (keep_tbl) {
+      
+      if (inherits(x$tbl, "tbl_dbi") || inherits(x$tbl, "tbl_spark")) {
+        
+        warning(
+          "A table of class `tbl_dbi` or `tbl_spark` cannot be ",
+          "kept with the object.",
+          call. = FALSE
+        )
+        
+        x <- remove_tbl(x)
+      }
+      
+    } else if (!keep_tbl) {
       x <- remove_tbl(x)
     }
     
-  } else if (!keep_tbl) {
-    x <- remove_tbl(x)
+    if (!keep_extracts) {
+      x$extracts <- list()
+    }
   }
   
-  if (!keep_extracts) {
-    x$extracts <- list()
-  }
-
   if (!is.null(path)) {
     filename <- file.path(path, filename)
   }

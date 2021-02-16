@@ -1,5 +1,9 @@
+type: informant
 read_fn: ~small_table
+tbl_name: small_table
 info_label: A simple example with the `small_table`.
+lang: en
+locale: en
 table:
   name: small_table
   _columns: 8

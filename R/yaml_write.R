@@ -514,6 +514,10 @@ to_list_label <- function(label) {
   list(label = label)
 }
 
+to_list_info_label <- function(label) {
+  list(info_label = label)
+}
+
 to_list_tbl_name <- function(tbl_name) {
 
   if (is.na(tbl_name)) {

@@ -30,10 +30,10 @@
 #' target table, and the date-time of processing. For convenience and
 #' modularity, this setup is ideal when a table store YAML file (typically named
 #' `"tbl_store.yml"` and produced via the [tbl_store()] and [yaml_write()]
-#' workflow) in available in the directory, and tables-prep formulas are
+#' workflow) is available in the directory, and when table-prep formulas are
 #' accessed by name through [tbl_source()].
 #' 
-#' A typical directory of files set up for execution like this might have the
+#' A typical directory of files set up for execution in this way might have the
 #' following contents:
 #' 
 #' - a `"tbl_store.yml"` file for holding table-prep formulas (created with

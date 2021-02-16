@@ -173,7 +173,7 @@ tbl_store <- function(...,
     
     if (!inherits(tbl_list[[i]], "formula")) {
       stop(
-        "Each entry to `tbl_catalog()` must be a formula.",
+        "Each entry to `tbl_store()` must be a formula.",
         call. = FALSE
       )
     }

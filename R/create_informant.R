@@ -243,7 +243,6 @@ create_informant <- function(tbl = NULL,
   metadata_list <-
     c(
       list(
-        info_label = label,
         table = list(
           name = table.name,
           `_columns` = table.columns,

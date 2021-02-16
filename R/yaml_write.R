@@ -1042,7 +1042,9 @@ as_informant_yaml_list <- function(informant) {
     )
   }
   
+  lst_tbl_name <- to_list_tbl_name(informant$tbl_name)
   lst_read_fn <- to_list_read_fn(informant$read_fn)
+  lst_info_label <- to_list_info_label(informant$info_label)
   
   if (length(informant$meta_snippets) > 0) {
     

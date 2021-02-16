@@ -1073,11 +1073,14 @@ as_informant_yaml_list <- function(informant) {
   }
   
   c(
-    lst_read_fn,
-    lst_lang,
-    lst_locale,
-    lst_meta_snippets,
-    informant$metadata
+    type = "informant",           # YAML type: `informant`
+    lst_read_fn,                  # table-prep formula
+    lst_tbl_name,                 # table name
+    lst_info_label,               # informant label
+    lst_lang,                     # informant language
+    lst_locale,                   # informant locale
+    lst_meta_snippets,            # informant metadata snippet stmts
+    informant$metadata            # informant metadata entries
   )
 }
 

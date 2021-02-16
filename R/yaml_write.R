@@ -1101,5 +1101,10 @@ as_tbl_store_yaml_list <- function(tbl_store) {
     names(tbl_list)[i] <- tbl_name
   }
   
-  list(tbls = tbl_list)
+  lst_tbls <- list(tbls = tbl_list)
+  
+  c(
+    type = "tbl_store",           # YAML type: `tbl_store`
+    lst_tbls                      # table store list of table-prep formulas
+  )
 }

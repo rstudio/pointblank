@@ -39,7 +39,6 @@ test_that("Creating a valid `informant` object is possible", {
   expect_is(informant$lang, "character")
   expect_is(informant$locale, "character")
   expect_is(informant$metadata, "list")
-  expect_is(informant$metadata$info_label, "character")
   expect_is(informant$metadata$table, "list")
   expect_is(informant$metadata$table$name, "character")
   expect_is(informant$metadata$table$`_columns`, "integer")

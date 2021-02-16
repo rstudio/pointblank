@@ -105,10 +105,11 @@
 #' 
 #' @export
 incorporate <- function(informant) {
-  
+
   # Get the target table for this informant object
   # TODO: Use the same scheme that the `agent` does
   tbl <- informant$tbl
+  tbl_name <- informant$tbl_name
   read_fn <- informant$read_fn
   
   # Extract the informant's `lang` and `locale` values
@@ -129,9 +130,21 @@ incorporate <- function(informant) {
     } else if (rlang::is_formula(read_fn)) {
       
       tbl <- 
-        read_fn %>%
-        rlang::f_rhs() %>%
+        read_fn %>% 
+        rlang::f_rhs() %>% 
         rlang::eval_tidy(env = caller_env(n = 1))
+      
+      if (inherits(tbl, "read_fn")) {
+        
+        if (inherits(tbl, "with_tbl_name") && is.na(tbl_name)) {
+          tbl_name <- tbl %>% rlang::f_lhs() %>% as.character()
+        }
+        
+        tbl <-
+          tbl %>%
+          rlang::f_rhs() %>%
+          rlang::eval_tidy(env = caller_env(n = 1))
+      }
       
     } else {
       

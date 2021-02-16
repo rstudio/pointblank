@@ -1,9 +1,11 @@
-read_fn: ~tbl_source("sml_table", tbls)
+type: agent
+read_fn: ~tbl_source("sml_table", "tbl_store.yml")
 tbl_name: sml_table
 label: An example that uses a table store.
+lang: en
+locale: en
 actions:
   warn_fraction: 0.1
-locale: en
 steps:
 - col_exists:
     columns: vars(date, date_time)

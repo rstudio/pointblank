@@ -514,6 +514,10 @@ to_list_label <- function(label) {
   list(label = label)
 }
 
+to_list_info_label <- function(label) {
+  list(info_label = label)
+}
+
 to_list_tbl_name <- function(tbl_name) {
 
   if (is.na(tbl_name)) {
@@ -644,15 +648,14 @@ as_agent_yaml_list <- function(agent,
     lst_embed_report <- list(embed_report = agent$embed_report)
   }
 
-  if (is.null(agent$lang) || 
-      (!is.null(agent$lang) && agent$lang == "en")) {
-    lst_lang <- NULL
+  if (is.null(agent$lang)) {
+    lst_lang <- "en"
   } else {
     lst_lang <- list(lang = agent$lang)
   }
   
   if (is.null(agent$locale)) {
-    lst_locale <- NULL
+    lst_locale <- "en"
   } else {
     lst_locale <- list(locale = agent$locale)
   }
@@ -999,15 +1002,16 @@ as_agent_yaml_list <- function(agent,
   }
   
   c(
-    lst_read_fn,
-    lst_tbl_name,
-    lst_label,
-    lst_action_levels,
-    lst_end_fns,
-    lst_embed_report,
-    lst_lang,
-    lst_locale,
-    list(steps = all_steps)
+    type = "agent",               # YAML type: `agent`
+    lst_read_fn,                  # table-prep formula
+    lst_tbl_name,                 # table name
+    lst_label,                    # agent label
+    lst_lang,                     # agent language
+    lst_locale,                   # agent locale
+    lst_action_levels,            # agent action levels stmt
+    lst_end_fns,                  # agent end functions stmt
+    lst_embed_report,             # agent embed report in saved file
+    list(steps = all_steps)       # list of validation steps
   )
 }
 
@@ -1038,7 +1042,9 @@ as_informant_yaml_list <- function(informant) {
     )
   }
   
+  lst_tbl_name <- to_list_tbl_name(informant$tbl_name)
   lst_read_fn <- to_list_read_fn(informant$read_fn)
+  lst_info_label <- to_list_info_label(informant$info_label)
   
   if (length(informant$meta_snippets) > 0) {
     
@@ -1056,25 +1062,27 @@ as_informant_yaml_list <- function(informant) {
     lst_meta_snippets <- NULL
   }
   
-  if (is.null(informant$lang) || 
-      (!is.null(informant$lang) && informant$lang == "en")) {
-    lst_lang <- NULL
+  if (is.null(informant$lang)) {
+    lst_lang <- "en"
   } else {
     lst_lang <- list(lang = informant$lang)
   }
   
   if (is.null(informant$locale)) {
-    lst_locale <- NULL
+    lst_locale <- "en"
   } else {
     lst_locale <- list(locale = informant$locale)
   }
   
   c(
-    lst_read_fn,
-    lst_lang,
-    lst_locale,
-    lst_meta_snippets,
-    informant$metadata
+    type = "informant",           # YAML type: `informant`
+    lst_read_fn,                  # table-prep formula
+    lst_tbl_name,                 # table name
+    lst_info_label,               # informant label
+    lst_lang,                     # informant language
+    lst_locale,                   # informant locale
+    lst_meta_snippets,            # informant metadata snippet stmts
+    informant$metadata            # informant metadata entries
   )
 }
 
@@ -1093,5 +1101,10 @@ as_tbl_store_yaml_list <- function(tbl_store) {
     names(tbl_list)[i] <- tbl_name
   }
   
-  list(tbls = tbl_list)
+  lst_tbls <- list(tbls = tbl_list)
+  
+  c(
+    type = "tbl_store",           # YAML type: `tbl_store`
+    lst_tbls                      # table store list of table-prep formulas
+  )
 }

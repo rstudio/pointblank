@@ -36,11 +36,9 @@ test_that("Reading an informant from YAML is possible", {
       row_count = "There are {row_count} rows available."
     )
   
-  temp_file <- tempfile(fileext = ".yaml")
+  yaml_write(informant)
   
-  yaml_write(informant, filename = temp_file)
-  
-  informant_from_yaml <- yaml_read_informant(filename = temp_file)
+  informant_from_yaml <- yaml_read_informant(filename = "informant-test_table.yml")
   
   # Expect that the original informant and the one read
   # back from YAML are both of the class `ptblank_informant`
@@ -69,11 +67,9 @@ test_that("Reading an informant from YAML is possible", {
   # metadata revisions (the latest only)
   informant_inc <- informant %>% incorporate()
   
-  temp_file <- tempfile(fileext = ".yaml")
+  yaml_write(informant_inc, filename = "informant-test_table-2.yml")
   
-  yaml_write(informant_inc, filename = temp_file)
-  
-  informant_inc_from_yaml <- yaml_read_informant(filename = temp_file)
+  informant_inc_from_yaml <- yaml_read_informant(filename = "informant-test_table-2.yml")
   
   # Expect that the `informant_inc` object has the revised
   # metadata list component but that the derived object from
@@ -93,3 +89,6 @@ test_that("Reading an informant from YAML is possible", {
   expect_is(report_1_inc, "gt_tbl")
   expect_is(report_1_from_yaml_inc, "gt_tbl")
 })
+
+fs::file_delete(path = "informant-test_table.yml")
+fs::file_delete(path = "informant-test_table-2.yml")

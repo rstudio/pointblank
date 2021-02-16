@@ -123,6 +123,7 @@ class(agent)
 Other pointblank YAML: 
 \code{\link{yaml_agent_show_exprs}()},
 \code{\link{yaml_agent_string}()},
+\code{\link{yaml_exec}()},
 \code{\link{yaml_informant_incorporate}()},
 \code{\link{yaml_read_agent}()},
 \code{\link{yaml_read_informant}()},

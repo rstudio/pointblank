@@ -139,8 +139,25 @@ yaml_read_informant <- function(filename,
     filename <- file.path(path, filename)
   }
   
+  initial_wd <- fs::path_abs(fs::path_wd())
+  wd_path <- fs::as_fs_path(dirname(filename))
+  
+  if (!fs::dir_exists(wd_path)) {
+    stop(
+      "The `path` provided (", as.character(wd_path), ") does not exist.",
+      call. = FALSE
+    )
+  }
+  
+  if (initial_wd != wd_path) {
+    setwd(as.character(wd_path))
+    on.exit(setwd(as.character(initial_wd)))
+  }
+  
+  file_to_read <- basename(filename)
+  
   informant_list <- 
-    expr_from_informant_yaml(path = filename, incorporate = FALSE)
+    expr_from_informant_yaml(path = file_to_read, incorporate = FALSE)
 
   informant <- 
     informant_list$expr_str %>%
@@ -258,7 +275,7 @@ yaml_read_informant <- function(filename,
 #' @export
 yaml_informant_incorporate <- function(filename,
                                        path = NULL) {
-  
+
   if (!is.null(path)) {
     filename <- file.path(path, filename)
   }
@@ -272,7 +289,7 @@ yaml_informant_incorporate <- function(filename,
     rlang::eval_tidy()
   
   informant$metadata <- informant_list$metadata
-  
+
   informant <- informant %>% incorporate()
   informant
 }
@@ -287,7 +304,7 @@ expr_from_informant_yaml <- function(path,
   check_info_yaml_table(y)
   check_info_yaml_columns(y)
   check_info_yaml_others(y)
-
+  
   if ("read_fn" %in% names(y)) {
     read_fn <- paste0("  read_fn = ", y$read_fn)
   } else {
@@ -346,6 +363,9 @@ expr_from_informant_yaml <- function(path,
   y$lang <- NULL
   y$locale <- NULL
   y$meta_snippets <- NULL
+  y$type <- NULL
+  y$tbl_name <- NULL
+  y$info_label <- NULL
 
   list(
     expr_str = expr_str,

@@ -56,7 +56,7 @@ test_that("Incorporating an informant yields the correct results", {
   # `informant$metadata_rev`
   expect_equal(
     names(informant_inc$metadata),
-    c("info_label", "table", "columns", "rows")
+    c("table", "columns", "rows")
   )
   expect_equal(
     names(informant_inc$metadata_rev),
@@ -149,11 +149,9 @@ test_that("Incorporating an informant from YAML yields the correct results", {
       row_count = "There are {row_count} rows available."
     )
   
-  temp_file <- tempfile(fileext = ".yaml")
+  yaml_write(informant)
   
-  yaml_write(informant, filename = temp_file)
-  
-  informant_from_yaml <- yaml_read_informant(filename = temp_file)
+  informant_from_yaml <- yaml_read_informant(filename = "informant-test_table.yml")
   
   informant_inc_yaml <- informant_from_yaml %>% incorporate()
   
@@ -174,7 +172,7 @@ test_that("Incorporating an informant from YAML yields the correct results", {
   # `informant$metadata_rev`
   expect_equal(
     names(informant_inc_yaml$metadata),
-    c("info_label", "table", "columns", "rows")
+    c("table", "columns", "rows")
   )
   expect_equal(
     names(informant_inc_yaml$metadata_rev),
@@ -211,18 +209,20 @@ test_that("Incorporating an informant from YAML yields the correct results", {
   n_columns_i <- informant_inc_yaml$metadata_rev$table$`_columns`
   
   # Modify the `read_fn` in the YAML file to read in a slightly altered table
-  yaml_file_lines <- readLines(temp_file)
+  yaml_file_lines <- readLines("informant-test_table.yml")
   
-  yaml_file_lines[1] <- 
-    yaml_file_lines[1] %>%
+  read_fn_line <- which(grepl("read_fn", yaml_file_lines))
+  
+  yaml_file_lines[read_fn_line] <- 
+    yaml_file_lines[read_fn_line] %>%
     gsub("test_table.csv", "test_table_2.csv", .) %>%
     gsub("TDdcddlc", "TDdcddlcd", .)
   
-  writeLines(yaml_file_lines, con = temp_file)
+  writeLines(yaml_file_lines, con = "informant-test_table.yml")
   
   # Incorporate the informant in the YAML file with
   # `yaml_informant_incorporate()` function
-  informant_inc_yaml_2 <- yaml_informant_incorporate(filename = temp_file)
+  informant_inc_yaml_2 <- yaml_informant_incorporate(filename = "informant-test_table.yml")
     
   # Get the row and column count values
   n_row_f <- informant_inc_yaml_2$metadata_rev$table$`_rows`
@@ -235,3 +235,5 @@ test_that("Incorporating an informant from YAML yields the correct results", {
     c(n_columns_i, n_columns_f), c("8", "9")
   )
 })
+
+fs::file_delete(path = "informant-test_table.yml")

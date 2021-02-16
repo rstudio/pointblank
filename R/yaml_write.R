@@ -1002,15 +1002,16 @@ as_agent_yaml_list <- function(agent,
   }
   
   c(
-    lst_read_fn,
-    lst_tbl_name,
-    lst_label,
-    lst_action_levels,
-    lst_end_fns,
-    lst_embed_report,
-    lst_lang,
-    lst_locale,
-    list(steps = all_steps)
+    type = "agent",               # YAML type: `agent`
+    lst_read_fn,                  # table-prep formula
+    lst_tbl_name,                 # table name
+    lst_label,                    # agent label
+    lst_lang,                     # agent language
+    lst_locale,                   # agent locale
+    lst_action_levels,            # agent action levels stmt
+    lst_end_fns,                  # agent end functions stmt
+    lst_embed_report,             # agent embed report in saved file
+    list(steps = all_steps)       # list of validation steps
   )
 }
 

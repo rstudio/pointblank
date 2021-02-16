@@ -141,7 +141,24 @@ yaml_read_agent <- function(filename,
     filename <- file.path(path, filename)
   }
   
-  expr_from_agent_yaml(path = filename, interrogate = FALSE) %>%
+  initial_wd <- fs::path_abs(fs::path_wd())
+  wd_path <- fs::as_fs_path(dirname(filename))
+  
+  if (!fs::dir_exists(wd_path)) {
+    stop(
+      "The `path` provided (", as.character(wd_path), ") does not exist.",
+      call. = FALSE
+    )
+  }
+  
+  if (initial_wd != wd_path) {
+    setwd(as.character(wd_path))
+    on.exit(setwd(as.character(initial_wd)))
+  }
+  
+  file_to_read <- basename(filename)
+  
+  expr_from_agent_yaml(path = file_to_read, interrogate = FALSE) %>%
     rlang::parse_expr() %>%
     rlang::eval_tidy()
 }
@@ -259,7 +276,7 @@ yaml_read_agent <- function(filename,
 #' @export
 yaml_agent_interrogate <- function(filename,
                                    path = NULL) {
-  
+
   if (!is.null(path)) {
     filename <- file.path(path, filename)
   }

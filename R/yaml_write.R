@@ -648,15 +648,14 @@ as_agent_yaml_list <- function(agent,
     lst_embed_report <- list(embed_report = agent$embed_report)
   }
 
-  if (is.null(agent$lang) || 
-      (!is.null(agent$lang) && agent$lang == "en")) {
-    lst_lang <- NULL
+  if (is.null(agent$lang)) {
+    lst_lang <- "en"
   } else {
     lst_lang <- list(lang = agent$lang)
   }
   
   if (is.null(agent$locale)) {
-    lst_locale <- NULL
+    lst_locale <- "en"
   } else {
     lst_locale <- list(locale = agent$locale)
   }
@@ -1060,15 +1059,14 @@ as_informant_yaml_list <- function(informant) {
     lst_meta_snippets <- NULL
   }
   
-  if (is.null(informant$lang) || 
-      (!is.null(informant$lang) && informant$lang == "en")) {
-    lst_lang <- NULL
+  if (is.null(informant$lang)) {
+    lst_lang <- "en"
   } else {
     lst_lang <- list(lang = informant$lang)
   }
   
   if (is.null(informant$locale)) {
-    lst_locale <- NULL
+    lst_locale <- "en"
   } else {
     lst_locale <- list(locale = informant$locale)
   }

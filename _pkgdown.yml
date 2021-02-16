@@ -206,6 +206,7 @@ reference:
     - yaml_agent_string
     - yaml_agent_show_exprs
     - yaml_informant_incorporate
+    - yaml_exec
     
   - title: Utility and Helper Functions
     contents:

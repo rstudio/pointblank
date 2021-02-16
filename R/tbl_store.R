@@ -416,10 +416,8 @@ yaml_read_tbl_store <- function(filename) {
   # Read the YAML file with `yaml::read_yaml()`
   y <- yaml::read_yaml(file = filename)
   
-  table_names <- names(y[[1]])
-  table_formulas <- 
-    unlist(y, recursive = FALSE, use.names = FALSE) %>%
-    unlist()
+  table_names <- names(y$tbls)
+  table_formulas <- unlist(y$tbls, recursive = FALSE, use.names = FALSE)
   
   statements <- paste(table_names, table_formulas)
   

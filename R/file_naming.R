@@ -210,7 +210,7 @@ affix_date <- function(filename,
 #' @export
 affix_datetime <- function(filename,
                            position = c("end", "start"),
-                           format = "%Y-%m-%dT%H:%M:%S",
+                           format = "%Y-%m-%d_%H-%M-%S",
                            delimiter = "_",
                            utc_time = TRUE,
                            add_tz = FALSE) {

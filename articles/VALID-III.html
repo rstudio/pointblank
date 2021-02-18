@@ -93,7 +93,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -114,7 +114,7 @@
       <h1 data-toc-skip>Introduction to the <strong>Expectations in Unit Tests</strong> Workflow (<strong>VALID-III</strong>)</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/vignettes/VALID-III.Rmd"><code>vignettes/VALID-III.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/vignettes/VALID-III.Rmd" class="external-link"><code>vignettes/VALID-III.Rmd</code></a></small>
       <div class="hidden name"><code>VALID-III.Rmd</code></div>
 
     </div>
@@ -182,12 +182,12 @@
 <p>The <strong>testthat</strong> package has collection of functions that begin with <code>expect_</code>. It’s no coincidence that the <strong>pointblank</strong> for the <strong>VALID-III</strong> workflow adopts the same naming convention. The idea is to use these functions interchangeably with those from <strong>testthat</strong> in the standard <strong>testthat</strong> workflow (in a <code>test-&lt;name&gt;.R</code> file, inside the <code>tests/testthat</code> folder). The big difference here is that instead of testing function outputs, we are testing data tables. However, tables may be returned from function calls and the <code>expect_*()</code> functions offered up by <strong>pointblank</strong> might offer more flexibility for testing that data. For instance <code><a href="../reference/col_vals_between.html">expect_col_vals_between()</a></code> allows us to write an expectation with fine control on boundary values (and whether they are inclusive bounds), whether <code>NA</code> values should be ignored, and we can even set a failure threshold if that makes sense for the expectation.</p>
 <p>Here’s an example of how to generate some tests on data with <strong>testthat</strong> and also with <strong>pointblank</strong>. For the <code>small_table</code> dataset, let’s write expectations that show that non-NA values in column <code>c</code> are between <code>2</code> and <code>9</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/logical-expectations.html">expect_true</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">$</span><span class="va">c</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/logical-expectations.html">expect_true</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">$</span><span class="va">c</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">9</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>There is no <strong>testthat</strong> function that tests for values between two values. The original strategy was to use <code><a href="https://testthat.r-lib.org/reference/comparison-expectations.html">testthat::expect_gte()</a></code> and <code>testthat::lte()</code> with <code>small_table$c</code> as the <code>object</code> in both, however, that doesn’t work because that results in a logical vector greater than length 1. Also, there is no allowance for <code>NA</code> values to be skipped. The best I could do was the above.</p>
+<code class="sourceCode R"><span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/logical-expectations.html" class="external-link">expect_true</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">$</span><span class="va">c</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/logical-expectations.html" class="external-link">expect_true</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">$</span><span class="va">c</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">9</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>There is no <strong>testthat</strong> function that tests for values between two values. The original strategy was to use <code><a href="https://testthat.r-lib.org/reference/comparison-expectations.html" class="external-link">testthat::expect_gte()</a></code> and <code>testthat::lte()</code> with <code>small_table$c</code> as the <code>object</code> in both, however, that doesn’t work because that results in a logical vector greater than length 1. Also, there is no allowance for <code>NA</code> values to be skipped. The best I could do was the above.</p>
 <p>The <strong>pointblank</strong> version of this task makes for a more succinct and understandable expectation expression:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/col_vals_between.html">expect_col_vals_between</a></span><span class="op">(</span><span class="va">small_table</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">9</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/col_vals_between.html">expect_col_vals_between</a></span><span class="op">(</span><span class="va">small_table</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">9</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>The arguments in the <code><a href="../reference/col_vals_between.html">expect_col_vals_between()</a></code> give us everything we need to check tabular data without having to do subsetting and perform other transformations. There are a few added benefits. Should data come from a data source other than locals data frame, the SQL expressions are handled internally and they have been tested extensively across the supported database types and in Spark DataFrames as well.</p>
 </div>
 <div id="these-expect_-functions-are-simpler-than-their-counterparts" class="section level1">
@@ -222,7 +222,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

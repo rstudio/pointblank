@@ -449,4 +449,38 @@ print.tbl_store <- function(x, ...) {
   # nocov end 
 }
 
+#' Print the `read_fn` object
+#'
+#' This function will allow the `read_fn` to be nicely printed.
+#' 
+#' @param x An object of class `read_fn`.
+#' @param ... Any additional parameters.
+#' 
+#' @keywords internal
+#' @export
+print.read_fn <- function(x, ...) {
+  
+  # nocov start
+  tbl_name <- capture_formula(x)[1]
+  tbl_formula <- capture_formula(x)[2]
+  
+  has_given_name <- inherits(x, "with_tbl_name")
+  
+  cli::cli_div(
+    theme = list(
+      span.red = list(color = "red"),
+      span.blue = list(color = "blue")
+    )
+  )
+  
+  cli::cli_text(
+    paste0(
+      "{.blue {ifelse(is.na(tbl_name), '', tbl_name)}}",
+      "{.red {ifelse(has_given_name, '', '*')}} // {tbl_formula}"
+    )
+  )
+
+  # nocov end 
+}
+
 # nolint end

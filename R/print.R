@@ -370,7 +370,6 @@ print.action_levels <- function(x, ...) {
   # nocov end 
 }
 
-
 #' Print the `ptblank_multiagent` object
 #'
 #' This function will allow the `ptblank_multiagent` to be nicely printed.
@@ -386,6 +385,66 @@ print.ptblank_multiagent <- function(x, view = interactive(), ...) {
   # nocov start 
   
   print(get_multiagent_report(x), view = view, ...)
+  
+  # nocov end 
+}
+
+#' Print the `tbl_store` object
+#'
+#' This function will allow the `tbl_store` to be nicely printed.
+#' 
+#' @param x An object of class `tbl_store`.
+#' @param ... Any additional parameters.
+#' 
+#' @keywords internal
+#' @export
+print.tbl_store <- function(x, ...) {
+  
+  # nocov start
+  
+  tbl_names <- names(x)
+  
+  n_tbls <- length(tbl_names)
+  
+  has_given_name <- 
+    vapply(
+      x,
+      FUN.VALUE = logical(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) inherits(x, "with_tbl_name")
+    )
+  
+  tbl_formulas <-
+    vapply(
+      x,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) capture_formula(x)[2]
+    )
+
+  cli::cli_div(
+    theme = list(
+      span.yellow = list(color = "yellow"),
+      span.red = list(color = "red"),
+      span.blue = list(color = "blue")
+    )
+  )
+  
+  cli::cli_rule(
+    left = "The `table_store` table formulas",
+    right = paste0("n = ", n_tbls)
+  )
+  
+  for (i in seq_len(n_tbls)) {
+    cli::cli_text(
+      paste0(
+        "{.yellow {i}} {.blue {tbl_names[i]}}",
+        "{.red {ifelse(has_given_name[i], '', '*')}} // {tbl_formulas[i]}"
+      )
+    )
+  }
+  
+  cli::cli_rule()
   
   # nocov end 
 }

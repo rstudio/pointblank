@@ -7,7 +7,7 @@
 affix_datetime(
   filename,
   position = c("end", "start"),
-  format = "\%Y-\%m-\%dT\%H:\%M:\%S",
+  format = "\%Y-\%m-\%dT\%H\%M\%S",
   delimiter = "_",
   utc_time = TRUE,
   add_tz = FALSE

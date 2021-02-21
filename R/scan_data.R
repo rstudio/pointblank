@@ -261,7 +261,8 @@ probe_overview_stats <- function(data,
     dplyr::tibble(r_col_types = r_col_types) %>%
     dplyr::group_by(r_col_types) %>%
     dplyr::summarize(count = dplyr::n()) %>%
-    dplyr::arrange(dplyr::desc(count))
+    dplyr::arrange(dplyr::desc(count)) %>%
+    utils::head(6E8)
   
   data_overview_gt <-
     gt::gt(data_overview_tbl) %>%
@@ -571,7 +572,8 @@ get_quantile_stats_gt <- function(data_column,
         data_column %>%
         dplyr::rename(a = 1) %>%
         dplyr::filter(!is.na(a)) %>%
-        dplyr::arrange(a)
+        dplyr::arrange(a) %>%
+        utils::head(6E8)
       
       n_rows_data <-  
         data_arranged %>%
@@ -589,31 +591,31 @@ get_quantile_stats_gt <- function(data_column,
             as.numeric(),
           p05 = data_arranged %>% 
             utils::head(quantile_rows[1]) %>%
-            dplyr::arrange(desc(a)) %>%
+            dplyr::arrange(dplyr::desc(a)) %>%
             utils::head(1) %>%
             dplyr::pull(a) %>%
             as.numeric(),
           q_1 = data_arranged %>% 
             utils::head(quantile_rows[2]) %>%
-            dplyr::arrange(desc(a)) %>%
+            dplyr::arrange(dplyr::desc(a)) %>%
             utils::head(1) %>%
             dplyr::pull(a) %>%
             as.numeric(),
           med = data_arranged %>% 
             utils::head(quantile_rows[3]) %>%
-            dplyr::arrange(desc(a)) %>%
+            dplyr::arrange(dplyr::desc(a)) %>%
             utils::head(1) %>%
             dplyr::pull(a) %>%
             as.numeric(),
           q_3 = data_arranged %>%
             utils::head(quantile_rows[4]) %>%
-            dplyr::arrange(desc(a)) %>%
+            dplyr::arrange(dplyr::desc(a)) %>%
             utils::head(1) %>%
             dplyr::pull(a) %>%
             as.numeric(),
           p95 = data_arranged %>%
             utils::head(quantile_rows[5]) %>%
-            dplyr::arrange(desc(a)) %>%
+            dplyr::arrange(dplyr::desc(a)) %>%
             utils::head(1) %>%
             dplyr::pull(a) %>%
             as.numeric(),
@@ -831,7 +833,8 @@ get_common_values_gt <- function(data_column,
     data_column %>%
     dplyr::group_by_at(1) %>%
     dplyr::count() %>%
-    dplyr::arrange(desc(n)) %>%
+    dplyr::arrange(dplyr::desc(n)) %>%
+    utils::head(6E8) %>%
     dplyr::ungroup()
   
   n_rows_common_values_tbl <- 
@@ -846,7 +849,8 @@ get_common_values_gt <- function(data_column,
     other_values_tbl <-
       common_values_tbl %>% 
       dplyr::anti_join(top_ten_rows, by = colnames(common_values_tbl)) %>% 
-      dplyr::arrange(desc(n))
+      dplyr::arrange(dplyr::desc(n)) %>%
+      utils::head(6E8)
     
     other_values_distinct <- 
       other_values_tbl %>%

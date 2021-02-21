@@ -158,4 +158,3 @@ get_rds_tbl_info_files_tbl <- function(rds_tbl, tbl_name) {
   
   rds_tbl[rds_tbl$tbl_name == tbl_name, "information_files"][[1]][[1]]
 }
-

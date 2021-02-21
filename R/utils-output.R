@@ -22,14 +22,20 @@ create_rds_tbl <- function(path = NULL, files = NULL) {
   agent_rds_files <- 
     fs::dir_ls(
       path = path,
-      regexp = "agent.*?[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}-[0-9]{2}-[0-9]{2}.rds$"
+      regexp = paste0(
+        "agent.*?[0-9]{4}-[0-9]{2}-[0-9]{2}_",
+        "[0-9]{2}-[0-9]{2}-[0-9]{2}.rds$"
+      )
     ) %>%
     basename()
   
   agent_rds_tbl_names <-
     unique(
       gsub(
-        "^agent-(.*?)-[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}-[0-9]{2}-[0-9]{2}.rds",
+        paste0(
+          "^agent-(.*?)-[0-9]{4}-[0-9]{2}-[0-9]{2}_",
+          "[0-9]{2}-[0-9]{2}-[0-9]{2}.rds"
+        ),
         "\\1",
         agent_rds_files
       )
@@ -38,14 +44,20 @@ create_rds_tbl <- function(path = NULL, files = NULL) {
   informant_rds_files <- 
     fs::dir_ls(
       path = path,
-      regexp = "informant.*?[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}-[0-9]{2}-[0-9]{2}.rds$",
+      regexp = paste0(
+        "informant.*?[0-9]{4}-[0-9]{2}-[0-9]{2}_",
+        "[0-9]{2}-[0-9]{2}-[0-9]{2}.rds$"
+      ),
     ) %>%
     basename()
   
   informant_rds_tbl_names <-
     unique(
       gsub(
-        "^informant-(.*?)-[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}-[0-9]{2}-[0-9]{2}.rds",
+        paste0(
+          "^informant-(.*?)-[0-9]{4}-[0-9]{2}-[0-9]{2}_",
+          "[0-9]{2}-[0-9]{2}-[0-9]{2}.rds"
+        ),
         "\\1",
         informant_rds_files
       )

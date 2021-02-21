@@ -107,9 +107,8 @@ get_informant_report <- function(informant,
     y <- informant$metadata
   }
   
-  if ("info_label" %in% names(y)) {
-    info_label <- y[["info_label"]]
-    y <- y[names(y) != "info_label"]
+  if ("info_label" %in% names(informant)) {
+    info_label <- informant[["info_label"]]
   } else {
     info_label <- paste0("[", gsub(" ", "|", as.character(Sys.time())), "]")
   }

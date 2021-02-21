@@ -127,6 +127,7 @@ utils::globalVariables(
     "status_color",
     "step_id",
     "tbl_checked",
+    "time_str",
     "total_pts",
     "type",
     "value",

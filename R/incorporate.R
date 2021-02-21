@@ -280,11 +280,13 @@ incorporate <- function(informant) {
   metadata_extra <- informant$metadata[extra_sections]
   
   for (i in seq_along(extra_sections)) {
-    
-    metadata_extra[[i]] <-
-      lapply(metadata_extra[[i]], function(x) {
-        glue_safely(x, .otherwise = "(SNIPPET MISSING)")
-      })
+    for (j in seq_along(metadata_extra[[i]])) {
+      
+      metadata_extra[[i]][[j]] <-
+        lapply(metadata_extra[[i]][[j]], function(x) {
+          glue_safely(x, .otherwise = "(SNIPPET MISSING)")
+        })
+    }
   }
   
   metadata_rev <-

@@ -308,16 +308,20 @@ tbl_source <- function(tbl,
   tbl_entry
 }
 
-#' 
-#' @description
-#' With a `tbl_store` object at the ready, any table referenced in that store
-#' can be materialized by providing a matching table name. The [tbl_store()]
-#' function is used to create a store of tables, which is a catalog of table-
-#' prep formulas with names supplied for each of the tables. The `tbl_get()`
-#' function does the work of evaluating a table-prep formula and returning the
-#' requested table.
 #' Obtain a materialized table via a table store
 #' 
+#' @description 
+#' The `tbl_get()` function gives us the means to materialize a table that has
+#' an entry in a table store (i.e., has a table-prep formula with a unique
+#' name). The table store that is used for this can be in the form of a
+#' `tbl_store` object (created with the [tbl_store()] function) or an on-disk
+#' YAML representation of a table store (created by using [yaml_write()] with a
+#' `tbl_store` object).
+#'
+#' Should you want a table-prep formula from a table store to use as a value for
+#' `read_fn` (in [create_agent()], [create_informant()], or [set_read_fn()]),
+#' then have a look at the [tbl_source()] function.
+#'
 #' @param tbl The table to retrieve from a table `store`. This table could be
 #'   identified by its name (e.g., `tbl = "large_table"`) or by supplying a
 #'   reference using a subset (with `$`) of the `tbl_store` object (e.g.,

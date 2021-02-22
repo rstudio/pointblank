@@ -60,12 +60,12 @@ read_disk_multiagent <- function(filenames = NULL,
     
   } else if (!is.null(filenames)) {
     
-    # TODO: check that filenames is a character vector
-    # TODO: check that filenames isn't zero length
+    # TODO: check that `filenames` is a character vector
+    # TODO: check that `filenames` isn't zero length
     
     file_list <- filenames
     
-    # TODO: verify that the filenames point to files on disk
+    # TODO: verify that the `filenames` point to actual files on disk
   }
   
   agent_list <-

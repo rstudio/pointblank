@@ -217,10 +217,14 @@ tbl_store <- function(...,
 #' Obtain a table-prep formula from a table store
 #' 
 #' @description
-#' With a `tbl_store` object at the ready, any table-prep formula within it can
-#' be extracted with the `tbl_source()` function. Should you need to obtain the
-#' table itself (generated via the table-prep formula), then the [tbl_get()]
-#' function is useful for that.
+#' The `tbl_source()` function provides a convenient means to access a
+#' table-prep formula from either a `tbl_store` object or a table store YAML
+#' file (which can be created with the [yaml_write()] function). A call to
+#' `tbl_source()` is most useful as an input to the `read_fn` argument of
+#' [create_agent()], [create_informant()], or [set_read_fn()].
+#'
+#' Should you need to obtain the table itself (that is generated via the
+#' table-prep formula), then the [tbl_get()] function should be used for that.
 #' 
 #' @param tbl The table name associated with a table-prep formula. This is part
 #'   of the table `store`. This table could be identified by its name (e.g.,

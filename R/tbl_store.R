@@ -219,6 +219,8 @@ tbl_store <- function(...,
       has_given_name <- c(has_given_name, TRUE)
     }
   }
+  
+  # TODO: Ensure uniqueness of names in the table store
 
   tbl_list <- rlang::set_names(tbl_list, name_list)
   

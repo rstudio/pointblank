@@ -17,7 +17,7 @@
 #
 
 
-#' Define a store of tables with table-prep formulas
+#' Define a store of tables with table-prep formulas: a table store
 #' 
 #' @description 
 #' It can be useful to set up all the data sources you need and just draw from

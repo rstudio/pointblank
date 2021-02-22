@@ -187,12 +187,32 @@ tbl_store <- function(...,
     
     if (is.null(rlang::f_lhs(tbl_list[[i]]))) {
       
-      # TODO: Try to get the name if present in `db_tbl()` or `file_tbl()`;
-      # for now, just use the index number formatted as string
-      name_list <- 
-        c(name_list, paste0("tbl_", formatC(i, width = 3, flag = "0")))
+      # Get RHS of formula and attempt to get the table name if there
+      # is only a single `db_tbl()` or `file_tbl()` call
+      rhs <- capture_formula(tbl_list[[i]])[2]
       
-      has_given_name <- c(has_given_name, FALSE)
+      if (grepl("~\\s*?(db_tbl|file_tbl)\\(", rhs) &&
+          grepl("table\\s*?=\\s*?\".*?\"", rhs)) {
+        
+        tbl_name <- gsub(".*table\\s*?=\\s*?\"(.*?)\".*$", "\\1", rhs)
+        
+        if (!is.null(tbl_name) && length(tbl_name) == 1 && nzchar(tbl_name)) {
+          name_list <- c(name_list, tbl_name)
+          has_given_name <- c(has_given_name, TRUE)
+        } else {
+          name_list <- 
+            c(name_list, paste0("tbl_", formatC(i, width = 3, flag = "0")))
+          has_given_name <- c(has_given_name, FALSE)
+        }
+        
+      } else {
+        
+        # If the table name isn't provided and isn't recoverable, 
+        # use the index number formatted as string
+        name_list <- 
+          c(name_list, paste0("tbl_", formatC(i, width = 3, flag = "0")))
+        has_given_name <- c(has_given_name, FALSE)
+      }
       
     } else if (inherits(rlang::f_lhs(tbl_list[[i]]), "name")) {
       name_list <- c(name_list, as.character(rlang::f_lhs(tbl_list[[i]])))

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Obtain a table from a tbl_store object — tbl_get • pointblank</title>
+<title>Obtain a materialized table via a table store — tbl_get • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,13 +46,16 @@
 
 
 
-<meta property="og:title" content="Obtain a table from a tbl_store object — tbl_get" />
-<meta property="og:description" content="With a tbl_store object at the ready, any table referenced in that store
-can be materialized by providing a matching table name. The tbl_store()
-function is used to create a store of tables, which is a catalog of table-
-prep formulas with names supplied for each of the tables. The tbl_get()
-function does the work of evaluating a table-prep formula and returning the
-requested table." />
+<meta property="og:title" content="Obtain a materialized table via a table store — tbl_get" />
+<meta property="og:description" content="The tbl_get() function gives us the means to materialize a table that has
+an entry in a table store (i.e., has a table-prep formula with a unique
+name). The table store that is used for this can be in the form of a
+tbl_store object (created with the tbl_store() function) or an on-disk
+YAML representation of a table store (created by using yaml_write() with a
+tbl_store object).
+Should you want a table-prep formula from a table store to use as a value for
+read_fn (in create_agent(), create_informant(), or set_read_fn()),
+then have a look at the tbl_source() function." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -164,18 +167,21 @@ requested table." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Obtain a table from a <code>tbl_store</code> object</h1>
+    <h1>Obtain a materialized table via a table store</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/tbl_store.R'><code>R/tbl_store.R</code></a></small>
     <div class="hidden name"><code>tbl_get.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>With a <code>tbl_store</code> object at the ready, any table referenced in that store
-can be materialized by providing a matching table name. The <code><a href='tbl_store.html'>tbl_store()</a></code>
-function is used to create a store of tables, which is a catalog of table-
-prep formulas with names supplied for each of the tables. The <code>tbl_get()</code>
-function does the work of evaluating a table-prep formula and returning the
-requested table.</p>
+    <p>The <code>tbl_get()</code> function gives us the means to materialize a table that has
+an entry in a table store (i.e., has a table-prep formula with a unique
+name). The table store that is used for this can be in the form of a
+<code>tbl_store</code> object (created with the <code><a href='tbl_store.html'>tbl_store()</a></code> function) or an on-disk
+YAML representation of a table store (created by using <code><a href='yaml_write.html'>yaml_write()</a></code> with a
+<code>tbl_store</code> object).</p>
+<p>Should you want a table-prep formula from a table store to use as a value for
+<code>read_fn</code> (in <code><a href='create_agent.html'>create_agent()</a></code>, <code><a href='create_informant.html'>create_informant()</a></code>, or <code><a href='set_read_fn.html'>set_read_fn()</a></code>),
+then have a look at the <code><a href='tbl_source.html'>tbl_source()</a></code> function.</p>
     </div>
 
     <pre class="usage"><span class='fu'>tbl_get</span><span class='op'>(</span><span class='va'>tbl</span>, store <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
@@ -187,9 +193,8 @@ requested table.</p>
       <th>tbl</th>
       <td><p>The table to retrieve from a table <code>store</code>. This table could be
 identified by its name (e.g., <code>tbl = "large_table"</code>) or by supplying a
-reference using a subset (with <code><a href='https://rdrr.io/r/base/Extract.html'>$</a></code>) of the <code>tbl_store</code> object (e.g.,
-<code>tbl = store$large_table</code>). If using the latter method then nothing needs
-to be supplied to <code>store</code>.</p></td>
+reference using a subset (with <code><a href='https://rdrr.io/r/base/Extract.html'>$</a></code>) of the <code>tbl_store</code> object (e.g., <code>tbl = store$large_table</code>). If using the latter method then nothing needs to be
+supplied to <code>store</code>.</p></td>
     </tr>
     <tr>
       <th>store</th>

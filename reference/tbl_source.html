@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Obtain a table-prep formula from a tbl_store object — tbl_source • pointblank</title>
+<title>Obtain a table-prep formula from a table store — tbl_source • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,11 +46,14 @@
 
 
 
-<meta property="og:title" content="Obtain a table-prep formula from a tbl_store object — tbl_source" />
-<meta property="og:description" content="With a tbl_store object at the ready, any table-prep formula within it can
-be extracted with the tbl_source() function. Should you need to obtain the
-table itself (generated via the table-prep formula), then the tbl_get()
-function is useful for that." />
+<meta property="og:title" content="Obtain a table-prep formula from a table store — tbl_source" />
+<meta property="og:description" content="The tbl_source() function provides a convenient means to access a
+table-prep formula from either a tbl_store object or a table store YAML
+file (which can be created with the yaml_write() function). A call to
+tbl_source() is most useful as an input to the read_fn argument of
+create_agent(), create_informant(), or set_read_fn().
+Should you need to obtain the table itself (that is generated via the
+table-prep formula), then the tbl_get() function should be used for that." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -162,16 +165,19 @@ function is useful for that." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Obtain a table-prep formula from a <code>tbl_store</code> object</h1>
+    <h1>Obtain a table-prep formula from a table store</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/tbl_store.R'><code>R/tbl_store.R</code></a></small>
     <div class="hidden name"><code>tbl_source.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>With a <code>tbl_store</code> object at the ready, any table-prep formula within it can
-be extracted with the <code>tbl_source()</code> function. Should you need to obtain the
-table itself (generated via the table-prep formula), then the <code><a href='tbl_get.html'>tbl_get()</a></code>
-function is useful for that.</p>
+    <p>The <code>tbl_source()</code> function provides a convenient means to access a
+table-prep formula from either a <code>tbl_store</code> object or a table store YAML
+file (which can be created with the <code><a href='yaml_write.html'>yaml_write()</a></code> function). A call to
+<code>tbl_source()</code> is most useful as an input to the <code>read_fn</code> argument of
+<code><a href='create_agent.html'>create_agent()</a></code>, <code><a href='create_informant.html'>create_informant()</a></code>, or <code><a href='set_read_fn.html'>set_read_fn()</a></code>.</p>
+<p>Should you need to obtain the table itself (that is generated via the
+table-prep formula), then the <code><a href='tbl_get.html'>tbl_get()</a></code> function should be used for that.</p>
     </div>
 
     <pre class="usage"><span class='fu'>tbl_source</span><span class='op'>(</span><span class='va'>tbl</span>, store <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>

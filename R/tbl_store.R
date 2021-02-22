@@ -214,7 +214,7 @@ tbl_store <- function(...,
   tbl_list
 }
 
-#' Obtain a table-prep formula from a `tbl_store` object
+#' Obtain a table-prep formula from a table store
 #' 
 #' @description
 #' With a `tbl_store` object at the ready, any table-prep formula within it can

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tbl_store.R
 \name{tbl_store}
 \alias{tbl_store}
-\title{Define a store of tables with table-prep formulas}
+\title{Define a store of tables with table-prep formulas: a table store}
 \usage{
 tbl_store(..., .list = list2(...))
 }
@@ -19,19 +19,18 @@ A \code{tbl_store} object that contains table-prep formulas.
 }
 \description{
 It can be useful to set up all the data sources you need and just draw from
-them when necessary. This upfront configuration with \code{tbl_store()} can be
-lets us define the methods for obtaining tabular data from mixed sources
-(e.g., database tables, tables generated from flat files, etc.) and provide
-names for these data pulling procedures as a way to access the data with
-\code{\link[=tbl_get]{tbl_get()}} or get table-prep formula with \code{\link[=tbl_source]{tbl_source()}}. Data preparation
-could be a part of what's in the store (imagine procuring several mutated
-variations of the same source table, generating a table from multiple
-sources, or pre-filtering a database table according to the system time).
-Another nice aspect of organizing table-prep formulas in a single object is
-supplying it to the \code{read_fn} argument of \code{\link[=create_agent]{create_agent()}} or
-\code{\link[=create_informant]{create_informant()}} via \code{$} notation (e.g,
-\verb{create_agent(read_fn = <tbl_store>$<name>)}) or with \code{\link[=tbl_source]{tbl_source()}} (e.g.,
-\verb{create_agent(read_fn = ~ tbl_source("<name>", <tbl_store>))}).
+them when necessary. This upfront configuration with \code{tbl_store()} lets us
+define the methods for obtaining tabular data from mixed sources (e.g.,
+database tables, tables generated from flat files, etc.) and provide names
+for these data preparation procedures. Then we have a convenient way to
+access the materialized tables with \code{\link[=tbl_get]{tbl_get()}}, or, the table-prep formulas
+with \code{\link[=tbl_source]{tbl_source()}}. Table-prep formulas can be as simple as getting a table
+from a location, or, it can involve as much mutation as is necessary (imagine
+procuring several mutated variations of the same source table, generating a
+table from multiple sources, or pre-filtering a database table according to
+the system time). Another nice aspect of organizing table-prep formulas in a
+single object is supplying it to the \code{read_fn} argument of \code{\link[=create_agent]{create_agent()}}
+or \code{\link[=create_informant]{create_informant()}} via \code{$} notation (e.g, \verb{create_agent(read_fn = <tbl_store>$<name>)}) or with \code{\link[=tbl_source]{tbl_source()}} (e.g., \verb{create_agent(read_fn = ~ tbl_source("<name>", <tbl_store>))}).
 }
 \section{YAML}{
 

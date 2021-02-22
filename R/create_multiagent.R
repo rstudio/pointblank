@@ -60,7 +60,8 @@ create_multiagent <- function(...,
       agent_list,
       FUN = function(agent) {
         
-        # TODO: Ensure that the `agent` is actually an agent
+        # TODO: Ensure that each `agent` in `agent_list` is
+        # actually an agent with `is_ptblank_agent()`
         
         class(agent) <-
           c(setdiff(class(agent), "ptblank_agent"), "ptblank_agent_i")

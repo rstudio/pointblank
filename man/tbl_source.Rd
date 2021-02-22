@@ -2,7 +2,7 @@
 % Please edit documentation in R/tbl_store.R
 \name{tbl_source}
 \alias{tbl_source}
-\title{Obtain a table-prep formula from a \code{tbl_store} object}
+\title{Obtain a table-prep formula from a table store}
 \usage{
 tbl_source(tbl, store = NULL)
 }
@@ -20,10 +20,14 @@ function or a path to a table store YAML file created by \code{\link[=yaml_write
 A table-prep formula.
 }
 \description{
-With a \code{tbl_store} object at the ready, any table-prep formula within it can
-be extracted with the \code{tbl_source()} function. Should you need to obtain the
-table itself (generated via the table-prep formula), then the \code{\link[=tbl_get]{tbl_get()}}
-function is useful for that.
+The \code{tbl_source()} function provides a convenient means to access a
+table-prep formula from either a \code{tbl_store} object or a table store YAML
+file (which can be created with the \code{\link[=yaml_write]{yaml_write()}} function). A call to
+\code{tbl_source()} is most useful as an input to the \code{read_fn} argument of
+\code{\link[=create_agent]{create_agent()}}, \code{\link[=create_informant]{create_informant()}}, or \code{\link[=set_read_fn]{set_read_fn()}}.
+
+Should you need to obtain the table itself (that is generated via the
+table-prep formula), then the \code{\link[=tbl_get]{tbl_get()}} function should be used for that.
 }
 \section{Function ID}{
 

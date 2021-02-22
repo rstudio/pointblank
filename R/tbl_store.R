@@ -308,7 +308,6 @@ tbl_source <- function(tbl,
   tbl_entry
 }
 
-#' Obtain a table from a `tbl_store` object
 #' 
 #' @description
 #' With a `tbl_store` object at the ready, any table referenced in that store
@@ -317,6 +316,7 @@ tbl_source <- function(tbl,
 #' prep formulas with names supplied for each of the tables. The `tbl_get()`
 #' function does the work of evaluating a table-prep formula and returning the
 #' requested table.
+#' Obtain a materialized table via a table store
 #' 
 #' @param tbl The table to retrieve from a table `store`. This table could be
 #'   identified by its name (e.g., `tbl = "large_table"`) or by supplying a

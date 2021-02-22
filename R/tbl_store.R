@@ -326,9 +326,9 @@ tbl_source <- function(tbl,
 #'
 #' @param tbl The table to retrieve from a table `store`. This table could be
 #'   identified by its name (e.g., `tbl = "large_table"`) or by supplying a
-#'   reference using a subset (with `$`) of the `tbl_store` object (e.g.,
-#'   `tbl = store$large_table`). If using the latter method then nothing needs
-#'   to be supplied to `store`.
+#'   reference using a subset (with `$`) of the `tbl_store` object (e.g., `tbl =
+#'   store$large_table`). If using the latter method then nothing needs to be
+#'   supplied to `store`.
 #' @param store Either a table store object created by the [tbl_store()]
 #'   function or a path to a table store YAML file created by [yaml_write()].
 #' 

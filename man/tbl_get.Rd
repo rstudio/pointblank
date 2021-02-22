@@ -2,16 +2,15 @@
 % Please edit documentation in R/tbl_store.R
 \name{tbl_get}
 \alias{tbl_get}
-\title{Obtain a table from a \code{tbl_store} object}
+\title{Obtain a materialized table via a table store}
 \usage{
 tbl_get(tbl, store = NULL)
 }
 \arguments{
 \item{tbl}{The table to retrieve from a table \code{store}. This table could be
 identified by its name (e.g., \code{tbl = "large_table"}) or by supplying a
-reference using a subset (with \code{$}) of the \code{tbl_store} object (e.g.,
-\code{tbl = store$large_table}). If using the latter method then nothing needs
-to be supplied to \code{store}.}
+reference using a subset (with \code{$}) of the \code{tbl_store} object (e.g., \code{tbl = store$large_table}). If using the latter method then nothing needs to be
+supplied to \code{store}.}
 
 \item{store}{Either a table store object created by the \code{\link[=tbl_store]{tbl_store()}}
 function or a path to a table store YAML file created by \code{\link[=yaml_write]{yaml_write()}}.}
@@ -20,12 +19,16 @@ function or a path to a table store YAML file created by \code{\link[=yaml_write
 A table object.
 }
 \description{
-With a \code{tbl_store} object at the ready, any table referenced in that store
-can be materialized by providing a matching table name. The \code{\link[=tbl_store]{tbl_store()}}
-function is used to create a store of tables, which is a catalog of table-
-prep formulas with names supplied for each of the tables. The \code{tbl_get()}
-function does the work of evaluating a table-prep formula and returning the
-requested table.
+The \code{tbl_get()} function gives us the means to materialize a table that has
+an entry in a table store (i.e., has a table-prep formula with a unique
+name). The table store that is used for this can be in the form of a
+\code{tbl_store} object (created with the \code{\link[=tbl_store]{tbl_store()}} function) or an on-disk
+YAML representation of a table store (created by using \code{\link[=yaml_write]{yaml_write()}} with a
+\code{tbl_store} object).
+
+Should you want a table-prep formula from a table store to use as a value for
+\code{read_fn} (in \code{\link[=create_agent]{create_agent()}}, \code{\link[=create_informant]{create_informant()}}, or \code{\link[=set_read_fn]{set_read_fn()}}),
+then have a look at the \code{\link[=tbl_source]{tbl_source()}} function.
 }
 \section{Function ID}{
 

@@ -291,8 +291,8 @@ tbl_store <- function(...,
 tbl_source <- function(tbl,
                        store = NULL) {
   
-  # If `store` is supplied as a character vector, assume it is a
-  # file path to a YAML file
+  # If `store` is supplied as a character vector,
+  # assume it is a file path to a YAML file
   if (is.character(store)) {
     store <- yaml_read_tbl_store(filename = store)
   }

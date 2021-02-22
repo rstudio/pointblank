@@ -431,7 +431,7 @@ print.tbl_store <- function(x, ...) {
   )
   
   cli::cli_rule(
-    left = "The `table_store` table formulas",
+    left = "The `table_store` table-prep formulas",
     right = paste0("n = ", n_tbls)
   )
   

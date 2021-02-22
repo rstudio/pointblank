@@ -21,19 +21,20 @@
 #' 
 #' @description 
 #' It can be useful to set up all the data sources you need and just draw from
-#' them when necessary. This upfront configuration with `tbl_store()` can be
-#' lets us define the methods for obtaining tabular data from mixed sources
-#' (e.g., database tables, tables generated from flat files, etc.) and provide
-#' names for these data pulling procedures as a way to access the data with
-#' [tbl_get()] or get table-prep formula with [tbl_source()]. Data preparation
-#' could be a part of what's in the store (imagine procuring several mutated
-#' variations of the same source table, generating a table from multiple
-#' sources, or pre-filtering a database table according to the system time).
-#' Another nice aspect of organizing table-prep formulas in a single object is
-#' supplying it to the `read_fn` argument of [create_agent()] or
-#' [create_informant()] via `$` notation (e.g, 
-#' `create_agent(read_fn = <tbl_store>$<name>)`) or with [tbl_source()] (e.g.,
-#' `create_agent(read_fn = ~ tbl_source("<name>", <tbl_store>))`).
+#' them when necessary. This upfront configuration with `tbl_store()` lets us
+#' define the methods for obtaining tabular data from mixed sources (e.g.,
+#' database tables, tables generated from flat files, etc.) and provide names
+#' for these data preparation procedures. Then we have a convenient way to
+#' access the materialized tables with [tbl_get()], or, the table-prep formulas
+#' with [tbl_source()]. Table-prep formulas can be as simple as getting a table
+#' from a location, or, it can involve as much mutation as is necessary (imagine
+#' procuring several mutated variations of the same source table, generating a
+#' table from multiple sources, or pre-filtering a database table according to
+#' the system time). Another nice aspect of organizing table-prep formulas in a
+#' single object is supplying it to the `read_fn` argument of [create_agent()]
+#' or [create_informant()] via `$` notation (e.g, `create_agent(read_fn =
+#' <tbl_store>$<name>)`) or with [tbl_source()] (e.g., `create_agent(read_fn = ~
+#' tbl_source("<name>", <tbl_store>))`).
 #' 
 #' @section YAML:
 #' A **pointblank** table store can be written to YAML with [yaml_write()] and

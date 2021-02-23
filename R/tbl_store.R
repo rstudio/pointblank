@@ -237,6 +237,33 @@ tbl_store <- function(...,
   tbl_list
 }
 
+add_to_name_list <- function(name_list,
+                             tbl_name,
+                             duplicate_strategy = c("stop", "rename")) {
+
+  duplicate_strategy <- match.arg(duplicate_strategy)
+  
+  # Determine if name is a duplicate in the `name_list` and employ
+  # the chosen strategy
+  if (tbl_name %in% name_list) {
+    
+    if (duplicate_strategy == "stop") {
+      # Stop function if duplicate `tbl_name` seen
+      stop(
+        "The table name `", tbl_name, "` is a duplicate name:\n",
+        "* Please choose another name since all table names must be unique",
+        call. = FALSE 
+      )
+      
+    } else {
+      # Rename `tbl_name` with suffix of random numbers
+      tbl_name <- paste0(tbl_name, paste(sample(0:9, 2), collapse = ""))
+    }
+  }
+  
+  c(name_list, tbl_name)
+}
+
 #' Obtain a table-prep formula from a table store
 #' 
 #' @description

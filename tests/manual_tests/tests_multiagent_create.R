@@ -1,7 +1,12 @@
 library(pointblank)
 library(tidyverse)
 
-al <- action_levels(0.05, 0.10, 0.20)
+al <- 
+  action_levels(
+    warn_at = 0.05,
+    stop_at = 0.10,
+    notify_at = 0.20
+  )
 
 agent_1 <-
   create_agent(

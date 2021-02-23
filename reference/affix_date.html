@@ -57,8 +57,6 @@ file extension) or at the beginning with a customizable delimiter." />
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -70,15 +68,9 @@ file extension) or at the beginning with a customizable delimiter." />
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -251,13 +243,13 @@ produces a date-time string by default.</p>
 <span class='co'># a file, we add the current date to it</span>
 <span class='co'># as a suffix</span>
 <span class='fu'>affix_date</span><span class='op'>(</span><span class='st'>"pb_file"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "pb_file_2021-02-22"</div><div class='input'>
+</div><div class='output co'>#&gt; [1] "pb_file_2021-02-23"</div><div class='input'>
 <span class='co'># File extensions won't get in the way:</span>
 <span class='fu'>affix_date</span><span class='op'>(</span><span class='st'>"pb_file.rds"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "pb_file_2021-02-22.rds"</div><div class='input'>
+</div><div class='output co'>#&gt; [1] "pb_file_2021-02-23.rds"</div><div class='input'>
 <span class='co'># The date can be used as a prefix</span>
 <span class='fu'>affix_date</span><span class='op'>(</span><span class='st'>"pb_file"</span>, position <span class='op'>=</span> <span class='st'>"start"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "2021-02-22_pb_file"</div><div class='input'>
+</div><div class='output co'>#&gt; [1] "2021-02-23_pb_file"</div><div class='input'>
 <span class='co'># The date pattern can be changed and so</span>
 <span class='co'># can the delimiter</span>
 <span class='fu'>affix_date</span><span class='op'>(</span>
@@ -265,7 +257,7 @@ produces a date-time string by default.</p>
   format <span class='op'>=</span> <span class='st'>"%Y%m%d"</span>,
   delimiter <span class='op'>=</span> <span class='st'>"-"</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "pb_file-20210222.yml"</div><div class='input'>
+</div><div class='output co'>#&gt; [1] "pb_file-20210223.yml"</div><div class='input'>
 <span class='co'># We can use a file-naming convention</span>
 <span class='co'># involving dates when writing output</span>
 <span class='co'># files immediately after interrogating;</span>
@@ -298,11 +290,11 @@ produces a date-time string by default.</p>
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
+  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -310,8 +302,6 @@ produces a date-time string by default.</p>
 
   
 
-
-  
 
   </body>
 </html>

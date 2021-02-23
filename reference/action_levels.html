@@ -72,8 +72,6 @@ directly on data (more information on this is provided in Details)." />
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -85,15 +83,9 @@ directly on data (more information on this is provided in Details)." />
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -293,22 +285,22 @@ reducing potential for duplicating any side effects.</p>
 <span class='co'># Use the included `small_table` dataset</span>
 <span class='co'># for the validation example</span>
 <span class='va'>small_table</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 13 x 8</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 13 x 8</span><span>
 #&gt;    date_time           date           a b             c      d e     f    
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> 2016-01-04 </span><span style='color: #555555;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high 
-#&gt; </span><span style='color: #555555;'> 2</span><span> 2016-01-04 </span><span style='color: #555555;'>00:32:00</span><span> 2016-01-04     3 5-egh-163     8 </span><span style='text-decoration: underline;'>10</span><span>000. TRUE  low  
-#&gt; </span><span style='color: #555555;'> 3</span><span> 2016-01-05 </span><span style='color: #555555;'>13:32:00</span><span> 2016-01-05     6 8-kdg-938     3  </span><span style='text-decoration: underline;'>2</span><span>343. TRUE  high 
-#&gt; </span><span style='color: #555555;'> 4</span><span> 2016-01-06 </span><span style='color: #555555;'>17:23:00</span><span> 2016-01-06     2 5-jdo-903    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>3</span><span>892. FALSE mid  
-#&gt; </span><span style='color: #555555;'> 5</span><span> 2016-01-09 </span><span style='color: #555555;'>12:36:00</span><span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
-#&gt; </span><span style='color: #555555;'> 6</span><span> 2016-01-11 </span><span style='color: #555555;'>06:15:00</span><span> 2016-01-11     4 2-dhe-923     4  </span><span style='text-decoration: underline;'>3</span><span>291. TRUE  mid  
-#&gt; </span><span style='color: #555555;'> 7</span><span> 2016-01-15 </span><span style='color: #555555;'>18:46:00</span><span> 2016-01-15     7 1-knw-093     3   843. TRUE  high 
-#&gt; </span><span style='color: #555555;'> 8</span><span> 2016-01-17 </span><span style='color: #555555;'>11:27:00</span><span> 2016-01-17     4 5-boe-639     2  </span><span style='text-decoration: underline;'>1</span><span>036. FALSE low  
-#&gt; </span><span style='color: #555555;'> 9</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
-#&gt; </span><span style='color: #555555;'>10</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
-#&gt; </span><span style='color: #555555;'>11</span><span> 2016-01-26 </span><span style='color: #555555;'>20:07:00</span><span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
-#&gt; </span><span style='color: #555555;'>12</span><span> 2016-01-28 </span><span style='color: #555555;'>02:51:00</span><span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  
-#&gt; </span><span style='color: #555555;'>13</span><span> 2016-01-30 </span><span style='color: #555555;'>11:23:00</span><span> 2016-01-30     1 3-dka-303    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>2</span><span>230. TRUE  high </div><div class='input'>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> 2016-01-04 </span><span style='color: #949494;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> 2016-01-04 </span><span style='color: #949494;'>00:32:00</span><span> 2016-01-04     3 5-egh-163     8 </span><span style='text-decoration: underline;'>10</span><span>000. TRUE  low  
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> 2016-01-05 </span><span style='color: #949494;'>13:32:00</span><span> 2016-01-05     6 8-kdg-938     3  </span><span style='text-decoration: underline;'>2</span><span>343. TRUE  high 
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> 2016-01-06 </span><span style='color: #949494;'>17:23:00</span><span> 2016-01-06     2 5-jdo-903    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>3</span><span>892. FALSE mid  
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> 2016-01-09 </span><span style='color: #949494;'>12:36:00</span><span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> 2016-01-11 </span><span style='color: #949494;'>06:15:00</span><span> 2016-01-11     4 2-dhe-923     4  </span><span style='text-decoration: underline;'>3</span><span>291. TRUE  mid  
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> 2016-01-15 </span><span style='color: #949494;'>18:46:00</span><span> 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> 2016-01-17 </span><span style='color: #949494;'>11:27:00</span><span> 2016-01-17     4 5-boe-639     2  </span><span style='text-decoration: underline;'>1</span><span>036. FALSE low  
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> 2016-01-20 </span><span style='color: #949494;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> 2016-01-20 </span><span style='color: #949494;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> 2016-01-26 </span><span style='color: #949494;'>20:07:00</span><span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> 2016-01-28 </span><span style='color: #949494;'>02:51:00</span><span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  
+#&gt; </span><span style='color: #BCBCBC;'>13</span><span> 2016-01-30 </span><span style='color: #949494;'>11:23:00</span><span> 2016-01-30     1 3-dka-303    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>2</span><span>230. TRUE  high </div><div class='input'>
 <span class='co'># Validate that values in column</span>
 <span class='co'># `a` are always greater than `2` and</span>
 <span class='co'># apply the list of action levels (`al`)</span>
@@ -325,11 +317,11 @@ reducing potential for duplicating any side effects.</p>
 <span class='co'># of the `get_agent_report()` function)</span>
 <span class='va'>agent</span> <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='get_agent_report.html'>get_agent_report</a></span><span class='op'>(</span>display_table <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 14</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 14</span><span>
 #&gt;       i type  columns values precon active eval  units n_pass f_pass W     S    
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     1 col_… a       2      </span><span style='color: #BB0000;'>NA</span><span>     TRUE   OK       13      9  0.692 TRUE  FALSE
-#&gt; </span><span style='color: #555555;'># … with 2 more variables: N </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, extract </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'>  
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     1 col_… a       2      </span><span style='color: #BB0000;'>NA</span><span>     TRUE   OK       13      9  0.692 TRUE  FALSE
+#&gt; </span><span style='color: #949494;'># … with 2 more variables: N &lt;lgl&gt;, extract &lt;int&gt;</span><span></div><div class='input'>  
 <span class='co'># In the context of using validation</span>
 <span class='co'># functions directly on data, their</span>
 <span class='co'># use is commonly to trigger warnings</span>
@@ -341,22 +333,22 @@ reducing potential for duplicating any side effects.</p>
   <span class='va'>small_table</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, <span class='fl'>2</span>, actions <span class='op'>=</span> <span class='va'>al</span><span class='op'>)</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 13 x 8</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 13 x 8</span><span>
 #&gt;    date_time           date           a b             c      d e     f    
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> 2016-01-04 </span><span style='color: #555555;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high 
-#&gt; </span><span style='color: #555555;'> 2</span><span> 2016-01-04 </span><span style='color: #555555;'>00:32:00</span><span> 2016-01-04     3 5-egh-163     8 </span><span style='text-decoration: underline;'>10</span><span>000. TRUE  low  
-#&gt; </span><span style='color: #555555;'> 3</span><span> 2016-01-05 </span><span style='color: #555555;'>13:32:00</span><span> 2016-01-05     6 8-kdg-938     3  </span><span style='text-decoration: underline;'>2</span><span>343. TRUE  high 
-#&gt; </span><span style='color: #555555;'> 4</span><span> 2016-01-06 </span><span style='color: #555555;'>17:23:00</span><span> 2016-01-06     2 5-jdo-903    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>3</span><span>892. FALSE mid  
-#&gt; </span><span style='color: #555555;'> 5</span><span> 2016-01-09 </span><span style='color: #555555;'>12:36:00</span><span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
-#&gt; </span><span style='color: #555555;'> 6</span><span> 2016-01-11 </span><span style='color: #555555;'>06:15:00</span><span> 2016-01-11     4 2-dhe-923     4  </span><span style='text-decoration: underline;'>3</span><span>291. TRUE  mid  
-#&gt; </span><span style='color: #555555;'> 7</span><span> 2016-01-15 </span><span style='color: #555555;'>18:46:00</span><span> 2016-01-15     7 1-knw-093     3   843. TRUE  high 
-#&gt; </span><span style='color: #555555;'> 8</span><span> 2016-01-17 </span><span style='color: #555555;'>11:27:00</span><span> 2016-01-17     4 5-boe-639     2  </span><span style='text-decoration: underline;'>1</span><span>036. FALSE low  
-#&gt; </span><span style='color: #555555;'> 9</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
-#&gt; </span><span style='color: #555555;'>10</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
-#&gt; </span><span style='color: #555555;'>11</span><span> 2016-01-26 </span><span style='color: #555555;'>20:07:00</span><span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
-#&gt; </span><span style='color: #555555;'>12</span><span> 2016-01-28 </span><span style='color: #555555;'>02:51:00</span><span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  
-#&gt; </span><span style='color: #555555;'>13</span><span> 2016-01-30 </span><span style='color: #555555;'>11:23:00</span><span> 2016-01-30     1 3-dka-303    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>2</span><span>230. TRUE  high </div><div class='input'>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> 2016-01-04 </span><span style='color: #949494;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> 2016-01-04 </span><span style='color: #949494;'>00:32:00</span><span> 2016-01-04     3 5-egh-163     8 </span><span style='text-decoration: underline;'>10</span><span>000. TRUE  low  
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> 2016-01-05 </span><span style='color: #949494;'>13:32:00</span><span> 2016-01-05     6 8-kdg-938     3  </span><span style='text-decoration: underline;'>2</span><span>343. TRUE  high 
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> 2016-01-06 </span><span style='color: #949494;'>17:23:00</span><span> 2016-01-06     2 5-jdo-903    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>3</span><span>892. FALSE mid  
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> 2016-01-09 </span><span style='color: #949494;'>12:36:00</span><span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> 2016-01-11 </span><span style='color: #949494;'>06:15:00</span><span> 2016-01-11     4 2-dhe-923     4  </span><span style='text-decoration: underline;'>3</span><span>291. TRUE  mid  
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> 2016-01-15 </span><span style='color: #949494;'>18:46:00</span><span> 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> 2016-01-17 </span><span style='color: #949494;'>11:27:00</span><span> 2016-01-17     4 5-boe-639     2  </span><span style='text-decoration: underline;'>1</span><span>036. FALSE low  
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> 2016-01-20 </span><span style='color: #949494;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> 2016-01-20 </span><span style='color: #949494;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> 2016-01-26 </span><span style='color: #949494;'>20:07:00</span><span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> 2016-01-28 </span><span style='color: #949494;'>02:51:00</span><span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  
+#&gt; </span><span style='color: #BCBCBC;'>13</span><span> 2016-01-30 </span><span style='color: #949494;'>11:23:00</span><span> 2016-01-30     1 3-dka-303    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>2</span><span>230. TRUE  high </div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -369,11 +361,11 @@ reducing potential for duplicating any side effects.</p>
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
+  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -381,8 +373,6 @@ reducing potential for duplicating any side effects.</p>
 
   
 
-
-  
 
   </body>
 </html>

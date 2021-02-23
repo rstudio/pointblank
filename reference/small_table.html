@@ -55,8 +55,6 @@ exact duplicates. The c column contains two NA values." />
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -68,15 +66,9 @@ exact duplicates. The c column contains two NA values." />
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -205,17 +197,17 @@ two <code>NA</code> values.</p></dd>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Here is a glimpse at the data</span>
 <span class='co'># available in `small_table`</span>
-<span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>small_table</span><span class='op'>)</span>
+<span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://pillar.r-lib.org//reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>small_table</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Rows: 13
 #&gt; Columns: 8
-#&gt; $ date_time <span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span> 2016-01-04 11:00:00, 2016-01-04 00:32:00, 2016-01-05 13:32…
-#&gt; $ date      </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span> 2016-01-04, 2016-01-04, 2016-01-05, 2016-01-06, 2016-01-09…
-#&gt; $ a         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> 2, 3, 6, 2, 8, 4, 7, 4, 3, 3, 4, 2, 1
-#&gt; $ b         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "1-bcd-345", "5-egh-163", "8-kdg-938", "5-jdo-903", "3-ldm-…
-#&gt; $ c         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 3, 8, 3, NA, 7, 4, 3, 2, 9, 9, 7, 8, NA
-#&gt; $ d         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> 3423.29, 9999.99, 2343.23, 3892.40, 283.94, 3291.03, 843.34…
-#&gt; $ e         </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FA…
-#&gt; $ f         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> "high", "low", "high", "mid", "low", "mid", "high", "low", …</div><div class='input'>
+#&gt; $ date_time <span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span> 2016-01-04 11:00:00, 2016-01-04 00:32:00, 2016-01-05 13:32:…
+#&gt; $ date      </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span> 2016-01-04, 2016-01-04, 2016-01-05, 2016-01-06, 2016-01-09,…
+#&gt; $ a         </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> 2, 3, 6, 2, 8, 4, 7, 4, 3, 3, 4, 2, 1
+#&gt; $ b         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "1-bcd-345", "5-egh-163", "8-kdg-938", "5-jdo-903", "3-ldm-0…
+#&gt; $ c         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> 3, 8, 3, NA, 7, 4, 3, 2, 9, 9, 7, 8, NA
+#&gt; $ d         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> 3423.29, 9999.99, 2343.23, 3892.40, 283.94, 3291.03, 843.34,…
+#&gt; $ e         </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span> TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FAL…
+#&gt; $ f         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "high", "low", "high", "mid", "low", "mid", "high", "low", "…</div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -228,11 +220,11 @@ two <code>NA</code> values.</p></dd>
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
+  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -240,8 +232,6 @@ two <code>NA</code> values.</p></dd>
 
   
 
-
-  
 
   </body>
 </html>

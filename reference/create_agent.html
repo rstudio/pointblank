@@ -67,8 +67,6 @@ get_agent_report() function, where there are more reporting options." />
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -80,15 +78,9 @@ get_agent_report() function, where there are more reporting options." />
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -332,22 +324,22 @@ validation steps are free from any failing units.</p>
 <span class='co'># we can find it as a dataset in this</span>
 <span class='co'># package</span>
 <span class='va'>small_table</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 13 x 8</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 13 x 8</span><span>
 #&gt;    date_time           date           a b             c      d e     f    
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> 2016-01-04 </span><span style='color: #555555;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high 
-#&gt; </span><span style='color: #555555;'> 2</span><span> 2016-01-04 </span><span style='color: #555555;'>00:32:00</span><span> 2016-01-04     3 5-egh-163     8 </span><span style='text-decoration: underline;'>10</span><span>000. TRUE  low  
-#&gt; </span><span style='color: #555555;'> 3</span><span> 2016-01-05 </span><span style='color: #555555;'>13:32:00</span><span> 2016-01-05     6 8-kdg-938     3  </span><span style='text-decoration: underline;'>2</span><span>343. TRUE  high 
-#&gt; </span><span style='color: #555555;'> 4</span><span> 2016-01-06 </span><span style='color: #555555;'>17:23:00</span><span> 2016-01-06     2 5-jdo-903    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>3</span><span>892. FALSE mid  
-#&gt; </span><span style='color: #555555;'> 5</span><span> 2016-01-09 </span><span style='color: #555555;'>12:36:00</span><span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
-#&gt; </span><span style='color: #555555;'> 6</span><span> 2016-01-11 </span><span style='color: #555555;'>06:15:00</span><span> 2016-01-11     4 2-dhe-923     4  </span><span style='text-decoration: underline;'>3</span><span>291. TRUE  mid  
-#&gt; </span><span style='color: #555555;'> 7</span><span> 2016-01-15 </span><span style='color: #555555;'>18:46:00</span><span> 2016-01-15     7 1-knw-093     3   843. TRUE  high 
-#&gt; </span><span style='color: #555555;'> 8</span><span> 2016-01-17 </span><span style='color: #555555;'>11:27:00</span><span> 2016-01-17     4 5-boe-639     2  </span><span style='text-decoration: underline;'>1</span><span>036. FALSE low  
-#&gt; </span><span style='color: #555555;'> 9</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
-#&gt; </span><span style='color: #555555;'>10</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
-#&gt; </span><span style='color: #555555;'>11</span><span> 2016-01-26 </span><span style='color: #555555;'>20:07:00</span><span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
-#&gt; </span><span style='color: #555555;'>12</span><span> 2016-01-28 </span><span style='color: #555555;'>02:51:00</span><span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  
-#&gt; </span><span style='color: #555555;'>13</span><span> 2016-01-30 </span><span style='color: #555555;'>11:23:00</span><span> 2016-01-30     1 3-dka-303    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>2</span><span>230. TRUE  high </div><div class='input'>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> 2016-01-04 </span><span style='color: #949494;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> 2016-01-04 </span><span style='color: #949494;'>00:32:00</span><span> 2016-01-04     3 5-egh-163     8 </span><span style='text-decoration: underline;'>10</span><span>000. TRUE  low  
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> 2016-01-05 </span><span style='color: #949494;'>13:32:00</span><span> 2016-01-05     6 8-kdg-938     3  </span><span style='text-decoration: underline;'>2</span><span>343. TRUE  high 
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> 2016-01-06 </span><span style='color: #949494;'>17:23:00</span><span> 2016-01-06     2 5-jdo-903    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>3</span><span>892. FALSE mid  
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> 2016-01-09 </span><span style='color: #949494;'>12:36:00</span><span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> 2016-01-11 </span><span style='color: #949494;'>06:15:00</span><span> 2016-01-11     4 2-dhe-923     4  </span><span style='text-decoration: underline;'>3</span><span>291. TRUE  mid  
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> 2016-01-15 </span><span style='color: #949494;'>18:46:00</span><span> 2016-01-15     7 1-knw-093     3   843. TRUE  high 
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> 2016-01-17 </span><span style='color: #949494;'>11:27:00</span><span> 2016-01-17     4 5-boe-639     2  </span><span style='text-decoration: underline;'>1</span><span>036. FALSE low  
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> 2016-01-20 </span><span style='color: #949494;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> 2016-01-20 </span><span style='color: #949494;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> 2016-01-26 </span><span style='color: #949494;'>20:07:00</span><span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> 2016-01-28 </span><span style='color: #949494;'>02:51:00</span><span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  
+#&gt; </span><span style='color: #BCBCBC;'>13</span><span> 2016-01-30 </span><span style='color: #949494;'>11:23:00</span><span> 2016-01-30     1 3-dka-303    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>2</span><span>230. TRUE  high </div><div class='input'>
 <span class='co'># We ought to think about what's</span>
 <span class='co'># tolerable in terms of data quality so</span>
 <span class='co'># let's designate proportional failure</span>
@@ -417,11 +409,11 @@ validation steps are free from any failing units.</p>
 <span class='co'># that failed; we can see those rows</span>
 <span class='co'># with `get_data_extracts()` </span>
 <span class='va'>agent</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='get_data_extracts.html'>get_data_extracts</a></span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 8</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 8</span><span>
 #&gt;   date_time           date           a b             c     d e     f    
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9  838. FALSE high 
-#&gt; </span><span style='color: #555555;'>2</span><span> 2016-01-20 </span><span style='color: #555555;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9  838. FALSE high </div><div class='input'>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2016-01-20 </span><span style='color: #949494;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9  838. FALSE high 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2016-01-20 </span><span style='color: #949494;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9  838. FALSE high </div><div class='input'>
 <span class='co'># We can get an x-list for the whole</span>
 <span class='co'># validation (8 steps), or, just for</span>
 <span class='co'># the 4th step with `get_agent_x_list()`</span>
@@ -455,11 +447,11 @@ validation steps are free from any failing units.</p>
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
+  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -467,8 +459,6 @@ validation steps are free from any failing units.</p>
 
   
 
-
-  
 
   </body>
 </html>

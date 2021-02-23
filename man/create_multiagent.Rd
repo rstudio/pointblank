@@ -36,6 +36,11 @@ by using the \code{\link[=get_multiagent_report]{get_multiagent_report()}} funct
 the interrogation time and it automatically recognizes which validation steps
 are equivalent across interrogations.
 }
+\section{Figures}{
+
+\if{html}{\figure{man_create_multiagent_1.png}{options: width=100\%}}
+}
+
 \section{Function ID}{
 
 10-1

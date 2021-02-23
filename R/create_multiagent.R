@@ -152,6 +152,9 @@
 #' report <- get_multiagent_report(multiagent)
 #' class(report)
 #' 
+#' @section Figures:
+#' \if{html}{\figure{man_create_multiagent_1.png}{options: width=100\%}}
+#' 
 #' @family The multiagent
 #' @section Function ID:
 #' 10-1

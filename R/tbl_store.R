@@ -220,8 +220,6 @@ tbl_store <- function(...,
     }
   }
   
-  # TODO: Ensure uniqueness of names in the table store
-
   tbl_list <- rlang::set_names(tbl_list, name_list)
   
   for (i in seq_along(tbl_list)) {

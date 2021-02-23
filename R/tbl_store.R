@@ -197,11 +197,11 @@ tbl_store <- function(...,
         tbl_name <- gsub(".*table\\s*?=\\s*?\"(.*?)\".*$", "\\1", rhs)
         
         if (!is.null(tbl_name) && length(tbl_name) == 1 && nzchar(tbl_name)) {
-          name_list <- c(name_list, tbl_name)
+          name_list <- add_to_name_list(name_list, tbl_name, "stop")
           has_given_name <- c(has_given_name, TRUE)
         } else {
-          name_list <- 
-            c(name_list, paste0("tbl_", formatC(i, width = 3, flag = "0")))
+          tbl_name <- paste0("tbl_", formatC(i, width = 3, flag = "0"))
+          name_list <- add_to_name_list(name_list, tbl_name, "rename")
           has_given_name <- c(has_given_name, FALSE)
         }
         
@@ -209,13 +209,14 @@ tbl_store <- function(...,
         
         # If the table name isn't provided and isn't recoverable, 
         # use the index number formatted as string
-        name_list <- 
-          c(name_list, paste0("tbl_", formatC(i, width = 3, flag = "0")))
+        tbl_name <- paste0("tbl_", formatC(i, width = 3, flag = "0"))
+        name_list <- add_to_name_list(name_list, tbl_name, "rename")
         has_given_name <- c(has_given_name, FALSE)
       }
       
     } else if (inherits(rlang::f_lhs(tbl_list[[i]]), "name")) {
-      name_list <- c(name_list, as.character(rlang::f_lhs(tbl_list[[i]])))
+      name_list <- 
+        add_to_name_list(name_list, as.character(rlang::f_lhs(tbl_list[[i]])))
       has_given_name <- c(has_given_name, TRUE)
     }
   }

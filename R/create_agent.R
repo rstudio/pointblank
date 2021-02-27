@@ -37,30 +37,132 @@
 #' table. This reporting of the interrogation can also be accessed with the
 #' [get_agent_report()] function, where there are more reporting options.
 #'
-#' @details A very detailed list object, known as the x-list, can be obtained by
-#' using the [get_agent_x_list()] function on the *agent*. This font of
-#' information can be taken as a whole, or, broken down by the step number (with
-#' the `i` argument).
+#' @section Data Products Obtained from an Agent:
+#' A very detailed list object, known as an x-list, can be obtained by using the
+#' [get_agent_x_list()] function on the *agent*. This font of information can be
+#' taken as a whole, or, broken down by the step number (with the `i` argument).
 #'
 #' Sometimes it is useful to see which rows were the failing ones. By using the
 #' [get_data_extracts()] function on the *agent*, we either get a list of
 #' tibbles (for those steps that have data extracts) or one tibble if the
 #' validation step is specified with the `i` argument.
 #'
+#' The target data can be split into pieces that represent the 'pass' and 'fail'
+#' portions with the [get_sundered_data()] function. A primary requirement is an
+#' agent that has had [interrogate()] called on it. In addition, the validation
+#' steps considered for this data splitting need to be those that operate on
+#' values down a column (e.g., the `col_vals_*()` functions or [conjointly()]).
+#' With these in-consideration validation steps, rows with no failing test units
+#' across all validation steps comprise the 'pass' data piece, and rows with at
+#' least one failing test unit across the same series of validations constitute
+#' the 'fail' piece.
+#'
 #' If we just need to know whether all validations completely passed (i.e., all
 #' steps had no failing test units), the [all_passed()] function could be used
 #' on the *agent*. However, in practice, it's not often the case that all data
 #' validation steps are free from any failing units.
+#' 
+#' While printing an *agent* will display the *agent* report in the Viewer, we
+#' can alternatively use the [get_agent_report()] to take advantage of other
+#' options (e.g., overriding the language, modifying the arrangement of report
+#' rows, etc.), and to return the report as independent objects. For example,
+#' with the `display_table = TRUE` option (the default), [get_agent_report()]
+#' will return a **gt** table object (`"gt_tbl"`). If `display_table` is set to
+#' `FALSE`, we'll get a data frame back instead.
+#' 
+#' @section YAML: 
+#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
+#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
+#' or interrogate the target table (via [yaml_agent_interrogate()]). Here is an
+#' example of how a complex call of `create_agent()` is expressed in R code and
+#' in the corresponding YAML representation.
+#' 
+#' ```
+#' # R statement
+#' create_agent(
+#'   read_fn = ~ small_table,
+#'   tbl_name = "small_table",
+#'   label = "An example.",
+#'   actions = action_levels(
+#'     warn_at = 0.10,
+#'     stop_at = 0.25,
+#'     notify_at = 0.35
+#'   ), 
+#'   end_fns = list(
+#'     ~ beepr::beep(2),
+#'     ~ Sys.sleep(1)
+#'   ), 
+#'   embed_report = TRUE,
+#'   lang = "fr", 
+#'   locale = "fr_CA"
+#' )
+#' 
+#' # YAML representation
+#' type: agent
+#' read_fn: ~small_table
+#' tbl_name: small_table
+#' label: An example.
+#' lang: fr
+#' locale: fr_CA
+#' actions:
+#'   warn_fraction: 0.1
+#' stop_fraction: 0.25
+#' notify_fraction: 0.35
+#' end_fns:
+#' - ~beepr::beep(2)
+#' - ~Sys.sleep(1)
+#' embed_report: true
+#' ```
+#' 
+#' In practice, this block of YAML will be shorter since arguments with default
+#' values won't be written to YAML when using [yaml_write()] (though it is
+#' acceptable to include them with their default when generating the YAML by
+#' other means). The only requirement for writing the YAML representation of an
+#' *agent* is having `read_fn` specified (any table supplied to `tbl` is
+#' ignored).
+#' 
+#' What typically follows this chunk of YAML is a `steps` part, and that
+#' corresponds to the addition of validation steps via validation functions.
+#' Help articles for each validation function have a *YAML* section that
+#' describes how a given validation function is translated to YAML.
+#' 
+#' Should you need to preview the transformation of an *agent* to YAML (without
+#' any committing anything to disk), use the [yaml_agent_string()] function. If
+#' you already have a `.yml` file that holds an *agent*, you can get a glimpse
+#' of the R expressions that are used to regenerate that agent with
+#' [yaml_agent_show_exprs()].
+#' 
+#' @section Writing an Agent to Disk:
+#' An *agent* object can be written to disk with the [x_write_disk()] function.
+#' This can be useful for keeping a history of validations and generating views
+#' of data quality over time. Agents are stored in the serialized RDS format and
+#' can be easily retrieved with the [x_read_disk()] function.
+#'
+#' It's recommended that table-prep formulas are supplied to the `read_fn`
+#' argument of `create_agent()`. In this way, when an *agent* is read from disk
+#' through [x_read_disk()], it can be reused to access the target table (which
+#' may changed, hence the need to use an expression for this).
+#' 
+#' @section Combining Several Agents in a *multiagent* Object:
+#' Multiple *agent* objects can be part of a *multiagent* object, and two
+#' functions can be used for this: [create_multiagent()] and
+#' [read_disk_multiagent()]. By gathering multiple agents that have performed
+#' interrogations in the past, we can get a *multiagent* report showing how data
+#' quality evolved over time. This use case is interesting for data quality
+#' monitoring and management, and, the reporting (which can be customized with
+#' [get_multiagent_report()]) is robust against changes in validation steps for
+#' a given target table.
 #'
 #' @param tbl The input table. This can be a data frame, a tibble, a `tbl_dbi`
 #'   object, or a `tbl_spark` object. Alternatively, a function can be used to
 #'   read in the input data table with the `read_fn` argument (in which case,
 #'   `tbl` can be `NULL`).
-#' @param read_fn A function that's used for reading in the data. Even if a
-#'   `tbl` is provided, this function will be invoked to obtain the data (i.e.,
-#'   the `read_fn` takes priority). There are two ways to specify a `read_fn`:
-#'   (1) using a function (e.g., `function() { <table reading code> }`) or, (2)
-#'   with an R formula expression (e.g., `~ { <table reading code> }`).
+#' @param read_fn A table-prep formula that's used to access the target table.
+#'   Even if a `tbl` is provided, this formula will be invoked to obtain the
+#'   data (i.e., the `read_fn` takes priority). There are two ways to specify a
+#'   `read_fn`: (1) with a right-hand side (RHS) formula expression (e.g.,
+#'   `~ { <table reading code>}`) or (2) as a function (e.g., 
+#'   `function() { <table reading code>}`).
 #' @param tbl_name A optional name to assign to the input table object. If no
 #'   value is provided, a name will be generated based on whatever information
 #'   is available. This table name will be displayed in the header area of the
@@ -75,13 +177,12 @@
 #'   is to be created with the [action_levels()] helper function. Should an
 #'   action levels list be used for a specific validation step, the default set
 #'   specified here will be overridden.
-#' @param end_fns A list of function calls that should be performed at the end
-#'   of an interrogation. Each function call should be in the form of a
-#'   one-sided R formula expression, so overall this construction should be
-#'   used: `end_fns = list(~ <R statements>, ~ <R statements>, ...)`. An example
-#'   of a function that can be sensibly used here is [email_blast()], where an
-#'   email of the validation report is generated and sent based on sending
-#'   condition.
+#' @param end_fns A list of expressions that should be invoked at the end of an
+#'   interrogation. Each expression should be in the form of a one-sided R
+#'   formula, so overall this construction should be used: `end_fns = list(~ <R
+#'   statements>, ~ <R statements>, ...)`. An example of a function included in
+#'   **pointblank** that can be sensibly used here is [email_blast()], which
+#'   sends an email of the validation report (based on a sending condition).
 #' @param embed_report An option to embed a **gt**-based validation report into
 #'   the `ptblank_agent` object. If `FALSE` (the default) then the table object
 #'   will be not generated and available with the *agent* upon returning from

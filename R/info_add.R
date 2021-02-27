@@ -19,25 +19,30 @@
 
 #' Add information that focuses on aspects of the data table as a whole
 #' 
+#' @description 
 #' When an *informant* object is created with the [create_informant()] function,
-#' it has two starter sections: (1) 'table' and (2) 'columns'. The
-#' 'table' section should contain a few properties upon creation, such as the
-#' supplied table name (`name`) and table dimensions (as `_columns` and
-#' `_rows`). We can add more table-based properties with the `info_tabular()`
-#' function. By providing a series of named arguments (in the form
-#' `entry_name = "The *info text*."`), we can add more information that makes
-#' sense for describing the table as a whole.
+#' it has two starter sections: (1) 'table' and (2) 'columns'. The 'table'
+#' section should contain a few properties upon creation, such as the supplied
+#' table name (`name`) and table dimensions (as `_columns` and `_rows`). We can
+#' add more table-based properties with the `info_tabular()` function. By
+#' providing a series of named arguments (in the form `entry_name = "The *info
+#' text*."`), we can add more information that makes sense for describing the
+#' table as a whole.
 #' 
-#' The *info text* readily accepts Markdown formatting. Also, there are a few
-#' *Text Tricks* that are good to know. Markdown links written as `< link url >`
+#' @section Info Text:
+#' The *info text* that's used for any of the `info_*()` functions readily
+#' accepts Markdown formatting, and, there are a few *Text Tricks* that can be
+#' used to spice up the presentation. Markdown links written as `< link url >`
 #' or `[ link text ]( link url )` will get nicely-styled links. Any dates
 #' expressed in the ISO-8601 standard with parentheses, `"(2004-12-01)"`, will
 #' be styled with a font variation (monospaced) and underlined in purple. Spans
-#' of text can be converted to label text by using: (1) double parentheses
-#' around text for a rectangular label as in `((label text))`, or (2) triple
-#' parentheses around text for a rounded-rectangular label like `(((label
-#' text)))`. Finally, CSS styles can be applied to spans of *info text* with
-#' the following form:
+#' of text can be converted to label-style text by using: (1) double parentheses
+#' around text for a rectangular border as in `((label text))`, or (2) triple
+#' parentheses around text for a rounded-rectangular border like `(((label
+#' text)))`.
+#'
+#' CSS style rules can be applied to spans of *info text* with the following
+#' form:
 #' 
 #' `[[ info text ]]<< CSS style rules >>`
 #' 
@@ -46,6 +51,65 @@
 #' the following might be used:
 #' 
 #' `"This is a [[factor]]<<color: red; font-weight: 300;>> value."`
+#' 
+#' The are quite a few CSS style rules that can be used to great effect. Here
+#' are a few you might like:
+#' 
+#' - `color: <a color value>;` (text color)
+#' - `background-color: <a color value>;` (the text's background color)
+#' - `text-decoration: (overline | line-through | underline);`
+#' - `text-transform: (uppercase | lowercase | capitalize);`
+#' - `letter-spacing: <a +/- length value>;`
+#' - `word-spacing: <a +/- length value>;`
+#' - `font-style: (normal | italic | oblique);`
+#' - `font-weight: (normal | bold | 100-900);`
+#' - `font-variant: (normal | bold | 100-900);`
+#' - `border: <a color value> <a length value> (solid | dashed | dotted);`
+#' 
+#' In the above examples, 'length value' refers to a CSS length which can be
+#' expressed in different units of measure (e.g., `12px`, `1em`, etc.). Some
+#' lengths can be expressed as positive or negative values (e.g., for
+#' `letter-spacing`). Color values can be expressed in a few ways, the most
+#' common being in the form of hexadecimal color values or as CSS color names.
+#' 
+#' @section YAML:
+#' A **pointblank** informant can be written to YAML with [yaml_write()] and the
+#' resulting YAML can be used to regenerate an informant (with
+#' [yaml_read_informant()]) or perform the 'incorporate' action using the target
+#' table (via [yaml_informant_incorporate()]). When `info_tabular()` is
+#' represented in YAML, *info text* goes into subsections of the top-level
+#' `table` key. Here is an example of how a call of `info_tabular()` is
+#' expressed in R code and in the corresponding YAML representation.
+#' 
+#' ```
+#' # R statement
+#' informant %>% 
+#'   info_tabular(
+#'     section_1 = "*info text* 1.",
+#'     `section 2` = "*info text* 2 and {snippet_1}"
+#'   )
+#' 
+#' # YAML representation
+#' table:
+#'   _columns: 23
+#'   _rows: 205.0
+#'   _type: tbl_df
+#'   section_1: '*info text* 1.'
+#'   section 2: '*info text* 2 and {snippet_1}'
+#' ```
+#' 
+#' Subsection titles as defined in `info_tabular()` can be set in backticks if
+#' they are not syntactically correct as an argument name without them (e.g.,
+#' when using spaces, hyphens, etc.).
+#' 
+#' It's safest to use single quotation marks around any *info text* if directly
+#' editing it in a YAML file. Note that Markdown formatting and *info snippet*
+#' placeholders (shown here as `{snippet_1}`, see [info_snippet()] for more
+#' information) are preserved in the YAML. The Markdown to HTML conversion is
+#' done when printing an informant (or invoking [get_informant_report()] on an
+#' *informant*) and the processing of snippets (generation and insertion) is
+#' done when using the [incorporate()] function. Thus, the source text is always
+#' maintained in the YAML representation and is never written in processed form.
 #' 
 #' @param x An informant object of class `ptblank_informant`.
 #' @param ... Information entries as a series of named arguments. The names
@@ -68,14 +132,13 @@
 #'     label = "An example."
 #'   )
 #' 
-#' # The `informant` object has the 'table'
-#' # and 'columns' sections; we can add more
-#' # properties to the 'table' section
+#' # We can add *info text* to describe
+#' # the table with `info_tabular()`
 #' informant <-
 #'   informant %>%
 #'   info_tabular(
-#'     row_definition = "A row has randomized values.",
-#'     source = c(
+#'     `Row Definition` = "A row has randomized values.",
+#'     Source = c(
 #'       "- From the **pointblank** package.",
 #'       "- [https://rich-iannone.github.io/pointblank/]()"
 #'      )
@@ -84,22 +147,26 @@
 #' # Upon printing the `informant` object, we see
 #' # the additions made to the 'Table' section
 #' 
+#' if (interactive()) {
+#' 
 #' # The `informant` object can be written to
 #' # a YAML file with the `yaml_write()`
 #' # function; then information can
 #' # be directly edited or modified
-#' # yaml_write(
-#' #   informant = informant,
-#' #   filename = "informant.yml"
-#' # )
+#' yaml_write(
+#'   informant = informant,
+#'   filename = "informant.yml"
+#' )
 #' 
 #' # The YAML file can then be read back
 #' # into an informant object with the
 #' # `yaml_read_informant()` function
-#' # informant <-
-#' #   yaml_read_informant(
-#' #     filename = "informant.yml"
-#' #   )
+#' informant <-
+#'   yaml_read_informant(
+#'     filename = "informant.yml"
+#'   )
+#' 
+#' }
 #'
 #' @section Figures:
 #' \if{html}{\figure{man_info_tabular_1.png}{options: width=100\%}}
@@ -145,6 +212,7 @@ info_tabular <- function(x,
 
 #' Add information that focuses on aspects of a data table's columns
 #' 
+#' @description
 #' Upon creation of an *informant* object (with the [create_informant()]
 #' function), there are two sections containing properties: (1) 'table' and (2)
 #' 'columns'. The 'columns' section is initialized with the table's column names
@@ -154,16 +222,20 @@ info_tabular <- function(x,
 #' series of named arguments (in the form `entry_name = "The *info text*."`)
 #' serves as additional information for the column or columns.
 #' 
-#' The *info text* readily accepts Markdown formatting. Also, there are a few
-#' *Text Tricks* that are good to know. Markdown links written as `< link url >`
+#' @section Info Text:
+#' The *info text* that's used for any of the `info_*()` functions readily
+#' accepts Markdown formatting, and, there are a few *Text Tricks* that can be
+#' used to spice up the presentation. Markdown links written as `< link url >`
 #' or `[ link text ]( link url )` will get nicely-styled links. Any dates
 #' expressed in the ISO-8601 standard with parentheses, `"(2004-12-01)"`, will
 #' be styled with a font variation (monospaced) and underlined in purple. Spans
-#' of text can be converted to label text by using: (1) double parentheses
-#' around text for a rectangular label as in `((label text))`, or (2) triple
-#' parentheses around text for a rounded-rectangular label like `(((label
-#' text)))`. Finally, CSS styles can be applied to spans of *info text* with
-#' the following form:
+#' of text can be converted to label-style text by using: (1) double parentheses
+#' around text for a rectangular border as in `((label text))`, or (2) triple
+#' parentheses around text for a rounded-rectangular border like `(((label
+#' text)))`.
+#'
+#' CSS style rules can be applied to spans of *info text* with the following
+#' form:
 #' 
 #' `[[ info text ]]<< CSS style rules >>`
 #' 
@@ -172,6 +244,86 @@ info_tabular <- function(x,
 #' the following might be used:
 #' 
 #' `"This is a [[factor]]<<color: red; font-weight: 300;>> value."`
+#' 
+#' The are quite a few CSS style rules that can be used to great effect. Here
+#' are a few you might like:
+#' 
+#' - `color: <a color value>;` (text color)
+#' - `background-color: <a color value>;` (the text's background color)
+#' - `text-decoration: (overline | line-through | underline);`
+#' - `text-transform: (uppercase | lowercase | capitalize);`
+#' - `letter-spacing: <a +/- length value>;`
+#' - `word-spacing: <a +/- length value>;`
+#' - `font-style: (normal | italic | oblique);`
+#' - `font-weight: (normal | bold | 100-900);`
+#' - `font-variant: (normal | bold | 100-900);`
+#' - `border: <a color value> <a length value> (solid | dashed | dotted);`
+#' 
+#' In the above examples, 'length value' refers to a CSS length which can be
+#' expressed in different units of measure (e.g., `12px`, `1em`, etc.). Some
+#' lengths can be expressed as positive or negative values (e.g., for
+#' `letter-spacing`). Color values can be expressed in a few ways, the most
+#' common being in the form of hexadecimal color values or as CSS color names.
+#' 
+#' @section YAML:
+#' A **pointblank** informant can be written to YAML with [yaml_write()] and the
+#' resulting YAML can be used to regenerate an informant (with
+#' [yaml_read_informant()]) or perform the 'incorporate' action using the target
+#' table (via [yaml_informant_incorporate()]). The way that information on table
+#' columns is represented in YAML works like this: *info text* goes into
+#' subsections of YAML keys named for the columns, which are themselves part of
+#' the top-level `columns` key. Here is an example of how several calls of
+#' `info_columns()` are expressed in R code and how the result corresponds to
+#' the YAML representation.
+#' 
+#' ```
+#' # R statement
+#' informant %>% 
+#'   info_columns(
+#'     columns = "date_time",
+#'     info = "*info text* 1."
+#'   ) %>%
+#'   info_columns(
+#'     columns = "date",
+#'     info = "*info text* 2."
+#'   ) %>%
+#'   info_columns(
+#'     columns = "item_count",
+#'     info = "*info text* 3. Statistics: {snippet_1}."
+#'   ) %>%
+#'   info_columns(
+#'     columns = vars(date, date_time),
+#'     info = "UTC time."
+#'   )
+#' 
+#' # YAML representation
+#' columns:
+#'   date_time:
+#'     _type: POSIXct, POSIXt
+#'     info: '*info text* 1. UTC time.'
+#'   date:
+#'     _type: Date
+#'     info: '*info text* 2. UTC time.'
+#'   item_count:
+#'     _type: integer
+#'     info: '*info text* 3. Statistics: {snippet_1}.'
+#' ```
+#' 
+#' Subsections represented as column names are automatically generated when
+#' creating an informant. Within these, there can be multiple subsections used
+#' for holding *info text* on each column. The subsections used across the
+#' different columns needn't be the same either, the only commonality that
+#' should be enforced is the presence of the `_type` key (automatically updated
+#' at every [incorporate()] invocation). 
+#' 
+#' It's safest to use single quotation marks around any *info text* if directly
+#' editing it in a YAML file. Note that Markdown formatting and *info snippet*
+#' placeholders (shown here as `{snippet_1}`, see [info_snippet()] for more
+#' information) are preserved in the YAML. The Markdown to HTML conversion is
+#' done when printing an informant (or invoking [get_informant_report()] on an
+#' *informant*) and the processing of snippets (generation and insertion) is
+#' done when using the [incorporate()] function. Thus, the source text is always
+#' maintained in the YAML representation and is never written in processed form.
 #' 
 #' @param x An informant object of class `ptblank_informant`.
 #' @param columns The column or set of columns to focus on. Can be defined as a
@@ -200,10 +352,11 @@ info_tabular <- function(x,
 #'     label = "An example."
 #'   )
 #' 
-#' # The `informant` object has the 'table'
-#' # and 'columns' sections; we can add more
-#' # properties to individual columns in
-#' # the 'columns' section
+#' # We can add *info text* to describe
+#' # the columns in the table with multiple
+#' # `info_columns()` calls; the *info text*
+#' # calls are additive to existing content
+#' # in subsections
 #' informant <-
 #'   informant %>%
 #'   info_columns(
@@ -222,22 +375,26 @@ info_tabular <- function(x,
 #' # Upon printing the `informant` object, we see
 #' # the additions made to the 'Columns' section
 #' 
+#' if (interactive()) {
+#' 
 #' # The `informant` object can be written to
 #' # a YAML file with the `yaml_write()`
 #' # function; then, information can
 #' # be directly edited or modified
-#' # yaml_write(
-#' #   informant = informant,
-#' #   filename = "informant.yml"
-#' # )
+#' yaml_write(
+#'   informant = informant,
+#'   filename = "informant.yml"
+#' )
 #' 
 #' # The YAML file can then be read back
 #' # into an informant object with the
 #' # `yaml_read_informant()` function
-#' # informant <-
-#' #   yaml_read_informant(
-#' #     filename = "informant.yml"
-#' #   )
+#' informant <-
+#'   yaml_read_informant(
+#'     filename = "informant.yml"
+#'   )
+#' 
+#' }
 #' 
 #' @section Figures:
 #' \if{html}{\figure{man_info_columns_1.png}{options: width=100\%}}
@@ -307,23 +464,28 @@ info_columns <- function(x,
 
 #' Add information that focuses on some key aspect of the data table
 #' 
+#' @description 
 #' While the [info_tabular()] and [info_columns()] functions allow us to
-#' add/modify info text for specific sections, the `info_section()`
-#' makes it possible to add sections of our own choosing and the information
-#' that make sense for those sections. Define a `section_name` and provide a
-#' series of named arguments (in the form `entry_name = "The *info text*."`) to
-#' build the informational content for that section.
+#' add/modify info text for specific sections, the `info_section()` makes it
+#' possible to add sections of our own choosing and the information that make
+#' sense for those sections. Define a `section_name` and provide a series of
+#' named arguments (in the form `entry_name = "The *info text*."`) to build the
+#' informational content for that section.
 #' 
-#' The *info text* readily accepts Markdown formatting. Also, there are a few
-#' *Text Tricks* that are good to know. Markdown links written as `< link url >`
+#' @section Info Text:
+#' The *info text* that's used for any of the `info_*()` functions readily
+#' accepts Markdown formatting, and, there are a few *Text Tricks* that can be
+#' used to spice up the presentation. Markdown links written as `< link url >`
 #' or `[ link text ]( link url )` will get nicely-styled links. Any dates
 #' expressed in the ISO-8601 standard with parentheses, `"(2004-12-01)"`, will
 #' be styled with a font variation (monospaced) and underlined in purple. Spans
-#' of text can be converted to label text by using: (1) double parentheses
-#' around text for a rectangular label as in `((label text))`, or (2) triple
-#' parentheses around text for a rounded-rectangular label like `(((label
-#' text)))`. Finally, CSS styles can be applied to spans of *info text* with
-#' the following form:
+#' of text can be converted to label-style text by using: (1) double parentheses
+#' around text for a rectangular border as in `((label text))`, or (2) triple
+#' parentheses around text for a rounded-rectangular border like `(((label
+#' text)))`.
+#'
+#' CSS style rules can be applied to spans of *info text* with the following
+#' form:
 #' 
 #' `[[ info text ]]<< CSS style rules >>`
 #' 
@@ -332,6 +494,79 @@ info_columns <- function(x,
 #' the following might be used:
 #' 
 #' `"This is a [[factor]]<<color: red; font-weight: 300;>> value."`
+#' 
+#' The are quite a few CSS style rules that can be used to great effect. Here
+#' are a few you might like:
+#' 
+#' - `color: <a color value>;` (text color)
+#' - `background-color: <a color value>;` (the text's background color)
+#' - `text-decoration: (overline | line-through | underline);`
+#' - `text-transform: (uppercase | lowercase | capitalize);`
+#' - `letter-spacing: <a +/- length value>;`
+#' - `word-spacing: <a +/- length value>;`
+#' - `font-style: (normal | italic | oblique);`
+#' - `font-weight: (normal | bold | 100-900);`
+#' - `font-variant: (normal | bold | 100-900);`
+#' - `border: <a color value> <a length value> (solid | dashed | dotted);`
+#' 
+#' In the above examples, 'length value' refers to a CSS length which can be
+#' expressed in different units of measure (e.g., `12px`, `1em`, etc.). Some
+#' lengths can be expressed as positive or negative values (e.g., for
+#' `letter-spacing`). Color values can be expressed in a few ways, the most
+#' common being in the form of hexadecimal color values or as CSS color names.
+#' 
+#' @section YAML:
+#' A **pointblank** informant can be written to YAML with [yaml_write()] and the
+#' resulting YAML can be used to regenerate an informant (with
+#' [yaml_read_informant()]) or perform the 'incorporate' action using the target
+#' table (via [yaml_informant_incorporate()]). Extra sections (i.e., neither the
+#' `table` nor the `columns` sections) can be generated and filled with *info
+#' text* by using one or more calls of `info_section()`. This is how it is
+#' expressed in both R code and in the YAML representation.
+#' 
+#' ```
+#' # R statement
+#' informant %>% 
+#'   info_section(
+#'     section_name = "History",
+#'     Changes = "
+#' - Change 1
+#' - Change 2
+#' - Change 3",
+#'     `Last Update` = "(2020-10-23) at 3:28 PM."
+#'   ) %>%
+#'   info_section(
+#'     section_name = "Additional Notes",
+#'     `Notes 1` = "Notes with a {snippet}.",
+#'     `Notes 2` = "**Bold notes**."
+#'   )
+#' 
+#' # YAML representation
+#' History:
+#'   Changes: |2-
+#'   
+#'     - Change 1
+#'     - Change 2
+#'     - Change 3
+#'   Last Update: (2020-10-23) at 3:28 PM.
+#' Additional Notes:
+#'   Notes 1: Notes with a {snippet}.
+#'   Notes 2: '**Bold notes**.'
+#' ```
+#' 
+#' Subsections represented as column names are automatically generated when
+#' creating an informant. Within each of the top-level sections (i.e., `History`
+#' and `Additional Notes`) there can be multiple subsections used for holding
+#' *info text*.
+#' 
+#' It's safest to use single quotation marks around any *info text* if directly
+#' editing it in a YAML file. Note that Markdown formatting and *info snippet*
+#' placeholders (shown here as `{snippet}`, see [info_snippet()] for more
+#' information) are preserved in the YAML. The Markdown to HTML conversion is
+#' done when printing an informant (or invoking [get_informant_report()] on an
+#' *informant*) and the processing of snippets (generation and insertion) is
+#' done when using the [incorporate()] function. Thus, the source text is always
+#' maintained in the YAML representation and is never written in processed form.
 #' 
 #' @param x An informant object of class `ptblank_informant`.
 #' @param section_name The name of the section for which this information
@@ -360,10 +595,14 @@ info_columns <- function(x,
 #' # and 'columns' sections; we can create
 #' # entirely different sections with their
 #' # own properties using `info_section()`
+#' 
+#' # We can add *info text* to sections
+#' # entirely different than `table` and
+#' # `columns` with `info_section()`
 #' informant <-
 #'   informant %>%
 #'   info_section(
-#'     section_name = "notes",
+#'     section_name = "Notes",
 #'     creation = "Dataset generated on (2020-01-15).",
 #'     usage = "`small_table %>% dplyr::glimpse()`"
 #'   )
@@ -372,22 +611,26 @@ info_columns <- function(x,
 #' # the addition of the 'Notes' section and its
 #' # own information
 #' 
+#' if (interactive()) {
+#' 
 #' # The `informant` object can be written to
 #' # a YAML file with the `yaml_write()`
 #' # function; then, information can
 #' # be directly edited or modified
-#' # yaml_write(
-#' #   informant = informant,
-#' #   filename = "informant.yml"
-#' # )
+#' yaml_write(
+#'   informant = informant,
+#'   filename = "informant.yml"
+#' )
 #' 
 #' # The YAML file can then be read back
 #' # into an informant object with the
 #' # `yaml_read_informant()` function
-#' # informant <-
-#' #   yaml_read_informant(
-#' #     filename = "informant.yml"
-#' #   )
+#' informant <-
+#'   yaml_read_informant(
+#'     filename = "informant.yml"
+#'   )
+#' 
+#' }
 #' 
 #' @section Figures:
 #' \if{html}{\figure{man_info_section_1.png}{options: width=100\%}}
@@ -449,6 +692,7 @@ info_section <- function(x,
 
 #' Generate a useful text 'snippet' from the target table
 #' 
+#' @description 
 #' Getting little snippets of information from a table goes hand-in-hand with
 #' mixing those bits of info with your table info. Call `info_snippet()` to
 #' define a snippet and how you'll get that from the target table (it's with a

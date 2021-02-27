@@ -41,17 +41,20 @@ and password for the database.}
 A \code{tbl_dbi} object.
 }
 \description{
-If your target table is in a database, the \code{db_tbl()} function
-is a handy way of accessing it. This function simplifies the process of
-getting a \code{tbl_dbi} object, which usually involves a combination of building
-a connection to a database and using the \code{dplyr::tbl()} function with the
-connection and the table name (or a reference to a table in a schema). A
-better option is to use this function as the \code{read_fn} parameter in
-\code{\link[=create_agent]{create_agent()}} or \code{\link[=create_informant]{create_informant()}}. This can be done by using a
-leading \code{~} before the \code{db_tbl()} call (e.g,. \code{read_fn = ~db_tbl(...)}).
+If your target table is in a database, the \code{db_tbl()} function is a handy way
+of accessing it. This function simplifies the process of getting a \code{tbl_dbi}
+object, which usually involves a combination of building a connection to a
+database and using the \code{dplyr::tbl()} function with the connection and the
+table name (or a reference to a table in a schema). You can use \code{db_tbl()} as
+the basis for obtaining a database table for the \code{read_fn} parameter in
+\code{\link[=create_agent]{create_agent()}} or \code{\link[=create_informant]{create_informant()}}. This can be done by using a leading
+\code{~} before the \code{db_tbl()} call (e.g,. \code{read_fn = ~db_tbl(...)}). Another
+great option is supplying a table-prep formula involving \code{db_tbl()} to
+\code{\link[=tbl_store]{tbl_store()}} so that you have access to database tables though single names
+via a table store.
 
 The username and password are supplied though environment variables. If
-desired, these can be supplied directly by enclosing those values in \code{I()}.
+desired, these can be supplied directly by enclosing those values in \code{\link[=I]{I()}}.
 }
 \section{Function ID}{
 
@@ -62,68 +65,117 @@ desired, these can be supplied directly by enclosing those values in \code{I()}.
 # You can use an in-memory database
 # table and supply an in-memory table
 # to it too:
-# small_table_duckdb <- 
-#   db_tbl(
-#     table = small_table,
-#     dbname = ":memory:",
-#     dbtype = "duckdb"
-#   )
+small_table_duckdb <- 
+  db_tbl(
+    table = small_table,
+    dbname = ":memory:",
+    dbtype = "duckdb"
+  )
+
+if (interactive()) {
 
 # It's also possible to obtain a remote
 # file and shove it into an in-memory
-# database; use the all-powerful `file_tbl()`
-# + `db_tbl()` combo
-# all_revenue_large_duckdb <-
-#   db_tbl(
-#     table = file_tbl(
-#       file = from_github(
-#         file = "all_revenue_large.rds",
-#         repo = "rich-iannone/intendo",
-#         subdir = "data-large"
-#       )
-#     ),
-#     dbname = ":memory:",
-#     dbtype = "duckdb"
-#   )
+# database; use the all-powerful
+# `file_tbl()` + `db_tbl()` combo
+all_revenue_large_duckdb <-
+  db_tbl(
+    table = file_tbl(
+      file = from_github(
+        file = "all_revenue_large.rds",
+        repo = "rich-iannone/intendo",
+        subdir = "data-large"
+      )
+    ),
+    dbname = ":memory:",
+    dbtype = "duckdb"
+  )
 
-# For remote databases, it's just as
-# simple (I think); you can get access
-# to the `rna` table that's in the
-# RNA Central public database with the
-# following `db_tbl()` call
-# rna_db_tbl <- 
-#   db_tbl(
-#     table = "rna",
-#     dbname = "pfmegrnargs",
-#     dbtype = "postgres", 
-#     host = "hh-pgsql-public.ebi.ac.uk",
-#     port = 5432,
-#     user = I("reader"),
-#     password = I("NWDMCE5xdipIjRrp")
-#   )
+# For remote databases, it's much the
+# same; here's an example that accesses
+# the `rna` table (in the RNA Central
+# public database) using `db_tbl()`
+rna_db_tbl <- 
+  db_tbl(
+    table = "rna",
+    dbname = "pfmegrnargs",
+    dbtype = "postgres", 
+    host = "hh-pgsql-public.ebi.ac.uk",
+    port = 5432,
+    user = I("reader"),
+    password = I("NWDMCE5xdipIjRrp")
+  )
 
 # Using `I()` for the user name and
 # password means that you're passing in
 # the actual values but, normally, you
-# would use names of environment variables
-# (envvars) to access the username and
-# password values when connecting to a
-# database... like this:
-# example_db_tbl <- 
-#   db_tbl(
-#     table = "<table_name>",
-#     dbname = "<database_name>",
-#     dbtype = "<database_type_shortname>", 
-#     host = "<connection_url>",
-#     port = "<connection_port>",
-#     user = "<DB_USER_NAME>",
-#     password = "<DB_PASSWORD>"
-#   )
+# would want use the names of environment
+# variables (envvars) to securely access
+# the appropriate username and password
+# values when connecting to a DB:
+example_db_tbl <- 
+  db_tbl(
+    table = "<table_name>",
+    dbname = "<database_name>",
+    dbtype = "<database_type_shortname>", 
+    host = "<connection_url>",
+    port = "<connection_port>",
+    user = "<DB_USER_NAME>",
+    password = "<DB_PASSWORD>"
+  )
 
 # Environment variables can be created
 # by editing the user `.Renviron` file and
 # the `usethis::edit_r_environ()` function
 # makes this pretty easy to do
+
+# Storing table-prep formulas in a table
+# store makes it easier to work with DB
+# tables in pointblank; here's how to
+# generate a table store with two named
+# entries for table preparations
+tbls <-
+  tbl_store(
+    small_table_duck ~ db_tbl(
+      table = pointblank::small_table,
+      dbname = ":memory:",
+      dbtype = "duckdb"
+    ),
+    small_high_duck ~ db_tbl(
+      table = pointblank::small_table,
+      dbname = ":memory:",
+      dbtype = "duckdb"
+    ) \%>\%
+      dplyr::filter(f == "high")
+  )
+
+# Now it's easy to access either of these
+# tables (the second is a mutated version)
+# via the `tbl_get()` function
+tbl_get("small_table_duck", store = tbls)
+tbl_get("small_high_duck", store = tbls)
+
+# The table-prep formulas in `tbls`
+# could also be used in functions with
+# the `read_fn` argument; this is thanks
+# to the `tbl_source()` function
+agent <- 
+  create_agent(
+    read_fn = ~ tbl_source(
+      "small_table_duck",
+      store = tbls
+    )
+  )
+
+informant <- 
+  create_informant(
+    read_fn = ~ tbl_source(
+      "small_high_duck",
+      store = tbls
+    )
+  )
+
+}
 
 }
 \seealso{

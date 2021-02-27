@@ -61,14 +61,15 @@
 #' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
 #' then be automatically generated.
 #' 
-#' @section YAML: A **pointblank** agent can be written to YAML with
-#'   [yaml_write()] and the resulting YAML can be used to regenerate an agent
-#'   (with [yaml_read_agent()]) or interrogate the target table (via
-#'   [yaml_agent_interrogate()]). When `col_is_posix()` is represented in YAML
-#'   (under the top-level `steps` key as a list member), the syntax closely
-#'   follows the signature of the validation function. Here is an example of how
-#'   a complex call of `col_is_posix()` as a validation step is expressed in R
-#'   code and in the corresponding YAML representation.
+#' @section YAML: 
+#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
+#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
+#' or interrogate the target table (via [yaml_agent_interrogate()]). When
+#' `col_is_posix()` is represented in YAML (under the top-level `steps` key as a
+#' list member), the syntax closely follows the signature of the validation
+#' function. Here is an example of how a complex call of `col_is_posix()` as a
+#' validation step is expressed in R code and in the corresponding YAML
+#' representation.
 #' 
 #' ```
 #' # R statement
@@ -97,9 +98,6 @@
 #' their default when generating the YAML by other means). It is also possible
 #' to preview the transformation of an agent to YAML without any writing to disk
 #' by using the [yaml_agent_string()] function.
-#'
-#' Verification step where a table column is expected to consist entirely of
-#' R `POSIXct` dates.
 #'
 #' @inheritParams col_vals_gt
 #' 

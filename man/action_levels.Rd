@@ -33,8 +33,9 @@ each named state can be used by enclosing the set of statements with \code{{ }}.
 \description{
 The \code{action_levels()} function works with the \code{actions} argument that is
 present in the \code{\link[=create_agent]{create_agent()}} function and in every validation step
-function. With it, we can provide threshold \emph{fail} levels for any combination
-of \code{warn}, \code{stop}, or \code{notify} states.
+function (which also has an \code{actions} argument). With it, we can provide
+threshold \emph{fail} levels for any combination of \code{warn}, \code{stop}, or \code{notify}
+states.
 
 We can react to any entrance of a state by supplying corresponding functions
 to the \code{fns} argument. They will undergo evaluation at the time when the
@@ -84,7 +85,11 @@ reducing potential for duplicating any side effects.
 }
 
 \examples{
-# Create an `action_levels()` list
+# For these examples, we will use the
+# included `small_table` dataset
+small_table
+
+# Create an `action_levels` object
 # with fractional values for the
 # `warn`, `stop`, and `notify` states
 al <- 
@@ -94,38 +99,103 @@ al <-
     notify_at = 0.5
   )
   
-# Use the included `small_table` dataset
-# for the validation example
-small_table
+# A summary of settings for the `al`
+# object is shown by printing it
+al
 
-# Validate that values in column
-# `a` are always greater than `2` and
-# apply the list of action levels (`al`)
-agent <-
-  create_agent(tbl = small_table) \%>\%
-  col_vals_gt(vars(a), 2, actions = al) \%>\%
+# Create a pointblank agent and
+# apply the `al` object to `actions`;
+# add two validation steps and
+# interrogate the `small_table`
+agent_1 <-
+  create_agent(
+    tbl = small_table,
+    actions = al
+  ) \%>\%
+  col_vals_gt(
+    vars(a), value = 2
+  ) \%>\%
+  col_vals_lt(
+    vars(d), value = 20000
+  ) \%>\%
   interrogate()
 
 # The report from the agent will show
 # that the `warn` state has been entered
-# for the first and only validation step;
-# Let's look at the *tibble* version of the
-# agent report (accessible through the use
-# of the `get_agent_report()` function)
-agent \%>\% 
-  get_agent_report(display_table = FALSE)
-  
+# for the first validation step but not
+# the second one; we can confirm this
+# in the console by inspecting the
+# `warn` component in the agent's x-list
+x_list <- get_agent_x_list(agent_1)
+x_list$warn
+
+# Applying the `action_levels` object
+# to the agent means that all validation
+# steps will inherit these settings but
+# we can override this by applying
+# another such object to the validation
+# step instead (this time using the
+# `warn_on_fail()` shorthand)
+agent_2 <-
+  create_agent(
+    tbl = small_table,
+    actions = al
+  ) \%>\%
+  col_vals_gt(
+    vars(a), value = 2,
+    actions = warn_on_fail(warn_at = 0.5)
+  ) \%>\%
+  col_vals_lt(
+    vars(d), value = 20000
+  ) \%>\%
+  interrogate()
+
+# In this case, the first validation
+# step has a less stringent failure
+# threshold for the `warn` state and it's
+# high enough that the condition is not
+# entered; this can be confirmed in the
+# console through inspection of the
+# x-list `warn` component
+x_list <- get_agent_x_list(agent_2)
+x_list$warn
+
+if (interactive()) {
+
 # In the context of using validation
-# functions directly on data, their
-# use is commonly to trigger warnings
-# and raise errors. The following *will*
-# provide a warning (but that's
-# suppressed here) and the `small_table`
-# data will be returned
-suppressWarnings(
-  small_table \%>\%
-    col_vals_gt(vars(a), 2, actions = al)
-)
+# functions directly on data (i.e., no
+# involvement of an agent) we want to
+# trigger warnings and raise errors; the
+# following will yield a warning if
+# it is executed (returning the
+# `small_table` data)
+small_table \%>\%
+  col_vals_gt(
+    vars(a), value = 2,
+    actions = warn_on_fail(warn_at = 2)
+  )
+
+# With the same pipeline, not supplying
+# anything for `actions` (it's `NULL` by
+# default) will have the same effect as
+# using `stop_on_fail(stop_at = 1)` 
+small_table \%>\%
+  col_vals_gt(vars(a), value = 2)
+
+small_table \%>\%
+  col_vals_gt(
+    vars(a), value = 2,
+    actions = stop_on_fail(stop_at = 1)
+  )
+
+# This is because the `stop_on_fail()`
+# call is auto-injected in the default
+# case (when operating on data) for your
+# convenience; behind the scenes a
+# 'secret agent' uses 'covert actions':
+# all so you can type less
+
+}
 
 }
 \seealso{

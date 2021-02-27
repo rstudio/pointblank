@@ -22,11 +22,12 @@ object, or a \code{tbl_spark} object. Alternatively, a function can be used to
 read in the input data table with the \code{read_fn} argument (in which case,
 \code{tbl} can be \code{NULL}).}
 
-\item{read_fn}{A function that's used for reading in the data. Even if a
-\code{tbl} is provided, this function will be invoked to obtain the data (i.e.,
-the \code{read_fn} takes priority). There are two ways to specify a \code{read_fn}:
-(1) using a function (e.g., \verb{function() \{ <table reading code> \}}) or, (2)
-with an R formula expression (e.g., \verb{~ \{ <table reading code> \}}).}
+\item{read_fn}{A table-prep formula that's used to access the target table.
+Even if a \code{tbl} is provided, this formula will be invoked to obtain the
+data (i.e., the \code{read_fn} takes priority). There are two ways to specify a
+\code{read_fn}: (1) with a right-hand side (RHS) formula expression (e.g.,
+\verb{~ \{ <table reading code>\}}) or (2) as a function (e.g.,
+\verb{function() \{ <table reading code>\}}).}
 
 \item{tbl_name}{A optional name to assign to the input table object. If no
 value is provided, a name will be generated based on whatever information
@@ -45,13 +46,11 @@ is to be created with the \code{\link[=action_levels]{action_levels()}} helper f
 action levels list be used for a specific validation step, the default set
 specified here will be overridden.}
 
-\item{end_fns}{A list of function calls that should be performed at the end
-of an interrogation. Each function call should be in the form of a
-one-sided R formula expression, so overall this construction should be
-used: \verb{end_fns = list(~ <R statements>, ~ <R statements>, ...)}. An example
-of a function that can be sensibly used here is \code{\link[=email_blast]{email_blast()}}, where an
-email of the validation report is generated and sent based on sending
-condition.}
+\item{end_fns}{A list of expressions that should be invoked at the end of an
+interrogation. Each expression should be in the form of a one-sided R
+formula, so overall this construction should be used: \verb{end_fns = list(~ <R statements>, ~ <R statements>, ...)}. An example of a function included in
+\strong{pointblank} that can be sensibly used here is \code{\link[=email_blast]{email_blast()}}, which
+sends an email of the validation report (based on a sending condition).}
 
 \item{embed_report}{An option to embed a \strong{gt}-based validation report into
 the \code{ptblank_agent} object. If \code{FALSE} (the default) then the table object
@@ -92,22 +91,127 @@ the \emph{agent} has intel. Calling the \emph{agent} itself will result in a rep
 table. This reporting of the interrogation can also be accessed with the
 \code{\link[=get_agent_report]{get_agent_report()}} function, where there are more reporting options.
 }
-\details{
-A very detailed list object, known as the x-list, can be obtained by
-using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function on the \emph{agent}. This font of
-information can be taken as a whole, or, broken down by the step number (with
-the \code{i} argument).
+\section{Data Products Obtained from an Agent}{
+
+A very detailed list object, known as an x-list, can be obtained by using the
+\code{\link[=get_agent_x_list]{get_agent_x_list()}} function on the \emph{agent}. This font of information can be
+taken as a whole, or, broken down by the step number (with the \code{i} argument).
 
 Sometimes it is useful to see which rows were the failing ones. By using the
 \code{\link[=get_data_extracts]{get_data_extracts()}} function on the \emph{agent}, we either get a list of
 tibbles (for those steps that have data extracts) or one tibble if the
 validation step is specified with the \code{i} argument.
 
+The target data can be split into pieces that represent the 'pass' and 'fail'
+portions with the \code{\link[=get_sundered_data]{get_sundered_data()}} function. A primary requirement is an
+agent that has had \code{\link[=interrogate]{interrogate()}} called on it. In addition, the validation
+steps considered for this data splitting need to be those that operate on
+values down a column (e.g., the \verb{col_vals_*()} functions or \code{\link[=conjointly]{conjointly()}}).
+With these in-consideration validation steps, rows with no failing test units
+across all validation steps comprise the 'pass' data piece, and rows with at
+least one failing test unit across the same series of validations constitute
+the 'fail' piece.
+
 If we just need to know whether all validations completely passed (i.e., all
 steps had no failing test units), the \code{\link[=all_passed]{all_passed()}} function could be used
 on the \emph{agent}. However, in practice, it's not often the case that all data
 validation steps are free from any failing units.
+
+While printing an \emph{agent} will display the \emph{agent} report in the Viewer, we
+can alternatively use the \code{\link[=get_agent_report]{get_agent_report()}} to take advantage of other
+options (e.g., overriding the language, modifying the arrangement of report
+rows, etc.), and to return the report as independent objects. For example,
+with the \code{display_table = TRUE} option (the default), \code{\link[=get_agent_report]{get_agent_report()}}
+will return a \strong{gt} table object (\code{"gt_tbl"}). If \code{display_table} is set to
+\code{FALSE}, we'll get a data frame back instead.
 }
+
+\section{YAML}{
+
+A \strong{pointblank} agent can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
+resulting YAML can be used to regenerate an agent (with \code{\link[=yaml_read_agent]{yaml_read_agent()}})
+or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}). Here is an
+example of how a complex call of \code{create_agent()} is expressed in R code and
+in the corresponding YAML representation.\preformatted{# R statement
+create_agent(
+  read_fn = ~ small_table,
+  tbl_name = "small_table",
+  label = "An example.",
+  actions = action_levels(
+    warn_at = 0.10,
+    stop_at = 0.25,
+    notify_at = 0.35
+  ), 
+  end_fns = list(
+    ~ beepr::beep(2),
+    ~ Sys.sleep(1)
+  ), 
+  embed_report = TRUE,
+  lang = "fr", 
+  locale = "fr_CA"
+)
+
+# YAML representation
+type: agent
+read_fn: ~small_table
+tbl_name: small_table
+label: An example.
+lang: fr
+locale: fr_CA
+actions:
+  warn_fraction: 0.1
+stop_fraction: 0.25
+notify_fraction: 0.35
+end_fns:
+- ~beepr::beep(2)
+- ~Sys.sleep(1)
+embed_report: true
+}
+
+In practice, this block of YAML will be shorter since arguments with default
+values won't be written to YAML when using \code{\link[=yaml_write]{yaml_write()}} (though it is
+acceptable to include them with their default when generating the YAML by
+other means). The only requirement for writing the YAML representation of an
+\emph{agent} is having \code{read_fn} specified (any table supplied to \code{tbl} is
+ignored).
+
+What typically follows this chunk of YAML is a \code{steps} part, and that
+corresponds to the addition of validation steps via validation functions.
+Help articles for each validation function have a \emph{YAML} section that
+describes how a given validation function is translated to YAML.
+
+Should you need to preview the transformation of an \emph{agent} to YAML (without
+any committing anything to disk), use the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function. If
+you already have a \code{.yml} file that holds an \emph{agent}, you can get a glimpse
+of the R expressions that are used to regenerate that agent with
+\code{\link[=yaml_agent_show_exprs]{yaml_agent_show_exprs()}}.
+}
+
+\section{Writing an Agent to Disk}{
+
+An \emph{agent} object can be written to disk with the \code{\link[=x_write_disk]{x_write_disk()}} function.
+This can be useful for keeping a history of validations and generating views
+of data quality over time. Agents are stored in the serialized RDS format and
+can be easily retrieved with the \code{\link[=x_read_disk]{x_read_disk()}} function.
+
+It's recommended that table-prep formulas are supplied to the \code{read_fn}
+argument of \code{create_agent()}. In this way, when an \emph{agent} is read from disk
+through \code{\link[=x_read_disk]{x_read_disk()}}, it can be reused to access the target table (which
+may changed, hence the need to use an expression for this).
+}
+
+\section{Combining Several Agents in a \emph{multiagent} Object}{
+
+Multiple \emph{agent} objects can be part of a \emph{multiagent} object, and two
+functions can be used for this: \code{\link[=create_multiagent]{create_multiagent()}} and
+\code{\link[=read_disk_multiagent]{read_disk_multiagent()}}. By gathering multiple agents that have performed
+interrogations in the past, we can get a \emph{multiagent} report showing how data
+quality evolved over time. This use case is interesting for data quality
+monitoring and management, and, the reporting (which can be customized with
+\code{\link[=get_multiagent_report]{get_multiagent_report()}}) is robust against changes in validation steps for
+a given target table.
+}
+
 \section{Figures}{
 
 \if{html}{\figure{man_create_agent_1.png}{options: width=100\%}}

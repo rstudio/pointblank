@@ -10,9 +10,17 @@ info_snippet(x, snippet_name, fn)
 \item{x}{An informant object of class \code{ptblank_informant}.}
 
 \item{snippet_name}{The name for snippet, which is used for interpolating the
-snippet itself into info text.}
+result of the snippet formula into \emph{info text} defined by an \verb{info_*()}
+function.}
 
-\item{fn}{A function that obtains a snippet of data from the target table.}
+\item{fn}{A formula that obtains a snippet of data from the target table.
+It's best to use a leading dot (\code{.}) that stands for the table itself and
+use pipes to construct a series of operations to be performed on the table
+(e.g., \code{~ . \%>\% dplyr::pull(column_2) \%>\% max(na.rm = TRUE)}). So long as
+the result is a length-1 vector, it'll likely be valid for insertion into
+some info text. Alternatively, a \verb{snip_*()} function can be used here
+(these functions always return a formula that's suitable for all types of
+data sources).}
 }
 \value{
 A \code{ptblank_informant} object.
@@ -20,13 +28,76 @@ A \code{ptblank_informant} object.
 \description{
 Getting little snippets of information from a table goes hand-in-hand with
 mixing those bits of info with your table info. Call \code{info_snippet()} to
-define a snippet and how you'll get that from the target table (it's with a
-function). So long as you know how to interact with a table and extract
-information, you can easily define snippets for a \emph{informant} object. And
-once those snippets are defined, you can insert them into the info text as
-defined through the \verb{info_*()} functions. Just use curly braces with the
-\code{snippet_name} inside (e.g., \code{"This column has {n_cat} categories."}).
+define a snippet and how you'll get that from the target table. The snippet
+definition is supplied either with a formula, or, with a
+\strong{pointblank}-supplied \verb{snip_*()} function. So long as you know how to
+interact with a table and extract information, you can easily define snippets
+for a \emph{informant} object. And once those snippets are defined, you can insert
+them into the \emph{info text} as defined through the other \verb{info_*()} functions
+(\code{\link[=info_tabular]{info_tabular()}}, \code{\link[=info_columns]{info_columns()}}, and \code{\link[=info_section]{info_section()}}). Use curly braces
+with just the \code{snippet_name} inside (e.g., \code{"This column has {n_cat} categories."}).
 }
+\section{Snip functions provided in \strong{pointblank}}{
+
+For convenience, there are several \verb{snip_*()} functions provided in the
+package that work on column data from the \emph{informant}'s target table. These
+are:
+\itemize{
+\item \code{\link[=snip_list]{snip_list()}}: get a list of column categories
+\item \code{\link[=snip_stats]{snip_stats()}}: get an inline statistical summary
+\item \code{\link[=snip_lowest]{snip_lowest()}}: get the lowest value from a column
+\item \code{\link[=snip_highest]{snip_highest()}} : get the highest value from a column
+}
+
+As it's understood what the target table is, only the \code{column} in each of
+these functions is necessary for obtaining the resultant text.
+}
+
+\section{YAML}{
+
+A \strong{pointblank} informant can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
+resulting YAML can be used to regenerate an informant (with
+\code{\link[=yaml_read_informant]{yaml_read_informant()}}) or perform the 'incorporate' action using the target
+table (via \code{\link[=yaml_informant_incorporate]{yaml_informant_incorporate()}}). Snippets are stored in the YAML
+representation and here is is how they are expressed in both R code and in
+the YAML output (showing both the \code{meta_snippets} and \code{columns} keys to
+demonstrate their relationship here).\preformatted{# R statement
+informant \%>\% 
+  info_columns(
+    columns = "date_time",
+    `Latest Date` = "The latest date is \{latest_date\}."
+  ) \%>\%
+  info_columns(
+    columns = "item_count",
+    info = "Statistics (*fivenum*): \{descriptive_stats\}."
+  ) \%>\%
+  info_snippet(
+    snippet_name = "descriptive_stats",
+    fn = snip_stats(column = "item_count")
+  ) \%>\%
+  info_snippet(
+    snippet_name = "latest_date",
+    fn = ~ . \%>\% dplyr::pull(date) \%>\% max(na.rm = TRUE)
+  ) \%>\%
+  incorporate()
+
+# YAML representation
+meta_snippets:
+  descriptive_stats: ~. \%>\% dplyr::select(item_count) \%>\% pb_str_summary(type = "5num")
+  latest_date: ~. \%>\% dplyr::pull(date) \%>\% max(na.rm = TRUE)
+...
+columns:
+  date_time:
+    _type: POSIXct, POSIXt
+    Latest Date: The latest date is \{latest_date\}.
+  date:
+    _type: Date
+  item_count:
+    _type: integer
+    info: 'Statistics (*fivenum*): \{descriptive_stats\}.'
+}
+}
+
 \section{Figures}{
 
 \if{html}{\figure{man_info_snippet_1.png}{options: width=100\%}}
@@ -51,7 +122,7 @@ test_table <- small_table
 # the info text
 informant <- 
   create_informant(
-    read_fn = ~test_table,
+    read_fn = ~ test_table,
     tbl_name = "test_table",
     label = "An example."
   ) \%>\%
@@ -60,12 +131,12 @@ informant <-
     fn = ~ . \%>\% nrow()
   ) \%>\%
   info_snippet(
-    snippet_name = "col_count",
-    fn = ~ . \%>\% ncol()
+    snippet_name = "max_a",
+    fn = snip_highest(column = "a")
   ) \%>\%
   info_columns(
     columns = vars(a),
-    info = "In the range of 1 to 10. (SIMPLE)"
+    info = "In the range of 1 to {max_a}. (SIMPLE)"
   ) \%>\%
   info_columns(
     columns = starts_with("date"),

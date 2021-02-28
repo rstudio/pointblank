@@ -339,6 +339,15 @@ write_testthat_file <- function(agent,
     append = FALSE
   )
   
+  # Generate cli message w.r.t. written YAML file
+  if (!quiet) {
+    cli_bullet_msg(
+      msg = "The testthat file has been written to `{path}`",
+      bullet = cli::symbol$tick,
+      color = "green"
+    )
+  }
+  
   invisible(TRUE)
 }
 

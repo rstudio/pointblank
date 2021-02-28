@@ -49,6 +49,10 @@
 #'   `TRUE`).
 #' @param keep_extracts An option to keep any collected extract data for failing
 #'   rows. By default, this is `FALSE`.
+#' @param quiet Should the function *not* inform when the file is written? By
+#'   default this is `FALSE`.
+#'   
+#' @return Invisibly returns `TRUE` if the file has been written.
 #'   
 #' @family Object Ops
 #' @section Function ID:
@@ -59,9 +63,9 @@ x_write_disk <- function(x,
                          filename,
                          path = NULL,
                          keep_tbl = FALSE,
-                         keep_extracts = FALSE) {
+                         keep_extracts = FALSE,
+                         quiet = FALSE) {
 
-  
   if (!any(inherits(x, "ptblank_agent") | inherits(x, "ptblank_informant"))) {
     stop(
       "The object given as `x` is neither an agent nor an informant.", 
@@ -97,15 +101,32 @@ x_write_disk <- function(x,
     if (!keep_extracts) {
       x$extracts <- list()
     }
+    
+    object_type <- "agent"
+  } else {
+    object_type <- "informant"
   }
   
   if (!is.null(path)) {
     filename <- file.path(path, filename)
   }
     
-  filename <- as.character(fs::path_expand(filename))
+  filename <- as.character(fs::path_norm(fs::path_expand(filename)))
 
+  # Write the object to disk
   saveRDS(x, file = filename)
+  
+  # Generate cli message w.r.t. written RDS file
+  if (!quiet) {
+    cli_bullet_msg(
+      msg = "The {object_type} file has been written to `{filename}`",
+      bullet = cli::symbol$tick,
+      color = "green"
+    )
+  }
+  
+  invisible(TRUE)
+  
 }
 
 #' Read a **pointblank** *agent* or *informant* from disk

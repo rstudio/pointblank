@@ -92,60 +92,100 @@ done with \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}} (e.g.,
 }
 
 \examples{
+if (interactive()) {
+
 # Define a `tbl_store` object by adding
 # table-prep formulas inside the
 # `tbl_store()` call
-# tbls <- 
-#   tbl_store(
-#     small_table_duck ~ db_tbl(
-#       table = small_table,
-#       dbname = ":memory:",
-#       dbtype = "duckdb"
-#     ),
-#     ~ db_tbl(
-#       table = "rna",
-#       dbname = "pfmegrnargs",
-#       dbtype = "postgres",
-#       host = "hh-pgsql-public.ebi.ac.uk",
-#       port = 5432,
-#       user = I("reader"),
-#       password = I("NWDMCE5xdipIjRrp")
-#     ),
-#     all_revenue ~ db_tbl(
-#       table = file_tbl(
-#         file = from_github(
-#           file = "all_revenue_large.rds",
-#           repo = "rich-iannone/intendo",
-#           subdir = "data-large"
-#         )
-#       ),
-#       dbname = ":memory:",
-#       dbtype = "duckdb"
-#     ),
-#     sml_table ~ pointblank::small_table
-#   )
+tbls <- 
+  tbl_store(
+    small_table_duck ~ db_tbl(
+      table = small_table,
+      dbname = ":memory:",
+      dbtype = "duckdb"
+    ),
+    ~ db_tbl(
+      table = "rna",
+      dbname = "pfmegrnargs",
+      dbtype = "postgres",
+      host = "hh-pgsql-public.ebi.ac.uk",
+      port = 5432,
+      user = I("reader"),
+      password = I("NWDMCE5xdipIjRrp")
+    ),
+    all_revenue ~ db_tbl(
+      table = file_tbl(
+        file = from_github(
+          file = "all_revenue_large.rds",
+          repo = "rich-iannone/intendo",
+          subdir = "data-large"
+        )
+      ),
+      dbname = ":memory:",
+      dbtype = "duckdb"
+    ),
+    sml_table ~ pointblank::small_table
+  )
 
-# Once this object is available, you can
-# check that the table of interest is
-# produced to your specification with the
-# `tbl_get()` function
-# tbl_get(
-#   tbl = "small_table_duck",
-#   store = tbls
-# )
+# Once this object is available, you
+# can check that the table of interest
+# is produced to your specification with
+# the `tbl_get()` function
+tbl_get(
+  tbl = "small_table_duck",
+  store = tbls
+)
 
 # Another simpler way to get the same
 # table materialized is by using `$` to
 # get the entry of choice for `tbl_get()`
-# tbls$small_table_duck \%>\% tbl_get()
+tbls$small_table_duck \%>\% tbl_get()
 
 # Creating an agent is easy when all
 # table-prep formulas are encapsulated
-# in a `tbl_store` object; use `$` notation
-# to pass the appropriate procedure for
-# reading a table to the `read_fn` argument
-# agent <-
-#   create_agent(read_fn = tbls$small_table_duck)
+# in a `tbl_store` object; use `$` 
+# notation to pass the appropriate
+# procedure for reading a table to the
+# `read_fn` argument
+agent_1 <-
+  create_agent(
+    read_fn = tbls$small_table_duck
+  )
+  
+# There are other ways to use the
+# table store to assign a target table
+# to an agent, like using the
+# `tbl_source()` function
+agent_2 <-
+  create_agent(
+    read_fn = ~ tbl_source(
+      tbl = "small_table_duck",
+      store = tbls
+      )
+  )
+
+# The table store can be moved to
+# YAML with `yaml_write` and the
+# `tbl_source()` call could then
+# refer to that on-disk table store;
+# let's do that YAML conversion
+yaml_write(tbls)
+
+# The above writes the `tbl_store.yml`
+# file (by not providing a `filename`
+# this default filename is chosen);
+# next, modify the `tbl_source()`
+# so that `store` refer to the YAML
+# file
+agent_3 <-
+  create_agent(
+    read_fn = ~ tbl_source(
+      tbl = "small_table_duck",
+      store = "tbl_store.yml"
+    )
+  )
+
+}
 
 }
 \seealso{

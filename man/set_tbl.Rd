@@ -18,11 +18,11 @@ associated with the \emph{agent} or \emph{informant} will be overwritten.}
 Setting a data table to an \emph{agent} or \emph{informant} with \code{set_tbl()} replaces
 any associated table (a data frame, a tibble, objects of class \code{tbl_dbi} or
 \code{tbl_spark}). If a data table is associated with an \emph{agent} or \emph{informant}
-along with a table-reading function (settable in \code{\link[=create_agent]{create_agent()}} and
-\code{\link[=create_informant]{create_informant()}}'s \code{read_fn} argument or with \code{\link[=set_read_fn]{set_read_fn()}}), the
-table-reading function will take precedence. If this is undesirable, it be
-removed with the \code{\link[=remove_read_fn]{remove_read_fn()}} function. The association to a table can
-be removed with with \code{\link[=remove_tbl]{remove_tbl()}}.
+through the \code{tbl} argument \emph{and} the same object has a table-prep formula
+(settable in \code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}'s \code{read_fn} argument
+or with \code{\link[=set_read_fn]{set_read_fn()}}), the table-prep formula will take precedence. If
+this is undesirable, it be removed with the \code{\link[=remove_read_fn]{remove_read_fn()}} function. The
+association to a table can be removed with with \code{\link[=remove_tbl]{remove_tbl()}}.
 }
 \section{Function ID}{
 

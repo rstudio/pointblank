@@ -4,7 +4,14 @@
 \alias{x_write_disk}
 \title{Write a \strong{pointblank} \emph{agent} or \emph{informant} to disk}
 \usage{
-x_write_disk(x, filename, path = NULL, keep_tbl = FALSE, keep_extracts = FALSE)
+x_write_disk(
+  x,
+  filename,
+  path = NULL,
+  keep_tbl = FALSE,
+  keep_extracts = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{x}{An \emph{agent} object of class \code{ptblank_agent}, or, an \emph{informant} of
@@ -26,6 +33,12 @@ database tables of the class \code{tbl_dbi} and for Spark DataFrames
 
 \item{keep_extracts}{An option to keep any collected extract data for failing
 rows. By default, this is \code{FALSE}.}
+
+\item{quiet}{Should the function \emph{not} inform when the file is written? By
+default this is \code{FALSE}.}
+}
+\value{
+Invisibly returns \code{TRUE} if the file has been written.
 }
 \description{
 Writing an \emph{agent} or \emph{informant} to disk with \code{x_write_disk()} can be useful

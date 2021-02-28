@@ -27,7 +27,8 @@ be provided:
 \enumerate{
 \item a five-number summary (\code{"5num"}): minimum, Q1, median, Q3, maximum
 \item a seven-number summary (\code{"7num"}): P2, P9, Q1, median, Q3, P91, P98
-\item Bowley's seven-figure summary: minimum, P10, Q1, median, Q3, P90, maximum
+\item Bowley's seven-figure summary (\code{"bowley"}): minimum, P10, Q1, median, Q3,
+P90, maximum
 }
 }
 \section{Function ID}{
@@ -35,6 +36,35 @@ be provided:
 3-6
 }
 
+\examples{
+# Generate an informant object, add
+# a snippet with `info_snippet()`
+# and `snip_stats()` (giving us a
+# method to get some summary stats for
+# column `a`); define a location for
+# the snippet result in `{ }` and
+# then `incorporate()` the snippet
+# into the info text
+informant <- 
+  create_informant(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example."
+  ) \%>\% 
+  info_columns(
+    columns = "a",
+    `Stats` = "Stats (fivenum): {stats_a}."
+  ) \%>\%
+  info_snippet(
+    snippet_name = "stats_a",
+    fn = snip_stats(column = "a")
+  ) \%>\%
+  incorporate()
+
+# We can print the `informant` object
+# to see the information report
+
+}
 \seealso{
 Other Information Functions: 
 \code{\link{info_columns}()},

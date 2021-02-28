@@ -208,7 +208,12 @@ yaml_write <- function(...,
       )
     )
     
-    # TODO: Generate message w.r.t. written YAML file
+    # Generate cli message w.r.t. written YAML file
+    cli_bullet_msg(
+      msg = "The table store YAML file has been written to `{filename}`",
+      bullet = cli::symbol$tick,
+      color = "green"
+    )
     
     return(invisible(NULL))
   }
@@ -242,6 +247,8 @@ yaml_write <- function(...,
       filename <- "pointblank.yml"
     }
     
+    yaml_type <- "agent and informant"
+    
     # TODO: manage conflicts between both YAML representations
     
   } else if (!is.null(agent)) {
@@ -255,6 +262,8 @@ yaml_write <- function(...,
       }
     }
     
+    yaml_type <- "agent"
+    
   } else {
     x <- as_informant_yaml_list(informant = informant)
     
@@ -265,6 +274,8 @@ yaml_write <- function(...,
         filename <- "informant.yml"
       }
     }
+    
+    yaml_type <- "informant"
   }
   
   if (!is.null(path)) {
@@ -283,7 +294,12 @@ yaml_write <- function(...,
     )
   )
   
-  # TODO: Generate message w.r.t. written YAML file
+  # Generate cli message w.r.t. written YAML file
+  cli_bullet_msg(
+    msg = "The {yaml_type} YAML file has been written to `{filename}`",
+    bullet = cli::symbol$tick,
+    color = "green"
+  )
 }
 
 #' Display **pointblank** YAML using an agent or a YAML file

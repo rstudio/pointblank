@@ -103,60 +103,100 @@
 #' @return A `tbl_store` object that contains table-prep formulas.
 #' 
 #' @examples 
+#' if (interactive()) {
+#' 
 #' # Define a `tbl_store` object by adding
 #' # table-prep formulas inside the
 #' # `tbl_store()` call
-#' # tbls <- 
-#' #   tbl_store(
-#' #     small_table_duck ~ db_tbl(
-#' #       table = small_table,
-#' #       dbname = ":memory:",
-#' #       dbtype = "duckdb"
-#' #     ),
-#' #     ~ db_tbl(
-#' #       table = "rna",
-#' #       dbname = "pfmegrnargs",
-#' #       dbtype = "postgres",
-#' #       host = "hh-pgsql-public.ebi.ac.uk",
-#' #       port = 5432,
-#' #       user = I("reader"),
-#' #       password = I("NWDMCE5xdipIjRrp")
-#' #     ),
-#' #     all_revenue ~ db_tbl(
-#' #       table = file_tbl(
-#' #         file = from_github(
-#' #           file = "all_revenue_large.rds",
-#' #           repo = "rich-iannone/intendo",
-#' #           subdir = "data-large"
-#' #         )
-#' #       ),
-#' #       dbname = ":memory:",
-#' #       dbtype = "duckdb"
-#' #     ),
-#' #     sml_table ~ pointblank::small_table
-#' #   )
+#' tbls <- 
+#'   tbl_store(
+#'     small_table_duck ~ db_tbl(
+#'       table = small_table,
+#'       dbname = ":memory:",
+#'       dbtype = "duckdb"
+#'     ),
+#'     ~ db_tbl(
+#'       table = "rna",
+#'       dbname = "pfmegrnargs",
+#'       dbtype = "postgres",
+#'       host = "hh-pgsql-public.ebi.ac.uk",
+#'       port = 5432,
+#'       user = I("reader"),
+#'       password = I("NWDMCE5xdipIjRrp")
+#'     ),
+#'     all_revenue ~ db_tbl(
+#'       table = file_tbl(
+#'         file = from_github(
+#'           file = "all_revenue_large.rds",
+#'           repo = "rich-iannone/intendo",
+#'           subdir = "data-large"
+#'         )
+#'       ),
+#'       dbname = ":memory:",
+#'       dbtype = "duckdb"
+#'     ),
+#'     sml_table ~ pointblank::small_table
+#'   )
 #' 
-#' # Once this object is available, you can
-#' # check that the table of interest is
-#' # produced to your specification with the
-#' # `tbl_get()` function
-#' # tbl_get(
-#' #   tbl = "small_table_duck",
-#' #   store = tbls
-#' # )
+#' # Once this object is available, you
+#' # can check that the table of interest
+#' # is produced to your specification with
+#' # the `tbl_get()` function
+#' tbl_get(
+#'   tbl = "small_table_duck",
+#'   store = tbls
+#' )
 #' 
 #' # Another simpler way to get the same
 #' # table materialized is by using `$` to
 #' # get the entry of choice for `tbl_get()`
-#' # tbls$small_table_duck %>% tbl_get()
+#' tbls$small_table_duck %>% tbl_get()
 #' 
 #' # Creating an agent is easy when all
 #' # table-prep formulas are encapsulated
-#' # in a `tbl_store` object; use `$` notation
-#' # to pass the appropriate procedure for
-#' # reading a table to the `read_fn` argument
-#' # agent <-
-#' #   create_agent(read_fn = tbls$small_table_duck)
+#' # in a `tbl_store` object; use `$` 
+#' # notation to pass the appropriate
+#' # procedure for reading a table to the
+#' # `read_fn` argument
+#' agent_1 <-
+#'   create_agent(
+#'     read_fn = tbls$small_table_duck
+#'   )
+#'   
+#' # There are other ways to use the
+#' # table store to assign a target table
+#' # to an agent, like using the
+#' # `tbl_source()` function
+#' agent_2 <-
+#'   create_agent(
+#'     read_fn = ~ tbl_source(
+#'       tbl = "small_table_duck",
+#'       store = tbls
+#'       )
+#'   )
+#' 
+#' # The table store can be moved to
+#' # YAML with `yaml_write` and the
+#' # `tbl_source()` call could then
+#' # refer to that on-disk table store;
+#' # let's do that YAML conversion
+#' yaml_write(tbls)
+#' 
+#' # The above writes the `tbl_store.yml`
+#' # file (by not providing a `filename`
+#' # this default filename is chosen);
+#' # next, modify the `tbl_source()`
+#' # so that `store` refer to the YAML
+#' # file
+#' agent_3 <-
+#'   create_agent(
+#'     read_fn = ~ tbl_source(
+#'       tbl = "small_table_duck",
+#'       store = "tbl_store.yml"
+#'     )
+#'   )
+#' 
+#' }
 #' 
 #' @family Planning and Prep
 #' @section Function ID:
@@ -286,55 +326,67 @@ add_to_name_list <- function(name_list,
 #' @return A table-prep formula.
 #' 
 #' @examples 
+#' if (interactive()) {
+#' 
 #' # Let's create a `tbl_store` object by
 #' # giving two table-prep formulas to
 #' # `tbl_store()`
-#' # tbls <- 
-#' #   tbl_store(
-#' #     small_table_duck ~ db_tbl(
-#' #       table = small_table,
-#' #       dbname = ":memory:",
-#' #       dbtype = "duckdb"
-#' #     ),
-#' #     sml_table ~ pointblank::small_table
-#' #   )
+#' tbls <- 
+#'   tbl_store(
+#'     small_table_duck ~ db_tbl(
+#'       table = small_table,
+#'       dbname = ":memory:",
+#'       dbtype = "duckdb"
+#'     ),
+#'     sml_table ~ pointblank::small_table
+#'   )
 #' 
 #' # We can pass a table-prep formula
 #' # to `create_agent()` and interrogate
 #' # the table shortly thereafter
-#' # agent <- 
-#' #   create_agent(
-#' #     read_fn = ~ tbl_source("sml_table", tbls),
-#' #     label = "An example that uses a table store.",
-#' #     actions = action_levels(warn_at = 0.10)
-#' #   ) %>% 
-#' #   col_exists(vars(date, date_time)) %>%
-#' #   interrogate()
+#' agent <- 
+#'   create_agent(
+#'     read_fn = ~ tbl_source("sml_table", tbls),
+#'     label = "An example that uses a table store.",
+#'     actions = action_levels(warn_at = 0.10)
+#'   ) %>% 
+#'   col_exists(vars(date, date_time)) %>%
+#'   interrogate()
 #'
 #' # Both the `tbl_store` object and the
 #' # `agent` can be transformed to YAML with
 #' # the `yaml_write()` function
 #' 
 #' # This writes the `tbl_store.yml` file
-#' # by default (a different name could be used)
-#' # yaml_write(tbls)
+#' # by default (but a different name
+#' # could be used)
+#' yaml_write(tbls)
 #' 
 #' # Let's modify the agent's `read_fn` to point
 #' # to the YAML representation of the `tbl_store`
-#' # agent <-
-#' #   agent %>% 
-#' #   set_read_fn(
-#' #     ~ tbl_source("sml_table", "tbl_store.yml")
-#' #   )
+#' agent <-
+#'   agent %>% 
+#'   set_read_fn(
+#'     ~ tbl_source(
+#'         tbl = "sml_table",
+#'         store = "tbl_store.yml"
+#'       )
+#'   )
 #' 
-#' # Then we can write agent to a YAML file
-#' # (it's `agent-sml_table.yml` by default)
-#' # yaml_write(agent)
+#' # Then we can write agent to a YAML
+#' # file (writes to `agent-sml_table.yml`
+#' # by default)
+#' yaml_write(agent)
 #' 
 #' # Now that both are in this on-disk format
 #' # an interrogation can be done by accessing
 #' # the agent YAML
-#' # yaml_agent_interrogate("agent-sml_table.yml")
+#' agent <-
+#'   yaml_agent_interrogate(
+#'     filename = "agent-sml_table.yml"
+#'   )
+#' 
+#' }
 #' 
 #' @family Planning and Prep
 #' @section Function ID:

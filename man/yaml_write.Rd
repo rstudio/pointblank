@@ -77,9 +77,9 @@ existing agent or informant object).
 # and then offloading that validation
 # plan to a pointblank YAML file
 
-# We ought to think about what's
-# tolerable in terms of data quality so
-# let's designate proportional failure
+# Creating an `action_levels` object is a
+# common workflow step when creating a
+# pointblank agent; we designate failure
 # thresholds to the `warn`, `stop`, and
 # `notify` states using `action_levels()`
 al <- 
@@ -110,11 +110,11 @@ agent <-
   agent \%>\% 
   col_exists(vars(date, date_time)) \%>\%
   col_vals_regex(
-    vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+    vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}"
   ) \%>\%
   rows_distinct() \%>\%
-  col_vals_gt(vars(d), 100) \%>\%
-  col_vals_lte(vars(c), 5)
+  col_vals_gt(vars(d), value = 100) \%>\%
+  col_vals_lte(vars(c), value = 5)
 
 # The agent can be written to a pointblank
 # YAML file with `yaml_write()`

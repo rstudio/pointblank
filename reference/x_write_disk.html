@@ -172,7 +172,14 @@ this only works in the case where the table is not of the <code>tbl_dbi</code> o
 <code>tbl_spark</code> class.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>x_write_disk</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>filename</span>, path <span class='op'>=</span> <span class='cn'>NULL</span>, keep_tbl <span class='op'>=</span> <span class='cn'>FALSE</span>, keep_extracts <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>x_write_disk</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>filename</span>,
+  path <span class='op'>=</span> <span class='cn'>NULL</span>,
+  keep_tbl <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keep_extracts <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,8 +214,16 @@ database tables of the class <code>tbl_dbi</code> and for Spark DataFrames
       <td><p>An option to keep any collected extract data for failing
 rows. By default, this is <code>FALSE</code>.</p></td>
     </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Should the function <em>not</em> inform when the file is written? By
+default this is <code>FALSE</code>.</p></td>
+    </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Invisibly returns <code>TRUE</code> if the file has been written.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>It is recommended to set up a table-prep formula so that the <em>agent</em> and

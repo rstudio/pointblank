@@ -19,6 +19,7 @@
 
 #' Did all of the validations fully *pass*?
 #'
+#' @description
 #' Given an agent's validation plan that had undergone interrogation via
 #' `interrogate()`, did every single validation step result in zero *fail*
 #' levels? Using the `all_passed()` function will let us know whether that's

@@ -42,7 +42,7 @@ without needing to write the YAML to disk beforehand.
 # Let's create a validation plan for the
 # data quality analysis of the `small_table`
 # dataset; we need an agent and its
-# table-reading function enables retrieval
+# table-prep formula enables retrieval
 # of the target table
 agent <- 
   create_agent(
@@ -75,7 +75,8 @@ yaml_agent_string(agent = agent)
 # )
 
 # The 'agent-small_table.yml' file is
-# available in the package through `system.file()`
+# available in the package through
+# `system.file()`
 yml_file <- 
   system.file(
     "yaml", "agent-small_table.yml",

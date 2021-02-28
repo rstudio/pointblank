@@ -1116,13 +1116,13 @@ pb_min_max_stats <- function(data_column) {
 
 cli_bullet_msg <- function(msg,
                            bullet = cli::symbol$bullet,
-                           color = NULL) {
+                           color = NULL,
+                           .envir = parent.frame()) {
   
   msg <- glue::glue_collapse(msg, "\n")
-  msg <- glue::glue(msg)
+  msg <- glue::glue(msg, .envir = .envir)
   
   if (!is.null(color) && requireNamespace("crayon", quietly = TRUE)) {
-    
     color_style <- crayon::make_style(color)
     bullet <- color_style(bullet)
   }

@@ -67,14 +67,6 @@ informant \%>\%
     columns = "date_time",
     `Latest Date` = "The latest date is \{latest_date\}."
   ) \%>\%
-  info_columns(
-    columns = "item_count",
-    info = "Statistics (*fivenum*): \{descriptive_stats\}."
-  ) \%>\%
-  info_snippet(
-    snippet_name = "descriptive_stats",
-    fn = snip_stats(column = "item_count")
-  ) \%>\%
   info_snippet(
     snippet_name = "latest_date",
     fn = ~ . \%>\% dplyr::pull(date) \%>\% max(na.rm = TRUE)
@@ -83,7 +75,6 @@ informant \%>\%
 
 # YAML representation
 meta_snippets:
-  descriptive_stats: ~. \%>\% dplyr::select(item_count) \%>\% pb_str_summary(type = "5num")
   latest_date: ~. \%>\% dplyr::pull(date) \%>\% max(na.rm = TRUE)
 ...
 columns:
@@ -94,7 +85,6 @@ columns:
     _type: Date
   item_count:
     _type: integer
-    info: 'Statistics (*fivenum*): \{descriptive_stats\}.'
 }
 }
 

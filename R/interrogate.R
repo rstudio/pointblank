@@ -65,7 +65,7 @@
 #' # the whole process
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   col_vals_gt(vars(a), 5) %>%
+#'   col_vals_gt(vars(a), value = 5) %>%
 #'   interrogate()
 #' 
 #' @family Interrogate and Report

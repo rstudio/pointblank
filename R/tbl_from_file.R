@@ -115,7 +115,7 @@
 #' # A CSV can be obtained from a public
 #' # GitHub repo by using the `from_github()`
 #' # helper function; let's create an agent
-#' # a supply a table-reading function that
+#' # a supply a table-prep formula that
 #' # gets the same CSV file from the GitHub
 #' # repository for the pointblank package 
 #' agent <- 
@@ -363,7 +363,7 @@ file_tbl <- function(file,
 #' 
 #' # We can use the first call in combination with
 #' # `file_tbl()` and `create_agent()`; this
-#' # supplies a table-reading function that gets
+#' # supplies a table-prep formula that gets
 #' # a CSV file from the GitHub repository for the
 #' # pointblank package 
 #' # agent <- 

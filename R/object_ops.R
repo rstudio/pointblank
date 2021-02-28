@@ -168,6 +168,47 @@ x_read_disk <- function(filename,
 #'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Any table already
 #'   associated with the *agent* or *informant* will be overwritten.
 #' 
+#' @examples
+#' # Set proportional failure thresholds
+#' # to the `warn`, `stop`, and `notify`
+#' # states using `action_levels()`
+#' al <- 
+#'   action_levels(
+#'       warn_at = 0.10,
+#'       stop_at = 0.25,
+#'     notify_at = 0.35
+#'   )
+#' 
+#' # Create an agent that has
+#' # `small_table` set as the target
+#' # table via `tbl`; apply the actions,
+#' # add some validation steps and then
+#' # interrogate the data
+#' agent_1 <- 
+#'   create_agent(
+#'     tbl = small_table,
+#'     tbl_name = "small_table",
+#'     label = "An example.",
+#'     actions = al
+#'   ) %>%
+#'   col_exists(vars(date, date_time)) %>%
+#'   col_vals_regex(
+#'     vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+#'   ) %>%
+#'   rows_distinct() %>%
+#'   interrogate()
+#'   
+#' # Replace the agent's association to
+#' # `small_table` with a mutated version
+#' # of it (one that removes duplicate rows);
+#' # then, interrogate the new target table
+#' agent_2 <-
+#'   agent_1 %>%
+#'   set_tbl(
+#'     tbl = small_table %>% dplyr::distinct()
+#'   ) %>%
+#'   interrogate()
+#' 
 #' @family Object Ops
 #' @section Function ID:
 #' 9-3

@@ -230,6 +230,7 @@
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
 #'     label = "An example.",
 #'     actions = al
 #'   )

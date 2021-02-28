@@ -17,10 +17,10 @@ The \code{yaml_agent_interrogate()} function operates much like the
 \code{\link[=yaml_read_agent]{yaml_read_agent()}} function (reading a \strong{pointblank} YAML file and
 generating an \emph{agent} with a validation plan in place). The key difference is
 that this function takes things a step further and interrogates the target
-table (defined by table-reading, \code{read_fn}, function that is required in the
-YAML file). The additional auto-invocation of \code{\link[=interrogate]{interrogate()}} uses the
-default options of that function. As with \code{\link[=yaml_read_agent]{yaml_read_agent()}} the agent is
-returned except, this time, it has intel from the interrogation.
+table (defined by table-prep formula that is required in the YAML file). The
+additional auto-invocation of \code{\link[=interrogate]{interrogate()}} uses the default options of
+that function. As with \code{\link[=yaml_read_agent]{yaml_read_agent()}} the agent is returned except, this
+time, it has intel from the interrogation.
 }
 \section{Function ID}{
 

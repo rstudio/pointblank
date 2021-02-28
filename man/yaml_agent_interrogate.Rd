@@ -38,9 +38,9 @@ time, it has intel from the interrogation.
 # the target data will be interrogated
 # (one step) with `yaml_agent_interrogate()`
 
-# We ought to think about what's
-# tolerable in terms of data quality so
-# let's designate proportional failure
+# Creating an `action_levels` object is a
+# common workflow step when creating a
+# pointblank agent; we designate failure
 # thresholds to the `warn`, `stop`, and
 # `notify` states using `action_levels()`
 al <- 

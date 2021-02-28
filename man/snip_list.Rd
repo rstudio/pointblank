@@ -79,6 +79,36 @@ the of items in that list with the \code{limit} value.
 3-5
 }
 
+\examples{
+# Generate an informant object, add
+# a snippet with `info_snippet()`
+# and `snip_list()` (giving us a
+# method to get a distinct list of
+# column values for column `f`);
+# define a location for the snippet
+# result in `{ }` and then
+# `incorporate()` the snippet into
+# the info text
+informant <- 
+  create_informant(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example."
+  ) \%>\% 
+  info_columns(
+    columns = "f",
+    `Items` = "This column contains {values_f}."
+  ) \%>\%
+  info_snippet(
+    snippet_name = "values_f",
+    fn = snip_list(column = "f")
+  ) \%>\%
+  incorporate()
+
+# We can print the `informant` object
+# to see the information report
+
+}
 \seealso{
 Other Information Functions: 
 \code{\link{info_columns}()},

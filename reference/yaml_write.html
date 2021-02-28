@@ -197,7 +197,8 @@ existing agent or informant object).</p>
   .list <span class='op'>=</span> <span class='fu'>list2</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>,
   filename <span class='op'>=</span> <span class='cn'>NULL</span>,
   path <span class='op'>=</span> <span class='cn'>NULL</span>,
-  expanded <span class='op'>=</span> <span class='cn'>FALSE</span>
+  expanded <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -236,6 +237,11 @@ expanded such that <strong>tidyselect</strong> and <code><a href='https://dplyr.
 evaluated, yielding a validation function per column? By default, this is
 <code>FALSE</code> so expressions as written will be retained in the YAML
 representation.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Should the function <em>not</em> inform when the file is written? By
+default this is <code>FALSE</code>.</p></td>
     </tr>
     </table>
 

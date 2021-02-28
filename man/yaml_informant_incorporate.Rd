@@ -17,11 +17,11 @@ The \code{yaml_informant_incorporate()} function operates much like the
 \code{\link[=yaml_read_informant]{yaml_read_informant()}} function (reading a \strong{pointblank} YAML file and
 generating an \emph{informant} with all information in place). The key difference
 is that this function takes things a step further and incorporates aspects
-from the the target table (defined by table-reading, \code{read_fn}, function that
-is required in the YAML file). The additional auto-invocation of
-\code{\link[=incorporate]{incorporate()}} uses the default options of that function. As with
-\code{\link[=yaml_read_informant]{yaml_read_informant()}} the informant is returned except, this time, it has
-been updated with the latest information from the target table.
+from the the target table (defined by table-prep formula that is required in
+the YAML file). The additional auto-invocation of \code{\link[=incorporate]{incorporate()}} uses the
+default options of that function. As with \code{\link[=yaml_read_informant]{yaml_read_informant()}} the
+informant is returned except, this time, it has been updated with the latest
+information from the target table.
 }
 \section{Function ID}{
 

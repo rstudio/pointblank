@@ -9,7 +9,8 @@ write_testthat_file(
   name = NULL,
   path = NULL,
   overwrite = FALSE,
-  skips = NULL
+  skips = NULL,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -38,6 +39,9 @@ certain operating systems and all of them will insert a specific
 (\code{skip_on_os("windows")}), \code{"mac"} (\code{skip_on_os("mac")}), \code{"linux"}
 (\code{skip_on_os("linux")}), and \code{"solaris"} (\code{skip_on_os("solaris")}). These
 calls will be placed at the top of the generated \strong{testthat} test file.}
+
+\item{quiet}{Should the function \emph{not} inform when the file is written? By
+default this is \code{FALSE}.}
 }
 \value{
 Invisibly returns \code{TRUE} if the \strong{testthat} file has been written.
@@ -85,6 +89,8 @@ won't run on a CRAN system or if the system OS is Windows.
 }
 
 \examples{
+if (interactive()) {
+
 # Creating an `action_levels` object is a
 # common workflow step when creating a
 # pointblank agent; we designate failure
@@ -120,17 +126,19 @@ agent <-
 # be transformed into a testthat file
 # with `write_testthat_file()`; the `stop`
 # thresholds will be ported over
-# write_testthat_file(
-#   agent,
-#   name = "small_table",
-#   path = "."
-# )
+write_testthat_file(
+  agent,
+  name = "small_table",
+  path = "."
+)
 
 # The above code will generate a file with
 # the name `test-small_table.R`; the path
 # was specified with `"."` but, by default,
 # the function will place the file in the
 # `tests/testthat` folder if it's available
+
+}
 
 }
 \seealso{

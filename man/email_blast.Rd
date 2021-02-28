@@ -51,8 +51,7 @@ of the \code{end_fns} argument of \code{\link[=create_agent]{create_agent()}}. I
 \code{email_blast()} as part of the \code{fns} argument of the \code{\link[=action_levels]{action_levels()}}
 function (i.e., to send multiple email messages at the granularity of
 different validation steps exceeding failure thresholds).
-}
-\details{
+
 To better get a handle on emailing with \code{email_blast()}, the analogous
 \code{\link[=email_create]{email_create()}} function can be used with a \strong{pointblank} agent object or
 an x-list obtained from using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function.
@@ -141,6 +140,8 @@ if (interactive()) {
 agent <-
   create_agent(
     read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example.",
     actions = al,
     end_fns = list(
       ~ email_blast(
@@ -160,21 +161,25 @@ agent <-
 
 }
 
-# This example was intentionally
+# The above example was intentionally
 # not run because email credentials
 # aren't available and the `to`
 # and `from` email addresses are
-# nonexistent; to look at the email
-# message before sending anything of
-# the like, we can use the 
+# nonexistent
+
+# To get a blastula email object
+# instead of eagerly sending the
+# message, we can use the 
 # `email_create()` function
 email_object <-
   create_agent(
-    tbl = tbl,
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example.",
     actions = al
   ) \%>\%
   col_vals_gt(vars(a), 5) \%>\%
-  col_vals_lt(vars(b), 5) \%>\%
+  col_vals_lt(vars(a), 7) \%>\%
   interrogate() \%>\%
   email_create()
   

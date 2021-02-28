@@ -51,7 +51,7 @@ the \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}} function. Th
 can also be written to YAML with \code{yaml_write()}.
 
 One requirement for writing an \emph{agent} or an \emph{informant} to YAML is that we
-need to have a table-reading function (\code{read_fn}) specified (it's a function
+need to have a table-prep formula (\code{read_fn}) specified (it's an R formula
 that is used to read the target table when \code{\link[=interrogate]{interrogate()}} or \code{\link[=incorporate]{incorporate()}}
 is called). This option can be set when using
 \code{\link[=create_agent]{create_agent()}}/\code{\link[=create_informant]{create_informant()}} or with \code{\link[=set_read_fn]{set_read_fn()}} (useful with an

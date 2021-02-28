@@ -309,7 +309,8 @@ write_testthat_file <- function(agent,
     # won't create a path
     stop(
       "The provided `path` does not exist:\n",
-      "* Please create the path"
+      "* Please create the path",
+      call. = FALSE
     )
   } else if (!is.null(path) && fs::dir_exists(path)) {
     file_path <- path

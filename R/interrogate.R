@@ -90,7 +90,7 @@ interrogate <- function(agent,
       "We can't `interrogate()` because the agent doesn't have a data table ",
       "or a function to obtain one:\n",
       "* Use the `set_tbl()` function to specify a table, or\n",
-      "* Use `set_read_fn()` to supply a table-reading function.",
+      "* Use `set_read_fn()` to supply a table-prep formula.",
       call. = FALSE
     )
   }

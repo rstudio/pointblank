@@ -1113,3 +1113,28 @@ pb_min_max_stats <- function(data_column) {
     dplyr::mutate_all(.funs = as.numeric) %>%
     as.list()
 }
+
+cli_bullet_msg <- function(msg,
+                           bullet = cli::symbol$bullet,
+                           color = NULL) {
+  
+  msg <- glue::glue_collapse(msg, "\n")
+  msg <- glue::glue(msg)
+  
+  if (!is.null(color) && requireNamespace("crayon", quietly = TRUE)) {
+    
+    color_style <- crayon::make_style(color)
+    bullet <- color_style(bullet)
+  }
+
+  bullet <- paste0(bullet, " ")
+  msg <- cli_ident(msg, bullet, "  ")
+  rlang::inform(msg)
+}
+
+cli_ident <- function(x,
+                      initial = "  ",
+                      indent = initial) {
+
+  paste0(initial, gsub("\n", paste0("\n", indent), x))
+}

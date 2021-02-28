@@ -59,7 +59,7 @@ the yaml_agent_interrogate() function. That returns an agent with intel
 (having already interrogated the target data table). An informant object
 can also be written to YAML with yaml_write().
 One requirement for writing an agent or an informant to YAML is that we
-need to have a table-reading function (read_fn) specified (it's a function
+need to have a table-prep formula (read_fn) specified (it's an R formula
 that is used to read the target table when interrogate() or incorporate()
 is called). This option can be set when using
 create_agent()/create_informant() or with set_read_fn() (useful with an
@@ -185,7 +185,7 @@ the <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></co
 (having already interrogated the target data table). An <em>informant</em> object
 can also be written to YAML with <code>yaml_write()</code>.</p>
 <p>One requirement for writing an <em>agent</em> or an <em>informant</em> to YAML is that we
-need to have a table-reading function (<code>read_fn</code>) specified (it's a function
+need to have a table-prep formula (<code>read_fn</code>) specified (it's an R formula
 that is used to read the target table when <code><a href='interrogate.html'>interrogate()</a></code> or <code><a href='incorporate.html'>incorporate()</a></code>
 is called). This option can be set when using
 <code><a href='create_agent.html'>create_agent()</a></code>/<code><a href='create_informant.html'>create_informant()</a></code> or with <code><a href='set_read_fn.html'>set_read_fn()</a></code> (useful with an

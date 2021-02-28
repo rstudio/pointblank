@@ -211,9 +211,9 @@ rows. By default, this is <code>FALSE</code>.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>It is recommended to set a table-reading function for later reuse of the
-<em>agent</em> and <em>informant</em> after being read from disk through <code><a href='x_read_disk.html'>x_read_disk()</a></code>.
-This can be done initially with the <code>read_fn</code> argument of
+    <p>It is recommended to set up a table-prep formula so that the <em>agent</em> and
+<em>informant</em> can access refreshed data after being read from disk through
+<code><a href='x_read_disk.html'>x_read_disk()</a></code>. This can be done initially with the <code>read_fn</code> argument of
 <code><a href='create_agent.html'>create_agent()</a></code>/<code><a href='create_informant.html'>create_informant()</a></code> or, later, with <code><a href='set_read_fn.html'>set_read_fn()</a></code>.
 Alternatively, we can reintroduce the <em>agent</em> or <em>informant</em> to a data table
 with the <code><a href='set_tbl.html'>set_tbl()</a></code> function.</p>

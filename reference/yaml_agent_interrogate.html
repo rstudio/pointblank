@@ -51,10 +51,10 @@
 yaml_read_agent() function (reading a pointblank YAML file and
 generating an agent with a validation plan in place). The key difference is
 that this function takes things a step further and interrogates the target
-table (defined by table-reading, read_fn, function that is required in the
-YAML file). The additional auto-invocation of interrogate() uses the
-default options of that function. As with yaml_read_agent() the agent is
-returned except, this time, it has intel from the interrogation." />
+table (defined by table-prep formula that is required in the YAML file). The
+additional auto-invocation of interrogate() uses the default options of
+that function. As with yaml_read_agent() the agent is returned except, this
+time, it has intel from the interrogation." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -168,10 +168,10 @@ returned except, this time, it has intel from the interrogation." />
 <code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code> function (reading a <strong>pointblank</strong> YAML file and
 generating an <em>agent</em> with a validation plan in place). The key difference is
 that this function takes things a step further and interrogates the target
-table (defined by table-reading, <code>read_fn</code>, function that is required in the
-YAML file). The additional auto-invocation of <code><a href='interrogate.html'>interrogate()</a></code> uses the
-default options of that function. As with <code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code> the agent is
-returned except, this time, it has intel from the interrogation.</p>
+table (defined by table-prep formula that is required in the YAML file). The
+additional auto-invocation of <code><a href='interrogate.html'>interrogate()</a></code> uses the default options of
+that function. As with <code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code> the agent is returned except, this
+time, it has intel from the interrogation.</p>
     </div>
 
     <pre class="usage"><span class='fu'>yaml_agent_interrogate</span><span class='op'>(</span><span class='va'>filename</span>, path <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>

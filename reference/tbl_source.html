@@ -214,55 +214,67 @@ function or a path to a table store YAML file created by <code><a href='yaml_wri
 <code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Let's create a `tbl_store` object by</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+
+<span class='co'># Let's create a `tbl_store` object by</span>
 <span class='co'># giving two table-prep formulas to</span>
 <span class='co'># `tbl_store()`</span>
-<span class='co'># tbls &lt;- </span>
-<span class='co'>#   tbl_store(</span>
-<span class='co'>#     small_table_duck ~ db_tbl(</span>
-<span class='co'>#       table = small_table,</span>
-<span class='co'>#       dbname = ":memory:",</span>
-<span class='co'>#       dbtype = "duckdb"</span>
-<span class='co'>#     ),</span>
-<span class='co'>#     sml_table ~ pointblank::small_table</span>
-<span class='co'>#   )</span>
+<span class='va'>tbls</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='tbl_store.html'>tbl_store</a></span><span class='op'>(</span>
+    <span class='va'>small_table_duck</span> <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span>
+      table <span class='op'>=</span> <span class='va'>small_table</span>,
+      dbname <span class='op'>=</span> <span class='st'>":memory:"</span>,
+      dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span>
+    <span class='op'>)</span>,
+    <span class='va'>sml_table</span> <span class='op'>~</span> <span class='fu'>pointblank</span><span class='fu'>::</span><span class='va'><a href='small_table.html'>small_table</a></span>
+  <span class='op'>)</span>
 
 <span class='co'># We can pass a table-prep formula</span>
 <span class='co'># to `create_agent()` and interrogate</span>
 <span class='co'># the table shortly thereafter</span>
-<span class='co'># agent &lt;- </span>
-<span class='co'>#   create_agent(</span>
-<span class='co'>#     read_fn = ~ tbl_source("sml_table", tbls),</span>
-<span class='co'>#     label = "An example that uses a table store.",</span>
-<span class='co'>#     actions = action_levels(warn_at = 0.10)</span>
-<span class='co'>#   ) %&gt;% </span>
-<span class='co'>#   col_exists(vars(date, date_time)) %&gt;%</span>
-<span class='co'>#   interrogate()</span>
+<span class='va'>agent</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'>tbl_source</span><span class='op'>(</span><span class='st'>"sml_table"</span>, <span class='va'>tbls</span><span class='op'>)</span>,
+    label <span class='op'>=</span> <span class='st'>"An example that uses a table store."</span>,
+    actions <span class='op'>=</span> <span class='fu'><a href='action_levels.html'>action_levels</a></span><span class='op'>(</span>warn_at <span class='op'>=</span> <span class='fl'>0.10</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='col_exists.html'>col_exists</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>date_time</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Both the `tbl_store` object and the</span>
 <span class='co'># `agent` can be transformed to YAML with</span>
 <span class='co'># the `yaml_write()` function</span>
 
 <span class='co'># This writes the `tbl_store.yml` file</span>
-<span class='co'># by default (a different name could be used)</span>
-<span class='co'># yaml_write(tbls)</span>
+<span class='co'># by default (but a different name</span>
+<span class='co'># could be used)</span>
+<span class='fu'><a href='yaml_write.html'>yaml_write</a></span><span class='op'>(</span><span class='va'>tbls</span><span class='op'>)</span>
 
 <span class='co'># Let's modify the agent's `read_fn` to point</span>
 <span class='co'># to the YAML representation of the `tbl_store`</span>
-<span class='co'># agent &lt;-</span>
-<span class='co'>#   agent %&gt;% </span>
-<span class='co'>#   set_read_fn(</span>
-<span class='co'>#     ~ tbl_source("sml_table", "tbl_store.yml")</span>
-<span class='co'>#   )</span>
+<span class='va'>agent</span> <span class='op'>&lt;-</span>
+  <span class='va'>agent</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='set_read_fn.html'>set_read_fn</a></span><span class='op'>(</span>
+    <span class='op'>~</span> <span class='fu'>tbl_source</span><span class='op'>(</span>
+        tbl <span class='op'>=</span> <span class='st'>"sml_table"</span>,
+        store <span class='op'>=</span> <span class='st'>"tbl_store.yml"</span>
+      <span class='op'>)</span>
+  <span class='op'>)</span>
 
-<span class='co'># Then we can write agent to a YAML file</span>
-<span class='co'># (it's `agent-sml_table.yml` by default)</span>
-<span class='co'># yaml_write(agent)</span>
+<span class='co'># Then we can write agent to a YAML</span>
+<span class='co'># file (writes to `agent-sml_table.yml`</span>
+<span class='co'># by default)</span>
+<span class='fu'><a href='yaml_write.html'>yaml_write</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
 
 <span class='co'># Now that both are in this on-disk format</span>
 <span class='co'># an interrogation can be done by accessing</span>
 <span class='co'># the agent YAML</span>
-<span class='co'># yaml_agent_interrogate("agent-sml_table.yml")</span>
+<span class='va'>agent</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate</a></span><span class='op'>(</span>
+    filename <span class='op'>=</span> <span class='st'>"agent-sml_table.yml"</span>
+  <span class='op'>)</span>
+
+<span class='op'>}</span>
 
 </div></pre>
   </div>

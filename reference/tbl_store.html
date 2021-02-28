@@ -278,60 +278,100 @@ done with <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</
 <code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Define a `tbl_store` object by adding</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+
+<span class='co'># Define a `tbl_store` object by adding</span>
 <span class='co'># table-prep formulas inside the</span>
 <span class='co'># `tbl_store()` call</span>
-<span class='co'># tbls &lt;- </span>
-<span class='co'>#   tbl_store(</span>
-<span class='co'>#     small_table_duck ~ db_tbl(</span>
-<span class='co'>#       table = small_table,</span>
-<span class='co'>#       dbname = ":memory:",</span>
-<span class='co'>#       dbtype = "duckdb"</span>
-<span class='co'>#     ),</span>
-<span class='co'>#     ~ db_tbl(</span>
-<span class='co'>#       table = "rna",</span>
-<span class='co'>#       dbname = "pfmegrnargs",</span>
-<span class='co'>#       dbtype = "postgres",</span>
-<span class='co'>#       host = "hh-pgsql-public.ebi.ac.uk",</span>
-<span class='co'>#       port = 5432,</span>
-<span class='co'>#       user = I("reader"),</span>
-<span class='co'>#       password = I("NWDMCE5xdipIjRrp")</span>
-<span class='co'>#     ),</span>
-<span class='co'>#     all_revenue ~ db_tbl(</span>
-<span class='co'>#       table = file_tbl(</span>
-<span class='co'>#         file = from_github(</span>
-<span class='co'>#           file = "all_revenue_large.rds",</span>
-<span class='co'>#           repo = "rich-iannone/intendo",</span>
-<span class='co'>#           subdir = "data-large"</span>
-<span class='co'>#         )</span>
-<span class='co'>#       ),</span>
-<span class='co'>#       dbname = ":memory:",</span>
-<span class='co'>#       dbtype = "duckdb"</span>
-<span class='co'>#     ),</span>
-<span class='co'>#     sml_table ~ pointblank::small_table</span>
-<span class='co'>#   )</span>
+<span class='va'>tbls</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>tbl_store</span><span class='op'>(</span>
+    <span class='va'>small_table_duck</span> <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span>
+      table <span class='op'>=</span> <span class='va'>small_table</span>,
+      dbname <span class='op'>=</span> <span class='st'>":memory:"</span>,
+      dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span>
+    <span class='op'>)</span>,
+    <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span>
+      table <span class='op'>=</span> <span class='st'>"rna"</span>,
+      dbname <span class='op'>=</span> <span class='st'>"pfmegrnargs"</span>,
+      dbtype <span class='op'>=</span> <span class='st'>"postgres"</span>,
+      host <span class='op'>=</span> <span class='st'>"hh-pgsql-public.ebi.ac.uk"</span>,
+      port <span class='op'>=</span> <span class='fl'>5432</span>,
+      user <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='st'>"reader"</span><span class='op'>)</span>,
+      password <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='st'>"NWDMCE5xdipIjRrp"</span><span class='op'>)</span>
+    <span class='op'>)</span>,
+    <span class='va'>all_revenue</span> <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span>
+      table <span class='op'>=</span> <span class='fu'><a href='file_tbl.html'>file_tbl</a></span><span class='op'>(</span>
+        file <span class='op'>=</span> <span class='fu'><a href='from_github.html'>from_github</a></span><span class='op'>(</span>
+          file <span class='op'>=</span> <span class='st'>"all_revenue_large.rds"</span>,
+          repo <span class='op'>=</span> <span class='st'>"rich-iannone/intendo"</span>,
+          subdir <span class='op'>=</span> <span class='st'>"data-large"</span>
+        <span class='op'>)</span>
+      <span class='op'>)</span>,
+      dbname <span class='op'>=</span> <span class='st'>":memory:"</span>,
+      dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span>
+    <span class='op'>)</span>,
+    <span class='va'>sml_table</span> <span class='op'>~</span> <span class='fu'>pointblank</span><span class='fu'>::</span><span class='va'><a href='small_table.html'>small_table</a></span>
+  <span class='op'>)</span>
 
-<span class='co'># Once this object is available, you can</span>
-<span class='co'># check that the table of interest is</span>
-<span class='co'># produced to your specification with the</span>
-<span class='co'># `tbl_get()` function</span>
-<span class='co'># tbl_get(</span>
-<span class='co'>#   tbl = "small_table_duck",</span>
-<span class='co'>#   store = tbls</span>
-<span class='co'># )</span>
+<span class='co'># Once this object is available, you</span>
+<span class='co'># can check that the table of interest</span>
+<span class='co'># is produced to your specification with</span>
+<span class='co'># the `tbl_get()` function</span>
+<span class='fu'><a href='tbl_get.html'>tbl_get</a></span><span class='op'>(</span>
+  tbl <span class='op'>=</span> <span class='st'>"small_table_duck"</span>,
+  store <span class='op'>=</span> <span class='va'>tbls</span>
+<span class='op'>)</span>
 
 <span class='co'># Another simpler way to get the same</span>
 <span class='co'># table materialized is by using `$` to</span>
 <span class='co'># get the entry of choice for `tbl_get()`</span>
-<span class='co'># tbls$small_table_duck %&gt;% tbl_get()</span>
+<span class='va'>tbls</span><span class='op'>$</span><span class='va'>small_table_duck</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='tbl_get.html'>tbl_get</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Creating an agent is easy when all</span>
 <span class='co'># table-prep formulas are encapsulated</span>
-<span class='co'># in a `tbl_store` object; use `$` notation</span>
-<span class='co'># to pass the appropriate procedure for</span>
-<span class='co'># reading a table to the `read_fn` argument</span>
-<span class='co'># agent &lt;-</span>
-<span class='co'>#   create_agent(read_fn = tbls$small_table_duck)</span>
+<span class='co'># in a `tbl_store` object; use `$` </span>
+<span class='co'># notation to pass the appropriate</span>
+<span class='co'># procedure for reading a table to the</span>
+<span class='co'># `read_fn` argument</span>
+<span class='va'>agent_1</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='va'>tbls</span><span class='op'>$</span><span class='va'>small_table_duck</span>
+  <span class='op'>)</span>
+  
+<span class='co'># There are other ways to use the</span>
+<span class='co'># table store to assign a target table</span>
+<span class='co'># to an agent, like using the</span>
+<span class='co'># `tbl_source()` function</span>
+<span class='va'>agent_2</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='tbl_source.html'>tbl_source</a></span><span class='op'>(</span>
+      tbl <span class='op'>=</span> <span class='st'>"small_table_duck"</span>,
+      store <span class='op'>=</span> <span class='va'>tbls</span>
+      <span class='op'>)</span>
+  <span class='op'>)</span>
+
+<span class='co'># The table store can be moved to</span>
+<span class='co'># YAML with `yaml_write` and the</span>
+<span class='co'># `tbl_source()` call could then</span>
+<span class='co'># refer to that on-disk table store;</span>
+<span class='co'># let's do that YAML conversion</span>
+<span class='fu'><a href='yaml_write.html'>yaml_write</a></span><span class='op'>(</span><span class='va'>tbls</span><span class='op'>)</span>
+
+<span class='co'># The above writes the `tbl_store.yml`</span>
+<span class='co'># file (by not providing a `filename`</span>
+<span class='co'># this default filename is chosen);</span>
+<span class='co'># next, modify the `tbl_source()`</span>
+<span class='co'># so that `store` refer to the YAML</span>
+<span class='co'># file</span>
+<span class='va'>agent_3</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='tbl_source.html'>tbl_source</a></span><span class='op'>(</span>
+      tbl <span class='op'>=</span> <span class='st'>"small_table_duck"</span>,
+      store <span class='op'>=</span> <span class='st'>"tbl_store.yml"</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
+
+<span class='op'>}</span>
 
 </div></pre>
   </div>

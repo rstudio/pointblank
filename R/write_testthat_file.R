@@ -110,10 +110,11 @@
 #'   ) %>%
 #'   col_exists(vars(date, date_time)) %>%
 #'   col_vals_regex(
-#'     vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+#'     vars(b),
+#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
-#'   col_vals_gt(vars(d), 100) %>%
-#'   col_vals_lte(vars(c), 5) %>%
+#'   col_vals_gt(vars(d), value = 100) %>%
+#'   col_vals_lte(vars(c), value = 5) %>%
 #'   interrogate()
 #' 
 #' # This agent and all of the checks can
@@ -121,7 +122,7 @@
 #' # with `write_testthat_file()`; the `stop`
 #' # thresholds will be ported over
 #' write_testthat_file(
-#'   agent,
+#'   agent = agent,
 #'   name = "small_table",
 #'   path = "."
 #' )

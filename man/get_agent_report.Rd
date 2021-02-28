@@ -150,7 +150,7 @@ tbl <-
 # `a` are always greater than 4
 agent <-
   create_agent(tbl = tbl) \%>\%
-  col_vals_gt(vars(a), 4) \%>\%
+  col_vals_gt(vars(a), value = 4) \%>\%
   interrogate()
 
 # Get a tibble-based report from the

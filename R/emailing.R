@@ -149,8 +149,8 @@
 #'       )
 #'     )
 #'   ) %>%
-#'   col_vals_gt(vars(a), 1) %>%
-#'   col_vals_lt(vars(a), 7) %>%
+#'   col_vals_gt(vars(a), value = 1) %>%
+#'   col_vals_lt(vars(a), value = 7) %>%
 #'   interrogate()
 #' 
 #' }
@@ -172,8 +172,8 @@
 #'     label = "An example.",
 #'     actions = al
 #'   ) %>%
-#'   col_vals_gt(vars(a), 5) %>%
-#'   col_vals_lt(vars(a), 7) %>%
+#'   col_vals_gt(vars(a), value = 5) %>%
+#'   col_vals_lt(vars(a), value = 7) %>%
 #'   interrogate() %>%
 #'   email_create()
 #'   
@@ -275,8 +275,8 @@ email_blast <- function(x,
 #'     label = "An example.",
 #'     actions = al
 #'   ) %>%
-#'   col_vals_gt(vars(a), 1) %>%
-#'   col_vals_lt(vars(a), 7) %>%
+#'   col_vals_gt(vars(a), value = 1) %>%
+#'   col_vals_lt(vars(a), value = 7) %>%
 #'   interrogate() %>%
 #'   email_create()
 #' 
@@ -294,8 +294,8 @@ email_blast <- function(x,
 #'     label = "An example.",
 #'     actions = al
 #'   ) %>%
-#'   col_vals_gt(vars(a), 5) %>%
-#'   col_vals_lt(vars(b), 5) %>%
+#'   col_vals_gt(vars(a), value = 5) %>%
+#'   col_vals_lt(vars(b), value = 5) %>%
 #'   interrogate() %>%
 #'   get_agent_x_list() %>%
 #'   email_create()

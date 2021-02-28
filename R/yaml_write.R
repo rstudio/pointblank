@@ -212,11 +212,13 @@ yaml_write <- function(...,
     )
     
     # Generate cli message w.r.t. written YAML file
-    cli_bullet_msg(
-      msg = "The table store YAML file has been written to `{filename}`",
-      bullet = cli::symbol$tick,
-      color = "green"
-    )
+    if (!quiet) {
+      cli_bullet_msg(
+        msg = "The table store YAML file has been written to `{filename}`",
+        bullet = cli::symbol$tick,
+        color = "green"
+      )
+    }
     
     return(invisible(NULL))
   }
@@ -298,11 +300,13 @@ yaml_write <- function(...,
   )
   
   # Generate cli message w.r.t. written YAML file
-  cli_bullet_msg(
-    msg = "The {yaml_type} YAML file has been written to `{filename}`",
-    bullet = cli::symbol$tick,
-    color = "green"
-  )
+  if (!quiet) {
+    cli_bullet_msg(
+      msg = "The {yaml_type} YAML file has been written to `{filename}`",
+      bullet = cli::symbol$tick,
+      color = "green"
+    )
+  }
 }
 
 #' Display **pointblank** YAML using an agent or a YAML file

@@ -61,6 +61,8 @@
 #' @param quiet Should the function *not* inform when the file is written? By
 #'   default this is `FALSE`.
 #'   
+#' @return Invisibly returns `TRUE` if the YAML file has been written. 
+#'   
 #' @examples
 #' # Let's go through the process of
 #' # developing an agent with a validation
@@ -307,6 +309,8 @@ yaml_write <- function(...,
       color = "green"
     )
   }
+  
+  invisible(TRUE)
 }
 
 #' Display **pointblank** YAML using an agent or a YAML file

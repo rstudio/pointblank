@@ -333,10 +333,10 @@ create_agent <- function(tbl = NULL,
   if (is.null(tbl) && is.null(read_fn)) {
     
     stop(
-      "A table object or table-reading function must be supplied:\n",
+      "A table object or table-prep formula must be supplied:\n",
       " * Use a table object in the `tbl` argument.\n",
-      " * Or supply a table-reading function in `read_fn`.\n",
-      " * You can do both: the supplied `tbl` will take priority.",
+      " * Or supply a table-prep formula in `read_fn`.\n",
+      " * You can do both, the table-prep formula will take priority though.",
       call. = FALSE
     )
   }

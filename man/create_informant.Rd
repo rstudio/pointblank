@@ -27,7 +27,7 @@ the \code{read_fn} takes priority). There are two ways to specify a \code{read_f
 with an R formula expression.}
 
 \item{agent}{A pointblank \emph{agent} object. This object can be used instead of
-supplying a table in \code{tbl} or a table-reading function in \code{read_fn}.}
+supplying a table in \code{tbl} or a table-prep formula in \code{read_fn}.}
 
 \item{tbl_name}{A optional name to assign to the input table object. If no
 value is provided, a name will be generated based on whatever information

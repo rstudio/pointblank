@@ -17,17 +17,17 @@ email_blast(
 )
 }
 \arguments{
-\item{x}{A reference to the x-list object prepared by the agent. This version
-of the x-list is the same as that generated via \verb{get_agent_x_list(<agent>)}
-except this version is internally generated and hence only available in an
-internal evaluation context.}
+\item{x}{A reference to the x-list object prepared internally by the agent.
+This version of the x-list is the same as that generated via
+\verb{get_agent_x_list(<agent>)} except this version is internally generated and
+hence only available in an internal evaluation context.}
 
-\item{to, from}{The email addresses for the recipients and the sender.}
+\item{to, from}{The email addresses for the recipients and of the sender.}
 
 \item{credentials}{A credentials list object that is produced by either of
 the \code{\link[blastula:credential_helpers]{blastula::creds()}}, \code{\link[blastula:credential_helpers]{blastula::creds_anonymous()}},
 \code{\link[blastula:credential_helpers]{blastula::creds_key()}}, or \code{\link[blastula:credential_helpers]{blastula::creds_file()}} functions. Please
-refer to the \strong{blastula} documentation for details on each of these helper
+refer to the \strong{blastula} documentation for information on how to use these
 functions.}
 
 \item{msg_subject}{The subject line of the email message.}
@@ -36,13 +36,12 @@ functions.}
 footer components of the HTML email message.}
 
 \item{send_condition}{An expression that should evaluate to a logical vector
-of length 1. If \code{TRUE} then the email will be sent, if \code{FALSE} then that
-won't happen. The expression can use x-list variables (e.g., \code{x$notify},
-\code{x$type}, etc.) and all of those variables can be viewed using the
-\code{\link[=get_agent_x_list]{get_agent_x_list()}} function. The default expression is
-\code{~TRUE \%in\% x$notify}, which results in \code{TRUE} if there are any \code{TRUE}
-values in the \code{x$notify} logical vector (i.e., any validation step results
-in a 'notify' condition).}
+of length 1. If evaluated as \code{TRUE} then the email will be sent, if \code{FALSE}
+then that won't happen. The expression can use x-list variables (e.g.,
+\code{x$notify}, \code{x$type}, etc.) and all of those variables can be explored
+using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function. The default expression is \code{~TRUE \%in\% x$notify}, which results in \code{TRUE} if there are any \code{TRUE} values in
+the \code{x$notify} logical vector (i.e., any validation step results in a
+'notify' condition).}
 }
 \description{
 The \code{email_blast()} function is useful for sending an email message that
@@ -50,27 +49,73 @@ explains the result of a \strong{pointblank} validation. It is powered by the
 \strong{blastula} and \strong{glue} packages. This function should be invoked as part
 of the \code{end_fns} argument of \code{\link[=create_agent]{create_agent()}}. It's also possible to invoke
 \code{email_blast()} as part of the \code{fns} argument of the \code{\link[=action_levels]{action_levels()}}
-function (to possibly send an email message at one or more steps).
+function (i.e., to send multiple email messages at the granularity of
+different validation steps exceeding failure thresholds).
 }
 \details{
 To better get a handle on emailing with \code{email_blast()}, the analogous
-\code{\link[=email_create]{email_create()}} can be used with a \strong{pointblank} agent object or the
-output obtained from using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function.
+\code{\link[=email_create]{email_create()}} function can be used with a \strong{pointblank} agent object or
+an x-list obtained from using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function.
 }
+\section{YAML}{
+
+A \strong{pointblank} agent can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
+resulting YAML can be used to regenerate an agent (with \code{\link[=yaml_read_agent]{yaml_read_agent()}})
+or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}). Here is an
+example of how the use of \code{email_blast()} inside the \code{end_fns} argument of
+\code{\link[=create_agent]{create_agent()}} is expressed in R code and in the corresponding YAML
+representation.\preformatted{# R statement
+create_agent(
+  read_fn = ~ small_table,
+  tbl_name = "small_table",
+  label = "An example.",
+  actions = al,
+  end_fns = list(
+    ~ email_blast(
+      x,
+      to = "joe_public@example.com",
+      from = "pb_notif@example.com",
+      msg_subject = "Table Validation",
+      credentials = blastula::creds_key(
+        id = "smtp2go"
+      ),
+    )
+  )
+) \%>\%
+  col_vals_gt(vars(a), 1) \%>\%
+  col_vals_lt(vars(a), 7) 
+
+# YAML representation
+type: agent
+read_fn: ~small_table
+tbl_name: small_table
+label: An example.
+lang: en
+locale: en
+actions:
+  warn_count: 1.0
+  notify_count: 2.0
+end_fns: ~email_blast(x, to = "joe_public@example.com", 
+  from = "pb_notif@example.com", msg_subject = "Table Validation",
+  credentials = blastula::creds_key(id = "smtp2go"),
+  )
+embed_report: true
+steps:
+  - col_vals_gt:
+    columns: vars(a)
+    value: 1.0
+  - col_vals_lt:
+    columns: vars(a)
+    value: 7.0
+}
+}
+
 \section{Function ID}{
 
 4-1
 }
 
 \examples{
-# Create a simple table with two
-# columns of numerical values
-tbl <-
-  dplyr::tibble(
-    a = c(5, 7, 6, 5, 8, 7),
-    b = c(7, 1, 0, 0, 0, 3)
-  )
-
 # Create an `action_levels()` list
 # with absolute values for the
 # `warn`, and `notify` states (with
@@ -80,36 +125,40 @@ al <-
     warn_at = 1,
     notify_at = 2
   )
+  
+if (interactive()) {
 
 # Validate that values in column
-# `a` from `tbl` are always > 5 and
-# that `b` values are always < 5;
-# first, apply the `actions_levels()`
+# `a` from `small_tbl` are always > 1
+# and that they are always < 7; first,
+# apply the `actions_levels()`
 # directive to `actions` and set up
 # an `email_blast()` as one of the
 # `end_fns` (by default, the email
 # will be sent if there is a single
 # 'notify' state across all
 # validation steps)
-# agent <-
-#   create_agent(
-#     tbl = tbl,
-#     actions = al,
-#     end_fns = list(
-#       ~ email_blast(
-#         x,
-#         to = "joe_public@example.com",
-#         from = "pb_notif@example.com",
-#         msg_subject = "Table Validation",
-#         credentials = blastula::creds_key(
-#           id = "gmail"
-#         ),
-#       )
-#     )
-#   ) \%>\%
-#   col_vals_gt(vars(a), 5) \%>\%
-#   col_vals_lt(vars(b), 5) \%>\%
-#   interrogate()
+agent <-
+  create_agent(
+    read_fn = ~ small_table,
+    actions = al,
+    end_fns = list(
+      ~ email_blast(
+        x,
+        to = "joe_public@example.com",
+        from = "pb_notif@example.com",
+        msg_subject = "Table Validation",
+        credentials = blastula::creds_key(
+          id = "smtp2go"
+        ),
+      )
+    )
+  ) \%>\%
+  col_vals_gt(vars(a), 1) \%>\%
+  col_vals_lt(vars(a), 7) \%>\%
+  interrogate()
+
+}
 
 # This example was intentionally
 # not run because email credentials

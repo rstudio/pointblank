@@ -734,14 +734,6 @@ info_section <- function(x,
 #'     columns = "date_time",
 #'     `Latest Date` = "The latest date is {latest_date}."
 #'   ) %>%
-#'   info_columns(
-#'     columns = "item_count",
-#'     info = "Statistics (*fivenum*): {descriptive_stats}."
-#'   ) %>%
-#'   info_snippet(
-#'     snippet_name = "descriptive_stats",
-#'     fn = snip_stats(column = "item_count")
-#'   ) %>%
 #'   info_snippet(
 #'     snippet_name = "latest_date",
 #'     fn = ~ . %>% dplyr::pull(date) %>% max(na.rm = TRUE)
@@ -750,7 +742,6 @@ info_section <- function(x,
 #' 
 #' # YAML representation
 #' meta_snippets:
-#'   descriptive_stats: ~. %>% dplyr::select(item_count) %>% pb_str_summary(type = "5num")
 #'   latest_date: ~. %>% dplyr::pull(date) %>% max(na.rm = TRUE)
 #' ...
 #' columns:
@@ -761,7 +752,6 @@ info_section <- function(x,
 #'     _type: Date
 #'   item_count:
 #'     _type: integer
-#'     info: 'Statistics (*fivenum*): {descriptive_stats}.'
 #' ```
 #' 
 #' @param x An informant object of class `ptblank_informant`.
@@ -915,6 +905,35 @@ info_snippet <- function(x,
 #'   (`"ru"`).
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
+#' 
+#' @examples 
+#' # Generate an informant object, add
+#' # a snippet with `info_snippet()`
+#' # and `snip_list()` (giving us a
+#' # method to get a distinct list of
+#' # column values for column `f`);
+#' # define a location for the snippet
+#' # result in `{ }` and then
+#' # `incorporate()` the snippet into
+#' # the info text
+#' informant <- 
+#'   create_informant(
+#'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
+#'     label = "An example."
+#'   ) %>% 
+#'   info_columns(
+#'     columns = "f",
+#'     `Items` = "This column contains {values_f}."
+#'   ) %>%
+#'   info_snippet(
+#'     snippet_name = "values_f",
+#'     fn = snip_list(column = "f")
+#'   ) %>%
+#'   incorporate()
+#' 
+#' # We can print the `informant` object
+#' # to see the information report
 #' 
 #' @family Information Functions
 #' @section Function ID:
@@ -1076,7 +1095,8 @@ snip_list <- function(column,
 #' 
 #' 1. a five-number summary (`"5num"`): minimum, Q1, median, Q3, maximum
 #' 2. a seven-number summary (`"7num"`): P2, P9, Q1, median, Q3, P91, P98
-#' 3. Bowley's seven-figure summary: minimum, P10, Q1, median, Q3, P90, maximum
+#' 3. Bowley's seven-figure summary (`"bowley"`): minimum, P10, Q1, median, Q3,
+#' P90, maximum
 #'
 #' @param column The name of the column that contains the target values.
 #' @param type The type of summary. By default, the `"5num"` keyword is used to
@@ -1084,6 +1104,34 @@ snip_list <- function(column,
 #'   summaries: `"7num"` and `"bowley"`.
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
+#' 
+#' @examples 
+#' # Generate an informant object, add
+#' # a snippet with `info_snippet()`
+#' # and `snip_stats()` (giving us a
+#' # method to get some summary stats for
+#' # column `a`); define a location for
+#' # the snippet result in `{ }` and
+#' # then `incorporate()` the snippet
+#' # into the info text
+#' informant <- 
+#'   create_informant(
+#'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
+#'     label = "An example."
+#'   ) %>% 
+#'   info_columns(
+#'     columns = "a",
+#'     `Stats` = "Stats (fivenum): {stats_a}."
+#'   ) %>%
+#'   info_snippet(
+#'     snippet_name = "stats_a",
+#'     fn = snip_stats(column = "a")
+#'   ) %>%
+#'   incorporate()
+#' 
+#' # We can print the `informant` object
+#' # to see the information report
 #' 
 #' @family Information Functions
 #' @section Function ID:
@@ -1118,6 +1166,34 @@ snip_stats <- function(column,
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 
+#' @examples 
+#' # Generate an informant object, add
+#' # a snippet with `info_snippet()`
+#' # and `snip_lowest()` (giving us a
+#' # method to get the lowest value in
+#' # column `a`); define a location for
+#' # the snippet result in `{ }` and
+#' # then `incorporate()` the snippet
+#' # into the info text
+#' informant <- 
+#'   create_informant(
+#'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
+#'     label = "An example."
+#'   ) %>% 
+#'   info_columns(
+#'     columns = "a",
+#'     `Lowest Value` = "Lowest value is {lowest_a}."
+#'   ) %>%
+#'   info_snippet(
+#'     snippet_name = "lowest_a",
+#'     fn = snip_lowest(column = "a")
+#'   ) %>%
+#'   incorporate()
+#' 
+#' # We can print the `informant` object
+#' # to see the information report
+#' 
 #' @family Information Functions
 #' @section Function ID:
 #' 3-7
@@ -1147,6 +1223,34 @@ snip_lowest <- function(column) {
 #' @param column The name of the column that contains the target values.
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
+#' 
+#' @examples 
+#' # Generate an informant object, add
+#' # a snippet with `info_snippet()`
+#' # and `snip_highest()` (giving us a
+#' # method to get the highest value in
+#' # column `a`); define a location for
+#' # the snippet result in `{ }` and
+#' # then `incorporate()` the snippet
+#' # into the info text
+#' informant <- 
+#'   create_informant(
+#'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
+#'     label = "An example."
+#'   ) %>% 
+#'   info_columns(
+#'     columns = "a",
+#'     `Highest Value` = "Highest value is {highest_a}."
+#'   ) %>%
+#'   info_snippet(
+#'     snippet_name = "highest_a",
+#'     fn = snip_highest(column = "a")
+#'   ) %>%
+#'   incorporate()
+#' 
+#' # We can print the `informant` object
+#' # to see the information report
 #' 
 #' @family Information Functions
 #' @section Function ID:

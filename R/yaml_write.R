@@ -158,7 +158,8 @@ yaml_write <- function(...,
                        .list = list2(...),
                        filename = NULL,
                        path = NULL,
-                       expanded = FALSE) {
+                       expanded = FALSE,
+                       quiet = FALSE) {
 
   # Collect a list of pointblank objects
   obj_list <- .list

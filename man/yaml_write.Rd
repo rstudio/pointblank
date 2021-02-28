@@ -41,6 +41,9 @@ representation.}
 \item{quiet}{Should the function \emph{not} inform when the file is written? By
 default this is \code{FALSE}.}
 }
+\value{
+Invisibly returns \code{TRUE} if the YAML file has been written.
+}
 \description{
 With \code{yaml_write()} we can take different \strong{pointblank} objects (these are
 the \code{ptblank_agent}, \code{ptblank_informant}, and \code{tbl_store}) and write them to

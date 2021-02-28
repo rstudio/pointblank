@@ -33,7 +33,7 @@
 #' can also be written to YAML with `yaml_write()`.
 #'
 #' One requirement for writing an *agent* or an *informant* to YAML is that we
-#' need to have a table-reading function (`read_fn`) specified (it's a function
+#' need to have a table-prep formula (`read_fn`) specified (it's an R formula
 #' that is used to read the target table when [interrogate()] or [incorporate()]
 #' is called). This option can be set when using
 #' [create_agent()]/[create_informant()] or with [set_read_fn()] (useful with an
@@ -314,7 +314,7 @@ yaml_write <- function(...,
 #' # Let's create a validation plan for the
 #' # data quality analysis of the `small_table`
 #' # dataset; we need an agent and its
-#' # table-reading function enables retrieval
+#' # table-prep formula enables retrieval
 #' # of the target table
 #' agent <- 
 #'   create_agent(
@@ -347,7 +347,8 @@ yaml_write <- function(...,
 #' # )
 #' 
 #' # The 'agent-small_table.yml' file is
-#' # available in the package through `system.file()`
+#' # available in the package through
+#' # `system.file()`
 #' yml_file <- 
 #'   system.file(
 #'     "yaml", "agent-small_table.yml",

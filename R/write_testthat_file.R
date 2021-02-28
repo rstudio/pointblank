@@ -137,7 +137,8 @@ write_testthat_file <- function(agent,
                                 name = NULL,
                                 path = NULL,
                                 overwrite = FALSE,
-                                skips = NULL) {
+                                skips = NULL,
+                                quiet = FALSE) {
 
   # Enforce that the agent must have a `read_fn`
   if (is.null(agent$read_fn)) {

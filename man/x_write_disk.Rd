@@ -37,9 +37,9 @@ this only works in the case where the table is not of the \code{tbl_dbi} or the
 \code{tbl_spark} class.
 }
 \details{
-It is recommended to set a table-reading function for later reuse of the
-\emph{agent} and \emph{informant} after being read from disk through \code{\link[=x_read_disk]{x_read_disk()}}.
-This can be done initially with the \code{read_fn} argument of
+It is recommended to set up a table-prep formula so that the \emph{agent} and
+\emph{informant} can access refreshed data after being read from disk through
+\code{\link[=x_read_disk]{x_read_disk()}}. This can be done initially with the \code{read_fn} argument of
 \code{\link[=create_agent]{create_agent()}}/\code{\link[=create_informant]{create_informant()}} or, later, with \code{\link[=set_read_fn]{set_read_fn()}}.
 Alternatively, we can reintroduce the \emph{agent} or \emph{informant} to a data table
 with the \code{\link[=set_tbl]{set_tbl()}} function.

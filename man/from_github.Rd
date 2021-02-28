@@ -49,7 +49,7 @@ where GitHub URLs for raw user content are needed.
 
 # We can use the first call in combination with
 # `file_tbl()` and `create_agent()`; this
-# supplies a table-reading function that gets
+# supplies a table-prep formula that gets
 # a CSV file from the GitHub repository for the
 # pointblank package 
 # agent <- 

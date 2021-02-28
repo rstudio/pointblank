@@ -47,7 +47,14 @@
 
 
 <meta property="og:title" content="Determine if one or more columns exist in a table. — has_columns" />
-<meta property="og:description" content="Determine if one or more columns exist in a table." />
+<meta property="og:description" content="This utility function can help you easily determine whether a column of a
+specified name is present in a table object. This function works well enough
+on a table object but it can also be used as part of a formula in any
+validation function's active argument. Using active = ~ . %&amp;gt;% has_columns(&quot;column_1&quot;) means that the validation step will be inactive if
+the target table doesn't contain a column named column_1. We can also use
+multiple columns in vars() so having active = ~ . %&amp;gt;% has_columns(vars(column_1, column_2)) in a validation step will make it
+inactive at interrogate() time unless the columns column_1 and column_2
+are both present." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -157,7 +164,14 @@
     </div>
 
     <div class="ref-description">
-    <p>Determine if one or more columns exist in a table.</p>
+    <p>This utility function can help you easily determine whether a column of a
+specified name is present in a table object. This function works well enough
+on a table object but it can also be used as part of a formula in any
+validation function's <code>active</code> argument. Using <code>active = ~ . %&gt;% has_columns("column_1")</code> means that the validation step will be inactive if
+the target table doesn't contain a column named <code>column_1</code>. We can also use
+multiple columns in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code> so having <code>active = ~ . %&gt;% has_columns(vars(column_1, column_2))</code> in a validation step will make it
+inactive at <code><a href='interrogate.html'>interrogate()</a></code> time unless the columns <code>column_1</code> and <code>column_2</code>
+are both present.</p>
     </div>
 
     <pre class="usage"><span class='fu'>has_columns</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>columns</span><span class='op'>)</span></pre>
@@ -256,11 +270,11 @@ in the table <code>x</code>.</p></td>
     tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>c</span><span class='op'>)</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>c</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>,
     active <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span> <span class='op'>%&gt;%</span> <span class='fu'>has_columns</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>c</span><span class='op'>)</span><span class='op'>)</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>h</span><span class='op'>)</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>h</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>,
     preconditions <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span> <span class='op'>%&gt;%</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>h <span class='op'>=</span> <span class='va'>d</span> <span class='op'>-</span> <span class='va'>a</span><span class='op'>)</span>,
     active <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span> <span class='op'>%&gt;%</span> <span class='fu'>has_columns</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>d</span><span class='op'>)</span><span class='op'>)</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>

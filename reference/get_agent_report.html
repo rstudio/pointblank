@@ -418,7 +418,11 @@ designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</c
 <span class='co'># table comes in two sizes: "standard"</span>
 <span class='co'># (the default) and "small"</span>
 <span class='va'>small_report</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>get_agent_report</span><span class='op'>(</span><span class='va'>agent</span>, size <span class='op'>=</span> <span class='st'>"small"</span><span class='op'>)</span>
+  <span class='fu'>get_agent_report</span><span class='op'>(</span>
+    agent <span class='op'>=</span> <span class='va'>agent</span>,
+    size <span class='op'>=</span> <span class='st'>"small"</span>
+  <span class='op'>)</span>
+
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>small_report</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "gt_tbl" "list"  </div><div class='input'>
 <span class='co'># The standard report is 875px wide</span>

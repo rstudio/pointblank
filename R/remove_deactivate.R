@@ -19,6 +19,7 @@
 
 #' Activate one or more of an *agent*'s validation steps
 #'
+#' @description 
 #' If certain validation steps need to be activated after the creation of the
 #' validation plan for an *agent*, use the `activate_steps()` function. This is
 #' equivalent to using the `active = TRUE` for the selected validation steps
@@ -56,11 +57,12 @@ activate_steps <- function(agent,
 
 #' Deactivate one or more of an *agent*'s validation steps
 #'
+#' @description
 #' Should the deactivation of one or more validation steps be necessary after
 #' creation of the validation plan for an *agent*, the `deactivate_steps()`
 #' function will be helpful for that. This has the same effect as using the
 #' `active = FALSE` option (`active` is an argument in all validation functions)
-#' for the selected validation steps. Please note that this directly edit the
+#' for the selected validation steps. Please note that this directly edits the
 #' validation step, wiping out any function that may have been defined for
 #' whether the step should be active or not.
 #'
@@ -94,6 +96,7 @@ deactivate_steps <- function(agent,
 
 #' Remove one or more of an *agent*'s validation steps
 #'
+#' @description
 #' Validation steps can be removed from an *agent* object through use of the
 #' `remove_steps()` function. This is useful, for instance, when getting an
 #' agent from disk (via the [x_read_disk()] function) and omitting one or more

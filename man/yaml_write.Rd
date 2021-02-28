@@ -9,7 +9,8 @@ yaml_write(
   .list = list2(...),
   filename = NULL,
   path = NULL,
-  expanded = FALSE
+  expanded = FALSE,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -36,6 +37,9 @@ expanded such that \strong{tidyselect} and \code{\link[=vars]{vars()}} expressio
 evaluated, yielding a validation function per column? By default, this is
 \code{FALSE} so expressions as written will be retained in the YAML
 representation.}
+
+\item{quiet}{Should the function \emph{not} inform when the file is written? By
+default this is \code{FALSE}.}
 }
 \description{
 With \code{yaml_write()} we can take different \strong{pointblank} objects (these are

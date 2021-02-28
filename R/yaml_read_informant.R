@@ -174,11 +174,11 @@ yaml_read_informant <- function(filename,
 #' [yaml_read_informant()] function (reading a **pointblank** YAML file and
 #' generating an *informant* with all information in place). The key difference
 #' is that this function takes things a step further and incorporates aspects
-#' from the the target table (defined by table-reading, `read_fn`, function that
-#' is required in the YAML file). The additional auto-invocation of
-#' [incorporate()] uses the default options of that function. As with
-#' [yaml_read_informant()] the informant is returned except, this time, it has
-#' been updated with the latest information from the target table.
+#' from the the target table (defined by table-prep formula that is required in
+#' the YAML file). The additional auto-invocation of [incorporate()] uses the
+#' default options of that function. As with [yaml_read_informant()] the
+#' informant is returned except, this time, it has been updated with the latest
+#' information from the target table.
 #'
 #' @param filename The name of the YAML file that contains fields related to an
 #'   *informant*.

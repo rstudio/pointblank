@@ -126,7 +126,6 @@ x_write_disk <- function(x,
   }
   
   invisible(TRUE)
-  
 }
 
 #' Read a **pointblank** *agent* or *informant* from disk

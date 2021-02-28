@@ -27,9 +27,9 @@
 #' this only works in the case where the table is not of the `tbl_dbi` or the
 #' `tbl_spark` class.
 #'
-#' It is recommended to set a table-reading function for later reuse of the
-#' *agent* and *informant* after being read from disk through [x_read_disk()].
-#' This can be done initially with the `read_fn` argument of
+#' It is recommended to set up a table-prep formula so that the *agent* and
+#' *informant* can access refreshed data after being read from disk through
+#' [x_read_disk()]. This can be done initially with the `read_fn` argument of
 #' [create_agent()]/[create_informant()] or, later, with [set_read_fn()].
 #' Alternatively, we can reintroduce the *agent* or *informant* to a data table
 #' with the [set_tbl()] function.
@@ -122,8 +122,8 @@ x_write_disk <- function(x,
 #' *agent*'s validation steps will still be present (along with results from the
 #' last interrogation).
 #' 
-#' Should the *agent* or *informant* possess a table-reading function (can be
-#' set any time with [set_read_fn()]) or a specific table (settable with
+#' Should the *agent* or *informant* possess a table-prep formula (can be set
+#' any time with [set_read_fn()]) or a specific table (settable with
 #' [set_tbl()]) we could use the [interrogate()] or [incorporate()] function
 #' again. For a *data quality reporting* workflow, it is useful to
 #' [interrogate()] target tables that evolve over time. While the same

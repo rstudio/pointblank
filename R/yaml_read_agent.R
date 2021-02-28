@@ -683,7 +683,8 @@ agent_get_exprs <- function(agent,
     agent = agent,
     filename = yaml_name,
     path = temp_dir,
-    expanded = expanded
+    expanded = expanded,
+    quiet = TRUE
   )
 
   expr_from_agent_yaml(path = file.path(temp_dir, yaml_name))

@@ -28,6 +28,40 @@ of the targeted validation steps.
 9-6
 }
 
+\examples{
+# Create an agent that has the
+# `small_table` object as the
+# target table, add a few inactive
+# validation steps, and then use
+# `interrogate()`
+agent_1 <- 
+  create_agent(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example."
+  ) \%>\%
+  col_exists(
+    vars(date),
+    active = FALSE
+  ) \%>\%
+  col_vals_regex(
+    vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+    active = FALSE
+  ) \%>\%
+  interrogate()
+
+# In the above, the data is
+# not actually interrogated
+# because the `active` setting
+# was `FALSE` in all steps; we
+# can selectively change this
+# with `activate_steps()`
+agent_2 <-
+  agent_1 \%>\%
+  activate_steps(i = 1) \%>\%
+  interrogate()
+
+}
 \seealso{
 For the opposite behavior, use the \code{\link[=deactivate_steps]{deactivate_steps()}} function.
 

@@ -30,7 +30,7 @@ written by hand.
 # Let's create a validation plan for the
 # data quality analysis of the `small_table`
 # dataset; we need an agent and its
-# table-reading function enables retrieval
+# table-prep formula enables retrieval
 # of the target table
 agent <- 
   create_agent(

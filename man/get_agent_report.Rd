@@ -176,7 +176,11 @@ class(report)
 # table comes in two sizes: "standard"
 # (the default) and "small"
 small_report <- 
-  get_agent_report(agent, size = "small")
+  get_agent_report(
+    agent = agent,
+    size = "small"
+  )
+
 class(small_report)
 
 # The standard report is 875px wide

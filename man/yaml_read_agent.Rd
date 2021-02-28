@@ -75,21 +75,27 @@ agent <-
   agent \%>\% 
   col_exists(vars(date, date_time)) \%>\%
   col_vals_regex(
-    vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+    vars(b),
+    regex = "[0-9]-[a-z]{3}-[0-9]{3}"
   ) \%>\%
   rows_distinct() \%>\%
-  col_vals_gt(vars(d), 100) \%>\%
-  col_vals_lte(vars(c), 5)
+  col_vals_gt(vars(d), value = 100) \%>\%
+  col_vals_lte(vars(c), value = 5)
+
+if (interactive()) {
 
 # The agent can be written to a pointblank
 # YAML file with `yaml_write()`
-# yaml_write(
-#   agent = agent,
-#   filename = "agent-small_table.yml"
-# )
+yaml_write(
+  agent = agent,
+  filename = "agent-small_table.yml"
+)
+
+}
 
 # The 'agent-small_table.yml' file is
-# available in the package through `system.file()`
+# available in the package through
+# `system.file()`
 yml_file <- 
   system.file(
     "yaml", "agent-small_table.yml",

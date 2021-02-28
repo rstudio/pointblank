@@ -262,7 +262,7 @@ tbl
 # are all greater than the value of `4`
 agent <-
   create_agent(tbl) \%>\%
-  col_vals_gt(vars(a), 4) \%>\%
+  col_vals_gt(vars(a), value = 4) \%>\%
   interrogate()
 
 # Determine if this validation
@@ -285,7 +285,7 @@ all_passed(agent)
 # behavior of side effects can be
 # customized with the `actions` option
 tbl \%>\% 
-  col_vals_gt(vars(a), 4) \%>\%
+  col_vals_gt(vars(a), value = 4) \%>\%
   dplyr::pull(a)
   
 # C: Using the expectation function
@@ -294,14 +294,20 @@ tbl \%>\%
 # typically perform one validation at a
 # time; this is primarily used in
 # testthat tests
-expect_col_vals_gt(tbl, vars(a), 4)
+expect_col_vals_gt(
+  tbl, vars(a),
+  value = 4
+)
 
 # D: Using the test function
 
 # With the `test_*()` form, we should
 # get a single logical value returned
 # to us
-test_col_vals_gt(tbl, vars(a), 4)
+test_col_vals_gt(
+  tbl, vars(a), 
+  value = 4
+)
 
 }
 \seealso{

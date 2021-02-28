@@ -97,7 +97,7 @@ agent <-
       col_types = "TDdcddlc"
     )
   ) \%>\%
-  col_vals_gt(vars(a), 0)
+  col_vals_gt(vars(a), value = 0)
 
 # All of the file-reading instructions
 # are encapsulated in the `read_fn` so
@@ -124,7 +124,7 @@ agent <-
       col_types = "TDdcddlc"
     )
   ) \%>\%
-  col_vals_gt(vars(a), 0) \%>\%
+  col_vals_gt(vars(a), value = 0) \%>\%
   interrogate()
 
 # This interrogated the data that was

@@ -121,7 +121,7 @@ agent <-
     tbl = tbl,
     actions = al
   ) \%>\%
-  col_vals_gt(vars(a), 7) \%>\%
+  col_vals_gt(vars(a), value = 7) \%>\%
   col_is_numeric(vars(a)) \%>\%
   interrogate()
   

@@ -16,7 +16,14 @@ in the table \code{x}.}
 A length-1 logical vector.
 }
 \description{
-Determine if one or more columns exist in a table.
+This utility function can help you easily determine whether a column of a
+specified name is present in a table object. This function works well enough
+on a table object but it can also be used as part of a formula in any
+validation function's \code{active} argument. Using \code{active = ~ . \%>\% has_columns("column_1")} means that the validation step will be inactive if
+the target table doesn't contain a column named \code{column_1}. We can also use
+multiple columns in \code{vars()} so having \code{active = ~ . \%>\% has_columns(vars(column_1, column_2))} in a validation step will make it
+inactive at \code{\link[=interrogate]{interrogate()}} time unless the columns \code{column_1} and \code{column_2}
+are both present.
 }
 \section{Function ID}{
 
@@ -71,11 +78,11 @@ agent <-
     tbl_name = "small_table"
   ) \%>\%
   col_vals_gt(
-    vars(c), vars(a),
+    vars(c), value = vars(a),
     active = ~ . \%>\% has_columns(vars(a, c))
   ) \%>\%
   col_vals_lt(
-    vars(h), vars(d),
+    vars(h), value = vars(d),
     preconditions = ~ . \%>\% dplyr::mutate(h = d - a),
     active = ~ . \%>\% has_columns(vars(a, d))
   ) \%>\%

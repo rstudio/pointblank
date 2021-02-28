@@ -78,20 +78,24 @@ agent_1 <-
     actions = al
   ) \%>\%
   col_vals_gt(
-    vars(date_time), value = vars(date),
+    vars(date_time),
+    value = vars(date),
     na_pass = TRUE
   ) \%>\%
   col_vals_gt(
-    vars(b), value = vars(g),
+    vars(b), 
+    value = vars(g),
     na_pass = TRUE
   ) \%>\%
   rows_distinct() \%>\%
   col_vals_equal(
-    vars(d), value = vars(d),
+    vars(d), 
+    value = vars(d),
     na_pass = TRUE
   ) \%>\%
   col_vals_between(
-    vars(c), left = vars(a), right = vars(d)
+    vars(c), 
+    left = vars(a), right = vars(d)
   ) \%>\%
   col_vals_not_between(
     vars(c),
@@ -152,6 +156,7 @@ multiagent <-
 # can get a `gt_tbl` object with the
 # `get_multiagent_report(agent)` function
 report <- get_multiagent_report(multiagent)
+
 class(report)
 
 }

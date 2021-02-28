@@ -265,8 +265,8 @@ tbl
 agent <-
   create_agent(tbl = tbl) \%>\%
   conjointly(
-    ~ col_vals_lt(., vars(a), 8),
-    ~ col_vals_gt(., vars(c), vars(a)),
+    ~ col_vals_lt(., vars(a), value = 8),
+    ~ col_vals_gt(., vars(c), value = vars(a)),
     ~ col_vals_not_null(., vars(b))
     ) \%>\%
   interrogate()
@@ -300,8 +300,8 @@ all_passed(agent)
 # customized with the `actions` option
 tbl \%>\%
   conjointly(
-    ~ col_vals_lt(., vars(a), 8),
-    ~ col_vals_gt(., vars(c), vars(a)),
+    ~ col_vals_lt(., vars(a), value = 8),
+    ~ col_vals_gt(., vars(c), value = vars(a)),
     ~ col_vals_not_null(., vars(b))
   )
 
@@ -313,8 +313,8 @@ tbl \%>\%
 # testthat tests
 expect_conjointly(
   tbl,
-  ~ col_vals_lt(., vars(a), 8),
-  ~ col_vals_gt(., vars(c), vars(a)),
+  ~ col_vals_lt(., vars(a), value = 8),
+  ~ col_vals_gt(., vars(c), value = vars(a)),
   ~ col_vals_not_null(., vars(b))
 )
 
@@ -325,8 +325,8 @@ expect_conjointly(
 # to us
 tbl \%>\%
   test_conjointly(
-    ~ col_vals_lt(., vars(a), 8),
-    ~ col_vals_gt(., vars(c), vars(a)),
+    ~ col_vals_lt(., vars(a), value = 8),
+    ~ col_vals_gt(., vars(c), value = vars(a)),
     ~ col_vals_not_null(., vars(b))
   )
 

@@ -58,6 +58,8 @@
 #'   evaluated, yielding a validation function per column? By default, this is
 #'   `FALSE` so expressions as written will be retained in the YAML
 #'   representation.
+#' @param quiet Should the function *not* inform when the file is written? By
+#'   default this is `FALSE`.
 #'   
 #' @examples
 #' # Let's go through the process of

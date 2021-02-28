@@ -2,7 +2,7 @@
 % Please edit documentation in R/object_ops.R
 \name{remove_read_fn}
 \alias{remove_read_fn}
-\title{Remove a table-reading function associated with an \emph{agent} or \emph{informant}}
+\title{Remove a table-prep formula associated with an \emph{agent} or \emph{informant}}
 \usage{
 remove_read_fn(x)
 }
@@ -11,18 +11,64 @@ remove_read_fn(x)
 class \code{ptblank_informant}.}
 }
 \description{
-Removing an \emph{agent} or an \emph{informant}'s association to a table-reading
-function can be done with \code{remove_read_fn()}. This may be good idea in an
-interactive session when instead relying on the direct association of a data
+Removing an \emph{agent} or an \emph{informant}'s association to a table-pre formula
+can be done with \code{remove_read_fn()}. This may be good idea in an interactive
+session when needing to rely on the direct association of a 'fixed' data
 table (settable in \code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}'s \code{tbl} argument
-or with \code{\link[=set_tbl]{set_tbl()}}). The table-reading function can be set again with
-\code{\link[=set_read_fn]{set_read_fn()}}.
+or with \code{\link[=set_tbl]{set_tbl()}}) instead of using a table-prep formula that might produce
+different a different table than expected. The table-prep formula can always
+be set again with \code{\link[=set_read_fn]{set_read_fn()}}.
 }
 \section{Function ID}{
 
 9-6
 }
 
+\examples{
+# Set proportional failure thresholds
+# to the `warn`, `stop`, and `notify`
+# states using `action_levels()`
+al <- 
+  action_levels(
+      warn_at = 0.10,
+      stop_at = 0.25,
+    notify_at = 0.35
+  )
+
+# Create an agent that directly ingests
+# the `small_table` object and also has
+# a table-prep formula (when both are
+# present the latter always obtains the
+# table); apply the actions, add some
+# validation steps and then interrogate
+# the data that was read in
+agent_1 <- 
+  create_agent(
+    tbl = small_table,
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example.",
+    actions = al
+  ) \%>\%
+  col_exists(vars(date, date_time)) \%>\%
+  col_vals_regex(
+    vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+  ) \%>\%
+  rows_distinct() \%>\%
+  interrogate()
+  
+# In a situation where `small_table`
+# changes frequently and it's desirable
+# to have a snapshot of the table, we
+# can remove the table-prep formula so
+# that the ingested `small_table` will
+# be used
+agent_2 <-
+  agent_1 \%>\%
+  remove_read_fn() \%>\%
+  interrogate()
+  
+}
 \seealso{
 Other Object Ops: 
 \code{\link{activate_steps}()},

@@ -131,7 +131,7 @@
 #'   (1) using a function (e.g., `function() { <table reading code> }`) or, (2)
 #'   with an R formula expression.
 #' @param agent A pointblank *agent* object. This object can be used instead of
-#'   supplying a table in `tbl` or a table-reading function in `read_fn`.
+#'   supplying a table in `tbl` or a table-prep formula in `read_fn`.
 #' @param tbl_name A optional name to assign to the input table object. If no
 #'   value is provided, a name will be generated based on whatever information
 #'   is available.
@@ -214,10 +214,10 @@ create_informant <- function(tbl = NULL,
   if (is.null(tbl) && is.null(read_fn) && is.null(agent)) {
     
     stop(
-      "A table object, table-reading function, or agent must be supplied:\n",
+      "A table object, table-prep formula, or agent must be supplied:\n",
       " * Use a table object in the `tbl` argument.\n",
-      " * Or supply a table-reading function in `read_fn`.\n",
-      " * Or even an agent with some connection to a table.",
+      " * Or supply a table-prep formula in `read_fn`.\n",
+      " * Or even an agent with some association to a table.",
       call. = FALSE
     )
   }

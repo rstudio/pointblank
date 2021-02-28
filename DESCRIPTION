@@ -52,6 +52,7 @@ Imports:
 Suggests:
     arrow,
     covr,
+    crayon,
     duckdb,
     jsonlite,
     lubridate,

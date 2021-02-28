@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Remove a table-reading function associated with an agent or informant — remove_read_fn • pointblank</title>
+<title>Remove a table-prep formula associated with an agent or informant — remove_read_fn • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,13 +46,14 @@
 
 
 
-<meta property="og:title" content="Remove a table-reading function associated with an agent or informant — remove_read_fn" />
-<meta property="og:description" content="Removing an agent or an informant's association to a table-reading
-function can be done with remove_read_fn(). This may be good idea in an
-interactive session when instead relying on the direct association of a data
+<meta property="og:title" content="Remove a table-prep formula associated with an agent or informant — remove_read_fn" />
+<meta property="og:description" content="Removing an agent or an informant's association to a table-pre formula
+can be done with remove_read_fn(). This may be good idea in an interactive
+session when needing to rely on the direct association of a 'fixed' data
 table (settable in create_agent() and create_informant()'s tbl argument
-or with set_tbl()). The table-reading function can be set again with
-set_read_fn()." />
+or with set_tbl()) instead of using a table-prep formula that might produce
+different a different table than expected. The table-prep formula can always
+be set again with set_read_fn()." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -156,18 +157,19 @@ set_read_fn()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Remove a table-reading function associated with an <em>agent</em> or <em>informant</em></h1>
+    <h1>Remove a table-prep formula associated with an <em>agent</em> or <em>informant</em></h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/object_ops.R'><code>R/object_ops.R</code></a></small>
     <div class="hidden name"><code>remove_read_fn.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Removing an <em>agent</em> or an <em>informant</em>'s association to a table-reading
-function can be done with <code>remove_read_fn()</code>. This may be good idea in an
-interactive session when instead relying on the direct association of a data
+    <p>Removing an <em>agent</em> or an <em>informant</em>'s association to a table-pre formula
+can be done with <code>remove_read_fn()</code>. This may be good idea in an interactive
+session when needing to rely on the direct association of a 'fixed' data
 table (settable in <code><a href='create_agent.html'>create_agent()</a></code> and <code><a href='create_informant.html'>create_informant()</a></code>'s <code>tbl</code> argument
-or with <code><a href='set_tbl.html'>set_tbl()</a></code>). The table-reading function can be set again with
-<code><a href='set_read_fn.html'>set_read_fn()</a></code>.</p>
+or with <code><a href='set_tbl.html'>set_tbl()</a></code>) instead of using a table-prep formula that might produce
+different a different table than expected. The table-prep formula can always
+be set again with <code><a href='set_read_fn.html'>set_read_fn()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>remove_read_fn</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
@@ -199,6 +201,51 @@ class <code>ptblank_informant</code>.</p></td>
 <code><a href='x_read_disk.html'>x_read_disk</a>()</code>,
 <code><a href='x_write_disk.html'>x_write_disk</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Set proportional failure thresholds</span>
+<span class='co'># to the `warn`, `stop`, and `notify`</span>
+<span class='co'># states using `action_levels()`</span>
+<span class='va'>al</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='action_levels.html'>action_levels</a></span><span class='op'>(</span>
+      warn_at <span class='op'>=</span> <span class='fl'>0.10</span>,
+      stop_at <span class='op'>=</span> <span class='fl'>0.25</span>,
+    notify_at <span class='op'>=</span> <span class='fl'>0.35</span>
+  <span class='op'>)</span>
+
+<span class='co'># Create an agent that directly ingests</span>
+<span class='co'># the `small_table` object and also has</span>
+<span class='co'># a table-prep formula (when both are</span>
+<span class='co'># present the latter always obtains the</span>
+<span class='co'># table); apply the actions, add some</span>
+<span class='co'># validation steps and then interrogate</span>
+<span class='co'># the data that was read in</span>
+<span class='va'>agent_1</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
+    tbl <span class='op'>=</span> <span class='va'>small_table</span>,
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
+    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,
+    label <span class='op'>=</span> <span class='st'>"An example."</span>,
+    actions <span class='op'>=</span> <span class='va'>al</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_exists.html'>col_exists</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>date_time</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_regex.html'>col_vals_regex</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, <span class='st'>"[0-9]-[a-z]{3}-[0-9]{3}"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='rows_distinct.html'>rows_distinct</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
+  
+<span class='co'># In a situation where `small_table`</span>
+<span class='co'># changes frequently and it's desirable</span>
+<span class='co'># to have a snapshot of the table, we</span>
+<span class='co'># can remove the table-prep formula so</span>
+<span class='co'># that the ingested `small_table` will</span>
+<span class='co'># be used</span>
+<span class='va'>agent_2</span> <span class='op'>&lt;-</span>
+  <span class='va'>agent_1</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>remove_read_fn</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
+  
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

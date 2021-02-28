@@ -47,20 +47,20 @@
 
 
 <meta property="og:title" content="Get a table from a local or remote file — file_tbl" />
-<meta property="og:description" content="If your target table is in a file, stored either locally or
-remotely, the file_tbl() function can make it possible to access it in a
-single function call. Compatible file types for this function are: CSV
-(.csv), TSV (.tsv), RDA (.rda), and RDS (.rds) files. This function
-generates an in-memory tbl_dbl object, which can be used as a target
-table for create_agent() and create_informant(). The ideal option for
-data access with file_tbl() is using this function as the read_fn
-parameter in either of the aforementioned create_*() functions. This can
-be done by using a leading ~ (e.g,. read_fn = ~file_tbl(...)).
-In the remote data use case, we can specify a URL starting with http://
-or https:// and ending with the file containing the data table. If data
+<meta property="og:description" content="If your target table is in a file, stored either locally or remotely, the
+file_tbl() function can make it possible to access it in a single function
+call. Compatible file types for this function are: CSV (.csv), TSV
+(.tsv), RDA (.rda), and RDS (.rds) files. This function generates an
+in-memory tbl_dbl object, which can be used as a target table for
+create_agent() and create_informant(). The ideal option for data access
+with file_tbl() is using this function as the read_fn parameter in either
+of the aforementioned create_*() functions. This can be done by using a
+leading ~ (e.g,. read_fn = ~file_tbl(...)).
+In the remote data use case, we can specify a URL starting with http://,
+https://, etc., and ending with the file containing the data table. If data
 files are available in a GitHub repository then we can use the
 from_github() function to specify the name and location of the table data
-for a repository." />
+in a repository." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -170,20 +170,20 @@ for a repository." />
     </div>
 
     <div class="ref-description">
-    <p>If your target table is in a file, stored either locally or
-remotely, the <code>file_tbl()</code> function can make it possible to access it in a
-single function call. Compatible file types for this function are: CSV
-(<code>.csv</code>), TSV (<code>.tsv</code>), RDA (<code>.rda</code>), and RDS (<code>.rds</code>) files. This function
-generates an in-memory <code>tbl_dbl</code> object, which can be used as a target
-table for <code><a href='create_agent.html'>create_agent()</a></code> and <code><a href='create_informant.html'>create_informant()</a></code>. The ideal option for
-data access with <code>file_tbl()</code> is using this function as the <code>read_fn</code>
-parameter in either of the aforementioned <code>create_*()</code> functions. This can
-be done by using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> (e.g,. <code>read_fn = ~file_tbl(...)</code>).</p>
-<p>In the remote data use case, we can specify a URL starting with <code>http://</code>
-or <code>https://</code> and ending with the file containing the data table. If data
+    <p>If your target table is in a file, stored either locally or remotely, the
+<code>file_tbl()</code> function can make it possible to access it in a single function
+call. Compatible file types for this function are: CSV (<code>.csv</code>), TSV
+(<code>.tsv</code>), RDA (<code>.rda</code>), and RDS (<code>.rds</code>) files. This function generates an
+in-memory <code>tbl_dbl</code> object, which can be used as a target table for
+<code><a href='create_agent.html'>create_agent()</a></code> and <code><a href='create_informant.html'>create_informant()</a></code>. The ideal option for data access
+with <code>file_tbl()</code> is using this function as the <code>read_fn</code> parameter in either
+of the aforementioned <code>create_*()</code> functions. This can be done by using a
+leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> (e.g,. <code>read_fn = ~file_tbl(...)</code>).</p>
+<p>In the remote data use case, we can specify a URL starting with <code>http://</code>,
+<code>https://</code>, etc., and ending with the file containing the data table. If data
 files are available in a GitHub repository then we can use the
 <code><a href='from_github.html'>from_github()</a></code> function to specify the name and location of the table data
-for a repository.</p>
+in a repository.</p>
     </div>
 
     <pre class="usage"><span class='fu'>file_tbl</span><span class='op'>(</span><span class='va'>file</span>, type <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span>, keep <span class='op'>=</span> <span class='cn'>FALSE</span>, verify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
@@ -298,30 +298,85 @@ having the <code>data.frame</code> class will be carried out.</p></td>
 <span class='co'># logic can be translated to YAML, for</span>
 <span class='co'># later use)</span>
 
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+
 <span class='co'># A CSV can be obtained from a public</span>
 <span class='co'># GitHub repo by using the `from_github()`</span>
 <span class='co'># helper function; let's create an agent</span>
 <span class='co'># a supply a table-reading function that</span>
 <span class='co'># gets the same CSV file from the GitHub</span>
 <span class='co'># repository for the pointblank package </span>
-<span class='co'># agent &lt;- </span>
-<span class='co'>#   create_agent(</span>
-<span class='co'>#     read_fn = ~ file_tbl(</span>
-<span class='co'>#       file = from_github(</span>
-<span class='co'>#         file = "inst/data_files/small_table.csv",</span>
-<span class='co'>#         repo = "rich-iannone/pointblank"</span>
-<span class='co'>#       ),</span>
-<span class='co'>#       col_types = "TDdcddlc"</span>
-<span class='co'>#     )</span>
-<span class='co'>#   ) %&gt;%</span>
-<span class='co'>#   col_vals_gt(vars(a), 0) %&gt;%</span>
-<span class='co'>#   interrogate()</span>
+<span class='va'>agent</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'>file_tbl</span><span class='op'>(</span>
+      file <span class='op'>=</span> <span class='fu'><a href='from_github.html'>from_github</a></span><span class='op'>(</span>
+        file <span class='op'>=</span> <span class='st'>"inst/data_files/small_table.csv"</span>,
+        repo <span class='op'>=</span> <span class='st'>"rich-iannone/pointblank"</span>
+      <span class='op'>)</span>,
+      col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, <span class='fl'>0</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># This interrogated the data that was</span>
 <span class='co'># obtained from the remote source file,</span>
 <span class='co'># and, there's nothing to clean up (by</span>
 <span class='co'># default, the downloaded file goes into</span>
 <span class='co'># a system temp directory)</span>
+
+<span class='co'># Storing table-prep formulas in a table</span>
+<span class='co'># store makes it easier to work with</span>
+<span class='co'># tabular data originating from files;</span>
+<span class='co'># here's how to generate a table store</span>
+<span class='co'># with two named entries for table</span>
+<span class='co'># preparations</span>
+<span class='va'>tbls</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='tbl_store.html'>tbl_store</a></span><span class='op'>(</span>
+    <span class='va'>small_table_file</span> <span class='op'>~</span> <span class='fu'>file_tbl</span><span class='op'>(</span>
+      file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
+        <span class='st'>"data_files"</span>, <span class='st'>"small_table.csv"</span>,
+        package <span class='op'>=</span> <span class='st'>"pointblank"</span>
+      <span class='op'>)</span>,
+      col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span>
+    <span class='op'>)</span>,
+    <span class='va'>small_high_file</span> <span class='op'>~</span> <span class='fu'>file_tbl</span><span class='op'>(</span>
+      file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
+        <span class='st'>"data_files"</span>, <span class='st'>"small_table.csv"</span>,
+        package <span class='op'>=</span> <span class='st'>"pointblank"</span>
+      <span class='op'>)</span>,
+      col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span>
+    <span class='op'>)</span> <span class='op'>%&gt;%</span>
+      <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>f</span> <span class='op'>==</span> <span class='st'>"high"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+
+<span class='co'># Now it's easy to access either of these</span>
+<span class='co'># tables (the second is a mutated version)</span>
+<span class='co'># via the `tbl_get()` function</span>
+<span class='fu'><a href='tbl_get.html'>tbl_get</a></span><span class='op'>(</span><span class='st'>"small_table_file"</span>, store <span class='op'>=</span> <span class='va'>tbls</span><span class='op'>)</span>
+<span class='fu'><a href='tbl_get.html'>tbl_get</a></span><span class='op'>(</span><span class='st'>"small_high_file"</span>, store <span class='op'>=</span> <span class='va'>tbls</span><span class='op'>)</span>
+
+<span class='co'># The table-prep formulas in `tbls`</span>
+<span class='co'># could also be used in functions with</span>
+<span class='co'># the `read_fn` argument; this is thanks</span>
+<span class='co'># to the `tbl_source()` function</span>
+<span class='va'>agent</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='tbl_source.html'>tbl_source</a></span><span class='op'>(</span>
+      <span class='st'>"small_table_file"</span>,
+      store <span class='op'>=</span> <span class='va'>tbls</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
+
+<span class='va'>informant</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='tbl_source.html'>tbl_source</a></span><span class='op'>(</span>
+      <span class='st'>"small_high_file"</span>,
+      store <span class='op'>=</span> <span class='va'>tbls</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
+
+<span class='op'>}</span>
 
 </div></pre>
   </div>

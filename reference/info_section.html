@@ -48,11 +48,11 @@
 
 <meta property="og:title" content="Add information that focuses on some key aspect of the data table — info_section" />
 <meta property="og:description" content="While the info_tabular() and info_columns() functions allow us to
-add/modify info text for specific sections, the info_section()
-makes it possible to add sections of our own choosing and the information
-that make sense for those sections. Define a section_name and provide a
-series of named arguments (in the form entry_name = &quot;The *info text*.&quot;) to
-build the informational content for that section." />
+add/modify info text for specific sections, the info_section() makes it
+possible to add sections of our own choosing and the information that make
+sense for those sections. Define a section_name and provide a series of
+named arguments (in the form entry_name = &quot;The *info text*.&quot;) to build the
+informational content for that section." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -163,11 +163,11 @@ build the informational content for that section." />
 
     <div class="ref-description">
     <p>While the <code><a href='info_tabular.html'>info_tabular()</a></code> and <code><a href='info_columns.html'>info_columns()</a></code> functions allow us to
-add/modify info text for specific sections, the <code>info_section()</code>
-makes it possible to add sections of our own choosing and the information
-that make sense for those sections. Define a <code>section_name</code> and provide a
-series of named arguments (in the form <code>entry_name = "The *info text*."</code>) to
-build the informational content for that section.</p>
+add/modify info text for specific sections, the <code>info_section()</code> makes it
+possible to add sections of our own choosing and the information that make
+sense for those sections. Define a <code>section_name</code> and provide a series of
+named arguments (in the form <code>entry_name = "The *info text*."</code>) to build the
+informational content for that section.</p>
     </div>
 
     <pre class="usage"><span class='fu'>info_section</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>section_name</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -196,22 +196,96 @@ Markdown and further styled with <em>Text Tricks</em>).</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>ptblank_informant</code> object.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="info-text"><a class="anchor" href="#info-text"></a>Info Text</h2>
 
-    <p>The <em>info text</em> readily accepts Markdown formatting. Also, there are a few
-<em>Text Tricks</em> that are good to know. Markdown links written as <code>&lt; link url &gt;</code>
+    
+
+<p>The <em>info text</em> that's used for any of the <code>info_*()</code> functions readily
+accepts Markdown formatting, and, there are a few <em>Text Tricks</em> that can be
+used to spice up the presentation. Markdown links written as <code>&lt; link url &gt;</code>
 or <code>[ link text ]( link url )</code> will get nicely-styled links. Any dates
 expressed in the ISO-8601 standard with parentheses, <code>"(2004-12-01)"</code>, will
 be styled with a font variation (monospaced) and underlined in purple. Spans
-of text can be converted to label text by using: (1) double parentheses
-around text for a rectangular label as in <code>((label text))</code>, or (2) triple
-parentheses around text for a rounded-rectangular label like <code>(((label text)))</code>. Finally, CSS styles can be applied to spans of <em>info text</em> with
-the following form:</p>
+of text can be converted to label-style text by using: (1) double parentheses
+around text for a rectangular border as in <code>((label text))</code>, or (2) triple
+parentheses around text for a rounded-rectangular border like <code>(((label text)))</code>.</p>
+<p>CSS style rules can be applied to spans of <em>info text</em> with the following
+form:</p>
 <p><code>[[ info text ]]&lt;&lt; CSS style rules &gt;&gt;</code></p>
 <p>As an example of this in practice suppose you'd like to change the color of
 some text to red and make the font appear somewhat thinner. A variation on
 the following might be used:</p>
 <p><code>"This is a [[factor]]&lt;&lt;color: red; font-weight: 300;&gt;&gt; value."</code></p>
+<p>The are quite a few CSS style rules that can be used to great effect. Here
+are a few you might like:</p><ul>
+<li><p><code>color: &lt;a color value&gt;;</code> (text color)</p></li>
+<li><p><code>background-color: &lt;a color value&gt;;</code> (the text's background color)</p></li>
+<li><p><code>text-decoration: (overline | line-through | underline);</code></p></li>
+<li><p><code>text-transform: (uppercase | lowercase | capitalize);</code></p></li>
+<li><p><code>letter-spacing: &lt;a +/- length value&gt;;</code></p></li>
+<li><p><code>word-spacing: &lt;a +/- length value&gt;;</code></p></li>
+<li><p><code>font-style: (normal | italic | oblique);</code></p></li>
+<li><p><code>font-weight: (normal | bold | 100-900);</code></p></li>
+<li><p><code>font-variant: (normal | bold | 100-900);</code></p></li>
+<li><p><code>border: &lt;a color value&gt; &lt;a length value&gt; (solid | dashed | dotted);</code></p></li>
+</ul>
+
+<p>In the above examples, 'length value' refers to a CSS length which can be
+expressed in different units of measure (e.g., <code>12px</code>, <code>1em</code>, etc.). Some
+lengths can be expressed as positive or negative values (e.g., for
+<code>letter-spacing</code>). Color values can be expressed in a few ways, the most
+common being in the form of hexadecimal color values or as CSS color names.</p>
+    <h2 class="hasAnchor" id="yaml"><a class="anchor" href="#yaml"></a>YAML</h2>
+
+    
+
+<p>A <strong>pointblank</strong> informant can be written to YAML with <code><a href='yaml_write.html'>yaml_write()</a></code> and the
+resulting YAML can be used to regenerate an informant (with
+<code><a href='yaml_read_informant.html'>yaml_read_informant()</a></code>) or perform the 'incorporate' action using the target
+table (via <code><a href='yaml_informant_incorporate.html'>yaml_informant_incorporate()</a></code>). Extra sections (i.e., neither the
+<code>table</code> nor the <code>columns</code> sections) can be generated and filled with <em>info
+text</em> by using one or more calls of <code>info_section()</code>. This is how it is
+expressed in both R code and in the YAML representation.</p><pre># R statement
+informant %&gt;% 
+  info_section(
+    section_name = "History",
+    Changes = "
+- Change 1
+- Change 2
+- Change 3",
+    `Last Update` = "(2020-10-23) at 3:28 PM."
+  ) %&gt;%
+  info_section(
+    section_name = "Additional Notes",
+    `Notes 1` = "Notes with a {snippet}.",
+    `Notes 2` = "**Bold notes**."
+  )
+
+# YAML representation
+History:
+  Changes: |2-
+  
+    - Change 1
+    - Change 2
+    - Change 3
+  Last Update: (2020-10-23) at 3:28 PM.
+Additional Notes:
+  Notes 1: Notes with a {snippet}.
+  Notes 2: '**Bold notes**.'
+</pre>
+
+<p>Subsections represented as column names are automatically generated when
+creating an informant. Within each of the top-level sections (i.e., <code>History</code>
+and <code>Additional Notes</code>) there can be multiple subsections used for holding
+<em>info text</em>.</p>
+<p>It's safest to use single quotation marks around any <em>info text</em> if directly
+editing it in a YAML file. Note that Markdown formatting and <em>info snippet</em>
+placeholders (shown here as <code>{snippet}</code>, see <code><a href='info_snippet.html'>info_snippet()</a></code> for more
+information) are preserved in the YAML. The Markdown to HTML conversion is
+done when printing an informant (or invoking <code><a href='get_informant_report.html'>get_informant_report()</a></code> on an
+<em>informant</em>) and the processing of snippets (generation and insertion) is
+done when using the <code><a href='incorporate.html'>incorporate()</a></code> function. Thus, the source text is always
+maintained in the YAML representation and is never written in processed form.</p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
@@ -250,10 +324,14 @@ the following might be used:</p>
 <span class='co'># and 'columns' sections; we can create</span>
 <span class='co'># entirely different sections with their</span>
 <span class='co'># own properties using `info_section()`</span>
+
+<span class='co'># We can add *info text* to sections</span>
+<span class='co'># entirely different than `table` and</span>
+<span class='co'># `columns` with `info_section()`</span>
 <span class='va'>informant</span> <span class='op'>&lt;-</span>
   <span class='va'>informant</span> <span class='op'>%&gt;%</span>
   <span class='fu'>info_section</span><span class='op'>(</span>
-    section_name <span class='op'>=</span> <span class='st'>"notes"</span>,
+    section_name <span class='op'>=</span> <span class='st'>"Notes"</span>,
     creation <span class='op'>=</span> <span class='st'>"Dataset generated on (2020-01-15)."</span>,
     usage <span class='op'>=</span> <span class='st'>"`small_table %&gt;% dplyr::glimpse()`"</span>
   <span class='op'>)</span>
@@ -262,22 +340,26 @@ the following might be used:</p>
 <span class='co'># the addition of the 'Notes' section and its</span>
 <span class='co'># own information</span>
 
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+
 <span class='co'># The `informant` object can be written to</span>
 <span class='co'># a YAML file with the `yaml_write()`</span>
 <span class='co'># function; then, information can</span>
 <span class='co'># be directly edited or modified</span>
-<span class='co'># yaml_write(</span>
-<span class='co'>#   informant = informant,</span>
-<span class='co'>#   filename = "informant.yml"</span>
-<span class='co'># )</span>
+<span class='fu'><a href='yaml_write.html'>yaml_write</a></span><span class='op'>(</span>
+  informant <span class='op'>=</span> <span class='va'>informant</span>,
+  filename <span class='op'>=</span> <span class='st'>"informant.yml"</span>
+<span class='op'>)</span>
 
 <span class='co'># The YAML file can then be read back</span>
 <span class='co'># into an informant object with the</span>
 <span class='co'># `yaml_read_informant()` function</span>
-<span class='co'># informant &lt;-</span>
-<span class='co'>#   yaml_read_informant(</span>
-<span class='co'>#     filename = "informant.yml"</span>
-<span class='co'>#   )</span>
+<span class='va'>informant</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='yaml_read_informant.html'>yaml_read_informant</a></span><span class='op'>(</span>
+    filename <span class='op'>=</span> <span class='st'>"informant.yml"</span>
+  <span class='op'>)</span>
+
+<span class='op'>}</span>
 
 </div></pre>
   </div>

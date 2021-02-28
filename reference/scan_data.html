@@ -52,6 +52,7 @@ an agent to validate the data, it's a good idea to understand the data with
 some level of precision. Make this the initial step of a well-balanced
 data quality reporting workflow. The reporting output contains several
 sections to make everything more digestible, and these are:
+
 OverviewTable dimensions, duplicate row counts, column types, and
 reproducibility information
 VariablesA summary for each table variable and further statistics and
@@ -62,6 +63,8 @@ variables
 Missing ValuesA summary figure that shows the degree of missingness
 across variables
 SampleA table that provides the head and tail rows of the dataset
+
+
 
 The output HTML report will appear in the RStudio Viewer and can also be
 integrated in R Markdown HTML output. If you need the output HTML as a
@@ -182,7 +185,8 @@ within." />
 an <em>agent</em> to validate the data, it's a good idea to understand the data with
 some level of precision. Make this the initial step of a well-balanced
 <em>data quality reporting</em> workflow. The reporting output contains several
-sections to make everything more digestible, and these are:</p><dl>
+sections to make everything more digestible, and these are:</p>
+<dl>
 <dt>Overview</dt><dd><p>Table dimensions, duplicate row counts, column types, and
 reproducibility information</p></dd>
 <dt>Variables</dt><dd><p>A summary for each table variable and further statistics and
@@ -194,7 +198,9 @@ variables</p></dd>
 across variables</p></dd>
 <dt>Sample</dt><dd><p>A table that provides the head and tail rows of the dataset</p></dd>
 
-</dl><p>The output HTML report will appear in the RStudio Viewer and can also be
+</dl>
+
+<p>The output HTML report will appear in the RStudio Viewer and can also be
 integrated in R Markdown HTML output. If you need the output HTML as a
 string, it's possible to get that by using <code><a href='https://rdrr.io/r/base/character.html'>as.character()</a></code> (e.g.,
 <code>scan_data(tbl = mtcars) %&gt;% as.character()</code>). The resulting HTML string is a
@@ -246,6 +252,11 @@ Spanish (Spain, same as <code>"es_ES"</code>).</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
+
+    
+
+<p><img src='figures/man_scan_data_1.png' width=100% /></p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
@@ -265,9 +276,13 @@ Spanish (Spain, same as <code>"es_ES"</code>).</p></td>
 <code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Get an HTML report that describes all of</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+
+<span class='co'># Get an HTML document that describes all of</span>
 <span class='co'># the data in the `dplyr::storms` dataset</span>
-<span class='co'># scan_data(tbl = dplyr::storms)</span>
+<span class='va'>tbl_scan</span> <span class='op'>&lt;-</span> <span class='fu'>scan_data</span><span class='op'>(</span>tbl <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/storms.html'>storms</a></span><span class='op'>)</span>
+
+<span class='op'>}</span>
 
 </div></pre>
   </div>

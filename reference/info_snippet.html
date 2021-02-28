@@ -49,12 +49,14 @@
 <meta property="og:title" content="Generate a useful text 'snippet' from the target table — info_snippet" />
 <meta property="og:description" content="Getting little snippets of information from a table goes hand-in-hand with
 mixing those bits of info with your table info. Call info_snippet() to
-define a snippet and how you'll get that from the target table (it's with a
-function). So long as you know how to interact with a table and extract
-information, you can easily define snippets for a informant object. And
-once those snippets are defined, you can insert them into the info text as
-defined through the info_*() functions. Just use curly braces with the
-snippet_name inside (e.g., &quot;This column has {n_cat} categories.&quot;)." />
+define a snippet and how you'll get that from the target table. The snippet
+definition is supplied either with a formula, or, with a
+pointblank-supplied snip_*() function. So long as you know how to
+interact with a table and extract information, you can easily define snippets
+for a informant object. And once those snippets are defined, you can insert
+them into the info text as defined through the other info_*() functions
+(info_tabular(), info_columns(), and info_section()). Use curly braces
+with just the snippet_name inside (e.g., &quot;This column has {n_cat} categories.&quot;)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -166,12 +168,14 @@ snippet_name inside (e.g., &quot;This column has {n_cat} categories.&quot;)." />
     <div class="ref-description">
     <p>Getting little snippets of information from a table goes hand-in-hand with
 mixing those bits of info with your table info. Call <code>info_snippet()</code> to
-define a snippet and how you'll get that from the target table (it's with a
-function). So long as you know how to interact with a table and extract
-information, you can easily define snippets for a <em>informant</em> object. And
-once those snippets are defined, you can insert them into the info text as
-defined through the <code>info_*()</code> functions. Just use curly braces with the
-<code>snippet_name</code> inside (e.g., <code>"This column has {n_cat} categories."</code>).</p>
+define a snippet and how you'll get that from the target table. The snippet
+definition is supplied either with a formula, or, with a
+<strong>pointblank</strong>-supplied <code>snip_*()</code> function. So long as you know how to
+interact with a table and extract information, you can easily define snippets
+for a <em>informant</em> object. And once those snippets are defined, you can insert
+them into the <em>info text</em> as defined through the other <code>info_*()</code> functions
+(<code><a href='info_tabular.html'>info_tabular()</a></code>, <code><a href='info_columns.html'>info_columns()</a></code>, and <code><a href='info_section.html'>info_section()</a></code>). Use curly braces
+with just the <code>snippet_name</code> inside (e.g., <code>"This column has {n_cat} categories."</code>).</p>
     </div>
 
     <pre class="usage"><span class='fu'>info_snippet</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>snippet_name</span>, <span class='va'>fn</span><span class='op'>)</span></pre>
@@ -186,17 +190,76 @@ defined through the <code>info_*()</code> functions. Just use curly braces with 
     <tr>
       <th>snippet_name</th>
       <td><p>The name for snippet, which is used for interpolating the
-snippet itself into info text.</p></td>
+result of the snippet formula into <em>info text</em> defined by an <code>info_*()</code>
+function.</p></td>
     </tr>
     <tr>
       <th>fn</th>
-      <td><p>A function that obtains a snippet of data from the target table.</p></td>
+      <td><p>A formula that obtains a snippet of data from the target table.
+It's best to use a leading dot (<code>.</code>) that stands for the table itself and
+use pipes to construct a series of operations to be performed on the table
+(e.g., <code>~ . %&gt;% dplyr::pull(column_2) %&gt;% max(na.rm = TRUE)</code>). So long as
+the result is a length-1 vector, it'll likely be valid for insertion into
+some info text. Alternatively, a <code>snip_*()</code> function can be used here
+(these functions always return a formula that's suitable for all types of
+data sources).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>ptblank_informant</code> object.</p>
+    <h2 class="hasAnchor" id="snip-functions-provided-in-pointblank"><a class="anchor" href="#snip-functions-provided-in-pointblank"></a>Snip functions provided in <strong>pointblank</strong></h2>
+
+    
+
+<p>For convenience, there are several <code>snip_*()</code> functions provided in the
+package that work on column data from the <em>informant</em>'s target table. These
+are:</p><ul>
+<li><p><code><a href='snip_list.html'>snip_list()</a></code>: get a list of column categories</p></li>
+<li><p><code><a href='snip_stats.html'>snip_stats()</a></code>: get an inline statistical summary</p></li>
+<li><p><code><a href='snip_lowest.html'>snip_lowest()</a></code>: get the lowest value from a column</p></li>
+<li><p><code><a href='snip_highest.html'>snip_highest()</a></code> : get the highest value from a column</p></li>
+</ul>
+
+<p>As it's understood what the target table is, only the <code>column</code> in each of
+these functions is necessary for obtaining the resultant text.</p>
+    <h2 class="hasAnchor" id="yaml"><a class="anchor" href="#yaml"></a>YAML</h2>
+
+    
+
+<p>A <strong>pointblank</strong> informant can be written to YAML with <code><a href='yaml_write.html'>yaml_write()</a></code> and the
+resulting YAML can be used to regenerate an informant (with
+<code><a href='yaml_read_informant.html'>yaml_read_informant()</a></code>) or perform the 'incorporate' action using the target
+table (via <code><a href='yaml_informant_incorporate.html'>yaml_informant_incorporate()</a></code>). Snippets are stored in the YAML
+representation and here is is how they are expressed in both R code and in
+the YAML output (showing both the <code>meta_snippets</code> and <code>columns</code> keys to
+demonstrate their relationship here).</p><pre># R statement
+informant %&gt;% 
+  info_columns(
+    columns = "date_time",
+    `Latest Date` = "The latest date is {latest_date}."
+  ) %&gt;%
+  info_snippet(
+    snippet_name = "latest_date",
+    fn = ~ . %&gt;% dplyr::pull(date) %&gt;% max(na.rm = TRUE)
+  ) %&gt;%
+  incorporate()
+
+# YAML representation
+meta_snippets:
+  latest_date: ~. %&gt;% dplyr::pull(date) %&gt;% max(na.rm = TRUE)
+...
+columns:
+  date_time:
+    _type: POSIXct, POSIXt
+    Latest Date: The latest date is {latest_date}.
+  date:
+    _type: Date
+  item_count:
+    _type: integer
+</pre>
+
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
@@ -232,7 +295,7 @@ snippet itself into info text.</p></td>
 <span class='co'># the info text</span>
 <span class='va'>informant</span> <span class='op'>&lt;-</span> 
   <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span><span class='va'>test_table</span>,
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>test_table</span>,
     tbl_name <span class='op'>=</span> <span class='st'>"test_table"</span>,
     label <span class='op'>=</span> <span class='st'>"An example."</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -241,12 +304,12 @@ snippet itself into info text.</p></td>
     fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='op'>)</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>info_snippet</span><span class='op'>(</span>
-    snippet_name <span class='op'>=</span> <span class='st'>"col_count"</span>,
-    fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='op'>)</span>
+    snippet_name <span class='op'>=</span> <span class='st'>"max_a"</span>,
+    fn <span class='op'>=</span> <span class='fu'><a href='snip_highest.html'>snip_highest</a></span><span class='op'>(</span>column <span class='op'>=</span> <span class='st'>"a"</span><span class='op'>)</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
     columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>,
-    info <span class='op'>=</span> <span class='st'>"In the range of 1 to 10. (SIMPLE)"</span>
+    info <span class='op'>=</span> <span class='st'>"In the range of 1 to {max_a}. (SIMPLE)"</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
     columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"date"</span><span class='op'>)</span>,

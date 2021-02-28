@@ -48,13 +48,12 @@
 
 <meta property="og:title" content="Add information that focuses on aspects of the data table as a whole — info_tabular" />
 <meta property="og:description" content="When an informant object is created with the create_informant() function,
-it has two starter sections: (1) 'table' and (2) 'columns'. The
-'table' section should contain a few properties upon creation, such as the
-supplied table name (name) and table dimensions (as _columns and
-_rows). We can add more table-based properties with the info_tabular()
-function. By providing a series of named arguments (in the form
-entry_name = &quot;The *info text*.&quot;), we can add more information that makes
-sense for describing the table as a whole." />
+it has two starter sections: (1) 'table' and (2) 'columns'. The 'table'
+section should contain a few properties upon creation, such as the supplied
+table name (name) and table dimensions (as _columns and _rows). We can
+add more table-based properties with the info_tabular() function. By
+providing a series of named arguments (in the form entry_name = &quot;The *info text*.&quot;), we can add more information that makes sense for describing the
+table as a whole." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -165,13 +164,12 @@ sense for describing the table as a whole." />
 
     <div class="ref-description">
     <p>When an <em>informant</em> object is created with the <code><a href='create_informant.html'>create_informant()</a></code> function,
-it has two starter sections: (1) 'table' and (2) 'columns'. The
-'table' section should contain a few properties upon creation, such as the
-supplied table name (<code>name</code>) and table dimensions (as <code>_columns</code> and
-<code>_rows</code>). We can add more table-based properties with the <code>info_tabular()</code>
-function. By providing a series of named arguments (in the form
-<code>entry_name = "The *info text*."</code>), we can add more information that makes
-sense for describing the table as a whole.</p>
+it has two starter sections: (1) 'table' and (2) 'columns'. The 'table'
+section should contain a few properties upon creation, such as the supplied
+table name (<code>name</code>) and table dimensions (as <code>_columns</code> and <code>_rows</code>). We can
+add more table-based properties with the <code>info_tabular()</code> function. By
+providing a series of named arguments (in the form <code>entry_name = "The *info text*."</code>), we can add more information that makes sense for describing the
+table as a whole.</p>
     </div>
 
     <pre class="usage"><span class='fu'>info_tabular</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -195,22 +193,82 @@ styled with <em>Text Tricks</em>).</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>ptblank_informant</code> object.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="info-text"><a class="anchor" href="#info-text"></a>Info Text</h2>
 
-    <p>The <em>info text</em> readily accepts Markdown formatting. Also, there are a few
-<em>Text Tricks</em> that are good to know. Markdown links written as <code>&lt; link url &gt;</code>
+    
+
+<p>The <em>info text</em> that's used for any of the <code>info_*()</code> functions readily
+accepts Markdown formatting, and, there are a few <em>Text Tricks</em> that can be
+used to spice up the presentation. Markdown links written as <code>&lt; link url &gt;</code>
 or <code>[ link text ]( link url )</code> will get nicely-styled links. Any dates
 expressed in the ISO-8601 standard with parentheses, <code>"(2004-12-01)"</code>, will
 be styled with a font variation (monospaced) and underlined in purple. Spans
-of text can be converted to label text by using: (1) double parentheses
-around text for a rectangular label as in <code>((label text))</code>, or (2) triple
-parentheses around text for a rounded-rectangular label like <code>(((label text)))</code>. Finally, CSS styles can be applied to spans of <em>info text</em> with
-the following form:</p>
+of text can be converted to label-style text by using: (1) double parentheses
+around text for a rectangular border as in <code>((label text))</code>, or (2) triple
+parentheses around text for a rounded-rectangular border like <code>(((label text)))</code>.</p>
+<p>CSS style rules can be applied to spans of <em>info text</em> with the following
+form:</p>
 <p><code>[[ info text ]]&lt;&lt; CSS style rules &gt;&gt;</code></p>
 <p>As an example of this in practice suppose you'd like to change the color of
 some text to red and make the font appear somewhat thinner. A variation on
 the following might be used:</p>
 <p><code>"This is a [[factor]]&lt;&lt;color: red; font-weight: 300;&gt;&gt; value."</code></p>
+<p>The are quite a few CSS style rules that can be used to great effect. Here
+are a few you might like:</p><ul>
+<li><p><code>color: &lt;a color value&gt;;</code> (text color)</p></li>
+<li><p><code>background-color: &lt;a color value&gt;;</code> (the text's background color)</p></li>
+<li><p><code>text-decoration: (overline | line-through | underline);</code></p></li>
+<li><p><code>text-transform: (uppercase | lowercase | capitalize);</code></p></li>
+<li><p><code>letter-spacing: &lt;a +/- length value&gt;;</code></p></li>
+<li><p><code>word-spacing: &lt;a +/- length value&gt;;</code></p></li>
+<li><p><code>font-style: (normal | italic | oblique);</code></p></li>
+<li><p><code>font-weight: (normal | bold | 100-900);</code></p></li>
+<li><p><code>font-variant: (normal | bold | 100-900);</code></p></li>
+<li><p><code>border: &lt;a color value&gt; &lt;a length value&gt; (solid | dashed | dotted);</code></p></li>
+</ul>
+
+<p>In the above examples, 'length value' refers to a CSS length which can be
+expressed in different units of measure (e.g., <code>12px</code>, <code>1em</code>, etc.). Some
+lengths can be expressed as positive or negative values (e.g., for
+<code>letter-spacing</code>). Color values can be expressed in a few ways, the most
+common being in the form of hexadecimal color values or as CSS color names.</p>
+    <h2 class="hasAnchor" id="yaml"><a class="anchor" href="#yaml"></a>YAML</h2>
+
+    
+
+<p>A <strong>pointblank</strong> informant can be written to YAML with <code><a href='yaml_write.html'>yaml_write()</a></code> and the
+resulting YAML can be used to regenerate an informant (with
+<code><a href='yaml_read_informant.html'>yaml_read_informant()</a></code>) or perform the 'incorporate' action using the target
+table (via <code><a href='yaml_informant_incorporate.html'>yaml_informant_incorporate()</a></code>). When <code>info_tabular()</code> is
+represented in YAML, <em>info text</em> goes into subsections of the top-level
+<code>table</code> key. Here is an example of how a call of <code>info_tabular()</code> is
+expressed in R code and in the corresponding YAML representation.</p><pre># R statement
+informant %&gt;% 
+  info_tabular(
+    section_1 = "*info text* 1.",
+    `section 2` = "*info text* 2 and {snippet_1}"
+  )
+
+# YAML representation
+table:
+  _columns: 23
+  _rows: 205.0
+  _type: tbl_df
+  section_1: '*info text* 1.'
+  section 2: '*info text* 2 and {snippet_1}'
+</pre>
+
+<p>Subsection titles as defined in <code>info_tabular()</code> can be set in backticks if
+they are not syntactically correct as an argument name without them (e.g.,
+when using spaces, hyphens, etc.).</p>
+<p>It's safest to use single quotation marks around any <em>info text</em> if directly
+editing it in a YAML file. Note that Markdown formatting and <em>info snippet</em>
+placeholders (shown here as <code>{snippet_1}</code>, see <code><a href='info_snippet.html'>info_snippet()</a></code> for more
+information) are preserved in the YAML. The Markdown to HTML conversion is
+done when printing an informant (or invoking <code><a href='get_informant_report.html'>get_informant_report()</a></code> on an
+<em>informant</em>) and the processing of snippets (generation and insertion) is
+done when using the <code><a href='incorporate.html'>incorporate()</a></code> function. Thus, the source text is always
+maintained in the YAML representation and is never written in processed form.</p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
@@ -245,14 +303,13 @@ the following might be used:</p>
     label <span class='op'>=</span> <span class='st'>"An example."</span>
   <span class='op'>)</span>
 
-<span class='co'># The `informant` object has the 'table'</span>
-<span class='co'># and 'columns' sections; we can add more</span>
-<span class='co'># properties to the 'table' section</span>
+<span class='co'># We can add *info text* to describe</span>
+<span class='co'># the table with `info_tabular()`</span>
 <span class='va'>informant</span> <span class='op'>&lt;-</span>
   <span class='va'>informant</span> <span class='op'>%&gt;%</span>
   <span class='fu'>info_tabular</span><span class='op'>(</span>
-    row_definition <span class='op'>=</span> <span class='st'>"A row has randomized values."</span>,
-    source <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    `Row Definition` <span class='op'>=</span> <span class='st'>"A row has randomized values."</span>,
+    Source <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
       <span class='st'>"- From the **pointblank** package."</span>,
       <span class='st'>"- [https://rich-iannone.github.io/pointblank/]()"</span>
      <span class='op'>)</span>
@@ -261,22 +318,26 @@ the following might be used:</p>
 <span class='co'># Upon printing the `informant` object, we see</span>
 <span class='co'># the additions made to the 'Table' section</span>
 
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+
 <span class='co'># The `informant` object can be written to</span>
 <span class='co'># a YAML file with the `yaml_write()`</span>
 <span class='co'># function; then information can</span>
 <span class='co'># be directly edited or modified</span>
-<span class='co'># yaml_write(</span>
-<span class='co'>#   informant = informant,</span>
-<span class='co'>#   filename = "informant.yml"</span>
-<span class='co'># )</span>
+<span class='fu'><a href='yaml_write.html'>yaml_write</a></span><span class='op'>(</span>
+  informant <span class='op'>=</span> <span class='va'>informant</span>,
+  filename <span class='op'>=</span> <span class='st'>"informant.yml"</span>
+<span class='op'>)</span>
 
 <span class='co'># The YAML file can then be read back</span>
 <span class='co'># into an informant object with the</span>
 <span class='co'># `yaml_read_informant()` function</span>
-<span class='co'># informant &lt;-</span>
-<span class='co'>#   yaml_read_informant(</span>
-<span class='co'>#     filename = "informant.yml"</span>
-<span class='co'>#   )</span>
+<span class='va'>informant</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='yaml_read_informant.html'>yaml_read_informant</a></span><span class='op'>(</span>
+    filename <span class='op'>=</span> <span class='st'>"informant.yml"</span>
+  <span class='op'>)</span>
+
+<span class='op'>}</span>
 
 </div></pre>
   </div>

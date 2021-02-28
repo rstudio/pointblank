@@ -212,11 +212,12 @@ read in the input data table with the <code>read_fn</code> argument (in which ca
     </tr>
     <tr>
       <th>read_fn</th>
-      <td><p>A function that's used for reading in the data. Even if a
-<code>tbl</code> is provided, this function will be invoked to obtain the data (i.e.,
-the <code>read_fn</code> takes priority). There are two ways to specify a <code>read_fn</code>:
-(1) using a function (e.g., <code>function() { &lt;table reading code&gt; }</code>) or, (2)
-with an R formula expression (e.g., <code>~ { &lt;table reading code&gt; }</code>).</p></td>
+      <td><p>A table-prep formula that's used to access the target table.
+Even if a <code>tbl</code> is provided, this formula will be invoked to obtain the
+data (i.e., the <code>read_fn</code> takes priority). There are two ways to specify a
+<code>read_fn</code>: (1) with a right-hand side (RHS) formula expression (e.g.,
+<code>~ { &lt;table reading code&gt;}</code>) or (2) as a function (e.g.,
+<code>function() { &lt;table reading code&gt;}</code>).</p></td>
     </tr>
     <tr>
       <th>tbl_name</th>
@@ -243,13 +244,11 @@ specified here will be overridden.</p></td>
     </tr>
     <tr>
       <th>end_fns</th>
-      <td><p>A list of function calls that should be performed at the end
-of an interrogation. Each function call should be in the form of a
-one-sided R formula expression, so overall this construction should be
-used: <code>end_fns = list(~ &lt;R statements&gt;, ~ &lt;R statements&gt;, ...)</code>. An example
-of a function that can be sensibly used here is <code><a href='email_blast.html'>email_blast()</a></code>, where an
-email of the validation report is generated and sent based on sending
-condition.</p></td>
+      <td><p>A list of expressions that should be invoked at the end of an
+interrogation. Each expression should be in the form of a one-sided R
+formula, so overall this construction should be used: <code>end_fns = list(~ &lt;R statements&gt;, ~ &lt;R statements&gt;, ...)</code>. An example of a function included in
+<strong>pointblank</strong> that can be sensibly used here is <code><a href='email_blast.html'>email_blast()</a></code>, which
+sends an email of the validation report (based on a sending condition).</p></td>
     </tr>
     <tr>
       <th>embed_report</th>
@@ -280,20 +279,120 @@ designation, like "es" for Spanish (Spain, same as <code>"es_ES"</code>).</p></t
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>ptblank_agent</code> object.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="data-products-obtained-from-an-agent"><a class="anchor" href="#data-products-obtained-from-an-agent"></a>Data Products Obtained from an Agent</h2>
 
-    <p>A very detailed list object, known as the x-list, can be obtained by
-using the <code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function on the <em>agent</em>. This font of
-information can be taken as a whole, or, broken down by the step number (with
-the <code>i</code> argument).</p>
+    
+
+<p>A very detailed list object, known as an x-list, can be obtained by using the
+<code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function on the <em>agent</em>. This font of information can be
+taken as a whole, or, broken down by the step number (with the <code>i</code> argument).</p>
 <p>Sometimes it is useful to see which rows were the failing ones. By using the
 <code><a href='get_data_extracts.html'>get_data_extracts()</a></code> function on the <em>agent</em>, we either get a list of
 tibbles (for those steps that have data extracts) or one tibble if the
 validation step is specified with the <code>i</code> argument.</p>
+<p>The target data can be split into pieces that represent the 'pass' and 'fail'
+portions with the <code><a href='get_sundered_data.html'>get_sundered_data()</a></code> function. A primary requirement is an
+agent that has had <code><a href='interrogate.html'>interrogate()</a></code> called on it. In addition, the validation
+steps considered for this data splitting need to be those that operate on
+values down a column (e.g., the <code>col_vals_*()</code> functions or <code><a href='conjointly.html'>conjointly()</a></code>).
+With these in-consideration validation steps, rows with no failing test units
+across all validation steps comprise the 'pass' data piece, and rows with at
+least one failing test unit across the same series of validations constitute
+the 'fail' piece.</p>
 <p>If we just need to know whether all validations completely passed (i.e., all
 steps had no failing test units), the <code><a href='all_passed.html'>all_passed()</a></code> function could be used
 on the <em>agent</em>. However, in practice, it's not often the case that all data
 validation steps are free from any failing units.</p>
+<p>While printing an <em>agent</em> will display the <em>agent</em> report in the Viewer, we
+can alternatively use the <code><a href='get_agent_report.html'>get_agent_report()</a></code> to take advantage of other
+options (e.g., overriding the language, modifying the arrangement of report
+rows, etc.), and to return the report as independent objects. For example,
+with the <code>display_table = TRUE</code> option (the default), <code><a href='get_agent_report.html'>get_agent_report()</a></code>
+will return a <strong>gt</strong> table object (<code>"gt_tbl"</code>). If <code>display_table</code> is set to
+<code>FALSE</code>, we'll get a data frame back instead.</p>
+    <h2 class="hasAnchor" id="yaml"><a class="anchor" href="#yaml"></a>YAML</h2>
+
+    
+
+<p>A <strong>pointblank</strong> agent can be written to YAML with <code><a href='yaml_write.html'>yaml_write()</a></code> and the
+resulting YAML can be used to regenerate an agent (with <code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code>)
+or interrogate the target table (via <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></code>). Here is an
+example of how a complex call of <code>create_agent()</code> is expressed in R code and
+in the corresponding YAML representation.</p><pre># R statement
+create_agent(
+  read_fn = ~ small_table,
+  tbl_name = "small_table",
+  label = "An example.",
+  actions = action_levels(
+    warn_at = 0.10,
+    stop_at = 0.25,
+    notify_at = 0.35
+  ), 
+  end_fns = list(
+    ~ beepr::beep(2),
+    ~ Sys.sleep(1)
+  ), 
+  embed_report = TRUE,
+  lang = "fr", 
+  locale = "fr_CA"
+)
+
+# YAML representation
+type: agent
+read_fn: ~small_table
+tbl_name: small_table
+label: An example.
+lang: fr
+locale: fr_CA
+actions:
+  warn_fraction: 0.1
+stop_fraction: 0.25
+notify_fraction: 0.35
+end_fns:
+- ~beepr::beep(2)
+- ~Sys.sleep(1)
+embed_report: true
+</pre>
+
+<p>In practice, this block of YAML will be shorter since arguments with default
+values won't be written to YAML when using <code><a href='yaml_write.html'>yaml_write()</a></code> (though it is
+acceptable to include them with their default when generating the YAML by
+other means). The only requirement for writing the YAML representation of an
+<em>agent</em> is having <code>read_fn</code> specified (any table supplied to <code>tbl</code> is
+ignored).</p>
+<p>What typically follows this chunk of YAML is a <code>steps</code> part, and that
+corresponds to the addition of validation steps via validation functions.
+Help articles for each validation function have a <em>YAML</em> section that
+describes how a given validation function is translated to YAML.</p>
+<p>Should you need to preview the transformation of an <em>agent</em> to YAML (without
+any committing anything to disk), use the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></code> function. If
+you already have a <code>.yml</code> file that holds an <em>agent</em>, you can get a glimpse
+of the R expressions that are used to regenerate that agent with
+<code><a href='yaml_agent_show_exprs.html'>yaml_agent_show_exprs()</a></code>.</p>
+    <h2 class="hasAnchor" id="writing-an-agent-to-disk"><a class="anchor" href="#writing-an-agent-to-disk"></a>Writing an Agent to Disk</h2>
+
+    
+
+<p>An <em>agent</em> object can be written to disk with the <code><a href='x_write_disk.html'>x_write_disk()</a></code> function.
+This can be useful for keeping a history of validations and generating views
+of data quality over time. Agents are stored in the serialized RDS format and
+can be easily retrieved with the <code><a href='x_read_disk.html'>x_read_disk()</a></code> function.</p>
+<p>It's recommended that table-prep formulas are supplied to the <code>read_fn</code>
+argument of <code>create_agent()</code>. In this way, when an <em>agent</em> is read from disk
+through <code><a href='x_read_disk.html'>x_read_disk()</a></code>, it can be reused to access the target table (which
+may changed, hence the need to use an expression for this).</p>
+    <h2 class="hasAnchor" id="combining-several-agents-in-a-multiagent-object"><a class="anchor" href="#combining-several-agents-in-a-multiagent-object"></a>Combining Several Agents in a <em>multiagent</em> Object</h2>
+
+    
+
+<p>Multiple <em>agent</em> objects can be part of a <em>multiagent</em> object, and two
+functions can be used for this: <code><a href='create_multiagent.html'>create_multiagent()</a></code> and
+<code><a href='read_disk_multiagent.html'>read_disk_multiagent()</a></code>. By gathering multiple agents that have performed
+interrogations in the past, we can get a <em>multiagent</em> report showing how data
+quality evolved over time. This use case is interesting for data quality
+monitoring and management, and, the reporting (which can be customized with
+<code><a href='get_multiagent_report.html'>get_multiagent_report()</a></code>) is robust against changes in validation steps for
+a given target table.</p>
     <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
 
     
@@ -361,6 +460,7 @@ validation steps are free from any failing units.</p>
 <span class='va'>agent</span> <span class='op'>&lt;-</span> 
   <span class='fu'>create_agent</span><span class='op'>(</span>
     read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
+    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,
     label <span class='op'>=</span> <span class='st'>"An example."</span>,
     actions <span class='op'>=</span> <span class='va'>al</span>
   <span class='op'>)</span>

@@ -47,14 +47,17 @@
 
 
 <meta property="og:title" content="Get a table from a database — db_tbl" />
-<meta property="og:description" content="If your target table is in a database, the db_tbl() function
-is a handy way of accessing it. This function simplifies the process of
-getting a tbl_dbi object, which usually involves a combination of building
-a connection to a database and using the dplyr::tbl() function with the
-connection and the table name (or a reference to a table in a schema). A
-better option is to use this function as the read_fn parameter in
-create_agent() or create_informant(). This can be done by using a
-leading ~ before the db_tbl() call (e.g,. read_fn = ~db_tbl(...)).
+<meta property="og:description" content="If your target table is in a database, the db_tbl() function is a handy way
+of accessing it. This function simplifies the process of getting a tbl_dbi
+object, which usually involves a combination of building a connection to a
+database and using the dplyr::tbl() function with the connection and the
+table name (or a reference to a table in a schema). You can use db_tbl() as
+the basis for obtaining a database table for the read_fn parameter in
+create_agent() or create_informant(). This can be done by using a leading
+~ before the db_tbl() call (e.g,. read_fn = ~db_tbl(...)). Another
+great option is supplying a table-prep formula involving db_tbl() to
+tbl_store() so that you have access to database tables though single names
+via a table store.
 The username and password are supplied though environment variables. If
 desired, these can be supplied directly by enclosing those values in I()." />
 <meta property="og:image" content="/logo.svg" />
@@ -166,14 +169,17 @@ desired, these can be supplied directly by enclosing those values in I()." />
     </div>
 
     <div class="ref-description">
-    <p>If your target table is in a database, the <code>db_tbl()</code> function
-is a handy way of accessing it. This function simplifies the process of
-getting a <code>tbl_dbi</code> object, which usually involves a combination of building
-a connection to a database and using the <code><a href='https://dplyr.tidyverse.org/reference/tbl.html'>dplyr::tbl()</a></code> function with the
-connection and the table name (or a reference to a table in a schema). A
-better option is to use this function as the <code>read_fn</code> parameter in
-<code><a href='create_agent.html'>create_agent()</a></code> or <code><a href='create_informant.html'>create_informant()</a></code>. This can be done by using a
-leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> before the <code>db_tbl()</code> call (e.g,. <code>read_fn = ~db_tbl(...)</code>).</p>
+    <p>If your target table is in a database, the <code>db_tbl()</code> function is a handy way
+of accessing it. This function simplifies the process of getting a <code>tbl_dbi</code>
+object, which usually involves a combination of building a connection to a
+database and using the <code><a href='https://dplyr.tidyverse.org/reference/tbl.html'>dplyr::tbl()</a></code> function with the connection and the
+table name (or a reference to a table in a schema). You can use <code>db_tbl()</code> as
+the basis for obtaining a database table for the <code>read_fn</code> parameter in
+<code><a href='create_agent.html'>create_agent()</a></code> or <code><a href='create_informant.html'>create_informant()</a></code>. This can be done by using a leading
+<code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> before the <code>db_tbl()</code> call (e.g,. <code>read_fn = ~db_tbl(...)</code>). Another
+great option is supplying a table-prep formula involving <code>db_tbl()</code> to
+<code><a href='tbl_store.html'>tbl_store()</a></code> so that you have access to database tables though single names
+via a table store.</p>
 <p>The username and password are supplied though environment variables. If
 desired, these can be supplied directly by enclosing those values in <code><a href='https://rdrr.io/r/base/AsIs.html'>I()</a></code>.</p>
     </div>
@@ -250,68 +256,117 @@ and password for the database.</p></td>
     <pre class="examples"><div class='input'><span class='co'># You can use an in-memory database</span>
 <span class='co'># table and supply an in-memory table</span>
 <span class='co'># to it too:</span>
-<span class='co'># small_table_duckdb &lt;- </span>
-<span class='co'>#   db_tbl(</span>
-<span class='co'>#     table = small_table,</span>
-<span class='co'>#     dbname = ":memory:",</span>
-<span class='co'>#     dbtype = "duckdb"</span>
-<span class='co'>#   )</span>
+<span class='va'>small_table_duckdb</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>db_tbl</span><span class='op'>(</span>
+    table <span class='op'>=</span> <span class='va'>small_table</span>,
+    dbname <span class='op'>=</span> <span class='st'>":memory:"</span>,
+    dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span>
+  <span class='op'>)</span>
+
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 
 <span class='co'># It's also possible to obtain a remote</span>
 <span class='co'># file and shove it into an in-memory</span>
-<span class='co'># database; use the all-powerful `file_tbl()`</span>
-<span class='co'># + `db_tbl()` combo</span>
-<span class='co'># all_revenue_large_duckdb &lt;-</span>
-<span class='co'>#   db_tbl(</span>
-<span class='co'>#     table = file_tbl(</span>
-<span class='co'>#       file = from_github(</span>
-<span class='co'>#         file = "all_revenue_large.rds",</span>
-<span class='co'>#         repo = "rich-iannone/intendo",</span>
-<span class='co'>#         subdir = "data-large"</span>
-<span class='co'>#       )</span>
-<span class='co'>#     ),</span>
-<span class='co'>#     dbname = ":memory:",</span>
-<span class='co'>#     dbtype = "duckdb"</span>
-<span class='co'>#   )</span>
+<span class='co'># database; use the all-powerful</span>
+<span class='co'># `file_tbl()` + `db_tbl()` combo</span>
+<span class='va'>all_revenue_large_duckdb</span> <span class='op'>&lt;-</span>
+  <span class='fu'>db_tbl</span><span class='op'>(</span>
+    table <span class='op'>=</span> <span class='fu'><a href='file_tbl.html'>file_tbl</a></span><span class='op'>(</span>
+      file <span class='op'>=</span> <span class='fu'><a href='from_github.html'>from_github</a></span><span class='op'>(</span>
+        file <span class='op'>=</span> <span class='st'>"all_revenue_large.rds"</span>,
+        repo <span class='op'>=</span> <span class='st'>"rich-iannone/intendo"</span>,
+        subdir <span class='op'>=</span> <span class='st'>"data-large"</span>
+      <span class='op'>)</span>
+    <span class='op'>)</span>,
+    dbname <span class='op'>=</span> <span class='st'>":memory:"</span>,
+    dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span>
+  <span class='op'>)</span>
 
-<span class='co'># For remote databases, it's just as</span>
-<span class='co'># simple (I think); you can get access</span>
-<span class='co'># to the `rna` table that's in the</span>
-<span class='co'># RNA Central public database with the</span>
-<span class='co'># following `db_tbl()` call</span>
-<span class='co'># rna_db_tbl &lt;- </span>
-<span class='co'>#   db_tbl(</span>
-<span class='co'>#     table = "rna",</span>
-<span class='co'>#     dbname = "pfmegrnargs",</span>
-<span class='co'>#     dbtype = "postgres", </span>
-<span class='co'>#     host = "hh-pgsql-public.ebi.ac.uk",</span>
-<span class='co'>#     port = 5432,</span>
-<span class='co'>#     user = I("reader"),</span>
-<span class='co'>#     password = I("NWDMCE5xdipIjRrp")</span>
-<span class='co'>#   )</span>
+<span class='co'># For remote databases, it's much the</span>
+<span class='co'># same; here's an example that accesses</span>
+<span class='co'># the `rna` table (in the RNA Central</span>
+<span class='co'># public database) using `db_tbl()`</span>
+<span class='va'>rna_db_tbl</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>db_tbl</span><span class='op'>(</span>
+    table <span class='op'>=</span> <span class='st'>"rna"</span>,
+    dbname <span class='op'>=</span> <span class='st'>"pfmegrnargs"</span>,
+    dbtype <span class='op'>=</span> <span class='st'>"postgres"</span>, 
+    host <span class='op'>=</span> <span class='st'>"hh-pgsql-public.ebi.ac.uk"</span>,
+    port <span class='op'>=</span> <span class='fl'>5432</span>,
+    user <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='st'>"reader"</span><span class='op'>)</span>,
+    password <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='st'>"NWDMCE5xdipIjRrp"</span><span class='op'>)</span>
+  <span class='op'>)</span>
 
 <span class='co'># Using `I()` for the user name and</span>
 <span class='co'># password means that you're passing in</span>
 <span class='co'># the actual values but, normally, you</span>
-<span class='co'># would use names of environment variables</span>
-<span class='co'># (envvars) to access the username and</span>
-<span class='co'># password values when connecting to a</span>
-<span class='co'># database... like this:</span>
-<span class='co'># example_db_tbl &lt;- </span>
-<span class='co'>#   db_tbl(</span>
-<span class='co'>#     table = "&lt;table_name&gt;",</span>
-<span class='co'>#     dbname = "&lt;database_name&gt;",</span>
-<span class='co'>#     dbtype = "&lt;database_type_shortname&gt;", </span>
-<span class='co'>#     host = "&lt;connection_url&gt;",</span>
-<span class='co'>#     port = "&lt;connection_port&gt;",</span>
-<span class='co'>#     user = "&lt;DB_USER_NAME&gt;",</span>
-<span class='co'>#     password = "&lt;DB_PASSWORD&gt;"</span>
-<span class='co'>#   )</span>
+<span class='co'># would want use the names of environment</span>
+<span class='co'># variables (envvars) to securely access</span>
+<span class='co'># the appropriate username and password</span>
+<span class='co'># values when connecting to a DB:</span>
+<span class='va'>example_db_tbl</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>db_tbl</span><span class='op'>(</span>
+    table <span class='op'>=</span> <span class='st'>"&lt;table_name&gt;"</span>,
+    dbname <span class='op'>=</span> <span class='st'>"&lt;database_name&gt;"</span>,
+    dbtype <span class='op'>=</span> <span class='st'>"&lt;database_type_shortname&gt;"</span>, 
+    host <span class='op'>=</span> <span class='st'>"&lt;connection_url&gt;"</span>,
+    port <span class='op'>=</span> <span class='st'>"&lt;connection_port&gt;"</span>,
+    user <span class='op'>=</span> <span class='st'>"&lt;DB_USER_NAME&gt;"</span>,
+    password <span class='op'>=</span> <span class='st'>"&lt;DB_PASSWORD&gt;"</span>
+  <span class='op'>)</span>
 
 <span class='co'># Environment variables can be created</span>
 <span class='co'># by editing the user `.Renviron` file and</span>
 <span class='co'># the `usethis::edit_r_environ()` function</span>
 <span class='co'># makes this pretty easy to do</span>
+
+<span class='co'># Storing table-prep formulas in a table</span>
+<span class='co'># store makes it easier to work with DB</span>
+<span class='co'># tables in pointblank; here's how to</span>
+<span class='co'># generate a table store with two named</span>
+<span class='co'># entries for table preparations</span>
+<span class='va'>tbls</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='tbl_store.html'>tbl_store</a></span><span class='op'>(</span>
+    <span class='va'>small_table_duck</span> <span class='op'>~</span> <span class='fu'>db_tbl</span><span class='op'>(</span>
+      table <span class='op'>=</span> <span class='fu'>pointblank</span><span class='fu'>::</span><span class='va'><a href='small_table.html'>small_table</a></span>,
+      dbname <span class='op'>=</span> <span class='st'>":memory:"</span>,
+      dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span>
+    <span class='op'>)</span>,
+    <span class='va'>small_high_duck</span> <span class='op'>~</span> <span class='fu'>db_tbl</span><span class='op'>(</span>
+      table <span class='op'>=</span> <span class='fu'>pointblank</span><span class='fu'>::</span><span class='va'><a href='small_table.html'>small_table</a></span>,
+      dbname <span class='op'>=</span> <span class='st'>":memory:"</span>,
+      dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span>
+    <span class='op'>)</span> <span class='op'>%&gt;%</span>
+      <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>f</span> <span class='op'>==</span> <span class='st'>"high"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+
+<span class='co'># Now it's easy to access either of these</span>
+<span class='co'># tables (the second is a mutated version)</span>
+<span class='co'># via the `tbl_get()` function</span>
+<span class='fu'><a href='tbl_get.html'>tbl_get</a></span><span class='op'>(</span><span class='st'>"small_table_duck"</span>, store <span class='op'>=</span> <span class='va'>tbls</span><span class='op'>)</span>
+<span class='fu'><a href='tbl_get.html'>tbl_get</a></span><span class='op'>(</span><span class='st'>"small_high_duck"</span>, store <span class='op'>=</span> <span class='va'>tbls</span><span class='op'>)</span>
+
+<span class='co'># The table-prep formulas in `tbls`</span>
+<span class='co'># could also be used in functions with</span>
+<span class='co'># the `read_fn` argument; this is thanks</span>
+<span class='co'># to the `tbl_source()` function</span>
+<span class='va'>agent</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='tbl_source.html'>tbl_source</a></span><span class='op'>(</span>
+      <span class='st'>"small_table_duck"</span>,
+      store <span class='op'>=</span> <span class='va'>tbls</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
+
+<span class='va'>informant</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='tbl_source.html'>tbl_source</a></span><span class='op'>(</span>
+      <span class='st'>"small_high_duck"</span>,
+      store <span class='op'>=</span> <span class='va'>tbls</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
+
+<span class='op'>}</span>
 
 </div></pre>
   </div>

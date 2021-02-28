@@ -194,6 +194,35 @@ alphabetical value from a column in the target table.</p>
 <code><a href='snip_lowest.html'>snip_lowest</a>()</code>,
 <code><a href='snip_stats.html'>snip_stats</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Generate an informant object, add</span>
+<span class='co'># a snippet with `info_snippet()`</span>
+<span class='co'># and `snip_highest()` (giving us a</span>
+<span class='co'># method to get the highest value in</span>
+<span class='co'># column `a`); define a location for</span>
+<span class='co'># the snippet result in `{ }` and</span>
+<span class='co'># then `incorporate()` the snippet</span>
+<span class='co'># into the info text</span>
+<span class='va'>informant</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span>
+    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
+    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,
+    label <span class='op'>=</span> <span class='st'>"An example."</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
+    columns <span class='op'>=</span> <span class='st'>"a"</span>,
+    `Highest Value` <span class='op'>=</span> <span class='st'>"Highest value is {highest_a}."</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='info_snippet.html'>info_snippet</a></span><span class='op'>(</span>
+    snippet_name <span class='op'>=</span> <span class='st'>"highest_a"</span>,
+    fn <span class='op'>=</span> <span class='fu'>snip_highest</span><span class='op'>(</span>column <span class='op'>=</span> <span class='st'>"a"</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='incorporate.html'>incorporate</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># We can print the `informant` object</span>
+<span class='co'># to see the information report</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

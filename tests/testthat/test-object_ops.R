@@ -185,7 +185,7 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   # Expect the `tbl_src_details` to be NA
   expect_equal(agent_test_4$tbl_src_details, NA_character_)
   
-  # Set a table-reading function and remove the associated table
+  # Set a table-prep formula and remove the associated table
   agent_test_4 <-
     agent_test_4 %>%
     remove_tbl() %>%
@@ -198,7 +198,7 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   expect_true(rlang::is_formula(agent_test_4$read_fn))
   expect_true(rlang::is_bare_formula(agent_test_4$read_fn))
   
-  # Remove the table-reading function from the agent with `remove_read_fn()`
+  # Remove the table-prep formula from the agent with `remove_read_fn()`
   agent_test_4 <- agent_test_4 %>% remove_read_fn()
   
   # Don't expect the `read_fn` element to be in the agent object

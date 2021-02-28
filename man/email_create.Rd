@@ -39,14 +39,6 @@ either be a \strong{pointblank} agent, the \emph{agent} x-list (produced from th
 }
 
 \examples{
-# Create a simple table with two
-# columns of numerical values
-tbl <-
-  dplyr::tibble(
-    a = c(5, 7, 6, 5, 8, 7),
-    b = c(7, 1, 0, 0, 0, 3)
-  )
-
 # Create an `action_levels()` list
 # with absolute values for the
 # `warn`, and `notify` states (with
@@ -67,15 +59,17 @@ al <-
 # to send outside of the pointblank API;
 # the `email_create()` function lets
 # us do this with an `agent` object
-# email_object_1 <-
-#   create_agent(
-#     tbl = tbl,
-#     actions = al
-#   ) \%>\%
-#   col_vals_gt(vars(a), 5) \%>\%
-#   col_vals_lt(vars(b), 5) \%>\%
-#   interrogate() \%>\%
-#   email_create()
+email_object_1 <-
+  create_agent(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example.",
+    actions = al
+  ) \%>\%
+  col_vals_gt(vars(a), 1) \%>\%
+  col_vals_lt(vars(a), 7) \%>\%
+  interrogate() \%>\%
+  email_create()
 
 # We can view the HTML email just
 # by printing `email_object`; it
@@ -84,41 +78,45 @@ al <-
 # The `email_create()` function can
 # also be used on an agent x-list to
 # get the same email message object
-# email_object_2 <-
-#   create_agent(
-#     tbl = tbl,
-#     actions = al
-#   ) \%>\%
-#   col_vals_gt(vars(a), 5) \%>\%
-#   col_vals_lt(vars(b), 5) \%>\%
-#   interrogate() \%>\%
-#   get_agent_x_list() \%>\%
-#   email_create()
+email_object_2 <-
+  create_agent(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example.",
+    actions = al
+  ) \%>\%
+  col_vals_gt(vars(a), 5) \%>\%
+  col_vals_lt(vars(b), 5) \%>\%
+  interrogate() \%>\%
+  get_agent_x_list() \%>\%
+  email_create()
 
 # An information report that's
 # produced by the informant can
 # made into an email message object;
 # let's create an informant and use
 # `email_create()`
-# email_object_3 <-
-#   create_informant(
-#     tbl = tbl
-#   ) \%>\%
-#   info_tabular(
-#     info = "A simple table in the
-#     *Examples* section of the function
-#     called `email_create()`."
-#   ) \%>\%
-#   info_columns(
-#     columns = vars(a),
-#     info = "Numbers. On the high side."
-#   ) \%>\%
-#   info_columns(
-#     columns = vars(b),
-#     info = "Lower numbers. Zeroes, even."
-#   ) \%>\%
-#   incorporate() \%>\%
-#   email_create()
+email_object_3 <-
+  create_informant(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example."
+  ) \%>\%
+  info_tabular(
+    info = "A simple table in the
+    *Examples* section of the function
+    called `email_create()`."
+  ) \%>\%
+  info_columns(
+    columns = vars(a),
+    info = "Numbers. On the high side."
+  ) \%>\%
+  info_columns(
+    columns = vars(b),
+    info = "Lower numbers. Zeroes, even."
+  ) \%>\%
+  incorporate() \%>\%
+  email_create()
 
 }
 \seealso{

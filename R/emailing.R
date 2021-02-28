@@ -19,48 +19,96 @@
 
 #' Send email at a validation step or at the end of an interrogation
 #' 
+#' @description
 #' The `email_blast()` function is useful for sending an email message that
 #' explains the result of a **pointblank** validation. It is powered by the
 #' **blastula** and **glue** packages. This function should be invoked as part
 #' of the `end_fns` argument of [create_agent()]. It's also possible to invoke
 #' `email_blast()` as part of the `fns` argument of the [action_levels()]
-#' function (to possibly send an email message at one or more steps).
+#' function (i.e., to send multiple email messages at the granularity of
+#' different validation steps exceeding failure thresholds).
 #'
 #' To better get a handle on emailing with `email_blast()`, the analogous
-#' [email_create()] can be used with a **pointblank** agent object or the
-#' output obtained from using the [get_agent_x_list()] function.
+#' [email_create()] function can be used with a **pointblank** agent object or
+#' an x-list obtained from using the [get_agent_x_list()] function.
 #' 
-#' @param x A reference to the x-list object prepared by the agent. This version
-#'   of the x-list is the same as that generated via `get_agent_x_list(<agent>)`
-#'   except this version is internally generated and hence only available in an
-#'   internal evaluation context.
-#' @param to,from The email addresses for the recipients and the sender.
+#' @section YAML: 
+#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
+#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
+#' or interrogate the target table (via [yaml_agent_interrogate()]). Here is an
+#' example of how the use of `email_blast()` inside the `end_fns` argument of
+#' [create_agent()] is expressed in R code and in the corresponding YAML
+#' representation.
+#' 
+#' ```
+#' # R statement
+#' create_agent(
+#'   read_fn = ~ small_table,
+#'   tbl_name = "small_table",
+#'   label = "An example.",
+#'   actions = al,
+#'   end_fns = list(
+#'     ~ email_blast(
+#'       x,
+#'       to = "joe_public@example.com",
+#'       from = "pb_notif@example.com",
+#'       msg_subject = "Table Validation",
+#'       credentials = blastula::creds_key(
+#'         id = "smtp2go"
+#'       ),
+#'     )
+#'   )
+#' ) %>%
+#'   col_vals_gt(vars(a), 1) %>%
+#'   col_vals_lt(vars(a), 7) 
+#' 
+#' # YAML representation
+#' type: agent
+#' read_fn: ~small_table
+#' tbl_name: small_table
+#' label: An example.
+#' lang: en
+#' locale: en
+#' actions:
+#'   warn_count: 1.0
+#'   notify_count: 2.0
+#' end_fns: ~email_blast(x, to = "joe_public@example.com", 
+#'   from = "pb_notif@example.com", msg_subject = "Table Validation",
+#'   credentials = blastula::creds_key(id = "smtp2go"),
+#'   )
+#' embed_report: true
+#' steps:
+#'   - col_vals_gt:
+#'     columns: vars(a)
+#'     value: 1.0
+#'   - col_vals_lt:
+#'     columns: vars(a)
+#'     value: 7.0
+#' ```
+#' 
+#' @param x A reference to the x-list object prepared internally by the agent.
+#'   This version of the x-list is the same as that generated via
+#'   `get_agent_x_list(<agent>)` except this version is internally generated and
+#'   hence only available in an internal evaluation context.
+#' @param to,from The email addresses for the recipients and of the sender.
 #' @param credentials A credentials list object that is produced by either of
 #'   the [blastula::creds()], [blastula::creds_anonymous()],
 #'   [blastula::creds_key()], or [blastula::creds_file()] functions. Please
-#'   refer to the **blastula** documentation for details on each of these helper
+#'   refer to the **blastula** documentation for information on how to use these
 #'   functions.
 #' @param msg_subject The subject line of the email message.
 #' @param msg_header,msg_body,msg_footer Content for the header, body, and
 #'   footer components of the HTML email message.
 #' @param send_condition An expression that should evaluate to a logical vector
-#'   of length 1. If `TRUE` then the email will be sent, if `FALSE` then that
-#'   won't happen. The expression can use x-list variables (e.g., `x$notify`,
-#'   `x$type`, etc.) and all of those variables can be viewed using the
-#'   [get_agent_x_list()] function. The default expression is
-#'   `~TRUE %in% x$notify`, which results in `TRUE` if there are any `TRUE`
-#'   values in the `x$notify` logical vector (i.e., any validation step results
-#'   in a 'notify' condition).
+#'   of length 1. If evaluated as `TRUE` then the email will be sent, if `FALSE`
+#'   then that won't happen. The expression can use x-list variables (e.g.,
+#'   `x$notify`, `x$type`, etc.) and all of those variables can be explored
+#'   using the [get_agent_x_list()] function. The default expression is `~TRUE
+#'   %in% x$notify`, which results in `TRUE` if there are any `TRUE` values in
+#'   the `x$notify` logical vector (i.e., any validation step results in a
+#'   'notify' condition).
 #'   
 #' @examples
-#' # Create a simple table with two
-#' # columns of numerical values
-#' tbl <-
-#'   dplyr::tibble(
-#'     a = c(5, 7, 6, 5, 8, 7),
-#'     b = c(7, 1, 0, 0, 0, 3)
-#'   )
-#'
 #' # Create an `action_levels()` list
 #' # with absolute values for the
 #' # `warn`, and `notify` states (with
@@ -70,52 +118,62 @@
 #'     warn_at = 1,
 #'     notify_at = 2
 #'   )
+#'   
+#' if (interactive()) {
 #' 
 #' # Validate that values in column
-#' # `a` from `tbl` are always > 5 and
-#' # that `b` values are always < 5;
-#' # first, apply the `actions_levels()`
+#' # `a` from `small_tbl` are always > 1
+#' # and that they are always < 7; first,
+#' # apply the `actions_levels()`
 #' # directive to `actions` and set up
 #' # an `email_blast()` as one of the
 #' # `end_fns` (by default, the email
 #' # will be sent if there is a single
 #' # 'notify' state across all
 #' # validation steps)
-#' # agent <-
-#' #   create_agent(
-#' #     tbl = tbl,
-#' #     actions = al,
-#' #     end_fns = list(
-#' #       ~ email_blast(
-#' #         x,
-#' #         to = "joe_public@example.com",
-#' #         from = "pb_notif@example.com",
-#' #         msg_subject = "Table Validation",
-#' #         credentials = blastula::creds_key(
-#' #           id = "gmail"
-#' #         ),
-#' #       )
-#' #     )
-#' #   ) %>%
-#' #   col_vals_gt(vars(a), 5) %>%
-#' #   col_vals_lt(vars(b), 5) %>%
-#' #   interrogate()
+#' agent <-
+#'   create_agent(
+#'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
+#'     label = "An example.",
+#'     actions = al,
+#'     end_fns = list(
+#'       ~ email_blast(
+#'         x,
+#'         to = "joe_public@example.com",
+#'         from = "pb_notif@example.com",
+#'         msg_subject = "Table Validation",
+#'         credentials = blastula::creds_key(
+#'           id = "smtp2go"
+#'         ),
+#'       )
+#'     )
+#'   ) %>%
+#'   col_vals_gt(vars(a), 1) %>%
+#'   col_vals_lt(vars(a), 7) %>%
+#'   interrogate()
 #' 
-#' # This example was intentionally
+#' }
+#' 
+#' # The above example was intentionally
 #' # not run because email credentials
 #' # aren't available and the `to`
 #' # and `from` email addresses are
-#' # nonexistent; to look at the email
-#' # message before sending anything of
-#' # the like, we can use the 
+#' # nonexistent
+#' 
+#' # To get a blastula email object
+#' # instead of eagerly sending the
+#' # message, we can use the 
 #' # `email_create()` function
 #' email_object <-
 #'   create_agent(
-#'     tbl = tbl,
+#'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
+#'     label = "An example.",
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(vars(a), 5) %>%
-#'   col_vals_lt(vars(b), 5) %>%
+#'   col_vals_lt(vars(a), 7) %>%
 #'   interrogate() %>%
 #'   email_create()
 #'   
@@ -170,6 +228,7 @@ email_blast <- function(x,
 
 #' Create an email object from a **pointblank** *agent* or *informant*
 #' 
+#' @description
 #' The `email_create()` function produces an email message object that could be
 #' sent using the **blastula** package. The `x` that we need for this could
 #' either be a **pointblank** agent, the *agent* x-list (produced from the
@@ -189,14 +248,6 @@ email_blast <- function(x,
 #' @return A **blastula** `email_message` object.
 #' 
 #' @examples
-#' # Create a simple table with two
-#' # columns of numerical values
-#' tbl <-
-#'   dplyr::tibble(
-#'     a = c(5, 7, 6, 5, 8, 7),
-#'     b = c(7, 1, 0, 0, 0, 3)
-#'   )
-#'
 #' # Create an `action_levels()` list
 #' # with absolute values for the
 #' # `warn`, and `notify` states (with
@@ -217,15 +268,17 @@ email_blast <- function(x,
 #' # to send outside of the pointblank API;
 #' # the `email_create()` function lets
 #' # us do this with an `agent` object
-#' # email_object_1 <-
-#' #   create_agent(
-#' #     tbl = tbl,
-#' #     actions = al
-#' #   ) %>%
-#' #   col_vals_gt(vars(a), 5) %>%
-#' #   col_vals_lt(vars(b), 5) %>%
-#' #   interrogate() %>%
-#' #   email_create()
+#' email_object_1 <-
+#'   create_agent(
+#'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
+#'     label = "An example.",
+#'     actions = al
+#'   ) %>%
+#'   col_vals_gt(vars(a), 1) %>%
+#'   col_vals_lt(vars(a), 7) %>%
+#'   interrogate() %>%
+#'   email_create()
 #' 
 #' # We can view the HTML email just
 #' # by printing `email_object`; it
@@ -234,41 +287,45 @@ email_blast <- function(x,
 #' # The `email_create()` function can
 #' # also be used on an agent x-list to
 #' # get the same email message object
-#' # email_object_2 <-
-#' #   create_agent(
-#' #     tbl = tbl,
-#' #     actions = al
-#' #   ) %>%
-#' #   col_vals_gt(vars(a), 5) %>%
-#' #   col_vals_lt(vars(b), 5) %>%
-#' #   interrogate() %>%
-#' #   get_agent_x_list() %>%
-#' #   email_create()
+#' email_object_2 <-
+#'   create_agent(
+#'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
+#'     label = "An example.",
+#'     actions = al
+#'   ) %>%
+#'   col_vals_gt(vars(a), 5) %>%
+#'   col_vals_lt(vars(b), 5) %>%
+#'   interrogate() %>%
+#'   get_agent_x_list() %>%
+#'   email_create()
 #' 
 #' # An information report that's
 #' # produced by the informant can
 #' # made into an email message object;
 #' # let's create an informant and use
 #' # `email_create()`
-#' # email_object_3 <-
-#' #   create_informant(
-#' #     tbl = tbl
-#' #   ) %>%
-#' #   info_tabular(
-#' #     info = "A simple table in the
-#' #     *Examples* section of the function
-#' #     called `email_create()`."
-#' #   ) %>%
-#' #   info_columns(
-#' #     columns = vars(a),
-#' #     info = "Numbers. On the high side."
-#' #   ) %>%
-#' #   info_columns(
-#' #     columns = vars(b),
-#' #     info = "Lower numbers. Zeroes, even."
-#' #   ) %>%
-#' #   incorporate() %>%
-#' #   email_create()
+#' email_object_3 <-
+#'   create_informant(
+#'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
+#'     label = "An example."
+#'   ) %>%
+#'   info_tabular(
+#'     info = "A simple table in the
+#'     *Examples* section of the function
+#'     called `email_create()`."
+#'   ) %>%
+#'   info_columns(
+#'     columns = vars(a),
+#'     info = "Numbers. On the high side."
+#'   ) %>%
+#'   info_columns(
+#'     columns = vars(b),
+#'     info = "Lower numbers. Zeroes, even."
+#'   ) %>%
+#'   incorporate() %>%
+#'   email_create()
 #' 
 #' @family Emailing
 #' @section Function ID:

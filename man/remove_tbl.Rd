@@ -14,16 +14,63 @@ class \code{ptblank_informant}.}
 Removing an \emph{agent} or \emph{informant}'s association to a data table can be done
 with the \code{remove_tbl()} function. This can be useful to ensure that the table
 data isn't unintentionally written to disk. It is usually best to avoid
-directly associating a table to an \emph{agent} or \emph{informant}, instead opting for
-setting a table-reading function (via \code{\link[=create_agent]{create_agent()}} and
-\code{\link[=create_informant]{create_informant()}}'s \code{read_fn} argument, or, with \code{\link[=set_read_fn]{set_read_fn()}}). The
-association to a table can be set again with \code{\link[=set_tbl]{set_tbl()}}.
+directly associating a table to an \emph{agent} or \emph{informant} through the \code{tbl}
+argument, instead opting for setting a table-prep formula (via
+\code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}'s \code{read_fn} argument, or, with
+\code{\link[=set_read_fn]{set_read_fn()}}). If necessary, the association to a table can be set again
+with \code{\link[=set_tbl]{set_tbl()}}.
 }
 \section{Function ID}{
 
 9-4
 }
 
+\examples{
+# Set proportional failure thresholds
+# to the `warn`, `stop`, and `notify`
+# states using `action_levels()`
+al <- 
+  action_levels(
+      warn_at = 0.10,
+      stop_at = 0.25,
+    notify_at = 0.35
+  )
+
+# Create an agent that has
+# `small_table` set as the target
+# table via `tbl`; apply the actions,
+# add some validation steps and then
+# interrogate the data
+agent_1 <- 
+  create_agent(
+    tbl = small_table,
+    tbl_name = "small_table",
+    label = "An example.",
+    actions = al
+  ) \%>\%
+  col_exists(vars(date, date_time)) \%>\%
+  col_vals_regex(
+    vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+  ) \%>\%
+  rows_distinct() \%>\%
+  interrogate()
+  
+# In this case where `small_table`
+# changes (and the aim is to have
+# validations run periodically) it is
+# better to obtain the table from the
+# source with a table-prep formula;
+# while doing this, the direct
+# association to `small_table` can be
+# removed with `remove_tbl()` so it's
+# no longer part of the agent object
+agent_2 <-
+  agent_1 \%>\%
+  remove_tbl() \%>\%
+  set_read_fn(read_fn = ~ small_table) \%>\%
+  interrogate()
+  
+}
 \seealso{
 Other Object Ops: 
 \code{\link{activate_steps}()},

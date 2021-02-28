@@ -22,22 +22,26 @@ A \code{ptblank_informant} object.
 }
 \description{
 While the \code{\link[=info_tabular]{info_tabular()}} and \code{\link[=info_columns]{info_columns()}} functions allow us to
-add/modify info text for specific sections, the \code{info_section()}
-makes it possible to add sections of our own choosing and the information
-that make sense for those sections. Define a \code{section_name} and provide a
-series of named arguments (in the form \code{entry_name = "The *info text*."}) to
-build the informational content for that section.
+add/modify info text for specific sections, the \code{info_section()} makes it
+possible to add sections of our own choosing and the information that make
+sense for those sections. Define a \code{section_name} and provide a series of
+named arguments (in the form \code{entry_name = "The *info text*."}) to build the
+informational content for that section.
 }
-\details{
-The \emph{info text} readily accepts Markdown formatting. Also, there are a few
-\emph{Text Tricks} that are good to know. Markdown links written as \verb{< link url >}
+\section{Info Text}{
+
+The \emph{info text} that's used for any of the \verb{info_*()} functions readily
+accepts Markdown formatting, and, there are a few \emph{Text Tricks} that can be
+used to spice up the presentation. Markdown links written as \verb{< link url >}
 or \verb{[ link text ]( link url )} will get nicely-styled links. Any dates
 expressed in the ISO-8601 standard with parentheses, \code{"(2004-12-01)"}, will
 be styled with a font variation (monospaced) and underlined in purple. Spans
-of text can be converted to label text by using: (1) double parentheses
-around text for a rectangular label as in \verb{((label text))}, or (2) triple
-parentheses around text for a rounded-rectangular label like \verb{(((label text)))}. Finally, CSS styles can be applied to spans of \emph{info text} with
-the following form:
+of text can be converted to label-style text by using: (1) double parentheses
+around text for a rectangular border as in \verb{((label text))}, or (2) triple
+parentheses around text for a rounded-rectangular border like \verb{(((label text)))}.
+
+CSS style rules can be applied to spans of \emph{info text} with the following
+form:
 
 \verb{[[ info text ]]<< CSS style rules >>}
 
@@ -46,7 +50,81 @@ some text to red and make the font appear somewhat thinner. A variation on
 the following might be used:
 
 \code{"This is a [[factor]]<<color: red; font-weight: 300;>> value."}
+
+The are quite a few CSS style rules that can be used to great effect. Here
+are a few you might like:
+\itemize{
+\item \verb{color: <a color value>;} (text color)
+\item \verb{background-color: <a color value>;} (the text's background color)
+\item \code{text-decoration: (overline | line-through | underline);}
+\item \code{text-transform: (uppercase | lowercase | capitalize);}
+\item \verb{letter-spacing: <a +/- length value>;}
+\item \verb{word-spacing: <a +/- length value>;}
+\item \code{font-style: (normal | italic | oblique);}
+\item \code{font-weight: (normal | bold | 100-900);}
+\item \code{font-variant: (normal | bold | 100-900);}
+\item \verb{border: <a color value> <a length value> (solid | dashed | dotted);}
 }
+
+In the above examples, 'length value' refers to a CSS length which can be
+expressed in different units of measure (e.g., \verb{12px}, \verb{1em}, etc.). Some
+lengths can be expressed as positive or negative values (e.g., for
+\code{letter-spacing}). Color values can be expressed in a few ways, the most
+common being in the form of hexadecimal color values or as CSS color names.
+}
+
+\section{YAML}{
+
+A \strong{pointblank} informant can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
+resulting YAML can be used to regenerate an informant (with
+\code{\link[=yaml_read_informant]{yaml_read_informant()}}) or perform the 'incorporate' action using the target
+table (via \code{\link[=yaml_informant_incorporate]{yaml_informant_incorporate()}}). Extra sections (i.e., neither the
+\code{table} nor the \code{columns} sections) can be generated and filled with \emph{info
+text} by using one or more calls of \code{info_section()}. This is how it is
+expressed in both R code and in the YAML representation.\preformatted{# R statement
+informant \%>\% 
+  info_section(
+    section_name = "History",
+    Changes = "
+- Change 1
+- Change 2
+- Change 3",
+    `Last Update` = "(2020-10-23) at 3:28 PM."
+  ) \%>\%
+  info_section(
+    section_name = "Additional Notes",
+    `Notes 1` = "Notes with a \{snippet\}.",
+    `Notes 2` = "**Bold notes**."
+  )
+
+# YAML representation
+History:
+  Changes: |2-
+  
+    - Change 1
+    - Change 2
+    - Change 3
+  Last Update: (2020-10-23) at 3:28 PM.
+Additional Notes:
+  Notes 1: Notes with a \{snippet\}.
+  Notes 2: '**Bold notes**.'
+}
+
+Subsections represented as column names are automatically generated when
+creating an informant. Within each of the top-level sections (i.e., \code{History}
+and \verb{Additional Notes}) there can be multiple subsections used for holding
+\emph{info text}.
+
+It's safest to use single quotation marks around any \emph{info text} if directly
+editing it in a YAML file. Note that Markdown formatting and \emph{info snippet}
+placeholders (shown here as \code{{snippet}}, see \code{\link[=info_snippet]{info_snippet()}} for more
+information) are preserved in the YAML. The Markdown to HTML conversion is
+done when printing an informant (or invoking \code{\link[=get_informant_report]{get_informant_report()}} on an
+\emph{informant}) and the processing of snippets (generation and insertion) is
+done when using the \code{\link[=incorporate]{incorporate()}} function. Thus, the source text is always
+maintained in the YAML representation and is never written in processed form.
+}
+
 \section{Figures}{
 
 \if{html}{\figure{man_info_section_1.png}{options: width=100\%}}
@@ -74,10 +152,14 @@ informant <-
 # and 'columns' sections; we can create
 # entirely different sections with their
 # own properties using `info_section()`
+
+# We can add *info text* to sections
+# entirely different than `table` and
+# `columns` with `info_section()`
 informant <-
   informant \%>\%
   info_section(
-    section_name = "notes",
+    section_name = "Notes",
     creation = "Dataset generated on (2020-01-15).",
     usage = "`small_table \%>\% dplyr::glimpse()`"
   )
@@ -86,22 +168,26 @@ informant <-
 # the addition of the 'Notes' section and its
 # own information
 
+if (interactive()) {
+
 # The `informant` object can be written to
 # a YAML file with the `yaml_write()`
 # function; then, information can
 # be directly edited or modified
-# yaml_write(
-#   informant = informant,
-#   filename = "informant.yml"
-# )
+yaml_write(
+  informant = informant,
+  filename = "informant.yml"
+)
 
 # The YAML file can then be read back
 # into an informant object with the
 # `yaml_read_informant()` function
-# informant <-
-#   yaml_read_informant(
-#     filename = "informant.yml"
-#   )
+informant <-
+  yaml_read_informant(
+    filename = "informant.yml"
+  )
+
+}
 
 }
 \seealso{

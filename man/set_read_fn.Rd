@@ -2,7 +2,7 @@
 % Please edit documentation in R/object_ops.R
 \name{set_read_fn}
 \alias{set_read_fn}
-\title{Set a table-reading function to an \emph{agent} or \emph{informant}}
+\title{Set a table-prep formula to an \emph{agent} or \emph{informant}}
 \usage{
 set_read_fn(x, read_fn)
 }
@@ -10,24 +10,64 @@ set_read_fn(x, read_fn)
 \item{x}{An \emph{agent} object of class \code{ptblank_agent}, or, an \emph{informant} of
 class \code{ptblank_informant}.}
 
-\item{read_fn}{A function that's used for reading in the data. This can be
-specified by using a function (e.g., \verb{function() \{ <table reading code> \}})
-or an R formula expression (e.g., \verb{~ \{ <table reading code> \}}).}
+\item{read_fn}{An R formula expression (e.g., \verb{~ \{ <table reading code> \}})
+that is used to prepare a table.}
 }
 \description{
-A table-reading function can be associated with an \emph{agent} or \emph{informant}
-with \code{set_read_fn()}. Should both a \code{tbl} \emph{and} a \code{read_fn} be associated
-with the \emph{agent} or \emph{informant}, the \code{read_fn} will take priority. There are
-two ways to specify a \code{read_fn}: (1) using a function (e.g.,
-\verb{function() \{ <table reading code> \}}) or, (2) with an R formula expression
-(e.g., \verb{~ \{ <table reading code> \}}). The table-reading function can removed
-with \code{\link[=remove_read_fn]{remove_read_fn()}}.
+A table-prep formula can be associated with an \emph{agent} or \emph{informant} with
+\code{set_read_fn()}. Should both a \code{tbl} \emph{and} a \code{read_fn} be associated with the
+\emph{agent} or \emph{informant}, the \code{read_fn} will take priority. We can specify a
+value for \code{read_fn} with an RHS formula expression (e.g., \verb{~ \{ <table reading code> \}}). The table-prep formula can removed with \code{\link[=remove_read_fn]{remove_read_fn()}} or
+replaced with \code{set_read_fn()}.
 }
 \section{Function ID}{
 
 9-5
 }
 
+\examples{
+# Set proportional failure thresholds
+# to the `warn`, `stop`, and `notify`
+# states using `action_levels()`
+al <- 
+  action_levels(
+      warn_at = 0.10,
+      stop_at = 0.25,
+    notify_at = 0.35
+  )
+
+# Create an agent that reads in
+# `small_table` with a table-prep
+# formula; apply the actions,
+# add some validation steps and then
+# interrogate the data
+agent_1 <- 
+  create_agent(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example.",
+    actions = al
+  ) \%>\%
+  col_exists(vars(date, date_time)) \%>\%
+  col_vals_regex(
+    vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+  ) \%>\%
+  rows_distinct() \%>\%
+  interrogate()
+  
+# Change the table-prep formula to use
+# a mutated version of `small_table`
+# (one that removes duplicate rows);
+# then, interrogate the target table
+# again
+agent_2 <-
+  agent_1 \%>\%
+  set_read_fn(
+    read_fn = ~ small_table \%>\% dplyr::distinct()
+  ) \%>\%
+  interrogate()
+
+}
 \seealso{
 Other Object Ops: 
 \code{\link{activate_steps}()},

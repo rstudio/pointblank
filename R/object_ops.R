@@ -153,20 +153,62 @@ x_read_disk <- function(filename,
 
 #' Set a data table to an *agent* or *informant*
 #' 
+#' @description 
 #' Setting a data table to an *agent* or *informant* with `set_tbl()` replaces
 #' any associated table (a data frame, a tibble, objects of class `tbl_dbi` or
 #' `tbl_spark`). If a data table is associated with an *agent* or *informant*
-#' along with a table-reading function (settable in [create_agent()] and
-#' [create_informant()]'s `read_fn` argument or with [set_read_fn()]), the
-#' table-reading function will take precedence. If this is undesirable, it be
-#' removed with the [remove_read_fn()] function. The association to a table can
-#' be removed with with [remove_tbl()].
+#' through the `tbl` argument *and* the same object has a table-prep formula
+#' (settable in [create_agent()] and [create_informant()]'s `read_fn` argument
+#' or with [set_read_fn()]), the table-prep formula will take precedence. If
+#' this is undesirable, it be removed with the [remove_read_fn()] function. The
+#' association to a table can be removed with with [remove_tbl()].
 #'
 #' @param x An *agent* object of class `ptblank_agent`, or, an *informant* of
 #'   class `ptblank_informant`.
 #' @param tbl The input table for the `agent`. This can be a data frame, a
 #'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Any table already
 #'   associated with the *agent* or *informant* will be overwritten.
+#' 
+#' @examples
+#' # Set proportional failure thresholds
+#' # to the `warn`, `stop`, and `notify`
+#' # states using `action_levels()`
+#' al <- 
+#'   action_levels(
+#'       warn_at = 0.10,
+#'       stop_at = 0.25,
+#'     notify_at = 0.35
+#'   )
+#' 
+#' # Create an agent that has
+#' # `small_table` set as the target
+#' # table via `tbl`; apply the actions,
+#' # add some validation steps and then
+#' # interrogate the data
+#' agent_1 <- 
+#'   create_agent(
+#'     tbl = small_table,
+#'     tbl_name = "small_table",
+#'     label = "An example.",
+#'     actions = al
+#'   ) %>%
+#'   col_exists(vars(date, date_time)) %>%
+#'   col_vals_regex(
+#'     vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+#'   ) %>%
+#'   rows_distinct() %>%
+#'   interrogate()
+#'   
+#' # Replace the agent's association to
+#' # `small_table` with a mutated version
+#' # of it (one that removes duplicate rows);
+#' # then, interrogate the new target table
+#' agent_2 <-
+#'   agent_1 %>%
+#'   set_tbl(
+#'     tbl = small_table %>% dplyr::distinct()
+#'   ) %>%
+#'   interrogate()
 #' 
 #' @family Object Ops
 #' @section Function ID:
@@ -180,6 +222,8 @@ set_tbl <- function(x,
   x$tbl <- tbl
   
   if (is_ptblank_agent(x)) {
+    
+    # TODO: only attempt to set a `tbl_name` if it is NULL
     
     # Get the name of the table and set it to
     # the `$tbl_name` list element
@@ -213,16 +257,63 @@ set_tbl <- function(x,
 
 #' Remove a data table associated with an *agent* or *informant*
 #' 
+#' @description 
 #' Removing an *agent* or *informant*'s association to a data table can be done
 #' with the `remove_tbl()` function. This can be useful to ensure that the table
 #' data isn't unintentionally written to disk. It is usually best to avoid
-#' directly associating a table to an *agent* or *informant*, instead opting for
-#' setting a table-reading function (via [create_agent()] and
-#' [create_informant()]'s `read_fn` argument, or, with [set_read_fn()]). The 
-#' association to a table can be set again with [set_tbl()].
+#' directly associating a table to an *agent* or *informant* through the `tbl`
+#' argument, instead opting for setting a table-prep formula (via
+#' [create_agent()] and [create_informant()]'s `read_fn` argument, or, with
+#' [set_read_fn()]). If necessary, the association to a table can be set again
+#' with [set_tbl()].
 #' 
 #' @param x An *agent* object of class `ptblank_agent`, or, an *informant* of
 #'   class `ptblank_informant`.
+#' 
+#' @examples
+#' # Set proportional failure thresholds
+#' # to the `warn`, `stop`, and `notify`
+#' # states using `action_levels()`
+#' al <- 
+#'   action_levels(
+#'       warn_at = 0.10,
+#'       stop_at = 0.25,
+#'     notify_at = 0.35
+#'   )
+#' 
+#' # Create an agent that has
+#' # `small_table` set as the target
+#' # table via `tbl`; apply the actions,
+#' # add some validation steps and then
+#' # interrogate the data
+#' agent_1 <- 
+#'   create_agent(
+#'     tbl = small_table,
+#'     tbl_name = "small_table",
+#'     label = "An example.",
+#'     actions = al
+#'   ) %>%
+#'   col_exists(vars(date, date_time)) %>%
+#'   col_vals_regex(
+#'     vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+#'   ) %>%
+#'   rows_distinct() %>%
+#'   interrogate()
+#'   
+#' # In this case where `small_table`
+#' # changes (and the aim is to have
+#' # validations run periodically) it is
+#' # better to obtain the table from the
+#' # source with a table-prep formula;
+#' # while doing this, the direct
+#' # association to `small_table` can be
+#' # removed with `remove_tbl()` so it's
+#' # no longer part of the agent object
+#' agent_2 <-
+#'   agent_1 %>%
+#'   remove_tbl() %>%
+#'   set_read_fn(read_fn = ~ small_table) %>%
+#'   interrogate()
 #'   
 #' @family Object Ops
 #' @section Function ID:
@@ -235,21 +326,62 @@ remove_tbl <- function(x) {
   invisible(x)
 }
 
-#' Set a table-reading function to an *agent* or *informant*
+#' Set a table-prep formula to an *agent* or *informant*
 #'
-#' A table-reading function can be associated with an *agent* or *informant*
-#' with `set_read_fn()`. Should both a `tbl` *and* a `read_fn` be associated
-#' with the *agent* or *informant*, the `read_fn` will take priority. There are
-#' two ways to specify a `read_fn`: (1) using a function (e.g., 
-#' `function() { <table reading code> }`) or, (2) with an R formula expression
-#' (e.g., `~ { <table reading code> }`). The table-reading function can removed
-#' with [remove_read_fn()].
+#' @description
+#' A table-prep formula can be associated with an *agent* or *informant* with
+#' `set_read_fn()`. Should both a `tbl` *and* a `read_fn` be associated with the
+#' *agent* or *informant*, the `read_fn` will take priority. We can specify a
+#' value for `read_fn` with an RHS formula expression (e.g., `~ { <table reading
+#' code> }`). The table-prep formula can removed with [remove_read_fn()] or
+#' replaced with `set_read_fn()`.
 #' 
 #' @param x An *agent* object of class `ptblank_agent`, or, an *informant* of
 #'   class `ptblank_informant`.
-#' @param read_fn A function that's used for reading in the data. This can be
-#'   specified by using a function (e.g., `function() { <table reading code> }`)
-#'   or an R formula expression (e.g., `~ { <table reading code> }`).
+#' @param read_fn An R formula expression (e.g., `~ { <table reading code> }`)
+#'   that is used to prepare a table.
+#'
+#' @examples
+#' # Set proportional failure thresholds
+#' # to the `warn`, `stop`, and `notify`
+#' # states using `action_levels()`
+#' al <- 
+#'   action_levels(
+#'       warn_at = 0.10,
+#'       stop_at = 0.25,
+#'     notify_at = 0.35
+#'   )
+#' 
+#' # Create an agent that reads in
+#' # `small_table` with a table-prep
+#' # formula; apply the actions,
+#' # add some validation steps and then
+#' # interrogate the data
+#' agent_1 <- 
+#'   create_agent(
+#'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
+#'     label = "An example.",
+#'     actions = al
+#'   ) %>%
+#'   col_exists(vars(date, date_time)) %>%
+#'   col_vals_regex(
+#'     vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+#'   ) %>%
+#'   rows_distinct() %>%
+#'   interrogate()
+#'   
+#' # Change the table-prep formula to use
+#' # a mutated version of `small_table`
+#' # (one that removes duplicate rows);
+#' # then, interrogate the target table
+#' # again
+#' agent_2 <-
+#'   agent_1 %>%
+#'   set_read_fn(
+#'     read_fn = ~ small_table %>% dplyr::distinct()
+#'   ) %>%
+#'   interrogate()
 #'
 #' @family Object Ops
 #' @section Function ID:
@@ -263,17 +395,63 @@ set_read_fn <- function(x,
   invisible(x)
 }
 
-#' Remove a table-reading function associated with an *agent* or *informant*
+#' Remove a table-prep formula associated with an *agent* or *informant*
 #' 
-#' Removing an *agent* or an *informant*'s association to a table-reading
-#' function can be done with `remove_read_fn()`. This may be good idea in an
-#' interactive session when instead relying on the direct association of a data
+#' @description 
+#' Removing an *agent* or an *informant*'s association to a table-pre formula
+#' can be done with `remove_read_fn()`. This may be good idea in an interactive
+#' session when needing to rely on the direct association of a 'fixed' data
 #' table (settable in [create_agent()] and [create_informant()]'s `tbl` argument
-#' or with [set_tbl()]). The table-reading function can be set again with
-#' [set_read_fn()].
+#' or with [set_tbl()]) instead of using a table-prep formula that might produce
+#' different a different table than expected. The table-prep formula can always
+#' be set again with [set_read_fn()].
 #' 
 #' @param x An *agent* object of class `ptblank_agent`, or, an *informant* of
 #'   class `ptblank_informant`.
+#'   
+#' @examples 
+#' # Set proportional failure thresholds
+#' # to the `warn`, `stop`, and `notify`
+#' # states using `action_levels()`
+#' al <- 
+#'   action_levels(
+#'       warn_at = 0.10,
+#'       stop_at = 0.25,
+#'     notify_at = 0.35
+#'   )
+#' 
+#' # Create an agent that directly ingests
+#' # the `small_table` object and also has
+#' # a table-prep formula (when both are
+#' # present the latter always obtains the
+#' # table); apply the actions, add some
+#' # validation steps and then interrogate
+#' # the data that was read in
+#' agent_1 <- 
+#'   create_agent(
+#'     tbl = small_table,
+#'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
+#'     label = "An example.",
+#'     actions = al
+#'   ) %>%
+#'   col_exists(vars(date, date_time)) %>%
+#'   col_vals_regex(
+#'     vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+#'   ) %>%
+#'   rows_distinct() %>%
+#'   interrogate()
+#'   
+#' # In a situation where `small_table`
+#' # changes frequently and it's desirable
+#' # to have a snapshot of the table, we
+#' # can remove the table-prep formula so
+#' # that the ingested `small_table` will
+#' # be used
+#' agent_2 <-
+#'   agent_1 %>%
+#'   remove_read_fn() %>%
+#'   interrogate()
 #'   
 #' @family Object Ops
 #' @section Function ID:
@@ -283,5 +461,9 @@ set_read_fn <- function(x,
 remove_read_fn <- function(x) {
   
   x$read_fn <- NULL
+  
+  # Remove any data extracts
+  x$extracts <- NULL
+  
   invisible(x)
 }

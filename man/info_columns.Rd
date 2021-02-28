@@ -35,16 +35,20 @@ function. A single column (or multiple columns) is targeted, and then a
 series of named arguments (in the form \code{entry_name = "The *info text*."})
 serves as additional information for the column or columns.
 }
-\details{
-The \emph{info text} readily accepts Markdown formatting. Also, there are a few
-\emph{Text Tricks} that are good to know. Markdown links written as \verb{< link url >}
+\section{Info Text}{
+
+The \emph{info text} that's used for any of the \verb{info_*()} functions readily
+accepts Markdown formatting, and, there are a few \emph{Text Tricks} that can be
+used to spice up the presentation. Markdown links written as \verb{< link url >}
 or \verb{[ link text ]( link url )} will get nicely-styled links. Any dates
 expressed in the ISO-8601 standard with parentheses, \code{"(2004-12-01)"}, will
 be styled with a font variation (monospaced) and underlined in purple. Spans
-of text can be converted to label text by using: (1) double parentheses
-around text for a rectangular label as in \verb{((label text))}, or (2) triple
-parentheses around text for a rounded-rectangular label like \verb{(((label text)))}. Finally, CSS styles can be applied to spans of \emph{info text} with
-the following form:
+of text can be converted to label-style text by using: (1) double parentheses
+around text for a rectangular border as in \verb{((label text))}, or (2) triple
+parentheses around text for a rounded-rectangular border like \verb{(((label text)))}.
+
+CSS style rules can be applied to spans of \emph{info text} with the following
+form:
 
 \verb{[[ info text ]]<< CSS style rules >>}
 
@@ -53,7 +57,88 @@ some text to red and make the font appear somewhat thinner. A variation on
 the following might be used:
 
 \code{"This is a [[factor]]<<color: red; font-weight: 300;>> value."}
+
+The are quite a few CSS style rules that can be used to great effect. Here
+are a few you might like:
+\itemize{
+\item \verb{color: <a color value>;} (text color)
+\item \verb{background-color: <a color value>;} (the text's background color)
+\item \code{text-decoration: (overline | line-through | underline);}
+\item \code{text-transform: (uppercase | lowercase | capitalize);}
+\item \verb{letter-spacing: <a +/- length value>;}
+\item \verb{word-spacing: <a +/- length value>;}
+\item \code{font-style: (normal | italic | oblique);}
+\item \code{font-weight: (normal | bold | 100-900);}
+\item \code{font-variant: (normal | bold | 100-900);}
+\item \verb{border: <a color value> <a length value> (solid | dashed | dotted);}
 }
+
+In the above examples, 'length value' refers to a CSS length which can be
+expressed in different units of measure (e.g., \verb{12px}, \verb{1em}, etc.). Some
+lengths can be expressed as positive or negative values (e.g., for
+\code{letter-spacing}). Color values can be expressed in a few ways, the most
+common being in the form of hexadecimal color values or as CSS color names.
+}
+
+\section{YAML}{
+
+A \strong{pointblank} informant can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
+resulting YAML can be used to regenerate an informant (with
+\code{\link[=yaml_read_informant]{yaml_read_informant()}}) or perform the 'incorporate' action using the target
+table (via \code{\link[=yaml_informant_incorporate]{yaml_informant_incorporate()}}). The way that information on table
+columns is represented in YAML works like this: \emph{info text} goes into
+subsections of YAML keys named for the columns, which are themselves part of
+the top-level \code{columns} key. Here is an example of how several calls of
+\code{info_columns()} are expressed in R code and how the result corresponds to
+the YAML representation.\preformatted{# R statement
+informant \%>\% 
+  info_columns(
+    columns = "date_time",
+    info = "*info text* 1."
+  ) \%>\%
+  info_columns(
+    columns = "date",
+    info = "*info text* 2."
+  ) \%>\%
+  info_columns(
+    columns = "item_count",
+    info = "*info text* 3. Statistics: \{snippet_1\}."
+  ) \%>\%
+  info_columns(
+    columns = vars(date, date_time),
+    info = "UTC time."
+  )
+
+# YAML representation
+columns:
+  date_time:
+    _type: POSIXct, POSIXt
+    info: '*info text* 1. UTC time.'
+  date:
+    _type: Date
+    info: '*info text* 2. UTC time.'
+  item_count:
+    _type: integer
+    info: '*info text* 3. Statistics: \{snippet_1\}.'
+}
+
+Subsections represented as column names are automatically generated when
+creating an informant. Within these, there can be multiple subsections used
+for holding \emph{info text} on each column. The subsections used across the
+different columns needn't be the same either, the only commonality that
+should be enforced is the presence of the \verb{_type} key (automatically updated
+at every \code{\link[=incorporate]{incorporate()}} invocation).
+
+It's safest to use single quotation marks around any \emph{info text} if directly
+editing it in a YAML file. Note that Markdown formatting and \emph{info snippet}
+placeholders (shown here as \code{{snippet_1}}, see \code{\link[=info_snippet]{info_snippet()}} for more
+information) are preserved in the YAML. The Markdown to HTML conversion is
+done when printing an informant (or invoking \code{\link[=get_informant_report]{get_informant_report()}} on an
+\emph{informant}) and the processing of snippets (generation and insertion) is
+done when using the \code{\link[=incorporate]{incorporate()}} function. Thus, the source text is always
+maintained in the YAML representation and is never written in processed form.
+}
+
 \section{Figures}{
 
 \if{html}{\figure{man_info_columns_1.png}{options: width=100\%}}
@@ -77,10 +162,11 @@ informant <-
     label = "An example."
   )
 
-# The `informant` object has the 'table'
-# and 'columns' sections; we can add more
-# properties to individual columns in
-# the 'columns' section
+# We can add *info text* to describe
+# the columns in the table with multiple
+# `info_columns()` calls; the *info text*
+# calls are additive to existing content
+# in subsections
 informant <-
   informant \%>\%
   info_columns(
@@ -99,22 +185,26 @@ informant <-
 # Upon printing the `informant` object, we see
 # the additions made to the 'Columns' section
 
+if (interactive()) {
+
 # The `informant` object can be written to
 # a YAML file with the `yaml_write()`
 # function; then, information can
 # be directly edited or modified
-# yaml_write(
-#   informant = informant,
-#   filename = "informant.yml"
-# )
+yaml_write(
+  informant = informant,
+  filename = "informant.yml"
+)
 
 # The YAML file can then be read back
 # into an informant object with the
 # `yaml_read_informant()` function
-# informant <-
-#   yaml_read_informant(
-#     filename = "informant.yml"
-#   )
+informant <-
+  yaml_read_informant(
+    filename = "informant.yml"
+  )
+
+}
 
 }
 \seealso{

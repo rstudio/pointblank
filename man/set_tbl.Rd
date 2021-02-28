@@ -18,17 +18,59 @@ associated with the \emph{agent} or \emph{informant} will be overwritten.}
 Setting a data table to an \emph{agent} or \emph{informant} with \code{set_tbl()} replaces
 any associated table (a data frame, a tibble, objects of class \code{tbl_dbi} or
 \code{tbl_spark}). If a data table is associated with an \emph{agent} or \emph{informant}
-along with a table-reading function (settable in \code{\link[=create_agent]{create_agent()}} and
-\code{\link[=create_informant]{create_informant()}}'s \code{read_fn} argument or with \code{\link[=set_read_fn]{set_read_fn()}}), the
-table-reading function will take precedence. If this is undesirable, it be
-removed with the \code{\link[=remove_read_fn]{remove_read_fn()}} function. The association to a table can
-be removed with with \code{\link[=remove_tbl]{remove_tbl()}}.
+through the \code{tbl} argument \emph{and} the same object has a table-prep formula
+(settable in \code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}'s \code{read_fn} argument
+or with \code{\link[=set_read_fn]{set_read_fn()}}), the table-prep formula will take precedence. If
+this is undesirable, it be removed with the \code{\link[=remove_read_fn]{remove_read_fn()}} function. The
+association to a table can be removed with with \code{\link[=remove_tbl]{remove_tbl()}}.
 }
 \section{Function ID}{
 
 9-3
 }
 
+\examples{
+# Set proportional failure thresholds
+# to the `warn`, `stop`, and `notify`
+# states using `action_levels()`
+al <- 
+  action_levels(
+      warn_at = 0.10,
+      stop_at = 0.25,
+    notify_at = 0.35
+  )
+
+# Create an agent that has
+# `small_table` set as the target
+# table via `tbl`; apply the actions,
+# add some validation steps and then
+# interrogate the data
+agent_1 <- 
+  create_agent(
+    tbl = small_table,
+    tbl_name = "small_table",
+    label = "An example.",
+    actions = al
+  ) \%>\%
+  col_exists(vars(date, date_time)) \%>\%
+  col_vals_regex(
+    vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+  ) \%>\%
+  rows_distinct() \%>\%
+  interrogate()
+  
+# Replace the agent's association to
+# `small_table` with a mutated version
+# of it (one that removes duplicate rows);
+# then, interrogate the new target table
+agent_2 <-
+  agent_1 \%>\%
+  set_tbl(
+    tbl = small_table \%>\% dplyr::distinct()
+  ) \%>\%
+  interrogate()
+
+}
 \seealso{
 Other Object Ops: 
 \code{\link{activate_steps}()},

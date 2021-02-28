@@ -21,21 +21,22 @@
 
 #' Get a table from a local or remote file
 #' 
-#' @description If your target table is in a file, stored either locally or
-#'   remotely, the `file_tbl()` function can make it possible to access it in a
-#'   single function call. Compatible file types for this function are: CSV
-#'   (`.csv`), TSV (`.tsv`), RDA (`.rda`), and RDS (`.rds`) files. This function
-#'   generates an in-memory `tbl_dbl` object, which can be used as a target
-#'   table for [create_agent()] and [create_informant()]. The ideal option for
-#'   data access with `file_tbl()` is using this function as the `read_fn`
-#'   parameter in either of the aforementioned `create_*()` functions. This can
-#'   be done by using a leading `~` (e.g,. `read_fn = ~file_tbl(...)`).
+#' @description 
+#' If your target table is in a file, stored either locally or remotely, the
+#' `file_tbl()` function can make it possible to access it in a single function
+#' call. Compatible file types for this function are: CSV (`.csv`), TSV
+#' (`.tsv`), RDA (`.rda`), and RDS (`.rds`) files. This function generates an
+#' in-memory `tbl_dbl` object, which can be used as a target table for
+#' [create_agent()] and [create_informant()]. The ideal option for data access
+#' with `file_tbl()` is using this function as the `read_fn` parameter in either
+#' of the aforementioned `create_*()` functions. This can be done by using a
+#' leading `~` (e.g,. `read_fn = ~file_tbl(...)`).
 #'
-#'   In the remote data use case, we can specify a URL starting with `http://`
-#'   or `https://` and ending with the file containing the data table. If data
-#'   files are available in a GitHub repository then we can use the
-#'   [from_github()] function to specify the name and location of the table data
-#'   for a repository.
+#' In the remote data use case, we can specify a URL starting with `http://`,
+#' `https://`, etc., and ending with the file containing the data table. If data
+#' files are available in a GitHub repository then we can use the
+#' [from_github()] function to specify the name and location of the table data
+#' in a repository.
 #' 
 #' @param file The complete file path leading to a compatible data table either
 #'   in the user system or at a `http://`, `https://`, `ftp://`, or `ftps://`
@@ -109,30 +110,85 @@
 #' # logic can be translated to YAML, for
 #' # later use)
 #' 
+#' if (interactive()) {
+#' 
 #' # A CSV can be obtained from a public
 #' # GitHub repo by using the `from_github()`
 #' # helper function; let's create an agent
 #' # a supply a table-reading function that
 #' # gets the same CSV file from the GitHub
 #' # repository for the pointblank package 
-#' # agent <- 
-#' #   create_agent(
-#' #     read_fn = ~ file_tbl(
-#' #       file = from_github(
-#' #         file = "inst/data_files/small_table.csv",
-#' #         repo = "rich-iannone/pointblank"
-#' #       ),
-#' #       col_types = "TDdcddlc"
-#' #     )
-#' #   ) %>%
-#' #   col_vals_gt(vars(a), 0) %>%
-#' #   interrogate()
+#' agent <- 
+#'   create_agent(
+#'     read_fn = ~ file_tbl(
+#'       file = from_github(
+#'         file = "inst/data_files/small_table.csv",
+#'         repo = "rich-iannone/pointblank"
+#'       ),
+#'       col_types = "TDdcddlc"
+#'     )
+#'   ) %>%
+#'   col_vals_gt(vars(a), 0) %>%
+#'   interrogate()
 #' 
 #' # This interrogated the data that was
 #' # obtained from the remote source file,
 #' # and, there's nothing to clean up (by
 #' # default, the downloaded file goes into
 #' # a system temp directory)
+#' 
+#' # Storing table-prep formulas in a table
+#' # store makes it easier to work with
+#' # tabular data originating from files;
+#' # here's how to generate a table store
+#' # with two named entries for table
+#' # preparations
+#' tbls <-
+#'   tbl_store(
+#'     small_table_file ~ file_tbl(
+#'       file = system.file(
+#'         "data_files", "small_table.csv",
+#'         package = "pointblank"
+#'       ),
+#'       col_types = "TDdcddlc"
+#'     ),
+#'     small_high_file ~ file_tbl(
+#'       file = system.file(
+#'         "data_files", "small_table.csv",
+#'         package = "pointblank"
+#'       ),
+#'       col_types = "TDdcddlc"
+#'     ) %>%
+#'       dplyr::filter(f == "high")
+#'   )
+#' 
+#' # Now it's easy to access either of these
+#' # tables (the second is a mutated version)
+#' # via the `tbl_get()` function
+#' tbl_get("small_table_file", store = tbls)
+#' tbl_get("small_high_file", store = tbls)
+#' 
+#' # The table-prep formulas in `tbls`
+#' # could also be used in functions with
+#' # the `read_fn` argument; this is thanks
+#' # to the `tbl_source()` function
+#' agent <- 
+#'   create_agent(
+#'     read_fn = ~ tbl_source(
+#'       "small_table_file",
+#'       store = tbls
+#'     )
+#'   )
+#' 
+#' informant <- 
+#'   create_informant(
+#'     read_fn = ~ tbl_source(
+#'       "small_high_file",
+#'       store = tbls
+#'     )
+#'   )
+#' 
+#' }
 #'
 #' @family Planning and Prep
 #' @section Function ID:

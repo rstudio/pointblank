@@ -20,7 +20,7 @@ Should the deactivation of one or more validation steps be necessary after
 creation of the validation plan for an \emph{agent}, the \code{deactivate_steps()}
 function will be helpful for that. This has the same effect as using the
 \code{active = FALSE} option (\code{active} is an argument in all validation functions)
-for the selected validation steps. Please note that this directly edit the
+for the selected validation steps. Please note that this directly edits the
 validation step, wiping out any function that may have been defined for
 whether the step should be active or not.
 }
@@ -29,6 +29,36 @@ whether the step should be active or not.
 9-7
 }
 
+\examples{
+# Create an agent that has the
+# `small_table` object as the
+# target table, add a few
+# validation steps, and then use
+# `interrogate()`
+agent_1 <- 
+  create_agent(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example."
+  ) \%>\%
+  col_exists(vars(date)) \%>\%
+  col_vals_regex(
+    vars(b), regex = "[0-9]-[a-z]{3}-[0-9]"
+  ) \%>\%
+  interrogate()
+  
+# The second validation step has
+# is being reconsidered and may
+# be either phased out or improved
+# upon; in the interim period it
+# was decided that the step should
+# be deactivated for now
+agent_2 <-
+  agent_1 \%>\%
+  deactivate_steps(i = 2) \%>\%
+  interrogate()
+
+}
 \seealso{
 For the opposite behavior, use the \code{\link[=activate_steps]{activate_steps()}} function.
 

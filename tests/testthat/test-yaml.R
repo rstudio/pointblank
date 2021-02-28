@@ -202,7 +202,7 @@ test_that("YAML writing and reading works as expected", {
   expect_error(yaml_agent_string())
   
   # Expect an error if using `as_agent_yaml_list()` with an agent
-  # that doesn't have a table-reading function specified
+  # that doesn't have a table-prep formula specified
   expect_error(
     agent_plan %>%
       remove_read_fn() %>%

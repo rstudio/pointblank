@@ -318,7 +318,7 @@ write_testthat_file <- function(agent,
   }
 
   # Create path that contains the testthat test file name
-  path <- as.character(fs::path_wd(file_path, file_name))
+  path <- as.character(fs::path_norm(fs::path_wd(file_path, file_name)))
   
   # Check if the file to write already exists; if it does, don't
   # write the new file if `overwrite` is FALSE

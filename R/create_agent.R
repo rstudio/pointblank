@@ -245,13 +245,14 @@
 #'   agent %>% 
 #'   col_exists(vars(date, date_time)) %>%
 #'   col_vals_regex(
-#'     vars(b), "[0-9]-[a-z]{3}-[0-9]{3}"
+#'     vars(b),
+#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}"
 #'   ) %>%
 #'   rows_distinct() %>%
-#'   col_vals_gt(vars(d), 100) %>%
-#'   col_vals_lte(vars(c), 5) %>%
+#'   col_vals_gt(vars(d), value = 100) %>%
+#'   col_vals_lte(vars(c), value = 5) %>%
 #'   col_vals_equal(
-#'     vars(d), vars(d),
+#'     vars(d), value = vars(d),
 #'     na_pass = TRUE
 #'   ) %>%
 #'   col_vals_between(

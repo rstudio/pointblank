@@ -436,50 +436,54 @@ tbl_source <- function(tbl,
 #' @return A table object.
 #' 
 #' @examples 
+#' if (interactive()) {
+#' 
 #' # Define a `tbl_store` object by adding
 #' # table-prep formulas in `tbl_store()`
-#' # tbls <- 
-#' #   tbl_store(
-#' #     small_table_duck ~ db_tbl(
-#' #       table = small_table,
-#' #       dbname = ":memory:",
-#' #       dbtype = "duckdb"
-#' #     ),
-#' #     ~ db_tbl(
-#' #       table = "rna",
-#' #       dbname = "pfmegrnargs",
-#' #       dbtype = "postgres",
-#' #       host = "hh-pgsql-public.ebi.ac.uk",
-#' #       port = 5432,
-#' #       user = I("reader"),
-#' #       password = I("NWDMCE5xdipIjRrp")
-#' #     ),
-#' #     all_revenue ~ db_tbl(
-#' #       table = file_tbl(
-#' #         file = from_github(
-#' #           file = "all_revenue_large.rds",
-#' #           repo = "rich-iannone/intendo",
-#' #           subdir = "data-large"
-#' #         )
-#' #       ),
-#' #       dbname = ":memory:",
-#' #       dbtype = "duckdb"
-#' #     ),
-#' #     sml_table ~ pointblank::small_table
-#' #   )
+#' tbls <- 
+#'   tbl_store(
+#'     small_table_duck ~ db_tbl(
+#'       table = small_table,
+#'       dbname = ":memory:",
+#'       dbtype = "duckdb"
+#'     ),
+#'     ~ db_tbl(
+#'       table = "rna",
+#'       dbname = "pfmegrnargs",
+#'       dbtype = "postgres",
+#'       host = "hh-pgsql-public.ebi.ac.uk",
+#'       port = 5432,
+#'       user = I("reader"),
+#'       password = I("NWDMCE5xdipIjRrp")
+#'     ),
+#'     all_revenue ~ db_tbl(
+#'       table = file_tbl(
+#'         file = from_github(
+#'           file = "all_revenue_large.rds",
+#'           repo = "rich-iannone/intendo",
+#'           subdir = "data-large"
+#'         )
+#'       ),
+#'       dbname = ":memory:",
+#'       dbtype = "duckdb"
+#'     ),
+#'     sml_table ~ pointblank::small_table
+#'   )
 #' 
 #' # Once this object is available, you can
 #' # check that the table of interest is
 #' # produced to your specification
-#' # tbl_get(
-#' #   tbl = "small_table_duck",
-#' #   store = tbls
-#' # )
+#' tbl_get(
+#'   tbl = "small_table_duck",
+#'   store = tbls
+#' )
 #' 
 #' # An alternative method for getting the
 #' # same table materialized is by using `$`
 #' # to get the formula of choice from `tbls`
-#' # tbls$small_table_duck %>% tbl_get()
+#' tbls$small_table_duck %>% tbl_get()
+#' 
+#' }
 #' 
 #' @family Planning and Prep
 #' @section Function ID:

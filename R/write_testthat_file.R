@@ -77,10 +77,14 @@
 #'   (`skip_on_os("windows")`), `"mac"` (`skip_on_os("mac")`), `"linux"`
 #'   (`skip_on_os("linux")`), and `"solaris"` (`skip_on_os("solaris")`). These
 #'   calls will be placed at the top of the generated **testthat** test file.
+#' @param quiet Should the function *not* inform when the file is written? By
+#'   default this is `FALSE`.
 #'   
 #' @return Invisibly returns `TRUE` if the **testthat** file has been written. 
 #' 
-#' @examples 
+#' @examples
+#' if (interactive()) {
+#' 
 #' # Creating an `action_levels` object is a
 #' # common workflow step when creating a
 #' # pointblank agent; we designate failure
@@ -116,17 +120,19 @@
 #' # be transformed into a testthat file
 #' # with `write_testthat_file()`; the `stop`
 #' # thresholds will be ported over
-#' # write_testthat_file(
-#' #   agent,
-#' #   name = "small_table",
-#' #   path = "."
-#' # )
+#' write_testthat_file(
+#'   agent,
+#'   name = "small_table",
+#'   path = "."
+#' )
 #' 
 #' # The above code will generate a file with
 #' # the name `test-small_table.R`; the path
 #' # was specified with `"."` but, by default,
 #' # the function will place the file in the
 #' # `tests/testthat` folder if it's available
+#' 
+#' }
 #' 
 #' @family Post-interrogation
 #' @section Function ID:

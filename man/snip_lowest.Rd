@@ -22,6 +22,35 @@ alphabetical value from a column in the target table.
 3-7
 }
 
+\examples{
+# Generate an informant object, add
+# a snippet with `info_snippet()`
+# and `snip_lowest()` (giving us a
+# method to get the lowest value in
+# column `a`); define a location for
+# the snippet result in `{ }` and
+# then `incorporate()` the snippet
+# into the info text
+informant <- 
+  create_informant(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example."
+  ) \%>\% 
+  info_columns(
+    columns = "a",
+    `Lowest Value` = "Lowest value is {lowest_a}."
+  ) \%>\%
+  info_snippet(
+    snippet_name = "lowest_a",
+    fn = snip_lowest(column = "a")
+  ) \%>\%
+  incorporate()
+
+# We can print the `informant` object
+# to see the information report
+
+}
 \seealso{
 Other Information Functions: 
 \code{\link{info_columns}()},

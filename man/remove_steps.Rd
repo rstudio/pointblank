@@ -28,6 +28,35 @@ validation steps all stored data extracts will be removed from the \emph{agent}.
 9-8
 }
 
+\examples{
+# Create an agent that has the
+# `small_table` object as the
+# target table, add a few
+# validation steps, and then use
+# `interrogate()`
+agent_1 <- 
+  create_agent(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example."
+  ) \%>\%
+  col_exists(vars(date)) \%>\%
+  col_vals_regex(
+    vars(b), regex = "[0-9]-[a-z]{3}-[0-9]"
+  ) \%>\%
+  interrogate()
+  
+# The second validation step has
+# been determined to be unneeded and
+# is to be removed; this can be done
+# by used `remove_steps()` with the
+# agent object
+agent_2 <-
+  agent_1 \%>\%
+  remove_steps(i = 2) \%>\%
+  interrogate()
+
+}
 \seealso{
 Instead of removal, the \code{\link[=deactivate_steps]{deactivate_steps()}} function will simply
 change the \code{active} status of one or more validation steps to \code{FALSE} (and

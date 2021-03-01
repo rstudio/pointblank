@@ -60,41 +60,48 @@ timestamps should approximate the time components affixed to the filenames.
 # Taking the generic `pb_file` name for
 # a file, we add the current date to it
 # as a suffix
-affix_date("pb_file")
+affix_date(filename = "pb_file")
 
 # File extensions won't get in the way:
-affix_date("pb_file.rds")
+affix_date(filename = "pb_file.rds")
 
 # The date can be used as a prefix
-affix_date("pb_file", position = "start")
+affix_date(
+  filename = "pb_file",
+  position = "start"
+)
 
 # The date pattern can be changed and so
 # can the delimiter
 affix_date(
-  "pb_file.yml",
+  filename = "pb_file.yml",
   format = "\%Y\%m\%d",
   delimiter = "-"
 )
+
+if (interactive()) {
 
 # We can use a file-naming convention
 # involving dates when writing output
 # files immediately after interrogating;
 # useful when interrogating directly
 # from YAML in a scheduled process
-# yaml_agent_interrogate(
-#   filename = system.file(
-#     "yaml", "agent-small_table.yml",
-#     package = "pointblank"
-#   )
-# ) \%>\% 
-#   x_write_disk(
-#     filename = affix_date(
-#       "small_table_agent.rds",
-#       delimiter = "-"
-#     ),
-#     keep_tbl = TRUE,
-#     keep_extracts = TRUE
-#   )
+yaml_agent_interrogate(
+  filename = system.file(
+    "yaml", "agent-small_table.yml",
+    package = "pointblank"
+  )
+) \%>\% 
+  x_write_disk(
+    filename = affix_date(
+      filename = "small_table_agent.rds",
+      delimiter = "-"
+    ),
+    keep_tbl = TRUE,
+    keep_extracts = TRUE
+  )
+
+}
 
 }
 \seealso{

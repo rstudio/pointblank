@@ -50,8 +50,7 @@ customizable delimiter. Optionally, the time zone information can be
 included. If the date-time is based on the local system time, the user system
 time zone is shown with the format \verb{<time>(+/-)hhmm}. If using UTC time, then
 the \verb{<time>Z} format is adopted.
-}
-\details{
+
 The \code{\link[=x_write_disk]{x_write_disk()}}, \code{\link[=yaml_write]{yaml_write()}} functions allow for the writing of
 \strong{pointblank} objects to disk. The modification of the filename string takes
 effect immediately but not at the time of writing a file to disk. In most

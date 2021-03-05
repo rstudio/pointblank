@@ -40,8 +40,7 @@ when writing \emph{agent} and/or \emph{informant} objects to disk as part of a
 continuous process. The date can be in terms of UTC time or the local system
 time. The date can be affixed either to the end of the filename (before the
 file extension) or at the beginning with a customizable delimiter.
-}
-\details{
+
 The \code{\link[=x_write_disk]{x_write_disk()}}, \code{\link[=yaml_write]{yaml_write()}} functions allow for the writing of
 \strong{pointblank} objects to disk. Furthermore the \code{\link[=log4r_step]{log4r_step()}} function has
 the \code{append_to} argument that accepts filenames, and, it's reasonable that a

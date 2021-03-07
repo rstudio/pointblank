@@ -1,4 +1,50 @@
-# pointblank (development version)
+# pointblank 0.7.0
+
+## New features
+
+* New functions for set-based interrogations: `col_vals_make_set()` (+ `expect_col_vals_make_set()` and `test_col_vals_make_set()`) and `col_vals_make_subset()` (+ `expect_col_vals_make_subset()` and `test_col_vals_make_subset()`); they answer the following two questions: (1) is a set of values entirely accounted for in a column of values?, and (2) is a set of values a subset of a column of values?
+
+* New functions for order-based interrogations: `col_vals_increasing()` (+ `expect_col_vals_increasing()` and `test_col_vals_increasing()`) and `col_vals_decreasing()` (+ `expect_col_vals_decreasing()` and `test_col_vals_decreasing()`); they check that column values are either increasing or decreasing and both have options to allow for non-moving values and backtracking (with a threshold).
+
+* Several functions added to facilitate multi-agent workflows: `create_multiagent()`, `read_disk_multiagent()`, and `get_multiagent_report()`; these workflows help to track interrogation results across multiple agents and the reporting scales well from several to dozens of agents.
+
+* The new function `write_testthat_file()` generates a **testthat** test file and puts it in `tests/testthat` if certain conditions are met; this converts an *agent*'s validation plan into separate `expect_*()` statements.
+
+* New functions `tbl_store()`, `tbl_source()`, and `tbl_get()` functions added for centrally managing table-prep formulas.
+
+* Added the `yaml_exec()` function that processes all relevant **pointblank** YAML files in a directory; execution involves interrogation of agents (given YAML agents) and incorporation of informants (given YAML informants), saving all the processed objects to an output directory.
+
+* The new functions `file_tbl()` and helper `from_github()` make it easy to generate a table from a compatible data file; a file could be in the form of `CSV`, `TSV`, `RDA`, or `RDS`.
+
+* Several functions have been added for modifying an *agent*'s validation plan: `activate_steps()`, `deactivate_steps()`, `remove_steps()`.
+
+* Added the `snip_stats()` function for generating an in-line statistical summary in an information report.
+
+* Add sorting options for `snip_list()` so we can choose to sort column items by frequency or sequentially (alphabetically/numerically).
+
+* More improvements were made to `snip_list()` to: (1) have a better default appearance, (2) enable more customization, and (3) include localization options for the supported spoken languages.
+
+* Added several options for customizing the main reporting heading in three reporting objects: the agent report, the information report, and the multiagent report.
+
+* The `active` argument in every validation function can now take an expression that evaluates to a logical; the `has_columns()` has been added to make it easy to express in `active` whether one or more columns are present in the target table (e.g., perform the validation step only if the target column is available).
+
+* Added support for using Arrow tables as target tables for *informant* objects.
+
+## Documentation
+
+* Added information on YAML representations of all validation functions and several other functions that make an appearance in YAML.
+
+* General improvements to function documentation were made to a wide cross section of the exported functions.
+
+## Minor improvements and bug fixes
+
+* Included method for writing an *informant* object to disk (with `x_write_disk()`).
+
+* Many fixes were made and tests added to ensure that *agents* survive the YAML roundtrip (so `agent` %>% `yaml_write()` then `yaml_read_agent()` creates the same `agent` object).
+
+* Update several internal `dplyr::arrange()` statements used by `scan_data()` so that warnings aren't issued by **dbplyr** (for table scans operating on `tbl_dbi` objects).
+
+* All **tidyselect** expressions used with *agents* are now preserved when the agent is written to YAML.
 
 # pointblank 0.6.0
 

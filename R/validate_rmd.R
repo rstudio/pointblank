@@ -77,6 +77,13 @@ validate_rmd <- function(summary = TRUE,
   
   if (test_options$perform_logging) {
     
+    if (!requireNamespace("log4r", quietly = TRUE)) {
+      stop("Using the `log4r_step()` function requires ", 
+           "the log4r package:\n",
+           " * It can be installed with `install.packages(\"log4r\")`.",
+           call. = FALSE)
+    }
+    
     # Create a log4r `logger` object and store it in `test_options`
     test_options$logger <- 
       log4r::logger(

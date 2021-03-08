@@ -50,6 +50,13 @@ log4r_step <- function(x,
                        message = NULL,
                        append_to = "pb_log_file") {
   
+  if (!requireNamespace("log4r", quietly = TRUE)) {
+    stop("Using the `log4r_step()` function requires ", 
+         "the log4r package:\n",
+         " * It can be installed with `install.packages(\"log4r\")`.",
+         call. = FALSE)
+  }
+  
   # nocov start
   
   type <- x$this_type

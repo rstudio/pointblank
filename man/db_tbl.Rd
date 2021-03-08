@@ -28,8 +28,7 @@ connection. This only works if: (1) the \code{db} is either \code{"sqlite"} or
 \code{RPostgres::Postgres()}) or a shortname for the database type. Valid names
 are: \code{"postgresql"}, \code{"postgres"}, or \code{"pgsql"} (PostgreSQL, using the
 \code{RPostgres::Postgres()} driver function); \code{"mysql"} (MySQL, using
-\code{RMySQL::MySQL()}); \code{"maria"} or \code{"mariadb"} (MariaDB, using
-\code{RMariaDB::MariaDB()}); \code{"duckdb"} (DuckDB, using \code{duckdb::duckdb()}); and
+\code{RMySQL::MySQL()}); \code{"duckdb"} (DuckDB, using \code{duckdb::duckdb()}); and
 \code{"sqlite"} (SQLite, using \code{RSQLite::SQLite()}).}
 
 \item{host, port}{The database host and optional port number.}

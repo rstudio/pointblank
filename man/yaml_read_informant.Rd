@@ -25,6 +25,8 @@ the \verb{info_*()} functions.
 }
 
 \examples{
+if (interactive()) {
+
 # Create a pointblank `informant`
 # object with `create_informant()`
 # and the `small_table` dataset
@@ -121,6 +123,8 @@ informant <-
   yaml_read_informant(filename = yml_file)
 
 class(informant)
+
+}
 
 }
 \seealso{

@@ -40,6 +40,8 @@
 #' @param path An optional path to the YAML file (combined with `filename`).
 #'   
 #' @examples
+#' if (interactive()) {
+#' 
 #' # Let's go through the process of
 #' # developing an agent with a validation
 #' # plan (to be used for the data quality
@@ -88,16 +90,12 @@
 #'   col_vals_gt(vars(d), value = 100) %>%
 #'   col_vals_lte(vars(c), value = 5)
 #'
-#' if (interactive()) {
-#'
 #' # The agent can be written to a pointblank
 #' # YAML file with `yaml_write()`
 #' yaml_write(
 #'   agent = agent,
 #'   filename = "agent-small_table.yml"
 #' )
-#' 
-#' }
 #' 
 #' # The 'agent-small_table.yml' file is
 #' # available in the package through
@@ -135,6 +133,8 @@
 #'   )
 #' 
 #' class(agent)
+#' 
+#' }
 #' 
 #' @family pointblank YAML
 #' @section Function ID:

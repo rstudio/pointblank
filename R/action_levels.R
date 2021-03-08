@@ -85,6 +85,8 @@
 #'   each named state can be used by enclosing the set of statements with `{ }`.
 #' 
 #' @examples 
+#' if (interactive()) {
+#' 
 #' # For these examples, we will use the
 #' # included `small_table` dataset
 #' small_table
@@ -159,8 +161,6 @@
 #' # x-list `warn` component
 #' x_list <- get_agent_x_list(agent_2)
 #' x_list$warn
-#'
-#' if (interactive()) {
 #'
 #' # In the context of using validation
 #' # functions directly on data (i.e., no

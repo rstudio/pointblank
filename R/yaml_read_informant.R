@@ -30,6 +30,8 @@
 #' @param path An optional path to the YAML file (combined with `filename`).
 #' 
 #' @examples 
+#' if (interactive()) {
+#' 
 #' # Create a pointblank `informant`
 #' # object with `create_informant()`
 #' # and the `small_table` dataset
@@ -126,6 +128,8 @@
 #'   yaml_read_informant(filename = yml_file)
 #' 
 #' class(informant)
+#' 
+#' }
 #' 
 #' @family pointblank YAML
 #' @section Function ID:

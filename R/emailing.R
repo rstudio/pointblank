@@ -248,6 +248,8 @@ email_blast <- function(x,
 #' @return A **blastula** `email_message` object.
 #' 
 #' @examples
+#' if (interactive()) {
+#' 
 #' # Create an `action_levels()` list
 #' # with absolute values for the
 #' # `warn`, and `notify` states (with
@@ -326,6 +328,8 @@ email_blast <- function(x,
 #'   ) %>%
 #'   incorporate() %>%
 #'   email_create()
+#' 
+#' }
 #' 
 #' @family Emailing
 #' @section Function ID:

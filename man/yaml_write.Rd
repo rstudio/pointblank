@@ -70,6 +70,8 @@ existing agent or informant object).
 }
 
 \examples{
+if (interactive()) {
+
 # Let's go through the process of
 # developing an agent with a validation
 # plan (to be used for the data quality
@@ -118,10 +120,10 @@ agent <-
 
 # The agent can be written to a pointblank
 # YAML file with `yaml_write()`
-# yaml_write(
-#   agent,
-#   filename = "agent-small_table.yml"
-# )
+yaml_write(
+  agent,
+  filename = "agent-small_table.yml"
+)
 
 # The 'agent-small_table.yml' file is
 # available in the package through
@@ -158,6 +160,8 @@ agent <-
   yaml_agent_interrogate(filename = yml_file)
 
 class(agent)
+
+}
 
 }
 \seealso{

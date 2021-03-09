@@ -1,3 +1,5 @@
+skip_on_cran()
+
 library(dplyr)
 library(RSQLite)
 library(DBI)
@@ -278,7 +280,6 @@ test_that("sundered data can be generated and retrieved with a `tbl_df` (one ste
     nrow() %>%
     expect_equal(0L)
 })
-
 
 test_that("sundered data can be generated and retrieved with a `tbl_df` (no steps)", {
   

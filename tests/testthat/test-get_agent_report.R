@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("Getting an agent report is possible", {
   
   # Use `col_is_character()` function to create

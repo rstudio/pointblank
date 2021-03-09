@@ -1809,9 +1809,9 @@ probe_sample <- function(data) {
   probe_sample <-
     data %>%
     gt::gt_preview(top_n = 5, bottom_n = 5) %>%
-    gt::fmt_missing(columns = TRUE, missing_text = "**NA**") %>%
+    gt::fmt_missing(columns = gt::everything(), missing_text = "**NA**") %>%
     gt::text_transform(
-      locations = gt::cells_body(columns = TRUE),
+      locations = gt::cells_body(columns = gt::everything()),
       fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
     ) %>%
     gt::tab_options(table.width = "100%")

@@ -534,7 +534,7 @@ get_multiagent_report <- function(multiagent,
             "padding-top: 8px; padding-bottom: 8px;"
           )
         ),
-        locations = gt::cells_column_labels(columns = TRUE)
+        locations = gt::cells_column_labels(columns = gt::everything())
       ) %>%
       gt::tab_style(
         style = gt::cell_text(weight = "bold", color = "#666666"),
@@ -566,7 +566,7 @@ get_multiagent_report <- function(multiagent,
             "padding-bottom: 5px;"
           )
         ),
-        locations = gt::cells_column_labels(columns = TRUE)
+        locations = gt::cells_column_labels(columns = gt::everything())
       ) %>%
       gt::tab_style(
         style = gt::cell_text(
@@ -606,7 +606,7 @@ get_multiagent_report <- function(multiagent,
             "overflow-x: visible;"
           )
         ),
-        locations = gt::cells_column_labels(columns = TRUE)
+        locations = gt::cells_column_labels(columns = gt::everything())
       ) %>%
       gt::tab_style(
         list(

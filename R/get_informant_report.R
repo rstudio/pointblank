@@ -482,7 +482,7 @@ get_informant_report <- function(informant,
       subtitle = gt::md(combined_subtitle)
     ) %>%
     gt::tab_source_note(source_note = gt::md(table_time)) %>%
-    gt::fmt_markdown(columns = gt::vars(item)) %>%
+    gt::fmt_markdown(columns = "item") %>%
     gt::tab_options(
       column_labels.hidden = TRUE
     ) %>%

@@ -44,7 +44,7 @@
 
 * Many fixes were made and tests added to ensure that *agents* survive the YAML roundtrip (so `agent` %>% `yaml_write()` then `yaml_read_agent()` creates the same `agent` object).
 
-* Update several internal `dplyr::arrange()` statements used by `scan_data()` so that warnings aren't issued by **dbplyr** (for table scans operating on `tbl_dbi` objects).
+* Updated several internal `dplyr::arrange()` statements used by `scan_data()` so that warnings aren't issued by **dbplyr** (for table scans operating on `tbl_dbi` objects).
 
 * All **tidyselect** expressions used with *agents* are now preserved when the agent is written to YAML.
 

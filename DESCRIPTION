@@ -1,6 +1,6 @@
 Type: Package
 Package: pointblank
-Version: 0.7.0
+Version: 0.7.0.9000
 Title: Validation of Local and Remote Data Tables
 Description: Validate data in data frames, 'tibble' objects, 'Spark'
     'DataFrames', and database tables (e.g., 'PostgreSQL' and 'MySQL').

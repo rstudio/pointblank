@@ -29,6 +29,8 @@ information from the target table.
 }
 
 \examples{
+if (interactive()) {
+
 # Let's go through the process of
 # developing an informant with information
 # about the `small_table` dataset and then
@@ -78,10 +80,10 @@ informant <-
 
 # The informant can be written to a pointblank
 # YAML file with `yaml_write()`
-# yaml_write(
-#   informant = informant,
-#   filename = "informant-small_table.yml"
-# )
+yaml_write(
+  informant = informant,
+  filename = "informant-small_table.yml"
+)
 
 # The 'informant-small_table.yml' file
 # is available in the package through
@@ -111,6 +113,8 @@ informant <-
   yaml_read_informant(filename = yml_file)
 
 class(informant)
+
+}
 
 }
 \seealso{

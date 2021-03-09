@@ -57,6 +57,123 @@
 #' 
 #' @return A **gt** table object if `display_table = TRUE` or a tibble if
 #'   `display_table = FALSE`.
+#' 
+#' @examples 
+#' if (interactive()) {
+#' 
+#' # Let's walk through several theoretical
+#' # data quality analyses of an extremely
+#' # small table; that table is called
+#' # `small_table` and we can find it as a
+#' # dataset in this package
+#' small_table
+#' 
+#' # To set failure limits and signal
+#' # conditions, we designate proportional
+#' # failure thresholds to the `warn`, `stop`,
+#' # and `notify` states using `action_levels()`
+#' al <- 
+#'   action_levels(
+#'     warn_at = 0.05,
+#'     stop_at = 0.10,
+#'     notify_at = 0.20
+#'   )
+#' 
+#' # We will create four different agents
+#' # and have slightly different validation
+#' # steps in each of them; in the first,
+#' # `agent_1`, eight different validation
+#' # steps are created and the agent will
+#' # interrogate the `small_table`
+#' agent_1 <-
+#'   create_agent(
+#'     read_fn = ~ small_table,
+#'     label = "An example.",
+#'     actions = al
+#'   ) %>%
+#'   col_vals_gt(
+#'     vars(date_time),
+#'     value = vars(date),
+#'     na_pass = TRUE
+#'   ) %>%
+#'   col_vals_gt(
+#'     vars(b), 
+#'     value = vars(g),
+#'     na_pass = TRUE
+#'   ) %>%
+#'   rows_distinct() %>%
+#'   col_vals_equal(
+#'     vars(d), 
+#'     value = vars(d),
+#'     na_pass = TRUE
+#'   ) %>%
+#'   col_vals_between(
+#'     vars(c), 
+#'     left = vars(a), right = vars(d)
+#'   ) %>%
+#'   col_vals_not_between(
+#'     vars(c),
+#'     left = 10, right = 20,
+#'     na_pass = TRUE
+#'   ) %>%
+#'   rows_distinct(vars(d, e, f)) %>%
+#'   col_is_integer(vars(a)) %>%
+#'   interrogate()
+#' 
+#' # The second agent, `agent_2`, retains
+#' # all of the steps of `agent_1` and adds
+#' # two more (the last of which is inactive)
+#' agent_2 <- 
+#'   agent_1 %>%
+#'   col_exists(vars(date, date_time)) %>%
+#'   col_vals_regex(
+#'     vars(b), 
+#'     regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+#'     active = FALSE
+#'   ) %>%
+#'   interrogate()
+#' 
+#' # The third agent, `agent_3`, adds a single
+#' # validation step, removes the fifth one,
+#' # and deactivates the first
+#' agent_3 <- 
+#'   agent_2 %>%
+#'   col_vals_in_set(
+#'     vars(f),
+#'     set = c("low", "mid", "high")
+#'   ) %>%
+#'   remove_steps(i = 5) %>%
+#'   deactivate_steps(i = 1) %>%
+#'   interrogate()
+#' 
+#' # The fourth and final agent, `agent_4`,
+#' # reactivates steps 1 and 10, and removes
+#' # the sixth step
+#' agent_4 <-
+#'   agent_3 %>%
+#'   activate_steps(i = 1) %>%
+#'   activate_steps(i = 10) %>%
+#'   remove_steps(i = 6) %>%
+#'   interrogate()
+#' 
+#' # While all the agents are slightly
+#' # different from each other, we can still
+#' # get a combined report of them by
+#' # creating a 'multiagent'
+#' multiagent <-
+#'   create_multiagent(
+#'     agent_1, agent_2, agent_3, agent_4
+#'   )
+#' 
+#' # Calling `multiagent` in the console
+#' # prints the multiagent report; but we
+#' # can get a `gt_tbl` object with the
+#' # `get_multiagent_report(agent)` function
+#' report <- get_multiagent_report(multiagent)
+#' 
+#' class(report)
+#' 
+#' }
 #'
 #' @family The multiagent
 #' @section Function ID:
@@ -417,7 +534,7 @@ get_multiagent_report <- function(multiagent,
             "padding-top: 8px; padding-bottom: 8px;"
           )
         ),
-        locations = gt::cells_column_labels(columns = TRUE)
+        locations = gt::cells_column_labels(columns = gt::everything())
       ) %>%
       gt::tab_style(
         style = gt::cell_text(weight = "bold", color = "#666666"),
@@ -449,7 +566,7 @@ get_multiagent_report <- function(multiagent,
             "padding-bottom: 5px;"
           )
         ),
-        locations = gt::cells_column_labels(columns = TRUE)
+        locations = gt::cells_column_labels(columns = gt::everything())
       ) %>%
       gt::tab_style(
         style = gt::cell_text(
@@ -489,7 +606,7 @@ get_multiagent_report <- function(multiagent,
             "overflow-x: visible;"
           )
         ),
-        locations = gt::cells_column_labels(columns = TRUE)
+        locations = gt::cells_column_labels(columns = gt::everything())
       ) %>%
       gt::tab_style(
         list(
@@ -551,7 +668,7 @@ get_multiagent_report <- function(multiagent,
       row.striping.include_table_body = FALSE
     ) %>%
     gt::fmt_markdown(columns = 2:n_columns) %>%
-    gt::fmt_markdown(columns = vars(sha1)) %>%
+    gt::fmt_markdown(columns = "sha1") %>%
     gt::fmt_missing(
       columns = columns_used_tbl,
       missing_text = gt::html(
@@ -573,7 +690,7 @@ get_multiagent_report <- function(multiagent,
     ) %>%
     gt::tab_style(
       style = gt::cell_text(font = "IBM Plex Mono", size = "small"),
-      locations = gt::cells_body(columns = gt::vars(sha1))
+      locations = gt::cells_body(columns = "sha1")
     ) %>%
     gt::tab_style(
       style = gt::cell_text(
@@ -596,7 +713,7 @@ get_multiagent_report <- function(multiagent,
         gt::cell_borders(sides = "right", color = "#D3D3D3"),
         gt::cell_fill(color = "#FCFCFC")
       ),
-      locations = gt::cells_body(columns = vars(sha1))
+      locations = gt::cells_body(columns = "sha1")
     ) %>%
     gt::tab_style(
       style = list(

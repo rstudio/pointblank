@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("Creating a `col_is_character()` step is possible", {
   
   # Use `col_is_character()` function to create

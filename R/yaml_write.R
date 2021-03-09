@@ -64,6 +64,8 @@
 #' @return Invisibly returns `TRUE` if the YAML file has been written. 
 #'   
 #' @examples
+#' if (interactive()) {
+#' 
 #' # Let's go through the process of
 #' # developing an agent with a validation
 #' # plan (to be used for the data quality
@@ -112,10 +114,10 @@
 #'
 #' # The agent can be written to a pointblank
 #' # YAML file with `yaml_write()`
-#' # yaml_write(
-#' #   agent,
-#' #   filename = "agent-small_table.yml"
-#' # )
+#' yaml_write(
+#'   agent,
+#'   filename = "agent-small_table.yml"
+#' )
 #' 
 #' # The 'agent-small_table.yml' file is
 #' # available in the package through
@@ -152,6 +154,8 @@
 #'   yaml_agent_interrogate(filename = yml_file)
 #' 
 #' class(agent)
+#' 
+#' }
 #' 
 #' @family pointblank YAML
 #' @section Function ID:

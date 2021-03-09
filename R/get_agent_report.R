@@ -1098,15 +1098,15 @@ get_agent_report <- function(agent,
       subtitle = gt::md(combined_subtitle)
     ) %>%
     gt::cols_merge(
-      columns = gt::vars(n_pass, f_pass),
-      hide_columns = gt::vars(f_pass)
+      columns = c("n_pass", "f_pass"),
+      hide_columns = "f_pass"
     ) %>%
     gt::cols_merge(
-      columns = gt::vars(n_fail, f_fail),
-      hide_columns = gt::vars(f_fail)
+      columns = c("n_fail", "f_fail"),
+      hide_columns = "f_fail"
     ) %>%
     gt::text_transform(
-      locations = gt::cells_body(columns = gt::vars(n_pass, n_fail)),
+      locations = gt::cells_body(columns = c("n_pass", "n_fail")),
       fn = function(x) {
         dplyr::case_when(
           x == "NA NA"  ~ "&mdash;",
@@ -1136,37 +1136,37 @@ get_agent_report <- function(agent,
     ) %>%
     gt::cols_align(
       align = "center",
-      columns = gt::vars(precon, eval_sym, W, S, N, extract)
+      columns = c("precon", "eval_sym", "W", "S", "N", "extract")
     ) %>%
     gt::cols_align(
       align = "center",
-      columns = gt::vars(f_pass, f_fail)
+      columns = c("f_pass", "f_fail")
     ) %>%
     gt::cols_align(
       align = "right",
-      columns = gt::vars(i)
+      columns = "i"
     ) %>%
     gt::fmt_number(
-      columns = gt::vars(units, n_pass, n_fail, f_pass, f_fail),
+      columns = c("units", "n_pass", "n_fail", "f_pass", "f_fail"),
       decimals = 0, drop_trailing_zeros = TRUE, suffixing = TRUE,
       locale = locale
     ) %>%
     gt::fmt_number(
-      columns = gt::vars(f_pass, f_fail),
+      columns = c("f_pass", "f_fail"),
       decimals = 2,
       locale = locale
     ) %>%
     gt::fmt_markdown(
-      columns = gt::vars(
-        type, columns, values, precon,
-        eval_sym, W, S, N, extract
+      columns = c(
+        "type", "columns", "values", "precon",
+        "eval_sym", "W", "S", "N", "extract"
       )
     ) %>%
-    gt::fmt_missing(columns = gt::vars(columns, values, units, extract)) %>%
-    gt::fmt_missing(columns = gt::vars(status_color), missing_text = "") %>%
-    gt::cols_hide(columns = gt::vars(W_val, S_val, N_val, active, eval)) %>%
+    gt::fmt_missing(columns = c("columns", "values", "units", "extract")) %>%
+    gt::fmt_missing(columns = "status_color", missing_text = "") %>%
+    gt::cols_hide(columns = c("W_val", "S_val", "N_val", "active", "eval")) %>%
     gt::text_transform(
-      locations = gt::cells_body(columns = gt::vars(units)),
+      locations = gt::cells_body(columns = "units"),
       fn = function(x) {
         dplyr::case_when(
           x == "&mdash;" ~ x,
@@ -1196,33 +1196,33 @@ get_agent_report <- function(agent,
         color = "#666666",
         size = ifelse(size == "small", gt::px(10), gt::px(13))
       ),
-      locations = gt::cells_body(columns = gt::vars(i))
+      locations = gt::cells_body(columns = "i")
     ) %>%
     gt::tab_style(
       style = gt::cell_fill(color = "#4CA64C"),
       locations = gt::cells_body(
-        columns = gt::vars(status_color),
+        columns = "status_color",
         rows = units == n_pass
       )
     ) %>%
     gt::tab_style(
       style = gt::cell_fill(color = "#4CA64C66", alpha = 0.5),
       locations = gt::cells_body(
-        columns = gt::vars(status_color),
+        columns = "status_color",
         rows = units != n_pass
       )
     ) %>%
     gt::tab_style(
       style = gt::cell_fill(color = "#FFBF00"),
       locations = gt::cells_body(
-        columns = gt::vars(status_color),
+        columns = "status_color",
         rows = W_val
       )
     ) %>%
     gt::tab_style(
       style = gt::cell_fill(color = "#CF142B"),
       locations = gt::cells_body(
-        columns = gt::vars(status_color),
+        columns = "status_color",
         rows = S_val
       )
     ) %>%
@@ -1231,7 +1231,7 @@ get_agent_report <- function(agent,
         gt::cell_borders(sides = "left", color = "#D3D3D3"),
         gt::cell_fill(color = "#FCFCFC")
       ),
-      locations = gt::cells_body(columns = vars(precon, W))
+      locations = gt::cells_body(columns = c("precon", "W"))
     ) %>%
     gt::tab_style(
       style = gt::cell_borders(
@@ -1239,18 +1239,18 @@ get_agent_report <- function(agent,
         color = "#E5E5E5",
         style = "dashed"
       ),
-      locations = gt::cells_body(columns = vars(n_pass, n_fail))
+      locations = gt::cells_body(columns = c("n_pass", "n_fail"))
     ) %>%
     gt::tab_style(
       style = list(
         gt::cell_borders(sides = "right", color = "#D3D3D3"),
         gt::cell_fill(color = "#FCFCFC")
       ),
-      locations = gt::cells_body(columns = vars(eval_sym, N))
+      locations = gt::cells_body(columns = c("eval_sym", "N"))
     ) %>%
     gt::tab_style(
       style = gt::cell_fill(color = "#FCFCFC"),
-      locations = gt::cells_body(columns = vars(S))
+      locations = gt::cells_body(columns = "S")
     ) %>%
     gt::tab_style(
       style = gt::cell_borders(
@@ -1259,7 +1259,7 @@ get_agent_report <- function(agent,
         style = "dashed"
       ),
       locations = list(
-        gt::cells_body(columns = vars(columns, values))
+        gt::cells_body(columns = c("columns", "values"))
       )
     ) %>%
     gt::tab_style(
@@ -1268,21 +1268,21 @@ get_agent_report <- function(agent,
         gt::cell_text(color = "#8B8B8B")
       ),
       locations = gt::cells_body(
-        columns = TRUE,
+        columns = gt::everything(),
         rows = active == FALSE
       )
     ) %>%
     gt::tab_style(
       style = gt::cell_fill(color = "#FFC1C1", alpha = 0.35),
       locations = gt::cells_body(
-        columns = TRUE,
+        columns = gt::everything(),
         rows = eval == "ERROR"
       )
     ) %>%
     gt::tab_style(
       style = gt::cell_text(size = gt::px(11)),
       locations = gt::cells_body(
-        columns = gt::vars(units, n_pass, n_fail)
+        columns = c("units", "n_pass", "n_fail")
       )
     )
   
@@ -1292,9 +1292,9 @@ get_agent_report <- function(agent,
       gt_agent_report %>%
       gt::text_transform(
         locations = gt::cells_body(
-          columns = gt::vars(
-            precon, eval_sym, units, f_pass, f_fail,
-            n_pass, n_fail, W, S, N, extract
+          columns = c(
+            "precon", "eval_sym", "units", "f_pass", "f_fail",
+            "n_pass", "n_fail", "W", "S", "N", "extract"
           )
         ),
         fn = function(x) {
@@ -1311,9 +1311,9 @@ get_agent_report <- function(agent,
           )
         ),
         locations = gt::cells_body(
-          columns = gt::vars(
-            precon, eval_sym, units, f_pass, f_fail,
-            n_pass, n_fail, W, S, N, extract
+          columns = c(
+            "precon", "eval_sym", "units", "f_pass", "f_fail",
+            "n_pass", "n_fail", "W", "S", "N", "extract"
           )
         )
       ) %>%
@@ -1345,19 +1345,19 @@ get_agent_report <- function(agent,
     
     gt_agent_report <- 
       gt_agent_report %>%
-      gt::cols_hide(gt::vars(columns, values, eval_sym, precon, extract)) %>%
+      gt::cols_hide(c("columns", "values", "eval_sym", "precon", "extract")) %>%
       gt::cols_width(
-        gt::vars(status_color) ~ gt::px(4),
-        gt::vars(i) ~ gt::px(25),
-        gt::vars(type) ~ gt::px(190),
-        gt::vars(precon) ~ gt::px(30),
-        gt::vars(units) ~ gt::px(50),
-        gt::vars(n_pass) ~ gt::px(50),
-        gt::vars(n_fail) ~ gt::px(50),
-        gt::vars(W) ~ gt::px(30),
-        gt::vars(S) ~ gt::px(30),
-        gt::vars(N) ~ gt::px(30),
-        TRUE ~ gt::px(20)
+        "status_color" ~ gt::px(4),
+        "i" ~ gt::px(25),
+        "type" ~ gt::px(190),
+        "precon" ~ gt::px(30),
+        "units" ~ gt::px(50),
+        "n_pass" ~ gt::px(50),
+        "n_fail" ~ gt::px(50),
+        "W" ~ gt::px(30),
+        "S" ~ gt::px(30),
+        "N" ~ gt::px(30),
+        gt::everything() ~ gt::px(20)
       ) %>%
       gt::tab_style(
         locations = gt::cells_body(columns = gt::everything()),
@@ -1407,22 +1407,22 @@ get_agent_report <- function(agent,
     gt_agent_report <- 
       gt_agent_report %>%
       gt::cols_width(
-        gt::vars(status_color) ~ gt::px(6),
-        gt::vars(i) ~ gt::px(35),
-        gt::vars(type) ~ gt::px(190),
-        gt::vars(columns) ~ gt::px(120),
-        gt::vars(values) ~ gt::px(120),
-        gt::vars(precon) ~ gt::px(50),
-        gt::vars(eval_sym) ~ gt::px(50),
-        gt::vars(W) ~ gt::px(30),
-        gt::vars(S) ~ gt::px(30),
-        gt::vars(N) ~ gt::px(30),
-        gt::vars(extract) ~ gt::px(65),
-        TRUE ~ gt::px(50)
+        "status_color" ~ gt::px(6),
+        "i" ~ gt::px(35),
+        "type" ~ gt::px(190),
+        "columns" ~ gt::px(120),
+        "values" ~ gt::px(120),
+        "precon" ~ gt::px(50),
+        "eval_sym" ~ gt::px(50),
+        "W" ~ gt::px(30),
+        "S" ~ gt::px(30),
+        "N" ~ gt::px(30),
+        "extract" ~ gt::px(65),
+        gt::everything() ~ gt::px(50)
       ) %>%
       gt::tab_style(
         style = gt::cell_text(weight = "bold", color = "#666666"),
-        locations = gt::cells_column_labels(columns = TRUE)
+        locations = gt::cells_column_labels(columns = gt::everything())
       ) %>%
       gt::tab_style(
         locations = gt::cells_body(columns = gt::everything()),

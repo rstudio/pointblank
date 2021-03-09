@@ -39,6 +39,8 @@ either be a \strong{pointblank} agent, the \emph{agent} x-list (produced from th
 }
 
 \examples{
+if (interactive()) {
+
 # Create an `action_levels()` list
 # with absolute values for the
 # `warn`, and `notify` states (with
@@ -117,6 +119,8 @@ email_object_3 <-
   ) \%>\%
   incorporate() \%>\%
   email_create()
+
+}
 
 }
 \seealso{

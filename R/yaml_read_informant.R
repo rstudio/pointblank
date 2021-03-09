@@ -30,6 +30,8 @@
 #' @param path An optional path to the YAML file (combined with `filename`).
 #' 
 #' @examples 
+#' if (interactive()) {
+#' 
 #' # Create a pointblank `informant`
 #' # object with `create_informant()`
 #' # and the `small_table` dataset
@@ -127,6 +129,8 @@
 #' 
 #' class(informant)
 #' 
+#' }
+#' 
 #' @family pointblank YAML
 #' @section Function ID:
 #' 11-3
@@ -185,6 +189,8 @@ yaml_read_informant <- function(filename,
 #' @param path An optional path to the YAML file (combined with `filename`).
 #'
 #' @examples
+#' if (interactive()) {
+#' 
 #' # Let's go through the process of
 #' # developing an informant with information
 #' # about the `small_table` dataset and then
@@ -234,10 +240,10 @@ yaml_read_informant <- function(filename,
 #'
 #' # The informant can be written to a pointblank
 #' # YAML file with `yaml_write()`
-#' # yaml_write(
-#' #   informant = informant,
-#' #   filename = "informant-small_table.yml"
-#' # )
+#' yaml_write(
+#'   informant = informant,
+#'   filename = "informant-small_table.yml"
+#' )
 #' 
 #' # The 'informant-small_table.yml' file
 #' # is available in the package through
@@ -267,6 +273,8 @@ yaml_read_informant <- function(filename,
 #'   yaml_read_informant(filename = yml_file)
 #' 
 #' class(informant)
+#' 
+#' }
 #'
 #' @family pointblank YAML
 #' @section Function ID:

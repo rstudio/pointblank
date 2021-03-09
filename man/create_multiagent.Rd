@@ -47,6 +47,8 @@ are equivalent across interrogations.
 }
 
 \examples{
+if (interactive()) {
+
 # Let's walk through several theoretical
 # data quality analyses of an extremely
 # small table; that table is called
@@ -158,6 +160,8 @@ multiagent <-
 report <- get_multiagent_report(multiagent)
 
 class(report)
+
+}
 
 }
 \seealso{

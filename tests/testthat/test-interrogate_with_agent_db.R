@@ -1,3 +1,5 @@
+skip_on_cran()
+
 library(DBI)
 library(RSQLite)
 

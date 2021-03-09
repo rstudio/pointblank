@@ -639,7 +639,7 @@ pb_fmt_number <- function(x,
   ((dplyr::tibble(a = x) %>%
       gt::gt() %>%
       gt::fmt_number(
-        vars(a),
+        columns = "a",
         decimals = decimals,
         n_sigfig = n_sigfig,
         drop_trailing_zeros = drop_trailing_zeros,

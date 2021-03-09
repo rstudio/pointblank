@@ -1,6 +1,6 @@
 Type: Package
 Package: pointblank
-Version: 0.6.0.9000
+Version: 0.7.0
 Title: Validation of Local and Remote Data Tables
 Description: Validate data in data frames, 'tibble' objects, 'Spark'
     'DataFrames', and database tables (e.g., 'PostgreSQL' and 'MySQL').
@@ -17,7 +17,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-1017-7574"))
     )
 License: MIT + file LICENSE
-URL: https://rich-iannone.github.io/pointblank, https://github.com/rich-iannone/pointblank
+URL: https://rich-iannone.github.io/pointblank/, https://github.com/rich-iannone/pointblank
 BugReports: https://github.com/rich-iannone/pointblank/issues
 Encoding: UTF-8
 LazyData: true
@@ -34,12 +34,9 @@ Imports:
     dplyr (>= 1.0.2),
     dbplyr (>= 1.4.4),
     fs (>= 1.4.1),
-    ggforce (>= 0.3.1),
-    ggplot2 (>= 3.3.0),
     glue (>= 1.4.2),
     gt (>= 0.2.2),
     htmltools (>= 0.5.0),
-    log4r (>= 0.3.2),
     knitr (>= 1.30),
     rlang (>= 0.4.9),
     magrittr,
@@ -54,10 +51,12 @@ Suggests:
     covr,
     crayon,
     duckdb,
+    ggforce,
+    ggplot2,
     jsonlite,
+    log4r,
     lubridate,
     RSQLite,
-    RMariaDB,
     RMySQL,
     RPostgres,
     readr,

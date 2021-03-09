@@ -48,8 +48,7 @@
 #'   `RPostgres::Postgres()`) or a shortname for the database type. Valid names
 #'   are: `"postgresql"`, `"postgres"`, or `"pgsql"` (PostgreSQL, using the
 #'   `RPostgres::Postgres()` driver function); `"mysql"` (MySQL, using
-#'   `RMySQL::MySQL()`); `"maria"` or `"mariadb"` (MariaDB, using
-#'   `RMariaDB::MariaDB()`); `"duckdb"` (DuckDB, using `duckdb::duckdb()`); and
+#'   `RMySQL::MySQL()`); `"duckdb"` (DuckDB, using `duckdb::duckdb()`); and
 #'   `"sqlite"` (SQLite, using `RSQLite::SQLite()`).
 #' @param host,port The database host and optional port number.
 #' @param user,password The environment variables used to access the username
@@ -206,8 +205,6 @@ db_tbl <- function(table,
         postgres = ,
         pgsql = RPostgres_driver(),
         mysql = RMySQL_driver(),
-        maria = ,
-        mariadb = RMariaDB_driver(),
         duckdb = DuckDB_driver(),
         sqlite = RSQLite_driver(),
         unknown_driver()
@@ -303,17 +300,6 @@ RMySQL_driver <- function() {
   RMySQL::MySQL()
 }
 
-RMariaDB_driver <- function() {
-  
-  if (!requireNamespace("RMariaDB", quietly = TRUE)) {
-    stop("Accessing a MariaDB or MySQL table requires the RMariaDB package:\n",
-         " * It can be installed with `install.packages(\"RMariaDB\")`.",
-         call. = FALSE)
-  }
-  
-  RMariaDB::MariaDB()
-}
-
 DuckDB_driver <- function() {
   
   if (!requireNamespace("duckdb", quietly = TRUE)) {
@@ -340,7 +326,7 @@ RSQLite_driver <- function() {
 
 unknown_driver <- function() {
     stop("The supplied value for `db` doesn't correspond to database type:\n",
-         " * Acceptable values are: \"postgres\", \"mysql\", \"mariadb\", ",
+         " * Acceptable values are: \"postgres\", \"mysql\", ",
          "\"sqlite\", and \"duckdb\".", 
          call. = FALSE)
 }

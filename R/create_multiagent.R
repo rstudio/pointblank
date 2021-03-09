@@ -45,6 +45,8 @@
 #' @return A `ptblank_multiagent` object.
 #' 
 #' @examples 
+#' if (interactive()) {
+#' 
 #' # Let's walk through several theoretical
 #' # data quality analyses of an extremely
 #' # small table; that table is called
@@ -156,6 +158,8 @@
 #' report <- get_multiagent_report(multiagent)
 #' 
 #' class(report)
+#' 
+#' }
 #' 
 #' @section Figures:
 #' \if{html}{\figure{man_create_multiagent_1.png}{options: width=100\%}}

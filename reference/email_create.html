@@ -85,7 +85,7 @@ blastula email_message object will be returned." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pointblank</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.7.0.9000</span>
       </span>
     </div>
 
@@ -212,7 +212,9 @@ footer components of the HTML email message.</p></td>
 <code><a href='stock_msg_footer.html'>stock_msg_footer</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create an `action_levels()` list</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+
+<span class='co'># Create an `action_levels()` list</span>
 <span class='co'># with absolute values for the</span>
 <span class='co'># `warn`, and `notify` states (with</span>
 <span class='co'># thresholds of 1 and 2 'fail' units)</span>
@@ -290,6 +292,8 @@ footer components of the HTML email message.</p></td>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='incorporate.html'>incorporate</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>email_create</span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='op'>}</span>
 
 </div></pre>
   </div>

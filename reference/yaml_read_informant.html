@@ -84,7 +84,7 @@ the info_*() functions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pointblank</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.7.0.9000</span>
       </span>
     </div>
 
@@ -201,7 +201,9 @@ the <code>info_*()</code> functions.</p>
 <code><a href='yaml_write.html'>yaml_write</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a pointblank `informant`</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+
+<span class='co'># Create a pointblank `informant`</span>
 <span class='co'># object with `create_informant()`</span>
 <span class='co'># and the `small_table` dataset</span>
 <span class='va'>informant</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span><span class='va'>small_table</span><span class='op'>)</span>
@@ -297,7 +299,9 @@ the <code>info_*()</code> functions.</p>
   <span class='fu'>yaml_read_informant</span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>informant</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "ptblank_informant"</div><div class='input'>
+
+<span class='op'>}</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

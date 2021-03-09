@@ -100,7 +100,7 @@ directly on data (more information on this is provided in Details)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pointblank</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.6.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.7.0.9000</span>
       </span>
     </div>
 
@@ -274,25 +274,12 @@ reducing potential for duplicating any side effects.</p>
 <code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># For these examples, we will use the</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+
+<span class='co'># For these examples, we will use the</span>
 <span class='co'># included `small_table` dataset</span>
 <span class='va'>small_table</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 13 x 8</span><span>
-#&gt;    date_time           date           a b             c      d e     f    
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> 2016-01-04 </span><span style='color: #949494;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> 2016-01-04 </span><span style='color: #949494;'>00:32:00</span><span> 2016-01-04     3 5-egh-163     8 </span><span style='text-decoration: underline;'>10</span><span>000. TRUE  low  
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> 2016-01-05 </span><span style='color: #949494;'>13:32:00</span><span> 2016-01-05     6 8-kdg-938     3  </span><span style='text-decoration: underline;'>2</span><span>343. TRUE  high 
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> 2016-01-06 </span><span style='color: #949494;'>17:23:00</span><span> 2016-01-06     2 5-jdo-903    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>3</span><span>892. FALSE mid  
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> 2016-01-09 </span><span style='color: #949494;'>12:36:00</span><span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> 2016-01-11 </span><span style='color: #949494;'>06:15:00</span><span> 2016-01-11     4 2-dhe-923     4  </span><span style='text-decoration: underline;'>3</span><span>291. TRUE  mid  
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> 2016-01-15 </span><span style='color: #949494;'>18:46:00</span><span> 2016-01-15     7 1-knw-093     3   843. TRUE  high 
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> 2016-01-17 </span><span style='color: #949494;'>11:27:00</span><span> 2016-01-17     4 5-boe-639     2  </span><span style='text-decoration: underline;'>1</span><span>036. FALSE low  
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> 2016-01-20 </span><span style='color: #949494;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> 2016-01-20 </span><span style='color: #949494;'>04:30:00</span><span> 2016-01-20     3 5-bce-642     9   838. FALSE high 
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> 2016-01-26 </span><span style='color: #949494;'>20:07:00</span><span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span> 2016-01-28 </span><span style='color: #949494;'>02:51:00</span><span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  
-#&gt; </span><span style='color: #BCBCBC;'>13</span><span> 2016-01-30 </span><span style='color: #949494;'>11:23:00</span><span> 2016-01-30     1 3-dka-303    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>2</span><span>230. TRUE  high </div><div class='input'>
+
 <span class='co'># Create an `action_levels` object</span>
 <span class='co'># with fractional values for the</span>
 <span class='co'># `warn`, `stop`, and `notify` states</span>
@@ -306,7 +293,7 @@ reducing potential for duplicating any side effects.</p>
 <span class='co'># A summary of settings for the `al`</span>
 <span class='co'># object is shown by printing it</span>
 <span class='va'>al</span>
-</div><div class='output co'>#&gt; <span class='message'>── The `action_levels` settings ────────────────────────────────────────────────</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #BBBB00;'>WARN</span><span> failure threshold of 0.2 of all test units.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #BB0000;'>STOP</span><span> failure threshold of 0.8 of all test units.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>NOTIFY</span><span> failure threshold of 0.5 of all test units.</span></div><div class='output co'>#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────────────</span></div><div class='input'>
+
 <span class='co'># Create a pointblank agent and</span>
 <span class='co'># apply the `al` object to `actions`;</span>
 <span class='co'># add two validation steps and</span>
@@ -331,8 +318,8 @@ reducing potential for duplicating any side effects.</p>
 <span class='co'># in the console by inspecting the</span>
 <span class='co'># `warn` component in the agent's x-list</span>
 <span class='va'>x_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_agent_x_list.html'>get_agent_x_list</a></span><span class='op'>(</span><span class='va'>agent_1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: The `.dots` argument of `group_by()` is deprecated as of dplyr 1.0.0.</span></div><div class='input'><span class='va'>x_list</span><span class='op'>$</span><span class='va'>warn</span>
-</div><div class='output co'>#&gt; [1]  TRUE FALSE</div><div class='input'>
+<span class='va'>x_list</span><span class='op'>$</span><span class='va'>warn</span>
+
 <span class='co'># Applying the `action_levels` object</span>
 <span class='co'># to the agent means that all validation</span>
 <span class='co'># steps will inherit these settings but</span>
@@ -363,8 +350,6 @@ reducing potential for duplicating any side effects.</p>
 <span class='co'># x-list `warn` component</span>
 <span class='va'>x_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_agent_x_list.html'>get_agent_x_list</a></span><span class='op'>(</span><span class='va'>agent_2</span><span class='op'>)</span>
 <span class='va'>x_list</span><span class='op'>$</span><span class='va'>warn</span>
-</div><div class='output co'>#&gt; [1] FALSE FALSE</div><div class='input'>
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 
 <span class='co'># In the context of using validation</span>
 <span class='co'># functions directly on data (i.e., no</span>
@@ -401,7 +386,7 @@ reducing potential for duplicating any side effects.</p>
 
 <span class='op'>}</span>
 
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

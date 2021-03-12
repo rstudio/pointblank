@@ -83,12 +83,6 @@ test_that("a testthat test file can be written using an agent", {
   expect_fixed_match(testthat_file,
     "test_that(\"column `a` is of type: integer\", {"
   )
-  expect_fixed_match(testthat_file,
-    "skip(\"This test is not active.\")"
-  )
-  expect_fixed_match(testthat_file,
-    "# expect_col_is_integer("
-  )
   
   # Expect an error if a `read_fn` is not available in agent
   expect_error(

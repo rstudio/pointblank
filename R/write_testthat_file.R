@@ -165,9 +165,6 @@ write_testthat_file <- function(agent,
   # Get the stop threshold values
   stop_thresholds <- get_thresholds(agent = agent, type = "stop")
   
-  # Get the `eval_active` values
-  step_inactive <- !agent_validation_set$eval_active
-  
   # Create a string that will be used to read the table (at the top
   # of the testthat test file)
   read_tbl_str <-
@@ -219,31 +216,6 @@ write_testthat_file <- function(agent,
       agent_exprs_raw,
       threshold_vals = stop_thresholds
     )
-  
-  # Process any skipped tests by commenting out the
-  # generated statements
-  for (i in seq_along(agent_exprs_raw)) {
-    
-    if (step_inactive[i]) {
-
-      agent_exprs_raw[i] <-
-        paste0(
-          "skip(\"This test is not active.\")\n\n",
-          agent_exprs_raw[i] %>%
-            gsub("^", "  # ", .) %>%
-            gsub("\n  ", "\n  #   ", .) %>%
-            gsub("\n\\)", "\n  # )", .),
-          collapse = ""
-        )
-      
-    } else {
-      
-      agent_exprs_raw[i] %>%
-        gsub("^", "  ", .) %>%
-        gsub("\n  ", "\n    ", .) %>%
-        gsub("\n\\)", "\n  )", .)
-    }
-  }
   
   # Generate descriptions for each test
   test_that_desc <- 

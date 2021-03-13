@@ -246,8 +246,6 @@ get_dbi_column_quantile_stats <- function(data_column) {
 # (must be a table with a single column)
 # - works across all supported data sources
 # - returns a ggplot object
-#' @import ggplot2
-#' @noRd
 get_table_column_histogram <- function(data_column, lang, locale) {
   
   # TODO: Use `locale` value to get proper settings for
@@ -265,13 +263,13 @@ get_table_column_histogram <- function(data_column, lang, locale) {
       dplyr::collect() %>%
       dplyr::filter(!is.na(nchar)) %>%
       dplyr::mutate_all(.funs = as.numeric) %>%
-      ggplot(aes(x = nchar, y = n)) +
-      geom_col(fill = "steelblue") +
-      geom_hline(yintercept = 0, color = "#B2B2B2") +
-      labs(x = x_label, y = y_label) +
-      scale_x_continuous(limits = c(0, NA)) +
-      scale_y_continuous(labels = scales::comma_format()) +
-      theme_minimal()
+      ggplot2::ggplot(ggplot2::aes(x = nchar, y = n)) +
+      ggplot2::geom_col(fill = "steelblue") +
+      ggplot2::geom_hline(yintercept = 0, color = "#B2B2B2") +
+      ggplot2::labs(x = x_label, y = y_label) +
+      ggplot2::scale_x_continuous(limits = c(0, NA)) +
+      ggplot2::scale_y_continuous(labels = scales::comma_format()) +
+      ggplot2::theme_minimal()
   )
 }
 
@@ -456,26 +454,28 @@ get_missing_by_column_tbl <- function(data) {
   missing_by_column_tbl
 }
 
-#' @import ggplot2
-#' @noRd
+
 get_missing_value_plot <- function(data, frequency_tbl, missing_by_column_tbl) {
   
   n_rows <- get_table_total_rows(data = data)
   
-  ggplot(frequency_tbl, aes(x = col_name, y = bin_num, fill = value)) +
-    geom_tile(color = "white", linejoin = "bevel") +
-    scale_fill_gradientn(
+  ggplot2::ggplot(
+    frequency_tbl,
+    ggplot2::aes(x = col_name, y = bin_num, fill = value)
+  ) +
+    ggplot2::geom_tile(color = "white", linejoin = "bevel") +
+    ggplot2::scale_fill_gradientn(
       colours = c("gray85", "black"),
       na.value = "#A1C1E5",
       limits = c(0, 1)
     ) +
-    scale_y_continuous(
+    ggplot2::scale_y_continuous(
       breaks = c(0, 1, 20),
       labels = c("", as.character(n_rows), "1")
     ) +
-    geom_label(
+    ggplot2::geom_label(
       data = missing_by_column_tbl,
-      mapping = aes(
+      mapping = ggplot2::aes(
         x = col_name,
         y = -0.2,
         label = value,
@@ -484,27 +484,27 @@ get_missing_value_plot <- function(data, frequency_tbl, missing_by_column_tbl) {
       fill = "white",
       show.legend = FALSE
     ) +
-    labs(x = "", y = "") + 
-    theme_minimal() +
-    theme(
-      axis.text.x = element_text(
+    ggplot2::labs(x = "", y = "") + 
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      axis.text.x = ggplot2::element_text(
         angle = 90,
         vjust = 0.5,
         hjust = 1,
         size = 10,
-        margin = margin(t = -1)
+        margin = ggplot2::margin(t = -1)
       ),
-      axis.text.y = element_text(
+      axis.text.y = ggplot2::element_text(
         angle = 90,
         hjust = 0,
-        margin = margin(r = -3)
+        margin = ggplot2::margin(r = -3)
       ),
-      panel.grid = element_blank(),
+      panel.grid = ggplot2::element_blank(),
       legend.direction = "horizontal",
-      legend.title = element_blank(),
+      legend.title = ggplot2::element_blank(),
       legend.position = c(0.5, 1.0),
-      plot.margin = unit(c(1, 0.5, 0, 0), "cm"),
-      legend.key.width = unit(2.0, "cm"),
-      legend.key.height = unit(3.0, "mm")
+      plot.margin = ggplot2::unit(c(1, 0.5, 0, 0), "cm"),
+      legend.key.width = ggplot2::unit(2.0, "cm"),
+      legend.key.height = ggplot2::unit(3.0, "mm")
     )
 }

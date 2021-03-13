@@ -232,39 +232,21 @@ probe_overview_stats <- function(data,
                                  lang,
                                  locale) {
   
-  n_cols <- ncol(data)
+  n_cols <- get_table_total_columns(data = data)
+  n_rows <- get_table_total_rows(data = data)
   
-  n_rows <-
-    data %>%
-    dplyr::count(name = "n") %>%
-    dplyr::pull(n) %>%
-    as.numeric()
+  n_rows_distinct <- get_table_total_distinct_rows(data = data)
   
-  suppressWarnings(
-    na_cells <-
-      data %>%
-      dplyr::select(dplyr::everything()) %>%
-      dplyr::summarise_all(~ sum(ifelse(is.na(.), 1, 0))) %>%
-      dplyr::collect() %>%
-      t() %>%
-      as.vector() %>%
-      sum()
-  )
+  duplicate_rows <- n_rows - n_rows_distinct
   
+  na_cells <- get_table_total_missing_values(data = data)
+
   tbl_info <- get_tbl_information(tbl = data)
   
   tbl_src <- tbl_info$tbl_src
   r_col_types <- tbl_info$r_col_types
   
-  n_rows_distinct <-
-    data %>%
-    dplyr::distinct() %>%
-    dplyr::count(name = "n") %>%
-    dplyr::pull(n) %>%
-    as.numeric()
-  
-  duplicate_rows <- n_rows - n_rows_distinct
-  
+
   data_overview_tbl <-
     dplyr::tibble(
       label = c(
@@ -365,19 +347,13 @@ probe_columns <- function(data,
                           lang,
                           locale) {
   
-  n_rows <- 
-    data %>%
-    dplyr::count(name = "n") %>%
-    dplyr::pull(n) %>%
-    as.numeric()
+  n_rows <- get_table_total_rows(data = data)
+  
+  col_names <- get_table_column_names(data = data)
   
   tbl_info <- get_tbl_information(tbl = data)
   
-  col_names <- tbl_info$col_names
-  
-  col_types <- 
-    tbl_info$r_col_types %>%
-    gsub("integer64", "integer", ., fixed = TRUE)
+  col_types <- gsub("integer64", "integer", tbl_info$r_col_types, fixed = TRUE)
   
   column_descriptions <- 
     lapply(
@@ -455,36 +431,11 @@ get_column_description_gt <- function(data_column,
                                       lang,
                                       locale) {
 
-  distinct_count <- 
-    data_column %>%
-    dplyr::distinct() %>%
-    dplyr::group_by() %>%
-    dplyr::summarize(n = dplyr::n()) %>%
-    dplyr::pull(n) %>%
-    as.integer()
+  distinct_count <- get_table_column_distinct_rows(data_column = data_column)
   
-  na_cells <- 
-    data_column %>%
-    dplyr::select(dplyr::everything()) %>%
-    dplyr::summarise_all(~ sum(ifelse(is.na(.), 1, 0))) %>%
-    dplyr::collect() %>% 
-    t() %>%
-    as.vector() %>%
-    sum()
-  
-  # Get a count of Inf/-Inf values for non-DB table cells
-  if (!inherits(data_column, "tbl_dbi") &&
-      !inherits(data_column, "tbl_spark")) {
-    
-    inf_cells <-
-      data_column %>%
-      dplyr::pull(1) %>%
-      is.infinite() %>%
-      sum()
-    
-  } else {
-    inf_cells <- 0L
-  }
+  na_cells <- get_table_column_missing_values(data_column = data_column)
+
+  inf_cells <- get_table_column_inf_values(data_column = data_column)
   
   column_description_tbl <-
     dplyr::tibble(
@@ -529,23 +480,8 @@ get_numeric_stats_gt <- function(data_column,
                                  lang,
                                  locale) {
   
-  summary_stats <- 
-    data_column %>%
-    dplyr::summarize_all(
-      .funs = list(
-        ~ mean(., na.rm = TRUE),
-        ~ min(., na.rm = TRUE),
-        ~ max(., na.rm = TRUE)
-      )
-    ) %>%
-    dplyr::collect() %>%
-    dplyr::summarize_all(~ round(., 2)) %>%
-    dplyr::mutate_all(.funs = as.numeric)
-  
-  mean <- summary_stats$mean
-  min <- summary_stats$min
-  max <- summary_stats$max
-  
+  summary_stats <- get_table_column_summary(data_column = data_column)
+
   column_stats_tbl <-
     dplyr::tibble(
       label = c(
@@ -553,7 +489,11 @@ get_numeric_stats_gt <- function(data_column,
         get_lsv("table_scan/tbl_lab_minimum")[[lang]],
         get_lsv("table_scan/tbl_lab_maximum")[[lang]]
       ),
-      value = c(mean, min, max)
+      value = c(
+        summary_stats$mean,
+        summary_stats$min,
+        summary_stats$max
+      )
     )
 
   column_stats_gt <-
@@ -582,84 +522,16 @@ get_quantile_stats_gt <- function(data_column,
     
     data_column <- data_column %>% dplyr::filter(!is.na(1))
     
-    n_rows <- 
-      data_column %>%
-      dplyr::count(name = "n") %>%
-      dplyr::pull(n) %>%
-      as.numeric()
+    n_rows <- get_table_total_rows(data = data_column)
     
     if (n_rows <= 1000) {
-      
-      data_column <- data_column %>% dplyr::collect()
-      quantile_stats <- calculate_quantile_stats(data_column = data_column)
-      
+      data_column <- dplyr::collect(data_column)
+      quantile_stats <- get_df_column_quantile_stats(data_column = data_column)
     } else {
-      
-      data_arranged <- 
-        data_column %>%
-        dplyr::rename(a = 1) %>%
-        dplyr::filter(!is.na(a)) %>%
-        dplyr::arrange(a) %>%
-        utils::head(6E8)
-      
-      n_rows_data <-  
-        data_arranged %>%
-        dplyr::count(name = "n") %>%
-        dplyr::pull(n) %>%
-        as.numeric()
-      
-      quantile_rows <- floor(c(0.05, 0.25, 0.5, 0.75, 0.95) * n_rows_data)
-      
-      quantile_stats <-
-        dplyr::tibble(
-          min = data_arranged %>% 
-            dplyr::summarize(a = min(a, na.rm = TRUE)) %>%
-            dplyr::pull(a) %>%
-            as.numeric(),
-          p05 = data_arranged %>% 
-            utils::head(quantile_rows[1]) %>%
-            dplyr::arrange(dplyr::desc(a)) %>%
-            utils::head(1) %>%
-            dplyr::pull(a) %>%
-            as.numeric(),
-          q_1 = data_arranged %>% 
-            utils::head(quantile_rows[2]) %>%
-            dplyr::arrange(dplyr::desc(a)) %>%
-            utils::head(1) %>%
-            dplyr::pull(a) %>%
-            as.numeric(),
-          med = data_arranged %>% 
-            utils::head(quantile_rows[3]) %>%
-            dplyr::arrange(dplyr::desc(a)) %>%
-            utils::head(1) %>%
-            dplyr::pull(a) %>%
-            as.numeric(),
-          q_3 = data_arranged %>%
-            utils::head(quantile_rows[4]) %>%
-            dplyr::arrange(dplyr::desc(a)) %>%
-            utils::head(1) %>%
-            dplyr::pull(a) %>%
-            as.numeric(),
-          p95 = data_arranged %>%
-            utils::head(quantile_rows[5]) %>%
-            dplyr::arrange(dplyr::desc(a)) %>%
-            utils::head(1) %>%
-            dplyr::pull(a) %>%
-            as.numeric(),
-          max = data_arranged %>%
-            dplyr::summarize(a = max(a, na.rm = TRUE)) %>%
-            dplyr::pull(a) %>%
-            as.numeric()
-        ) %>%
-        dplyr::mutate(
-          range = max - min,
-          iqr = q_3 - q_1
-        ) %>%
-        dplyr::summarize_all(~ round(., 2)) %>%
-        as.list()
+      quantile_stats <- get_dbi_column_quantile_stats(data_column = data_column)
     }
   } else {
-    quantile_stats <- calculate_quantile_stats(data_column)
+    quantile_stats <- get_df_column_quantile_stats(data_column = data_column)
   }
   
   quantile_stats_tbl <-
@@ -704,52 +576,12 @@ get_quantile_stats_gt <- function(data_column,
   quantile_stats_gt
 }
 
-calculate_quantile_stats <- function(data_column) {
+get_df_column_quantile_stats <- function(data_column) {
   
   if (inherits(data_column, "tbl_spark")) {
-    
-    column_name <- colnames(data_column)
-    
-    quantiles <- 
-      sparklyr::sdf_quantile(
-        data_column, column_name,
-        probabilities = c(0, 0.05, 0.25, 0.5, 0.75, 0.95, 1)
-      ) %>% 
-      unname()
-    
-    quantile_stats <- 
-      list(
-        min = quantiles[1],
-        p05 = quantiles[2],
-        q_1 = quantiles[3],
-        med = quantiles[4],
-        q_3 = quantiles[5],
-        p95 = quantiles[6],
-        max = quantiles[7],
-        iqr = quantiles[5] - quantiles[3],
-        range = quantiles[7] - quantiles[1]
-      ) %>% 
-      lapply(FUN = function(x) round(x, 2))
-    
+    quantile_stats <- get_spark_column_quantile_stats(data_column = data_column)
   } else {
-    
-    quantile_stats <- 
-      data_column %>%
-      dplyr::summarize_all(
-        .funs = list(
-          min = ~ min(., na.rm = TRUE),
-          p05 = ~ stats::quantile(., probs = 0.05, na.rm = TRUE),
-          q_1 = ~ stats::quantile(., probs = 0.25, na.rm = TRUE),
-          med = ~ stats::median(., na.rm = TRUE),
-          q_3 = ~ stats::quantile(., probs = 0.75, na.rm = TRUE),
-          p95 = ~ stats::quantile(., probs = 0.95, na.rm = TRUE),
-          max = ~ max(., na.rm = TRUE),
-          iqr = ~ stats::IQR(., na.rm = TRUE)
-        )
-      ) %>%
-      dplyr::mutate(range = max - min) %>%
-      dplyr::summarize_all(~ round(., 2)) %>%
-      as.list()
+    quantile_stats <- get_df_column_quantile_stats(data_column = data_column)
   }
   
   quantile_stats
@@ -979,11 +811,8 @@ get_top_bottom_slice <- function(data_column,
                                  lang,
                                  locale) {
   
-  n_rows <-
-    data_column %>%
-    dplyr::count(name = "n") %>%
-    dplyr::pull(n)
-  
+  n_rows <- get_table_total_rows(data = data_column)
+
   data_column_freq <-
     data_column %>%
     dplyr::group_by_at(1) %>%
@@ -1081,32 +910,19 @@ get_character_nchar_stats_gt <- function(data_column,
     )
 }
 
-get_character_nchar_histogram <- function(data_column,
-                                          lang,
-                                          locale) {
-  
-  x_label <- get_lsv("table_scan/plot_lab_string_length")[[lang]]
-  y_label <- get_lsv("table_scan/plot_lab_count")[[lang]]
+get_character_nchar_plot <- function(data_column,
+                                     lang,
+                                     locale) {
   
   suppressWarnings(
     plot_histogram <- 
-      data_column %>%
-      dplyr::mutate_all(.funs = nchar) %>%
-      dplyr::rename(nchar = 1) %>%
-      dplyr::group_by(nchar) %>%
-      dplyr::summarize(n = dplyr::n()) %>%
-      dplyr::collect() %>%
-      dplyr::filter(!is.na(nchar)) %>%
-      dplyr::mutate_all(.funs = as.numeric) %>%
-      ggplot2::ggplot(ggplot2::aes(x = nchar, y = n)) +
-      ggplot2::geom_col(fill = "steelblue") +
-      ggplot2::geom_hline(yintercept = 0, color = "#B2B2B2") +
-      ggplot2::labs(x = x_label, y = y_label) +
-      ggplot2::scale_x_continuous(limits = c(0, NA)) +
-      ggplot2::scale_y_continuous(labels = scales::comma_format()) +
-      ggplot2::theme_minimal()
+      get_table_column_histogram(
+        data_column = data_column,
+        lang = lang,
+        locale = locale
+      )
   )
-  
+
   # Save PNG file to disk
   ggplot2::ggsave(
     filename = "temp_histogram_ggplot.png",
@@ -1118,7 +934,7 @@ get_character_nchar_histogram <- function(data_column,
   )
   
   # Wait longer for file to be written on async file systems
-  Sys.sleep(0.5)
+  Sys.sleep(0.25)
   
   image_html <- 
     htmltools::tags$div(
@@ -1143,9 +959,7 @@ probe_columns_numeric <- function(data,
                                   lang,
                                   locale) {
   
-  data_column <- 
-    data %>% 
-    dplyr::select({{ column }})
+  data_column <- dplyr::select(data, {{ column }})
   
   column_description_gt <- 
     get_column_description_gt(
@@ -1254,7 +1068,7 @@ probe_columns_character <- function(data,
     )
   
   column_nchar_plot <- 
-    get_character_nchar_histogram(
+    get_character_nchar_plot(
       data_column = data_column,
       lang = lang,
       locale = locale
@@ -1438,7 +1252,7 @@ probe_interactions <- function(data) {
   )
   
   # Wait longer for file to be written on async file systems
-  Sys.sleep(0.5)
+  Sys.sleep(0.25)
   
   image_html <- 
     htmltools::tags$div(
@@ -1551,7 +1365,7 @@ get_corr_plot <- function(mat,
   )
   
   # Wait longer for file to be written on async file systems
-  Sys.sleep(0.5)
+  Sys.sleep(0.25)
   
   image_html <- 
     htmltools::tags$div(
@@ -1569,215 +1383,34 @@ get_corr_plot <- function(mat,
 
 probe_missing <- function(data) {
   
-  n_cols <- ncol(data)
-  
-  n_rows <- 
-    data %>%
-    dplyr::count(name = "n") %>%
-    dplyr::pull(n) %>%
-    as.numeric()
-  
-  if (n_rows < 20) {
-    n_breaks <- n_rows
-  } else {
-    n_breaks <- 20
-  }
-  
+  n_rows <- get_table_total_rows(data = data)
+  col_names <- get_table_column_names(data = data)
+
   if (n_rows <= 1000) {
     data <- dplyr::collect(data)
   }
   
-  col_names <- colnames(data)
-  
-  cuts <- floor(seq(from = 1, to = n_rows, length.out = n_breaks + 1))[-1]
-  
-  bin_size <- cuts[1]
-  
-  # nolint start
-  
-  if (inherits(data, "tbl_dbi") || inherits(data, "tbl_spark")) {
-    
-    frequency_list <- 
-      lapply(
-        col_names,
-        FUN = function(`_x_`) {
-          
-          col_num <- which(col_names %in% `_x_`)
-          bin_num <- 1:20
-          missing_tally <- 0L
-          
-          missing_freq <- 
-            vapply(
-              bin_num,
-              FUN.VALUE = numeric(1),
-              FUN = function(x) {
-                
-                missing_n_span <- 
-                  data %>% 
-                  dplyr::select(1, dplyr::one_of(`_x_`))
-                
-                if (ncol(missing_n_span) == 1) {
-                  
-                  missing_n_span <- 
-                    missing_n_span %>%
-                    dplyr::rename(a = 1)
-                  
-                } else {
-                  
-                  missing_n_span <- 
-                    missing_n_span %>%
-                    dplyr::rename(a = 2)
-                }
-                
-                missing_n_span <- 
-                  missing_n_span %>%
-                  utils::head(cuts[x]) %>%
-                  dplyr::summarize_all(~ sum(ifelse(is.na(.), 1, 0))) %>%
-                  dplyr::pull(a) %>%
-                  as.integer()
-                
-                missing_bin <- missing_n_span - missing_tally
-                
-                missing_tally <<- missing_tally + missing_bin
-                
-                (missing_bin / bin_size) %>% as.numeric()
-              }
-            )
-          
-          dplyr::tibble(
-            value = missing_freq,
-            col_num = col_num,
-            bin_num = bin_num,
-            col_name = `_x_`
-          )
-        }
-      )
-    
+  if (inherits(data, "tbl_dbi")) {
+    frequency_tbl <- get_tbl_dbi_missing_tbl(data = data)
+  } else if (inherits(data, "tbl_spark")) {
+    frequency_tbl <- get_tbl_spark_missing_tbl(data = data)
   } else {
-    
-    frequency_list <- 
-      lapply(
-        col_names,
-        FUN = function(`_x_`) {
-          
-          data %>%
-            dplyr::select(dplyr::one_of(`_x_`)) %>%
-            dplyr::mutate(`::cut_group::` = dplyr::case_when(
-              dplyr::row_number() < !!cuts[1] ~ 1L,
-              dplyr::row_number() < !!cuts[2] ~ 2L,
-              dplyr::row_number() < !!cuts[3] ~ 3L,
-              dplyr::row_number() < !!cuts[4] ~ 4L,
-              dplyr::row_number() < !!cuts[5] ~ 5L,
-              dplyr::row_number() < !!cuts[6] ~ 6L,
-              dplyr::row_number() < !!cuts[7] ~ 7L,
-              dplyr::row_number() < !!cuts[8] ~ 8L,
-              dplyr::row_number() < !!cuts[9] ~ 9L,
-              dplyr::row_number() < !!cuts[10] ~ 10L,
-              dplyr::row_number() < !!cuts[11] ~ 11L,
-              dplyr::row_number() < !!cuts[12] ~ 12L,
-              dplyr::row_number() < !!cuts[13] ~ 13L,
-              dplyr::row_number() < !!cuts[14] ~ 14L,
-              dplyr::row_number() < !!cuts[15] ~ 15L,
-              dplyr::row_number() < !!cuts[16] ~ 16L,
-              dplyr::row_number() < !!cuts[17] ~ 17L,
-              dplyr::row_number() < !!cuts[18] ~ 18L,
-              dplyr::row_number() < !!cuts[19] ~ 19L,
-              dplyr::row_number() < !!cuts[20] ~ 20L,
-              TRUE ~ 20L
-            )) %>%
-            dplyr::group_by(`::cut_group::`) %>% 
-            dplyr::summarize_all(~ sum(is.na(.)) / dplyr::n()) %>%
-            dplyr::collect() %>%
-            dplyr::select(-1) %>%
-            dplyr::mutate(col_num = which(col_names %in% `_x_`)) %>%
-            dplyr::mutate(bin_num = 1:n_breaks) %>%
-            dplyr::mutate(col_name = `_x_`) %>%
-            dplyr::rename(value = 1)
-        }
-      )
+    frequency_tbl <- get_tbl_df_missing_tbl(data = data)
   }
   
-  # nolint end
+  missing_by_column_tbl <- get_missing_by_column_tbl(data = data)
   
-  frequency_tbl <-
-    frequency_list %>%
-    dplyr::bind_rows() %>%
-    dplyr::mutate(value = ifelse(value == 0, NA_real_, value)) %>%
-    dplyr::mutate(col_name = factor(col_name, levels = colnames(data)))
-  
-  # nolint start
-  
-  missing_tbl <- 
-    lapply(
-      col_names,
-      FUN = function(`_x_`) {
-        data %>% 
-          dplyr::select(dplyr::one_of(`_x_`)) %>%
-          dplyr::group_by() %>% 
-          dplyr::summarize_all(~ sum(ifelse(is.na(.), 1, 0)) / dplyr::n()) %>%
-          dplyr::collect() %>%
-          dplyr::mutate(col_num = which(col_names %in% `_x_`)) %>%
-          dplyr::mutate(col_name = `_x_`) %>%
-          dplyr::rename(value = 1)
-      }) %>%
-    dplyr::bind_rows() %>%
-    dplyr::mutate(value = round(value, 2)) %>%
-    dplyr::mutate(col_name = factor(col_name, levels = colnames(data)))
-  
-  # nolint end
-  
-  plot_missing <- 
-    frequency_tbl %>%
-    ggplot2::ggplot(ggplot2::aes(x = col_name, y = bin_num, fill = value)) +
-    ggplot2::geom_tile(color = "white", linejoin = "bevel") +
-    ggplot2::scale_fill_gradientn(
-      colours = c("gray85", "black"),
-      na.value = "#A1C1E5",
-      limits = c(0, 1)
-    ) +
-    ggplot2::scale_y_continuous(
-      breaks = c(0, 1, 20),
-      labels = c("", as.character(n_rows), "1")
-    ) +
-    ggplot2::geom_label(
-      data = missing_tbl,
-      mapping = ggplot2::aes(
-        x = col_name,
-        y = -0.2,
-        label = value,
-        color = value
-      ),
-      fill = "white",
-      show.legend = FALSE
-    ) +
-    ggplot2::labs(x = "", y = "") + 
-    ggplot2::theme_minimal() +
-    ggplot2::theme(
-      axis.text.x = ggplot2::element_text(
-        angle = 90,
-        vjust = 0.5,
-        hjust = 1,
-        size = 10,
-        margin = ggplot2::margin(t = -1)
-      ),
-      axis.text.y = ggplot2::element_text(
-        angle = 90,
-        hjust = 0,
-        margin = ggplot2::margin(r = -3)
-      ),
-      panel.grid = ggplot2::element_blank(),
-      legend.direction = "horizontal",
-      legend.title = ggplot2::element_blank(),
-      legend.position = c(0.5, 1.0),
-      plot.margin = ggplot2::unit(c(1, 0.5, 0, 0), "cm"),
-      legend.key.width = ggplot2::unit(2.0, "cm"),
-      legend.key.height = ggplot2::unit(3.0, "mm")
+  missing_value_plot <- 
+    get_missing_value_plot(
+      data = data,
+      frequency_tbl = frequency_tbl,
+      missing_by_column_tbl = missing_by_column_tbl
     )
   
   # Save PNG file to disk
   ggplot2::ggsave(
     filename = "temp_missing_ggplot.png",
-    plot = plot_missing,
+    plot = missing_value_plot,
     device = "png",
     dpi = 300,
     width = length(col_names) * 0.8,
@@ -1785,7 +1418,7 @@ probe_missing <- function(data) {
   )
   
   # Wait longer for file to be written on async file systems
-  Sys.sleep(0.5)
+  Sys.sleep(0.25)
   
   image_html <- 
     htmltools::tags$div(

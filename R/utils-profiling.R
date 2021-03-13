@@ -44,7 +44,7 @@ get_table_total_columns <- function(data) {
 # Get the total number of NA/NULLs in a table
 # - works across all supported data sources
 # - returns 'numeric' of length 1
-get_table_total_missing_values <- function(data) { 
+get_table_total_missing_values <- function(data) {
   
   collected <- 
     dplyr::collect(
@@ -77,7 +77,7 @@ get_table_column_distinct_rows <- function(data_column) {
 # (must be a table with a single column)
 # - works across all supported data sources
 # - returns 'numeric' of length 1
-get_table_column_missing_values <- function(data_column) { 
+get_table_column_na_values <- function(data_column) {
   
   get_table_total_missing_values(data = data_column)
 }
@@ -127,7 +127,7 @@ get_table_column_summary <- function(data_column) {
 # (must be a table with a single column)
 # - works only with local data frames
 # - returns a 'list' with 9 elements
-get_df_column_quantile_stats <- function(data_column) {
+get_df_column_qtile_stats <- function(data_column) {
   
   data_column %>%
     dplyr::summarize_all(
@@ -151,7 +151,7 @@ get_df_column_quantile_stats <- function(data_column) {
 # (must be a table with a single column)
 # - works only with Spark DataFrames
 # - returns a 'list' with 9 elements
-get_spark_column_quantile_stats <- function(data_column) {
+get_spark_column_qtile_stats <- function(data_column) {
   
   column_name <- colnames(data_column)
   
@@ -181,7 +181,7 @@ get_spark_column_quantile_stats <- function(data_column) {
 # (must be a table with a single column)
 # - works only with `tbl_dbi` objects
 # - returns a 'list' with 9 elements
-get_dbi_column_quantile_stats <- function(data_column) {
+get_dbi_column_qtile_stats <- function(data_column) {
   
   data_arranged <- 
     data_column %>%
@@ -248,8 +248,7 @@ get_dbi_column_quantile_stats <- function(data_column) {
 # - returns a ggplot object
 get_table_column_histogram <- function(data_column, lang, locale) {
   
-  # TODO: Use `locale` value to get proper settings for
-  #       `scales::comma_format()`
+  # TODO: Use locale value to get proper settings comma format
   
   x_label <- get_lsv("table_scan/plot_lab_string_length")[[lang]]
   y_label <- get_lsv("table_scan/plot_lab_count")[[lang]]
@@ -291,9 +290,9 @@ get_tbl_dbi_missing_tbl <- function(data) {
   frequency_list <- 
     lapply(
       col_names,
-      FUN = function(`_x_`) {
+      FUN = function(x__) {
         
-        col_num <- which(col_names %in% `_x_`)
+        col_num <- which(col_names %in% x__)
         bin_num <- 1:20
         missing_tally <- 0L
         
@@ -305,7 +304,7 @@ get_tbl_dbi_missing_tbl <- function(data) {
               
               missing_n_span <- 
                 data %>% 
-                dplyr::select(1, dplyr::one_of(`_x_`))
+                dplyr::select(1, dplyr::one_of(x__))
               
               if (ncol(missing_n_span) == 1) {
                 
@@ -332,7 +331,7 @@ get_tbl_dbi_missing_tbl <- function(data) {
           )
         
         dplyr::tibble(
-          col_name = `_x_`,
+          col_name = x__,
           col_num = col_num,
           bin_num = bin_num,
           value = missing_freq
@@ -367,9 +366,9 @@ get_tbl_df_missing_tbl <- function(data) {
   frequency_list <- 
     lapply(
       col_names,
-      FUN = function(`_x_`) {
+      FUN = function(x__) {
         
-        data <- dplyr::select(data, dplyr::one_of(`_x_`))
+        data <- dplyr::select(data, dplyr::one_of(x__))
         data <- tibble::rowid_to_column(data)
         data <- 
           dplyr::mutate(data, `::cut_group::` = dplyr::case_when(
@@ -399,9 +398,9 @@ get_tbl_df_missing_tbl <- function(data) {
         data <- dplyr::group_by(data, `::cut_group::`)
         data <- dplyr::summarize_all(data, ~ sum(is.na(.)) / dplyr::n())
         data <- dplyr::select(data, -1)
-        data <- dplyr::mutate(data, col_num = which(col_names %in% `_x_`))
+        data <- dplyr::mutate(data, col_num = which(col_names %in% x__))
         data <- dplyr::mutate(data, bin_num = 1:n_breaks)
-        data <- dplyr::mutate(data, col_name = `_x_`)
+        data <- dplyr::mutate(data, col_name = x__)
         data <- dplyr::rename(data, value = 1)
         data <- dplyr::select(data, col_name, col_num, bin_num, value)
         
@@ -429,14 +428,14 @@ get_missing_by_column_tbl <- function(data) {
   missing_by_column_list <-
     lapply(
       col_names,
-      FUN = function(`_x_`) {
+      FUN = function(x__) {
         
-        data <- dplyr::select(data, dplyr::one_of(`_x_`))
+        data <- dplyr::select(data, dplyr::one_of(x__))
         data <- dplyr::group_by(data)
         data <- 
           dplyr::summarize_all(data, ~ sum(ifelse(is.na(.), 1, 0)) / dplyr::n())
-        data <- dplyr::mutate(data, col_num = which(col_names %in% `_x_`))
-        data <- dplyr::mutate(data, col_name = `_x_`)
+        data <- dplyr::mutate(data, col_num = which(col_names %in% x__))
+        data <- dplyr::mutate(data, col_name = x__)
         data <- dplyr::rename(data, value = 1)
         
         data

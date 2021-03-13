@@ -433,7 +433,7 @@ get_column_description_gt <- function(data_column,
 
   distinct_count <- get_table_column_distinct_rows(data_column = data_column)
   
-  na_cells <- get_table_column_missing_values(data_column = data_column)
+  na_cells <- get_table_column_na_values(data_column = data_column)
 
   inf_cells <- get_table_column_inf_values(data_column = data_column)
   
@@ -526,12 +526,12 @@ get_quantile_stats_gt <- function(data_column,
     
     if (n_rows <= 1000) {
       data_column <- dplyr::collect(data_column)
-      quantile_stats <- get_df_column_quantile_stats(data_column = data_column)
+      quantile_stats <- get_df_column_qtile_stats(data_column = data_column)
     } else {
-      quantile_stats <- get_dbi_column_quantile_stats(data_column = data_column)
+      quantile_stats <- get_dbi_column_qtile_stats(data_column = data_column)
     }
   } else {
-    quantile_stats <- get_df_column_quantile_stats(data_column = data_column)
+    quantile_stats <- get_df_column_qtile_stats(data_column = data_column)
   }
   
   quantile_stats_tbl <-

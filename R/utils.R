@@ -1138,3 +1138,19 @@ cli_ident <- function(x,
 
   paste0(initial, gsub("\n", paste0("\n", indent), x))
 }
+
+print_time <- function(time_diff_s) {
+  
+  if (time_diff_s < 1) {
+    return("")
+  } else {
+    return(
+      paste0(
+        " {.time_taken (",
+        round(time_diff_s, 1) %>%
+          formatC(format = "f", drop0trailing = FALSE, digits = 1),
+        " s)}"
+      )
+    )
+  }
+}

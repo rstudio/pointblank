@@ -94,6 +94,12 @@ scan_data <- function(tbl,
                       lang = NULL,
                       locale = NULL) {
 
+  cli::cli_div(
+    theme = list(
+      span.time_taken = list(color = "magenta", "font-weight" = "normal")
+    )
+  )
+  
   # Stop function if the length of the `sections` vector is not 1
   if (length(sections) != 1) {
     stop("The length of the `section` vector must be 1.",
@@ -111,13 +117,17 @@ scan_data <- function(tbl,
     stop("At least one `section` is required.", call. = FALSE)
   }
   
-  # Stop function if their are unrecognized sections in `sections`
+  # Stop function if there are unrecognized sections in `sections`
   if (!all(unique(unlist(strsplit(toupper(sections), ""))) %in% 
            c("O", "V", "I", "C", "M", "S"))) {
-    stop("All key characters provided in `sections` must be valid:\n",
-         " * Allowed values are \"O\", \"V\", \"I\", \"C\", \"M\", and \"S\".",
-         call. = FALSE)
+    stop(
+      "All key characters provided in `sections` must be valid:\n",
+      " * Allowed values are \"O\", \"V\", \"I\", \"C\", \"M\", and \"S\".",
+      call. = FALSE
+    )
   }
+  
+  sections_abbrev <- unique(unlist(strsplit(toupper(sections), "")))
   
   # Transform the `sections` string to a vector of section names
   sections <- 
@@ -174,15 +184,47 @@ scan_data <- function(tbl,
   if (tbl_name == ".") {
     tbl_name <- NA_character_
   }
-
-  build_examination_page(
-    data = tbl,
-    tbl_name = tbl_name,
-    sections = sections,
-    navbar = navbar,
-    lang = lang,
-    locale = locale
+  
+  # Get the starting time for the table scan
+  scan_start_time <- Sys.time()
+  
+  cli::cli_h1(
+    paste0(
+      "Data Scan started. Processing ",
+      length(unique(sections_abbrev)), " ",
+      "section",
+      ifelse(length(unique(sections_abbrev)) > 1, "s", ""),
+      "."
+    )
   )
+
+  table_scan <- 
+    build_examination_page(
+      data = tbl,
+      tbl_name = tbl_name,
+      sections = sections,
+      navbar = navbar,
+      lang = lang,
+      locale = locale
+    )
+  
+  # Get the ending time for the table scan
+  scan_end_time <- Sys.time()
+  
+  # Get the time duration for the table scan    
+  time_diff_s <- 
+    get_time_duration(
+      start_time = scan_start_time,
+      end_time = scan_end_time
+    )
+  
+  cli::cli_h1(
+    paste0(
+      "Data Scan finished. ", print_time(time_diff_s)
+    )
+  )
+  
+  table_scan
 }
 
 # nolint start
@@ -579,9 +621,9 @@ get_quantile_stats_gt <- function(data_column,
 get_df_column_quantile_stats <- function(data_column) {
   
   if (inherits(data_column, "tbl_spark")) {
-    quantile_stats <- get_spark_column_quantile_stats(data_column = data_column)
+    quantile_stats <- get_spark_column_qtile_stats(data_column = data_column)
   } else {
-    quantile_stats <- get_df_column_quantile_stats(data_column = data_column)
+    quantile_stats <- get_df_column_qtile_stats(data_column = data_column)
   }
   
   quantile_stats
@@ -1593,6 +1635,17 @@ probe_overview_stats_assemble <- function(data,
                                           lang,
                                           locale) {
   
+  cli::cli_div(
+    theme = list(
+      span.overview = list(color = "red"),
+      span.variables = list(color = "orange"),
+      span.interactions = list(color = "yellow"),
+      span.correlations = list(color = "green"),
+      span.missing_values = list(color = "blue"),
+      span.sample = list(color = "purple")
+    )
+  )
+  
   if (is.na(tbl_name)) {
     header <- 
       get_lsv("table_scan/nav_overview_ts")[[lang]]
@@ -1602,6 +1655,13 @@ probe_overview_stats_assemble <- function(data,
   }
   
   row_header <- row_header(id = "overview", header = htmltools::HTML(header))
+  
+  # Get the starting time for the section
+  section_start_time <- Sys.time()
+  
+  cli::cli_alert_info(
+    "{.overview Starting assembly of 'Overview' section...}"
+  )
   
   overview_stats <- 
     probe_overview_stats(data = data, lang = lang, locale = locale)
@@ -1674,6 +1734,20 @@ probe_overview_stats_assemble <- function(data,
       )
     )
   
+  # Get the ending time for the section
+  section_end_time <- Sys.time()
+  
+  # Get the time duration for the section    
+  time_diff_s <- 
+    get_time_duration(
+      start_time = section_start_time,
+      end_time = section_end_time
+    )
+  
+  cli::cli_alert_success(
+    paste0("{.overview ...Finished!} ", print_time(time_diff_s))
+  )
+  
   overview_stats_tags
 }
 
@@ -1681,9 +1755,27 @@ probe_columns_assemble <- function(data,
                                    lang,
                                    locale) {
   
+  cli::cli_div(
+    theme = list(
+      span.overview = list(color = "red"),
+      span.variables = list(color = "orange"),
+      span.interactions = list(color = "yellow"),
+      span.correlations = list(color = "green"),
+      span.missing_values = list(color = "blue"),
+      span.sample = list(color = "purple")
+    )
+  )
+
   header <- get_lsv("table_scan/nav_variables_ts")[[lang]]
   
   row_header <- row_header(id = "variables", header = header)
+  
+  # Get the starting time for the section
+  section_start_time <- Sys.time()
+  
+  cli::cli_alert_info(
+    "{.variables Starting assembly of 'Variables' section...}"
+  )
   
   columns_data <- probe_columns(data = data, lang = lang, locale = locale)
   
@@ -2144,15 +2236,47 @@ probe_columns_assemble <- function(data,
       )
     )
   
+  # Get the ending time for the section
+  section_end_time <- Sys.time()
+  
+  # Get the time duration for the section    
+  time_diff_s <- 
+    get_time_duration(
+      start_time = section_start_time,
+      end_time = section_end_time
+    )
+  
+  cli::cli_alert_success(
+    paste0("{.variables ...Finished!} ", print_time(time_diff_s))
+  )
+  
   columns_tags
 }
 
 probe_interactions_assemble <- function(data,
                                         lang) {
   
+  cli::cli_div(
+    theme = list(
+      span.overview = list(color = "red"),
+      span.variables = list(color = "orange"),
+      span.interactions = list(color = "yellow"),
+      span.correlations = list(color = "green"),
+      span.missing_values = list(color = "blue"),
+      span.sample = list(color = "purple")
+    )
+  )
+  
   header <- get_lsv("table_scan/nav_interactions_ts")[[lang]]
   
   row_header <- row_header(id = "interactions", header = header)
+  
+  # Get the starting time for the section
+  section_start_time <- Sys.time()
+  
+  cli::cli_alert_info(
+    "{.interactions Starting assembly of 'Interactions' section...}"
+  )
   
   interactions_data <- suppressWarnings(probe_interactions(data = data))
   
@@ -2172,15 +2296,47 @@ probe_interactions_assemble <- function(data,
       )
     )
   
+  # Get the ending time for the section
+  section_end_time <- Sys.time()
+  
+  # Get the time duration for the section    
+  time_diff_s <- 
+    get_time_duration(
+      start_time = section_start_time,
+      end_time = section_end_time
+    )
+  
+  cli::cli_alert_success(
+    paste0("{.interactions ...Finished!} ", print_time(time_diff_s))
+  )
+  
   interactions_tags
 }
 
 probe_correlations_assemble <- function(data,
                                         lang) {
   
+  cli::cli_div(
+    theme = list(
+      span.overview = list(color = "red"),
+      span.variables = list(color = "orange"),
+      span.interactions = list(color = "yellow"),
+      span.correlations = list(color = "green"),
+      span.missing_values = list(color = "blue"),
+      span.sample = list(color = "purple")
+    )
+  )
+  
   header <- get_lsv("table_scan/nav_correlations_ts")[[lang]]
   
   row_header <- row_header(id = "correlations", header = header)
+  
+  # Get the starting time for the section
+  section_start_time <- Sys.time()
+  
+  cli::cli_alert_info(
+    "{.correlations Starting assembly of 'Correlations' section...}"
+  )
   
   correlations_data <- probe_correlations(data = data)
   
@@ -2251,15 +2407,47 @@ probe_correlations_assemble <- function(data,
       )
     )
   
+  # Get the ending time for the section
+  section_end_time <- Sys.time()
+  
+  # Get the time duration for the section    
+  time_diff_s <- 
+    get_time_duration(
+      start_time = section_start_time,
+      end_time = section_end_time
+    )
+  
+  cli::cli_alert_success(
+    paste0("{.correlations ...Finished!} ", print_time(time_diff_s))
+  )
+  
   correlations_tags
 }
 
 probe_missing_assemble <- function(data,
                                    lang) {
   
+  cli::cli_div(
+    theme = list(
+      span.overview = list(color = "red"),
+      span.variables = list(color = "orange"),
+      span.interactions = list(color = "yellow"),
+      span.correlations = list(color = "green"),
+      span.missing_values = list(color = "blue"),
+      span.sample = list(color = "purple")
+    )
+  )
+  
   header <- get_lsv("table_scan/nav_missing_values_ts")[[lang]]
   
   row_header <- row_header(id = "missing", header = header)
+  
+  # Get the starting time for the section
+  section_start_time <- Sys.time()
+  
+  cli::cli_alert_info(
+    "{.missing_values Starting assembly of 'Missing Values' section...}"
+  )
   
   missing_data <- probe_missing(data = data)
   
@@ -2279,15 +2467,47 @@ probe_missing_assemble <- function(data,
       )
     )
   
+  # Get the ending time for the section
+  section_end_time <- Sys.time()
+  
+  # Get the time duration for the section    
+  time_diff_s <- 
+    get_time_duration(
+      start_time = section_start_time,
+      end_time = section_end_time
+    )
+  
+  cli::cli_alert_success(
+    paste0("{.missing_values ...Finished!} ", print_time(time_diff_s))
+  )
+  
   missing_tags
 }
 
 probe_sample_assemble <- function(data,
                                   lang) {
 
+  cli::cli_div(
+    theme = list(
+      span.overview = list(color = "red"),
+      span.variables = list(color = "orange"),
+      span.interactions = list(color = "yellow"),
+      span.correlations = list(color = "green"),
+      span.missing_values = list(color = "blue"),
+      span.sample = list(color = "purple")
+    )
+  )
+  
   header <- get_lsv("table_scan/nav_sample_values_ts")[[lang]]
   
   row_header <- row_header(id = "sample", header = header)
+  
+  # Get the starting time for the section
+  section_start_time <- Sys.time()
+  
+  cli::cli_alert_info(
+    "{.sample Starting assembly of 'Sample' section...}"
+  )
   
   sample_data <- probe_sample(data = data)
   
@@ -2306,6 +2526,20 @@ probe_sample_assemble <- function(data,
         )
       )
     )
+  
+  # Get the ending time for the section
+  section_end_time <- Sys.time()
+  
+  # Get the time duration for the section    
+  time_diff_s <- 
+    get_time_duration(
+      start_time = section_start_time,
+      end_time = section_end_time
+    )
+  
+  cli::cli_alert_success(
+    paste0("{.sample ...Finished!} ", print_time(time_diff_s))
+  )
   
   sample_tags
 }
@@ -2450,6 +2684,20 @@ nav_pill_li <- function(label,
 pb_glue_data <- function(.x,
                          ...) {
   glue::glue_data(.x, ..., .transformer = get, .envir = emptyenv())
+}
+
+use_cli_theme <- function() {
+
+  cli::cli_div(
+    theme = list(
+      span.overview = list(color = "red"),
+      span.variables = list(color = "orange"),
+      span.interactions = list(color = "yellow"),
+      span.correlations = list(color = "green"),
+      span.missing_values = list(color = "blue"),
+      span.sample = list(color = "purple")
+    )
+  )
 }
 
 # nolint end

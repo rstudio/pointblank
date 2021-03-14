@@ -594,9 +594,7 @@ get_descriptive_stats_gt <- function(data_column,
   if (inherits(data_column, "tbl_dbi") ||
       inherits(data_column, "tbl_spark")) {
     
-    data_column <- 
-      data_column %>%
-      dplyr::filter(!is.na(1))
+    data_column <- dplyr::filter(data_column, !is.na(1))
     
     mean <-
       data_column %>%
@@ -621,32 +619,29 @@ get_descriptive_stats_gt <- function(data_column,
     cv <- sd / mean
     
     descriptive_stats <- 
-      dplyr::tibble(
-        mean = mean,
-        variance = variance,
-        sd = sd,
-        cv = cv
-      ) %>%
-      dplyr::summarize_all(~ round(., 2)) %>%
-      as.list()
+      dplyr::tibble(mean = mean, variance = variance, sd = sd, cv = cv)
+    descriptive_stats <- 
+      dplyr::summarize_all(descriptive_stats, ~ round(., 2))
+    descriptive_stats <- as.list(descriptive_stats)
     
   } else {
     
     # Create simple function to obtain the coefficient of variation
     cv <- function(x) stats::sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
     
-    descriptive_stats <- 
-      data_column %>%
+    descriptive_stats <-
       dplyr::summarize_all(
+        data_column,
         .funs = list(
           mean = ~ mean(., na.rm = TRUE),
           variance = ~ stats::var(., na.rm = TRUE),
           sd = ~ stats::sd(., na.rm = TRUE),
           cv = ~ cv(.)
         )
-      ) %>%
-      dplyr::summarize_all(~ round(., 2)) %>%
-      as.list()
+      )
+    descriptive_stats <- 
+      dplyr::summarize_all(descriptive_stats, ~ round(., 2))
+    descriptive_stats <- as.list(descriptive_stats)
   }
 
   descriptive_stats_tbl <-
@@ -683,46 +678,39 @@ get_common_values_gt <- function(data_column,
                                  lang,
                                  locale) {
   
-  n_rows <- 
-    data_column %>%
-    dplyr::count(name = "n") %>%
-    dplyr::pull(n)
-  
-  common_values_tbl <- 
-    data_column %>%
-    dplyr::group_by_at(1) %>%
-    dplyr::count() %>%
-    dplyr::arrange(dplyr::desc(n)) %>%
-    utils::head(6E8) %>%
-    dplyr::ungroup()
+  n_rows <- get_table_total_rows(data = data_column)
+
+  common_values_tbl <- dplyr::group_by_at(data_column, 1)
+  common_values_tbl <- dplyr::count(common_values_tbl)
+  common_values_tbl <- dplyr::arrange(common_values_tbl, dplyr::desc(n))
+  common_values_tbl <- utils::head(common_values_tbl, 6E8)
+  common_values_tbl <- dplyr::ungroup(common_values_tbl)
   
   n_rows_common_values_tbl <- 
-    common_values_tbl %>%
-    dplyr::count(name = "n", wt = n) %>%
-    dplyr::pull(n)
+    dplyr::pull(dplyr::count(common_values_tbl, name = "n", wt = n), n)
   
   if (n_rows_common_values_tbl > 10) {
     
     top_ten_rows <- utils::head(common_values_tbl, 10)
     
     other_values_tbl <-
-      common_values_tbl %>% 
-      dplyr::anti_join(top_ten_rows, by = colnames(common_values_tbl)) %>% 
-      dplyr::arrange(dplyr::desc(n)) %>%
-      utils::head(6E8)
+      dplyr::anti_join(
+        common_values_tbl,
+        top_ten_rows,
+        by = colnames(common_values_tbl)
+      )
+    other_values_tbl <- dplyr::arrange(other_values_tbl, dplyr::desc(n))
+    other_values_tbl <- utils::head(other_values_tbl, 6E8)
     
     other_values_distinct <- 
-      other_values_tbl %>%
-      dplyr::count(name = "n", wt = n) %>%
-      dplyr::pull(n)
+      dplyr::pull(dplyr::count(other_values_tbl, name = "n", wt = n), n)
     
+    other_values_n <- dplyr::select(other_values_tbl, n)
+    other_values_n <- dplyr::group_by(other_values_n)
     other_values_n <- 
-      other_values_tbl %>%
-      dplyr::select(n) %>%
-      dplyr::group_by() %>%
-      dplyr::summarize(sum = sum(n, na.rm = TRUE)) %>%
-      dplyr::ungroup() %>%
-      dplyr::pull(sum)
+      dplyr::summarize(other_values_n, sum = sum(n, na.rm = TRUE))
+    other_values_n <- dplyr::ungroup(other_values_n)
+    other_values_n <- dplyr::pull(other_values_n, sum)
     
     common_values_gt <-
       dplyr::bind_rows(
@@ -731,7 +719,8 @@ get_common_values_gt <- function(data_column,
           dplyr::collect() %>%
           dplyr::mutate(
             n = as.numeric(n),
-            frequency = n / n_rows) %>%
+            frequency = n / n_rows
+          ) %>%
           dplyr::rename(value = 1) %>%
           dplyr::mutate(value = as.character(value)),
         dplyr::tibble(
@@ -769,8 +758,7 @@ get_common_values_gt <- function(data_column,
   } else {
     
     common_values_gt <-
-      common_values_tbl %>%
-      dplyr::collect() %>%
+      dplyr::collect(common_values_tbl) %>%
       dplyr::mutate(frequency = n / n_rows) %>%
       dplyr::rename(value = 1) %>%
       dplyr::mutate(value = as.character(value)) %>%
@@ -823,25 +811,20 @@ get_top_bottom_slice <- function(data_column,
   name_2 <- rlang::sym(get_lsv("table_scan/tbl_lab_count")[[lang]])
   
   data_column_freq <- 
-    data_column_freq %>%
-    dplyr::select(!! name_1 := 1, !! name_2 := 2)
+    dplyr::select(data_column_freq, !!name_1 := 1, !!name_2 := 2)
   
-  data_column_top_n <-
-    data_column_freq %>%
-    dplyr::arrange(dplyr::desc(!! name_2)) %>%
-    utils::head(10) %>%
-    dplyr::collect()
+  data_column_top_n <- dplyr::arrange(data_column_freq, dplyr::desc(!!name_2))
+  data_column_top_n <- utils::head(data_column_top_n, 10)
+  data_column_top_n <- dplyr::collect(data_column_top_n)
   
   data_column_top_n[, 3] <- data_column_top_n[, 2, drop = TRUE] / n_rows
   
   colnames(data_column_top_n)[3] <- 
     get_lsv("table_scan/tbl_lab_frequency")[[lang]]
   
-  data_column_bottom_n <- 
-    data_column_freq %>%
-    dplyr::arrange(!! name_2) %>%
-    utils::head(10) %>%
-    dplyr::collect()
+  data_column_bottom_n <- dplyr::arrange(data_column_freq, !!name_2)
+  data_column_bottom_n <- utils::head(data_column_bottom_n, 10)
+  data_column_bottom_n <- dplyr::collect(data_column_bottom_n)
   
   data_column_bottom_n[, 3] <- 
     data_column_bottom_n[, 2, drop = TRUE] / n_rows
@@ -849,26 +832,21 @@ get_top_bottom_slice <- function(data_column,
   colnames(data_column_bottom_n)[3] <- 
     get_lsv("table_scan/tbl_lab_frequency")[[lang]]
   
-  get_slice_gt <- function(data_column,
-                           slice = "max") {
-    
-    data_column %>%
-      gt::gt() %>%
-      gt::fmt_percent(columns = 3, locale = locale) %>%
-      gt::fmt_missing(columns = 1, missing_text = "**NA**") %>%
-      gt::text_transform(
-        locations = gt::cells_body(columns = 1),
-        fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
-      ) %>%
-      gt::tab_options(
-        table.border.top.style = "none",
-        table.width = "100%"
-      )
-  }
+  top_slice <-
+    get_table_slice_gt(
+      data_column = data_column_top_n,
+      locale = locale
+    )
+  
+  bottom_slice <-
+    get_table_slice_gt(
+      data_column = data_column_bottom_n,
+      locale = locale
+    )
   
   list(
-    top_slice = get_slice_gt(data_column = data_column_top_n),
-    bottom_slice = get_slice_gt(data_column = data_column_bottom_n)
+    top_slice = top_slice,
+    bottom_slice = bottom_slice
   )
 }
 
@@ -1606,6 +1584,7 @@ build_examination_page <- function(data,
     )
   
   class(examination_page) <- c("examination_page", class(examination_page))
+  
   examination_page
 }
 
@@ -1627,72 +1606,75 @@ probe_overview_stats_assemble <- function(data,
   overview_stats <- 
     probe_overview_stats(data = data, lang = lang, locale = locale)
   
-  htmltools::tagList(
-    row_header,
-    htmltools::tags$div(
-      class = "section-items",
+  overview_stats_tags <-
+    htmltools::tagList(
+      row_header,
       htmltools::tags$div(
-        class = "row spacing",
-        htmltools::tags$ul(
-          class = "nav nav-pills",
-          role = "tablist",
-          nav_pill_li(
-            label = get_lsv("table_scan/nav_overview_ts")[[lang]],
-            id = "overview-dataset_overview",
-            active = TRUE
-          ),
-          nav_pill_li(
-            label = get_lsv(text = c(
-              "table_scan",
-              "button_label_overview_reproducibility_ts"
-            ))[[lang]],
-            id = "overview-reproducibility",
-            active = FALSE
-          )
-        ),
+        class = "section-items",
         htmltools::tags$div(
-          class = "tab-content",
-          style = "padding-top: 10px;",
-          tab_panel(
-            id = "overview-dataset_overview",
-            active = TRUE,
-            panel_component_list = list(
-              panel_component(
-                size = 6,
-                title = get_lsv(text = c(
-                  "table_scan",
-                  "subsection_title_overview_table_overview"
-                ))[[lang]],
-                content = overview_stats$data_overview_gt
-              ),
-              panel_component(
-                size = 6,
-                title = get_lsv(text = c(
-                  "table_scan",
-                  "subsection_title_overview_column_types"
-                ))[[lang]],
-                content = overview_stats$r_col_types_gt
-              )
+          class = "row spacing",
+          htmltools::tags$ul(
+            class = "nav nav-pills",
+            role = "tablist",
+            nav_pill_li(
+              label = get_lsv("table_scan/nav_overview_ts")[[lang]],
+              id = "overview-dataset_overview",
+              active = TRUE
+            ),
+            nav_pill_li(
+              label = get_lsv(text = c(
+                "table_scan",
+                "button_label_overview_reproducibility_ts"
+              ))[[lang]],
+              id = "overview-reproducibility",
+              active = FALSE
             )
           ),
-          tab_panel(
-            id = "overview-reproducibility",
-            active = FALSE,
-            panel_component_list = list(
-              panel_component(
-                size = 12,
-                title = get_lsv(text = c(
-                  "table_scan",
-                  "subsection_title_overview_reproducibility_information"
-                ))[[lang]],
-                content = overview_stats$reproducibility_gt
+          htmltools::tags$div(
+            class = "tab-content",
+            style = "padding-top: 10px;",
+            tab_panel(
+              id = "overview-dataset_overview",
+              active = TRUE,
+              panel_component_list = list(
+                panel_component(
+                  size = 6,
+                  title = get_lsv(text = c(
+                    "table_scan",
+                    "subsection_title_overview_table_overview"
+                  ))[[lang]],
+                  content = overview_stats$data_overview_gt
+                ),
+                panel_component(
+                  size = 6,
+                  title = get_lsv(text = c(
+                    "table_scan",
+                    "subsection_title_overview_column_types"
+                  ))[[lang]],
+                  content = overview_stats$r_col_types_gt
+                )
+              )
+            ),
+            tab_panel(
+              id = "overview-reproducibility",
+              active = FALSE,
+              panel_component_list = list(
+                panel_component(
+                  size = 12,
+                  title = get_lsv(text = c(
+                    "table_scan",
+                    "subsection_title_overview_reproducibility_information"
+                  ))[[lang]],
+                  content = overview_stats$reproducibility_gt
+                )
               )
             )
           )
         )
       )
     )
-  )
+  
+  overview_stats_tags
 }
 
 probe_columns_assemble <- function(data,
@@ -1765,11 +1747,9 @@ probe_columns_assemble <- function(data,
                     style = "height: 5px;",
                     htmltools::tags$div(
                       class = "row spacing",
-                      
                       htmltools::tags$ul(
                         class = "nav nav-tabs",
                         role = "tablist",
-                        
                         htmltools::tags$li(
                           role = "presentation",
                           class = "active",
@@ -1835,7 +1815,6 @@ probe_columns_assemble <- function(data,
                       ),
                       htmltools::tags$div(
                         class = "tab-content",
-                        
                         htmltools::tags$div(
                           role = "tabpanel",
                           class = "tab-pane col-sm-12 active",
@@ -1869,7 +1848,6 @@ probe_columns_assemble <- function(data,
                             x$column_descriptive_gt
                           )
                         ),
-                        
                         htmltools::tags$div(
                           role = "tabpanel",
                           class = "tab-pane col-sm-12",
@@ -1889,7 +1867,6 @@ probe_columns_assemble <- function(data,
                             x$column_common_gt
                           )
                         ),
-                        
                         htmltools::tags$div(
                           role = "tabpanel",
                           class = "tab-pane col-sm-12",
@@ -1981,11 +1958,9 @@ probe_columns_assemble <- function(data,
                     style = "height: 5px;",
                     htmltools::tags$div(
                       class = "row spacing",
-                      
                       htmltools::tags$ul(
                         class = "nav nav-tabs",
                         role = "tablist",
-                        
                         htmltools::tags$li(
                           role = "presentation",
                           class = "active",
@@ -2007,7 +1982,6 @@ probe_columns_assemble <- function(data,
                             ))[[lang]]
                           )
                         ),
-                        
                         htmltools::tags$li(
                           role = "presentation",
                           class = "",
@@ -2028,8 +2002,7 @@ probe_columns_assemble <- function(data,
                               "subsection_title_variables_string_lengths"
                             ))[[lang]]
                           )
-                        ),
-                        
+                        )
                       ),
                       htmltools::tags$div(
                         class = "tab-content",
@@ -2053,7 +2026,6 @@ probe_columns_assemble <- function(data,
                             x$column_common_gt
                           )
                         ),
-                        
                         htmltools::tags$div(
                           role = "tabpanel",
                           class = "tab-pane col-sm-12",
@@ -2083,8 +2055,7 @@ probe_columns_assemble <- function(data,
                             ),
                             x$column_nchar_plot
                           )
-                        ),
-                        
+                        )
                       )
                     )
                   )
@@ -2164,13 +2135,16 @@ probe_columns_assemble <- function(data,
       }
     )
   
-  htmltools::tagList(
-    row_header,
-    htmltools::tags$div(
-      class = "section-items",
-      columns_tag_lists
+  columns_tags <-
+    htmltools::tagList(
+      row_header,
+      htmltools::tags$div(
+        class = "section-items",
+        columns_tag_lists
+      )
     )
-  )
+  
+  columns_tags
 }
 
 probe_interactions_assemble <- function(data,
@@ -2182,20 +2156,23 @@ probe_interactions_assemble <- function(data,
   
   interactions_data <- suppressWarnings(probe_interactions(data = data))
   
-  htmltools::tagList(
-    row_header,
-    htmltools::tags$div(
-      class = "section-items",
+  interactions_tags <-
+    htmltools::tagList(
+      row_header,
       htmltools::tags$div(
-        class = "row spacing",
+        class = "section-items",
         htmltools::tags$div(
-          id = "sample-container",
-          class = "col-sm-12",
-          interactions_data$probe_interactions
+          class = "row spacing",
+          htmltools::tags$div(
+            id = "sample-container",
+            class = "col-sm-12",
+            interactions_data$probe_interactions
+          )
         )
       )
     )
-  )
+  
+  interactions_tags
 }
 
 probe_correlations_assemble <- function(data,
@@ -2207,71 +2184,74 @@ probe_correlations_assemble <- function(data,
   
   correlations_data <- probe_correlations(data = data)
   
-  htmltools::tagList(
-    row_header,
-    htmltools::tags$div(
-      class = "section-items",
+  correlations_tags <-
+    htmltools::tagList(
+      row_header,
       htmltools::tags$div(
-        class = "row spacing",
-        htmltools::tags$ul(
-          class = "nav nav-pills",
-          role = "tablist",
-          nav_pill_li(
-            label = "Pearson",
-            id = "correlations-pearson",
-            active = TRUE
-          ),
-          nav_pill_li(
-            label = "Kendall",
-            id = "correlations-kendall",
-            active = FALSE
-          ),
-          nav_pill_li(
-            label = "Spearman",
-            id = "correlations-spearman",
-            active = FALSE
-          ),
-        ),
+        class = "section-items",
         htmltools::tags$div(
-          class = "tab-content",
-          style = "padding-top: 10px;",
-          tab_panel(
-            id = "correlations-pearson",
-            active = TRUE,
-            panel_component_list = list(
-              panel_component(
-                size = 12,
-                title = NULL,
-                content = correlations_data$probe_corr_pearson
-              )
-            )
+          class = "row spacing",
+          htmltools::tags$ul(
+            class = "nav nav-pills",
+            role = "tablist",
+            nav_pill_li(
+              label = "Pearson",
+              id = "correlations-pearson",
+              active = TRUE
+            ),
+            nav_pill_li(
+              label = "Kendall",
+              id = "correlations-kendall",
+              active = FALSE
+            ),
+            nav_pill_li(
+              label = "Spearman",
+              id = "correlations-spearman",
+              active = FALSE
+            ),
           ),
-          tab_panel(
-            id = "correlations-kendall",
-            active = FALSE,
-            panel_component_list = list(
-              panel_component(
-                size = 12,
-                title = NULL,
-                content = correlations_data$probe_corr_kendall
+          htmltools::tags$div(
+            class = "tab-content",
+            style = "padding-top: 10px;",
+            tab_panel(
+              id = "correlations-pearson",
+              active = TRUE,
+              panel_component_list = list(
+                panel_component(
+                  size = 12,
+                  title = NULL,
+                  content = correlations_data$probe_corr_pearson
+                )
               )
-            )
-          ),
-          tab_panel(
-            id = "correlations-spearman",
-            active = FALSE,
-            panel_component_list = list(
-              panel_component(
-                size = 12,
-                title = NULL,
-                content = correlations_data$probe_corr_spearman
+            ),
+            tab_panel(
+              id = "correlations-kendall",
+              active = FALSE,
+              panel_component_list = list(
+                panel_component(
+                  size = 12,
+                  title = NULL,
+                  content = correlations_data$probe_corr_kendall
+                )
+              )
+            ),
+            tab_panel(
+              id = "correlations-spearman",
+              active = FALSE,
+              panel_component_list = list(
+                panel_component(
+                  size = 12,
+                  title = NULL,
+                  content = correlations_data$probe_corr_spearman
+                )
               )
             )
           )
         )
       )
     )
-  )
+  
+  correlations_tags
 }
 
 probe_missing_assemble <- function(data,
@@ -2283,20 +2263,23 @@ probe_missing_assemble <- function(data,
   
   missing_data <- probe_missing(data = data)
   
-  htmltools::tagList(
-    row_header,
-    htmltools::tags$div(
-      class = "section-items",
+  missing_tags <-
+    htmltools::tagList(
+      row_header,
       htmltools::tags$div(
-        class = "row spacing",
+        class = "section-items",
         htmltools::tags$div(
-          id = "sample-container",
-          class = "col-sm-12",
-          missing_data$probe_missing
+          class = "row spacing",
+          htmltools::tags$div(
+            id = "sample-container",
+            class = "col-sm-12",
+            missing_data$probe_missing
+          )
         )
       )
     )
-  )
+  
+  missing_tags
 }
 
 probe_sample_assemble <- function(data,
@@ -2308,20 +2291,23 @@ probe_sample_assemble <- function(data,
   
   sample_data <- probe_sample(data = data)
   
-  htmltools::tagList(
-    row_header,
-    htmltools::tags$div(
-      class = "section-items",
+  sample_tags <-
+    htmltools::tagList(
+      row_header,
       htmltools::tags$div(
-        class = "row spacing",
+        class = "section-items",
         htmltools::tags$div(
-          id = "sample-container",
-          class = "col-sm-12",
-          sample_data$probe_sample
+          class = "row spacing",
+          htmltools::tags$div(
+            id = "sample-container",
+            class = "col-sm-12",
+            sample_data$probe_sample
+          )
         )
       )
     )
-  )
+  
+  sample_tags
 }
 
 #

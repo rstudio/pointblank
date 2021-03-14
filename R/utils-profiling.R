@@ -507,3 +507,21 @@ get_missing_value_plot <- function(data, frequency_tbl, missing_by_column_tbl) {
       legend.key.height = ggplot2::unit(3.0, "mm")
     )
 }
+
+
+get_table_slice_gt <- function(data_column,
+                               locale) {
+  
+  data_column %>%
+    gt::gt() %>%
+    gt::fmt_percent(columns = 3, locale = locale) %>%
+    gt::fmt_missing(columns = 1, missing_text = "**NA**") %>%
+    gt::text_transform(
+      locations = gt::cells_body(columns = 1),
+      fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
+    ) %>%
+    gt::tab_options(
+      table.border.top.style = "none",
+      table.width = "100%"
+    )
+}

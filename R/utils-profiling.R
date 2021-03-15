@@ -147,6 +147,49 @@ get_df_column_qtile_stats <- function(data_column) {
     as.list()
 }
 
+# Get the mean value of a column in a table
+# - works only with `tbl_dbi` objects
+# - returns 'numeric' of length 1
+get_dbi_column_mean <- function(data_column) {
+  
+  x <- dplyr::rename(data_column, a = 1)
+  x <- dplyr::group_by(x)
+  x <- dplyr::summarize(x, "__mean__" = mean(a, na.rm = TRUE))
+  x <- dplyr::pull(x, `__mean__`)
+  
+  x
+}
+
+# Get the mean value of a column in a table
+# - works only with `tbl_spark` objects
+# - returns 'numeric' of length 1
+get_spark_column_mean <- function(data_column) {
+  
+  get_dbi_column_mean(data_column = data_column)
+}
+
+# Get the variance value of a column in a table, after obtaining the mean value
+# - works only with `tbl_dbi` objects
+# - returns 'numeric' of length 1
+get_dbi_column_variance <- function(data_column, mean) {
+  
+  x <- dplyr::rename(data_column, a = 1)
+  x <- dplyr::mutate(x, "__diff__" = (!!mean - a)^2)
+  x <- dplyr::group_by(x)
+  x <- dplyr::summarize(x, "__var__"  = mean(`__diff__`, na.rm = TRUE))
+  x <- dplyr::pull(x, `__var__`)
+  
+  x
+}
+
+# Get the variance value of a column in a table, after obtaining the mean value
+# - works only with `tbl_spark` objects
+# - returns 'numeric' of length 1
+get_spark_column_variance <- function(data_column, mean) {
+  
+  get_dbi_column_variance(data_column = data_column, mean = mean)
+}
+
 # Get a list of quantile statistics for a Spark DataFrame column
 # (must be a table with a single column)
 # - works only with Spark DataFrames
@@ -434,6 +477,7 @@ get_missing_by_column_tbl <- function(data) {
         data <- dplyr::group_by(data)
         data <- 
           dplyr::summarize_all(data, ~ sum(ifelse(is.na(.), 1, 0)) / dplyr::n())
+        data <- dplyr::collect(data)
         data <- dplyr::mutate(data, col_num = which(col_names %in% x__))
         data <- dplyr::mutate(data, col_name = x__)
         data <- dplyr::rename(data, value = 1)

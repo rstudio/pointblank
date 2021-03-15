@@ -175,13 +175,15 @@ scan_data <- function(tbl,
   
   # Set the `locale` to the `lang` value if `locale` isn't set
   if (is.null(locale)) locale <- lang
-
+  
   # Attempt to get the table name through `match.call()` and `deparse()`
   tbl_name <- deparse(match.call()$tbl)
   
   # In the case where the table is piped in a `"."` is the
   # result; since it's unknown, we treat it as NA
-  if (tbl_name == ".") {
+  if (length(tbl_name) == 1 && tbl_name == ".") {
+    tbl_name <- NA_character_
+  } else if (length(tbl_name) > 1) {
     tbl_name <- NA_character_
   }
   
@@ -562,7 +564,7 @@ get_quantile_stats_gt <- function(data_column,
   
   if (inherits(data_column, "tbl_dbi")) {
     
-    data_column <- data_column %>% dplyr::filter(!is.na(1))
+    data_column <-  dplyr::filter(data_column, !is.na(1))
     
     n_rows <- get_table_total_rows(data = data_column)
     
@@ -638,24 +640,9 @@ get_descriptive_stats_gt <- function(data_column,
     
     data_column <- dplyr::filter(data_column, !is.na(1))
     
-    mean <-
-      data_column %>%
-      dplyr::rename(a = 1) %>%
-      dplyr::group_by() %>%
-      dplyr::summarize("__mean__" = mean(a, na.rm = TRUE)) %>%
-      dplyr::pull(`__mean__`)
-    
-    variance <-
-      data_column %>%
-      dplyr::rename(a = 1) %>%
-      dplyr::mutate(
-        "__diff__" = (!!mean - a)^2
-      ) %>%
-      dplyr::group_by() %>%
-      dplyr::summarize(
-        "__var__"  = mean(`__diff__`, na.rm = TRUE)
-      ) %>%
-      dplyr::pull(`__var__`)
+    mean <- get_dbi_column_mean(data_column = data_column)
+
+    variance <- get_dbi_column_variance(data_column = data_column, mean = mean)
     
     sd <- variance^0.5
     cv <- sd / mean
@@ -1402,7 +1389,6 @@ get_corr_plot <- function(mat,
 }
 
 probe_missing <- function(data) {
-  
   n_rows <- get_table_total_rows(data = data)
   col_names <- get_table_column_names(data = data)
 

@@ -315,7 +315,9 @@ get_table_column_histogram <- function(data_column, lang, locale) {
   )
 }
 
-
+# Get a tibble of binned missing value proportions for a table
+# - works only with `tbl_dbi` objects
+# - returns 'tibble' of 20 bins * y columns rows, 4 columns
 get_tbl_dbi_missing_tbl <- function(data) {
   
   n_rows <- get_table_total_rows(data = data)
@@ -388,11 +390,17 @@ get_tbl_dbi_missing_tbl <- function(data) {
     dplyr::mutate(col_name = factor(col_name, levels = colnames(data)))
 }
 
+# Get a tibble of binned missing value proportions for a table
+# - works only with `tbl_spark` objects
+# - returns 'tibble' of 20 bins * y columns rows, 4 columns
 get_tbl_spark_missing_tbl <- function(data) {
   
   get_tbl_dbi_missing_tbl(data = data)
 }
 
+# Get a tibble of binned missing value proportions for a table
+# - works only with data frame objects
+# - returns 'tibble' of 20 bins * y columns rows, 4 columns
 get_tbl_df_missing_tbl <- function(data) {
   
   n_rows <- get_table_total_rows(data = data)
@@ -463,7 +471,9 @@ get_tbl_df_missing_tbl <- function(data) {
   missing_tbl
 }
 
-
+# Get a tibble of missing value proportions, by column, for a table
+# - works across all supported data sources
+# - returns 'tibble' of x columns rows, 3 columns
 get_missing_by_column_tbl <- function(data) {
   
   col_names <- get_table_column_names(data = data)
@@ -497,7 +507,10 @@ get_missing_by_column_tbl <- function(data) {
   missing_by_column_tbl
 }
 
-
+# Get a ggplot2 plot of missing values by column (with up to 20 bins),
+# supported by the `frequency_tbl` and `missing_by_column_tbl` objects
+# - works across all supported data sources
+# - returns a ggplot object
 get_missing_value_plot <- function(data, frequency_tbl, missing_by_column_tbl) {
   
   n_rows <- get_table_total_rows(data = data)
@@ -551,7 +564,6 @@ get_missing_value_plot <- function(data, frequency_tbl, missing_by_column_tbl) {
       legend.key.height = ggplot2::unit(3.0, "mm")
     )
 }
-
 
 get_table_slice_gt <- function(data_column,
                                locale) {

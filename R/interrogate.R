@@ -480,21 +480,6 @@ create_post_step_cli_output <- function(agent,
     )) %>% 
     dplyr::pull(condition)
   
-  print_time <- function(time_diff_s) {
-    if (time_diff_s < 1) {
-      return("")
-    } else {
-      return(
-        paste0(
-          " {.time_taken (",
-          round(time_diff_s, 1) %>%
-            formatC(format = "f", drop0trailing = FALSE, digits = 1),
-          " s)}"
-        )
-      )
-    }
-  }
-  
   cli::cli_div(
     theme = list(
       span.green = list(color = "green"),

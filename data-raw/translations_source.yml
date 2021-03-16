@@ -151,6 +151,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были находиться между {value_1} и {value_2}."
   not_between_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should not be between {value_1} and {value_2}."
+    da: "Forvent at værdier i {column_text} {column_computed_text} er imellem {value_1} og {value_2}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} ne soient pas comprises entre {value_1} et {value_2}."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} nicht zwischen {value_1} und {value_2} liegen sollten."
     it: "Aspettatevi che i valori in {column_text} {column_computed_text} non debbano essere compresi tra {value_1} e {value_2}."

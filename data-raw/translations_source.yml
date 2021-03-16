@@ -81,6 +81,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {values_text} точно соответствуют уникальному набору значений в {column_text} {column_computed_text}."
   make_set_failure_text:
     en: "Exceedance of failed test units where values in {values_text} should have exactly matched the unique set of values in {column_text}."
+    da: "Overskridelse af fejlslagne testenheder, hvor der skulle have været overensstemmelse imellem værdierne i {values_text} og det unikke sæt af værdier i {column_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs de {values_text} devraient correspondre exactement à l'ensemble unique de valeurs dans {column_text}."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen die Werte in {values_text} genau mit dem eindeutigen Wertesatz in {column_text} übereinstimmen sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {values_text} dovrebbero corrispondere esattamente all'insieme univoco di valori in {column_text}."
@@ -90,6 +91,7 @@ autobriefs:
     ru: "Превышение количества неудачных тестовых единиц, где значения в {values_text} должны точно соответствовать уникальному набору значений в {column_text}."
   make_subset_expectation_text:
     en: "Expect that values in {values_text} are a subset of the unique set of values in {column_text} {column_computed_text}."
+    da: "Forvent at værdierne i {values_text} er en delmængde af de unikke værdier {column_text} {column_computed_text}."
     fr: "Attendez-vous à ce que les valeurs de {values_text} soient un sous-ensemble de l'ensemble unique de valeurs de {column_text} {column_computed_text}."
     de: "Erwarten Sie, dass die Werte in {values_text} eine Teilmenge der eindeutigen Wertemenge in {column_text} {column_computed_text} sind."
     it: "Aspettati che i valori in {values_text} siano un sottoinsieme dell'insieme univoco di valori in {column_text} {column_computed_text}."
@@ -99,6 +101,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {values_text} являются подмножеством уникального набора значений в {column_text} {column_computed_text}. "
   make_subset_failure_text:
     en: "Exceedance of failed test units where values in {values_text} should have been a subset of the unique set of values in {column_text}."
+    da: "Overskridelse af fejlslagne testenheder hvor værdierne i {values_text} skulle have været en delmængde af de unikke værdier i {column_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs de {values_text} auraient dû être un sous-ensemble de l'ensemble unique de valeurs de {column_text}."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen Werte in {values_text} eine Teilmenge der eindeutigen Wertemenge in {column_text} sein sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {values_text} avrebbero dovuto essere un sottoinsieme dell'insieme univoco di valori in {column_text}."
@@ -108,6 +111,7 @@ autobriefs:
     ru: "Превышение количества неудачных тестовых единиц, где значения в {values_text} должны были быть подмножеством уникального набора значений в {column_text}."
   not_in_set_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should not be in the set of {values_text}."
+    da: "Forvent at værdierne i {column_text} {column_computed_text} ikke er blandt værdierne i {values_text}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} ne soient pas dans l'ensemble de {values_text}."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} nicht in der Menge von {values_text} enthalten sein sollten."
     it: "Aspettatevi che i valori in {column_text} {column_computed_text} non debbano essere nel set di {values_text}."
@@ -117,6 +121,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} не должны быть в наборе {values_text}."
   not_in_set_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should not have been in the set of {values_text}."
+    da: "Overskridelse af fejlslagne testenheder, hvor værdierne i {column_text} ikke skulle være blandt værdierne i {values_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} n'auraient pas dû être dans l'ensemble de {values_text}."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen die Werte in {column_text} nicht in der Menge von {values_text} enthalten sein sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {column_text} non avrebbero dovuto essere nel set di {values_text}."
@@ -126,6 +131,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} не должны были быть в наборе {values_text}."
   between_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be between {value_1} and {value_2}."
+    da: "Forvent at værdierne i {column_text} {column_computed_text} skal være imellem {value_1} og {value_2}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} soient comprises entre {value_1} et {value_2}."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} zwischen {value_1} und {value_2} liegen sollten."
     it: "Aspettati che i valori in {column_text} {column_computed_text} siano compresi tra {value_1} e {value_2}."
@@ -135,6 +141,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны находиться между {value_1} и {value_2}."
   between_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have been between {value_1} and {value_2}."
+    da: "Overskridelse af fejlslagne testenheder, hvor værdierne i {column_text} skulle have været imellem {value_1} og {value_2}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû être comprises entre {value_1} et {value_2}."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen die Werte in {column_text} zwischen {value_1} und {value_2} liegen sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {column_text} avrebbero dovuto essere compresi tra {value_1} e {value_2}."

@@ -1,6 +1,7 @@
 autobriefs:
   precondition_text:
     en: "Precondition applied"
+    da: "Forudsætning anvendt"
     fr: "Condition préalable"
     de: "Voraussetzung angewandt"
     it: "Prerequisito applicato"
@@ -10,6 +11,7 @@ autobriefs:
     ru: "Применяемое предварительное условие"
   column_computed_text:
     en: "computed column"
+    da: "beregnet kolonne"
     fr: "colonne calculée"
     de: "berechnete Spalte"
     it: "colonna calcolata"
@@ -19,6 +21,7 @@ autobriefs:
     ru: "Вычисленный столбец"
   values_text:
     en: "and {num_omitted} more"
+    da: "og {num_omitted} flere"
     fr: "et {num_omitted} de plus"
     de: "und {num_omitted} mehr"
     it: "e altri {num_omitted}"
@@ -28,6 +31,7 @@ autobriefs:
     ru: "И {num_omitted} больше"
   compare_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be {operator} {values_text}."
+    da: "Forvent at værdier i {column_text} {column_computed_text} er {operator} {values_text}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} soient {operator} {values_text}."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} {operator} {values_text} sein sollten."
     it: "Aspettatevi che i valori in {column_text} {column_computed_text} dovrebbero essere {operator} {values_text}."
@@ -37,6 +41,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны быть {operator} {values_text}."
   compare_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have been {operator} {values_text}."
+    da: "Overskridelse af fejlslagne test enheder hvor værdier i {column_text} skulle have været {operator} {values_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû être {operator} {values_text}."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen die Werte in {column_text} {operator} {values_text} sein sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {column_text} avrebbero dovuto essere {operator} {values_text}."
@@ -46,6 +51,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были быть {operator} {values_text}."
   in_set_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be in the set of {values_text}."
+    da: "Forvent at værdier i {column_text} {column_computed_text} findes blandt {values_text}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} soient dans l'ensemble de {values_text}."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} in der Menge von {values_text} enthalten sein sollten."
     it: "Aspettatevi che i valori in {column_text} {column_computed_text} siano nell'insieme di {values_text}."
@@ -55,6 +61,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны быть в наборе {values_text}."
   in_set_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have been in the set of {values_text}."
+    da: "Overskridelse af fejlslagne testenheder, hvor værdier i {column_text} skulle have været blandt {values_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû être dans l'ensemble de {values_text}."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen Werte in {column_text} in der Menge von {values_text} enthalten sein sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {column_text} avrebbero dovuto essere nel set di {values_text}."
@@ -64,6 +71,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были быть в наборе {values_text}."
   make_set_expectation_text:
     en: "Expect that values in {values_text} exactly match the unique set of values in {column_text} {column_computed_text}."
+    da: "Forvent at værdier i {values_text} præcist stemmer overens med det unikke sæt af værdier i {column_text} {column_computed_text}."
     fr: "Attendez-vous à ce que les valeurs de {values_text} correspondent exactement à l'ensemble unique de valeurs de {column_text} {column_computed_text}."
     de: "Erwarten Sie, dass die Werte in {values_text} genau mit den eindeutigen Werten in {column_text} {column_computed_text} übereinstimmen."
     it: "Aspettati che i valori in {values_text} corrispondano esattamente al set distinto di valori in {column_text} {column_computed_text}"

@@ -201,7 +201,7 @@ autobriefs:
     ru: "Ожидайте, что все значения в {column_text} {column_computed_text} не должны быть NULL."
   not_null_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should not have been NULL."
-    da: "Overskridelse af testenheder, hvor ingen af værdierne i {column_text} skulle have været NULL."
+    da: "Overskridelse af antallet af fejlslagne testenheder, hvor ingen af værdierne i {column_text} skulle have været NULL."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} n'auraient pas dû être NULL."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen die Werte in {column_text} nicht NULL sein sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {column_text} non avrebbero dovuto essere NULL."
@@ -211,6 +211,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} не должны были быть NULL."
   increasing_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be increasing."
+    da: "Forvent at værdierne i {column_text} {column_computed_text} er i stigende orden."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} augmentent."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} zunehmen."
     it: "Aspettati che i valori in {column_text} {column_computed_text} dovrebbero aumentare."
@@ -220,6 +221,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны увеличиваться."
   increasing_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should be increasing."
+    da: "Overskridelse af antallet af fejlslagne testenheder, hvor værdierne i {column_text} skulle være i stigende orden."
     fr: "Dépassement des unités de test ayant échoué où les valeurs de {column_text} devraient augmenter."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen die Werte in {column_text} zunehmen sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {column_text} dovrebbero essere in aumento."
@@ -229,6 +231,7 @@ autobriefs:
     ru: "Превышение количества неудачных тестовых единиц, где значения в {column_text} должны увеличиваться."
   decreasing_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be decreasing."
+    da: "Forvent at værdierne i {column_text} {column_computed_text} er i faldende orden."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} diminuent."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} abnehmen."
     it: "Aspettati che i valori in {column_text} {column_computed_text} dovrebbero diminuire."
@@ -238,6 +241,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны уменьшаться."
   decreasing_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should be decreasing."
+    da: "Overskridelse af antallet af fejlslagne testenheder, hvor værdierne i {column_text} skulle være i faldende orden."
     fr: "Dépassement des unités de test ayant échoué où les valeurs de {column_text} devraient diminuer."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen die Werte in {column_text} abnehmen sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {column_text} dovrebbero essere in diminuzione."
@@ -247,6 +251,7 @@ autobriefs:
     ru: "Превышение количества неудачных тестовых единиц, где значения в {column_text} должны уменьшаться."
   col_vals_expr_expectation_text:
     en: "Expect that values should agree with the given R expression."
+    da: "Forvent at værdier er i overensstemmelse med den pågældende R udtryk."
     fr: "Attendez-vous à ce que les valeurs soient en accord avec l'expression R donnée."
     de: "Erwarten Sie, dass die Werte mit dem angegebenen R-Ausdruck übereinstimmen."
     it: "Aspettatevi che i valori siano in accordo con l'espressione R fornita."
@@ -256,6 +261,7 @@ autobriefs:
     ru: "Ожидайте, что значения должны совпадать с заданным выражением R."
   col_vals_expr_failure_text:
     en: "Exceedance of failed test units where values should have agreed with the given R expression."
+    da: "Overskridelse af antallet af fejlslagne testenheder, hvor værdier skulle have været i overensstemmelse med det pågældende R udtryk."
     fr: "Dépassement des unités de test ayant échoué les valeurs auraient dû correspondre à l'expression R donnée."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen die Werte mit dem angegebenen R-Ausdruck übereinstimmen sollten."
     it: "Superamento di unità di test fallite in cui i valori avrebbero dovuto concordare con l'espressione R fornita."
@@ -265,6 +271,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения должны были быть согласованы с заданным выражением R."
   regex_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should match the regular expression: {values_text}."
+    da: "Forvent at værdierne i {column_text} {column_computed_text} stemmer overens med følgende regular expression: {values_text}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} correspondent à l'expression régulière: {values_text}."
     de: "Erwarten Sie, dass die Werte in {column_text} {column_computed_text} mit dem regulären Ausdruck {values_text} übereinstimmen."
     it: "Aspettati che i valori in {column_text} {column_computed_text} debbano corrispondere all'espressione regolare: {values_text}."
@@ -274,6 +281,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны соответствовать регулярному выражению: {values_text}."
   regex_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have matched the regular expression: {values_text}."
+    da: "Overskridelse af antallet af fejlslagne testenheder, hvor værdier {column_text} skulle have været i overensstemmelse med følgende regular expression: {values_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû correspondre à l'expression régulière: {values_text}."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen die Werte in {column_text} mit dem regulären Ausdruck {values_text} übereinstimmen sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {column_text} avrebbero dovuto corrispondere all'espressione regolare: {values_text}."

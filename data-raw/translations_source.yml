@@ -191,7 +191,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были быть NULL."
   not_null_expectation_text:
     en: "Expect that all values in {column_text} {column_computed_text} should not be NULL."
-    en: "Forvent at ingen af værdierne i {column_text} {column_computed_text} er NULL."
+    da: "Forvent at ingen af værdierne i {column_text} {column_computed_text} er NULL."
     fr: "Attendez-vous à ce que toutes les valeurs de {column_text} {column_computed_text} ne soient pas NULL."
     de: "Erwarten Sie, dass alle Werte in {column_text} {column_computed_text} nicht NULL sein sollten."
     it: "Aspettatevi che tutti i valori in {column_text} {column_computed_text} non debbano essere NULL."
@@ -201,6 +201,7 @@ autobriefs:
     ru: "Ожидайте, что все значения в {column_text} {column_computed_text} не должны быть NULL."
   not_null_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should not have been NULL."
+    da: "Overskridelse af testenheder, hvor ingen af værdierne i {column_text} skulle have været NULL."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} n'auraient pas dû être NULL."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen die Werte in {column_text} nicht NULL sein sollten."
     it: "Superamento delle unità di test non riuscite in cui i valori in {column_text} non avrebbero dovuto essere NULL."

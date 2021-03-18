@@ -764,6 +764,7 @@ table_scan:
     ru: "Квантовая статистика"
   subsection_title_variables_descriptive_statistics:
     en: "Descriptive Statistics"
+    da: "Deskriptive statistikker"
     fr: "Statistiques descriptives"
     de: "Deskriptive Statistik"
     it: "Statistiche descrittive"
@@ -773,6 +774,7 @@ table_scan:
     ru: "Описательная статистика"
   subsection_title_variables_maximum_values:
     en: "Maximum Values"
+    da: "Maksimum værdier"
     fr: "Valeurs maximales"
     de: "Maximalwerte"
     it: "Valori massimi"
@@ -782,6 +784,7 @@ table_scan:
     ru: "Максимальные значения"
   subsection_title_variables_minimum_values:
     en: "Minimum Values"
+    da: "Minimum værdier"
     fr: "Valeurs minimales"
     de: "Minimalwerte"
     it: "Valori minimi"
@@ -791,6 +794,7 @@ table_scan:
     ru: "Минимальные значения"
   subsection_title_variables_string_lengths:
     en: "String Lengths"
+    da: "Tekststreng længde"
     fr: "Longueurs de chaîne de caractères"
     de: "Zeichenlängen"
     it: "Lunghezza delle stringhe"
@@ -800,6 +804,7 @@ table_scan:
     ru: "Длины струн"
   subsection_title_variables_histogram:
     en: "Histogram"
+    da: "Histogram"
     fr: "Histogramme"
     de: "Histogramm"
     it: "Istogramma"
@@ -809,6 +814,7 @@ table_scan:
     ru: "Гистограмма"
   btn_toggle_details:
     en: "Toggle details"
+    da: "Vis detaljer"
     fr: "Basculer les détails"
     de: "Details einblenden"
     it: "Attiva / disattiva i dettagli"
@@ -818,6 +824,7 @@ table_scan:
     ru: "Переключатель деталей"
   tbl_lab_columns:
     en: "Columns"
+    da: "Kolonner"
     fr: "Colonnes"
     de: "Spalten"
     it: "Colonne"
@@ -827,6 +834,7 @@ table_scan:
     ru: "Колонки"
   tbl_lab_rows:
     en: "Rows"
+    da: "Rækker"
     fr: "Enregistrements"
     de: "Einträge"
     it: "Record"
@@ -836,6 +844,7 @@ table_scan:
     ru: "Строки"
   tbl_lab_NAs:
     en: "`NA`s"
+    da: "`NA`-værdier"
     fr: "Valeurs `NA`"
     de: "`NA`-Werte"
     it: "Valori `NA`"
@@ -845,6 +854,7 @@ table_scan:
     ru: "Валеурс `NA`"
   tbl_lab_duplicate_rows:
     en: "Duplicate Rows"
+    da: "Duplikerede rækker"
     fr: "Enregistrements en double"
     de: "Doppelte Einträge"
     it: "Record duplicati"
@@ -854,6 +864,7 @@ table_scan:
     ru: "Дублирование рядов"
   tbl_lab_scan_build_time:
     en: "Scan Build Time"
+    da: "Tidspunkt for scan"
     fr: "Moment de l'analyse"
     de: "Zeitpunkt des Scans"
     it: "Tempo di scansione"
@@ -863,6 +874,7 @@ table_scan:
     ru: "Время сборки сканирования"
   tbl_lab_pointblank_version:
     en: "**pointblank** Version"
+    da: "**pointblank** Version"
     fr: "version **pointblank**"
     de: "**pointblank** Version"
     it: "versione **pointblank**"
@@ -872,6 +884,7 @@ table_scan:
     ru: "**pointblank** Версия"
   tbl_lab_r_version:
     en: "**R** Version"
+    da: "**R** Version"
     fr: "version **R**"
     de: "**R** Version"
     it: "versione **R**"
@@ -881,6 +894,7 @@ table_scan:
     ru: "**R** Версия"
   tbl_lab_system_os:
     en: "Operating System"
+    da: "Styresystem"
     fr: "Système opérateur"
     de: "Betriebssystem"
     it: "Sistema operativo"
@@ -890,6 +904,7 @@ table_scan:
     ru: "Операционная система"
   tbl_lab_distinct:
     en: "Distinct"
+    da: "Unikke værdier"
     fr: "valeurs uniques"
     de: "Einzigartige Werte"
     it: "Valori unici"
@@ -899,6 +914,7 @@ table_scan:
     ru: "Внятный"
   tbl_lab_mean:
     en: "Mean"
+    da: "Middelværdi"
     fr: "Moyenne"
     de: "Mittelwert"
     it: "Media"
@@ -908,6 +924,7 @@ table_scan:
     ru: "Середина"
   tbl_lab_minimum:
     en: "Minimum"
+    da: "Minimum"
     fr: "Minimum"
     de: "Minimum"
     it: "Minimo"
@@ -917,6 +934,7 @@ table_scan:
     ru: "Минимум"
   tbl_lab_maximum:
     en: "Maximum"
+    da: "Maksimum"
     fr: "Maximum"
     de: "Maximum"
     it: "Massimo"
@@ -926,6 +944,7 @@ table_scan:
     ru: "Максимум"
   tbl_lab_5_percentile:
     en: "5th Percentile"
+    da: "5. percentil"
     fr: "5e centile"
     de: "5tes Perzentil"
     it: "5 percentile"
@@ -935,6 +954,7 @@ table_scan:
     ru: "Пятый процентиль"
   tbl_lab_median:
     en: "Median"
+    da: "Median"
     fr: "Médiane"
     de: "Median"
     it: "Mediana"
@@ -944,6 +964,7 @@ table_scan:
     ru: "Медиана"
   tbl_lab_95_percentile:
     en: "95th Percentile"
+    da: "95. percentil"
     fr: "95e centile"
     de: "95tes Perzentil"
     it: "95 percentile"
@@ -953,6 +974,7 @@ table_scan:
     ru: "95-й процентиль"
   tbl_lab_range:
     en: "Range"
+    da: "Interval"
     fr: "Étendue"
     de: "Spannweite"
     it: "Campo di variazione"
@@ -962,6 +984,7 @@ table_scan:
     ru: "Диапазон"
   tbl_lab_variance:
     en: "Variance"
+    da: "Varians"
     fr: "Variance"
     de: "Varianz"
     it: "Varianza"
@@ -971,6 +994,7 @@ table_scan:
     ru: "дисперсия"
   tbl_lab_standard_deviation:
     en: "Standard Deviation"
+    da: "Standardafvigelse"
     fr: "Écart type"
     de: "Standardabweichung"
     it: "Deviazione standard"
@@ -980,6 +1004,7 @@ table_scan:
     ru: "Стандартное отклонение"
   tbl_lab_cov:
     en: "Coefficient of Variation"
+    da: "Varianskoefficient"
     fr: "Coefficient de variation"
     de: "Variationskoeffizient"
     it: "Coefficiente di variazione"
@@ -989,6 +1014,7 @@ table_scan:
     ru: "Коэффициент вариации"
   tbl_lab_value:
     en: "Value"
+    da: "Værdi"
     fr: "Valeur"
     de: "Wert"
     it: "Valore"
@@ -998,6 +1024,7 @@ table_scan:
     ru: "Значение"
   tbl_lab_count:
     en: "Count"
+    da: "Antal"
     fr: "Compte"
     de: "Anzahl"
     it: "Conteggio"
@@ -1007,6 +1034,7 @@ table_scan:
     ru: "Количество"
   tbl_lab_frequency:
     en: "Frequency"
+    da: "Frekvens"
     fr: "Fréquence"
     de: "Frequenz"
     it: "Frequenza"
@@ -1016,6 +1044,7 @@ table_scan:
     ru: "Частота"
   plot_lab_string_length:
     en: "String Length"
+    da: "Tekststreng længde"
     fr: "Longueur de chaîne de caractères"
     de: "Zeichenlänge"
     it: "Lunghezza della stringa"
@@ -1025,6 +1054,7 @@ table_scan:
     ru: "Длина струны"
   other_values_text:
     en: "Other Values"
+    da: "Andre værdier"
     fr: "Autres valeurs"
     de: "Andere Werte"
     it: "Altri valori"
@@ -1034,6 +1064,7 @@ table_scan:
     ru: "Другие ценности"
   footer_text_fragment:
     en: "Table scan generated with <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
+    da: "Scan af tabel genereret med <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
     fr: "Scan de table généré avec <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
     de: "Mit <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a> generierter Scan der Tabelle."
     it: "Scansione della tabella generata con <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
@@ -1044,6 +1075,7 @@ table_scan:
 email:
   agent_body:
     en: "This <strong>pointblank</strong> validation report containing <strong>{nrow(x$validation_set)}</strong> validation step{ifelse(nrow(x$validation_set) != 1, 's', '')} was initiated on {blastula::add_readable_time(x$time_start)}."
+    da: "Denne <strong>pointblank</strong> valideringsrapport indeholdende <strong>{nrow(x$validation_set)}</strong> validerings trin{ifelse(nrow(x$validation_set) != 1, '', '')} blev startet {blastula::add_readable_time(x$time_start)}."
     fr: "Ce rapport de validation <strong>pointblank</strong> contenant <strong>{nrow(x$validation_set)}</strong> étape{ifelse(nrow(x$validation_set) != 1, 's', '')} de validation a été initié le {x$time_start}."
     de: "Dieser <strong>Pointblank</strong>-Validierungsbericht mit <strong>{nrow(x$validation_set)}</strong> Validierungsschritt{ifelse(nrow(x$validation_set) != 1, 'en', '')} wurde am {x$time_start} gestartet."
     it: "Questo report di convalida <strong>pointblank</strong> contenente <strong>{nrow(x$validation_set)}</strong> {ifelse(nrow(x$validation_set) != 1, 'passaggi', 'passaggio')} di convalida è stato avviato il {x$time_start}."
@@ -1053,6 +1085,7 @@ email:
     ru: "Этот отчет о проверке <strong>pointblank</strong>, содержащий <strong>{nrow(x$validation_set)}</strong> этап{ifelse(nrow(x$validation_set) != 1, 'а', '')} проверки, был инициирован {x$time_start}."
   footer_1:
     en: "Validation performed via the <code>pointblank</code> <strong>R<strong> package."
+    da: "Validering udført med <code>pointblank</code> <strong>R<strong> pakken."
     fr: "Validation effectuée avec le package <code>pointblank</code> <strong>R</strong>."
     de: "Die Validierung wurde mit dem Paket <code>pointblank</code> <strong>R</strong> durchgeführt."
     it: "Convalida eseguita con il pacchetto <strong>R</strong> <code>pointblank</code>."
@@ -1062,6 +1095,7 @@ email:
     ru: "Проверка выполняется с помощью пакета <strong>R</strong> <code>pointblank</code>."
   footer_2:
     en: "Information and package documentation"
+    da: "Information og pakke dokumentation"
     fr: "Informations et documentation du paquet"
     de: "Informationen und Paketdokumentation"
     it: "Informazioni e documentazione del pacchetto"
@@ -1071,6 +1105,7 @@ email:
     ru: "Информация и пакетная документация"
   footer_i:
     en: "This information was synthesized with the <code>pointblank</code> <strong>R<strong> package."
+    da: "Denne information blev syntetiseret med <code>pointblank</code> <strong>R<strong> pakken."
     fr: "Ces informations ont été synthétisées avec le package <code>pointblank</code> <strong>R<strong>."
     de: "Diese Informationen wurden mit dem <code>pointblank</code> <strong>R<strong>-Paket synthetisiert."
     it: "Questa informazione è stata sintetizzata con il pacchetto <strong>R<strong> <code>pointblank</code>."
@@ -1080,6 +1115,7 @@ email:
     ru: "Эта информация была синтезирована с помощью пакета <code>pointblank</code> <strong>R<strong>."
   informant_body:
     en: "This <strong>pointblank</strong> information report was synthesized on {blastula::add_readable_time(x$time_start)}."
+    da: "Denne <strong>pointblank</strong> informations rapport blev syntetiseret {blastula::add_readable_time(x$time_start)}."
     fr: "Ce rapport d'information <strong>pointblank</strong> a été synthétisé le {x$time_start}."
     de: "Dieser <strong>Pointblank</strong> Informationsbericht wurde am {x$time_start} zusammengestellt."
     it: "Questo rapporto informativo <strong>pointblank</strong> è stato sintetizzato il {x$time_start}."

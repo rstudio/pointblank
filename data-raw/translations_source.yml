@@ -401,6 +401,7 @@ autobriefs:
     ru: "Ожидайте, что схемы столбцов совпадают."
   col_schema_match_failure_text:
     en: "Failure to validate that column schemas match."
+    da: "Fejl da der ikke er overensstemmelse med kolonne schema."
     fr: "Échec de validation de la correspondance des schémas de colonne."
     de: "Fehler beim Überprüfen der übereinstimmen dieser Spaltenschemata."
     it: "Impossibile convalidare gli schemi di colonna corrispondenti."
@@ -411,6 +412,7 @@ autobriefs:
 agent_report:
   pointblank_validation_title_text:
     en: "Pointblank Validation"
+    da: "Pointblank Validering"
     fr: "Validation Pointblank"
     de: "Pointblank-Validierung"
     it: "Convalida Pointblank"
@@ -420,6 +422,7 @@ agent_report:
     ru: "Проверка Pointblank"
   pointblank_validation_plan_text:
     en: "Pointblank Validation Plan"
+    da: "Pointblank Validerings Plan"
     fr: "Plan de validation de Pointblank"
     de: "Pointblank-Validierungsplan"
     it: "Piano di convalida Pointblank"
@@ -429,6 +432,7 @@ agent_report:
     ru: "План проверки Pointblank"
   no_interrogation_performed_text:
     en: "No Interrogation Performed"
+    da: "Intet forhør foretaget"
     fr: "Aucune interrogation effectuée"
     de: "Keine Abfrage durchgeführt"
     it: "Nessuna interrogazione eseguita"
@@ -438,6 +442,7 @@ agent_report:
     ru: "Допрос не производился"
   report_fail_rows_available:
     en: "There are {fail_rows_extract} 'fail' rows available as a CSV file."
+    da: "Der er {fail_rows_extract} 'fail' rækker tilgængelige som CSV fil."
     fr: "Il existe des {fail_rows_extract} lignes 'fail' disponibles sous forme de fichier CSV."
     de: "Es sind {fail_rows_extract} 'fail'-Zeilen als CSV-Datei verfügbar."
     it: "Sono disponibili {fail_rows_extract} righe 'fail' come file CSV."
@@ -447,6 +452,7 @@ agent_report:
     ru: "В CSV-файле доступны строки {fail_rows_extract} 'fail'."
   report_no_table_preconditions:
     en: "No modifications of the table."
+    da: "Ingen modifikationer af tabellen."
     fr: "Aucune modification du tableau."
     de: "Keine Änderungen der Tabelle."
     it: "Nessuna alterazione della tabella."
@@ -456,6 +462,7 @@ agent_report:
     ru: "Никаких изменений таблицы данных."
   report_some_table_preconditions:
     en: "The data table was modified for this step."
+    da: "Data tabellen blev modificeret for dette trin."
     fr: "Le tableau a été modifié pour cette étape."
     de: "Die Tabelle wurde für diesen Schritt geändert."
     it: "La tabella è stata modificata per questo passaggio."
@@ -465,6 +472,7 @@ agent_report:
     ru: "Таблица данных была изменена для этого шага."
   report_no_evaluation_issues:
     en: "No evaluation issues."
+    da: "Ingen evalueringsproblemer."
     fr: "Aucun problème d'évaluation."
     de: "Keine Bewertungsprobleme."
     it: "Nessun problema di valutazione."
@@ -474,6 +482,7 @@ agent_report:
     ru: "Нет проблем с оценкой."
   report_col_step:
     en: "STEP"
+    da: "TRIN"
     fr: "ÉTAPE"
     de: "SCHRITT"
     it: "INDICE"
@@ -483,6 +492,7 @@ agent_report:
     ru: "ШАГ"
   report_col_steps:
     en: "STEPS"
+    da: "TRIN"
     fr: "ÉTAPES"
     de: "SCHRITTE"
     it: "INDICI"
@@ -492,6 +502,7 @@ agent_report:
     ru: "ШАГИ"
   report_col_columns:
     en: "COLUMNS"
+    da: "KOLONNER"
     fr: "COLONNES"
     de: "SPALTEN"
     it: "COLONNE"
@@ -501,6 +512,7 @@ agent_report:
     ru: "КОЛУМЫ"
   report_col_values:
     en: "VALUES"
+    da: "VÆRDIER"
     fr: "VALEURS"
     de: "WERTE"
     it: "VALORI"
@@ -510,6 +522,7 @@ agent_report:
     ru: "ЦЕННОСТИ"
   report_column_schema:
     en: "SCHEMA"
+    da: "SCHEMA"
     fr: "SCHÉMA"
     de: "SCHEMA"
     it: "SCHEMA"
@@ -519,6 +532,7 @@ agent_report:
     ru: "СХЕМА"
   report_r_col_types:
     en: "R TYPES"
+    da: "R TYPER"
     fr: "TYPES R"
     de: "R-TYPEN"
     it: "TIPI R"
@@ -528,6 +542,7 @@ agent_report:
     ru: "R ТИПЫ"
   report_r_sql_types:
     en: "SQL TYPES"
+    da: "SQL TYPER"
     fr: "TYPES SQL"
     de: "SQL-TYPEN"
     it: "TIPI SQL"
@@ -538,6 +553,7 @@ agent_report:
 informant_report:
   pointblank_information_title_text:
     en: "Pointblank Information"
+    da: "Pointblank Information"
     fr: "Informations Pointblank"
     de: "Pointblank Informationen"
     it: "Informazioni su Pointblank"
@@ -547,6 +563,7 @@ informant_report:
     ru: "Pointblank Информация"
   pointblank_table_text:
     en: "Table"
+    da: "Tabel"
     fr: "Table"
     de: "Tabelle"
     it: "Tabella"
@@ -556,6 +573,7 @@ informant_report:
     ru: "Таблица"
   snip_list_more:
     en: "+{n_items} more"
+    da: "+{n_items} flere"
     fr: "+{n_items} de plus"
     de: "+{n_items} mehr"
     it: "+{n_items} di più"
@@ -565,6 +583,7 @@ informant_report:
     ru: "+Еще {n_items}"
   snip_list_and:
     en: " and "
+    da: " og "
     fr: " et "
     de: " und "
     it: " e "
@@ -574,6 +593,7 @@ informant_report:
     ru: " и "
   snip_list_or:
     en: " or "
+    da: " eller "
     fr: " ou "
     de: " oder "
     it: " o "
@@ -584,6 +604,7 @@ informant_report:
 table_scan:
   nav_title_ts:
     en: "Table Scan"
+    da: "Tabel Scan"
     fr: "Scan de table"
     de: "Scan der Tabelle"
     it: "Scansione della tabella"
@@ -593,6 +614,7 @@ table_scan:
     ru: "Сканирование таблиц данных"
   nav_overview_ts:
     en: "Overview"
+    da: "Overblik"
     fr: "Aperçu"
     de: "Übersicht"
     it: "Panoramica"
@@ -602,6 +624,7 @@ table_scan:
     ru: "Обзор"
   nav_variables_ts:
     en: "Variables"
+    da: "Variable"
     fr: "Variables"
     de: "Variablen"
     it: "Variabili"
@@ -611,6 +634,7 @@ table_scan:
     ru: "Переменные"
   nav_interactions_ts:
     en: "Interactions"
+    da: "Interaktioner"
     fr: "Interactions"
     de: "Interaktionen"
     it: "Interazioni"
@@ -620,6 +644,7 @@ table_scan:
     ru: "Взаимодействие"
   nav_correlations_ts:
     en: "Correlations"
+    da: "Korrelationer"
     fr: "Corrélations"
     de: "Korrelationen"
     it: "Correlazioni"
@@ -629,6 +654,7 @@ table_scan:
     ru: "Корреляции"
   nav_missing_values_ts:
     en: "Missing Values"
+    da: "Manglende værdier"
     fr: "Valeurs manquantes"
     de: "Fehlende Werte"
     it: "Valori mancanti"
@@ -638,6 +664,7 @@ table_scan:
     ru: "Отсутствуют ценности"
   nav_sample_values_ts:
     en: "Sample"
+    da: "Stikprøve"
     fr: "Exemple"
     de: "Stichprobe"
     it: "Campione"
@@ -647,6 +674,7 @@ table_scan:
     ru: "Образец"
   section_title_overview_of_ts:
     en: "Overview of <code>{tbl_name}</code>"
+    da: "Overblik over <code>{tbl_name}</code>"
     fr: "Aperçu du tableau <code>{tbl_name}</code>"
     de: "Übersicht über die Tabelle <code>{tbl_name}</code>"
     it: "Panoramica della tabella <code>{tbl_name}</code>"
@@ -656,6 +684,7 @@ table_scan:
     ru: "Обзор <code>{tbl_name}</code>"
   button_label_overview_reproducibility_ts:
     en: "Reproducibility"
+    da: "Replikerbarhed"
     fr: "Reproductibilité"
     de: "Reproduzierbarkeit"
     it: "Riproducibilità"
@@ -665,6 +694,7 @@ table_scan:
     ru: "Воспроизводимость"
   tab_label_variables_statistics_ts:
     en: "Statistics"
+    da: "Statistikker"
     fr: "Statistiques"
     de: "Statistiken"
     it: "Statistica"
@@ -674,6 +704,7 @@ table_scan:
     ru: "Статистические данные"
   tab_label_variables_common_values_ts:
     en: "Common Values"
+    da: "Hyppige værdier"
     fr: "Valeurs communes"
     de: "Häufigsten Werte"
     it: "Valori comuni"
@@ -683,6 +714,7 @@ table_scan:
     ru: "Общие ценности"
   tab_label_variables_max_min_slices_ts:
     en: "Max/Min Slices"
+    da: "Max/Min værdier"
     fr: "Tranche supérieure et inférieure"
     de: "Minimale und maximale Werte"
     it: "Fetta superiore e inferiore"
@@ -692,6 +724,7 @@ table_scan:
     ru: "Макс./мин. срезы"
   subsection_title_overview_table_overview:
     en: "Table Overview"
+    da: "Tabel overblik"
     fr: "Aperçu du tableau"
     de: "Übersicht der Tabelle"
     it: "Panoramica della tabella"
@@ -701,6 +734,7 @@ table_scan:
     ru: "Обзор таблицы"
   subsection_title_overview_column_types:
     en: "Column Types"
+    da: "Kolonnetyper"
     fr: "Types de colonnes"
     de: "Spaltentypen"
     it: "Tipi di colonna"
@@ -710,6 +744,7 @@ table_scan:
     ru: "Типы столбцов"
   subsection_title_overview_reproducibility_information:
     en: "Reproducibility Information"
+    da: "Information om replikerbarhed"
     fr: "Informations sur la reproductibilité"
     de: "Informationen zur Reproduzierbarkeit"
     it: "Informazioni sulla riproducibilità"
@@ -719,6 +754,7 @@ table_scan:
     ru: "Информация о воспроизводимости"
   subsection_title_variables_quantile_statistics:
     en: "Quantile Statistics"
+    da: "Quantil statistikker"
     fr: "Statistiques quantiles"
     de: "Verteilungswerte"
     it: "Statistiche quantili"

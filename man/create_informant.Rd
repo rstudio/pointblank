@@ -42,7 +42,7 @@ will appear in the header area of the information report).}
 that provides all of the available information for the table. By default,
 \code{NULL} will create English (\code{"en"}) text. Other options include French
 (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish (\code{"es"}), Portuguese,
-(\code{"pt"}), Chinese (\code{"zh"}), and Russian (\code{"ru"}).}
+(\code{"pt"}), Chinese (\code{"zh"}), Russian (\code{"ru"}), and Danish (\code{"da"}).}
 
 \item{locale}{An optional locale ID to use for formatting values in the
 information report according the locale's rules. Examples include \code{"en_US"}

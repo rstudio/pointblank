@@ -63,8 +63,8 @@ option) or additional words in the generated list string. By default,
 \emph{informant} object (this is settable in the \code{\link[=create_informant]{create_informant()}} \code{lang}
 argument). If specified here as an override, the language options are
 English (\code{"en"}), French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}),
-Spanish (\code{"es"}), Portuguese, (\code{"pt"}), Chinese (\code{"zh"}), and Russian
-(\code{"ru"}).}
+Spanish (\code{"es"}), Portuguese, (\code{"pt"}), Chinese (\code{"zh"}), Russian (\code{"ru"}),
+and Danish (\code{"da"})}
 }
 \value{
 A formula needed for \code{\link[=info_snippet]{info_snippet()}}'s \code{fn} argument.

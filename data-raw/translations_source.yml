@@ -291,6 +291,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были соответствовать регулярному выражению: {values_text}."
   conjointly_expectation_text:
     en: "Expect conjoint 'pass' units across the following expressions: {values_text}."
+    da: "Forvent fælles 'pass' enheder i følgende expressions: {values_text}."
     fr: "Attendez-vous à des unités de «pass» conjointes dans les expressions suivantes: {values_text}."
     de: "Erwarten Sie gemeinsame 'Pass'-Einheiten für die folgenden Ausdrücke: {values_text}."
     it: "Aspettatevi unitá 'pass' congiunte tra le seguenti espressioni: {values_text}."
@@ -300,6 +301,7 @@ autobriefs:
     ru: "Ожидайте соединяющиеся единицы 'pass' в следующих выражениях: {values_text}."
   conjointly_failure_text:
     en: "Exceedance of failed test units where there should have been conjoint 'pass' units across the following expressions: {values_text}."
+    da: "Overskridelse af antal fejlslagne enhedstests, hvor der skulle have været fælles 'pass' enheder i følgende udtryk: {values_text}."
     fr: "Dépassement des unités de test ayant échoué là où il aurait dû y avoir des unités de «pass» conjointes dans les expressions suivantes: {values_text}."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen über die folgenden Ausdrücke hinweg 'Pass'-Einheiten zusammengesetzt sein sollten: {values_text}."
     it: "Superamento delle unità di test fallite in cui avrebbero dovuto esserci unità di 'pass' congiunte tra le seguenti espressioni: {values_text}."
@@ -309,6 +311,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где должны были быть объединены единицы 'pass' в следующих выражениях: {values_text}."
   col_exists_expectation_text:
     en: "Expect that column {column_text} exists."
+    da: "Forvent at kolonnen {column_text} findes."
     fr: "Attendez-vous à ce que la colonne {column_text} existe."
     de: "Erwarten Sie, dass die Spalte {column_text} vorhanden ist."
     it: "Aspettati che la colonna {column_text} esista."
@@ -318,6 +321,7 @@ autobriefs:
     ru: "Ожидайте, что столбец {column_text} существует."
   col_exists_failure_text:
     en: "Failure to validate that column {column_text} exists."
+    da: "Fejl da det ikke kunne verificeres at {column_text} findes."
     fr: "Échec de validation de l'existence de la colonne {column_text}."
     de: "Fehler beim Überprüfen, ob die Spalte {column_text} vorhanden ist."
     it: "Impossibile convalidare l'esistenza della colonna {column_text}."
@@ -327,6 +331,7 @@ autobriefs:
     ru: "Неверка этого столбца {column_text} существует."
   col_is_expectation_text:
     en: "Expect that column {column_text} is of type: {col_type}."
+    da: "Forvent at kolonne {column_text} er af typen: {col_type}."
     fr: "Attendez-vous à ce que la colonne {column_text} soit de type: {col_type}."
     de: "Erwarten Sie, dass die Spalte {column_text} vom Typ {col_type} ist."
     it: "Aspettati che la colonna {column_text} sia di tipo: {col_type}."
@@ -336,6 +341,7 @@ autobriefs:
     ru: "Ожидайте, что столбец {column_text} имеет тип: {col_type}."
   col_is_failure_text:
     en: "Failure to validate that column {column_text} is of type: {col_type}."
+    da: "Fejl da kolonnen {column_text} ikke er af typen: {col_type}."
     fr: "Échec de validation de la colonne {column_text} de type: {col_type}."
     de: "Fehler beim Überprüfen dieser Spalte {column_text} vom Typ {col_type}."
     it: "Impossibile convalidare che la colonna {column_text} sia di tipo: {col_type}."
@@ -345,6 +351,7 @@ autobriefs:
     ru: "Неверка этого столбца {column_text} имеет тип: {col_type}."
   all_row_distinct_expectation_text:
     en: "Expect entirely distinct rows across all columns."
+    da: "Forvent unikke værdier i alle rækker i alle kolonner."
     fr: "Attendez-vous à des lignes entièrement distinctes dans toutes les colonnes."
     de: "Erwarten Sie in allen Spalten einzigartige Zeilen."
     it: "Aspettati righe completamente distinte su tutte le colonne."
@@ -354,6 +361,7 @@ autobriefs:
     ru: "Ожидайте совершенно разные строки во всех столбцах."
   all_row_distinct_failure_text:
     en: "Exceedance of failed test units where there weren't distinct rows across all columns."
+    da: "Overskridelse af antal fejlslagne enhedstests, hvor der ikke var unikke værdier i alle rækker i alle kolonner."
     fr: "Dépassement des unités de test ayant échoué là où il n'y avait pas des lignes distinctes dans toutes les colonnes."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen nicht in allen Spalten einzigartige Zeilen vorhanden waren."
     it: "Superamento di unità di test fallite in cui non c'erano righe distinte su tutte le colonne."
@@ -363,6 +371,7 @@ autobriefs:
     ru: "Превышение неудачных испытательных блоков, где не было различных строк по всем столбцам."
   across_row_distinct_expectation_text:
     en: "Expect entirely distinct rows across {column_text}."
+    da: "Forvent unikke værdier i alle rækker i {column_text}."
     fr: "Attendez-vous à des lignes entièrement distinctes sur {column_text}."
     de: "Erwarten Sie einzigartige Zeilen in {column_text}."
     it: "Aspettati righe completamente distinte su {column_text}."
@@ -372,6 +381,7 @@ autobriefs:
     ru: "Ожидайте совершенно разные строки в {column_text}."
   across_row_distinct_failure_text:
     en: "Exceedance of failed test units where there weren't distinct rows across selected columns."
+    da: "Overskridelse af antal fejlslagne enhedstests, hvor der ikke var unikke værdier i alle rækker i de valgte kolonner."
     fr: "Dépassement des unités de test ayant échoué là où il n'y avait pas des lignes distinctes dans les colonnes sélectionnées."
     de: "Überschreitung fehlgeschlagener Testeinheiten, bei denen in ausgewählten Spalten keine eindeutigen Zeilen vorhanden waren."
     it: "Superamento delle unità di test fallite in cui non c'erano righe distinte tra le colonne selezionate."
@@ -381,6 +391,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых блоков, где не было различных строк в выбранных столбцах."
   col_schema_match_expectation_text:
     en: "Expect that column schemas match."
+    da: "Forvent overensstemmelse med kolonne schema."
     fr: "Attendez-vous à ce que les schémas de colonnes correspondent."
     de: "Erwarten Sie, dass die Spaltenschemata übereinstimmen."
     it: "Aspettati che gli schemi di colonna corrispondano."

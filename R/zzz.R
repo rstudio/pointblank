@@ -149,6 +149,7 @@ utils::globalVariables(
   
   register_s3_method("knitr", "knit_print", "ptblank_agent")
   register_s3_method("knitr", "knit_print", "ptblank_informant")
+  register_s3_method("knitr", "knit_print", "table_scan")
   
   if ("knitr" %in% loadedNamespaces()) {
     validate_rmd_setup()

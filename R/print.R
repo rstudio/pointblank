@@ -98,6 +98,41 @@ knit_print.ptblank_informant <- function(x, ...) {
   # nocov end 
 }
 
+#' Print a table scan
+#'
+#' This facilitates printing of a table scan to the R console.
+#'
+#' @param x An object of class `table_scan`.
+#' @param ... Any additional parameters.
+#' @param view The value for `print()`s `browse` argument.
+#'
+#' @keywords internal
+#'
+#' @export
+print.table_scan <- function(x, ..., view = interactive()) {
+  
+  class(x) <- c("shiny.tag.list", "list")
+  
+  print(x, browse = view, ...)
+}
+
+#' Knit print a table scan 
+#'
+#' This facilitates printing of a table scan within a knitr code chunk.
+#'
+#' @param x An object of class `table_scan`.
+#' @param ... Any additional parameters.
+#'
+#' @keywords internal
+#' @noRd
+knit_print.table_scan <- function(x, ...) {
+  
+  class(x) <- c("shiny.tag.list", "list")
+  
+  # Use `knit_print()` to print in a code chunk
+  knitr::knit_print(x, ...)
+}
+
 
 #' Print a single-step x-list to the console
 #'

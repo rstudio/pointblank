@@ -201,7 +201,7 @@ scan_data <- function(tbl,
   )
 
   table_scan <- 
-    build_examination_page(
+    build_table_scan_page(
       data = tbl,
       tbl_name = tbl_name,
       sections = sections,
@@ -228,45 +228,6 @@ scan_data <- function(tbl,
   
   table_scan
 }
-
-# nolint start
-
-#' Print the reporting produced by [scan_data()]
-#'
-#' This facilitates printing of the HTML report to the R console.
-#'
-#' @param x An object of class `examination_page`.
-#' @param ... Any additional parameters.
-#' @param view The value for `print()`s `browse` argument.
-#'
-#' @keywords internal
-#'
-#' @export
-print.examination_page <- function(x, ..., view = interactive()) {
-
-  class(x) <- c("shiny.tag.list", "list")
-
-  print(x, browse = view, ...)
-}
-
-#' Knit print the reporting produced by [scan_data()] 
-#'
-#' This facilitates printing of the HTML report within a knitr code chunk.
-#'
-#' @param x An object of class `examination_page`.
-#' @param ... Any additional parameters.
-#'
-#' @keywords internal
-#' @noRd
-knit_print.examination_page <- function(x, ...) {
-  
-  class(x) <- c("shiny.tag.list", "list")
-  
-  # Use `knit_print()` to print in a code chunk
-  knitr::knit_print(x, ...)
-}
-
-# nolint end
 
 #
 # Generate section components such as tables and plots
@@ -1471,12 +1432,12 @@ bootstrap_lib <- function() {
   )
 }
 
-build_examination_page <- function(data,
-                                   tbl_name,
-                                   sections,
-                                   navbar,
-                                   lang,
-                                   locale) {
+build_table_scan_page <- function(data,
+                                  tbl_name,
+                                  sections,
+                                  navbar,
+                                  lang,
+                                  locale) {
   
   if (navbar) {
     navbar <- navbar(sections = sections, lang = lang)
@@ -1553,7 +1514,7 @@ build_examination_page <- function(data,
       )
     )
   
-  examination_page <- 
+  table_scan <- 
     htmltools::tagList(
       htmltools::HTML("<!doctype html>"),
       htmltools::tags$html(
@@ -1611,9 +1572,9 @@ build_examination_page <- function(data,
       )
     )
   
-  class(examination_page) <- c("examination_page", class(examination_page))
+  class(table_scan) <- c("table_scan", class(table_scan))
   
-  examination_page
+  table_scan
 }
 
 probe_overview_stats_assemble <- function(data,

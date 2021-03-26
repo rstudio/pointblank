@@ -158,3 +158,34 @@ subdivision_tbl <-
 countries <- country_tbl
 subdivisions <- subdivision_tbl
 currencies <- currency_tbl
+
+get_subdivision_list <- function(subdivisions, countries) {
+  
+  subd_list <- list()
+  
+  for (co in countries) {
+    
+    subd_country <- 
+      subdivisions %>%
+      dplyr::filter(country_alpha_3 == {{ co }}) %>%
+      dplyr::filter(!(subd_name %in% c("FALSE"))) %>%
+      dplyr::filter(!(grepl("[0-9]", subd_name))) %>%
+      dplyr::pull(subd_name)
+    
+    subd_country_list <- list(subd_country)
+    names(subd_country_list) <- co
+    
+    subd_list <- append(subd_list, subd_country_list)
+  }
+  
+  subd_list
+}
+
+subd_list_main <- 
+  get_subdivision_list(
+    subdivisions = subdivisions,
+    countries = c(
+      "USA", "CAN", "AUS", "GBR", "NZL", "IND", "RUS",
+      "ZAF", "BRA", "MEX", "DEU", "ITA", "CHN", "IDN"
+    )
+  )

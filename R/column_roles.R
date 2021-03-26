@@ -657,6 +657,30 @@ get_column_role_string <- function(data_column) {
   return("string")
 }
 
+get_column_role_numeric <- function(data_column) {
+  
+  column_name <- colnames(data_column)
+  row_count <- get_table_total_rows(data_column)
+  cardinality <- get_column_cardinality(data_column)
+  column_samp <- get_non_null_col_sample(data_column)
+  
+  if (is.null(column_samp)) {
+    return("numeric")
+  }
+  
+  if (row_count > 200 &&
+      is_column_integerlike(data_column = column_samp)) {
+    
+    return("numeric.discrete")
+    
+  } else {
+    return("numeric.continuous")
+  }
+  
+  return("numeric")
+}
+
+
 regex_url <- function() {
   "^(?:(?:http(?:s)?|ftp)://)(?:\\S+(?::(?:\\S)*)?@)?(?:(?:[a-z0-9\u00a1-\uffff](?:-)*)*(?:[a-z0-9\u00a1-\uffff])+)(?:\\.(?:[a-z0-9\u00a1-\uffff](?:-)*)*(?:[a-z0-9\u00a1-\uffff])+)*(?:\\.(?:[a-z0-9\u00a1-\uffff]){2,})(?::(?:\\d){2,5})?(?:/(?:\\S)*)?$"
 }

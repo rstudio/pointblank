@@ -6,6 +6,6 @@ source("data-raw/03-countries_subdivisions_currencies.R")
 # Create external datasets
 
 usethis::use_data(
-  small_table, countries, subdivisions, currencies,
+  small_table, countries, subdivisions, subd_list_main, currencies, 
   internal = FALSE, overwrite = TRUE
 )

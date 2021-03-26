@@ -167,71 +167,6 @@ col_name_possibly__cat <- function(col_name) {
   check_patterns(col_name, patterns)
 }
 
-col_name_possibly__country <- function(col_name) {
-  
-  patterns <- 
-    c(
-      "^(COUNTRY|Country|country|CTRY|Ctry|ctry)$",
-      "^(COUNTRY|Country|country|CTRY|Ctry|ctry)[ \\._]",
-      "[ \\._](COUNTRY|Country|country|CTRY|Ctry|ctry)$",
-      "[ \\._](COUNTRY|Country|country|CTRY|Ctry|ctry)[ \\._]",
-      "[a-z](COUNTRY|Country|CTRY|Ctry)$",
-      "[A-Z](country|ctry)$",
-      "^(Country|country|Ctry|ctry)[A-Z]",
-      "^(COUTNRY|CTRY)[a-z]"
-    )
-  
-  check_patterns(col_name, patterns)
-}
-
-col_name_possibly__subd <- function(col_name) {
-  
-  # kw_lower <-
-  #   c("state", "province", "prov", "r.gio", "division", "district",
-  #     "distrito", "land", "pref")
-  # 
-  # kw_upper <- toupper(kw_lower)
-  # 
-  # kw_title <- tools::toTitleCase(kw_lower)
-  # 
-  # kw_all_pipe <- 
-  #   paste0("(", paste(c(kw_lower, kw_upper, kw_title), collapse = "|"), ")")
-  # 
-  # kw_ut_pipe <- 
-  #   paste0("(", paste(c(kw_upper, kw_title), collapse = "|"), ")")
-  # 
-  # kw_lt_pipe <- 
-  #   paste0("(", paste(c(kw_lower, kw_title), collapse = "|"), ")")
-  #
-  # kw_u_pipe <- 
-  #   paste0("(", paste(kw_upper, collapse = "|"), ")")
-  #
-  # 
-  # patterns <- 
-  #   c(
-  #     paste0("^", kw_all_pipe, "$"),
-  #     paste0("^", kw_all_pipe, "[ \\._]"),
-  #     paste0("[ \\._]", kw_all_pipe, "$"),
-  #     paste0("[ \\._]", kw_all_pipe, "[ \\._]"),
-  #     paste0("[a-z]", kw_ut_pipe, "$"),
-  #     paste0("^", kw_lt_pipe, "[A-Z]")
-  #   )
-  
-  patterns <- 
-    c(
-      "^(state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)$",
-      "^(state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)[ \\._]",
-      "[ \\._](state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)$",
-      "[ \\._](state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)[ \\._]",
-      "[a-z](STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)$",
-      "[A-Z](state|province|prov|r.gio|division|district|distrito|land|pref)$",
-      "^(state|province|prov|r.gio|division|district|distrito|land|pref|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)[A-Z]",
-      "^(STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF)[a-z]"
-    )
-  
-  check_patterns(col_name, patterns)
-}
-
 col_name_possibly__ind <- function(col_name) {
   
   patterns <- 
@@ -367,8 +302,138 @@ col_name_possibly__longitude <- function(col_name) {
   check_patterns(col_name, patterns)
 }
 
+col_name_possibly__country <- function(col_name) {
+  
+  patterns <- 
+    c(
+      "^(COUNTRY|Country|country|CTRY|Ctry|ctry)$",
+      "^(COUNTRY|Country|country|CTRY|Ctry|ctry)[ \\._]",
+      "[ \\._](COUNTRY|Country|country|CTRY|Ctry|ctry)$",
+      "[ \\._](COUNTRY|Country|country|CTRY|Ctry|ctry)[ \\._]",
+      "[a-z](COUNTRY|Country|CTRY|Ctry)$",
+      "[A-Z](country|ctry)$",
+      "^(Country|country|Ctry|ctry)[A-Z]",
+      "^(COUTNRY|CTRY)[a-z]"
+    )
+  
+  check_patterns(col_name, patterns)
+}
 
+col_name_possibly__subd <- function(col_name) {
+  
+  # kw_lower <-
+  #   c("state", "province", "prov", "r.gio", "division", "district",
+  #     "distrito", "land", "pref")
+  # 
+  # kw_upper <- toupper(kw_lower)
+  # 
+  # kw_title <- tools::toTitleCase(kw_lower)
+  # 
+  # kw_all_pipe <- 
+  #   paste0("(", paste(c(kw_lower, kw_upper, kw_title), collapse = "|"), ")")
+  # 
+  # kw_ut_pipe <- 
+  #   paste0("(", paste(c(kw_upper, kw_title), collapse = "|"), ")")
+  # 
+  # kw_lt_pipe <- 
+  #   paste0("(", paste(c(kw_lower, kw_title), collapse = "|"), ")")
+  #
+  # kw_u_pipe <- 
+  #   paste0("(", paste(kw_upper, collapse = "|"), ")")
+  #
+  # 
+  # patterns <- 
+  #   c(
+  #     paste0("^", kw_all_pipe, "$"),
+  #     paste0("^", kw_all_pipe, "[ \\._]"),
+  #     paste0("[ \\._]", kw_all_pipe, "$"),
+  #     paste0("[ \\._]", kw_all_pipe, "[ \\._]"),
+  #     paste0("[a-z]", kw_ut_pipe, "$"),
+  #     paste0("^", kw_lt_pipe, "[A-Z]")
+  #   )
+  
+  patterns <- 
+    c(
+      "^(state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)$",
+      "^(state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)[ \\._]",
+      "[ \\._](state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)$",
+      "[ \\._](state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)[ \\._]",
+      "[a-z](STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)$",
+      "[A-Z](state|province|prov|r.gio|division|district|distrito|land|pref)$",
+      "^(state|province|prov|r.gio|division|district|distrito|land|pref|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)[A-Z]",
+      "^(STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF)[a-z]"
+    )
+  
+  check_patterns(col_name, patterns)
+}
 
+col_name_possibly__currency_type <- function(col_name) {
+  
+  patterns <- 
+    c(
+      "^(CURRENCY|Currency|currency|CURR?|Curr?|curr?)$",
+      "^(CURRENCY|Currency|currency|CURR?|Curr?|curr?|CY|cy)[ \\._]",
+      "[ \\._](CURRENCY|Currency|currency|CURR?|Curr?|curr?|CY|cy)$",
+      "[ \\._](CURRENCY|Currency|currency|CURR?|Curr?|curr?|CY|cy)[ \\._]",
+      "[a-z](CURRENCY|Currency|CURR?|Curr?|CY)$",
+      "[A-Z](currency|curr?|cy)$",
+      "^(Currency|currency|Curr?|curr?|cy)[A-Z]",
+      "^(CURRENCY|CURR?|CY)[a-z]"
+    )
+  
+  check_patterns(col_name, patterns)
+}
+
+col_name_possibly__url <- function(col_name) {
+  
+  patterns <- 
+    c(
+      "^(URL|url|ADDR|Addr|addr|WEB|Web|web|SITE|Site|site|PAGE|Page|page|WWW|www|Net|net)$",
+      "^(URL|url|ADDR|Addr|addr|WEB|Web|web|SITE|Site|site|PAGE|Page|page|WWW|www|Net|net)[ \\._]",
+      "[ \\._](URL|url|ADDR|Addr|addr|WEB|Web|web|SITE|Site|site|PAGE|Page|page|WWW|www|Net|net)$",
+      "[ \\._](URL|url|ADDR|Addr|addr|WEB|Web|web|SITE|Site|site|PAGE|Page|page|WWW|www|Net|net)[ \\._]",
+      "[a-z](URL|ADDR|Addr|WEB|Web|SITE|Site|PAGE|Page|WWW|Net)$",
+      "[A-Z](url|addr|web|site|page|www|net)$",
+      "^(url|Addr|addr|Web|web|Site|site|Page|page|www|Net|net)[A-Z]",
+      "^(URL|ADDR|WEB|SITE|PAGE|WWW)[a-z]"
+    )
+  
+  check_patterns(col_name, patterns)
+}
+
+col_name_possibly__email <- function(col_name) {
+  
+  patterns <- 
+    c(
+      "^(E?-?MAIL|E?-?mail|e?-?mail|ADDR|Addr|addr)$",
+      "^(E?-?MAIL|E?-?mail|e?-?mail|ADDR|Addr|addr)[ \\._]",
+      "[ \\._](E?-?MAIL|E?-?mail|e?-?mail|ADDR|Addr|addr)$",
+      "[ \\._](E?-?MAIL|E?-?mail|e?-?mail|ADDR|Addr|addr)[ \\._]",
+      "[a-z](E?-?MAIL|E?-?mail|ADDR|Addr)$",
+      "[A-Z](e?-?mail|addr)$",
+      "^(E?-?mail|e?-?mail|Addr|addr)[A-Z]",
+      "^(E?-?MAIL|ADDR)[a-z]"
+    )
+  
+  check_patterns(col_name, patterns)
+}
+
+col_name_possibly__ip <- function(col_name) {
+  
+  patterns <- 
+    c(
+      "^(IP|ip|IPv[46]|ipv[46]|HOST|Host|host|NET|Net|net)$",
+      "^(IP|ip|IPv[46]|ipv[46]|HOST|Host|host|NET|Net|net)[ \\._]",
+      "[ \\._](IP|ip|IPv[46]|ipv[46]|HOST|Host|host|NET|Net|net)$",
+      "[ \\._](IP|ip|IPv[46]|ipv[46]|HOST|Host|host|NET|Net|net)[ \\._]",
+      "[a-z](IP|IPv[46]|HOST|Host|NET|Net)$",
+      "[A-Z](ip|ipv[46]|host|net)$",
+      "^(ip|IPv[46]|ipv[46]|Host|host|Net|net)[A-Z]",
+      "^(IP|IPv[46]|ipv[46]|HOST|NET)[a-z]"
+    )
+  
+  check_patterns(col_name, patterns)
+}
 
 check_patterns <- function(x, patterns) {
   
@@ -392,7 +457,7 @@ get_column_role_string <- function(data_column) {
   row_count <- get_table_total_rows(data_column)
   cardinality <- get_column_cardinality(data_column)
   column_samp <- get_non_null_col_sample(data_column)
-  length_range <- get_string_length_range(column_samp)
+  length_stats <- get_string_length_stats(column_samp)
   
   if (col_name_possibly__id(column_name)) {
     
@@ -402,17 +467,56 @@ get_column_role_string <- function(data_column) {
     return("id.string")
   }
   
-  if (col_name_possibly_cat(column_name)) {
+  if (col_name_possibly__cat(column_name)) {
     
     # This is a category or type column judging by the name;
     # the naming is all-important in this case
+    
+    return("id.string.categorical")
   }
+  
+  # Get the distinct non-null items from the column sample
+  column_items <- 
+    column_samp %>%
+    dplyr::distinct() %>%
+    dplyr::pull()
   
   if (col_name_possibly__country(column_name)) {
     
     # We might assume this is a column containing country names;
     # it's useful to further probe how this is represented since
     # there are a few standardized ways to refer to countries
+    
+    if (any(column_items %in% countries$name)) {
+      
+      prop_column_items <-
+        sum(column_items %in% countries$name) / length(column_items)
+      
+      if (prop_column_items >= 0.75) {
+        return("country:iso3166-1-esn.string.categorical")
+      }
+    }
+    
+    if (any(column_items %in% countries$alpha_3)) {
+      
+      prop_column_items <-
+        sum(column_items %in% countries$alpha_3) / length(column_items)
+      
+      if (prop_column_items >= 0.9) {
+        return("country:iso3166-1-a-3.string.categorical")
+      }
+    }
+    
+    if (any(column_items %in% countries$alpha_2)) {
+      
+      prop_column_items <-
+        sum(column_items %in% countries$alpha_2) / length(column_items)
+      
+      if (prop_column_items >= 0.9) {
+        return("country:iso3166-1-a-2.string.categorical")
+        
+      }
+    }
   }
   
   if (col_name_possibly__subd(column_name)) {
@@ -420,39 +524,152 @@ get_column_role_string <- function(data_column) {
     # The guess here is that this column may containing subdivisions;
     # of one or maybe more countries; this warrant further investigation
     # since even first-level subdivisions are standardized to great extent
+
+    # Extract all fully-alphabetical subdivision names to
+    # serve as a large set
+    subd_names <- 
+      subdivisions %>% 
+      dplyr::select(subd_name) %>%
+      dplyr::filter(grepl("[A-Z][A-Z]", subd_name)) %>% 
+      dplyr::pull()
+    
+    # If any of the column items matches any one of the
+    # `subd_names` then further inspect to see if there's a
+    # country-specific match
+    if (any(column_items %in% subd_names)) {
+      
+      frac <- c()
+      
+      for (co in names(subd_list_main)) {
+        
+        # obtain fractional amounts of subdivision names in each main country
+        frac_co <- 
+          sum(subd_list_main[[co]] %in% column_items) /
+          length(subd_list_main[[co]])
+        
+        frac_co <- stats::setNames(frac_co, co)
+        
+        frac <- c(frac, frac_co)
+      }
+      
+      # Sort `frac` by decreasing value
+      frac <- sort(frac, decreasing = TRUE)
+      
+      # Get the non-zero values
+      frac <- frac[frac != 0]
+      
+      # Get the length of non-zero values
+      frac_length <- length(frac)
+      
+      if (frac_length == 1) {
+        c_code <- names(frac)
+        return(
+          paste0("country_subd:iso3166-2[", c_code, "].string.categorical")
+        )
+      }
+      
+      # If there's no country-specific matching, we're still
+      # somewhat sure this column has to do with country subdivisions
+      return("country_subd:iso3166-2.string.categorical")
+    }
   }
   
   if (col_name_possibly__currency_type(column_name)) {
     
-    # 
+    # Perhaps this column contains currency types and the only way to
+    # be more certain is to check against 3-letter and 3-digit currency
+    # codes
+    
+    prop_column_items_a <-
+      sum(column_items %in% currencies$currency_a) / 
+      length(currencies$currency_a)
+    
+    if (prop_column_items_a >= 0.9) {
+      return("currency:iso4217-a.string.categorical")
+    }
+    
+    prop_column_items_n <-
+      sum(column_items %in% currencies$currency_n) / 
+      length(currencies$currency_n)
+    
+    if (prop_column_items_n >= 0.9) {
+      return("currency:iso4217-num.string.categorical")
+    }
   }
 
   if (col_name_possibly__url(column_name)) {
     
     # This could very well be a URL and it's easy to check for that
+    
+    # Check that values in the column follow URL formatting rules
+    prop_column_items_url <-
+      sum(grepl(regex_url(), column_items)) / 
+      length(column_items)
+    
+    if (prop_column_items_url >= 0.8) {
+      return("url.string")
+    }
+    
   }
     
   if (col_name_possibly__email(column_name)) {
     
     # This could very well be an email address; this isn't too
     # difficult to verify
+    
+    # Check that values in the column follow email formatting rules
+    prop_column_items_email <-
+      sum(grepl(regex_email(), column_items)) / 
+      length(column_items)
+    
+    if (prop_column_items_email >= 0.8) {
+      return("email.string")
+    }
   }
   
   if (col_name_possibly__ip(column_name)) {
     
     # An IP address? Might possibly be the case. Let's check on that
-  }
-  
-  if (col_name_possibly__path(column_name)) {
     
-    # A path or directory is what this column may or may not have
+    # Check column for IPv4 addresses
+    prop_column_items_ipv4 <-
+      sum(grepl(regex_ipv4_address(), column_items)) / 
+      length(column_items)
     
+    if (prop_column_items_ipv4 >= 0.9) {
+      return("ip.string")
+    }
+    
+    # Check column for IPv6 addresses
+    prop_column_items_ipv6 <-
+      sum(grepl(regex_ipv6_address(), column_items)) / 
+      length(column_items)
+    
+    if (prop_column_items_ipv6 >= 0.1) {
+      return("ip.string")
+    }
   }
-  
   
   if (cardinality < 50 && row_count > 200) {
     return("string.categorical")
   }
   
   return("string")
+}
+
+regex_url <- function() {
+  "^(?:(?:http(?:s)?|ftp)://)(?:\\S+(?::(?:\\S)*)?@)?(?:(?:[a-z0-9\u00a1-\uffff](?:-)*)*(?:[a-z0-9\u00a1-\uffff])+)(?:\\.(?:[a-z0-9\u00a1-\uffff](?:-)*)*(?:[a-z0-9\u00a1-\uffff])+)*(?:\\.(?:[a-z0-9\u00a1-\uffff]){2,})(?::(?:\\d){2,5})?(?:/(?:\\S)*)?$"
+}
+
+regex_email <- function() {
+  
+  "^\\s*[A-Z0-9._%&'*+`/=?^{}~-]+@[A-Z0-9.-]+\\.[A-Z0-9]{2,}\\s*$"
+}
+
+regex_ipv4_address <- function() {
+  "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
+}
+
+regex_ipv6_address <- function() {
+  "^\\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?\\s*$"
 }

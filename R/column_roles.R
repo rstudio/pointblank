@@ -388,14 +388,14 @@ col_name_possibly__url <- function(col_name) {
   
   patterns <- 
     c(
-      "^(URL|url|ADDR|Addr|addr|WEB|Web|web|SITE|Site|site|PAGE|Page|page|WWW|www|Net|net)$",
-      "^(URL|url|ADDR|Addr|addr|WEB|Web|web|SITE|Site|site|PAGE|Page|page|WWW|www|Net|net)[ \\._]",
-      "[ \\._](URL|url|ADDR|Addr|addr|WEB|Web|web|SITE|Site|site|PAGE|Page|page|WWW|www|Net|net)$",
-      "[ \\._](URL|url|ADDR|Addr|addr|WEB|Web|web|SITE|Site|site|PAGE|Page|page|WWW|www|Net|net)[ \\._]",
-      "[a-z](URL|ADDR|Addr|WEB|Web|SITE|Site|PAGE|Page|WWW|Net)$",
-      "[A-Z](url|addr|web|site|page|www|net)$",
-      "^(url|Addr|addr|Web|web|Site|site|Page|page|www|Net|net)[A-Z]",
-      "^(URL|ADDR|WEB|SITE|PAGE|WWW)[a-z]"
+      "^(URL|url|ADDR|Addr|addr|WEB|Web|web|SITE|Site|site|LINK|Link|link|PAGE|Page|page|WWW|www|Net|net)$",
+      "^(URL|url|ADDR|Addr|addr|WEB|Web|web|SITE|Site|site|LINK|Link|link|PAGE|Page|page|WWW|www|Net|net)[ \\._]",
+      "[ \\._](URL|url|ADDR|Addr|addr|WEB|Web|web|SITE|Site|site|LINK|Link|link|PAGE|Page|page|WWW|www|Net|net)$",
+      "[ \\._](URL|url|ADDR|Addr|addr|WEB|Web|web|SITE|Site|site|LINK|Link|link|PAGE|Page|page|WWW|www|Net|net)[ \\._]",
+      "[a-z](URL|ADDR|Addr|WEB|Web|SITE|Site|LINK|Link|PAGE|Page|WWW|Net)$",
+      "[A-Z](url|addr|web|site|link|page|www|net)$",
+      "^(url|Addr|addr|Web|web|Site|site|Link|link|Page|page|www|Net|net)[A-Z]",
+      "^(URL|ADDR|WEB|SITE|LINK|PAGE|WWW)[a-z]"
     )
   
   check_patterns(col_name, patterns)

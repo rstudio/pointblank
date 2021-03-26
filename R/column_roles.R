@@ -447,33 +447,18 @@ check_patterns <- function(x, patterns) {
   FALSE
 }
 
-
-get_column_role_string <- function(data_column) {
-  
-  # This is to be used on string-based column to try and
-  # get at the role of the column
+get_column_role_character <- function(data_column) {
   
   column_name <- colnames(data_column)
   row_count <- get_table_total_rows(data_column)
   cardinality <- get_column_cardinality(data_column)
   column_samp <- get_non_null_col_sample(data_column)
+  
+  if (is.null(column_samp)) {
+    return("string")
+  }
+  
   length_stats <- get_string_length_stats(column_samp)
-  
-  if (col_name_possibly__id(column_name)) {
-    
-    # If the column prominently has 'ID' in it's name, it's
-    # best to believe it's an ID column of some sort
-    
-    return("id.string")
-  }
-  
-  if (col_name_possibly__cat(column_name)) {
-    
-    # This is a category or type column judging by the name;
-    # the naming is all-important in this case
-    
-    return("id.string.categorical")
-  }
   
   # Get the distinct non-null items from the column sample
   column_items <- 
@@ -648,6 +633,22 @@ get_column_role_string <- function(data_column) {
     if (prop_column_items_ipv6 >= 0.1) {
       return("ip.string")
     }
+  }
+  
+  if (col_name_possibly__id(column_name)) {
+    
+    # If the column prominently has 'ID' in it's name, it's
+    # best to believe it's an ID column of some sort
+    
+    return("id.string")
+  }
+  
+  if (col_name_possibly__cat(column_name)) {
+    
+    # This is a category or type column judging by the name;
+    # the naming is all-important in this case
+    
+    return("string.categorical")
   }
   
   if (cardinality < 50 && row_count > 200) {

@@ -16,6 +16,39 @@
 # https://rich-iannone.github.io/pointblank/LICENSE.html
 #
 
+get_column_roles <- function(data) {
+  
+  col_types <- get_column_types(data)
+  
+  col_roles <- character(length(col_types$name))
+  
+  for (i in seq_along(col_types$name)) {
+    
+    col_type_i <- col_types$r_col_type[i]
+    col_name_i <- col_types$name[i]
+    data_column <- data %>% dplyr::select({{ col_name_i }})
+    
+    col_role_i <- 
+      switch(
+        col_type_i,
+        character = get_column_role_character(data_column),
+        numeric = get_column_role_numeric(data_column),
+        factor = "string.categorical",
+        ordered = "string.ordinal",
+        integer = "integer.discrete",
+        logical = "boolean.logical.categorical",
+        POSIXct = "time.datetime.continuous",
+        Date = "time.date.discrete",
+        list = "list_object",
+        NA_character_
+      )
+    
+    col_roles[i] <- col_role_i 
+  }
+  
+  col_roles
+}
+
 
 # This returns a `data_column` with NULL values removed using the
 # sampling procedure of `first_n` or `random_n`

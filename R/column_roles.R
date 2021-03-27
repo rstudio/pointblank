@@ -18,6 +18,10 @@
 
 get_column_roles <- function(data) {
   
+  if (!is_a_table_object(data)) {
+    return(NULL)
+  }
+  
   col_types <- get_column_types(data)
   
   col_roles <- character(length(col_types$name))
@@ -36,9 +40,10 @@ get_column_roles <- function(data) {
         factor = "string.categorical",
         ordered = "string.ordinal",
         integer = "integer.discrete",
+        integer64 = "integer.discrete",
         logical = "boolean.logical.categorical",
-        POSIXct = "time.datetime.continuous",
-        Date = "time.date.discrete",
+        POSIXct = "datetime.continuous",
+        Date = "date.discrete",
         list = "list_object",
         NA_character_
       )
@@ -48,7 +53,6 @@ get_column_roles <- function(data) {
   
   col_roles
 }
-
 
 # This returns a `data_column` with NULL values removed using the
 # sampling procedure of `first_n` or `random_n`
@@ -66,11 +70,13 @@ get_non_null_col_sample <- function(data_column,
   
   # Filter out all NA/NULL values from the `data_column`
   data_column <- 
-    dplyr::filter(data_column, dplyr::if_any(dplyr::everything(), ~ !is.na(.)))
+    data_column %>%
+    dplyr::rename(a__ = 1) %>%
+    dplyr::filter(!is.na(a__))
   
   # Obtain a subsample of non-NULL values in the column
   if (sample_type == "first_n") {
-    data_column <- dplyr::slice_head(data_column, n = sample_n)
+    data_column <- head(data_column, sample_n)
   } else {
     data_column <- dplyr::slice_sample(data_column, n = sample_n)
   }
@@ -94,10 +100,8 @@ get_column_cardinality <- function(data_column,
   data_column_groups <-
     data_column %>%
     dplyr::rename(a__ = 1) %>%
-    dplyr::group_by(a__) %>%
-    dplyr::slice_head(n = 1) %>%
-    dplyr::ungroup()
-  
+    dplyr::distinct()
+
   data_column_has_any_na <-
     data_column_groups %>%
     dplyr::filter(is.na(a__)) %>%
@@ -109,7 +113,8 @@ get_column_cardinality <- function(data_column,
   data_column_groups_n <-
     data_column_groups %>%
     dplyr::count() %>%
-    dplyr::pull(n)
+    dplyr::pull(n) %>%
+    as.integer()
   
   if (data_column_has_any_na && !include_na) {
     data_column_groups_n <- data_column_groups_n - 1L
@@ -124,19 +129,11 @@ is_column_integerlike <- function(data_column) {
   data_vals <- 
     data_column %>%
     dplyr::rename(a__ = 1) %>%
-    dplyr::group_by(a__) %>%
-    dplyr::slice_head(n = 1) %>%
-    dplyr::ungroup() %>%
-    dplyr::pull()
-  
-  for (i in seq_along(data_vals)) {
-    
-    if (!rlang::is_integerish(data_vals[i])) {
-      return(FALSE)
-    }
-  }
-  
-  TRUE
+    dplyr::distinct() %>%
+    dplyr::collect() %>%
+    dplyr::pull(a__)
+
+  rlang::is_integerish(data_vals)
 }
 
 # Get the types for a column; this provides one or more R types and also
@@ -339,14 +336,14 @@ col_name_possibly__country <- function(col_name) {
   
   patterns <- 
     c(
-      "^(COUNTRY|Country|country|CTRY|Ctry|ctry)$",
-      "^(COUNTRY|Country|country|CTRY|Ctry|ctry)[ \\._]",
-      "[ \\._](COUNTRY|Country|country|CTRY|Ctry|ctry)$",
-      "[ \\._](COUNTRY|Country|country|CTRY|Ctry|ctry)[ \\._]",
-      "[a-z](COUNTRY|Country|CTRY|Ctry)$",
-      "[A-Z](country|ctry)$",
-      "^(Country|country|Ctry|ctry)[A-Z]",
-      "^(COUTNRY|CTRY)[a-z]"
+      "^(COUNTRY|Country|country|CTRY|Ctry|ctry|(iso|ISO)2|(iso|ISO)3)$",
+      "^(COUNTRY|Country|country|CTRY|Ctry|ctry|(iso|ISO)2|(iso|ISO)3)[ \\._]",
+      "[ \\._](COUNTRY|Country|country|CTRY|Ctry|ctry|(iso|ISO)2|(iso|ISO)3)$",
+      "[ \\._](COUNTRY|Country|country|CTRY|Ctry|ctry|(iso|ISO)2|(iso|ISO)3)[ \\._]",
+      "[a-z](COUNTRY|Country|CTRY|Ctry|ISO2|ISO3)$",
+      "[A-Z](country|ctry|iso2|iso3)$",
+      "^(Country|country|Ctry|ctry|(iso|ISO)2|(iso|ISO)3)[A-Z]",
+      "^(COUTNRY|CTRY|(iso|ISO)2|(iso|ISO)3)[a-z]"
     )
   
   check_patterns(col_name, patterns)
@@ -387,11 +384,11 @@ col_name_possibly__subd <- function(col_name) {
   
   patterns <- 
     c(
-      "^(state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)$",
-      "^(state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)[ \\._]",
-      "[ \\._](state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)$",
-      "[ \\._](state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)[ \\._]",
-      "[a-z](STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)$",
+      "^(state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref|NAME|name)$",
+      "^(state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref|NAME|name)[ \\._]",
+      "[ \\._](state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref|NAME|name)$",
+      "[ \\._](state|province|prov|r.gio|division|district|distrito|land|pref|STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref|NAME|name)[ \\._]",
+      "[a-z](STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref|NAME|name)$",
       "[A-Z](state|province|prov|r.gio|division|district|distrito|land|pref)$",
       "^(state|province|prov|r.gio|division|district|distrito|land|pref|State|Province|Prov|R.gio|Division|District|Distrito|Land|Pref)[A-Z]",
       "^(STATE|PROVINCE|PROV|R.GIO|DIVISION|DISTRICT|DISTRITO|LAND|PREF)[a-z]"
@@ -510,7 +507,7 @@ get_column_role_character <- function(data_column) {
       prop_column_items <-
         sum(column_items %in% countries$name) / length(column_items)
       
-      if (prop_column_items >= 0.75) {
+      if (prop_column_items >= 0.5) {
         return("country:iso3166-1-esn.string.categorical")
       }
     }
@@ -530,7 +527,7 @@ get_column_role_character <- function(data_column) {
       prop_column_items <-
         sum(column_items %in% countries$alpha_2) / length(column_items)
       
-      if (prop_column_items >= 0.9) {
+      if (prop_column_items >= 0.75) {
         return("country:iso3166-1-a-2.string.categorical")
         
       }
@@ -590,6 +587,58 @@ get_column_role_character <- function(data_column) {
       # somewhat sure this column has to do with country subdivisions
       return("country_subd:iso3166-2.string.categorical")
     }
+    
+    # Extract all subdivision short names to serve as a large set
+    subd_names <- 
+      subdivisions %>%
+      dplyr::filter(country_alpha_3 %in% names(subd_list_main)) %>%
+      dplyr::pull(name_en)
+    
+    # If any of the column items matches any one of the
+    # `subd_names` then further inspect to see if there's a
+    # country-specific match
+    if (any(column_items %in% subd_names) && 
+        sum(column_items %in% subd_names) > 1) {
+      
+      frac <- c()
+      
+      for (co in names(subd_list_main)) {
+        
+        subd_list_co <- 
+          subdivisions %>%
+          dplyr::filter(country_alpha_3 == {{ co }}) %>%
+          dplyr::pull(name_en)
+        
+        # obtain fractional amounts of subdivision names in each main country
+        frac_co <- 
+          sum(subd_list_co %in% column_items) /
+          length(subd_list_co)
+        
+        frac_co <- stats::setNames(frac_co, co)
+        
+        frac <- c(frac, frac_co)
+      }
+      
+      # Sort `frac` by decreasing value
+      frac <- sort(frac, decreasing = TRUE)
+      
+      # Get the non-zero values
+      frac <- frac[frac != 0]
+      
+      # Get the length of non-zero values
+      frac_length <- length(frac)
+      
+      if (frac_length == 1) {
+        c_code <- names(frac)
+        return(
+          paste0("country_subd:iso3166-2-sn[", c_code, "].string.categorical")
+        )
+      }
+      
+      # If there's no country-specific matching, we're still
+      # somewhat sure this column has to do with country subdivisions
+      return("country_subd:iso3166-2-sn.string.categorical")
+    }
   }
   
   if (col_name_possibly__currency_type(column_name)) {
@@ -627,7 +676,6 @@ get_column_role_character <- function(data_column) {
     if (prop_column_items_url >= 0.8) {
       return("url.string")
     }
-    
   }
     
   if (col_name_possibly__email(column_name)) {
@@ -688,6 +736,55 @@ get_column_role_character <- function(data_column) {
     return("string.categorical")
   }
   
+  if (col_name_possibly__datetime(column_name)) {
+    
+    # Determine if the column sample has strings that are
+    # parsable as datetime values
+
+    parsable <- FALSE
+    
+    for (s_fmt in strptime_8601_formats) {
+      
+      parsed <- strptime(column_items, format = s_fmt)
+      
+      prop_parsed <- sum(!is.na(parsed)) / length(parsed)
+      
+      if (prop_parsed > 0.8) {
+        parsable <- TRUE
+        break
+      }
+    }
+    
+    if (parsable) {
+      return("datetime.string")
+    }
+  }
+  
+  if (col_name_possibly__date(column_name)) {
+    
+    # Determine if the column sample has strings that are
+    # parsable as datetime values
+    
+    parsable <- FALSE
+    
+    for (s_fmt in strptime_date_formats) {
+      
+      parsed <- strptime(column_items, format = s_fmt)
+      
+      prop_parsed <- sum(!is.na(parsed)) / length(parsed)
+      
+      if (prop_parsed > 0.8) {
+        parsable <- TRUE
+        break
+      }
+    }
+    
+    if (parsable) {
+      return("date.string")
+    }
+    
+  }
+  
   return("string")
 }
 
@@ -702,16 +799,52 @@ get_column_role_numeric <- function(data_column) {
     return("numeric")
   }
   
-  if (row_count > 200 &&
-      is_column_integerlike(data_column = column_samp)) {
+  # Initialize the role fragment
+  role <- ""
+  
+  # Get the distinct non-null items from the column sample
+  column_items <- 
+    column_samp %>%
+    dplyr::distinct() %>%
+    dplyr::pull()
+  
+  if (col_name_possibly__latitude(column_name)) {
     
-    return("numeric.discrete")
+    # Determine if the column sample has values that mostly lie
+    # within the valid range of latitude values
     
-  } else {
-    return("numeric.continuous")
+    within_bounds <- column_items <= 90 & column_items >= -90
+    
+    prop_within_bounds <- sum(!is.na(within_bounds)) / length(within_bounds)
+    
+    if (prop_within_bounds > 0.8) {
+      role <- "geo:latitude."
+    }
   }
   
-  return("numeric")
+  if (col_name_possibly__longitude(column_name)) {
+    
+    # Determine if the column sample has values that mostly lie
+    # within the valid range of longitude values
+    
+    within_bounds <- column_items <= 180 & column_items >= -180
+    
+    prop_within_bounds <- sum(!is.na(within_bounds)) / length(within_bounds)
+    
+    if (prop_within_bounds > 0.8) {
+      role <- "geo:longitude."
+    }
+  }
+  
+  if (row_count > 200 && is_column_integerlike(data_column = column_samp)) {
+    
+    return(paste0(role, "numeric.discrete"))
+    
+  } else {
+    return(paste0(role, "numeric.continuous"))
+  }
+  
+  return(paste0(role, "numeric"))
 }
 
 
@@ -720,7 +853,6 @@ regex_url <- function() {
 }
 
 regex_email <- function() {
-  
   "^\\s*[A-Z0-9._%&'*+`/=?^{}~-]+@[A-Z0-9.-]+\\.[A-Z0-9]{2,}\\s*$"
 }
 
@@ -731,3 +863,17 @@ regex_ipv4_address <- function() {
 regex_ipv6_address <- function() {
   "^\\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?\\s*$"
 }
+
+strptime_8601_formats <-
+  c(
+    "%Y-%m-%d %H:%M:%S",
+    "%Y-%m-%dT%H:%M:%S",
+    "%Y/%m/%d %H:%M:%S"
+  )
+
+strptime_date_formats <-
+  c(
+    "%Y-%m-%d",
+    "%Y-%m-%d",
+    "%Y/%m/%d"
+  )

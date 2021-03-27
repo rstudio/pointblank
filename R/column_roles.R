@@ -76,7 +76,7 @@ get_non_null_col_sample <- function(data_column,
   
   # Obtain a subsample of non-NULL values in the column
   if (sample_type == "first_n") {
-    data_column <- head(data_column, sample_n)
+    data_column <- utils::head(data_column, sample_n)
   } else {
     data_column <- dplyr::slice_sample(data_column, n = sample_n)
   }

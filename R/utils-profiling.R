@@ -363,7 +363,9 @@ get_tbl_dbi_missing_tbl <- function(data) {
               missing_n_span <- 
                 missing_n_span %>%
                 utils::head(cuts[x]) %>%
-                dplyr::summarize_all(~ sum(ifelse(is.na(.), 1, 0))) %>%
+                dplyr::summarize_all(
+                  ~ sum(ifelse(is.na(.), 1, 0), na.rm = TRUE)
+                ) %>%
                 dplyr::pull(a) %>%
                 as.integer()
               
@@ -486,7 +488,10 @@ get_missing_by_column_tbl <- function(data) {
         data <- dplyr::select(data, dplyr::one_of(x__))
         data <- dplyr::group_by(data)
         data <- 
-          dplyr::summarize_all(data, ~ sum(ifelse(is.na(.), 1, 0)) / dplyr::n())
+          dplyr::summarize_all(
+            data,
+            ~ sum(ifelse(is.na(.), 1, 0), na.rm = TRUE) / dplyr::n()
+          )
         data <- dplyr::collect(data)
         data <- dplyr::mutate(data, col_num = which(col_names %in% x__))
         data <- dplyr::mutate(data, col_name = x__)

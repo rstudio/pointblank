@@ -1521,7 +1521,8 @@ build_table_scan_page <- function(data,
         lang = lang,
         htmltools::HTML(
           "<head>\n",
-          "   <meta charset=\"utf-8\">\n",
+          "   <style>code {color: #333 !important; ",
+          "   background: none !important; padding: 0 !important; }</style>",
           paste0(
             "   <meta name=\"viewport\" content=\"width=device-width, ",
             "initial-scale=1, shrink-to-fit=no\">\n"
@@ -1770,6 +1771,7 @@ probe_columns_assemble <- function(data,
                     class = "col-sm-12 text-left",
                     htmltools::tags$button(
                       class = "btn btn-default btn-sm",
+                      style = "margin-top: 5px;",
                       `data-toggle` = "collapse",
                       `data-target` = paste0(
                         "#bottom-", id_val, ", #minifreqtable", id_val
@@ -1981,6 +1983,7 @@ probe_columns_assemble <- function(data,
                     class = "col-sm-12 text-left",
                     htmltools::tags$button(
                       class = "btn btn-default btn-sm",
+                      style = "margin-top: 5px;",
                       `data-toggle` = "collapse",
                       `data-target` = paste0(
                         "#bottom-", id_val, ", #minifreqtable", id_val
@@ -2534,6 +2537,7 @@ navbar <- function(sections,
         htmltools::tags$button(
           type = "button",
           class = "navbar-toggle collapsed",
+          style = "margin-top: 5px;",
           `data-toggle` = "collapse",
           `data-target` = "#navbar",
           `aria-expanded` = "false",
@@ -2546,7 +2550,7 @@ navbar <- function(sections,
         htmltools::tags$a(
           class = "navbar-brand anchor",
           href = "#top",
-          style = "font-size: 14.5px",
+          style = "font-size: 14.5px;",
           get_lsv("table_scan/nav_title_ts")[[lang]]
         ),
       ),

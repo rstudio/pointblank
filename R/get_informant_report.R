@@ -458,7 +458,9 @@ get_informant_report <- function(informant,
   table_time <- 
     create_table_time_html(
       time_start = time_start,
-      time_end = time_end
+      time_end = time_end,
+      size = size,
+      locale = locale 
     )
 
   # Generate the report title with the `title` option

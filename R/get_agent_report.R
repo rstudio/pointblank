@@ -377,6 +377,7 @@ get_agent_report <- function(agent,
     create_table_time_html(
       time_start = agent$time_start,
       time_end = agent$time_end,
+      size = size,
       locale = locale
     )
   
@@ -1523,6 +1524,7 @@ process_title_text <- function(title,
 
 create_table_time_html <- function(time_start,
                                    time_end,
+                                   size = "standard",
                                    locale = NULL) {
   
   if (length(time_start) < 1) {
@@ -1533,31 +1535,61 @@ create_table_time_html <- function(time_start,
   time_duration_formatted <- 
     print_time_duration_report(time_duration, locale = locale)
   
-  paste0(
-    "<span style=\"background-color: #FFF;",
-    "color: #444;padding: 0.5em 0.5em;",
-    "position: inherit;text-transform: uppercase;margin-left: 10px;",
-    "border: solid 1px #999999;font-variant-numeric: tabular-nums;",
-    "border-radius: 0;padding: 2px 10px 2px 10px;\">",
-    format(time_start, "%Y-%m-%d %H:%M:%S %Z"),
-    "</span>",
-    
-    "<span style=\"background-color: #FFF;",
-    "color: #444;padding: 0.5em 0.5em;",
-    "position: inherit;margin: 5px 1px 5px 0;",
-    "border: solid 1px #999999;border-left: none;",
-    "font-variant-numeric: tabular-nums;",
-    "border-radius: 0;padding: 2px 10px 2px 10px;\">",
-    time_duration_formatted,
-    "</span>",
-    
-    "<span style=\"background-color: #FFF;",
-    "color: #444;padding: 0.5em 0.5em;",
-    "position: inherit;text-transform: uppercase;margin: 5px 1px 5px -1px;",
-    "border: solid 1px #999999;border-left: none;",
-    "border-radius: 0;padding: 2px 10px 2px 10px;\">",
-    format(time_end, "%Y-%m-%d %H:%M:%S %Z"),
-    "</span>"
+  as.character(
+    htmltools::tagList(
+      htmltools::tags$span(
+        style = htmltools::css(
+          `background-color` = "#FFF",
+          color = "#444",
+          padding = if (size == "standard") "0.5em 0.5em" else "",
+          position = "inherit",
+          `text-transform` = "uppercase",
+          `margin-left` = if (size == "standard") "10px" else "",
+          border = if (size == "standard") "solid 1px #999999" else "",
+          `font-variant-numeric` = "tabular-nums",
+          `border-radius` = "0",
+          padding = "2px 10px 2px 10px",
+          padding = if (size == "standard") {
+            "2px 10px 2px 10px" 
+          } else {
+            "2px 10px 2px 5px"
+          },
+          `border-right` = if (size == "small") "solid 1px #333" else ""
+        ),
+        format(time_start, "%Y-%m-%d %H:%M:%S %Z")
+      ),
+      htmltools::tags$span(
+        style = htmltools::css(
+          `background-color` = "#FFF",
+          color = "#444",
+          padding = if (size == "standard") "0.5em 0.5em" else "",
+          position = "inherit",
+          margin = "5px 1px 5px 0",
+          border = if (size == "standard") "solid 1px #999999" else "",
+          `border-left` = if (size == "small") "none" else "",
+          `font-variant-numeric` = "tabular-nums",
+          `border-radius` = "0",
+          padding = "2px 10px 2px 10px"
+        ),
+        time_duration_formatted,
+      ),
+      htmltools::tags$span(
+        style = htmltools::css(
+          `background-color` = "#FFF",
+          color = "#444",
+          padding = if (size == "standard") "0.5em 0.5em" else "",
+          position = "inherit",
+          `text-transform` = "uppercase",
+          `margin` = "5px 1px 5px -1px",
+          border = if (size == "standard") "solid 1px #999999" else "",
+          `font-variant-numeric` = "tabular-nums",
+          `border-left` = if (size == "small") "solid 1px #333" else "",
+          `border-radius` = "0",
+          padding = "2px 10px 2px 10px"
+        ),
+        format(time_end, "%Y-%m-%d %H:%M:%S %Z")
+      )
+    )
   )
 }
 

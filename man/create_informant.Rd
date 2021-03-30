@@ -202,6 +202,7 @@ Other Planning and Prep:
 \code{\link{action_levels}()},
 \code{\link{create_agent}()},
 \code{\link{db_tbl}()},
+\code{\link{draft_validation_plan}()},
 \code{\link{file_tbl}()},
 \code{\link{scan_data}()},
 \code{\link{tbl_get}()},

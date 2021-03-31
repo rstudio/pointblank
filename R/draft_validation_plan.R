@@ -17,16 +17,16 @@
 #
 
 
-#' Draft a starter **pointblank** validation .R script with a data table
+#' Draft a starter **pointblank** validation .R/.Rmd file with a data table
 #' 
 #' @description
-#' Generate a draft validation plan in a new .R file using an input data table.
-#' Using this workflow, the data table will be scanned to learn about its column
-#' data and a set of starter validation steps (constituting a validation plan)
-#' will be written. It's best to use a data extract that contains at least 1000
-#' rows and is relatively free of spurious data.
+#' Generate a draft validation plan in a new .R or .Rmd file using an input data
+#' table. Using this workflow, the data table will be scanned to learn about its
+#' column data and a set of starter validation steps (constituting a validation
+#' plan) will be written. It's best to use a data extract that contains at least
+#' 1000 rows and is relatively free of spurious data.
 #'
-#' Once in the .R file, it's possible to tweak the validation steps to better
+#' Once in the file, it's possible to tweak the validation steps to better
 #' fit the expectations to the particular domain. While column inference is used
 #' to generate reasonable validation plans, it is difficult to infer the
 #' acceptable values without domain expertise. However, using
@@ -36,11 +36,11 @@
 #' 
 #' @param tbl The input table. This can be a data frame, tibble, a `tbl_dbi`
 #'   object, or a `tbl_spark` object.
-#' @param name An optional name for the .R file. This should be a name without
-#'   an extension. If nothing is supplied, the name will contain the text
-#'   `"draft_validation_plan_"` followed by the current date and time.
+#' @param name An optional name for the .R or .Rmd file. This should be a name
+#'   without an extension. If nothing is supplied, the name will contain the
+#'   text `"draft_validation_plan_"` followed by the current date and time.
 #' @param path A path can be specified here if there shouldn't be an attempt to
-#'   place the .R file in the working directory.
+#'   place the generated file in the working directory.
 #' @param lang The language to use when creating comments for the automatically-
 #'   generated validation steps. By default, `NULL` will create English (`"en"`)
 #'   text. Other options include French (`"fr"`), German (`"de"`), Italian
@@ -49,8 +49,8 @@
 #' @param output_type An option for choosing what type of output should be
 #'   generated. By default, this is an .R script (`"R"`) but this could
 #'   alternatively be an R Markdown document (`"Rmd"`).
-#' @param overwrite Should an .R file of the same name be overwritten? By
-#'   default, this is `FALSE`.
+#' @param overwrite Should a file of the same name be overwritten? By default,
+#'   this is `FALSE`.
 #' @param quiet Should the function *not* inform when the file is written? By
 #'   default this is `FALSE`.
 #'   
@@ -78,6 +78,8 @@ draft_validation_plan <- function(tbl,
                                   add_comments = TRUE,
                                   overwrite = FALSE,
                                   quiet = FALSE) {
+  
+  output_type <- match.arg(output_type)
   
   column_roles <- get_column_roles(tbl)
   column_names <- colnames(tbl)
@@ -108,8 +110,13 @@ draft_validation_plan <- function(tbl,
     }
   } 
   
-  # Create the filename for the pointblank .R file
-  file_name <- resolve_file_filename(agent = agent, name = name)
+  # Create the filename for the pointblank file
+  file_name <- 
+    resolve_file_filename(
+      agent = agent,
+      name = name,
+      output_type = output_type
+    )
   
   if (is.null(path)) {
     file_path <- "."
@@ -136,7 +143,7 @@ draft_validation_plan <- function(tbl,
   # write the new file if `overwrite` is FALSE
   if (fs::file_exists(path) && !overwrite) {
     stop(
-      "The .R file of the same name already exists:\n",
+      "A file of the same name already exists:\n",
       "* set `overwrite` to `TRUE`, or\n",
       "* choose a different `name`, or\n",
       "* define another `path` for the file",
@@ -150,7 +157,7 @@ draft_validation_plan <- function(tbl,
   # Extract all briefs from the validation steps
   briefs <- agent$validation_set$brief
   
-  # Extract all R expressions for the .R file
+  # Extract all R expressions for the file
   agent_exprs <- agent_get_exprs(agent = agent, expanded = TRUE)
   
   agent_exprs <-
@@ -194,14 +201,39 @@ draft_validation_plan <- function(tbl,
       collapse = ""
     )
   
-  file_content <-
-    paste0(
-      "library(pointblank)\n\n",
-      agent_lines,
-      "%>%\n  interrogate()\n",
-      collapse = ""
-    ) %>%
-    gsub("  %>%", " %>%", .)
+  if (output_type == "R") {
+    
+    file_content <-
+      paste0(
+        "library(pointblank)\n\n",
+        agent_lines,
+        "%>%\n  interrogate()\n",
+        collapse = ""
+      ) %>%
+      gsub("  %>%", " %>%", .)
+    
+  } else {
+    
+    file_content <-
+      paste0(
+        "---\n",
+        "title: \"", ifelse(is.null(name), "Untitled", name), "\"\n",
+        "output: html_document\n",
+        "---\n",
+        "\n",
+        "```{r setup, include=FALSE}\n",
+        "knitr::opts_chunk$set(echo = TRUE)\n",
+        "library(pointblank)\n",
+        "```\n",
+        "\n\n",
+        "```{r validation_plan}\n",
+        agent_lines,
+        "%>%\n  interrogate()\n",
+        "```\n",
+        collapse = ""
+      ) %>%
+      gsub("  %>%", " %>%", .)
+  }
   
   # Write the testthat file to the resulting `path`
   pb_write_file(
@@ -213,7 +245,9 @@ draft_validation_plan <- function(tbl,
   # Generate cli message w.r.t. written YAML file
   if (!quiet) {
     cli_bullet_msg(
-      msg = "The pointblank .R file has been written to `{path}`",
+      msg = paste0(
+        "The pointblank .", output_type," file has been written to `{path}`"
+        ),
       bullet = cli::symbol$tick,
       color = "green"
     )
@@ -338,12 +372,14 @@ add_col_val_steps_with_role <- function(agent, column, column_role) {
 
 
 resolve_file_filename <- function(agent,
-                                  name) {
+                                  name,
+                                  output_type) {
   
   if (is.null(name)) {
     
     sys_time <- format(Sys.time(), format = "%Y_%m_%d_%I_%M_%p")
-    file_name <- paste0("draft_validation_plan_", sys_time, ".R")
+    file_name <- 
+      paste0("draft_validation_plan_", sys_time, ".", output_type)
     
   } else {
     
@@ -358,7 +394,7 @@ resolve_file_filename <- function(agent,
       name[1] %>%
       fs::path_sanitize() %>%
       gsub("(\\.| |'|:)", "_", .) %>%
-      paste0(., ".R")
+      paste0(., ".", output_type)
   }
   
   file_name

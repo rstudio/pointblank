@@ -138,7 +138,7 @@ draft_validation_plan <- function(tbl,
     file_path <- path
   }
   
-  # Create path that contains the testthat test file name
+  # Create path that contains the file
   path <- as.character(fs::path_norm(fs::path_wd(file_path, file_name)))
   
   # Check if the file to write already exists; if it does, don't
@@ -237,18 +237,18 @@ draft_validation_plan <- function(tbl,
       gsub("  %>%", " %>%", .)
   }
   
-  # Write the testthat file to the resulting `path`
+  # Write the file to the resulting `path`
   pb_write_file(
     path = path,
     lines = file_content,
     append = FALSE
   )
   
-  # Generate cli message w.r.t. written YAML file
+  # Generate cli message
   if (!quiet) {
     cli_bullet_msg(
       msg = paste0(
-        "The pointblank .", output_type," file has been written to `{path}`"
+        "The pointblank .", output_type, " file has been written to `{path}`"
         ),
       bullet = cli::symbol$tick,
       color = "green"

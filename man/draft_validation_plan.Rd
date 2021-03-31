@@ -2,12 +2,15 @@
 % Please edit documentation in R/draft_validation_plan.R
 \name{draft_validation_plan}
 \alias{draft_validation_plan}
-\title{Draft a starter \strong{pointblank} validation .R script with a data table}
+\title{Draft a starter \strong{pointblank} validation .R/.Rmd file with a data table}
 \usage{
 draft_validation_plan(
   tbl,
   name = NULL,
   path = NULL,
+  lang = NULL,
+  output_type = c("R", "Rmd"),
+  add_comments = TRUE,
   overwrite = FALSE,
   quiet = FALSE
 )
@@ -16,15 +19,25 @@ draft_validation_plan(
 \item{tbl}{The input table. This can be a data frame, tibble, a \code{tbl_dbi}
 object, or a \code{tbl_spark} object.}
 
-\item{name}{An optional name for the .R file. This should be a name without
-an extension. If nothing is supplied, the name will contain the text
-\code{"draft_validation_plan_"} followed by the current date and time.}
+\item{name}{An optional name for the .R or .Rmd file. This should be a name
+without an extension. If nothing is supplied, the name will contain the
+text \code{"draft_validation_plan_"} followed by the current date and time.}
 
 \item{path}{A path can be specified here if there shouldn't be an attempt to
-place the .R file in the working directory.}
+place the generated file in the working directory.}
 
-\item{overwrite}{Should an .R file of the same name be overwritten?
-By default, this is \code{FALSE}.}
+\item{lang}{The language to use when creating comments for the automatically-
+generated validation steps. By default, \code{NULL} will create English (\code{"en"})
+text. Other options include French (\code{"fr"}), German (\code{"de"}), Italian
+(\code{"it"}), Spanish (\code{"es"}), Portuguese, (\code{"pt"}), Chinese (\code{"zh"}), Russian
+(\code{"ru"}), and Danish (\code{"da"}).}
+
+\item{output_type}{An option for choosing what type of output should be
+generated. By default, this is an .R script (\code{"R"}) but this could
+alternatively be an R Markdown document (\code{"Rmd"}).}
+
+\item{overwrite}{Should a file of the same name be overwritten? By default,
+this is \code{FALSE}.}
 
 \item{quiet}{Should the function \emph{not} inform when the file is written? By
 default this is \code{FALSE}.}
@@ -33,13 +46,13 @@ default this is \code{FALSE}.}
 Invisibly returns \code{TRUE} if the file has been written.
 }
 \description{
-Generate a draft validation plan in a new .R file using an input data table.
-Using this workflow, the data table will be scanned to learn about its column
-data and a set of starter validation steps (constituting a validation plan)
-will be written. It's best to use a data extract that contains at least 1000
-rows and is relatively free of spurious data.
+Generate a draft validation plan in a new .R or .Rmd file using an input data
+table. Using this workflow, the data table will be scanned to learn about its
+column data and a set of starter validation steps (constituting a validation
+plan) will be written. It's best to use a data extract that contains at least
+1000 rows and is relatively free of spurious data.
 
-Once in the .R file, it's possible to tweak the validation steps to better
+Once in the file, it's possible to tweak the validation steps to better
 fit the expectations to the particular domain. While column inference is used
 to generate reasonable validation plans, it is difficult to infer the
 acceptable values without domain expertise. However, using

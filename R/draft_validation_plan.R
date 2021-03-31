@@ -49,6 +49,8 @@
 #' @param output_type An option for choosing what type of output should be
 #'   generated. By default, this is an .R script (`"R"`) but this could
 #'   alternatively be an R Markdown document (`"Rmd"`).
+#' @param add_comments Should there be comments that explain the features of the
+#'   validation plan in the generated document? By default, this is `TRUE`.
 #' @param overwrite Should a file of the same name be overwritten? By default,
 #'   this is `FALSE`.
 #' @param quiet Should the function *not* inform when the file is written? By

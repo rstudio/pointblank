@@ -36,6 +36,9 @@ text. Other options include French (\code{"fr"}), German (\code{"de"}), Italian
 generated. By default, this is an .R script (\code{"R"}) but this could
 alternatively be an R Markdown document (\code{"Rmd"}).}
 
+\item{add_comments}{Should there be comments that explain the features of the
+validation plan in the generated document? By default, this is \code{TRUE}.}
+
 \item{overwrite}{Should a file of the same name be overwritten? By default,
 this is \code{FALSE}.}
 

@@ -300,6 +300,10 @@ add_valdn_steps_with_role <- function(agent, column, column_role) {
     }
   }
   
+  if (column_role == "integer.discrete") {
+    agent <- col_is_integer(agent, columns = {{ column }})
+  }
+  
   if (column_role == "boolean.logical.categorical") {
     agent <- col_is_logical(agent, columns = {{ column }})
   }

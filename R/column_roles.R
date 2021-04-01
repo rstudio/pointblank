@@ -59,7 +59,8 @@ get_column_roles <- function(data) {
 get_non_null_col_sample <- function(data_column,
                                     sample_type = c("first_n", "random_n"),
                                     sample_n = 1000,
-                                    sample_min_n = 1) {
+                                    sample_min_n = 1,
+                                    make_distinct = FALSE) {
   
   sample_type <- match.arg(sample_type)
   
@@ -79,6 +80,10 @@ get_non_null_col_sample <- function(data_column,
     data_column <- utils::head(data_column, sample_n)
   } else {
     data_column <- dplyr::slice_sample(data_column, n = sample_n)
+  }
+  
+  if (make_distinct) {
+    data_column <- dplyr::distinct(data_column)
   }
   
   # Count the values in the column and return `NULL` if it the

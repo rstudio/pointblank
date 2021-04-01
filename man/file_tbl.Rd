@@ -193,6 +193,7 @@ Other Planning and Prep:
 \code{\link{create_agent}()},
 \code{\link{create_informant}()},
 \code{\link{db_tbl}()},
+\code{\link{draft_validation}()},
 \code{\link{scan_data}()},
 \code{\link{tbl_get}()},
 \code{\link{tbl_source}()},

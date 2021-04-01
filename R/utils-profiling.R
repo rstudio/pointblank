@@ -108,7 +108,7 @@ get_table_column_inf_values <- function(data_column) {
 # (must be a table with a single column)
 # - works across all supported data sources
 # - returns 'tibble' of 1 row, 3 columns
-get_table_column_summary <- function(data_column) {
+get_table_column_summary <- function(data_column, round = 2) {
   
   data_column %>%
     dplyr::summarize_all(
@@ -119,7 +119,7 @@ get_table_column_summary <- function(data_column) {
       )
     ) %>%
     dplyr::collect() %>%
-    dplyr::summarize_all(~ round(., 2)) %>%
+    dplyr::summarize_all(~ round(., round)) %>%
     dplyr::mutate_all(.funs = as.numeric)
 }
 

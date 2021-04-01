@@ -120,7 +120,11 @@ draft_validation <- function(tbl,
   
   # Try to infer the table name from `tbl`
   if (!is.null(tbl)) {
+    
     read_fn_name <- deparse(match.call()$tbl)
+    read_fn_name <- gsub("^\\s+", "", read_fn_name)
+    read_fn_name <- paste(read_fn_name, collapse = "")
+    
     if (read_fn_name == ".") {
       read_fn_name <- NA_character_
     }

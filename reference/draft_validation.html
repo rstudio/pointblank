@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Obtain a materialized table via a table store — tbl_get • pointblank</title>
+<title>Draft a starter pointblank validation .R/.Rmd file with a data table — draft_validation • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,16 +46,18 @@
 
 
 
-<meta property="og:title" content="Obtain a materialized table via a table store — tbl_get" />
-<meta property="og:description" content="The tbl_get() function gives us the means to materialize a table that has
-an entry in a table store (i.e., has a table-prep formula with a unique
-name). The table store that is used for this can be in the form of a
-tbl_store object (created with the tbl_store() function) or an on-disk
-YAML representation of a table store (created by using yaml_write() with a
-tbl_store object).
-Should you want a table-prep formula from a table store to use as a value for
-read_fn (in create_agent(), create_informant(), or set_read_fn()),
-then have a look at the tbl_source() function." />
+<meta property="og:title" content="Draft a starter pointblank validation .R/.Rmd file with a data table — draft_validation" />
+<meta property="og:description" content="Generate a draft validation plan in a new .R or .Rmd file using an input data
+table. Using this workflow, the data table will be scanned to learn about its
+column data and a set of starter validation steps (constituting a validation
+plan) will be written. It's best to use a data extract that contains at least
+1000 rows and is relatively free of spurious data.
+Once in the file, it's possible to tweak the validation steps to better fit
+the expectations to the particular domain. While column inference is used to
+generate reasonable validation plans, it is difficult to infer the acceptable
+values without domain expertise. However, using draft_validation() could
+get you started on floor 10 of tackling data quality issues and is in any
+case better than starting with an empty code editor view." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -159,50 +161,104 @@ then have a look at the tbl_source() function." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Obtain a materialized table via a table store</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/tbl_store.R'><code>R/tbl_store.R</code></a></small>
-    <div class="hidden name"><code>tbl_get.Rd</code></div>
+    <h1>Draft a starter <strong>pointblank</strong> validation .R/.Rmd file with a data table</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/draft_validation.R'><code>R/draft_validation.R</code></a></small>
+    <div class="hidden name"><code>draft_validation.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>tbl_get()</code> function gives us the means to materialize a table that has
-an entry in a table store (i.e., has a table-prep formula with a unique
-name). The table store that is used for this can be in the form of a
-<code>tbl_store</code> object (created with the <code><a href='tbl_store.html'>tbl_store()</a></code> function) or an on-disk
-YAML representation of a table store (created by using <code><a href='yaml_write.html'>yaml_write()</a></code> with a
-<code>tbl_store</code> object).</p>
-<p>Should you want a table-prep formula from a table store to use as a value for
-<code>read_fn</code> (in <code><a href='create_agent.html'>create_agent()</a></code>, <code><a href='create_informant.html'>create_informant()</a></code>, or <code><a href='set_read_fn.html'>set_read_fn()</a></code>),
-then have a look at the <code><a href='tbl_source.html'>tbl_source()</a></code> function.</p>
+    <p>Generate a draft validation plan in a new .R or .Rmd file using an input data
+table. Using this workflow, the data table will be scanned to learn about its
+column data and a set of starter validation steps (constituting a validation
+plan) will be written. It's best to use a data extract that contains at least
+1000 rows and is relatively free of spurious data.</p>
+<p>Once in the file, it's possible to tweak the validation steps to better fit
+the expectations to the particular domain. While column inference is used to
+generate reasonable validation plans, it is difficult to infer the acceptable
+values without domain expertise. However, using <code>draft_validation()</code> could
+get you started on floor 10 of tackling data quality issues and is in any
+case better than starting with an empty code editor view.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tbl_get</span><span class='op'>(</span><span class='va'>tbl</span>, store <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>draft_validation</span><span class='op'>(</span>
+  <span class='va'>tbl</span>,
+  tbl_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  file_name <span class='op'>=</span> <span class='va'>tbl_name</span>,
+  path <span class='op'>=</span> <span class='cn'>NULL</span>,
+  lang <span class='op'>=</span> <span class='cn'>NULL</span>,
+  output_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"R"</span>, <span class='st'>"Rmd"</span><span class='op'>)</span>,
+  add_comments <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  overwrite <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tbl</th>
-      <td><p>The table to retrieve from a table <code>store</code>. This table could be
-identified by its name (e.g., <code>tbl = "large_table"</code>) or by supplying a
-reference using a subset (with <code><a href='https://rdrr.io/r/base/Extract.html'>$</a></code>) of the <code>tbl_store</code> object (e.g., <code>tbl = store$large_table</code>). If using the latter method then nothing needs to be
-supplied to <code>store</code>.</p></td>
+      <td><p>The input table. This can be a data frame, tibble, a <code>tbl_dbi</code>
+object, or a <code>tbl_spark</code> object.</p></td>
     </tr>
     <tr>
-      <th>store</th>
-      <td><p>Either a table store object created by the <code><a href='tbl_store.html'>tbl_store()</a></code>
-function or a path to a table store YAML file created by <code><a href='yaml_write.html'>yaml_write()</a></code>.</p></td>
+      <th>tbl_name</th>
+      <td><p>A optional name to assign to the input table object. If no
+value is provided, a name will be generated based on whatever information
+is available. This table name will be displayed in the header area of the
+agent report generated by printing the <em>agent</em> or calling
+<code><a href='get_agent_report.html'>get_agent_report()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>file_name</th>
+      <td><p>An optional name for the .R or .Rmd file. This should be a
+name without an extension. By default, this is taken from the <code>tbl_name</code>
+but if nothing is supplied for that, the name will contain the text
+<code>"draft_validation_"</code> followed by the current date and time.</p></td>
+    </tr>
+    <tr>
+      <th>path</th>
+      <td><p>A path can be specified here if there shouldn't be an attempt to
+place the generated file in the working directory.</p></td>
+    </tr>
+    <tr>
+      <th>lang</th>
+      <td><p>The language to use when creating comments for the automatically-
+generated validation steps. By default, <code>NULL</code> will create English (<code>"en"</code>)
+text. Other options include French (<code>"fr"</code>), German (<code>"de"</code>), Italian
+(<code>"it"</code>), Spanish (<code>"es"</code>), Portuguese, (<code>"pt"</code>), Chinese (<code>"zh"</code>), Russian
+(<code>"ru"</code>), and Danish (<code>"da"</code>).</p></td>
+    </tr>
+    <tr>
+      <th>output_type</th>
+      <td><p>An option for choosing what type of output should be
+generated. By default, this is an .R script (<code>"R"</code>) but this could
+alternatively be an R Markdown document (<code>"Rmd"</code>).</p></td>
+    </tr>
+    <tr>
+      <th>add_comments</th>
+      <td><p>Should there be comments that explain the features of the
+validation plan in the generated document? By default, this is <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>overwrite</th>
+      <td><p>Should a file of the same name be overwritten? By default,
+this is <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Should the function <em>not</em> inform when the file is written? By
+default this is <code>FALSE</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A table object.</p>
+    <p>Invisibly returns <code>TRUE</code> if the file has been written.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
 
-<p>1-10</p>
+<p>1-11</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Planning and Prep: 
@@ -210,9 +266,9 @@ function or a path to a table store YAML file created by <code><a href='yaml_wri
 <code><a href='create_agent.html'>create_agent</a>()</code>,
 <code><a href='create_informant.html'>create_informant</a>()</code>,
 <code><a href='db_tbl.html'>db_tbl</a>()</code>,
-<code><a href='draft_validation.html'>draft_validation</a>()</code>,
 <code><a href='file_tbl.html'>file_tbl</a>()</code>,
 <code><a href='scan_data.html'>scan_data</a>()</code>,
+<code><a href='tbl_get.html'>tbl_get</a>()</code>,
 <code><a href='tbl_source.html'>tbl_source</a>()</code>,
 <code><a href='tbl_store.html'>tbl_store</a>()</code>,
 <code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
@@ -220,50 +276,9 @@ function or a path to a table store YAML file created by <code><a href='yaml_wri
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 
-<span class='co'># Define a `tbl_store` object by adding</span>
-<span class='co'># table-prep formulas in `tbl_store()`</span>
-<span class='va'>tbls</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='tbl_store.html'>tbl_store</a></span><span class='op'>(</span>
-    <span class='va'>small_table_duck</span> <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span>
-      table <span class='op'>=</span> <span class='va'>small_table</span>,
-      dbname <span class='op'>=</span> <span class='st'>":memory:"</span>,
-      dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span>
-    <span class='op'>)</span>,
-    <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span>
-      table <span class='op'>=</span> <span class='st'>"rna"</span>,
-      dbname <span class='op'>=</span> <span class='st'>"pfmegrnargs"</span>,
-      dbtype <span class='op'>=</span> <span class='st'>"postgres"</span>,
-      host <span class='op'>=</span> <span class='st'>"hh-pgsql-public.ebi.ac.uk"</span>,
-      port <span class='op'>=</span> <span class='fl'>5432</span>,
-      user <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='st'>"reader"</span><span class='op'>)</span>,
-      password <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='st'>"NWDMCE5xdipIjRrp"</span><span class='op'>)</span>
-    <span class='op'>)</span>,
-    <span class='va'>all_revenue</span> <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span>
-      table <span class='op'>=</span> <span class='fu'><a href='file_tbl.html'>file_tbl</a></span><span class='op'>(</span>
-        file <span class='op'>=</span> <span class='fu'><a href='from_github.html'>from_github</a></span><span class='op'>(</span>
-          file <span class='op'>=</span> <span class='st'>"all_revenue_large.rds"</span>,
-          repo <span class='op'>=</span> <span class='st'>"rich-iannone/intendo"</span>,
-          subdir <span class='op'>=</span> <span class='st'>"data-large"</span>
-        <span class='op'>)</span>
-      <span class='op'>)</span>,
-      dbname <span class='op'>=</span> <span class='st'>":memory:"</span>,
-      dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span>
-    <span class='op'>)</span>,
-    <span class='va'>sml_table</span> <span class='op'>~</span> <span class='fu'>pointblank</span><span class='fu'>::</span><span class='va'><a href='small_table.html'>small_table</a></span>
-  <span class='op'>)</span>
-
-<span class='co'># Once this object is available, you can</span>
-<span class='co'># check that the table of interest is</span>
-<span class='co'># produced to your specification</span>
-<span class='fu'>tbl_get</span><span class='op'>(</span>
-  tbl <span class='op'>=</span> <span class='st'>"small_table_duck"</span>,
-  store <span class='op'>=</span> <span class='va'>tbls</span>
-<span class='op'>)</span>
-
-<span class='co'># An alternative method for getting the</span>
-<span class='co'># same table materialized is by using `$`</span>
-<span class='co'># to get the formula of choice from `tbls`</span>
-<span class='va'>tbls</span><span class='op'>$</span><span class='va'>small_table_duck</span> <span class='op'>%&gt;%</span> <span class='fu'>tbl_get</span><span class='op'>(</span><span class='op'>)</span>
+<span class='co'># Draft validation plan for the</span>
+<span class='co'># `dplyr::storms` dataset</span>
+<span class='fu'>draft_validation</span><span class='op'>(</span>tbl <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/storms.html'>storms</a></span><span class='op'>)</span>
 
 <span class='op'>}</span>
 

@@ -25,7 +25,7 @@ reference:
     - tbl_store
     - tbl_source
     - tbl_get
-    - draft_validation_plan
+    - draft_validation
 
   - title: Validation, Expectation, and Test Functions
     desc: >

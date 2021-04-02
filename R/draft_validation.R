@@ -50,7 +50,7 @@
 #'   generated validation steps. By default, `NULL` will create English (`"en"`)
 #'   text. Other options include French (`"fr"`), German (`"de"`), Italian
 #'   (`"it"`), Spanish (`"es"`), Portuguese, (`"pt"`), Chinese (`"zh"`), Russian
-#'   (`"ru"`), Danish (`"da"`), and Swedish (`"sv"`).
+#'   (`"ru"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
 #' @param output_type An option for choosing what type of output should be
 #'   generated. By default, this is an .R script (`"R"`) but this could
 #'   alternatively be an R Markdown document (`"Rmd"`).

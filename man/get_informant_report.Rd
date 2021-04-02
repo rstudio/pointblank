@@ -34,9 +34,9 @@ transformed.}
 that provides the validation plan and the results from the interrogation.
 By default, \code{NULL} will create English (\code{"en"}) text. Other options include
 French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish (\code{"es"}),
-Portuguese, (\code{"pt"}), Chinese (\code{"zh"}), Russian (\code{"ru"}), and Danish
-(\code{"da"}). This \code{lang} option will override any previously set language
-setting (e.g., by the \code{\link[=create_agent]{create_agent()}} call).}
+Portuguese, (\code{"pt"}), Chinese (\code{"zh"}), Russian (\code{"ru"}), Danish (\code{"da"}),
+and Swedish (\code{"sv"}). This \code{lang} option will override any previously set
+language setting (e.g., by the \code{\link[=create_agent]{create_agent()}} call).}
 
 \item{locale}{An optional locale ID to use for formatting values in the
 \emph{information report} summary table according the locale's rules. Examples

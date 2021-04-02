@@ -10,6 +10,7 @@ autobriefs:
     ru: "Применяемое предварительное условие"
     da: "Forudsætning anvendt"
     sv: "Antagande används"
+    nl: "Voorwaarde toegepast"
   column_computed_text:
     en: "computed column"
     fr: "colonne calculée"
@@ -21,6 +22,7 @@ autobriefs:
     ru: "Вычисленный столбец"
     da: "beregnet kolonne"
     sv: "beräknad kolumn"
+    nl: "berekende kolom"
   values_text:
     en: "and {num_omitted} more"
     fr: "et {num_omitted} de plus"
@@ -32,6 +34,7 @@ autobriefs:
     ru: "И {num_omitted} больше"
     da: "og {num_omitted} flere"
     sv: "och {num_omitted} till"
+    nl: "en {num_omitted} meer"
   compare_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be {operator} {values_text}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} soient {operator} {values_text}."
@@ -43,6 +46,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны быть {operator} {values_text}."
     da: "Forvent at værdier i {column_text} {column_computed_text} er {operator} {values_text}."
     sv: "Förvänta dig att värden i {column_text} {column_computed_text} är {operator} {values_text}."
+    nl: "Verwacht dat waarden in {column_text} {column_computed_text} {operator} {values_text} moeten zijn."
   compare_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have been {operator} {values_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû être {operator} {values_text}."
@@ -54,6 +58,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были быть {operator} {values_text}."
     da: "Overskridelse af fejlslagne test enheder hvor værdier i {column_text} skulle have været {operator} {values_text}."
     sv: "Överskrider misslyckade testenheter där värden i {column_text} borde ha varit {operator} {values_text}."
+    nl: "Overschrijding van mislukte testeenheden, waar de waarden in {column_text} {operator} {values_text} zouden moeten zijn."
   in_set_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be in the set of {values_text}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} soient dans l'ensemble de {values_text}."
@@ -65,6 +70,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны быть в наборе {values_text}."
     da: "Forvent at værdier i {column_text} {column_computed_text} findes blandt {values_text}."
     sv: "Förvänta dig att värden i {column_text} {column_computed_text} finns bland {values_text}."
+    nl: "Verwacht dat de waarden in {column_text} {column_computed_text} in de set {values_text} moeten staan."
   in_set_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have been in the set of {values_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû être dans l'ensemble de {values_text}."
@@ -76,6 +82,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были быть в наборе {values_text}."
     da: "Overskridelse af fejlslagne testenheder, hvor værdier i {column_text} skulle have været blandt {values_text}."
     sv: "Överskrider misslyckade testenheter där värden i {column_text} borde ha varit bland {values_text}."
+    nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} in de set van {values_text} hadden moeten staan."
   make_set_expectation_text:
     en: "Expect that values in {values_text} exactly match the unique set of values in {column_text} {column_computed_text}."
     fr: "Attendez-vous à ce que les valeurs de {values_text} correspondent exactement à l'ensemble unique de valeurs de {column_text} {column_computed_text}."
@@ -87,6 +94,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {values_text} точно соответствуют уникальному набору значений в {column_text} {column_computed_text}."
     da: "Forvent at værdier i {values_text} præcist stemmer overens med det unikke sæt af værdier i {column_text} {column_computed_text}."
     sv: "Förvänta dig att värden i {values_text} exakt matchar den unika uppsättningen värden i {column_text} {column_computed_text}."
+    nl: "Verwacht dat de waarden in {values_text} exact overeenkomen met de unieke waarden in {column_text} {column_computed_text}."
   make_set_failure_text:
     en: "Exceedance of failed test units where values in {values_text} should have exactly matched the unique set of values in {column_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs de {values_text} devraient correspondre exactement à l'ensemble unique de valeurs dans {column_text}."
@@ -98,6 +106,7 @@ autobriefs:
     ru: "Превышение количества неудачных тестовых единиц, где значения в {values_text} должны точно соответствовать уникальному набору значений в {column_text}."
     da: "Overskridelse af fejlslagne testenheder, hvor der skulle have været overensstemmelse imellem værdierne i {values_text} og det unikke sæt af værdier i {column_text}."
     sv: "Överskrider misslyckade testenheter där det borde ha varit en matchning mellan värdena i {values_text} och den unika värdena i {column_text}."
+    nl: "Overschrijding van mislukte testeenheden waarbij waarden in {values_text} exact overeen moesten komen met de unieke set waarden in {column_text}."
   make_subset_expectation_text:
     en: "Expect that values in {values_text} are a subset of the unique set of values in {column_text} {column_computed_text}."
     fr: "Attendez-vous à ce que les valeurs de {values_text} soient un sous-ensemble de l'ensemble unique de valeurs de {column_text} {column_computed_text}."
@@ -109,6 +118,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {values_text} являются подмножеством уникального набора значений в {column_text} {column_computed_text}. "
     da: "Forvent at værdierne i {values_text} er en delmængde af de unikke værdier {column_text} {column_computed_text}."
     sv: "Förvänta dig att värdena i {values_text} ska vara en delmängd av de unika värdena {column_text} {column_computed_text}."
+    nl: "Verwacht dat de waarden in {values_text} een subset zijn van de unieke set waarden in {column_text} {column_computed_text}."
   make_subset_failure_text:
     en: "Exceedance of failed test units where values in {values_text} should have been a subset of the unique set of values in {column_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs de {values_text} auraient dû être un sous-ensemble de l'ensemble unique de valeurs de {column_text}."
@@ -120,6 +130,7 @@ autobriefs:
     ru: "Превышение количества неудачных тестовых единиц, где значения в {values_text} должны были быть подмножеством уникального набора значений в {column_text}."
     da: "Overskridelse af fejlslagne testenheder hvor værdierne i {values_text} skulle have været en delmængde af de unikke værdier i {column_text}."
     sv: "Överskrider misslyckade testenheter där värdena i {values_text} borde ha varit en delmängd av de unika värdena i {column_text}."
+    nl: "Overschrijding van mislukte testeenheden waarbij waarden in {values_text} een subset hadden moeten zijn van de unieke set waarden in {column_text}."
   not_in_set_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should not be in the set of {values_text}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} ne soient pas dans l'ensemble de {values_text}."
@@ -131,6 +142,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} не должны быть в наборе {values_text}."
     da: "Forvent at værdierne i {column_text} {column_computed_text} ikke er blandt værdierne i {values_text}."
     sv: "Förvänta dig att värdena i {column_text} {column_computed_text} inte ska vara bland värdena i {values_text}."
+    nl: "Verwacht dat de waarden in {column_text} {column_computed_text} niet in de set van {values_text} mogen voorkomen."
   not_in_set_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should not have been in the set of {values_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} n'auraient pas dû être dans l'ensemble de {values_text}."
@@ -142,6 +154,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} не должны были быть в наборе {values_text}."
     da: "Overskridelse af fejlslagne testenheder, hvor værdierne i {column_text} ikke skulle være blandt værdierne i {values_text}."
     sv: "Överskrider misslyckade testenheter där värdena i {column_text} inte ska vara bland värdena i {values_text}."
+    nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} niet in de set van {values_text} hadden mogen staan."
   between_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be between {value_1} and {value_2}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} soient comprises entre {value_1} et {value_2}."
@@ -153,6 +166,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны находиться между {value_1} и {value_2}."
     da: "Forvent at værdierne i {column_text} {column_computed_text} skal være imellem {value_1} og {value_2}."
     sv: "Förvänta dig att värdena i {column_text} {column_computed_text} ligger mellan {value_1} och {value_2}."
+    nl: "Verwacht dat de waarden in {column_text} {column_computed_text} tussen {value_1} en {value_2} moeten liggen."
   between_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have been between {value_1} and {value_2}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû être comprises entre {value_1} et {value_2}."
@@ -164,6 +178,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были находиться между {value_1} и {value_2}."
     da: "Overskridelse af fejlslagne testenheder, hvor værdierne i {column_text} skulle have været imellem {value_1} og {value_2}."
     sv: "Överskrider misslyckade testenheter där värdena i {column_text} borde ha varit mellan {value_1} och {value_2}."
+    nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} tussen {value_1} en {value_2} hadden moeten liggen."
   not_between_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should not be between {value_1} and {value_2}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} ne soient pas comprises entre {value_1} et {value_2}."
@@ -175,6 +190,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} не должны находиться между {value_1} и {value_2}."
     da: "Forvent at værdier i {column_text} {column_computed_text} er imellem {value_1} og {value_2}."
     sv: "Förvänta dig att värdena i {column_text} {column_computed_text} ligger mellan {value_1} och {value_2}."
+    nl: "Verwacht dat de waarden in {column_text} {column_computed_text} niet tussen {value_1} en {value_2} mogen liggen."
   not_between_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should not have been between {value_1} and {value_2}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} n'auraient pas dû être comprises entre {value_1} et {value_2}."
@@ -186,6 +202,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} не должны были находиться между {value_1} и {value_2}."
     da: "Overskridelse af testenheder, hvor værdierne i {column_text} ikke skulle have været imellem {value_1} og {value_2}."
     sv: "Överskrider testenheter där värdena i {column_text} inte borde ha varit mellan {value_1} och {value_2}."
+    nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} niet tussen {value_1} en {value_2} mogen liggen."
   null_expectation_text:
     en: "Expect that all values in {column_text} {column_computed_text} should be NULL."
     fr: "Attendez-vous à ce que toutes les valeurs de {column_text} {column_computed_text} soient NULL."
@@ -197,6 +214,7 @@ autobriefs:
     ru: "Ожидайте, что все значения в {column_text} {column_computed_text} должны быть NULL."
     da: "Forvent at all værdier i {column_text} {column_computed_text} er NULL."
     sv: "Förvänta dig att alla värden i {column_text} {column_computed_text} är NULL."
+    nl: "Verwacht dat alle waarden in {column_text} {column_computed_text} NULL moeten zijn."
   null_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have been NULL."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû être NULL."
@@ -208,6 +226,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были быть NULL."
     da: "Overskridelse af testenheder, hvor værdierne i {column_text} skulle have været NULL."
     sv: "Överskrider testenheter där värdena i {column_text} borde ha varit NULL."
+    nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} NULL hadden moeten zijn."
   not_null_expectation_text:
     en: "Expect that all values in {column_text} {column_computed_text} should not be NULL."
     fr: "Attendez-vous à ce que toutes les valeurs de {column_text} {column_computed_text} ne soient pas NULL."
@@ -219,6 +238,7 @@ autobriefs:
     ru: "Ожидайте, что все значения в {column_text} {column_computed_text} не должны быть NULL."
     da: "Forvent at ingen af værdierne i {column_text} {column_computed_text} er NULL."
     sv: "Förvänta dig att inget av värdena i {column_text} {column_computed_text} ska vara NULL."
+    nl: "Verwacht dat alle waarden in {column_text} {column_computed_text} niet NULL mogen zijn."
   not_null_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should not have been NULL."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} n'auraient pas dû être NULL."
@@ -230,6 +250,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} не должны были быть NULL."
     da: "Overskridelse af antallet af fejlslagne testenheder, hvor ingen af værdierne i {column_text} skulle have været NULL."
     sv: "Överskrider antalet misslyckade testenheter där inget av värdena i {column_text} borde ha varit NULL."
+    nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} niet NULL hadden mogen zijn."
   increasing_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be increasing."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} augmentent."
@@ -241,6 +262,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны увеличиваться."
     da: "Forvent at værdierne i {column_text} {column_computed_text} er i stigende orden."
     sv: "Förvänta dig att värdena i {column_text} {column_computed_text} ska vara i stigande ordning."
+    nl: "Verwacht dat de waarden in {column_text} {column_computed_text} toenemen."
   increasing_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should be increasing."
     fr: "Dépassement des unités de test ayant échoué où les valeurs de {column_text} devraient augmenter."
@@ -252,6 +274,7 @@ autobriefs:
     ru: "Превышение количества неудачных тестовых единиц, где значения в {column_text} должны увеличиваться."
     da: "Overskridelse af antallet af fejlslagne testenheder, hvor værdierne i {column_text} skulle være i stigende orden."
     sv: "Överskrider antalet misslyckade testenheter där värdena i {column_text} ska vara i stigande ordning."
+    nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} zouden moeten toenemen."
   decreasing_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be decreasing."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} diminuent."
@@ -263,6 +286,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны уменьшаться."
     da: "Forvent at værdierne i {column_text} {column_computed_text} er i faldende orden."
     sv: "Förvänta dig att värdena i {column_text} {column_computed_text} ska vara i fallande ordning."
+    nl: "Verwacht dat de waarden in {column_text} {column_computed_text} afnemen."
   decreasing_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should be decreasing."
     fr: "Dépassement des unités de test ayant échoué où les valeurs de {column_text} devraient diminuer."
@@ -274,6 +298,7 @@ autobriefs:
     ru: "Превышение количества неудачных тестовых единиц, где значения в {column_text} должны уменьшаться."
     da: "Overskridelse af antallet af fejlslagne testenheder, hvor værdierne i {column_text} skulle være i faldende orden."
     sv: "Överskrider antalet misslyckade testenheter där värdena i {column_text} ska vara i fallande ordning."
+    nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} zouden moeten afnemen."
   col_vals_expr_expectation_text:
     en: "Expect that values should agree with the given R expression."
     fr: "Attendez-vous à ce que les valeurs soient en accord avec l'expression R donnée."
@@ -285,6 +310,7 @@ autobriefs:
     ru: "Ожидайте, что значения должны совпадать с заданным выражением R."
     da: "Forvent at værdier er i overensstemmelse med den pågældende R udtryk."
     sv: "Förvänta dig att värden överensstämmer med det R-uttrycket."
+    nl: "Verwacht dat de waarden overeenkomen met de gegeven R-uitdrukking."
   col_vals_expr_failure_text:
     en: "Exceedance of failed test units where values should have agreed with the given R expression."
     fr: "Dépassement des unités de test ayant échoué les valeurs auraient dû correspondre à l'expression R donnée."
@@ -296,6 +322,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения должны были быть согласованы с заданным выражением R."
     da: "Overskridelse af antallet af fejlslagne testenheder, hvor værdier skulle have været i overensstemmelse med det pågældende R udtryk."
     sv: "Överstiger antalet misslyckade testenheter där värden borde ha varit i enlighet med relevant R-uttryck."
+    nl: "Overschrijding van mislukte testeenheden waarbij waarden overeen hadden moeten komen met de gegeven R-uitdrukking."
   regex_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should match the regular expression: {values_text}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} correspondent à l'expression régulière: {values_text}."
@@ -307,6 +334,7 @@ autobriefs:
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны соответствовать регулярному выражению: {values_text}."
     da: "Forvent at værdierne i {column_text} {column_computed_text} stemmer overens med følgende regular expression: {values_text}."
     sv: "Förvänta dig att värdena i {column_text} {column_computed_text} ska matcha följande reguljära uttryck: {values_text}."
+    nl: "Verwacht dat de waarden in {column_text} {column_computed_text} overeenkomen met de reguliere expressie {values_text}."
   regex_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have matched the regular expression: {values_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû correspondre à l'expression régulière: {values_text}."
@@ -318,6 +346,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были соответствовать регулярному выражению: {values_text}."
     da: "Overskridelse af antallet af fejlslagne testenheder, hvor værdier {column_text} skulle have været i overensstemmelse med følgende regular expression: {values_text}."
     sv: "Överskrider antalet misslyckade testenheter där värden {column_text} borde ha matchat följande reguljära uttryck: {values_text}."
+    nl: "Overschrijding van mislukte testeenheden waarbij waarden in {column_text} overeen moeten komen met de reguliere expressie: {values_text}."
   conjointly_expectation_text:
     en: "Expect conjoint 'pass' units across the following expressions: {values_text}."
     fr: "Attendez-vous à des unités de «pass» conjointes dans les expressions suivantes: {values_text}."
@@ -329,6 +358,7 @@ autobriefs:
     ru: "Ожидайте соединяющиеся единицы 'pass' в следующих выражениях: {values_text}."
     da: "Forvent fælles 'pass' enheder i følgende expressions: {values_text}."
     sv: "Förvänta dig vanliga 'pass'-enheter i följande uttryck: {values_text}."
+    nl: "Verwacht gemeenschappelijke 'pass'-eenheden voor de volgende expressies: {values_text}."
   conjointly_failure_text:
     en: "Exceedance of failed test units where there should have been conjoint 'pass' units across the following expressions: {values_text}."
     fr: "Dépassement des unités de test ayant échoué là où il aurait dû y avoir des unités de «pass» conjointes dans les expressions suivantes: {values_text}."
@@ -340,6 +370,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых единиц, где должны были быть объединены единицы 'pass' в следующих выражениях: {values_text}."
     da: "Overskridelse af antal fejlslagne enhedstests, hvor der skulle have været fælles 'pass' enheder i følgende udtryk: {values_text}."
     sv: "Överstiger antalet misslyckade enhetstest där det skulle ha varit vanliga 'pass'-enheter i följande termer: {values_text}."
+    nl: "Overschrijding van mislukte testeenheden waarbij er gecombineerde 'pass'-eenheden hadden moeten zijn over de volgende uitdrukkingen: {values_text}."
   col_exists_expectation_text:
     en: "Expect that column {column_text} exists."
     fr: "Attendez-vous à ce que la colonne {column_text} existe."
@@ -351,6 +382,7 @@ autobriefs:
     ru: "Ожидайте, что столбец {column_text} существует."
     da: "Forvent at kolonnen {column_text} findes."
     sv: "Förvänta dig att kolumnen {column_text} ska finnas."
+    nl: "Verwacht dat de kolom {column_text} bestaat."
   col_exists_failure_text:
     en: "Failure to validate that column {column_text} exists."
     fr: "Échec de validation de l'existence de la colonne {column_text}."
@@ -362,6 +394,7 @@ autobriefs:
     ru: "Неверка этого столбца {column_text} существует."
     da: "Fejl da det ikke kunne verificeres at {column_text} findes."
     sv: "Fel eftersom {column_text} inte kunde verifieras."
+    nl: "Het is mislukt om de kolom {column_text} te valideren."
   col_is_expectation_text:
     en: "Expect that column {column_text} is of type: {col_type}."
     fr: "Attendez-vous à ce que la colonne {column_text} soit de type: {col_type}."
@@ -373,6 +406,7 @@ autobriefs:
     ru: "Ожидайте, что столбец {column_text} имеет тип: {col_type}."
     da: "Forvent at kolonne {column_text} er af typen: {col_type}."
     sv: "Förvänta dig att kolumn {column_text} är av typen: {col_type}."
+    nl: "Verwacht dat de kolom {column_text} van het type {col_type} is."
   col_is_failure_text:
     en: "Failure to validate that column {column_text} is of type: {col_type}."
     fr: "Échec de validation de la colonne {column_text} de type: {col_type}."
@@ -384,6 +418,7 @@ autobriefs:
     ru: "Неверка этого столбца {column_text} имеет тип: {col_type}."
     da: "Fejl da kolonnen {column_text} ikke er af typen: {col_type}."
     sv: "Fel eftersom kolumn {column_text} inte är av typen: {col_type}."
+    nl: "Het niet valideren van die kolom {column_text} is van het type: {col_type}."
   all_row_distinct_expectation_text:
     en: "Expect entirely distinct rows across all columns."
     fr: "Attendez-vous à des lignes entièrement distinctes dans toutes les colonnes."
@@ -395,6 +430,7 @@ autobriefs:
     ru: "Ожидайте совершенно разные строки во всех столбцах."
     da: "Forvent unikke værdier i alle rækker i alle kolonner."
     sv: "Förvänta dig unika värden i alla rader i alla kolumner."
+    nl: "Verwacht unieke rijen in alle kolommen."
   all_row_distinct_failure_text:
     en: "Exceedance of failed test units where there weren't distinct rows across all columns."
     fr: "Dépassement des unités de test ayant échoué là où il n'y avait pas des lignes distinctes dans toutes les colonnes."
@@ -406,6 +442,7 @@ autobriefs:
     ru: "Превышение неудачных испытательных блоков, где не было различных строк по всем столбцам."
     da: "Overskridelse af antal fejlslagne enhedstests, hvor der ikke var unikke værdier i alle rækker i alle kolonner."
     sv: "Överstiger antalet misslyckade enhetstest där det inte fanns några unika värden i alla rader i alla kolumner."
+    nl: "Overschrijding van mislukte testeenheden waarbij er niet in alle kolommen verschillende rijen waren."
   across_row_distinct_expectation_text:
     en: "Expect entirely distinct rows across {column_text}."
     fr: "Attendez-vous à des lignes entièrement distinctes sur {column_text}."
@@ -417,6 +454,7 @@ autobriefs:
     ru: "Ожидайте совершенно разные строки в {column_text}."
     da: "Forvent unikke værdier i alle rækker i {column_text}."
     sv: "Förvänta dig unika värden i alla rader i {column_text}."
+    nl: "Verwacht unieke regels in {column_text}."
   across_row_distinct_failure_text:
     en: "Exceedance of failed test units where there weren't distinct rows across selected columns."
     fr: "Dépassement des unités de test ayant échoué là où il n'y avait pas des lignes distinctes dans les colonnes sélectionnées."
@@ -428,6 +466,7 @@ autobriefs:
     ru: "Превышение неудачных тестовых блоков, где не было различных строк в выбранных столбцах."
     da: "Overskridelse af antal fejlslagne enhedstests, hvor der ikke var unikke værdier i alle rækker i de valgte kolonner."
     sv: "Överstiger antalet misslyckade enhetstest där det inte fanns några unika värden i alla rader i de valda kolumnerna."
+    nl: "Overschrijding van mislukte testeenheden waarbij er geen afzonderlijke rijen waren over geselecteerde kolommen."
   col_schema_match_expectation_text:
     en: "Expect that column schemas match."
     fr: "Attendez-vous à ce que les schémas de colonnes correspondent."
@@ -439,6 +478,7 @@ autobriefs:
     ru: "Ожидайте, что схемы столбцов совпадают."
     da: "Forvent overensstemmelse med kolonne schema."
     sv: "Förvänta överensstämmelse med kolumn schema."
+    nl: "Verwacht dat de kolomschema's overeenkomen."
   col_schema_match_failure_text:
     en: "Failure to validate that column schemas match."
     fr: "Échec de validation de la correspondance des schémas de colonne."
@@ -450,6 +490,7 @@ autobriefs:
     ru: "Неверка соответствия схем столбцов."
     da: "Fejl da der ikke er overensstemmelse med kolonne schema."
     sv: "Fel eftersom kolonnschemat inte matchar."
+    nl: "Het is mislukt om de overeenkomst van die kolomschema's te valideren."
 agent_report:
   pointblank_validation_title_text:
     en: "Pointblank Validation"
@@ -462,6 +503,7 @@ agent_report:
     ru: "Проверка Pointblank"
     da: "Pointblank Validering"
     sv: "Pointblank Validation"
+    nl: "Pointblank-validatie"
   pointblank_validation_plan_text:
     en: "Pointblank Validation Plan"
     fr: "Plan de validation de Pointblank"
@@ -473,6 +515,7 @@ agent_report:
     ru: "План проверки Pointblank"
     da: "Pointblank Validerings Plan"
     sv: "Pointblank Validation Plan"
+    nl: "Pointblank-validatieplan"
   no_interrogation_performed_text:
     en: "No Interrogation Performed"
     fr: "Aucune interrogation effectuée"
@@ -484,6 +527,7 @@ agent_report:
     ru: "Допрос не производился"
     da: "Intet forhør foretaget"
     sv: "Inga förhör genomfördes"
+    nl: "Geen ondervraging uitgevoerd"
   report_fail_rows_available:
     en: "There are {fail_rows_extract} 'fail' rows available as a CSV file."
     fr: "Il existe des {fail_rows_extract} lignes 'fail' disponibles sous forme de fichier CSV."
@@ -495,6 +539,7 @@ agent_report:
     ru: "В CSV-файле доступны строки {fail_rows_extract} 'fail'."
     da: "Der er {fail_rows_extract} 'fail' rækker tilgængelige som CSV fil."
     sv: "Det finns {fail_rows_extract} 'fail'-rader tillgängliga som CSV-fil."
+    nl: "Er zijn {fail_rows_extract} 'fail' rijen beschikbaar als CSV-bestand."
   report_no_table_preconditions:
     en: "No modifications of the table."
     fr: "Aucune modification du tableau."
@@ -506,6 +551,7 @@ agent_report:
     ru: "Никаких изменений таблицы данных."
     da: "Ingen modifikationer af tabellen."
     sv: "Inga ändringar i tabellen."
+    nl: "Geen wijzigingen aan de tafel."
   report_some_table_preconditions:
     en: "The data table was modified for this step."
     fr: "Le tableau a été modifié pour cette étape."
@@ -517,6 +563,7 @@ agent_report:
     ru: "Таблица данных была изменена для этого шага."
     da: "Data tabellen blev modificeret for dette trin."
     sv: "Datatabellen modifierades för detta steg."
+    nl: "De tafel is voor deze stap gewijzigd."
   report_no_evaluation_issues:
     en: "No evaluation issues."
     fr: "Aucun problème d'évaluation."
@@ -528,6 +575,7 @@ agent_report:
     ru: "Нет проблем с оценкой."
     da: "Ingen evalueringsproblemer."
     sv: "Inga utvärderingsproblem."
+    nl: "Geen waarderingsproblemen."
   report_col_step:
     en: "STEP"
     fr: "ÉTAPE"
@@ -539,6 +587,7 @@ agent_report:
     ru: "ШАГ"
     da: "TRIN"
     sv: "STEG"
+    nl: "STAP"
   report_col_steps:
     en: "STEPS"
     fr: "ÉTAPES"
@@ -550,6 +599,7 @@ agent_report:
     ru: "ШАГИ"
     da: "TRIN"
     sv: "STEG"
+    nl: "STAPPEN"
   report_col_columns:
     en: "COLUMNS"
     fr: "COLONNES"
@@ -561,6 +611,7 @@ agent_report:
     ru: "КОЛУМЫ"
     da: "KOLONNER"
     sv: "KOLONNER"
+    nl: "KOLOMMEN"
   report_col_values:
     en: "VALUES"
     fr: "VALEURS"
@@ -572,6 +623,7 @@ agent_report:
     ru: "ЦЕННОСТИ"
     da: "VÆRDIER"
     sv: "VÄRDEN"
+    nl: "WAARDEN"
   report_column_schema:
     en: "SCHEMA"
     fr: "SCHÉMA"
@@ -583,6 +635,7 @@ agent_report:
     ru: "СХЕМА"
     da: "SCHEMA"
     sv: "SCHEMA"
+    nl: "REGELING"
   report_r_col_types:
     en: "R TYPES"
     fr: "TYPES R"
@@ -594,6 +647,7 @@ agent_report:
     ru: "R ТИПЫ"
     da: "R TYPER"
     sv: "R TYPER"
+    nl: "R-TYPEN"
   report_r_sql_types:
     en: "SQL TYPES"
     fr: "TYPES SQL"
@@ -605,6 +659,7 @@ agent_report:
     ru: "ВИДЫ SQL"
     da: "SQL TYPER"
     sv: "SQL TYPER"
+    nl: "SQL-TYPEN"
 informant_report:
   pointblank_information_title_text:
     en: "Pointblank Information"
@@ -617,6 +672,7 @@ informant_report:
     ru: "Pointblank Информация"
     da: "Pointblank Information"
     sv: "Pointblank Information"
+    nl: "Pointblank Informatie"
   pointblank_table_text:
     en: "Table"
     fr: "Table"
@@ -628,6 +684,7 @@ informant_report:
     ru: "Таблица"
     da: "Tabel"
     sv: "Tabell"
+    nl: "Tafel"
   snip_list_more:
     en: "+{n_items} more"
     fr: "+{n_items} de plus"
@@ -639,6 +696,7 @@ informant_report:
     ru: "+Еще {n_items}"
     da: "+{n_items} flere"
     sv: "+ {n_items} till"
+    nl: "+ {n_items} meer"
   snip_list_and:
     en: " and "
     fr: " et "
@@ -650,6 +708,7 @@ informant_report:
     ru: " и "
     da: " og "
     sv: " och "
+    nl: " en "
   snip_list_or:
     en: " or "
     fr: " ou "
@@ -661,6 +720,7 @@ informant_report:
     ru: " или "
     da: " eller "
     sv: " eller "
+    nl: " of "
 table_scan:
   nav_title_ts:
     en: "Table Scan"
@@ -673,6 +733,7 @@ table_scan:
     ru: "Сканирование таблиц данных"
     da: "Tabel Scan"
     sv: "Tabellskanning"
+    nl: "Tabelscan"
   nav_overview_ts:
     en: "Overview"
     fr: "Aperçu"
@@ -684,6 +745,7 @@ table_scan:
     ru: "Обзор"
     da: "Overblik"
     sv: "Översikt"
+    nl: "Overzicht"
   nav_variables_ts:
     en: "Variables"
     fr: "Variables"
@@ -695,6 +757,7 @@ table_scan:
     ru: "Переменные"
     da: "Variable"
     sv: "Variabler"
+    nl: "Variabelen"
   nav_interactions_ts:
     en: "Interactions"
     fr: "Interactions"
@@ -706,6 +769,7 @@ table_scan:
     ru: "Взаимодействие"
     da: "Interaktioner"
     sv: "Interaktioner"
+    nl: "Interacties"
   nav_correlations_ts:
     en: "Correlations"
     fr: "Corrélations"
@@ -717,6 +781,7 @@ table_scan:
     ru: "Корреляции"
     da: "Korrelationer"
     sv: "Korrelationer"
+    nl: "Correlaties"
   nav_missing_values_ts:
     en: "Missing Values"
     fr: "Valeurs manquantes"
@@ -728,6 +793,7 @@ table_scan:
     ru: "Отсутствуют ценности"
     da: "Manglende værdier"
     sv: "Värden saknas"
+    nl: "Ontbrekende waarden"
   nav_sample_values_ts:
     en: "Sample"
     fr: "Exemple"
@@ -739,6 +805,7 @@ table_scan:
     ru: "Образец"
     da: "Stikprøve"
     sv: "Prov"
+    nl: "Monster"
   section_title_overview_of_ts:
     en: "Overview of <code>{tbl_name}</code>"
     fr: "Aperçu du tableau <code>{tbl_name}</code>"
@@ -750,6 +817,7 @@ table_scan:
     ru: "Обзор <code>{tbl_name}</code>"
     da: "Overblik over <code>{tbl_name}</code>"
     sv: "Översikt över <code>{tbl_name}</code>"
+    nl: "Overzicht van <code>{tbl_name}</code>"
   button_label_overview_reproducibility_ts:
     en: "Reproducibility"
     fr: "Reproductibilité"
@@ -761,6 +829,7 @@ table_scan:
     ru: "Воспроизводимость"
     da: "Replikerbarhed"
     sv: "Replikerbarhet"
+    nl: "Reproduceerbaarheid"
   tab_label_variables_statistics_ts:
     en: "Statistics"
     fr: "Statistiques"
@@ -772,6 +841,7 @@ table_scan:
     ru: "Статистические данные"
     da: "Statistikker"
     sv: "Statistik"
+    nl: "Statistieken"
   tab_label_variables_common_values_ts:
     en: "Common Values"
     fr: "Valeurs communes"
@@ -783,6 +853,7 @@ table_scan:
     ru: "Общие ценности"
     da: "Hyppige værdier"
     sv: "Frekventa värden"
+    nl: "Meest voorkomende waarden"
   tab_label_variables_max_min_slices_ts:
     en: "Max/Min Slices"
     fr: "Tranche supérieure et inférieure"
@@ -794,6 +865,7 @@ table_scan:
     ru: "Макс./мин. срезы"
     da: "Max/Min værdier"
     sv: "Max/Min-värden"
+    nl: "Minimale en maximale waarden"
   subsection_title_overview_table_overview:
     en: "Table Overview"
     fr: "Aperçu du tableau"
@@ -805,6 +877,7 @@ table_scan:
     ru: "Обзор таблицы"
     da: "Tabel overblik"
     sv: "Tabellöversikt"
+    nl: "Overzicht van de tafel"
   subsection_title_overview_column_types:
     en: "Column Types"
     fr: "Types de colonnes"
@@ -816,6 +889,7 @@ table_scan:
     ru: "Типы столбцов"
     da: "Kolonnetyper"
     sv: "Kolumntyper"
+    nl: "Kolomtypen"
   subsection_title_overview_reproducibility_information:
     en: "Reproducibility Information"
     fr: "Informations sur la reproductibilité"
@@ -827,6 +901,7 @@ table_scan:
     ru: "Информация о воспроизводимости"
     da: "Information om replikerbarhed"
     sv: "Information om replikerbarhet"
+    nl: "Informatie over reproduceerbaarheid"
   subsection_title_variables_quantile_statistics:
     en: "Quantile Statistics"
     fr: "Statistiques quantiles"
@@ -838,6 +913,7 @@ table_scan:
     ru: "Квантовая статистика"
     da: "Quantil statistikker"
     sv: "Kvantitetsstatistik"
+    nl: "Kwantiele statistieken"
   subsection_title_variables_descriptive_statistics:
     en: "Descriptive Statistics"
     fr: "Statistiques descriptives"
@@ -849,6 +925,7 @@ table_scan:
     ru: "Описательная статистика"
     da: "Deskriptive statistikker"
     sv: "Beskrivande statistik"
+    nl: "Beschrijvende statistieken"
   subsection_title_variables_maximum_values:
     en: "Maximum Values"
     fr: "Valeurs maximales"
@@ -860,6 +937,7 @@ table_scan:
     ru: "Максимальные значения"
     da: "Maksimum værdier"
     sv: "Maximala värden"
+    nl: "Maximale waarden"
   subsection_title_variables_minimum_values:
     en: "Minimum Values"
     fr: "Valeurs minimales"
@@ -871,6 +949,7 @@ table_scan:
     ru: "Минимальные значения"
     da: "Minimum værdier"
     sv: "Minimivärden"
+    nl: "Minimale waarden"
   subsection_title_variables_string_lengths:
     en: "String Lengths"
     fr: "Longueurs de chaîne de caractères"
@@ -882,6 +961,7 @@ table_scan:
     ru: "Длины струн"
     da: "Tekststreng længde"
     sv: "Textstränglängd"
+    nl: "Karakterlengtes"
   subsection_title_variables_histogram:
     en: "Histogram"
     fr: "Histogramme"
@@ -893,6 +973,7 @@ table_scan:
     ru: "Гистограмма"
     da: "Histogram"
     sv: "Histogram"
+    nl: "Histogram"
   btn_toggle_details:
     en: "Toggle details"
     fr: "Basculer les détails"
@@ -904,6 +985,7 @@ table_scan:
     ru: "Переключатель деталей"
     da: "Vis detaljer"
     sv: "Visa detaljer"
+    nl: "Toon details"
   tbl_lab_columns:
     en: "Columns"
     fr: "Colonnes"
@@ -915,6 +997,7 @@ table_scan:
     ru: "Колонки"
     da: "Kolonner"
     sv: "Kolumner"
+    nl: "Kolommen"
   tbl_lab_rows:
     en: "Rows"
     fr: "Enregistrements"
@@ -926,6 +1009,7 @@ table_scan:
     ru: "Строки"
     da: "Rækker"
     sv: "Rader"
+    nl: "Rijen"
   tbl_lab_NAs:
     en: "`NA`s"
     fr: "Valeurs `NA`"
@@ -937,6 +1021,7 @@ table_scan:
     ru: "Валеурс `NA`"
     da: "`NA`-værdier"
     sv: "`NA`-värden"
+    nl: "`NA`-waarden"
   tbl_lab_duplicate_rows:
     en: "Duplicate Rows"
     fr: "Enregistrements en double"
@@ -948,6 +1033,7 @@ table_scan:
     ru: "Дублирование рядов"
     da: "Duplikerede rækker"
     sv: "Duplicera rader"
+    nl: "Dubbele rijen"
   tbl_lab_scan_build_time:
     en: "Scan Build Time"
     fr: "Moment de l'analyse"
@@ -959,6 +1045,7 @@ table_scan:
     ru: "Время сборки сканирования"
     da: "Tidspunkt for scan"
     sv: "Tid för skanning"
+    nl: "Tijdstip van scan"
   tbl_lab_pointblank_version:
     en: "**pointblank** Version"
     fr: "version **pointblank**"
@@ -970,6 +1057,7 @@ table_scan:
     ru: "**pointblank** Версия"
     da: "**pointblank** Version"
     sv: "**pointblank** Version"
+    nl: "**pointblank** Versie"
   tbl_lab_r_version:
     en: "**R** Version"
     fr: "version **R**"
@@ -981,6 +1069,7 @@ table_scan:
     ru: "**R** Версия"
     da: "**R** Version"
     sv: "**R** Version"
+    nl: "**R**-versie"
   tbl_lab_system_os:
     en: "Operating System"
     fr: "Système opérateur"
@@ -992,6 +1081,7 @@ table_scan:
     ru: "Операционная система"
     da: "Styresystem"
     sv: "Kontrollsystem"
+    nl: "Besturingssysteem"
   tbl_lab_distinct:
     en: "Distinct"
     fr: "valeurs uniques"
@@ -1003,6 +1093,7 @@ table_scan:
     ru: "Внятный"
     da: "Unikke værdier"
     sv: "Unika värden"
+    nl: "Unieke waarden"
   tbl_lab_mean:
     en: "Mean"
     fr: "Moyenne"
@@ -1014,6 +1105,7 @@ table_scan:
     ru: "Середина"
     da: "Middelværdi"
     sv: "Betyda"
+    nl: "Gemeen"
   tbl_lab_minimum:
     en: "Minimum"
     fr: "Minimum"
@@ -1025,6 +1117,7 @@ table_scan:
     ru: "Минимум"
     da: "Minimum"
     sv: "Minimum"
+    nl: "Minimum"
   tbl_lab_maximum:
     en: "Maximum"
     fr: "Maximum"
@@ -1036,6 +1129,7 @@ table_scan:
     ru: "Максимум"
     da: "Maksimum"
     sv: "Maximal"
+    nl: "Maximaal"
   tbl_lab_5_percentile:
     en: "5th Percentile"
     fr: "5e centile"
@@ -1047,6 +1141,7 @@ table_scan:
     ru: "Пятый процентиль"
     da: "5. percentil"
     sv: "5:e percentilen"
+    nl: "5e percentiel"
   tbl_lab_median:
     en: "Median"
     fr: "Médiane"
@@ -1058,6 +1153,7 @@ table_scan:
     ru: "Медиана"
     da: "Median"
     sv: "Median"
+    nl: "Mediaan"
   tbl_lab_95_percentile:
     en: "95th Percentile"
     fr: "95e centile"
@@ -1069,6 +1165,7 @@ table_scan:
     ru: "95-й процентиль"
     da: "95. percentil"
     sv: "95:e percentilen"
+    nl: "95e percentiel"
   tbl_lab_range:
     en: "Range"
     fr: "Étendue"
@@ -1080,6 +1177,7 @@ table_scan:
     ru: "Диапазон"
     da: "Interval"
     sv: "Intervall"
+    nl: "Interval"
   tbl_lab_variance:
     en: "Variance"
     fr: "Variance"
@@ -1091,6 +1189,7 @@ table_scan:
     ru: "дисперсия"
     da: "Varians"
     sv: "Variation"
+    nl: "Variantie"
   tbl_lab_standard_deviation:
     en: "Standard Deviation"
     fr: "Écart type"
@@ -1102,6 +1201,7 @@ table_scan:
     ru: "Стандартное отклонение"
     da: "Standardafvigelse"
     sv: "Standardavvikelse"
+    nl: "Standaardafwijking"
   tbl_lab_cov:
     en: "Coefficient of Variation"
     fr: "Coefficient de variation"
@@ -1113,6 +1213,7 @@ table_scan:
     ru: "Коэффициент вариации"
     da: "Varianskoefficient"
     sv: "Variationskoefficient"
+    nl: "Variatiecoëfficiënt"
   tbl_lab_value:
     en: "Value"
     fr: "Valeur"
@@ -1124,6 +1225,7 @@ table_scan:
     ru: "Значение"
     da: "Værdi"
     sv: "Värde"
+    nl: "Waarde"
   tbl_lab_count:
     en: "Count"
     fr: "Compte"
@@ -1135,6 +1237,7 @@ table_scan:
     ru: "Количество"
     da: "Antal"
     sv: "Siffra"
+    nl: "Aantal"
   tbl_lab_frequency:
     en: "Frequency"
     fr: "Fréquence"
@@ -1146,6 +1249,7 @@ table_scan:
     ru: "Частота"
     da: "Frekvens"
     sv: "Frekvens"
+    nl: "Frequentie"
   plot_lab_string_length:
     en: "String Length"
     fr: "Longueur de chaîne de caractères"
@@ -1157,6 +1261,7 @@ table_scan:
     ru: "Длина струны"
     da: "Tekststreng længde"
     sv: "Textstränglängd"
+    nl: "Karakterlengte"
   other_values_text:
     en: "Other Values"
     fr: "Autres valeurs"
@@ -1168,6 +1273,7 @@ table_scan:
     ru: "Другие ценности"
     da: "Andre værdier"
     sv: "Andra värden"
+    nl: "Andere waarden"
   footer_text_fragment:
     en: "Table scan generated with <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
     fr: "Scan de table généré avec <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
@@ -1179,6 +1285,7 @@ table_scan:
     ru: "Сканирование таблиц, сгенерированное с помощью <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
     da: "Scan af tabel genereret med <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
     sv: "Genomsökning av tabellen genereras med <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
+    nl: "Scan van tabel gegenereerd met <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
 email:
   agent_body:
     en: "This <strong>pointblank</strong> validation report containing <strong>{nrow(x$validation_set)}</strong> validation step{ifelse(nrow(x$validation_set) != 1, 's', '')} was initiated on {blastula::add_readable_time(x$time_start)}."
@@ -1191,6 +1298,7 @@ email:
     ru: "Этот отчет о проверке <strong>pointblank</strong>, содержащий <strong>{nrow(x$validation_set)}</strong> этап{ifelse(nrow(x$validation_set) != 1, 'а', '')} проверки, был инициирован {x$time_start}."
     da: "Denne <strong>pointblank</strong> valideringsrapport indeholdende <strong>{nrow(x$validation_set)}</strong> validerings trin{ifelse(nrow(x$validation_set) != 1, '', '')} blev startet {x$time_start}."
     sv: "Denna <strong>pointblank</strong> valideringsrapport som innehåller <strong>{nrow(x$validation_set)}</strong> valideringssteg startades {x$time_start}."
+    nl: "Dit <strong>pointblank</strong> validatierapport met <strong>{nrow(x$validation_set)}</strong> validatiestap{nrow(x$validation_set)! = 1, 'pen', '')} is gestart {x$time_start}."
   footer_1:
     en: "Validation performed via the <code>pointblank</code> <strong>R<strong> package."
     fr: "Validation effectuée avec le package <code>pointblank</code> <strong>R</strong>."
@@ -1202,6 +1310,7 @@ email:
     ru: "Проверка выполняется с помощью пакета <strong>R</strong> <code>pointblank</code>."
     da: "Validering udført med <code>pointblank</code> <strong>R<strong> pakken."
     sv: "Valideringen utförs med <code>pointblank</code> <strong>R<strong>-paketet."
+    nl: "Validatie uitgevoerd met het <code>pointblank</code> <strong>R<strong> pakket."
   footer_2:
     en: "Information and package documentation"
     fr: "Informations et documentation du paquet"
@@ -1213,6 +1322,7 @@ email:
     ru: "Информация и пакетная документация"
     da: "Information og pakke dokumentation"
     sv: "Information och paketdokumentation"
+    nl: "Informatie en pakketdocumentatie"
   footer_i:
     en: "This information was synthesized with the <code>pointblank</code> <strong>R<strong> package."
     fr: "Ces informations ont été synthétisées avec le package <code>pointblank</code> <strong>R<strong>."
@@ -1224,6 +1334,7 @@ email:
     ru: "Эта информация была синтезирована с помощью пакета <code>pointblank</code> <strong>R<strong>."
     da: "Denne information blev syntetiseret med <code>pointblank</code> <strong>R<strong> pakken."
     sv: "Denna information syntetiserades med hjälp av <code>pointblank</code> <strong>R<strong>-paketet."
+    nl: "Deze informatie is gesynthetiseerd met behulp van het <code>pointblank</code> <strong>R<strong>-pakket."
   informant_body:
     en: "This <strong>pointblank</strong> information report was synthesized on {blastula::add_readable_time(x$time_start)}."
     fr: "Ce rapport d'information <strong>pointblank</strong> a été synthétisé le {x$time_start}."
@@ -1235,3 +1346,4 @@ email:
     ru: "Этот информационный отчет <strong>pointblank</strong> был синтезирован {x$time_start}."
     da: "Denne <strong>pointblank</strong> informations rapport blev syntetiseret {x$time_start}."
     sv: "Denna <strong>pointblank</strong> informationsrapport syntetiserades {x$time_start}."
+    nl: "Dit <strong>pointblank</strong> informatierapport is samengesteld {x$time_start}."

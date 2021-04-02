@@ -9,6 +9,7 @@ autobriefs:
     zh: "应用先决条件"
     ru: "Применяемое предварительное условие"
     da: "Forudsætning anvendt"
+    sv: "Antagande används"
   column_computed_text:
     en: "computed column"
     fr: "colonne calculée"
@@ -19,6 +20,7 @@ autobriefs:
     zh: "计算后的列"
     ru: "Вычисленный столбец"
     da: "beregnet kolonne"
+    sv: "beräknad kolumn"
   values_text:
     en: "and {num_omitted} more"
     fr: "et {num_omitted} de plus"
@@ -29,6 +31,7 @@ autobriefs:
     zh: "还有{num_omitted}个"
     ru: "И {num_omitted} больше"
     da: "og {num_omitted} flere"
+    sv: "och {num_omitted} till"
   compare_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be {operator} {values_text}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} soient {operator} {values_text}."
@@ -39,6 +42,7 @@ autobriefs:
     zh: "预期在{column_text} {column_computed_text} 的值应当{operator} {values_text}。"
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны быть {operator} {values_text}."
     da: "Forvent at værdier i {column_text} {column_computed_text} er {operator} {values_text}."
+    sv: "Förvänta dig att värden i {column_text} {column_computed_text} är {operator} {values_text}."
   compare_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have been {operator} {values_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû être {operator} {values_text}."
@@ -49,6 +53,7 @@ autobriefs:
     zh: "错误过多，其中{column_text}中的值应当被 {operator} {values_text}。"
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были быть {operator} {values_text}."
     da: "Overskridelse af fejlslagne test enheder hvor værdier i {column_text} skulle have været {operator} {values_text}."
+    sv: "Överskrider misslyckade testenheter där värden i {column_text} borde ha varit {operator} {values_text}."
   in_set_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be in the set of {values_text}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} soient dans l'ensemble de {values_text}."
@@ -59,6 +64,7 @@ autobriefs:
     zh: "预期在{column_text} {column_computed_text} 的值应当在集{values_text}中。"
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны быть в наборе {values_text}."
     da: "Forvent at værdier i {column_text} {column_computed_text} findes blandt {values_text}."
+    sv: "Förvänta dig att värden i {column_text} {column_computed_text} finns bland {values_text}."
   in_set_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have been in the set of {values_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû être dans l'ensemble de {values_text}."
@@ -69,6 +75,7 @@ autobriefs:
     zh: "错误过多，其中{column_text}中的值应当在集{values_text}中。"
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были быть в наборе {values_text}."
     da: "Overskridelse af fejlslagne testenheder, hvor værdier i {column_text} skulle have været blandt {values_text}."
+    sv: "Överskrider misslyckade testenheter där värden i {column_text} borde ha varit bland {values_text}."
   make_set_expectation_text:
     en: "Expect that values in {values_text} exactly match the unique set of values in {column_text} {column_computed_text}."
     fr: "Attendez-vous à ce que les valeurs de {values_text} correspondent exactement à l'ensemble unique de valeurs de {column_text} {column_computed_text}."
@@ -79,6 +86,7 @@ autobriefs:
     zh: "期望{values_text}中的值与{column_text} {column_computed_text}中的唯一值集完全匹配。"
     ru: "Ожидайте, что значения в {values_text} точно соответствуют уникальному набору значений в {column_text} {column_computed_text}."
     da: "Forvent at værdier i {values_text} præcist stemmer overens med det unikke sæt af værdier i {column_text} {column_computed_text}."
+    sv: "Förvänta dig att värden i {values_text} exakt matchar den unika uppsättningen värden i {column_text} {column_computed_text}."
   make_set_failure_text:
     en: "Exceedance of failed test units where values in {values_text} should have exactly matched the unique set of values in {column_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs de {values_text} devraient correspondre exactement à l'ensemble unique de valeurs dans {column_text}."
@@ -89,6 +97,7 @@ autobriefs:
     zh: "超过失败的测试单元，其中{values_text}中的值应与{column_text}中的唯一值集完全匹配。"
     ru: "Превышение количества неудачных тестовых единиц, где значения в {values_text} должны точно соответствовать уникальному набору значений в {column_text}."
     da: "Overskridelse af fejlslagne testenheder, hvor der skulle have været overensstemmelse imellem værdierne i {values_text} og det unikke sæt af værdier i {column_text}."
+    sv: "Överskrider misslyckade testenheter där det borde ha varit en matchning mellan värdena i {values_text} och den unika värdena i {column_text}."
   make_subset_expectation_text:
     en: "Expect that values in {values_text} are a subset of the unique set of values in {column_text} {column_computed_text}."
     fr: "Attendez-vous à ce que les valeurs de {values_text} soient un sous-ensemble de l'ensemble unique de valeurs de {column_text} {column_computed_text}."
@@ -99,6 +108,7 @@ autobriefs:
     zh: "期望{values_text}中的值是{column_text} {column_computed_text}中唯一值集的子集。"
     ru: "Ожидайте, что значения в {values_text} являются подмножеством уникального набора значений в {column_text} {column_computed_text}. "
     da: "Forvent at værdierne i {values_text} er en delmængde af de unikke værdier {column_text} {column_computed_text}."
+    sv: "Förvänta dig att värdena i {values_text} ska vara en delmängd av de unika värdena {column_text} {column_computed_text}."
   make_subset_failure_text:
     en: "Exceedance of failed test units where values in {values_text} should have been a subset of the unique set of values in {column_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs de {values_text} auraient dû être un sous-ensemble de l'ensemble unique de valeurs de {column_text}."
@@ -109,6 +119,7 @@ autobriefs:
     zh: "超出失败的测试单元，其中{values_text}中的值应该是{column_text}中唯一值集的子集。"
     ru: "Превышение количества неудачных тестовых единиц, где значения в {values_text} должны были быть подмножеством уникального набора значений в {column_text}."
     da: "Overskridelse af fejlslagne testenheder hvor værdierne i {values_text} skulle have været en delmængde af de unikke værdier i {column_text}."
+    sv: "Överskrider misslyckade testenheter där värdena i {values_text} borde ha varit en delmängd av de unika värdena i {column_text}."
   not_in_set_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should not be in the set of {values_text}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} ne soient pas dans l'ensemble de {values_text}."
@@ -119,6 +130,7 @@ autobriefs:
     zh: "预期在{column_text} {column_computed_text} 的值应当不在集{values_text}中。"
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} не должны быть в наборе {values_text}."
     da: "Forvent at værdierne i {column_text} {column_computed_text} ikke er blandt værdierne i {values_text}."
+    sv: "Förvänta dig att värdena i {column_text} {column_computed_text} inte ska vara bland värdena i {values_text}."
   not_in_set_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should not have been in the set of {values_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} n'auraient pas dû être dans l'ensemble de {values_text}."
@@ -129,6 +141,7 @@ autobriefs:
     zh: "错误过多，其中{column_text}中的值应当不在集{values_text}中。"
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} не должны были быть в наборе {values_text}."
     da: "Overskridelse af fejlslagne testenheder, hvor værdierne i {column_text} ikke skulle være blandt værdierne i {values_text}."
+    sv: "Överskrider misslyckade testenheter där värdena i {column_text} inte ska vara bland värdena i {values_text}."
   between_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be between {value_1} and {value_2}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} soient comprises entre {value_1} et {value_2}."
@@ -139,6 +152,7 @@ autobriefs:
     zh: "预期在{column_text} {column_computed_text} 的值应当在 {value_1}和 {value_2}之间。"
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны находиться между {value_1} и {value_2}."
     da: "Forvent at værdierne i {column_text} {column_computed_text} skal være imellem {value_1} og {value_2}."
+    sv: "Förvänta dig att värdena i {column_text} {column_computed_text} ligger mellan {value_1} och {value_2}."
   between_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have been between {value_1} and {value_2}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû être comprises entre {value_1} et {value_2}."
@@ -149,6 +163,7 @@ autobriefs:
     zh: "错误过多，其中{column_text}中的值应当在 {value_1}和 {value_2}之间。"
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были находиться между {value_1} и {value_2}."
     da: "Overskridelse af fejlslagne testenheder, hvor værdierne i {column_text} skulle have været imellem {value_1} og {value_2}."
+    sv: "Överskrider misslyckade testenheter där värdena i {column_text} borde ha varit mellan {value_1} och {value_2}."
   not_between_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should not be between {value_1} and {value_2}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} ne soient pas comprises entre {value_1} et {value_2}."
@@ -159,6 +174,7 @@ autobriefs:
     zh: "预期在{column_text} {column_computed_text} 的值应当不在 {value_1}和 {value_2}之间。"
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} не должны находиться между {value_1} и {value_2}."
     da: "Forvent at værdier i {column_text} {column_computed_text} er imellem {value_1} og {value_2}."
+    sv: "Förvänta dig att värdena i {column_text} {column_computed_text} ligger mellan {value_1} och {value_2}."
   not_between_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should not have been between {value_1} and {value_2}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} n'auraient pas dû être comprises entre {value_1} et {value_2}."
@@ -169,6 +185,7 @@ autobriefs:
     zh: "错误过多，其中{column_text}中的值应当不在 {value_1}和 {value_2}之间。"
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} не должны были находиться между {value_1} и {value_2}."
     da: "Overskridelse af testenheder, hvor værdierne i {column_text} ikke skulle have været imellem {value_1} og {value_2}."
+    sv: "Överskrider testenheter där värdena i {column_text} inte borde ha varit mellan {value_1} och {value_2}."
   null_expectation_text:
     en: "Expect that all values in {column_text} {column_computed_text} should be NULL."
     fr: "Attendez-vous à ce que toutes les valeurs de {column_text} {column_computed_text} soient NULL."
@@ -179,6 +196,7 @@ autobriefs:
     zh: "预期在{column_text} {column_computed_text} 的值应当为NULL。"
     ru: "Ожидайте, что все значения в {column_text} {column_computed_text} должны быть NULL."
     da: "Forvent at all værdier i {column_text} {column_computed_text} er NULL."
+    sv: "Förvänta dig att alla värden i {column_text} {column_computed_text} är NULL."
   null_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have been NULL."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû être NULL."
@@ -189,6 +207,7 @@ autobriefs:
     zh: "错误过多，其中{column_text}中的值应当为NULL。"
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были быть NULL."
     da: "Overskridelse af testenheder, hvor værdierne i {column_text} skulle have været NULL."
+    sv: "Överskrider testenheter där värdena i {column_text} borde ha varit NULL."
   not_null_expectation_text:
     en: "Expect that all values in {column_text} {column_computed_text} should not be NULL."
     fr: "Attendez-vous à ce que toutes les valeurs de {column_text} {column_computed_text} ne soient pas NULL."
@@ -199,6 +218,7 @@ autobriefs:
     zh: "预期在{column_text} {column_computed_text} 的值应当不为NULL。"
     ru: "Ожидайте, что все значения в {column_text} {column_computed_text} не должны быть NULL."
     da: "Forvent at ingen af værdierne i {column_text} {column_computed_text} er NULL."
+    sv: "Förvänta dig att inget av värdena i {column_text} {column_computed_text} ska vara NULL."
   not_null_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should not have been NULL."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} n'auraient pas dû être NULL."
@@ -209,6 +229,7 @@ autobriefs:
     zh: "错误过多，其中{column_text}中的值应当不为NULL。"
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} не должны были быть NULL."
     da: "Overskridelse af antallet af fejlslagne testenheder, hvor ingen af værdierne i {column_text} skulle have været NULL."
+    sv: "Överskrider antalet misslyckade testenheter där inget av värdena i {column_text} borde ha varit NULL."
   increasing_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be increasing."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} augmentent."
@@ -219,6 +240,7 @@ autobriefs:
     zh: "期望{column_text} {column_computed_text}中的值应该增加。"
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны увеличиваться."
     da: "Forvent at værdierne i {column_text} {column_computed_text} er i stigende orden."
+    sv: "Förvänta dig att värdena i {column_text} {column_computed_text} ska vara i stigande ordning."
   increasing_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should be increasing."
     fr: "Dépassement des unités de test ayant échoué où les valeurs de {column_text} devraient augmenter."
@@ -229,6 +251,7 @@ autobriefs:
     zh: "有失败的测试单元的超标。 期望{column_text}中的值应该增加。"
     ru: "Превышение количества неудачных тестовых единиц, где значения в {column_text} должны увеличиваться."
     da: "Overskridelse af antallet af fejlslagne testenheder, hvor værdierne i {column_text} skulle være i stigende orden."
+    sv: "Överskrider antalet misslyckade testenheter där värdena i {column_text} ska vara i stigande ordning."
   decreasing_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should be decreasing."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} diminuent."
@@ -239,6 +262,7 @@ autobriefs:
     zh: "预计{column_text} {column_computed_text}中的值应减小。"
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны уменьшаться."
     da: "Forvent at værdierne i {column_text} {column_computed_text} er i faldende orden."
+    sv: "Förvänta dig att värdena i {column_text} {column_computed_text} ska vara i fallande ordning."
   decreasing_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should be decreasing."
     fr: "Dépassement des unités de test ayant échoué où les valeurs de {column_text} devraient diminuer."
@@ -249,6 +273,7 @@ autobriefs:
     zh: "有失败的测试单元的超标。 预计{column_text}中的值应减小。"
     ru: "Превышение количества неудачных тестовых единиц, где значения в {column_text} должны уменьшаться."
     da: "Overskridelse af antallet af fejlslagne testenheder, hvor værdierne i {column_text} skulle være i faldende orden."
+    sv: "Överskrider antalet misslyckade testenheter där värdena i {column_text} ska vara i fallande ordning."
   col_vals_expr_expectation_text:
     en: "Expect that values should agree with the given R expression."
     fr: "Attendez-vous à ce que les valeurs soient en accord avec l'expression R donnée."
@@ -259,6 +284,7 @@ autobriefs:
     zh: "值应当与给定的R表达式一致。"
     ru: "Ожидайте, что значения должны совпадать с заданным выражением R."
     da: "Forvent at værdier er i overensstemmelse med den pågældende R udtryk."
+    sv: "Förvänta dig att värden överensstämmer med det R-uttrycket."
   col_vals_expr_failure_text:
     en: "Exceedance of failed test units where values should have agreed with the given R expression."
     fr: "Dépassement des unités de test ayant échoué les valeurs auraient dû correspondre à l'expression R donnée."
@@ -269,6 +295,7 @@ autobriefs:
     zh: "错误过多，其中值应当与给定的R表达式一致。"
     ru: "Превышение неудачных тестовых единиц, где значения должны были быть согласованы с заданным выражением R."
     da: "Overskridelse af antallet af fejlslagne testenheder, hvor værdier skulle have været i overensstemmelse med det pågældende R udtryk."
+    sv: "Överstiger antalet misslyckade testenheter där värden borde ha varit i enlighet med relevant R-uttryck."
   regex_expectation_text:
     en: "Expect that values in {column_text} {column_computed_text} should match the regular expression: {values_text}."
     fr: "Attendez-vous à ce que les valeurs de {column_text} {column_computed_text} correspondent à l'expression régulière: {values_text}."
@@ -279,6 +306,7 @@ autobriefs:
     zh: "预期在{column_text} {column_computed_text} 的值应当匹配正则表达式。"
     ru: "Ожидайте, что значения в {column_text} {column_computed_text} должны соответствовать регулярному выражению: {values_text}."
     da: "Forvent at værdierne i {column_text} {column_computed_text} stemmer overens med følgende regular expression: {values_text}."
+    sv: "Förvänta dig att värdena i {column_text} {column_computed_text} ska matcha följande reguljära uttryck: {values_text}."
   regex_failure_text:
     en: "Exceedance of failed test units where values in {column_text} should have matched the regular expression: {values_text}."
     fr: "Dépassement des unités de test ayant échoué où les valeurs dans {column_text} auraient dû correspondre à l'expression régulière: {values_text}."
@@ -289,6 +317,7 @@ autobriefs:
     zh: "错误过多，其中{column_text}中的值应当匹配正则表达式。"
     ru: "Превышение неудачных тестовых единиц, где значения в {column_text} должны были соответствовать регулярному выражению: {values_text}."
     da: "Overskridelse af antallet af fejlslagne testenheder, hvor værdier {column_text} skulle have været i overensstemmelse med følgende regular expression: {values_text}."
+    sv: "Överskrider antalet misslyckade testenheter där värden {column_text} borde ha matchat följande reguljära uttryck: {values_text}."
   conjointly_expectation_text:
     en: "Expect conjoint 'pass' units across the following expressions: {values_text}."
     fr: "Attendez-vous à des unités de «pass» conjointes dans les expressions suivantes: {values_text}."
@@ -299,6 +328,7 @@ autobriefs:
     zh: "预期在下列表达式中存在同时出现的单元（conjoint 'pass' units）。"
     ru: "Ожидайте соединяющиеся единицы 'pass' в следующих выражениях: {values_text}."
     da: "Forvent fælles 'pass' enheder i følgende expressions: {values_text}."
+    sv: "Förvänta dig vanliga 'pass'-enheter i följande uttryck: {values_text}."
   conjointly_failure_text:
     en: "Exceedance of failed test units where there should have been conjoint 'pass' units across the following expressions: {values_text}."
     fr: "Dépassement des unités de test ayant échoué là où il aurait dû y avoir des unités de «pass» conjointes dans les expressions suivantes: {values_text}."
@@ -309,6 +339,7 @@ autobriefs:
     zh: "错误过多，下列表达式中应当存在同时出现的单元（conjoint 'pass' units）。"
     ru: "Превышение неудачных тестовых единиц, где должны были быть объединены единицы 'pass' в следующих выражениях: {values_text}."
     da: "Overskridelse af antal fejlslagne enhedstests, hvor der skulle have været fælles 'pass' enheder i følgende udtryk: {values_text}."
+    sv: "Överstiger antalet misslyckade enhetstest där det skulle ha varit vanliga 'pass'-enheter i följande termer: {values_text}."
   col_exists_expectation_text:
     en: "Expect that column {column_text} exists."
     fr: "Attendez-vous à ce que la colonne {column_text} existe."
@@ -319,6 +350,7 @@ autobriefs:
     zh: "预期列 {column_text}存在。"
     ru: "Ожидайте, что столбец {column_text} существует."
     da: "Forvent at kolonnen {column_text} findes."
+    sv: "Förvänta dig att kolumnen {column_text} ska finnas."
   col_exists_failure_text:
     en: "Failure to validate that column {column_text} exists."
     fr: "Échec de validation de l'existence de la colonne {column_text}."
@@ -329,6 +361,7 @@ autobriefs:
     zh: "未成功确认列{column_text}存在。"
     ru: "Неверка этого столбца {column_text} существует."
     da: "Fejl da det ikke kunne verificeres at {column_text} findes."
+    sv: "Fel eftersom {column_text} inte kunde verifieras."
   col_is_expectation_text:
     en: "Expect that column {column_text} is of type: {col_type}."
     fr: "Attendez-vous à ce que la colonne {column_text} soit de type: {col_type}."
@@ -339,6 +372,7 @@ autobriefs:
     zh: "预期列 {column_text}为类型"
     ru: "Ожидайте, что столбец {column_text} имеет тип: {col_type}."
     da: "Forvent at kolonne {column_text} er af typen: {col_type}."
+    sv: "Förvänta dig att kolumn {column_text} är av typen: {col_type}."
   col_is_failure_text:
     en: "Failure to validate that column {column_text} is of type: {col_type}."
     fr: "Échec de validation de la colonne {column_text} de type: {col_type}."
@@ -349,6 +383,7 @@ autobriefs:
     zh: "未成功确认列{column_text}为类型"
     ru: "Неверка этого столбца {column_text} имеет тип: {col_type}."
     da: "Fejl da kolonnen {column_text} ikke er af typen: {col_type}."
+    sv: "Fel eftersom kolumn {column_text} inte är av typen: {col_type}."
   all_row_distinct_expectation_text:
     en: "Expect entirely distinct rows across all columns."
     fr: "Attendez-vous à des lignes entièrement distinctes dans toutes les colonnes."
@@ -359,6 +394,7 @@ autobriefs:
     zh: "预期在所有的列，行都应当完全不同（即无重复）。"
     ru: "Ожидайте совершенно разные строки во всех столбцах."
     da: "Forvent unikke værdier i alle rækker i alle kolonner."
+    sv: "Förvänta dig unika värden i alla rader i alla kolumner."
   all_row_distinct_failure_text:
     en: "Exceedance of failed test units where there weren't distinct rows across all columns."
     fr: "Dépassement des unités de test ayant échoué là où il n'y avait pas des lignes distinctes dans toutes les colonnes."
@@ -369,6 +405,7 @@ autobriefs:
     zh: "错误过多，其中在所有的列，行存在相同之处（即有重复）。"
     ru: "Превышение неудачных испытательных блоков, где не было различных строк по всем столбцам."
     da: "Overskridelse af antal fejlslagne enhedstests, hvor der ikke var unikke værdier i alle rækker i alle kolonner."
+    sv: "Överstiger antalet misslyckade enhetstest där det inte fanns några unika värden i alla rader i alla kolumner."
   across_row_distinct_expectation_text:
     en: "Expect entirely distinct rows across {column_text}."
     fr: "Attendez-vous à des lignes entièrement distinctes sur {column_text}."
@@ -379,6 +416,7 @@ autobriefs:
     zh: "预期在列{column_text}，行应当完全不同（即无重复）。"
     ru: "Ожидайте совершенно разные строки в {column_text}."
     da: "Forvent unikke værdier i alle rækker i {column_text}."
+    sv: "Förvänta dig unika värden i alla rader i {column_text}."
   across_row_distinct_failure_text:
     en: "Exceedance of failed test units where there weren't distinct rows across selected columns."
     fr: "Dépassement des unités de test ayant échoué là où il n'y avait pas des lignes distinctes dans les colonnes sélectionnées."
@@ -389,6 +427,7 @@ autobriefs:
     zh: "错误过多，其中在所选列，行存在相同之处（即有重复）。"
     ru: "Превышение неудачных тестовых блоков, где не было различных строк в выбранных столбцах."
     da: "Overskridelse af antal fejlslagne enhedstests, hvor der ikke var unikke værdier i alle rækker i de valgte kolonner."
+    sv: "Överstiger antalet misslyckade enhetstest där det inte fanns några unika värden i alla rader i de valda kolumnerna."
   col_schema_match_expectation_text:
     en: "Expect that column schemas match."
     fr: "Attendez-vous à ce que les schémas de colonnes correspondent."
@@ -399,6 +438,7 @@ autobriefs:
     zh: "预期列模式（column schemas）应当匹配。"
     ru: "Ожидайте, что схемы столбцов совпадают."
     da: "Forvent overensstemmelse med kolonne schema."
+    sv: "Förvänta överensstämmelse med kolumn schema."
   col_schema_match_failure_text:
     en: "Failure to validate that column schemas match."
     fr: "Échec de validation de la correspondance des schémas de colonne."
@@ -409,6 +449,7 @@ autobriefs:
     zh: "未成功确认列模式（column schemas）匹配。"
     ru: "Неверка соответствия схем столбцов."
     da: "Fejl da der ikke er overensstemmelse med kolonne schema."
+    sv: "Fel eftersom kolonnschemat inte matchar."
 agent_report:
   pointblank_validation_title_text:
     en: "Pointblank Validation"
@@ -420,6 +461,7 @@ agent_report:
     zh: "Pointblank检验"
     ru: "Проверка Pointblank"
     da: "Pointblank Validering"
+    sv: "Pointblank Validation"
   pointblank_validation_plan_text:
     en: "Pointblank Validation Plan"
     fr: "Plan de validation de Pointblank"
@@ -430,6 +472,7 @@ agent_report:
     zh: "Pointblank检验计划"
     ru: "План проверки Pointblank"
     da: "Pointblank Validerings Plan"
+    sv: "Pointblank Validation Plan"
   no_interrogation_performed_text:
     en: "No Interrogation Performed"
     fr: "Aucune interrogation effectuée"
@@ -440,6 +483,7 @@ agent_report:
     zh: "未采用问询"
     ru: "Допрос не производился"
     da: "Intet forhør foretaget"
+    sv: "Inga förhör genomfördes"
   report_fail_rows_available:
     en: "There are {fail_rows_extract} 'fail' rows available as a CSV file."
     fr: "Il existe des {fail_rows_extract} lignes 'fail' disponibles sous forme de fichier CSV."
@@ -450,6 +494,7 @@ agent_report:
     zh: "有 {fail_rows_extract} “fail”可以作为一个CSV文件行。"
     ru: "В CSV-файле доступны строки {fail_rows_extract} 'fail'."
     da: "Der er {fail_rows_extract} 'fail' rækker tilgængelige som CSV fil."
+    sv: "Det finns {fail_rows_extract} 'fail'-rader tillgängliga som CSV-fil."
   report_no_table_preconditions:
     en: "No modifications of the table."
     fr: "Aucune modification du tableau."
@@ -460,6 +505,7 @@ agent_report:
     zh: "数据表无变化。"
     ru: "Никаких изменений таблицы данных."
     da: "Ingen modifikationer af tabellen."
+    sv: "Inga ändringar i tabellen."
   report_some_table_preconditions:
     en: "The data table was modified for this step."
     fr: "Le tableau a été modifié pour cette étape."
@@ -470,6 +516,7 @@ agent_report:
     zh: "数据表已为此步骤修改。"
     ru: "Таблица данных была изменена для этого шага."
     da: "Data tabellen blev modificeret for dette trin."
+    sv: "Datatabellen modifierades för detta steg."
   report_no_evaluation_issues:
     en: "No evaluation issues."
     fr: "Aucun problème d'évaluation."
@@ -480,6 +527,7 @@ agent_report:
     zh: "没有评估问题。"
     ru: "Нет проблем с оценкой."
     da: "Ingen evalueringsproblemer."
+    sv: "Inga utvärderingsproblem."
   report_col_step:
     en: "STEP"
     fr: "ÉTAPE"
@@ -490,6 +538,7 @@ agent_report:
     zh: "步（STEP）"
     ru: "ШАГ"
     da: "TRIN"
+    sv: "STEG"
   report_col_steps:
     en: "STEPS"
     fr: "ÉTAPES"
@@ -500,6 +549,7 @@ agent_report:
     zh: "步（STEPS）"
     ru: "ШАГИ"
     da: "TRIN"
+    sv: "STEG"
   report_col_columns:
     en: "COLUMNS"
     fr: "COLONNES"
@@ -510,6 +560,7 @@ agent_report:
     zh: "列"
     ru: "КОЛУМЫ"
     da: "KOLONNER"
+    sv: "KOLONNER"
   report_col_values:
     en: "VALUES"
     fr: "VALEURS"
@@ -520,6 +571,7 @@ agent_report:
     zh: "值"
     ru: "ЦЕННОСТИ"
     da: "VÆRDIER"
+    sv: "VÄRDEN"
   report_column_schema:
     en: "SCHEMA"
     fr: "SCHÉMA"
@@ -530,6 +582,7 @@ agent_report:
     zh: "模式（SCHEMA）"
     ru: "СХЕМА"
     da: "SCHEMA"
+    sv: "SCHEMA"
   report_r_col_types:
     en: "R TYPES"
     fr: "TYPES R"
@@ -540,6 +593,7 @@ agent_report:
     zh: "R类型"
     ru: "R ТИПЫ"
     da: "R TYPER"
+    sv: "R TYPER"
   report_r_sql_types:
     en: "SQL TYPES"
     fr: "TYPES SQL"
@@ -550,6 +604,7 @@ agent_report:
     zh: "SQL类型"
     ru: "ВИДЫ SQL"
     da: "SQL TYPER"
+    sv: "SQL TYPER"
 informant_report:
   pointblank_information_title_text:
     en: "Pointblank Information"
@@ -561,6 +616,7 @@ informant_report:
     zh: "Pointblank信息"
     ru: "Pointblank Информация"
     da: "Pointblank Information"
+    sv: "Pointblank Information"
   pointblank_table_text:
     en: "Table"
     fr: "Table"
@@ -571,6 +627,7 @@ informant_report:
     zh: "制表"
     ru: "Таблица"
     da: "Tabel"
+    sv: "Tabell"
   snip_list_more:
     en: "+{n_items} more"
     fr: "+{n_items} de plus"
@@ -581,6 +638,7 @@ informant_report:
     zh: "+另外{n_items}个"
     ru: "+Еще {n_items}"
     da: "+{n_items} flere"
+    sv: "+ {n_items} till"
   snip_list_and:
     en: " and "
     fr: " et "
@@ -591,6 +649,7 @@ informant_report:
     zh: "和"
     ru: " и "
     da: " og "
+    sv: " och "
   snip_list_or:
     en: " or "
     fr: " ou "
@@ -601,6 +660,7 @@ informant_report:
     zh: "或"
     ru: " или "
     da: " eller "
+    sv: " eller "
 table_scan:
   nav_title_ts:
     en: "Table Scan"
@@ -612,6 +672,7 @@ table_scan:
     zh: "表扫描"
     ru: "Сканирование таблиц данных"
     da: "Tabel Scan"
+    sv: "Tabellskanning"
   nav_overview_ts:
     en: "Overview"
     fr: "Aperçu"
@@ -622,6 +683,7 @@ table_scan:
     zh: "概述"
     ru: "Обзор"
     da: "Overblik"
+    sv: "Översikt"
   nav_variables_ts:
     en: "Variables"
     fr: "Variables"
@@ -632,6 +694,7 @@ table_scan:
     zh: "变量"
     ru: "Переменные"
     da: "Variable"
+    sv: "Variabler"
   nav_interactions_ts:
     en: "Interactions"
     fr: "Interactions"
@@ -642,6 +705,7 @@ table_scan:
     zh: "交互项"
     ru: "Взаимодействие"
     da: "Interaktioner"
+    sv: "Interaktioner"
   nav_correlations_ts:
     en: "Correlations"
     fr: "Corrélations"
@@ -652,6 +716,7 @@ table_scan:
     zh: "相关性"
     ru: "Корреляции"
     da: "Korrelationer"
+    sv: "Korrelationer"
   nav_missing_values_ts:
     en: "Missing Values"
     fr: "Valeurs manquantes"
@@ -662,6 +727,7 @@ table_scan:
     zh: "缺失值"
     ru: "Отсутствуют ценности"
     da: "Manglende værdier"
+    sv: "Värden saknas"
   nav_sample_values_ts:
     en: "Sample"
     fr: "Exemple"
@@ -672,6 +738,7 @@ table_scan:
     zh: "样本"
     ru: "Образец"
     da: "Stikprøve"
+    sv: "Prov"
   section_title_overview_of_ts:
     en: "Overview of <code>{tbl_name}</code>"
     fr: "Aperçu du tableau <code>{tbl_name}</code>"
@@ -682,6 +749,7 @@ table_scan:
     zh: "<code>{tbl_name}</code>的概述"
     ru: "Обзор <code>{tbl_name}</code>"
     da: "Overblik over <code>{tbl_name}</code>"
+    sv: "Översikt över <code>{tbl_name}</code>"
   button_label_overview_reproducibility_ts:
     en: "Reproducibility"
     fr: "Reproductibilité"
@@ -692,6 +760,7 @@ table_scan:
     zh: "可重复生成性"
     ru: "Воспроизводимость"
     da: "Replikerbarhed"
+    sv: "Replikerbarhet"
   tab_label_variables_statistics_ts:
     en: "Statistics"
     fr: "Statistiques"
@@ -702,6 +771,7 @@ table_scan:
     zh: "统计"
     ru: "Статистические данные"
     da: "Statistikker"
+    sv: "Statistik"
   tab_label_variables_common_values_ts:
     en: "Common Values"
     fr: "Valeurs communes"
@@ -712,6 +782,7 @@ table_scan:
     zh: "共同值"
     ru: "Общие ценности"
     da: "Hyppige værdier"
+    sv: "Frekventa värden"
   tab_label_variables_max_min_slices_ts:
     en: "Max/Min Slices"
     fr: "Tranche supérieure et inférieure"
@@ -722,6 +793,7 @@ table_scan:
     zh: "高/低值"
     ru: "Макс./мин. срезы"
     da: "Max/Min værdier"
+    sv: "Max/Min-värden"
   subsection_title_overview_table_overview:
     en: "Table Overview"
     fr: "Aperçu du tableau"
@@ -732,6 +804,7 @@ table_scan:
     zh: "表概述"
     ru: "Обзор таблицы"
     da: "Tabel overblik"
+    sv: "Tabellöversikt"
   subsection_title_overview_column_types:
     en: "Column Types"
     fr: "Types de colonnes"
@@ -742,6 +815,7 @@ table_scan:
     zh: "列类型"
     ru: "Типы столбцов"
     da: "Kolonnetyper"
+    sv: "Kolumntyper"
   subsection_title_overview_reproducibility_information:
     en: "Reproducibility Information"
     fr: "Informations sur la reproductibilité"
@@ -752,6 +826,7 @@ table_scan:
     zh: "可重复生成的信息"
     ru: "Информация о воспроизводимости"
     da: "Information om replikerbarhed"
+    sv: "Information om replikerbarhet"
   subsection_title_variables_quantile_statistics:
     en: "Quantile Statistics"
     fr: "Statistiques quantiles"
@@ -762,6 +837,7 @@ table_scan:
     zh: "分位数统计"
     ru: "Квантовая статистика"
     da: "Quantil statistikker"
+    sv: "Kvantitetsstatistik"
   subsection_title_variables_descriptive_statistics:
     en: "Descriptive Statistics"
     fr: "Statistiques descriptives"
@@ -772,6 +848,7 @@ table_scan:
     zh: "描述性统计"
     ru: "Описательная статистика"
     da: "Deskriptive statistikker"
+    sv: "Beskrivande statistik"
   subsection_title_variables_maximum_values:
     en: "Maximum Values"
     fr: "Valeurs maximales"
@@ -782,6 +859,7 @@ table_scan:
     zh: "高价值"
     ru: "Максимальные значения"
     da: "Maksimum værdier"
+    sv: "Maximala värden"
   subsection_title_variables_minimum_values:
     en: "Minimum Values"
     fr: "Valeurs minimales"
@@ -792,6 +870,7 @@ table_scan:
     zh: "低值"
     ru: "Минимальные значения"
     da: "Minimum værdier"
+    sv: "Minimivärden"
   subsection_title_variables_string_lengths:
     en: "String Lengths"
     fr: "Longueurs de chaîne de caractères"
@@ -802,6 +881,7 @@ table_scan:
     zh: "字符串长度"
     ru: "Длины струн"
     da: "Tekststreng længde"
+    sv: "Textstränglängd"
   subsection_title_variables_histogram:
     en: "Histogram"
     fr: "Histogramme"
@@ -812,6 +892,7 @@ table_scan:
     zh: "直方图"
     ru: "Гистограмма"
     da: "Histogram"
+    sv: "Histogram"
   btn_toggle_details:
     en: "Toggle details"
     fr: "Basculer les détails"
@@ -822,6 +903,7 @@ table_scan:
     zh: "切换细节"
     ru: "Переключатель деталей"
     da: "Vis detaljer"
+    sv: "Visa detaljer"
   tbl_lab_columns:
     en: "Columns"
     fr: "Colonnes"
@@ -832,6 +914,7 @@ table_scan:
     zh: "列"
     ru: "Колонки"
     da: "Kolonner"
+    sv: "Kolumner"
   tbl_lab_rows:
     en: "Rows"
     fr: "Enregistrements"
@@ -842,6 +925,7 @@ table_scan:
     zh: "行"
     ru: "Строки"
     da: "Rækker"
+    sv: "Rader"
   tbl_lab_NAs:
     en: "`NA`s"
     fr: "Valeurs `NA`"
@@ -852,6 +936,7 @@ table_scan:
     zh: "`NA` 值"
     ru: "Валеурс `NA`"
     da: "`NA`-værdier"
+    sv: "`NA`-värden"
   tbl_lab_duplicate_rows:
     en: "Duplicate Rows"
     fr: "Enregistrements en double"
@@ -862,6 +947,7 @@ table_scan:
     zh: "重复的行"
     ru: "Дублирование рядов"
     da: "Duplikerede rækker"
+    sv: "Duplicera rader"
   tbl_lab_scan_build_time:
     en: "Scan Build Time"
     fr: "Moment de l'analyse"
@@ -872,6 +958,7 @@ table_scan:
     zh: "创建扫描时间"
     ru: "Время сборки сканирования"
     da: "Tidspunkt for scan"
+    sv: "Tid för skanning"
   tbl_lab_pointblank_version:
     en: "**pointblank** Version"
     fr: "version **pointblank**"
@@ -882,6 +969,7 @@ table_scan:
     zh: "**pointblank** 版本"
     ru: "**pointblank** Версия"
     da: "**pointblank** Version"
+    sv: "**pointblank** Version"
   tbl_lab_r_version:
     en: "**R** Version"
     fr: "version **R**"
@@ -892,6 +980,7 @@ table_scan:
     zh: "**R** 版本"
     ru: "**R** Версия"
     da: "**R** Version"
+    sv: "**R** Version"
   tbl_lab_system_os:
     en: "Operating System"
     fr: "Système opérateur"
@@ -902,6 +991,7 @@ table_scan:
     zh: "操作系统"
     ru: "Операционная система"
     da: "Styresystem"
+    sv: "Kontrollsystem"
   tbl_lab_distinct:
     en: "Distinct"
     fr: "valeurs uniques"
@@ -912,6 +1002,7 @@ table_scan:
     zh: "独特值"
     ru: "Внятный"
     da: "Unikke værdier"
+    sv: "Unika värden"
   tbl_lab_mean:
     en: "Mean"
     fr: "Moyenne"
@@ -922,6 +1013,7 @@ table_scan:
     zh: "平均数"
     ru: "Середина"
     da: "Middelværdi"
+    sv: "Betyda"
   tbl_lab_minimum:
     en: "Minimum"
     fr: "Minimum"
@@ -932,6 +1024,7 @@ table_scan:
     zh: "低价值"
     ru: "Минимум"
     da: "Minimum"
+    sv: "Minimum"
   tbl_lab_maximum:
     en: "Maximum"
     fr: "Maximum"
@@ -942,6 +1035,7 @@ table_scan:
     zh: "高价值"
     ru: "Максимум"
     da: "Maksimum"
+    sv: "Maximal"
   tbl_lab_5_percentile:
     en: "5th Percentile"
     fr: "5e centile"
@@ -952,6 +1046,7 @@ table_scan:
     zh: "5% 分位数"
     ru: "Пятый процентиль"
     da: "5. percentil"
+    sv: "5:e percentilen"
   tbl_lab_median:
     en: "Median"
     fr: "Médiane"
@@ -962,6 +1057,7 @@ table_scan:
     zh: "中位数"
     ru: "Медиана"
     da: "Median"
+    sv: "Median"
   tbl_lab_95_percentile:
     en: "95th Percentile"
     fr: "95e centile"
@@ -972,6 +1068,7 @@ table_scan:
     zh: "95% 分位数"
     ru: "95-й процентиль"
     da: "95. percentil"
+    sv: "95:e percentilen"
   tbl_lab_range:
     en: "Range"
     fr: "Étendue"
@@ -982,6 +1079,7 @@ table_scan:
     zh: "范围"
     ru: "Диапазон"
     da: "Interval"
+    sv: "Intervall"
   tbl_lab_variance:
     en: "Variance"
     fr: "Variance"
@@ -992,6 +1090,7 @@ table_scan:
     zh: "方差"
     ru: "дисперсия"
     da: "Varians"
+    sv: "Variation"
   tbl_lab_standard_deviation:
     en: "Standard Deviation"
     fr: "Écart type"
@@ -1002,6 +1101,7 @@ table_scan:
     zh: "标准差"
     ru: "Стандартное отклонение"
     da: "Standardafvigelse"
+    sv: "Standardavvikelse"
   tbl_lab_cov:
     en: "Coefficient of Variation"
     fr: "Coefficient de variation"
@@ -1012,6 +1112,7 @@ table_scan:
     zh: "变异系数"
     ru: "Коэффициент вариации"
     da: "Varianskoefficient"
+    sv: "Variationskoefficient"
   tbl_lab_value:
     en: "Value"
     fr: "Valeur"
@@ -1022,6 +1123,7 @@ table_scan:
     zh: "值"
     ru: "Значение"
     da: "Værdi"
+    sv: "Värde"
   tbl_lab_count:
     en: "Count"
     fr: "Compte"
@@ -1032,6 +1134,7 @@ table_scan:
     zh: "计数"
     ru: "Количество"
     da: "Antal"
+    sv: "Siffra"
   tbl_lab_frequency:
     en: "Frequency"
     fr: "Fréquence"
@@ -1042,6 +1145,7 @@ table_scan:
     zh: "频率"
     ru: "Частота"
     da: "Frekvens"
+    sv: "Frekvens"
   plot_lab_string_length:
     en: "String Length"
     fr: "Longueur de chaîne de caractères"
@@ -1052,6 +1156,7 @@ table_scan:
     zh: "字符串长度"
     ru: "Длина струны"
     da: "Tekststreng længde"
+    sv: "Textstränglängd"
   other_values_text:
     en: "Other Values"
     fr: "Autres valeurs"
@@ -1062,6 +1167,7 @@ table_scan:
     zh: "其他值"
     ru: "Другие ценности"
     da: "Andre værdier"
+    sv: "Andra värden"
   footer_text_fragment:
     en: "Table scan generated with <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
     fr: "Scan de table généré avec <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
@@ -1072,6 +1178,7 @@ table_scan:
     zh: "通过 <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>建立表扫描。"
     ru: "Сканирование таблиц, сгенерированное с помощью <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
     da: "Scan af tabel genereret med <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
+    sv: "Genomsökning av tabellen genereras med <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
 email:
   agent_body:
     en: "This <strong>pointblank</strong> validation report containing <strong>{nrow(x$validation_set)}</strong> validation step{ifelse(nrow(x$validation_set) != 1, 's', '')} was initiated on {blastula::add_readable_time(x$time_start)}."
@@ -1083,6 +1190,7 @@ email:
     zh: "包含<strong>{nrow(x$validation_set)}</strong>个验证步骤的该<strong>pointblank</strong>验证报告于{x$time_start}启动。"
     ru: "Этот отчет о проверке <strong>pointblank</strong>, содержащий <strong>{nrow(x$validation_set)}</strong> этап{ifelse(nrow(x$validation_set) != 1, 'а', '')} проверки, был инициирован {x$time_start}."
     da: "Denne <strong>pointblank</strong> valideringsrapport indeholdende <strong>{nrow(x$validation_set)}</strong> validerings trin{ifelse(nrow(x$validation_set) != 1, '', '')} blev startet {x$time_start}."
+    sv: "Denna <strong>pointblank</strong> valideringsrapport som innehåller <strong>{nrow(x$validation_set)}</strong> valideringssteg startades {x$time_start}."
   footer_1:
     en: "Validation performed via the <code>pointblank</code> <strong>R<strong> package."
     fr: "Validation effectuée avec le package <code>pointblank</code> <strong>R</strong>."
@@ -1093,6 +1201,7 @@ email:
     zh: "使用<code>pointblank</code> <strong>R</strong>软件包执行的验证。"
     ru: "Проверка выполняется с помощью пакета <strong>R</strong> <code>pointblank</code>."
     da: "Validering udført med <code>pointblank</code> <strong>R<strong> pakken."
+    sv: "Valideringen utförs med <code>pointblank</code> <strong>R<strong>-paketet."
   footer_2:
     en: "Information and package documentation"
     fr: "Informations et documentation du paquet"
@@ -1103,6 +1212,7 @@ email:
     zh: "信息和包装文件"
     ru: "Информация и пакетная документация"
     da: "Information og pakke dokumentation"
+    sv: "Information och paketdokumentation"
   footer_i:
     en: "This information was synthesized with the <code>pointblank</code> <strong>R<strong> package."
     fr: "Ces informations ont été synthétisées avec le package <code>pointblank</code> <strong>R<strong>."
@@ -1113,6 +1223,7 @@ email:
     zh: "此信息是使用<strong>R<strong>的<code>pointblank</code>软件包合成的。"
     ru: "Эта информация была синтезирована с помощью пакета <code>pointblank</code> <strong>R<strong>."
     da: "Denne information blev syntetiseret med <code>pointblank</code> <strong>R<strong> pakken."
+    sv: "Denna information syntetiserades med hjälp av <code>pointblank</code> <strong>R<strong>-paketet."
   informant_body:
     en: "This <strong>pointblank</strong> information report was synthesized on {blastula::add_readable_time(x$time_start)}."
     fr: "Ce rapport d'information <strong>pointblank</strong> a été synthétisé le {x$time_start}."
@@ -1123,3 +1234,4 @@ email:
     zh: "此<strong>pointblank</strong>信息报告于{x$time_start}合成。"
     ru: "Этот информационный отчет <strong>pointblank</strong> был синтезирован {x$time_start}."
     da: "Denne <strong>pointblank</strong> informations rapport blev syntetiseret {x$time_start}."
+    sv: "Denna <strong>pointblank</strong> informationsrapport syntetiserades {x$time_start}."

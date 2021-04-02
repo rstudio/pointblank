@@ -18,7 +18,7 @@
 
 
 reporting_languages <- 
-  c("en", "fr", "de", "it", "es", "pt", "zh", "ru", "da")
+  c("en", "fr", "de", "it", "es", "pt", "zh", "ru", "da", "sv")
 
 normalize_reporting_language <- function(lang) {
   

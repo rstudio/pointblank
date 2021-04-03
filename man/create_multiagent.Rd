@@ -13,8 +13,9 @@ create_multiagent(..., lang = NULL, locale = NULL)
 the \emph{multiagent}. (e.g., individual \emph{agent reports}, \emph{multiagent reports},
 etc.). By default, \code{NULL} will create English (\code{"en"}) text. Other options
 include French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish
-(\code{"es"}), Portuguese, (\code{"pt"}), Chinese (\code{"zh"}), Russian (\code{"ru"}), Polish
-(\code{"pl"}), Danish (\code{"da"}), Swedish (\code{"sv"}), and Dutch (\code{"nl"}).}
+(\code{"es"}), Portuguese (\code{"pt"}), Turkish (\code{"tr"}), Chinese (\code{"zh"}), Russian
+(\code{"ru"}), Polish (\code{"pl"}), Danish (\code{"da"}), Swedish (\code{"sv"}), and Dutch
+(\code{"nl"}).}
 
 \item{locale}{An optional locale ID to use for formatting values in the
 reporting outputs according the locale's rules. Examples include \code{"en_US"}

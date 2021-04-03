@@ -49,9 +49,9 @@
 #' @param lang The language to use when creating comments for the automatically-
 #'   generated validation steps. By default, `NULL` will create English (`"en"`)
 #'   text. Other options include French (`"fr"`), German (`"de"`), Italian
-#'   (`"it"`), Spanish (`"es"`), Portuguese, (`"pt"`), Chinese (`"zh"`), Russian
-#'   (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch
-#'   (`"nl"`).
+#'   (`"it"`), Spanish (`"es"`), Portuguese (`"pt"`), Turkish (`"tr"`), Chinese
+#'   (`"zh"`), Russian (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish
+#'   (`"sv"`), and Dutch (`"nl"`).
 #' @param output_type An option for choosing what type of output should be
 #'   generated. By default, this is an .R script (`"R"`) but this could
 #'   alternatively be an R Markdown document (`"Rmd"`).

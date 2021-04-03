@@ -64,7 +64,7 @@ option) or additional words in the generated list string. By default,
 argument). If specified here as an override, the language options are
 English (\code{"en"}), French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}),
 Spanish (\code{"es"}), Portuguese, (\code{"pt"}), Chinese (\code{"zh"}), Russian (\code{"ru"}),
-Danish (\code{"da"}), Swedish (\code{"sv"}), and Dutch (\code{"nl"}).}
+Polish (\code{"pl"}), Danish (\code{"da"}), Swedish (\code{"sv"}), and Dutch (\code{"nl"}).}
 }
 \value{
 A formula needed for \code{\link[=info_snippet]{info_snippet()}}'s \code{fn} argument.

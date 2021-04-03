@@ -143,8 +143,8 @@
 #'   that provides all of the available information for the table. By default,
 #'   `NULL` will create English (`"en"`) text. Other options include French
 #'   (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish (`"es"`), Portuguese,
-#'   (`"pt"`), Chinese (`"zh"`), Russian (`"ru"`), Danish (`"da"`), Swedish
-#'   (`"sv"`), and Dutch (`"nl"`).
+#'   (`"pt"`), Chinese (`"zh"`), Russian (`"ru"`), Polish (`"pl"`), Danish
+#'   (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
 #' @param locale An optional locale ID to use for formatting values in the
 #'   information report according the locale's rules. Examples include `"en_US"`
 #'   for English (United States) and `"fr_FR"` for French (France); more simply,

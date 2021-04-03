@@ -38,7 +38,8 @@ place the generated file in the working directory.}
 generated validation steps. By default, \code{NULL} will create English (\code{"en"})
 text. Other options include French (\code{"fr"}), German (\code{"de"}), Italian
 (\code{"it"}), Spanish (\code{"es"}), Portuguese, (\code{"pt"}), Chinese (\code{"zh"}), Russian
-(\code{"ru"}), Danish (\code{"da"}), Swedish (\code{"sv"}), and Dutch (\code{"nl"}).}
+(\code{"ru"}), Polish (\code{"pl"}), Danish (\code{"da"}), Swedish (\code{"sv"}), and Dutch
+(\code{"nl"}).}
 
 \item{output_type}{An option for choosing what type of output should be
 generated. By default, this is an .R script (\code{"R"}) but this could

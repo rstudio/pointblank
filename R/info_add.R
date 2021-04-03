@@ -902,7 +902,7 @@ info_snippet <- function(x,
 #'   argument). If specified here as an override, the language options are
 #'   English (`"en"`), French (`"fr"`), German (`"de"`), Italian (`"it"`),
 #'   Spanish (`"es"`), Portuguese, (`"pt"`), Chinese (`"zh"`), Russian (`"ru"`),
-#'   Danish (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
+#'   Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 

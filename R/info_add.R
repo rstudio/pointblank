@@ -901,8 +901,9 @@ info_snippet <- function(x,
 #'   *informant* object (this is settable in the [create_informant()] `lang`
 #'   argument). If specified here as an override, the language options are
 #'   English (`"en"`), French (`"fr"`), German (`"de"`), Italian (`"it"`),
-#'   Spanish (`"es"`), Portuguese, (`"pt"`), Chinese (`"zh"`), Russian (`"ru"`),
-#'   Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
+#'   Spanish (`"es"`), Portuguese (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`),
+#'   Russian (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and
+#'   Dutch (`"nl"`).
 #'   
 #' @return A formula needed for [info_snippet()]'s `fn` argument.
 #' 

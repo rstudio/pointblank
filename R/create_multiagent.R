@@ -35,8 +35,9 @@
 #'   the *multiagent*. (e.g., individual *agent reports*, *multiagent reports*,
 #'   etc.). By default, `NULL` will create English (`"en"`) text. Other options
 #'   include French (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish
-#'   (`"es"`), Portuguese, (`"pt"`), Chinese (`"zh"`), Russian (`"ru"`), Polish
-#'   (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
+#'   (`"es"`), Portuguese (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`), Russian
+#'   (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch
+#'   (`"nl"`).
 #' @param locale An optional locale ID to use for formatting values in the
 #'   reporting outputs according the locale's rules. Examples include `"en_US"`
 #'   for English (United States) and `"fr_FR"` for French (France); more simply,

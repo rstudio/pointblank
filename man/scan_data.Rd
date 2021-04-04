@@ -25,9 +25,9 @@ report page? By default this is \code{TRUE}.}
 
 \item{lang}{The language to use for label text in the report. By default,
 \code{NULL} will create English (\code{"en"}) text. Other options include French
-(\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish (\code{"es"}), Portuguese,
-(\code{"pt"}), Chinese (\code{"zh"}),  Russian (\code{"ru"}), Polish (\code{"pl"}), Danish
-(\code{"da"}), Swedish (\code{"sv"}), and Dutch (\code{"nl"}).}
+(\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish (\code{"es"}), Portuguese
+(\code{"pt"}), Turkish (\code{"tr"}), Chinese (\code{"zh"}),  Russian (\code{"ru"}), Polish
+(\code{"pl"}), Danish (\code{"da"}), Swedish (\code{"sv"}), and Dutch (\code{"nl"}).}
 
 \item{locale}{An optional locale ID to use for formatting values in the
 report according the locale's rules. Examples include \code{"en_US"} for English

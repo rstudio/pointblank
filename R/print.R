@@ -17,6 +17,7 @@
 #
 
 
+# nocov start
 # nolint start
 
 #' Print the agent information to the console
@@ -30,12 +31,8 @@
 #' @keywords internal
 #' @export
 print.ptblank_agent <- function(x, view = interactive(), ...) {
-  
-  # nocov start 
-  
+
   print(get_agent_report(x), view = view, ...)
-  
-  # nocov end 
 }
 
 #' Knit print the agent information table
@@ -50,12 +47,8 @@ print.ptblank_agent <- function(x, view = interactive(), ...) {
 #' @noRd
 knit_print.ptblank_agent <- function(x, ...) {
   
-  # nocov start 
-
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(get_agent_report(x), ...)
-  
-  # nocov end 
 }
 
 
@@ -71,11 +64,7 @@ knit_print.ptblank_agent <- function(x, ...) {
 #' @export
 print.ptblank_informant <- function(x, view = interactive(), ...) {
   
-  # nocov start 
-  
   print(get_informant_report(x), view = view, ...)
-  
-  # nocov end 
 }
 
 #' Knit print the table information report
@@ -90,12 +79,8 @@ print.ptblank_informant <- function(x, view = interactive(), ...) {
 #' @noRd
 knit_print.ptblank_informant <- function(x, ...) {
   
-  # nocov start 
-  
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(get_informant_report(x), ...)
-  
-  # nocov end 
 }
 
 #' Print a table scan
@@ -144,8 +129,6 @@ knit_print.table_scan <- function(x, ...) {
 #' @keywords internal
 #' @export
 print.x_list_i <- function(x, ...) {
-  
-  # nocov start
   
   cli::cli_div(
     theme = list(
@@ -199,8 +182,6 @@ print.x_list_i <- function(x, ...) {
   cli::cli_rule(
     right = ifelse(length(x$time) == 0, "NO INTERROGATION PERFORMED", "")
   )
-
-  # nocov end 
 }
 
 #' Print an x-list comprising all validation steps to the console
@@ -214,8 +195,6 @@ print.x_list_i <- function(x, ...) {
 #' @keywords internal
 #' @export
 print.x_list_n <- function(x, ...) {
-  
-  # nocov start
   
   cli::cli_div(
     theme = list(
@@ -286,8 +265,6 @@ print.x_list_n <- function(x, ...) {
   cli::cli_rule(
     right = ifelse(length(x$time) == 0, "NO INTERROGATION PERFORMED", "")
   )
-    
-  # nocov end 
 }
 
 #' Print the `action_levels` object
@@ -300,9 +277,7 @@ print.x_list_n <- function(x, ...) {
 #' @keywords internal
 #' @export
 print.action_levels <- function(x, ...) {
-  
-  # nocov start
-  
+
   has_warn_fns <- !is.null(x$fns$warn)
   has_stop_fns <- !is.null(x$fns$stop)
   has_notify_fns <- !is.null(x$fns$notify)
@@ -401,8 +376,6 @@ print.action_levels <- function(x, ...) {
   }
   
   cli::cli_rule()
-  
-  # nocov end 
 }
 
 #' Print the `ptblank_multiagent` object
@@ -417,11 +390,7 @@ print.action_levels <- function(x, ...) {
 #' @export
 print.ptblank_multiagent <- function(x, view = interactive(), ...) {
 
-  # nocov start 
-  
   print(get_multiagent_report(x), view = view, ...)
-  
-  # nocov end 
 }
 
 #' Print the `tbl_store` object
@@ -434,8 +403,6 @@ print.ptblank_multiagent <- function(x, view = interactive(), ...) {
 #' @keywords internal
 #' @export
 print.tbl_store <- function(x, ...) {
-  
-  # nocov start
   
   tbl_names <- names(x)
   
@@ -480,8 +447,6 @@ print.tbl_store <- function(x, ...) {
   }
   
   cli::cli_rule()
-  
-  # nocov end 
 }
 
 #' Print the `read_fn` object
@@ -495,7 +460,6 @@ print.tbl_store <- function(x, ...) {
 #' @export
 print.read_fn <- function(x, ...) {
   
-  # nocov start
   tbl_name <- capture_formula(x)[1]
   tbl_formula <- capture_formula(x)[2]
   
@@ -514,8 +478,7 @@ print.read_fn <- function(x, ...) {
       "{.red {ifelse(has_given_name, '', '*')}} // {tbl_formula}"
     )
   )
-
-  # nocov end 
 }
 
 # nolint end
+# nocov end

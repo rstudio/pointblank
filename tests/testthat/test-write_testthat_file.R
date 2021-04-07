@@ -37,8 +37,8 @@ if (fs::dir_exists(path = work_path)) {
 
 fs::dir_create(path = work_path)
 
-expect_fixed_match <- function(testthat_file, text) {
-  expect_match(testthat_file, text, fixed = TRUE)
+expect_fixed_match <- function(fulltext, text) {
+  expect_match(fulltext, text, fixed = TRUE)
 }
 
 test_that("a testthat test file can be written using an agent", {

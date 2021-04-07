@@ -86,21 +86,6 @@ test_that("column roles can be satisfactorily determined", {
   )
   
   expect_equal(
-    get_column_roles(gt::exibble),
-    c(
-      "numeric.continuous",
-      "string",
-      "string.categorical",
-      "date.string",
-      "string",
-      "string",
-      "numeric.continuous",
-      "string",
-      "string"
-    )
-  )
-  
-  expect_equal(
     get_column_roles(ggplot2::diamonds),
     c(
       "numeric.continuous",

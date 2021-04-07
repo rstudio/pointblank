@@ -1,4 +1,5 @@
 skip_on_cran()
+skip_on_os(os = "windows")
 local_edition(3)
 
 work_path <- "./generated_r_files"

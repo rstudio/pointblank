@@ -43,78 +43,82 @@ regex_mac <- function() {
   "^(([a-f0-9]{2}-){5}[a-f0-9]{2}|([A-F0-9]{2}-){5}[A-Z0-9]{2}|([a-f0-9]{2}:){5}[a-z0-9]{2}|([A-F0-9]{2}:){5}[A-Z0-9]{2})$"
 }
 
-regex_iban_precheck <- function(country = NULL) {
+regex_iban <- function(country = NULL) {
+  
+  if (is.null(country)) {
+    country <- "ZZZ"
+  }
   
   switch(
     country,
-    ALB = "[0-9]{8}[0-9A-Z]{16}",          # Albania
-    AND = "[0-9]{8}[0-9A-Z]{12}",          # Andorra
-    AUT = "[0-9]{16}",                     # Austria
-    BEL = "[0-9]{12}",                     # Belgium
-    BIH = "[0-9]{16}",                     # Bosnia and Herzegovina
-    BGR = "[A-Z]{4}[0-9]{6}[0-9A-Z]{8}",   # Bulgaria
-    HRV = "[0-9]{17}",                     # Croatia
-    CYP = "[0-9]{8}[0-9A-Z]{16}",          # Cyprus
-    CZE = "[0-9]{20}",                     # The Czech Republic
-    DNK = "[0-9]{14}",                     # Denmark
-    EST = "[0-9]{16}",                     # Estonia
-    FRO = "[0-9]{14}",                     # The Faroe Islands
-    FIN = "[0-9]{14}",                     # Finland
-    FRA = "[0-9]{10}[0-9A-Z]{11}[0-9]{2}", # France
-    PYF = "[0-9]{10}[0-9A-Z]{11}[0-9]{2}", # French Polynesia
-    ATF = "[0-9]{10}[0-9A-Z]{11}[0-9]{2}", # French Southern Territories
-    GLP = "[0-9]{10}[0-9A-Z]{11}[0-9]{2}", # Guadeloupe (France)
-    MTQ = "[0-9]{10}[0-9A-Z]{11}[0-9]{2}", # Martinique (France)
-    MYT = "[0-9]{10}[0-9A-Z]{11}[0-9]{2}", # Mayotte (France)
-    NCL = "[0-9]{10}[0-9A-Z]{11}[0-9]{2}", # New Caledonia (France)
-    REU = "[0-9]{10}[0-9A-Z]{11}[0-9]{2}", # Reunion (France)
-    BLM = "[0-9]{10}[0-9A-Z]{11}[0-9]{2}", # Saint-Barthelemy (France)
-    MAF = "[0-9]{10}[0-9A-Z]{11}[0-9]{2}", # Saint Martin (France)
-    SPM = "[0-9]{10}[0-9A-Z]{11}[0-9]{2}", # Saint Pierre et Miquelon (France)
-    WLF = "[0-9]{10}[0-9A-Z]{11}[0-9]{2}", # Wallis and Futuna Islands (France)
-    GEO = "[0-9A-Z]{2}[0-9]{16}",          # Georgia
-    DEU = "[0-9]{18}",                     # Germany
-    GIB = "[A-Z]{4}[0-9A-Z]{15}",          # Gibraltar (United Kingdom)
-    GRC = "[0-9]{7}[0-9A-Z]{16}",          # Greece
-    GRL = "[0-9]{14}",                     # Greenland (Denmark)
-    HUN = "[0-9]{24}",                     # Hungary
-    ISL = "[0-9]{22}",                     # Iceland
-    IRL = "[0-9A-Z]{4}[0-9]{14}",          # Ireland
-    ISR = "[0-9]{19}",                     # Israel
-    ITA = "[A-Z][0-9]{10}[0-9A-Z]{12}",    # Italy
-    KAZ = "[0-9]{3}[0-9A-Z]{3}[0-9]{10}",  # Kazakhstan
-    KWT = "[A-Z]{4}[0-9]{22}",             # Kuwait
-    LVA = "[A-Z]{4}[0-9A-Z]{13}",          # Latvia
-    LBN = "[0-9]{4}[0-9A-Z]{20}",          # Lebanon
-    LIE = "[0-9]{5}[0-9A-Z]{12}",          # Liechtenstein
-    LTU = "[0-9]{16}",                     # Lithuania
-    LUX = "[0-9]{3}[0-9A-Z]{13}",          # Luxembourg
-    MKD = "[0-9]{3}[0-9A-Z]{10}[0-9]{2}",  # North Macedonia
-    MLT = "[A-Z]{4}[0-9]{5}[0-9A-Z]{18}",  # Malta
-    MRT = "[0-9]{23}",                     # Mauritania
-    MUS = "[A-Z]{4}[0-9]{19}[A-Z]{3}",     # Mauritius
-    MCO = "[0-9]{10}[0-9A-Z]{11}[0-9]{2}", # Monaco
-    MNE = "[0-9]{18}",                     # Montenegro
-    NLD = "[A-Z]{4}[0-9]{10}",             # Netherlands
-    NOR = "[0-9]{11}",                     # Norway
-    POL = "[0-9]{24}",                     # Poland
-    PRT = "[0-9]{21}",                     # Portugal
-    ROU = "[A-Z]{4}[0-9A-Z]{16}",          # Romania
-    SMR = "[A-Z][0-9]{10}[0-9A-Z]{12}",    # San Marino
-    SAU = "[0-9]{2}[0-9A-Z]{18}",          # Saudi Arabia
-    SRB = "[0-9]{18}",                     # Serbia
-    SVK = "[0-9]{20}",                     # Slovakia
-    SVN = "[0-9]{15}",                     # Slovenia
-    ESP = "[0-9]{20}",                     # Spain
-    SWE = "[0-9]{20}",                     # Sweden
-    CHE = "[0-9]{5}[0-9A-Z]{12}",          # Switzerland
-    TUN = "[0-9]{20}",                     # Tunisia
-    TUR = "[0-9]{5}[0-9A-Z]{17}",          # Turkey
-    ARE = "[0-9]{19}",                     # The United Arab Emirates
-    GBR = "[A-Z]{4}[0-9]{14}",             # The United Kingdom and N. Ireland
-    CIV = "[0-9A-Z]{2}[0-9]{22}",          # Cote d'Ivoire
-    BRA = "[0-9]{8}[0-9]{5}[0-9]{10}[A-Z]{1}[A-Z0-9]{1}", # Brazil
-    NA_character_
+    ALB = "^AL[0-9]{2}[0-9]{8}[0-9A-Z]{16}$",          # Albania
+    AND = "^AD[0-9]{2}[0-9]{8}[0-9A-Z]{12}$",          # Andorra
+    ARE = "^AE[0-9]{2}[0-9]{19}$",                     # The United Arab Emirates
+    AUT = "^AT[0-9]{2}[0-9]{16}$",                     # Austria
+    BEL = "^BE[0-9]{2}[0-9]{12}$",                     # Belgium
+    BGR = "^BG[0-9]{2}[A-Z]{4}[0-9]{6}[0-9A-Z]{8}$",   # Bulgaria
+    BIH = "^BA[0-9]{2}[0-9]{16}$",                     # Bosnia and Herzegovina
+    BRA = "^BR[0-9]{2}[0-9]{8}[0-9]{5}[0-9]{10}[A-Z]{1}[A-Z0-9]{1}$", # Brazil
+    CHE = "^CH[0-9]{2}[0-9]{5}[0-9A-Z]{12}$",          # Switzerland
+    CIV = "^CI[0-9]{2}[0-9A-Z]{2}[0-9]{22}$",          # Cote d'Ivoire
+    CYP = "^CY[0-9]{2}[0-9]{8}[0-9A-Z]{16}$",          # Cyprus
+    CZE = "^CZ[0-9]{2}[0-9]{20}$",                     # The Czech Republic
+    DEU = "^DE[0-9]{2}[0-9]{18}$",                     # Germany
+    DNK = "^DK[0-9]{2}[0-9]{14}$",                     # Denmark
+    ESP = "^ES[0-9]{2}[0-9]{20}$",                     # Spain
+    EST = "^EE[0-9]{2}[0-9]{16}$",                     # Estonia
+    FIN = "^FI[0-9]{2}[0-9]{14}$",                     # Finland
+    FRA = "^FR[0-9]{2}[0-9]{10}[0-9A-Z]{11}[0-9]{2}$", # France
+    PYF = "^PF[0-9]{2}[0-9]{10}[0-9A-Z]{11}[0-9]{2}$", # French Polynesia (FRA)
+    ATF = "^TF[0-9]{2}[0-9]{10}[0-9A-Z]{11}[0-9]{2}$", # French Southern Territories (FRA)
+    GLP = "^GP[0-9]{2}[0-9]{10}[0-9A-Z]{11}[0-9]{2}$", # Guadeloupe (FRA)
+    MTQ = "^MQ[0-9]{2}[0-9]{10}[0-9A-Z]{11}[0-9]{2}$", # Martinique (FRA)
+    MYT = "^YT[0-9]{2}[0-9]{10}[0-9A-Z]{11}[0-9]{2}$", # Mayotte (FRA)
+    NCL = "^NC[0-9]{2}[0-9]{10}[0-9A-Z]{11}[0-9]{2}$", # New Caledonia (FRA)
+    REU = "^RE[0-9]{2}[0-9]{10}[0-9A-Z]{11}[0-9]{2}$", # Reunion (FRA)
+    BLM = "^BL[0-9]{2}[0-9]{10}[0-9A-Z]{11}[0-9]{2}$", # Saint-Barthelemy (FRA)
+    MAF = "^MF[0-9]{2}[0-9]{10}[0-9A-Z]{11}[0-9]{2}$", # Saint Martin (FRA)
+    SPM = "^PM[0-9]{2}[0-9]{10}[0-9A-Z]{11}[0-9]{2}$", # Saint Pierre et Miquelon (FRA)
+    WLF = "^WF[0-9]{2}[0-9]{10}[0-9A-Z]{11}[0-9]{2}$", # Wallis and Futuna Islands (FRA)
+    FRO = "^FO[0-9]{2}[0-9]{14}$",                     # The Faroe Islands (DNK)
+    GBR = "^GB[0-9]{2}[A-Z]{4}[0-9]{14}$",             # The United Kingdom and N. Ireland
+    GEO = "^GE[0-9]{2}[0-9A-Z]{2}[0-9]{16}$",          # Georgia
+    GIB = "^GI[0-9]{2}[A-Z]{4}[0-9A-Z]{15}$",          # Gibraltar (United Kingdom)
+    GRC = "^GR[0-9]{2}[0-9]{7}[0-9A-Z]{16}$",          # Greece
+    GRL = "^GL[0-9]{2}[0-9]{14}$",                     # Greenland (Denmark)
+    HRV = "^HR[0-9]{2}[0-9]{17}$",                     # Croatia
+    HUN = "^HU[0-9]{2}[0-9]{24}$",                     # Hungary
+    IRL = "^IE[0-9]{2}[0-9A-Z]{4}[0-9]{14}$",          # Ireland
+    ISL = "^IS[0-9]{2}[0-9]{22}$",                     # Iceland
+    ISR = "^IL[0-9]{2}[0-9]{19}$",                     # Israel
+    ITA = "^IT[0-9]{2}[A-Z][0-9]{10}[0-9A-Z]{12}$",    # Italy
+    KAZ = "^KZ[0-9]{2}[0-9]{3}[0-9A-Z]{3}[0-9]{10}$",  # Kazakhstan
+    KWT = "^KW[0-9]{2}[A-Z]{4}[0-9]{22}$",             # Kuwait
+    LBN = "^LB[0-9]{2}[0-9]{4}[0-9A-Z]{20}$",          # Lebanon
+    LIE = "^LI[0-9]{2}[0-9]{5}[0-9A-Z]{12}$",          # Liechtenstein
+    LTU = "^LT[0-9]{2}[0-9]{16}$",                     # Lithuania
+    LUX = "^LU[0-9]{2}[0-9]{3}[0-9A-Z]{13}$",          # Luxembourg
+    LVA = "^LV[0-9]{2}[A-Z]{4}[0-9A-Z]{13}$",          # Latvia
+    MCO = "^MC[0-9]{2}[0-9]{10}[0-9A-Z]{11}[0-9]{2}$", # Monaco
+    MKD = "^MK[0-9]{2}[0-9]{3}[0-9A-Z]{10}[0-9]{2}$",  # North Macedonia
+    MLT = "^MT[0-9]{2}[A-Z]{4}[0-9]{5}[0-9A-Z]{18}$",  # Malta
+    MNE = "^ME[0-9]{2}[0-9]{18}$",                     # Montenegro
+    MRT = "^MR[0-9]{2}[0-9]{23}$",                     # Mauritania
+    MUS = "^MU[0-9]{2}[A-Z]{4}[0-9]{19}[A-Z]{3}$",     # Mauritius
+    NLD = "^NL[0-9]{2}[A-Z]{4}[0-9]{10}$",             # Netherlands
+    NOR = "^NO[0-9]{2}[0-9]{11}$",                     # Norway
+    POL = "^PL[0-9]{2}[0-9]{24}$",                     # Poland
+    PRT = "^PT[0-9]{2}[0-9]{21}$",                     # Portugal
+    ROU = "^RO[0-9]{2}[A-Z]{4}[0-9A-Z]{16}$",          # Romania
+    SAU = "^SA[0-9]{2}[0-9]{2}[0-9A-Z]{18}$",          # Saudi Arabia
+    SMR = "^SM[0-9]{2}[A-Z][0-9]{10}[0-9A-Z]{12}$",    # San Marino
+    SRB = "^RS[0-9]{2}[0-9]{18}$",                     # Serbia
+    SVK = "^SK[0-9]{2}[0-9]{20}$",                     # Slovakia
+    SVN = "^SI[0-9]{2}[0-9]{15}$",                     # Slovenia
+    SWE = "^SE[0-9]{2}[0-9]{20}$",                     # Sweden
+    TUN = "^TN[0-9]{2}[0-9]{20}$",                     # Tunisia
+    TUR = "^TR[0-9]{2}[0-9]{5}[0-9A-Z]{17}$",          # Turkey
+    "[A-Z]{2}[0-9]{2}[0-9A-Z]+"
   )
 }
 

@@ -122,4 +122,8 @@ regex_iban <- function(country = NULL) {
   )
 }
 
+regex_vin <- function() {
+  "^[^\\Wioq]{17}$"
+}
+
 # nolint end

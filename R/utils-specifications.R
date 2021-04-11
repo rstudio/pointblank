@@ -150,6 +150,8 @@ is_vin <- function(x) {
   check == x[9]
 }
 
+# nolint start
+
 check_vin_db <- function(table,
                          column) {
   
@@ -242,6 +244,8 @@ check_vin_db <- function(table,
   
   table
 }
+
+# nolint end
 
 check_credit_card <- function(x) {
   

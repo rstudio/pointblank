@@ -17,31 +17,6 @@
 #
 
 
-check_isbn <- function(x) {
-  
-  x <- remove_hyphens(x)
-  x <- remove_punctuation(x)
-  x <- tolower(x)
-  x <- remove_spaces(x)
-  
-  isbn_str_length <- as.character(nchar(x))
-
-  vapply(
-    seq_along(x),
-    FUN.VALUE = logical(1),
-    USE.NAMES = FALSE,
-    FUN = function(i) {
-      if (isbn_str_length[i] == 10) {
-        is_isbn_10(x[i])
-      } else if (isbn_str_length[i] == 13) {
-        is_isbn_13(x[i])
-      } else {
-        FALSE
-      }
-    }
-  )
-}
-
 is_isbn_10 <- function(x) {
   
   if (!grepl("\\d{9}[0-9x]", x)) {
@@ -76,7 +51,6 @@ is_isbn_13 <- function(x) {
 
   remainder == 0 && check == 0 || 10 - remainder == check
 }
-
 
 remove_hyphens <- function(x, replacement = "") {
   gsub("-", replacement, x, fixed = TRUE)
@@ -150,6 +124,110 @@ is_vin <- function(x) {
   check == x[9]
 }
 
+is_credit_card <- function(x) {
+  
+  if (!grepl(regex_credit_card_1(), x)) {
+    return(FALSE)
+  }
+  
+  if (!grepl(regex_credit_card_2(), x)) {
+    return(FALSE)
+  }
+  
+  x <- remove_hyphens(x)
+  x <- remove_punctuation(x)
+  x <- remove_spaces(x)
+  
+  luhn(x)
+}
+
+luhn <- function(x) {
+  
+  x <- rev(as.integer(unlist(strsplit(x, ""))))
+  
+  idx_odd  <- seq_along(x) %% 2 == 1
+  idx_even <- seq_along(x) %% 2 == 0
+  
+  x[idx_even] <- x[idx_even] * 2
+  x[idx_even] <- ifelse(x[idx_even] > 9, x[idx_even] - 9, x[idx_even])
+  
+  sum_odd  <- sum(x[idx_odd])
+  sum_even <- sum(x[idx_even])
+  
+  sum_x <- sum_odd + sum_even
+  
+  sum_x %% 10 == 0
+}
+
+check_credit_card <- function(x) {
+  
+  vapply(
+    seq_along(x),
+    FUN.VALUE = logical(1),
+    USE.NAMES = FALSE,
+    FUN = function(i) {
+      is_vin(x[i])
+    }
+  )
+}
+
+check_isbn <- function(x) {
+  
+  x <- remove_hyphens(x)
+  x <- remove_punctuation(x)
+  x <- tolower(x)
+  x <- remove_spaces(x)
+  
+  isbn_str_length <- as.character(nchar(x))
+  
+  vapply(
+    seq_along(x),
+    FUN.VALUE = logical(1),
+    USE.NAMES = FALSE,
+    FUN = function(i) {
+      if (isbn_str_length[i] == 10) {
+        is_isbn_10(x[i])
+      } else if (isbn_str_length[i] == 13) {
+        is_isbn_13(x[i])
+      } else {
+        FALSE
+      }
+    }
+  )
+}
+
+check_iban <- function(x, country = NULL) {
+  grepl(regex_iban(country = country), x)
+}
+
+check_url <- function(x) {
+  grepl(regex_url(), x, perl = TRUE)
+}
+
+check_ipv4_address <- function(x) {
+  grepl(regex_ipv4_address(), x, perl = TRUE)
+}
+
+check_ipv6_address <- function(x) {
+  grepl(regex_ipv6_address(), x, perl = TRUE)
+}
+
+check_email <- function(x) {
+  grepl(regex_email(), x, perl = TRUE)
+}
+
+check_phone <- function(x) {
+  grepl(regex_phone(), x, perl = TRUE)
+}
+
+check_mac <- function(x) {
+  grepl(regex_mac(), x)
+}
+
+check_swift_bic <- function(x) {
+  grepl(regex_swift_bic(), x)
+}
+
 # nolint start
 
 check_vin_db <- function(table,
@@ -194,7 +272,7 @@ check_vin_db <- function(table,
         !(. %in% c("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")) ~ "100000",
         TRUE ~ .
       )
-    )) %>%
+      )) %>%
     dplyr::mutate(pb_vin_chk_ = pb_vin_009_) %>%
     dplyr::mutate_at(
       dplyr::vars(dplyr::matches("pb_vin_[0-9]{3}_")),
@@ -246,55 +324,3 @@ check_vin_db <- function(table,
 }
 
 # nolint end
-
-check_credit_card <- function(x) {
-  
-  vapply(
-    seq_along(x),
-    FUN.VALUE = logical(1),
-    USE.NAMES = FALSE,
-    FUN = function(i) {
-      is_vin(x[i])
-    }
-  )
-}
-
-
-is_credit_card <- function(x) {
-  
-  if (!grepl(regex_credit_card_1(), x)) {
-    return(FALSE)
-  }
-  
-  if (!grepl(regex_credit_card_2(), x)) {
-    return(FALSE)
-  }
-  
-  x <- remove_hyphens(x)
-  x <- remove_punctuation(x)
-  x <- remove_spaces(x)
-  
-  luhn(x)
-}
-
-luhn <- function(x) {
-  
-  x <- rev(as.integer(unlist(strsplit(x, ""))))
-  
-  idx_odd  <- seq_along(x) %% 2 == 1
-  idx_even <- seq_along(x) %% 2 == 0
-  
-  x[idx_even] <- x[idx_even] * 2
-  x[idx_even] <- ifelse(x[idx_even] > 9, x[idx_even] - 9, x[idx_even])
-  
-  sum_odd  <- sum(x[idx_odd])
-  sum_even <- sum(x[idx_even])
-  
-  sum_x <- sum_odd + sum_even
-  
-  sum_x %% 10 == 0
-}
-
-check_iban <- function(x, country = NULL) {
-  grepl(regex_iban(country = country), x)
-}

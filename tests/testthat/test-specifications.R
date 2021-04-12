@@ -512,6 +512,303 @@ isbn_13_invalid <-
     "978-0679405422"
   )
 
+swift_bic_valid <-
+  c(
+    "RBOSGGSX",
+    "RZTIAT22263",
+    "BCEELULL",
+    "MARKDEFF",
+    "GENODEF1JEV",
+    "UBSWCHZH80A",
+    "CEDELULLXXX",
+    "ABNANL2A"
+  )
+
+swift_bic_invalid <-
+  c(
+    "CE1EL2LLFFF",
+    "E31DCLLFFF",
+    "ABNANL13"
+  )
+
+
+phone_valid <-
+  c(
+    "+5-555-555-5555",
+    "+5 555 555 5555",
+    "+5.555.555.5555",
+    "5-555-555-5555",
+    "5.555.555.5555",
+    "5 555 555 5555",
+    "555.555.5555",
+    "555 555 5555",
+    "555-555-5555",
+    "555-5555555",
+    "0123456789",
+    "5(555)555.5555",
+    "+5(555)555.5555",
+    "+5(555)555 5555",
+    "+5(555)555-5555",
+    "+5(555)5555555",
+    "(555)5555555",
+    "(555)555.5555",
+    "(555)555-5555",
+    "(555) 555 5555",
+    "55555555555",
+    "5555555555",
+    "+33(1)2222222",
+    "+33(1)222 2222",
+    "+33(1)222.2222",
+    "+33(1)22 22 22 22",
+    "33(1)2222222",
+    "33(1)22222222",
+    "33(1)22 22 22 22",
+    "(020) 7476 4026",
+    "33(020) 7777 7777",
+    "33(020)7777 7777",
+    "+33(020) 7777 7777",
+    "+33(020)7777 7777",
+    "03-6106666",
+    "036106666",
+    "+33(11) 97777 7777",
+    "+3311977777777",
+    "11977777777",
+    "11 97777 7777",
+    "(11) 97777 7777",
+    "(11) 97777-7777",
+    "555-5555",
+    "5555555",
+    "555.5555",
+    "555 5555",
+    "+1 (555) 555 5555"
+  )
+
+phone_invalid <-
+  c(
+    "",
+    "123",
+    "(11- 97777-7777",
+    "-11) 97777-7777",
+    "s555-5555",
+    "555-555",
+    "555555",
+    "555+5555",
+    "(555)555555",
+    "(555)55555",
+    "+(555)555 555",
+    "+5(555)555 555",
+    "+5(555)555 555 555",
+    "555)555 555",
+    "+5(555)5555 555",
+    "(555)55 555",
+    "(555)5555 555",
+    "+5(555)555555",
+    "5(555)55 55555",
+    "(5)555555",
+    "+55(5)55 5 55 55",
+    "+55(5)55 55 55 5",
+    "+55(5)55 55 55",
+    "+55(5)5555 555",
+    "+55()555 5555",
+    "03610666-5",
+    "text",
+    "99999999999999999999999999999999999999999999999999999999",
+    "888888888888888888888888888888888888888888888888888",
+    "7777777777777777777777777777777777777777777777",
+    "66666666666666666666666666666666666666666",
+    "555555555555555555555555555555555555",
+    "4444444444444444444444444444444",
+    "33333333333333333333333333",
+    "222222222222222222222",
+    "1111111111111111",
+    "555\n5555"
+  )
+
+mac_valid <-
+  c(
+    "01-2d-4c-ef-89-ab",
+    "01-2D-4C-EF-89-AB",
+    "01:2d:4c:ef:89:ab",
+    "01:2D:4C:EF:89:AB",
+    "01-2d-4c-ef-89-59",
+    "ff-2d-4c-ef-89-59"
+  )
+
+mac_invalid <-
+  c(
+    "999999999",
+    "9999.9999",
+    "01-2d-4c-ef-89-ab-06",
+    "01-2d:4c-ef:89-ab",
+    "01-2d-4c-EF-89-ab",
+    "01-2d-4C-ef-89-ab",
+    "01-2dc-4c-ef-89-ab",
+    "text"
+  )
+
+email_valid <-
+  c(
+    "test@test.com",
+    "mail+mail@example.com",
+    "mail.email@e.test.com",
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@letters-in-local.org",
+    "01234567890@numbers-in-local.net",
+    "&'*+-./=?^_{}~@other-valid-characters-in-local.net",
+    "mixed-1234-in-{+^}-local@sld.net",
+    "a@single-character-in-local.org",
+    "one-character-third-level@a.example.com",
+    "single-character-in-sld@x.org",
+    "local@dash-in-sld.com",
+    "letters-in-sld@123.com",
+    "one-letter-sld@x.org",
+    "test@test--1.com",
+    "uncommon-tld@sld.museum",
+    "uncommon-tld@sld.travel",
+    "uncommon-tld@sld.mobi",
+    "country-code-tld@sld.uk",
+    "country-code-tld@sld.rw",
+    "local@sld.newTLD",
+    "the-total-length@of-an-entire-address.cannot-be-longer-than-two-hundred-and-fifty-four-characters.and-this-address-is-254-characters-exactly.so-it-should-be-valid.and-im-going-to-add-some-more-words-here.to-increase-the-lenght-blah-blah-blah-blah-bla.org",
+    "the-character-limit@for-each-part.of-the-domain.is-sixty-three-characters.this-is-exactly-sixty-three-characters-so-it-is-valid-blah-blah.com",
+    "local@sub.domains.com",
+    "backticks`are`legit@test.com",
+    "digit-only-domain@123.com",
+    "digit-only-domain-with-subdomain@sub.123.com",
+    "`a@a.fr",
+    "`aa@fr.com",
+    "com@sil.c1m",
+    "t119037jskc_ihndkdoz@aakctgajathzffcsuqyjhgjuxnuulgnhxtnbquwtgxljfayeestsjdbalthtddy.lgtmsdhywswlameglunsaplsblljavswxrltovagexhtttodqedmicsekvpmpuu.pgjvdmvzyltpixvalfbktnnpjyjqswbfvtpbfsngqtmhgamhrbqqvyvlhqigggv.nxqglspfbwdhtfpibcrccvctmoxuxwlunghhwacjtrclgirrgppvshxvrzkoifl"
+  )
+
+email_invalid <-
+  c(
+    "",
+    "test",
+    "@test.com",
+    "invalid-characters-in-sld@! \"#$%(),/;<>_[]`|.org",
+    "(),:;`|@more-invalid-characters-in-local.org",
+    "<>@[]\\`|@even-more-invalid-characters-in-local.org",
+    "partially.\"quoted\"@sld.com",
+    "missing-dot-before-tld@com",
+    "mail.example.com",
+    "mail@example",
+    "test.test@",
+    "test@example.com.",
+    "plainaddress",
+    "missing-at-sign.net",
+    "#@%^%#$@#$@#.com",
+    "Joe Smith <email@example.com>",
+    "mail@example.com (Joe Smith)",
+    "mg@ns.i",
+    "double@a@com"
+  )
+
+url_valid <-
+  c(
+    "http://foo.com/blah_blah",
+    "http://foo.com/blah_blah/",
+    "http://foo.com/blah_blah_(wikipedia)",
+    "http://\u2605foo.com/blah_blah_(wikipedia)_(again)",
+    "http://www.example.com/wpstyle/?p=364",
+    "https://www.example.com/foo/?bar=baz&inga=42&quux",
+    "http://userid:password@example.com:8080",
+    "http://userid:password@example.com:8080/",
+    "http://userid@example.com",
+    "http://userid@example.com/",
+    "http://userid@example.com:8080",
+    "http://userid@example.com:8080/",
+    "http://userid:password@example.com",
+    "http://userid:password@example.com/",
+    "http://foo.com/blah_(wikipedia)#cite-1",
+    "http://foo.com/blah_(wikipedia)_blah#cite-1",
+    "http://foo.com/(something)?after=parens",
+    "http://code.google.com/events/#&product=browser",
+    "http://j.mp",
+    "ftp://foo.bar/baz",
+    "http://foo.bar/?q=Test%20URL-encoded%20stuff",
+    "http://-.~_!$&'()*+,;=:%40:80%2f::::::@example.com",
+    "http://1337.net",
+    "http://a.b-c.de",
+    "http://223.255.255.254"
+  )
+
+url_invalid <-
+  c(
+    "http://",
+    "http://.",
+    "http://..",
+    "http://../",
+    "http://?",
+    "http://??",
+    "http://??/",
+    "http://#",
+    "http://##",
+    "http://##/",
+    "http://foo.bar?q=Spaces should be encoded",
+    "//",
+    "//a",
+    "///a",
+    "///",
+    "http:///a",
+    "foo.com",
+    "rdar://1234",
+    "h://test",
+    "http:// shouldfail.com",
+    ":// should fail",
+    "http://foo.bar/foo(bar)baz quux",
+    "ftps://foo.bar/",
+    "http://-error-.invalid/",
+    "http://-a.b.co",
+    "http://a.b-.co",
+    "http://0.0.0.0",
+    "http://3628126748",
+    "http://.www.foo.bar/",
+    "http://www.foo.bar./",
+    "http://.www.foo.bar./"
+  )
+
+ipv4_address_valid <-
+  c(
+    "93.184.220.20",
+    "161.148.172.130",
+    "161.148.172.130",
+    "73.194.66.94",
+    "60.92.167.193",
+    "92.168.1.1",
+    "0.0.0.0",
+    "55.255.255.255"
+  )
+
+ipv4_address_invalid <-
+  c(
+    "000.000.000.000",
+    "256.255.255.255",
+    "2001:0db8:0000:85a3:0000:0000:ac1f:8001",
+    "2001:db8:0:85a3:0:0:ac1f:8001",
+    ""
+  )
+
+ipv6_address_valid <-
+  c(
+    "2001:0db8:0000:85a3:0000:0000:ac1f:8001",
+    "2001:db8:0:85a3:0:0:ac1f:8001"
+  )
+
+ipv6_address_invalid <-
+  c(
+    "0db8:0000:85a3:0000:0000:ac1f:8001",
+    "2001:0db8:0000:85a3:0000:0000:ac1f",
+    "93.184.220.20",
+    "161.148.172.130",
+    "161.148.172.130",
+    "73.194.66.94",
+    "60.92.167.193",
+    "92.168.1.1",
+    "0.0.0.0",
+    "55.255.255.255",
+    ""
+  )
+
 test_that("IBAN numbers can be successfully validated", {
   
   # Check all IBAN numbers for weak validity (i.e, validity not
@@ -588,4 +885,46 @@ test_that("ISBN numbers can be successfully validated", {
   
   expect_true(all(check_isbn(c(isbn_10_valid, isbn_13_valid))))
   expect_true(all(!check_isbn(c(isbn_10_invalid, isbn_13_invalid))))
+})
+
+test_that("Phone numbers can be successfully validated", {
+  
+  expect_true(all(check_phone(phone_valid)))
+  expect_true(all(! check_phone(phone_invalid)))
+})
+
+test_that("MAC addresses can be successfully validated", {
+  
+  expect_true(all(check_mac(mac_valid)))
+  expect_true(all(!check_mac(mac_invalid)))
+})
+
+test_that("Swift/BIC numbers can be successfully validated", {
+  
+  expect_true(all(check_swift_bic(swift_bic_valid)))
+  expect_true(all(!check_swift_bic(swift_bic_invalid)))
+})
+
+test_that("Email addresses can be successfully validated", {
+  
+  expect_true(all(check_email(email_valid)))
+  expect_true(all(!check_email(email_invalid)))
+})
+
+test_that("URLs can be successfully validated", {
+  
+  expect_true(all(check_url(url_valid)))
+  expect_true(all(!check_url(url_invalid)))
+})
+
+test_that("IPv4 addresses can be successfully validated", {
+  
+  expect_true(all(check_ipv4_address(ipv4_address_valid)))
+  expect_true(all(!check_ipv4_address(ipv4_address_invalid)))
+})
+
+test_that("IPv6 addresses can be successfully validated", {
+  
+  expect_true(all(check_ipv6_address(ipv6_address_valid)))
+  expect_true(all(!check_ipv6_address(ipv6_address_invalid)))
 })

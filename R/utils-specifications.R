@@ -74,7 +74,7 @@ is_isbn_13 <- function(x) {
   
   remainder <- sum(x[1:12] * rep(c(1, 3), 6)) %% 10
 
-  10 - remainder == check
+  remainder == 0 && check == 0 || 10 - remainder == check
 }
 
 

@@ -249,11 +249,24 @@ check_vin_db <- function(table,
 
 check_credit_card <- function(x) {
   
-  if (!grepl(".*[1-9].*", x)) {
+  vapply(
+    seq_along(x),
+    FUN.VALUE = logical(1),
+    USE.NAMES = FALSE,
+    FUN = function(i) {
+      is_vin(x[i])
+    }
+  )
+}
+
+
+is_credit_card <- function(x) {
+  
+  if (!grepl(regex_credit_card_1(), x)) {
     return(FALSE)
   }
   
-  if (!grepl("^[0-9]*$", x)) {
+  if (!grepl(regex_credit_card_2(), x)) {
     return(FALSE)
   }
   
@@ -280,4 +293,8 @@ luhn <- function(x) {
   sum_x <- sum_odd + sum_even
   
   sum_x %% 10 == 0
+}
+
+check_iban <- function(x, country = NULL) {
+  grepl(regex_iban(country = country), x)
 }

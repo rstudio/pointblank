@@ -127,6 +127,37 @@ regex_iban <- function(country = NULL) {
   )
 }
 
+regex_postal_code <- function(country) {
+  
+  code_tbl <-
+    dplyr::select(countries, alpha_2, alpha_3, postal_code_format)
+  
+  if (!(country %in% code_tbl$alpha_2 || country %in% code_tbl$alpha_3)) {
+    return(NA_character_)
+  }
+  
+  if (country %in% code_tbl$alpha_2) {
+    code_tbl <- dplyr::filter(code_tbl, alpha_2 == country)
+  } else {
+    code_tbl <- dplyr::filter(code_tbl, alpha_3 == country)
+  }
+  
+  postal_code_format <- paste0("^", code_tbl$postal_code_format, "$")
+  
+  alpha_3 <- code_tbl$alpha_3
+  
+  if (alpha_3 == "IRL") {
+    postal_code_format <- "^[0-9A-Z]{3} ?[0-9dA-Z]{4}$"
+  }
+  if (alpha_3 == "REU") {
+    postal_code_format <- "^9[78]4[0-9]{2}$"
+  }
+  
+  names(postal_code_format) <- alpha_3
+  
+  postal_code_format
+}
+
 regex_vin <- function() {
   "^[^\\Wioq]{17}$"
 }

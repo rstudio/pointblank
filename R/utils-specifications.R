@@ -166,7 +166,7 @@ check_credit_card <- function(x) {
     FUN.VALUE = logical(1),
     USE.NAMES = FALSE,
     FUN = function(i) {
-      is_vin(x[i])
+      is_credit_card(x[i])
     }
   )
 }
@@ -198,6 +198,25 @@ check_isbn <- function(x) {
 
 check_iban <- function(x, country = NULL) {
   grepl(regex_iban(country = country), x)
+}
+
+check_postal_code <- function(x, country) {
+  
+  if (length(country) == length(x)) {
+    res <- 
+      vapply(
+        seq_along(country),
+        FUN.VALUE = logical(1),
+        USE.NAMES = FALSE,
+        FUN = function(i) {
+          grepl(regex_postal_code(country = country[i]), toupper(x[i]))
+        }
+      )
+  } else {
+    res <- grepl(regex_postal_code(country = country), toupper(x))
+  }
+  
+  res
 }
 
 check_url <- function(x) {

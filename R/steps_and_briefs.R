@@ -284,7 +284,7 @@ create_autobrief <- function(agent,
   if (assertion_type == "col_vals_within_spec") {
     
     expectation_text <- 
-      prep_regex_within_spec_text(
+      prep_within_spec_expectation_text(
         column_text,
         column_computed_text,
         values_text,

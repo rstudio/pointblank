@@ -281,6 +281,19 @@ create_autobrief <- function(agent,
     autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
+  if (assertion_type == "col_vals_within_spec") {
+    
+    expectation_text <- 
+      prep_regex_within_spec_text(
+        column_text,
+        column_computed_text,
+        values_text,
+        lang = lang
+      )
+    
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
+  }
+  
   if (assertion_type == "col_vals_expr") {
    
     expectation_text <- prep_col_vals_expr_expectation_text(lang = lang)
@@ -546,6 +559,14 @@ prep_regex_expectation_text <- function(column_text,
                                         lang) {
 
   glue::glue(get_lsv("autobriefs/regex_expectation_text")[[lang]])
+}
+
+prep_within_spec_expectation_text <- function(column_text,
+                                              column_computed_text,
+                                              values_text,
+                                              lang) {
+  
+  glue::glue(get_lsv("autobriefs/within_spec_expectation_text")[[lang]])
 }
 
 prep_conjointly_expectation_text <- function(values_text,

@@ -606,6 +606,11 @@ check_table_with_assertion <- function(agent,
         idx = idx,
         table = table
       ),
+      "col_vals_within_spec" = interrogate_within_spec(
+        agent = agent,
+        idx = idx,
+        table = table
+      ),
       "col_vals_expr" = interrogate_expr(
         agent = agent,
         idx = idx,
@@ -1459,6 +1464,214 @@ interrogate_regex <- function(agent,
       tbl_type = tbl_type,
       column = {{ column }},
       regex = regex,
+      na_pass = na_pass
+    )
+  )
+}
+
+interrogate_within_spec <- function(agent,
+                                    idx,
+                                    table) {
+  
+  # Get the specification text
+  spec <- get_values_at_idx(agent = agent, idx = idx)
+  
+  # Determine whether NAs should be allowed
+  na_pass <- get_column_na_pass_at_idx(agent = agent, idx = idx)
+  
+  # Obtain the target column as a symbol
+  column <- get_column_as_sym_at_idx(agent = agent, idx = idx)
+  
+  tbl_type <- agent$tbl_src
+  
+  # Create function for validating the `col_vals_within_spec()` step function
+  tbl_val_within_spec <- function(table,
+                                  tbl_type,
+                                  column,
+                                  spec,
+                                  na_pass) {
+    
+    column_validity_checks_column(table = table, column = {{ column }})
+    
+    # nocov start
+    
+    if (tbl_type == "sqlite") {
+      
+      stop(
+        "Specification-based validations are currently not supported on ",
+        "SQLite database tables",
+        call. = FALSE
+      )
+    }
+    
+    if (inherits(table, "tbl_dbi") || inherits(table, "tbl_spark")) {
+      
+      # Not possible: isbn, creditcard, & phone
+      if (spec %in% c("isbn", "creditcard", "phone")) {
+        stop(
+          "Validations with the `\"", spec, "\"` specification are currently ",
+          "not supported on `tbl_dbi` or `tbl_spark` tables",
+          call. = FALSE
+        )
+      }
+      
+      if (grepl("iban", spec)) {
+        country <- toupper(gsub("(iban\\[|\\])", "", spec))
+        spec <- "iban"
+      } else if (grepl("postal", spec)) {
+        country <- toupper(gsub("(postal\\[|\\])", "", spec))
+        spec <- "postal"
+      }
+      
+      # Perform regex-based specification checks
+      if (grepl("iban", spec) || grepl("postal", spec) ||
+          spec %in% c(
+            "swift", "email", "url",
+            "ipv4", "ipv6", "mac"
+          )
+      ) {
+        
+        regex <-
+          switch(
+            spec,
+            iban = regex_iban(country = country),
+            postal = regex_postal_code(country = country),
+            swift = regex_swift_bic(),
+            email = regex_email(),
+            url = regex_url(),
+            ipv4 = regex_ipv4_address(),
+            ipv6 = regex_ipv6_address(),
+            mac = regex_mac()
+          )
+        
+        if (tbl_type == "tbl_spark") {
+          
+          tbl <- 
+            table %>%
+            dplyr::mutate(
+              pb_is_good_ = ifelse(
+                !is.na({{ column }}), RLIKE({{ column }}, regex), NA)
+            ) %>%
+            dplyr::mutate(pb_is_good_ = dplyr::case_when(
+              is.na(pb_is_good_) ~ na_pass,
+              TRUE ~ pb_is_good_
+            ))
+          
+        } else if (tbl_type == "mysql") {
+          
+          tbl <- 
+            table %>%
+            dplyr::mutate(pb_is_good_ = ifelse(
+              !is.na({{ column }}), {{ column }} %REGEXP% regex, NA)
+            ) %>%
+            dplyr::mutate(pb_is_good_ = dplyr::case_when(
+              is.na(pb_is_good_) ~ na_pass,
+              TRUE ~ pb_is_good_
+            ))
+          
+        } else if (tbl_type == "duckdb") {
+          
+          tbl <- 
+            table %>%
+            dplyr::mutate(pb_is_good_ = ifelse(
+              !is.na({{ column }}), regexp_matches({{ column }}, regex), NA)
+            ) %>%
+            dplyr::mutate(pb_is_good_ = dplyr::case_when(
+              is.na(pb_is_good_) ~ na_pass,
+              TRUE ~ pb_is_good_
+            ))
+          
+        } else {
+          
+          # This works for postgres and local tables;
+          # untested so far in other DBs
+          tbl <- 
+            table %>% 
+            dplyr::mutate(pb_is_good_ = ifelse(
+              !is.na({{ column }}), grepl(regex, {{ column }}), NA)
+            ) %>%
+            dplyr::mutate(pb_is_good_ = dplyr::case_when(
+              is.na(pb_is_good_) ~ na_pass,
+              TRUE ~ pb_is_good_
+            ))
+        }
+      }
+      
+      # VIN
+      
+      if (spec == "vin") {
+        
+        tbl <-
+          check_vin_db(table, column = {{ column }}) %>%
+          dplyr::mutate(pb_is_good_ = dplyr::case_when(
+            is.na(pb_is_good_) ~ na_pass,
+            TRUE ~ pb_is_good_
+          ))
+      }
+      
+    } else {
+      
+      # This is for local tables
+      
+      if (grepl("iban", spec)) {
+        country <- toupper(gsub("(iban\\[|\\])", "", spec))
+        fn <- check_iban
+      } else if (grepl("postal", spec)) {
+        country <- toupper(gsub("(postal\\[|\\])", "", spec))
+        fn <- check_postal_code
+      } else {
+        country <- NULL
+        fn <-
+          switch(
+            spec,
+            phone = check_phone,
+            creditcard = check_credit_card,
+            vin = check_vin,
+            isbn = check_isbn,
+            swift = check_swift_bic,
+            email = check_email,
+            url = check_url,
+            ipv4 = check_ipv4_address,
+            ipv6 = check_ipv6_address,
+            mac = check_mac
+          )
+      }
+      
+      if (!is.null(country)) {
+        
+        tbl <-
+          dplyr::mutate(table, pb_is_good_ = ifelse(
+            !is.na({{ column }}), fn({{ column }}, country = country), NA
+          ))
+        
+      } else {
+        
+        tbl <-
+          dplyr::mutate(table, pb_is_good_ = ifelse(
+            !is.na({{ column }}), fn({{ column }}), NA
+          ))
+        
+      }
+      
+      tbl <- 
+        dplyr::mutate(tbl, pb_is_good_ = dplyr::case_when(
+          is.na(pb_is_good_) ~ na_pass,
+          TRUE ~ pb_is_good_
+        ))
+    }
+    
+    # nocov end
+    
+    tbl
+  }
+  
+  # Perform rowwise validations for the column
+  pointblank_try_catch(
+    tbl_val_within_spec(
+      table = table,
+      tbl_type = tbl_type,
+      column = {{ column }},
+      spec = spec,
       na_pass = na_pass
     )
   )

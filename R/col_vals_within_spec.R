@@ -166,7 +166,8 @@ col_vals_within_spec <- function(x,
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
-  spec <- tolower(spec)
+  # Perform checks of `spec` value
+  spec <- normalize_spec(spec = spec)
   
   if (is_a_table_object(x)) {
     
@@ -325,4 +326,176 @@ test_col_vals_within_spec <- function(object,
   }
   
   all(!vs$notify)
+}
+
+country_has_postal_code_fmt <- function(country) {
+  
+  code_tbl <- 
+    dplyr::select(countries, alpha_2, alpha_3, postal_code_format) %>%
+    dplyr::filter(!is.na(postal_code_format))
+  
+  country_codes <-
+    c(dplyr::pull(code_tbl, alpha_2), dplyr::pull(code_tbl, alpha_3))
+  
+  tolower(country) %in% tolower(country_codes)
+}
+
+country_has_iban_fmt <- function(country) {
+  
+  country_codes <-
+    c(
+      "AL", "ALB",
+      "AD", "AND",
+      "AE", "ARE",
+      "AT", "AUT",
+      "BE", "BEL",
+      "BG", "BGR",
+      "BA", "BIH",
+      "BR", "BRA",
+      "CH", "CHE",
+      "CI", "CIV",
+      "CY", "CYP",
+      "CZ", "CZE",
+      "DE", "DEU",
+      "DK", "DNK",
+      "ES", "ESP",
+      "EE", "EST",
+      "FI", "FIN",
+      "FR", "FRA",
+      "PF", "PYF",
+      "TF", "ATF",
+      "GP", "GLP",
+      "MQ", "MTQ",
+      "YT", "MYT",
+      "NC", "NCL",
+      "RE", "REU",
+      "BL", "BLM",
+      "MF", "MAF",
+      "PM", "SPM",
+      "WF", "WLF",
+      "FO", "FRO",
+      "GB", "GBR",
+      "GE", "GEO",
+      "GI", "GIB",
+      "GR", "GRC",
+      "GL", "GRL",
+      "HR", "HRV",
+      "HU", "HUN",
+      "IE", "IRL",
+      "IS", "ISL",
+      "IL", "ISR",
+      "IT", "ITA",
+      "KZ", "KAZ",
+      "KW", "KWT",
+      "LB", "LBN",
+      "LI", "LIE",
+      "LT", "LTU",
+      "LU", "LUX",
+      "LV", "LVA",
+      "MC", "MCO",
+      "MK", "MKD",
+      "MT", "MLT",
+      "ME", "MNE",
+      "MR", "MRT",
+      "MU", "MUS",
+      "NL", "NLD",
+      "NO", "NOR",
+      "PL", "POL",
+      "PT", "PRT",
+      "RO", "ROU",
+      "SA", "SAU",
+      "SM", "SMR",
+      "RS", "SRB",
+      "SK", "SVK",
+      "SI", "SVN",
+      "SE", "SWE",
+      "TN", "TUN",
+      "TR", "TUR"
+    )
+  
+  tolower(country) %in% tolower(country_codes)
+}
+
+normalize_spec <- function(spec) {
+  
+  spec <- tolower(spec)
+  
+  # nolint start
+  
+  spec_correct <- 
+    grepl("(iban|postal|zip|phone|cc|credit_?card|vin|isbn.*|swift.*?|email|url|ipv4|ipv6|mac.*?|)", spec) 
+  
+  # nolint end
+  
+  if (!spec_correct) {
+    stop(
+      "The value for `spec` doesn't correspond to a specification type:\n",
+      "* Keywords such as 'email', 'url', 'isbn10', etc. can be used",
+      call. = FALSE
+    )
+  }
+  
+  if (grepl("iban", spec)) {
+    
+    if (!grepl("iban\\[[a-z]{2,3}\\]", spec)) {
+      stop(
+        "The IBAN code specification must include a country identifier:\n",
+        "* The accepted form is: `\"iban[<country>]\"`\n",
+        "* The <country> identifier can be a 2- or 3-letter country code",
+        call. = FALSE
+      )
+    }
+    
+    country <- gsub("(iban\\[|\\])", "", spec)
+    
+    if (!country_has_iban_fmt(country = country)) {
+      stop(
+        "The country supplied in the IBAN `spec` is not supported.",
+        call. = FALSE
+      )
+    }
+  }
+  
+  if (grepl("^zip$", spec)) {
+    spec <- gsub("zip", "postal[usa]", spec)
+  }
+  if (grepl("postal", spec)) {
+    
+    if (!grepl("postal\\[[a-z]{2,3}\\]", spec)) {
+      stop(
+        "The postal code specification must include a country identifier:\n",
+        "* The accepted form is: `\"postal[<country>]\"`\n",
+        "* The <country> identifier can be a 2- or 3-letter country code\n",
+        "* The short form `\"zip\"` will resolve to `\"postal[usa]\"`",
+        call. = FALSE
+      )
+    }
+    
+    country <- gsub("(postal\\[|\\])", "", spec)
+    
+    if (!country_has_postal_code_fmt(country = country)) {
+      stop(
+        "The country supplied in the postal code `spec` is not supported.",
+        call. = FALSE
+      )
+    }
+  }
+  
+  if (grepl("(cc|credit_?card)", spec)) {
+    spec <- "creditcard"
+  }
+  
+  if (grepl("swift.*?", spec)) {
+    spec <- "swift"
+  }
+  
+  if (grepl("isbn.*?", spec)) {
+    spec <- "isbn"
+  }
+  
+  if (grepl("mac.*?", spec)) {
+    spec <- "mac"
+  }
+  
+  spec
 }

@@ -223,6 +223,7 @@ reference:
     contents:
     - small_table
     - small_table_sqlite
+    - specifications
     
 navbar:
   type: default

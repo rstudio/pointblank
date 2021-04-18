@@ -96,15 +96,15 @@ small_table_sqlite <- function() {
   # nocov end
 }
 
-#' A small table containing data pertaining to various specifications
+#' A table containing data pertaining to various specifications
 #'
-#' This table is useful for testing with the [col_vals_within_spec()],
-#' [test_col_vals_within_spec()], and [expect_col_vals_within_spec()] functions.
-#' For each column, holding character values for different specifications, rows
-#' 1-5 contain valid values, the 6th row is an NA value, and the final two
-#' values (rows 7 and 8) are invalid. Different specification (`spec`) keywords
-#' apply to each of columns when validating with any of the aforementioned
-#' functions.
+#' The `specifications` dataset is useful for testing the
+#' [col_vals_within_spec()], [test_col_vals_within_spec()], and
+#' [expect_col_vals_within_spec()] functions. For each column, holding character
+#' values for different specifications, rows 1-5 contain valid values, the 6th
+#' row is an NA value, and the final two values (rows 7 and 8) are invalid.
+#' Different specification (`spec`) keywords apply to each of columns when
+#' validating with any of the aforementioned functions.
 #'
 #' @format A tibble with 8 rows and 12 variables:
 #' \describe{

@@ -27,6 +27,7 @@ and \strong{RSQLite} packages. These packages can be installed by using
 }
 \seealso{
 Other Datasets: 
-\code{\link{small_table}}
+\code{\link{small_table}},
+\code{\link{specifications}}
 }
 \concept{Datasets}

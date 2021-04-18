@@ -185,7 +185,9 @@ check_isbn <- function(x) {
     FUN.VALUE = logical(1),
     USE.NAMES = FALSE,
     FUN = function(i) {
-      if (isbn_str_length[i] == 10) {
+      if (is.na(isbn_str_length[i])) {
+        FALSE
+      } else if (isbn_str_length[i] == 10) {
         is_isbn_10(x[i])
       } else if (isbn_str_length[i] == 13) {
         is_isbn_13(x[i])

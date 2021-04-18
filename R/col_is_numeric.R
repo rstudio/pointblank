@@ -168,7 +168,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-22
+#' 2-23
 #' 
 #' @name col_is_numeric
 NULL

@@ -178,7 +178,7 @@ by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 
 \section{Function ID}{
 
-2-25
+2-26
 }
 
 \examples{

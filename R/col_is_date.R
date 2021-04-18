@@ -167,7 +167,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-26
+#' 2-27
 #' 
 #' @name col_is_date
 NULL

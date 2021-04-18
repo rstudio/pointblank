@@ -95,3 +95,51 @@ small_table_sqlite <- function() {
   
   # nocov end
 }
+
+#' A small table containing data pertaining to various specifications
+#'
+#' This table is useful for testing with the [col_vals_within_spec()],
+#' [test_col_vals_within_spec()], and [expect_col_vals_within_spec()] functions.
+#' For each column, holding character values for different specifications, rows
+#' 1-5 contain valid values, the 6th row is an NA value, and the final two
+#' values (rows 7 and 8) are invalid. Different specification (`spec`) keywords
+#' apply to each of columns when validating with any of the aforementioned
+#' functions.
+#'
+#' @format A tibble with 8 rows and 12 variables:
+#' \describe{
+#' \item{isbn_numbers}{ISBN-13 numbers; can be validated with the `"isbn"`
+#' specification.}
+#' \item{vin_numbers}{VIN numbers (identifiers for motor vehicles); can be
+#' validated with the `"vin"` specification.}
+#' \item{zip_codes}{Postal codes for the U.S.; can be validated with the
+#' `"postal[USA]"` specification or its `"zip"` alias.}
+#' \item{credit_card_numbers}{Credit card numbers; can be validated with the
+#' `"credit_card"` specification or the `"cc"` alias.}
+#' \item{iban_austria}{IBAN numbers for Austrian accounts; can be validated with
+#' the `"iban[AUT]"` specification.}
+#' \item{swift_numbers}{Swift-BIC numbers; can be validated with the `"swift"`
+#' specification.}
+#' \item{phone_numbers}{Phone numbers; can be validated with the `"phone"`
+#' specification.}
+#' \item{email_addresses}{Email addresses; can be validated with the `"email"`
+#' specification.}
+#' \item{urls}{URLs; can be validated with the  `"url"` specification.}
+#' \item{ipv4_addresses}{IPv4 addresses; can be validated with the `"ipv4"`
+#' specification}
+#' \item{ipv6_addresses}{IPv6 addresses; can be validated with the `"ipv6"`
+#' specification}
+#' \item{mac_addresses}{MAC addresses; can be validated with the `"mac"`
+#' specification}
+#' }
+#'
+#' @examples
+#' # Here is a glimpse at the data
+#' # available in `specifications`
+#' dplyr::glimpse(specifications)
+#'
+#' @family Datasets
+#' @section Function ID:
+#' 10-3
+#'
+"specifications"

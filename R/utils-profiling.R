@@ -343,7 +343,7 @@ get_tbl_dbi_missing_tbl <- function(data) {
         col_num <- which(col_names %in% x__)
         
         if (length(cuts) < 20) {
-          bin_num <- 1:length(cuts)
+          bin_num <- cuts
         } else {
           bin_num <- 1:20
         }

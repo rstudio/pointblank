@@ -1,4 +1,5 @@
 skip_on_cran()
+skip_on_os(os = "windows")
 
 small_table_sqlite <- small_table_sqlite()
 small_table_duckdb <- db_tbl(table = small_table, dbname = ":memory:", dbtype = "duckdb")

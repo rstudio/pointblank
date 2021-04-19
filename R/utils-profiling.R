@@ -133,11 +133,11 @@ get_df_column_qtile_stats <- function(data_column) {
     dplyr::summarize_all(
       .funs = list(
         min = ~ min(., na.rm = TRUE),
-        p05 = ~ stats::quantile(., probs = 0.05, na.rm = TRUE),
-        q_1 = ~ stats::quantile(., probs = 0.25, na.rm = TRUE),
-        med = ~ stats::quantile(., probs = 0.50, na.rm = TRUE),
-        q_3 = ~ stats::quantile(., probs = 0.75, na.rm = TRUE),
-        p95 = ~ stats::quantile(., probs = 0.95, na.rm = TRUE),
+        p05 = ~ unname(stats::quantile(., probs = 0.05, na.rm = TRUE)),
+        q_1 = ~ unname(stats::quantile(., probs = 0.25, na.rm = TRUE)),
+        med = ~ unname(stats::quantile(., probs = 0.50, na.rm = TRUE)),
+        q_3 = ~ unname(stats::quantile(., probs = 0.75, na.rm = TRUE)),
+        p95 = ~ unname(stats::quantile(., probs = 0.95, na.rm = TRUE)),
         max = ~ max(., na.rm = TRUE),
         iqr = ~ stats::IQR(., na.rm = TRUE)
       )
@@ -237,6 +237,9 @@ get_dbi_column_qtile_stats <- function(data_column) {
   
   quantile_rows <- floor(c(0.05, 0.25, 0.5, 0.75, 0.95) * n_rows)
   
+  # Should there be any rows estimated as `0`, change those to `1`
+  quantile_rows[quantile_rows == 0] <- 1
+  
   dplyr::tibble(
     min = data_arranged %>% 
       dplyr::summarize(a = min(a, na.rm = TRUE)) %>%
@@ -278,8 +281,8 @@ get_dbi_column_qtile_stats <- function(data_column) {
       as.numeric()
   ) %>%
     dplyr::mutate(
-      range = max - min,
-      iqr = q_3 - q_1
+      iqr = q_3 - q_1,
+      range = max - min
     ) %>%
     dplyr::summarize_all(~ round(., 2)) %>%
     as.list()

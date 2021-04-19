@@ -118,6 +118,46 @@ test_that("draft validations for data tables can be generated in .Rmd format", {
   write_draft_snapshot_test(dataset = gt::exibble, file_name = "exibble_rmd", output_type = "Rmd")
 })
 
+test_that("draft validations for data tables can be generated without comments", {
+  
+  write_draft_snapshot_test(dataset = gt::countrypops, file_name = "countrypops_no_comments", add_comments = FALSE)
+})
+
+test_that("an invalid path used in `draft_validation()` will result in an error", {
+  expect_error(draft_validation(tbl = gt::countrypops, file_name = "countrypops", path = "invalid/path"))
+})
+
+test_that("a file created with `draft_validation()` cannot be overwritten by default", {
+
+  suppressMessages(
+    draft_validation(tbl = gt::countrypops, file_name = "countrypops_new", path = work_path)
+  )
+  
+  expect_error(
+    suppressMessages(
+      draft_validation(tbl = gt::countrypops, file_name = "countrypops_new", path = work_path)
+    )
+  )
+  
+  expect_error(
+    regexp = NA,
+    suppressMessages(
+      draft_validation(tbl = gt::countrypops, file_name = "countrypops_new", path = work_path, overwrite = TRUE)
+    )
+  )
+})
+
+test_that("messages emitted by `draft_validation()` can be quieted", {
+  
+  expect_message(
+    draft_validation(tbl = gt::countrypops, file_name = "countrypops", path = work_path, overwrite = TRUE)
+  )
+  
+  expect_message(
+    regexp = NA,
+    draft_validation(tbl = gt::countrypops, file_name = "countrypops", path = work_path, overwrite = TRUE, quiet = TRUE)
+  )
+})
 
 if (fs::dir_exists(path = work_path)) {
   fs::dir_delete(path = work_path)

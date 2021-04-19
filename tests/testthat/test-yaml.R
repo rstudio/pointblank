@@ -675,6 +675,21 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   
   #
+  # col_vals_within_spec()
+  #
+  
+  agent_spec <- create_agent(read_fn = ~ specifications, label = "testthat")
+
+  expect_equal(
+    get_oneline_expr_str(agent_spec %>% col_vals_within_spec(columns = vars(isbn_numbers), spec = "isbn13")),
+    "col_vals_within_spec(columns = vars(isbn_numbers),spec = \"isbn\")"
+  )
+  expect_equal(
+    get_oneline_expr_str(agent_spec %>% col_vals_within_spec(columns = vars(vin_numbers), spec = "VIN", label = "my_label")),
+    "col_vals_within_spec(columns = vars(vin_numbers),spec = \"vin\",label = \"my_label\")"
+  )
+  
+  #
   # col_vals_expr()
   #
   

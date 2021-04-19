@@ -171,10 +171,10 @@ get_spark_column_mean <- function(data_column) {
 # Get the variance value of a column in a table, after obtaining the mean value
 # - works only with `tbl_dbi` objects
 # - returns 'numeric' of length 1
-get_dbi_column_variance <- function(data_column, mean) {
+get_dbi_column_variance <- function(data_column, mean_value) {
   
   x <- dplyr::rename(data_column, a = 1)
-  x <- dplyr::mutate(x, "__diff__" = (!!mean - a)^2)
+  x <- dplyr::mutate(x, "__diff__" = (!!mean_value - a)^2)
   x <- dplyr::group_by(x)
   x <- dplyr::summarize(x, "__var__"  = mean(`__diff__`, na.rm = TRUE))
   x <- dplyr::pull(x, `__var__`)
@@ -341,7 +341,13 @@ get_tbl_dbi_missing_tbl <- function(data) {
       FUN = function(x__) {
         
         col_num <- which(col_names %in% x__)
-        bin_num <- 1:20
+        
+        if (length(cuts) < 20) {
+          bin_num <- 1:length(cuts)
+        } else {
+          bin_num <- 1:20
+        }
+        
         missing_tally <- 0L
         
         missing_freq <- 

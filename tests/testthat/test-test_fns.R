@@ -243,6 +243,16 @@ test_that("pointblank expectation functions produce the correct results", {
   expect_false(test_col_vals_regex(tbl, vars(b), regex = "^[0-9]-[a-z]{4}-[0-9]{3}$", threshold = 0.01))
   
   #
+  # test_col_vals_within_spec()
+  #
+  
+  expect_true(test_col_vals_within_spec(specifications[1:5, ], vars(zip_codes), spec = "zip"))
+  expect_false(test_col_vals_within_spec(specifications[1:6, ], vars(zip_codes), spec = "zip"))
+  expect_true(test_col_vals_within_spec(specifications, vars(zip_codes), spec = "zip", threshold = 1000))
+  expect_false(test_col_vals_within_spec(specifications, vars(zip_codes), spec = "zip", threshold = 1))
+  expect_false(test_col_vals_within_spec(specifications, vars(zip_codes), spec = "zip", threshold = 0.01))
+  
+  #
   # test_col_vals_expr()
   #
   

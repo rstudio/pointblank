@@ -1165,6 +1165,55 @@ test_that("Interrogating for valid row values", {
   expect_equivalent(validation$validation_set$f_passed, 1)
   expect_equivalent(validation$validation_set$f_failed, 0)
   expect_equivalent(nrow(validation$validation_set), 1)
+  
+  # Use the `col_vals_within_spec()` function to create
+  # a validation step, then, `interrogate()`
+  validation <-
+    create_agent(tbl = specifications) %>%
+    col_vals_within_spec(
+      columns = vars(isbn_numbers),
+      spec = "isbn"
+    ) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "specifications")
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_within_spec")
+  expect_equivalent(validation$validation_set$column, "isbn_numbers")
+  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), "isbn")
+  expect_false(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 8)
+  expect_equivalent(validation$validation_set$n_passed, 5)
+  expect_equivalent(validation$validation_set$n_failed, 3)
+  expect_equivalent(validation$validation_set$f_passed, 0.625)
+  expect_equivalent(validation$validation_set$f_failed, 0.375)
+  expect_equivalent(nrow(validation$validation_set), 1)
+  
+  
+  # Use the `col_vals_within_spec()` function to create
+  # a validation step (with a precondition), then,
+  # `interrogate()`
+  validation <-
+    create_agent(tbl = specifications) %>%
+    col_vals_within_spec(
+      columns = vars(isbn_numbers),
+      spec = "isbn",
+      preconditions = ~ . %>% tidyr::drop_na()
+    ) %>%
+    interrogate()
+  
+  # Expect certain values in `validation$validation_set`
+  expect_equivalent(validation$tbl_name, "specifications")
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_within_spec")
+  expect_equivalent(validation$validation_set$column, "isbn_numbers")
+  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), "isbn")
+  expect_false(validation$validation_set$all_passed)
+  expect_equivalent(validation$validation_set$n, 7)
+  expect_equivalent(validation$validation_set$n_passed, 5)
+  expect_equivalent(validation$validation_set$n_failed, 2)
+  expect_equivalent(validation$validation_set$f_passed, 0.71429)
+  expect_equivalent(validation$validation_set$f_failed, 0.28571)
+  expect_equivalent(nrow(validation$validation_set), 1)
 })
 
 test_that("Interrogating with an agent incorporates the `na_pass` option", {
@@ -1408,6 +1457,23 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
       na_pass = TRUE,
       actions = action_levels(warn_at = 1)
     ) %>%
+    interrogate() %>%
+    all_passed() %>%
+    expect_true()
+  
+  create_agent(read_fn = ~ specifications[1:6, ]) %>%
+    col_vals_within_spec(columns = vars(isbn_numbers), spec = "isbn13", na_pass = TRUE) %>%
+    col_vals_within_spec(columns = vars(vin_numbers), spec = "VIN", na_pass = TRUE) %>%
+    col_vals_within_spec(columns = vars(zip_codes), spec = "zip", na_pass = TRUE) %>%
+    col_vals_within_spec(columns = vars(credit_card_numbers), spec = "credit_card", na_pass = TRUE) %>%
+    col_vals_within_spec(columns = vars(iban_austria), spec = "iban[AT]", na_pass = TRUE) %>%
+    col_vals_within_spec(columns = vars(swift_numbers), spec = "swift-bic", na_pass = TRUE) %>%
+    col_vals_within_spec(columns = vars(phone_numbers), spec = "phone", na_pass = TRUE) %>%
+    col_vals_within_spec(columns = vars(email_addresses), spec = "email", na_pass = TRUE) %>%
+    col_vals_within_spec(columns = vars(urls), spec = "url", na_pass = TRUE) %>%
+    col_vals_within_spec(columns = vars(ipv4_addresses), spec = "ipv4", na_pass = TRUE) %>%
+    col_vals_within_spec(columns = vars(ipv6_addresses), spec = "ipv6", na_pass = TRUE) %>%
+    col_vals_within_spec(columns = vars(mac_addresses), spec = "mac", na_pass = TRUE) %>%
     interrogate() %>%
     all_passed() %>%
     expect_true()

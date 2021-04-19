@@ -274,7 +274,7 @@ check_vin_db <- function(table,
   
   table <- 
     table %>%
-    dplyr::mutate(pb_vin_all_ = {{column}}) %>%
+    dplyr::mutate(pb_vin_all_ = {{ column }}) %>%
     dplyr::mutate(pb_vin_all_ = tolower(as.character((pb_vin_all_)))) %>%
     dplyr::mutate(pb_vin_nch_ = ifelse(nchar(pb_vin_all_) == 17, TRUE, FALSE)) %>%
     dplyr::mutate(pb_vin_001_ = ifelse(pb_vin_nch_, substr(pb_vin_all_, 1, 1), "8")) %>%

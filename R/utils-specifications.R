@@ -97,7 +97,7 @@ check_vin <- function(x) {
 
 is_vin <- function(x) {
   
-  if (!grepl(regex_vin(), x)) {
+  if (!grepl(regex_vin(), tolower(x))) {
     return(FALSE)
   }
   

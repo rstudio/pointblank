@@ -19,6 +19,11 @@
 
 is_isbn_10 <- function(x) {
   
+  x <- remove_hyphens(x)
+  x <- remove_punctuation(x)
+  x <- tolower(x)
+  x <- remove_spaces(x)
+  
   if (!grepl("\\d{9}[0-9x]", x)) {
     return(FALSE)
   }
@@ -38,6 +43,8 @@ is_isbn_10 <- function(x) {
 }
 
 is_isbn_13 <- function(x) {
+  
+  x <- remove_hyphens(x)
   
   if (!grepl("\\d{13}", x)) {
     return(FALSE)
@@ -105,7 +112,13 @@ is_vin <- function(x) {
       "j" = 1, "k" = 2, "l" = 3, "m" = 4,
       "n" = 5, "p" = 7, "r" = 9, "s" = 2,
       "t" = 3, "u" = 4, "v" = 5, "w" = 6,
-      "x" = 7, "y" = 8, "z" = 9
+      "x" = 7, "y" = 8, "z" = 9,
+      "A" = 1, "B" = 2, "C" = 3, "D" = 4,
+      "E" = 5, "F" = 6, "G" = 7, "H" = 8,
+      "J" = 1, "K" = 2, "L" = 3, "M" = 4,
+      "N" = 5, "P" = 7, "R" = 9, "S" = 2,
+      "T" = 3, "U" = 4, "V" = 5, "W" = 6,
+      "X" = 7, "Y" = 8, "Z" = 9
     )
   
   sum <- 0

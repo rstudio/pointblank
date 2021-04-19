@@ -604,7 +604,11 @@ get_descriptive_stats_gt <- function(data_column,
     
     mean <- get_dbi_column_mean(data_column = data_column)
 
-    variance <- get_dbi_column_variance(data_column = data_column, mean = mean)
+    variance <- 
+      get_dbi_column_variance(
+        data_column = data_column,
+        mean_value = mean
+      )
     
     sd <- variance^0.5
     cv <- sd / mean

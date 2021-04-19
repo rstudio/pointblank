@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("Utility functions won't fail us", {
   
   # Use two validation step functions to create

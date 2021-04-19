@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Do the columns contain R factor objects? — col_is_factor • pointblank</title>
+<title>Do values in column data fit within a specification? — col_vals_within_spec • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,18 +46,19 @@
 
 
 
-<meta property="og:title" content="Do the columns contain R factor objects? — col_is_factor" />
-<meta property="og:description" content="The col_is_factor() validation function, the expect_col_is_factor()
-expectation function, and the test_col_is_factor() test function all check
-whether one or more columns in a table is of the factor type. Like many of
-the col_is_*()-type functions in pointblank, the only requirement is a
-specification of the column names. The validation function can be used
-directly on a data table or with an agent object (technically, a
-ptblank_agent object) whereas the expectation and test functions can only
+<meta property="og:title" content="Do values in column data fit within a specification? — col_vals_within_spec" />
+<meta property="og:description" content="The col_vals_within_spec() validation function, the
+expect_col_vals_within_spec() expectation function, and the
+test_col_vals_within_spec() test function all check whether column values
+in a table correspond to a specification (spec) type (details of which are
+available in the Specifications section). The validation step function
+can be used directly on a data table or with an agent object (technically,
+a ptblank_agent object) whereas the expectation and test functions can only
 be used with a data table. The types of data tables that can be used include
 data frames, tibbles, database tables (tbl_dbi), and Spark DataFrames
-(tbl_spark). Each validation step or expectation will operate over a single
-test unit, which is whether the column is a factor-type column or not." />
+(tbl_spark). Each validation step or expectation will operate over the
+number of test units that is equal to the number of rows in the table (after
+any preconditions have been applied)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -161,28 +162,32 @@ test unit, which is whether the column is a factor-type column or not." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Do the columns contain R <code>factor</code> objects?</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/col_is_factor.R'><code>R/col_is_factor.R</code></a></small>
-    <div class="hidden name"><code>col_is_factor.Rd</code></div>
+    <h1>Do values in column data fit within a specification?</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/col_vals_within_spec.R'><code>R/col_vals_within_spec.R</code></a></small>
+    <div class="hidden name"><code>col_vals_within_spec.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>col_is_factor()</code> validation function, the <code>expect_col_is_factor()</code>
-expectation function, and the <code>test_col_is_factor()</code> test function all check
-whether one or more columns in a table is of the factor type. Like many of
-the <code>col_is_*()</code>-type functions in <strong>pointblank</strong>, the only requirement is a
-specification of the column names. The validation function can be used
-directly on a data table or with an <em>agent</em> object (technically, a
-<code>ptblank_agent</code> object) whereas the expectation and test functions can only
+    <p>The <code>col_vals_within_spec()</code> validation function, the
+<code>expect_col_vals_within_spec()</code> expectation function, and the
+<code>test_col_vals_within_spec()</code> test function all check whether column values
+in a table correspond to a specification (<code>spec</code>) type (details of which are
+available in the <em>Specifications</em> section). The validation step function
+can be used directly on a data table or with an <em>agent</em> object (technically,
+a <code>ptblank_agent</code> object) whereas the expectation and test functions can only
 be used with a data table. The types of data tables that can be used include
 data frames, tibbles, database tables (<code>tbl_dbi</code>), and Spark DataFrames
-(<code>tbl_spark</code>). Each validation step or expectation will operate over a single
-test unit, which is whether the column is a factor-type column or not.</p>
+(<code>tbl_spark</code>). Each validation step or expectation will operate over the
+number of test units that is equal to the number of rows in the table (after
+any <code>preconditions</code> have been applied).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>col_is_factor</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>col_vals_within_spec</span><span class='op'>(</span>
   <span class='va'>x</span>,
   <span class='va'>columns</span>,
+  <span class='va'>spec</span>,
+  na_pass <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
   actions <span class='op'>=</span> <span class='cn'>NULL</span>,
   step_id <span class='op'>=</span> <span class='cn'>NULL</span>,
   label <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -190,9 +195,23 @@ test unit, which is whether the column is a factor-type column or not.</p>
   active <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
 
-<span class='fu'>expect_col_is_factor</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>columns</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'>expect_col_vals_within_spec</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  <span class='va'>columns</span>,
+  <span class='va'>spec</span>,
+  na_pass <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  threshold <span class='op'>=</span> <span class='fl'>1</span>
+<span class='op'>)</span>
 
-<span class='fu'>test_col_is_factor</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>columns</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
+<span class='fu'>test_col_vals_within_spec</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  <span class='va'>columns</span>,
+  <span class='va'>spec</span>,
+  na_pass <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  threshold <span class='op'>=</span> <span class='fl'>1</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,6 +226,23 @@ created with <code><a href='create_agent.html'>create_agent()</a></code>.</p></t
       <th>columns</th>
       <td><p>The column (or a set of columns, provided as a character
 vector) to which this validation should be applied.</p></td>
+    </tr>
+    <tr>
+      <th>spec</th>
+      <td><p>A specification string. Examples are <code>"email"</code>, <code>"url"</code>, and
+<code>"postal[USA]"</code>. All options are explained in the <em>Specifications</em> section.</p></td>
+    </tr>
+    <tr>
+      <th>na_pass</th>
+      <td><p>Should any encountered <code>NA</code> values be considered as passing
+test units? This is by default <code>FALSE</code>. Set to <code>TRUE</code> to give <code>NA</code>s a pass.</p></td>
+    </tr>
+    <tr>
+      <th>preconditions</th>
+      <td><p>An optional expression for mutating the input table
+before proceeding with the validation. This is ideally as a one-sided R
+formula using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>. In the formula representation, the <code>.</code> serves
+as the input data table to be transformed (e.g., <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code>.</p></td>
     </tr>
     <tr>
       <th>actions</th>
@@ -286,6 +322,55 @@ object or a table was passed to <code>x</code>). The expectation function invisi
 returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
 The test function returns a logical value.</p>
+    <h2 class="hasAnchor" id="specifications"><a class="anchor" href="#specifications"></a>Specifications</h2>
+
+    
+
+<p>A specification type must be used with the <code>spec</code> argument. This is a
+character-based keyword that corresponds to the type of data in the specified
+<code>columns</code>. The following keywords can be used:</p><ul>
+<li><p><code>"isbn"</code>: The International Standard Book Number (ISBN) is a unique
+numerical identifier for books, pamphletes, educational kits, microforms, and
+digital/ electronic publications. The specification has been formalized in
+ISO 2108. This keyword can be used to validate 10- or 13-digit ISBNs.</p></li>
+<li><p><code>"VIN"</code>: A vehicle identification number (VIN) is a unique code (which
+includes a serial number) used by the automotive industry to identify
+individual motor vehicles, motorcycles, scooters, and mopeds as stipulated
+by ISO 3779 and ISO 4030.</p></li>
+<li><p><code>"postal_code[&lt;country_code&gt;]"</code>: A postal code (also known as postcodes,
+PIN, or ZIP codes, depending on region) is a series of letters, digits, or
+both (sometimes including spaces/punctuation) included in a postal address to
+aid in sorting mail. Because the coding varies by country, a country code in
+either the 2- (ISO 3166-1 alpha-2) or 3-letter (ISO 3166-1 alpha-3) formats
+needs to be supplied along with the keywords (e.g., for postal codes in
+Germany, <code>"postal_code[DE]"</code> or <code>"postal_code[DEU]"</code> can be used). The
+keyword alias <code>"zip"</code> can be used for US ZIP codes.</p></li>
+<li><p><code>"credit_card"</code>: A credit card number can be validated and this check works
+across a large variety of credit type issuers (where card numbers are
+allocated in accordance with ISO/IEC 7812). Numbers can be of various lengths
+(typically, they are of 14-19 digits) and the key validation performed here
+is the usage of the Luhn algorithm.</p></li>
+<li><p><code>"iban[&lt;country_code&gt;]"</code>: The International Bank Account Number (IBAN) is a
+system of identifying bank accounts across different countries for the
+purpose of improving cross-border transactions. IBAN values are validated
+through conversion to integer values and performing a basic mod-97 operation
+(as described in ISO 7064) on them. Because the length and coding varies by
+country, a country code in either the 2- (ISO 3166-1 alpha-2) or 3-letter
+(ISO 3166-1 alpha-3) formats needs to be supplied along with the keywords
+(e.g., for IBANs in Germany, <code>"iban[DE]"</code> or <code>"iban[DEU]"</code> can be used).</p></li>
+<li><p><code>"swift"</code>: Business Identifier Codes (also known as SWIFT-BIC, BIC,
+or SWIFT code) are defined in a standard format as described by ISO 9362.
+These codes are unique identifiers for both financial and non-financial
+institutions. SWIFT stands for the Society for Worldwide Interbank Financial
+Telecommunication. These numbers are used when transferring money between
+banks, especially important for international wire transfers.</p></li>
+<li><p><code>"phone"</code>, <code>"email"</code>, <code>"url"</code>, <code>"ipv4"</code>, <code>"ipv6"</code>, <code>"mac"</code>: Phone numbers,
+email addresses, Internet URLs, IPv4 or IPv6 addresses, and MAC addresses can
+be validated with their respective keyword. These validations use regex-based
+matching to determine validity.</p></li>
+</ul>
+
+<p>Only a single <code>spec</code> value should be provided per function call.</p>
     <h2 class="hasAnchor" id="column-names"><a class="anchor" href="#column-names"></a>Column Names</h2>
 
     
@@ -296,6 +381,27 @@ will result in the entry of two validation steps). Aside from column names in
 quotes and in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, <strong>tidyselect</strong> helper functions are available for
 specifying columns. They are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>,
 <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p>
+    <h2 class="hasAnchor" id="missing-values"><a class="anchor" href="#missing-values"></a>Missing Values</h2>
+
+    
+
+<p>This validation function supports special handling of <code>NA</code> values. The
+<code>na_pass</code> argument will determine whether an <code>NA</code> value appearing in a test
+unit should be counted as a <em>pass</em> or a <em>fail</em>. The default of <code>na_pass = FALSE</code> means that any <code>NA</code>s encountered will accumulate failing test units.</p>
+    <h2 class="hasAnchor" id="preconditions"><a class="anchor" href="#preconditions"></a>Preconditions</h2>
+
+    
+
+<p>Having table <code>preconditions</code> means <strong>pointblank</strong> will mutate the table just
+before interrogation. Such a table mutation is isolated in scope to the
+validation step(s) produced by the validation function call. Using
+<strong>dplyr</strong> code is suggested here since the statements can be translated to
+SQL if necessary. The code is most easily supplied as a one-sided <strong>R</strong>
+formula (using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>). In the formula representation, the <code>.</code> serves
+as the input data table to be transformed (e.g.,
+<code>~ . %&gt;% dplyr::mutate(col_a = col_b + 10)</code>). Alternatively, a function could
+instead be supplied (e.g.,
+<code>function(x) dplyr::mutate(x, col_a = col_b + 10)</code>).</p>
     <h2 class="hasAnchor" id="actions"><a class="anchor" href="#actions"></a>Actions</h2>
 
     
@@ -308,10 +414,11 @@ above-threshold failure levels in validation. The basic gist is that you'll
 want at least a single threshold level (specified as either the fraction of
 test units failed, or, an absolute value), often using the <code>warn_at</code>
 argument. This is especially true when <code>x</code> is a table object because,
-otherwise, nothing happens. For the <code>col_is_*()</code>-type functions, using
-<code><a href='action_levels.html'>action_levels(warn_at = 1)</a></code> or <code><a href='action_levels.html'>action_levels(stop_at = 1)</a></code> are good choices
-depending on the situation (the first produces a warning, the other
-<code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>s).</p>
+otherwise, nothing happens. For the <code>col_vals_*()</code>-type functions, using
+<code><a href='action_levels.html'>action_levels(warn_at = 0.25)</a></code> or <code><a href='action_levels.html'>action_levels(stop_at = 0.25)</a></code> are good
+choices depending on the situation (the first produces a warning when a
+quarter of the total test units fails, the other <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>s at the same
+threshold level).</p>
     <h2 class="hasAnchor" id="briefs"><a class="anchor" href="#briefs"></a>Briefs</h2>
 
     
@@ -328,47 +435,54 @@ then be automatically generated.</p>
 <p>A <strong>pointblank</strong> agent can be written to YAML with <code><a href='yaml_write.html'>yaml_write()</a></code> and the
 resulting YAML can be used to regenerate an agent (with <code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code>)
 or interrogate the target table (via <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></code>). When
-<code>col_is_factor()</code> is represented in YAML (under the top-level <code>steps</code> key as
-a list member), the syntax closely follows the signature of the validation
-function. Here is an example of how a complex call of <code>col_is_factor()</code> as a
-validation step is expressed in R code and in the corresponding YAML
-representation.</p><pre># R statement
+<code>col_vals_within_spec()</code> is represented in YAML (under the top-level <code>steps</code>
+key as a list member), the syntax closely follows the signature of the
+validation function. Here is an example of how a complex call of
+<code>col_vals_within_spec()</code> as a validation step is expressed in R code and in
+the corresponding YAML representation.</p><pre># R statement
 agent %&gt;% 
-  col_is_factor(
-    vars(a),
+  col_vals_within_spec(
+    columns = vars(a),
+    spec = "email",
+    na_pass = TRUE,
+    preconditions = ~ . %&gt;% dplyr::filter(b &lt; 10),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-    label = "The `col_is_factor()` step.",
+    label = "The `col_vals_within_spec()` step.",
     active = FALSE
   )
 
 # YAML representation
 steps:
-- col_is_factor:
+- col_vals_within_spec:
     columns: vars(a)
+    spec: email
+    na_pass: true
+    preconditions: ~. %&gt;% dplyr::filter(b &lt; 10)
     actions:
       warn_fraction: 0.1
       stop_fraction: 0.2
-    label: The `col_is_factor()` step.
+    label: The `col_vals_within_spec()` step.
     active: false
 </pre>
 
-<p>In practice, both of these will often be shorter as only the <code>columns</code>,
-argument requires a value. Arguments with default values won't be written to
-YAML when using <code><a href='yaml_write.html'>yaml_write()</a></code> (though it is acceptable to include them with
-their default when generating the YAML by other means). It is also possible
-to preview the transformation of an agent to YAML without any writing to disk
-by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></code> function.</p>
+<p>In practice, both of these will often be shorter as only the <code>columns</code> and
+<code>spec</code> arguments require values. Arguments with default values won't be
+written to YAML when using <code><a href='yaml_write.html'>yaml_write()</a></code> (though it is acceptable to include
+them with their default when generating the YAML by other means). It is also
+possible to preview the transformation of an agent to YAML without any
+writing to disk by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></code> function.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
 
-<p>2-28</p>
+<p>2-18</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other validation functions: 
 <code><a href='col_exists.html'>col_exists</a>()</code>,
 <code><a href='col_is_character.html'>col_is_character</a>()</code>,
 <code><a href='col_is_date.html'>col_is_date</a>()</code>,
+<code><a href='col_is_factor.html'>col_is_factor</a>()</code>,
 <code><a href='col_is_integer.html'>col_is_integer</a>()</code>,
 <code><a href='col_is_logical.html'>col_is_logical</a>()</code>,
 <code><a href='col_is_numeric.html'>col_is_numeric</a>()</code>,
@@ -392,77 +506,9 @@ by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></cod
 <code><a href='col_vals_not_null.html'>col_vals_not_null</a>()</code>,
 <code><a href='col_vals_null.html'>col_vals_null</a>()</code>,
 <code><a href='col_vals_regex.html'>col_vals_regex</a>()</code>,
-<code><a href='col_vals_within_spec.html'>col_vals_within_spec</a>()</code>,
 <code><a href='conjointly.html'>conjointly</a>()</code>,
 <code><a href='rows_distinct.html'>rows_distinct</a>()</code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Let's modify the `f` column in the</span>
-<span class='co'># `small_table` dataset so that the</span>
-<span class='co'># values are factors instead of having</span>
-<span class='co'># the `character` class; the following</span>
-<span class='co'># examples will validate that the `f`</span>
-<span class='co'># column was successfully mutated and</span>
-<span class='co'># now consists of factors</span>
-<span class='va'>tbl</span> <span class='op'>&lt;-</span> 
-  <span class='va'>small_table</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>f <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># A: Using an `agent` with validation</span>
-<span class='co'>#    functions and then `interrogate()`</span>
-
-<span class='co'># Validate that the column `f` in the</span>
-<span class='co'># `tbl` object is of the `factor` class</span>
-<span class='va'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span><span class='va'>tbl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>col_is_factor</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
-  
-<span class='co'># Determine if this validation</span>
-<span class='co'># had no failing test units (1)</span>
-<span class='fu'><a href='all_passed.html'>all_passed</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='co'># Calling `agent` in the console</span>
-<span class='co'># prints the agent's report; but we</span>
-<span class='co'># can get a `gt_tbl` object directly</span>
-<span class='co'># with `get_agent_report(agent)`</span>
-
-<span class='co'># B: Using the validation function</span>
-<span class='co'>#    directly on the data (no `agent`)</span>
-
-<span class='co'># This way of using validation functions</span>
-<span class='co'># acts as a data filter: data is passed</span>
-<span class='co'># through but should `stop()` if there</span>
-<span class='co'># is a single test unit failing; the</span>
-<span class='co'># behavior of side effects can be</span>
-<span class='co'># customized with the `actions` option</span>
-<span class='va'>tbl</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>col_is_factor</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 8</span><span>
-#&gt;   date_time           date           a b             c      d e     f    
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2016-01-04 </span><span style='color: #949494;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high 
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2016-01-04 </span><span style='color: #949494;'>00:32:00</span><span> 2016-01-04     3 5-egh-163     8 </span><span style='text-decoration: underline;'>10</span><span>000. TRUE  low  
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 2016-01-05 </span><span style='color: #949494;'>13:32:00</span><span> 2016-01-05     6 8-kdg-938     3  </span><span style='text-decoration: underline;'>2</span><span>343. TRUE  high 
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 2016-01-06 </span><span style='color: #949494;'>17:23:00</span><span> 2016-01-06     2 5-jdo-903    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>3</span><span>892. FALSE mid  
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 2016-01-09 </span><span style='color: #949494;'>12:36:00</span><span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </div><div class='input'>
-<span class='co'># C: Using the expectation function</span>
-
-<span class='co'># With the `expect_*()` form, we would</span>
-<span class='co'># typically perform one validation at a</span>
-<span class='co'># time; this is primarily used in</span>
-<span class='co'># testthat tests</span>
-<span class='fu'>expect_col_is_factor</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># D: Using the test function</span>
-
-<span class='co'># With the `test_*()` form, we should</span>
-<span class='co'># get a single logical value returned</span>
-<span class='co'># to us</span>
-<span class='va'>tbl</span> <span class='op'>%&gt;%</span> <span class='fu'>test_col_is_factor</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

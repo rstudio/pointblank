@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A SQLite version of the small_table dataset — small_table_sqlite • pointblank</title>
+<title>A table containing data pertaining to various specifications — specifications • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,11 +46,14 @@
 
 
 
-<meta property="og:title" content="A SQLite version of the small_table dataset — small_table_sqlite" />
-<meta property="og:description" content="The small_table_sqlite() function creates a SQLite, tbl_dbi version of
-the small_table dataset. A requirement is the availability of the DBI
-and RSQLite packages. These packages can be installed by using
-install.packages(&quot;DBI&quot;) and install.packages(&quot;RSQLite&quot;)." />
+<meta property="og:title" content="A table containing data pertaining to various specifications — specifications" />
+<meta property="og:description" content="The specifications dataset is useful for testing the
+col_vals_within_spec(), test_col_vals_within_spec(), and
+expect_col_vals_within_spec() functions. For each column, holding character
+values for different specifications, rows 1-5 contain valid values, the 6th
+row is an NA value, and the final two values (rows 7 and 8) are invalid.
+Different specification (spec) keywords apply to each of columns when
+validating with any of the aforementioned functions." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -154,40 +157,83 @@ install.packages(&quot;DBI&quot;) and install.packages(&quot;RSQLite&quot;)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A SQLite version of the <code>small_table</code> dataset</h1>
+    <h1>A table containing data pertaining to various specifications</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
-    <div class="hidden name"><code>small_table_sqlite.Rd</code></div>
+    <div class="hidden name"><code>specifications.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>small_table_sqlite()</code> function creates a SQLite, <code>tbl_dbi</code> version of
-the <code>small_table</code> dataset. A requirement is the availability of the <strong>DBI</strong>
-and <strong>RSQLite</strong> packages. These packages can be installed by using
-<code><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages("DBI")</a></code> and <code><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages("RSQLite")</a></code>.</p>
+    <p>The <code>specifications</code> dataset is useful for testing the
+<code><a href='col_vals_within_spec.html'>col_vals_within_spec()</a></code>, <code><a href='col_vals_within_spec.html'>test_col_vals_within_spec()</a></code>, and
+<code><a href='col_vals_within_spec.html'>expect_col_vals_within_spec()</a></code> functions. For each column, holding character
+values for different specifications, rows 1-5 contain valid values, the 6th
+row is an NA value, and the final two values (rows 7 and 8) are invalid.
+Different specification (<code>spec</code>) keywords apply to each of columns when
+validating with any of the aforementioned functions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>small_table_sqlite</span><span class='op'>(</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>specifications</span></pre>
 
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A tibble with 8 rows and 12 variables:</p><dl>
+<dt>isbn_numbers</dt><dd><p>ISBN-13 numbers; can be validated with the <code>"isbn"</code>
+specification.</p></dd>
+<dt>vin_numbers</dt><dd><p>VIN numbers (identifiers for motor vehicles); can be
+validated with the <code>"vin"</code> specification.</p></dd>
+<dt>zip_codes</dt><dd><p>Postal codes for the U.S.; can be validated with the
+<code>"postal[USA]"</code> specification or its <code>"zip"</code> alias.</p></dd>
+<dt>credit_card_numbers</dt><dd><p>Credit card numbers; can be validated with the
+<code>"credit_card"</code> specification or the <code>"cc"</code> alias.</p></dd>
+<dt>iban_austria</dt><dd><p>IBAN numbers for Austrian accounts; can be validated with
+the <code>"iban[AUT]"</code> specification.</p></dd>
+<dt>swift_numbers</dt><dd><p>Swift-BIC numbers; can be validated with the <code>"swift"</code>
+specification.</p></dd>
+<dt>phone_numbers</dt><dd><p>Phone numbers; can be validated with the <code>"phone"</code>
+specification.</p></dd>
+<dt>email_addresses</dt><dd><p>Email addresses; can be validated with the <code>"email"</code>
+specification.</p></dd>
+<dt>urls</dt><dd><p>URLs; can be validated with the  <code>"url"</code> specification.</p></dd>
+<dt>ipv4_addresses</dt><dd><p>IPv4 addresses; can be validated with the <code>"ipv4"</code>
+specification</p></dd>
+<dt>ipv6_addresses</dt><dd><p>IPv6 addresses; can be validated with the <code>"ipv6"</code>
+specification</p></dd>
+<dt>mac_addresses</dt><dd><p>MAC addresses; can be validated with the <code>"mac"</code>
+specification</p></dd>
+
+</dl>
 
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
 
-<p>10-2</p>
+<p>10-3</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Datasets: 
-<code><a href='small_table.html'>small_table</a></code>,
-<code><a href='specifications.html'>specifications</a></code></p></div>
+<code><a href='small_table_sqlite.html'>small_table_sqlite</a>()</code>,
+<code><a href='small_table.html'>small_table</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use `small_table_sqlite()` to</span>
-<span class='co'># create a SQLite version of the</span>
-<span class='co'># `small_table` table</span>
-<span class='co'>#</span>
-<span class='co'># small_table_sqlite &lt;- small_table_sqlite()</span>
-
-</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Here is a glimpse at the data</span>
+<span class='co'># available in `specifications`</span>
+<span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>specifications</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Rows: 8
+#&gt; Columns: 12
+#&gt; $ isbn_numbers        <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "978 1 85715 201 2", "978-1-84159-362-3", "978 1 8…
+#&gt; $ vin_numbers         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "4UZAANDH85CV12329", "JM1BL1S59A1134659", "1GCEK14…
+#&gt; $ zip_codes           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "99553", "36264", "71660", "85225", "90309", NA, "…
+#&gt; $ credit_card_numbers </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "340000000000009", "378734493671000", "67034444444…
+#&gt; $ iban_austria        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "AT582774098454337653", "AT220332087576467472", "A…
+#&gt; $ swift_numbers       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "RBOSGGSX", "RZTIAT22263", "BCEELULL", "MARKDEFF",…
+#&gt; $ phone_numbers       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "+5-555-555-5555", "+5 555 555 5555", "+5.555.555.…
+#&gt; $ email_addresses     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "test@test.com", "mail+mail@example.com", "mail.em…
+#&gt; $ urls                </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "http://foo.com/blah_blah", "http://foo.com/blah_b…
+#&gt; $ ipv4_addresses      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "93.184.220.20", "161.148.172.130", "161.148.172.1…
+#&gt; $ ipv6_addresses      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "2001:0db8:0000:85a3:0000:0000:ac1f:8001", "2001:d…
+#&gt; $ mac_addresses       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> "01-2d-4c-ef-89-ab", "01-2D-4C-EF-89-AB", "01:2d:4…</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

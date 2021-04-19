@@ -46,7 +46,7 @@ created with \code{\link[=create_agent]{create_agent()}}.}
 vector) to which this validation should be applied.}
 
 \item{spec}{A specification string. Examples are \code{"email"}, \code{"url"}, and
-\code{"postal:USA"}.}
+\code{"postal[USA]"}. All options are explained in the \emph{Specifications} section.}
 
 \item{na_pass}{Should any encountered \code{NA} values be considered as passing
 test units? This is by default \code{FALSE}. Set to \code{TRUE} to give \code{NA}s a pass.}

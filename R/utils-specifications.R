@@ -80,6 +80,9 @@ check_vin <- function(x) {
     FUN.VALUE = logical(1),
     USE.NAMES = FALSE,
     FUN = function(i) {
+      if (is.na(x[i])) {
+        return(FALSE)
+      }
       is_vin(x[i])
     }
   )

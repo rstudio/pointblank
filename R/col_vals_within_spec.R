@@ -174,7 +174,7 @@
 #'
 #' @inheritParams col_vals_gt
 #' @param spec A specification string. Examples are `"email"`, `"url"`, and
-#'   `"postal:USA"`.
+#'   `"postal[USA]"`. All options are explained in the *Specifications* section.
 #' 
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

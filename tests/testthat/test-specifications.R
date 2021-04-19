@@ -1,3 +1,5 @@
+skip_on_cran()
+
 iban_valid <- 
   list(
     AL = c(

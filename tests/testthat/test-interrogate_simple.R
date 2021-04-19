@@ -1095,45 +1095,45 @@ test_that("Interrogating simply returns the expected results", {
   expect_false(exists("tbl_result"))
   
   #
-  # col_vals_regex
+  # col_vals_within_spec
   #
   
-  # Use the `col_vals_regex()` function to perform
+  # Use the `col_vals_within_spec()` function to perform
   # a simple validation step
   tbl_result <- 
-    tbl %>%
-    col_vals_regex(
-      columns = vars(b),
-      regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+    specifications[1:5, ] %>%
+    col_vals_within_spec(
+      columns = vars(isbn_numbers),
+      spec = "isbn",
       actions = warn_on_fail()
     )
   
-  # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  # Expect that `tbl_result` is equivalent to `specifications[1:5, ]`
+  expect_equivalent(specifications[1:5, ], tbl_result)
   
   # Perform a simple validation that yields a warning
   expect_warning(
     tbl_result <- 
-      tbl %>%
-      col_vals_regex(
-        columns = vars(b),
-        regex = "[0-9]-dmx-[0-9]{3}",
+      specifications[1:6, ] %>%
+      col_vals_within_spec(
+        columns = vars(isbn_numbers),
+        spec = "isbn",
         actions = warn_on_fail()
       )
   )
   
-  # Expect that `tbl_result` is equivalent to `tbl`
-  expect_equivalent(tbl, tbl_result)
+  # Expect that `tbl_result` is equivalent to `specifications[1:6, ]`
+  expect_equivalent(specifications[1:6, ], tbl_result)
   
   rm(tbl_result)
   
   # Perform a simple validation step that results in stopping
   expect_error(
     tbl_result <- 
-      tbl %>%
-      col_vals_regex(
-        columns = vars(b),
-        regex = "[0-9]-dmx-[0-9]{3}",
+      specifications %>%
+      col_vals_within_spec(
+        columns = vars(isbn_numbers),
+        spec = "isbn",
         actions = stop_on_fail()
       )
   )

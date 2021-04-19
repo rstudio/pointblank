@@ -932,6 +932,30 @@ as_agent_yaml_list <- function(agent,
           )
         )
       
+    } else if (validation_fn == "col_vals_within_spec") {
+      
+      column_text <- 
+        get_column_text(
+          step_list = step_list,
+          expanded = expanded
+        )
+      
+      lst_step <- 
+        list(
+          validation_fn = list(
+            columns = column_text,
+            spec = get_arg_value(step_list$values),
+            na_pass = step_list$na_pass,
+            preconditions = as_list_preconditions(step_list$preconditions),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
+            label = step_list$label,
+            active = as_list_active(step_list$active)
+          )
+        )
+      
     } else if (grepl("col_is_", validation_fn) ||
                validation_fn == "col_exists") {
 

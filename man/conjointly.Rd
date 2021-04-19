@@ -232,7 +232,7 @@ writing to disk by using the \code{\link[=yaml_agent_string]{yaml_agent_string()
 
 \section{Function ID}{
 
-2-19
+2-20
 }
 
 \examples{
@@ -360,6 +360,7 @@ Other validation functions:
 \code{\link{col_vals_not_null}()},
 \code{\link{col_vals_null}()},
 \code{\link{col_vals_regex}()},
+\code{\link{col_vals_within_spec}()},
 \code{\link{rows_distinct}()}
 }
 \concept{validation functions}

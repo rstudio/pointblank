@@ -170,7 +170,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-28
+#' 2-29
 #' @name col_exists
 NULL
 

@@ -60,6 +60,7 @@ reference:
     - col_vals_null
     - col_vals_not_null
     - col_vals_regex
+    - col_vals_within_spec
     - col_vals_expr
     - conjointly
     - rows_distinct
@@ -222,6 +223,7 @@ reference:
     contents:
     - small_table
     - small_table_sqlite
+    - specifications
     
 navbar:
   type: default

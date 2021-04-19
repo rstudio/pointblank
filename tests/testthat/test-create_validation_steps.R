@@ -836,7 +836,6 @@ test_that("Creating a `col_vals_make_subset()` step is possible", {
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
 })
 
-
 test_that("Creating a `col_vals_regex()` step is possible", {
   
   # Use `col_vals_regex()` function to create
@@ -879,6 +878,59 @@ test_that("Creating a `col_vals_regex()` step is possible", {
   expect_equivalent(
     validation_all$validation_set$column,
     c("date_time", "date", "a", "b", "c", "d", "e", "f"))
+})
+
+test_that("Creating a `col_vals_within_spec()` step is possible", {
+  
+  # Use `col_vals_within_spec()` function to create
+  # a validation step
+  validation <-
+    create_agent(tbl = specifications) %>%
+    col_vals_within_spec(columns = vars(zip_codes), spec = "zip")
+  
+  # Expect the class name for the object
+  # to be `ptblank_agent`
+  expect_is(validation, "ptblank_agent")
+  
+  # Expect elements of the object to be equivalent
+  # to specific parameters
+  expect_equivalent(validation$tbl_name, "specifications")
+  expect_equivalent(validation$col_names, c(
+    "isbn_numbers", "vin_numbers", "zip_codes", "credit_card_numbers", 
+    "iban_austria", "swift_numbers", "phone_numbers", "email_addresses", 
+    "urls", "ipv4_addresses", "ipv6_addresses", "mac_addresses"
+    ))
+  expect_equivalent(validation$validation_set$assertion_type, "col_vals_within_spec")
+  expect_equivalent(validation$validation_set$column, "zip_codes")
+  expect_equivalent(validation$validation_set[["values"]] %>% unlist(), "postal[usa]")
+  expect_true(is.na(validation$validation_set$all_passed))
+  expect_true(is.na(validation$validation_set$n))
+  expect_true(is.na(validation$validation_set$n_passed))
+  expect_true(is.na(validation$validation_set$n_failed))
+  expect_true(is.na(validation$validation_set$f_passed))
+  expect_true(is.na(validation$validation_set$f_failed))
+  expect_true(is.na(validation$validation_set$warn))
+  expect_true(is.na(validation$validation_set$notify))
+  expect_true(is.na(validation$validation_set$row_sample))
+  
+  # Validate all available columns using the
+  # `everything()` helper function
+  validation_all <-
+    create_agent(tbl = specifications) %>%
+    col_vals_within_spec(columns = everything(), spec = "zip")
+  
+  # Expect 8 rows in the `validation_all$validation_set` object
+  expect_equivalent(nrow(validation_all$validation_set), 12)
+  
+  # Expect all column names in `validation_all$validation_set$column`
+  expect_equivalent(
+    validation_all$validation_set$column,
+    c(
+      "isbn_numbers", "vin_numbers", "zip_codes", "credit_card_numbers", 
+      "iban_austria", "swift_numbers", "phone_numbers", "email_addresses", 
+      "urls", "ipv4_addresses", "ipv6_addresses", "mac_addresses"
+    )
+  )
 })
 
 test_that("Creating a `col_vals_null()` step is possible", {

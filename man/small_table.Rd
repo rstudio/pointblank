@@ -41,7 +41,8 @@ dplyr::glimpse(small_table)
 }
 \seealso{
 Other Datasets: 
-\code{\link{small_table_sqlite}()}
+\code{\link{small_table_sqlite}()},
+\code{\link{specifications}}
 }
 \concept{Datasets}
 \keyword{datasets}

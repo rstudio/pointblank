@@ -419,6 +419,25 @@ test_that("pointblank expectation function produce the correct results", {
   )
   
   #
+  # expect_col_vals_within_spec()
+  #
+  
+  expect_col_vals_within_spec(specifications[1:5, ], vars(zip_codes), spec = "zip")
+  expect_success(expect_col_vals_within_spec(specifications[1:5, ], vars(zip_codes), spec = "zip"))
+  expect_failure(expect_col_vals_within_spec(specifications[1:6, ], vars(zip_codes), spec = "zip"))
+  expect_success(expect_col_vals_within_spec(specifications, vars(zip_codes), spec = "zip", threshold = 1000))
+  
+  expect_error(expect_col_vals_within_spec(specifications, vars(zip_codes), spec = "isbn"), class = "expectation_failure")
+  
+  expect_failure(expect_col_vals_within_spec(specifications[1:6, ], vars(zip_codes), spec = "zip", threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_vals_within_spec(specifications[1:6, ], vars(zip_codes), spec = "zip", threshold = 0.01), failed_beyond_proportional)
+  
+  expect_failure(
+    expect_col_vals_within_spec(specifications, vars(zip_codes), spec = "zip"),
+    "failure level \\(3\\) >= failure threshold \\(1\\)"
+  )
+  
+  #
   # expect_col_vals_expr()
   #
   
@@ -882,6 +901,7 @@ test_that("expect errors to be expressed by pointblank under some conditions", {
   expect_error(expect_col_vals_null(tbl, columns = vars(z)), regexp = no_col_msg)
   expect_error(expect_col_vals_not_null(tbl, columns = vars(z)), regexp = no_col_msg)
   expect_error(expect_col_vals_regex(tbl, vars(z), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$"), regexp = no_col_msg)
+  expect_error(expect_col_vals_within_spec(tbl, vars(z), spec = "isbn"), regexp = no_col_msg)
   expect_error(expect_col_is_character(tbl, columns = vars(z)), regexp = no_col_msg)
   expect_error(expect_col_is_numeric(tbl, columns = vars(z)), regexp = no_col_msg)
   expect_error(expect_col_is_integer(tbl, columns = vars(z)), regexp = no_col_msg)

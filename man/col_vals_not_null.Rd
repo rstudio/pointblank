@@ -298,6 +298,7 @@ Other validation functions:
 \code{\link{col_vals_not_in_set}()},
 \code{\link{col_vals_null}()},
 \code{\link{col_vals_regex}()},
+\code{\link{col_vals_within_spec}()},
 \code{\link{conjointly}()},
 \code{\link{rows_distinct}()}
 }

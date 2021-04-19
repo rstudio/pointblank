@@ -901,6 +901,7 @@ test_that("expect errors to be expressed by pointblank under some conditions", {
   expect_error(expect_col_vals_null(tbl, columns = vars(z)), regexp = no_col_msg)
   expect_error(expect_col_vals_not_null(tbl, columns = vars(z)), regexp = no_col_msg)
   expect_error(expect_col_vals_regex(tbl, vars(z), regex = "^[0-9]-[a-z]{3}-[0-9]{3}$"), regexp = no_col_msg)
+  expect_error(expect_col_vals_within_spec(tbl, vars(z), spec = "isbn"), regexp = no_col_msg)
   expect_error(expect_col_is_character(tbl, columns = vars(z)), regexp = no_col_msg)
   expect_error(expect_col_is_numeric(tbl, columns = vars(z)), regexp = no_col_msg)
   expect_error(expect_col_is_integer(tbl, columns = vars(z)), regexp = no_col_msg)

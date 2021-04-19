@@ -1,4 +1,5 @@
 skip_on_cran()
+skip_on_os(os = "windows")
 
 test_that("Utility functions won't fail us", {
   
@@ -607,9 +608,15 @@ test_that("Utility functions won't fail us", {
     "a et b"
   )
   
+  expect_error(pb_str_catalog(l_vector, and_or = NA))
+  expect_error(pb_str_catalog(l_vector, and_or = "maybe"))
+  
   #
   # pb_quantile_stats
-  #  
+  # 
+  
+  diamond_ducks <-
+    db_tbl(table = ggplot2::diamonds, dbname = ":memory:", dbtype = "duckdb")
   
   expect_equal(pb_quantile_stats(dplyr::tibble(a = 0:100), 0.5), 50)
   expect_equal(pb_quantile_stats(dplyr::tibble(a = 0:100), 1), 100)
@@ -617,6 +624,13 @@ test_that("Utility functions won't fail us", {
   expect_equal(pb_quantile_stats(dplyr::tibble(a = c(0:100, NA)), 0.5), 50)
   expect_equal(pb_quantile_stats(dplyr::tibble(a = c(0:100, NA)), 1), 100)
   expect_equal(pb_quantile_stats(dplyr::tibble(a = c(0:100, NA)), 0), 0)
+  
+  expect_equal(pb_quantile_stats(small_table %>% dplyr::select(c), 0.5), 7)
+  expect_equal(pb_quantile_stats(small_table_sqlite() %>% dplyr::select(c), 0.5), 7)
+  
+  expect_equal(pb_quantile_stats(diamond_ducks %>% dplyr::select(depth), 0.5), 61.8)
+  expect_equal(pb_quantile_stats(diamond_ducks %>% dplyr::select(table), 0.5), 57)
+  expect_equal(pb_quantile_stats(diamond_ducks %>% dplyr::select(price), 0.5), 2401)
   
   #
   # pb_fmt_number
@@ -701,4 +715,15 @@ test_that("Utility functions won't fail us", {
   )
   expect_error(regexp = NA, glue_safely("Easy as {one}, {two}, {three}."))
   expect_error(regexp = NA, glue_safely("Easy as {LETTERS[1]}, B, C."))
+  
+  #
+  # print_time
+  #
+  
+  expect_equal(print_time(time_diff_s = 0.1), "")
+  expect_equal(print_time(time_diff_s = 1.0), " {.time_taken (1.0 s)}")
+  expect_equal(print_time(time_diff_s = 10.0), " {.time_taken (10.0 s)}")
+  expect_equal(print_time(time_diff_s = 100.0), " {.time_taken (100.0 s)}")
+  expect_equal(print_time(time_diff_s = 1000.0), " {.time_taken (1000.0 s)}")
+  expect_equal(print_time(time_diff_s = 345.343234), " {.time_taken (345.3 s)}")
 })

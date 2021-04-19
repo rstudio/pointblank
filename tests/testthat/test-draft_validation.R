@@ -108,6 +108,17 @@ test_that("draft validations for data tables can be generated in different langu
   write_draft_snapshot_test(dataset = pointblank::small_table, file_name = "st_nl", lang = "nl")
 })
 
+test_that("draft validations for data tables can be generated in .Rmd format", {
+  
+  write_draft_snapshot_test(dataset = gt::countrypops, file_name = "countrypops_rmd", output_type = "Rmd")
+  write_draft_snapshot_test(dataset = gt::sza, file_name = "sza_rmd", output_type = "Rmd")
+  write_draft_snapshot_test(dataset = gt::gtcars, file_name = "gtcars_rmd", output_type = "Rmd")
+  write_draft_snapshot_test(dataset = gt::sp500, file_name = "sp500_rmd", output_type = "Rmd")
+  write_draft_snapshot_test(dataset = gt::pizzaplace, file_name = "pizzaplace_rmd", output_type = "Rmd")
+  write_draft_snapshot_test(dataset = gt::exibble, file_name = "exibble_rmd", output_type = "Rmd")
+})
+
+
 if (fs::dir_exists(path = work_path)) {
   fs::dir_delete(path = work_path)
 }

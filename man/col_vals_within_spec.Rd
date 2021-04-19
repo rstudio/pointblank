@@ -140,7 +140,7 @@ character-based keyword that corresponds to the type of data in the specified
 \itemize{
 \item \code{"isbn"}: The International Standard Book Number (ISBN) is a unique
 numerical identifier for books, pamphletes, educational kits, microforms, and
-digital/ electronic publications. The specification has been formalized in
+digital/electronic publications. The specification has been formalized in
 ISO 2108. This keyword can be used to validate 10- or 13-digit ISBNs.
 \item \code{"VIN"}: A vehicle identification number (VIN) is a unique code (which
 includes a serial number) used by the automotive industry to identify
@@ -175,8 +175,8 @@ Telecommunication. These numbers are used when transferring money between
 banks, especially important for international wire transfers.
 \item \code{"phone"}, \code{"email"}, \code{"url"}, \code{"ipv4"}, \code{"ipv6"}, \code{"mac"}: Phone numbers,
 email addresses, Internet URLs, IPv4 or IPv6 addresses, and MAC addresses can
-be validated with their respective keyword. These validations use regex-based
-matching to determine validity.
+be validated with their respective keywords. These validations use
+regex-based matching to determine validity.
 }
 
 Only a single \code{spec} value should be provided per function call.

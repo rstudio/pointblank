@@ -1,4 +1,5 @@
 skip_on_cran()
+skip_on_os(os = "windows")
 
 iban_valid <- 
   list(
@@ -2071,4 +2072,68 @@ test_that("Credit card numbers can be successfully validated", {
   
   expect_true(all(check_credit_card(credit_card_valid)))
   expect_true(all(!check_credit_card(credit_card_invalid)))
+})
+
+test_that("the `is_isbn_10()` function works", {
+  
+  isbn_10 <- c("0307957802", "0679405828", "0679405437", "0307268217")
+  
+  expect_true(is_isbn_10(isbn_10[1]))
+  expect_true(is_isbn_10(isbn_10[2]))
+  expect_true(is_isbn_10(isbn_10[3]))
+  expect_true(is_isbn_10(isbn_10[4]))
+})
+
+test_that("the `is_isbn_13()` function works", {
+  
+  isbn_13 <- c("978-0307957801", "978-0679405825", "978-0679405436", "978-0307268211")
+  
+  expect_true(is_isbn_13(isbn_13[1]))
+  expect_true(is_isbn_13(isbn_13[2]))
+  expect_true(is_isbn_13(isbn_13[3]))
+  expect_true(is_isbn_13(isbn_13[4]))
+})
+
+test_that("functions that clean up strings all work", {
+  
+  strings <- c("978-0307957801", "978-0307957801 ", "isbn978-0307957801", " isbn:978 - 0307957801")
+  
+  expect_equal(
+    remove_hyphens(strings),
+    c("9780307957801", "9780307957801 ", "isbn9780307957801", " isbn:978  0307957801")
+  )
+  
+  expect_equal(
+    remove_spaces(strings),
+    c("978-0307957801", "978-0307957801", "isbn978-0307957801", "isbn:978-0307957801")
+  )
+  
+  expect_equal(
+    remove_letters(strings),
+    c("978-0307957801", "978-0307957801 ", "978-0307957801", " :978 - 0307957801")
+  )
+  
+  expect_equal(
+    remove_punctuation(strings),
+    c("978 0307957801", "978 0307957801 ", "isbn978 0307957801", " isbn 978   0307957801")
+  )
+  
+  expect_equal(
+    strings %>%
+      remove_hyphens() %>%
+      remove_letters() %>%
+      remove_punctuation() %>%
+      remove_spaces(),
+    c("9780307957801", "9780307957801", "9780307957801", "9780307957801")
+  )
+})
+
+test_that("the `is_vin()` function works", {
+  
+  expect_true(is_vin(specifications$vin_numbers[1]))
+  expect_true(is_vin(specifications$vin_numbers[2]))
+  expect_true(is_vin(specifications$vin_numbers[3]))
+  expect_true(is_vin(specifications$vin_numbers[4]))
+  expect_true(is_vin(specifications$vin_numbers[5]))
+  expect_false(is_vin(specifications$vin_numbers[6]))
 })

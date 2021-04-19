@@ -131,6 +131,56 @@ Spark DataFrames (\code{tbl_spark}). Each validation step or expectation will
 operate over the number of test units that is equal to the number of rows in
 the table (after any \code{preconditions} have been applied).
 }
+\section{Specifications}{
+
+A specification type must be used with the \code{spec} argument. This is a
+character-based keyword that corresponds to the type of data in the specified
+\code{columns}. The following keywords can be used:
+\itemize{
+\item \code{"isbn"}: The International Standard Book Number (ISBN) is a unique
+numerical identifier for books, pamphletes, educational kits, microforms, and
+digital/ electronic publications. The specification has been formalized in
+ISO 2108. This keyword can be used to validate 10- or 13-digit ISBNs.
+\item \code{"VIN"}: A vehicle identification number (VIN) is a unique code (which
+includes a serial number) used by the automotive industry to identify
+individual motor vehicles, motorcycles, scooters, and mopeds as stipulated
+by ISO 3779 and ISO 4030.
+\item \code{"postal_code[<country_code>]"}: A postal code (also known as postcodes,
+PIN, or ZIP codes, depending on region) is a series of letters, digits, or
+both (sometimes including spaces/punctuation) included in a postal address to
+aid in sorting mail. Because the coding varies by country, a country code in
+either the 2- (ISO 3166-1 alpha-2) or 3-letter (ISO 3166-1 alpha-3) formats
+needs to be supplied along with the keywords (e.g., for postal codes in
+Germany, \code{"postal_code[DE]"} or \code{"postal_code[DEU]"} can be used). The
+keyword alias \code{"zip"} can be used for US ZIP codes.
+\item \code{"credit_card"}: A credit card number can be validated and this check works
+across a large variety of credit type issuers (where card numbers are
+allocated in accordance with ISO/IEC 7812). Numbers can be of various lengths
+(typically, they are of 14-19 digits) and the key validation performed here
+is the usage of the Luhn algorithm.
+\item \code{"iban[<country_code>]"}: The International Bank Account Number (IBAN) is a
+system of identifying bank accounts across different countries for the
+purpose of improving cross-border transactions. IBAN values are validated
+through conversion to integer values and performing a basic mod-97 operation
+(as described in ISO 7064) on them. Because the length and coding varies by
+country, a country code in either the 2- (ISO 3166-1 alpha-2) or 3-letter
+(ISO 3166-1 alpha-3) formats needs to be supplied along with the keywords
+(e.g., for IBANs in Germany, \code{"iban[DE]"} or \code{"iban[DEU]"} can be used).
+\item \code{"swift"}: Business Identifier Codes (also known as SWIFT-BIC, BIC,
+or SWIFT code) are defined in a standard format as described by ISO 9362.
+These codes are unique identifiers for both financial and non-financial
+institutions. SWIFT stands for the Society for Worldwide Interbank Financial
+Telecommunication. These numbers are used when transferring money between
+banks, especially important for international wire transfers.
+\item \code{"phone"}, \code{"email"}, \code{"url"}, \code{"ipv4"}, \code{"ipv6"}, \code{"mac"}: Phone numbers,
+email addresses, Internet URLs, IPv4 or IPv6 addresses, and MAC addresses can
+be validated with their respective keyword. These validations use regex-based
+matching to determine validity.
+}
+
+Only a single \code{spec} value should be provided per function call.
+}
+
 \section{Column Names}{
 
 If providing multiple column names, the result will be an expansion of
@@ -203,7 +253,7 @@ agent \%>\%
     columns = vars(a),
     spec = "email",
     na_pass = TRUE,
-    preconditions = ~ . \%>\% dplyr::filter(a < 10),
+    preconditions = ~ . \%>\% dplyr::filter(b < 10),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
     label = "The `col_vals_within_spec()` step.",
     active = FALSE
@@ -215,7 +265,7 @@ steps:
     columns: vars(a)
     spec: email
     na_pass: true
-    preconditions: ~. \%>\% dplyr::filter(a < 10)
+    preconditions: ~. \%>\% dplyr::filter(b < 10)
     actions:
       warn_fraction: 0.1
       stop_fraction: 0.2

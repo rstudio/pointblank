@@ -29,22 +29,6 @@ is_ptblank_x_list <- function(x) {
   inherits(x, "x_list")
 }
 
-is_a_table_object <- function(x) {
-  inherits(x, c("data.frame", "tbl_df", "tbl_dbi", "tbl_spark"))
-}
-
-is_tbl_spark <- function(x) {
-  inherits(x, "tbl_spark")
-}
-
-is_tbl_dbi <- function(x) {
-  inherits(x, "tbl_dbi")
-}
-
-is_arrow_object <- function(x) {
-  inherits(x, "ArrowObject")
-}
-
 has_agent_intel <- function(agent) {
   inherits(agent, "has_intel")
 }
@@ -52,6 +36,26 @@ has_agent_intel <- function(agent) {
 get_tbl_object <- function(agent) {
   agent$tbl
 }
+
+is_a_table_object <- function(x) {
+  inherits(x, c("data.frame", "tbl_df", "tbl_dbi", "tbl_spark"))
+}
+
+is_tbl_dbi <- function(x) {
+  inherits(x, "tbl_dbi")
+}
+
+# nocov start
+
+is_tbl_spark <- function(x) {
+  inherits(x, "tbl_spark")
+}
+
+is_arrow_object <- function(x) {
+  inherits(x, "ArrowObject")
+}
+
+# nocov end
 
 # Generate a label for the `agent` or `informant` object
 generate_label <- function(label = NULL) {
@@ -574,6 +578,8 @@ get_tbl_information_dbi <- function(tbl) {
   )
 }
 
+# nocov start
+
 get_tbl_information_arrow <- function(tbl) {
 
   schema_cap <- utils::capture.output(tbl$schema)[-1][seq_len(ncol(tbl))]
@@ -614,7 +620,9 @@ get_tbl_information_arrow <- function(tbl) {
     r_col_types = r_col_types,
     db_col_types = db_col_types
   )
-} 
+}
+
+# nocov end
 
 pb_fmt_number <- function(x,
                           decimals = 2,
@@ -1026,6 +1034,8 @@ pb_quantile_stats <- function(data_column,
   
   if (is_tbl_spark(data_column)) {
     
+    # nocov start
+    
     column_name <- colnames(data_column)
     
     quantile <- 
@@ -1037,6 +1047,8 @@ pb_quantile_stats <- function(data_column,
       round(2)
     
     return(quantile)
+    
+    # nocov end
     
   } else if (inherits(data_column, "data.frame")) {
     

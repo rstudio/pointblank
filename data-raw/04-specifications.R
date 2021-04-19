@@ -17,10 +17,10 @@ specifications <-
       "JM1BL1S59A1134659",
       "1GCEK14R3WZ274764",
       "2B7JB21Y0XK524370",
-      "2B7JB21Y0XK52437",
+      "4UZAANDH85CV12329",
       NA_character_,
       "2B7JB21Y0XK52437!",
-      "4UZAANDH85CV12329"
+      "2B7JB21Y0XK52437"
     ),
     zip_codes = c(
       "99553",

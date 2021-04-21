@@ -185,9 +185,9 @@ get_dbi_column_variance <- function(data_column, mean_value) {
 # Get the variance value of a column in a table, after obtaining the mean value
 # - works only with `tbl_spark` objects
 # - returns 'numeric' of length 1
-get_spark_column_variance <- function(data_column, mean) {
+get_spark_column_variance <- function(data_column, mean_value) {
   
-  get_dbi_column_variance(data_column = data_column, mean = mean)
+  get_dbi_column_variance(data_column = data_column, mean_value = mean_value)
 }
 
 # Get a list of quantile statistics for a Spark DataFrame column

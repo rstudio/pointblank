@@ -24,7 +24,8 @@
 #' YAML agents and incorporation of informants for YAML informants. Under the
 #' hood, this uses [yaml_agent_interrogate()] and [yaml_informant_incorporate()]
 #' and then [x_write_disk()] to save the processed objects to an output
-#' directory for access to fresh results.
+#' directory. These written artifacts can be read in at any later time with the
+#' [x_read_disk()] function or the [read_disk_multiagent()] function.
 #' 
 #' The output RDS files are named according to the object type processed, the
 #' target table, and the date-time of processing. For convenience and
@@ -46,20 +47,20 @@
 #' processed agents and informants
 #' 
 #' @param path The path that contains the YAML files for agents and informants.
-#' @param files A vector of YAML files to use. By default, `yaml_exec()` will
-#'   attempt to process every valid YAML file but supplying a vector here limits
-#'   the scope to the specified files.
-#' @param write_to_disk Should the processing include a step that writes output
-#'   files to disk? This uses [x_write_disk()] to write RDS files and uses the
-#'   base filename of the agent/informant YAML file, adding the date-time to the
-#'   output filename.
+#' @param files A vector of YAML files to use in the execution workflow. By
+#'   default, `yaml_exec()` will attempt to process every valid YAML file in
+#'   `path` but supplying a vector here limits the scope to the specified files.
+#' @param write_to_disk Should the execution workflow include a step that writes
+#'   output files to disk? This internally calls [x_write_disk()] to write RDS
+#'   files and uses the base filename of the agent/informant YAML file as part
+#'   of the output filename, appending the date-time to the basename.
 #' @param output_path The output path for any generated output files. By
 #'   default, this will be a subdirectory of the provided `path` called
 #'   `"output"`.
 #' @param keep_tbl,keep_extracts For agents, the table may be kept if it is a
-#'   dataframe object and *extracts* (collections of table rows that failed a
-#'   validation step) may also be stored. By default, both of these options are
-#'   set to `FALSE`.
+#'   data frame object (databases tables will never be pulled for storage) and
+#'   *extracts*, collections of table rows that failed a validation step, may
+#'   also be stored. By default, both of these options are set to `FALSE`.
 #'   
 #' @family pointblank YAML
 #' @section Function ID:
@@ -69,7 +70,7 @@
 yaml_exec <- function(path = NULL,
                       files = NULL,
                       write_to_disk = TRUE, 
-                      output_path = NULL,
+                      output_path = file.path(path, "output"),
                       keep_tbl = FALSE,
                       keep_extracts = FALSE) {
   
@@ -98,14 +99,19 @@ yaml_exec <- function(path = NULL,
   }
   
   # Construct paths to files
-  files_paths <- fs::path(fs::path_wd(), files)
-  
-  # Construct the output path (if not provided) as a
-  # subdirectory of `path`
-  if (is.null(output_path)) {
-    output_path <- fs::path(path, "output")
+  if (!is.null(files)) {
+    files_paths <- fs::path(fs::path_wd(), files)
   } else {
-    output_path <- path
+    files_paths <- fs::path(fs::path_wd(), fs::dir_ls(regexp = ".ya?ml$"))
+  }
+  
+  # Normalize the output path
+  if (is.null(output_path)) {
+    output_path <- fs::path_norm(output_path)
+  } else {
+    if (!fs::is_absolute_path(output_path)) {
+      output_path <- fs::path_norm(fs::path(initial_wd, output_path))
+    }
   }
   
   agent_file_paths <- c()

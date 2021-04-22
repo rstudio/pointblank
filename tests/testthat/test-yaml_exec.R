@@ -1,17 +1,32 @@
 skip_on_cran()
 
-path_agent <- "../../inst/yaml/agent-small_table.yml"
-path_informant <- "../../inst/yaml/informant-small_table.yml"
-path_tbl_store <- "../../inst/yaml/tbl_store.yml"
-path_yml_files <- "../../inst/yaml"
+sys_path_agent <- system.file("yaml/agent-small_table.yml", package = "pointblank")
+sys_path_informant <- system.file("yaml/informant-small_table.yml", package = "pointblank")
+sys_path_tbl_store <- system.file("yaml/tbl_store.yml", package = "pointblank")
 
+path_yml_files <- "./yaml_files"
 work_path <- "./generated_r_files"
 
 if (fs::dir_exists(path = work_path)) {
   fs::dir_delete(path = work_path)
 }
 
+if (fs::dir_exists(path = path_yml_files)) {
+  fs::dir_delete(path = path_yml_files)
+}
+
 fs::dir_create(path = work_path)
+fs::dir_create(path = path_yml_files)
+
+# Copy the YAML files over to the `path_yml_files` directory
+fs::file_copy(
+  path = c(sys_path_agent, sys_path_informant, sys_path_tbl_store),
+  new_path = fs::path_norm(fs::path(getwd(), path_yml_files))
+)
+
+path_agent <- fs::path_norm(fs::path(getwd(), path_yml_files, "agent-small_table.yml"))
+path_informant <- fs::path_norm(fs::path(getwd(), path_yml_files, "informant-small_table.yml"))
+path_tbl_store <- fs::path_norm(fs::path(getwd(), path_yml_files, "tbl_store.yml"))
 
 test_that("The `yaml_exec()` function efffectively processes .yml files", {
   
@@ -71,8 +86,8 @@ test_that("The `yaml_exec()` function efffectively processes .yml files", {
   fs::file_delete(written_informant)
   
   # Delete the 'output' subdirectory
-  if (fs::dir_exists(path = "../../inst/yaml/output")) {
-    fs::dir_delete(path = "../../inst/yaml/output")
+  if (fs::dir_exists(path = file.path(path_yml_files, "output"))) {
+    fs::dir_delete(path = file.path(path_yml_files, "output"))
   }
   
   # Copy the YAML files over to the working directory
@@ -199,4 +214,8 @@ test_that("The `yaml_exec()` function efffectively processes .yml files", {
 
 if (fs::dir_exists(path = work_path)) {
   fs::dir_delete(path = work_path)
+}
+
+if (fs::dir_exists(path = path_yml_files)) {
+  fs::dir_delete(path = path_yml_files)
 }

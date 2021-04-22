@@ -1,8 +1,9 @@
 skip_on_cran()
 
-path_agent <- system.file("yaml/agent-small_table.yml", package = "pointblank")
-path_informant <- system.file("yaml/informant-small_table.yml", package = "pointblank")
-path_yml_files <- system.file("yaml", package = "pointblank")
+path_agent <- "../../inst/yaml/agent-small_table.yml"
+path_informant <- "../../inst/yaml/informant-small_table.yml"
+path_tbl_store <- "../../inst/yaml/tbl_store.yml"
+path_yml_files <- "../../inst/yaml"
 
 work_path <- "./generated_r_files"
 
@@ -69,9 +70,14 @@ test_that("The `yaml_exec()` function efffectively processes .yml files", {
   fs::file_delete(written_agent)
   fs::file_delete(written_informant)
   
+  # Delete the 'output' subdirectory
+  if (fs::dir_exists(path = "../../inst/yaml/output")) {
+    fs::dir_delete(path = "../../inst/yaml/output")
+  }
+  
   # Copy the YAML files over to the working directory
   fs::file_copy(
-    path = c(path_agent, path_informant),
+    path = c(path_agent, path_informant, path_tbl_store),
     new_path = getwd()
   )
   
@@ -89,17 +95,13 @@ test_that("The `yaml_exec()` function efffectively processes .yml files", {
     fs::path_abs(fs::dir_ls(path = file.path(getwd(), "output"), regexp = "informant.*?rds$"))
   expect_true(is_ptblank_informant(x_read_disk(filename = written_informant)))
   
-  # Delete the written agent and informant files
-  fs::file_delete(written_agent)
-  fs::file_delete(written_informant)
-  
   # Delete the 'output' subdirectory
   if (fs::dir_exists(path = "./output")) {
     fs::dir_delete(path = "./output")
   }
   
   # Delete the YAML files in the working directory
-  fs::file_delete(fs::dir_ls(path = getwd(), regexp = "(agent|informant).*?yml$"))
+  fs::file_delete(fs::dir_ls(path = getwd(), regexp = "(agent|informant|tbl_store).*?yml$"))
   
   # Read just one of the YAML files (the agent) from the specified path,
   # write output to a path relative to the working directory

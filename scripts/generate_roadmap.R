@@ -9,19 +9,28 @@ issues_df <- parse_issues(issues)
 
 tbl <- 
   issues_df %>%
+  dplyr::as_tibble() %>%
+  dplyr::filter(!is.na(milestone_title)) %>%
   tidyr::separate(
     col = labels_name,
     into = c("difficulty", "effort", "priority", "type"),
     sep = ",",
     remove = FALSE
   ) %>%
+  tidyr::separate(
+    col = milestone_title,
+    into = c("major", "minor", "patch"),
+    sep = "\\.",
+    remove = FALSE
+  ) %>%
+  dplyr::mutate(major = gsub("v", "", major)) %>% 
+  dplyr::mutate_at(.vars = vars(major, minor, patch), .funs = as.integer) %>%
   dplyr::mutate(type = ifelse(labels_name == "Release", "✈ Release", type)) %>%
   dplyr::filter(!grepl("Question", labels_name)) %>%
   dplyr::filter(!grepl("Help", labels_name)) %>%
   dplyr::filter(!grepl("Good", labels_name)) %>%
-  dplyr::filter(!is.na(milestone_title)) %>%
   dplyr::select(
-    number, title, milestone_title,
+    number, title, milestone_title, major, minor, patch,
     type, priority, difficulty, effort
   ) %>%
   dplyr::mutate(difficulty = gsub(".*?([1-3]).*", "\\1", difficulty)) %>%
@@ -29,10 +38,17 @@ tbl <-
   dplyr::mutate(priority = gsub(".*?([1-3]).*", "\\1", priority)) %>%
   dplyr::mutate(priority = ifelse(grepl("[^1-3]", priority), 4, priority)) %>%
   dplyr::mutate(type = gsub(".*?Type: (.*?)\\\"\\)", "\\1", type)) %>%
-  dplyr::arrange(milestone_title, desc(priority, type, difficulty, effort)) %>%
   dplyr::mutate_at(.vars = vars(priority, difficulty, effort), .funs = as.numeric) %>%
+  dplyr::arrange(
+    major,
+    minor,
+    dplyr::desc(priority),
+    type,
+    dplyr::desc(difficulty),
+    dplyr::desc(effort)
+  ) %>%
   dplyr::mutate(number = paste0("#", number)) %>%
-  dplyr::as_tibble()
+  dplyr::select(-c(major, minor, patch))
 
 gt_tbl <- 
   tbl %>%

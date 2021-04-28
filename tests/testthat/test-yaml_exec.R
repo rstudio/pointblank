@@ -28,7 +28,7 @@ path_agent <- fs::path_norm(fs::path(getwd(), path_yml_files, "agent-small_table
 path_informant <- fs::path_norm(fs::path(getwd(), path_yml_files, "informant-small_table.yml"))
 path_tbl_store <- fs::path_norm(fs::path(getwd(), path_yml_files, "tbl_store.yml"))
 
-test_that("The `yaml_exec()` function efffectively processes .yml files", {
+test_that("The `yaml_exec()` function effectively processes .yml files", {
   
   # Read YAML files from the specified path, write output to a path
   # relative to the working directory

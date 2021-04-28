@@ -16,6 +16,7 @@
 # https://rich-iannone.github.io/pointblank/LICENSE.html
 #
 
+
 #' Execute all agent and informant YAML tasks
 #' 
 #' @description
@@ -25,7 +26,9 @@
 #' hood, this uses [yaml_agent_interrogate()] and [yaml_informant_incorporate()]
 #' and then [x_write_disk()] to save the processed objects to an output
 #' directory. These written artifacts can be read in at any later time with the
-#' [x_read_disk()] function or the [read_disk_multiagent()] function.
+#' [x_read_disk()] function or the [read_disk_multiagent()] function. This is
+#' useful when data in the target tables are changing and the periodic testing
+#' of such tables is part of a data quality monitoring plan.
 #' 
 #' The output RDS files are named according to the object type processed, the
 #' target table, and the date-time of processing. For convenience and

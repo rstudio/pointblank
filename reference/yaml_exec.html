@@ -53,7 +53,9 @@ YAML agents and incorporation of informants for YAML informants. Under the
 hood, this uses yaml_agent_interrogate() and yaml_informant_incorporate()
 and then x_write_disk() to save the processed objects to an output
 directory. These written artifacts can be read in at any later time with the
-x_read_disk() function or the read_disk_multiagent() function.
+x_read_disk() function or the read_disk_multiagent() function. This is
+useful when data in the target tables are changing and the periodic testing
+of such tables is part of a data quality monitoring plan.
 The output RDS files are named according to the object type processed, the
 target table, and the date-time of processing. For convenience and
 modularity, this setup is ideal when a table store YAML file (typically named
@@ -71,7 +73,15 @@ one or more YAML informant files to provide refreshed metadata on tables
 an output folder (default is &quot;output&quot;) to save serialized versions of
 processed agents and informants
 
-" />
+
+Minimal example files of the aforementioned types can be found in the
+pointblank package through the following system.file() calls:
+system.file(&quot;yaml&quot;, &quot;agent-small_table.yml&quot;, package = &quot;pointblank&quot;)
+system.file(&quot;yaml&quot;, &quot;informant-small_table.yml&quot;, package = &quot;pointblank&quot;)
+system.file(&quot;yaml&quot;, &quot;tbl_store.yml&quot;, package = &quot;pointblank&quot;)
+
+
+The directory itself can be accessed using system.file(&quot;yaml&quot;, package = &quot;pointblank&quot;)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -187,7 +197,9 @@ YAML agents and incorporation of informants for YAML informants. Under the
 hood, this uses <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></code> and <code><a href='yaml_informant_incorporate.html'>yaml_informant_incorporate()</a></code>
 and then <code><a href='x_write_disk.html'>x_write_disk()</a></code> to save the processed objects to an output
 directory. These written artifacts can be read in at any later time with the
-<code><a href='x_read_disk.html'>x_read_disk()</a></code> function or the <code><a href='read_disk_multiagent.html'>read_disk_multiagent()</a></code> function.</p>
+<code><a href='x_read_disk.html'>x_read_disk()</a></code> function or the <code><a href='read_disk_multiagent.html'>read_disk_multiagent()</a></code> function. This is
+useful when data in the target tables are changing and the periodic testing
+of such tables is part of a data quality monitoring plan.</p>
 <p>The output RDS files are named according to the object type processed, the
 target table, and the date-time of processing. For convenience and
 modularity, this setup is ideal when a table store YAML file (typically named
@@ -206,6 +218,14 @@ following contents:</p><ul>
 processed agents and informants</p></li>
 </ul>
 
+<p>Minimal example files of the aforementioned types can be found in the
+<strong>pointblank</strong> package through the following <code><a href='https://rdrr.io/r/base/system.file.html'>system.file()</a></code> calls:</p><ul>
+<li><p><code><a href='https://rdrr.io/r/base/system.file.html'>system.file("yaml", "agent-small_table.yml", package = "pointblank")</a></code></p></li>
+<li><p><code><a href='https://rdrr.io/r/base/system.file.html'>system.file("yaml", "informant-small_table.yml", package = "pointblank")</a></code></p></li>
+<li><p><code><a href='https://rdrr.io/r/base/system.file.html'>system.file("yaml", "tbl_store.yml", package = "pointblank")</a></code></p></li>
+</ul>
+
+<p>The directory itself can be accessed using <code><a href='https://rdrr.io/r/base/system.file.html'>system.file("yaml", package = "pointblank")</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>yaml_exec</span><span class='op'>(</span>
@@ -268,6 +288,43 @@ also be stored. By default, both of these options are set to <code>FALSE</code>.
 <code><a href='yaml_read_informant.html'>yaml_read_informant</a>()</code>,
 <code><a href='yaml_write.html'>yaml_write</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+
+<span class='co'># The 'yaml' directory that is</span>
+<span class='co'># accessible in the package through</span>
+<span class='co'># `system.file()` contains the files</span>
+<span class='co'># 1. `agent-small_table.yml`</span>
+<span class='co'># 2. `informant-small_table.yml`</span>
+<span class='co'># 3. `tbl_store.yml`</span>
+
+<span class='co'># There are references in YAML files</span>
+<span class='co'># 1 &amp; 2 to the table store YAML file,</span>
+<span class='co'># so, they all work together cohesively</span>
+
+<span class='co'># Let's process the agent and the</span>
+<span class='co'># informant YAML files with `yaml_exec()`;</span>
+<span class='co'># and we'll specify the working directory</span>
+<span class='co'># as the place where the output RDS files</span>
+<span class='co'># are written</span>
+<span class='fu'>yaml_exec</span><span class='op'>(</span>
+  path <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
+    <span class='st'>"yaml"</span>, package <span class='op'>=</span> <span class='st'>"pointblank"</span>
+  <span class='op'>)</span>,
+  output <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='co'># This generates two RDS files in the</span>
+<span class='co'># working directory: one for the agent</span>
+<span class='co'># and the other for the informant; each</span>
+<span class='co'># of them are automatically time-stamped</span>
+<span class='co'># so that periodic execution can be</span>
+<span class='co'># safely carried out without risk of</span>
+<span class='co'># overwriting </span>
+
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

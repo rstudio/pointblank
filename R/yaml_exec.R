@@ -107,7 +107,7 @@ yaml_exec <- function(path = NULL,
   
   # Normalize the output path
   if (is.null(output_path)) {
-    output_path <- fs::path_norm(output_path)
+    output_path <- fs::path_norm(initial_wd)
   } else {
     if (!fs::is_absolute_path(output_path)) {
       output_path <- fs::path_norm(fs::path(initial_wd, output_path))

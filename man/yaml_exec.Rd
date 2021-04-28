@@ -41,7 +41,9 @@ YAML agents and incorporation of informants for YAML informants. Under the
 hood, this uses \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}} and \code{\link[=yaml_informant_incorporate]{yaml_informant_incorporate()}}
 and then \code{\link[=x_write_disk]{x_write_disk()}} to save the processed objects to an output
 directory. These written artifacts can be read in at any later time with the
-\code{\link[=x_read_disk]{x_read_disk()}} function or the \code{\link[=read_disk_multiagent]{read_disk_multiagent()}} function.
+\code{\link[=x_read_disk]{x_read_disk()}} function or the \code{\link[=read_disk_multiagent]{read_disk_multiagent()}} function. This is
+useful when data in the target tables are changing and the periodic testing
+of such tables is part of a data quality monitoring plan.
 
 The output RDS files are named according to the object type processed, the
 target table, and the date-time of processing. For convenience and
@@ -62,12 +64,59 @@ following contents:
 \item an output folder (default is \code{"output"}) to save serialized versions of
 processed agents and informants
 }
+
+Minimal example files of the aforementioned types can be found in the
+\strong{pointblank} package through the following \code{system.file()} calls:
+\itemize{
+\item \code{system.file("yaml", "agent-small_table.yml", package = "pointblank")}
+\item \code{system.file("yaml", "informant-small_table.yml", package = "pointblank")}
+\item \code{system.file("yaml", "tbl_store.yml", package = "pointblank")}
+}
+
+The directory itself can be accessed using \code{system.file("yaml", package = "pointblank")}.
 }
 \section{Function ID}{
 
 11-8
 }
 
+\examples{
+if (interactive()) {
+
+# The 'yaml' directory that is
+# accessible in the package through
+# `system.file()` contains the files
+# 1. `agent-small_table.yml`
+# 2. `informant-small_table.yml`
+# 3. `tbl_store.yml`
+
+# There are references in YAML files
+# 1 & 2 to the table store YAML file,
+# so, they all work together cohesively
+
+# Let's process the agent and the
+# informant YAML files with `yaml_exec()`;
+# and we'll specify the working directory
+# as the place where the output RDS files
+# are written
+yaml_exec(
+  path = system.file(
+    "yaml", package = "pointblank"
+  ),
+  output = getwd()
+)
+
+# This generates two RDS files in the
+# working directory: one for the agent
+# and the other for the informant; each
+# of them are automatically time-stamped
+# so that periodic execution can be
+# safely carried out without risk of
+# overwriting 
+
+}
+
+}
 \seealso{
 Other pointblank YAML: 
 \code{\link{yaml_agent_interrogate}()},

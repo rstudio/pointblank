@@ -61,7 +61,46 @@
 #'   data frame object (databases tables will never be pulled for storage) and
 #'   *extracts*, collections of table rows that failed a validation step, may
 #'   also be stored. By default, both of these options are set to `FALSE`.
-#'   
+#' 
+#' @examples
+#' if (interactive()) {
+#' 
+#' # The 'yaml' directory that is
+#' # accessible in the package through
+#' # `system.file()` contains the files
+#' # 1. `agent-small_table.yml`
+#' # 2. `informant-small_table.yml`
+#' # 3. `tbl_store.yml`
+#' 
+#' # There are references in YAML files
+#' # 1 & 2 to the table store YAML file,
+#' # so, they all work together cohesively
+#' 
+#' # Let's process the agent and the
+#' # informant YAML files with `yaml_exec()`;
+#' # and we'll specify the working directory
+#' # as the place where the output RDS files
+#' # are written
+#' 
+#' output_dir <- getwd()
+#' 
+#' yaml_exec(
+#'   path = system.file(
+#'     "yaml", package = "pointblank"
+#'   ),
+#'   output = output_dir
+#' )
+#' 
+#' # This generates two RDS files in the
+#' # working directory: one for the agent
+#' # and the other for the informant; each
+#' # of them are automatically time-stamped
+#' # so that periodic execution can be
+#' # safely carried out without risk of
+#' # overwriting 
+#' 
+#' }
+#' 
 #' @family pointblank YAML
 #' @section Function ID:
 #' 11-8

@@ -49,6 +49,16 @@
 #' - an output folder (default is `"output"`) to save serialized versions of
 #' processed agents and informants
 #' 
+#' Minimal example files of the aforementioned types can be found in the
+#' **pointblank** package through the following `system.file()` calls:
+#' 
+#' - `system.file("yaml", "agent-small_table.yml", package = "pointblank")`
+#' - `system.file("yaml", "informant-small_table.yml", package = "pointblank")`
+#' - `system.file("yaml", "tbl_store.yml", package = "pointblank")`
+#' 
+#' The directory itself can be accessed using `system.file("yaml", package =
+#' "pointblank")`.
+#' 
 #' @param path The path that contains the YAML files for agents and informants.
 #' @param files A vector of YAML files to use in the execution workflow. By
 #'   default, `yaml_exec()` will attempt to process every valid YAML file in

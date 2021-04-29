@@ -34,6 +34,10 @@ data frame object (databases tables will never be pulled for storage) and
 \emph{extracts}, collections of table rows that failed a validation step, may
 also be stored. By default, both of these options are set to \code{FALSE}.}
 }
+\value{
+Invisibly returns a named vector of files processed with output paths
+(wherever writing occurred) given as the names.
+}
 \description{
 The \code{yaml_exec()} function takes all relevant \strong{pointblank} YAML files in a
 directory and executes them. Execution involves interrogation of agents for
@@ -99,11 +103,14 @@ if (interactive()) {
 # and we'll specify the working directory
 # as the place where the output RDS files
 # are written
+
+output_dir <- getwd()
+
 yaml_exec(
   path = system.file(
     "yaml", package = "pointblank"
   ),
-  output = getwd()
+  output = output_dir
 )
 
 # This generates two RDS files in the

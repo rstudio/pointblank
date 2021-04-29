@@ -200,11 +200,27 @@ yaml_exec <- function(path = NULL,
   # Create a vector for collecting files that were written and also read in  
   files_written <- c()
   files_read <- c()
+  
+  if (total_files == 1) {
+    execution_progress_header <- 
+      "Execution Started - there is a single file to process"
+  } else {
+    execution_progress_header <- 
+      "Execution Started - there are {total_files} files to process"
+  }
+  
+  cli::cli_h1(execution_progress_header)
+  cli::cli_text()
+  
   if (length(agent_file_paths) > 0) {
     
     for (agent_yml_file in agent_file_paths) {
       
+      cli::cli_rule(left = basename(agent_yml_file))
+      
       agent <- yaml_agent_interrogate(agent_yml_file)
+      
+      cli::cli_text()
       
       if (write_to_disk) {
 
@@ -235,6 +251,9 @@ yaml_exec <- function(path = NULL,
       }
       
       files_read <- c(files_read, agent_yml_file)
+      
+      cli::cli_rule()
+      cli::cli_text()
     }
   }
 
@@ -242,7 +261,11 @@ yaml_exec <- function(path = NULL,
     
     for (informant_yml_file in informant_file_paths) {
       
+      cli::cli_rule(left = basename(informant_yml_file))
+      
       informant <- yaml_informant_incorporate(informant_yml_file)
+      
+      cli::cli_text()
       
       if (write_to_disk) {
         
@@ -277,8 +300,11 @@ yaml_exec <- function(path = NULL,
       
       files_read <- c(files_read, informant_yml_file)
       
+      cli::cli_rule()
     }
   }
+  
+  cli::cli_h1("Execution Finished")
   
   files_in_out <- files_read
   names(files_in_out) <- files_written

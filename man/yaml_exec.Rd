@@ -35,8 +35,9 @@ data frame object (databases tables will never be pulled for storage) and
 also be stored. By default, both of these options are set to \code{FALSE}.}
 }
 \value{
-Invisibly returns a named vector of files processed with output paths
-(wherever writing occurred) given as the names.
+Invisibly returns a named vector of file paths for the input files
+that were processed; file output paths (for wherever writing occurred) are
+given as the names.
 }
 \description{
 The \code{yaml_exec()} function takes all relevant \strong{pointblank} YAML files in a

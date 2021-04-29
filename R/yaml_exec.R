@@ -280,7 +280,6 @@ yaml_exec <- function(path = NULL,
     }
   }
   
-  invisible(NULL)
   files_in_out <- files_read
   names(files_in_out) <- files_written
   

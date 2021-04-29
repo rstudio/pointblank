@@ -189,6 +189,17 @@ yaml_exec <- function(path = NULL,
     }
   }
   
+  # Get the total number of files that are candidates for agents/informants
+  total_files <- length(agent_file_paths) + length(informant_file_paths)
+  
+  # If there are no files to process, invisibly return NULL
+  if (total_files == 0) {
+    return(invisible(NULL))
+  }
+  
+  # Create a vector for collecting files that were written and also read in  
+  files_written <- c()
+  files_read <- c()
   if (length(agent_file_paths) > 0) {
     
     for (agent_yml_file in agent_file_paths) {
@@ -217,7 +228,13 @@ yaml_exec <- function(path = NULL,
           keep_tbl = keep_tbl,
           keep_extracts = keep_extracts
         )
+        
+        files_written <- c(files_written, as.character(file_name))
+      } else {
+        files_written <- c(files_written, "")
       }
+      
+      files_read <- c(files_read, agent_yml_file)
     }
   }
 
@@ -252,9 +269,20 @@ yaml_exec <- function(path = NULL,
             delimiter = "-"
           )
         )
+        
+        files_written <- c(files_written, as.character(file_name))
+      } else {
+        files_written <- c(files_written, "")
       }
+      
+      files_read <- c(files_read, informant_yml_file)
+      
     }
   }
   
   invisible(NULL)
+  files_in_out <- files_read
+  names(files_in_out) <- files_written
+  
+  invisible(files_in_out)
 }

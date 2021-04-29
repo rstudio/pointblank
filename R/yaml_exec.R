@@ -75,8 +75,9 @@
 #'   *extracts*, collections of table rows that failed a validation step, may
 #'   also be stored. By default, both of these options are set to `FALSE`.
 #' 
-#' @return Invisibly returns a named vector of files processed with output paths
-#'   (wherever writing occurred) given as the names.
+#' @return Invisibly returns a named vector of file paths for the input files
+#'   that were processed; file output paths (for wherever writing occurred) are
+#'   given as the names.
 #' 
 #' @examples
 #' if (interactive()) {

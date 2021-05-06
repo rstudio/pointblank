@@ -392,7 +392,7 @@ interrogate <- function(agent,
   perform_end_action(agent)
   
   # Add closing rule of interrogation console status
-  create_cli_footer(quiet)
+  create_cli_footer_a(quiet)
   
   # Update the ending time to the `agent` object
   agent$time_end <- Sys.time()
@@ -433,7 +433,7 @@ create_cli_header_a <- function(validation_steps,
   cli::cli_h1(interrogation_progress_header)
 }
 
-create_cli_footer <- function(quiet) {
+create_cli_footer_a <- function(quiet) {
   
   if (quiet) return()
   

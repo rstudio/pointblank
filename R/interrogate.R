@@ -358,7 +358,7 @@ interrogate <- function(agent,
     agent$validation_set$time_processed[i] <- validation_start_time
     agent$validation_set$proc_duration_s[i] <- time_diff_s
     
-    create_post_step_cli_output(
+    create_post_step_cli_output_a(
       agent = agent,
       i = i,
       time_diff_s = time_diff_s,
@@ -442,10 +442,10 @@ create_cli_footer_a <- function(quiet) {
   cli::cli_h1(interrogation_progress_footer)
 }
 
-create_post_step_cli_output <- function(agent,
-                                        i,
-                                        time_diff_s,
-                                        quiet) {
+create_post_step_cli_output_a <- function(agent,
+                                          i,
+                                          time_diff_s,
+                                          quiet) {
   
   if (quiet) return()
   

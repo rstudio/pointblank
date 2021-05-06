@@ -50,6 +50,8 @@
 #' @return A `ptblank_agent` object.
 #'   
 #' @examples
+#' if (interactive()) {
+#' 
 #' # Create a simple table with two
 #' # columns of numerical values
 #' tbl <-
@@ -67,6 +69,8 @@
 #'   create_agent(tbl = tbl) %>%
 #'   col_vals_gt(vars(a), value = 5) %>%
 #'   interrogate()
+#' 
+#' }
 #' 
 #' @family Interrogate and Report
 #' @section Function ID:

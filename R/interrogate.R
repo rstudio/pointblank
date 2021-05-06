@@ -135,7 +135,7 @@ interrogate <- function(agent,
   validation_steps <- unique(agent$validation_set$i)
   
   # Add start of interrogation console status
-  create_cli_header(
+  create_cli_header_a(
     validation_steps = validation_steps,
     quiet = quiet
   )
@@ -413,8 +413,8 @@ get_time_duration <- function(start_time,
   )
 }
 
-create_cli_header <- function(validation_steps,
-                              quiet) {
+create_cli_header_a <- function(validation_steps,
+                                quiet) {
   
   if (quiet) return()
   

@@ -57,6 +57,8 @@ how the interrogation went down.
 }
 
 \examples{
+if (interactive()) {
+
 # Create a simple table with two
 # columns of numerical values
 tbl <-
@@ -74,6 +76,8 @@ agent <-
   create_agent(tbl = tbl) \%>\%
   col_vals_gt(vars(a), value = 5) \%>\%
   interrogate()
+
+}
 
 }
 \seealso{

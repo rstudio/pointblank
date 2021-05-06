@@ -106,6 +106,15 @@
 #' @export
 incorporate <- function(informant) {
 
+  # Obtain the informant's snippets
+  meta_snippets <- informant$meta_snippets
+  
+  # Signal the start of incorporation in the console
+  create_cli_header_i(snippets_to_process = meta_snippets)
+  
+  # Get the starting time for the gathering of info
+  info_gather_start_time <- Sys.time()
+  
   # Get the target table for this informant object
   # TODO: Use the same scheme that the `agent` does
   tbl <- informant$tbl
@@ -176,12 +185,27 @@ incorporate <- function(informant) {
   
   # TODO: Sync column types
   
+  # Get the ending time for the gathering of info
+  info_gather_end_time <- Sys.time()
+  
+  # Get the time duration for the processing of snippets (in seconds)    
+  time_diff_s <- 
+    get_time_duration(
+      start_time = info_gather_start_time,
+      end_time = info_gather_end_time
+    )
+  
+  cli::cli_alert_success(
+    c("Information gathered.", print_time(time_diff_s))
+  )
+  
   #
   # Incorporate snippets
   #
   
-  meta_snippets <- informant$meta_snippets
-
+  # Get the starting time for the processing of snippets
+  snippets_start_time <- Sys.time()
+  
   for (i in seq_along(meta_snippets)) {
 
     snippet_fn <- 
@@ -255,6 +279,25 @@ incorporate <- function(informant) {
     }
   }
   
+  # Get the ending time for the processing of snippets
+  snippets_end_time <- Sys.time()
+  
+  # Get the time duration for the processing of snippets (in seconds)    
+  time_diff_s <- 
+    get_time_duration(
+      start_time = snippets_start_time,
+      end_time = snippets_end_time
+    )
+  
+  if (length(meta_snippets) > 0) {
+    cli::cli_alert_success(
+      c("Snippets processed.", print_time(time_diff_s))
+    )
+  }
+  
+  # Get the starting time for the information building
+  info_build_start_time <- Sys.time()
+  
   metadata_meta_label <- 
     glue_safely(
       informant$metadata[["info_label"]],
@@ -305,5 +348,46 @@ incorporate <- function(informant) {
   # nolint end
   
   informant$metadata_rev <- metadata_rev
+  
+  # Get the ending time for the information building
+  info_build_end_time <- Sys.time()
+  
+  # Get the time duration for the processing of snippets (in seconds)    
+  time_diff_s <- 
+    get_time_duration(
+      start_time = info_build_start_time,
+      end_time = info_build_end_time
+    )
+  
+  cli::cli_alert_success(
+    c("Information built.", print_time(time_diff_s))
+  )
+  
+  create_cli_footer_i()
+  
   informant
+}
+
+create_cli_header_i <- function(snippets_to_process) {
+  
+  if (length(snippets_to_process) < 1) {
+    incorporation_progress_header <- 
+      "Incorporation Started"
+  } else if (length(snippets_to_process) == 1) {
+    incorporation_progress_header <- 
+      "Incorporation Started - there is a single snippet to process"
+  } else {
+    num_snippets <- length(snippets_to_process)
+    incorporation_progress_header <- 
+      "Incorporation Started - there are {num_snippets} snippets to process"
+  }
+  
+  cli::cli_h1(incorporation_progress_header)
+}
+
+create_cli_footer_i <- function() {
+  
+  interrogation_progress_footer <- "Incorporation Completed"
+  
+  cli::cli_h1(interrogation_progress_footer)
 }

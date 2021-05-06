@@ -134,7 +134,7 @@ interrogate <- function(agent,
   # Get the agent's validation step indices
   validation_steps <- unique(agent$validation_set$i)
   
-  # Add start of interrogation console status
+  # Signal the start of interrogation in the console
   create_cli_header_a(
     validation_steps = validation_steps,
     quiet = quiet

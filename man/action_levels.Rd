@@ -54,6 +54,10 @@ These helpers either warn or stop (default failure threshold for each is set
 to \code{1}), and, they do so with informative warning or error messages. The
 \code{stop_on_fail()} helper is applied by default when using validation functions
 directly on data (more information on this is provided in \emph{Details}).
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \details{
 The output of the \code{action_levels()} call in \code{actions} will be interpreted

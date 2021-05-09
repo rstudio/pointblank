@@ -32,6 +32,10 @@ either be a \strong{pointblank} agent, the \emph{agent} x-list (produced from th
 \emph{agent} with the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function), or a \strong{pointblank}
 \emph{informant}. In all cases, the email message will appear in the Viewer and a
 \strong{blastula} \code{email_message} object will be returned.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

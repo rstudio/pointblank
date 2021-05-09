@@ -84,6 +84,10 @@ snippets and other metadata will be updated. Calling the \emph{informant} itself
 will result in a reporting table. This reporting can also be accessed with
 the \code{\link[=get_informant_report]{get_informant_report()}} function, where there are more reporting
 options.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{YAML}{
 

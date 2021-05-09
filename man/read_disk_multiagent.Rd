@@ -28,6 +28,10 @@ the \code{read_disk_multiagent()} function, which creates a \code{ptblank_multia
 object. A \emph{multiagent} object can also be generated via the
 \code{\link[=create_multiagent]{create_multiagent()}} function but is less convenient to use if one is just
 using agents that have been previous written to disk.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

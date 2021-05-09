@@ -36,6 +36,10 @@ for a \emph{informant} object. And once those snippets are defined, you can inse
 them into the \emph{info text} as defined through the other \verb{info_*()} functions
 (\code{\link[=info_tabular]{info_tabular()}}, \code{\link[=info_columns]{info_columns()}}, and \code{\link[=info_section]{info_section()}}). Use curly braces
 with just the \code{snippet_name} inside (e.g., \code{"This column has {n_cat} categories."}).
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Snip functions provided in \strong{pointblank}}{
 

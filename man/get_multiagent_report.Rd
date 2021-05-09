@@ -48,6 +48,10 @@ identical across interrogations. This way of organizing the report is
 beneficial because different agents may have used different steps and we want
 to track the validation results where the validation step doesn't change but
 the target table does.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

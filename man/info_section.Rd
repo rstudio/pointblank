@@ -27,6 +27,10 @@ possible to add sections of our own choosing and the information that make
 sense for those sections. Define a \code{section_name} and provide a series of
 named arguments (in the form \code{entry_name = "The *info text*."}) to build the
 informational content for that section.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Info Text}{
 

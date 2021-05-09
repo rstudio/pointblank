@@ -18,6 +18,10 @@ table (settable in \code{\link[=create_agent]{create_agent()}} and \code{\link[=
 or with \code{\link[=set_tbl]{set_tbl()}}) instead of using a table-prep formula that might produce
 different a different table than expected. The table-prep formula can always
 be set again with \code{\link[=set_read_fn]{set_read_fn()}}.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

@@ -16,6 +16,10 @@ A formula needed for \code{\link[=info_snippet]{info_snippet()}}'s \code{fn} arg
 The \code{snip_lowest()} function can be used as an \code{\link[=info_snippet]{info_snippet()}} function
 (i.e., provided to \code{fn}) to get the lowest numerical, time value, or
 alphabetical value from a column in the target table.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

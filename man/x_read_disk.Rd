@@ -24,6 +24,10 @@ the console or using \code{\link[=get_agent_report]{get_agent_report()}}/\code{\
 available data extracts with \code{\link[=get_data_extracts]{get_data_extracts()}}. Furthermore, all of an
 \emph{agent}'s validation steps will still be present (along with results from the
 last interrogation).
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \details{
 Should the \emph{agent} or \emph{informant} possess a table-prep formula (can be set

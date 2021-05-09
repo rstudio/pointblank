@@ -31,6 +31,10 @@ table from multiple sources, or pre-filtering a database table according to
 the system time). Another nice aspect of organizing table-prep formulas in a
 single object is supplying it to the \code{read_fn} argument of \code{\link[=create_agent]{create_agent()}}
 or \code{\link[=create_informant]{create_informant()}} via \code{$} notation (e.g, \verb{create_agent(read_fn = <tbl_store>$<name>)}) or with \code{\link[=tbl_source]{tbl_source()}} (e.g., \verb{create_agent(read_fn = ~ tbl_source("<name>", <tbl_store>))}).
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{YAML}{
 

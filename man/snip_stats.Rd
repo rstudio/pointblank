@@ -30,6 +30,10 @@ be provided:
 \item Bowley's seven-figure summary (\code{"bowley"}): minimum, P10, Q1, median, Q3,
 P90, maximum
 }
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

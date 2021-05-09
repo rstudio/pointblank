@@ -44,6 +44,9 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
   )
 }
 
+#' @theme assets/extra.css assets/rd.js
+NULL
+
 utils::globalVariables(
   c(
     ".",

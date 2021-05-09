@@ -49,6 +49,10 @@ scheme. The modification of the filename string takes effect immediately but
 not at the time of writing a file to disk. In most cases, especially when
 using \code{affix_date()} with the aforementioned file-writing functions, the file
 timestamps should approximate the time components affixed to the filenames.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

@@ -92,6 +92,10 @@ for each step. Once the interrogation process is complete, we can say that
 the \emph{agent} has intel. Calling the \emph{agent} itself will result in a reporting
 table. This reporting of the interrogation can also be accessed with the
 \code{\link[=get_agent_report]{get_agent_report()}} function, where there are more reporting options.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Data Products Obtained from an Agent}{
 

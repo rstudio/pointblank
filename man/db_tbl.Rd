@@ -54,6 +54,10 @@ via a table store.
 
 The username and password are supplied though environment variables. If
 desired, these can be supplied directly by enclosing those values in \code{\link[=I]{I()}}.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

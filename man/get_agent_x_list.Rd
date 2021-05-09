@@ -27,6 +27,10 @@ particular validation step (by supplying the step number to the \code{i}
 argument), or, we can get the information for all validation steps by leaving
 \code{i} unspecified. The \strong{x-list} is indeed an R \code{list} object that contains a
 veritable cornucopia of information.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \details{
 For an \strong{x-list} obtained with \code{i} specified for a validation step, the

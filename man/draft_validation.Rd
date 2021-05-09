@@ -70,6 +70,10 @@ generate reasonable validation plans, it is difficult to infer the acceptable
 values without domain expertise. However, using \code{draft_validation()} could
 get you started on floor 10 of tackling data quality issues and is in any
 case better than starting with an empty code editor view.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

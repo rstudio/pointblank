@@ -64,4 +64,7 @@ Suggests:
     sparklyr,
     dittodb,
     odbc
-Roxygen: list(markdown = TRUE)
+Roxygen: list(
+    packages = "roxygenlabs",
+    markdown = TRUE,
+    roclets = c("collate", "namespace", "roxygenlabs::roxygenlabs_rd"))

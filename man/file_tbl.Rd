@@ -49,6 +49,10 @@ In the remote data use case, we can specify a URL starting with \verb{http://},
 files are available in a GitHub repository then we can use the
 \code{\link[=from_github]{from_github()}} function to specify the name and location of the table data
 in a repository.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

@@ -17,6 +17,11 @@
 \alias{creds_key}
 \alias{creds_file}
 \title{Objects exported from other packages}
+\description{
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
+}
 \keyword{internal}
 \description{
 These objects are imported from other packages. Follow the links

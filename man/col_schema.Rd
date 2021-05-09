@@ -30,6 +30,10 @@ SQL column types (e.g., \code{"double"}, \code{"varchar"}, etc.), or Spark SQL c
 types (\code{"DoubleType"}, \code{"StringType"}, etc.). This is great if we want to
 validate table column schemas both on the server side and when tabular data
 is collected and loaded into R.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

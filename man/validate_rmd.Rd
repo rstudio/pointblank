@@ -30,6 +30,10 @@ button reveals the otherwise hidden validation statements and their error
 messages (if any). While the framework for such testing is set up by default,
 the \code{validate_rmd()} function offers an opportunity to set UI and logging
 options.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

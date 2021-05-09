@@ -55,6 +55,10 @@ different validation steps exceeding failure thresholds).
 To better get a handle on emailing with \code{email_blast()}, the analogous
 \code{\link[=email_create]{email_create()}} function can be used with a \strong{pointblank} agent object or
 an x-list obtained from using the \code{\link[=get_agent_x_list]{get_agent_x_list()}} function.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{YAML}{
 

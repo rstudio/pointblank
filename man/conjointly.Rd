@@ -135,6 +135,10 @@ leading \code{~}, and having a \code{.} stand in as the data object). The valida
 function can be used directly on a data table or with an \emph{agent} object
 (technically, a \code{ptblank_agent} object) whereas the expectation and test
 functions can only be used with a data table.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Column Names}{
 

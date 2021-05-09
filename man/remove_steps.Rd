@@ -22,6 +22,10 @@ Validation steps can be removed from an \emph{agent} object through use of the
 agent from disk (via the \code{\link[=x_read_disk]{x_read_disk()}} function) and omitting one or more
 steps from the \emph{agent}'s validation plan. Please note that when removing
 validation steps all stored data extracts will be removed from the \emph{agent}.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

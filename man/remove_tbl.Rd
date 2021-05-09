@@ -19,6 +19,10 @@ argument, instead opting for setting a table-prep formula (via
 \code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}'s \code{read_fn} argument, or, with
 \code{\link[=set_read_fn]{set_read_fn()}}). If necessary, the association to a table can be set again
 with \code{\link[=set_tbl]{set_tbl()}}.
+
+\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
+
+\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

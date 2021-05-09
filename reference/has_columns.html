@@ -54,7 +54,9 @@ validation function's active argument. Using active = ~ . %&amp;gt;% has_columns
 the target table doesn't contain a column named column_1. We can also use
 multiple columns in vars() so having active = ~ . %&amp;gt;% has_columns(vars(column_1, column_2)) in a validation step will make it
 inactive at interrogate() time unless the columns column_1 and column_2
-are both present." />
+are both present.
+
+" />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -172,6 +174,8 @@ the target table doesn't contain a column named <code>column_1</code>. We can al
 multiple columns in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code> so having <code>active = ~ . %&gt;% has_columns(vars(column_1, column_2))</code> in a validation step will make it
 inactive at <code><a href='interrogate.html'>interrogate()</a></code> time unless the columns <code>column_1</code> and <code>column_2</code>
 are both present.</p>
+<p><link rel="stylesheet" type="text/css" href="../doc/assets/extra.css"></p>
+<p><script src="../doc/assets/rd.js"></script></p>
     </div>
 
     <pre class="usage"><span class='fu'>has_columns</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>columns</span><span class='op'>)</span></pre>

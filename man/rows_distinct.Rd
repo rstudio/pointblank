@@ -118,10 +118,6 @@ applied).
 We can specify the constraining column names in quotes, in \code{vars()}, and with
 the following \strong{tidyselect} helper functions: \code{starts_with()},
 \code{ends_with()}, \code{contains()}, \code{matches()}, and \code{everything()}.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Preconditions}{
 

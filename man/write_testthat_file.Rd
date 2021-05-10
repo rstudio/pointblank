@@ -66,10 +66,6 @@ to the \code{actions} argument of \code{\link[=create_agent]{create_agent()}} or
 included validation function. If \code{stop} thresholds are not available, then a
 threshold value of \code{1} will be used for each generated \verb{expect_*()} statement
 in the resulting \strong{testthat} test file.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \details{
 Tests for inactive validation steps will be skipped with a clear message

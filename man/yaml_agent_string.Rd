@@ -32,10 +32,6 @@ directly with the YAML file (with \code{\link[=yaml_agent_interrogate]{yaml_agen
 to open the file directly. Alternatively, we can provide an \emph{agent} to the
 \code{yaml_agent_string()} and view the YAML representation of the validation plan
 without needing to write the YAML to disk beforehand.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

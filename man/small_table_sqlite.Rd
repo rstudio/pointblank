@@ -11,10 +11,6 @@ The \code{small_table_sqlite()} function creates a SQLite, \code{tbl_dbi} versio
 the \code{small_table} dataset. A requirement is the availability of the \strong{DBI}
 and \strong{RSQLite} packages. These packages can be installed by using
 \code{install.packages("DBI")} and \code{install.packages("RSQLite")}.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

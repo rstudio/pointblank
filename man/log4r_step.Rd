@@ -30,10 +30,6 @@ function in every failure condition that should produce a log (i.e., \code{warn}
 \code{stop}, \code{notify}). Only the failure condition with the highest severity for a
 given validation step will produce a log entry (skipping failure conditions
 with lower severity) so long as the call to \code{log4r_step()} is present.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

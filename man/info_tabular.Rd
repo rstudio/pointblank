@@ -25,10 +25,6 @@ table name (\code{name}) and table dimensions (as \verb{_columns} and \verb{_row
 add more table-based properties with the \code{info_tabular()} function. By
 providing a series of named arguments (in the form \code{entry_name = "The *info text*."}), we can add more information that makes sense for describing the
 table as a whole.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Info Text}{
 

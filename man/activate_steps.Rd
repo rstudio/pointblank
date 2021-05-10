@@ -22,10 +22,6 @@ equivalent to using the \code{active = TRUE} for the selected validation steps
 (\code{active} is an argument in all validation functions). This will replace any
 function that may have been defined for the \code{active} argument during creation
 of the targeted validation steps.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

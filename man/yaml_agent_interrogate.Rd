@@ -21,10 +21,6 @@ table (defined by table-prep formula that is required in the YAML file). The
 additional auto-invocation of \code{\link[=interrogate]{interrogate()}} uses the default options of
 that function. As with \code{\link[=yaml_read_agent]{yaml_read_agent()}} the agent is returned except, this
 time, it has intel from the interrogation.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

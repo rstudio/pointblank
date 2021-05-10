@@ -135,10 +135,6 @@ states were entered
 \item extract: a logical value that indicates whether a data extract is
 available for the validation step
 }
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

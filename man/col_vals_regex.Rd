@@ -130,10 +130,6 @@ of data tables that can be used include data frames, tibbles, database tables
 (\code{tbl_dbi}), and Spark DataFrames (\code{tbl_spark}). Each validation step or
 expectation will operate over the number of test units that is equal to the
 number of rows in the table (after any \code{preconditions} have been applied).
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Column Names}{
 

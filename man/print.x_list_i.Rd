@@ -13,9 +13,5 @@
 }
 \description{
 This function will print an x-list object, for a single step, to the console.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \keyword{internal}

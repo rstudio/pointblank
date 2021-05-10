@@ -63,10 +63,6 @@ that is used to read the target table when \code{\link[=interrogate]{interrogate
 is called). This option can be set when using
 \code{\link[=create_agent]{create_agent()}}/\code{\link[=create_informant]{create_informant()}} or with \code{\link[=set_read_fn]{set_read_fn()}} (useful with an
 existing agent or informant object).
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

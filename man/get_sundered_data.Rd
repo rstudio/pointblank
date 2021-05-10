@@ -48,10 +48,6 @@ function works with an agent object that has intel (i.e., post
 test units across all row-based validation functions), or, the 'fail' data
 piece (rows with at least one failing test unit across the same series of
 validations).
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \details{
 There are some caveats to sundering. The validation steps considered for this

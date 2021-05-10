@@ -25,10 +25,6 @@ The \code{from_github()} function is helpful for generating a valid URL that
 points to a data file in a public GitHub repository. This function can be
 used in the \code{file} argument of the \code{\link[=file_tbl]{file_tbl()}} function or anywhere else
 where GitHub URLs for raw user content are needed.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

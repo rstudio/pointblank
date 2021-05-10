@@ -34,10 +34,6 @@ about the nature of each column and we can do that with the \code{info_columns()
 function. A single column (or multiple columns) is targeted, and then a
 series of named arguments (in the form \code{entry_name = "The *info text*."})
 serves as additional information for the column or columns.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Info Text}{
 

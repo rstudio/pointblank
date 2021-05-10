@@ -37,10 +37,6 @@ behavior is to collect up to the first 5000 \emph{fail} rows.
 Row-based validation steps are based on the validation functions of the form
 \verb{col_vals_*()} and also include \code{\link[=conjointly]{conjointly()}} and \code{\link[=rows_distinct]{rows_distinct()}}. Only
 those types of validation steps can provide data extracts.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

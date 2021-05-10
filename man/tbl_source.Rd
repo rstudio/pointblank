@@ -28,10 +28,6 @@ file (which can be created with the \code{\link[=yaml_write]{yaml_write()}} func
 
 Should you need to obtain the table itself (that is generated via the
 table-prep formula), then the \code{\link[=tbl_get]{tbl_get()}} function should be used for that.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

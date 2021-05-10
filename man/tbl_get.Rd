@@ -29,10 +29,6 @@ YAML representation of a table store (created by using \code{\link[=yaml_write]{
 Should you want a table-prep formula from a table store to use as a value for
 \code{read_fn} (in \code{\link[=create_agent]{create_agent()}}, \code{\link[=create_informant]{create_informant()}}, or \code{\link[=set_read_fn]{set_read_fn()}}),
 then have a look at the \code{\link[=tbl_source]{tbl_source()}} function.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

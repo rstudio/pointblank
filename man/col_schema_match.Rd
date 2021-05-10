@@ -157,10 +157,6 @@ order as in the target table. Finally, the \code{is_exact} option set to \code{F
 means that all column classes/types don't have to be provided for a
 particular column. It can even be \code{NULL}, skipping the check of the column
 type.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Actions}{
 

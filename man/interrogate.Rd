@@ -50,10 +50,6 @@ which is a series of validation steps), the interrogation process can occur
 according its plan. After that, the agent will have gathered intel, and we
 can use functions like \code{\link[=get_agent_report]{get_agent_report()}} and \code{\link[=all_passed]{all_passed()}} to understand
 how the interrogation went down.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

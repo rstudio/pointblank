@@ -24,10 +24,6 @@ the target table doesn't contain a column named \code{column_1}. We can also use
 multiple columns in \code{vars()} so having \code{active = ~ . \%>\% has_columns(vars(column_1, column_2))} in a validation step will make it
 inactive at \code{\link[=interrogate]{interrogate()}} time unless the columns \code{column_1} and \code{column_2}
 are both present.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

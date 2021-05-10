@@ -27,10 +27,6 @@ small_table
 This is a small table with a few different types of columns. It's probably
 just useful when testing the functions from \strong{pointblank}. Rows 9 and 10 are
 exact duplicates. The \code{c} column contains two \code{NA} values.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

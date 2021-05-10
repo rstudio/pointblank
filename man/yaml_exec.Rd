@@ -79,10 +79,6 @@ Minimal example files of the aforementioned types can be found in the
 }
 
 The directory itself can be accessed using \code{system.file("yaml", package = "pointblank")}.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

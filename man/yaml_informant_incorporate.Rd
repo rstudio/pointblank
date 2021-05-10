@@ -22,10 +22,6 @@ the YAML file). The additional auto-invocation of \code{\link[=incorporate]{inco
 default options of that function. As with \code{\link[=yaml_read_informant]{yaml_read_informant()}} the
 informant is returned except, this time, it has been updated with the latest
 information from the target table.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

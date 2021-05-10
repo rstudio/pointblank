@@ -14,9 +14,5 @@
 \description{
 This function will print a x-list object, with all validation steps included,
 to the console.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \keyword{internal}

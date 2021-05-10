@@ -17,10 +17,6 @@ Given an agent's validation plan that had undergone interrogation via
 \code{interrogate()}, did every single validation step result in zero \emph{fail}
 levels? Using the \code{all_passed()} function will let us know whether that's
 \code{TRUE} or not.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

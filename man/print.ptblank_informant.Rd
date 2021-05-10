@@ -15,9 +15,5 @@
 }
 \description{
 This function will allow the table information to be nicely printed.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \keyword{internal}

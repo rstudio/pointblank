@@ -20,10 +20,6 @@ checks in R Markdown documents where \strong{pointblank} is loaded. Using
 \code{stop_if_not()} in a code chunk where the \code{validate = TRUE} option is set
 will yield the correct reporting of successes and failures whereas
 \code{stopifnot()} \emph{does not}.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

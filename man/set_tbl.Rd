@@ -23,10 +23,6 @@ through the \code{tbl} argument \emph{and} the same object has a table-prep form
 or with \code{\link[=set_read_fn]{set_read_fn()}}), the table-prep formula will take precedence. If
 this is undesirable, it be removed with the \code{\link[=remove_read_fn]{remove_read_fn()}} function. The
 association to a table can be removed with with \code{\link[=remove_tbl]{remove_tbl()}}.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

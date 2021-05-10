@@ -19,10 +19,6 @@ A table-prep formula can be associated with an \emph{agent} or \emph{informant} 
 \emph{agent} or \emph{informant}, the \code{read_fn} will take priority. We can specify a
 value for \code{read_fn} with an RHS formula expression (e.g., \verb{~ \{ <table reading code> \}}). The table-prep formula can removed with \code{\link[=remove_read_fn]{remove_read_fn()}} or
 replaced with \code{set_read_fn()}.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

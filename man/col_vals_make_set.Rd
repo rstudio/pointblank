@@ -128,10 +128,6 @@ Spark DataFrames (\code{tbl_spark}). Each validation step or expectation will
 operate over the number of test units that is equal to the number of elements
 in the \code{set} plus a test unit reserved for detecting column values outside of
 the \code{set} (any outside value seen will make this additional test unit fail).
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Column Names}{
 

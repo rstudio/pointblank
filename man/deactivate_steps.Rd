@@ -23,10 +23,6 @@ function will be helpful for that. This has the same effect as using the
 for the selected validation steps. Please note that this directly edits the
 validation step, wiping out any function that may have been defined for
 whether the step should be active or not.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

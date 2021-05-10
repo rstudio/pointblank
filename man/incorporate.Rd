@@ -21,10 +21,6 @@ using the \code{incorporate()} function. After that, the information will be ful
 updated (getting the current state of table dimensions, re-rendering the
 info text, etc.) and we can print the \emph{informant} object or use the
 \code{\link[=get_informant_report]{get_informant_report()}} function to see the information report.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

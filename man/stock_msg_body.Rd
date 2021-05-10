@@ -14,10 +14,6 @@ Text suitable for the \code{msg_body} arguments of \code{\link[=email_blast]{ema
 The \code{stock_msg_body()} function simply provides some stock text for an email
 message sent via \code{\link[=email_blast]{email_blast()}} or obtained as a standalone object through
 \code{\link[=email_create]{email_create()}}.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

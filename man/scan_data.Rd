@@ -61,10 +61,6 @@ string, it's possible to get that by using \code{as.character()} (e.g.,
 \code{scan_data(tbl = mtcars) \%>\% as.character()}). The resulting HTML string is a
 complete HTML document where \strong{Bootstrap} and \strong{jQuery} are embedded
 within.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Figures}{
 

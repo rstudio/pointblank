@@ -43,10 +43,6 @@ values for different specifications, rows 1-5 contain valid values, the 6th
 row is an NA value, and the final two values (rows 7 and 8) are invalid.
 Different specification (\code{spec}) keywords apply to each of columns when
 validating with any of the aforementioned functions.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

@@ -27,10 +27,6 @@ To get a picture of how \code{yaml_read_agent()} is interpreting the validation
 plan specified in the \strong{pointblank} YAML, we can use the
 \code{\link[=yaml_agent_show_exprs]{yaml_agent_show_exprs()}} function. That function shows us (in the console)
 the \strong{pointblank} expressions for generating the described validation plan.
-
-\if{html}{\out{<link rel="stylesheet" type="text/css" href="../doc/assets/extra.css">}}
-
-\if{html}{\out{<script src="../doc/assets/rd.js"></script>}}
 }
 \section{Function ID}{
 

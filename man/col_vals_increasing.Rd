@@ -12,6 +12,7 @@ col_vals_increasing(
   allow_stationary = FALSE,
   decreasing_tol = NULL,
   na_pass = FALSE,
+  groups = NULL,
   preconditions = NULL,
   actions = NULL,
   step_id = NULL,

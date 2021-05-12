@@ -166,6 +166,7 @@ col_vals_increasing <- function(x,
                                 allow_stationary = FALSE,
                                 decreasing_tol = NULL,
                                 na_pass = FALSE,
+                                groups = NULL,
                                 preconditions = NULL,
                                 actions = NULL,
                                 step_id = NULL,
@@ -177,6 +178,9 @@ col_vals_increasing <- function(x,
   columns_expr <- 
     rlang::as_label(rlang::quo(!!enquo(columns))) %>%
     gsub("^\"|\"$", "", .)
+  
+  # TODO: resolve groups into list
+  groups_list <- resolve_groups(x = x, groups_expr = groups, preconditions)
   
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
@@ -202,6 +206,7 @@ col_vals_increasing <- function(x,
         allow_stationary = allow_stationary,
         decreasing_tol = decreasing_tol,
         na_pass = na_pass,
+        groups = groups,
         preconditions = preconditions,
         label = label,
         brief = brief,
@@ -235,24 +240,33 @@ col_vals_increasing <- function(x,
   
   # Add one or more validation steps based on the
   # length of the `columns` variable
-  for (i in seq(columns)) {
+  for (i in seq_along(columns)) {
     
-    agent <-
-      create_validation_step(
-        agent = agent,
-        assertion_type = "col_vals_increasing",
-        i_o = i_o,
-        columns_expr = columns_expr,
-        column = columns[i],
-        values = stat_tol,
-        na_pass = na_pass,
-        preconditions = preconditions,
-        actions = covert_actions(actions, agent),
-        step_id = step_id[i],
-        label = label,
-        brief = brief[i],
-        active = active
-      )
+    for (j in seq_along(groups_list)) {
+      
+      group_col <- names(groups_list[j])
+      group_val <- unname(unlist(groups_list[j]))
+      
+      agent <-
+        create_validation_step(
+          agent = agent,
+          assertion_type = "col_vals_increasing",
+          i_o = i_o,
+          columns_expr = columns_expr,
+          column = columns[i],
+          values = stat_tol,
+          na_pass = na_pass,
+          groups_expr = groups,
+          group_col = group_col,
+          group_val = group_val,
+          preconditions = preconditions,
+          actions = covert_actions(actions, agent),
+          step_id = step_id[i],
+          label = label,
+          brief = brief[i],
+          active = active
+        )
+    }
   }
   
   agent

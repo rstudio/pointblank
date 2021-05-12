@@ -83,7 +83,7 @@ interrogate <- function(agent,
                         sample_n = NULL,
                         sample_frac = NULL,
                         sample_limit = 5000) {
-
+  
   # Add the starting time to the `agent` object
   agent$time_start <- Sys.time()
 
@@ -165,6 +165,13 @@ interrogate <- function(agent,
       agent$validation_set[[i, "eval_active"]] <- 
         agent$validation_set[[i, "active"]][[1]]
     }
+    
+    # Set the validation step as `active = FALSE` if there is a
+    # `groups_expr` declared but not resolved `group_col`
+    if (!is.null(agent$validation_set$groups_expr[[i]]) &&
+        is.na(agent$validation_set$group_col[i])) {
+      agent$validation_set[[i, "eval_active"]] <- FALSE
+    }
 
     # Skip the validation step if `active = FALSE`
     if (!agent$validation_set[[i, "eval_active"]]) {
@@ -179,7 +186,10 @@ interrogate <- function(agent,
     
     # Use preconditions to modify the table
     table <- apply_preconditions_to_tbl(agent = agent, idx = i, tbl = table)
-
+    
+    # Use grouping columns/value to filter the table
+    table <- apply_grouping_to_tbl(agent = agent, idx = i, tbl = table)
+    
     # Get the assertion type for this verification step
     assertion_type <- get_assertion_type_at_idx(agent = agent, idx = i)
 

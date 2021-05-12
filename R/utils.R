@@ -161,8 +161,8 @@ resolve_columns <- function(x, var_expr, preconditions) {
   if (inherits(var_expr, "quosure") &&
       var_expr %>% rlang::as_label() == "NULL") {
     
-    return(character(0))
-  } 
+    return(character(NA_character_))
+  }
   
   # nocov end
   
@@ -197,7 +197,35 @@ resolve_columns <- function(x, var_expr, preconditions) {
     }
   }
   
+  if (length(column) < 1) {
+    column <- NA_character_
+  }
+  
   column
+}
+
+# TODO: Make this work
+#' @return A named vector in the form of <column_name> = <column_value>
+resolve_groups <- function(x, groups_expr, preconditions) {
+  
+  # Return a list with an NA_character_ vector if the `groups_expr` is NULL
+  if (is.null(groups_expr)) {
+    
+    empty_vec <- c("empty" = NA_character_)
+    names(empty_vec) <- NA_character_
+    
+    return(as.list(empty_vec))
+  }
+  
+  col_group_vals <- rlang::eval_bare(rlang::f_rhs(groups_expr))
+  
+  column_name <- rlang::as_label(rlang::f_lhs(groups_expr))
+  
+  names(col_group_vals) <- rep(column_name, length(col_group_vals))
+
+  groups <- as.list(col_group_vals)
+  
+  groups
 }
 
 normalize_step_id <- function(step_id, columns, agent) {

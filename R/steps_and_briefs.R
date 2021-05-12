@@ -24,6 +24,9 @@ create_validation_step <- function(agent,
                                    column = NULL,
                                    values = NULL,
                                    na_pass = NULL,
+                                   groups_expr = NULL,
+                                   group_col = NULL,
+                                   group_val = NULL,
                                    preconditions = NULL,
                                    actions = NULL,
                                    step_id = NULL,
@@ -41,13 +44,19 @@ create_validation_step <- function(agent,
         assertion_type = assertion_type,
         column = ifelse(is.null(column), list(NULL), list(column)),
         values = ifelse(is.null(values), list(NULL), list(values)),
-        na_pass = ifelse(is.null(na_pass), as.logical(NA), as.logical(na_pass)),
+        na_pass = ifelse(is.null(na_pass), NA, as.logical(na_pass)),
+        group_col = ifelse(
+          is.null(group_col), NA_character_, as.character(group_col)
+        ),
+        group_val = ifelse(
+          is.null(group_val), NA_character_, as.character(group_val)
+        ),
         preconditions = ifelse(
           is.null(preconditions), list(NULL), list(preconditions)
         )
       )
     )
-
+  
   # Create a validation step as a single-row `tbl_df` object
   validation_step_df <-
     dplyr::tibble(
@@ -62,6 +71,15 @@ create_validation_step <- function(agent,
       column = ifelse(is.null(column), list(NULL), list(column)),
       values = ifelse(is.null(values), list(NULL), list(values)),
       na_pass = ifelse(is.null(na_pass), as.logical(NA), as.logical(na_pass)),
+      groups_expr = ifelse(
+        is.null(groups_expr), list(NULL), list(groups_expr)
+      ),
+      group_col = ifelse(
+        is.null(group_col), NA_character_, as.character(group_col)
+      ),
+      group_val = ifelse(
+        is.null(group_val), NA_character_, as.character(group_val)
+      ),
       preconditions = ifelse(
         is.null(preconditions), list(NULL), list(preconditions)
       ),
@@ -91,6 +109,30 @@ create_validation_step <- function(agent,
 apply_preconditions_to_tbl <- function(agent, idx, tbl) {
 
   preconditions <- agent$validation_set$preconditions[[idx]]
+  
+  tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
+  
+  tbl
+}
+
+# TODO: Ensure that this works
+apply_grouping_to_tbl <- function(agent, idx, tbl) {
+  
+  # Extract the `group_col` and `group_val` values for the validation step
+  group_col <- agent$validation_set$group_col[[idx]]
+  group_val <- agent$validation_set$group_val[[idx]]
+  
+  # If either of `group_col` or `group_val` is NA then return
+  # the table unchanged
+  if (is.na(group_col) || is.na(group_val)) {
+    return(tbl)
+  }
+  
+  # Generate a second set of 'preconditions' to filter the table
+  preconditions <- 
+    stats::as.formula(
+      glue::glue("~ . %>% dplyr::filter({group_col} == '{group_val}')")
+    )
   
   tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
   

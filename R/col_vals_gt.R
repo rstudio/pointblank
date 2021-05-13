@@ -143,6 +143,17 @@
 #'   formula using a leading `~`. In the formula representation, the `.` serves
 #'   as the input data table to be transformed (e.g., `~ . %>% dplyr::mutate(col
 #'   = col + 10)`.
+#' @param groups An optional set of expressions that serve to slice the target
+#'   table based on occurrences of defined values present in specified columns.
+#'   This is expressed by a two-sided formula where the LHS holds the column and
+#'   the RHS contains the values. Each group of rows resolved from the formula
+#'   will result in a separate validation step. If there are multiple columns
+#'   then the potential number of validation steps will be `m` columns
+#'   multiplied by `n` groups. As an example of an expression that can be used,
+#'   `a_column ~ c("group_1", "group_2)` will attempt to obtain two groups where
+#'   one is a slice of data where the value `"group_1"` exists in the column
+#'   named `"a_column"`, and, the other is a slice where `"group_2"` exists in
+#'   the same column.
 #' @param actions A list containing threshold levels so that the validation step
 #'   can react accordingly when exceeding the set levels. This is to be created
 #'   with the [action_levels()] helper function.
@@ -283,6 +294,7 @@ col_vals_gt <- function(x,
                         value,
                         na_pass = FALSE,
                         preconditions = NULL,
+                        groups = NULL,
                         actions = NULL,
                         step_id = NULL,
                         label = NULL,

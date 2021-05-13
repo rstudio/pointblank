@@ -206,6 +206,7 @@ resolve_columns <- function(x, var_expr, preconditions) {
 
 # TODO: Make this work
 #' @return A named vector in the form of <column_name> = <column_value>
+#' @noRd
 resolve_groups <- function(x, groups_expr, preconditions) {
   
   # Return a list with an NA_character_ vector if the `groups_expr` is NULL

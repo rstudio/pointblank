@@ -179,7 +179,7 @@ col_vals_increasing <- function(x,
     rlang::as_label(rlang::quo(!!enquo(columns))) %>%
     gsub("^\"|\"$", "", .)
   
-  # TODO: resolve groups into list
+  # resolve groups into list
   groups_list <- resolve_groups(x = x, groups_expr = groups, preconditions)
   
   # Capture the `columns` expression
@@ -206,8 +206,8 @@ col_vals_increasing <- function(x,
         allow_stationary = allow_stationary,
         decreasing_tol = decreasing_tol,
         na_pass = na_pass,
-        groups = groups,
         preconditions = preconditions,
+        groups = groups,
         label = label,
         brief = brief,
         actions = prime_actions(actions),

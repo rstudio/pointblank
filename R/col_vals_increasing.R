@@ -179,14 +179,14 @@ col_vals_increasing <- function(x,
     rlang::as_label(rlang::quo(!!enquo(columns))) %>%
     gsub("^\"|\"$", "", .)
   
-  # resolve groups into list
-  groups_list <- resolve_groups(x = x, groups_expr = groups, preconditions)
-  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)
+  
+  # Resolve groups into list
+  groups_list <- resolve_groups(x = x, groups_expr = groups, preconditions)
   
   # TODO: Ensure that `allow_stationary` is logical
   # TODO: Ensure that `decreasing_tol` is either `NULL` or numeric
@@ -221,10 +221,14 @@ col_vals_increasing <- function(x,
   agent <- x
   
   if (is.null(brief)) {
+    
     brief <- 
       generate_autobriefs(
-        agent, columns, preconditions,
-        values = decreasing_tol, "col_vals_increasing"
+        agent = agent,
+        columns = columns,
+        preconditions = preconditions,
+        values = decreasing_tol,
+        assertion_type = "col_vals_increasing"
       )
   }
   
@@ -241,7 +245,6 @@ col_vals_increasing <- function(x,
   # Add one or more validation steps based on the
   # length of the `columns` variable
   for (i in seq_along(columns)) {
-    
     for (j in seq_along(groups_list)) {
       
       group_col <- names(groups_list[j])
@@ -256,10 +259,10 @@ col_vals_increasing <- function(x,
           column = columns[i],
           values = stat_tol,
           na_pass = na_pass,
+          preconditions = preconditions,
           groups_expr = groups,
           group_col = group_col,
           group_val = group_val,
-          preconditions = preconditions,
           actions = covert_actions(actions, agent),
           step_id = step_id[i],
           label = label,

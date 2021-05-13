@@ -219,6 +219,7 @@ col_vals_not_equal <- function(x,
                                value,
                                na_pass = FALSE,
                                preconditions = NULL,
+                               groups = NULL,
                                actions = NULL,
                                step_id = NULL,
                                label = NULL,
@@ -236,6 +237,9 @@ col_vals_not_equal <- function(x,
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
+  # Resolve groups into list
+  groups_list <- resolve_groups(x = x, groups_expr = groups, preconditions)
+  
   if (is_a_table_object(x)) {
     
     secret_agent <-
@@ -245,6 +249,7 @@ col_vals_not_equal <- function(x,
         value = value,
         na_pass = na_pass,
         preconditions = preconditions,
+        groups = groups,
         label = label,
         brief = brief,
         actions = prime_actions(actions),
@@ -258,13 +263,14 @@ col_vals_not_equal <- function(x,
   agent <- x
   
   if (is.null(brief)) {
+    
     brief <-
       generate_autobriefs(
-        agent,
-        columns,
-        preconditions,
+        agent = agent,
+        columns = columns,
+        preconditions = preconditions,
         values = value,
-        "col_vals_not_equal"
+        assertion_type = "col_vals_not_equal"
       )
   }
   
@@ -280,24 +286,32 @@ col_vals_not_equal <- function(x,
   
   # Add one or more validation steps based on the
   # length of the `columns` variable
-  for (i in seq(columns)) {
-    
-    agent <-
-      create_validation_step(
-        agent = agent,
-        assertion_type = "col_vals_not_equal",
-        i_o = i_o,
-        columns_expr = columns_expr,
-        column = columns[i],
-        values = value,
-        na_pass = na_pass,
-        preconditions = preconditions,
-        actions = covert_actions(actions, agent),
-        step_id = step_id[i],
-        label = label,
-        brief = brief[i],
-        active = active
-      )
+  for (i in seq_along(columns)) {
+    for (j in seq_along(groups_list)) {
+      
+      group_col <- names(groups_list[j])
+      group_val <- unname(unlist(groups_list[j]))
+      
+      agent <-
+        create_validation_step(
+          agent = agent,
+          assertion_type = "col_vals_not_equal",
+          i_o = i_o,
+          columns_expr = columns_expr,
+          column = columns[i],
+          values = value,
+          na_pass = na_pass,
+          preconditions = preconditions,
+          groups_expr = groups,
+          group_col = group_col,
+          group_val = group_val,
+          actions = covert_actions(actions, agent),
+          step_id = step_id[i],
+          label = label,
+          brief = brief[i],
+          active = active
+        )
+    }
   }
 
   agent

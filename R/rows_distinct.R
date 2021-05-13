@@ -158,6 +158,7 @@ NULL
 rows_distinct <- function(x,
                           columns = NULL,
                           preconditions = NULL,
+                          groups = NULL,
                           actions = NULL,
                           step_id = NULL,
                           label = NULL,
@@ -186,6 +187,9 @@ rows_distinct <- function(x,
     columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   }
   
+  # Resolve groups into list
+  groups_list <- resolve_groups(x = x, groups_expr = groups, preconditions)
+  
   if (is_a_table_object(x)) {
     
     secret_agent <- 
@@ -193,6 +197,7 @@ rows_distinct <- function(x,
       rows_distinct(
         columns = columns,
         preconditions = preconditions,
+        groups = groups,
         label = label,
         brief = brief,
         actions = prime_actions(actions),
@@ -233,22 +238,32 @@ rows_distinct <- function(x,
   # values in earlier validation steps
   check_step_id_duplicates(step_id, agent)
   
-  # Add a validation step
-  agent <-
-    create_validation_step(
-      agent = agent,
-      assertion_type = "rows_distinct",
-      i_o = i_o,
-      columns_expr = columns_expr,
-      column = list(ifelse(is.null(columns), NA_character_, columns)),
-      values = NULL,
-      preconditions = preconditions,
-      actions = covert_actions(actions, agent),
-      step_id = step_id,
-      label = label,
-      brief = brief,
-      active = active
-    )
+  # Add one or more validation steps based on the
+  # length of `groups_list`
+  for (i in seq_along(groups_list)) {
+    
+    group_col <- names(groups_list[i])
+    group_val <- unname(unlist(groups_list[i]))
+    
+    agent <-
+      create_validation_step(
+        agent = agent,
+        assertion_type = "rows_distinct",
+        i_o = i_o,
+        columns_expr = columns_expr,
+        column = list(ifelse(is.null(columns), NA_character_, columns)),
+        values = NULL,
+        preconditions = preconditions,
+        groups_expr = groups,
+        group_col = group_col,
+        group_val = group_val,
+        actions = covert_actions(actions, agent),
+        step_id = step_id,
+        label = label,
+        brief = brief,
+        active = active
+      )
+  }
 
   agent
 }

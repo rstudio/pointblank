@@ -24,10 +24,10 @@ create_validation_step <- function(agent,
                                    column = NULL,
                                    values = NULL,
                                    na_pass = NULL,
+                                   preconditions = NULL,
                                    groups_expr = NULL,
                                    group_col = NULL,
                                    group_val = NULL,
-                                   preconditions = NULL,
                                    actions = NULL,
                                    step_id = NULL,
                                    label = NULL,
@@ -45,14 +45,14 @@ create_validation_step <- function(agent,
         column = ifelse(is.null(column), list(NULL), list(column)),
         values = ifelse(is.null(values), list(NULL), list(values)),
         na_pass = ifelse(is.null(na_pass), NA, as.logical(na_pass)),
+        preconditions = ifelse(
+          is.null(preconditions), list(NULL), list(preconditions)
+        ),
         group_col = ifelse(
           is.null(group_col), NA_character_, as.character(group_col)
         ),
         group_val = ifelse(
           is.null(group_val), NA_character_, as.character(group_val)
-        ),
-        preconditions = ifelse(
-          is.null(preconditions), list(NULL), list(preconditions)
         )
       )
     )
@@ -71,6 +71,9 @@ create_validation_step <- function(agent,
       column = ifelse(is.null(column), list(NULL), list(column)),
       values = ifelse(is.null(values), list(NULL), list(values)),
       na_pass = ifelse(is.null(na_pass), as.logical(NA), as.logical(na_pass)),
+      preconditions = ifelse(
+        is.null(preconditions), list(NULL), list(preconditions)
+      ),
       groups_expr = ifelse(
         is.null(groups_expr), list(NULL), list(groups_expr)
       ),
@@ -79,9 +82,6 @@ create_validation_step <- function(agent,
       ),
       group_val = ifelse(
         is.null(group_val), NA_character_, as.character(group_val)
-      ),
-      preconditions = ifelse(
-        is.null(preconditions), list(NULL), list(preconditions)
       ),
       actions = ifelse(is.null(actions), list(NULL), list(actions)),
       label = ifelse(is.null(label), NA_character_, as.character(label)),

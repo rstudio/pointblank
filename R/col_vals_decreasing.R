@@ -167,6 +167,7 @@ col_vals_decreasing <- function(x,
                                 increasing_tol = NULL,
                                 na_pass = FALSE,
                                 preconditions = NULL,
+                                groups = NULL,
                                 actions = NULL,
                                 step_id = NULL,
                                 label = NULL,
@@ -183,6 +184,9 @@ col_vals_decreasing <- function(x,
   
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)
+  
+  # Resolve groups into list
+  groups_list <- resolve_groups(x = x, groups_expr = groups, preconditions)
   
   # TODO: Ensure that `allow_stationary` is logical
   # TODO: Ensure that `increasing_tol` is either `NULL` or numeric
@@ -203,6 +207,7 @@ col_vals_decreasing <- function(x,
         increasing_tol = increasing_tol,
         na_pass = na_pass,
         preconditions = preconditions,
+        groups = groups,
         label = label,
         brief = brief,
         actions = prime_actions(actions),
@@ -216,10 +221,14 @@ col_vals_decreasing <- function(x,
   agent <- x
   
   if (is.null(brief)) {
+    
     brief <- 
       generate_autobriefs(
-        agent, columns, preconditions,
-        values = increasing_tol, "col_vals_decreasing"
+        agent = agent,
+        column = columns,
+        preconditions = preconditions,
+        values = increasing_tol,
+        assertion_type = "col_vals_decreasing"
       )
   }
   
@@ -235,24 +244,32 @@ col_vals_decreasing <- function(x,
   
   # Add one or more validation steps based on the
   # length of the `columns` variable
-  for (i in seq(columns)) {
-    
-    agent <-
-      create_validation_step(
-        agent = agent,
-        assertion_type = "col_vals_decreasing",
-        i_o = i_o,
-        columns_expr = columns_expr,
-        column = columns[i],
-        values = stat_tol,
-        na_pass = na_pass,
-        preconditions = preconditions,
-        actions = covert_actions(actions, agent),
-        step_id = step_id[i],
-        label = label,
-        brief = brief[i],
-        active = active
-      )
+  for (i in seq_along(columns)) {
+    for (j in seq_along(groups_list)) {
+      
+      group_col <- names(groups_list[j])
+      group_val <- unname(unlist(groups_list[j]))
+      
+      agent <-
+        create_validation_step(
+          agent = agent,
+          assertion_type = "col_vals_decreasing",
+          i_o = i_o,
+          columns_expr = columns_expr,
+          column = columns[i],
+          values = stat_tol,
+          na_pass = na_pass,
+          preconditions = preconditions,
+          groups_expr = groups,
+          group_col = group_col,
+          group_val = group_val,
+          actions = covert_actions(actions, agent),
+          step_id = step_id[i],
+          label = label,
+          brief = brief[i],
+          active = active
+        )
+    }
   }
   
   agent

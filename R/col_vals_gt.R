@@ -48,16 +48,51 @@
 #' FALSE` means that any `NA`s encountered will accumulate failing test units.
 #' 
 #' @section Preconditions:
-#' Having table `preconditions` means **pointblank** will mutate the table just
-#' before interrogation. Such a table mutation is isolated in scope to the
-#' validation step(s) produced by the validation function call. Using
-#' **dplyr** code is suggested here since the statements can be translated to
-#' SQL if necessary. The code is most easily supplied as a one-sided **R**
-#' formula (using a leading `~`). In the formula representation, the `.` serves
-#' as the input data table to be transformed (e.g., 
-#' `~ . %>% dplyr::mutate(col_a = col_b + 10)`). Alternatively, a function could
-#' instead be supplied (e.g., 
-#' `function(x) dplyr::mutate(x, col_a = col_b + 10)`).
+#' Having table `preconditions` means **pointblank** will temporarily mutate the
+#' table during a validation step. It might happen that a particular validation
+#' step requires a calculated column, a filtering of rows, additional columns
+#' via a join, etc. For an *agent*-based report this can be advantageous since
+#' we can develop a large validation plan with a single target table and make
+#' minor adjustments to it, as needed, along the way.
+#' 
+#' The table mutation is totally isolated in scope to the validation step(s)
+#' where `preconditions` is used. Using **dplyr** code is suggested here since
+#' the statements can be translated to SQL if necessary. The code is most easily
+#' supplied as a one-sided **R** formula (using a leading `~`). In the formula
+#' representation, the `.` serves as the input data table to be transformed
+#' (e.g., `~ . %>% dplyr::mutate(col_a = col_b + 10)`). Alternatively, a
+#' function could instead be supplied (e.g., `function(x) dplyr::mutate(x, col_a
+#' = col_b + 10)`).
+#' 
+#' @section Segments:
+#' By using the `segments` argument, it's possible to define a particular
+#' validation with segments (or row slices) of the target table. An optional
+#' expression or set of expressions that serve to segment the target table by
+#' column values. Each expression can be given in one of two ways: (1) as column
+#' names, or (2) as a two-sided formula where the LHS holds a column name and
+#' the RHS contains the column values to segment on.
+#' 
+#' As an example of the first type of expression that can be used,
+#' `vars(a_column)` will segment the target table in however many unique values
+#' are present in the column called `a_column`. This is great if every unique
+#' value in a particular column (like different locations, or different dates)
+#' requires it's own repeating validation.
+#'
+#' With a formula, we can be more selective with which column values should be
+#' used for segmentation. Using `a_column ~ c("group_1", "group_2)` will attempt
+#' to obtain two segments where one is a slice of data where the value
+#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
+#' slice where `"group_2"` exists in the same column. Each group of rows
+#' resolved from the formula will result in a separate validation step.
+#'
+#' If there are multiple `columns` specified then the potential number of
+#' validation steps will be `m` columns multiplied by `n` segments resolved.
+#'
+#' Segmentation will always occur after `preconditions` (i.e., statements that
+#' mutate the target table), if any, are applied. With this type of one-two
+#' combo, it's possible to generate labels for segmentation using an expression
+#' for `preconditions` and refer to those labels in `segments` without having to
+#' generate a separate version of the target table.
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -142,19 +177,12 @@
 #'   before proceeding with the validation. This is ideally as a one-sided R
 #'   formula using a leading `~`. In the formula representation, the `.` serves
 #'   as the input data table to be transformed (e.g., `~ . %>% dplyr::mutate(col
-#'   = col + 10)`.
+#'   = col + 10)`. See the *Preconditions* section for more information.
 #' @param segments An optional expression or set of expressions (held in a list)
 #'   that serve to segment the target table by column values. Each expression
 #'   can be given in one of two ways: (1) as column names, or (2) as a two-sided
 #'   formula where the LHS holds a column name and the RHS contains the column
-#'   values to segment on. Each group of rows resolved from the formula will
-#'   result in a separate validation step. If there are multiple columns then
-#'   the potential number of validation steps will be `m` columns multiplied by
-#'   `n` groups. As an example of an expression that can be used, `a_column ~
-#'   c("group_1", "group_2)` will attempt to obtain two groups where one is a
-#'   slice of data where the value `"group_1"` exists in the column named
-#'   `"a_column"`, and, the other is a slice where `"group_2"` exists in the
-#'   same column.
+#'   values to segment on. See the *Segments* section for more details on this.
 #' @param actions A list containing threshold levels so that the validation step
 #'   can react accordingly when exceeding the set levels. This is to be created
 #'   with the [action_levels()] helper function.

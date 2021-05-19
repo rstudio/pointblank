@@ -624,6 +624,10 @@ prune_lst_step <- function(lst_step) {
       is.null(lst_step[[1]][["preconditions"]])) {
     lst_step[[1]]["preconditions"] <- NULL
   }
+  if ("segments" %in% names(lst_step[[1]]) &&
+      is.null(lst_step[[1]][["segments"]])) {
+    lst_step[[1]]["segments"] <- NULL
+  }
   if ("na_pass" %in% names(lst_step[[1]]) &&
       !lst_step[[1]][["na_pass"]]) {
     lst_step[[1]]["na_pass"] <- NULL

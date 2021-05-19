@@ -116,22 +116,22 @@ apply_preconditions_to_tbl <- function(agent, idx, tbl) {
 }
 
 # TODO: Ensure that this works
-apply_grouping_to_tbl <- function(agent, idx, tbl) {
+apply_segments_to_tbl <- function(agent, idx, tbl) {
   
-  # Extract the `group_col` and `group_val` values for the validation step
-  group_col <- agent$validation_set$group_col[[idx]]
-  group_val <- agent$validation_set$group_val[[idx]]
+  # Extract the `seg_col` and `seg_val` values for the validation step
+  seg_col <- agent$validation_set$seg_col[[idx]]
+  seg_val <- agent$validation_set$seg_val[[idx]]
   
-  # If either of `group_col` or `group_val` is NA then return
+  # If either of `seg_col` or `seg_val` is NA then return
   # the table unchanged
-  if (is.na(group_col) || is.na(group_val)) {
+  if (is.na(seg_col) || is.na(seg_val)) {
     return(tbl)
   }
   
   # Generate a second set of 'preconditions' to filter the table
   preconditions <- 
     stats::as.formula(
-      glue::glue("~ . %>% dplyr::filter({group_col} == '{group_val}')")
+      glue::glue("~ . %>% dplyr::filter({seg_col} == '{seg_val}')")
     )
   
   tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)

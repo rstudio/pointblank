@@ -736,7 +736,7 @@ as_agent_yaml_list <- function(agent,
       agent$validation_set %>% 
       dplyr::select(
         i_o, assertion_type, columns_expr, column, values, na_pass,
-        preconditions, actions, label, brief, active
+        preconditions, seg_expr, actions, label, brief, active
       ) %>%
       dplyr::group_by(i_o) %>%
       dplyr::filter(dplyr::row_number() == 1) %>%
@@ -754,7 +754,7 @@ as_agent_yaml_list <- function(agent,
       agent$validation_set %>% 
       dplyr::select(
         i, assertion_type, columns_expr, column, values, na_pass,
-        preconditions, actions, label, brief, active
+        preconditions, seg_expr, actions, label, brief, active
       )
   }
   
@@ -785,6 +785,7 @@ as_agent_yaml_list <- function(agent,
             value = get_arg_value(step_list$values),
             na_pass = step_list$na_pass,
             preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default

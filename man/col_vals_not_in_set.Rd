@@ -144,16 +144,20 @@ specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{co
 
 \section{Preconditions}{
 
-Having table \code{preconditions} means \strong{pointblank} will mutate the table just
-before interrogation. Such a table mutation is isolated in scope to the
-validation step(s) produced by the validation function call. Using
-\strong{dplyr} code is suggested here since the statements can be translated to
-SQL if necessary. The code is most easily supplied as a one-sided \strong{R}
-formula (using a leading \code{~}). In the formula representation, the \code{.} serves
-as the input data table to be transformed (e.g.,
-\code{~ . \%>\% dplyr::mutate(col_a = col_b + 10)}). Alternatively, a function could
-instead be supplied (e.g.,
-\code{function(x) dplyr::mutate(x, col_a = col_b + 10)}).
+Having table \code{preconditions} means \strong{pointblank} will temporarily mutate the
+table during a validation step. It might happen that a particular validation
+step requires a calculated column, a filtering of rows, additional columns
+via a join, etc. For an \emph{agent}-based report this can be advantageous since
+we can develop a large validation plan with a single target table and make
+minor adjustments to it, as needed, along the way.
+
+The table mutation is totally isolated in scope to the validation step(s)
+where \code{preconditions} is used. Using \strong{dplyr} code is suggested here since
+the statements can be translated to SQL if necessary. The code is most easily
+supplied as a one-sided \strong{R} formula (using a leading \code{~}). In the formula
+representation, the \code{.} serves as the input data table to be transformed
+(e.g., \code{~ . \%>\% dplyr::mutate(col_a = col_b + 10)}). Alternatively, a
+function could instead be supplied (e.g., \code{function(x) dplyr::mutate(x, col_a = col_b + 10)}).
 }
 
 \section{Segments}{

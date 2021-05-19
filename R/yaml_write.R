@@ -459,6 +459,34 @@ as_list_preconditions <- function(preconditions) {
   }
 }
 
+as_list_segments <- function(segments) {
+  
+  if (is.null(segments[[1]])) {
+    return(NULL)
+  }
+
+  segments <- unlist(segments)
+  
+  components <- c()
+  
+  for (i in seq_along(segments)) {
+    
+    if (rlang::is_formula(segments[[i]]) &&
+        !inherits(segments[[i]], "quosure")) {
+      
+      components <-
+        c(components, paste(capture_formula(segments[[i]]), collapse = " "))
+      
+    } else if (inherits(segments[[i]], "quosure")) {
+      
+      components <-
+        c(components, paste0("vars(", as_label(segments[[i]]), ")"))
+    }
+  }
+  
+  paste0("list(", paste(components, collapse = ", "), ")")
+}
+
 as_list_active <- function(active) {
 
   if (is.logical(active[[1]])) {

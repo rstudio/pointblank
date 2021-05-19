@@ -211,7 +211,7 @@ col_vals_in_set <- function(x,
                             columns,
                             set,
                             preconditions = NULL,
-                            groups = NULL,
+                            segments = NULL,
                             actions = NULL,
                             step_id = NULL,
                             label = NULL,
@@ -229,8 +229,13 @@ col_vals_in_set <- function(x,
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
-  # Resolve groups into list
-  groups_list <- resolve_groups(x = x, groups_expr = groups, preconditions)
+  # Resolve segments into list
+  segments_list <-
+    resolve_segments(
+      x = x,
+      seg_expr = segments,
+      preconditions = preconditions
+    )
   
   if (is_a_table_object(x)) {
     
@@ -240,7 +245,7 @@ col_vals_in_set <- function(x,
         columns = columns,
         set = set,
         preconditions = preconditions,
-        groups = groups,
+        segments = segments,
         label = label,
         brief = brief,
         actions = prime_actions(actions),
@@ -278,10 +283,10 @@ col_vals_in_set <- function(x,
   # Add one or more validation steps based on the
   # length of the `columns` variable
   for (i in seq_along(columns)) {
-    for (j in seq_along(groups_list)) {
+    for (j in seq_along(segments_list)) {
       
-      group_col <- names(groups_list[j])
-      group_val <- unname(unlist(groups_list[j]))
+      seg_col <- names(segments_list[j])
+      seg_val <- unname(unlist(segments_list[j]))
       
       agent <-
         create_validation_step(
@@ -292,9 +297,9 @@ col_vals_in_set <- function(x,
           column = columns[i],
           values = set,
           preconditions = preconditions,
-          groups_expr = groups,
-          group_col = group_col,
-          group_val = group_val,
+          seg_expr = segments,
+          seg_col = seg_col,
+          seg_val = seg_val,
           actions = covert_actions(actions, agent),
           step_id = step_id[i],
           label = label,

@@ -253,7 +253,7 @@ conjointly <- function(x,
                        ...,
                        .list = list2(...),
                        preconditions = NULL,
-                       groups = NULL,
+                       segments = NULL,
                        actions = NULL,
                        step_id = NULL,
                        label = NULL,
@@ -275,8 +275,13 @@ conjointly <- function(x,
       )
     ]
   
-  # Resolve groups into list
-  groups_list <- resolve_groups(x = x, groups_expr = groups, preconditions)
+  # Resolve segments into list
+  segments_list <-
+    resolve_segments(
+      x = x,
+      seg_expr = segments,
+      preconditions = preconditions
+    )
   
   if (is_a_table_object(x)) {
     
@@ -285,7 +290,7 @@ conjointly <- function(x,
       conjointly(
         .list = .list,
         preconditions = preconditions,
-        groups = groups,
+        segments = segments,
         actions = prime_actions(actions),
         label = label,
         brief = brief,
@@ -320,11 +325,11 @@ conjointly <- function(x,
   check_step_id_duplicates(step_id, agent)
 
   # Add one or more validation steps based on the
-  # length of `groups_list`
-  for (i in seq_along(groups_list)) {
+  # length of `segments_list`
+  for (i in seq_along(segments_list)) {
     
-    group_col <- names(groups_list[i])
-    group_val <- unname(unlist(groups_list[i]))
+    seg_col <- names(segments_list[i])
+    seg_val <- unname(unlist(segments_list[i]))
     
     agent <-
       create_validation_step(
@@ -336,9 +341,9 @@ conjointly <- function(x,
         values = validation_formulas,
         na_pass = NULL,
         preconditions = preconditions,
-        groups_expr = groups,
-        group_col = group_col,
-        group_val = group_val,
+        seg_expr = segments,
+        seg_col = seg_col,
+        seg_val = seg_val,
         actions = covert_actions(actions, agent),
         step_id = step_id,
         label = label,

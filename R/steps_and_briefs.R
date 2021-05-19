@@ -74,14 +74,14 @@ create_validation_step <- function(agent,
       preconditions = ifelse(
         is.null(preconditions), list(NULL), list(preconditions)
       ),
-      groups_expr = ifelse(
-        is.null(groups_expr), list(NULL), list(groups_expr)
+      seg_expr = ifelse(
+        is.null(seg_expr), list(NULL), list(seg_expr)
       ),
-      group_col = ifelse(
-        is.null(group_col), NA_character_, as.character(group_col)
+      seg_col = ifelse(
+        is.null(seg_col), NA_character_, as.character(seg_col)
       ),
-      group_val = ifelse(
-        is.null(group_val), NA_character_, as.character(group_val)
+      seg_val = ifelse(
+        is.null(seg_val), NA_character_, as.character(seg_val)
       ),
       actions = ifelse(is.null(actions), list(NULL), list(actions)),
       label = ifelse(is.null(label), NA_character_, as.character(label)),

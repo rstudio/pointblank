@@ -25,9 +25,9 @@ create_validation_step <- function(agent,
                                    values = NULL,
                                    na_pass = NULL,
                                    preconditions = NULL,
-                                   groups_expr = NULL,
-                                   group_col = NULL,
-                                   group_val = NULL,
+                                   seg_expr = NULL,
+                                   seg_col = NULL,
+                                   seg_val = NULL,
                                    actions = NULL,
                                    step_id = NULL,
                                    label = NULL,
@@ -48,11 +48,11 @@ create_validation_step <- function(agent,
         preconditions = ifelse(
           is.null(preconditions), list(NULL), list(preconditions)
         ),
-        group_col = ifelse(
-          is.null(group_col), NA_character_, as.character(group_col)
+        seg_col = ifelse(
+          is.null(seg_col), NA_character_, as.character(seg_col)
         ),
-        group_val = ifelse(
-          is.null(group_val), NA_character_, as.character(group_val)
+        seg_val = ifelse(
+          is.null(seg_val), NA_character_, as.character(seg_val)
         )
       )
     )

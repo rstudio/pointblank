@@ -167,9 +167,9 @@ interrogate <- function(agent,
     }
     
     # Set the validation step as `active = FALSE` if there is a
-    # `groups_expr` declared but not resolved `group_col`
-    if (!is.null(agent$validation_set$groups_expr[[i]]) &&
-        is.na(agent$validation_set$group_col[i])) {
+    # `seg_expr` declared but not resolved `seg_col`
+    if (!is.null(agent$validation_set$seg_expr[[i]]) &&
+        is.na(agent$validation_set$seg_col[i])) {
       agent$validation_set[[i, "eval_active"]] <- FALSE
     }
 
@@ -187,8 +187,8 @@ interrogate <- function(agent,
     # Use preconditions to modify the table
     table <- apply_preconditions_to_tbl(agent = agent, idx = i, tbl = table)
     
-    # Use grouping columns/value to filter the table
-    table <- apply_grouping_to_tbl(agent = agent, idx = i, tbl = table)
+    # Use segmentation directives to constrain the table
+    table <- apply_segments_to_tbl(agent = agent, idx = i, tbl = table)
     
     # Get the assertion type for this verification step
     assertion_type <- get_assertion_type_at_idx(agent = agent, idx = i)

@@ -84,6 +84,10 @@ interrogate <- function(agent,
                         sample_frac = NULL,
                         sample_limit = 5000) {
   
+  #
+  # INITIAL PROCESSING OF AGENT
+  #
+  
   # Add the starting time to the `agent` object
   agent$time_start <- Sys.time()
 
@@ -99,6 +103,8 @@ interrogate <- function(agent,
     )
   }
 
+  # Materialization of table given that there is a table-prep formula
+  # available in the agent object
   if (is.null(agent$tbl) && !is.null(agent$read_fn)) {
     
     if (inherits(agent$read_fn, "function")) {
@@ -129,11 +135,17 @@ interrogate <- function(agent,
     agent$extracts <- NULL
   }
 
+  # Quieting of an agent's remarks either when the agent has the
+  # special label `"::QUIET::"` or the session is non-interactive
   if (agent$label == "::QUIET::" || !interactive()) {
     quiet <- TRUE
   } else {
     quiet <- FALSE
   }
+  
+  # TODO: Handle possible expansion of table through evaluation
+  # of all `seg_expr` values
+  
   
   # Get the agent's validation step indices
   validation_steps <- seq_len(nrow(agent$validation_set))
@@ -143,6 +155,10 @@ interrogate <- function(agent,
     validation_steps = validation_steps,
     quiet = quiet
   )
+  
+  #
+  # PROCESSING OF VALIDATION STEPS AS INDIVIDUAL INTERROGATIONS
+  #
   
   for (i in validation_steps) {
     
@@ -380,6 +396,12 @@ interrogate <- function(agent,
     )
   }
   
+  #
+  # POST-INTERROGATION PHASE
+  #
+  
+  # Bestowing of the class `"has_intel"` to the agent, given that
+  # all validation steps have been carried out
   class(agent) <- c("has_intel", "ptblank_agent")
   
   # Add the ending time to the `agent` object

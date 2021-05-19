@@ -813,23 +813,23 @@ get_agent_report <- function(agent,
       } 
     )
   
-  group_col <- validation_set$group_col
-  group_val <- validation_set$group_val
+  seg_col <- validation_set$seg_col
+  seg_val <- validation_set$seg_val
   
   # Make changes to the `precon` column if there is grouping
   precon_upd <- 
-    seq_along(group_col) %>%
+    seq_along(seg_col) %>%
     vapply(
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
         
-        if (is.na(group_col[x])) {
+        if (is.na(seg_col[x])) {
           return(precon_upd[x])
         }
         
-        group_col_x <- group_col[x]
-        group_val_x <- group_val[x]
+        seg_col_x <- seg_col[x]
+        seg_val_x <- seg_val[x]
         
         precon_upd[x] <- 
           make_boxed_text_html(
@@ -840,8 +840,8 @@ get_agent_report <- function(agent,
             font_size = "10px",
             padding = 0,
             tt_text = glue_safely(
-              "Using rows associated with value '{group_val_x}' from ",
-              "grouping column '{group_col_x}'."
+              "Using segment associated with value '{seg_val_x}' from ",
+              "column '{seg_col_x}'."
             ),
             border_radius = "4px"
           )

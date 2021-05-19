@@ -13,7 +13,7 @@ col_vals_decreasing(
   increasing_tol = NULL,
   na_pass = FALSE,
   preconditions = NULL,
-  groups = NULL,
+  segments = NULL,
   actions = NULL,
   step_id = NULL,
   label = NULL,
@@ -69,17 +69,17 @@ before proceeding with the validation. This is ideally as a one-sided R
 formula using a leading \code{~}. In the formula representation, the \code{.} serves
 as the input data table to be transformed (e.g., \code{~ . \%>\% dplyr::mutate(col = col + 10)}.}
 
-\item{groups}{An optional set of expressions that serve to slice the target
-table based on occurrences of defined values present in specified columns.
-This is expressed by a two-sided formula where the LHS holds the column and
-the RHS contains the values. Each group of rows resolved from the formula
-will result in a separate validation step. If there are multiple columns
-then the potential number of validation steps will be \code{m} columns
-multiplied by \code{n} groups. As an example of an expression that can be used,
-\verb{a_column ~ c("group_1", "group_2)} will attempt to obtain two groups where
-one is a slice of data where the value \code{"group_1"} exists in the column
-named \code{"a_column"}, and, the other is a slice where \code{"group_2"} exists in
-the same column.}
+\item{segments}{An optional expression or set of expressions (held in a list)
+that serve to segment the target table by column values. Each expression
+can be given in one of two ways: (1) as column names, or (2) as a two-sided
+formula where the LHS holds a column name and the RHS contains the column
+values to segment on. Each group of rows resolved from the formula will
+result in a separate validation step. If there are multiple columns then
+the potential number of validation steps will be \code{m} columns multiplied by
+\code{n} groups. As an example of an expression that can be used, \verb{a_column ~ c("group_1", "group_2)} will attempt to obtain two groups where one is a
+slice of data where the value \code{"group_1"} exists in the column named
+\code{"a_column"}, and, the other is a slice where \code{"group_2"} exists in the
+same column.}
 
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created

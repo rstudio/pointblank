@@ -548,7 +548,7 @@ make_validation_steps <- function(steps) {
             FUN = function(x) {
               arg_name <- names(step_i[[1]][x])
               val <- step_i[[1]][[x]]
-              others <- c("preconditions", "expr", "schema")
+              others <- c("preconditions", "segments", "expr", "schema")
               
               if (arg_name == "fns") {
                 return(paste("  ", val, collapse = ",\n"))

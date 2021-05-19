@@ -136,7 +136,7 @@ interrogate <- function(agent,
   }
   
   # Get the agent's validation step indices
-  validation_steps <- unique(agent$validation_set$i)
+  validation_steps <- seq_len(nrow(agent$validation_set))
   
   # Signal the start of interrogation in the console
   create_cli_header_a(

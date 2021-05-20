@@ -204,6 +204,9 @@ resolve_columns <- function(x, var_expr, preconditions) {
   column
 }
 
+#' The `resolve_segments()` function works with input from the `segments`
+#' argument, present is a variety of row-based validation functions.
+#' 
 #' @return A segment list with <column_name> = <column_value>
 #' @noRd
 resolve_segments <- function(x, seg_expr, preconditions) {

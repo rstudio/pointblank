@@ -240,8 +240,8 @@ value in a particular column (like different locations, or different dates)
 requires it's own repeating validation.
 
 With a formula, we can be more selective with which column values should be
-used for segmentation. Using \verb{a_column ~ c("group_1", "group_2)} will attempt
-to obtain two segments where one is a slice of data where the value
+used for segmentation. Using \code{a_column ~ c("group_1", "group_2")} will
+attempt to obtain two segments where one is a slice of data where the value
 \code{"group_1"} exists in the column named \code{"a_column"}, and, the other is a
 slice where \code{"group_2"} exists in the same column. Each group of rows
 resolved from the formula will result in a separate validation step.
@@ -298,6 +298,7 @@ agent \%>\%
     spec = "email",
     na_pass = TRUE,
     preconditions = ~ . \%>\% dplyr::filter(b < 10),
+    segments = b ~ c("group_1", "group_2"),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
     label = "The `col_vals_within_spec()` step.",
     active = FALSE
@@ -310,6 +311,7 @@ steps:
     spec: email
     na_pass: true
     preconditions: ~. \%>\% dplyr::filter(b < 10)
+    segments: b ~ c("group_1", "group_2")
     actions:
       warn_fraction: 0.1
       stop_fraction: 0.2

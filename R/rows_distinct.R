@@ -69,8 +69,8 @@
 #' requires it's own repeating validation.
 #'
 #' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2)` will attempt
-#' to obtain two segments where one is a slice of data where the value
+#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
+#' attempt to obtain two segments where one is a slice of data where the value
 #' `"group_1"` exists in the column named `"a_column"`, and, the other is a
 #' slice where `"group_2"` exists in the same column. Each group of rows
 #' resolved from the formula will result in a separate validation step.
@@ -122,6 +122,7 @@
 #'   rows_distinct(
 #'     columns = vars(a, b),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
+#'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
 #'     label = "The `rows_distinct()` step.",
 #'     active = FALSE
@@ -132,6 +133,7 @@
 #' - rows_distinct:
 #'     columns: vars(a, b)
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
+#'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
@@ -139,13 +141,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter. A value `columns` for
-#' columns is only necessary if checking for unique values across the some
-#' specification of columns. Arguments with default values won't be written to
-#' YAML when using [yaml_write()] (though it is acceptable to include them with
-#' their default when generating the YAML by other means). It is also possible
-#' to preview the transformation of an agent to YAML without any writing to disk
-#' by using the [yaml_agent_string()] function.
+#' In practice, both of these will often be shorter. A value for `columns` is
+#' only necessary if checking for unique values across a subset of columns.
+#' Arguments with default values won't be written to YAML when using
+#' [yaml_write()] (though it is acceptable to include them with their default
+#' when generating the YAML by other means). It is also possible to preview the
+#' transformation of an agent to YAML without any writing to disk by using the
+#' [yaml_agent_string()] function.
 #'
 #' @inheritParams col_vals_gt
 #'   

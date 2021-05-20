@@ -71,8 +71,8 @@
 #' requires it's own repeating validation.
 #'
 #' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2)` will attempt
-#' to obtain two segments where one is a slice of data where the value
+#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
+#' attempt to obtain two segments where one is a slice of data where the value
 #' `"group_1"` exists in the column named `"a_column"`, and, the other is a
 #' slice where `"group_2"` exists in the same column. Each group of rows
 #' resolved from the formula will result in a separate validation step.
@@ -124,6 +124,7 @@
 #'   col_vals_null(
 #'     vars(a),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
+#'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
 #'     label = "The `col_vals_null()` step.",
 #'     active = FALSE
@@ -134,6 +135,7 @@
 #' - col_vals_null:
 #'     columns: vars(a)
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
+#'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2

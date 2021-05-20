@@ -204,7 +204,6 @@ resolve_columns <- function(x, var_expr, preconditions) {
   column
 }
 
-# TODO: Make this work
 #' @return A segment list with <column_name> = <column_value>
 #' @noRd
 resolve_segments <- function(x, seg_expr, preconditions) {

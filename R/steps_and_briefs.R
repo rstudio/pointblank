@@ -115,7 +115,6 @@ apply_preconditions_to_tbl <- function(agent, idx, tbl) {
   tbl
 }
 
-# TODO: Ensure that this works
 apply_segments_to_tbl <- function(agent, idx, tbl) {
   
   # Extract the `seg_col` and `seg_val` values for the validation step

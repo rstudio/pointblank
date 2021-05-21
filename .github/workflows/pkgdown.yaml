@@ -26,8 +26,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: macOS-r-4.0-2-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: macOS-r-4.0-2-
+          key: macOS-r-4.0-3-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: macOS-r-4.0-3-
 
       - name: Install system dependencies
         run: |
@@ -35,17 +35,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages("pkgdown")
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_dev("pkgdown")
         shell: Rscript {0}
 
       - name: Install package
         run: R CMD INSTALL .
         
-      - name: Git setup
+      - name: Deploy package
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-
-      - name: Deploy package
-        run: pkgdown::deploy_to_branch(new_process = FALSE)
-        shell: Rscript {0}
+          Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'

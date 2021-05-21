@@ -839,10 +839,10 @@ get_agent_report <- function(agent,
             background = "transparent",
             font_size = "10px",
             padding = 0,
-            tt_text = glue_safely(
-              "Using segment associated with value '{seg_val_x}' from ",
-              "column '{seg_col_x}'."
-            ),
+            tt_text = glue::glue(get_lsv(text = c(
+              "agent_report",
+              "report_on_segmentation"
+            ))[[lang]]),
             border_radius = "4px"
           )
         

@@ -231,12 +231,12 @@ resolve_segments <- function(x, seg_expr, preconditions) {
   # Verify that `seg_expr` is a list
   if (!is.list(seg_expr)) {
     stop(
-      "The `groups` value should be a list of two-sided formulas",
+      "The `segments` value should be a list of two-sided formulas",
       call. = FALSE
     )
   }
   
-  groups <- list()
+  segments_list <- list()
 
   # Process each `seg_expr` element
   for (i in seq_along(seg_expr)) {
@@ -265,7 +265,7 @@ resolve_segments <- function(x, seg_expr, preconditions) {
         
         names(col_seg_vals) <- rep(column_name, length(col_seg_vals))
         
-        groups <- c(groups, as.list(col_seg_vals))
+        segments_list <- c(segments_list, as.list(col_seg_vals))
       }
     }
     
@@ -279,7 +279,7 @@ resolve_segments <- function(x, seg_expr, preconditions) {
         is.null(rlang::f_rhs(group_formula))
       ) {
         stop(
-          "Any formulas provided for `groups` must be two-sided",
+          "Any formulas provided for `segments` must be two-sided",
           call. = FALSE
         )
       }
@@ -294,11 +294,11 @@ resolve_segments <- function(x, seg_expr, preconditions) {
       
       names(col_seg_vals) <- rep(column_name, length(col_seg_vals))
       
-      groups <- c(groups, as.list(col_seg_vals))
+      segments_list <- c(segments_list, as.list(col_seg_vals))
     }
   }
   
-  groups
+  segments_list
 }
 
 normalize_step_id <- function(step_id, columns, agent) {

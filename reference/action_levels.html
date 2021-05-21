@@ -73,6 +73,8 @@ directly on data (more information on this is provided in Details)." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -84,9 +86,16 @@ directly on data (more information on this is provided in Details)." />
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -200,11 +209,11 @@ to <code>1</code>), and, they do so with informative warning or error messages. 
 directly on data (more information on this is provided in <em>Details</em>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>action_levels</span><span class='op'>(</span>warn_at <span class='op'>=</span> <span class='cn'>NULL</span>, stop_at <span class='op'>=</span> <span class='cn'>NULL</span>, notify_at <span class='op'>=</span> <span class='cn'>NULL</span>, fns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>action_levels</span><span class='op'>(</span>warn_at <span class='op'>=</span> <span class='cn'>NULL</span>, stop_at <span class='op'>=</span> <span class='cn'>NULL</span>, notify_at <span class='op'>=</span> <span class='cn'>NULL</span>, fns <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
 <span class='fu'>warn_on_fail</span><span class='op'>(</span>warn_at <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
-<span class='fu'>stop_on_fail</span><span class='op'>(</span>stop_at <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
+<span class='fu'>stop_on_fail</span><span class='op'>(</span>stop_at <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -227,8 +236,8 @@ threshold (e.g., <code>10</code> means that if 10 of the test units are found to
 appropriate failure states. The syntax for this list involves using failure
 state names from the set of <code>warn</code>, <code>stop</code>, and <code>notify</code>. The functions
 corresponding to the failure states are provided as formulas (e.g.,
-<code><a href='https://rdrr.io/r/base/list.html'>list(warn = ~ warning("Too many failures."))</a></code>. A series of expressions for
-each named state can be used by enclosing the set of statements with <code>{ }</code>.</p></td>
+<code>list(warn = ~ warning("Too many failures."))</code>. A series of expressions for
+each named state can be used by enclosing the set of statements with <code><a href='https://rdrr.io/r/base/Paren.html'>{ }</a></code>.</p></td>
     </tr>
     </table>
 
@@ -275,119 +284,119 @@ reducing potential for duplicating any side effects.</p>
 <code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-
-<span class='co'># For these examples, we will use the</span>
-<span class='co'># included `small_table` dataset</span>
-<span class='va'>small_table</span>
-
-<span class='co'># Create an `action_levels` object</span>
-<span class='co'># with fractional values for the</span>
-<span class='co'># `warn`, `stop`, and `notify` states</span>
-<span class='va'>al</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>action_levels</span><span class='op'>(</span>
-    warn_at <span class='op'>=</span> <span class='fl'>0.2</span>,
-    stop_at <span class='op'>=</span> <span class='fl'>0.8</span>,
-    notify_at <span class='op'>=</span> <span class='fl'>0.5</span>
-  <span class='op'>)</span>
-  
-<span class='co'># A summary of settings for the `al`</span>
-<span class='co'># object is shown by printing it</span>
-<span class='va'>al</span>
-
-<span class='co'># Create a pointblank agent and</span>
-<span class='co'># apply the `al` object to `actions`;</span>
-<span class='co'># add two validation steps and</span>
-<span class='co'># interrogate the `small_table`</span>
-<span class='va'>agent_1</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
-    tbl <span class='op'>=</span> <span class='va'>small_table</span>,
-    actions <span class='op'>=</span> <span class='va'>al</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>2</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>20000</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># The report from the agent will show</span>
-<span class='co'># that the `warn` state has been entered</span>
-<span class='co'># for the first validation step but not</span>
-<span class='co'># the second one; we can confirm this</span>
-<span class='co'># in the console by inspecting the</span>
-<span class='co'># `warn` component in the agent's x-list</span>
-<span class='va'>x_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_agent_x_list.html'>get_agent_x_list</a></span><span class='op'>(</span><span class='va'>agent_1</span><span class='op'>)</span>
-<span class='va'>x_list</span><span class='op'>$</span><span class='va'>warn</span>
-
-<span class='co'># Applying the `action_levels` object</span>
-<span class='co'># to the agent means that all validation</span>
-<span class='co'># steps will inherit these settings but</span>
-<span class='co'># we can override this by applying</span>
-<span class='co'># another such object to the validation</span>
-<span class='co'># step instead (this time using the</span>
-<span class='co'># `warn_on_fail()` shorthand)</span>
-<span class='va'>agent_2</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
-    tbl <span class='op'>=</span> <span class='va'>small_table</span>,
-    actions <span class='op'>=</span> <span class='va'>al</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>2</span>,
-    actions <span class='op'>=</span> <span class='fu'>warn_on_fail</span><span class='op'>(</span>warn_at <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>20000</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># In this case, the first validation</span>
-<span class='co'># step has a less stringent failure</span>
-<span class='co'># threshold for the `warn` state and it's</span>
-<span class='co'># high enough that the condition is not</span>
-<span class='co'># entered; this can be confirmed in the</span>
-<span class='co'># console through inspection of the</span>
-<span class='co'># x-list `warn` component</span>
-<span class='va'>x_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_agent_x_list.html'>get_agent_x_list</a></span><span class='op'>(</span><span class='va'>agent_2</span><span class='op'>)</span>
-<span class='va'>x_list</span><span class='op'>$</span><span class='va'>warn</span>
-
-<span class='co'># In the context of using validation</span>
-<span class='co'># functions directly on data (i.e., no</span>
-<span class='co'># involvement of an agent) we want to</span>
-<span class='co'># trigger warnings and raise errors; the</span>
-<span class='co'># following will yield a warning if</span>
-<span class='co'># it is executed (returning the</span>
-<span class='co'># `small_table` data)</span>
-<span class='va'>small_table</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>2</span>,
-    actions <span class='op'>=</span> <span class='fu'>warn_on_fail</span><span class='op'>(</span>warn_at <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-  <span class='op'>)</span>
-
-<span class='co'># With the same pipeline, not supplying</span>
-<span class='co'># anything for `actions` (it's `NULL` by</span>
-<span class='co'># default) will have the same effect as</span>
-<span class='co'># using `stop_on_fail(stop_at = 1)` </span>
-<span class='va'>small_table</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-
-<span class='va'>small_table</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>2</span>,
-    actions <span class='op'>=</span> <span class='fu'>stop_on_fail</span><span class='op'>(</span>stop_at <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-  <span class='op'>)</span>
-
-<span class='co'># This is because the `stop_on_fail()`</span>
-<span class='co'># call is auto-injected in the default</span>
-<span class='co'># case (when operating on data) for your</span>
-<span class='co'># convenience; behind the scenes a</span>
-<span class='co'># 'secret agent' uses 'covert actions':</span>
-<span class='co'># all so you can type less</span>
-
-<span class='op'>}</span>
-
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># For these examples, we will use the</span></span>
+<span class='r-in'><span class='co'># included `small_table` dataset</span></span>
+<span class='r-in'><span class='va'>small_table</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Create an `action_levels` object</span></span>
+<span class='r-in'><span class='co'># with fractional values for the</span></span>
+<span class='r-in'><span class='co'># `warn`, `stop`, and `notify` states</span></span>
+<span class='r-in'><span class='va'>al</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'>action_levels</span><span class='op'>(</span></span>
+<span class='r-in'>    warn_at <span class='op'>=</span> <span class='fl'>0.2</span>,</span>
+<span class='r-in'>    stop_at <span class='op'>=</span> <span class='fl'>0.8</span>,</span>
+<span class='r-in'>    notify_at <span class='op'>=</span> <span class='fl'>0.5</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='co'># A summary of settings for the `al`</span></span>
+<span class='r-in'><span class='co'># object is shown by printing it</span></span>
+<span class='r-in'><span class='va'>al</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Create a pointblank agent and</span></span>
+<span class='r-in'><span class='co'># apply the `al` object to `actions`;</span></span>
+<span class='r-in'><span class='co'># add two validation steps and</span></span>
+<span class='r-in'><span class='co'># interrogate the `small_table`</span></span>
+<span class='r-in'><span class='va'>agent_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    tbl <span class='op'>=</span> <span class='va'>small_table</span>,</span>
+<span class='r-in'>    actions <span class='op'>=</span> <span class='va'>al</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>2</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>20000</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The report from the agent will show</span></span>
+<span class='r-in'><span class='co'># that the `warn` state has been entered</span></span>
+<span class='r-in'><span class='co'># for the first validation step but not</span></span>
+<span class='r-in'><span class='co'># the second one; we can confirm this</span></span>
+<span class='r-in'><span class='co'># in the console by inspecting the</span></span>
+<span class='r-in'><span class='co'># `warn` component in the agent's x-list</span></span>
+<span class='r-in'><span class='va'>x_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_agent_x_list.html'>get_agent_x_list</a></span><span class='op'>(</span><span class='va'>agent_1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>x_list</span><span class='op'>$</span><span class='va'>warn</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Applying the `action_levels` object</span></span>
+<span class='r-in'><span class='co'># to the agent means that all validation</span></span>
+<span class='r-in'><span class='co'># steps will inherit these settings but</span></span>
+<span class='r-in'><span class='co'># we can override this by applying</span></span>
+<span class='r-in'><span class='co'># another such object to the validation</span></span>
+<span class='r-in'><span class='co'># step instead (this time using the</span></span>
+<span class='r-in'><span class='co'># `warn_on_fail()` shorthand)</span></span>
+<span class='r-in'><span class='va'>agent_2</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    tbl <span class='op'>=</span> <span class='va'>small_table</span>,</span>
+<span class='r-in'>    actions <span class='op'>=</span> <span class='va'>al</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>2</span>,</span>
+<span class='r-in'>    actions <span class='op'>=</span> <span class='fu'>warn_on_fail</span><span class='op'>(</span>warn_at <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>20000</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># In this case, the first validation</span></span>
+<span class='r-in'><span class='co'># step has a less stringent failure</span></span>
+<span class='r-in'><span class='co'># threshold for the `warn` state and it's</span></span>
+<span class='r-in'><span class='co'># high enough that the condition is not</span></span>
+<span class='r-in'><span class='co'># entered; this can be confirmed in the</span></span>
+<span class='r-in'><span class='co'># console through inspection of the</span></span>
+<span class='r-in'><span class='co'># x-list `warn` component</span></span>
+<span class='r-in'><span class='va'>x_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get_agent_x_list.html'>get_agent_x_list</a></span><span class='op'>(</span><span class='va'>agent_2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>x_list</span><span class='op'>$</span><span class='va'>warn</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># In the context of using validation</span></span>
+<span class='r-in'><span class='co'># functions directly on data (i.e., no</span></span>
+<span class='r-in'><span class='co'># involvement of an agent) we want to</span></span>
+<span class='r-in'><span class='co'># trigger warnings and raise errors; the</span></span>
+<span class='r-in'><span class='co'># following will yield a warning if</span></span>
+<span class='r-in'><span class='co'># it is executed (returning the</span></span>
+<span class='r-in'><span class='co'># `small_table` data)</span></span>
+<span class='r-in'><span class='va'>small_table</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>2</span>,</span>
+<span class='r-in'>    actions <span class='op'>=</span> <span class='fu'>warn_on_fail</span><span class='op'>(</span>warn_at <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># With the same pipeline, not supplying</span></span>
+<span class='r-in'><span class='co'># anything for `actions` (it's `NULL` by</span></span>
+<span class='r-in'><span class='co'># default) will have the same effect as</span></span>
+<span class='r-in'><span class='co'># using `stop_on_fail(stop_at = 1)` </span></span>
+<span class='r-in'><span class='va'>small_table</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>small_table</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>2</span>,</span>
+<span class='r-in'>    actions <span class='op'>=</span> <span class='fu'>stop_on_fail</span><span class='op'>(</span>stop_at <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># This is because the `stop_on_fail()`</span></span>
+<span class='r-in'><span class='co'># call is auto-injected in the default</span></span>
+<span class='r-in'><span class='co'># case (when operating on data) for your</span></span>
+<span class='r-in'><span class='co'># convenience; behind the scenes a</span></span>
+<span class='r-in'><span class='co'># 'secret agent' uses 'covert actions':</span></span>
+<span class='r-in'><span class='co'># all so you can type less</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -399,11 +408,11 @@ reducing potential for duplicating any side effects.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
+  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -411,6 +420,8 @@ reducing potential for duplicating any side effects.</p>
 
   
 
+
+  
 
   </body>
 </html>

@@ -58,6 +58,8 @@ blastula email_message object will be returned." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -69,9 +71,16 @@ blastula email_message object will be returned." />
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -170,12 +179,12 @@ either be a <strong>pointblank</strong> agent, the <em>agent</em> x-list (produc
 <strong>blastula</strong> <code>email_message</code> object will be returned.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>email_create</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>email_create</span><span class='op'>(</span>
   <span class='va'>x</span>,
   msg_header <span class='op'>=</span> <span class='cn'>NULL</span>,
   msg_body <span class='op'>=</span> <span class='fu'><a href='stock_msg_body.html'>stock_msg_body</a></span><span class='op'>(</span><span class='op'>)</span>,
   msg_footer <span class='op'>=</span> <span class='fu'><a href='stock_msg_footer.html'>stock_msg_footer</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -212,90 +221,90 @@ footer components of the HTML email message.</p></td>
 <code><a href='stock_msg_footer.html'>stock_msg_footer</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-
-<span class='co'># Create an `action_levels()` list</span>
-<span class='co'># with absolute values for the</span>
-<span class='co'># `warn`, and `notify` states (with</span>
-<span class='co'># thresholds of 1 and 2 'fail' units)</span>
-<span class='va'>al</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='action_levels.html'>action_levels</a></span><span class='op'>(</span>
-    warn_at <span class='op'>=</span> <span class='fl'>1</span>,
-    notify_at <span class='op'>=</span> <span class='fl'>2</span>
-  <span class='op'>)</span>
-
-<span class='co'># In a workflow that involves an</span>
-<span class='co'># `agent` object, we can make use of</span>
-<span class='co'># the `end_fns` argument and</span>
-<span class='co'># programmatically email the report</span>
-<span class='co'># with the `email_blast()` function,</span>
-<span class='co'># however, an alternate workflow is to</span>
-<span class='co'># produce the email object and choose</span>
-<span class='co'># to send outside of the pointblank API;</span>
-<span class='co'># the `email_create()` function lets</span>
-<span class='co'># us do this with an `agent` object</span>
-<span class='va'>email_object_1</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
-    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,
-    label <span class='op'>=</span> <span class='st'>"An example."</span>,
-    actions <span class='op'>=</span> <span class='va'>al</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>email_create</span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># We can view the HTML email just</span>
-<span class='co'># by printing `email_object`; it</span>
-<span class='co'># should appear in the Viewer</span>
-
-<span class='co'># The `email_create()` function can</span>
-<span class='co'># also be used on an agent x-list to</span>
-<span class='co'># get the same email message object</span>
-<span class='va'>email_object_2</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
-    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,
-    label <span class='op'>=</span> <span class='st'>"An example."</span>,
-    actions <span class='op'>=</span> <span class='va'>al</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='get_agent_x_list.html'>get_agent_x_list</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>email_create</span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># An information report that's</span>
-<span class='co'># produced by the informant can</span>
-<span class='co'># made into an email message object;</span>
-<span class='co'># let's create an informant and use</span>
-<span class='co'># `email_create()`</span>
-<span class='va'>email_object_3</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
-    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,
-    label <span class='op'>=</span> <span class='st'>"An example."</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_tabular.html'>info_tabular</a></span><span class='op'>(</span>
-    info <span class='op'>=</span> <span class='st'>"A simple table in the
-    *Examples* section of the function
-    called `email_create()`."</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>,
-    info <span class='op'>=</span> <span class='st'>"Numbers. On the high side."</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>,
-    info <span class='op'>=</span> <span class='st'>"Lower numbers. Zeroes, even."</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='incorporate.html'>incorporate</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>email_create</span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='op'>}</span>
-
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Create an `action_levels()` list</span></span>
+<span class='r-in'><span class='co'># with absolute values for the</span></span>
+<span class='r-in'><span class='co'># `warn`, and `notify` states (with</span></span>
+<span class='r-in'><span class='co'># thresholds of 1 and 2 'fail' units)</span></span>
+<span class='r-in'><span class='va'>al</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'><a href='action_levels.html'>action_levels</a></span><span class='op'>(</span></span>
+<span class='r-in'>    warn_at <span class='op'>=</span> <span class='fl'>1</span>,</span>
+<span class='r-in'>    notify_at <span class='op'>=</span> <span class='fl'>2</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># In a workflow that involves an</span></span>
+<span class='r-in'><span class='co'># `agent` object, we can make use of</span></span>
+<span class='r-in'><span class='co'># the `end_fns` argument and</span></span>
+<span class='r-in'><span class='co'># programmatically email the report</span></span>
+<span class='r-in'><span class='co'># with the `email_blast()` function,</span></span>
+<span class='r-in'><span class='co'># however, an alternate workflow is to</span></span>
+<span class='r-in'><span class='co'># produce the email object and choose</span></span>
+<span class='r-in'><span class='co'># to send outside of the pointblank API;</span></span>
+<span class='r-in'><span class='co'># the `email_create()` function lets</span></span>
+<span class='r-in'><span class='co'># us do this with an `agent` object</span></span>
+<span class='r-in'><span class='va'>email_object_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,</span>
+<span class='r-in'>    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"An example."</span>,</span>
+<span class='r-in'>    actions <span class='op'>=</span> <span class='va'>al</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>email_create</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># We can view the HTML email just</span></span>
+<span class='r-in'><span class='co'># by printing `email_object`; it</span></span>
+<span class='r-in'><span class='co'># should appear in the Viewer</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The `email_create()` function can</span></span>
+<span class='r-in'><span class='co'># also be used on an agent x-list to</span></span>
+<span class='r-in'><span class='co'># get the same email message object</span></span>
+<span class='r-in'><span class='va'>email_object_2</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,</span>
+<span class='r-in'>    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"An example."</span>,</span>
+<span class='r-in'>    actions <span class='op'>=</span> <span class='va'>al</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='get_agent_x_list.html'>get_agent_x_list</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>email_create</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># An information report that's</span></span>
+<span class='r-in'><span class='co'># produced by the informant can</span></span>
+<span class='r-in'><span class='co'># made into an email message object;</span></span>
+<span class='r-in'><span class='co'># let's create an informant and use</span></span>
+<span class='r-in'><span class='co'># `email_create()`</span></span>
+<span class='r-in'><span class='va'>email_object_3</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,</span>
+<span class='r-in'>    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"An example."</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='info_tabular.html'>info_tabular</a></span><span class='op'>(</span></span>
+<span class='r-in'>    info <span class='op'>=</span> <span class='st'>"A simple table in the</span>
+<span class='r-in'>    *Examples* section of the function</span>
+<span class='r-in'>    called `email_create()`."</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>,</span>
+<span class='r-in'>    info <span class='op'>=</span> <span class='st'>"Numbers. On the high side."</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>,</span>
+<span class='r-in'>    info <span class='op'>=</span> <span class='st'>"Lower numbers. Zeroes, even."</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='incorporate.html'>incorporate</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>email_create</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -307,11 +316,11 @@ footer components of the HTML email message.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
+  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -319,6 +328,8 @@ footer components of the HTML email message.</p></td>
 
   
 
+
+  
 
   </body>
 </html>

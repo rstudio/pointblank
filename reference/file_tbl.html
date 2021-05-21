@@ -66,6 +66,8 @@ in a repository." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -77,9 +79,16 @@ in a repository." />
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -178,7 +187,7 @@ in-memory <code>tbl_dbl</code> object, which can be used as a target table for
 <code><a href='create_agent.html'>create_agent()</a></code> and <code><a href='create_informant.html'>create_informant()</a></code>. The ideal option for data access
 with <code>file_tbl()</code> is using this function as the <code>read_fn</code> parameter in either
 of the aforementioned <code>create_*()</code> functions. This can be done by using a
-leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> (e.g,. <code>read_fn = ~file_tbl(...)</code>).</p>
+leading <code>~</code> (e.g,. <code>read_fn = ~file_tbl(...)</code>).</p>
 <p>In the remote data use case, we can specify a URL starting with <code>http://</code>,
 <code>https://</code>, etc., and ending with the file containing the data table. If data
 files are available in a GitHub repository then we can use the
@@ -186,7 +195,7 @@ files are available in a GitHub repository then we can use the
 in a repository.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>file_tbl</span><span class='op'>(</span><span class='va'>file</span>, type <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span>, keep <span class='op'>=</span> <span class='cn'>FALSE</span>, verify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>file_tbl</span><span class='op'>(</span><span class='va'>file</span>, type <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span>, keep <span class='op'>=</span> <span class='cn'>FALSE</span>, verify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -249,137 +258,137 @@ having the <code>data.frame</code> class will be carried out.</p></td>
 <code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># A local CSV file can be obtained as</span>
-<span class='co'># a tbl object by supplying a path to</span>
-<span class='co'># the file and some CSV reading options</span>
-<span class='co'># (the ones used by `readr::read_csv()`)</span>
-<span class='co'># to the `file_tbl()` function; for</span>
-<span class='co'># this example we could obtain a path</span>
-<span class='co'># to a CSV file in the pointblank</span>
-<span class='co'># package with `system.file()`:</span>
-<span class='va'>csv_path</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
-    <span class='st'>"data_files"</span>, <span class='st'>"small_table.csv"</span>,
-    package <span class='op'>=</span> <span class='st'>"pointblank"</span>
-  <span class='op'>)</span>
-
-<span class='co'># Then use that path in `file_tbl()`</span>
-<span class='co'># with the option to specify the column</span>
-<span class='co'># types in that CSV  </span>
-<span class='va'>tbl</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>file_tbl</span><span class='op'>(</span>
-    file <span class='op'>=</span> <span class='va'>csv_path</span>,
-    col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span>
-  <span class='op'>)</span>
-  
-<span class='co'># Now that we have a `tbl` object that</span>
-<span class='co'># is a tibble, it can be introduced to</span>
-<span class='co'># `create_agent()` for validation</span>
-<span class='va'>agent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>tbl <span class='op'>=</span> <span class='va'>tbl</span><span class='op'>)</span>
-
-<span class='co'># A different strategy is to provide</span>
-<span class='co'># the data-reading function call</span>
-<span class='co'># directly to `create_agent()`:</span>
-<span class='va'>agent</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'>file_tbl</span><span class='op'>(</span>
-      file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
-        <span class='st'>"data_files"</span>, <span class='st'>"small_table.csv"</span>,
-        package <span class='op'>=</span> <span class='st'>"pointblank"</span>
-      <span class='op'>)</span>,
-      col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
-
-<span class='co'># All of the file-reading instructions</span>
-<span class='co'># are encapsulated in the `read_fn` so</span>
-<span class='co'># the agent will always obtain the most</span>
-<span class='co'># recent version of the dataset (and the</span>
-<span class='co'># logic can be translated to YAML, for</span>
-<span class='co'># later use)</span>
-
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-
-<span class='co'># A CSV can be obtained from a public</span>
-<span class='co'># GitHub repo by using the `from_github()`</span>
-<span class='co'># helper function; let's create an agent</span>
-<span class='co'># a supply a table-prep formula that</span>
-<span class='co'># gets the same CSV file from the GitHub</span>
-<span class='co'># repository for the pointblank package </span>
-<span class='va'>agent</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'>file_tbl</span><span class='op'>(</span>
-      file <span class='op'>=</span> <span class='fu'><a href='from_github.html'>from_github</a></span><span class='op'>(</span>
-        file <span class='op'>=</span> <span class='st'>"inst/data_files/small_table.csv"</span>,
-        repo <span class='op'>=</span> <span class='st'>"rich-iannone/pointblank"</span>
-      <span class='op'>)</span>,
-      col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># This interrogated the data that was</span>
-<span class='co'># obtained from the remote source file,</span>
-<span class='co'># and, there's nothing to clean up (by</span>
-<span class='co'># default, the downloaded file goes into</span>
-<span class='co'># a system temp directory)</span>
-
-<span class='co'># Storing table-prep formulas in a table</span>
-<span class='co'># store makes it easier to work with</span>
-<span class='co'># tabular data originating from files;</span>
-<span class='co'># here's how to generate a table store</span>
-<span class='co'># with two named entries for table</span>
-<span class='co'># preparations</span>
-<span class='va'>tbls</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='tbl_store.html'>tbl_store</a></span><span class='op'>(</span>
-    <span class='va'>small_table_file</span> <span class='op'>~</span> <span class='fu'>file_tbl</span><span class='op'>(</span>
-      file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
-        <span class='st'>"data_files"</span>, <span class='st'>"small_table.csv"</span>,
-        package <span class='op'>=</span> <span class='st'>"pointblank"</span>
-      <span class='op'>)</span>,
-      col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span>
-    <span class='op'>)</span>,
-    <span class='va'>small_high_file</span> <span class='op'>~</span> <span class='fu'>file_tbl</span><span class='op'>(</span>
-      file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
-        <span class='st'>"data_files"</span>, <span class='st'>"small_table.csv"</span>,
-        package <span class='op'>=</span> <span class='st'>"pointblank"</span>
-      <span class='op'>)</span>,
-      col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span>
-    <span class='op'>)</span> <span class='op'>%&gt;%</span>
-      <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>f</span> <span class='op'>==</span> <span class='st'>"high"</span><span class='op'>)</span>
-  <span class='op'>)</span>
-
-<span class='co'># Now it's easy to access either of these</span>
-<span class='co'># tables (the second is a mutated version)</span>
-<span class='co'># via the `tbl_get()` function</span>
-<span class='fu'><a href='tbl_get.html'>tbl_get</a></span><span class='op'>(</span><span class='st'>"small_table_file"</span>, store <span class='op'>=</span> <span class='va'>tbls</span><span class='op'>)</span>
-<span class='fu'><a href='tbl_get.html'>tbl_get</a></span><span class='op'>(</span><span class='st'>"small_high_file"</span>, store <span class='op'>=</span> <span class='va'>tbls</span><span class='op'>)</span>
-
-<span class='co'># The table-prep formulas in `tbls`</span>
-<span class='co'># could also be used in functions with</span>
-<span class='co'># the `read_fn` argument; this is thanks</span>
-<span class='co'># to the `tbl_source()` function</span>
-<span class='va'>agent</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='tbl_source.html'>tbl_source</a></span><span class='op'>(</span>
-      <span class='st'>"small_table_file"</span>,
-      store <span class='op'>=</span> <span class='va'>tbls</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span>
-
-<span class='va'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='tbl_source.html'>tbl_source</a></span><span class='op'>(</span>
-      <span class='st'>"small_high_file"</span>,
-      store <span class='op'>=</span> <span class='va'>tbls</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span>
-
-<span class='op'>}</span>
-
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># A local CSV file can be obtained as</span></span>
+<span class='r-in'><span class='co'># a tbl object by supplying a path to</span></span>
+<span class='r-in'><span class='co'># the file and some CSV reading options</span></span>
+<span class='r-in'><span class='co'># (the ones used by `readr::read_csv()`)</span></span>
+<span class='r-in'><span class='co'># to the `file_tbl()` function; for</span></span>
+<span class='r-in'><span class='co'># this example we could obtain a path</span></span>
+<span class='r-in'><span class='co'># to a CSV file in the pointblank</span></span>
+<span class='r-in'><span class='co'># package with `system.file()`:</span></span>
+<span class='r-in'><span class='va'>csv_path</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='st'>"data_files"</span>, <span class='st'>"small_table.csv"</span>,</span>
+<span class='r-in'>    package <span class='op'>=</span> <span class='st'>"pointblank"</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Then use that path in `file_tbl()`</span></span>
+<span class='r-in'><span class='co'># with the option to specify the column</span></span>
+<span class='r-in'><span class='co'># types in that CSV  </span></span>
+<span class='r-in'><span class='va'>tbl</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'>file_tbl</span><span class='op'>(</span></span>
+<span class='r-in'>    file <span class='op'>=</span> <span class='va'>csv_path</span>,</span>
+<span class='r-in'>    col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='co'># Now that we have a `tbl` object that</span></span>
+<span class='r-in'><span class='co'># is a tibble, it can be introduced to</span></span>
+<span class='r-in'><span class='co'># `create_agent()` for validation</span></span>
+<span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>tbl <span class='op'>=</span> <span class='va'>tbl</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># A different strategy is to provide</span></span>
+<span class='r-in'><span class='co'># the data-reading function call</span></span>
+<span class='r-in'><span class='co'># directly to `create_agent()`:</span></span>
+<span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'>file_tbl</span><span class='op'>(</span></span>
+<span class='r-in'>      file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span></span>
+<span class='r-in'>        <span class='st'>"data_files"</span>, <span class='st'>"small_table.csv"</span>,</span>
+<span class='r-in'>        package <span class='op'>=</span> <span class='st'>"pointblank"</span></span>
+<span class='r-in'>      <span class='op'>)</span>,</span>
+<span class='r-in'>      col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># All of the file-reading instructions</span></span>
+<span class='r-in'><span class='co'># are encapsulated in the `read_fn` so</span></span>
+<span class='r-in'><span class='co'># the agent will always obtain the most</span></span>
+<span class='r-in'><span class='co'># recent version of the dataset (and the</span></span>
+<span class='r-in'><span class='co'># logic can be translated to YAML, for</span></span>
+<span class='r-in'><span class='co'># later use)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># A CSV can be obtained from a public</span></span>
+<span class='r-in'><span class='co'># GitHub repo by using the `from_github()`</span></span>
+<span class='r-in'><span class='co'># helper function; let's create an agent</span></span>
+<span class='r-in'><span class='co'># a supply a table-prep formula that</span></span>
+<span class='r-in'><span class='co'># gets the same CSV file from the GitHub</span></span>
+<span class='r-in'><span class='co'># repository for the pointblank package </span></span>
+<span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'>file_tbl</span><span class='op'>(</span></span>
+<span class='r-in'>      file <span class='op'>=</span> <span class='fu'><a href='from_github.html'>from_github</a></span><span class='op'>(</span></span>
+<span class='r-in'>        file <span class='op'>=</span> <span class='st'>"inst/data_files/small_table.csv"</span>,</span>
+<span class='r-in'>        repo <span class='op'>=</span> <span class='st'>"rich-iannone/pointblank"</span></span>
+<span class='r-in'>      <span class='op'>)</span>,</span>
+<span class='r-in'>      col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># This interrogated the data that was</span></span>
+<span class='r-in'><span class='co'># obtained from the remote source file,</span></span>
+<span class='r-in'><span class='co'># and, there's nothing to clean up (by</span></span>
+<span class='r-in'><span class='co'># default, the downloaded file goes into</span></span>
+<span class='r-in'><span class='co'># a system temp directory)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Storing table-prep formulas in a table</span></span>
+<span class='r-in'><span class='co'># store makes it easier to work with</span></span>
+<span class='r-in'><span class='co'># tabular data originating from files;</span></span>
+<span class='r-in'><span class='co'># here's how to generate a table store</span></span>
+<span class='r-in'><span class='co'># with two named entries for table</span></span>
+<span class='r-in'><span class='co'># preparations</span></span>
+<span class='r-in'><span class='va'>tbls</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='tbl_store.html'>tbl_store</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>small_table_file</span> <span class='op'>~</span> <span class='fu'>file_tbl</span><span class='op'>(</span></span>
+<span class='r-in'>      file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span></span>
+<span class='r-in'>        <span class='st'>"data_files"</span>, <span class='st'>"small_table.csv"</span>,</span>
+<span class='r-in'>        package <span class='op'>=</span> <span class='st'>"pointblank"</span></span>
+<span class='r-in'>      <span class='op'>)</span>,</span>
+<span class='r-in'>      col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span></span>
+<span class='r-in'>    <span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='va'>small_high_file</span> <span class='op'>~</span> <span class='fu'>file_tbl</span><span class='op'>(</span></span>
+<span class='r-in'>      file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span></span>
+<span class='r-in'>        <span class='st'>"data_files"</span>, <span class='st'>"small_table.csv"</span>,</span>
+<span class='r-in'>        package <span class='op'>=</span> <span class='st'>"pointblank"</span></span>
+<span class='r-in'>      <span class='op'>)</span>,</span>
+<span class='r-in'>      col_types <span class='op'>=</span> <span class='st'>"TDdcddlc"</span></span>
+<span class='r-in'>    <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>      <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>f</span> <span class='op'>==</span> <span class='st'>"high"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Now it's easy to access either of these</span></span>
+<span class='r-in'><span class='co'># tables (the second is a mutated version)</span></span>
+<span class='r-in'><span class='co'># via the `tbl_get()` function</span></span>
+<span class='r-in'><span class='fu'><a href='tbl_get.html'>tbl_get</a></span><span class='op'>(</span><span class='st'>"small_table_file"</span>, store <span class='op'>=</span> <span class='va'>tbls</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='tbl_get.html'>tbl_get</a></span><span class='op'>(</span><span class='st'>"small_high_file"</span>, store <span class='op'>=</span> <span class='va'>tbls</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The table-prep formulas in `tbls`</span></span>
+<span class='r-in'><span class='co'># could also be used in functions with</span></span>
+<span class='r-in'><span class='co'># the `read_fn` argument; this is thanks</span></span>
+<span class='r-in'><span class='co'># to the `tbl_source()` function</span></span>
+<span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='tbl_source.html'>tbl_source</a></span><span class='op'>(</span></span>
+<span class='r-in'>      <span class='st'>"small_table_file"</span>,</span>
+<span class='r-in'>      store <span class='op'>=</span> <span class='va'>tbls</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>informant</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='tbl_source.html'>tbl_source</a></span><span class='op'>(</span></span>
+<span class='r-in'>      <span class='st'>"small_high_file"</span>,</span>
+<span class='r-in'>      store <span class='op'>=</span> <span class='va'>tbls</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -391,11 +400,11 @@ having the <code>data.frame</code> class will be carried out.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
+  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -403,6 +412,8 @@ having the <code>data.frame</code> class will be carried out.</p></td>
 
   
 
+
+  
 
   </body>
 </html>

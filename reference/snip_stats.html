@@ -64,6 +64,8 @@ P90, maximum
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -75,9 +77,16 @@ P90, maximum
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -182,7 +191,7 @@ P90, maximum</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'>snip_stats</span><span class='op'>(</span><span class='va'>column</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"5num"</span>, <span class='st'>"7num"</span>, <span class='st'>"bowley"</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>snip_stats</span><span class='op'>(</span><span class='va'>column</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"5num"</span>, <span class='st'>"7num"</span>, <span class='st'>"bowley"</span><span class='op'>)</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -219,34 +228,41 @@ summaries: <code>"7num"</code> and <code>"bowley"</code>.</p></td>
 <code><a href='snip_lowest.html'>snip_lowest</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate an informant object, add</span>
-<span class='co'># a snippet with `info_snippet()`</span>
-<span class='co'># and `snip_stats()` (giving us a</span>
-<span class='co'># method to get some summary stats for</span>
-<span class='co'># column `a`); define a location for</span>
-<span class='co'># the snippet result in `{ }` and</span>
-<span class='co'># then `incorporate()` the snippet</span>
-<span class='co'># into the info text</span>
-<span class='va'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
-    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,
-    label <span class='op'>=</span> <span class='st'>"An example."</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='st'>"a"</span>,
-    `Stats` <span class='op'>=</span> <span class='st'>"Stats (fivenum): {stats_a}."</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_snippet.html'>info_snippet</a></span><span class='op'>(</span>
-    snippet_name <span class='op'>=</span> <span class='st'>"stats_a"</span>,
-    fn <span class='op'>=</span> <span class='fu'>snip_stats</span><span class='op'>(</span>column <span class='op'>=</span> <span class='st'>"a"</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='incorporate.html'>incorporate</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Incorporation Started - there is a single snippet to process</span><span> </span><span style='color: #00BBBB;'>────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> Information gathered.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> Snippets processed.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> Information built.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Incorporation Completed</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────────</span><span></span></div><div class='input'>
-<span class='co'># We can print the `informant` object</span>
-<span class='co'># to see the information report</span>
-
-</div></span></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Generate an informant object, add</span></span>
+<span class='r-in'><span class='co'># a snippet with `info_snippet()`</span></span>
+<span class='r-in'><span class='co'># and `snip_stats()` (giving us a</span></span>
+<span class='r-in'><span class='co'># method to get some summary stats for</span></span>
+<span class='r-in'><span class='co'># column `a`); define a location for</span></span>
+<span class='r-in'><span class='co'># the snippet result in `{ }` and</span></span>
+<span class='r-in'><span class='co'># then `incorporate()` the snippet</span></span>
+<span class='r-in'><span class='co'># into the info text</span></span>
+<span class='r-in'><span class='va'>informant</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,</span>
+<span class='r-in'>    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"An example."</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='st'>"a"</span>,</span>
+<span class='r-in'>    `Stats` <span class='op'>=</span> <span class='st'>"Stats (fivenum): {stats_a}."</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='info_snippet.html'>info_snippet</a></span><span class='op'>(</span></span>
+<span class='r-in'>    snippet_name <span class='op'>=</span> <span class='st'>"stats_a"</span>,</span>
+<span class='r-in'>    fn <span class='op'>=</span> <span class='fu'>snip_stats</span><span class='op'>(</span>column <span class='op'>=</span> <span class='st'>"a"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='incorporate.html'>incorporate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Incorporation Started - there is a single snippet to process</span><span> </span><span style='color: #00BBBB;'>────────────────</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span><span> Information gathered.</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span><span> Snippets processed.</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span><span> Information built.</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Incorporation Completed</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────────</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># We can print the `informant` object</span></span>
+<span class='r-in'><span class='co'># to see the information report</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -258,11 +274,11 @@ summaries: <code>"7num"</code> and <code>"bowley"</code>.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
+  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -270,6 +286,8 @@ summaries: <code>"7num"</code> and <code>"bowley"</code>.</p></td>
 
   
 
+
+  
 
   </body>
 </html>

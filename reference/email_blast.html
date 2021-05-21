@@ -62,6 +62,8 @@ an x-list obtained from using the get_agent_x_list() function." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -73,9 +75,16 @@ an x-list obtained from using the get_agent_x_list() function." />
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -178,7 +187,7 @@ different validation steps exceeding failure thresholds).</p>
 an x-list obtained from using the <code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>email_blast</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>email_blast</span><span class='op'>(</span>
   <span class='va'>x</span>,
   <span class='va'>to</span>,
   <span class='va'>from</span>,
@@ -187,8 +196,8 @@ an x-list obtained from using the <code><a href='get_agent_x_list.html'>get_agen
   msg_header <span class='op'>=</span> <span class='cn'>NULL</span>,
   msg_body <span class='op'>=</span> <span class='fu'><a href='stock_msg_body.html'>stock_msg_body</a></span><span class='op'>(</span><span class='op'>)</span>,
   msg_footer <span class='op'>=</span> <span class='fu'><a href='stock_msg_footer.html'>stock_msg_footer</a></span><span class='op'>(</span><span class='op'>)</span>,
-  send_condition <span class='op'>=</span> <span class='op'>~</span><span class='cn'>TRUE</span> <span class='op'>%in%</span> <span class='va'>x</span><span class='op'>$</span><span class='va'>notify</span>
-<span class='op'>)</span></pre>
+  send_condition <span class='op'>=</span> <span class='op'>~</span><span class='cn'>TRUE</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='va'>x</span><span class='op'>$</span><span class='va'>notify</span>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -242,7 +251,7 @@ resulting YAML can be used to regenerate an agent (with <code><a href='yaml_read
 or interrogate the target table (via <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></code>). Here is an
 example of how the use of <code>email_blast()</code> inside the <code>end_fns</code> argument of
 <code><a href='create_agent.html'>create_agent()</a></code> is expressed in R code and in the corresponding YAML
-representation.</p><pre># R statement
+representation.</p><pre><code># R statement
 create_agent(
   read_fn = ~ small_table,
   tbl_name = "small_table",
@@ -285,7 +294,7 @@ steps:
   - col_vals_lt:
     columns: vars(a)
     value: 7.0
-</pre>
+</code></pre>
 
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
@@ -300,75 +309,75 @@ steps:
 <code><a href='stock_msg_footer.html'>stock_msg_footer</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create an `action_levels()` list</span>
-<span class='co'># with absolute values for the</span>
-<span class='co'># `warn`, and `notify` states (with</span>
-<span class='co'># thresholds of 1 and 2 'fail' units)</span>
-<span class='va'>al</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='action_levels.html'>action_levels</a></span><span class='op'>(</span>
-    warn_at <span class='op'>=</span> <span class='fl'>1</span>,
-    notify_at <span class='op'>=</span> <span class='fl'>2</span>
-  <span class='op'>)</span>
-  
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-
-<span class='co'># Validate that values in column</span>
-<span class='co'># `a` from `small_tbl` are always &gt; 1</span>
-<span class='co'># and that they are always &lt; 7; first,</span>
-<span class='co'># apply the `actions_levels()`</span>
-<span class='co'># directive to `actions` and set up</span>
-<span class='co'># an `email_blast()` as one of the</span>
-<span class='co'># `end_fns` (by default, the email</span>
-<span class='co'># will be sent if there is a single</span>
-<span class='co'># 'notify' state across all</span>
-<span class='co'># validation steps)</span>
-<span class='va'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
-    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,
-    label <span class='op'>=</span> <span class='st'>"An example."</span>,
-    actions <span class='op'>=</span> <span class='va'>al</span>,
-    end_fns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      <span class='op'>~</span> <span class='fu'>email_blast</span><span class='op'>(</span>
-        <span class='va'>x</span>,
-        to <span class='op'>=</span> <span class='st'>"joe_public@example.com"</span>,
-        from <span class='op'>=</span> <span class='st'>"pb_notif@example.com"</span>,
-        msg_subject <span class='op'>=</span> <span class='st'>"Table Validation"</span>,
-        credentials <span class='op'>=</span> <span class='fu'>blastula</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/blastula/man/credential_helpers.html'>creds_key</a></span><span class='op'>(</span>
-          id <span class='op'>=</span> <span class='st'>"smtp2go"</span>
-        <span class='op'>)</span>,
-      <span class='op'>)</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='op'>}</span>
-
-<span class='co'># The above example was intentionally</span>
-<span class='co'># not run because email credentials</span>
-<span class='co'># aren't available and the `to`</span>
-<span class='co'># and `from` email addresses are</span>
-<span class='co'># nonexistent</span>
-
-<span class='co'># To get a blastula email object</span>
-<span class='co'># instead of eagerly sending the</span>
-<span class='co'># message, we can use the </span>
-<span class='co'># `email_create()` function</span>
-<span class='va'>email_object</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
-    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,
-    label <span class='op'>=</span> <span class='st'>"An example."</span>,
-    actions <span class='op'>=</span> <span class='va'>al</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='email_create.html'>email_create</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: The `.dots` argument of `group_by()` is deprecated as of dplyr 1.0.0.</span></div><div class='input'>  
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Create an `action_levels()` list</span></span>
+<span class='r-in'><span class='co'># with absolute values for the</span></span>
+<span class='r-in'><span class='co'># `warn`, and `notify` states (with</span></span>
+<span class='r-in'><span class='co'># thresholds of 1 and 2 'fail' units)</span></span>
+<span class='r-in'><span class='va'>al</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'><a href='action_levels.html'>action_levels</a></span><span class='op'>(</span></span>
+<span class='r-in'>    warn_at <span class='op'>=</span> <span class='fl'>1</span>,</span>
+<span class='r-in'>    notify_at <span class='op'>=</span> <span class='fl'>2</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Validate that values in column</span></span>
+<span class='r-in'><span class='co'># `a` from `small_tbl` are always &gt; 1</span></span>
+<span class='r-in'><span class='co'># and that they are always &lt; 7; first,</span></span>
+<span class='r-in'><span class='co'># apply the `actions_levels()`</span></span>
+<span class='r-in'><span class='co'># directive to `actions` and set up</span></span>
+<span class='r-in'><span class='co'># an `email_blast()` as one of the</span></span>
+<span class='r-in'><span class='co'># `end_fns` (by default, the email</span></span>
+<span class='r-in'><span class='co'># will be sent if there is a single</span></span>
+<span class='r-in'><span class='co'># 'notify' state across all</span></span>
+<span class='r-in'><span class='co'># validation steps)</span></span>
+<span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,</span>
+<span class='r-in'>    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"An example."</span>,</span>
+<span class='r-in'>    actions <span class='op'>=</span> <span class='va'>al</span>,</span>
+<span class='r-in'>    end_fns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      <span class='op'>~</span> <span class='fu'>email_blast</span><span class='op'>(</span></span>
+<span class='r-in'>        <span class='va'>x</span>,</span>
+<span class='r-in'>        to <span class='op'>=</span> <span class='st'>"joe_public@example.com"</span>,</span>
+<span class='r-in'>        from <span class='op'>=</span> <span class='st'>"pb_notif@example.com"</span>,</span>
+<span class='r-in'>        msg_subject <span class='op'>=</span> <span class='st'>"Table Validation"</span>,</span>
+<span class='r-in'>        credentials <span class='op'>=</span> <span class='fu'>blastula</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/blastula/man/credential_helpers.html'>creds_key</a></span><span class='op'>(</span></span>
+<span class='r-in'>          id <span class='op'>=</span> <span class='st'>"smtp2go"</span></span>
+<span class='r-in'>        <span class='op'>)</span>,</span>
+<span class='r-in'>      <span class='op'>)</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The above example was intentionally</span></span>
+<span class='r-in'><span class='co'># not run because email credentials</span></span>
+<span class='r-in'><span class='co'># aren't available and the `to`</span></span>
+<span class='r-in'><span class='co'># and `from` email addresses are</span></span>
+<span class='r-in'><span class='co'># nonexistent</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># To get a blastula email object</span></span>
+<span class='r-in'><span class='co'># instead of eagerly sending the</span></span>
+<span class='r-in'><span class='co'># message, we can use the </span></span>
+<span class='r-in'><span class='co'># `email_create()` function</span></span>
+<span class='r-in'><span class='va'>email_object</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,</span>
+<span class='r-in'>    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"An example."</span>,</span>
+<span class='r-in'>    actions <span class='op'>=</span> <span class='va'>al</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='email_create.html'>email_create</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'>  </span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -380,11 +389,11 @@ steps:
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
+  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -392,6 +401,8 @@ steps:
 
   
 
+
+  
 
   </body>
 </html>

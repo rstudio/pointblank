@@ -115,6 +115,8 @@ available for the validation step
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -126,9 +128,16 @@ available for the validation step
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -284,7 +293,7 @@ available for the validation step</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'>get_agent_report</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>get_agent_report</span><span class='op'>(</span>
   <span class='va'>agent</span>,
   arrange_by <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"i"</span>, <span class='st'>"severity"</span><span class='op'>)</span>,
   keep <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"fail_states"</span><span class='op'>)</span>,
@@ -293,7 +302,7 @@ available for the validation step</p></li>
   title <span class='op'>=</span> <span class='st'>":default:"</span>,
   lang <span class='op'>=</span> <span class='cn'>NULL</span>,
   locale <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -380,56 +389,59 @@ designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</c
 <code><a href='interrogate.html'>interrogate</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create a simple table with a</span>
-<span class='co'># column of numerical values</span>
-<span class='va'>tbl</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># Validate that values in column</span>
-<span class='co'># `a` are always greater than 4</span>
-<span class='va'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>tbl <span class='op'>=</span> <span class='va'>tbl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># Get a tibble-based report from the</span>
-<span class='co'># agent by using `get_agent_report()`</span>
-<span class='co'># with `display_table = FALSE`</span>
-<span class='va'>agent</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>get_agent_report</span><span class='op'>(</span>display_table <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 14</span><span>
-#&gt;       i type  columns values precon active eval  units n_pass f_pass W     S    
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     1 col_… a       4      </span><span style='color: #BB0000;'>NA</span><span>     TRUE   OK        4      4      1 </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>   
-#&gt; </span><span style='color: #949494;'># … with 2 more variables: N &lt;lgl&gt;, extract &lt;int&gt;</span><span></div><div class='input'>  
-<span class='co'># View a the report by printing the</span>
-<span class='co'># `agent` object anytime, but, return a</span>
-<span class='co'># gt table object by using this with</span>
-<span class='co'># `display_table = TRUE` (the default)</span>
-<span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>get_agent_report</span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>report</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "gt_tbl" "list"  </div><div class='input'>
-<span class='co'># What can you do with the report?</span>
-<span class='co'># Print it from an R Markdown code,</span>
-<span class='co'># use it in an email, put it in a</span>
-<span class='co'># webpage, or further modify it with</span>
-<span class='co'># the **gt** package</span>
-
-<span class='co'># The agent report as a **gt** display</span>
-<span class='co'># table comes in two sizes: "standard"</span>
-<span class='co'># (the default) and "small"</span>
-<span class='va'>small_report</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>get_agent_report</span><span class='op'>(</span>
-    agent <span class='op'>=</span> <span class='va'>agent</span>,
-    size <span class='op'>=</span> <span class='st'>"small"</span>
-  <span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>small_report</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "gt_tbl" "list"  </div><div class='input'>
-<span class='co'># The standard report is 875px wide</span>
-<span class='co'># the small one is 575px wide</span>
-
-</div></span></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Create a simple table with a</span></span>
+<span class='r-in'><span class='co'># column of numerical values</span></span>
+<span class='r-in'><span class='va'>tbl</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Validate that values in column</span></span>
+<span class='r-in'><span class='co'># `a` are always greater than 4</span></span>
+<span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>tbl <span class='op'>=</span> <span class='va'>tbl</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Get a tibble-based report from the</span></span>
+<span class='r-in'><span class='co'># agent by using `get_agent_report()`</span></span>
+<span class='r-in'><span class='co'># with `display_table = FALSE`</span></span>
+<span class='r-in'><span class='va'>agent</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>get_agent_report</span><span class='op'>(</span>display_table <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1 x 14</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       i type  columns values precon active eval  units n_pass f_pass W     S    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span><span>     1 col_… a       4      </span><span style='color: #BB0000;'>NA</span><span>     TRUE   OK        4      4      1 </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>   </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 2 more variables: N &lt;lgl&gt;, extract &lt;int&gt;</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='co'># View a the report by printing the</span></span>
+<span class='r-in'><span class='co'># `agent` object anytime, but, return a</span></span>
+<span class='r-in'><span class='co'># gt table object by using this with</span></span>
+<span class='r-in'><span class='co'># `display_table = TRUE` (the default)</span></span>
+<span class='r-in'><span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>get_agent_report</span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>report</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "gt_tbl" "list"  </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># What can you do with the report?</span></span>
+<span class='r-in'><span class='co'># Print it from an R Markdown code,</span></span>
+<span class='r-in'><span class='co'># use it in an email, put it in a</span></span>
+<span class='r-in'><span class='co'># webpage, or further modify it with</span></span>
+<span class='r-in'><span class='co'># the **gt** package</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The agent report as a **gt** display</span></span>
+<span class='r-in'><span class='co'># table comes in two sizes: "standard"</span></span>
+<span class='r-in'><span class='co'># (the default) and "small"</span></span>
+<span class='r-in'><span class='va'>small_report</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'>get_agent_report</span><span class='op'>(</span></span>
+<span class='r-in'>    agent <span class='op'>=</span> <span class='va'>agent</span>,</span>
+<span class='r-in'>    size <span class='op'>=</span> <span class='st'>"small"</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>small_report</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "gt_tbl" "list"  </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The standard report is 875px wide</span></span>
+<span class='r-in'><span class='co'># the small one is 575px wide</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -441,11 +453,11 @@ designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</c
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
+  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -453,6 +465,8 @@ designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</c
 
   
 
+
+  
 
   </body>
 </html>

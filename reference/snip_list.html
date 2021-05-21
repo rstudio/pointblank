@@ -55,6 +55,8 @@ the of items in that list with the limit value." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -66,9 +68,16 @@ the of items in that list with the limit value." />
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -164,7 +173,7 @@ provided to <code>fn</code>) to get a catalog list from a table column. You can 
 the of items in that list with the <code>limit</code> value.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>snip_list</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>snip_list</span><span class='op'>(</span>
   <span class='va'>column</span>,
   limit <span class='op'>=</span> <span class='fl'>5</span>,
   sorting <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"inorder"</span>, <span class='st'>"infreq"</span>, <span class='st'>"inseq"</span><span class='op'>)</span>,
@@ -175,7 +184,7 @@ the of items in that list with the <code>limit</code> value.</p>
   as_code <span class='op'>=</span> <span class='cn'>TRUE</span>,
   quot_str <span class='op'>=</span> <span class='cn'>NULL</span>,
   lang <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -271,35 +280,42 @@ Dutch (<code>"nl"</code>).</p></td>
 <code><a href='snip_stats.html'>snip_stats</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Generate an informant object, add</span>
-<span class='co'># a snippet with `info_snippet()`</span>
-<span class='co'># and `snip_list()` (giving us a</span>
-<span class='co'># method to get a distinct list of</span>
-<span class='co'># column values for column `f`);</span>
-<span class='co'># define a location for the snippet</span>
-<span class='co'># result in `{ }` and then</span>
-<span class='co'># `incorporate()` the snippet into</span>
-<span class='co'># the info text</span>
-<span class='va'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
-    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,
-    label <span class='op'>=</span> <span class='st'>"An example."</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='st'>"f"</span>,
-    `Items` <span class='op'>=</span> <span class='st'>"This column contains {values_f}."</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_snippet.html'>info_snippet</a></span><span class='op'>(</span>
-    snippet_name <span class='op'>=</span> <span class='st'>"values_f"</span>,
-    fn <span class='op'>=</span> <span class='fu'>snip_list</span><span class='op'>(</span>column <span class='op'>=</span> <span class='st'>"f"</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='incorporate.html'>incorporate</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Incorporation Started - there is a single snippet to process</span><span> </span><span style='color: #00BBBB;'>────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> Information gathered.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> Snippets processed.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> Information built.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Incorporation Completed</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────────</span><span></span></div><div class='input'>
-<span class='co'># We can print the `informant` object</span>
-<span class='co'># to see the information report</span>
-
-</div></span></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Generate an informant object, add</span></span>
+<span class='r-in'><span class='co'># a snippet with `info_snippet()`</span></span>
+<span class='r-in'><span class='co'># and `snip_list()` (giving us a</span></span>
+<span class='r-in'><span class='co'># method to get a distinct list of</span></span>
+<span class='r-in'><span class='co'># column values for column `f`);</span></span>
+<span class='r-in'><span class='co'># define a location for the snippet</span></span>
+<span class='r-in'><span class='co'># result in `{ }` and then</span></span>
+<span class='r-in'><span class='co'># `incorporate()` the snippet into</span></span>
+<span class='r-in'><span class='co'># the info text</span></span>
+<span class='r-in'><span class='va'>informant</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,</span>
+<span class='r-in'>    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"An example."</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> </span>
+<span class='r-in'>  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='st'>"f"</span>,</span>
+<span class='r-in'>    `Items` <span class='op'>=</span> <span class='st'>"This column contains {values_f}."</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='info_snippet.html'>info_snippet</a></span><span class='op'>(</span></span>
+<span class='r-in'>    snippet_name <span class='op'>=</span> <span class='st'>"values_f"</span>,</span>
+<span class='r-in'>    fn <span class='op'>=</span> <span class='fu'>snip_list</span><span class='op'>(</span>column <span class='op'>=</span> <span class='st'>"f"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='incorporate.html'>incorporate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Incorporation Started - there is a single snippet to process</span><span> </span><span style='color: #00BBBB;'>────────────────</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span><span> Information gathered.</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span><span> Snippets processed.</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span><span> Information built.</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Incorporation Completed</span><span> </span><span style='color: #00BBBB;'>─────────────────────────────────────────────────────</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># We can print the `informant` object</span></span>
+<span class='r-in'><span class='co'># to see the information report</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -311,11 +327,11 @@ Dutch (<code>"nl"</code>).</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
+  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -323,6 +339,8 @@ Dutch (<code>"nl"</code>).</p></td>
 
   
 
+
+  
 
   </body>
 </html>

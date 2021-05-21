@@ -63,6 +63,8 @@ test unit, which is whether the column is a Date-type column or not." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -74,9 +76,16 @@ test unit, which is whether the column is a Date-type column or not." />
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -180,7 +189,7 @@ data frames, tibbles, database tables (<code>tbl_dbi</code>), and Spark DataFram
 test unit, which is whether the column is a <code>Date</code>-type column or not.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>col_is_date</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>col_is_date</span><span class='op'>(</span>
   <span class='va'>x</span>,
   <span class='va'>columns</span>,
   actions <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -192,7 +201,7 @@ test unit, which is whether the column is a <code>Date</code>-type column or not
 
 <span class='fu'>expect_col_is_date</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>columns</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
-<span class='fu'>test_col_is_date</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>columns</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
+<span class='fu'>test_col_is_date</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>columns</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -251,7 +260,7 @@ keeping indexes for the steps unchanged). If the validation function will
 be operating directly on data (no <em>agent</em> involvement), then any step with
 <code>active = FALSE</code> will simply pass the data through with no validation
 whatsoever. Aside from a logical vector, a one-sided R formula using a
-leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> can be used with <code>.</code> (serving as the input data table) to
+leading <code>~</code> can be used with <code>.</code> (serving as the input data table) to
 evaluate to a single logical value. With this approach, the <strong>pointblank</strong>
 function <code><a href='has_columns.html'>has_columns()</a></code> can be used to determine whether to make a
 validation step active on the basis of one or more columns existing in the
@@ -291,7 +300,7 @@ The test function returns a logical value.</p>
     
 
 <p>If providing multiple column names, the result will be an expansion of
-validation steps to that number of column names (e.g., <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars(col_a, col_b)</a></code>
+validation steps to that number of column names (e.g., <code>vars(col_a, col_b)</code>
 will result in the entry of two validation steps). Aside from column names in
 quotes and in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, <strong>tidyselect</strong> helper functions are available for
 specifying columns. They are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>,
@@ -309,7 +318,7 @@ want at least a single threshold level (specified as either the fraction of
 test units failed, or, an absolute value), often using the <code>warn_at</code>
 argument. This is especially true when <code>x</code> is a table object because,
 otherwise, nothing happens. For the <code>col_is_*()</code>-type functions, using
-<code><a href='action_levels.html'>action_levels(warn_at = 1)</a></code> or <code><a href='action_levels.html'>action_levels(stop_at = 1)</a></code> are good choices
+<code>action_levels(warn_at = 1)</code> or <code>action_levels(stop_at = 1)</code> are good choices
 depending on the situation (the first produces a warning, the other
 <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>s).</p>
     <h2 class="hasAnchor" id="briefs"><a class="anchor" href="#briefs"></a>Briefs</h2>
@@ -332,7 +341,7 @@ or interrogate the target table (via <code><a href='yaml_agent_interrogate.html'
 list member), the syntax closely follows the signature of the validation
 function. Here is an example of how a complex call of <code>col_is_date()</code> as a
 validation step is expressed in R code and in the corresponding YAML
-representation.</p><pre># R statement
+representation.</p><pre><code># R statement
 agent %&gt;% 
   col_is_date(
     vars(a),
@@ -350,7 +359,7 @@ steps:
       stop_fraction: 0.2
     label: The `col_is_date()` step.
     active: false
-</pre>
+</code></pre>
 
 <p>In practice, both of these will often be shorter as only the <code>columns</code>,
 argument requires a value. Arguments with default values won't be written to
@@ -397,70 +406,73 @@ by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></cod
 <code><a href='rows_distinct.html'>rows_distinct</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># The `small_table` dataset in the</span>
-<span class='co'># package has a `date` column; the</span>
-<span class='co'># following examples will validate</span>
-<span class='co'># that that column is of the `Date`</span>
-<span class='co'># class</span>
-
-<span class='co'># A: Using an `agent` with validation</span>
-<span class='co'>#    functions and then `interrogate()`</span>
-
-<span class='co'># Validate that the column `date` has</span>
-<span class='co'># the `Date` class</span>
-<span class='va'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span><span class='va'>small_table</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>col_is_date</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
-  
-<span class='co'># Determine if this validation</span>
-<span class='co'># had no failing test units (1)</span>
-<span class='fu'><a href='all_passed.html'>all_passed</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='co'># Calling `agent` in the console</span>
-<span class='co'># prints the agent's report; but we</span>
-<span class='co'># can get a `gt_tbl` object directly</span>
-<span class='co'># with `get_agent_report(agent)`</span>
-
-<span class='co'># B: Using the validation function</span>
-<span class='co'>#    directly on the data (no `agent`)</span>
-
-<span class='co'># This way of using validation functions</span>
-<span class='co'># acts as a data filter: data is passed</span>
-<span class='co'># through but should `stop()` if there</span>
-<span class='co'># is a single test unit failing; the</span>
-<span class='co'># behavior of side effects can be</span>
-<span class='co'># customized with the `actions` option</span>
-<span class='va'>small_table</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>col_is_date</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 8</span><span>
-#&gt;   date_time           date           a b             c      d e     f    
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2016-01-04 </span><span style='color: #949494;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high 
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2016-01-04 </span><span style='color: #949494;'>00:32:00</span><span> 2016-01-04     3 5-egh-163     8 </span><span style='text-decoration: underline;'>10</span><span>000. TRUE  low  
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 2016-01-05 </span><span style='color: #949494;'>13:32:00</span><span> 2016-01-05     6 8-kdg-938     3  </span><span style='text-decoration: underline;'>2</span><span>343. TRUE  high 
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 2016-01-06 </span><span style='color: #949494;'>17:23:00</span><span> 2016-01-06     2 5-jdo-903    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>3</span><span>892. FALSE mid  
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 2016-01-09 </span><span style='color: #949494;'>12:36:00</span><span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </div><div class='input'>
-<span class='co'># C: Using the expectation function</span>
-
-<span class='co'># With the `expect_*()` form, we would</span>
-<span class='co'># typically perform one validation at a</span>
-<span class='co'># time; this is primarily used in</span>
-<span class='co'># testthat tests</span>
-<span class='fu'>expect_col_is_date</span><span class='op'>(</span>
-  <span class='va'>small_table</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># D: Using the test function</span>
-
-<span class='co'># With the `test_*()` form, we should</span>
-<span class='co'># get a single logical value returned</span>
-<span class='co'># to us</span>
-<span class='va'>small_table</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>test_col_is_date</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-</div></span></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># The `small_table` dataset in the</span></span>
+<span class='r-in'><span class='co'># package has a `date` column; the</span></span>
+<span class='r-in'><span class='co'># following examples will validate</span></span>
+<span class='r-in'><span class='co'># that that column is of the `Date`</span></span>
+<span class='r-in'><span class='co'># class</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># A: Using an `agent` with validation</span></span>
+<span class='r-in'><span class='co'>#    functions and then `interrogate()`</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Validate that the column `date` has</span></span>
+<span class='r-in'><span class='co'># the `Date` class</span></span>
+<span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span><span class='va'>small_table</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>col_is_date</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='co'># Determine if this validation</span></span>
+<span class='r-in'><span class='co'># had no failing test units (1)</span></span>
+<span class='r-in'><span class='fu'><a href='all_passed.html'>all_passed</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Calling `agent` in the console</span></span>
+<span class='r-in'><span class='co'># prints the agent's report; but we</span></span>
+<span class='r-in'><span class='co'># can get a `gt_tbl` object directly</span></span>
+<span class='r-in'><span class='co'># with `get_agent_report(agent)`</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># B: Using the validation function</span></span>
+<span class='r-in'><span class='co'>#    directly on the data (no `agent`)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># This way of using validation functions</span></span>
+<span class='r-in'><span class='co'># acts as a data filter: data is passed</span></span>
+<span class='r-in'><span class='co'># through but should `stop()` if there</span></span>
+<span class='r-in'><span class='co'># is a single test unit failing; the</span></span>
+<span class='r-in'><span class='co'># behavior of side effects can be</span></span>
+<span class='r-in'><span class='co'># customized with the `actions` option</span></span>
+<span class='r-in'><span class='va'>small_table</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>col_is_date</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 5 x 8</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   date_time           date           a b             c      d e     f    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span><span> 2016-01-04 </span><span style='color: #949494;'>11:00:00</span><span> 2016-01-04     2 1-bcd-345     3  </span><span style='text-decoration: underline;'>3</span><span>423. TRUE  high </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span><span> 2016-01-04 </span><span style='color: #949494;'>00:32:00</span><span> 2016-01-04     3 5-egh-163     8 </span><span style='text-decoration: underline;'>10</span><span>000. TRUE  low  </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span><span> 2016-01-05 </span><span style='color: #949494;'>13:32:00</span><span> 2016-01-05     6 8-kdg-938     3  </span><span style='text-decoration: underline;'>2</span><span>343. TRUE  high </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span><span> 2016-01-06 </span><span style='color: #949494;'>17:23:00</span><span> 2016-01-06     2 5-jdo-903    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='text-decoration: underline;'>3</span><span>892. FALSE mid  </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span><span> 2016-01-09 </span><span style='color: #949494;'>12:36:00</span><span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># C: Using the expectation function</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># With the `expect_*()` form, we would</span></span>
+<span class='r-in'><span class='co'># typically perform one validation at a</span></span>
+<span class='r-in'><span class='co'># time; this is primarily used in</span></span>
+<span class='r-in'><span class='co'># testthat tests</span></span>
+<span class='r-in'><span class='fu'>expect_col_is_date</span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='va'>small_table</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># D: Using the test function</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># With the `test_*()` form, we should</span></span>
+<span class='r-in'><span class='co'># get a single logical value returned</span></span>
+<span class='r-in'><span class='co'># to us</span></span>
+<span class='r-in'><span class='va'>small_table</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>test_col_is_date</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -472,11 +484,11 @@ by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></cod
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
+  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -484,6 +496,8 @@ by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></cod
 
   
 
+
+  
 
   </body>
 </html>

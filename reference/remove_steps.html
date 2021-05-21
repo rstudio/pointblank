@@ -57,6 +57,8 @@ validation steps all stored data extracts will be removed from the agent." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -68,9 +70,16 @@ validation steps all stored data extracts will be removed from the agent." />
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -168,7 +177,7 @@ steps from the <em>agent</em>'s validation plan. Please note that when removing
 validation steps all stored data extracts will be removed from the <em>agent</em>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>remove_steps</span><span class='op'>(</span><span class='va'>agent</span>, i <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>remove_steps</span><span class='op'>(</span><span class='va'>agent</span>, i <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -209,34 +218,34 @@ change the <code>active</code> status of one or more validation steps to <code>F
 <code><a href='x_write_disk.html'>x_write_disk</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Create an agent that has the</span>
-<span class='co'># `small_table` object as the</span>
-<span class='co'># target table, add a few</span>
-<span class='co'># validation steps, and then use</span>
-<span class='co'># `interrogate()`</span>
-<span class='va'>agent_1</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
-    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,
-    label <span class='op'>=</span> <span class='st'>"An example."</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_exists.html'>col_exists</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_regex.html'>col_vals_regex</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, regex <span class='op'>=</span> <span class='st'>"[0-9]-[a-z]{3}-[0-9]"</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
-  
-<span class='co'># The second validation step has</span>
-<span class='co'># been determined to be unneeded and</span>
-<span class='co'># is to be removed; this can be done</span>
-<span class='co'># by used `remove_steps()` with the</span>
-<span class='co'># agent object</span>
-<span class='va'>agent_2</span> <span class='op'>&lt;-</span>
-  <span class='va'>agent_1</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>remove_steps</span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
-
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Create an agent that has the</span></span>
+<span class='r-in'><span class='co'># `small_table` object as the</span></span>
+<span class='r-in'><span class='co'># target table, add a few</span></span>
+<span class='r-in'><span class='co'># validation steps, and then use</span></span>
+<span class='r-in'><span class='co'># `interrogate()`</span></span>
+<span class='r-in'><span class='va'>agent_1</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,</span>
+<span class='r-in'>    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"An example."</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_exists.html'>col_exists</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_regex.html'>col_vals_regex</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, regex <span class='op'>=</span> <span class='st'>"[0-9]-[a-z]{3}-[0-9]"</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='co'># The second validation step has</span></span>
+<span class='r-in'><span class='co'># been determined to be unneeded and</span></span>
+<span class='r-in'><span class='co'># is to be removed; this can be done</span></span>
+<span class='r-in'><span class='co'># by used `remove_steps()` with the</span></span>
+<span class='r-in'><span class='co'># agent object</span></span>
+<span class='r-in'><span class='va'>agent_2</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>agent_1</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>remove_steps</span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -248,11 +257,11 @@ change the <code>active</code> status of one or more validation steps to <code>F
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
+  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -260,6 +269,8 @@ change the <code>active</code> status of one or more validation steps to <code>F
 
   
 
+
+  
 
   </body>
 </html>

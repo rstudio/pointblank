@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -91,7 +93,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -112,7 +114,7 @@
       <h1 data-toc-skip>Intro to Information Management</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/vignettes/INFO-1.Rmd"><code>vignettes/INFO-1.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/vignettes/INFO-1.Rmd" class="external-link"><code>vignettes/INFO-1.Rmd</code></a></small>
       <div class="hidden name"><code>INFO-1.Rmd</code></div>
 
     </div>
@@ -122,7 +124,7 @@
 <p>With the <em>Information Management</em> workflow, table information can be synthesized, giving us a snapshot of a data table we care to collect information on. The <strong>pointblank</strong> <em>informant</em> is given a series of information functions to define portions of information about a table. This <em>info text</em> can pertain to individual columns, the table as a whole, and whatever additional information makes sense for your organization. We can even glean little snippets of information from the target table and mix them into the <em>info text</em> to make the overall information more dynamic.</p>
 <div id="starting-with-a-simple-example" class="section level1">
 <h1 class="hasAnchor">
-<a href="#starting-with-a-simple-example" class="anchor"></a>Starting with a Simple Example</h1>
+<a href="#starting-with-a-simple-example" class="anchor" aria-hidden="true"></a>Starting with a Simple Example</h1>
 <p>This workflow is somewhat similar in concept and usage to the <strong>Data Quality Reporting</strong> Workflow (<strong>VALID-I</strong>). Instead of an <em>agent</em>, we use an <em>informant</em> and we get that informant with the <code><a href="../reference/create_informant.html">create_informant()</a></code> function. We point the <em>informant</em> to a target table and this can be a data frame, a tibble, a database table (as a <code>tbl_dbi</code> object), or a Spark DataFrame (as a <code>tbl_spark</code> object).</p>
 <p>The <code>small_table</code> dataset is included in the <strong>pointblank</strong> package. It’s a small, uninteresting dataset but it’s useful for simple examples. This is what it looks like:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -181,14 +183,14 @@
     read_fn <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,
     tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,
     label <span class="op">=</span> <span class="st">"Example No. 2"</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>
     description <span class="op">=</span> <span class="st">"This table is included in the **pointblank** pkg."</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="st">"date_time"</span>,
     info <span class="op">=</span> <span class="st">"This column is full of timestamps."</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/info_section.html">info_section</a></span><span class="op">(</span>
     section_name <span class="op">=</span> <span class="st">"further information"</span>, 
     `examples and documentation` <span class="op">=</span> <span class="st">"Examples for how to use the `info_*()` functions
@@ -205,11 +207,11 @@
 </div>
 <div id="the-table-section-and-info_tabular" class="section level1">
 <h1 class="hasAnchor">
-<a href="#the-table-section-and-info_tabular" class="anchor"></a>The <strong>TABLE</strong> Section and <code>info_tabular()</code>
+<a href="#the-table-section-and-info_tabular" class="anchor" aria-hidden="true"></a>The <strong>TABLE</strong> Section and <code>info_tabular()</code>
 </h1>
-<p>The <code><a href="../reference/info_tabular.html">info_tabular()</a></code> function adds information to the <strong>TABLE</strong> section. We use named arguments to define subsection names and their content. In the previous example <code><a href="../reference/info_tabular.html">info_tabular(description = "This table is included in the **pointblank** pkg.")</a></code> was used to make the <strong>DESCRIPTION</strong> subsection (all section titles are automatically capitalized), and the <em>info text</em> is the Markdown text <code>"This table is included in the **pointblank** pkg."</code>. We can define as many subsections to the <strong>TABLE</strong> section as we need, either in the same <code><a href="../reference/info_tabular.html">info_tabular()</a></code> call or across multiple calls. If we want to use more complicated subsection names than a single word, then we can enclose that text in back ticks. For example, why not put some emoji in your subsection name?</p>
+<p>The <code><a href="../reference/info_tabular.html">info_tabular()</a></code> function adds information to the <strong>TABLE</strong> section. We use named arguments to define subsection names and their content. In the previous example <code>info_tabular(description = "This table is included in the **pointblank** pkg.")</code> was used to make the <strong>DESCRIPTION</strong> subsection (all section titles are automatically capitalized), and the <em>info text</em> is the Markdown text <code>"This table is included in the **pointblank** pkg."</code>. We can define as many subsections to the <strong>TABLE</strong> section as we need, either in the same <code><a href="../reference/info_tabular.html">info_tabular()</a></code> call or across multiple calls. If we want to use more complicated subsection names than a single word, then we can enclose that text in back ticks. For example, why not put some emoji in your subsection name?</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">informant</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">informant</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/info_tabular.html">info_tabular</a></span><span class="op">(</span>`🔄 updates` <span class="op">=</span> <span class="st">"This table is not regularly updated."</span><span class="op">)</span></code></pre></div>
 <div style="text-align: center;">
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_4.png" width="80%">
@@ -229,50 +231,50 @@ This is an excerpt of the complete report, showing just the report header and th
 </div>
 <div id="the-columns-section-and-info_columns" class="section level1">
 <h1 class="hasAnchor">
-<a href="#the-columns-section-and-info_columns" class="anchor"></a>The <strong>COLUMNS</strong> Section and <code>info_columns()</code>
+<a href="#the-columns-section-and-info_columns" class="anchor" aria-hidden="true"></a>The <strong>COLUMNS</strong> Section and <code>info_columns()</code>
 </h1>
 <p>The section that follows the <strong>TABLE</strong> section is <strong>COLUMNS</strong>. This section provides an opportunity to describe each table column in as much detail as necessary. Here, individual columns serve as subsections (automatically generated upon using <code><a href="../reference/create_informant.html">create_informant()</a></code>) and there can be subsections within each column as well.</p>
-<p>The interesting thing about the information provided here via <code><a href="../reference/info_columns.html">info_columns()</a></code> is that the information is additive. We can make multiple calls of <code><a href="../reference/info_columns.html">info_columns()</a></code> and disperse common pieces of <em>info text</em> to multiple columns and append the text to any existing. Let’s take a look at this in practice with the far more interesting <code>palmerpenguins::penguins</code> dataset. Here, we fill in information for each column by adapting <a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html">documentation</a> from the <strong>palmerpenguins</strong> package.</p>
+<p>The interesting thing about the information provided here via <code><a href="../reference/info_columns.html">info_columns()</a></code> is that the information is additive. We can make multiple calls of <code><a href="../reference/info_columns.html">info_columns()</a></code> and disperse common pieces of <em>info text</em> to multiple columns and append the text to any existing. Let’s take a look at this in practice with the far more interesting <code>palmerpenguins::penguins</code> dataset. Here, we fill in information for each column by adapting <a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">documentation</a> from the <strong>palmerpenguins</strong> package.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/create_informant.html">create_informant</a></span><span class="op">(</span>
     read_fn <span class="op">=</span> <span class="op">~</span> <span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va">penguins</span>,
     tbl_name <span class="op">=</span> <span class="st">"penguins"</span>,
     label <span class="op">=</span> <span class="st">"The `penguins` dataset from the **palmerpenguins** 📦."</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="st">"species"</span>,
     `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting penguin species (*Adélie*, *Chinstrap*, and *Gentoo*)."</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="st">"island"</span>,
     `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting island in Palmer Archipelago, Antarctica
     (*Biscoe*, *Dream*, or *Torgersen*)."</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="st">"bill_length_mm"</span>,
     `ℹ️` <span class="op">=</span> <span class="st">"A number denoting bill length"</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="st">"bill_depth_mm"</span>,
     `ℹ️` <span class="op">=</span> <span class="st">"A number denoting bill depth"</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="st">"flipper_length_mm"</span>,
     `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting flipper length"</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
-    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"mm"</span><span class="op">)</span>,
+    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"mm"</span><span class="op">)</span>,
     `ℹ️` <span class="op">=</span> <span class="st">"(in units of millimeters)."</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="st">"body_mass_g"</span>,
     `ℹ️` <span class="op">=</span> <span class="st">"An integer denoting body mass (grams)."</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="st">"sex"</span>,
     `ℹ️` <span class="op">=</span> <span class="st">"A factor denoting penguin sex (`\"female\"`, `\"male\"`)."</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/info_columns.html">info_columns</a></span><span class="op">(</span>
     columns <span class="op">=</span> <span class="st">"year"</span>,
     `ℹ️` <span class="op">=</span> <span class="st">"The study year (e.g., `2007`, `2008`, `2009`)."</span>
@@ -283,31 +285,31 @@ This is an excerpt of the complete report, showing just the report header and th
 <img src="https://silly-jackson-b3dec8.netlify.app/informant_report_5.png" width="80%">
 </div>
 <p><br></p>
-<p>We are able to provide subsections with the name <code>ℹ️</code> and, furthermore, use <strong>tidyselect</strong> functions like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with()</a></code> to append <em>info text</em> to a common subsection that exists across multiple columns. This was useful for stating the units which were common across three columns: <code>bill_length_mm</code>, <code>bill_depth_mm</code>, and <code>flipper_length_mm</code>. The following <strong>tidyselect</strong> functions are available in <strong>pointblank</strong> to make this process easier:</p>
+<p>We are able to provide subsections with the name <code>ℹ️</code> and, furthermore, use <strong>tidyselect</strong> functions like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code> to append <em>info text</em> to a common subsection that exists across multiple columns. This was useful for stating the units which were common across three columns: <code>bill_length_mm</code>, <code>bill_depth_mm</code>, and <code>flipper_length_mm</code>. The following <strong>tidyselect</strong> functions are available in <strong>pointblank</strong> to make this process easier:</p>
 <ul>
 <li>
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with()</a></code>: Match columns that start with a prefix.</li>
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>: Match columns that start with a prefix.</li>
 <li>
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with()</a></code>: Match columns that end with a suffix.</li>
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>: Match columns that end with a suffix.</li>
 <li>
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains()</a></code>: Match columns that contain a literal string.</li>
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>: Match columns that contain a literal string.</li>
 <li>
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches()</a></code>: Perform matching with a regular expression.</li>
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>: Perform matching with a regular expression.</li>
 <li>
-<code><a href="https://tidyselect.r-lib.org/reference/everything.html">everything()</a></code>: Select all columns.</li>
+<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>: Select all columns.</li>
 </ul>
 </div>
 <div id="extra-sections-and-info_section" class="section level1">
 <h1 class="hasAnchor">
-<a href="#extra-sections-and-info_section" class="anchor"></a>Extra Sections and <code>info_section()</code>
+<a href="#extra-sections-and-info_section" class="anchor" aria-hidden="true"></a>Extra Sections and <code>info_section()</code>
 </h1>
 <p>For all that information that we can’t or don’t want to put in the <strong>TABLE</strong> or <strong>COLUMNS</strong> sections, we can place it extra sections (and their subsections) with the <code><a href="../reference/info_section.html">info_section()</a></code> function. These sections go below the aforementioned sections in the order of creation. Let’s put together some extra sections that further describe the <code>palmerpenguins::penguins</code> dataset.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span> 
-  <span class="va">informant_pp</span> <span class="op">%&gt;%</span>
+  <span class="va">informant_pp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/info_section.html">info_section</a></span><span class="op">(</span>
     section_name <span class="op">=</span> <span class="st">"source"</span>,
-    <span class="st">"References"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+    <span class="st">"References"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
 <span class="st">"- Adélie penguins: Palmer Station Antarctica LTER and K. Gorman. 2020. Structural 
 size measurements and isotopic signatures of foraging among adult male and female 
 Adélie penguins (Pygoscelis adeliae) nesting along the Palmer Archipelago near
@@ -368,11 +370,13 @@ This is an excerpt of the complete report, showing just the <strong>SOURCE</stro
 
 
       <footer><div class="copyright">
-  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
+  <p></p>
+<p>Developed by Richard Iannone, Mauricio Vargas.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -380,6 +384,8 @@ This is an excerpt of the complete report, showing just the <strong>SOURCE</stro
 
   
 
+
+  
 
   </body>
 </html>

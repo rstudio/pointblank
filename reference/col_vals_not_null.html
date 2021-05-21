@@ -63,6 +63,8 @@ number of rows in the table (after any preconditions have been applied)." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -74,9 +76,16 @@ number of rows in the table (after any preconditions have been applied)." />
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -180,10 +189,11 @@ expectation will operate over the number of test units that is equal to the
 number of rows in the table (after any <code>preconditions</code> have been applied).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>col_vals_not_null</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>col_vals_not_null</span><span class='op'>(</span>
   <span class='va'>x</span>,
   <span class='va'>columns</span>,
   preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  segments <span class='op'>=</span> <span class='cn'>NULL</span>,
   actions <span class='op'>=</span> <span class='cn'>NULL</span>,
   step_id <span class='op'>=</span> <span class='cn'>NULL</span>,
   label <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -193,7 +203,7 @@ number of rows in the table (after any <code>preconditions</code> have been appl
 
 <span class='fu'>expect_col_vals_not_null</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>columns</span>, preconditions <span class='op'>=</span> <span class='cn'>NULL</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
-<span class='fu'>test_col_vals_not_null</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>columns</span>, preconditions <span class='op'>=</span> <span class='cn'>NULL</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
+<span class='fu'>test_col_vals_not_null</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>columns</span>, preconditions <span class='op'>=</span> <span class='cn'>NULL</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,8 +223,16 @@ vector) to which this validation should be applied.</p></td>
       <th>preconditions</th>
       <td><p>An optional expression for mutating the input table
 before proceeding with the validation. This is ideally as a one-sided R
-formula using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>. In the formula representation, the <code>.</code> serves
-as the input data table to be transformed (e.g., <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code>.</p></td>
+formula using a leading <code>~</code>. In the formula representation, the <code>.</code> serves
+as the input data table to be transformed (e.g., <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code>. See the <em>Preconditions</em> section for more information.</p></td>
+    </tr>
+    <tr>
+      <th>segments</th>
+      <td><p>An optional expression or set of expressions (held in a list)
+that serve to segment the target table by column values. Each expression
+can be given in one of two ways: (1) as column names, or (2) as a two-sided
+formula where the LHS holds a column name and the RHS contains the column
+values to segment on. See the <em>Segments</em> section for more details on this.</p></td>
     </tr>
     <tr>
       <th>actions</th>
@@ -259,7 +277,7 @@ keeping indexes for the steps unchanged). If the validation function will
 be operating directly on data (no <em>agent</em> involvement), then any step with
 <code>active = FALSE</code> will simply pass the data through with no validation
 whatsoever. Aside from a logical vector, a one-sided R formula using a
-leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code> can be used with <code>.</code> (serving as the input data table) to
+leading <code>~</code> can be used with <code>.</code> (serving as the input data table) to
 evaluate to a single logical value. With this approach, the <strong>pointblank</strong>
 function <code><a href='has_columns.html'>has_columns()</a></code> can be used to determine whether to make a
 validation step active on the basis of one or more columns existing in the
@@ -299,7 +317,7 @@ The test function returns a logical value.</p>
     
 
 <p>If providing multiple column names, the result will be an expansion of
-validation steps to that number of column names (e.g., <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars(col_a, col_b)</a></code>
+validation steps to that number of column names (e.g., <code>vars(col_a, col_b)</code>
 will result in the entry of two validation steps). Aside from column names in
 quotes and in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, <strong>tidyselect</strong> helper functions are available for
 specifying columns. They are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>,
@@ -308,16 +326,47 @@ specifying columns. They are: <code><a href='https://tidyselect.r-lib.org/refere
 
     
 
-<p>Having table <code>preconditions</code> means <strong>pointblank</strong> will mutate the table just
-before interrogation. Such a table mutation is isolated in scope to the
-validation step(s) produced by the validation function call. Using
-<strong>dplyr</strong> code is suggested here since the statements can be translated to
-SQL if necessary. The code is most easily supplied as a one-sided <strong>R</strong>
-formula (using a leading <code><a href='https://rdrr.io/r/base/tilde.html'>~</a></code>). In the formula representation, the <code>.</code> serves
-as the input data table to be transformed (e.g.,
-<code>~ . %&gt;% dplyr::mutate(col_a = col_b + 10)</code>). Alternatively, a function could
-instead be supplied (e.g.,
-<code>function(x) dplyr::mutate(x, col_a = col_b + 10)</code>).</p>
+<p>Having table <code>preconditions</code> means <strong>pointblank</strong> will temporarily mutate the
+table during a validation step. It might happen that a particular validation
+step requires a calculated column, a filtering of rows, additional columns
+via a join, etc. For an <em>agent</em>-based report this can be advantageous since
+we can develop a large validation plan with a single target table and make
+minor adjustments to it, as needed, along the way.</p>
+<p>The table mutation is totally isolated in scope to the validation step(s)
+where <code>preconditions</code> is used. Using <strong>dplyr</strong> code is suggested here since
+the statements can be translated to SQL if necessary. The code is most easily
+supplied as a one-sided <strong>R</strong> formula (using a leading <code>~</code>). In the formula
+representation, the <code>.</code> serves as the input data table to be transformed
+(e.g., <code>~ . %&gt;% dplyr::mutate(col_a = col_b + 10)</code>). Alternatively, a
+function could instead be supplied (e.g., <code>function(x) dplyr::mutate(x, col_a = col_b + 10)</code>).</p>
+    <h2 class="hasAnchor" id="segments"><a class="anchor" href="#segments"></a>Segments</h2>
+
+    
+
+<p>By using the <code>segments</code> argument, it's possible to define a particular
+validation with segments (or row slices) of the target table. An optional
+expression or set of expressions that serve to segment the target table by
+column values. Each expression can be given in one of two ways: (1) as column
+names, or (2) as a two-sided formula where the LHS holds a column name and
+the RHS contains the column values to segment on.</p>
+<p>As an example of the first type of expression that can be used,
+<code>vars(a_column)</code> will segment the target table in however many unique values
+are present in the column called <code>a_column</code>. This is great if every unique
+value in a particular column (like different locations, or different dates)
+requires it's own repeating validation.</p>
+<p>With a formula, we can be more selective with which column values should be
+used for segmentation. Using <code>a_column ~ c("group_1", "group_2")</code> will
+attempt to obtain two segments where one is a slice of data where the value
+<code>"group_1"</code> exists in the column named <code>"a_column"</code>, and, the other is a
+slice where <code>"group_2"</code> exists in the same column. Each group of rows
+resolved from the formula will result in a separate validation step.</p>
+<p>If there are multiple <code>columns</code> specified then the potential number of
+validation steps will be <code>m</code> columns multiplied by <code>n</code> segments resolved.</p>
+<p>Segmentation will always occur after <code>preconditions</code> (i.e., statements that
+mutate the target table), if any, are applied. With this type of one-two
+combo, it's possible to generate labels for segmentation using an expression
+for <code>preconditions</code> and refer to those labels in <code>segments</code> without having to
+generate a separate version of the target table.</p>
     <h2 class="hasAnchor" id="actions"><a class="anchor" href="#actions"></a>Actions</h2>
 
     
@@ -331,7 +380,7 @@ want at least a single threshold level (specified as either the fraction of
 test units failed, or, an absolute value), often using the <code>warn_at</code>
 argument. This is especially true when <code>x</code> is a table object because,
 otherwise, nothing happens. For the <code>col_vals_*()</code>-type functions, using
-<code><a href='action_levels.html'>action_levels(warn_at = 0.25)</a></code> or <code><a href='action_levels.html'>action_levels(stop_at = 0.25)</a></code> are good
+<code>action_levels(warn_at = 0.25)</code> or <code>action_levels(stop_at = 0.25)</code> are good
 choices depending on the situation (the first produces a warning when a
 quarter of the total test units fails, the other <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>s at the same
 threshold level).</p>
@@ -355,11 +404,12 @@ or interrogate the target table (via <code><a href='yaml_agent_interrogate.html'
 as a list member), the syntax closely follows the signature of the validation
 function. Here is an example of how a complex call of <code>col_vals_not_null()</code>
 as a validation step is expressed in R code and in the corresponding YAML
-representation.</p><pre># R statement
+representation.</p><pre><code># R statement
 agent %&gt;% 
   col_vals_not_null(
     vars(a),
     preconditions = ~ . %&gt;% dplyr::filter(a &lt; 10),
+    segments = b ~ c("group_1", "group_2"),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
     label = "The `col_vals_not_null()` step.",
     active = FALSE
@@ -370,12 +420,13 @@ steps:
 - col_vals_not_null:
     columns: vars(a)
     preconditions: ~. %&gt;% dplyr::filter(a &lt; 10)
+    segments: b ~ c("group_1", "group_2")
     actions:
       warn_fraction: 0.1
       stop_fraction: 0.2
     label: The `col_vals_not_null()` step.
     active: false
-</pre>
+</code></pre>
 
 <p>In practice, both of these will often be shorter as only the <code>columns</code>,
 argument requires a value. Arguments with default values won't be written to
@@ -423,77 +474,81 @@ by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></cod
 <code><a href='rows_distinct.html'>rows_distinct</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># For all examples here, we'll use</span>
-<span class='co'># a simple table with four columns:</span>
-<span class='co'># `a`, `b`, `c`, and `d`</span>
-<span class='va'>tbl</span> <span class='op'>&lt;-</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
-    a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>5</span>,  <span class='fl'>7</span>,  <span class='fl'>6</span>,  <span class='fl'>5</span>,  <span class='fl'>8</span><span class='op'>)</span>,
-    b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>7</span>,  <span class='fl'>1</span>,  <span class='fl'>0</span>,  <span class='fl'>0</span>,  <span class='fl'>0</span><span class='op'>)</span>,
-    c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span><span class='op'>)</span>,
-    d <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>35</span>, <span class='fl'>23</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span><span class='op'>)</span>
-  <span class='op'>)</span>
-  
-<span class='va'>tbl</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 4</span><span>
-#&gt;       a     b c         d
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     5     7 </span><span style='color: #BB0000;'>NA</span><span>       35
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     7     1 </span><span style='color: #BB0000;'>NA</span><span>       23
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     6     0 </span><span style='color: #BB0000;'>NA</span><span>       </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>     5     0 </span><span style='color: #BB0000;'>NA</span><span>       </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>     8     0 </span><span style='color: #BB0000;'>NA</span><span>       </span><span style='color: #BB0000;'>NA</span><span></div><div class='input'>  
-<span class='co'># A: Using an `agent` with validation</span>
-<span class='co'>#    functions and then `interrogate()`</span>
-
-<span class='co'># Validate that all values in column</span>
-<span class='co'># `b` are *not* NA (they would be</span>
-<span class='co'># non-NULL in a database context, which</span>
-<span class='co'># isn't the case here)</span>
-<span class='va'>agent</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span><span class='va'>tbl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_not_null</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># Determine if this validation</span>
-<span class='co'># had no failing test units (there</span>
-<span class='co'># are 5 test units, one for each row)</span>
-<span class='fu'><a href='all_passed.html'>all_passed</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='co'># Calling `agent` in the console</span>
-<span class='co'># prints the agent's report; but we</span>
-<span class='co'># can get a `gt_tbl` object directly</span>
-<span class='co'># with `get_agent_report(agent)`</span>
-
-<span class='co'># B: Using the validation function</span>
-<span class='co'>#    directly on the data (no `agent`)</span>
-
-<span class='co'># This way of using validation functions</span>
-<span class='co'># acts as a data filter: data is passed</span>
-<span class='co'># through but should `stop()` if there</span>
-<span class='co'># is a single test unit failing; the</span>
-<span class='co'># behavior of side effects can be</span>
-<span class='co'># customized with the `actions` option</span>
-<span class='va'>tbl</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>col_vals_not_null</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 7 1 0 0 0</div><div class='input'>
-<span class='co'># C: Using the expectation function</span>
-
-<span class='co'># With the `expect_*()` form, we would</span>
-<span class='co'># typically perform one validation at a</span>
-<span class='co'># time; this is primarily used in</span>
-<span class='co'># testthat tests</span>
-<span class='fu'>expect_col_vals_not_null</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># D: Using the test function</span>
-
-<span class='co'># With the `test_*()` form, we should</span>
-<span class='co'># get a single logical value returned</span>
-<span class='co'># to us</span>
-<span class='va'>tbl</span> <span class='op'>%&gt;%</span> <span class='fu'>test_col_vals_not_null</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-</div></span></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># For all examples here, we'll use</span></span>
+<span class='r-in'><span class='co'># a simple table with four columns:</span></span>
+<span class='r-in'><span class='co'># `a`, `b`, `c`, and `d`</span></span>
+<span class='r-in'><span class='va'>tbl</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span></span>
+<span class='r-in'>    a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>5</span>,  <span class='fl'>7</span>,  <span class='fl'>6</span>,  <span class='fl'>5</span>,  <span class='fl'>8</span><span class='op'>)</span>,</span>
+<span class='r-in'>    b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span> <span class='fl'>7</span>,  <span class='fl'>1</span>,  <span class='fl'>0</span>,  <span class='fl'>0</span>,  <span class='fl'>0</span><span class='op'>)</span>,</span>
+<span class='r-in'>    c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span><span class='op'>)</span>,</span>
+<span class='r-in'>    d <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>35</span>, <span class='fl'>23</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='va'>tbl</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 5 x 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       a     b c         d</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span><span>     5     7 </span><span style='color: #BB0000;'>NA</span><span>       35</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span><span>     7     1 </span><span style='color: #BB0000;'>NA</span><span>       23</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span><span>     6     0 </span><span style='color: #BB0000;'>NA</span><span>       </span><span style='color: #BB0000;'>NA</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span><span>     5     0 </span><span style='color: #BB0000;'>NA</span><span>       </span><span style='color: #BB0000;'>NA</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span><span>     8     0 </span><span style='color: #BB0000;'>NA</span><span>       </span><span style='color: #BB0000;'>NA</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='co'># A: Using an `agent` with validation</span></span>
+<span class='r-in'><span class='co'>#    functions and then `interrogate()`</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Validate that all values in column</span></span>
+<span class='r-in'><span class='co'># `b` are *not* NA (they would be</span></span>
+<span class='r-in'><span class='co'># non-NULL in a database context, which</span></span>
+<span class='r-in'><span class='co'># isn't the case here)</span></span>
+<span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span><span class='va'>tbl</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>col_vals_not_null</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Determine if this validation</span></span>
+<span class='r-in'><span class='co'># had no failing test units (there</span></span>
+<span class='r-in'><span class='co'># are 5 test units, one for each row)</span></span>
+<span class='r-in'><span class='fu'><a href='all_passed.html'>all_passed</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Calling `agent` in the console</span></span>
+<span class='r-in'><span class='co'># prints the agent's report; but we</span></span>
+<span class='r-in'><span class='co'># can get a `gt_tbl` object directly</span></span>
+<span class='r-in'><span class='co'># with `get_agent_report(agent)`</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># B: Using the validation function</span></span>
+<span class='r-in'><span class='co'>#    directly on the data (no `agent`)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># This way of using validation functions</span></span>
+<span class='r-in'><span class='co'># acts as a data filter: data is passed</span></span>
+<span class='r-in'><span class='co'># through but should `stop()` if there</span></span>
+<span class='r-in'><span class='co'># is a single test unit failing; the</span></span>
+<span class='r-in'><span class='co'># behavior of side effects can be</span></span>
+<span class='r-in'><span class='co'># customized with the `actions` option</span></span>
+<span class='r-in'><span class='va'>tbl</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>col_vals_not_null</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 7 1 0 0 0</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># C: Using the expectation function</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># With the `expect_*()` form, we would</span></span>
+<span class='r-in'><span class='co'># typically perform one validation at a</span></span>
+<span class='r-in'><span class='co'># time; this is primarily used in</span></span>
+<span class='r-in'><span class='co'># testthat tests</span></span>
+<span class='r-in'><span class='fu'>expect_col_vals_not_null</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># D: Using the test function</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># With the `test_*()` form, we should</span></span>
+<span class='r-in'><span class='co'># get a single logical value returned</span></span>
+<span class='r-in'><span class='co'># to us</span></span>
+<span class='r-in'><span class='va'>tbl</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> <span class='fu'>test_col_vals_not_null</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -505,11 +560,11 @@ by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></cod
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
+  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -517,6 +572,8 @@ by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></cod
 
   
 
+
+  
 
   </body>
 </html>

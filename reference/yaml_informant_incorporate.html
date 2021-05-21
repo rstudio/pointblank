@@ -61,6 +61,8 @@ information from the target table." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -72,9 +74,16 @@ information from the target table." />
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -176,7 +185,7 @@ informant is returned except, this time, it has been updated with the latest
 information from the target table.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>yaml_informant_incorporate</span><span class='op'>(</span><span class='va'>filename</span>, path <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>yaml_informant_incorporate</span><span class='op'>(</span><span class='va'>filename</span>, path <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -209,94 +218,94 @@ information from the target table.</p>
 <code><a href='yaml_write.html'>yaml_write</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-
-<span class='co'># Let's go through the process of</span>
-<span class='co'># developing an informant with information</span>
-<span class='co'># about the `small_table` dataset and then</span>
-<span class='co'># move all that to a pointblank YAML</span>
-<span class='co'># file; this will later be read in as a</span>
-<span class='co'># new informant and the target data will</span>
-<span class='co'># be incorporated into the info text</span>
-<span class='co'># (in one step) with</span>
-<span class='co'># `yaml_informant_incorporate()`</span>
-
-<span class='co'># Now create a pointblank `informant`</span>
-<span class='co'># object; the data will be referenced</span>
-<span class='co'># in a `read_fn` (a requirement for</span>
-<span class='co'># writing to YAML)</span>
-<span class='va'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span><span class='va'>small_table</span>,
-    label <span class='op'>=</span> <span class='st'>"A simple example with the `small_table`."</span>
-  <span class='op'>)</span>
-
-<span class='co'># Then, as with any `informant` object, we</span>
-<span class='co'># can add information by using as many</span>
-<span class='co'># `info_*()` functions as we want</span>
-<span class='va'>informant</span> <span class='op'>&lt;-</span>
-  <span class='va'>informant</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
-   columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>,
-   info <span class='op'>=</span> <span class='st'>"In the range of 1 to 10. (SIMPLE)"</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"date"</span><span class='op'>)</span>,
-    info <span class='op'>=</span> <span class='st'>"Time-based values (e.g., `Sys.time()`)."</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span>
-    columns <span class='op'>=</span> <span class='st'>"date"</span>,
-    info <span class='op'>=</span> <span class='st'>"The date part of `date_time`. (CALC)"</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_section.html'>info_section</a></span><span class='op'>(</span>
-    section_name <span class='op'>=</span> <span class='st'>"rows"</span>,
-    row_count <span class='op'>=</span> <span class='st'>"There are {row_count} rows available."</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='info_snippet.html'>info_snippet</a></span><span class='op'>(</span>
-    snippet_name <span class='op'>=</span> <span class='st'>"row_count"</span>,
-    fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='incorporate.html'>incorporate</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># The informant can be written to a pointblank</span>
-<span class='co'># YAML file with `yaml_write()`</span>
-<span class='fu'><a href='yaml_write.html'>yaml_write</a></span><span class='op'>(</span>
-  informant <span class='op'>=</span> <span class='va'>informant</span>,
-  filename <span class='op'>=</span> <span class='st'>"informant-small_table.yml"</span>
-<span class='op'>)</span>
-
-<span class='co'># The 'informant-small_table.yml' file</span>
-<span class='co'># is available in the package through</span>
-<span class='co'># `system.file()`</span>
-<span class='va'>yml_file</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
-    <span class='st'>"yaml"</span>, <span class='st'>"informant-small_table.yml"</span>,
-    package <span class='op'>=</span> <span class='st'>"pointblank"</span>
-  <span class='op'>)</span>
-
-<span class='co'># We can incorporate the data (which</span>
-<span class='co'># is accessible through the `read_fn`)</span>
-<span class='co'># into the info text through direct</span>
-<span class='co'># use of the YAML file with</span>
-<span class='co'># `yaml_informant_incorporate()`</span>
-<span class='va'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>yaml_informant_incorporate</span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>informant</span><span class='op'>)</span>
-
-<span class='co'># If it's desired to only create a new</span>
-<span class='co'># informant with the information in place</span>
-<span class='co'># (stopping short of processing), then the</span>
-<span class='co'># `yaml_read_informant()` function will</span>
-<span class='co'># be useful</span>
-<span class='va'>informant</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='yaml_read_informant.html'>yaml_read_informant</a></span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>informant</span><span class='op'>)</span>
-
-<span class='op'>}</span>
-
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Let's go through the process of</span></span>
+<span class='r-in'><span class='co'># developing an informant with information</span></span>
+<span class='r-in'><span class='co'># about the `small_table` dataset and then</span></span>
+<span class='r-in'><span class='co'># move all that to a pointblank YAML</span></span>
+<span class='r-in'><span class='co'># file; this will later be read in as a</span></span>
+<span class='r-in'><span class='co'># new informant and the target data will</span></span>
+<span class='r-in'><span class='co'># be incorporated into the info text</span></span>
+<span class='r-in'><span class='co'># (in one step) with</span></span>
+<span class='r-in'><span class='co'># `yaml_informant_incorporate()`</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Now create a pointblank `informant`</span></span>
+<span class='r-in'><span class='co'># object; the data will be referenced</span></span>
+<span class='r-in'><span class='co'># in a `read_fn` (a requirement for</span></span>
+<span class='r-in'><span class='co'># writing to YAML)</span></span>
+<span class='r-in'><span class='va'>informant</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'><a href='create_informant.html'>create_informant</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span><span class='va'>small_table</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"A simple example with the `small_table`."</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Then, as with any `informant` object, we</span></span>
+<span class='r-in'><span class='co'># can add information by using as many</span></span>
+<span class='r-in'><span class='co'># `info_*()` functions as we want</span></span>
+<span class='r-in'><span class='va'>informant</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>informant</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span></span>
+<span class='r-in'>   columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>,</span>
+<span class='r-in'>   info <span class='op'>=</span> <span class='st'>"In the range of 1 to 10. (SIMPLE)"</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"date"</span><span class='op'>)</span>,</span>
+<span class='r-in'>    info <span class='op'>=</span> <span class='st'>"Time-based values (e.g., `Sys.time()`)."</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='info_columns.html'>info_columns</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='st'>"date"</span>,</span>
+<span class='r-in'>    info <span class='op'>=</span> <span class='st'>"The date part of `date_time`. (CALC)"</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='info_section.html'>info_section</a></span><span class='op'>(</span></span>
+<span class='r-in'>    section_name <span class='op'>=</span> <span class='st'>"rows"</span>,</span>
+<span class='r-in'>    row_count <span class='op'>=</span> <span class='st'>"There are {row_count} rows available."</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='info_snippet.html'>info_snippet</a></span><span class='op'>(</span></span>
+<span class='r-in'>    snippet_name <span class='op'>=</span> <span class='st'>"row_count"</span>,</span>
+<span class='r-in'>    fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='incorporate.html'>incorporate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The informant can be written to a pointblank</span></span>
+<span class='r-in'><span class='co'># YAML file with `yaml_write()`</span></span>
+<span class='r-in'><span class='fu'><a href='yaml_write.html'>yaml_write</a></span><span class='op'>(</span></span>
+<span class='r-in'>  informant <span class='op'>=</span> <span class='va'>informant</span>,</span>
+<span class='r-in'>  filename <span class='op'>=</span> <span class='st'>"informant-small_table.yml"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The 'informant-small_table.yml' file</span></span>
+<span class='r-in'><span class='co'># is available in the package through</span></span>
+<span class='r-in'><span class='co'># `system.file()`</span></span>
+<span class='r-in'><span class='va'>yml_file</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='st'>"yaml"</span>, <span class='st'>"informant-small_table.yml"</span>,</span>
+<span class='r-in'>    package <span class='op'>=</span> <span class='st'>"pointblank"</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># We can incorporate the data (which</span></span>
+<span class='r-in'><span class='co'># is accessible through the `read_fn`)</span></span>
+<span class='r-in'><span class='co'># into the info text through direct</span></span>
+<span class='r-in'><span class='co'># use of the YAML file with</span></span>
+<span class='r-in'><span class='co'># `yaml_informant_incorporate()`</span></span>
+<span class='r-in'><span class='va'>informant</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'>yaml_informant_incorporate</span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>informant</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># If it's desired to only create a new</span></span>
+<span class='r-in'><span class='co'># informant with the information in place</span></span>
+<span class='r-in'><span class='co'># (stopping short of processing), then the</span></span>
+<span class='r-in'><span class='co'># `yaml_read_informant()` function will</span></span>
+<span class='r-in'><span class='co'># be useful</span></span>
+<span class='r-in'><span class='va'>informant</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'><a href='yaml_read_informant.html'>yaml_read_informant</a></span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>informant</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -308,11 +317,11 @@ information from the target table.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
+  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -320,6 +329,8 @@ information from the target table.</p>
 
   
 
+
+  
 
   </body>
 </html>

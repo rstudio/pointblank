@@ -72,6 +72,8 @@ the target table does." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -83,9 +85,16 @@ the target table does." />
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -198,7 +207,7 @@ to track the validation results where the validation step doesn't change but
 the target table does.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_multiagent_report</span><span class='op'>(</span><span class='va'>multiagent</span>, display_table <span class='op'>=</span> <span class='cn'>TRUE</span>, title <span class='op'>=</span> <span class='st'>":default:"</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>get_multiagent_report</span><span class='op'>(</span><span class='va'>multiagent</span>, display_table <span class='op'>=</span> <span class='cn'>TRUE</span>, title <span class='op'>=</span> <span class='st'>":default:"</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -242,123 +251,123 @@ that the supplied text should not be transformed.</p></td>
 <code><a href='read_disk_multiagent.html'>read_disk_multiagent</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-
-<span class='co'># Let's walk through several theoretical</span>
-<span class='co'># data quality analyses of an extremely</span>
-<span class='co'># small table; that table is called</span>
-<span class='co'># `small_table` and we can find it as a</span>
-<span class='co'># dataset in this package</span>
-<span class='va'>small_table</span>
-
-<span class='co'># To set failure limits and signal</span>
-<span class='co'># conditions, we designate proportional</span>
-<span class='co'># failure thresholds to the `warn`, `stop`,</span>
-<span class='co'># and `notify` states using `action_levels()`</span>
-<span class='va'>al</span> <span class='op'>&lt;-</span> 
-  <span class='fu'><a href='action_levels.html'>action_levels</a></span><span class='op'>(</span>
-    warn_at <span class='op'>=</span> <span class='fl'>0.05</span>,
-    stop_at <span class='op'>=</span> <span class='fl'>0.10</span>,
-    notify_at <span class='op'>=</span> <span class='fl'>0.20</span>
-  <span class='op'>)</span>
-
-<span class='co'># We will create four different agents</span>
-<span class='co'># and have slightly different validation</span>
-<span class='co'># steps in each of them; in the first,</span>
-<span class='co'># `agent_1`, eight different validation</span>
-<span class='co'># steps are created and the agent will</span>
-<span class='co'># interrogate the `small_table`</span>
-<span class='va'>agent_1</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,
-    label <span class='op'>=</span> <span class='st'>"An example."</span>,
-    actions <span class='op'>=</span> <span class='va'>al</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date_time</span><span class='op'>)</span>,
-    value <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span>,
-    na_pass <span class='op'>=</span> <span class='cn'>TRUE</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, 
-    value <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>g</span><span class='op'>)</span>,
-    na_pass <span class='op'>=</span> <span class='cn'>TRUE</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='rows_distinct.html'>rows_distinct</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_equal.html'>col_vals_equal</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>, 
-    value <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>,
-    na_pass <span class='op'>=</span> <span class='cn'>TRUE</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_between.html'>col_vals_between</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>c</span><span class='op'>)</span>, 
-    left <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, right <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_not_between.html'>col_vals_not_between</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>c</span><span class='op'>)</span>,
-    left <span class='op'>=</span> <span class='fl'>10</span>, right <span class='op'>=</span> <span class='fl'>20</span>,
-    na_pass <span class='op'>=</span> <span class='cn'>TRUE</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='rows_distinct.html'>rows_distinct</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>e</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_is_integer.html'>col_is_integer</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># The second agent, `agent_2`, retains</span>
-<span class='co'># all of the steps of `agent_1` and adds</span>
-<span class='co'># two more (the last of which is inactive)</span>
-<span class='va'>agent_2</span> <span class='op'>&lt;-</span> 
-  <span class='va'>agent_1</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_exists.html'>col_exists</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>date_time</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_regex.html'>col_vals_regex</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, 
-    regex <span class='op'>=</span> <span class='st'>"[0-9]-[a-z]{3}-[0-9]{3}"</span>,
-    active <span class='op'>=</span> <span class='cn'>FALSE</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># The third agent, `agent_3`, adds a single</span>
-<span class='co'># validation step, removes the fifth one,</span>
-<span class='co'># and deactivates the first</span>
-<span class='va'>agent_3</span> <span class='op'>&lt;-</span> 
-  <span class='va'>agent_2</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='col_vals_in_set.html'>col_vals_in_set</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>,
-    set <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"low"</span>, <span class='st'>"mid"</span>, <span class='st'>"high"</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='remove_steps.html'>remove_steps</a></span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='deactivate_steps.html'>deactivate_steps</a></span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># The fourth and final agent, `agent_4`,</span>
-<span class='co'># reactivates steps 1 and 10, and removes</span>
-<span class='co'># the sixth step</span>
-<span class='va'>agent_4</span> <span class='op'>&lt;-</span>
-  <span class='va'>agent_3</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='activate_steps.html'>activate_steps</a></span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='activate_steps.html'>activate_steps</a></span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='remove_steps.html'>remove_steps</a></span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># While all the agents are slightly</span>
-<span class='co'># different from each other, we can still</span>
-<span class='co'># get a combined report of them by</span>
-<span class='co'># creating a 'multiagent'</span>
-<span class='va'>multiagent</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_multiagent.html'>create_multiagent</a></span><span class='op'>(</span>
-    <span class='va'>agent_1</span>, <span class='va'>agent_2</span>, <span class='va'>agent_3</span>, <span class='va'>agent_4</span>
-  <span class='op'>)</span>
-
-<span class='co'># Calling `multiagent` in the console</span>
-<span class='co'># prints the multiagent report; but we</span>
-<span class='co'># can get a `gt_tbl` object with the</span>
-<span class='co'># `get_multiagent_report(agent)` function</span>
-<span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>get_multiagent_report</span><span class='op'>(</span><span class='va'>multiagent</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>report</span><span class='op'>)</span>
-
-<span class='op'>}</span>
-
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Let's walk through several theoretical</span></span>
+<span class='r-in'><span class='co'># data quality analyses of an extremely</span></span>
+<span class='r-in'><span class='co'># small table; that table is called</span></span>
+<span class='r-in'><span class='co'># `small_table` and we can find it as a</span></span>
+<span class='r-in'><span class='co'># dataset in this package</span></span>
+<span class='r-in'><span class='va'>small_table</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># To set failure limits and signal</span></span>
+<span class='r-in'><span class='co'># conditions, we designate proportional</span></span>
+<span class='r-in'><span class='co'># failure thresholds to the `warn`, `stop`,</span></span>
+<span class='r-in'><span class='co'># and `notify` states using `action_levels()`</span></span>
+<span class='r-in'><span class='va'>al</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'><a href='action_levels.html'>action_levels</a></span><span class='op'>(</span></span>
+<span class='r-in'>    warn_at <span class='op'>=</span> <span class='fl'>0.05</span>,</span>
+<span class='r-in'>    stop_at <span class='op'>=</span> <span class='fl'>0.10</span>,</span>
+<span class='r-in'>    notify_at <span class='op'>=</span> <span class='fl'>0.20</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># We will create four different agents</span></span>
+<span class='r-in'><span class='co'># and have slightly different validation</span></span>
+<span class='r-in'><span class='co'># steps in each of them; in the first,</span></span>
+<span class='r-in'><span class='co'># `agent_1`, eight different validation</span></span>
+<span class='r-in'><span class='co'># steps are created and the agent will</span></span>
+<span class='r-in'><span class='co'># interrogate the `small_table`</span></span>
+<span class='r-in'><span class='va'>agent_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"An example."</span>,</span>
+<span class='r-in'>    actions <span class='op'>=</span> <span class='va'>al</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date_time</span><span class='op'>)</span>,</span>
+<span class='r-in'>    value <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span>,</span>
+<span class='r-in'>    na_pass <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, </span>
+<span class='r-in'>    value <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>g</span><span class='op'>)</span>,</span>
+<span class='r-in'>    na_pass <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='rows_distinct.html'>rows_distinct</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_equal.html'>col_vals_equal</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>, </span>
+<span class='r-in'>    value <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>,</span>
+<span class='r-in'>    na_pass <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_between.html'>col_vals_between</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>c</span><span class='op'>)</span>, </span>
+<span class='r-in'>    left <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, right <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_not_between.html'>col_vals_not_between</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>c</span><span class='op'>)</span>,</span>
+<span class='r-in'>    left <span class='op'>=</span> <span class='fl'>10</span>, right <span class='op'>=</span> <span class='fl'>20</span>,</span>
+<span class='r-in'>    na_pass <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='rows_distinct.html'>rows_distinct</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>e</span>, <span class='va'>f</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_is_integer.html'>col_is_integer</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The second agent, `agent_2`, retains</span></span>
+<span class='r-in'><span class='co'># all of the steps of `agent_1` and adds</span></span>
+<span class='r-in'><span class='co'># two more (the last of which is inactive)</span></span>
+<span class='r-in'><span class='va'>agent_2</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='va'>agent_1</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_exists.html'>col_exists</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>date_time</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_regex.html'>col_vals_regex</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, </span>
+<span class='r-in'>    regex <span class='op'>=</span> <span class='st'>"[0-9]-[a-z]{3}-[0-9]{3}"</span>,</span>
+<span class='r-in'>    active <span class='op'>=</span> <span class='cn'>FALSE</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The third agent, `agent_3`, adds a single</span></span>
+<span class='r-in'><span class='co'># validation step, removes the fifth one,</span></span>
+<span class='r-in'><span class='co'># and deactivates the first</span></span>
+<span class='r-in'><span class='va'>agent_3</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='va'>agent_2</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_in_set.html'>col_vals_in_set</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>,</span>
+<span class='r-in'>    set <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"low"</span>, <span class='st'>"mid"</span>, <span class='st'>"high"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='remove_steps.html'>remove_steps</a></span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='deactivate_steps.html'>deactivate_steps</a></span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The fourth and final agent, `agent_4`,</span></span>
+<span class='r-in'><span class='co'># reactivates steps 1 and 10, and removes</span></span>
+<span class='r-in'><span class='co'># the sixth step</span></span>
+<span class='r-in'><span class='va'>agent_4</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='va'>agent_3</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='activate_steps.html'>activate_steps</a></span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='activate_steps.html'>activate_steps</a></span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='remove_steps.html'>remove_steps</a></span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># While all the agents are slightly</span></span>
+<span class='r-in'><span class='co'># different from each other, we can still</span></span>
+<span class='r-in'><span class='co'># get a combined report of them by</span></span>
+<span class='r-in'><span class='co'># creating a 'multiagent'</span></span>
+<span class='r-in'><span class='va'>multiagent</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_multiagent.html'>create_multiagent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>agent_1</span>, <span class='va'>agent_2</span>, <span class='va'>agent_3</span>, <span class='va'>agent_4</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Calling `multiagent` in the console</span></span>
+<span class='r-in'><span class='co'># prints the multiagent report; but we</span></span>
+<span class='r-in'><span class='co'># can get a `gt_tbl` object with the</span></span>
+<span class='r-in'><span class='co'># `get_multiagent_report(agent)` function</span></span>
+<span class='r-in'><span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>get_multiagent_report</span><span class='op'>(</span><span class='va'>multiagent</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>report</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -370,11 +379,11 @@ that the supplied text should not be transformed.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
+  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -382,6 +391,8 @@ that the supplied text should not be transformed.</p></td>
 
   
 
+
+  
 
   </body>
 </html>

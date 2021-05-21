@@ -65,6 +65,8 @@ or create_informant() via $ notation (e.g, create_agent(read_fn = &amp;lt;tbl_st
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -76,9 +78,16 @@ or create_informant() via $ notation (e.g, create_agent(read_fn = &amp;lt;tbl_st
 
 
 
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -181,10 +190,10 @@ procuring several mutated variations of the same source table, generating a
 table from multiple sources, or pre-filtering a database table according to
 the system time). Another nice aspect of organizing table-prep formulas in a
 single object is supplying it to the <code>read_fn</code> argument of <code><a href='create_agent.html'>create_agent()</a></code>
-or <code><a href='create_informant.html'>create_informant()</a></code> via <code><a href='https://rdrr.io/r/base/Extract.html'>$</a></code> notation (e.g, <code>create_agent(read_fn = &lt;tbl_store&gt;$&lt;name&gt;)</code>) or with <code><a href='tbl_source.html'>tbl_source()</a></code> (e.g., <code>create_agent(read_fn = ~ tbl_source("&lt;name&gt;", &lt;tbl_store&gt;))</code>).</p>
+or <code><a href='create_informant.html'>create_informant()</a></code> via <code>$</code> notation (e.g, <code>create_agent(read_fn = &lt;tbl_store&gt;$&lt;name&gt;)</code>) or with <code><a href='tbl_source.html'>tbl_source()</a></code> (e.g., <code>create_agent(read_fn = ~ tbl_source("&lt;name&gt;", &lt;tbl_store&gt;))</code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tbl_store</span><span class='op'>(</span><span class='va'>...</span>, .list <span class='op'>=</span> <span class='fu'>list2</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>tbl_store</span><span class='op'>(</span><span class='va'>...</span>, .list <span class='op'>=</span> <span class='fu'>list2</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -217,25 +226,25 @@ processing of both agents and informants can be performed with
 <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></code> and <code><a href='yaml_informant_incorporate.html'>yaml_informant_incorporate()</a></code>. With the
 following R code, a table store with two table-prep formulas is generated and
 written to YAML (if no filename is given then the YAML is written to
-<code>"tbl_store.yml"</code>).</p><pre><span class='co'># R statement for generating the "tbl_store.yml" file</span>
+<code>"tbl_store.yml"</code>).</p><pre class='sourceCode r'><code><span class='co'># R statement for generating the "tbl_store.yml" file</span>
 <span class='fu'>tbl_store</span><span class='op'>(</span>
   <span class='va'>tbl_duckdb</span> <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span><span class='va'>small_table</span>, dbname <span class='op'>=</span> <span class='st'>":memory:"</span>, dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span><span class='op'>)</span>,
-  <span class='va'>sml_table_high</span> <span class='op'>~</span> <span class='va'>small_table</span> <span class='op'>%&gt;%</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>f</span> <span class='op'>==</span> <span class='st'>"high"</span><span class='op'>)</span>
-<span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='va'>sml_table_high</span> <span class='op'>~</span> <span class='va'>small_table</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>f</span> <span class='op'>==</span> <span class='st'>"high"</span><span class='op'>)</span>
+<span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='yaml_write.html'>yaml_write</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># YAML representation ("tbl_store.yml")</span>
 <span class='va'>tbls</span><span class='op'>:</span>
   <span class='va'>tbl_duckdb</span><span class='op'>:</span> <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span><span class='va'>small_table</span>, dbname <span class='op'>=</span> <span class='st'>":memory:"</span>, dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span><span class='op'>)</span>
-  <span class='va'>sml_table_high</span><span class='op'>:</span> <span class='op'>~</span> <span class='va'>small_table</span> <span class='op'>%&gt;%</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>f</span> <span class='op'>==</span> <span class='st'>"high"</span><span class='op'>)</span>
-</pre>
+  <span class='va'>sml_table_high</span><span class='op'>:</span> <span class='op'>~</span> <span class='va'>small_table</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>f</span> <span class='op'>==</span> <span class='st'>"high"</span><span class='op'>)</span>
+</code></pre>
 
 <p>This is useful when you want to get fresh pulls of prepared data from a
 source materialized in an R session (with the <code><a href='tbl_get.html'>tbl_get()</a></code> function. For
 example, the <code>sml_table_high</code> table can be obtained by using
-<code><a href='tbl_get.html'>tbl_get("sml_table_high", "tbl_store.yml")</a></code>. To get an agent to check this
+<code>tbl_get("sml_table_high", "tbl_store.yml")</code>. To get an agent to check this
 prepared data periodically, then the following example with <code><a href='tbl_source.html'>tbl_source()</a></code>
-will be useful:</p><pre># Generate agent that checks `sml_table_high`, write it to YAML
+will be useful:</p><pre><code># Generate agent that checks `sml_table_high`, write it to YAML
 create_agent(
   read_fn = ~ tbl_source("sml_table_high", "tbl_store.yml"),
   label = "An example that uses a table store.",
@@ -254,11 +263,11 @@ locale: en
 steps:
   - col_exists:
     columns: vars(date, date_time)
-</pre>
+</code></pre>
 
 <p>Now, whenever the <code>sml_table_high</code> table needs to be validated, it can be
 done with <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></code> (e.g.,
-<code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate("agent-sml_table_high.yml")</a></code>).</p>
+<code>yaml_agent_interrogate("agent-sml_table_high.yml")</code>).</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
@@ -279,102 +288,102 @@ done with <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</
 <code><a href='validate_rmd.html'>validate_rmd</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-
-<span class='co'># Define a `tbl_store` object by adding</span>
-<span class='co'># table-prep formulas inside the</span>
-<span class='co'># `tbl_store()` call</span>
-<span class='va'>tbls</span> <span class='op'>&lt;-</span> 
-  <span class='fu'>tbl_store</span><span class='op'>(</span>
-    <span class='va'>small_table_duck</span> <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span>
-      table <span class='op'>=</span> <span class='va'>small_table</span>,
-      dbname <span class='op'>=</span> <span class='st'>":memory:"</span>,
-      dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span>
-    <span class='op'>)</span>,
-    <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span>
-      table <span class='op'>=</span> <span class='st'>"rna"</span>,
-      dbname <span class='op'>=</span> <span class='st'>"pfmegrnargs"</span>,
-      dbtype <span class='op'>=</span> <span class='st'>"postgres"</span>,
-      host <span class='op'>=</span> <span class='st'>"hh-pgsql-public.ebi.ac.uk"</span>,
-      port <span class='op'>=</span> <span class='fl'>5432</span>,
-      user <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='st'>"reader"</span><span class='op'>)</span>,
-      password <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='st'>"NWDMCE5xdipIjRrp"</span><span class='op'>)</span>
-    <span class='op'>)</span>,
-    <span class='va'>all_revenue</span> <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span>
-      table <span class='op'>=</span> <span class='fu'><a href='file_tbl.html'>file_tbl</a></span><span class='op'>(</span>
-        file <span class='op'>=</span> <span class='fu'><a href='from_github.html'>from_github</a></span><span class='op'>(</span>
-          file <span class='op'>=</span> <span class='st'>"all_revenue_large.rds"</span>,
-          repo <span class='op'>=</span> <span class='st'>"rich-iannone/intendo"</span>,
-          subdir <span class='op'>=</span> <span class='st'>"data-large"</span>
-        <span class='op'>)</span>
-      <span class='op'>)</span>,
-      dbname <span class='op'>=</span> <span class='st'>":memory:"</span>,
-      dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span>
-    <span class='op'>)</span>,
-    <span class='va'>sml_table</span> <span class='op'>~</span> <span class='fu'>pointblank</span><span class='fu'>::</span><span class='va'><a href='small_table.html'>small_table</a></span>
-  <span class='op'>)</span>
-
-<span class='co'># Once this object is available, you</span>
-<span class='co'># can check that the table of interest</span>
-<span class='co'># is produced to your specification with</span>
-<span class='co'># the `tbl_get()` function</span>
-<span class='fu'><a href='tbl_get.html'>tbl_get</a></span><span class='op'>(</span>
-  tbl <span class='op'>=</span> <span class='st'>"small_table_duck"</span>,
-  store <span class='op'>=</span> <span class='va'>tbls</span>
-<span class='op'>)</span>
-
-<span class='co'># Another simpler way to get the same</span>
-<span class='co'># table materialized is by using `$` to</span>
-<span class='co'># get the entry of choice for `tbl_get()`</span>
-<span class='va'>tbls</span><span class='op'>$</span><span class='va'>small_table_duck</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='tbl_get.html'>tbl_get</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># Creating an agent is easy when all</span>
-<span class='co'># table-prep formulas are encapsulated</span>
-<span class='co'># in a `tbl_store` object; use `$` </span>
-<span class='co'># notation to pass the appropriate</span>
-<span class='co'># procedure for reading a table to the</span>
-<span class='co'># `read_fn` argument</span>
-<span class='va'>agent_1</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='va'>tbls</span><span class='op'>$</span><span class='va'>small_table_duck</span>
-  <span class='op'>)</span>
-  
-<span class='co'># There are other ways to use the</span>
-<span class='co'># table store to assign a target table</span>
-<span class='co'># to an agent, like using the</span>
-<span class='co'># `tbl_source()` function</span>
-<span class='va'>agent_2</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='tbl_source.html'>tbl_source</a></span><span class='op'>(</span>
-      tbl <span class='op'>=</span> <span class='st'>"small_table_duck"</span>,
-      store <span class='op'>=</span> <span class='va'>tbls</span>
-      <span class='op'>)</span>
-  <span class='op'>)</span>
-
-<span class='co'># The table store can be moved to</span>
-<span class='co'># YAML with `yaml_write` and the</span>
-<span class='co'># `tbl_source()` call could then</span>
-<span class='co'># refer to that on-disk table store;</span>
-<span class='co'># let's do that YAML conversion</span>
-<span class='fu'><a href='yaml_write.html'>yaml_write</a></span><span class='op'>(</span><span class='va'>tbls</span><span class='op'>)</span>
-
-<span class='co'># The above writes the `tbl_store.yml`</span>
-<span class='co'># file (by not providing a `filename`</span>
-<span class='co'># this default filename is chosen);</span>
-<span class='co'># next, modify the `tbl_source()`</span>
-<span class='co'># so that `store` refer to the YAML</span>
-<span class='co'># file</span>
-<span class='va'>agent_3</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>
-    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='tbl_source.html'>tbl_source</a></span><span class='op'>(</span>
-      tbl <span class='op'>=</span> <span class='st'>"small_table_duck"</span>,
-      store <span class='op'>=</span> <span class='st'>"tbl_store.yml"</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span>
-
-<span class='op'>}</span>
-
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Define a `tbl_store` object by adding</span></span>
+<span class='r-in'><span class='co'># table-prep formulas inside the</span></span>
+<span class='r-in'><span class='co'># `tbl_store()` call</span></span>
+<span class='r-in'><span class='va'>tbls</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'>tbl_store</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>small_table_duck</span> <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span></span>
+<span class='r-in'>      table <span class='op'>=</span> <span class='va'>small_table</span>,</span>
+<span class='r-in'>      dbname <span class='op'>=</span> <span class='st'>":memory:"</span>,</span>
+<span class='r-in'>      dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span></span>
+<span class='r-in'>    <span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span></span>
+<span class='r-in'>      table <span class='op'>=</span> <span class='st'>"rna"</span>,</span>
+<span class='r-in'>      dbname <span class='op'>=</span> <span class='st'>"pfmegrnargs"</span>,</span>
+<span class='r-in'>      dbtype <span class='op'>=</span> <span class='st'>"postgres"</span>,</span>
+<span class='r-in'>      host <span class='op'>=</span> <span class='st'>"hh-pgsql-public.ebi.ac.uk"</span>,</span>
+<span class='r-in'>      port <span class='op'>=</span> <span class='fl'>5432</span>,</span>
+<span class='r-in'>      user <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='st'>"reader"</span><span class='op'>)</span>,</span>
+<span class='r-in'>      password <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='st'>"NWDMCE5xdipIjRrp"</span><span class='op'>)</span></span>
+<span class='r-in'>    <span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='va'>all_revenue</span> <span class='op'>~</span> <span class='fu'><a href='db_tbl.html'>db_tbl</a></span><span class='op'>(</span></span>
+<span class='r-in'>      table <span class='op'>=</span> <span class='fu'><a href='file_tbl.html'>file_tbl</a></span><span class='op'>(</span></span>
+<span class='r-in'>        file <span class='op'>=</span> <span class='fu'><a href='from_github.html'>from_github</a></span><span class='op'>(</span></span>
+<span class='r-in'>          file <span class='op'>=</span> <span class='st'>"all_revenue_large.rds"</span>,</span>
+<span class='r-in'>          repo <span class='op'>=</span> <span class='st'>"rich-iannone/intendo"</span>,</span>
+<span class='r-in'>          subdir <span class='op'>=</span> <span class='st'>"data-large"</span></span>
+<span class='r-in'>        <span class='op'>)</span></span>
+<span class='r-in'>      <span class='op'>)</span>,</span>
+<span class='r-in'>      dbname <span class='op'>=</span> <span class='st'>":memory:"</span>,</span>
+<span class='r-in'>      dbtype <span class='op'>=</span> <span class='st'>"duckdb"</span></span>
+<span class='r-in'>    <span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='va'>sml_table</span> <span class='op'>~</span> <span class='fu'>pointblank</span><span class='fu'>::</span><span class='va'><a href='small_table.html'>small_table</a></span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Once this object is available, you</span></span>
+<span class='r-in'><span class='co'># can check that the table of interest</span></span>
+<span class='r-in'><span class='co'># is produced to your specification with</span></span>
+<span class='r-in'><span class='co'># the `tbl_get()` function</span></span>
+<span class='r-in'><span class='fu'><a href='tbl_get.html'>tbl_get</a></span><span class='op'>(</span></span>
+<span class='r-in'>  tbl <span class='op'>=</span> <span class='st'>"small_table_duck"</span>,</span>
+<span class='r-in'>  store <span class='op'>=</span> <span class='va'>tbls</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Another simpler way to get the same</span></span>
+<span class='r-in'><span class='co'># table materialized is by using `$` to</span></span>
+<span class='r-in'><span class='co'># get the entry of choice for `tbl_get()`</span></span>
+<span class='r-in'><span class='va'>tbls</span><span class='op'>$</span><span class='va'>small_table_duck</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> <span class='fu'><a href='tbl_get.html'>tbl_get</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Creating an agent is easy when all</span></span>
+<span class='r-in'><span class='co'># table-prep formulas are encapsulated</span></span>
+<span class='r-in'><span class='co'># in a `tbl_store` object; use `$` </span></span>
+<span class='r-in'><span class='co'># notation to pass the appropriate</span></span>
+<span class='r-in'><span class='co'># procedure for reading a table to the</span></span>
+<span class='r-in'><span class='co'># `read_fn` argument</span></span>
+<span class='r-in'><span class='va'>agent_1</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='va'>tbls</span><span class='op'>$</span><span class='va'>small_table_duck</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='co'># There are other ways to use the</span></span>
+<span class='r-in'><span class='co'># table store to assign a target table</span></span>
+<span class='r-in'><span class='co'># to an agent, like using the</span></span>
+<span class='r-in'><span class='co'># `tbl_source()` function</span></span>
+<span class='r-in'><span class='va'>agent_2</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='tbl_source.html'>tbl_source</a></span><span class='op'>(</span></span>
+<span class='r-in'>      tbl <span class='op'>=</span> <span class='st'>"small_table_duck"</span>,</span>
+<span class='r-in'>      store <span class='op'>=</span> <span class='va'>tbls</span></span>
+<span class='r-in'>      <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The table store can be moved to</span></span>
+<span class='r-in'><span class='co'># YAML with `yaml_write` and the</span></span>
+<span class='r-in'><span class='co'># `tbl_source()` call could then</span></span>
+<span class='r-in'><span class='co'># refer to that on-disk table store;</span></span>
+<span class='r-in'><span class='co'># let's do that YAML conversion</span></span>
+<span class='r-in'><span class='fu'><a href='yaml_write.html'>yaml_write</a></span><span class='op'>(</span><span class='va'>tbls</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The above writes the `tbl_store.yml`</span></span>
+<span class='r-in'><span class='co'># file (by not providing a `filename`</span></span>
+<span class='r-in'><span class='co'># this default filename is chosen);</span></span>
+<span class='r-in'><span class='co'># next, modify the `tbl_source()`</span></span>
+<span class='r-in'><span class='co'># so that `store` refer to the YAML</span></span>
+<span class='r-in'><span class='co'># file</span></span>
+<span class='r-in'><span class='va'>agent_3</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='tbl_source.html'>tbl_source</a></span><span class='op'>(</span></span>
+<span class='r-in'>      tbl <span class='op'>=</span> <span class='st'>"small_table_duck"</span>,</span>
+<span class='r-in'>      store <span class='op'>=</span> <span class='st'>"tbl_store.yml"</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -386,11 +395,11 @@ done with <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</
 
       <footer>
       <div class="copyright">
-  <p>Developed by Richard Iannone, Mauricio Vargas.</p>
+  <p><p>Developed by Richard Iannone, Mauricio Vargas.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -398,6 +407,8 @@ done with <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</
 
   
 
+
+  
 
   </body>
 </html>

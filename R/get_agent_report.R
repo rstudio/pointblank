@@ -773,11 +773,11 @@ get_agent_report <- function(agent,
           
           x <- 
             make_boxed_text_html(
-              x = "&#x02192;",
+              x = icon_status("unchanged"),
               size = size,
               color = "#333333",
               background = "transparent",
-              font_size = "18px",
+              font_size = "10px",
               padding = 0,
               tt_text = get_lsv(text = c(
                 "agent_report",
@@ -796,7 +796,7 @@ get_agent_report <- function(agent,
           
           x <- 
             make_boxed_text_html(
-              x = "&#x021BB;",
+              x = icon_status("modified"),
               size = size,
               color = "#3C898A",
               background = "transparent",
@@ -811,6 +811,43 @@ get_agent_report <- function(agent,
         }
         x
       } 
+    )
+  
+  seg_col <- validation_set$seg_col
+  seg_val <- validation_set$seg_val
+  
+  # Make changes to the `precon` column if there is grouping
+  precon_upd <- 
+    seq_along(seg_col) %>%
+    vapply(
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        
+        if (is.na(seg_col[x])) {
+          return(precon_upd[x])
+        }
+        
+        seg_col_x <- seg_col[x]
+        seg_val_x <- seg_val[x]
+        
+        precon_upd[x] <- 
+          make_boxed_text_html(
+            x = icon_status("segmented"),
+            size = size, 
+            color = "#3C898A",
+            background = "transparent",
+            font_size = "10px",
+            padding = 0,
+            tt_text = glue::glue(get_lsv(text = c(
+              "agent_report",
+              "report_on_segmentation"
+            ))[[lang]]),
+            border_radius = "4px"
+          )
+        
+        precon_upd[x]
+      }
     )
   
   # Reformat `eval`
@@ -1458,8 +1495,6 @@ get_agent_report <- function(agent,
       )
   }
   
-
-  
   # nocov end
   
   gt_agent_report
@@ -1861,4 +1896,22 @@ make_boxed_text_html <- function(x,
   }
   
   text_html %>% as.character()
+}
+
+icon_status <- function(icon = c("unchanged", "modified", "segmented")) {
+  
+  icon <- match.arg(icon)
+  
+  htmltools::HTML(
+    paste(
+      readLines(
+        con = system.file(
+          "img", "status_icons", paste0(icon, ".svg"),
+          package = "pointblank"
+        ), 
+        warn = FALSE
+      ), collapse = ""
+    )
+  ) %>%
+    as.character()
 }

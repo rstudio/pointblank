@@ -25,6 +25,9 @@ create_validation_step <- function(agent,
                                    values = NULL,
                                    na_pass = NULL,
                                    preconditions = NULL,
+                                   seg_expr = NULL,
+                                   seg_col = NULL,
+                                   seg_val = NULL,
                                    actions = NULL,
                                    step_id = NULL,
                                    label = NULL,
@@ -41,13 +44,19 @@ create_validation_step <- function(agent,
         assertion_type = assertion_type,
         column = ifelse(is.null(column), list(NULL), list(column)),
         values = ifelse(is.null(values), list(NULL), list(values)),
-        na_pass = ifelse(is.null(na_pass), as.logical(NA), as.logical(na_pass)),
+        na_pass = ifelse(is.null(na_pass), NA, as.logical(na_pass)),
         preconditions = ifelse(
           is.null(preconditions), list(NULL), list(preconditions)
+        ),
+        seg_col = ifelse(
+          is.null(seg_col), NA_character_, as.character(seg_col)
+        ),
+        seg_val = ifelse(
+          is.null(seg_val), NA_character_, as.character(seg_val)
         )
       )
     )
-
+  
   # Create a validation step as a single-row `tbl_df` object
   validation_step_df <-
     dplyr::tibble(
@@ -64,6 +73,15 @@ create_validation_step <- function(agent,
       na_pass = ifelse(is.null(na_pass), as.logical(NA), as.logical(na_pass)),
       preconditions = ifelse(
         is.null(preconditions), list(NULL), list(preconditions)
+      ),
+      seg_expr = ifelse(
+        is.null(seg_expr), list(NULL), list(seg_expr)
+      ),
+      seg_col = ifelse(
+        is.null(seg_col), NA_character_, as.character(seg_col)
+      ),
+      seg_val = ifelse(
+        is.null(seg_val), NA_character_, as.character(seg_val)
       ),
       actions = ifelse(is.null(actions), list(NULL), list(actions)),
       label = ifelse(is.null(label), NA_character_, as.character(label)),
@@ -91,6 +109,29 @@ create_validation_step <- function(agent,
 apply_preconditions_to_tbl <- function(agent, idx, tbl) {
 
   preconditions <- agent$validation_set$preconditions[[idx]]
+  
+  tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
+  
+  tbl
+}
+
+apply_segments_to_tbl <- function(agent, idx, tbl) {
+  
+  # Extract the `seg_col` and `seg_val` values for the validation step
+  seg_col <- agent$validation_set$seg_col[[idx]]
+  seg_val <- agent$validation_set$seg_val[[idx]]
+  
+  # If either of `seg_col` or `seg_val` is NA then return
+  # the table unchanged
+  if (is.na(seg_col) || is.na(seg_val)) {
+    return(tbl)
+  }
+  
+  # Generate a second set of 'preconditions' to filter the table
+  preconditions <- 
+    stats::as.formula(
+      glue::glue("~ . %>% dplyr::filter({seg_col} == '{seg_val}')")
+    )
   
   tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
   

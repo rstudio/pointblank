@@ -41,16 +41,51 @@
 #' `matches()`, and `everything()`.
 #' 
 #' @section Preconditions:
-#' Having table `preconditions` means **pointblank** will mutate the table just
-#' before interrogation. Such a table mutation is isolated in scope to the
-#' validation step(s) produced by the validation function call. Using
-#' **dplyr** code is suggested here since the statements can be translated to
-#' SQL if necessary. The code is most easily supplied as a one-sided **R**
-#' formula (using a leading `~`). In the formula representation, the `.` serves
-#' as the input data table to be transformed (e.g., 
-#' `~ . %>% dplyr::mutate(col_a = col_b + 10)`). Alternatively, a function could
-#' instead be supplied (e.g., 
-#' `function(x) dplyr::mutate(x, col_a = col_b + 10)`).
+#' Having table `preconditions` means **pointblank** will temporarily mutate the
+#' table during a validation step. It might happen that a particular validation
+#' step requires a calculated column, a filtering of rows, additional columns
+#' via a join, etc. For an *agent*-based report this can be advantageous since
+#' we can develop a large validation plan with a single target table and make
+#' minor adjustments to it, as needed, along the way.
+#' 
+#' The table mutation is totally isolated in scope to the validation step(s)
+#' where `preconditions` is used. Using **dplyr** code is suggested here since
+#' the statements can be translated to SQL if necessary. The code is most easily
+#' supplied as a one-sided **R** formula (using a leading `~`). In the formula
+#' representation, the `.` serves as the input data table to be transformed
+#' (e.g., `~ . %>% dplyr::mutate(col_a = col_b + 10)`). Alternatively, a
+#' function could instead be supplied (e.g., `function(x) dplyr::mutate(x, col_a
+#' = col_b + 10)`).
+#' 
+#' @section Segments:
+#' By using the `segments` argument, it's possible to define a particular
+#' validation with segments (or row slices) of the target table. An optional
+#' expression or set of expressions that serve to segment the target table by
+#' column values. Each expression can be given in one of two ways: (1) as column
+#' names, or (2) as a two-sided formula where the LHS holds a column name and
+#' the RHS contains the column values to segment on.
+#' 
+#' As an example of the first type of expression that can be used,
+#' `vars(a_column)` will segment the target table in however many unique values
+#' are present in the column called `a_column`. This is great if every unique
+#' value in a particular column (like different locations, or different dates)
+#' requires it's own repeating validation.
+#'
+#' With a formula, we can be more selective with which column values should be
+#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
+#' attempt to obtain two segments where one is a slice of data where the value
+#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
+#' slice where `"group_2"` exists in the same column. Each group of rows
+#' resolved from the formula will result in a separate validation step.
+#'
+#' If there are multiple `columns` specified then the potential number of
+#' validation steps will be `m` columns multiplied by `n` segments resolved.
+#'
+#' Segmentation will always occur after `preconditions` (i.e., statements that
+#' mutate the target table), if any, are applied. With this type of one-two
+#' combo, it's possible to generate labels for segmentation using an expression
+#' for `preconditions` and refer to those labels in `segments` without having to
+#' generate a separate version of the target table.
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -91,6 +126,7 @@
 #'     columns = vars(a),
 #'     set = c(1, 2, 3, 4),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
+#'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
 #'     label = "The `col_vals_not_in_set()` step.",
 #'     active = FALSE
@@ -106,6 +142,7 @@
 #'    - 3.0
 #'    - 4.0
 #'    preconditions: ~. %>% dplyr::filter(a < 10)
+#'    segments: b ~ c("group_1", "group_2")
 #'    actions:
 #'      warn_fraction: 0.1
 #'      stop_fraction: 0.2
@@ -212,6 +249,7 @@ col_vals_not_in_set <- function(x,
                                 columns,
                                 set,
                                 preconditions = NULL,
+                                segments = NULL,
                                 actions = NULL,
                                 step_id = NULL,
                                 label = NULL,
@@ -229,6 +267,14 @@ col_vals_not_in_set <- function(x,
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions)
   
+  # Resolve segments into list
+  segments_list <-
+    resolve_segments(
+      x = x,
+      seg_expr = segments,
+      preconditions = preconditions
+    )
+  
   if (is_a_table_object(x)) {
     
     secret_agent <-
@@ -237,6 +283,7 @@ col_vals_not_in_set <- function(x,
         columns = columns,
         set = set,
         preconditions = preconditions,
+        segments = segments,
         label = label,
         brief = brief,
         actions = prime_actions(actions),
@@ -250,13 +297,14 @@ col_vals_not_in_set <- function(x,
   agent <- x
   
   if (is.null(brief)) {
+    
     brief <-
       generate_autobriefs(
-        agent,
-        columns,
-        preconditions,
+        agent = agent,
+        columns = columns,
+        preconditions = preconditions,
         values = set,
-        "col_vals_not_in_set"
+        assertion_type = "col_vals_not_in_set"
       )
   }
   
@@ -272,23 +320,31 @@ col_vals_not_in_set <- function(x,
   
   # Add one or more validation steps based on the
   # length of the `columns` variable
-  for (i in seq(columns)) {
-    
-    agent <-
-      create_validation_step(
-        agent = agent,
-        assertion_type = "col_vals_not_in_set",
-        i_o = i_o,
-        columns_expr = columns_expr,
-        column = columns[i],
-        values = set,
-        preconditions = preconditions,
-        actions = covert_actions(actions, agent),
-        step_id = step_id[i],
-        label = label,
-        brief = brief[i],
-        active = active
-      )
+  for (i in seq_along(columns)) {
+    for (j in seq_along(segments_list)) {
+      
+      seg_col <- names(segments_list[j])
+      seg_val <- unname(unlist(segments_list[j]))
+      
+      agent <-
+        create_validation_step(
+          agent = agent,
+          assertion_type = "col_vals_not_in_set",
+          i_o = i_o,
+          columns_expr = columns_expr,
+          column = columns[i],
+          values = set,
+          preconditions = preconditions,
+          seg_expr = segments,
+          seg_col = seg_col,
+          seg_val = seg_val,
+          actions = covert_actions(actions, agent),
+          step_id = step_id[i],
+          label = label,
+          brief = brief[i],
+          active = active
+        )
+    }
   }
   
   agent

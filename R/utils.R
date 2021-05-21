@@ -161,8 +161,8 @@ resolve_columns <- function(x, var_expr, preconditions) {
   if (inherits(var_expr, "quosure") &&
       var_expr %>% rlang::as_label() == "NULL") {
     
-    return(character(0))
-  } 
+    return(character(NA_character_))
+  }
   
   # nocov end
   
@@ -197,7 +197,108 @@ resolve_columns <- function(x, var_expr, preconditions) {
     }
   }
   
+  if (length(column) < 1) {
+    column <- NA_character_
+  }
+  
   column
+}
+
+#' The `resolve_segments()` function works with input from the `segments`
+#' argument, present is a variety of row-based validation functions.
+#' 
+#' @return A segment list with <column_name> = <column_value>
+#' @noRd
+resolve_segments <- function(x, seg_expr, preconditions) {
+  
+  # Return a list with an NA_character_ vector if the `seg_expr` is NULL
+  if (is.null(seg_expr)) {
+    
+    empty_vec <- c("empty" = NA_character_)
+    names(empty_vec) <- NA_character_
+    
+    return(as.list(empty_vec))
+  }
+  
+  # Upgrade single item to a list
+  if (
+    rlang::is_formula(seg_expr) ||
+    inherits(seg_expr, "quosures")
+  ) {
+    seg_expr <- list(seg_expr)
+  }
+  
+  # Verify that `seg_expr` is a list
+  if (!is.list(seg_expr)) {
+    stop(
+      "The `groups` value should be a list of two-sided formulas",
+      call. = FALSE
+    )
+  }
+  
+  groups <- list()
+
+  # Process each `seg_expr` element
+  for (i in seq_along(seg_expr)) {
+    
+    if (inherits(seg_expr[[i]], "quosures")) {
+      
+      if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
+        tbl <- x
+      } else if (inherits(x, ("ptblank_agent"))) {
+        tbl <- get_tbl_object(agent = x)
+      }
+      
+      if (!is.null(preconditions)) {
+        tbl <- apply_preconditions(tbl = tbl, preconditions = preconditions)
+      }
+      
+      for (j in seq_along(seg_expr[[i]])) {
+        
+        column_name <- rlang::as_label(seg_expr[[i]][[j]])
+        
+        col_seg_vals <- 
+          tbl %>%
+          dplyr::select(.env$column_name) %>%
+          dplyr::distinct() %>%
+          dplyr::pull()
+        
+        names(col_seg_vals) <- rep(column_name, length(col_seg_vals))
+        
+        groups <- c(groups, as.list(col_seg_vals))
+      }
+    }
+    
+    if (rlang::is_formula(seg_expr[[i]])) {
+  
+      group_formula <- seg_expr[[i]]
+      
+      # Determine if this is a two-sided formula
+      if (
+        is.null(rlang::f_lhs(group_formula)) ||
+        is.null(rlang::f_rhs(group_formula))
+      ) {
+        stop(
+          "Any formulas provided for `groups` must be two-sided",
+          call. = FALSE
+        )
+      }
+      
+      col_seg_vals <- rlang::eval_bare(rlang::f_rhs(group_formula))
+      
+      column_name <- rlang::as_label(rlang::f_lhs(group_formula))
+      
+      if (grepl("^vars\\(.+\\)$", column_name)) {
+        column_name <- gsub("(vars\\(|\\))", "", column_name)
+      }
+      
+      names(col_seg_vals) <- rep(column_name, length(col_seg_vals))
+      
+      groups <- c(groups, as.list(col_seg_vals))
+    }
+  }
+  
+  groups
 }
 
 normalize_step_id <- function(step_id, columns, agent) {

@@ -11,6 +11,7 @@ conjointly(
   ...,
   .list = list2(...),
   preconditions = NULL,
+  segments = NULL,
   actions = NULL,
   step_id = NULL,
   label = NULL,
@@ -49,7 +50,13 @@ example of this is \verb{~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(.,
 \item{preconditions}{An optional expression for mutating the input table
 before proceeding with the validation. This is ideally as a one-sided R
 formula using a leading \code{~}. In the formula representation, the \code{.} serves
-as the input data table to be transformed (e.g., \code{~ . \%>\% dplyr::mutate(col = col + 10)}.}
+as the input data table to be transformed (e.g., \code{~ . \%>\% dplyr::mutate(col = col + 10)}. See the \emph{Preconditions} section for more information.}
+
+\item{segments}{An optional expression or set of expressions (held in a list)
+that serve to segment the target table by column values. Each expression
+can be given in one of two ways: (1) as column names, or (2) as a two-sided
+formula where the LHS holds a column name and the RHS contains the column
+values to segment on. See the \emph{Segments} section for more details on this.}
 
 \item{actions}{A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
@@ -148,16 +155,52 @@ are: \code{starts_with()}, \code{ends_with()}, \code{contains()}, \code{matches(
 
 \section{Preconditions}{
 
-Having table \code{preconditions} means \strong{pointblank} will mutate the table just
-before interrogation. Such a table mutation is isolated in scope to the
-validation step(s) produced by the validation function call. Using
-\strong{dplyr} code is suggested here since the statements can be translated to
-SQL if necessary. The code is most easily supplied as a one-sided \strong{R}
-formula (using a leading \code{~}). In the formula representation, the \code{.} serves
-as the input data table to be transformed (e.g.,
-\code{~ . \%>\% dplyr::mutate(col_a = col_b + 10)}). Alternatively, a function could
-instead be supplied (e.g.,
-\code{function(x) dplyr::mutate(x, col_a = col_b + 10)}).
+Having table \code{preconditions} means \strong{pointblank} will temporarily mutate the
+table during a validation step. It might happen that a particular validation
+step requires a calculated column, a filtering of rows, additional columns
+via a join, etc. For an \emph{agent}-based report this can be advantageous since
+we can develop a large validation plan with a single target table and make
+minor adjustments to it, as needed, along the way.
+
+The table mutation is totally isolated in scope to the validation step(s)
+where \code{preconditions} is used. Using \strong{dplyr} code is suggested here since
+the statements can be translated to SQL if necessary. The code is most easily
+supplied as a one-sided \strong{R} formula (using a leading \code{~}). In the formula
+representation, the \code{.} serves as the input data table to be transformed
+(e.g., \code{~ . \%>\% dplyr::mutate(col_a = col_b + 10)}). Alternatively, a
+function could instead be supplied (e.g., \code{function(x) dplyr::mutate(x, col_a = col_b + 10)}).
+}
+
+\section{Segments}{
+
+By using the \code{segments} argument, it's possible to define a particular
+validation with segments (or row slices) of the target table. An optional
+expression or set of expressions that serve to segment the target table by
+column values. Each expression can be given in one of two ways: (1) as column
+names, or (2) as a two-sided formula where the LHS holds a column name and
+the RHS contains the column values to segment on.
+
+As an example of the first type of expression that can be used,
+\code{vars(a_column)} will segment the target table in however many unique values
+are present in the column called \code{a_column}. This is great if every unique
+value in a particular column (like different locations, or different dates)
+requires it's own repeating validation.
+
+With a formula, we can be more selective with which column values should be
+used for segmentation. Using \code{a_column ~ c("group_1", "group_2")} will
+attempt to obtain two segments where one is a slice of data where the value
+\code{"group_1"} exists in the column named \code{"a_column"}, and, the other is a
+slice where \code{"group_2"} exists in the same column. Each group of rows
+resolved from the formula will result in a separate validation step.
+
+If there are multiple \code{columns} specified then the potential number of
+validation steps will be \code{m} columns multiplied by \code{n} segments resolved.
+
+Segmentation will always occur after \code{preconditions} (i.e., statements that
+mutate the target table), if any, are applied. With this type of one-two
+combo, it's possible to generate labels for segmentation using an expression
+for \code{preconditions} and refer to those labels in \code{segments} without having to
+generate a separate version of the target table.
 }
 
 \section{Actions}{
@@ -202,6 +245,7 @@ agent \%>\%
     ~ col_vals_gt(., vars(c), vars(a)),
     ~ col_vals_not_null(., vars(b)),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
+    segments = b ~ c("group_1", "group_2"),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
     label = "The `conjointly()` step.",
     active = FALSE
@@ -215,6 +259,7 @@ steps:
     - ~col_vals_gt(., vars(c), vars(a))
     - ~col_vals_not_null(., vars(b))
     preconditions: ~. \%>\% dplyr::filter(a < 10)
+    segments: b ~ c("group_1", "group_2")
     actions:
       warn_fraction: 0.1
       stop_fraction: 0.2

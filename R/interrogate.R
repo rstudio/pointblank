@@ -83,7 +83,11 @@ interrogate <- function(agent,
                         sample_n = NULL,
                         sample_frac = NULL,
                         sample_limit = 5000) {
-
+  
+  #
+  # INITIAL PROCESSING OF AGENT
+  #
+  
   # Add the starting time to the `agent` object
   agent$time_start <- Sys.time()
 
@@ -99,6 +103,8 @@ interrogate <- function(agent,
     )
   }
 
+  # Materialization of table given that there is a table-prep formula
+  # available in the agent object
   if (is.null(agent$tbl) && !is.null(agent$read_fn)) {
     
     if (inherits(agent$read_fn, "function")) {
@@ -129,20 +135,30 @@ interrogate <- function(agent,
     agent$extracts <- NULL
   }
 
+  # Quieting of an agent's remarks either when the agent has the
+  # special label `"::QUIET::"` or the session is non-interactive
   if (agent$label == "::QUIET::" || !interactive()) {
     quiet <- TRUE
   } else {
     quiet <- FALSE
   }
   
+  # TODO: Handle possible expansion of table through evaluation
+  # of all `seg_expr` values
+  
+  
   # Get the agent's validation step indices
-  validation_steps <- unique(agent$validation_set$i)
+  validation_steps <- seq_len(nrow(agent$validation_set))
   
   # Signal the start of interrogation in the console
   create_cli_header_a(
     validation_steps = validation_steps,
     quiet = quiet
   )
+  
+  #
+  # PROCESSING OF VALIDATION STEPS AS INDIVIDUAL INTERROGATIONS
+  #
   
   for (i in validation_steps) {
     
@@ -165,6 +181,13 @@ interrogate <- function(agent,
       agent$validation_set[[i, "eval_active"]] <- 
         agent$validation_set[[i, "active"]][[1]]
     }
+    
+    # Set the validation step as `active = FALSE` if there is a
+    # `seg_expr` declared but not resolved `seg_col`
+    if (!is.null(agent$validation_set$seg_expr[[i]]) &&
+        is.na(agent$validation_set$seg_col[i])) {
+      agent$validation_set[[i, "eval_active"]] <- FALSE
+    }
 
     # Skip the validation step if `active = FALSE`
     if (!agent$validation_set[[i, "eval_active"]]) {
@@ -179,7 +202,10 @@ interrogate <- function(agent,
     
     # Use preconditions to modify the table
     table <- apply_preconditions_to_tbl(agent = agent, idx = i, tbl = table)
-
+    
+    # Use segmentation directives to constrain the table
+    table <- apply_segments_to_tbl(agent = agent, idx = i, tbl = table)
+    
     # Get the assertion type for this verification step
     assertion_type <- get_assertion_type_at_idx(agent = agent, idx = i)
 
@@ -370,6 +396,12 @@ interrogate <- function(agent,
     )
   }
   
+  #
+  # POST-INTERROGATION PHASE
+  #
+  
+  # Bestowing of the class `"has_intel"` to the agent, given that
+  # all validation steps have been carried out
   class(agent) <- c("has_intel", "ptblank_agent")
   
   # Add the ending time to the `agent` object

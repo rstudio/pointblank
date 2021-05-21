@@ -459,6 +459,34 @@ as_list_preconditions <- function(preconditions) {
   }
 }
 
+as_list_segments <- function(segments) {
+  
+  if (is.null(segments[[1]])) {
+    return(NULL)
+  }
+
+  segments <- unlist(segments)
+  
+  components <- c()
+  
+  for (i in seq_along(segments)) {
+    
+    if (rlang::is_formula(segments[[i]]) &&
+        !inherits(segments[[i]], "quosure")) {
+      
+      components <-
+        c(components, paste(capture_formula(segments[[i]]), collapse = " "))
+      
+    } else if (inherits(segments[[i]], "quosure")) {
+      
+      components <-
+        c(components, paste0("vars(", as_label(segments[[i]]), ")"))
+    }
+  }
+  
+  paste0("list(", paste(components, collapse = ", "), ")")
+}
+
 as_list_active <- function(active) {
 
   if (is.logical(active[[1]])) {
@@ -596,6 +624,10 @@ prune_lst_step <- function(lst_step) {
       is.null(lst_step[[1]][["preconditions"]])) {
     lst_step[[1]]["preconditions"] <- NULL
   }
+  if ("segments" %in% names(lst_step[[1]]) &&
+      is.null(lst_step[[1]][["segments"]])) {
+    lst_step[[1]]["segments"] <- NULL
+  }
   if ("na_pass" %in% names(lst_step[[1]]) &&
       !lst_step[[1]][["na_pass"]]) {
     lst_step[[1]]["na_pass"] <- NULL
@@ -708,7 +740,7 @@ as_agent_yaml_list <- function(agent,
       agent$validation_set %>% 
       dplyr::select(
         i_o, assertion_type, columns_expr, column, values, na_pass,
-        preconditions, actions, label, brief, active
+        preconditions, seg_expr, actions, label, brief, active
       ) %>%
       dplyr::group_by(i_o) %>%
       dplyr::filter(dplyr::row_number() == 1) %>%
@@ -726,7 +758,7 @@ as_agent_yaml_list <- function(agent,
       agent$validation_set %>% 
       dplyr::select(
         i, assertion_type, columns_expr, column, values, na_pass,
-        preconditions, actions, label, brief, active
+        preconditions, seg_expr, actions, label, brief, active
       )
   }
   
@@ -757,6 +789,7 @@ as_agent_yaml_list <- function(agent,
             value = get_arg_value(step_list$values),
             na_pass = step_list$na_pass,
             preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default
@@ -788,6 +821,7 @@ as_agent_yaml_list <- function(agent,
             ),
             na_pass = step_list$na_pass,
             preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default
@@ -811,6 +845,7 @@ as_agent_yaml_list <- function(agent,
             columns = column_text,
             set = step_list$values[[1]],
             preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default
@@ -833,6 +868,7 @@ as_agent_yaml_list <- function(agent,
           validation_fn = list(
             columns = column_text,
             preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default
@@ -866,6 +902,7 @@ as_agent_yaml_list <- function(agent,
             decreasing_tol = decreasing_tol,
             na_pass = step_list$na_pass,
             preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default
@@ -899,6 +936,7 @@ as_agent_yaml_list <- function(agent,
             increasing_tol = increasing_tol,
             na_pass = step_list$na_pass,
             preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default
@@ -923,6 +961,7 @@ as_agent_yaml_list <- function(agent,
             regex = get_arg_value(step_list$values),
             na_pass = step_list$na_pass,
             preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default
@@ -947,6 +986,7 @@ as_agent_yaml_list <- function(agent,
             spec = get_arg_value(step_list$values),
             na_pass = step_list$na_pass,
             preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default
@@ -985,6 +1025,7 @@ as_agent_yaml_list <- function(agent,
           validation_fn = list(
             expr = paste0("~", rlang::as_label(step_list$values[[1]])),
             preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default
@@ -1007,6 +1048,7 @@ as_agent_yaml_list <- function(agent,
           validation_fn = list(
             columns = vars_cols,
             preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default
@@ -1043,6 +1085,7 @@ as_agent_yaml_list <- function(agent,
           validation_fn = list(
             fns = as.character(step_list$values[[1]]),
             preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default

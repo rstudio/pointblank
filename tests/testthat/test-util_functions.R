@@ -354,9 +354,10 @@ test_that("Utility functions won't fail us", {
       "pointblank_validation_title_text", "pointblank_validation_plan_text", 
       "no_interrogation_performed_text", "report_fail_rows_available", 
       "report_no_table_preconditions", "report_some_table_preconditions", 
-      "report_no_evaluation_issues", "report_col_step", "report_col_steps", 
-      "report_col_columns", "report_col_values", "report_column_schema", 
-      "report_r_col_types", "report_r_sql_types"
+      "report_on_segmentation", "report_no_evaluation_issues",
+      "report_col_step", "report_col_steps", "report_col_columns",
+      "report_col_values", "report_column_schema", "report_r_col_types",
+      "report_r_sql_types"
     )
   )
   

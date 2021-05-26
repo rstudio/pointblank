@@ -560,6 +560,91 @@ writing to disk by using the <code><a href='yaml_agent_string.html'>yaml_agent_s
 <code><a href='conjointly.html'>conjointly</a>()</code>,
 <code><a href='rows_distinct.html'>rows_distinct</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># The `specifications` dataset in the</span></span>
+<span class='r-in'><span class='co'># package has columns of character data</span></span>
+<span class='r-in'><span class='co'># that correspond to each of the</span></span>
+<span class='r-in'><span class='co'># specifications that can be tested;</span></span>
+<span class='r-in'><span class='co'># the following examples will validate</span></span>
+<span class='r-in'><span class='co'># that the `email_addresses` column</span></span>
+<span class='r-in'><span class='co'># has 5 correct values (this is true if</span></span>
+<span class='r-in'><span class='co'># we get a subset of the data: the first</span></span>
+<span class='r-in'><span class='co'># five rows)</span></span>
+<span class='r-in'><span class='va'>spec_slice</span> <span class='op'>&lt;-</span> <span class='va'>specifications</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, <span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># A: Using an `agent` with validation</span></span>
+<span class='r-in'><span class='co'>#    functions and then `interrogate()`</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Validate that all values in the column</span></span>
+<span class='r-in'><span class='co'># `email_addresses` are correct</span></span>
+<span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span><span class='va'>spec_slice</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>col_vals_within_spec</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>email_addresses</span><span class='op'>)</span>,</span>
+<span class='r-in'>    spec <span class='op'>=</span> <span class='st'>"email"</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='co'># Determine if this validation</span></span>
+<span class='r-in'><span class='co'># had no failing test units (there</span></span>
+<span class='r-in'><span class='co'># are 13 test units, one for each row)</span></span>
+<span class='r-in'><span class='fu'><a href='all_passed.html'>all_passed</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Calling `agent` in the console</span></span>
+<span class='r-in'><span class='co'># prints the agent's report; but we</span></span>
+<span class='r-in'><span class='co'># can get a `gt_tbl` object directly</span></span>
+<span class='r-in'><span class='co'># with `get_agent_report(agent)`</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># B: Using the validation function</span></span>
+<span class='r-in'><span class='co'>#    directly on the data (no `agent`)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># This way of using validation functions</span></span>
+<span class='r-in'><span class='co'># acts as a data filter: data is passed</span></span>
+<span class='r-in'><span class='co'># through but should `stop()` if there</span></span>
+<span class='r-in'><span class='co'># is a single test unit failing; the</span></span>
+<span class='r-in'><span class='co'># behavior of side effects can be</span></span>
+<span class='r-in'><span class='co'># customized with the `actions` option</span></span>
+<span class='r-in'><span class='va'>spec_slice</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>col_vals_within_spec</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>email_addresses</span><span class='op'>)</span>,</span>
+<span class='r-in'>    spec <span class='op'>=</span> <span class='st'>"email"</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>email_addresses</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 5 x 1</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   email_addresses                                                          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                                                    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> test@test.com                                                            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> mail+mail@example.com                                                    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> mail.email@e.test.com                                                    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@letters-in-local.org</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> 01234567890@numbers-in-local.net                                         </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># C: Using the expectation function</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># With the `expect_*()` form, we would</span></span>
+<span class='r-in'><span class='co'># typically perform one validation at a</span></span>
+<span class='r-in'><span class='co'># time; this is primarily used in</span></span>
+<span class='r-in'><span class='co'># testthat tests</span></span>
+<span class='r-in'><span class='fu'>expect_col_vals_within_spec</span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='va'>spec_slice</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>email_addresses</span><span class='op'>)</span>,</span>
+<span class='r-in'>  spec <span class='op'>=</span> <span class='st'>"email"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># D: Using the test function</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># With the `test_*()` form, we should</span></span>
+<span class='r-in'><span class='co'># get a single logical value returned</span></span>
+<span class='r-in'><span class='co'># to us</span></span>
+<span class='r-in'><span class='va'>spec_slice</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>test_col_vals_within_spec</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>email_addresses</span><span class='op'>)</span>,</span>
+<span class='r-in'>    spec <span class='op'>=</span> <span class='st'>"email"</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

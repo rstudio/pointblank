@@ -247,7 +247,7 @@
 #'   
 #' # Determine if this validation
 #' # had no failing test units (there
-#' # are 13 test units, one for each row)
+#' # are 5 test units, one for each row)
 #' all_passed(agent)
 #' 
 #' # Calling `agent` in the console

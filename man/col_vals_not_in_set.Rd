@@ -144,20 +144,21 @@ specifying columns. They are: \code{starts_with()}, \code{ends_with()}, \code{co
 
 \section{Preconditions}{
 
-Having table \code{preconditions} means \strong{pointblank} will temporarily mutate the
-table during a validation step. It might happen that a particular validation
-step requires a calculated column, a filtering of rows, additional columns
-via a join, etc. For an \emph{agent}-based report this can be advantageous since
-we can develop a large validation plan with a single target table and make
-minor adjustments to it, as needed, along the way.
+Providing expressions as \code{preconditions} means \strong{pointblank} will preprocess
+the target table table during interrogation as a preparatory step. It might
+happen that a particular validation requires a calculated column, some
+filtering of rows, or the addition of columns via a join, etc. Especially for
+an \emph{agent}-based report this can be advantageous since we can develop a large
+validation plan with a single target table and make minor adjustments to it,
+as needed, along the way.
 
 The table mutation is totally isolated in scope to the validation step(s)
 where \code{preconditions} is used. Using \strong{dplyr} code is suggested here since
-the statements can be translated to SQL if necessary. The code is most easily
-supplied as a one-sided \strong{R} formula (using a leading \code{~}). In the formula
-representation, the \code{.} serves as the input data table to be transformed
-(e.g., \code{~ . \%>\% dplyr::mutate(col_a = col_b + 10)}). Alternatively, a
-function could instead be supplied (e.g., \code{function(x) dplyr::mutate(x, col_a = col_b + 10)}).
+the statements can be translated to SQL if necessary (i.e., if the target
+table resides in a database). The code is most easily supplied as a one-sided
+\strong{R} formula (using a leading \code{~}). In the formula representation, the \code{.}
+serves as the input data table to be transformed (e.g., \code{~ . \%>\% dplyr::mutate(col_b = col_a + 10)}). Alternatively, a function could instead
+be supplied (e.g., \code{function(x) dplyr::mutate(x, col_b = col_a + 10)}).
 }
 
 \section{Segments}{

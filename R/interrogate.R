@@ -744,6 +744,7 @@ tbl_val_comparison <- function(table,
   # Ensure that the input `table` is actually a table object
   tbl_validity_check(table = table)
   
+  # Ensure that the value provided is valid 
   column_validity_checks_column_value(
     table = table,
     column = {{ column }},

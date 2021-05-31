@@ -452,8 +452,18 @@ as_vars_fn <- function(columns) {
 }
 
 as_list_preconditions <- function(preconditions) {
+  
   if (is.null(preconditions[[1]])) {
+    
     return(NULL)
+    
+  } else if (is.function(preconditions[[1]])) {
+    
+    return(
+      paste(deparse(preconditions[[1]]), collapse = "\n") %>%
+        gsub("function (x) \n{", "function(x) {", ., fixed = TRUE)
+    )
+    
   } else {
     return(as.character(preconditions))
   }

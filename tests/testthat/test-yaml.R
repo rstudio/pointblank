@@ -250,6 +250,28 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   )
   expect_equal(
     get_oneline_expr_str(
+      agent %>% 
+        col_vals_lt(
+          vars(a), 1, na_pass = TRUE,
+          preconditions = function(x) { x %>% dplyr::filter(a > 2) }
+        )
+    ),
+    "col_vals_lt(columns = vars(a),value = 1,na_pass = TRUE,preconditions = function(x) {x %>% dplyr::filter(a > 2)})"
+  )
+  expect_equal(
+    get_oneline_expr_str(
+      agent %>% 
+        col_vals_lt(
+          vars(a), 1, na_pass = TRUE,
+          preconditions = function(x) {
+            x %>% dplyr::filter(a > 2)
+          }
+        )
+    ),
+    "col_vals_lt(columns = vars(a),value = 1,na_pass = TRUE,preconditions = function(x) {x %>% dplyr::filter(a > 2)})"
+  )
+  expect_equal(
+    get_oneline_expr_str(
       agent %>%
         col_vals_lt(
           vars(a, c), 1,

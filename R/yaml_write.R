@@ -226,7 +226,7 @@ yaml_write <- function(...,
       )
     }
     
-    return(invisible(NULL))
+    return(invisible(TRUE))
   }
   
   if ("agent" %in% object_types) {
@@ -293,6 +293,7 @@ yaml_write <- function(...,
     filename <- file.path(path, filename)
   }
   
+  # Write the YAML to disk
   yaml::write_yaml(
     x = x,
     file = filename,
@@ -413,19 +414,28 @@ yaml_agent_string <- function(agent = NULL,
   
   if (is.null(agent) && is.null(filename)) {
     stop(
-      "An `agent` object or a `path` to a YAML file must be specified.",
+      "An `agent` object or a `filename` for a YAML file must be specified.",
       call. = FALSE
     )
   }
   
   if (!is.null(agent) && !is.null(filename)) {
-    stop("Only one of `agent` or `path` should be specified.", call. = FALSE)
+    stop(
+      "Only `agent` or `filename` should be specified (not both).",
+      call. = FALSE
+    )
   }
   
   if (!is.null(agent)) {
     
+    # Display the agent's YAML as a nicely formatted string by
+    # generating the YAML (`as_agent_yaml_list() %>% as.yaml()`) and
+    # then emitting it to the console via `message()`
     message(
-      as_agent_yaml_list(agent = agent, expanded = expanded) %>%
+      as_agent_yaml_list(
+        agent = agent,
+        expanded = expanded
+      ) %>%
         yaml::as.yaml(
           handlers = list(
             logical = function(x) {
@@ -443,6 +453,9 @@ yaml_agent_string <- function(agent = NULL,
       filename <- file.path(path, filename)
     }
     
+    # Display the agent's YAML as a nicely formatted string by
+    # reading the YAML file specified by `file` (and perhaps `path`)
+    # and then emitting it to the console via `message()`
     message(readLines(filename) %>% paste(collapse = "\n"))
   }
 }
@@ -452,8 +465,18 @@ as_vars_fn <- function(columns) {
 }
 
 as_list_preconditions <- function(preconditions) {
+  
   if (is.null(preconditions[[1]])) {
+    
     return(NULL)
+    
+  } else if (is.function(preconditions[[1]])) {
+    
+    return(
+      paste(deparse(preconditions[[1]]), collapse = "\n") %>%
+        gsub("function (x) \n{", "function(x) {", ., fixed = TRUE)
+    )
+    
   } else {
     return(as.character(preconditions))
   }

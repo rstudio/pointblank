@@ -4,7 +4,7 @@ name: lint
 
 jobs:
   lint:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     
     steps:
       - uses: actions/checkout@v2
@@ -23,8 +23,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ubuntu-r-4.1-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ubuntu-r-4.1-1-
+          key: ubuntu-r-4.1-2-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ubuntu-r-4.1-2-
 
       - name: Install dependencies
         run: |

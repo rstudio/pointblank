@@ -232,9 +232,11 @@ found within this <code>set</code> will be considered as passing.</p></td>
     <tr>
       <th>preconditions</th>
       <td><p>An optional expression for mutating the input table
-before proceeding with the validation. This is ideally as a one-sided R
-formula using a leading <code>~</code>. In the formula representation, the <code>.</code> serves
-as the input data table to be transformed (e.g., <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code>. See the <em>Preconditions</em> section for more information.</p></td>
+before proceeding with the validation. This can either be provided as a
+one-sided R formula using a leading <code>~</code> (e.g.,
+<code>~ . %&gt;% dplyr::mutate(col = col + 10)</code> or as a function (e.g.,
+<code>function(x) dplyr::mutate(x, col = col + 10)</code>. See the <em>Preconditions</em>
+section for more information.</p></td>
     </tr>
     <tr>
       <th>segments</th>

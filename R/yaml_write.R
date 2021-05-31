@@ -226,7 +226,7 @@ yaml_write <- function(...,
       )
     }
     
-    return(invisible(NULL))
+    return(invisible(TRUE))
   }
   
   if ("agent" %in% object_types) {

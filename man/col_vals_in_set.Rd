@@ -41,9 +41,11 @@ vector) to which this validation should be applied.}
 found within this \code{set} will be considered as passing.}
 
 \item{preconditions}{An optional expression for mutating the input table
-before proceeding with the validation. This is ideally as a one-sided R
-formula using a leading \code{~}. In the formula representation, the \code{.} serves
-as the input data table to be transformed (e.g., \code{~ . \%>\% dplyr::mutate(col = col + 10)}. See the \emph{Preconditions} section for more information.}
+before proceeding with the validation. This can either be provided as a
+one-sided R formula using a leading \code{~} (e.g.,
+\code{~ . \%>\% dplyr::mutate(col = col + 10)} or as a function (e.g.,
+\code{function(x) dplyr::mutate(x, col = col + 10)}. See the \emph{Preconditions}
+section for more information.}
 
 \item{segments}{An optional expression or set of expressions (held in a list)
 that serve to segment the target table by column values. Each expression

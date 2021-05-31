@@ -177,10 +177,11 @@
 #' @param na_pass Should any encountered `NA` values be considered as passing
 #'   test units? This is by default `FALSE`. Set to `TRUE` to give `NA`s a pass.
 #' @param preconditions An optional expression for mutating the input table
-#'   before proceeding with the validation. This is ideally as a one-sided R
-#'   formula using a leading `~`. In the formula representation, the `.` serves
-#'   as the input data table to be transformed (e.g., `~ . %>% dplyr::mutate(col
-#'   = col + 10)`. See the *Preconditions* section for more information.
+#'   before proceeding with the validation. This can either be provided as a
+#'   one-sided R formula using a leading `~` (e.g.,
+#'   `~ . %>% dplyr::mutate(col = col + 10)` or as a function (e.g.,
+#'   `function(x) dplyr::mutate(x, col = col + 10)`. See the *Preconditions*
+#'   section for more information.
 #' @param segments An optional expression or set of expressions (held in a list)
 #'   that serve to segment the target table by column values. Each expression
 #'   can be given in one of two ways: (1) as column names, or (2) as a two-sided

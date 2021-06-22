@@ -58,9 +58,5 @@ all_passed <- function(agent) {
     stop("The agent hasn't performed an interrogation.", call. = FALSE)
   }
   
-  if (all(agent$validation_set$all_passed == TRUE)) {
-    return(TRUE)
-  } else {
-    return(FALSE)
-  }
+  all(agent$validation_set$all_passed)
 }

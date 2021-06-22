@@ -48,8 +48,8 @@
 
 <meta property="og:title" content="Did all of the validations fully pass? — all_passed" />
 <meta property="og:description" content="Given an agent's validation plan that had undergone interrogation via
-interrogate(), did every single validation step result in zero fail
-levels? Using the all_passed() function will let us know whether that's
+interrogate(), did every single validation step result in zero failing
+test units? Using the all_passed() function will let us know whether that's
 TRUE or not." />
 <meta property="og:image" content="/logo.svg" />
 
@@ -169,8 +169,8 @@ TRUE or not." />
 
     <div class="ref-description">
     <p>Given an agent's validation plan that had undergone interrogation via
-<code><a href='interrogate.html'>interrogate()</a></code>, did every single validation step result in zero <em>fail</em>
-levels? Using the <code>all_passed()</code> function will let us know whether that's
+<code><a href='interrogate.html'>interrogate()</a></code>, did every single validation step result in zero <em>failing</em>
+test units? Using the <code>all_passed()</code> function will let us know whether that's
 <code>TRUE</code> or not.</p>
     </div>
 
@@ -188,6 +188,20 @@ levels? Using the <code>all_passed()</code> function will let us know whether th
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A logical value.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <code>all_passed()</code> function provides a single logical value based on an
+interrogation performed in the <em>agent</em>-based workflow. For very large-scale
+validation (where data quality is a known issue, and is perhaps something to
+be tamed over time) this function is likely to be less useful since it is
+quite stringent (all test units must pass across all validation steps).</p>
+<p>Should there be a requirement for logical values produced from validation, a
+more flexible alternative is in using the test (<code>test_*()</code>) variants of the
+validation functions. Each of those produce a single logical value and each
+and have a <code>threshold</code> option for failure levels. Another option is to
+utilize post-interrogation objects within the <em>agent</em>'s x-list (obtained by
+using the <code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> function). This allows for many possibilities
+in producing a single logical value from an interrogation.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
@@ -205,18 +219,20 @@ levels? Using the <code>all_passed()</code> function will let us know whether th
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Create a simple table with</span></span>
 <span class='r-in'><span class='co'># a column of numerical values</span></span>
 <span class='r-in'><span class='va'>tbl</span> <span class='op'>&lt;-</span> </span>
-<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># Validate that values in column</span></span>
 <span class='r-in'><span class='co'># `a` are always greater than 4</span></span>
 <span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span></span>
 <span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>tbl <span class='op'>=</span> <span class='va'>tbl</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_lte.html'>col_vals_lte</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_increasing.html'>col_vals_increasing</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># Determine if these column</span></span>
-<span class='r-in'><span class='co'># validations have all passed</span></span>
-<span class='r-in'><span class='co'># by using `all_passed()`</span></span>
+<span class='r-in'><span class='co'># validations have all passed by</span></span>
+<span class='r-in'><span class='co'># using `all_passed()` (they do)</span></span>
 <span class='r-in'><span class='fu'>all_passed</span><span class='op'>(</span>agent <span class='op'>=</span> <span class='va'>agent</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
 <span class='r-in'></span>

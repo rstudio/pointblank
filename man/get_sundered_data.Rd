@@ -75,11 +75,13 @@ the input table.
 \examples{
 # Create a series of two validation
 # steps focused on testing row values
-# for the `small_table` object;
+# for part of the `small_table` object;
 # `interrogate()` immediately
 agent <-
   create_agent(
-    read_fn = ~ small_table
+    read_fn = ~ small_table \%>\%
+      dplyr::select(a:f),
+    label = "`get_sundered_data()`"
   ) \%>\%
   col_vals_gt(vars(d), value = 1000) \%>\%
   col_vals_between(

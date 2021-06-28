@@ -47,7 +47,10 @@ function works with an agent object that has intel (i.e., post
 \code{interrogate()}) and gets either the 'pass' data piece (rows with no failing
 test units across all row-based validation functions), or, the 'fail' data
 piece (rows with at least one failing test unit across the same series of
-validations).
+validations). As a final option, we can have emit all the data with a new
+column (called \code{.pb_combined}) which labels each row as passing or failing
+across validation steps. These labels are \code{"pass"} and \code{"fail"} by default
+but their values can be easily customized.
 }
 \details{
 There are some caveats to sundering. The validation steps considered for this
@@ -70,27 +73,61 @@ the input table.
 }
 
 \examples{
-# Create a series of three validation
-# steps focus on test row values for
-# the `small_table` tibble object;
+# Create a series of two validation
+# steps focused on testing row values
+# for the `small_table` object;
 # `interrogate()` immediately
 agent <-
-  create_agent(tbl = small_table) \%>\%
-  col_vals_gt(vars(d), value = 100) \%>\%
-  col_vals_equal(
-    vars(d), value = vars(d),
-    na_pass = TRUE
+  create_agent(
+    read_fn = ~ small_table
   ) \%>\%
+  col_vals_gt(vars(d), value = 1000) \%>\%
   col_vals_between(
-    vars(c), left = vars(a), right = vars(d),
+    vars(c),
+    left = vars(a), right = vars(d),
     na_pass = TRUE
   ) \%>\%
   interrogate()
 
 # Get the sundered data piece that
-# contains only rows that passed all
-# validation steps (the default piece)
+# contains only rows that passed both
+# validation steps (the default piece);
+# this yields 5 of 13 total rows
 agent \%>\% get_sundered_data()
+
+# Get the complementary data piece:
+# all of those rows that failed either
+# of the two validation steps;
+# this yields 8 of 13 total rows
+agent \%>\%
+  get_sundered_data(type = "fail")
+  
+# We can get all of the input data
+# returned with a flag column (called
+# `.pb_combined`); this is done by
+# using `type = "combined"` and that
+# rightmost column will contain `"pass"`
+# and `"fail"` values
+agent \%>\%
+  get_sundered_data(type = "combined")
+
+# We can change the `"pass"` or `"fail"`
+# text values to another type of coding
+# with the `pass_fail` argument; one
+# possibility is TRUE/FALSE
+agent \%>\%
+  get_sundered_data(
+    type = "combined",
+    pass_fail = c(TRUE, FALSE)
+  )
+
+# ...and using `0` and `1` might be
+# worthwhile in some situations
+agent \%>\%
+  get_sundered_data(
+    type = "combined",
+    pass_fail = 0:1
+  )
 
 }
 \seealso{

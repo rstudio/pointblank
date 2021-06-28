@@ -30,7 +30,7 @@ reencode_utf8 <- function(x) {
       USE.NAMES = FALSE,
       FUN = function(x) {
         
-        bytes_nz <- x[x > 0]
+        bytes_nz <- x[min(which(x > 0)):length(x)]
 
         if (length(bytes_nz) > 2) {
           out <- paste("\\U", paste(as.hexmode(x), collapse = ""), sep = "")

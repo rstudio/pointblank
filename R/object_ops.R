@@ -385,7 +385,32 @@ x_read_disk <- function(filename,
     filename <- file.path(path, filename)
   }
   
-  readRDS(filename)
+  filename <- as.character(fs::path_norm(fs::path_expand(filename)))
+  
+  x <- readRDS(filename)
+  
+  if (quiet) {
+    return(x)
+  }
+  
+  if (inherits(x, "ptblank_agent")) {
+    object_type <- "agent"
+  } else if (inherits(x, "ptblank_informant")) {
+    object_type <- "informant"
+  } else if (inherits(x, "ptblank_tbl_scan")) {
+    object_type <- "table scan"
+  } else {
+    object_type <- "object"
+  }
+  
+  # Generate cli message w.r.t. read in RDS file
+  cli_bullet_msg(
+    msg = "The {object_type} has been read from `{filename}`",
+    bullet = cli::symbol$tick,
+    color = "green"
+  )
+  
+  x
 }
 
 #' Set a data table to an *agent* or *informant*

@@ -17,16 +17,17 @@
 #
 
 
-#' Write a **pointblank** *agent* or *informant* to disk
+#' Write a **pointblank** *agent*, *informant*, or table scan to disk
 #' 
 #' @description 
-#' Writing an *agent* or *informant* to disk with `x_write_disk()` can be useful
-#' for keeping data validation intel or table information close at hand for
-#' later retrieval (with [x_read_disk()]). By default, any data table that the
-#' *agent* or *informant* may have held before being committed to disk will be
-#' expunged. This behavior can be changed by setting `keep_tbl` to `TRUE` but
-#' this only works in the case where the table is not of the `tbl_dbi` or the
-#' `tbl_spark` class.
+#' Writing an *agent*, *informant*, or even a table scan to disk with
+#' `x_write_disk()` can be useful for keeping data validation intel or table
+#' information close at hand for later retrieval (with [x_read_disk()]). By
+#' default, any data table that the *agent* or *informant* may have held before
+#' being committed to disk will be expunged (not applicable to any table scan
+#' since they never hold a table object). This behavior can be changed by
+#' setting `keep_tbl` to `TRUE` but this only works in the case where the table
+#' is not of the `tbl_dbi` or the `tbl_spark` class.
 #'
 #' @details
 #' It is recommended to set up a table-prep formula so that the *agent* and
@@ -36,10 +37,10 @@
 #' Alternatively, we can reintroduce the *agent* or *informant* to a data table
 #' with the [set_tbl()] function.
 #' 
-#' @param x An *agent* object of class `ptblank_agent`, or, an *informant* of
-#'   class `ptblank_informant`.
-#' @param filename The filename to create on disk for the `agent` or
-#'   `informant`.
+#' @param x An *agent* object of class `ptblank_agent`, an *informant* of class
+#'   `ptblank_informant`, or an table scan of class `ptblank_tbl_scan`.
+#' @param filename The filename to create on disk for the `agent`, `informant`,
+#'   or table scan.
 #' @param path An optional path to which the file should be saved (this is
 #'   automatically combined with `filename`).
 #' @param keep_tbl An option to keep a data table that is associated with the
@@ -50,7 +51,8 @@
 #'   (`tbl_spark`) the table is always removed (even if `keep_tbl` is set to
 #'   `TRUE`).
 #' @param keep_extracts An option to keep any collected extract data for failing
-#'   rows. By default, this is `FALSE`.
+#'   rows. Only applies to *agent* objects. By default, this is `FALSE` (i.e.,
+#'   extract data is removed).
 #' @param quiet Should the function *not* inform when the file is written? By
 #'   default this is `FALSE`.
 #'   
@@ -119,7 +121,7 @@
 #' # We can read the file back into an agent
 #' # with the `x_read_disk()` function and
 #' # we'll get all of the intel along with the
-#' # 'restored' agent
+#' # restored agent
 #' 
 #' # If you're consistently storing agents
 #' # from periodic runs of checking data, we
@@ -170,11 +172,11 @@
 #'   ) %>%
 #'   info_columns(
 #'     columns = starts_with("date"),
-#'     info = "Time-based values (e.g., `Sys.time()`)."
+#'     info = "Time-based values."
 #'   ) %>%
 #'   info_columns(
 #'     columns = "date",
-#'     info = "The date part of `date_time`. ((CALC))"
+#'     info = "The date part of `date_time`."
 #'   ) %>%
 #'   incorporate()
 #'
@@ -193,6 +195,19 @@
 #' # same informant object (as when it
 #' # was saved) by using `x_read_disk()`
 #' 
+#' # C: Writing a table scan to disk
+#' 
+#' # We can get an object describes all of
+#' # the data in the `dplyr::storms` dataset
+#' tbl_scan <- scan_data(tbl = dplyr::storms)
+#' 
+#' # The table scan object can be written
+#' # to a file with `x_write_disk()`
+#' x_write_disk(
+#'   tbl_scan,
+#'   filename = "tbl_scan-storms.rds"
+#' )
+#' 
 #' }
 #'   
 #' @family Object Ops
@@ -207,9 +222,18 @@ x_write_disk <- function(x,
                          keep_extracts = FALSE,
                          quiet = FALSE) {
 
-  if (!any(inherits(x, "ptblank_agent") | inherits(x, "ptblank_informant"))) {
+  if (
+    !any(
+      inherits(x, "ptblank_agent") |
+      inherits(x, "ptblank_informant") |
+      inherits(x, "ptblank_tbl_scan")
+      )
+    ) {
     stop(
-      "The object given as `x` is neither an agent nor an informant.", 
+      "The object provided isn't one of the three types that can be saved:\n",
+      "* the `agent` (`ptblank_agent`)\n",
+      "* the `informant()` (`ptblank_informant`)\n",
+      "* a table scan (`ptblank_tbl_scan`)",
       call. = FALSE
     )
   }
@@ -236,6 +260,7 @@ x_write_disk <- function(x,
       }
       
     } else if (!keep_tbl) {
+      
       x <- remove_tbl(x)
     }
     
@@ -244,8 +269,14 @@ x_write_disk <- function(x,
     }
     
     object_type <- "agent"
-  } else {
+    
+  } else if (inherits(x, "ptblank_informant")) {
+    
     object_type <- "informant"
+    
+  } else {
+    
+    object_type <- "table scan"
   }
   
   if (!is.null(path)) {
@@ -260,7 +291,7 @@ x_write_disk <- function(x,
   # Generate cli message w.r.t. written RDS file
   if (!quiet) {
     cli_bullet_msg(
-      msg = "The {object_type} file has been written to `{filename}`",
+      msg = "The {object_type} has been written as `{filename}`",
       bullet = cli::symbol$tick,
       color = "green"
     )
@@ -269,24 +300,24 @@ x_write_disk <- function(x,
   invisible(TRUE)
 }
 
-#' Read a **pointblank** *agent* or *informant* from disk
+#' Read a **pointblank** *agent*, *informant*, or table scan from disk
 #' 
 #' @description 
-#' An *agent* or *informant* that has been written to disk (with
+#' An *agent*, *informant*, or table scan that has been written to disk (with
 #' [x_write_disk()]) can be read back into memory with the `x_read_disk()`
-#' function. Once the *agent* or *informant* has been generated in this way, it
-#' may not have a data table associated with it (depending on whether the
-#' `keep_tbl` option was `TRUE` or `FALSE` when writing to disk) but it should
-#' still be able to produce reporting (by printing the *agent* or *informant* to
-#' the console or using [get_agent_report()]/[get_informant_report()]). An
-#' *agent* will return an x-list with [get_agent_x_list()] and yield any
-#' available data extracts with [get_data_extracts()]. Furthermore, all of an
-#' *agent*'s validation steps will still be present (along with results from the
-#' last interrogation).
+#' function. For an *agent* or an *informant* object that has been generated in
+#' this way, it may not have a data table associated with it (depending on
+#' whether the `keep_tbl` option was `TRUE` or `FALSE` when writing to disk) but
+#' it should still be able to produce reporting (by printing the *agent* or
+#' *informant* to the console or using
+#' [get_agent_report()]/[get_informant_report()]). An *agent* will return an
+#' x-list with [get_agent_x_list()] and yield any available data extracts with
+#' [get_data_extracts()]. Furthermore, all of an *agent*'s validation steps will
+#' still be present (along with results from the last interrogation).
 #' 
 #' @details
-#' Should the *agent* or *informant* possess a table-prep formula (can be set
-#' any time with [set_read_fn()]) or a specific table (settable with
+#' Should a written-to-disk *agent* or *informant* possess a table-prep formula
+#' (can be set any time with [set_read_fn()]) or a specific table (settable with
 #' [set_tbl()]) we could use the [interrogate()] or [incorporate()] function
 #' again. For a *data quality reporting* workflow, it is useful to
 #' [interrogate()] target tables that evolve over time. While the same
@@ -298,8 +329,11 @@ x_write_disk <- function(x,
 #' @param filename The name of a file that was previously written by
 #'   [x_write_disk()].
 #' @param path An optional path to the file (combined with `filename`).
+#' @param quiet Should the function *not* inform when the file is read? By
+#'   default this is `FALSE`.
 #' 
-#' @return Either a `ptblank_agent` or a `ptblank_informant` object.
+#' @return Either a `ptblank_agent`, `ptblank_informant`, or a
+#'   `ptblank_tbl_scan` object.
 #' 
 #' @examples
 #' if (interactive()) {
@@ -325,7 +359,16 @@ x_write_disk <- function(x,
 #' # we could read that to a new informant
 #' # with `x_read_disk()`
 #' informant <-
-#'   x_read_disk("informantt-small_table.rds")
+#'   x_read_disk("informant-small_table.rds")
+#' 
+#' # C: Reading a table scan from disk
+#' 
+#' # If there is a table scan written
+#' # to disk via `x_write_disk()` and it's
+#' # named "tbl_scan-storms.rds", we could
+#' # read it back into R with `x_read_disk()`
+#' tbl_scan <-
+#'   x_read_disk("tbl_scan-storms.rds")
 #' 
 #' }
 #' 
@@ -335,13 +378,39 @@ x_write_disk <- function(x,
 #' 
 #' @export
 x_read_disk <- function(filename,
-                        path = NULL) {
+                        path = NULL,
+                        quiet = FALSE) {
   
   if (!is.null(path)) {
     filename <- file.path(path, filename)
   }
   
-  readRDS(filename)
+  filename <- as.character(fs::path_norm(fs::path_expand(filename)))
+  
+  x <- readRDS(filename)
+  
+  if (quiet) {
+    return(x)
+  }
+  
+  if (inherits(x, "ptblank_agent")) {
+    object_type <- "agent"
+  } else if (inherits(x, "ptblank_informant")) {
+    object_type <- "informant"
+  } else if (inherits(x, "ptblank_tbl_scan")) {
+    object_type <- "table scan"
+  } else {
+    object_type <- "object"
+  }
+  
+  # Generate cli message w.r.t. read in RDS file
+  cli_bullet_msg(
+    msg = "The {object_type} has been read from `{filename}`",
+    bullet = cli::symbol$tick,
+    color = "green"
+  )
+  
+  x
 }
 
 #' Set a data table to an *agent* or *informant*

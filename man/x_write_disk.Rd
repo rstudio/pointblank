@@ -2,7 +2,7 @@
 % Please edit documentation in R/object_ops.R
 \name{x_write_disk}
 \alias{x_write_disk}
-\title{Write a \strong{pointblank} \emph{agent} or \emph{informant} to disk}
+\title{Write a \strong{pointblank} \emph{agent}, \emph{informant}, or table scan to disk}
 \usage{
 x_write_disk(
   x,
@@ -14,11 +14,11 @@ x_write_disk(
 )
 }
 \arguments{
-\item{x}{An \emph{agent} object of class \code{ptblank_agent}, or, an \emph{informant} of
-class \code{ptblank_informant}.}
+\item{x}{An \emph{agent} object of class \code{ptblank_agent}, an \emph{informant} of class
+\code{ptblank_informant}, or an table scan of class \code{ptblank_tbl_scan}.}
 
-\item{filename}{The filename to create on disk for the \code{agent} or
-\code{informant}.}
+\item{filename}{The filename to create on disk for the \code{agent}, \code{informant},
+or table scan.}
 
 \item{path}{An optional path to which the file should be saved (this is
 automatically combined with \code{filename}).}
@@ -32,7 +32,8 @@ database tables of the class \code{tbl_dbi} and for Spark DataFrames
 \code{TRUE}).}
 
 \item{keep_extracts}{An option to keep any collected extract data for failing
-rows. By default, this is \code{FALSE}.}
+rows. Only applies to \emph{agent} objects. By default, this is \code{FALSE} (i.e.,
+extract data is removed).}
 
 \item{quiet}{Should the function \emph{not} inform when the file is written? By
 default this is \code{FALSE}.}
@@ -41,13 +42,14 @@ default this is \code{FALSE}.}
 Invisibly returns \code{TRUE} if the file has been written.
 }
 \description{
-Writing an \emph{agent} or \emph{informant} to disk with \code{x_write_disk()} can be useful
-for keeping data validation intel or table information close at hand for
-later retrieval (with \code{\link[=x_read_disk]{x_read_disk()}}). By default, any data table that the
-\emph{agent} or \emph{informant} may have held before being committed to disk will be
-expunged. This behavior can be changed by setting \code{keep_tbl} to \code{TRUE} but
-this only works in the case where the table is not of the \code{tbl_dbi} or the
-\code{tbl_spark} class.
+Writing an \emph{agent}, \emph{informant}, or even a table scan to disk with
+\code{x_write_disk()} can be useful for keeping data validation intel or table
+information close at hand for later retrieval (with \code{\link[=x_read_disk]{x_read_disk()}}). By
+default, any data table that the \emph{agent} or \emph{informant} may have held before
+being committed to disk will be expunged (not applicable to any table scan
+since they never hold a table object). This behavior can be changed by
+setting \code{keep_tbl} to \code{TRUE} but this only works in the case where the table
+is not of the \code{tbl_dbi} or the \code{tbl_spark} class.
 }
 \details{
 It is recommended to set up a table-prep formula so that the \emph{agent} and
@@ -125,7 +127,7 @@ x_write_disk(
 # We can read the file back into an agent
 # with the `x_read_disk()` function and
 # we'll get all of the intel along with the
-# 'restored' agent
+# restored agent
 
 # If you're consistently storing agents
 # from periodic runs of checking data, we
@@ -176,11 +178,11 @@ informant <-
   ) \%>\%
   info_columns(
     columns = starts_with("date"),
-    info = "Time-based values (e.g., `Sys.time()`)."
+    info = "Time-based values."
   ) \%>\%
   info_columns(
     columns = "date",
-    info = "The date part of `date_time`. ((CALC))"
+    info = "The date part of `date_time`."
   ) \%>\%
   incorporate()
 
@@ -198,6 +200,19 @@ x_write_disk(
 # We can read the file back into the
 # same informant object (as when it
 # was saved) by using `x_read_disk()`
+
+# C: Writing a table scan to disk
+
+# We can get an object describes all of
+# the data in the `dplyr::storms` dataset
+tbl_scan <- scan_data(tbl = dplyr::storms)
+
+# The table scan object can be written
+# to a file with `x_write_disk()`
+x_write_disk(
+  tbl_scan,
+  filename = "tbl_scan-storms.rds"
+)
 
 }
   

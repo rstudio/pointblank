@@ -1578,7 +1578,7 @@ build_table_scan_page <- function(data,
       )
     )
   
-  class(table_scan) <- c("table_scan", class(table_scan))
+  class(table_scan) <- c("ptblank_tbl_scan", class(table_scan))
   
   table_scan
 }

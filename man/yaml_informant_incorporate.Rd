@@ -12,6 +12,9 @@ yaml_informant_incorporate(filename, path = NULL)
 
 \item{path}{An optional path to the YAML file (combined with \code{filename}).}
 }
+\value{
+A \code{ptblank_informant} object.
+}
 \description{
 The \code{yaml_informant_incorporate()} function operates much like the
 \code{\link[=yaml_read_informant]{yaml_read_informant()}} function (reading a \strong{pointblank} YAML file and

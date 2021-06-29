@@ -222,9 +222,18 @@ x_write_disk <- function(x,
                          keep_extracts = FALSE,
                          quiet = FALSE) {
 
-  if (!any(inherits(x, "ptblank_agent") | inherits(x, "ptblank_informant"))) {
+  if (
+    !any(
+      inherits(x, "ptblank_agent") |
+      inherits(x, "ptblank_informant") |
+      inherits(x, "ptblank_tbl_scan")
+      )
+    ) {
     stop(
-      "The object given as `x` is neither an agent nor an informant.", 
+      "The object provided isn't one of the three types that can be saved:\n",
+      "* the `agent` (`ptblank_agent`)\n",
+      "* the `informant()` (`ptblank_informant`)\n",
+      "* a table scan (`ptblank_tbl_scan`)",
       call. = FALSE
     )
   }

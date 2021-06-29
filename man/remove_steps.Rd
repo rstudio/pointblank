@@ -15,6 +15,8 @@ won't occur by index.}
 }
 \value{
 A \code{ptblank_agent} object.
+
+A \code{ptblank_agent} object.
 }
 \description{
 Validation steps can be removed from an \emph{agent} object through use of the

@@ -329,8 +329,11 @@ x_write_disk <- function(x,
 #' @param filename The name of a file that was previously written by
 #'   [x_write_disk()].
 #' @param path An optional path to the file (combined with `filename`).
+#' @param quiet Should the function *not* inform when the file is read? By
+#'   default this is `FALSE`.
 #' 
-#' @return Either a `ptblank_agent` or a `ptblank_informant` object.
+#' @return Either a `ptblank_agent`, `ptblank_informant`, or a
+#'   `ptblank_tbl_scan` object.
 #' 
 #' @examples
 #' if (interactive()) {

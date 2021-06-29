@@ -378,7 +378,8 @@ x_write_disk <- function(x,
 #' 
 #' @export
 x_read_disk <- function(filename,
-                        path = NULL) {
+                        path = NULL,
+                        quiet = FALSE) {
   
   if (!is.null(path)) {
     filename <- file.path(path, filename)

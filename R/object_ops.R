@@ -20,13 +20,14 @@
 #' Write a **pointblank** *agent*, *informant*, or table scan to disk
 #' 
 #' @description 
-#' Writing an *agent* or *informant* to disk with `x_write_disk()` can be useful
-#' for keeping data validation intel or table information close at hand for
-#' later retrieval (with [x_read_disk()]). By default, any data table that the
-#' *agent* or *informant* may have held before being committed to disk will be
-#' expunged. This behavior can be changed by setting `keep_tbl` to `TRUE` but
-#' this only works in the case where the table is not of the `tbl_dbi` or the
-#' `tbl_spark` class.
+#' Writing an *agent*, *informant*, or even a table scan to disk with
+#' `x_write_disk()` can be useful for keeping data validation intel or table
+#' information close at hand for later retrieval (with [x_read_disk()]). By
+#' default, any data table that the *agent* or *informant* may have held before
+#' being committed to disk will be expunged (not applicable to any table scan
+#' since they never hold a table object). This behavior can be changed by
+#' setting `keep_tbl` to `TRUE` but this only works in the case where the table
+#' is not of the `tbl_dbi` or the `tbl_spark` class.
 #'
 #' @details
 #' It is recommended to set up a table-prep formula so that the *agent* and

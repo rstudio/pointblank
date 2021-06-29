@@ -37,10 +37,10 @@
 #' Alternatively, we can reintroduce the *agent* or *informant* to a data table
 #' with the [set_tbl()] function.
 #' 
-#' @param x An *agent* object of class `ptblank_agent`, or, an *informant* of
-#'   class `ptblank_informant`.
-#' @param filename The filename to create on disk for the `agent` or
-#'   `informant`.
+#' @param x An *agent* object of class `ptblank_agent`, an *informant* of class
+#'   `ptblank_informant`, or an table scan of class `ptblank_tbl_scan`.
+#' @param filename The filename to create on disk for the `agent`, `informant`,
+#'   or table scan.
 #' @param path An optional path to which the file should be saved (this is
 #'   automatically combined with `filename`).
 #' @param keep_tbl An option to keep a data table that is associated with the
@@ -51,7 +51,8 @@
 #'   (`tbl_spark`) the table is always removed (even if `keep_tbl` is set to
 #'   `TRUE`).
 #' @param keep_extracts An option to keep any collected extract data for failing
-#'   rows. By default, this is `FALSE`.
+#'   rows. Only applies to *agent* objects. By default, this is `FALSE` (i.e.,
+#'   extract data is removed).
 #' @param quiet Should the function *not* inform when the file is written? By
 #'   default this is `FALSE`.
 #'   

@@ -17,7 +17,7 @@
 #
 
 
-#' Write a **pointblank** *agent* or *informant* to disk
+#' Write a **pointblank** *agent*, *informant*, or table scan to disk
 #' 
 #' @description 
 #' Writing an *agent* or *informant* to disk with `x_write_disk()` can be useful

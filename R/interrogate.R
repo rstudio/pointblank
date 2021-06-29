@@ -19,6 +19,7 @@
 
 #' Given an agent that has a validation plan, perform an interrogation
 #'
+#' @description 
 #' When the agent has all the information on what to do (i.e., a validation plan
 #' which is a series of validation steps), the interrogation process can occur
 #' according its plan. After that, the agent will have gathered intel, and we

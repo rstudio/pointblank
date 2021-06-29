@@ -300,7 +300,7 @@ x_write_disk <- function(x,
   invisible(TRUE)
 }
 
-#' Read a **pointblank** *agent* or *informant* from disk
+#' Read a **pointblank** *agent*, *informant*, or table scan from disk
 #' 
 #' @description 
 #' An *agent* or *informant* that has been written to disk (with

@@ -240,7 +240,8 @@ representation.</p></td>
 <span class='r-in'><span class='co'># of the target table</span></span>
 <span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span> </span>
 <span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
-<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span><span class='va'>small_table</span>,</span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,</span>
+<span class='r-in'>    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,</span>
 <span class='r-in'>    label <span class='op'>=</span> <span class='st'>"A simple example with the `small_table`."</span>,</span>
 <span class='r-in'>    actions <span class='op'>=</span> <span class='fu'><a href='action_levels.html'>action_levels</a></span><span class='op'>(</span></span>
 <span class='r-in'>      warn_at <span class='op'>=</span> <span class='fl'>0.10</span>,</span>
@@ -269,9 +270,9 @@ representation.</p></td>
 <span class='r-in'>  filename <span class='op'>=</span> <span class='st'>"agent-small_table.yml"</span></span>
 <span class='r-in'><span class='op'>)</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='co'># The 'agent-small_table.yml' file is</span></span>
-<span class='r-in'><span class='co'># available in the package through</span></span>
-<span class='r-in'><span class='co'># `system.file()`</span></span>
+<span class='r-in'><span class='co'># There's a similar file in the package</span></span>
+<span class='r-in'><span class='co'># ('agent-small_table.yml') and it's</span></span>
+<span class='r-in'><span class='co'># accessible with `system.file()`</span></span>
 <span class='r-in'><span class='va'>yml_file</span> <span class='op'>&lt;-</span> </span>
 <span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span></span>
 <span class='r-in'>    <span class='st'>"yaml"</span>, <span class='st'>"agent-small_table.yml"</span>,</span>
@@ -279,11 +280,12 @@ representation.</p></td>
 <span class='r-in'>  <span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># The `yaml_agent_string()` function can</span></span>
-<span class='r-in'><span class='co'># be used with the YAML file as well</span></span>
+<span class='r-in'><span class='co'># be used with the YAML file as well,</span></span>
+<span class='r-in'><span class='co'># use the `filename` argument instead</span></span>
 <span class='r-in'><span class='fu'>yaml_agent_string</span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='co'># At a later time, the YAML file can</span></span>
-<span class='r-in'><span class='co'># be read into a new agent with the</span></span>
+<span class='r-in'><span class='co'># At some later time, the YAML file can</span></span>
+<span class='r-in'><span class='co'># be read as a new agent with the</span></span>
 <span class='r-in'><span class='co'># `yaml_read_agent()` function</span></span>
 <span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='yaml_read_agent.html'>yaml_read_agent</a></span><span class='op'>(</span>filename <span class='op'>=</span> <span class='va'>yml_file</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span></span>

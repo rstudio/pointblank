@@ -195,6 +195,19 @@
 #' # same informant object (as when it
 #' # was saved) by using `x_read_disk()`
 #' 
+#' # C: Writing a table scan to disk
+#' 
+#' # We can get an object describes all of
+#' # the data in the `dplyr::storms` dataset
+#' tbl_scan <- scan_data(tbl = dplyr::storms)
+#' 
+#' # The table scan object can be written
+#' # to a file with `x_write_disk()`
+#' x_write_disk(
+#'   tbl_scan,
+#'   filename = "tbl_scan-storms.rds"
+#' )
+#' 
 #' }
 #'   
 #' @family Object Ops

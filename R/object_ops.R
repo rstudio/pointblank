@@ -303,17 +303,17 @@ x_write_disk <- function(x,
 #' Read a **pointblank** *agent*, *informant*, or table scan from disk
 #' 
 #' @description 
-#' An *agent* or *informant* that has been written to disk (with
+#' An *agent*, *informant*, or table scan that has been written to disk (with
 #' [x_write_disk()]) can be read back into memory with the `x_read_disk()`
-#' function. Once the *agent* or *informant* has been generated in this way, it
-#' may not have a data table associated with it (depending on whether the
-#' `keep_tbl` option was `TRUE` or `FALSE` when writing to disk) but it should
-#' still be able to produce reporting (by printing the *agent* or *informant* to
-#' the console or using [get_agent_report()]/[get_informant_report()]). An
-#' *agent* will return an x-list with [get_agent_x_list()] and yield any
-#' available data extracts with [get_data_extracts()]. Furthermore, all of an
-#' *agent*'s validation steps will still be present (along with results from the
-#' last interrogation).
+#' function. For an *agent* or an *informant* object that has been generated in
+#' this way, it may not have a data table associated with it (depending on
+#' whether the `keep_tbl` option was `TRUE` or `FALSE` when writing to disk) but
+#' it should still be able to produce reporting (by printing the *agent* or
+#' *informant* to the console or using
+#' [get_agent_report()]/[get_informant_report()]). An *agent* will return an
+#' x-list with [get_agent_x_list()] and yield any available data extracts with
+#' [get_data_extracts()]. Furthermore, all of an *agent*'s validation steps will
+#' still be present (along with results from the last interrogation).
 #' 
 #' @details
 #' Should the *agent* or *informant* possess a table-prep formula (can be set

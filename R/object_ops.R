@@ -316,8 +316,8 @@ x_write_disk <- function(x,
 #' still be present (along with results from the last interrogation).
 #' 
 #' @details
-#' Should the *agent* or *informant* possess a table-prep formula (can be set
-#' any time with [set_read_fn()]) or a specific table (settable with
+#' Should a written-to-disk *agent* or *informant* possess a table-prep formula
+#' (can be set any time with [set_read_fn()]) or a specific table (settable with
 #' [set_tbl()]) we could use the [interrogate()] or [incorporate()] function
 #' again. For a *data quality reporting* workflow, it is useful to
 #' [interrogate()] target tables that evolve over time. While the same

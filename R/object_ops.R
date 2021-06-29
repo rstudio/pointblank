@@ -172,11 +172,11 @@
 #'   ) %>%
 #'   info_columns(
 #'     columns = starts_with("date"),
-#'     info = "Time-based values (e.g., `Sys.time()`)."
+#'     info = "Time-based values."
 #'   ) %>%
 #'   info_columns(
 #'     columns = "date",
-#'     info = "The date part of `date_time`. ((CALC))"
+#'     info = "The date part of `date_time`."
 #'   ) %>%
 #'   incorporate()
 #'

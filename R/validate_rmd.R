@@ -23,6 +23,7 @@ test_options <- new.env(parent = emptyenv())
 
 #' Modify **pointblank** validation testing options within R Markdown documents
 #' 
+#' @description 
 #' Using **pointblank** in an R Markdown workflow is enabled by default once the
 #' **pointblank** library is loaded. The framework allows for validation testing
 #' within specialized validation code chunks where the `validate = TRUE` option

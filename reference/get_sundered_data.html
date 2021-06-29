@@ -264,11 +264,13 @@ the input table.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Create a series of two validation</span></span>
 <span class='r-in'><span class='co'># steps focused on testing row values</span></span>
-<span class='r-in'><span class='co'># for the `small_table` object;</span></span>
+<span class='r-in'><span class='co'># for part of the `small_table` object;</span></span>
 <span class='r-in'><span class='co'># `interrogate()` immediately</span></span>
 <span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span></span>
 <span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
-<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>      <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>:</span><span class='va'>f</span><span class='op'>)</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"`get_sundered_data()`"</span></span>
 <span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='col_vals_between.html'>col_vals_between</a></span><span class='op'>(</span></span>
@@ -283,14 +285,14 @@ the input table.</p>
 <span class='r-in'><span class='co'># validation steps (the default piece);</span></span>
 <span class='r-in'><span class='co'># this yields 5 of 13 total rows</span></span>
 <span class='r-in'><span class='va'>agent</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> <span class='fu'>get_sundered_data</span><span class='op'>(</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 5 x 8</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   date_time           date           a b             c      d e     f    </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> 2016-01-04 <span style='color: #949494;'>11:00:00</span> 2016-01-04     2 1-bcd-345     3  <span style='text-decoration: underline;'>3</span>423. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> 2016-01-04 <span style='color: #949494;'>00:32:00</span> 2016-01-04     3 5-egh-163     8 <span style='text-decoration: underline;'>10</span>000. TRUE  low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> 2016-01-06 <span style='color: #949494;'>17:23:00</span> 2016-01-06     2 5-jdo-903    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>3</span>892. FALSE mid  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> 2016-01-11 <span style='color: #949494;'>06:15:00</span> 2016-01-11     4 2-dhe-923     4  <span style='text-decoration: underline;'>3</span>291. TRUE  mid  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> 2016-01-30 <span style='color: #949494;'>11:23:00</span> 2016-01-30     1 3-dka-303    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>2</span>230. TRUE  high </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 5 x 6</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       a b             c      d e     f    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     2 1-bcd-345     3  <span style='text-decoration: underline;'>3</span>423. TRUE  high </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     3 5-egh-163     8 <span style='text-decoration: underline;'>10</span>000. TRUE  low  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>     2 5-jdo-903    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>3</span>892. FALSE mid  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span>     4 2-dhe-923     4  <span style='text-decoration: underline;'>3</span>291. TRUE  mid  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span>     1 3-dka-303    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>2</span>230. TRUE  high </span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># Get the complementary data piece:</span></span>
 <span class='r-in'><span class='co'># all of those rows that failed either</span></span>
@@ -298,17 +300,17 @@ the input table.</p>
 <span class='r-in'><span class='co'># this yields 8 of 13 total rows</span></span>
 <span class='r-in'><span class='va'>agent</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'>get_sundered_data</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"fail"</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 8 x 8</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   date_time           date           a b             c     d e     f    </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> 2016-01-05 <span style='color: #949494;'>13:32:00</span> 2016-01-05     6 8-kdg-938     3 <span style='text-decoration: underline;'>2</span>343. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> 2016-01-09 <span style='color: #949494;'>12:36:00</span> 2016-01-09     8 3-ldm-038     7  284. TRUE  low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> 2016-01-15 <span style='color: #949494;'>18:46:00</span> 2016-01-15     7 1-knw-093     3  843. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> 2016-01-17 <span style='color: #949494;'>11:27:00</span> 2016-01-17     4 5-boe-639     2 <span style='text-decoration: underline;'>1</span>036. FALSE low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> 2016-01-20 <span style='color: #949494;'>04:30:00</span> 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> 2016-01-20 <span style='color: #949494;'>04:30:00</span> 2016-01-20     3 5-bce-642     9  838. FALSE high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>7</span> 2016-01-26 <span style='color: #949494;'>20:07:00</span> 2016-01-26     4 2-dmx-010     7  834. TRUE  low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>8</span> 2016-01-28 <span style='color: #949494;'>02:51:00</span> 2016-01-28     2 7-dmx-010     8  108. FALSE low  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 8 x 6</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       a b             c     d e     f    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     6 8-kdg-938     3 <span style='text-decoration: underline;'>2</span>343. TRUE  high </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     8 3-ldm-038     7  284. TRUE  low  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>     7 1-knw-093     3  843. TRUE  high </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span>     4 5-boe-639     2 <span style='text-decoration: underline;'>1</span>036. FALSE low  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span>     3 5-bce-642     9  838. FALSE high </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span>     3 5-bce-642     9  838. FALSE high </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>7</span>     4 2-dmx-010     7  834. TRUE  low  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>8</span>     2 7-dmx-010     8  108. FALSE low  </span>
 <span class='r-in'>  </span>
 <span class='r-in'><span class='co'># We can get all of the input data</span></span>
 <span class='r-in'><span class='co'># returned with a flag column (called</span></span>
@@ -318,23 +320,22 @@ the input table.</p>
 <span class='r-in'><span class='co'># and `"fail"` values</span></span>
 <span class='r-in'><span class='va'>agent</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'>get_sundered_data</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"combined"</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 13 x 9</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    date_time           date           a b             c      d e     f    </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> 2016-01-04 <span style='color: #949494;'>11:00:00</span> 2016-01-04     2 1-bcd-345     3  <span style='text-decoration: underline;'>3</span>423. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> 2016-01-04 <span style='color: #949494;'>00:32:00</span> 2016-01-04     3 5-egh-163     8 <span style='text-decoration: underline;'>10</span>000. TRUE  low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> 2016-01-05 <span style='color: #949494;'>13:32:00</span> 2016-01-05     6 8-kdg-938     3  <span style='text-decoration: underline;'>2</span>343. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> 2016-01-06 <span style='color: #949494;'>17:23:00</span> 2016-01-06     2 5-jdo-903    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>3</span>892. FALSE mid  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> 2016-01-09 <span style='color: #949494;'>12:36:00</span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> 2016-01-11 <span style='color: #949494;'>06:15:00</span> 2016-01-11     4 2-dhe-923     4  <span style='text-decoration: underline;'>3</span>291. TRUE  mid  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> 2016-01-15 <span style='color: #949494;'>18:46:00</span> 2016-01-15     7 1-knw-093     3   843. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> 2016-01-17 <span style='color: #949494;'>11:27:00</span> 2016-01-17     4 5-boe-639     2  <span style='text-decoration: underline;'>1</span>036. FALSE low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> 2016-01-20 <span style='color: #949494;'>04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> 2016-01-20 <span style='color: #949494;'>04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span> 2016-01-26 <span style='color: #949494;'>20:07:00</span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span> 2016-01-28 <span style='color: #949494;'>02:51:00</span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span> 2016-01-30 <span style='color: #949494;'>11:23:00</span> 2016-01-30     1 3-dka-303    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>2</span>230. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 1 more variable: .pb_combined &lt;chr&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 13 x 7</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        a b             c      d e     f     .pb_combined</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>     2 1-bcd-345     3  <span style='text-decoration: underline;'>3</span>423. TRUE  high  pass        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>     3 5-egh-163     8 <span style='text-decoration: underline;'>10</span>000. TRUE  low   pass        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>     6 8-kdg-938     3  <span style='text-decoration: underline;'>2</span>343. TRUE  high  fail        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>     2 5-jdo-903    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>3</span>892. FALSE mid   pass        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>     8 3-ldm-038     7   284. TRUE  low   fail        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>     4 2-dhe-923     4  <span style='text-decoration: underline;'>3</span>291. TRUE  mid   pass        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>     7 1-knw-093     3   843. TRUE  high  fail        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>     4 5-boe-639     2  <span style='text-decoration: underline;'>1</span>036. FALSE low   fail        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>     3 5-bce-642     9   838. FALSE high  fail        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>     3 5-bce-642     9   838. FALSE high  fail        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span>     4 2-dmx-010     7   834. TRUE  low   fail        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span>     2 7-dmx-010     8   108. FALSE low   fail        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span>     1 3-dka-303    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>2</span>230. TRUE  high  pass        </span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># We can change the `"pass"` or `"fail"`</span></span>
 <span class='r-in'><span class='co'># text values to another type of coding</span></span>
@@ -345,23 +346,22 @@ the input table.</p>
 <span class='r-in'>    type <span class='op'>=</span> <span class='st'>"combined"</span>,</span>
 <span class='r-in'>    pass_fail <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span><span class='op'>)</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 13 x 9</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    date_time           date           a b             c      d e     f    </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> 2016-01-04 <span style='color: #949494;'>11:00:00</span> 2016-01-04     2 1-bcd-345     3  <span style='text-decoration: underline;'>3</span>423. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> 2016-01-04 <span style='color: #949494;'>00:32:00</span> 2016-01-04     3 5-egh-163     8 <span style='text-decoration: underline;'>10</span>000. TRUE  low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> 2016-01-05 <span style='color: #949494;'>13:32:00</span> 2016-01-05     6 8-kdg-938     3  <span style='text-decoration: underline;'>2</span>343. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> 2016-01-06 <span style='color: #949494;'>17:23:00</span> 2016-01-06     2 5-jdo-903    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>3</span>892. FALSE mid  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> 2016-01-09 <span style='color: #949494;'>12:36:00</span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> 2016-01-11 <span style='color: #949494;'>06:15:00</span> 2016-01-11     4 2-dhe-923     4  <span style='text-decoration: underline;'>3</span>291. TRUE  mid  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> 2016-01-15 <span style='color: #949494;'>18:46:00</span> 2016-01-15     7 1-knw-093     3   843. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> 2016-01-17 <span style='color: #949494;'>11:27:00</span> 2016-01-17     4 5-boe-639     2  <span style='text-decoration: underline;'>1</span>036. FALSE low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> 2016-01-20 <span style='color: #949494;'>04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> 2016-01-20 <span style='color: #949494;'>04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span> 2016-01-26 <span style='color: #949494;'>20:07:00</span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span> 2016-01-28 <span style='color: #949494;'>02:51:00</span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span> 2016-01-30 <span style='color: #949494;'>11:23:00</span> 2016-01-30     1 3-dka-303    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>2</span>230. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 1 more variable: .pb_combined &lt;lgl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 13 x 7</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        a b             c      d e     f     .pb_combined</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>     2 1-bcd-345     3  <span style='text-decoration: underline;'>3</span>423. TRUE  high  TRUE        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>     3 5-egh-163     8 <span style='text-decoration: underline;'>10</span>000. TRUE  low   TRUE        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>     6 8-kdg-938     3  <span style='text-decoration: underline;'>2</span>343. TRUE  high  FALSE       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>     2 5-jdo-903    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>3</span>892. FALSE mid   TRUE        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>     8 3-ldm-038     7   284. TRUE  low   FALSE       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>     4 2-dhe-923     4  <span style='text-decoration: underline;'>3</span>291. TRUE  mid   TRUE        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>     7 1-knw-093     3   843. TRUE  high  FALSE       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>     4 5-boe-639     2  <span style='text-decoration: underline;'>1</span>036. FALSE low   FALSE       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>     3 5-bce-642     9   838. FALSE high  FALSE       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>     3 5-bce-642     9   838. FALSE high  FALSE       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span>     4 2-dmx-010     7   834. TRUE  low   FALSE       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span>     2 7-dmx-010     8   108. FALSE low   FALSE       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span>     1 3-dka-303    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>2</span>230. TRUE  high  TRUE        </span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># ...and using `0` and `1` might be</span></span>
 <span class='r-in'><span class='co'># worthwhile in some situations</span></span>
@@ -370,23 +370,22 @@ the input table.</p>
 <span class='r-in'>    type <span class='op'>=</span> <span class='st'>"combined"</span>,</span>
 <span class='r-in'>    pass_fail <span class='op'>=</span> <span class='fl'>0</span><span class='op'>:</span><span class='fl'>1</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 13 x 9</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    date_time           date           a b             c      d e     f    </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> 2016-01-04 <span style='color: #949494;'>11:00:00</span> 2016-01-04     2 1-bcd-345     3  <span style='text-decoration: underline;'>3</span>423. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> 2016-01-04 <span style='color: #949494;'>00:32:00</span> 2016-01-04     3 5-egh-163     8 <span style='text-decoration: underline;'>10</span>000. TRUE  low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> 2016-01-05 <span style='color: #949494;'>13:32:00</span> 2016-01-05     6 8-kdg-938     3  <span style='text-decoration: underline;'>2</span>343. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> 2016-01-06 <span style='color: #949494;'>17:23:00</span> 2016-01-06     2 5-jdo-903    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>3</span>892. FALSE mid  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> 2016-01-09 <span style='color: #949494;'>12:36:00</span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> 2016-01-11 <span style='color: #949494;'>06:15:00</span> 2016-01-11     4 2-dhe-923     4  <span style='text-decoration: underline;'>3</span>291. TRUE  mid  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> 2016-01-15 <span style='color: #949494;'>18:46:00</span> 2016-01-15     7 1-knw-093     3   843. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> 2016-01-17 <span style='color: #949494;'>11:27:00</span> 2016-01-17     4 5-boe-639     2  <span style='text-decoration: underline;'>1</span>036. FALSE low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> 2016-01-20 <span style='color: #949494;'>04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> 2016-01-20 <span style='color: #949494;'>04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span> 2016-01-26 <span style='color: #949494;'>20:07:00</span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span> 2016-01-28 <span style='color: #949494;'>02:51:00</span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span> 2016-01-30 <span style='color: #949494;'>11:23:00</span> 2016-01-30     1 3-dka-303    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>2</span>230. TRUE  high </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 1 more variable: .pb_combined &lt;int&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 13 x 7</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        a b             c      d e     f     .pb_combined</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>     2 1-bcd-345     3  <span style='text-decoration: underline;'>3</span>423. TRUE  high             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>     3 5-egh-163     8 <span style='text-decoration: underline;'>10</span>000. TRUE  low              0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>     6 8-kdg-938     3  <span style='text-decoration: underline;'>2</span>343. TRUE  high             1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>     2 5-jdo-903    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>3</span>892. FALSE mid              0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>     8 3-ldm-038     7   284. TRUE  low              1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>     4 2-dhe-923     4  <span style='text-decoration: underline;'>3</span>291. TRUE  mid              0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>     7 1-knw-093     3   843. TRUE  high             1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>     4 5-boe-639     2  <span style='text-decoration: underline;'>1</span>036. FALSE low              1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>     3 5-bce-642     9   838. FALSE high             1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>     3 5-bce-642     9   838. FALSE high             1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span>     4 2-dmx-010     7   834. TRUE  low              1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span>     2 7-dmx-010     8   108. FALSE low              1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span>     1 3-dka-303    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>2</span>230. TRUE  high             0</span>
 <span class='r-in'></span>
 </code></pre></div>
   </div>

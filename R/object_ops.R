@@ -359,7 +359,16 @@ x_write_disk <- function(x,
 #' # we could read that to a new informant
 #' # with `x_read_disk()`
 #' informant <-
-#'   x_read_disk("informantt-small_table.rds")
+#'   x_read_disk("informant-small_table.rds")
+#' 
+#' # C: Reading a table scan from disk
+#' 
+#' # If there is a table scan written
+#' # to disk via `x_write_disk()` and it's
+#' # named "tbl_scan-storms.rds", we could
+#' # read it back into R with `x_read_disk()`
+#' tbl_scan <-
+#'   x_read_disk("tbl_scan-storms.rds")
 #' 
 #' }
 #' 

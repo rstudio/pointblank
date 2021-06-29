@@ -321,6 +321,7 @@ yaml_write <- function(...,
 
 #' Display **pointblank** YAML using an agent or a YAML file
 #' 
+#' @description 
 #' With **pointblank** YAML, we can serialize an agent's validation plan (with
 #' [yaml_write()]), read it back later with a new agent (with
 #' [yaml_read_agent()]), or perform an interrogation on the target data table

@@ -253,10 +253,10 @@
     <loc>/reference/print.ptblank_multiagent.html</loc>
   </url>
   <url>
-    <loc>/reference/print.read_fn.html</loc>
+    <loc>/reference/print.ptblank_tbl_scan.html</loc>
   </url>
   <url>
-    <loc>/reference/print.table_scan.html</loc>
+    <loc>/reference/print.read_fn.html</loc>
   </url>
   <url>
     <loc>/reference/print.tbl_store.html</loc>

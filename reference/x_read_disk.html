@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read a pointblank agent or informant from disk — x_read_disk • pointblank</title>
+<title>Read a pointblank agent, informant, or table scan from disk — x_read_disk • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,18 +46,18 @@
 
 
 
-<meta property="og:title" content="Read a pointblank agent or informant from disk — x_read_disk" />
-<meta property="og:description" content="An agent or informant that has been written to disk (with
+<meta property="og:title" content="Read a pointblank agent, informant, or table scan from disk — x_read_disk" />
+<meta property="og:description" content="An agent, informant, or table scan that has been written to disk (with
 x_write_disk()) can be read back into memory with the x_read_disk()
-function. Once the agent or informant has been generated in this way, it
-may not have a data table associated with it (depending on whether the
-keep_tbl option was TRUE or FALSE when writing to disk) but it should
-still be able to produce reporting (by printing the agent or informant to
-the console or using get_agent_report()/get_informant_report()). An
-agent will return an x-list with get_agent_x_list() and yield any
-available data extracts with get_data_extracts(). Furthermore, all of an
-agent's validation steps will still be present (along with results from the
-last interrogation)." />
+function. For an agent or an informant object that has been generated in
+this way, it may not have a data table associated with it (depending on
+whether the keep_tbl option was TRUE or FALSE when writing to disk) but
+it should still be able to produce reporting (by printing the agent or
+informant to the console or using
+get_agent_report()/get_informant_report()). An agent will return an
+x-list with get_agent_x_list() and yield any available data extracts with
+get_data_extracts(). Furthermore, all of an agent's validation steps will
+still be present (along with results from the last interrogation)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -169,26 +169,26 @@ last interrogation)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read a <strong>pointblank</strong> <em>agent</em> or <em>informant</em> from disk</h1>
+    <h1>Read a <strong>pointblank</strong> <em>agent</em>, <em>informant</em>, or table scan from disk</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/object_ops.R'><code>R/object_ops.R</code></a></small>
     <div class="hidden name"><code>x_read_disk.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>An <em>agent</em> or <em>informant</em> that has been written to disk (with
+    <p>An <em>agent</em>, <em>informant</em>, or table scan that has been written to disk (with
 <code><a href='x_write_disk.html'>x_write_disk()</a></code>) can be read back into memory with the <code>x_read_disk()</code>
-function. Once the <em>agent</em> or <em>informant</em> has been generated in this way, it
-may not have a data table associated with it (depending on whether the
-<code>keep_tbl</code> option was <code>TRUE</code> or <code>FALSE</code> when writing to disk) but it should
-still be able to produce reporting (by printing the <em>agent</em> or <em>informant</em> to
-the console or using <code><a href='get_agent_report.html'>get_agent_report()</a></code>/<code><a href='get_informant_report.html'>get_informant_report()</a></code>). An
-<em>agent</em> will return an x-list with <code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> and yield any
-available data extracts with <code><a href='get_data_extracts.html'>get_data_extracts()</a></code>. Furthermore, all of an
-<em>agent</em>'s validation steps will still be present (along with results from the
-last interrogation).</p>
+function. For an <em>agent</em> or an <em>informant</em> object that has been generated in
+this way, it may not have a data table associated with it (depending on
+whether the <code>keep_tbl</code> option was <code>TRUE</code> or <code>FALSE</code> when writing to disk) but
+it should still be able to produce reporting (by printing the <em>agent</em> or
+<em>informant</em> to the console or using
+<code><a href='get_agent_report.html'>get_agent_report()</a></code>/<code><a href='get_informant_report.html'>get_informant_report()</a></code>). An <em>agent</em> will return an
+x-list with <code><a href='get_agent_x_list.html'>get_agent_x_list()</a></code> and yield any available data extracts with
+<code><a href='get_data_extracts.html'>get_data_extracts()</a></code>. Furthermore, all of an <em>agent</em>'s validation steps will
+still be present (along with results from the last interrogation).</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>x_read_disk</span><span class='op'>(</span><span class='va'>filename</span>, path <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>x_read_disk</span><span class='op'>(</span><span class='va'>filename</span>, path <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -202,15 +202,21 @@ last interrogation).</p>
       <th>path</th>
       <td><p>An optional path to the file (combined with <code>filename</code>).</p></td>
     </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Should the function <em>not</em> inform when the file is read? By
+default this is <code>FALSE</code>.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Either a <code>ptblank_agent</code> or a <code>ptblank_informant</code> object.</p>
+    <p>Either a <code>ptblank_agent</code>, <code>ptblank_informant</code>, or a
+<code>ptblank_tbl_scan</code> object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Should the <em>agent</em> or <em>informant</em> possess a table-prep formula (can be set
-any time with <code><a href='set_read_fn.html'>set_read_fn()</a></code>) or a specific table (settable with
+    <p>Should a written-to-disk <em>agent</em> or <em>informant</em> possess a table-prep formula
+(can be set any time with <code><a href='set_read_fn.html'>set_read_fn()</a></code>) or a specific table (settable with
 <code><a href='set_tbl.html'>set_tbl()</a></code>) we could use the <code><a href='interrogate.html'>interrogate()</a></code> or <code><a href='incorporate.html'>incorporate()</a></code> function
 again. For a <em>data quality reporting</em> workflow, it is useful to
 <code><a href='interrogate.html'>interrogate()</a></code> target tables that evolve over time. While the same
@@ -259,7 +265,16 @@ table dimensions, and info snippets/text will be regenerated.</p>
 <span class='r-in'><span class='co'># we could read that to a new informant</span></span>
 <span class='r-in'><span class='co'># with `x_read_disk()`</span></span>
 <span class='r-in'><span class='va'>informant</span> <span class='op'>&lt;-</span></span>
-<span class='r-in'>  <span class='fu'>x_read_disk</span><span class='op'>(</span><span class='st'>"informantt-small_table.rds"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>x_read_disk</span><span class='op'>(</span><span class='st'>"informant-small_table.rds"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># C: Reading a table scan from disk</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># If there is a table scan written</span></span>
+<span class='r-in'><span class='co'># to disk via `x_write_disk()` and it's</span></span>
+<span class='r-in'><span class='co'># named "tbl_scan-storms.rds", we could</span></span>
+<span class='r-in'><span class='co'># read it back into R with `x_read_disk()`</span></span>
+<span class='r-in'><span class='va'>tbl_scan</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'>x_read_disk</span><span class='op'>(</span><span class='st'>"tbl_scan-storms.rds"</span><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='op'>}</span></span>
 <span class='r-in'></span>

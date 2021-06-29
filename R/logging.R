@@ -19,6 +19,7 @@
 
 #' Enable logging of failure conditions at the validation step level
 #' 
+#' @description 
 #' The `log4r_step()` function can be used as an action in the [action_levels()]
 #' function (as a list component for the `fns` list). Place a call to this
 #' function in every failure condition that should produce a log (i.e., `warn`,

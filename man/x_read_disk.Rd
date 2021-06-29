@@ -2,35 +2,39 @@
 % Please edit documentation in R/object_ops.R
 \name{x_read_disk}
 \alias{x_read_disk}
-\title{Read a \strong{pointblank} \emph{agent} or \emph{informant} from disk}
+\title{Read a \strong{pointblank} \emph{agent}, \emph{informant}, or table scan from disk}
 \usage{
-x_read_disk(filename, path = NULL)
+x_read_disk(filename, path = NULL, quiet = FALSE)
 }
 \arguments{
 \item{filename}{The name of a file that was previously written by
 \code{\link[=x_write_disk]{x_write_disk()}}.}
 
 \item{path}{An optional path to the file (combined with \code{filename}).}
+
+\item{quiet}{Should the function \emph{not} inform when the file is read? By
+default this is \code{FALSE}.}
 }
 \value{
-Either a \code{ptblank_agent} or a \code{ptblank_informant} object.
+Either a \code{ptblank_agent}, \code{ptblank_informant}, or a
+\code{ptblank_tbl_scan} object.
 }
 \description{
-An \emph{agent} or \emph{informant} that has been written to disk (with
+An \emph{agent}, \emph{informant}, or table scan that has been written to disk (with
 \code{\link[=x_write_disk]{x_write_disk()}}) can be read back into memory with the \code{x_read_disk()}
-function. Once the \emph{agent} or \emph{informant} has been generated in this way, it
-may not have a data table associated with it (depending on whether the
-\code{keep_tbl} option was \code{TRUE} or \code{FALSE} when writing to disk) but it should
-still be able to produce reporting (by printing the \emph{agent} or \emph{informant} to
-the console or using \code{\link[=get_agent_report]{get_agent_report()}}/\code{\link[=get_informant_report]{get_informant_report()}}). An
-\emph{agent} will return an x-list with \code{\link[=get_agent_x_list]{get_agent_x_list()}} and yield any
-available data extracts with \code{\link[=get_data_extracts]{get_data_extracts()}}. Furthermore, all of an
-\emph{agent}'s validation steps will still be present (along with results from the
-last interrogation).
+function. For an \emph{agent} or an \emph{informant} object that has been generated in
+this way, it may not have a data table associated with it (depending on
+whether the \code{keep_tbl} option was \code{TRUE} or \code{FALSE} when writing to disk) but
+it should still be able to produce reporting (by printing the \emph{agent} or
+\emph{informant} to the console or using
+\code{\link[=get_agent_report]{get_agent_report()}}/\code{\link[=get_informant_report]{get_informant_report()}}). An \emph{agent} will return an
+x-list with \code{\link[=get_agent_x_list]{get_agent_x_list()}} and yield any available data extracts with
+\code{\link[=get_data_extracts]{get_data_extracts()}}. Furthermore, all of an \emph{agent}'s validation steps will
+still be present (along with results from the last interrogation).
 }
 \details{
-Should the \emph{agent} or \emph{informant} possess a table-prep formula (can be set
-any time with \code{\link[=set_read_fn]{set_read_fn()}}) or a specific table (settable with
+Should a written-to-disk \emph{agent} or \emph{informant} possess a table-prep formula
+(can be set any time with \code{\link[=set_read_fn]{set_read_fn()}}) or a specific table (settable with
 \code{\link[=set_tbl]{set_tbl()}}) we could use the \code{\link[=interrogate]{interrogate()}} or \code{\link[=incorporate]{incorporate()}} function
 again. For a \emph{data quality reporting} workflow, it is useful to
 \code{\link[=interrogate]{interrogate()}} target tables that evolve over time. While the same
@@ -68,7 +72,16 @@ agent <-
 # we could read that to a new informant
 # with `x_read_disk()`
 informant <-
-  x_read_disk("informantt-small_table.rds")
+  x_read_disk("informant-small_table.rds")
+
+# C: Reading a table scan from disk
+
+# If there is a table scan written
+# to disk via `x_write_disk()` and it's
+# named "tbl_scan-storms.rds", we could
+# read it back into R with `x_read_disk()`
+tbl_scan <-
+  x_read_disk("tbl_scan-storms.rds")
 
 }
 

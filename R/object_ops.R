@@ -28,6 +28,7 @@
 #' this only works in the case where the table is not of the `tbl_dbi` or the
 #' `tbl_spark` class.
 #'
+#' @details
 #' It is recommended to set up a table-prep formula so that the *agent* and
 #' *informant* can access refreshed data after being read from disk through
 #' [x_read_disk()]. This can be done initially with the `read_fn` argument of

@@ -27,8 +27,7 @@ particular validation step (by supplying the step number to the \code{i}
 argument), or, we can get the information for all validation steps by leaving
 \code{i} unspecified. The \strong{x-list} is indeed an R \code{list} object that contains a
 veritable cornucopia of information.
-}
-\details{
+
 For an \strong{x-list} obtained with \code{i} specified for a validation step, the
 following components are available:
 \itemize{

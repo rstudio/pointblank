@@ -291,7 +291,7 @@ x_write_disk <- function(x,
   # Generate cli message w.r.t. written RDS file
   if (!quiet) {
     cli_bullet_msg(
-      msg = "The {object_type} file has been written to `{filename}`",
+      msg = "The {object_type} has been written as `{filename}`",
       bullet = cli::symbol$tick,
       color = "green"
     )

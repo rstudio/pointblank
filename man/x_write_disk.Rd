@@ -48,8 +48,7 @@ later retrieval (with \code{\link[=x_read_disk]{x_read_disk()}}). By default, an
 expunged. This behavior can be changed by setting \code{keep_tbl} to \code{TRUE} but
 this only works in the case where the table is not of the \code{tbl_dbi} or the
 \code{tbl_spark} class.
-}
-\details{
+
 It is recommended to set up a table-prep formula so that the \emph{agent} and
 \emph{informant} can access refreshed data after being read from disk through
 \code{\link[=x_read_disk]{x_read_disk()}}. This can be done initially with the \code{read_fn} argument of
@@ -62,6 +61,146 @@ with the \code{\link[=set_tbl]{set_tbl()}} function.
 9-1
 }
 
+\examples{
+if (interactive()) {
+
+# A: Writing an `agent` to disk 
+
+# Let's go through the process of (1)
+# developing an agent with a validation
+# plan (to be used for the data quality
+# analysis of the `small_table` dataset),
+# (2) interrogating the agent with the
+# `interrogate()` function, and (3) writing
+# the agent and all its intel to a file
+
+# Creating an `action_levels` object is a
+# common workflow step when creating a
+# pointblank agent; we designate failure
+# thresholds to the `warn`, `stop`, and
+# `notify` states using `action_levels()`
+al <- 
+  action_levels(
+    warn_at = 0.10,
+    stop_at = 0.25,
+    notify_at = 0.35
+  )
+
+# Now create a pointblank `agent` object
+# and give it the `al` object (which
+# serves as a default for all validation
+# steps which can be overridden); the
+# data will be referenced in a `read_fn`
+agent <- 
+  create_agent(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "`x_write_disk()`",
+    actions = al
+  )
+
+# Then, as with any `agent` object, we
+# can add steps to the validation plan by
+# using as many validation functions as we
+# want; then, we `interrogate()`
+agent <-
+  agent \%>\% 
+  col_exists(vars(date, date_time)) \%>\%
+  col_vals_regex(
+    vars(b), regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+  ) \%>\%
+  rows_distinct() \%>\%
+  col_vals_gt(vars(d), value = 100) \%>\%
+  col_vals_lte(vars(c), value = 5) \%>\%
+  interrogate()
+
+# The `agent` can be written to a file with
+# the `x_write_disk()` function
+x_write_disk(
+  agent,
+  filename = "agent-small_table.rds"
+)
+
+# We can read the file back into an agent
+# with the `x_read_disk()` function and
+# we'll get all of the intel along with the
+# 'restored' agent
+
+# If you're consistently storing agents
+# from periodic runs of checking data, we
+# could make use of the `affix_date()` or
+# `affix_datetime()` depending on the
+# granularly you need; here's an example
+# that writes the file with the format:
+# 'agent-small_table-YYYY-mm-dd_HH-MM-SS.rds'
+x_write_disk(
+  agent,
+  filename = affix_datetime(
+    "agent-small_table.rds"
+  )
+)
+
+# B: Writing an `informant` to disk
+
+# Let's go through the process of (1)
+# creating an informant object that
+# minimally describes the `small_table`
+# dataset, (2) ensuring that data is
+# captured from the target table using
+# the `incorporate()` function, and (3)
+# writing the informant to a file
+
+# Create a pointblank `informant`
+# object with `create_informant()`
+# and the `small_table` dataset;
+# `incorporate()` so that info snippets
+# are integrated into the text
+informant <- 
+  create_informant(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "`x_write_disk()`"
+  ) \%>\%
+  info_snippet(
+    snippet_name = "high_a",
+    fn = snip_highest(column = "a")
+  ) \%>\%
+  info_snippet(
+    snippet_name = "low_a",
+    fn = snip_lowest(column = "a")
+  ) \%>\%
+  info_columns(
+    columns = vars(a),
+    info = "From {low_a} to {high_a}."
+  ) \%>\%
+  info_columns(
+    columns = starts_with("date"),
+    info = "Time-based values (e.g., `Sys.time()`)."
+  ) \%>\%
+  info_columns(
+    columns = "date",
+    info = "The date part of `date_time`. ((CALC))"
+  ) \%>\%
+  incorporate()
+
+# The `informant` can be written to a
+# file with `x_write_disk()`; let's do
+# this with the `affix_date()` so the
+# filename has a datestamp
+x_write_disk(
+  informant,
+  filename = affix_date(
+    "informant-small_table.rds"
+  )
+)
+
+# We can read the file back into the
+# same informant object (as when it
+# was saved) by using `x_read_disk()`
+
+}
+  
+}
 \seealso{
 Other Object Ops: 
 \code{\link{activate_steps}()},

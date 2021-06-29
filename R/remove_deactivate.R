@@ -169,6 +169,8 @@ deactivate_steps <- function(agent,
 #' @param i The validation step number, which is assigned to each validation
 #'   step in the order of definition. If `NULL` (the default) then step removal
 #'   won't occur by index.
+#'   
+#' @return A `ptblank_agent` object.
 #' 
 #' @examples 
 #' # Create an agent that has the

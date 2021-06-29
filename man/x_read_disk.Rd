@@ -12,6 +12,9 @@ x_read_disk(filename, path = NULL)
 
 \item{path}{An optional path to the file (combined with \code{filename}).}
 }
+\value{
+Either a \code{ptblank_agent} or a \code{ptblank_informant} object.
+}
 \description{
 An \emph{agent} or \emph{informant} that has been written to disk (with
 \code{\link[=x_write_disk]{x_write_disk()}}) can be read back into memory with the \code{x_read_disk()}
@@ -41,6 +44,35 @@ table dimensions, and info snippets/text will be regenerated.
 9-2
 }
 
+\examples{
+if (interactive()) {
+
+# A: Reading an `agent` from disk 
+
+# The process of developing an `agent`
+# and writing it to disk with the
+# `x_write_disk()` function is explained
+# in that function's documentation;
+# suppose we have such a written file
+# that's named "agent-small_table.rds",
+# we could read that to a new agent
+# with `x_read_disk()`
+agent <-
+  x_read_disk("agent-small_table.rds")
+
+# B: Reading an `informant` from disk
+
+# If there is an `informant` written
+# to disk via `x_write_disk()` and it's
+# named "informant-small_table.rds",
+# we could read that to a new informant
+# with `x_read_disk()`
+informant <-
+  x_read_disk("informantt-small_table.rds")
+
+}
+
+}
 \seealso{
 Other Object Ops: 
 \code{\link{activate_steps}()},

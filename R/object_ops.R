@@ -270,6 +270,7 @@ x_write_disk <- function(x,
 
 #' Read a **pointblank** *agent* or *informant* from disk
 #' 
+#' @description 
 #' An *agent* or *informant* that has been written to disk (with
 #' [x_write_disk()]) can be read back into memory with the `x_read_disk()`
 #' function. Once the *agent* or *informant* has been generated in this way, it
@@ -282,6 +283,7 @@ x_write_disk <- function(x,
 #' *agent*'s validation steps will still be present (along with results from the
 #' last interrogation).
 #' 
+#' @details
 #' Should the *agent* or *informant* possess a table-prep formula (can be set
 #' any time with [set_read_fn()]) or a specific table (settable with
 #' [set_tbl()]) we could use the [interrogate()] or [incorporate()] function
@@ -295,6 +297,36 @@ x_write_disk <- function(x,
 #' @param filename The name of a file that was previously written by
 #'   [x_write_disk()].
 #' @param path An optional path to the file (combined with `filename`).
+#' 
+#' @return Either a `ptblank_agent` or a `ptblank_informant` object.
+#' 
+#' @examples
+#' if (interactive()) {
+#' 
+#' # A: Reading an `agent` from disk 
+#' 
+#' # The process of developing an `agent`
+#' # and writing it to disk with the
+#' # `x_write_disk()` function is explained
+#' # in that function's documentation;
+#' # suppose we have such a written file
+#' # that's named "agent-small_table.rds",
+#' # we could read that to a new agent
+#' # with `x_read_disk()`
+#' agent <-
+#'   x_read_disk("agent-small_table.rds")
+#' 
+#' # B: Reading an `informant` from disk
+#' 
+#' # If there is an `informant` written
+#' # to disk via `x_write_disk()` and it's
+#' # named "informant-small_table.rds",
+#' # we could read that to a new informant
+#' # with `x_read_disk()`
+#' informant <-
+#'   x_read_disk("informantt-small_table.rds")
+#' 
+#' }
 #' 
 #' @family Object Ops
 #' @section Function ID:

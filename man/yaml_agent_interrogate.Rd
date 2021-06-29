@@ -12,6 +12,9 @@ yaml_agent_interrogate(filename, path = NULL)
 
 \item{path}{An optional path to the YAML file (combined with \code{filename}).}
 }
+\value{
+A \code{ptblank_agent} object.
+}
 \description{
 The \code{yaml_agent_interrogate()} function operates much like the
 \code{\link[=yaml_read_agent]{yaml_read_agent()}} function (reading a \strong{pointblank} YAML file and
@@ -60,7 +63,8 @@ al <-
 # (a requirement for writing to YAML)
 agent <- 
   create_agent(
-    read_fn = ~small_table,
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
     label = "A simple example with the `small_table`.",
     actions = al
   )

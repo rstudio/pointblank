@@ -93,7 +93,8 @@
 #' # (a requirement for writing to YAML)
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~small_table,
+#'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
 #'     label = "A simple example with the `small_table`.",
 #'     actions = al
 #'   )
@@ -136,8 +137,8 @@
 #' # by supplying the agent as the input
 #' yaml_agent_string(agent = agent)
 #' 
-#' # At a later time, the YAML file can
-#' # be read into a new agent with the
+#' # At some later time, the YAML file can
+#' # be read as a new agent with the
 #' # `yaml_read_agent()` function
 #' agent <- 
 #'   yaml_read_agent(filename = yml_file)
@@ -352,7 +353,8 @@ yaml_write <- function(...,
 #' # of the target table
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~small_table,
+#'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
 #'     label = "A simple example with the `small_table`.",
 #'     actions = action_levels(
 #'       warn_at = 0.10,
@@ -381,9 +383,9 @@ yaml_write <- function(...,
 #'   filename = "agent-small_table.yml"
 #' )
 #' 
-#' # The 'agent-small_table.yml' file is
-#' # available in the package through
-#' # `system.file()`
+#' # There's a similar file in the package
+#' # ('agent-small_table.yml') and it's
+#' # accessible with `system.file()`
 #' yml_file <- 
 #'   system.file(
 #'     "yaml", "agent-small_table.yml",
@@ -391,11 +393,12 @@ yaml_write <- function(...,
 #'   )
 #' 
 #' # The `yaml_agent_string()` function can
-#' # be used with the YAML file as well
+#' # be used with the YAML file as well,
+#' # use the `filename` argument instead
 #' yaml_agent_string(filename = yml_file)
 #' 
-#' # At a later time, the YAML file can
-#' # be read into a new agent with the
+#' # At some later time, the YAML file can
+#' # be read as a new agent with the
 #' # `yaml_read_agent()` function
 #' agent <- yaml_read_agent(filename = yml_file)
 #' class(agent)

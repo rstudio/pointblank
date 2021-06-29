@@ -99,7 +99,8 @@ al <-
 # (a requirement for writing to YAML)
 agent <- 
   create_agent(
-    read_fn = ~small_table,
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
     label = "A simple example with the `small_table`.",
     actions = al
   )
@@ -142,8 +143,8 @@ yaml_agent_string(filename = yml_file)
 # by supplying the agent as the input
 yaml_agent_string(agent = agent)
 
-# At a later time, the YAML file can
-# be read into a new agent with the
+# At some later time, the YAML file can
+# be read as a new agent with the
 # `yaml_read_agent()` function
 agent <- 
   yaml_read_agent(filename = yml_file)

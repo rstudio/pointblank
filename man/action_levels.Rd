@@ -85,7 +85,6 @@ reducing potential for duplicating any side effects.
 }
 
 \examples{
-if (interactive()) {
 
 # For these examples, we will use the
 # included `small_table` dataset
@@ -161,6 +160,8 @@ agent_2 <-
 # x-list `warn` component
 x_list <- get_agent_x_list(agent_2)
 x_list$warn
+
+if (interactive()) {
 
 # In the context of using validation
 # functions directly on data (i.e., no

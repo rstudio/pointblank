@@ -121,7 +121,7 @@
 #' # We can read the file back into an agent
 #' # with the `x_read_disk()` function and
 #' # we'll get all of the intel along with the
-#' # 'restored' agent
+#' # restored agent
 #' 
 #' # If you're consistently storing agents
 #' # from periodic runs of checking data, we

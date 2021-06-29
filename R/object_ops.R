@@ -260,6 +260,7 @@ x_write_disk <- function(x,
       }
       
     } else if (!keep_tbl) {
+      
       x <- remove_tbl(x)
     }
     
@@ -268,8 +269,14 @@ x_write_disk <- function(x,
     }
     
     object_type <- "agent"
-  } else {
+    
+  } else if (inherits(x, "ptblank_informant")) {
+    
     object_type <- "informant"
+    
+  } else {
+    
+    object_type <- "table scan"
   }
   
   if (!is.null(path)) {

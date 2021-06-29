@@ -175,6 +175,7 @@ yaml_read_agent <- function(filename,
 
 #' Get an *agent* from **pointblank** YAML and `interrogate()`
 #'
+#' @description 
 #' The `yaml_agent_interrogate()` function operates much like the
 #' [yaml_read_agent()] function (reading a **pointblank** YAML file and
 #' generating an *agent* with a validation plan in place). The key difference is
@@ -306,6 +307,7 @@ yaml_agent_interrogate <- function(filename,
 
 #' Display validation expressions using **pointblank** YAML
 #'
+#' @description 
 #' The `yaml_agent_show_exprs()` function follows the specifications of a
 #' **pointblank** YAML file to generate and show the **pointblank** expressions
 #' for generating the described validation plan. The expressions are shown in

@@ -708,7 +708,7 @@ export_report <- function(x,
 #' 
 #' @family Object Ops
 #' @section Function ID:
-#' 9-3
+#' 9-4
 #' 
 #' @export
 set_tbl <- function(x,
@@ -813,7 +813,7 @@ set_tbl <- function(x,
 #'   
 #' @family Object Ops
 #' @section Function ID:
-#' 9-4
+#' 9-5
 #'   
 #' @export
 remove_tbl <- function(x) {
@@ -881,7 +881,7 @@ remove_tbl <- function(x) {
 #'
 #' @family Object Ops
 #' @section Function ID:
-#' 9-5
+#' 9-6
 #'
 #' @export
 set_read_fn <- function(x,
@@ -951,7 +951,7 @@ set_read_fn <- function(x,
 #'   
 #' @family Object Ops
 #' @section Function ID:
-#' 9-6
+#' 9-7
 #'   
 #' @export
 remove_read_fn <- function(x) {

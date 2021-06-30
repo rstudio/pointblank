@@ -57,7 +57,9 @@ Within the text, there's the use of curly braces and the name of the snippet. Th
 informant
 ```
 
-<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_7.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_7.png"
+alt="This is a tabular report entitled 'Pointblank Information'. The header contains information about the input table (identifying it as a tibble called 'small_table') and includes the number of rows (13) and columns (8). In the table body, the section entitled 'Columns' has a row for each column that has been identified in 'small_table'. Each row consists of the column name (enclosed in a box) and the column type (for example, 'Date', 'integer', etc.). There are 8 columns in the input table so there are 8 rows in this reporting table ('date_time', 'date', and 'a' through to 'f'). The row concerning column 'd' contains the text: 'This column contains fairly large numbers (much larger than those numbers in column 'a'. The mean value is {mean_d}, which is far greater than any number in that other column.'"
+width=80%></div>
 <br>
 
 Hmm. There is `"... {mean_d} ..."` text in the report that should have been replaced with the mean value of column `d`. What gives? Well, there's one finalizing step that needs to be done and should always be done to wrap up the *Information Management* workflow and that is the use of the `incorporate()` function. Let's write the whole thing again and finish it off with a call to `incorporate()`.
@@ -84,7 +86,9 @@ informant <-
 informant
 ```
 
-<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_8.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_8.png"
+alt="This is a tabular report entitled 'Pointblank Information'. Which is similar to the table presented just before. The key difference is that the row concerning column 'd' now contains the text: 'This column contains fairly large numbers (much larger than those numbers in column 'a'. The mean value is 2304.70, which is far greater than any number in that other column.' This revised text now contains a numeric figure instead of the placeholder for it."
+width=80%></div>
 <br>
 
 This time, sweet success. The value appears and the overall formatting looks great! This is a very useful thing, so long as we remember to use the `incorporate()` function to make it happen (more on that in the next section). 
@@ -121,7 +125,9 @@ informant_tt <-
 informant_tt
 ```
 
-<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_9.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_9.png"
+alt="This is a tabular report entitled 'Pointblank Information'. This excerpt presents only the header of the tabular report. The key information about the input table identifies it as a tibble called 'target_table'). The header includes the number of rows (13) and columns (8)."
+width=80%></div>
 <p align="center">This is an excerpt of the complete report, showing just the header.</p>
 <br>
 
@@ -143,7 +149,9 @@ We've got our informant object, let's see how `incorporate()` keeps pace with th
 informant_tt %>% incorporate()
 ```
 
-<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_10.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_10.png"
+alt="This is a tabular report entitled 'Pointblank Information'. This excerpt presents only the header of the tabular report. The key information about the input table identifies it as a tibble called 'target_table'). Compared to the last figure, the header contains an updated row count of 26 (compared to 13 previously)."
+width=80%></div>
 <p align="center">This is an excerpt of the complete report, showing just the header.</p>
 <br>
 
@@ -194,7 +202,9 @@ informant_pp <-
 informant_pp
 ```
 
-<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_11.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_11.png"
+alt="This is a tabular report entitled 'Pointblank Information'. The header contains information about the input table, which is the 'penguins' dataset). Information on the row and column count is available (344 rows and 8 columns). In the table body, the section entitled 'Columns' has a row for each column that has been identified in 'penguins'. Presented are only the first two rows, corresponding to the first two columns in the penguins dataset: 'species' and 'island'. The 'species' row contains the text: 'A factor denoting penguin species (Adelie, Gentoo, and Chinstrap)'. The 'island' row contains this text: 'A factor denoting island in Palmer Archipelago, Antarctica (Torgersen, Biscoe, and Dream)'."
+width=80%></div>
 <p align="center">This is an excerpt of the complete report, showing just the header and part of the <strong>COLUMNS</strong> section.</p>
 <br>
 
@@ -218,7 +228,9 @@ informant_pp <-
 informant_pp
 ```
 
-<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_12.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_12.png"
+alt="This is an except of the tabular report entitled 'Pointblank Information', based on the 'penguins' dataset. Presented is only the row that corresponds to the 'year' column in the penguins dataset. The 'year' row contains the text: 'The study year (2007, 2008, and 2009)'."
+width=80%></div>
 <p align="center">This is an excerpt of the complete report, showing just the bottom of the <strong>COLUMNS</strong> section and the footer.</p>
 <br>
 
@@ -269,7 +281,10 @@ informant_pp <-
 informant_pp
 ```
 
-<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_13.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_13.png"
+alt="This is a tabular report entitled 'Pointblank Information'. The header contains information about the input table (identifying it as a tibble called 'penguins') and includes the number of rows (344) and columns (8). In the table body, the section entitled 'Columns' has a row for each column that has been identified in 'penguins'. Each row consists of the column name (enclosed in a box) and the column type (for example, 'Date', 'integer', etc.). Descriptive information for each column in the 'penguins' dataset is available in each row. Here is a listing for each: (1)
+species, A factor denoting penguin species (Adélie, Chinstrap, and Gentoo); (2) island, A factor denoting island in Palmer Archipelago, Antarctica (Biscoe, Dream, or Torgersen); (3) bill_length_mm, A number denoting bill length (in units of millimeters); (4) bill_depth_mm, A number denoting bill depth (in the range of 13.1 to 21.5 millimeters); (5) flipper_length_mm, An integer denoting flipper length (in units of millimeters), largest observed is 231 mm.; (6) body_mass_g has no descriptive text and neither does the row (7), which corresponds to the sex column; however, (8) year, has the text of The study year (e.g., 2007, 2008, 2009)."
+width=80%></div>
 <br>
 
 We can see from the report output that we can creatively use the lowest and highest values obtained by `snip_lowest()` and `snip_highest()` to specify a range or simply show some maximum value. While the ordering of the `info_columns()` calls in the example affects the overall layout of the text (through the text appending behavior), the placement of `info_snippet()` calls *does not* matter. And, again, we must use `incorporate()` to update all of the text snippets and render them in their appropriate locations (inside each `{<snippet_name>}`).
@@ -306,7 +321,9 @@ informant_pp <-
 informant_pp
 ```
 
-<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_14.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_14.png"
+alt="This is a tabular report entitled 'Pointblank Information'. The header contains information about the input table (identifying it as a tibble called 'penguins') and includes the number of rows (344) and columns (8). In the table body, there is a section called 'Table' and three subsections: (1) 'R Dataset', (2) 'Data Collection', and (3) 'Citation'. The text for each of these subsections is available in (and taken verbatim from) the previous code listing. Notably, the date presented in the first subsection (2020-07-25) is prominently underlined and the text is styled with a monospaced variant of the report font."
+width=80%></div>
 <p align="center">This is an excerpt of the complete report, showing just the <strong>TABLE</strong> section and the header.</p>
 <br>
 
@@ -337,7 +354,9 @@ informant_pp <-
 informant_pp
 ```
 
-<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_15.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_15.png"
+alt="This is an except of a tabular report entitled 'Pointblank Information'. The header is not presented but, instead, there are two sections in the report: 'Columns' and 'Additional Notes'. The first section contains information on each of the columns from the penguins dataset. Notably, some of the information entries are adorned with a 'Measured' label (they appear at the end of the descriptive text entries, enclosed in a box). These labels occur in the rows describing the 'bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', and 'body_mass_g' columns. In the 'Additional Notes' section of the report table (at the bottom), there is a subsection called 'Data Types'. Within that there are three labels enclosed in rounded boxes; these labels are 'factor', 'numeric', and 'integer'."
+width=80%></div>
 <p align="center">This is an excerpt of the complete report, showing just the <strong>COLUMNS</strong> and <strong>ADDITIONAL NOTES</strong> sections.</p>
 <br>
 
@@ -353,7 +372,9 @@ It's important to ensure that each CSS rule is concluded with a `;` character in
 
 Where the result looks something like this:
 
-<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/info_text_styled.png" width=40%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/info_text_styled.png"
+alt="This is a snippet of text that reads 'This is a factor value.' Moreover, the word 'factor' is written in red whereas the rest of the text is in a dark gray."
+width=40%></div>
 <br>
 
 There are many CSS style rules that can be used. Here's a sample of a few useful ones:
@@ -392,7 +413,9 @@ informant_pp <-
 informant_pp
 ```
 
-<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_16.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_16.png"
+alt="This is an except of a tabular report entitled 'Pointblank Information'. The header is not presented but, instead, there is one section displayed from the full report: 'Additional Notes'. There are two subsections in that: 'Data Types' and 'Keywords'. Within the 'Data Types' subsection there are three labels enclosed in rounded boxes; these labels are 'factor', 'numeric', and 'integer'. Within the 'Keyword' subsection there are three different labels enclosed in square boxes; these labels are 'penguins', 'Antarctica', and 'measurements'. These last three labels have customs colors for their box borders and their background fill."
+width=80%></div>
 <p align="center">This is an excerpt of the complete report, showing just the bottom of the <strong>COLUMNS</strong> section, the <strong>ADDITIONAL NOTES</strong> section, and the footer.</p>
 <br>
 

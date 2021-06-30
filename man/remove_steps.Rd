@@ -67,6 +67,7 @@ change the \code{active} status of one or more validation steps to \code{FALSE} 
 Other Object Ops: 
 \code{\link{activate_steps}()},
 \code{\link{deactivate_steps}()},
+\code{\link{export_report}()},
 \code{\link{remove_read_fn}()},
 \code{\link{remove_tbl}()},
 \code{\link{set_read_fn}()},

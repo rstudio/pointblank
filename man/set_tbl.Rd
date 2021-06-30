@@ -26,7 +26,7 @@ association to a table can be removed with with \code{\link[=remove_tbl]{remove_
 }
 \section{Function ID}{
 
-9-3
+9-4
 }
 
 \examples{
@@ -75,6 +75,7 @@ agent_2 <-
 Other Object Ops: 
 \code{\link{activate_steps}()},
 \code{\link{deactivate_steps}()},
+\code{\link{export_report}()},
 \code{\link{remove_read_fn}()},
 \code{\link{remove_steps}()},
 \code{\link{remove_tbl}()},

@@ -51,26 +51,26 @@ table dimensions, and info snippets/text will be regenerated.
 \examples{
 if (interactive()) {
 
-# A: Reading an `agent` from disk 
+# A: Reading an agent from disk 
 
-# The process of developing an `agent`
+# The process of developing an agent
 # and writing it to disk with the
 # `x_write_disk()` function is explained
 # in that function's documentation;
-# suppose we have such a written file
+# but suppose we have such a written file
 # that's named "agent-small_table.rds",
 # we could read that to a new agent
-# with `x_read_disk()`
+# object with `x_read_disk()`
 agent <-
   x_read_disk("agent-small_table.rds")
 
-# B: Reading an `informant` from disk
+# B: Reading an informant from disk
 
-# If there is an `informant` written
+# If there is an informant written
 # to disk via `x_write_disk()` and it's
 # named "informant-small_table.rds",
 # we could read that to a new informant
-# with `x_read_disk()`
+# object with `x_read_disk()`
 informant <-
   x_read_disk("informant-small_table.rds")
 
@@ -90,6 +90,7 @@ tbl_scan <-
 Other Object Ops: 
 \code{\link{activate_steps}()},
 \code{\link{deactivate_steps}()},
+\code{\link{export_report}()},
 \code{\link{remove_read_fn}()},
 \code{\link{remove_steps}()},
 \code{\link{remove_tbl}()},

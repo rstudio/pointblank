@@ -64,6 +64,7 @@ For the opposite behavior, use the \code{\link[=activate_steps]{activate_steps()
 
 Other Object Ops: 
 \code{\link{activate_steps}()},
+\code{\link{export_report}()},
 \code{\link{remove_read_fn}()},
 \code{\link{remove_steps}()},
 \code{\link{remove_tbl}()},

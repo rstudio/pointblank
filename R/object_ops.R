@@ -118,16 +118,16 @@
 #'   filename = "agent-small_table.rds"
 #' )
 #' 
-#' # We can read the file back into an agent
+#' # We can read the file back as an agent
 #' # with the `x_read_disk()` function and
 #' # we'll get all of the intel along with the
 #' # restored agent
 #' 
-#' # If you're consistently storing agents
-#' # from periodic runs of checking data, we
-#' # could make use of the `affix_date()` or
-#' # `affix_datetime()` depending on the
-#' # granularly you need; here's an example
+#' # If you're consistently writing agent
+#' # reports when periodically checking data,
+#' # we could make use of the `affix_date()`
+#' # or `affix_datetime()` depending on the
+#' # granularity you need; here's an example
 #' # that writes the file with the format:
 #' # 'agent-small_table-YYYY-mm-dd_HH-MM-SS.rds'
 #' x_write_disk(
@@ -149,7 +149,7 @@
 #' 
 #' # Create a pointblank `informant`
 #' # object with `create_informant()`
-#' # and the `small_table` dataset;
+#' # and the `small_table` dataset; use
 #' # `incorporate()` so that info snippets
 #' # are integrated into the text
 #' informant <- 
@@ -182,7 +182,7 @@
 #'
 #' # The `informant` can be written to a
 #' # file with `x_write_disk()`; let's do
-#' # this with the `affix_date()` so the
+#' # this with `affix_date()` so that the
 #' # filename has a datestamp
 #' x_write_disk(
 #'   informant,
@@ -191,14 +191,15 @@
 #'   )
 #' )
 #' 
-#' # We can read the file back into the
-#' # same informant object (as when it
-#' # was saved) by using `x_read_disk()`
+#' # We can read the file back into a
+#' # new informant object (in the same
+#' # state as when it was saved) by using
+#' # `x_read_disk()`
 #' 
 #' # C: Writing a table scan to disk
 #' 
-#' # We can get an object describes all of
-#' # the data in the `dplyr::storms` dataset
+#' # We can get an report that describes all
+#' # of the data in the `storms` dataset
 #' tbl_scan <- scan_data(tbl = dplyr::storms)
 #' 
 #' # The table scan object can be written
@@ -338,26 +339,26 @@ x_write_disk <- function(x,
 #' @examples
 #' if (interactive()) {
 #' 
-#' # A: Reading an `agent` from disk 
+#' # A: Reading an agent from disk 
 #' 
-#' # The process of developing an `agent`
+#' # The process of developing an agent
 #' # and writing it to disk with the
 #' # `x_write_disk()` function is explained
 #' # in that function's documentation;
-#' # suppose we have such a written file
+#' # but suppose we have such a written file
 #' # that's named "agent-small_table.rds",
 #' # we could read that to a new agent
-#' # with `x_read_disk()`
+#' # object with `x_read_disk()`
 #' agent <-
 #'   x_read_disk("agent-small_table.rds")
 #' 
-#' # B: Reading an `informant` from disk
+#' # B: Reading an informant from disk
 #' 
-#' # If there is an `informant` written
+#' # If there is an informant written
 #' # to disk via `x_write_disk()` and it's
 #' # named "informant-small_table.rds",
 #' # we could read that to a new informant
-#' # with `x_read_disk()`
+#' # object with `x_read_disk()`
 #' informant <-
 #'   x_read_disk("informant-small_table.rds")
 #' 

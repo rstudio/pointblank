@@ -67,6 +67,7 @@ For the opposite behavior, use the \code{\link[=deactivate_steps]{deactivate_ste
 
 Other Object Ops: 
 \code{\link{deactivate_steps}()},
+\code{\link{export_report}()},
 \code{\link{remove_read_fn}()},
 \code{\link{remove_steps}()},
 \code{\link{remove_tbl}()},

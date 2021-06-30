@@ -21,7 +21,7 @@ be set again with \code{\link[=set_read_fn]{set_read_fn()}}.
 }
 \section{Function ID}{
 
-9-6
+9-7
 }
 
 \examples{
@@ -73,6 +73,7 @@ agent_2 <-
 Other Object Ops: 
 \code{\link{activate_steps}()},
 \code{\link{deactivate_steps}()},
+\code{\link{export_report}()},
 \code{\link{remove_steps}()},
 \code{\link{remove_tbl}()},
 \code{\link{set_read_fn}()},

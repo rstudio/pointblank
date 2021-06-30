@@ -36,7 +36,9 @@ Printing the *informant* will show us the automatically-generated information on
 informant
 ```
 
-<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_1.png" width=80%></div>
+<div style="text-align: center;"><img src="https://silly-jackson-b3dec8.netlify.app/informant_report_1.png"
+alt="This is a tabular report entitled 'Pointblank Information'. The header contains information about table (identifying it as a tibble called 'small_table') and includes the number of rows (13) and columns (8). In the table body, the section entitled 'Columns' has a row for each column that has been identified in 'small_table'. Each row consists of the column name (enclosed in a box) and the column type (for example, 'Date', 'integer', etc.). There are 8 columns in the input table so there are 8 rows in this reporting table ('date_time', 'date', and 'a' through to 'f')."
+width=80%></div>
 <br>
 
 Alternatively we can get the same report with `get_informant_report()` and have access to additional output options, like producing a narrower version of the output.

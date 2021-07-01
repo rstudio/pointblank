@@ -147,16 +147,23 @@ get_sundered_data <- function(agent,
   # Stop function if the agent hasn't
   # yet performed an interrogation
   if (!inherits(agent, "has_intel")) {
-    stop("The `agent` has not yet performed an interrogation.", call. = FALSE)
+    
+    stop(
+      "The `agent` has not yet performed an interrogation.",
+      call. = FALSE
+    )
   }
   
   input_tbl <- agent$tbl
   tbl_src <- agent$tbl_src
 
   if (!(tbl_src %in% c("tbl_df", "data.frame")) && is.null(id_cols)) {
-    stop("This table needs to have `id_cols` specified, otherwise ",
-         "sundering cannot be done",
-         call. = FALSE)
+    
+    stop(
+      "This table needs to have `id_cols` specified, otherwise ",
+      "sundering cannot be done",
+      call. = FALSE
+    )
   }
   
   # Get the row count of the input table
@@ -191,10 +198,13 @@ get_sundered_data <- function(agent,
     )
   
   if (!all(preconditions_vec == preconditions_vec[1])) {
-    stop("Using `get_sundered_data()` requires that either:\n",
-         "* No `preconditions` are used, or\n",
-         "* All specified `preconditions` are the same",
-         call. = FALSE)
+    
+    stop(
+      "Using `get_sundered_data()` requires that either:\n",
+      "* No `preconditions` are used, or\n",
+      "* All specified `preconditions` are the same",
+      call. = FALSE
+    )
   }
   
   # Obtain the validation steps that are to be used for sundering

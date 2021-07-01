@@ -75,11 +75,13 @@ small_table_sqlite <- function() {
   if (!requireNamespace("DBI", quietly = TRUE) &&
       !requireNamespace("RSQLite", quietly = TRUE)) {
     
-    stop("Creating the SQLite table object requires both the DBI and RSQLite ",
-         "packages:\n",
-         " * Install them with `install.packages(\"DBI\")` and ",
-         "`install.packages(\"RSQLite\")`.",
-         call. = FALSE)
+    stop(
+      "Creating the SQLite table object requires both the DBI and RSQLite ",
+      "packages:\n",
+      "* Install them with `install.packages(\"DBI\")` and ",
+      "`install.packages(\"RSQLite\")`.",
+      call. = FALSE
+    )
   }
   
   con <- 

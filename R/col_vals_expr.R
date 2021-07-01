@@ -268,12 +268,17 @@ col_vals_expr <- function(x,
   if (!inherits(expr, "call")) {
     
     if (rlang::is_formula(expr)) {
+      
       expr <- expr %>% rlang::f_rhs()
+      
     } else {
-      stop("The `expr` object must be a call or an R formula.\n",
-           "* A call can be made with the `expr()` function.\n",
-           "* An R formula can also be used, with the expression on the RHS.",
-           call. = FALSE)
+      
+      stop(
+        "The `expr` object must be a call or an R formula.\n",
+        "* A call can be made with the `expr()` function.\n",
+        "* An R formula can also be used, with the expression on the RHS.",
+        call. = FALSE
+      )
     }
   }
   

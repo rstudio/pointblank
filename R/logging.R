@@ -16,6 +16,7 @@
 # https://rich-iannone.github.io/pointblank/LICENSE.html
 #
 
+# nocov start
 
 #' Enable logging of failure conditions at the validation step level
 #' 
@@ -57,8 +58,6 @@ log4r_step <- function(x,
          " * It can be installed with `install.packages(\"log4r\")`.",
          call. = FALSE)
   }
-  
-  # nocov start
   
   type <- x$this_type
   warn_val <- x$warn
@@ -118,6 +117,6 @@ log4r_step <- function(x,
       (f_failed = {x$f_failed}) ['{x$type}']"
     )
   )
-  
-  # nocov end
 }
+
+# nocov end

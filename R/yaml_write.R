@@ -242,8 +242,11 @@ yaml_write <- function(...,
   }
   
   if (is.null(agent) && is.null(informant)) {
-    stop("An agent or informant object must be supplied to `yaml_write()`.",
-         call. = FALSE)
+    
+    stop(
+      "An agent or informant object must be supplied to `yaml_write()`.",
+      call. = FALSE
+    )
   }
 
   if (!is.null(agent) && !is.null(informant)) {

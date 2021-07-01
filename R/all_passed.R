@@ -72,7 +72,11 @@
 all_passed <- function(agent) {
   
   if (!has_agent_intel(agent)) {
-    stop("The agent hasn't performed an interrogation.", call. = FALSE)
+    
+    stop(
+      "The agent hasn't performed an interrogation.",
+      call. = FALSE
+    )
   }
   
   all(agent$validation_set$all_passed)

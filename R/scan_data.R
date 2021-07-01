@@ -103,19 +103,29 @@ scan_data <- function(tbl,
   
   # Stop function if the length of the `sections` vector is not 1
   if (length(sections) != 1) {
-    stop("The length of the `section` vector must be 1.",
-         call. = FALSE)
+    
+    stop(
+      "The length of the `section` vector must be 1.",
+      call. = FALSE
+    )
   }
   
   # Stop function if the `sections` vector is not of the `character` type
   if (!is.character(sections)) {
-    stop("The `section` vector must be of the `character` class.",
-         call. = FALSE)
+    
+    stop(
+      "The `section` vector must be of the `character` class.",
+      call. = FALSE
+    )
   }
   
   # Stop function if the length of `sections` string is not at least 1
   if (nchar(sections) < 1) {
-    stop("At least one `section` is required.", call. = FALSE)
+    
+    stop(
+      "At least one `section` is required.",
+      call. = FALSE
+    )
   }
   
   # Stop function if there are unrecognized sections in `sections`
@@ -123,7 +133,7 @@ scan_data <- function(tbl,
            c("O", "V", "I", "C", "M", "S"))) {
     stop(
       "All key characters provided in `sections` must be valid:\n",
-      " * Allowed values are \"O\", \"V\", \"I\", \"C\", \"M\", and \"S\".",
+      "* Allowed values are \"O\", \"V\", \"I\", \"C\", \"M\", and \"S\".",
       call. = FALSE
     )
   }
@@ -157,17 +167,23 @@ scan_data <- function(tbl,
   if (any(c("interactions", "correlations") %in% sections)) {
     
     if (!requireNamespace("ggplot2", quietly = TRUE)) {
-      stop("The `interactions` and `correlations` sections require ", 
-           "the ggplot2 package:\n",
-           " * It can be installed with `install.packages(\"ggplot2\")`.",
-           call. = FALSE)
+      
+      stop(
+        "The `interactions` and `correlations` sections require ", 
+        "the ggplot2 package:\n",
+        "* It can be installed with `install.packages(\"ggplot2\")`.",
+        call. = FALSE
+      )
     }
     
     if (!requireNamespace("ggforce", quietly = TRUE)) {
-      stop("The `interactions` and `correlations` sections require ", 
-           "the ggforce package:\n",
-           " * It can be installed with `install.packages(\"ggforce\")`.",
-           call. = FALSE)
+      
+      stop(
+        "The `interactions` and `correlations` sections require ", 
+        "the ggforce package:\n",
+        "* It can be installed with `install.packages(\"ggforce\")`.",
+        call. = FALSE
+      )
     }
   }
   

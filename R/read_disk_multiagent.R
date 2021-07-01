@@ -56,6 +56,7 @@ read_disk_multiagent <- function(filenames = NULL,
     file_list <- list.files(path = path, pattern = pattern)
     
     if (length(file_list) < 1) {
+      
       stop("No files.", call. = FALSE)
     }
     

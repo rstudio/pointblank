@@ -161,15 +161,21 @@ apply_preconditions <- function(tbl, preconditions) {
       tbl <- preconditions(tbl)
       
     } else {
-      stop("If using formula syntax to define `preconditions`, the RHS ",
-           "must resolve to a functional sequence.",
-           call. = FALSE)
+      
+      stop(
+        "If using formula syntax to define `preconditions`, the RHS ",
+        "must resolve to a functional sequence.",
+        call. = FALSE
+      )
     }
     
   } else {
-    stop("If providing `preconditions` it must either be as a function ",
-         "or a formula.",
-         call. = FALSE)
+    
+    stop(
+      "If providing `preconditions` it must either be as a function ",
+      "or a formula.",
+      call. = FALSE
+    )
   }
   
   tbl

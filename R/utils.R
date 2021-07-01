@@ -1205,8 +1205,10 @@ pb_quantile_stats <- function(data_column,
         as.numeric() %>%
         round(2)
     }
+    
   } else {
-    stop("The table type isn't yet supported", call. = FALSE)
+    
+    stop("This table type isn't yet supported", call. = FALSE)
   }
   
   quantile

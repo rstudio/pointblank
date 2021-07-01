@@ -964,21 +964,29 @@ snip_list <- function(column,
     
     # Normalize the reporting language identifier and stop if necessary
     if (!(tolower(lang) %in% reporting_languages)) {
-      stop("The text ", lang, " doesn't correspond to a pointblank ",
-           "reporting language.",
-           call. = FALSE)
+      
+      stop(
+        "The text ", lang, " doesn't correspond to a pointblank ",
+        "reporting language.",
+        call. = FALSE
+      )
     }
     
     lang <- paste0("'", tolower(lang[1]), "'")
     
   } else if (is.null(lang)) {
+    
     lang <- "NULL"
   }
 
   if (is.null(quot_str)) {
+    
     quot_str <- "NULL"
+    
   } else {
+    
     if (!is.logical(quot_str)) {
+      
       stop(
         "The value given to `quot_str` must be one of three things:\n",
         "* `NULL`: automatically sets quotes depending on the column values\n",
@@ -990,8 +998,11 @@ snip_list <- function(column,
   }
   
   if (!is.character(sep)) {
-    stop("A character value must be given for `sep` in `snip_list()`",
-         call. = FALSE)
+    
+    stop(
+      "A character value must be given for `sep` in `snip_list()`",
+      call. = FALSE
+    )
   }
   
   sep <- paste0("'", sep[1], "'")

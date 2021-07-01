@@ -2293,6 +2293,7 @@ add_reporting_data <- function(agent,
                                tbl_checked) {
 
   if (!inherits(tbl_checked, "table_eval")) {
+    
     stop("The validated table must be of class `table_eval`.")
   }
 

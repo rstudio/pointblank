@@ -262,17 +262,24 @@ normalize_fns_list <- function(fns) {
     )
   
   if (!all(are_formulas)) {
-    stop("All components of the `fns` list must be formulas.", call. = FALSE)
+    
+    stop(
+      "All components of the `fns` list must be formulas.",
+      call. = FALSE
+    )
   }
   
   if ("" %in% names(fns)) {
+    
     stop("The `fns` list must be fully named.", call. = FALSE)
   }
   
   if (!all(names(fns) %in% c("warn", "stop", "notify"))) {
-    stop("All names in the `fns` list must be one of `warn`, ",
-         "`stop`, or `notify`.",
-         call. = FALSE)
+    
+    stop(
+      "All names in the `fns` list must be one of `warn`, `stop`, or `notify`.",
+      call. = FALSE
+    )
   }
   
   fns
@@ -281,14 +288,20 @@ normalize_fns_list <- function(fns) {
 normalize_fraction_count <- function(x) {
   
   if (!is.null(x) && !any(c(inherits(x, "numeric"), inherits(x, "integer")))) {
-    stop("All values provided to `action_levels()` must be either ",
-         "`numeric` or `integer` types.",
-         call. = FALSE)
+    
+    stop(
+      "All values provided to `action_levels()` must be either ",
+      "`numeric` or `integer` types.",
+      call. = FALSE
+    )
   }
   
   if (!is.null(x) && x <= 0) {
-    stop("All values provided to `action_levels()` must be `>=0`.",
-         call. = FALSE)
+    
+    stop(
+      "All values provided to `action_levels()` must be `>=0`.",
+      call. = FALSE
+    )
   }
   
   if (!is.null(x)) {

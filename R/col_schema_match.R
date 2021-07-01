@@ -241,9 +241,12 @@ col_schema_match <- function(x,
                              active = TRUE) {
 
   if (!inherits(schema, "col_schema")) {
-    stop("A `col_schema` object must be provided to `schema`:\n",
-         "* A schema can be defined using the `col_schema()` function",
-         call. = FALSE)
+    
+    stop(
+      "A `col_schema` object must be provided to `schema`:\n",
+      "* A schema can be defined using the `col_schema()` function",
+      call. = FALSE
+    )
   }
 
   # Incorporate `complete` and `in_order` options into

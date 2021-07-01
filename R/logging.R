@@ -53,10 +53,12 @@ log4r_step <- function(x,
                        append_to = "pb_log_file") {
   
   if (!requireNamespace("log4r", quietly = TRUE)) {
-    stop("Using the `log4r_step()` function requires ", 
-         "the log4r package:\n",
-         " * It can be installed with `install.packages(\"log4r\")`.",
-         call. = FALSE)
+    
+    stop(
+      "Using the `log4r_step()` function requires the log4r package:\n",
+      "* It can be installed with `install.packages(\"log4r\")`.",
+      call. = FALSE
+    )
   }
   
   type <- x$this_type

@@ -67,7 +67,11 @@ get_non_null_col_sample <- function(data_column,
   
   # Stop function if there isn't exactly one column in `data_column`
   if (ncol(data_column) != 1) {
-    stop("The table given as `data_column` must have exactly one column.")
+    
+    stop(
+      "The table given as `data_column` must have exactly one column.",
+      call. = FALSE
+    )
   }
   
   # Filter out all NA/NULL values from the `data_column`

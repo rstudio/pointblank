@@ -345,11 +345,13 @@ email_create <- function(x,
       !is_ptblank_x_list(x) &&
       !is_ptblank_informant(x)) {
     
-    stop("Email creation requires either:\n",
-         "* a pointblank agent\n",
-         "* an agent x-list, or\n",
-         "* a pointblank informant",
-         call. = FALSE)
+    stop(
+      "Email creation requires either:\n",
+      "* a pointblank agent\n",
+      "* an agent x-list, or\n",
+      "* a pointblank informant",
+      call. = FALSE
+    )
   }
   
   if (is_ptblank_informant(x)) {

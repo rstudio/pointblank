@@ -515,8 +515,11 @@ process_skips_text <- function(skips) {
   skips_keywords_non_os <- base::setdiff(skips_keywords, skips_keywords_os)
   
   if (!all(skips %in% skips_keywords)) {
-    stop("All values provided in `skips` must be valid skipping keywords.",
-         call. = FALSE)
+    
+    stop(
+      "All values provided in `skips` must be valid skipping keywords.",
+      call. = FALSE
+    )
   }
   
   skips_text <- 

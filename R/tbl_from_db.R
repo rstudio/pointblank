@@ -188,9 +188,12 @@ db_tbl <- function(table,
   force(table)
   
   if (!requireNamespace("DBI", quietly = TRUE)) {
-    stop("Accessing a database table requires the DBI package:\n",
-         " * It can be installed with `install.packages(\"DBI\")`.",
-         call. = FALSE)
+    
+    stop(
+      "Accessing a database table requires the DBI package:\n",
+      "* It can be installed with `install.packages(\"DBI\")`.",
+      call. = FALSE
+    )
   }
   
   if (is.character(dbtype)) {
@@ -251,15 +254,23 @@ db_tbl <- function(table,
   }
   
   if (is.character(table)) {
+    
     if (length(table) == 1) {
+      
       table_stmt <- table
       table_name <- table
+      
     } else if (length(table) == 2) {
+      
       table_stmt <- dbplyr::in_schema(schema = table[1], table = table[2])
       table_name <- table[2]
+      
     } else {
-      stop("The length of `table` should be either 1 or 2.",
-           call. = FALSE)
+      
+      stop(
+        "The length of `table` should be either 1 or 2.",
+        call. = FALSE
+      )
     }
   }
   
@@ -281,9 +292,12 @@ db_tbl <- function(table,
 RPostgres_driver <- function() {
   
   if (!requireNamespace("RPostgres", quietly = TRUE)) {
-    stop("Accessing a PostgreSQL table requires the RPostgres package:\n",
-         " * It can be installed with `install.packages(\"RPostgres\")`.",
-         call. = FALSE)
+    
+    stop(
+      "Accessing a PostgreSQL table requires the RPostgres package:\n",
+      "* It can be installed with `install.packages(\"RPostgres\")`.",
+      call. = FALSE
+    )
   }
   
   RPostgres::Postgres()
@@ -292,9 +306,12 @@ RPostgres_driver <- function() {
 RMySQL_driver <- function() {
   
   if (!requireNamespace("RMySQL", quietly = TRUE)) {
-    stop("Accessing a MariaDB or MySQL table requires the RMySQL package:\n",
-         " * It can be installed with `install.packages(\"RMySQL\")`.",
-         call. = FALSE)
+    
+    stop(
+      "Accessing a MariaDB or MySQL table requires the RMySQL package:\n",
+      "* It can be installed with `install.packages(\"RMySQL\")`.",
+      call. = FALSE
+    )
   }
   
   RMySQL::MySQL()
@@ -303,9 +320,12 @@ RMySQL_driver <- function() {
 DuckDB_driver <- function() {
   
   if (!requireNamespace("duckdb", quietly = TRUE)) {
-    stop("Accessing a DuckDB table requires the duckdb package:\n",
-         " * It can be installed with `install.packages(\"duckdb\")`.",
-         call. = FALSE)
+    
+    stop(
+      "Accessing a DuckDB table requires the duckdb package:\n",
+      "* It can be installed with `install.packages(\"duckdb\")`.",
+      call. = FALSE
+    )
   }
   
   duckdb::duckdb()
@@ -314,9 +334,12 @@ DuckDB_driver <- function() {
 RSQLite_driver <- function() {
   
   if (!requireNamespace("RSQLite", quietly = TRUE)) {
-    stop("Accessing a SQLite table requires the RSQLite package:\n",
-         " * It can be installed with `install.packages(\"RSQLite\")`.",
-         call. = FALSE)
+    
+    stop(
+      "Accessing a SQLite table requires the RSQLite package:\n",
+      "* It can be installed with `install.packages(\"RSQLite\")`.",
+      call. = FALSE
+    )
   }
   
   RSQLite::SQLite()
@@ -325,10 +348,14 @@ RSQLite_driver <- function() {
 # nolint end
 
 unknown_driver <- function() {
-    stop("The supplied value for `db` doesn't correspond to database type:\n",
-         " * Acceptable values are: \"postgres\", \"mysql\", ",
-         "\"sqlite\", and \"duckdb\".", 
-         call. = FALSE)
+  
+    stop(
+      "The supplied value for `db` doesn't correspond to a supported ",
+      "database type:\n",
+      "* Acceptable values are: \"postgres\", \"mysql\", ",
+      "\"sqlite\", and \"duckdb\".", 
+      call. = FALSE
+    )
 }
 
 # nocov end

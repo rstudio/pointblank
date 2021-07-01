@@ -97,7 +97,11 @@ get_data_extracts <- function(agent,
   # Stop function if the agent hasn't
   # yet performed an interrogation
   if (!inherits(agent, "has_intel")) {
-    stop("The `agent` has not yet performed an interrogation.", call. = FALSE)
+    
+    stop(
+      "The `agent` has not yet performed an interrogation.",
+      call. = FALSE
+    )
   }
   
   # Get the number of validation steps
@@ -109,6 +113,7 @@ get_data_extracts <- function(agent,
   
   # Stop function if the `i`th step does not exist in `agent`
   if (!(i %in% seq(validation_steps))) {
+    
     stop("The provided step number does not exist.", call. = FALSE)
   }
   
@@ -117,8 +122,11 @@ get_data_extracts <- function(agent,
   
   # Stop function if the `i`th step does not have an extract available
   if (!(as.character(i) %in% extract_names)) {
-    stop("The provided step number does not have an associated extract.",
-         call. = FALSE)
+    
+    stop(
+      "The provided step number does not have an associated extract.",
+      call. = FALSE
+    )
   }
   
   # Get the data extract

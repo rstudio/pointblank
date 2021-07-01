@@ -394,6 +394,7 @@ check_info_yaml_table <- function(y) {
     
     # Validate that 2nd-level elements have unique names
     if (any(duplicated(names(y[["table"]])))) {
+      
       stop("Duplicate column names provided in `table`.", call. = FALSE)
     }
     
@@ -409,9 +410,12 @@ check_info_yaml_table <- function(y) {
           
           for (z in x_names) {
             if (is.list(y[["table"]][[z]])) {
-              stop("All subcomponents inside of `table` should be a ",
-                   "character vector.",
-                   call. = FALSE)
+              
+              stop(
+                "All subcomponents inside of `table` should be a ",
+                "character vector.",
+                call. = FALSE
+              )
             }
           }
         }
@@ -426,6 +430,7 @@ check_info_yaml_columns <- function(y) {
     
     # Validate that 2nd-level elements have unique names
     if (any(duplicated(names(y[["columns"]])))) {
+      
       stop("Duplicate column names provided in `columns`.", call. = FALSE)
     }
     
@@ -448,9 +453,11 @@ check_info_yaml_columns <- function(y) {
                 unname(unlist(lapply(y[["columns"]][[z]], is.character)))
               
               if (!all(components_are_char)) {
-                stop("All components inside of `columns/", z,
-                     "` should either be text or text under a single heading.",
-                     call. = FALSE)
+                stop(
+                  "All components inside of `columns/", z,
+                  "` should either be text or text under a single heading.",
+                  call. = FALSE
+                )
               }
             }
           }
@@ -480,16 +487,20 @@ check_info_yaml_others <- function(y) {
               
               idx <- which(unname(unlist(lapply(y[[x]], Negate(is.character)))))
               
-              stop("All components inside `", x, "/", names(y[[x]][idx]),
-                   "` should be a character vector.",
-                   call. = FALSE)
+              stop(
+                "All components inside `", x, "/", names(y[[x]][idx]),
+                "` should be a character vector.",
+                call. = FALSE
+              )
             }
             
           } else if (!is.list(y[[x]])) {
             if (!is.character(y[[x]])) {
-              stop("The component inside `", x,
-                   "` should be a character vector.",
-                   call. = FALSE)
+              
+              stop(
+                "The component inside `", x, "` should be a character vector.",
+                call. = FALSE
+              )
             }
           }
         }

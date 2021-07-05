@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href='http://rich-iannone.github.io/pointblank/'><img src="man/figures/logo.svg" height="350px"/></a>
+<a href='https://rich-iannone.github.io/pointblank/'><img src="man/figures/logo.svg" height="350px"/></a>
 
 <br />
 <!-- badges: start -->
@@ -12,7 +12,7 @@
 
 <a href="https://bestpractices.coreinfrastructure.org/projects/4310"><img src="https://bestpractices.coreinfrastructure.org/projects/4310/badge" alt="Best Practices"></a>
 <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="The project has reached a stable, usable state and is being actively developed." /></a>
-<a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing" /></a>
+<a href="https://lifecycle.r-lib.org/articles/stages.html"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing" /></a>
 <a href="https://CRAN.R-project.org/package=pointblank"><img src="https://cranlogs.r-pkg.org/badges/pointblank" alt="Monthly Downloads"></a>
 <a href="https://CRAN.R-project.org/package=pointblank"><img src="https://cranlogs.r-pkg.org/badges/grand-total/pointblank" alt="Total Downloads"></a>
 
@@ -419,7 +419,7 @@ While **pointblank** is trying to do something different, it may not
 suit your specific needs. Here is a listing of some other validation
 **R** packages:
 
-**assertr** ([GITHUB](https://github.com/ropensci/assertr), [WEBSITE](https://docs.ropensci.org/assertr))
+**assertr** ([GITHUB](https://github.com/ropensci/assertr/), [WEBSITE](https://docs.ropensci.org/assertr/))
 
 **validate** ([GITHUB](https://github.com/data-cleaning/validate))
 
@@ -441,7 +441,7 @@ See the [`LICENSE.md`](LICENSE.md) file for more details.
 
 ##### 🏛️ Governance
 
-This project is primarily maintained by [Rich Iannone](https://www.twitter.com/riannone). Other authors may occasionally assist with some of these duties.
+This project is primarily maintained by [Rich Iannone](https://twitter.com/riannone). Other authors may occasionally assist with some of these duties.
 
 <hr>
 

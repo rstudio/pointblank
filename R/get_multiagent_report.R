@@ -182,7 +182,7 @@
 #' @export
 get_multiagent_report <- function(multiagent,
                                   display_table = TRUE,
-                                  display_mode = c("wide", "long"),
+                                  display_mode = c("long", "wide"),
                                   title = ":default:") {
 
   for (i in seq_along(multiagent[["agents"]])) {

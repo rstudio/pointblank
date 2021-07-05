@@ -106,7 +106,8 @@
 #' agent_1 <-
 #'   create_agent(
 #'     read_fn = ~ small_table,
-#'     label = "An example.",
+#'     tbl_name = "small_table",
+#'     label = "`get_multiagent_report()`",
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(
@@ -185,12 +186,35 @@
 #' 
 #' # Calling `multiagent` in the console
 #' # prints the multiagent report; but we
-#' # can get a `gt_tbl` object with the
-#' # `get_multiagent_report(agent)` function
-#' report <- get_multiagent_report(multiagent)
+#' # can use some non-default option with
+#' # the `get_multiagent_report()` function
 #' 
-#' class(report)
+#' # By default, `get_multiagent_report()`
+#' # gives you a tall report with agent
+#' # reports being stacked
+#' report_1 <- 
+#'   get_multiagent_report(multiagent)
+#'   
+#' # We can modify the title with that's
+#' # more suitable or use a keyword like
+#' # `:tbl_name:` to give us the target
+#' # table name in each section
+#' report_2 <- 
+#'   get_multiagent_report(
+#'     multiagent,
+#'     title = ":tbl_name:"
+#'   )
 #' 
+#' # We can opt for a wide display of
+#' # the reporting info, and this is
+#' # great when reporting on multiple
+#' # validations of the same target
+#' # table
+#' report_3 <- 
+#'   get_multiagent_report(
+#'     multiagent,
+#'     display_mode = "wide"
+#'   )
 #' }
 #'
 #' @family The multiagent

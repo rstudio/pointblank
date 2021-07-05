@@ -66,6 +66,22 @@ print.ptblank_multiagent <- function(x, view = interactive(), ...) {
   print(get_multiagent_report(x), view = view, ...)
 }
 
+#' Knit print the `ptblank_multiagent`
+#'
+#' This facilitates printing of the `ptblank_multiagent` within a knitr code
+#' chunk.
+#'
+#' @param x An object of class `ptblank_multiagent`.
+#' @param ... Any additional parameters.
+#'
+#' @keywords internal
+#' @noRd
+knit_print.ptblank_multiagent <- function(x, ...) {
+  
+  # Use `knit_print()` to print in a code chunk
+  knitr::knit_print(get_multiagent_report(x), ...)
+}
+
 #' Print the `ptblank_multiagent_report` object
 #'
 #' This function will allow the `ptblank_multiagent_report` to be nicely
@@ -82,6 +98,24 @@ print.ptblank_multiagent_report <- function(x, view = interactive(), ...) {
   class(x) <- c("shiny.tag.list", "list")
   
   print(x, browse = view, ...)
+}
+
+#' Knit print the `ptblank_multiagent_report`
+#'
+#' This facilitates printing of the `ptblank_multiagent_report` within a knitr
+#' code chunk.
+#'
+#' @param x An object of class `ptblank_multiagent_report`.
+#' @param ... Any additional parameters.
+#'
+#' @keywords internal
+#' @noRd
+knit_print.ptblank_multiagent_report <- function(x, ...) {
+  
+  class(x) <- c("shiny.tag.list", "list")
+  
+  # Use `knit_print()` to print in a code chunk
+  knitr::knit_print(x, ...)
 }
 
 #' Print the table information report

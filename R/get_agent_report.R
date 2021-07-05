@@ -1527,7 +1527,7 @@ process_title_text <- function(title,
                                report_type,
                                lang) {
   
-  if (report_type == "multiagent") {
+  if (report_type == "multiagent:wide") {
     if (title == ":tbl_name:") {
       stop(
         "The `:tbl_name:` option can't be used with `get_multiagent_report()`.",

@@ -284,18 +284,16 @@ get_multiagent_report <- function(multiagent,
         )
     }
     
-    total_i <- length(multiagent[["agents"]])
-    
     for (i in seq_along(multiagent[["agents"]])) {
       
       long_report_i <- 
         get_agent_report(
           multiagent[["agents"]][[i]],
           title = if ((i != 1 || title == ":none:") && title != ":tbl_name:") {
-            "" }
-          else {
+            ""
+          } else {
             title
-          } 
+          }
         )
       
       long_report_i <-

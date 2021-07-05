@@ -4,7 +4,12 @@
 \alias{get_multiagent_report}
 \title{Get a summary report using multiple agents}
 \usage{
-get_multiagent_report(multiagent, display_table = TRUE, title = ":default:")
+get_multiagent_report(
+  multiagent,
+  display_table = TRUE,
+  display_mode = c("wide", "long"),
+  title = ":default:"
+)
 }
 \arguments{
 \item{multiagent}{A multiagent object of class \code{ptblank_multiagent}.}

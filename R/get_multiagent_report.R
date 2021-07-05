@@ -38,7 +38,8 @@
 #' identical across interrogations. This way of organizing the report is
 #' beneficial because different agents may have used different steps and we want
 #' to track the validation results where the validation step doesn't change but
-#' the target table does (i.e., new rows are added, existing rows are updated, etc.).
+#' the target table does (i.e., new rows are added, existing rows are updated,
+#' etc.).
 #' 
 #' The single table from this display mode will have the following columns:
 #' 

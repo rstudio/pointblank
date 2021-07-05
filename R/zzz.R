@@ -198,6 +198,8 @@ utils::globalVariables(
   register_s3_method("knitr", "knit_print", "ptblank_agent")
   register_s3_method("knitr", "knit_print", "ptblank_informant")
   register_s3_method("knitr", "knit_print", "ptblank_tbl_scan")
+  register_s3_method("knitr", "knit_print", "ptblank_multiagent")
+  register_s3_method("knitr", "knit_print", "ptblank_multiagent_report")
   
   if ("knitr" %in% loadedNamespaces()) {
     validate_rmd_setup()

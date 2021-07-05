@@ -1515,7 +1515,9 @@ get_default_title_text <- function(report_type,
         "agent_report",
         "pointblank_validation_title_text"
       ))[[lang]]
-  } else if (report_type == "multiagent") {
+  } else if (report_type == "multiagent:wide") {
+    title_text <- "Pointblank Validation Series"
+  } else if (report_type == "multiagent:long") {
     title_text <- "Pointblank Validation Series"
   }
   
@@ -1527,7 +1529,7 @@ process_title_text <- function(title,
                                report_type,
                                lang) {
   
-  if (report_type == "multiagent") {
+  if (report_type == "multiagent:wide") {
     if (title == ":tbl_name:") {
       stop(
         "The `:tbl_name:` option can't be used with `get_multiagent_report()`.",

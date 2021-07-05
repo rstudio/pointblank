@@ -4,7 +4,12 @@
 \alias{get_multiagent_report}
 \title{Get a summary report using multiple agents}
 \usage{
-get_multiagent_report(multiagent, display_table = TRUE, title = ":default:")
+get_multiagent_report(
+  multiagent,
+  display_table = TRUE,
+  display_mode = c("long", "wide"),
+  title = ":default:"
+)
 }
 \arguments{
 \item{multiagent}{A multiagent object of class \code{ptblank_multiagent}.}
@@ -13,14 +18,22 @@ get_multiagent_report(multiagent, display_table = TRUE, title = ":default:")
 default) a display table for the report will be shown in the Viewer. If
 \code{FALSE} then a tibble will be returned.}
 
-\item{title}{Options for customizing the title of the report. The default is
-the keyword \code{":default:"} which produces generic title text. If no title is
-wanted, then the \code{":none:"} keyword option can be used. Aside from keyword
-options, text can be provided for the title and \code{glue::glue()} calls can be
-used to construct the text string. If providing text, it will be
-interpreted as Markdown text and transformed internally to HTML. To
-circumvent such a transformation, use text in \code{\link[=I]{I()}} to explicitly state
-that the supplied text should not be transformed.}
+\item{display_mode}{If we are getting a display table, should the agent data
+be presented in a \code{"long"} or \code{"wide"} form? The default is \code{"long"} but
+when comparing multiple runs where the target table is the same it might be
+preferable to choose \code{"wide"}.}
+
+\item{title}{Options for customizing the title of the report when
+\code{display_table = TRUE}. The default is the keyword \code{":default:"} which
+produces generic title text. If no title is wanted, then the \code{":none:"}
+keyword option can be used. Another keyword option is \code{":tbl_name:"}, and
+that presents the name of the table as the title for the report (this can
+only be used when \code{display_mode = "long"}). Aside from keyword options,
+text can be provided for the title and \code{glue::glue()} calls can be used to
+construct the text string. If providing text, it will be interpreted as
+Markdown text and transformed internally to HTML. To circumvent such a
+transformation, use text in \code{\link[=I]{I()}} to explicitly state that the supplied
+text should not be transformed.}
 }
 \value{
 A \strong{gt} table object if \code{display_table = TRUE} or a tibble if
@@ -28,11 +41,34 @@ A \strong{gt} table object if \code{display_table = TRUE} or a tibble if
 }
 \description{
 We can get an informative summary table from a collective of agents by using
-the \code{get_multiagent_report()} function. The table can be provided in either
-of two very different forms: as a \strong{gt} based display table (the default),
-or, as a tibble with packed columns. The display table variant of the
-multiagent report, the default form, will have the following columns:
+the \code{get_multiagent_report()} function. Information from multiple agent can
+be provided in three very forms: (1) the \emph{Long Display} (stacked reports),
+(2) the \emph{Wide Display} (a comparison report), (3) as a tibble with packed
+columns.
+}
+\section{The Long Display}{
 
+When displayed as \code{"long"} the multiagent report will stack individual agent
+reports in a single document in the order of the agents in the multiagent
+object.
+}
+
+\section{The Wide Display}{
+
+When displayed as \code{"wide"} the multiagent report will show data from
+individual agents as columns, with rows standing as validation steps common
+across the agents.
+
+Each validation step is represented with an icon (standing in for the name of
+the validation function) and the associated SHA1 hash. This is a highly
+trustworthy way for ascertaining which validation steps are effectively
+identical across interrogations. This way of organizing the report is
+beneficial because different agents may have used different steps and we want
+to track the validation results where the validation step doesn't change but
+the target table does (i.e., new rows are added, existing rows are updated,
+etc.).
+
+The single table from this display mode will have the following columns:
 \itemize{
 \item STEP: the SHA1 hash for the validation step, possibly shared among
 several interrogations.
@@ -40,15 +76,8 @@ several interrogations.
 interrogation from an \emph{agent} object. The time stamp for the completion of
 each interrogation is shown as the column label.
 }
-
-Each step is represented with an icon standing in for the name of the
-validation function and the associated SHA1 hash. This is a highly
-trustworthy way for ascertaining which validation steps are effectively
-identical across interrogations. This way of organizing the report is
-beneficial because different agents may have used different steps and we want
-to track the validation results where the validation step doesn't change but
-the target table does.
 }
+
 \section{Function ID}{
 
 10-3
@@ -84,7 +113,8 @@ al <-
 agent_1 <-
   create_agent(
     read_fn = ~ small_table,
-    label = "An example.",
+    tbl_name = "small_table",
+    label = "`get_multiagent_report()`",
     actions = al
   ) \%>\%
   col_vals_gt(
@@ -163,12 +193,35 @@ multiagent <-
 
 # Calling `multiagent` in the console
 # prints the multiagent report; but we
-# can get a `gt_tbl` object with the
-# `get_multiagent_report(agent)` function
-report <- get_multiagent_report(multiagent)
+# can use some non-default option with
+# the `get_multiagent_report()` function
 
-class(report)
+# By default, `get_multiagent_report()`
+# gives you a tall report with agent
+# reports being stacked
+report_1 <- 
+  get_multiagent_report(multiagent)
+  
+# We can modify the title with that's
+# more suitable or use a keyword like
+# `:tbl_name:` to give us the target
+# table name in each section
+report_2 <- 
+  get_multiagent_report(
+    multiagent,
+    title = ":tbl_name:"
+  )
 
+# We can opt for a wide display of
+# the reporting info, and this is
+# great when reporting on multiple
+# validations of the same target
+# table
+report_3 <- 
+  get_multiagent_report(
+    multiagent,
+    display_mode = "wide"
+  )
 }
 
 }

@@ -23,14 +23,17 @@ be presented in a \code{"long"} or \code{"wide"} form? The default is \code{"lon
 when comparing multiple runs where the target table is the same it might be
 preferable to choose \code{"wide"}.}
 
-\item{title}{Options for customizing the title of the report. The default is
-the keyword \code{":default:"} which produces generic title text. If no title is
-wanted, then the \code{":none:"} keyword option can be used. Aside from keyword
-options, text can be provided for the title and \code{glue::glue()} calls can be
-used to construct the text string. If providing text, it will be
-interpreted as Markdown text and transformed internally to HTML. To
-circumvent such a transformation, use text in \code{\link[=I]{I()}} to explicitly state
-that the supplied text should not be transformed.}
+\item{title}{Options for customizing the title of the report when
+\code{display_table = TRUE}. The default is the keyword \code{":default:"} which
+produces generic title text. If no title is wanted, then the \code{":none:"}
+keyword option can be used. Another keyword option is \code{":tbl_name:"}, and
+that presents the name of the table as the title for the report (this can
+only be used when \code{display_mode = "long"}). Aside from keyword options,
+text can be provided for the title and \code{glue::glue()} calls can be used to
+construct the text string. If providing text, it will be interpreted as
+Markdown text and transformed internally to HTML. To circumvent such a
+transformation, use text in \code{\link[=I]{I()}} to explicitly state that the supplied
+text should not be transformed.}
 }
 \value{
 A \strong{gt} table object if \code{display_table = TRUE} or a tibble if
@@ -110,7 +113,8 @@ al <-
 agent_1 <-
   create_agent(
     read_fn = ~ small_table,
-    label = "An example.",
+    tbl_name = "small_table",
+    label = "`get_multiagent_report()`",
     actions = al
   ) \%>\%
   col_vals_gt(
@@ -189,12 +193,35 @@ multiagent <-
 
 # Calling `multiagent` in the console
 # prints the multiagent report; but we
-# can get a `gt_tbl` object with the
-# `get_multiagent_report(agent)` function
-report <- get_multiagent_report(multiagent)
+# can use some non-default option with
+# the `get_multiagent_report()` function
 
-class(report)
+# By default, `get_multiagent_report()`
+# gives you a tall report with agent
+# reports being stacked
+report_1 <- 
+  get_multiagent_report(multiagent)
+  
+# We can modify the title with that's
+# more suitable or use a keyword like
+# `:tbl_name:` to give us the target
+# table name in each section
+report_2 <- 
+  get_multiagent_report(
+    multiagent,
+    title = ":tbl_name:"
+  )
 
+# We can opt for a wide display of
+# the reporting info, and this is
+# great when reporting on multiple
+# validations of the same target
+# table
+report_3 <- 
+  get_multiagent_report(
+    multiagent,
+    display_mode = "wide"
+  )
 }
 
 }

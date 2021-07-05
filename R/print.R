@@ -51,6 +51,38 @@ knit_print.ptblank_agent <- function(x, ...) {
   knitr::knit_print(get_agent_report(x), ...)
 }
 
+#' Print the `ptblank_multiagent` object
+#'
+#' This function will allow the `ptblank_multiagent` to be nicely printed.
+#' 
+#' @param x An object of class `ptblank_multiagent`.
+#' @param view The value for `print()`s `browse` argument.
+#' @param ... Any additional parameters.
+#' 
+#' @keywords internal
+#' @export
+print.ptblank_multiagent <- function(x, view = interactive(), ...) {
+  
+  print(get_multiagent_report(x), view = view, ...)
+}
+
+#' Print the `ptblank_multiagent_report` object
+#'
+#' This function will allow the `ptblank_multiagent_report` to be nicely
+#' printed.
+#' 
+#' @param x An object of class `ptblank_multiagent_report`.
+#' @param view The value for `print()`s `browse` argument.
+#' @param ... Any additional parameters.
+#' 
+#' @keywords internal
+#' @export
+print.ptblank_multiagent_report <- function(x, view = interactive(), ...) {
+  
+  class(x) <- c("shiny.tag.list", "list")
+  
+  print(x, browse = view, ...)
+}
 
 #' Print the table information report
 #'
@@ -376,21 +408,6 @@ print.action_levels <- function(x, ...) {
   }
   
   cli::cli_rule()
-}
-
-#' Print the `ptblank_multiagent` object
-#'
-#' This function will allow the `ptblank_multiagent` to be nicely printed.
-#' 
-#' @param x An object of class `ptblank_multiagent`.
-#' @param view The value for `print()`s `browse` argument.
-#' @param ... Any additional parameters.
-#' 
-#' @keywords internal
-#' @export
-print.ptblank_multiagent <- function(x, view = interactive(), ...) {
-
-  print(get_multiagent_report(x), view = view, ...)
 }
 
 #' Print the `tbl_store` object

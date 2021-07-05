@@ -228,6 +228,8 @@ get_multiagent_report <- function(multiagent,
 
   # nocov start
   
+  display_mode <- match.arg(display_mode)
+  
   if (display_mode == "long") {
     
     long_report <- ""

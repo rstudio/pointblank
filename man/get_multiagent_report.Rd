@@ -7,7 +7,7 @@
 get_multiagent_report(
   multiagent,
   display_table = TRUE,
-  display_mode = c("wide", "long"),
+  display_mode = c("long", "wide"),
   title = ":default:"
 )
 }
@@ -17,6 +17,11 @@ get_multiagent_report(
 \item{display_table}{Should a display table be generated? If \code{TRUE} (the
 default) a display table for the report will be shown in the Viewer. If
 \code{FALSE} then a tibble will be returned.}
+
+\item{display_mode}{If we are getting a display table, should the agent data
+be presented in a \code{"long"} or \code{"wide"} form? The default is \code{"long"} but
+when comparing multiple runs where the target table is the same it might be
+preferable to choose \code{"wide"}.}
 
 \item{title}{Options for customizing the title of the report. The default is
 the keyword \code{":default:"} which produces generic title text. If no title is
@@ -33,18 +38,19 @@ A \strong{gt} table object if \code{display_table = TRUE} or a tibble if
 }
 \description{
 We can get an informative summary table from a collective of agents by using
-the \code{get_multiagent_report()} function. The table can be provided in either
-of two very different forms: as a \strong{gt} based display table (the default),
-or, as a tibble with packed columns. The display table variant of the
-multiagent report, the default form, will have the following columns:
-
-\itemize{
-\item STEP: the SHA1 hash for the validation step, possibly shared among
-several interrogations.
-\item \emph{subsequent columns}: each column beyond \code{STEP} represents a separate
-interrogation from an \emph{agent} object. The time stamp for the completion of
-each interrogation is shown as the column label.
+the \code{get_multiagent_report()} function. Information from multiple agent can
+be provided in three very forms: (1) the \emph{Long Display} (stacked reports),
+(2) the \emph{Wide Display} (a comparison report), (3) as a tibble with packed
+columns.
 }
+\section{The Long Display}{
+
+When displayed as \code{"long"} the multiagent report will stack individual agent
+reports in a single document in the order of the agents in the multiagent
+object.
+}
+
+\section{The Wide Display}{
 
 Each step is represented with an icon standing in for the name of the
 validation function and the associated SHA1 hash. This is a highly
@@ -52,8 +58,18 @@ trustworthy way for ascertaining which validation steps are effectively
 identical across interrogations. This way of organizing the report is
 beneficial because different agents may have used different steps and we want
 to track the validation results where the validation step doesn't change but
-the target table does.
+the target table does (i.e., new rows are added, existing rows are updated, etc.).
+
+The single table from this display mode will have the following columns:
+\itemize{
+\item STEP: the SHA1 hash for the validation step, possibly shared among
+several interrogations.
+\item \emph{subsequent columns}: each column beyond \code{STEP} represents a separate
+interrogation from an \emph{agent} object. The time stamp for the completion of
+each interrogation is shown as the column label.
 }
+}
+
 \section{Function ID}{
 
 10-3

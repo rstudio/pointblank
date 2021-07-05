@@ -52,8 +52,12 @@ object.
 
 \section{The Wide Display}{
 
-Each step is represented with an icon standing in for the name of the
-validation function and the associated SHA1 hash. This is a highly
+When displayed as \code{"wide"} the multiagent report will show data from
+individual agents as columns, with rows standing as validation steps common
+across the agents.
+
+Each validation step is represented with an icon (standing in for the name of
+the validation function) and the associated SHA1 hash. This is a highly
 trustworthy way for ascertaining which validation steps are effectively
 identical across interrogations. This way of organizing the report is
 beneficial because different agents may have used different steps and we want

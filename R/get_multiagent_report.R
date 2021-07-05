@@ -61,14 +61,17 @@
 #'   be presented in a `"long"` or `"wide"` form? The default is `"long"` but
 #'   when comparing multiple runs where the target table is the same it might be
 #'   preferable to choose `"wide"`.
-#' @param title Options for customizing the title of the report. The default is
-#'   the keyword `":default:"` which produces generic title text. If no title is
-#'   wanted, then the `":none:"` keyword option can be used. Aside from keyword
-#'   options, text can be provided for the title and `glue::glue()` calls can be
-#'   used to construct the text string. If providing text, it will be
-#'   interpreted as Markdown text and transformed internally to HTML. To
-#'   circumvent such a transformation, use text in [I()] to explicitly state
-#'   that the supplied text should not be transformed.
+#' @param title Options for customizing the title of the report when
+#'   `display_table = TRUE`. The default is the keyword `":default:"` which
+#'   produces generic title text. If no title is wanted, then the `":none:"`
+#'   keyword option can be used. Another keyword option is `":tbl_name:"`, and
+#'   that presents the name of the table as the title for the report (this can
+#'   only be used when `display_mode = "long"`). Aside from keyword options,
+#'   text can be provided for the title and `glue::glue()` calls can be used to
+#'   construct the text string. If providing text, it will be interpreted as
+#'   Markdown text and transformed internally to HTML. To circumvent such a
+#'   transformation, use text in [I()] to explicitly state that the supplied
+#'   text should not be transformed.
 #' 
 #' @return A **gt** table object if `display_table = TRUE` or a tibble if
 #'   `display_table = FALSE`.
@@ -247,23 +250,46 @@ get_multiagent_report <- function(multiagent,
   
   if (display_mode == "long") {
     
-    long_report <- ""
+    long_report <- rep(NA_character_, length(multiagent[["agents"]]))
     
-    for (i in seq_along(multiagent[["agents"]])) {
-      
-      long_report <-
-        paste(
-          long_report,
-          get_agent_report(
-            multiagent[["agents"]][[i]],
-            title = if (title == ":default:") "" else title
-          ) %>%
-            gt::as_raw_html(inline_css = FALSE),
-          "<br />"
+    if (title == ":default:") {
+      title <-
+        get_default_title_text(
+          report_type = "multiagent:long",
+          lang = "en"
         )
     }
     
-    long_report <- htmltools::tagList(htmltools::HTML(long_report))
+    total_i <- length(multiagent[["agents"]])
+    
+    for (i in seq_along(multiagent[["agents"]])) {
+      
+      long_report_i <- 
+        get_agent_report(
+          multiagent[["agents"]][[i]],
+          title = if ((i != 1 || title == ":none:") && title != ":tbl_name:") {
+            "" }
+          else {
+            title
+          } 
+        )
+      
+      long_report_i <-
+        long_report_i %>%
+        gt::tab_options(
+          table.border.top.width = "0",
+          table.border.bottom.style = "double",
+          table.border.bottom.width = "6px",
+          table.border.bottom.color = "#D3D3D3"
+        )
+      
+      long_report[i] <- gt::as_raw_html(long_report_i, inline_css = FALSE)
+    }
+    
+    long_report <- 
+      htmltools::tagList(
+        htmltools::HTML(paste(long_report, collapse = "<br>"))
+      )
     
     class(long_report) <- c("ptblank_multiagent_report", class(long_report))
     
@@ -693,7 +719,7 @@ get_multiagent_report <- function(multiagent,
     process_title_text(
       title = title,
       tbl_name = NULL,
-      report_type = "multiagent",
+      report_type = "multiagent:wide",
       lang = "en"
     )
   

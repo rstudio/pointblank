@@ -227,6 +227,31 @@ get_multiagent_report <- function(multiagent,
   }
 
   # nocov start
+  
+  if (display_mode == "long") {
+    
+    long_report <- ""
+    
+    for (i in seq_along(multiagent[["agents"]])) {
+      
+      long_report <-
+        paste(
+          long_report,
+          get_agent_report(
+            multiagent[["agents"]][[i]],
+            title = if (title == ":default:") "" else title
+          ) %>%
+            gt::as_raw_html(inline_css = FALSE),
+          "<br />"
+        )
+    }
+    
+    long_report <- htmltools::tagList(htmltools::HTML(long_report))
+    
+    class(long_report) <- c("ptblank_multiagent_report", class(long_report))
+    
+    return(long_report)
+  }
 
   # Generate table type HTML
   table_type <- 

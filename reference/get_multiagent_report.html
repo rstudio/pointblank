@@ -48,25 +48,10 @@
 
 <meta property="og:title" content="Get a summary report using multiple agents — get_multiagent_report" />
 <meta property="og:description" content="We can get an informative summary table from a collective of agents by using
-the get_multiagent_report() function. The table can be provided in either
-of two very different forms: as a gt based display table (the default),
-or, as a tibble with packed columns. The display table variant of the
-multiagent report, the default form, will have the following columns:
-
-STEP: the SHA1 hash for the validation step, possibly shared among
-several interrogations.
-subsequent columns: each column beyond STEP represents a separate
-interrogation from an agent object. The time stamp for the completion of
-each interrogation is shown as the column label.
-
-
-Each step is represented with an icon standing in for the name of the
-validation function and the associated SHA1 hash. This is a highly
-trustworthy way for ascertaining which validation steps are effectively
-identical across interrogations. This way of organizing the report is
-beneficial because different agents may have used different steps and we want
-to track the validation results where the validation step doesn't change but
-the target table does." />
+the get_multiagent_report() function. Information from multiple agent can
+be provided in three very forms: (1) the Long Display (stacked reports),
+(2) the Wide Display (a comparison report), (3) as a tibble with packed
+columns." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -185,28 +170,18 @@ the target table does." />
 
     <div class="ref-description">
     <p>We can get an informative summary table from a collective of agents by using
-the <code>get_multiagent_report()</code> function. The table can be provided in either
-of two very different forms: as a <strong>gt</strong> based display table (the default),
-or, as a tibble with packed columns. The display table variant of the
-multiagent report, the default form, will have the following columns:</p>
-<ul>
-<li><p>STEP: the SHA1 hash for the validation step, possibly shared among
-several interrogations.</p></li>
-<li><p><em>subsequent columns</em>: each column beyond <code>STEP</code> represents a separate
-interrogation from an <em>agent</em> object. The time stamp for the completion of
-each interrogation is shown as the column label.</p></li>
-</ul>
-
-<p>Each step is represented with an icon standing in for the name of the
-validation function and the associated SHA1 hash. This is a highly
-trustworthy way for ascertaining which validation steps are effectively
-identical across interrogations. This way of organizing the report is
-beneficial because different agents may have used different steps and we want
-to track the validation results where the validation step doesn't change but
-the target table does.</p>
+the <code>get_multiagent_report()</code> function. Information from multiple agent can
+be provided in three very forms: (1) the <em>Long Display</em> (stacked reports),
+(2) the <em>Wide Display</em> (a comparison report), (3) as a tibble with packed
+columns.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>get_multiagent_report</span><span class='op'>(</span><span class='va'>multiagent</span>, display_table <span class='op'>=</span> <span class='cn'>TRUE</span>, title <span class='op'>=</span> <span class='st'>":default:"</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>get_multiagent_report</span><span class='op'>(</span>
+  <span class='va'>multiagent</span>,
+  display_table <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  display_mode <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"long"</span>, <span class='st'>"wide"</span><span class='op'>)</span>,
+  title <span class='op'>=</span> <span class='st'>":default:"</span>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -222,15 +197,25 @@ default) a display table for the report will be shown in the Viewer. If
 <code>FALSE</code> then a tibble will be returned.</p></td>
     </tr>
     <tr>
+      <th>display_mode</th>
+      <td><p>If we are getting a display table, should the agent data
+be presented in a <code>"long"</code> or <code>"wide"</code> form? The default is <code>"long"</code> but
+when comparing multiple runs where the target table is the same it might be
+preferable to choose <code>"wide"</code>.</p></td>
+    </tr>
+    <tr>
       <th>title</th>
-      <td><p>Options for customizing the title of the report. The default is
-the keyword <code>":default:"</code> which produces generic title text. If no title is
-wanted, then the <code>":none:"</code> keyword option can be used. Aside from keyword
-options, text can be provided for the title and <code><a href='https://glue.tidyverse.org/reference/glue.html'>glue::glue()</a></code> calls can be
-used to construct the text string. If providing text, it will be
-interpreted as Markdown text and transformed internally to HTML. To
-circumvent such a transformation, use text in <code><a href='https://rdrr.io/r/base/AsIs.html'>I()</a></code> to explicitly state
-that the supplied text should not be transformed.</p></td>
+      <td><p>Options for customizing the title of the report when
+<code>display_table = TRUE</code>. The default is the keyword <code>":default:"</code> which
+produces generic title text. If no title is wanted, then the <code>":none:"</code>
+keyword option can be used. Another keyword option is <code>":tbl_name:"</code>, and
+that presents the name of the table as the title for the report (this can
+only be used when <code>display_mode = "long"</code>). Aside from keyword options,
+text can be provided for the title and <code><a href='https://glue.tidyverse.org/reference/glue.html'>glue::glue()</a></code> calls can be used to
+construct the text string. If providing text, it will be interpreted as
+Markdown text and transformed internally to HTML. To circumvent such a
+transformation, use text in <code><a href='https://rdrr.io/r/base/AsIs.html'>I()</a></code> to explicitly state that the supplied
+text should not be transformed.</p></td>
     </tr>
     </table>
 
@@ -238,6 +223,36 @@ that the supplied text should not be transformed.</p></td>
 
     <p>A <strong>gt</strong> table object if <code>display_table = TRUE</code> or a tibble if
 <code>display_table = FALSE</code>.</p>
+    <h2 class="hasAnchor" id="the-long-display"><a class="anchor" href="#the-long-display"></a>The Long Display</h2>
+
+    
+
+<p>When displayed as <code>"long"</code> the multiagent report will stack individual agent
+reports in a single document in the order of the agents in the multiagent
+object.</p>
+    <h2 class="hasAnchor" id="the-wide-display"><a class="anchor" href="#the-wide-display"></a>The Wide Display</h2>
+
+    
+
+<p>When displayed as <code>"wide"</code> the multiagent report will show data from
+individual agents as columns, with rows standing as validation steps common
+across the agents.</p>
+<p>Each validation step is represented with an icon (standing in for the name of
+the validation function) and the associated SHA1 hash. This is a highly
+trustworthy way for ascertaining which validation steps are effectively
+identical across interrogations. This way of organizing the report is
+beneficial because different agents may have used different steps and we want
+to track the validation results where the validation step doesn't change but
+the target table does (i.e., new rows are added, existing rows are updated,
+etc.).</p>
+<p>The single table from this display mode will have the following columns:</p><ul>
+<li><p>STEP: the SHA1 hash for the validation step, possibly shared among
+several interrogations.</p></li>
+<li><p><em>subsequent columns</em>: each column beyond <code>STEP</code> represents a separate
+interrogation from an <em>agent</em> object. The time stamp for the completion of
+each interrogation is shown as the column label.</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
@@ -279,7 +294,8 @@ that the supplied text should not be transformed.</p></td>
 <span class='r-in'><span class='va'>agent_1</span> <span class='op'>&lt;-</span></span>
 <span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
 <span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,</span>
-<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"An example."</span>,</span>
+<span class='r-in'>    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"`get_multiagent_report()`"</span>,</span>
 <span class='r-in'>    actions <span class='op'>=</span> <span class='va'>al</span></span>
 <span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span></span>
@@ -358,12 +374,35 @@ that the supplied text should not be transformed.</p></td>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># Calling `multiagent` in the console</span></span>
 <span class='r-in'><span class='co'># prints the multiagent report; but we</span></span>
-<span class='r-in'><span class='co'># can get a `gt_tbl` object with the</span></span>
-<span class='r-in'><span class='co'># `get_multiagent_report(agent)` function</span></span>
-<span class='r-in'><span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>get_multiagent_report</span><span class='op'>(</span><span class='va'>multiagent</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># can use some non-default option with</span></span>
+<span class='r-in'><span class='co'># the `get_multiagent_report()` function</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>report</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># By default, `get_multiagent_report()`</span></span>
+<span class='r-in'><span class='co'># gives you a tall report with agent</span></span>
+<span class='r-in'><span class='co'># reports being stacked</span></span>
+<span class='r-in'><span class='va'>report_1</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'>get_multiagent_report</span><span class='op'>(</span><span class='va'>multiagent</span><span class='op'>)</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='co'># We can modify the title with that's</span></span>
+<span class='r-in'><span class='co'># more suitable or use a keyword like</span></span>
+<span class='r-in'><span class='co'># `:tbl_name:` to give us the target</span></span>
+<span class='r-in'><span class='co'># table name in each section</span></span>
+<span class='r-in'><span class='va'>report_2</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'>get_multiagent_report</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>multiagent</span>,</span>
+<span class='r-in'>    title <span class='op'>=</span> <span class='st'>":tbl_name:"</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
 <span class='r-in'></span>
+<span class='r-in'><span class='co'># We can opt for a wide display of</span></span>
+<span class='r-in'><span class='co'># the reporting info, and this is</span></span>
+<span class='r-in'><span class='co'># great when reporting on multiple</span></span>
+<span class='r-in'><span class='co'># validations of the same target</span></span>
+<span class='r-in'><span class='co'># table</span></span>
+<span class='r-in'><span class='va'>report_3</span> <span class='op'>&lt;-</span> </span>
+<span class='r-in'>  <span class='fu'>get_multiagent_report</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>multiagent</span>,</span>
+<span class='r-in'>    display_mode <span class='op'>=</span> <span class='st'>"wide"</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
 <span class='r-in'><span class='op'>}</span></span>
 <span class='r-in'></span>
 </code></pre></div>

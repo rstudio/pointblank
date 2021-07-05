@@ -32,8 +32,12 @@
 #' object.
 #' 
 #' @section The Wide Display:
-#' Each step is represented with an icon standing in for the name of the
-#' validation function and the associated SHA1 hash. This is a highly
+#' When displayed as `"wide"` the multiagent report will show data from
+#' individual agents as columns, with rows standing as validation steps common
+#' across the agents.
+#'
+#' Each validation step is represented with an icon (standing in for the name of
+#' the validation function) and the associated SHA1 hash. This is a highly
 #' trustworthy way for ascertaining which validation steps are effectively
 #' identical across interrogations. This way of organizing the report is
 #' beneficial because different agents may have used different steps and we want
@@ -57,7 +61,6 @@
 #'   be presented in a `"long"` or `"wide"` form? The default is `"long"` but
 #'   when comparing multiple runs where the target table is the same it might be
 #'   preferable to choose `"wide"`.
-#' 
 #' @param title Options for customizing the title of the report. The default is
 #'   the keyword `":default:"` which produces generic title text. If no title is
 #'   wanted, then the `":none:"` keyword option can be used. Aside from keyword

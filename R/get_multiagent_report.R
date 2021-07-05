@@ -21,31 +21,42 @@
 #' 
 #' @description 
 #' We can get an informative summary table from a collective of agents by using
-#' the `get_multiagent_report()` function. The table can be provided in either
-#' of two very different forms: as a **gt** based display table (the default),
-#' or, as a tibble with packed columns. The display table variant of the
-#' multiagent report, the default form, will have the following columns:
+#' the `get_multiagent_report()` function. Information from multiple agent can
+#' be provided in three very forms: (1) the *Long Display* (stacked reports),
+#' (2) the *Wide Display* (a comparison report), (3) as a tibble with packed
+#' columns.
 #' 
-#' \itemize{
-#' \item STEP: the SHA1 hash for the validation step, possibly shared among
-#' several interrogations.
-#' \item *subsequent columns*: each column beyond `STEP` represents a separate
-#' interrogation from an *agent* object. The time stamp for the completion of
-#' each interrogation is shown as the column label.
-#' }
+#' @section The Long Display:
+#' When displayed as `"long"` the multiagent report will stack individual agent
+#' reports in a single document in the order of the agents in the multiagent
+#' object.
 #' 
+#' @section The Wide Display:
 #' Each step is represented with an icon standing in for the name of the
 #' validation function and the associated SHA1 hash. This is a highly
 #' trustworthy way for ascertaining which validation steps are effectively
 #' identical across interrogations. This way of organizing the report is
 #' beneficial because different agents may have used different steps and we want
 #' to track the validation results where the validation step doesn't change but
-#' the target table does.
+#' the target table does (i.e., new rows are added, existing rows are updated, etc.).
+#' 
+#' The single table from this display mode will have the following columns:
+#' 
+#' - STEP: the SHA1 hash for the validation step, possibly shared among
+#' several interrogations.
+#' - *subsequent columns*: each column beyond `STEP` represents a separate
+#' interrogation from an *agent* object. The time stamp for the completion of
+#' each interrogation is shown as the column label.
 #' 
 #' @param multiagent A multiagent object of class `ptblank_multiagent`.
 #' @param display_table Should a display table be generated? If `TRUE` (the
 #'   default) a display table for the report will be shown in the Viewer. If
 #'   `FALSE` then a tibble will be returned.
+#' @param display_mode If we are getting a display table, should the agent data
+#'   be presented in a `"long"` or `"wide"` form? The default is `"long"` but
+#'   when comparing multiple runs where the target table is the same it might be
+#'   preferable to choose `"wide"`.
+#' 
 #' @param title Options for customizing the title of the report. The default is
 #'   the keyword `":default:"` which produces generic title text. If no title is
 #'   wanted, then the `":none:"` keyword option can be used. Aside from keyword

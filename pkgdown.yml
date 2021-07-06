@@ -1,15 +1,15 @@
 pandoc: 2.7.3
 pkgdown: 1.6.1.9001
-pkgdown_sha: 0328c6c9129896e5e2f555a864a71e6b014b5366
+pkgdown_sha: ce9781a15c7ea07df9fb17a11295ba4abec0b54b
 articles:
-  INFO-1: articles/INFO-1.html
-  INFO-2: articles/INFO-2.html
-  VALID-I: articles/VALID-I.html
-  VALID-II: articles/VALID-II.html
-  VALID-III: articles/VALID-III.html
-  VALID-IV: articles/VALID-IV.html
-  VALID-V: articles/VALID-V.html
-  VALID-VI: articles/VALID-VI.html
-  validation_workflows: articles/validation_workflows.html
-last_built: 2021-07-05T21:34Z
+  INFO-1: INFO-1.html
+  INFO-2: INFO-2.html
+  VALID-I: VALID-I.html
+  VALID-II: VALID-II.html
+  VALID-III: VALID-III.html
+  VALID-IV: VALID-IV.html
+  VALID-V: VALID-V.html
+  VALID-VI: VALID-VI.html
+  validation_workflows: validation_workflows.html
+last_built: 2021-07-06T20:02Z
 

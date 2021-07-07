@@ -101,6 +101,15 @@ scan_data <- function(tbl,
   cli::cli_div(
     theme = list(
       span.time_taken = list(color = "magenta", "font-weight" = "normal")
+  # If the document is undergoing knitting then adjust some options
+  if (isTRUE(getOption('knitr.in.progress'))) {
+    
+    navbar <- FALSE
+    
+    if (is.null(width)) {
+      width <- "720px"
+    }
+  }
     )
   )
   

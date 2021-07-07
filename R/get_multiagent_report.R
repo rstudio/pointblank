@@ -31,6 +31,10 @@
 #' reports in a single document in the order of the agents in the multiagent
 #' object.
 #' 
+#' Each validation plan (possibly with interrogation info) will be provided and
+#' the output for each is equivalent to calling [get_agent_report()] on each
+#' of the agents within the multiagent object.
+#' 
 #' @section The Wide Display:
 #' When displayed as `"wide"` the multiagent report will show data from
 #' individual agents as columns, with rows standing as validation steps common

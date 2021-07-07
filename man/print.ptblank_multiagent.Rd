@@ -14,6 +14,7 @@
 \item{...}{Any additional parameters.}
 }
 \description{
-This function will allow the \code{ptblank_multiagent} to be nicely printed.
+This function will allow the multiagent object to print a useful HTML-based
+report.
 }
 \keyword{internal}

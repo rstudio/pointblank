@@ -61,6 +61,8 @@
 #'   `"interactions"` and `"correlations"` sections are currently excluded.
 #' @param navbar Should there be a navigation bar anchored to the top of the
 #'   report page? By default this is `TRUE`.
+#' @param width An optional fixed width (in pixels) for the HTML report. By
+#'   default, no fixed width is applied.
 #' @param lang The language to use for label text in the report. By default,
 #'   `NULL` will create English (`"en"`) text. Other options include French
 #'   (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish (`"es"`), Portuguese
@@ -92,6 +94,7 @@
 scan_data <- function(tbl,
                       sections = "OVICMS",
                       navbar = TRUE,
+                      width = NULL,
                       lang = NULL,
                       locale = NULL) {
 

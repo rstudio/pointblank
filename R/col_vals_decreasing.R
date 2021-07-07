@@ -268,7 +268,7 @@ col_vals_decreasing <- function(x,
     brief <- 
       generate_autobriefs(
         agent = agent,
-        column = columns,
+        columns = columns,
         preconditions = preconditions,
         values = increasing_tol,
         assertion_type = "col_vals_decreasing"

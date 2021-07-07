@@ -1,0 +1,287 @@
+---
+title: "Printing {pointblank} Objects in an R Markdown Document"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(pointblank)
+```
+
+## `ptblank_agent`
+
+Let's walk through a data quality analysis of an extremely small table. It's actually called `small_table` and we can find it as a dataset in this package.
+
+```{r}
+small_table
+```
+
+We ought to think about what's tolerable in terms of data quality so let's designate proportional failure thresholds to the `warn`, `stop`, and `notify` states using `action_levels()`.
+
+```{r}
+al <- 
+  action_levels(
+      warn_at = 0.10,
+      stop_at = 0.25,
+    notify_at = 0.35
+  )
+```
+
+Now create a pointblank `agent` object and give it the `al` object (which serves as a default for all validation steps which can be overridden). The static thresholds provided by `al` will make the reporting a bit more useful.
+
+```{r}
+agent <- 
+  create_agent(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "An example.",
+    actions = al
+  )
+```
+
+Then, as with any `agent` object, we can add steps to the validation plan by
+using as many validation functions as we want. Then, we use `interrogate()` to physically perform the validations and gather intel.
+
+```{r}
+agent <-
+  agent %>% 
+  col_exists(vars(date, date_time)) %>%
+  col_vals_regex(
+    vars(b),
+    regex = "[0-9]-[a-z]{3}-[0-9]{3}"
+  ) %>%
+  rows_distinct() %>%
+  col_vals_gt(vars(d), value = 100) %>%
+  col_vals_lte(vars(c), value = 5) %>%
+  col_vals_equal(
+    vars(d), value = vars(d),
+    na_pass = TRUE
+  ) %>%
+  col_vals_between(
+    vars(c),
+    left = vars(a), right = vars(d),
+    na_pass = TRUE
+  ) %>%
+  interrogate()
+
+class(agent)
+```
+
+Calling `agent` will print the agent report with the default options.
+
+```{r}
+agent
+```
+
+## `ptblank_agent_report`
+
+We can get a `gt_tbl` object directly with `get_agent_report(agent)`.
+
+```{r}
+agent_report <- get_agent_report(agent, title = "Validation Report")
+
+class(agent_report)
+```
+
+Calling `agent_report` will print the customized agent report.
+
+```{r}
+agent_report
+```
+
+## `ptblank_multiagent`
+
+Let's walk through several theoretical data quality analyses of `small_table`.
+
+We'll begin by setting failure limits and signal conditions, we designate proportional failure thresholds to the `warn`, `stop`, and `notify` states using `action_levels()`.
+
+```{r}
+al <- 
+  action_levels(
+    warn_at = 0.05,
+    stop_at = 0.10,
+    notify_at = 0.20
+  )
+```
+
+We will create four different agents and have slightly different validation
+steps in each of them; in the first, `agent_1`, eight different validation
+steps are created and the agent will interrogate the `small_table`.
+
+```{r}
+agent_1 <-
+  create_agent(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "`get_multiagent_report()`",
+    actions = al
+  ) %>%
+  col_vals_gt(
+    vars(date_time),
+    value = vars(date),
+    na_pass = TRUE
+  ) %>%
+  col_vals_gt(
+    vars(b), 
+    value = vars(g),
+    na_pass = TRUE
+  ) %>%
+  rows_distinct() %>%
+  col_vals_equal(
+    vars(d), 
+    value = vars(d),
+    na_pass = TRUE
+  ) %>%
+  col_vals_between(
+    vars(c), 
+    left = vars(a), right = vars(d)
+  ) %>%
+  col_vals_not_between(
+    vars(c),
+    left = 10, right = 20,
+    na_pass = TRUE
+  ) %>%
+  rows_distinct(vars(d, e, f)) %>%
+  col_is_integer(vars(a)) %>%
+  interrogate()
+```
+
+The second agent, `agent_2`, retains all of the steps of `agent_1` and adds two more (the last of which is inactive).
+
+```{r}
+agent_2 <- 
+  agent_1 %>%
+  col_exists(vars(date, date_time)) %>%
+  col_vals_regex(
+    vars(b), 
+    regex = "[0-9]-[a-z]{3}-[0-9]{3}",
+    active = FALSE
+  ) %>%
+  interrogate()
+```
+
+The third agent, `agent_3`, adds a single validation step, removes the fifth one, and deactivates the first.
+
+```{r}
+agent_3 <- 
+  agent_2 %>%
+  col_vals_in_set(
+    vars(f),
+    set = c("low", "mid", "high")
+  ) %>%
+  remove_steps(i = 5) %>%
+  deactivate_steps(i = 1) %>%
+  interrogate()
+```
+
+The fourth and final agent, `agent_4`, reactivates steps 1 and 10, and removes the sixth step.
+
+```{r}
+agent_4 <-
+  agent_3 %>%
+  activate_steps(i = 1) %>%
+  activate_steps(i = 10) %>%
+  remove_steps(i = 6) %>%
+  interrogate()
+```
+
+While all the agents are slightly different from each other, we can still
+get a combined report of them by creating a 'multiagent'.
+
+```{r}
+multiagent <-
+  create_multiagent(
+    agent_1, agent_2, agent_3, agent_4
+  )
+
+class(multiagent)
+```
+
+Calling `multiagent` prints the multiagent report with the default options.
+
+```{r}
+multiagent
+```
+
+## `ptblank_multiagent_report.long`
+
+We can use `get_multiagent_report()` to customize the report. By default (with `display_mode = "long"`), it gives you a long report with agent reports being stacked.
+
+```{r}
+long_report <- 
+  get_multiagent_report(multiagent, title = "Several Validation Reports")
+
+class(long_report)
+```
+
+Calling `long_report` will print the customized multiagent report.
+
+```{r}
+long_report
+```
+
+## `ptblank_multiagent_report.wide`
+
+We can opt for a wide display of he reporting info, and this is great when reporting on multiple validations of the same target table.
+
+```{r}
+wide_report <- 
+  get_multiagent_report(multiagent, display_mode = "wide")
+
+class(wide_report)
+```
+
+Calling `wide_report` will print the customized multiagent report.
+
+```{r}
+wide_report
+```
+
+## `ptblank_informant`
+
+Generate a basic informant object with the `small_table` dataset.
+
+```{r}
+informant <- create_informant(small_table)
+
+class(informant)
+```
+
+Calling `informant` prints the informant report with the default options.
+
+```{r}
+informant
+```
+
+We can get a customized version of the report by using `get_informant_report()`
+
+```{r}
+informant_report <- 
+  get_informant_report(informant, title = "Data Dictionary", lang = "de")
+
+class(informant_report)
+```
+
+Calling `informant_report` will print the customized informant report.
+
+```{r}
+informant_report
+```
+
+## `ptblank_tbl_scan`
+
+A table can be scanned, giving us an HTML-based information summary.
+
+```{r}
+table_scan <- scan_data(small_table, sections = "OVS")
+
+class(table_scan)
+```
+
+Calling `table_scan` prints the report with the options provided earlier.
+
+```{r}
+table_scan
+```
+

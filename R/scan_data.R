@@ -110,6 +110,10 @@ scan_data <- function(tbl,
       width <- "720px"
     }
   }
+  
+  if (!is.null(width) && is.numeric(width)) {
+    width <- gt::px(width[1])
+  }
     )
   )
   

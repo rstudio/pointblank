@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.R
 \name{print.ptblank_informant}
 \alias{print.ptblank_informant}
-\title{Print the table information report}
+\title{Print the \code{ptblank_informant} object}
 \usage{
 \method{print}{ptblank_informant}(x, view = interactive(), ...)
 }
@@ -14,6 +14,7 @@
 \item{...}{Any additional parameters.}
 }
 \description{
-This function will allow the table information to be nicely printed.
+This function will allow the informant object to print a useful HTML-based
+report.
 }
 \keyword{internal}

@@ -247,7 +247,8 @@ scan_data <- function(tbl,
       sections = sections,
       navbar = navbar,
       lang = lang,
-      locale = locale
+      locale = locale,
+      width = width
     )
   
   # Get the ending time for the table scan
@@ -1484,7 +1485,8 @@ build_table_scan_page <- function(data,
                                   sections,
                                   navbar,
                                   lang,
-                                  locale) {
+                                  locale,
+                                  width = NULL) {
   
   if (navbar) {
     navbar <- navbar(sections = sections, lang = lang)
@@ -1589,6 +1591,11 @@ build_table_scan_page <- function(data,
             class = "content",
             htmltools::tags$div(
               class = "container",
+              style = if (!is.null(width)) {
+                paste0("width: ", width, ";") 
+              } else {
+                NULL
+              },
               probe_list
             )
           ),

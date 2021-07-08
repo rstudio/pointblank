@@ -2,7 +2,7 @@
 % Please edit documentation in R/object_ops.R
 \name{x_write_disk}
 \alias{x_write_disk}
-\title{Write a \strong{pointblank} \emph{agent}, \emph{informant}, or table scan to disk}
+\title{Write an \emph{agent}, \emph{informant}, \emph{multiagent}, or table scan to disk}
 \usage{
 x_write_disk(
   x,
@@ -42,12 +42,12 @@ default this is \code{FALSE}.}
 Invisibly returns \code{TRUE} if the file has been written.
 }
 \description{
-Writing an \emph{agent}, \emph{informant}, or even a table scan to disk with
-\code{x_write_disk()} can be useful for keeping data validation intel or table
-information close at hand for later retrieval (with \code{\link[=x_read_disk]{x_read_disk()}}). By
-default, any data table that the \emph{agent} or \emph{informant} may have held before
-being committed to disk will be expunged (not applicable to any table scan
-since they never hold a table object). This behavior can be changed by
+Writing an \emph{agent}, \emph{informant}, \emph{multiagent}, or even a table scan to disk
+with \code{x_write_disk()} can be useful for keeping data validation intel or
+table information close at hand for later retrieval (with \code{\link[=x_read_disk]{x_read_disk()}}).
+By default, any data table that the \emph{agent} or \emph{informant} may have held
+before being committed to disk will be expunged (not applicable to any table
+scan since they never hold a table object). This behavior can be changed by
 setting \code{keep_tbl} to \code{TRUE} but this only works in the case where the table
 is not of the \code{tbl_dbi} or the \code{tbl_spark} class.
 }
@@ -202,7 +202,47 @@ x_write_disk(
 # state as when it was saved) by using
 # `x_read_disk()`
 
-# C: Writing a table scan to disk
+# C: Writing a multiagent to disk
+
+# Let's create one more pointblank
+# agent object, provide it with some
+# validation steps, and `interrogate()`
+agent_b <-
+  create_agent(
+    read_fn = ~ small_table,
+    tbl_name = "small_table",
+    label = "`x_write_disk()`",
+    actions = al
+  ) \%>\%
+  col_vals_gt(
+    vars(b), vars(g), na_pass = TRUE,
+    label = "b > g"
+  ) \%>\%
+  col_is_character(
+    vars(b, f),
+    label = "Verifying character-type columns" 
+  ) \%>\%
+  interrogate()
+
+# Now we can combine the earlier `agent`
+# object with the newer `agent_b` to 
+# create a `multiagent`
+multiagent <-
+  create_multiagent(agent, agent_b)
+  
+# The `multiagent` can be written to
+# a file with the `x_write_disk()` function
+x_write_disk(
+  multiagent,
+  filename = "multiagent-small_table.rds"
+)
+
+# We can read the file back as a multiagent
+# with the `x_read_disk()` function and
+# we'll get all of the constituent agents
+# and their associated intel back as well
+
+# D: Writing a table scan to disk
 
 # We can get an report that describes all
 # of the data in the `storms` dataset

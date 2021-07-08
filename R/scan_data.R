@@ -99,7 +99,7 @@ scan_data <- function(tbl,
                       locale = NULL) {
 
   # If the document is undergoing knitting then adjust some options
-  if (isTRUE(getOption('knitr.in.progress'))) {
+  if (isTRUE(getOption("knitr.in.progress"))) {
     
     navbar <- FALSE
     

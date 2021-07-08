@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write a pointblank agent, informant, or table scan to disk — x_write_disk • pointblank</title>
+<title>Write an agent, informant, multiagent, or table scan to disk — x_write_disk • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,13 +46,13 @@
 
 
 
-<meta property="og:title" content="Write a pointblank agent, informant, or table scan to disk — x_write_disk" />
-<meta property="og:description" content="Writing an agent, informant, or even a table scan to disk with
-x_write_disk() can be useful for keeping data validation intel or table
-information close at hand for later retrieval (with x_read_disk()). By
-default, any data table that the agent or informant may have held before
-being committed to disk will be expunged (not applicable to any table scan
-since they never hold a table object). This behavior can be changed by
+<meta property="og:title" content="Write an agent, informant, multiagent, or table scan to disk — x_write_disk" />
+<meta property="og:description" content="Writing an agent, informant, multiagent, or even a table scan to disk
+with x_write_disk() can be useful for keeping data validation intel or
+table information close at hand for later retrieval (with x_read_disk()).
+By default, any data table that the agent or informant may have held
+before being committed to disk will be expunged (not applicable to any table
+scan since they never hold a table object). This behavior can be changed by
 setting keep_tbl to TRUE but this only works in the case where the table
 is not of the tbl_dbi or the tbl_spark class." />
 <meta property="og:image" content="/logo.svg" />
@@ -166,18 +166,18 @@ is not of the tbl_dbi or the tbl_spark class." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write a <strong>pointblank</strong> <em>agent</em>, <em>informant</em>, or table scan to disk</h1>
+    <h1>Write an <em>agent</em>, <em>informant</em>, <em>multiagent</em>, or table scan to disk</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/object_ops.R'><code>R/object_ops.R</code></a></small>
     <div class="hidden name"><code>x_write_disk.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Writing an <em>agent</em>, <em>informant</em>, or even a table scan to disk with
-<code>x_write_disk()</code> can be useful for keeping data validation intel or table
-information close at hand for later retrieval (with <code><a href='x_read_disk.html'>x_read_disk()</a></code>). By
-default, any data table that the <em>agent</em> or <em>informant</em> may have held before
-being committed to disk will be expunged (not applicable to any table scan
-since they never hold a table object). This behavior can be changed by
+    <p>Writing an <em>agent</em>, <em>informant</em>, <em>multiagent</em>, or even a table scan to disk
+with <code>x_write_disk()</code> can be useful for keeping data validation intel or
+table information close at hand for later retrieval (with <code><a href='x_read_disk.html'>x_read_disk()</a></code>).
+By default, any data table that the <em>agent</em> or <em>informant</em> may have held
+before being committed to disk will be expunged (not applicable to any table
+scan since they never hold a table object). This behavior can be changed by
 setting <code>keep_tbl</code> to <code>TRUE</code> but this only works in the case where the table
 is not of the <code>tbl_dbi</code> or the <code>tbl_spark</code> class.</p>
     </div>
@@ -399,7 +399,47 @@ with the <code><a href='set_tbl.html'>set_tbl()</a></code> function.</p>
 <span class='r-in'><span class='co'># state as when it was saved) by using</span></span>
 <span class='r-in'><span class='co'># `x_read_disk()`</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='co'># C: Writing a table scan to disk</span></span>
+<span class='r-in'><span class='co'># C: Writing a multiagent to disk</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Let's create one more pointblank</span></span>
+<span class='r-in'><span class='co'># agent object, provide it with some</span></span>
+<span class='r-in'><span class='co'># validation steps, and `interrogate()`</span></span>
+<span class='r-in'><span class='va'>agent_b</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span></span>
+<span class='r-in'>    read_fn <span class='op'>=</span> <span class='op'>~</span> <span class='va'>small_table</span>,</span>
+<span class='r-in'>    tbl_name <span class='op'>=</span> <span class='st'>"small_table"</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"`x_write_disk()`"</span>,</span>
+<span class='r-in'>    actions <span class='op'>=</span> <span class='va'>al</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>g</span><span class='op'>)</span>, na_pass <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"b &gt; g"</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_is_character.html'>col_is_character</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span>, <span class='va'>f</span><span class='op'>)</span>,</span>
+<span class='r-in'>    label <span class='op'>=</span> <span class='st'>"Verifying character-type columns"</span> </span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Now we can combine the earlier `agent`</span></span>
+<span class='r-in'><span class='co'># object with the newer `agent_b` to </span></span>
+<span class='r-in'><span class='co'># create a `multiagent`</span></span>
+<span class='r-in'><span class='va'>multiagent</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_multiagent.html'>create_multiagent</a></span><span class='op'>(</span><span class='va'>agent</span>, <span class='va'>agent_b</span><span class='op'>)</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='co'># The `multiagent` can be written to</span></span>
+<span class='r-in'><span class='co'># a file with the `x_write_disk()` function</span></span>
+<span class='r-in'><span class='fu'>x_write_disk</span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='va'>multiagent</span>,</span>
+<span class='r-in'>  filename <span class='op'>=</span> <span class='st'>"multiagent-small_table.rds"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># We can read the file back as a multiagent</span></span>
+<span class='r-in'><span class='co'># with the `x_read_disk()` function and</span></span>
+<span class='r-in'><span class='co'># we'll get all of the constituent agents</span></span>
+<span class='r-in'><span class='co'># and their associated intel back as well</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># D: Writing a table scan to disk</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># We can get an report that describes all</span></span>
 <span class='r-in'><span class='co'># of the data in the `storms` dataset</span></span>

@@ -1,15 +1,15 @@
 Type: Package
 Package: pointblank
 Version: 0.7.0.9000
-Title: Validation of Local and Remote Data Tables
+Title: Data Validation and Organization of Metadata for Local and Remote Tables
 Description: Validate data in data frames, 'tibble' objects, 'Spark'
-    'DataFrames', and database tables (e.g., 'PostgreSQL' and 'MySQL').
-    Validation pipelines can be made using easily-readable, consecutive
-    validation steps. Upon execution of the validation plan, several reporting
-    options are available. User-defined thresholds for failure rates allow for
-    the determination of appropriate reporting actions. Many other workflows are
-    available including an information management workflow, where the aim is to
-    record, collect, and generate useful information on data tables.
+    'DataFrames', and database tables. Validation pipelines can be made using
+    easily-readable, consecutive validation steps. Upon execution of the
+    validation plan, several reporting options are available. User-defined
+    thresholds for failure rates allow for the determination of appropriate
+    reporting actions. Many other workflows are available including an
+    information management workflow, where the aim is to record, collect, and
+    generate useful information on data tables.
 Authors@R: c(
     person("Richard", "Iannone", , "riannone@me.com", c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3925-190X")),

@@ -1,5 +1,4 @@
 ---
-title: "Printing {pointblank} Objects in an R Markdown Document"
 output: html_document
 ---
 
@@ -8,6 +7,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(pointblank)
 ```
+
+# Printing {pointblank} Objects in an R Markdown Document
 
 ## `ptblank_agent`
 
@@ -284,4 +285,3 @@ Calling `table_scan` prints the report with the options provided earlier.
 ```{r}
 table_scan
 ```
-

@@ -2,7 +2,7 @@
 % Please edit documentation in R/object_ops.R
 \name{export_report}
 \alias{export_report}
-\title{Export an \emph{agent}, \emph{informant}, or table scan report to HTML}
+\title{Export an \emph{agent}, \emph{informant}, \emph{multiagent}, or table scan to HTML}
 \usage{
 export_report(x, filename, path = NULL, quiet = FALSE)
 }

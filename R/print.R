@@ -57,6 +57,42 @@ knit_print.ptblank_agent <- function(x, ...) {
 }
 
 #
+# ptblank_informant
+#
+
+#' Print the `ptblank_informant` object
+#'
+#' This function will allow the informant object to print a useful HTML-based
+#' report.
+#' 
+#' @param x An informant object of class `ptblank_informant`.
+#' @param view The value for `print()`s `browse` argument.
+#' @param ... Any additional parameters.
+#' 
+#' @keywords internal
+#' @export
+print.ptblank_informant <- function(x, view = interactive(), ...) {
+  
+  print(get_informant_report(x), view = view, ...)
+}
+
+#' Knit print the `ptblank_informant` object
+#'
+#' This facilitates printing of the `ptblank_informant` object within a knitr
+#' code chunk.
+#'
+#' @param x An object of class `ptblank_informant`.
+#' @param ... Any additional parameters.
+#'
+#' @keywords internal
+#' @noRd
+knit_print.ptblank_informant <- function(x, ...) {
+  
+  # Use `knit_print()` to print in a code chunk
+  knitr::knit_print(get_informant_report(x), ...)
+}
+
+#
 # ptblank_multiagent
 #
 
@@ -130,42 +166,6 @@ knit_print.ptblank_multiagent_report.long <- function(x, ...) {
   
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(x, ...)
-}
-
-#
-# ptblank_informant
-#
-
-#' Print the `ptblank_informant` object
-#'
-#' This function will allow the informant object to print a useful HTML-based
-#' report.
-#' 
-#' @param x An informant object of class `ptblank_informant`.
-#' @param view The value for `print()`s `browse` argument.
-#' @param ... Any additional parameters.
-#' 
-#' @keywords internal
-#' @export
-print.ptblank_informant <- function(x, view = interactive(), ...) {
-  
-  print(get_informant_report(x), view = view, ...)
-}
-
-#' Knit print the `ptblank_informant` object
-#'
-#' This facilitates printing of the `ptblank_informant` object within a knitr
-#' code chunk.
-#'
-#' @param x An object of class `ptblank_informant`.
-#' @param ... Any additional parameters.
-#'
-#' @keywords internal
-#' @noRd
-knit_print.ptblank_informant <- function(x, ...) {
-  
-  # Use `knit_print()` to print in a code chunk
-  knitr::knit_print(get_informant_report(x), ...)
 }
 
 #

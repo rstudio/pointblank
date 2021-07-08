@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.R
 \name{print.ptblank_tbl_scan}
 \alias{print.ptblank_tbl_scan}
-\title{Print a table scan}
+\title{Print the \code{ptblank_tbl_scan} object}
 \usage{
 \method{print}{ptblank_tbl_scan}(x, ..., view = interactive())
 }
@@ -14,6 +14,7 @@
 \item{view}{The value for \code{print()}s \code{browse} argument.}
 }
 \description{
-This facilitates printing of a table scan to the R console.
+This function will print the \code{ptblank_tbl_scan} object, which is an
+HTML-based report.
 }
 \keyword{internal}

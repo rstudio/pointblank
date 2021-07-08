@@ -61,6 +61,8 @@
 #'   `"interactions"` and `"correlations"` sections are currently excluded.
 #' @param navbar Should there be a navigation bar anchored to the top of the
 #'   report page? By default this is `TRUE`.
+#' @param width An optional fixed width (in pixels) for the HTML report. By
+#'   default, no fixed width is applied.
 #' @param lang The language to use for label text in the report. By default,
 #'   `NULL` will create English (`"en"`) text. Other options include French
 #'   (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish (`"es"`), Portuguese
@@ -92,14 +94,32 @@
 scan_data <- function(tbl,
                       sections = "OVICMS",
                       navbar = TRUE,
+                      width = NULL,
                       lang = NULL,
                       locale = NULL) {
 
-  cli::cli_div(
-    theme = list(
-      span.time_taken = list(color = "magenta", "font-weight" = "normal")
+  # If the document is undergoing knitting then adjust some options
+  if (isTRUE(getOption("knitr.in.progress"))) {
+    
+    navbar <- FALSE
+    
+    if (is.null(width)) {
+      width <- "720px"
+    }
+  }
+  
+  if (!is.null(width) && is.numeric(width)) {
+    width <- gt::px(width[1])
+  }
+  
+  if (interactive()) {
+    
+    cli::cli_div(
+      theme = list(
+        span.time_taken = list(color = "magenta", "font-weight" = "normal")
+      )
     )
-  )
+  }
   
   # Stop function if the length of the `sections` vector is not 1
   if (length(sections) != 1) {
@@ -207,16 +227,19 @@ scan_data <- function(tbl,
   # Get the starting time for the table scan
   scan_start_time <- Sys.time()
   
-  cli::cli_h1(
-    paste0(
-      "Data Scan started. Processing ",
-      length(unique(sections_abbrev)), " ",
-      "section",
-      ifelse(length(unique(sections_abbrev)) > 1, "s", ""),
-      "."
+  if (interactive()) {
+    
+    cli::cli_h1(
+      paste0(
+        "Data Scan started. Processing ",
+        length(unique(sections_abbrev)), " ",
+        "section",
+        ifelse(length(unique(sections_abbrev)) > 1, "s", ""),
+        "."
+      )
     )
-  )
-
+  }
+  
   table_scan <- 
     build_table_scan_page(
       data = tbl,
@@ -224,7 +247,8 @@ scan_data <- function(tbl,
       sections = sections,
       navbar = navbar,
       lang = lang,
-      locale = locale
+      locale = locale,
+      width = width
     )
   
   # Get the ending time for the table scan
@@ -237,11 +261,14 @@ scan_data <- function(tbl,
       end_time = scan_end_time
     )
   
-  cli::cli_h1(
-    paste0(
-      "Data Scan finished. ", print_time(time_diff_s)
+  if (interactive()) {
+    
+    cli::cli_h1(
+      paste0(
+        "Data Scan finished. ", print_time(time_diff_s)
+      )
     )
-  )
+  }
   
   table_scan
 }
@@ -1458,7 +1485,8 @@ build_table_scan_page <- function(data,
                                   sections,
                                   navbar,
                                   lang,
-                                  locale) {
+                                  locale,
+                                  width = NULL) {
   
   if (navbar) {
     navbar <- navbar(sections = sections, lang = lang)
@@ -1563,6 +1591,11 @@ build_table_scan_page <- function(data,
             class = "content",
             htmltools::tags$div(
               class = "container",
+              style = if (!is.null(width)) {
+                paste0("width: ", width, ";") 
+              } else {
+                NULL
+              },
               probe_list
             )
           ),
@@ -1628,9 +1661,11 @@ probe_overview_stats_assemble <- function(data,
   # Get the starting time for the section
   section_start_time <- Sys.time()
   
-  cli::cli_alert_info(
-    "{.overview Starting assembly of 'Overview' section...}"
-  )
+  if (interactive()) {
+    cli::cli_alert_info(
+      "{.overview Starting assembly of 'Overview' section...}"
+    )
+  }
   
   overview_stats <- 
     probe_overview_stats(data = data, lang = lang, locale = locale)
@@ -1713,9 +1748,11 @@ probe_overview_stats_assemble <- function(data,
       end_time = section_end_time
     )
   
-  cli::cli_alert_success(
-    paste0("{.overview ...Finished!} ", print_time(time_diff_s))
-  )
+  if (interactive()) {
+    cli::cli_alert_success(
+      paste0("{.overview ...Finished!} ", print_time(time_diff_s))
+    )
+  }
   
   overview_stats_tags
 }
@@ -1742,9 +1779,11 @@ probe_columns_assemble <- function(data,
   # Get the starting time for the section
   section_start_time <- Sys.time()
   
-  cli::cli_alert_info(
-    "{.variables Starting assembly of 'Variables' section...}"
-  )
+  if (interactive()) {
+    cli::cli_alert_info(
+      "{.variables Starting assembly of 'Variables' section...}"
+    )
+  }
   
   columns_data <- probe_columns(data = data, lang = lang, locale = locale)
   
@@ -2217,9 +2256,11 @@ probe_columns_assemble <- function(data,
       end_time = section_end_time
     )
   
-  cli::cli_alert_success(
-    paste0("{.variables ...Finished!} ", print_time(time_diff_s))
-  )
+  if (interactive()) {
+    cli::cli_alert_success(
+      paste0("{.variables ...Finished!} ", print_time(time_diff_s))
+    )
+  }
   
   columns_tags
 }
@@ -2245,9 +2286,11 @@ probe_interactions_assemble <- function(data,
   # Get the starting time for the section
   section_start_time <- Sys.time()
   
-  cli::cli_alert_info(
-    "{.interactions Starting assembly of 'Interactions' section...}"
-  )
+  if (interactive()) {
+    cli::cli_alert_info(
+      "{.interactions Starting assembly of 'Interactions' section...}"
+    )
+  }
   
   interactions_data <- suppressWarnings(probe_interactions(data = data))
   
@@ -2277,9 +2320,11 @@ probe_interactions_assemble <- function(data,
       end_time = section_end_time
     )
   
-  cli::cli_alert_success(
-    paste0("{.interactions ...Finished!} ", print_time(time_diff_s))
-  )
+  if (interactive()) {
+    cli::cli_alert_success(
+      paste0("{.interactions ...Finished!} ", print_time(time_diff_s))
+    )
+  }
   
   interactions_tags
 }
@@ -2305,9 +2350,11 @@ probe_correlations_assemble <- function(data,
   # Get the starting time for the section
   section_start_time <- Sys.time()
   
-  cli::cli_alert_info(
-    "{.correlations Starting assembly of 'Correlations' section...}"
-  )
+  if (interactive()) {
+    cli::cli_alert_info(
+      "{.correlations Starting assembly of 'Correlations' section...}"
+    )
+  }
   
   correlations_data <- probe_correlations(data = data)
   
@@ -2388,9 +2435,11 @@ probe_correlations_assemble <- function(data,
       end_time = section_end_time
     )
   
-  cli::cli_alert_success(
-    paste0("{.correlations ...Finished!} ", print_time(time_diff_s))
-  )
+  if (interactive()) {
+    cli::cli_alert_success(
+      paste0("{.correlations ...Finished!} ", print_time(time_diff_s))
+    )
+  }
   
   correlations_tags
 }
@@ -2416,9 +2465,11 @@ probe_missing_assemble <- function(data,
   # Get the starting time for the section
   section_start_time <- Sys.time()
   
-  cli::cli_alert_info(
-    "{.missing_values Starting assembly of 'Missing Values' section...}"
-  )
+  if (interactive()) {
+    cli::cli_alert_info(
+      "{.missing_values Starting assembly of 'Missing Values' section...}"
+    )
+  }
   
   missing_data <- probe_missing(data = data)
   
@@ -2448,9 +2499,11 @@ probe_missing_assemble <- function(data,
       end_time = section_end_time
     )
   
-  cli::cli_alert_success(
-    paste0("{.missing_values ...Finished!} ", print_time(time_diff_s))
-  )
+  if (interactive()) {
+    cli::cli_alert_success(
+      paste0("{.missing_values ...Finished!} ", print_time(time_diff_s))
+    )
+  }
   
   missing_tags
 }
@@ -2476,9 +2529,11 @@ probe_sample_assemble <- function(data,
   # Get the starting time for the section
   section_start_time <- Sys.time()
   
-  cli::cli_alert_info(
-    "{.sample Starting assembly of 'Sample' section...}"
-  )
+  if (interactive()) {
+    cli::cli_alert_info(
+      "{.sample Starting assembly of 'Sample' section...}"
+    )
+  }
   
   sample_data <- probe_sample(data = data)
   
@@ -2508,9 +2563,11 @@ probe_sample_assemble <- function(data,
       end_time = section_end_time
     )
   
-  cli::cli_alert_success(
-    paste0("{.sample ...Finished!} ", print_time(time_diff_s))
-  )
+  if (interactive()) {
+    cli::cli_alert_success(
+      paste0("{.sample ...Finished!} ", print_time(time_diff_s))
+    )
+  }
   
   sample_tags
 }

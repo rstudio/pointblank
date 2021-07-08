@@ -20,11 +20,16 @@
 # nocov start
 # nolint start
 
-#' Print the agent information to the console
+#
+# ptblank_agent
+#
+
+#' Print the `ptblank_agent` object
 #'
-#' This function will allow the agent to print a useful report.
+#' This function will allow the agent object to print a useful HTML-based
+#' report.
 #' 
-#' @param x An agent object of class `ptblank_agent`.
+#' @param x An object of class `ptblank_agent`.
 #' @param view The value for `print()`s `browse` argument.
 #' @param ... Any additional parameters.
 #' 
@@ -35,9 +40,9 @@ print.ptblank_agent <- function(x, view = interactive(), ...) {
   print(get_agent_report(x), view = view, ...)
 }
 
-#' Knit print the agent information table
+#' Knit print the `ptblank_agent` object
 #'
-#' This facilitates printing of the agent report table within a knitr code
+#' This facilitates printing of the `ptblank_agent` object within a knitr code
 #' chunk.
 #'
 #' @param x An object of class `ptblank_agent`.
@@ -51,9 +56,14 @@ knit_print.ptblank_agent <- function(x, ...) {
   knitr::knit_print(get_agent_report(x), ...)
 }
 
+#
+# ptblank_multiagent
+#
+
 #' Print the `ptblank_multiagent` object
 #'
-#' This function will allow the `ptblank_multiagent` to be nicely printed.
+#' This function will allow the multiagent object to print a useful HTML-based
+#' report.
 #' 
 #' @param x An object of class `ptblank_multiagent`.
 #' @param view The value for `print()`s `browse` argument.
@@ -66,7 +76,7 @@ print.ptblank_multiagent <- function(x, view = interactive(), ...) {
   print(get_multiagent_report(x), view = view, ...)
 }
 
-#' Knit print the `ptblank_multiagent`
+#' Knit print the `ptblank_multiagent` object
 #'
 #' This facilitates printing of the `ptblank_multiagent` within a knitr code
 #' chunk.
@@ -82,35 +92,39 @@ knit_print.ptblank_multiagent <- function(x, ...) {
   knitr::knit_print(get_multiagent_report(x), ...)
 }
 
-#' Print the `ptblank_multiagent_report` object
+#
+# ptblank_multiagent_report.long
+#
+
+#' Print the `ptblank_multiagent_report.long` object
 #'
-#' This function will allow the `ptblank_multiagent_report` to be nicely
-#' printed.
+#' This function will print the `ptblank_multiagent_report.long` object, which
+#' is an HTML-based report.
 #' 
-#' @param x An object of class `ptblank_multiagent_report`.
+#' @param x An object of class `ptblank_multiagent_report.long`.
 #' @param view The value for `print()`s `browse` argument.
 #' @param ... Any additional parameters.
 #' 
 #' @keywords internal
 #' @export
-print.ptblank_multiagent_report <- function(x, view = interactive(), ...) {
+print.ptblank_multiagent_report.long <- function(x, view = interactive(), ...) {
   
   class(x) <- c("shiny.tag.list", "list")
   
   print(x, browse = view, ...)
 }
 
-#' Knit print the `ptblank_multiagent_report`
+#' Knit print the `ptblank_multiagent_report.long` object
 #'
-#' This facilitates printing of the `ptblank_multiagent_report` within a knitr
-#' code chunk.
+#' This facilitates printing of the `ptblank_multiagent_report.long` within a
+#' knitr code chunk.
 #'
-#' @param x An object of class `ptblank_multiagent_report`.
+#' @param x An object of class `ptblank_multiagent_report.long`.
 #' @param ... Any additional parameters.
 #'
 #' @keywords internal
 #' @noRd
-knit_print.ptblank_multiagent_report <- function(x, ...) {
+knit_print.ptblank_multiagent_report.long <- function(x, ...) {
   
   class(x) <- c("shiny.tag.list", "list")
   
@@ -118,9 +132,14 @@ knit_print.ptblank_multiagent_report <- function(x, ...) {
   knitr::knit_print(x, ...)
 }
 
-#' Print the table information report
+#
+# ptblank_informant
+#
+
+#' Print the `ptblank_informant` object
 #'
-#' This function will allow the table information to be nicely printed.
+#' This function will allow the informant object to print a useful HTML-based
+#' report.
 #' 
 #' @param x An informant object of class `ptblank_informant`.
 #' @param view The value for `print()`s `browse` argument.
@@ -133,10 +152,10 @@ print.ptblank_informant <- function(x, view = interactive(), ...) {
   print(get_informant_report(x), view = view, ...)
 }
 
-#' Knit print the table information report
+#' Knit print the `ptblank_informant` object
 #'
-#' This facilitates printing of the table information report within a knitr code
-#' chunk.
+#' This facilitates printing of the `ptblank_informant` object within a knitr
+#' code chunk.
 #'
 #' @param x An object of class `ptblank_informant`.
 #' @param ... Any additional parameters.
@@ -149,9 +168,14 @@ knit_print.ptblank_informant <- function(x, ...) {
   knitr::knit_print(get_informant_report(x), ...)
 }
 
-#' Print a table scan
+#
+# ptblank_tbl_scan
+#
+
+#' Print the `ptblank_tbl_scan` object
 #'
-#' This facilitates printing of a table scan to the R console.
+#' This function will print the `ptblank_tbl_scan` object, which is an
+#' HTML-based report.
 #'
 #' @param x An object of class `ptblank_tbl_scan`.
 #' @param ... Any additional parameters.
@@ -167,9 +191,10 @@ print.ptblank_tbl_scan <- function(x, ..., view = interactive()) {
   print(x, browse = view, ...)
 }
 
-#' Knit print a table scan 
+#' Knit print the `ptblank_tbl_scan` object
 #'
-#' This facilitates printing of a table scan within a knitr code chunk.
+#' This facilitates printing of the `ptblank_tbl_scan` within a knitr code
+#' chunk.
 #'
 #' @param x An object of class `ptblank_tbl_scan`.
 #' @param ... Any additional parameters.
@@ -184,6 +209,9 @@ knit_print.ptblank_tbl_scan <- function(x, ...) {
   knitr::knit_print(x, ...)
 }
 
+#
+# x_list_i
+#
 
 #' Print a single-step x-list to the console
 #'

@@ -4,7 +4,14 @@
 \alias{scan_data}
 \title{Thoroughly scan a table to better understand it}
 \usage{
-scan_data(tbl, sections = "OVICMS", navbar = TRUE, lang = NULL, locale = NULL)
+scan_data(
+  tbl,
+  sections = "OVICMS",
+  navbar = TRUE,
+  width = NULL,
+  lang = NULL,
+  locale = NULL
+)
 }
 \arguments{
 \item{tbl}{The input table. This can be a data frame, tibble, a \code{tbl_dbi}
@@ -22,6 +29,9 @@ report. For \code{tbl_dbi} and \code{tbl_spark} objects supplied to \code{tbl}, 
 
 \item{navbar}{Should there be a navigation bar anchored to the top of the
 report page? By default this is \code{TRUE}.}
+
+\item{width}{An optional fixed width (in pixels) for the HTML report. By
+default, no fixed width is applied.}
 
 \item{lang}{The language to use for label text in the report. By default,
 \code{NULL} will create English (\code{"en"}) text. Other options include French

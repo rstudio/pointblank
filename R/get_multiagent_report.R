@@ -317,7 +317,8 @@ get_multiagent_report <- function(multiagent,
         htmltools::HTML(paste(long_report, collapse = "<br>"))
       )
     
-    class(long_report) <- c("ptblank_multiagent_report", class(long_report))
+    class(long_report) <- 
+      c("ptblank_multiagent_report.long", class(long_report))
     
     return(long_report)
   }
@@ -866,6 +867,8 @@ get_multiagent_report <- function(multiagent,
       report_tbl %>% 
       gt::cols_label(`001` = gt::html(date_time[[2]]))
   }
+  
+  class(report_tbl) <- c("ptblank_multiagent_report.wide", class(report_tbl))
   
   report_tbl
 }

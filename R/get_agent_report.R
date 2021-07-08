@@ -260,13 +260,15 @@ get_agent_report <- function(agent,
     
     extract_count[extract_count == FALSE] <- NA_integer_
     
-    extract_count[!is.na(extract_count)] <- 
-      vapply(
-        agent$extracts,
-        FUN.VALUE = integer(1),
-        USE.NAMES = FALSE,
-        FUN = nrow
-      )
+    suppressWarnings(
+      extract_count[!is.na(extract_count)] <- 
+        vapply(
+          agent$extracts,
+          FUN.VALUE = integer(1),
+          USE.NAMES = FALSE,
+          FUN = nrow
+        )
+    )
   }
   
   report_tbl <- 
@@ -1104,7 +1106,7 @@ get_agent_report <- function(agent,
     )
   
   # Generate a gt table
-  gt_agent_report <- 
+  agent_report <- 
     report_tbl %>%
     dplyr::mutate(
       status_color = NA_character_,
@@ -1327,8 +1329,8 @@ get_agent_report <- function(agent,
   
   if (!has_agent_intel(agent)) {
     
-    gt_agent_report <-
-      gt_agent_report %>%
+    agent_report <-
+      agent_report %>%
       gt::text_transform(
         locations = gt::cells_body(
           columns = c(
@@ -1382,8 +1384,8 @@ get_agent_report <- function(agent,
   
   if (size == "small") {
     
-    gt_agent_report <- 
-      gt_agent_report %>%
+    agent_report <- 
+      agent_report %>%
       gt::cols_hide(c("columns", "values", "eval_sym", "precon", "extract")) %>%
       gt::cols_width(
         "status_color" ~ gt::px(4),
@@ -1405,8 +1407,8 @@ get_agent_report <- function(agent,
     
     if (!has_agent_intel(agent)) {
       
-      gt_agent_report <- 
-        gt_agent_report %>%
+      agent_report <- 
+        agent_report %>%
         gt::tab_header(
           title = gt::md(
             paste0(
@@ -1429,8 +1431,8 @@ get_agent_report <- function(agent,
       
     } else {
       
-      gt_agent_report <- 
-        gt_agent_report %>%
+      agent_report <- 
+        agent_report %>%
         gt::tab_header(
           title = get_lsv(text = c(
             "agent_report", "pointblank_validation_title_text"
@@ -1443,8 +1445,8 @@ get_agent_report <- function(agent,
     
   } else {
     
-    gt_agent_report <- 
-      gt_agent_report %>%
+    agent_report <- 
+      agent_report %>%
       gt::cols_width(
         "status_color" ~ gt::px(6),
         "i" ~ gt::px(35),
@@ -1495,9 +1497,11 @@ get_agent_report <- function(agent,
       )
   }
   
+  class(agent_report) <- c("ptblank_agent_report", class(agent_report))
+  
   # nocov end
   
-  gt_agent_report
+  agent_report
 }
 
 get_default_title_text <- function(report_type,

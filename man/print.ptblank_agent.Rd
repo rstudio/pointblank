@@ -2,18 +2,19 @@
 % Please edit documentation in R/print.R
 \name{print.ptblank_agent}
 \alias{print.ptblank_agent}
-\title{Print the agent information to the console}
+\title{Print the \code{ptblank_agent} object}
 \usage{
 \method{print}{ptblank_agent}(x, view = interactive(), ...)
 }
 \arguments{
-\item{x}{An agent object of class \code{ptblank_agent}.}
+\item{x}{An object of class \code{ptblank_agent}.}
 
 \item{view}{The value for \code{print()}s \code{browse} argument.}
 
 \item{...}{Any additional parameters.}
 }
 \description{
-This function will allow the agent to print a useful report.
+This function will allow the agent object to print a useful HTML-based
+report.
 }
 \keyword{internal}

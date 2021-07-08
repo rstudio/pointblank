@@ -17,15 +17,15 @@
 #
 
 
-#' Write a **pointblank** *agent*, *informant*, or table scan to disk
+#' Write an *agent*, *informant*, *multiagent*, or table scan to disk
 #' 
 #' @description 
-#' Writing an *agent*, *informant*, or even a table scan to disk with
-#' `x_write_disk()` can be useful for keeping data validation intel or table
-#' information close at hand for later retrieval (with [x_read_disk()]). By
-#' default, any data table that the *agent* or *informant* may have held before
-#' being committed to disk will be expunged (not applicable to any table scan
-#' since they never hold a table object). This behavior can be changed by
+#' Writing an *agent*, *informant*, *multiagent*, or even a table scan to disk
+#' with `x_write_disk()` can be useful for keeping data validation intel or
+#' table information close at hand for later retrieval (with [x_read_disk()]).
+#' By default, any data table that the *agent* or *informant* may have held
+#' before being committed to disk will be expunged (not applicable to any table
+#' scan since they never hold a table object). This behavior can be changed by
 #' setting `keep_tbl` to `TRUE` but this only works in the case where the table
 #' is not of the `tbl_dbi` or the `tbl_spark` class.
 #'
@@ -196,7 +196,47 @@
 #' # state as when it was saved) by using
 #' # `x_read_disk()`
 #' 
-#' # C: Writing a table scan to disk
+#' # C: Writing a multiagent to disk
+#' 
+#' # Let's create one more pointblank
+#' # agent object, provide it with some
+#' # validation steps, and `interrogate()`
+#' agent_b <-
+#'   create_agent(
+#'     read_fn = ~ small_table,
+#'     tbl_name = "small_table",
+#'     label = "`x_write_disk()`",
+#'     actions = al
+#'   ) %>%
+#'   col_vals_gt(
+#'     vars(b), vars(g), na_pass = TRUE,
+#'     label = "b > g"
+#'   ) %>%
+#'   col_is_character(
+#'     vars(b, f),
+#'     label = "Verifying character-type columns" 
+#'   ) %>%
+#'   interrogate()
+#' 
+#' # Now we can combine the earlier `agent`
+#' # object with the newer `agent_b` to 
+#' # create a `multiagent`
+#' multiagent <-
+#'   create_multiagent(agent, agent_b)
+#'   
+#' # The `multiagent` can be written to
+#' # a file with the `x_write_disk()` function
+#' x_write_disk(
+#'   multiagent,
+#'   filename = "multiagent-small_table.rds"
+#' )
+#' 
+#' # We can read the file back as a multiagent
+#' # with the `x_read_disk()` function and
+#' # we'll get all of the constituent agents
+#' # and their associated intel back as well
+#' 
+#' # D: Writing a table scan to disk
 #' 
 #' # We can get an report that describes all
 #' # of the data in the `storms` dataset
@@ -227,13 +267,15 @@ x_write_disk <- function(x,
     !any(
       inherits(x, "ptblank_agent") |
       inherits(x, "ptblank_informant") |
+      inherits(x, "ptblank_multiagent") |
       inherits(x, "ptblank_tbl_scan")
       )
     ) {
     stop(
-      "The object provided isn't one of the three types that can be saved:\n",
+      "The object provided isn't one of the four types that can be saved:\n",
       "* the `agent` (`ptblank_agent`)\n",
       "* the `informant()` (`ptblank_informant`)\n",
+      "* the `multiagent()` (`ptblank_multiagent`)\n",
       "* a table scan (`ptblank_tbl_scan`)",
       call. = FALSE
     )
@@ -275,6 +317,10 @@ x_write_disk <- function(x,
     
     object_type <- "informant"
     
+  } else if (inherits(x, "ptblank_multiagent")) {
+    
+    object_type <- "multiagent"
+    
   } else {
     
     object_type <- "table scan"
@@ -301,16 +347,16 @@ x_write_disk <- function(x,
   invisible(TRUE)
 }
 
-#' Read a **pointblank** *agent*, *informant*, or table scan from disk
+#' Read an *agent*, *informant*, *multiagent*, or table scan from disk
 #' 
 #' @description 
-#' An *agent*, *informant*, or table scan that has been written to disk (with
-#' [x_write_disk()]) can be read back into memory with the `x_read_disk()`
-#' function. For an *agent* or an *informant* object that has been generated in
-#' this way, it may not have a data table associated with it (depending on
-#' whether the `keep_tbl` option was `TRUE` or `FALSE` when writing to disk) but
-#' it should still be able to produce reporting (by printing the *agent* or
-#' *informant* to the console or using
+#' An *agent*, *informant*, *multiagent*, or table scan that has been written to
+#' disk (with [x_write_disk()]) can be read back into memory with the
+#' `x_read_disk()` function. For an *agent* or an *informant* object that has
+#' been generated in this way, it may not have a data table associated with it
+#' (depending on whether the `keep_tbl` option was `TRUE` or `FALSE` when
+#' writing to disk) but it should still be able to produce reporting (by
+#' printing the *agent* or *informant* to the console or using
 #' [get_agent_report()]/[get_informant_report()]). An *agent* will return an
 #' x-list with [get_agent_x_list()] and yield any available data extracts with
 #' [get_data_extracts()]. Furthermore, all of an *agent*'s validation steps will
@@ -362,7 +408,20 @@ x_write_disk <- function(x,
 #' informant <-
 #'   x_read_disk("informant-small_table.rds")
 #' 
-#' # C: Reading a table scan from disk
+#' # C: Reading a multiagent from disk 
+#' 
+#' # The process of creating a multiagent
+#' # and writing it to disk with the
+#' # `x_write_disk()` function is shown
+#' # in that function's documentation;
+#' # but should we have such a written file
+#' # called "multiagent-small_table.rds",
+#' # we could read that to a new multiagent
+#' # object with `x_read_disk()`
+#' agent <-
+#'   x_read_disk("multiagent-small_table.rds")
+#' 
+#' # D: Reading a table scan from disk
 #' 
 #' # If there is a table scan written
 #' # to disk via `x_write_disk()` and it's
@@ -398,6 +457,8 @@ x_read_disk <- function(filename,
     object_type <- "agent"
   } else if (inherits(x, "ptblank_informant")) {
     object_type <- "informant"
+  } else if (inherits(x, "ptblank_multiagent")) {
+    object_type <- "multiagent"
   } else if (inherits(x, "ptblank_tbl_scan")) {
     object_type <- "table scan"
   } else {
@@ -414,7 +475,7 @@ x_read_disk <- function(filename,
   x
 }
 
-#' Export an *agent*, *informant*, or table scan report to HTML
+#' Export an *agent*, *informant*, *multiagent*, or table scan to HTML
 #' 
 #' @description 
 #' The *agent*, *informant*, and table scan reports can be easily written as
@@ -589,13 +650,15 @@ export_report <- function(x,
     !any(
       inherits(x, "ptblank_agent") |
       inherits(x, "ptblank_informant") |
+      inherits(x, "ptblank_multiagent") |
       inherits(x, "ptblank_tbl_scan")
     )
   ) {
     stop(
-      "The object provided isn't one of the three types that can be saved:\n",
+      "The object provided isn't one of the four types that can be saved:\n",
       "* the `agent` (`ptblank_agent`)\n",
       "* the `informant()` (`ptblank_informant`)\n",
+      "* the `multiagent()` (`ptblank_multiagent`)\n",
       "* a table scan (`ptblank_tbl_scan`)",
       call. = FALSE
     )

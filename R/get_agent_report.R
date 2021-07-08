@@ -260,13 +260,15 @@ get_agent_report <- function(agent,
     
     extract_count[extract_count == FALSE] <- NA_integer_
     
-    extract_count[!is.na(extract_count)] <- 
-      vapply(
-        agent$extracts,
-        FUN.VALUE = integer(1),
-        USE.NAMES = FALSE,
-        FUN = nrow
-      )
+    suppressWarnings(
+      extract_count[!is.na(extract_count)] <- 
+        vapply(
+          agent$extracts,
+          FUN.VALUE = integer(1),
+          USE.NAMES = FALSE,
+          FUN = nrow
+        )
+    )
   }
   
   report_tbl <- 

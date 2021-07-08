@@ -2,7 +2,7 @@
 % Please edit documentation in R/object_ops.R
 \name{x_read_disk}
 \alias{x_read_disk}
-\title{Read a \strong{pointblank} \emph{agent}, \emph{informant}, or table scan from disk}
+\title{Read an \emph{agent}, \emph{informant}, \emph{multiagent}, or table scan from disk}
 \usage{
 x_read_disk(filename, path = NULL, quiet = FALSE)
 }
@@ -20,13 +20,13 @@ Either a \code{ptblank_agent}, \code{ptblank_informant}, or a
 \code{ptblank_tbl_scan} object.
 }
 \description{
-An \emph{agent}, \emph{informant}, or table scan that has been written to disk (with
-\code{\link[=x_write_disk]{x_write_disk()}}) can be read back into memory with the \code{x_read_disk()}
-function. For an \emph{agent} or an \emph{informant} object that has been generated in
-this way, it may not have a data table associated with it (depending on
-whether the \code{keep_tbl} option was \code{TRUE} or \code{FALSE} when writing to disk) but
-it should still be able to produce reporting (by printing the \emph{agent} or
-\emph{informant} to the console or using
+An \emph{agent}, \emph{informant}, \emph{multiagent}, or table scan that has been written to
+disk (with \code{\link[=x_write_disk]{x_write_disk()}}) can be read back into memory with the
+\code{x_read_disk()} function. For an \emph{agent} or an \emph{informant} object that has
+been generated in this way, it may not have a data table associated with it
+(depending on whether the \code{keep_tbl} option was \code{TRUE} or \code{FALSE} when
+writing to disk) but it should still be able to produce reporting (by
+printing the \emph{agent} or \emph{informant} to the console or using
 \code{\link[=get_agent_report]{get_agent_report()}}/\code{\link[=get_informant_report]{get_informant_report()}}). An \emph{agent} will return an
 x-list with \code{\link[=get_agent_x_list]{get_agent_x_list()}} and yield any available data extracts with
 \code{\link[=get_data_extracts]{get_data_extracts()}}. Furthermore, all of an \emph{agent}'s validation steps will
@@ -74,7 +74,20 @@ agent <-
 informant <-
   x_read_disk("informant-small_table.rds")
 
-# C: Reading a table scan from disk
+# C: Reading a multiagent from disk 
+
+# The process of creating a multiagent
+# and writing it to disk with the
+# `x_write_disk()` function is shown
+# in that function's documentation;
+# but should we have such a written file
+# called "multiagent-small_table.rds",
+# we could read that to a new multiagent
+# object with `x_read_disk()`
+agent <-
+  x_read_disk("multiagent-small_table.rds")
+
+# D: Reading a table scan from disk
 
 # If there is a table scan written
 # to disk via `x_write_disk()` and it's

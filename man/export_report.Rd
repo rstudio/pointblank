@@ -8,10 +8,13 @@ export_report(x, filename, path = NULL, quiet = FALSE)
 }
 \arguments{
 \item{x}{An \emph{agent} object of class \code{ptblank_agent}, an \emph{informant} of class
-\code{ptblank_informant}, or an table scan of class \code{ptblank_tbl_scan}.}
+\code{ptblank_informant}, a \emph{multiagent} of class \code{ptblank_multiagent}, a table
+scan of class \code{ptblank_tbl_scan}, or, customized reporting objects
+(\code{ptblank_agent_report}, \code{ptblank_informant_report},
+\code{ptblank_multiagent_report.wide}, \code{ptblank_multiagent_report.long}).}
 
-\item{filename}{The filename to create on disk for the HTML report of the
-\code{agent}, \code{informant}, or table scan.}
+\item{filename}{The filename to create on disk for the HTML export of the
+object provided. It's recommended that the extension \code{".html"} is included.}
 
 \item{path}{An optional path to which the file should be saved (this is
 automatically combined with \code{filename}).}
@@ -23,9 +26,13 @@ default this is \code{FALSE}.}
 Invisibly returns \code{TRUE} if the file has been written.
 }
 \description{
-The \emph{agent}, \emph{informant}, and table scan reports can be easily written as
-HTML with \code{export_report()}. Each HTML document written to disk is
-self-contained and easily viewable in a web browser.
+The \emph{agent}, \emph{informant}, \emph{multiagent}, and the table scan object can be
+easily written as HTML with \code{export_report()}. Furthermore, any report
+objects from the \emph{agent}, \emph{informant}, and \emph{multiagent} (generated using
+\code{\link[=get_agent_report]{get_agent_report()}}, \code{\link[=get_informant_report]{get_informant_report()}}, and
+\code{\link[=get_multiagent_report]{get_multiagent_report()}}) can be provided here for HTML export. Each HTML
+document written to disk is self-contained and easily viewable in a web
+browser.
 }
 \section{Function ID}{
 

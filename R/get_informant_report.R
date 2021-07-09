@@ -632,9 +632,12 @@ get_informant_report <- function(informant,
       )
   }
   
-  gt_informant_report
+  class(gt_informant_report) <- 
+    c("ptblank_informant_report", class(gt_informant_report))
   
   # nocov end
+  
+  gt_informant_report
 }
 
 add_to_tbl <- function(tbl, item, group) {

@@ -645,13 +645,16 @@ export_report <- function(x,
                           filename,
                           path = NULL,
                           quiet = FALSE) {
-  
   if (
     !any(
       inherits(x, "ptblank_agent") |
       inherits(x, "ptblank_informant") |
       inherits(x, "ptblank_multiagent") |
-      inherits(x, "ptblank_tbl_scan")
+      inherits(x, "ptblank_tbl_scan") |
+      inherits(x, "ptblank_agent_report") |
+      inherits(x, "ptblank_informant_report") |
+      inherits(x, "ptblank_multiagent_report.wide") |
+      inherits(x, "ptblank_multiagent_report.long")
     )
   ) {
     stop(
@@ -691,6 +694,38 @@ export_report <- function(x,
   } else if (inherits(x, "ptblank_tbl_scan")) {
     
     object_type <- "table scan"
+    
+    x %>%
+      htmltools::as.tags() %>%
+      htmltools::save_html(file = filename)
+  
+  } else if (inherits(x, "ptblank_agent_report")) {
+    
+    object_type <- "agent report"
+    
+    x %>%
+      htmltools::as.tags() %>%
+      htmltools::save_html(file = filename)
+    
+  } else if (inherits(x, "ptblank_informant_report")) {
+    
+    object_type <- "informant report"
+    
+    x %>%
+      htmltools::as.tags() %>%
+      htmltools::save_html(file = filename)
+    
+  } else if (inherits(x, "ptblank_multiagent_report.wide")) {
+    
+    object_type <- "multiagent report (wide)"
+    
+    x %>%
+      htmltools::as.tags() %>%
+      htmltools::save_html(file = filename)
+    
+  } else if (inherits(x, "ptblank_multiagent_report.long")) {
+    
+    object_type <- "multiagent report (long)"
     
     x %>%
       htmltools::as.tags() %>%

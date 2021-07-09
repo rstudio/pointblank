@@ -478,14 +478,21 @@ x_read_disk <- function(filename,
 #' Export an *agent*, *informant*, *multiagent*, or table scan to HTML
 #' 
 #' @description 
-#' The *agent*, *informant*, and table scan reports can be easily written as
-#' HTML with `export_report()`. Each HTML document written to disk is
-#' self-contained and easily viewable in a web browser.
+#' The *agent*, *informant*, *multiagent*, and the table scan object can be
+#' easily written as HTML with `export_report()`. Furthermore, any report
+#' objects from the *agent*, *informant*, and *multiagent* (generated using
+#' [get_agent_report()], [get_informant_report()], and
+#' [get_multiagent_report()]) can be provided here for HTML export. Each HTML
+#' document written to disk is self-contained and easily viewable in a web
+#' browser.
 #'
 #' @param x An *agent* object of class `ptblank_agent`, an *informant* of class
-#'   `ptblank_informant`, or an table scan of class `ptblank_tbl_scan`.
-#' @param filename The filename to create on disk for the HTML report of the
-#'   `agent`, `informant`, or table scan.
+#'   `ptblank_informant`, a *multiagent* of class `ptblank_multiagent`, a table
+#'   scan of class `ptblank_tbl_scan`, or, customized reporting objects
+#'   (`ptblank_agent_report`, `ptblank_informant_report`,
+#'   `ptblank_multiagent_report.wide`, `ptblank_multiagent_report.long`).
+#' @param filename The filename to create on disk for the HTML export of the
+#'   object provided. It's recommended that the extension `".html"` is included.
 #' @param path An optional path to which the file should be saved (this is
 #'   automatically combined with `filename`).
 #' @param quiet Should the function *not* inform when the file is written? By

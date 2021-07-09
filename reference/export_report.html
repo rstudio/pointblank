@@ -47,9 +47,13 @@
 
 
 <meta property="og:title" content="Export an agent, informant, multiagent, or table scan to HTML — export_report" />
-<meta property="og:description" content="The agent, informant, and table scan reports can be easily written as
-HTML with export_report(). Each HTML document written to disk is
-self-contained and easily viewable in a web browser." />
+<meta property="og:description" content="The agent, informant, multiagent, and the table scan object can be
+easily written as HTML with export_report(). Furthermore, any report
+objects from the agent, informant, and multiagent (generated using
+get_agent_report(), get_informant_report(), and
+get_multiagent_report()) can be provided here for HTML export. Each HTML
+document written to disk is self-contained and easily viewable in a web
+browser." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -167,9 +171,13 @@ self-contained and easily viewable in a web browser." />
     </div>
 
     <div class="ref-description">
-    <p>The <em>agent</em>, <em>informant</em>, and table scan reports can be easily written as
-HTML with <code>export_report()</code>. Each HTML document written to disk is
-self-contained and easily viewable in a web browser.</p>
+    <p>The <em>agent</em>, <em>informant</em>, <em>multiagent</em>, and the table scan object can be
+easily written as HTML with <code>export_report()</code>. Furthermore, any report
+objects from the <em>agent</em>, <em>informant</em>, and <em>multiagent</em> (generated using
+<code><a href='get_agent_report.html'>get_agent_report()</a></code>, <code><a href='get_informant_report.html'>get_informant_report()</a></code>, and
+<code><a href='get_multiagent_report.html'>get_multiagent_report()</a></code>) can be provided here for HTML export. Each HTML
+document written to disk is self-contained and easily viewable in a web
+browser.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>export_report</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>filename</span>, path <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></code></pre></div>
@@ -180,12 +188,15 @@ self-contained and easily viewable in a web browser.</p>
     <tr>
       <th>x</th>
       <td><p>An <em>agent</em> object of class <code>ptblank_agent</code>, an <em>informant</em> of class
-<code>ptblank_informant</code>, or an table scan of class <code>ptblank_tbl_scan</code>.</p></td>
+<code>ptblank_informant</code>, a <em>multiagent</em> of class <code>ptblank_multiagent</code>, a table
+scan of class <code>ptblank_tbl_scan</code>, or, customized reporting objects
+(<code>ptblank_agent_report</code>, <code>ptblank_informant_report</code>,
+<code>ptblank_multiagent_report.wide</code>, <code>ptblank_multiagent_report.long</code>).</p></td>
     </tr>
     <tr>
       <th>filename</th>
-      <td><p>The filename to create on disk for the HTML report of the
-<code>agent</code>, <code>informant</code>, or table scan.</p></td>
+      <td><p>The filename to create on disk for the HTML export of the
+object provided. It's recommended that the extension <code>".html"</code> is included.</p></td>
     </tr>
     <tr>
       <th>path</th>

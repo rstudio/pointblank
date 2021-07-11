@@ -422,7 +422,7 @@ suit your specific needs. Here is a listing of some other validation
 
 **validate** ([GITHUB](https://github.com/data-cleaning/validate))
 
-**dataMaid** ([GITHUB](https://github.com/ekstroem/dataMaid))
+**dataReporter** ([GITHUB](https://github.com/ekstroem/dataReporter))
 
 <hr>
 

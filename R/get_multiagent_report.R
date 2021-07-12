@@ -299,7 +299,7 @@ get_multiagent_report <- function(multiagent,
       title <-
         get_default_title_text(
           report_type = "multiagent:long",
-          lang = "en"
+          lang = lang
         )
     }
     
@@ -307,12 +307,14 @@ get_multiagent_report <- function(multiagent,
       
       long_report_i <- 
         get_agent_report(
-          multiagent[["agents"]][[i]],
+          agent = multiagent[["agents"]][[i]],
           title = if ((i != 1 || title == ":none:") && title != ":tbl_name:") {
             ""
           } else {
             title
-          }
+          },
+          lang = lang,
+          locale = locale
         )
       
       long_report_i <-
@@ -762,7 +764,7 @@ get_multiagent_report <- function(multiagent,
       title = title,
       tbl_name = NULL,
       report_type = "multiagent:wide",
-      lang = "en"
+      lang = lang
     )
   
   report_tbl <- 

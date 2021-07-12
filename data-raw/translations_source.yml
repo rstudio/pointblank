@@ -1542,6 +1542,21 @@ table_scan:
     da: "Scan af tabel genereret med <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
     sv: "Genomsökning av tabellen genereras med <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
     nl: "Scan van tabel gegenereerd met <a href=\"https://www.github.com/rich-iannone/pointblank\">pointblank</a>."
+multiagent_report:
+  pointblank_multiagent_title_text:
+    en: "Pointblank Validation Series"
+    fr: "Série de Validation Pointblank"
+    de: "Pointblank-Validierungsserie"
+    it: "Serie di Convalida Pointblank"
+    es: "Serie de Validación Pointblank"
+    pt: "Série de Validação Pointblank"
+    tr: "Pointblank Doğrulama Serisi"
+    zh: "Pointblank验证系列"
+    ru: "Серия Проверки Pointblank"
+    pl: "Seria Walidacji Pointblank"
+    da: "Pointblank Validering-serie"
+    sv: "Pointblank Validation-serie"
+    nl: "Pointblank Validatie-serie"
 email:
   agent_body:
     en: "This <strong>pointblank</strong> validation report containing <strong>{nrow(x$validation_set)}</strong> validation step{ifelse(nrow(x$validation_set) != 1, 's', '')} was initiated on {blastula::add_readable_time(x$time_start)}."

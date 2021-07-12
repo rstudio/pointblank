@@ -229,7 +229,9 @@
 get_multiagent_report <- function(multiagent,
                                   display_table = TRUE,
                                   display_mode = c("long", "wide"),
-                                  title = ":default:") {
+                                  title = ":default:",
+                                  lang = NULL,
+                                  locale = NULL) {
 
   for (i in seq_along(multiagent[["agents"]])) {
     

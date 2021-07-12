@@ -1513,16 +1513,22 @@ get_default_title_text <- function(report_type,
         "informant_report",
         "pointblank_information_title_text"
       ))[[lang]]
+    
   } else if (report_type == "agent") {
+    
     title_text <- 
       get_lsv(text = c(
         "agent_report",
         "pointblank_validation_title_text"
       ))[[lang]]
-  } else if (report_type == "multiagent:wide") {
-    title_text <- "Pointblank Validation Series"
-  } else if (report_type == "multiagent:long") {
-    title_text <- "Pointblank Validation Series"
+    
+  } else if (grepl("multiagent", report_type)) {
+    
+    title_text <- 
+      get_lsv(text = c(
+        "multiagent_report",
+        "pointblank_multiagent_title_text"
+      ))[[lang]]
   }
   
   title_text

@@ -76,6 +76,19 @@
 #'   Markdown text and transformed internally to HTML. To circumvent such a
 #'   transformation, use text in [I()] to explicitly state that the supplied
 #'   text should not be transformed.
+#' @param lang The language to use for the long or wide report forms. By
+#'   default, `NULL` will preserve any language set in the component reports.
+#'   The following options will force the same language across all component
+#'   reports: English (`"en"`), French (`"fr"`), German (`"de"`), Italian
+#'   (`"it"`), Spanish (`"es"`), Portuguese (`"pt"`), Turkish (`"tr"`), Chinese
+#'   (`"zh"`), Russian (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish
+#'   (`"sv"`), and Dutch (`"nl"`).
+#' @param locale An optional locale ID to use for formatting values in the long
+#'   or wide report forms (according the locale's rules). Examples include
+#'   `"en_US"` for English (United States) and `"fr_FR"` for French (France);
+#'   more simply, this can be a language identifier without a country
+#'   designation, like `"es"` for Spanish (Spain, same as `"es_ES"`). This
+#'   `locale` option will override any previously set locale values.
 #' 
 #' @return A **gt** table object if `display_table = TRUE` or a tibble if
 #'   `display_table = FALSE`.

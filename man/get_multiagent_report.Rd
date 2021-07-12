@@ -8,7 +8,9 @@ get_multiagent_report(
   multiagent,
   display_table = TRUE,
   display_mode = c("long", "wide"),
-  title = ":default:"
+  title = ":default:",
+  lang = NULL,
+  locale = NULL
 )
 }
 \arguments{
@@ -34,6 +36,21 @@ construct the text string. If providing text, it will be interpreted as
 Markdown text and transformed internally to HTML. To circumvent such a
 transformation, use text in \code{\link[=I]{I()}} to explicitly state that the supplied
 text should not be transformed.}
+
+\item{lang}{The language to use for the long or wide report forms. By
+default, \code{NULL} will preserve any language set in the component reports.
+The following options will force the same language across all component
+reports: English (\code{"en"}), French (\code{"fr"}), German (\code{"de"}), Italian
+(\code{"it"}), Spanish (\code{"es"}), Portuguese (\code{"pt"}), Turkish (\code{"tr"}), Chinese
+(\code{"zh"}), Russian (\code{"ru"}), Polish (\code{"pl"}), Danish (\code{"da"}), Swedish
+(\code{"sv"}), and Dutch (\code{"nl"}).}
+
+\item{locale}{An optional locale ID to use for formatting values in the long
+or wide report forms (according the locale's rules). Examples include
+\code{"en_US"} for English (United States) and \code{"fr_FR"} for French (France);
+more simply, this can be a language identifier without a country
+designation, like \code{"es"} for Spanish (Spain, same as \code{"es_ES"}). This
+\code{locale} option will override any previously set locale values.}
 }
 \value{
 A \strong{gt} table object if \code{display_table = TRUE} or a tibble if

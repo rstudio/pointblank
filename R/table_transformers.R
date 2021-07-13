@@ -102,4 +102,69 @@ tt_summary_stats <- function(tbl) {
   
   summary_stats_tbl
 }
+
+#' Table Transformer: obtain an information table for string columns
+#' 
+#' @description
+#' With any table object, you can produce an information table that is scoped to
+#' string-based columns. The table produced will have a leading column called
+#' `"::param::"` with labels for each of the three rows, each corresponding to
+#' the following pieces of information pertaining to string length:
+#'
+#' 1. Mean String Length (`"length_mean"`) 2. Minimum String Length
+#' (`"length_min"`) 3. Maximum String Length (`"length_max"`)
+#'
+#' Only string data from the input table will generate columns in the output
+#' table. Column names from the input will be used in the output, preserving
+#' order as well.
+#' 
+#' @param tbl A table object to be used as input for the transformation. This
+#'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#' 
+#' @return A `tibble` object.
+#' 
+#' @family Table Transformers
+#' @section Function ID:
+#' 14-2
+#' 
+#' @export
+tt_string_info <- function(tbl) {
+  
+  if (!is_a_table_object(tbl)) {
+    stop("The object supplied is not a table", call. = FALSE)
+  }
+  
+  n_cols <- get_table_total_columns(data = tbl)
+  
+  tbl_info <- get_tbl_information(tbl = tbl)
+  col_names <- tbl_info$col_names
+  r_col_types <- tbl_info$r_col_types
+  
+  string_info_tbl <- 
+    dplyr::tibble(
+      `::param::` = c("length_mean", "length_min", "length_max")
+    )
+  
+  for (i in seq_len(n_cols)) {
+    
+    if (r_col_types[i] == "character") {
+      
+      data_col <- dplyr::select(tbl, col_names[i])
+      
+      suppressWarnings({
+        info_list <- get_table_column_nchar_stats(data_column = data_col)
+      })
+      
+      info_col <- 
+        tibble::enframe(
+          unlist(info_list),
+          name = NULL,
+          value = col_names[i]
+        )
+      
+      string_info_tbl <- dplyr::bind_cols(string_info_tbl, info_col)
+    }
+  }
+
+  string_info_tbl
 }

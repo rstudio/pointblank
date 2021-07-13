@@ -61,7 +61,7 @@ tt_summary_stats <- function(tbl) {
   col_names <- tbl_info$col_names
   r_col_types <- tbl_info$r_col_types
   
-  qtile_stats_tbl <- 
+  summary_stats_tbl <- 
     dplyr::tibble(
       `::stat::` = c(
         "min", "p05", "q_1", "med", "q_3",
@@ -77,28 +77,29 @@ tt_summary_stats <- function(tbl) {
       
       suppressWarnings({
         if (inherits(tbl, "data.frame")) {
-          qtile_list <- get_df_column_qtile_stats(data_column = data_col)
+          stats_list <- get_df_column_qtile_stats(data_column = data_col)
         } else if (inherits(tbl, "tbl_dbi")) {
-          qtile_list <- get_dbi_column_qtile_stats(data_column = data_col)
+          stats_list <- get_dbi_column_qtile_stats(data_column = data_col)
         } else if (inherits(tbl, "tbl_spark")) {
-          qtile_list <- get_spark_column_qtile_stats(data_column = data_col)
+          stats_list <- get_spark_column_qtile_stats(data_column = data_col)
         }
       })
       
-      qtile_tbl_col <- 
+      stats_col <- 
         tibble::enframe(
-          unlist(qtile_list),
+          unlist(stats_list),
           name = NULL,
           value = col_names[i]
         )
       
-      if (!(any(is.finite(qtile_tbl_col[, 1, drop = TRUE])))) {
-        qtile_tbl_col[[1]] <- rep(NA_real_, 9)
+      if (!(any(is.finite(stats_col[, 1, drop = TRUE])))) {
+        stats_col[[1]] <- rep(NA_real_, 9)
       }
       
-      qtile_stats_tbl <- dplyr::bind_cols(qtile_stats_tbl, qtile_tbl_col)
+      summary_stats_tbl <- dplyr::bind_cols(summary_stats_tbl, stats_col)
     }
   }
   
-  qtile_stats_tbl
+  summary_stats_tbl
+}
 }

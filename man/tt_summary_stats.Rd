@@ -39,4 +39,8 @@ order as well.
 14-1
 }
 
+\seealso{
+Other Table Transformers: 
+\code{\link{tt_string_info}()}
+}
 \concept{Table Transformers}

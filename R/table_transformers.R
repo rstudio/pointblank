@@ -209,8 +209,22 @@ tt_tbl_dims <- function(tbl) {
 
 #' Table Transformer: shift the times of a table
 #' 
+#' @description
+#' With any table object containing date or date-time columns, these values can
+#' be precisely shifted with `tt_time_shift()` and specification of the time
+#' shift. We can either provide a string with the time shift components and the
+#' shift direction or a `difftime` object (which can be created via
+#' **lubridate** expressions or by using the [base::difftime()] function).
+#' 
 #' @param tbl A table object to be used as input for the transformation. This
 #'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#' @param time_shift Either a character string that specifies the time
+#'   difference by which all time values in time-based columns will be shifted,
+#'   or, a `difftime` object. The character string is constructed in the format
+#'   "0y 0m 0d 0H 0M 0S" and individual time components can be omitted (i.e.,
+#'   "1y 5d" is a valid specification of shifting time values ahead one year and
+#'   five days). Adding a `"-"` at the beginning of the string (e.g., "-2y")
+#'   will shift time values back.
 #' 
 #' @return A `tibble` object.
 #' 
@@ -220,9 +234,7 @@ tt_tbl_dims <- function(tbl) {
 #' 
 #' @export
 tt_time_shift <- function(tbl,
-                          time_columns,
-                          difference = "0y 0m 0d 0H 0M 0S",
-                          direction = c("forward", "back")) {
+                          time_shift = "0y 0m 0d 0H 0M 0S") {
   
   if (!requireNamespace("lubridate", quietly = TRUE)) {
     
@@ -233,44 +245,72 @@ tt_time_shift <- function(tbl,
     )
   }
   
-  direction <- match.arg(direction)
-  
   if (!is_a_table_object(tbl)) {
     stop("The object supplied is not a table", call. = FALSE)
   }
+
   
-  direction_val <- if (direction == "forward") 1L else -1L
+  tbl_info <- get_tbl_information(tbl = tbl)
+  r_col_types <- tbl_info$r_col_types
+  col_names <- tbl_info$col_names
   
-  difference_vec <- unlist(strsplit(difference, split = " "))
+  time_columns <- col_names[r_col_types %in% c("POSIXct", "Date")]
   
-  for (i in seq_along(difference_vec)) {
+  if (length(time_columns) < 1) {
+    return(tbl)
+  }
+
+  if (inherits(time_shift, "difftime")) {
     
+    tbl <- 
+      tbl %>%
+      dplyr::mutate(
+        dplyr::across(
+          .cols = time_columns,
+          .fns = ~ time_shift + .
+        )
+      )
+    
+  } else {
+      
+    if (grepl("^-", time_shift)) {
+      direction_val <- -1L
+      time_shift <- gsub("^-", "", time_shift)
+    } else {
+      direction_val <- 1L
+    }
+    
+    difference_vec <- unlist(strsplit(time_shift, split = " "))
+    
+    for (i in seq_along(difference_vec)) {
+      
       if (grepl("[0-9]+?(y|m|d|H|M|S)$", difference_vec[i])) {
-      
-      time_basis <- gsub("[0-9]+?(y|m|d|H|M|S)", "\\1", difference_vec[i])
-      time_value <- 
-        as.integer(gsub("([0-9]+?)(y|m|d|H|M|S)", "\\1", difference_vec[i]))
-      
-      if (time_value == 0) next
-      
-      fn_time <-
-        switch(
-          time_basis,
-          y = lubridate::years,
-          m = lubridate::dmonths,
-          d = lubridate::days,
-          H = lubridate::hours,
-          M = lubridate::minutes,
-          S = lubridate::seconds
-        )
-      
-      tbl <- 
-        tbl %>%
-        dplyr::mutate(
-          dplyr::across(
-            .cols = time_columns,
-            .fns = ~ fn_time(time_value * direction_val) + .)
-        )
+        
+        time_basis <- gsub("[0-9]+?(y|m|d|H|M|S)", "\\1", difference_vec[i])
+        time_value <- 
+          as.integer(gsub("([0-9]+?)(y|m|d|H|M|S)", "\\1", difference_vec[i]))
+        
+        if (time_value == 0) next
+        
+        fn_time <-
+          switch(
+            time_basis,
+            y = lubridate::years,
+            m = lubridate::dmonths,
+            d = lubridate::days,
+            H = lubridate::hours,
+            M = lubridate::minutes,
+            S = lubridate::seconds
+          )
+        
+        tbl <- 
+          tbl %>%
+          dplyr::mutate(
+            dplyr::across(
+              .cols = time_columns,
+              .fns = ~ fn_time(time_value * direction_val) + .)
+          )
+      }
     }
   }
   

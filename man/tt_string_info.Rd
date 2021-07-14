@@ -37,6 +37,7 @@ order as well.
 \seealso{
 Other Table Transformers: 
 \code{\link{tt_summary_stats}()},
-\code{\link{tt_tbl_dims}()}
+\code{\link{tt_tbl_dims}()},
+\code{\link{tt_time_shift}()}
 }
 \concept{Table Transformers}

@@ -170,3 +170,39 @@ tt_string_info <- function(tbl) {
 
   string_info_tbl
 }
+
+#' Table Transformer: get the dimensions of a table
+#' 
+#' @description
+#' With any table object, you can produce an information that contains nothing
+#' more than the table's dimensions: the number of rows and the number of
+#' columns.
+#'
+#' The table produced will have two columns and two rows. The first is the
+#' `"param"` column with the labels `"rows"` and `"columns"`; the second column,
+#' `"value"`, contains the row and column counts.
+#' 
+#' @param tbl A table object to be used as input for the transformation. This
+#'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#' 
+#' @return A `tibble` object.
+#' 
+#' @family Table Transformers
+#' @section Function ID:
+#' 14-3
+#' 
+#' @export
+tt_tbl_dims <- function(tbl) {
+  
+  if (!is_a_table_object(tbl)) {
+    stop("The object supplied is not a table", call. = FALSE)
+  }
+  
+  n_cols <- get_table_total_columns(data = tbl)
+  n_rows <- get_table_total_rows(data = tbl)
+  
+  dplyr::tibble(
+    param = c("rows", "columns"),
+    value = as.integer(c(n_rows, n_cols))
+  )
+}

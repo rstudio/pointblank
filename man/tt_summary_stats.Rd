@@ -41,6 +41,7 @@ order as well.
 
 \seealso{
 Other Table Transformers: 
-\code{\link{tt_string_info}()}
+\code{\link{tt_string_info}()},
+\code{\link{tt_tbl_dims}()}
 }
 \concept{Table Transformers}

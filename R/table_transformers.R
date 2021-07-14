@@ -206,3 +206,73 @@ tt_tbl_dims <- function(tbl) {
     value = as.integer(c(n_rows, n_cols))
   )
 }
+
+#' Table Transformer: shift the times of a table
+#' 
+#' @param tbl A table object to be used as input for the transformation. This
+#'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#' 
+#' @return A `tibble` object.
+#' 
+#' @family Table Transformers
+#' @section Function ID:
+#' 14-4
+#' 
+#' @export
+tt_time_shift <- function(tbl,
+                          time_columns,
+                          difference = "0y 0m 0d 0H 0M 0S",
+                          direction = c("forward", "back")) {
+  
+  if (!requireNamespace("lubridate", quietly = TRUE)) {
+    
+    stop(
+      "The `tt_time_shift()` function requires the lubridate package:\n",
+      "* It can be installed with `install.packages(\"lubridate\")`.",
+      call. = FALSE
+    )
+  }
+  
+  direction <- match.arg(direction)
+  
+  if (!is_a_table_object(tbl)) {
+    stop("The object supplied is not a table", call. = FALSE)
+  }
+  
+  direction_val <- if (direction == "forward") 1L else -1L
+  
+  difference_vec <- unlist(strsplit(difference, split = " "))
+  
+  for (i in seq_along(difference_vec)) {
+    
+      if (grepl("[0-9]+?(y|m|d|H|M|S)$", difference_vec[i])) {
+      
+      time_basis <- gsub("[0-9]+?(y|m|d|H|M|S)", "\\1", difference_vec[i])
+      time_value <- 
+        as.integer(gsub("([0-9]+?)(y|m|d|H|M|S)", "\\1", difference_vec[i]))
+      
+      if (time_value == 0) next
+      
+      fn_time <-
+        switch(
+          time_basis,
+          y = lubridate::years,
+          m = lubridate::dmonths,
+          d = lubridate::days,
+          H = lubridate::hours,
+          M = lubridate::minutes,
+          S = lubridate::seconds
+        )
+      
+      tbl <- 
+        tbl %>%
+        dplyr::mutate(
+          dplyr::across(
+            .cols = time_columns,
+            .fns = ~ fn_time(time_value * direction_val) + .)
+        )
+    }
+  }
+  
+  tbl
+}

@@ -4,22 +4,29 @@
 \alias{tt_time_shift}
 \title{Table Transformer: shift the times of a table}
 \usage{
-tt_time_shift(
-  tbl,
-  time_columns,
-  difference = "0y 0m 0d 0H 0M 0S",
-  direction = c("forward", "back")
-)
+tt_time_shift(tbl, time_shift = "0y 0m 0d 0H 0M 0S")
 }
 \arguments{
 \item{tbl}{A table object to be used as input for the transformation. This
 can be a data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.}
+
+\item{time_shift}{Either a character string that specifies the time
+difference by which all time values in time-based columns will be shifted,
+or, a \code{difftime} object. The character string is constructed in the format
+"0y 0m 0d 0H 0M 0S" and individual time components can be omitted (i.e.,
+"1y 5d" is a valid specification of shifting time values ahead one year and
+five days). Adding a \code{"-"} at the beginning of the string (e.g., "-2y")
+will shift time values back.}
 }
 \value{
 A \code{tibble} object.
 }
 \description{
-Table Transformer: shift the times of a table
+With any table object containing date or date-time columns, these values can
+be precisely shifted with \code{tt_time_shift()} and specification of the time
+shift. We can either provide a string with the time shift components and the
+shift direction or a \code{difftime} object (which can be created via
+\strong{lubridate} expressions or by using the \code{\link[base:difftime]{base::difftime()}} function).
 }
 \section{Function ID}{
 

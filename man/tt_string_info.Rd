@@ -19,8 +19,10 @@ string-based columns. The table produced will have a leading column called
 \code{"::param::"} with labels for each of the three rows, each corresponding to
 the following pieces of information pertaining to string length:
 \enumerate{
-\item Mean String Length (\code{"length_mean"}) 2. Minimum String Length
-(\code{"length_min"}) 3. Maximum String Length (\code{"length_max"})
+\item Mean String Length (\code{"length_mean"})
+\item Minimum String Length
+(\code{"length_min"})
+\item Maximum String Length (\code{"length_max"})
 }
 
 Only string data from the input table will generate columns in the output
@@ -34,6 +36,7 @@ order as well.
 
 \seealso{
 Other Table Transformers: 
-\code{\link{tt_summary_stats}()}
+\code{\link{tt_summary_stats}()},
+\code{\link{tt_tbl_dims}()}
 }
 \concept{Table Transformers}

@@ -111,8 +111,10 @@ tt_summary_stats <- function(tbl) {
 #' `"::param::"` with labels for each of the three rows, each corresponding to
 #' the following pieces of information pertaining to string length:
 #'
-#' 1. Mean String Length (`"length_mean"`) 2. Minimum String Length
-#' (`"length_min"`) 3. Maximum String Length (`"length_max"`)
+#' 1. Mean String Length (`"length_mean"`)
+#' 2. Minimum String Length
+#' (`"length_min"`)
+#' 3. Maximum String Length (`"length_max"`)
 #'
 #' Only string data from the input table will generate columns in the output
 #' table. Column names from the input will be used in the output, preserving

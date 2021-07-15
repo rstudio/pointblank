@@ -262,14 +262,33 @@ tt_time_shift <- function(tbl,
 
   if (inherits(time_shift, "difftime")) {
     
-    tbl <- 
-      tbl %>%
-      dplyr::mutate(
-        dplyr::across(
-          .cols = time_columns,
-          .fns = ~ time_shift + .
+    # If there is a date-based column in the table, we need to ensure
+    # that the `difftime` object is rounded to a value of day units
+    if ("Date" %in% r_col_types) {
+      
+      n_days <-
+        as.integer(round(as.numeric(time_shift, units = "days"), digits = 0))
+      
+      tbl <- 
+        tbl %>%
+        dplyr::mutate(
+          dplyr::across(
+            .cols = time_columns,
+            .fns = ~ lubridate::days(n_days) + .
+          )
         )
-      )
+      
+    } else {
+      
+      tbl <- 
+        tbl %>%
+        dplyr::mutate(
+          dplyr::across(
+            .cols = time_columns,
+            .fns = ~ time_shift + .
+          )
+        )
+    }
     
   } else {
       
@@ -290,7 +309,13 @@ tt_time_shift <- function(tbl,
         time_value <- 
           as.integer(gsub("([0-9]+?)(y|m|d|H|M|S)", "\\1", difference_vec[i]))
         
+        # If the time value is zero, then proceed to the next iteration
         if (time_value == 0) next
+        
+        # Don't shift times by hours, minutes, or seconds if there are any
+        # time columns that are date-based (this will either fail or yield
+        # undesirable time values in date-based columns)
+        if (time_basis %in% c("H", "M", "S") && "Date" %in% r_col_types) next
         
         fn_time <-
           switch(
@@ -303,6 +328,7 @@ tt_time_shift <- function(tbl,
             S = lubridate::seconds
           )
         
+        # Apply the time change for the particular time basis to all columns
         tbl <- 
           tbl %>%
           dplyr::mutate(

@@ -249,7 +249,6 @@ tt_time_shift <- function(tbl,
     stop("The object supplied is not a table", call. = FALSE)
   }
 
-  
   tbl_info <- get_tbl_information(tbl = tbl)
   r_col_types <- tbl_info$r_col_types
   col_names <- tbl_info$col_names

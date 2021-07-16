@@ -43,6 +43,7 @@ order as well.
 Other Table Transformers: 
 \code{\link{tt_string_info}()},
 \code{\link{tt_tbl_dims}()},
-\code{\link{tt_time_shift}()}
+\code{\link{tt_time_shift}()},
+\code{\link{tt_time_slice}()}
 }
 \concept{Table Transformers}

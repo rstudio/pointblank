@@ -37,6 +37,7 @@ shift direction or a \code{difftime} object (which can be created via
 Other Table Transformers: 
 \code{\link{tt_string_info}()},
 \code{\link{tt_summary_stats}()},
-\code{\link{tt_tbl_dims}()}
+\code{\link{tt_tbl_dims}()},
+\code{\link{tt_time_slice}()}
 }
 \concept{Table Transformers}

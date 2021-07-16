@@ -31,6 +31,7 @@ The table produced will have two columns and two rows. The first is the
 Other Table Transformers: 
 \code{\link{tt_string_info}()},
 \code{\link{tt_summary_stats}()},
-\code{\link{tt_time_shift}()}
+\code{\link{tt_time_shift}()},
+\code{\link{tt_time_slice}()}
 }
 \concept{Table Transformers}

@@ -341,3 +341,146 @@ tt_time_shift <- function(tbl,
   
   tbl
 }
+
+#' Table Transformer: slice a table during an existential time crisis
+#' 
+#' @description
+#' With any table object containing date or date-time columns, any one of those
+#' columns can be used to effectively slice the data in two with a
+#' `slice_point`: and you get to choose which of those slices you want to keep.
+#' 
+#' @param tbl A table object to be used as input for the transformation. This
+#'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#' @param time_column The time-based column that will be used as a basis for the
+#'   slicing. If no time column is provided then the first one found will be
+#'   used.
+#' @param slice_point The location on the `time_column` where the slicing will
+#'   occur. This can either be a real number from `0` to `1`, an ISO 8601
+#'   formatted time string (as a date or a date-time), a `POSIXct` time, or a
+#'   `Date` object.
+#' @param keep Which slice should be kept? The `"left"` side (the default)
+#'   contains data rows that are earlier than the `slice_point` and the
+#'   `"right"` side will have rows that are later.
+#' 
+#' @return A `tibble` object.
+#' 
+#' @family Table Transformers
+#' @section Function ID:
+#' 14-5
+#' 
+#' @export
+tt_time_slice <- function(tbl,
+                          time_column = NULL,
+                          slice_point = 0,
+                          keep = c("left", "right")) {
+  
+  if (!requireNamespace("lubridate", quietly = TRUE)) {
+    
+    stop(
+      "The `tt_time_shift()` function requires the lubridate package:\n",
+      "* It can be installed with `install.packages(\"lubridate\")`.",
+      call. = FALSE
+    )
+  }
+  
+  keep <- match.arg(keep)
+  
+  if (!is_a_table_object(tbl)) {
+    stop("The object supplied is not a table", call. = FALSE)
+  }
+  
+  tbl_info <- get_tbl_information(tbl = tbl)
+  r_col_types <- tbl_info$r_col_types
+  col_names <- tbl_info$col_names
+  
+  all_time_columns <- col_names[r_col_types %in% c("POSIXct", "Date")]
+  
+  if (length(all_time_columns) < 1) {
+    return(tbl)
+  }
+  
+  if (is.null(time_column)) {
+    time_column <- all_time_columns[1]
+  }
+  
+  col_sym <- rlang::sym(time_column)
+  
+  time_bounds <-
+    tbl %>%
+    dplyr::select(!!col_sym) %>%
+    dplyr::summarize_all(
+      .funs = list(
+        ~ min(., na.rm = TRUE),
+        ~ max(., na.rm = TRUE)
+      )
+    ) %>%
+    dplyr::collect() %>%
+    as.list()
+  
+  if (is.numeric(slice_point)) {
+    
+    if (slice_point < 0 || slice_point > 1) {
+      stop(
+        "When provided as a number, `slice_point` must be between 0 and 1",
+        call. = FALSE
+      )
+    }
+    
+    time_range_s <-
+      as.numeric(
+        difftime(
+          time1 = time_bounds$max,
+          time2 = time_bounds$min,
+          units = "secs"
+        )
+      )
+    
+    time_slice_instant <-
+      time_bounds$min +
+      lubridate::seconds(time_range_s * slice_point)
+    
+  } else if (inherits(slice_point, "character")) {
+    
+    if (grepl("^[0-9]{4}-[0-9]{2}-[0-9]{2}$", slice_point[1])) {
+      
+      time_slice_instant <-
+        lubridate::ymd_hms(paste(slice_point[1], "00:00:00"))
+      
+    } else if (
+      grepl(
+        "^[0-9]{4}-[0-9]{2}-[0-9]{2}(T| )[0-9]{2}:[0-9]{2}:[0-9]{2}$",
+        slice_point[1]
+        )) {
+      
+      time_slice_instant <- lubridate::ymd_hms(slice_point[1])
+      
+    } else {
+      
+      stop(
+        "The `slice_point` must be a date or date-time",
+        call. = FALSE
+        )
+    }
+    
+  } else if (inherits(slice_point, "POSIXct")) {
+    
+    time_slice_instant <- slice_point
+    
+  } else if (inherits(slice_point, "Date")) {
+    
+    time_slice_instant <- slice_point
+  }
+  
+  tbl <- 
+    tbl %>%
+    dplyr::filter(!is.na(!!col_sym)) %>%
+    dplyr::arrange(!!col_sym)
+  
+  if (keep == "left") {
+    tbl <- dplyr::filter(tbl, !!col_sym < time_slice_instant)
+  } else {
+    tbl <- dplyr::filter(tbl, !!col_sym >= time_slice_instant)
+  }
+  
+  tbl
+}

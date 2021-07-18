@@ -341,10 +341,6 @@ file_tbl <- function(file,
 #'   
 #' @return A character vector of length 1 that contains a URL.
 #' 
-#' @family Utility and Helper Functions
-#' @section Function ID:
-#' 12-6
-#' 
 #' @examples
 #' # A valid URL to a data file in GitHub can be
 #' # obtained from the HEAD of the default branch
@@ -404,6 +400,10 @@ file_tbl <- function(file,
 #' #   file = "data-raw/small_table.csv",
 #' #   repo = "rich-iannone/pointblank#248"
 #' # )
+#' 
+#' @family Utility and Helper Functions
+#' @section Function ID:
+#' 13-6
 #' 
 #' @export
 from_github <- function(file,

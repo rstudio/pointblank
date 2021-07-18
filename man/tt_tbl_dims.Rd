@@ -14,9 +14,9 @@ can be a data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} ob
 A \code{tibble} object.
 }
 \description{
-With any table object, you can produce an information that contains nothing
-more than the table's dimensions: the number of rows and the number of
-columns.
+With any table object, you can produce an information table that contains
+nothing more than the table's dimensions: the number of rows and the number
+of columns.
 
 The table produced will have two columns and two rows. The first is the
 \code{"param"} column with the labels \code{"rows"} and \code{"columns"}; the second column,

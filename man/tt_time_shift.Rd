@@ -30,7 +30,7 @@ shift direction or a \code{difftime} object (which can be created via
 }
 \section{Function ID}{
 
-14-4
+12-4
 }
 
 \seealso{

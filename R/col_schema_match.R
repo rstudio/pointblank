@@ -492,7 +492,7 @@ test_col_schema_match <- function(object,
 #'   
 #' @family Utility and Helper Functions
 #' @section Function ID:
-#' 12-1
+#' 13-1
 #' 
 #' @export
 col_schema <- function(...,

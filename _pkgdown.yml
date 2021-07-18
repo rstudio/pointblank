@@ -212,6 +212,23 @@ reference:
     - yaml_informant_incorporate
     - yaml_exec
     
+  - title: Table Transformers
+    desc: >
+      **Table Transformer** functions can radically transform a data table and
+      either provide a wholly different table (like a summary table or table
+      properties table) or do some useful filtering in a single step. This can
+      be useful for preparing the target table for validation, creating a
+      temporary table for a few validation steps, or even as something used
+      outside of the **pointblank** workflows. As a nice bonus these
+      transformer functions will work equally well with data frames, database
+      tables, and Spark tables.
+    contents:
+    - tt_summary_stats
+    - tt_string_info
+    - tt_tbl_dims
+    - tt_time_shift
+    - tt_time_slice
+    
   - title: Utility and Helper Functions
     contents:
     - col_schema

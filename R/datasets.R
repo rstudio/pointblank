@@ -45,7 +45,7 @@
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 10-1
+#' 14-1
 #'
 "small_table"
 
@@ -65,7 +65,7 @@
 #' 
 #' @family Datasets
 #' @section Function ID:
-#' 10-2
+#' 14-2
 #' 
 #' @export
 small_table_sqlite <- function() {
@@ -142,6 +142,6 @@ small_table_sqlite <- function() {
 #'
 #' @family Datasets
 #' @section Function ID:
-#' 10-3
+#' 14-3
 #'
 "specifications"

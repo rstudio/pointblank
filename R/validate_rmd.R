@@ -625,7 +625,7 @@ knitr_chunk_hook <- function(x, options) {
 #' 
 #' @family Utility and Helper Functions
 #' @section Function ID:
-#' 12-5
+#' 13-5
 #' 
 #' @export
 stop_if_not <- function(...) {

@@ -101,7 +101,7 @@
 #' 
 #' @family Utility and Helper Functions
 #' @section Function ID:
-#' 12-2
+#' 13-2
 #'
 #' @export
 has_columns <- function(x, columns) {

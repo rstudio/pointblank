@@ -99,7 +99,7 @@
 #' 
 #' @family Utility and Helper Functions
 #' @section Function ID:
-#' 12-3
+#' 13-3
 #' 
 #' @seealso The [affix_datetime()] function provides the same features except it
 #'   produces a date-time string by default.
@@ -218,7 +218,7 @@ affix_date <- function(filename,
 #'
 #' @family Utility and Helper Functions
 #' @section Function ID:
-#' 12-4
+#' 13-4
 #'
 #' @seealso The [affix_date()] function provides the same features except it
 #'   produces a date string by default.

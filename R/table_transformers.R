@@ -342,7 +342,7 @@ tt_time_shift <- function(tbl,
   tbl
 }
 
-#' Table Transformer: slice a table during an existential time crisis
+#' Table Transformer: slice a table with a slice point on a time column
 #' 
 #' @description
 #' With any table object containing date or date-time columns, any one of those
@@ -361,6 +361,14 @@ tt_time_shift <- function(tbl,
 #' @param keep Which slice should be kept? The `"left"` side (the default)
 #'   contains data rows that are earlier than the `slice_point` and the
 #'   `"right"` side will have rows that are later.
+#' @param auto_arrange Should the table be arranged by the `time_column` just
+#'   before slicing? This may be useful if the input `tbl` isn't ordered by the
+#'   `time_column`.
+#' @param omit_missing Should rows with missing values in the `time_column` be
+#'   removed just before slicing? This might be useful in conjunction with
+#'   `auto_arrange = TRUE` and there is an expectation of missing values in
+#'   the `time_column` (i.e., sorting by a column with missing values will
+#'   result in the accumulation of rows with those missing values).
 #' 
 #' @return A `tibble` object.
 #' 
@@ -372,7 +380,9 @@ tt_time_shift <- function(tbl,
 tt_time_slice <- function(tbl,
                           time_column = NULL,
                           slice_point = 0,
-                          keep = c("left", "right")) {
+                          keep = c("left", "right"),
+                          auto_arrange = FALSE,
+                          omit_missing = FALSE) {
   
   if (!requireNamespace("lubridate", quietly = TRUE)) {
     
@@ -471,11 +481,18 @@ tt_time_slice <- function(tbl,
     time_slice_instant <- slice_point
   }
   
-  tbl <- 
-    tbl %>%
-    dplyr::filter(!is.na(!!col_sym)) %>%
-    dplyr::arrange(!!col_sym)
+  # Optionally prune rows with `NA` values in the time column
+  if (omit_missing) {
+    tbl <- dplyr::filter(tbl, !is.na(!!col_sym))
+  }
   
+  # Optionally arrange rows by the time column
+  if (auto_arrange) {
+    tbl <- dplyr::arrange(tbl, !!col_sym)
+  }
+  
+  # Perform the filtering of data either on the left or right of
+  # the `time_slice_instant`
   if (keep == "left") {
     tbl <- dplyr::filter(tbl, !!col_sym < time_slice_instant)
   } else {

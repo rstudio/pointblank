@@ -174,9 +174,9 @@ tt_string_info <- function(tbl) {
 #' Table Transformer: get the dimensions of a table
 #' 
 #' @description
-#' With any table object, you can produce an information that contains nothing
-#' more than the table's dimensions: the number of rows and the number of
-#' columns.
+#' With any table object, you can produce an information table that contains
+#' nothing more than the table's dimensions: the number of rows and the number
+#' of columns.
 #'
 #' The table produced will have two columns and two rows. The first is the
 #' `"param"` column with the labels `"rows"` and `"columns"`; the second column,

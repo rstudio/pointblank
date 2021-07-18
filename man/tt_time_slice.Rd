@@ -2,13 +2,15 @@
 % Please edit documentation in R/table_transformers.R
 \name{tt_time_slice}
 \alias{tt_time_slice}
-\title{Table Transformer: slice a table during an existential time crisis}
+\title{Table Transformer: slice a table with a slice point on a time column}
 \usage{
 tt_time_slice(
   tbl,
   time_column = NULL,
   slice_point = 0,
-  keep = c("left", "right")
+  keep = c("left", "right"),
+  auto_arrange = FALSE,
+  omit_missing = FALSE
 )
 }
 \arguments{
@@ -27,6 +29,16 @@ formatted time string (as a date or a date-time), a \code{POSIXct} time, or a
 \item{keep}{Which slice should be kept? The \code{"left"} side (the default)
 contains data rows that are earlier than the \code{slice_point} and the
 \code{"right"} side will have rows that are later.}
+
+\item{auto_arrange}{Should the table be arranged by the \code{time_column} just
+before slicing? This may be useful if the input \code{tbl} isn't ordered by the
+\code{time_column}.}
+
+\item{omit_missing}{Should rows with missing values in the \code{time_column} be
+removed just before slicing? This might be useful in conjunction with
+\code{auto_arrange = TRUE} and there is an expectation of missing values in
+the \code{time_column} (i.e., sorting by a column with missing values will
+result in the accumulation of rows with those missing values).}
 }
 \value{
 A \code{tibble} object.

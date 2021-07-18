@@ -46,7 +46,7 @@
 #' 
 #' @family Table Transformers
 #' @section Function ID:
-#' 14-1
+#' 12-1
 #' 
 #' @export
 tt_summary_stats <- function(tbl) {
@@ -127,7 +127,7 @@ tt_summary_stats <- function(tbl) {
 #' 
 #' @family Table Transformers
 #' @section Function ID:
-#' 14-2
+#' 12-2
 #' 
 #' @export
 tt_string_info <- function(tbl) {
@@ -189,7 +189,7 @@ tt_string_info <- function(tbl) {
 #' 
 #' @family Table Transformers
 #' @section Function ID:
-#' 14-3
+#' 12-3
 #' 
 #' @export
 tt_tbl_dims <- function(tbl) {
@@ -230,7 +230,7 @@ tt_tbl_dims <- function(tbl) {
 #' 
 #' @family Table Transformers
 #' @section Function ID:
-#' 14-4
+#' 12-4
 #' 
 #' @export
 tt_time_shift <- function(tbl,
@@ -374,7 +374,7 @@ tt_time_shift <- function(tbl,
 #' 
 #' @family Table Transformers
 #' @section Function ID:
-#' 14-5
+#' 12-5
 #' 
 #' @export
 tt_time_slice <- function(tbl,

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A small table that is useful for testing — small_table • pointblank</title>
+<title>Table Transformer: obtain a summary stats table for numeric columns — tt_summary_stats • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,10 +46,25 @@
 
 
 
-<meta property="og:title" content="A small table that is useful for testing — small_table" />
-<meta property="og:description" content="This is a small table with a few different types of columns. It's probably
-just useful when testing the functions from pointblank. Rows 9 and 10 are
-exact duplicates. The c column contains two NA values." />
+<meta property="og:title" content="Table Transformer: obtain a summary stats table for numeric columns — tt_summary_stats" />
+<meta property="og:description" content="With any table object, you can produce a summary table that is scoped to
+the numeric column values. The table produced will have a leading column
+called &quot;::stat::&quot; with labels for each of the nine rows, each corresponding
+to the following summary statistics:
+Minimum (&quot;min&quot;)
+5th Percentile (&quot;p05&quot;)
+1st Quartile (&quot;q_1&quot;)
+Median (&quot;med&quot;)
+3rd Quartile (&quot;q_3&quot;)
+95th Percentile (&quot;p95&quot;)
+Maximum (&quot;max&quot;)
+Interquartile Range (&quot;iqr&quot;)
+Range (&quot;range&quot;)
+
+
+Only numerical data from the input table will generate columns in the output
+table. Column names from the input will be used in the output, preserving
+order as well." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -161,64 +176,60 @@ exact duplicates. The c column contains two NA values." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A small table that is useful for testing</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
-    <div class="hidden name"><code>small_table.Rd</code></div>
+    <h1>Table Transformer: obtain a summary stats table for numeric columns</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/table_transformers.R'><code>R/table_transformers.R</code></a></small>
+    <div class="hidden name"><code>tt_summary_stats.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This is a small table with a few different types of columns. It's probably
-just useful when testing the functions from <strong>pointblank</strong>. Rows 9 and 10 are
-exact duplicates. The <code>c</code> column contains two <code>NA</code> values.</p>
+    <p>With any table object, you can produce a summary table that is scoped to
+the numeric column values. The table produced will have a leading column
+called <code>"::stat::"</code> with labels for each of the nine rows, each corresponding
+to the following summary statistics:</p><ol>
+<li><p>Minimum (<code>"min"</code>)</p></li>
+<li><p>5th Percentile (<code>"p05"</code>)</p></li>
+<li><p>1st Quartile (<code>"q_1"</code>)</p></li>
+<li><p>Median (<code>"med"</code>)</p></li>
+<li><p>3rd Quartile (<code>"q_3"</code>)</p></li>
+<li><p>95th Percentile (<code>"p95"</code>)</p></li>
+<li><p>Maximum (<code>"max"</code>)</p></li>
+<li><p>Interquartile Range (<code>"iqr"</code>)</p></li>
+<li><p>Range (<code>"range"</code>)</p></li>
+</ol>
+
+<p>Only numerical data from the input table will generate columns in the output
+table. Column names from the input will be used in the output, preserving
+order as well.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='va'>small_table</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>tt_summary_stats</span><span class='op'>(</span><span class='va'>tbl</span><span class='op'>)</span></code></pre></div>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>tbl</th>
+      <td><p>A table object to be used as input for the transformation. This
+can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble with 13 rows and 8 variables:</p><dl>
-<dt>date_time</dt><dd><p>A date-time column (of the <code>POSIXct</code> class) with dates that
-correspond exactly to those in the <code>date</code> column. Time values are somewhat
-randomized but all 'seconds' values are <code>00</code>.</p></dd>
-<dt>date</dt><dd><p>A <code>Date</code> column with dates from <code>2016-01-04</code> to <code>2016-01-30</code>.</p></dd>
-<dt>a</dt><dd><p>An <code>integer</code> column with values ranging from <code>1</code> to <code>8</code>.</p></dd>
-<dt>b</dt><dd><p>A <code>character</code> column with values that adhere to a common pattern.</p></dd>
-<dt>c</dt><dd><p>An <code>integer</code> column with values ranging from <code>2</code> to <code>9</code>. Contains
-two <code>NA</code> values.</p></dd>
-<dt>d</dt><dd><p>A numeric column with values ranging from <code>108</code> to <code>10000</code>.</p></dd>
-<dt>e</dt><dd><p>A <code>logical</code> column.</p></dd>
-<dt>f</dt><dd><p>A <code>character</code> column with <code>"low"</code>, <code>"mid"</code>, and <code>"high"</code> values.</p></dd>
-
-</dl>
-
+    <p>A <code>tibble</code> object.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
 
-<p>14-1</p>
+<p>12-1</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Datasets: 
-<code><a href='small_table_sqlite.html'>small_table_sqlite</a>()</code>,
-<code><a href='specifications.html'>specifications</a></code></p></div>
+    <div class='dont-index'><p>Other Table Transformers: 
+<code><a href='tt_string_info.html'>tt_string_info</a>()</code>,
+<code><a href='tt_tbl_dims.html'>tt_tbl_dims</a>()</code>,
+<code><a href='tt_time_shift.html'>tt_time_shift</a>()</code>,
+<code><a href='tt_time_slice.html'>tt_time_slice</a>()</code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Here is a glimpse at the data</span></span>
-<span class='r-in'><span class='co'># available in `small_table`</span></span>
-<span class='r-in'><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>small_table</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Rows: 13</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Columns: 8</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $ date_time <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span> 2016-01-04 11:00:00, 2016-01-04 00:32:00, 2016-01-05 13:32:…</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $ date      <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span> 2016-01-04, 2016-01-04, 2016-01-05, 2016-01-06, 2016-01-09,…</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $ a         <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> 2, 3, 6, 2, 8, 4, 7, 4, 3, 3, 4, 2, 1</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $ b         <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> "1-bcd-345", "5-egh-163", "8-kdg-938", "5-jdo-903", "3-ldm-0…</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $ c         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> 3, 8, 3, NA, 7, 4, 3, 2, 9, 9, 7, 8, NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $ d         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> 3423.29, 9999.99, 2343.23, 3892.40, 283.94, 3291.03, 843.34,…</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $ e         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FAL…</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $ f         <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> "high", "low", "high", "mid", "low", "mid", "high", "low", "…</span>
-<span class='r-in'></span>
-</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

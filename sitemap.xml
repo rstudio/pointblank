@@ -340,6 +340,21 @@
     <loc>/reference/tbl_store.html</loc>
   </url>
   <url>
+    <loc>/reference/tt_string_info.html</loc>
+  </url>
+  <url>
+    <loc>/reference/tt_summary_stats.html</loc>
+  </url>
+  <url>
+    <loc>/reference/tt_tbl_dims.html</loc>
+  </url>
+  <url>
+    <loc>/reference/tt_time_shift.html</loc>
+  </url>
+  <url>
+    <loc>/reference/tt_time_slice.html</loc>
+  </url>
+  <url>
     <loc>/reference/validate_rmd.html</loc>
   </url>
   <url>

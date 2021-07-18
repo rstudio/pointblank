@@ -821,6 +821,49 @@ column?</p></td>
     </tbody><tbody>
       <tr>
         <th colspan="2">
+          <h2 id="section-table-transformers" class="hasAnchor"><a href="#section-table-transformers" class="anchor"></a>Table Transformers</h2>
+          <p class="section-desc"><p><strong>Table Transformer</strong> functions can radically transform a data table and either provide a wholly different table (like a summary table or table properties table) or do some useful filtering in a single step. This can be useful for preparing the target table for validation, creating a temporary table for a few validation steps, or even as something used outside of the <strong>pointblank</strong> workflows. As a nice bonus these transformer functions will work equally well with data frames, database tables, and Spark tables.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="tt_summary_stats.html">tt_summary_stats()</a></code> </p>
+        </td>
+        <td><p>Table Transformer: obtain a summary stats table for numeric columns</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tt_string_info.html">tt_string_info()</a></code> </p>
+        </td>
+        <td><p>Table Transformer: obtain an information table for string columns</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tt_tbl_dims.html">tt_tbl_dims()</a></code> </p>
+        </td>
+        <td><p>Table Transformer: get the dimensions of a table</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tt_time_shift.html">tt_time_shift()</a></code> </p>
+        </td>
+        <td><p>Table Transformer: shift the times of a table</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tt_time_slice.html">tt_time_slice()</a></code> </p>
+        </td>
+        <td><p>Table Transformer: slice a table with a slice point on a time column</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
           <h2 id="section-utility-and-helper-functions" class="hasAnchor"><a href="#section-utility-and-helper-functions" class="anchor"></a>Utility and Helper Functions</h2>
           <p class="section-desc"></p>
         </th>

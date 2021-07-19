@@ -49,11 +49,10 @@
 <meta property="og:title" content="Table Transformer: obtain an information table for string columns — tt_string_info" />
 <meta property="og:description" content="With any table object, you can produce an information table that is scoped to
 string-based columns. The table produced will have a leading column called
-&quot;::param::&quot; with labels for each of the three rows, each corresponding to
+&quot;.param.&quot; with labels for each of the three rows, each corresponding to
 the following pieces of information pertaining to string length:
 Mean String Length (&quot;length_mean&quot;)
-Minimum String Length
-(&quot;length_min&quot;)
+Minimum String Length (&quot;length_min&quot;)
 Maximum String Length (&quot;length_max&quot;)
 
 
@@ -179,11 +178,10 @@ order as well." />
     <div class="ref-description">
     <p>With any table object, you can produce an information table that is scoped to
 string-based columns. The table produced will have a leading column called
-<code>"::param::"</code> with labels for each of the three rows, each corresponding to
+<code>".param."</code> with labels for each of the three rows, each corresponding to
 the following pieces of information pertaining to string length:</p><ol>
 <li><p>Mean String Length (<code>"length_mean"</code>)</p></li>
-<li><p>Minimum String Length
-(<code>"length_min"</code>)</p></li>
+<li><p>Minimum String Length (<code>"length_min"</code>)</p></li>
 <li><p>Maximum String Length (<code>"length_max"</code>)</p></li>
 </ol>
 
@@ -220,6 +218,55 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
 <code><a href='tt_time_shift.html'>tt_time_shift</a>()</code>,
 <code><a href='tt_time_slice.html'>tt_time_slice</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Get string information for the</span></span>
+<span class='r-in'><span class='co'># string-based columns in the</span></span>
+<span class='r-in'><span class='co'># `game_revenue` dataset</span></span>
+<span class='r-in'><span class='fu'>tt_string_info</span><span class='op'>(</span><span class='va'>game_revenue</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 3 x 7</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .param.     player_id session_id item_type item_name acquisition country</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> length_mean        15         24      2.22      7.35        7.97    8.53</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> length_min         15         24      2         5           5       5   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> length_max         15         24      3        11          14      14   </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Ensure that `player_id` and</span></span>
+<span class='r-in'><span class='co'># `session_id` values always have</span></span>
+<span class='r-in'><span class='co'># the same number of characters</span></span>
+<span class='r-in'><span class='co'># throughout the table</span></span>
+<span class='r-in'><span class='fu'>tt_string_info</span><span class='op'>(</span><span class='va'>game_revenue</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_equal.html'>col_vals_equal</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>player_id</span><span class='op'>)</span>,</span>
+<span class='r-in'>    value <span class='op'>=</span> <span class='fl'>15</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_equal.html'>col_vals_equal</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>session_id</span><span class='op'>)</span>,</span>
+<span class='r-in'>    value <span class='op'>=</span> <span class='fl'>24</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 3 x 7</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .param.     player_id session_id item_type item_name acquisition country</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> length_mean        15         24      2.22      7.35        7.97    8.53</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> length_min         15         24      2         5           5       5   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> length_max         15         24      3        11          14      14   </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Check that the maximum string</span></span>
+<span class='r-in'><span class='co'># length in column `f` of the</span></span>
+<span class='r-in'><span class='co'># `small_table` dataset is no</span></span>
+<span class='r-in'><span class='co'># greater than `4`</span></span>
+<span class='r-in'><span class='fu'>tt_string_info</span><span class='op'>(</span><span class='va'>small_table</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_lte.html'>col_vals_lte</a></span><span class='op'>(</span></span>
+<span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>,</span>
+<span class='r-in'>    value <span class='op'>=</span> <span class='fl'>4</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 3 x 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .param.         b     f</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> length_mean     9  3.46</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> length_min      9  3   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> length_max      9  4   </span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

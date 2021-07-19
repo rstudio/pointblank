@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A SQLite version of the small_table dataset — small_table_sqlite • pointblank</title>
+<title>A table with game revenue data — game_revenue • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,11 +46,10 @@
 
 
 
-<meta property="og:title" content="A SQLite version of the small_table dataset — small_table_sqlite" />
-<meta property="og:description" content="The small_table_sqlite() function creates a SQLite, tbl_dbi version of
-the small_table dataset. A requirement is the availability of the DBI
-and RSQLite packages. These packages can be installed by using
-install.packages(&quot;DBI&quot;) and install.packages(&quot;RSQLite&quot;)." />
+<meta property="og:title" content="A table with game revenue data — game_revenue" />
+<meta property="og:description" content="This table is a subset of the sj_all_revenue table from the intendo
+data package. It's the first 2,000 rows from that table where revenue records
+range from 2015-01-01 to 2015-01-21." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -162,40 +161,77 @@ install.packages(&quot;DBI&quot;) and install.packages(&quot;RSQLite&quot;)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A SQLite version of the <code>small_table</code> dataset</h1>
+    <h1>A table with game revenue data</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
-    <div class="hidden name"><code>small_table_sqlite.Rd</code></div>
+    <div class="hidden name"><code>game_revenue.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>small_table_sqlite()</code> function creates a SQLite, <code>tbl_dbi</code> version of
-the <code>small_table</code> dataset. A requirement is the availability of the <strong>DBI</strong>
-and <strong>RSQLite</strong> packages. These packages can be installed by using
-<code>install.packages("DBI")</code> and <code>install.packages("RSQLite")</code>.</p>
+    <p>This table is a subset of the <code>sj_all_revenue</code> table from the <strong>intendo</strong>
+data package. It's the first 2,000 rows from that table where revenue records
+range from <code>2015-01-01</code> to <code>2015-01-21</code>.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>small_table_sqlite</span><span class='op'>(</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='va'>game_revenue</span></code></pre></div>
 
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A tibble with 2,000 rows and 11 variables:</p><dl>
+<dt>player_id</dt><dd><p>A <code>character</code> column with unique identifiers for each
+user/player.</p></dd>
+<dt>session_id</dt><dd><p>A <code>character</code> column that contains unique identifiers for
+each player session.</p></dd>
+<dt>session_start</dt><dd><p>A date-time column that indicates when the session
+(containing the revenue event) started.</p></dd>
+<dt>time</dt><dd><p>A date-time column that indicates exactly when the player
+purchase (or revenue event) occurred.</p></dd>
+<dt>item_type</dt><dd><p>A <code>character</code> column that provides the class of the item
+purchased.</p></dd>
+<dt>item_name</dt><dd><p>A <code>character</code> column that provides the name of the item
+purchased.</p></dd>
+<dt>item_revenue</dt><dd><p>A <code>numeric</code> column with the revenue amounts per item
+purchased.</p></dd>
+<dt>session_duration</dt><dd><p>A <code>numeric</code> column that states the length of the
+session (in minutes) for which the purchase occurred.</p></dd>
+<dt>start_day</dt><dd><p>A <code>Date</code> column that provides the date of first login for
+the player making a purchase.</p></dd>
+<dt>acquisition</dt><dd><p>A <code>character</code> column that provides the method of
+acquisition for the player.</p></dd>
+<dt>country</dt><dd><p>A <code>character</code> column that provides the probable country of
+residence for the player.</p></dd>
+
+</dl>
 
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
 
-<p>14-2</p>
+<p>14-4</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Datasets: 
-<code><a href='game_revenue.html'>game_revenue</a></code>,
+<code><a href='small_table_sqlite.html'>small_table_sqlite</a>()</code>,
 <code><a href='small_table.html'>small_table</a></code>,
 <code><a href='specifications.html'>specifications</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Use `small_table_sqlite()` to</span></span>
-<span class='r-in'><span class='co'># create a SQLite version of the</span></span>
-<span class='r-in'><span class='co'># `small_table` table</span></span>
-<span class='r-in'><span class='co'>#</span></span>
-<span class='r-in'><span class='co'># small_table_sqlite &lt;- small_table_sqlite()</span></span>
-<span class='r-in'></span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Here is a glimpse at the data</span></span>
+<span class='r-in'><span class='co'># available in `game_revenue`</span></span>
+<span class='r-in'><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>game_revenue</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Rows: 2,000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Columns: 11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ player_id        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> "ECPANOIXLZHF896", "ECPANOIXLZHF896", "ECPANOIXLZHF89…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ session_id       <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> "ECPANOIXLZHF896-eol2j8bs", "ECPANOIXLZHF896-eol2j8bs…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ session_start    <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span> 2015-01-01 01:31:03, 2015-01-01 01:31:03, 2015-01-01…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ time             <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span> 2015-01-01 01:31:27, 2015-01-01 01:36:57, 2015-01-01…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ item_type        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> "iap", "iap", "iap", "ad", "ad", "ad", "ad", "ad", "a…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ item_name        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> "offer2", "gems3", "gold7", "ad_20sec", "ad_5sec", "a…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ item_revenue     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> 8.991, 22.491, 107.991, 0.760, 0.030, 0.070, 0.080, 1…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ session_duration <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> 16.3, 16.3, 16.3, 16.3, 35.2, 35.2, 35.2, 35.2, 35.2,…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ start_day        <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span> 2015-01-01, 2015-01-01, 2015-01-01, 2015-01-01, 2015…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ acquisition      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> "google", "google", "google", "google", "google", "go…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ country          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> "Germany", "Germany", "Germany", "Germany", "Germany"…</span>
 <span class='r-in'></span>
 </code></pre></div>
   </div>

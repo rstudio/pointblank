@@ -16,7 +16,7 @@ A \code{tibble} object.
 \description{
 With any table object, you can produce a summary table that is scoped to
 the numeric column values. The table produced will have a leading column
-called \code{"::stat::"} with labels for each of the nine rows, each corresponding
+called \code{".stat."} with labels for each of the nine rows, each corresponding
 to the following summary statistics:
 \enumerate{
 \item Minimum (\code{"min"})
@@ -39,6 +39,37 @@ order as well.
 12-1
 }
 
+\examples{
+# Get summary statistics for the
+# `game_revenue` dataset that's
+# included in the package
+tt_summary_stats(game_revenue)
+
+# Ensure that the maximum revenue
+# for individual purchases in the
+# `game_revenue` table is less than
+# $150
+tt_summary_stats(game_revenue) \%>\%
+  col_vals_lt(
+    columns = vars(item_revenue),
+    value = 150,
+    segments = .stat. ~ "max"
+  )
+
+# For in-app purchases in the
+# `game_revenue` table, check that
+# median revenue is somewhere
+# between $8 and $12
+game_revenue \%>\% 
+  dplyr::filter(item_type == "iap") \%>\%
+  tt_summary_stats() \%>\%
+  col_vals_between(
+    columns = vars(item_revenue),
+    left = 8, right = 12,
+    segments = .stat. ~ "med"
+  )
+
+}
 \seealso{
 Other Table Transformers: 
 \code{\link{tt_string_info}()},

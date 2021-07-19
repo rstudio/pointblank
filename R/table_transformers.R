@@ -44,6 +44,36 @@
 #' 
 #' @return A `tibble` object.
 #' 
+#' @examples 
+#' # Get summary statistics for the
+#' # `game_revenue` dataset that's
+#' # included in the package
+#' tt_summary_stats(game_revenue)
+#' 
+#' # Ensure that the maximum revenue
+#' # for individual purchases in the
+#' # `game_revenue` table is less than
+#' # $150
+#' tt_summary_stats(game_revenue) %>%
+#'   col_vals_lt(
+#'     columns = vars(item_revenue),
+#'     value = 150,
+#'     segments = .stat. ~ "max"
+#'   )
+#' 
+#' # For in-app purchases in the
+#' # `game_revenue` table, check that
+#' # median revenue is somewhere
+#' # between $8 and $12
+#' game_revenue %>% 
+#'   dplyr::filter(item_type == "iap") %>%
+#'   tt_summary_stats() %>%
+#'   col_vals_between(
+#'     columns = vars(item_revenue),
+#'     left = 8, right = 12,
+#'     segments = .stat. ~ "med"
+#'   )
+#' 
 #' @family Table Transformers
 #' @section Function ID:
 #' 12-1
@@ -124,6 +154,36 @@ tt_summary_stats <- function(tbl) {
 #' 
 #' @return A `tibble` object.
 #' 
+#' @examples 
+#' # Get string information for the
+#' # string-based columns in the
+#' # `game_revenue` dataset
+#' tt_string_info(game_revenue)
+#' 
+#' # Ensure that `player_id` and
+#' # `session_id` values always have
+#' # the same number of characters
+#' # throughout the table
+#' tt_string_info(game_revenue) %>%
+#'   col_vals_equal(
+#'     columns = vars(player_id),
+#'     value = 15
+#'   ) %>%
+#'   col_vals_equal(
+#'     columns = vars(session_id),
+#'     value = 24
+#'   )
+#' 
+#' # Check that the maximum string
+#' # length in column `f` of the
+#' # `small_table` dataset is no
+#' # greater than `4`
+#' tt_string_info(small_table) %>%
+#'   col_vals_lte(
+#'     columns = vars(f),
+#'     value = 4
+#'   )
+#' 
 #' @family Table Transformers
 #' @section Function ID:
 #' 12-2
@@ -185,6 +245,33 @@ tt_string_info <- function(tbl) {
 #'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #' 
 #' @return A `tibble` object.
+#' 
+#' @examples
+#' # Get the dimensions of the
+#' # `game_revenue` dataset that's
+#' # included in the package
+#' tt_tbl_dims(game_revenue)
+#' 
+#' # This output table is useful when
+#' # you want to validate the
+#' # dimensions of the table; here,
+#' # we check that `game_revenue` has
+#' # at least 1500 rows
+#' tt_tbl_dims(game_revenue) %>%
+#'   col_vals_gt(
+#'     columns = vars(value),
+#'     value = 1500,
+#'     segments = dim ~ "rows"
+#'   )
+#' 
+#' # We can check `small_table` for
+#' # an exact number of columns (`8`)
+#' tt_tbl_dims(small_table) %>%
+#'   dplyr::filter(dim == "columns") %>%
+#'   col_vals_equal(
+#'     columns = vars(value),
+#'     value = 8
+#'   )
 #' 
 #' @family Table Transformers
 #' @section Function ID:

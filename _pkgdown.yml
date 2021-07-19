@@ -243,6 +243,7 @@ reference:
     - small_table
     - small_table_sqlite
     - specifications
+    - game_revenue
     
 navbar:
   type: default

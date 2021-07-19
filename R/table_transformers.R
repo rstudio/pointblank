@@ -226,7 +226,27 @@ tt_tbl_dims <- function(tbl) {
 #'   five days). Adding a `"-"` at the beginning of the string (e.g., "-2y")
 #'   will shift time values back.
 #' 
-#' @return A `tibble` object.
+#' @return A data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object
+#'   depending on what was provided as `tbl`.
+#' 
+#' @examples
+#' # With the `game_revenue` dataset,
+#' # which has entries in the first
+#' # 21 days of 2015, move all of the
+#' # date and date-time values to the
+#' # beginning of 2021
+#' tt_time_shift(
+#'   tbl = game_revenue,
+#'   time_shift = "6y"
+#' )
+#' 
+#' # Keeping only the `date_time` and
+#' # `a`-`f` columns of `small_table`,
+#' # shift the times back 2 days and
+#' # 12 hours
+#' small_table %>%
+#'   dplyr::select(-date) %>%
+#'   tt_time_shift("-2d 12H")
 #' 
 #' @family Table Transformers
 #' @section Function ID:
@@ -370,7 +390,32 @@ tt_time_shift <- function(tbl,
 #'   the `time_column` (i.e., sorting by a column with missing values will
 #'   result in the accumulation of rows with those missing values).
 #' 
-#' @return A `tibble` object.
+#' @return A data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object
+#'   depending on what was provided as `tbl`.
+#' 
+#' @examples
+#' # With the `game_revenue` dataset,
+#' # which has entries in the first
+#' # 21 days of 2015, elect to get all
+#' # of the records where the `time`
+#' # values are strictly for the first
+#' # 15 days of 2015
+#' tt_time_slice(
+#'   tbl = game_revenue,
+#'   time_column = "time",
+#'   slice_point = "2015-01-16"
+#' )
+#' 
+#' # Omit the first 25% of records
+#' # from `small_table` on the basis
+#' # of a timeline that begins at 
+#' # `2016-01-04 11:00:00` and
+#' # ends at `2016-01-30 11:23:00`
+#' small_table %>%
+#'   tt_time_slice(
+#'     slice_point = 0.25,
+#'     keep = "right"
+#'   )
 #' 
 #' @family Table Transformers
 #' @section Function ID:

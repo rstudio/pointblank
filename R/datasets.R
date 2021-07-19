@@ -145,3 +145,46 @@ small_table_sqlite <- function() {
 #' 14-3
 #'
 "specifications"
+
+#' A table with game revenue data
+#'
+#' This table is a subset of the `sj_all_revenue` table from the **intendo**
+#' data package. It's the first 2,000 rows from that table where revenue records
+#' range from `2015-01-01` to `2015-01-21`.
+#'
+#' @format A tibble with 2,000 rows and 11 variables:
+#' \describe{
+#' \item{player_id}{A `character` column with unique identifiers for each
+#' user/player.}
+#' \item{session_id}{A `character` column that contains unique identifiers for
+#' each player session.}
+#' \item{session_start}{A date-time column that indicates when the session
+#' (containing the revenue event) started.}
+#' \item{time}{A date-time column that indicates exactly when the player
+#' purchase (or revenue event) occurred.}
+#' \item{item_type}{A `character` column that provides the class of the item
+#' purchased.}
+#' \item{item_name}{A `character` column that provides the name of the item
+#' purchased.}
+#' \item{item_revenue}{A `numeric` column with the revenue amounts per item
+#' purchased.}
+#' \item{session_duration}{A `numeric` column that states the length of the
+#' session (in minutes) for which the purchase occurred.}
+#' \item{start_day}{A `Date` column that provides the date of first login for
+#' the player making a purchase.}
+#' \item{acquisition}{A `character` column that provides the method of
+#' acquisition for the player.}
+#' \item{country}{A `character` column that provides the probable country of
+#' residence for the player.}
+#' }
+#'
+#' @examples
+#' # Here is a glimpse at the data
+#' # available in `game_revenue`
+#' dplyr::glimpse(game_revenue)
+#'
+#' @family Datasets
+#' @section Function ID:
+#' 14-4
+#'
+"game_revenue"

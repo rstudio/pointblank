@@ -41,7 +41,8 @@ the \code{time_column} (i.e., sorting by a column with missing values will
 result in the accumulation of rows with those missing values).}
 }
 \value{
-A \code{tibble} object.
+A data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object
+depending on what was provided as \code{tbl}.
 }
 \description{
 With any table object containing date or date-time columns, any one of those
@@ -53,6 +54,31 @@ columns can be used to effectively slice the data in two with a
 12-5
 }
 
+\examples{
+# With the `game_revenue` dataset,
+# which has entries in the first
+# 21 days of 2015, elect to get all
+# of the records where the `time`
+# values are strictly for the first
+# 15 days of 2015
+tt_time_slice(
+  tbl = game_revenue,
+  time_column = "time",
+  slice_point = "2015-01-16"
+)
+
+# Omit the first 25\% of records
+# from `small_table` on the basis
+# of a timeline that begins at 
+# `2016-01-04 11:00:00` and
+# ends at `2016-01-30 11:23:00`
+small_table \%>\%
+  tt_time_slice(
+    slice_point = 0.25,
+    keep = "right"
+  )
+
+}
 \seealso{
 Other Table Transformers: 
 \code{\link{tt_string_info}()},

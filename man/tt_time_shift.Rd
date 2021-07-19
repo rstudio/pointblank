@@ -19,7 +19,8 @@ five days). Adding a \code{"-"} at the beginning of the string (e.g., "-2y")
 will shift time values back.}
 }
 \value{
-A \code{tibble} object.
+A data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object
+depending on what was provided as \code{tbl}.
 }
 \description{
 With any table object containing date or date-time columns, these values can
@@ -33,6 +34,26 @@ shift direction or a \code{difftime} object (which can be created via
 12-4
 }
 
+\examples{
+# With the `game_revenue` dataset,
+# which has entries in the first
+# 21 days of 2015, move all of the
+# date and date-time values to the
+# beginning of 2021
+tt_time_shift(
+  tbl = game_revenue,
+  time_shift = "6y"
+)
+
+# Keeping only the `date_time` and
+# `a`-`f` columns of `small_table`,
+# shift the times back 2 days and
+# 12 hours
+small_table \%>\%
+  dplyr::select(-date) \%>\%
+  tt_time_shift("-2d 12H")
+
+}
 \seealso{
 Other Table Transformers: 
 \code{\link{tt_string_info}()},

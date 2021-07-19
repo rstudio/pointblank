@@ -200,7 +200,8 @@ will shift time values back.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>tibble</code> object.</p>
+    <p>A data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object
+depending on what was provided as <code>tbl</code>.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
@@ -214,6 +215,58 @@ will shift time values back.</p></td>
 <code><a href='tt_tbl_dims.html'>tt_tbl_dims</a>()</code>,
 <code><a href='tt_time_slice.html'>tt_time_slice</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># With the `game_revenue` dataset,</span></span>
+<span class='r-in'><span class='co'># which has entries in the first</span></span>
+<span class='r-in'><span class='co'># 21 days of 2015, move all of the</span></span>
+<span class='r-in'><span class='co'># date and date-time values to the</span></span>
+<span class='r-in'><span class='co'># beginning of 2021</span></span>
+<span class='r-in'><span class='fu'>tt_time_shift</span><span class='op'>(</span></span>
+<span class='r-in'>  tbl <span class='op'>=</span> <span class='va'>game_revenue</span>,</span>
+<span class='r-in'>  time_shift <span class='op'>=</span> <span class='st'>"6y"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2,000 x 11</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    player_id    session_id     session_start       time                item_type</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> ECPANOIXLZH… ECPANOIXLZHF8… 2021-01-01 <span style='color: #949494;'>01:31:03</span> 2021-01-01 <span style='color: #949494;'>01:31:27</span> iap      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> ECPANOIXLZH… ECPANOIXLZHF8… 2021-01-01 <span style='color: #949494;'>01:31:03</span> 2021-01-01 <span style='color: #949494;'>01:36:57</span> iap      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> ECPANOIXLZH… ECPANOIXLZHF8… 2021-01-01 <span style='color: #949494;'>01:31:03</span> 2021-01-01 <span style='color: #949494;'>01:37:45</span> iap      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> ECPANOIXLZH… ECPANOIXLZHF8… 2021-01-01 <span style='color: #949494;'>01:31:03</span> 2021-01-01 <span style='color: #949494;'>01:42:33</span> ad       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> ECPANOIXLZH… ECPANOIXLZHF8… 2021-01-01 <span style='color: #949494;'>11:50:02</span> 2021-01-01 <span style='color: #949494;'>11:55:20</span> ad       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> ECPANOIXLZH… ECPANOIXLZHF8… 2021-01-01 <span style='color: #949494;'>11:50:02</span> 2021-01-01 <span style='color: #949494;'>12:08:56</span> ad       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> ECPANOIXLZH… ECPANOIXLZHF8… 2021-01-01 <span style='color: #949494;'>11:50:02</span> 2021-01-01 <span style='color: #949494;'>12:14:08</span> ad       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> ECPANOIXLZH… ECPANOIXLZHF8… 2021-01-01 <span style='color: #949494;'>11:50:02</span> 2021-01-01 <span style='color: #949494;'>12:21:44</span> ad       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> ECPANOIXLZH… ECPANOIXLZHF8… 2021-01-01 <span style='color: #949494;'>11:50:02</span> 2021-01-01 <span style='color: #949494;'>12:24:20</span> ad       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> FXWUORGYNJA… FXWUORGYNJAE2… 2021-01-01 <span style='color: #949494;'>15:17:18</span> 2021-01-01 <span style='color: #949494;'>15:19:36</span> ad       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 1,990 more rows, and 6 more variables: item_name &lt;chr&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   item_revenue &lt;dbl&gt;, session_duration &lt;dbl&gt;, start_day &lt;date&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   acquisition &lt;chr&gt;, country &lt;chr&gt;</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Keeping only the `date_time` and</span></span>
+<span class='r-in'><span class='co'># `a`-`f` columns of `small_table`,</span></span>
+<span class='r-in'><span class='co'># shift the times back 2 days and</span></span>
+<span class='r-in'><span class='co'># 12 hours</span></span>
+<span class='r-in'><span class='va'>small_table</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>date</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>tt_time_shift</span><span class='op'>(</span><span class='st'>"-2d 12H"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 13 x 7</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    date_time               a b             c      d e     f    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> 2016-01-01 <span style='color: #949494;'>23:00:00</span>     2 1-bcd-345     3  <span style='text-decoration: underline;'>3</span>423. TRUE  high </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> 2016-01-01 <span style='color: #949494;'>12:32:00</span>     3 5-egh-163     8 <span style='text-decoration: underline;'>10</span>000. TRUE  low  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> 2016-01-03 <span style='color: #949494;'>01:32:00</span>     6 8-kdg-938     3  <span style='text-decoration: underline;'>2</span>343. TRUE  high </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> 2016-01-04 <span style='color: #949494;'>05:23:00</span>     2 5-jdo-903    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>3</span>892. FALSE mid  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> 2016-01-07 <span style='color: #949494;'>00:36:00</span>     8 3-ldm-038     7   284. TRUE  low  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> 2016-01-08 <span style='color: #949494;'>18:15:00</span>     4 2-dhe-923     4  <span style='text-decoration: underline;'>3</span>291. TRUE  mid  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> 2016-01-13 <span style='color: #949494;'>06:46:00</span>     7 1-knw-093     3   843. TRUE  high </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> 2016-01-14 <span style='color: #949494;'>23:27:00</span>     4 5-boe-639     2  <span style='text-decoration: underline;'>1</span>036. FALSE low  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> 2016-01-17 <span style='color: #949494;'>16:30:00</span>     3 5-bce-642     9   838. FALSE high </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> 2016-01-17 <span style='color: #949494;'>16:30:00</span>     3 5-bce-642     9   838. FALSE high </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span> 2016-01-24 <span style='color: #949494;'>08:07:00</span>     4 2-dmx-010     7   834. TRUE  low  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span> 2016-01-25 <span style='color: #949494;'>14:51:00</span>     2 7-dmx-010     8   108. FALSE low  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span> 2016-01-27 <span style='color: #949494;'>23:23:00</span>     1 3-dka-303    <span style='color: #BB0000;'>NA</span>  <span style='text-decoration: underline;'>2</span>230. TRUE  high </span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

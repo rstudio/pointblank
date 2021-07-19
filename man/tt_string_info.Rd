@@ -16,12 +16,11 @@ A \code{tibble} object.
 \description{
 With any table object, you can produce an information table that is scoped to
 string-based columns. The table produced will have a leading column called
-\code{"::param::"} with labels for each of the three rows, each corresponding to
+\code{".param."} with labels for each of the three rows, each corresponding to
 the following pieces of information pertaining to string length:
 \enumerate{
 \item Mean String Length (\code{"length_mean"})
-\item Minimum String Length
-(\code{"length_min"})
+\item Minimum String Length (\code{"length_min"})
 \item Maximum String Length (\code{"length_max"})
 }
 
@@ -34,6 +33,37 @@ order as well.
 12-2
 }
 
+\examples{
+# Get string information for the
+# string-based columns in the
+# `game_revenue` dataset
+tt_string_info(game_revenue)
+
+# Ensure that `player_id` and
+# `session_id` values always have
+# the same number of characters
+# throughout the table
+tt_string_info(game_revenue) \%>\%
+  col_vals_equal(
+    columns = vars(player_id),
+    value = 15
+  ) \%>\%
+  col_vals_equal(
+    columns = vars(session_id),
+    value = 24
+  )
+
+# Check that the maximum string
+# length in column `f` of the
+# `small_table` dataset is no
+# greater than `4`
+tt_string_info(small_table) \%>\%
+  col_vals_lte(
+    columns = vars(f),
+    value = 4
+  )
+
+}
 \seealso{
 Other Table Transformers: 
 \code{\link{tt_summary_stats}()},

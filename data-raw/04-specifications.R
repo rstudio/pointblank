@@ -123,5 +123,3 @@ specifications <-
       "01-2d:4c-ef:89-ab"
     )
   )
-
-specifications

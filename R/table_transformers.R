@@ -22,7 +22,7 @@
 #' @description
 #' With any table object, you can produce a summary table that is scoped to
 #' the numeric column values. The table produced will have a leading column
-#' called `"::stat::"` with labels for each of the nine rows, each corresponding
+#' called `".stat."` with labels for each of the nine rows, each corresponding
 #' to the following summary statistics:
 #' 
 #' 1. Minimum (`"min"`)
@@ -108,12 +108,11 @@ tt_summary_stats <- function(tbl) {
 #' @description
 #' With any table object, you can produce an information table that is scoped to
 #' string-based columns. The table produced will have a leading column called
-#' `"::param::"` with labels for each of the three rows, each corresponding to
+#' `".param."` with labels for each of the three rows, each corresponding to
 #' the following pieces of information pertaining to string length:
 #'
 #' 1. Mean String Length (`"length_mean"`)
-#' 2. Minimum String Length
-#' (`"length_min"`)
+#' 2. Minimum String Length (`"length_min"`)
 #' 3. Maximum String Length (`"length_max"`)
 #'
 #' Only string data from the input table will generate columns in the output
@@ -179,7 +178,7 @@ tt_string_info <- function(tbl) {
 #' of columns.
 #'
 #' The table produced will have two columns and two rows. The first is the
-#' `"param"` column with the labels `"rows"` and `"columns"`; the second column,
+#' `"dim"` column with the labels `"rows"` and `"columns"`; the second column,
 #' `"value"`, contains the row and column counts.
 #' 
 #' @param tbl A table object to be used as input for the transformation. This

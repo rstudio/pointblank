@@ -63,7 +63,7 @@ tt_summary_stats <- function(tbl) {
   
   summary_stats_tbl <- 
     dplyr::tibble(
-      `::stat::` = c(
+      `.stat.` = c(
         "min", "p05", "q_1", "med", "q_3",
         "p95", "max", "iqr", "range"
       )
@@ -144,7 +144,7 @@ tt_string_info <- function(tbl) {
   
   string_info_tbl <- 
     dplyr::tibble(
-      `::param::` = c("length_mean", "length_min", "length_max")
+      .param. = c("length_mean", "length_min", "length_max")
     )
   
   for (i in seq_len(n_cols)) {
@@ -202,7 +202,7 @@ tt_tbl_dims <- function(tbl) {
   n_rows <- get_table_total_rows(data = tbl)
   
   dplyr::tibble(
-    param = c("rows", "columns"),
+    dim = c("rows", "columns"),
     value = as.integer(c(n_rows, n_cols))
   )
 }

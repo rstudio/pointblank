@@ -50,6 +50,7 @@ Suggests:
     arrow,
     covr,
     crayon,
+    data.table,
     duckdb,
     ggforce,
     ggplot2,

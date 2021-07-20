@@ -47,9 +47,16 @@
 
 
 <meta property="og:title" content="Table Transformer: slice a table with a slice point on a time column — tt_time_slice" />
-<meta property="og:description" content="With any table object containing date or date-time columns, any one of those
-columns can be used to effectively slice the data in two with a
-slice_point: and you get to choose which of those slices you want to keep." />
+<meta property="og:description" content="With any table object containing date, date-time columns, or a mixture
+thereof, any one of those columns can be used to effectively slice the data
+table in two with a slice_point: and you get to choose which of those
+slices you want to keep. The slice point can be defined in several ways. One
+method involves using a decimal value between 0 and 1, which defines the
+slice point as the time instant somewhere between the earliest time value (at
+0) and the latest time value (at 1). Another way of defining the slice
+point is by supplying a time value, and the following input types are
+accepted: (1) an ISO 8601 formatted time string (as a date or a date-time),
+(2) a POSIXct time, or (3) a Date object." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -167,9 +174,16 @@ slice_point: and you get to choose which of those slices you want to keep." />
     </div>
 
     <div class="ref-description">
-    <p>With any table object containing date or date-time columns, any one of those
-columns can be used to effectively slice the data in two with a
-<code>slice_point</code>: and you get to choose which of those slices you want to keep.</p>
+    <p>With any table object containing date, date-time columns, or a mixture
+thereof, any one of those columns can be used to effectively slice the data
+table in two with a <code>slice_point</code>: and you get to choose which of those
+slices you want to keep. The slice point can be defined in several ways. One
+method involves using a decimal value between <code>0</code> and <code>1</code>, which defines the
+slice point as the time instant somewhere between the earliest time value (at
+<code>0</code>) and the latest time value (at <code>1</code>). Another way of defining the slice
+point is by supplying a time value, and the following input types are
+accepted: (1) an ISO 8601 formatted time string (as a date or a date-time),
+(2) a <code>POSIXct</code> time, or (3) a <code>Date</code> object.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>tt_time_slice</span><span class='op'>(</span>
@@ -198,7 +212,7 @@ used.</p></td>
     <tr>
       <th>slice_point</th>
       <td><p>The location on the <code>time_column</code> where the slicing will
-occur. This can either be a real number from <code>0</code> to <code>1</code>, an ISO 8601
+occur. This can either be a decimal value from <code>0</code> to <code>1</code>, an ISO 8601
 formatted time string (as a date or a date-time), a <code>POSIXct</code> time, or a
 <code>Date</code> object.</p></td>
     </tr>
@@ -212,15 +226,16 @@ contains data rows that are earlier than the <code>slice_point</code> and the
       <th>auto_arrange</th>
       <td><p>Should the table be arranged by the <code>time_column</code> just
 before slicing? This may be useful if the input <code>tbl</code> isn't ordered by the
-<code>time_column</code>.</p></td>
+<code>time_column</code>. By default, this is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>omit_missing</th>
       <td><p>Should rows with missing values in the <code>time_column</code> be
 removed just before slicing? This might be useful in conjunction with
-<code>auto_arrange = TRUE</code> and there is an expectation of missing values in
-the <code>time_column</code> (i.e., sorting by a column with missing values will
-result in the accumulation of rows with those missing values).</p></td>
+<code>auto_arrange = TRUE</code> and there is an expectation of missing values in the
+<code>time_column</code> (i.e., sorting by a column with missing values will result in
+the accumulation of rows with those missing values). By default, this is
+<code>FALSE</code>.</p></td>
     </tr>
     </table>
 
@@ -228,6 +243,15 @@ result in the accumulation of rows with those missing values).</p></td>
 
     <p>A data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object
 depending on what was provided as <code>tbl</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>It's preferable to have a input <code>tbl</code> that is ordered by time so that
+conceptual slices have time values (in the <code>time_column</code>) either earlier
+(left slice) or later (right slice) than the time instant specified by the
+<code>slice_point</code>. If that's not the case, then there is the option to
+<code>auto_arrange</code> the table. That will order the table by the <code>time_column</code>. If
+there are <code>NA</code>/<code>NULL</code> values in the <code>time_column</code>, the corresponding rows can
+be removed with the <code>omit_missing</code> option.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     

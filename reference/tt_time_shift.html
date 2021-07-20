@@ -50,8 +50,9 @@
 <meta property="og:description" content="With any table object containing date or date-time columns, these values can
 be precisely shifted with tt_time_shift() and specification of the time
 shift. We can either provide a string with the time shift components and the
-shift direction or a difftime object (which can be created via
-lubridate expressions or by using the base::difftime() function)." />
+shift direction (like &quot;-4y 10d&quot;) or a difftime object (which can be
+created via lubridate expressions or by using the base::difftime()
+function)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -172,8 +173,9 @@ lubridate expressions or by using the base::difftime() function)." />
     <p>With any table object containing date or date-time columns, these values can
 be precisely shifted with <code>tt_time_shift()</code> and specification of the time
 shift. We can either provide a string with the time shift components and the
-shift direction or a <code>difftime</code> object (which can be created via
-<strong>lubridate</strong> expressions or by using the <code><a href='https://rdrr.io/r/base/difftime.html'>base::difftime()</a></code> function).</p>
+shift direction (like <code>"-4y 10d"</code>) or a <code>difftime</code> object (which can be
+created via <strong>lubridate</strong> expressions or by using the <code><a href='https://rdrr.io/r/base/difftime.html'>base::difftime()</a></code>
+function).</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>tt_time_shift</span><span class='op'>(</span><span class='va'>tbl</span>, time_shift <span class='op'>=</span> <span class='st'>"0y 0m 0d 0H 0M 0S"</span><span class='op'>)</span></code></pre></div>
@@ -188,13 +190,13 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
     </tr>
     <tr>
       <th>time_shift</th>
-      <td><p>Either a character string that specifies the time
-difference by which all time values in time-based columns will be shifted,
-or, a <code>difftime</code> object. The character string is constructed in the format
-"0y 0m 0d 0H 0M 0S" and individual time components can be omitted (i.e.,
-"1y 5d" is a valid specification of shifting time values ahead one year and
-five days). Adding a <code>"-"</code> at the beginning of the string (e.g., "-2y")
-will shift time values back.</p></td>
+      <td><p>Either a character-based representation that specifies the
+time difference by which all time values in time-based columns will be
+shifted, or, a <code>difftime</code> object. The character string is constructed in
+the format <code>"0y 0m 0d 0H 0M 0S"</code> and individual time components can be
+omitted (i.e., <code>"1y 5d"</code> is a valid specification of shifting time values
+ahead one year and five days). Adding a <code>"-"</code> at the beginning of the
+string (e.g., <code>"-2y"</code>) will shift time values back.</p></td>
     </tr>
     </table>
 
@@ -202,6 +204,16 @@ will shift time values back.</p></td>
 
     <p>A data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object
 depending on what was provided as <code>tbl</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <code>time_shift</code> specification cannot have a higher time granularity than the
+least granular time column in the input table. Put in simpler terms, if there
+are any date-based based columns (or just a single date-based column) then
+the time shifting can only be in terms of years, months, and days. Using a
+<code>time_shift</code> specification of <code>"20d 6H"</code> in the presence of any dates will
+result in a truncation to <code>"20d 6H"</code>. Similarly, a <code>difftime</code> object will be
+altered in the same circumstances, however, the object will resolved to an
+exact number of days through rounding.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     

@@ -299,18 +299,29 @@ tt_tbl_dims <- function(tbl) {
 #' With any table object containing date or date-time columns, these values can
 #' be precisely shifted with `tt_time_shift()` and specification of the time
 #' shift. We can either provide a string with the time shift components and the
-#' shift direction or a `difftime` object (which can be created via
-#' **lubridate** expressions or by using the [base::difftime()] function).
+#' shift direction (like `"-4y 10d"`) or a `difftime` object (which can be
+#' created via **lubridate** expressions or by using the [base::difftime()]
+#' function).
+#' 
+#' @details 
+#' The `time_shift` specification cannot have a higher time granularity than the
+#' least granular time column in the input table. Put in simpler terms, if there
+#' are any date-based based columns (or just a single date-based column) then
+#' the time shifting can only be in terms of years, months, and days. Using a
+#' `time_shift` specification of `"20d 6H"` in the presence of any dates will
+#' result in a truncation to `"20d 6H"`. Similarly, a `difftime` object will be
+#' altered in the same circumstances, however, the object will resolved to an
+#' exact number of days through rounding.
 #' 
 #' @param tbl A table object to be used as input for the transformation. This
 #'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
-#' @param time_shift Either a character string that specifies the time
-#'   difference by which all time values in time-based columns will be shifted,
-#'   or, a `difftime` object. The character string is constructed in the format
-#'   "0y 0m 0d 0H 0M 0S" and individual time components can be omitted (i.e.,
-#'   "1y 5d" is a valid specification of shifting time values ahead one year and
-#'   five days). Adding a `"-"` at the beginning of the string (e.g., "-2y")
-#'   will shift time values back.
+#' @param time_shift Either a character-based representation that specifies the
+#'   time difference by which all time values in time-based columns will be
+#'   shifted, or, a `difftime` object. The character string is constructed in
+#'   the format `"0y 0m 0d 0H 0M 0S"` and individual time components can be
+#'   omitted (i.e., `"1y 5d"` is a valid specification of shifting time values
+#'   ahead one year and five days). Adding a `"-"` at the beginning of the
+#'   string (e.g., `"-2y"`) will shift time values back.
 #' 
 #' @return A data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object
 #'   depending on what was provided as `tbl`.
@@ -451,17 +462,33 @@ tt_time_shift <- function(tbl,
 #' Table Transformer: slice a table with a slice point on a time column
 #' 
 #' @description
-#' With any table object containing date or date-time columns, any one of those
-#' columns can be used to effectively slice the data in two with a
-#' `slice_point`: and you get to choose which of those slices you want to keep.
+#' With any table object containing date, date-time columns, or a mixture
+#' thereof, any one of those columns can be used to effectively slice the data
+#' table in two with a `slice_point`: and you get to choose which of those
+#' slices you want to keep. The slice point can be defined in several ways. One
+#' method involves using a decimal value between `0` and `1`, which defines the
+#' slice point as the time instant somewhere between the earliest time value (at
+#' `0`) and the latest time value (at `1`). Another way of defining the slice
+#' point is by supplying a time value, and the following input types are
+#' accepted: (1) an ISO 8601 formatted time string (as a date or a date-time),
+#' (2) a `POSIXct` time, or (3) a `Date` object.
 #' 
+#' @details 
+#' It's preferable to have a input `tbl` that is ordered by time so that
+#' conceptual slices have time values (in the `time_column`) either earlier
+#' (left slice) or later (right slice) than the time instant specified by the
+#' `slice_point`. If that's not the case, then there is the option to
+#' `auto_arrange` the table. That will order the table by the `time_column`. If
+#' there are `NA`/`NULL` values in the `time_column`, the corresponding rows can
+#' be removed with the `omit_missing` option.
+#'  
 #' @param tbl A table object to be used as input for the transformation. This
 #'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #' @param time_column The time-based column that will be used as a basis for the
 #'   slicing. If no time column is provided then the first one found will be
 #'   used.
 #' @param slice_point The location on the `time_column` where the slicing will
-#'   occur. This can either be a real number from `0` to `1`, an ISO 8601
+#'   occur. This can either be a decimal value from `0` to `1`, an ISO 8601
 #'   formatted time string (as a date or a date-time), a `POSIXct` time, or a
 #'   `Date` object.
 #' @param keep Which slice should be kept? The `"left"` side (the default)
@@ -469,12 +496,13 @@ tt_time_shift <- function(tbl,
 #'   `"right"` side will have rows that are later.
 #' @param auto_arrange Should the table be arranged by the `time_column` just
 #'   before slicing? This may be useful if the input `tbl` isn't ordered by the
-#'   `time_column`.
+#'   `time_column`. By default, this is `FALSE`.
 #' @param omit_missing Should rows with missing values in the `time_column` be
 #'   removed just before slicing? This might be useful in conjunction with
-#'   `auto_arrange = TRUE` and there is an expectation of missing values in
-#'   the `time_column` (i.e., sorting by a column with missing values will
-#'   result in the accumulation of rows with those missing values).
+#'   `auto_arrange = TRUE` and there is an expectation of missing values in the
+#'   `time_column` (i.e., sorting by a column with missing values will result in
+#'   the accumulation of rows with those missing values). By default, this is
+#'   `FALSE`.
 #' 
 #' @return A data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object
 #'   depending on what was provided as `tbl`.

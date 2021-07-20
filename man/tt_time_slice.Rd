@@ -22,7 +22,7 @@ slicing. If no time column is provided then the first one found will be
 used.}
 
 \item{slice_point}{The location on the \code{time_column} where the slicing will
-occur. This can either be a real number from \code{0} to \code{1}, an ISO 8601
+occur. This can either be a decimal value from \code{0} to \code{1}, an ISO 8601
 formatted time string (as a date or a date-time), a \code{POSIXct} time, or a
 \code{Date} object.}
 
@@ -32,22 +32,39 @@ contains data rows that are earlier than the \code{slice_point} and the
 
 \item{auto_arrange}{Should the table be arranged by the \code{time_column} just
 before slicing? This may be useful if the input \code{tbl} isn't ordered by the
-\code{time_column}.}
+\code{time_column}. By default, this is \code{FALSE}.}
 
 \item{omit_missing}{Should rows with missing values in the \code{time_column} be
 removed just before slicing? This might be useful in conjunction with
-\code{auto_arrange = TRUE} and there is an expectation of missing values in
-the \code{time_column} (i.e., sorting by a column with missing values will
-result in the accumulation of rows with those missing values).}
+\code{auto_arrange = TRUE} and there is an expectation of missing values in the
+\code{time_column} (i.e., sorting by a column with missing values will result in
+the accumulation of rows with those missing values). By default, this is
+\code{FALSE}.}
 }
 \value{
 A data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object
 depending on what was provided as \code{tbl}.
 }
 \description{
-With any table object containing date or date-time columns, any one of those
-columns can be used to effectively slice the data in two with a
-\code{slice_point}: and you get to choose which of those slices you want to keep.
+With any table object containing date, date-time columns, or a mixture
+thereof, any one of those columns can be used to effectively slice the data
+table in two with a \code{slice_point}: and you get to choose which of those
+slices you want to keep. The slice point can be defined in several ways. One
+method involves using a decimal value between \code{0} and \code{1}, which defines the
+slice point as the time instant somewhere between the earliest time value (at
+\code{0}) and the latest time value (at \code{1}). Another way of defining the slice
+point is by supplying a time value, and the following input types are
+accepted: (1) an ISO 8601 formatted time string (as a date or a date-time),
+(2) a \code{POSIXct} time, or (3) a \code{Date} object.
+}
+\details{
+It's preferable to have a input \code{tbl} that is ordered by time so that
+conceptual slices have time values (in the \code{time_column}) either earlier
+(left slice) or later (right slice) than the time instant specified by the
+\code{slice_point}. If that's not the case, then there is the option to
+\code{auto_arrange} the table. That will order the table by the \code{time_column}. If
+there are \code{NA}/\code{NULL} values in the \code{time_column}, the corresponding rows can
+be removed with the \code{omit_missing} option.
 }
 \section{Function ID}{
 

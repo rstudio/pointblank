@@ -10,13 +10,13 @@ tt_time_shift(tbl, time_shift = "0y 0m 0d 0H 0M 0S")
 \item{tbl}{A table object to be used as input for the transformation. This
 can be a data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.}
 
-\item{time_shift}{Either a character string that specifies the time
-difference by which all time values in time-based columns will be shifted,
-or, a \code{difftime} object. The character string is constructed in the format
-"0y 0m 0d 0H 0M 0S" and individual time components can be omitted (i.e.,
-"1y 5d" is a valid specification of shifting time values ahead one year and
-five days). Adding a \code{"-"} at the beginning of the string (e.g., "-2y")
-will shift time values back.}
+\item{time_shift}{Either a character-based representation that specifies the
+time difference by which all time values in time-based columns will be
+shifted, or, a \code{difftime} object. The character string is constructed in
+the format \code{"0y 0m 0d 0H 0M 0S"} and individual time components can be
+omitted (i.e., \code{"1y 5d"} is a valid specification of shifting time values
+ahead one year and five days). Adding a \code{"-"} at the beginning of the
+string (e.g., \code{"-2y"}) will shift time values back.}
 }
 \value{
 A data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object
@@ -26,8 +26,19 @@ depending on what was provided as \code{tbl}.
 With any table object containing date or date-time columns, these values can
 be precisely shifted with \code{tt_time_shift()} and specification of the time
 shift. We can either provide a string with the time shift components and the
-shift direction or a \code{difftime} object (which can be created via
-\strong{lubridate} expressions or by using the \code{\link[base:difftime]{base::difftime()}} function).
+shift direction (like \code{"-4y 10d"}) or a \code{difftime} object (which can be
+created via \strong{lubridate} expressions or by using the \code{\link[base:difftime]{base::difftime()}}
+function).
+}
+\details{
+The \code{time_shift} specification cannot have a higher time granularity than the
+least granular time column in the input table. Put in simpler terms, if there
+are any date-based based columns (or just a single date-based column) then
+the time shifting can only be in terms of years, months, and days. Using a
+\code{time_shift} specification of \code{"20d 6H"} in the presence of any dates will
+result in a truncation to \code{"20d 6H"}. Similarly, a \code{difftime} object will be
+altered in the same circumstances, however, the object will resolved to an
+exact number of days through rounding.
 }
 \section{Function ID}{
 

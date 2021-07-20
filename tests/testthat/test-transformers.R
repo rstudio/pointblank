@@ -131,7 +131,7 @@ test_that("the `tt_time_shift()` function works", {
   # matches that of the input table
   expect_equal(nrow(game_revenue), nrow(game_revenue_1))
   
-  # Expect that time values in the revised time are all
+  # Expect that time values in the revised table are all
   # six years (2192 days in this case) ahead of the input table
   expect_equal(
     unique(game_revenue_1$session_start - game_revenue$session_start),
@@ -144,5 +144,35 @@ test_that("the `tt_time_shift()` function works", {
   expect_equal(
     unique(game_revenue_1$start_day - game_revenue$start_day),
     2192
+  )
+  
+  # Shift the `game_revenue` table *back* 6 years using
+  # a character string for the `time_shift` spec
+  game_revenue_2 <- tt_time_shift(game_revenue, time_shift = "-6y")
+  
+  # Expect the schema for the revised table matches that
+  # of the input table
+  expect_col_schema_match(
+    game_revenue_2,
+    schema = col_schema(.tbl = game_revenue)
+  )
+  
+  # Expect that the number of rows in the revised table
+  # matches that of the input table
+  expect_equal(nrow(game_revenue), nrow(game_revenue_2))
+  
+  # Expect that time values in the revised table are all
+  # six years (2191 days in this case) behind the input table
+  expect_equal(
+    unique(game_revenue$session_start - game_revenue_2$session_start),
+    2191
+  )
+  expect_equal(
+    unique(game_revenue$time - game_revenue_2$time),
+    2191
+  )
+  expect_equal(
+    unique(game_revenue$start_day - game_revenue_2$start_day),
+    2191
   )
 })

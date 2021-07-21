@@ -309,7 +309,7 @@ tt_tbl_dims <- function(tbl) {
 #' are any date-based based columns (or just a single date-based column) then
 #' the time shifting can only be in terms of years, months, and days. Using a
 #' `time_shift` specification of `"20d 6H"` in the presence of any dates will
-#' result in a truncation to `"20d 6H"`. Similarly, a `difftime` object will be
+#' result in a truncation to `"20d"`. Similarly, a `difftime` object will be
 #' altered in the same circumstances, however, the object will resolved to an
 #' exact number of days through rounding.
 #' 

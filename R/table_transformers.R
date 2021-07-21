@@ -540,7 +540,7 @@ tt_time_slice <- function(tbl,
                           time_column = NULL,
                           slice_point = 0,
                           keep = c("left", "right"),
-                          auto_arrange = FALSE,
+                          arrange = FALSE) {
   
   if (!requireNamespace("lubridate", quietly = TRUE)) {
     
@@ -640,7 +640,7 @@ tt_time_slice <- function(tbl,
   }
   
   # Optionally arrange rows by the time column
-  if (auto_arrange) {
+  if (arrange) {
     tbl <- dplyr::arrange(tbl, !!col_sym)
   }
   

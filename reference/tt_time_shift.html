@@ -211,7 +211,7 @@ least granular time column in the input table. Put in simpler terms, if there
 are any date-based based columns (or just a single date-based column) then
 the time shifting can only be in terms of years, months, and days. Using a
 <code>time_shift</code> specification of <code>"20d 6H"</code> in the presence of any dates will
-result in a truncation to <code>"20d 6H"</code>. Similarly, a <code>difftime</code> object will be
+result in a truncation to <code>"20d"</code>. Similarly, a <code>difftime</code> object will be
 altered in the same circumstances, however, the object will resolved to an
 exact number of days through rounding.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>

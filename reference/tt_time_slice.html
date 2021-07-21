@@ -191,8 +191,7 @@ accepted: (1) an ISO 8601 formatted time string (as a date or a date-time),
   time_column <span class='op'>=</span> <span class='cn'>NULL</span>,
   slice_point <span class='op'>=</span> <span class='fl'>0</span>,
   keep <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"right"</span><span class='op'>)</span>,
-  auto_arrange <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  omit_missing <span class='op'>=</span> <span class='cn'>FALSE</span>
+  arrange <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -223,19 +222,10 @@ contains data rows that are earlier than the <code>slice_point</code> and the
 <code>"right"</code> side will have rows that are later.</p></td>
     </tr>
     <tr>
-      <th>auto_arrange</th>
-      <td><p>Should the table be arranged by the <code>time_column</code> just
-before slicing? This may be useful if the input <code>tbl</code> isn't ordered by the
-<code>time_column</code>. By default, this is <code>FALSE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>omit_missing</th>
-      <td><p>Should rows with missing values in the <code>time_column</code> be
-removed just before slicing? This might be useful in conjunction with
-<code>auto_arrange = TRUE</code> and there is an expectation of missing values in the
-<code>time_column</code> (i.e., sorting by a column with missing values will result in
-the accumulation of rows with those missing values). By default, this is
-<code>FALSE</code>.</p></td>
+      <th>arrange</th>
+      <td><p>Should the slice be arranged by the <code>time_column</code>? This may be
+useful if the input <code>tbl</code> isn't ordered by the <code>time_column</code>. By default,
+this is <code>FALSE</code> and the original ordering is retained.</p></td>
     </tr>
     </table>
 
@@ -245,13 +235,10 @@ the accumulation of rows with those missing values). By default, this is
 depending on what was provided as <code>tbl</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>It's preferable to have a input <code>tbl</code> that is ordered by time so that
-conceptual slices have time values (in the <code>time_column</code>) either earlier
-(left slice) or later (right slice) than the time instant specified by the
-<code>slice_point</code>. If that's not the case, then there is the option to
-<code>auto_arrange</code> the table. That will order the table by the <code>time_column</code>. If
-there are <code>NA</code>/<code>NULL</code> values in the <code>time_column</code>, the corresponding rows can
-be removed with the <code>omit_missing</code> option.</p>
+    <p>There is the option to <code>arrange</code> the table by the date or date-time values in
+the <code>time_column</code>. This ordering is always done in an ascending manner. Any
+<code>NA</code>/<code>NULL</code> values in the <code>time_column</code> will result in the corresponding rows
+can being removed (no matter which slice is retained).</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     

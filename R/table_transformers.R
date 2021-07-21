@@ -541,7 +541,6 @@ tt_time_slice <- function(tbl,
                           slice_point = 0,
                           keep = c("left", "right"),
                           auto_arrange = FALSE,
-                          omit_missing = FALSE) {
   
   if (!requireNamespace("lubridate", quietly = TRUE)) {
     
@@ -638,11 +637,6 @@ tt_time_slice <- function(tbl,
   } else if (inherits(slice_point, "Date")) {
     
     time_slice_instant <- slice_point
-  }
-  
-  # Optionally prune rows with `NA` values in the time column
-  if (omit_missing) {
-    tbl <- dplyr::filter(tbl, !is.na(!!col_sym))
   }
   
   # Optionally arrange rows by the time column

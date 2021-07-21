@@ -9,8 +9,7 @@ tt_time_slice(
   time_column = NULL,
   slice_point = 0,
   keep = c("left", "right"),
-  auto_arrange = FALSE,
-  omit_missing = FALSE
+  arrange = FALSE
 )
 }
 \arguments{
@@ -30,16 +29,9 @@ formatted time string (as a date or a date-time), a \code{POSIXct} time, or a
 contains data rows that are earlier than the \code{slice_point} and the
 \code{"right"} side will have rows that are later.}
 
-\item{auto_arrange}{Should the table be arranged by the \code{time_column} just
-before slicing? This may be useful if the input \code{tbl} isn't ordered by the
-\code{time_column}. By default, this is \code{FALSE}.}
-
-\item{omit_missing}{Should rows with missing values in the \code{time_column} be
-removed just before slicing? This might be useful in conjunction with
-\code{auto_arrange = TRUE} and there is an expectation of missing values in the
-\code{time_column} (i.e., sorting by a column with missing values will result in
-the accumulation of rows with those missing values). By default, this is
-\code{FALSE}.}
+\item{arrange}{Should the slice be arranged by the \code{time_column}? This may be
+useful if the input \code{tbl} isn't ordered by the \code{time_column}. By default,
+this is \code{FALSE} and the original ordering is retained.}
 }
 \value{
 A data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object
@@ -58,13 +50,10 @@ accepted: (1) an ISO 8601 formatted time string (as a date or a date-time),
 (2) a \code{POSIXct} time, or (3) a \code{Date} object.
 }
 \details{
-It's preferable to have a input \code{tbl} that is ordered by time so that
-conceptual slices have time values (in the \code{time_column}) either earlier
-(left slice) or later (right slice) than the time instant specified by the
-\code{slice_point}. If that's not the case, then there is the option to
-\code{auto_arrange} the table. That will order the table by the \code{time_column}. If
-there are \code{NA}/\code{NULL} values in the \code{time_column}, the corresponding rows can
-be removed with the \code{omit_missing} option.
+There is the option to \code{arrange} the table by the date or date-time values in
+the \code{time_column}. This ordering is always done in an ascending manner. Any
+\code{NA}/\code{NULL} values in the \code{time_column} will result in the corresponding rows
+can being removed (no matter which slice is retained).
 }
 \section{Function ID}{
 

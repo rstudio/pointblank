@@ -36,7 +36,7 @@ least granular time column in the input table. Put in simpler terms, if there
 are any date-based based columns (or just a single date-based column) then
 the time shifting can only be in terms of years, months, and days. Using a
 \code{time_shift} specification of \code{"20d 6H"} in the presence of any dates will
-result in a truncation to \code{"20d 6H"}. Similarly, a \code{difftime} object will be
+result in a truncation to \code{"20d"}. Similarly, a \code{difftime} object will be
 altered in the same circumstances, however, the object will resolved to an
 exact number of days through rounding.
 }

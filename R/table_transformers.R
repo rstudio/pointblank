@@ -474,13 +474,10 @@ tt_time_shift <- function(tbl,
 #' (2) a `POSIXct` time, or (3) a `Date` object.
 #' 
 #' @details 
-#' It's preferable to have a input `tbl` that is ordered by time so that
-#' conceptual slices have time values (in the `time_column`) either earlier
-#' (left slice) or later (right slice) than the time instant specified by the
-#' `slice_point`. If that's not the case, then there is the option to
-#' `auto_arrange` the table. That will order the table by the `time_column`. If
-#' there are `NA`/`NULL` values in the `time_column`, the corresponding rows can
-#' be removed with the `omit_missing` option.
+#' There is the option to `arrange` the table by the date or date-time values in
+#' the `time_column`. This ordering is always done in an ascending manner. Any
+#' `NA`/`NULL` values in the `time_column` will result in the corresponding rows
+#' can being removed (no matter which slice is retained).
 #'  
 #' @param tbl A table object to be used as input for the transformation. This
 #'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
@@ -494,15 +491,9 @@ tt_time_shift <- function(tbl,
 #' @param keep Which slice should be kept? The `"left"` side (the default)
 #'   contains data rows that are earlier than the `slice_point` and the
 #'   `"right"` side will have rows that are later.
-#' @param auto_arrange Should the table be arranged by the `time_column` just
-#'   before slicing? This may be useful if the input `tbl` isn't ordered by the
-#'   `time_column`. By default, this is `FALSE`.
-#' @param omit_missing Should rows with missing values in the `time_column` be
-#'   removed just before slicing? This might be useful in conjunction with
-#'   `auto_arrange = TRUE` and there is an expectation of missing values in the
-#'   `time_column` (i.e., sorting by a column with missing values will result in
-#'   the accumulation of rows with those missing values). By default, this is
-#'   `FALSE`.
+#' @param arrange Should the slice be arranged by the `time_column`? This may be
+#'   useful if the input `tbl` isn't ordered by the `time_column`. By default,
+#'   this is `FALSE` and the original ordering is retained.
 #' 
 #' @return A data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object
 #'   depending on what was provided as `tbl`.

@@ -250,3 +250,187 @@ test_that("the `tt_time_shift()` function works", {
     -6
   )
 })
+
+test_that("the `tt_time_slice()` function works", {
+  
+  # Trim down the size of the `game_revenue` by removing a few columns
+  # and only keeping rows where the `session_start` date-time value is
+  # before midnight on 2015-01-10
+  game_revenue_select <- 
+    game_revenue %>%
+    dplyr::select(session_start, time, start_day, item_revenue, country) %>%
+    dplyr::filter(session_start < lubridate::as_date("2015-01-10"))
+  
+  # Slice the table into `left` and `right` pieces
+  # via the `session_start` column
+  game_revenue_select_1_left <- 
+    tt_time_slice(
+      game_revenue_select,
+      time_column = "session_start",
+      slice_point = 0.5
+    )
+  game_revenue_select_1_right <- 
+    tt_time_slice(
+      game_revenue_select,
+      time_column = "session_start",
+      slice_point = 0.5,
+      keep = "right"
+    )
+  
+  # Expect that putting the slices back together (in the correct order!) will
+  # give us the original table
+  expect_equal(
+    dplyr::bind_rows(game_revenue_select_1_left, game_revenue_select_1_right),
+    game_revenue_select
+  )
+  
+  # Slice the table into `left` and `right` pieces
+  # via the `time` column
+  game_revenue_select_2_left <- 
+    tt_time_slice(
+      game_revenue_select,
+      time_column = "time",
+      slice_point = 0.5
+    )
+  game_revenue_select_2_right <- 
+    tt_time_slice(
+      game_revenue_select,
+      time_column = "time",
+      slice_point = 0.5,
+      keep = "right"
+    )
+  
+  # Expect that putting the slices back together will give us the original table
+  expect_equal(
+    dplyr::bind_rows(game_revenue_select_2_left, game_revenue_select_2_right),
+    game_revenue_select
+  )
+  
+  # Obtain a 10-row version of the `game_revenue_select` table
+  game_revenue_10 <- game_revenue_select[1:10, ]
+  
+  # Create a tibble that has `time` values that are out of order (original
+  # table is ordered by the `time` column)
+  game_revenue_10_reorder <-
+    dplyr::bind_rows(
+      game_revenue_10[2:5, ],
+      game_revenue_10[1, ],
+      game_revenue_10[7:10, ],
+      game_revenue_10[6, ]
+    )
+  
+  # Slice at "2015-01-01 12:00:00" (using the `time` column)
+  game_revenue_10_reorder_1_left <-
+    tt_time_slice(
+      game_revenue_10_reorder,
+      time_column = "time",
+      slice_point = "2015-01-01 12:00:00"
+    )
+  game_revenue_10_reorder_1_right <-
+    tt_time_slice(
+      game_revenue_10_reorder,
+      time_column = "time",
+      slice_point = "2015-01-01 12:00:00",
+      keep = "right"
+    )
+  
+  # Expect that putting the slices back together (in this case) will
+  # give us the original table
+  expect_equal(
+    dplyr::bind_rows(game_revenue_10_reorder_1_left, game_revenue_10_reorder_1_right),
+    game_revenue_10_reorder
+  )
+  
+  # Don't expect that the `time` column's values in
+  # `game_revenue_10_reorder_1_left` and `game_revenue_10_reorder_1_right`
+  # are ordered (they weren't in the input data table)
+  expect_col_vals_not_equal(
+    game_revenue_10_reorder_1_left %>%
+      dplyr::select(time) %>%
+      dplyr::bind_cols(
+        game_revenue_10_reorder_1_left %>%
+          dplyr::select(time_arranged = time) %>%
+          dplyr::arrange(time_arranged)
+      ),
+    columns = vars(time),
+    value = vars(time_arranged)
+  )
+  expect_col_vals_not_equal(
+    game_revenue_10_reorder_1_right %>%
+      dplyr::select(time) %>%
+      dplyr::bind_cols(
+        game_revenue_10_reorder_1_right %>%
+          dplyr::select(time_arranged = time) %>%
+          dplyr::arrange(time_arranged)
+      ),
+    columns = vars(time),
+    value = vars(time_arranged)
+  )
+
+  # Slice at "2015-01-01 12:00:00" (using the `time` column) but, this
+  # time, order the slices by the `time` column
+  game_revenue_10_reorder_2_left <-
+    tt_time_slice(
+      game_revenue_10_reorder,
+      time_column = "time",
+      slice_point = "2015-01-01 12:00:00",
+      arrange = TRUE
+    )
+  game_revenue_10_reorder_2_right <-
+    tt_time_slice(
+      game_revenue_10_reorder,
+      time_column = "time",
+      slice_point = "2015-01-01 12:00:00",
+      keep = "right",
+      arrange = TRUE
+    )
+  
+  # Expect that putting the slices back together will give us the
+  # original table but only if that input table is arranged
+  expect_equal(
+    dplyr::bind_rows(game_revenue_10_reorder_2_left, game_revenue_10_reorder_2_right),
+    game_revenue_10_reorder %>% dplyr::arrange(time)
+  )
+  
+  # Create a tibble that has some NA values in the `time` column
+  game_revenue_10_reorder_na <- game_revenue_10_reorder
+  game_revenue_10_reorder_na[c(2, 7, 8), "time"] <- NA
+  
+  # Slice at "2015-01-01 12:00:00" (using the `time` column)
+  game_revenue_10_reorder_na_1_left <-
+    tt_time_slice(
+      game_revenue_10_reorder_na,
+      time_column = "time",
+      slice_point = "2015-01-01 12:00:00"
+    )
+  game_revenue_10_reorder_na_1_right <-
+    tt_time_slice(
+      game_revenue_10_reorder_na,
+      time_column = "time",
+      slice_point = "2015-01-01 12:00:00",
+      keep = "right"
+    )
+  
+  # Get the date-time values (excluding NAs) for the left (earlier) and
+  # right (later) time slices
+  left_times <- game_revenue_10_reorder_na$time
+  left_times <- left_times[!is.na(left_times)]
+  left_times <- left_times[left_times < lubridate::ymd_hms("2015-01-01 12:00:00")]
+  
+  right_times <- game_revenue_10_reorder_na$time
+  right_times <- right_times[!is.na(right_times)]
+  right_times <- right_times[right_times >= lubridate::ymd_hms("2015-01-01 12:00:00")]
+  
+  # Expect that each of the time slices contain just the pre-determined
+  # datetime values for each slice
+  expect_col_vals_make_set(
+    game_revenue_10_reorder_na_1_left,
+    columns = vars(time),
+    set = left_times
+  )
+  expect_col_vals_make_set(
+    game_revenue_10_reorder_na_1_right,
+    columns = vars(time),
+    set = right_times
+  )
+})

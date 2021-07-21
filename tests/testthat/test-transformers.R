@@ -1,5 +1,3 @@
-library(data.table)
-
 test_that("the `tt_summary_stats()` function works", {
   
   # Generate a summary table based on `game_revenue`
@@ -29,7 +27,7 @@ test_that("the `tt_summary_stats()` function works", {
   expect_col_vals_not_null(summary_stats_tbl, "session_duration")
   
   # Generate a summary table from a data.table version of `game_revenue`
-  summary_stats_dt <- tt_summary_stats(data.table(game_revenue))
+  summary_stats_dt <- tt_summary_stats(data.table::as.data.table(game_revenue))
   
   # Expect that a data.table input table will produce the
   # same summary table as the original
@@ -73,7 +71,7 @@ test_that("the `tt_string_info()` function works", {
   expect_col_vals_not_null(string_info_tbl, "country")
   
   # Generate an info table from a data.table version of `game_revenue`
-  string_info_dt <- tt_string_info(data.table(game_revenue))
+  string_info_dt <- tt_string_info(data.table::as.data.table(game_revenue))
   
   # Expect that a data.table input table will produce the
   # same info table as the original
@@ -107,7 +105,7 @@ test_that("the `tt_tbl_dims()` function works", {
   expect_col_vals_not_null(dims_tbl, "value")
 
   # Generate an dimensions table from a data.table version of `game_revenue`
-  dims_dt <- tt_tbl_dims(data.table(game_revenue))
+  dims_dt <- tt_tbl_dims(data.table::as.data.table(game_revenue))
   
   # Expect that a data.table input table will produce the
   # same dimensions table as the original
@@ -174,5 +172,16 @@ test_that("the `tt_time_shift()` function works", {
   expect_equal(
     unique(game_revenue$start_day - game_revenue_2$start_day),
     2191
+  )
+  
+  # Expect that all non-time columns are untouched
+  non_time_expr <- ~ !lubridate::is.POSIXct(.x) && !lubridate::is.Date(.x)
+  expect_equal(
+    game_revenue %>% dplyr::select(where(non_time_expr)),
+    game_revenue_1 %>% dplyr::select(where(non_time_expr))
+  )
+  expect_equal(
+    game_revenue %>% dplyr::select(where(non_time_expr)),
+    game_revenue_2 %>% dplyr::select(where(non_time_expr))
   )
 })

@@ -648,9 +648,13 @@ stop_if_not <- function(...) {
       
       deparsed_call <- deparse(matched_call[[y + 1]])
       
+      # nocov start
+      
       if (length(deparsed_call) > 1) {
         deparsed_call <- paste(deparsed_call[1L], "...")
       }
+      
+      # nocov end
       
       stop(
         sQuote(deparsed_call), " is not TRUE.",

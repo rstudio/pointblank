@@ -385,7 +385,12 @@ check_step_id_duplicates <- function(step_id, agent) {
       "Just after step index `", error_at_index,
       "`, the following `step_id` has been ",
       "seen as used in a previous validation step:\n",
-      " * \"", a_duplicate_step_id, "\"",
+      "* \"", a_duplicate_step_id, "\"",
+      call. = FALSE
+    )
+  }
+}
+
       call. = FALSE
     )
   }

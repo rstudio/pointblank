@@ -32,6 +32,9 @@ test_that("the `tt_summary_stats()` function works", {
   # Expect that a data.table input table will produce the
   # same summary table as the original
   expect_equal(summary_stats_tbl, summary_stats_dt)
+  
+  # Expect an error if the `tbl` object is not a table
+  expect_error(tt_summary_stats(as.matrix(small_table)))
 })
 
 test_that("the `tt_string_info()` function works", {
@@ -76,6 +79,9 @@ test_that("the `tt_string_info()` function works", {
   # Expect that a data.table input table will produce the
   # same info table as the original
   expect_equal(string_info_tbl, string_info_dt)
+  
+  # Expect an error if the `tbl` object is not a table
+  expect_error(tt_string_info(as.matrix(small_table)))
 })
 
 test_that("the `tt_tbl_dims()` function works", {
@@ -110,6 +116,9 @@ test_that("the `tt_tbl_dims()` function works", {
   # Expect that a data.table input table will produce the
   # same dimensions table as the original
   expect_equal(dims_tbl, dims_dt)
+  
+  # Expect an error if the `tbl` object is not a table
+  expect_error(tt_tbl_dims(as.matrix(small_table)))
 })
 
 test_that("the `tt_time_shift()` function works", {
@@ -249,6 +258,9 @@ test_that("the `tt_time_shift()` function works", {
     unique(game_revenue_dttm_only_1$session_start - game_revenue_2$session_start),
     -6
   )
+  
+  # Expect an error if the `tbl` object is not a table
+  expect_error(tt_time_shift(as.matrix(small_table), time_shift = "6y"))
 })
 
 test_that("the `tt_time_slice()` function works", {
@@ -433,4 +445,7 @@ test_that("the `tt_time_slice()` function works", {
     columns = vars(time),
     set = right_times
   )
+  
+  # Expect an error if the `tbl` object is not a table
+  expect_error(tt_time_slice(as.matrix(small_table), slice_point = 0.5))
 })

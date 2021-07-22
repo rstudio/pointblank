@@ -353,6 +353,8 @@ tt_tbl_dims <- function(tbl) {
 tt_time_shift <- function(tbl,
                           time_shift = "0y 0m 0d 0H 0M 0S") {
   
+  # nocov start
+  
   if (!requireNamespace("lubridate", quietly = TRUE)) {
     
     stop(
@@ -361,6 +363,8 @@ tt_time_shift <- function(tbl,
       call. = FALSE
     )
   }
+  
+  # nocov end
   
   if (!is_a_table_object(tbl)) {
     stop("The object supplied is not a table", call. = FALSE)
@@ -533,6 +537,8 @@ tt_time_slice <- function(tbl,
                           keep = c("left", "right"),
                           arrange = FALSE) {
   
+  # nocov start
+  
   if (!requireNamespace("lubridate", quietly = TRUE)) {
     
     stop(
@@ -541,6 +547,8 @@ tt_time_slice <- function(tbl,
       call. = FALSE
     )
   }
+  
+  # nocov end
   
   keep <- match.arg(keep)
   

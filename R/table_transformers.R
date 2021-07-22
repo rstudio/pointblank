@@ -81,10 +81,9 @@
 #' @export
 tt_summary_stats <- function(tbl) {
   
-  if (!is_a_table_object(tbl)) {
-    stop("The object supplied is not a table", call. = FALSE)
-  }
-
+  # Determine whether the `tbl` object is acceptable here
+  check_is_a_table_object(tbl = tbl)
+  
   n_cols <- get_table_total_columns(data = tbl)
   
   tbl_info <- get_tbl_information(tbl = tbl)
@@ -195,9 +194,8 @@ tt_summary_stats <- function(tbl) {
 #' @export
 tt_string_info <- function(tbl) {
   
-  if (!is_a_table_object(tbl)) {
-    stop("The object supplied is not a table", call. = FALSE)
-  }
+  # Determine whether the `tbl` object is acceptable here
+  check_is_a_table_object(tbl = tbl)
   
   n_cols <- get_table_total_columns(data = tbl)
   
@@ -284,9 +282,8 @@ tt_string_info <- function(tbl) {
 #' @export
 tt_tbl_dims <- function(tbl) {
   
-  if (!is_a_table_object(tbl)) {
-    stop("The object supplied is not a table", call. = FALSE)
-  }
+  # Determine whether the `tbl` object is acceptable here
+  check_is_a_table_object(tbl = tbl)
   
   n_cols <- get_table_total_columns(data = tbl)
   n_rows <- get_table_total_rows(data = tbl)
@@ -370,9 +367,8 @@ tt_time_shift <- function(tbl,
   
   # nocov end
   
-  if (!is_a_table_object(tbl)) {
-    stop("The object supplied is not a table", call. = FALSE)
-  }
+  # Determine whether the `tbl` object is acceptable here
+  check_is_a_table_object(tbl = tbl)
 
   tbl_info <- get_tbl_information(tbl = tbl)
   r_col_types <- tbl_info$r_col_types
@@ -556,9 +552,8 @@ tt_time_slice <- function(tbl,
   
   keep <- match.arg(keep)
   
-  if (!is_a_table_object(tbl)) {
-    stop("The object supplied is not a table", call. = FALSE)
-  }
+  # Determine whether the `tbl` object is acceptable here
+  check_is_a_table_object(tbl = tbl)
   
   tbl_info <- get_tbl_information(tbl = tbl)
   r_col_types <- tbl_info$r_col_types

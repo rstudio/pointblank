@@ -391,6 +391,15 @@ check_step_id_duplicates <- function(step_id, agent) {
   }
 }
 
+check_is_a_table_object <- function(tbl) {
+
+  if (!is_a_table_object(tbl)) {
+    
+    stop(
+      "The object supplied is not a table object, valid tables are:\n",
+      "* data frames, tibbles, or data.table objects\n",
+      "* database tables (`tbl_dbi`)\n",
+      "* `tbl_spark` objects (via the sparklyr package)",
       call. = FALSE
     )
   }

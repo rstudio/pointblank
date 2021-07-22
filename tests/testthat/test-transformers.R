@@ -448,4 +448,31 @@ test_that("the `tt_time_slice()` function works", {
   
   # Expect an error if the `tbl` object is not a table
   expect_error(tt_time_slice(as.matrix(small_table), slice_point = 0.5))
+  
+  # Expect an error if the slice point isn't between `0` and `1`
+  expect_error(tt_time_slice(small_table, slice_point = -0.1))
+  expect_error(tt_time_slice(small_table, slice_point = 1.0001))
+  
+  # Expect that a `slice_point` of `0` will always provide a table with no rows
+  expect_equal(
+    nrow(tt_time_slice(small_table, time_column = "date_time", slice_point = 0)),
+    0
+  )
+  expect_equal(
+    nrow(tt_time_slice(small_table, time_column = "date", slice_point = 0)),
+    0
+  )
+
+  expect_equal(
+    nrow(tt_time_slice(game_revenue, time_column = "session_start", slice_point = 0)),
+    0
+  )
+  expect_equal(
+    nrow(tt_time_slice(game_revenue, time_column = "time", slice_point = 0)),
+    0
+  )
+  expect_equal(
+    nrow(tt_time_slice(game_revenue, time_column = "start_day", slice_point = 0)),
+    0
+  )
 })

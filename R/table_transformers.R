@@ -105,6 +105,8 @@ tt_summary_stats <- function(tbl) {
       
       data_col <- dplyr::select(tbl, col_names[i])
       
+      # nocov start
+      
       suppressWarnings({
         if (inherits(tbl, "data.frame")) {
           stats_list <- get_df_column_qtile_stats(data_column = data_col)
@@ -114,6 +116,8 @@ tt_summary_stats <- function(tbl) {
           stats_list <- get_spark_column_qtile_stats(data_column = data_col)
         }
       })
+      
+      # nocov end
       
       stats_col <- 
         tibble::enframe(

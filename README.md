@@ -230,16 +230,9 @@ IDE (it’s called `Pointblank Validation`). Try it out\!
 
 ##### TABLE INFORMATION
 
-Table information can be synthesized in an *information management* workflow, 
-giving us a snapshot of a data table we care to collect information on. The
-**pointblank** *informant* is fed a series of information functions to define
-bits of information about a table. This info text can pertain to individual
-columns, the table as a whole, and whatever additional information makes sense
-for your organization. We can even glean little snippets of information from the
-target table and mix them into the info text at will.
+Table information can be synthesized in an *information management* workflow, giving us a snapshot of a data table we care to collect information on. The **pointblank** *informant* is fed a series of information functions to define bits of information about a table. This info text can pertain to individual columns, the table as a whole, and whatever additional information makes sense for your organization. We can even glean little snippets of information (like column stats or sample values) from the target table and mix them into the data dictionary wherever they're needed.
 
-Here is an example of how to use **pointblank** to incorporate pieces of info
-text into an *informant* object.
+Here is an example of how to use **pointblank** to incorporate pieces of info text into an *informant* object.
 
 ``` r
 # Create a pointblank `informant` object, with the
@@ -295,49 +288,26 @@ By printing the *informant* we get the table information report.
 
 <img src="man/figures/informant_report.png">
 
-Here is an information report for the `intendo::intendo_revenue` table.
+Here is a link to a hosted information report for the `intendo::intendo_revenue` table:
 
-<a href="https://rpubs.com/rich_i/info_revenue_postgres"><img src="https://img.shields.io/static/v1?label=Information%20Report&amp;message=postgres&amp;color=466288" alt="postgres" /></a>
+[![Information Report for intendo::intendo_revenue](https://img.shields.io/static/v1?label=Information%20Report&message=intendo::intendo_revenue&color=466288)](https://rpubs.com/rich_i/info_revenue_postgres)
 
 <hr>
 
 ##### TABLE SCANS
 
-While data validation is important, one has to be familiar with the data
-first. To that end, the `scan_data()` function is provided in
-**pointblank** for generating a comprehensive summary of a tabular
-dataset. The report content is customizable, can be used inside an R
-Markdown document, and (as with the validation report) it can be
-produced in eight different languages: *English*, *French*, *German*,
-*Italian*, *Spanish*, *Portuguese*, *Chinese* (China mainland), and
-*Russian*. Here are several published examples of a **Table Scan** for
-each of these languages using the `dplyr::storms` dataset. Clicking any
-of these will take you to a highly interactive **RPubs** document.
+We can use the `scan_data()` function to generate a comprehensive summary of a tabular dataset. This allows us to quickly understand what's in the dataset and it helps us determine if there are any peculiarities within the data. Scanning the `dplyr::storms` dataset with `scan_data(tbl = dplyr::storms)` gives us an interactive HTML report. Here are a few of them, published in **RPubs**:
 
-[![Table Scan in
-English](https://img.shields.io/static/v1?label=Table%20Scan&message=English&color=blue)](https://rpubs.com/rich_i/pointblank_storms_english)   
-[![Table Scan in
-French](https://img.shields.io/static/v1?label=Table%20Scan&message=French&color=blue)](https://rpubs.com/rich_i/pointblank_storms_french)   
-[![Table Scan in
-German](https://img.shields.io/static/v1?label=Table%20Scan&message=German&color=blue)](https://rpubs.com/rich_i/pointblank_storms_german)   
-[![Table Scan in
-Italian](https://img.shields.io/static/v1?label=Table%20Scan&message=Italian&color=blue)](https://rpubs.com/rich_i/pointblank_storms_italian)   
-[![Table Scan in
-Spanish](https://img.shields.io/static/v1?label=Table%20Scan&message=Spanish&color=blue)](https://rpubs.com/rich_i/pointblank_storms_spanish)   
-[![Table Scan in
-Portuguese](https://img.shields.io/static/v1?label=Table%20Scan&message=Portuguese&color=blue)](https://rpubs.com/rich_i/pointblank_storms_portuguese)   
-[![Table Scan in
-Chinese](https://img.shields.io/static/v1?label=Table%20Scan&message=Chinese&color=blue)](https://rpubs.com/rich_i/pointblank_storms_chinese)   
-[![Table Scan in
-Russian](https://img.shields.io/static/v1?label=Table%20Scan&message=Russian&color=blue)](https://rpubs.com/rich_i/pointblank_storms_russian)   
+[![Table Scan of dplyr::storms](https://img.shields.io/static/v1?label=Table%20Scan&message=dplyr::storms&color=blue)](https://rpubs.com/rich_i/scan_data_storms)
 
-Database tables can be used with `scan_data()` as well. Here are two
-examples using the `full_region` table of the **Rfam** database (hosted
-publicly at `mysql-rfam-public.ebi.ac.uk`) and the `assembly` table of
-the **Ensembl** database (hosted publicly at `ensembldb.ensembl.org`).
+[![Table Scan of dplyr::storms](https://img.shields.io/static/v1?label=Table%20Scan&message=pointblank::game_revenue&color=blue)](https://rpubs.com/rich_i/scan_data_game_revenue)
+
+
+Database tables can be used with `scan_data()` as well. Here are two examples using (1) the `full_region` table of the **Rfam** database (hosted publicly at `mysql-rfam-public.ebi.ac.uk`) and (2) the `assembly` table of the **Ensembl** database (hosted publicly at `ensembldb.ensembl.org`).
 
 [![Rfam:
-full\_region](https://img.shields.io/static/v1?label=Table%20Scan&message=Rfam:%20full_region&color=green)](https://rpubs.com/rich_i/rfam_full_region)   
+full\_region](https://img.shields.io/static/v1?label=Table%20Scan&message=Rfam:%20full_region&color=green)](https://rpubs.com/rich_i/rfam_full_region)
+
 [![Ensembl:
 assembly](https://img.shields.io/static/v1?label=Table%20Scan&message=Ensembl:%20assembly&color=green)](https://rpubs.com/rich_i/ensembl_assembly)
 

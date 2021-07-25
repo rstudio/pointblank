@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pointblank</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.8.0.9000</span>
       </span>
     </div>
 
@@ -189,7 +189,7 @@
 <p>For our examples going forward, we’ll use the <code>small_table</code> dataset. It’s included in the <strong>pointblank</strong> package. It isn’t very large, which makes it great for simple examples. Here it is in its entirety:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">small_table</span></code></pre></div>
-<pre><code>## # A tibble: 13 x 8
+<pre><code>## # A tibble: 13 × 8
 ##    date_time           date           a b             c      d e     f    
 ##    &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;
 ##  1 2016-01-04 11:00:00 2016-01-04     2 1-bcd-345     3  3423. TRUE  high 
@@ -246,7 +246,7 @@
 <p>The total number of test units is provided next in the <code>...</code> column, then the absolute number and fraction of passing test units (<code>PASS</code>) and failing test units (<code>FAIL</code>). The <code>W</code>, <code>S</code>, <code>N</code> indicators tell us whether we have entered either of the <code>WARN</code>, <code>STOP</code>, or <code>NOTIFY</code> states for each these validation steps. Because we didn’t set any threshold levels for these states (that can be done with the <code>actions</code> argument, more on that later), they are irrelevant for this report. Finally, the <code>EXT</code> column provides an opportunity to download any data extract rows as a CSV. These rows represent the rows with failed test units. For <em>step 5</em>, the <code><a href="../reference/col_vals_between.html">col_vals_between()</a></code> validation step, there is a data extract available (with <code>1</code> row). We can either download the CSV from the report or examine that extract in <strong>R</strong> with the <code><a href="../reference/get_data_extracts.html">get_data_extracts()</a></code> function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_data_extracts.html">get_data_extracts</a></span><span class="op">(</span><span class="va">agent</span>, i <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 8
+<pre><code>## # A tibble: 1 × 8
 ##   date_time           date           a b             c      d e     f    
 ##   &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;
 ## 1 2016-01-04 00:32:00 2016-01-04     3 5-egh-163     8 10000. TRUE  low</code></pre>

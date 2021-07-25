@@ -93,7 +93,7 @@ function)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pointblank</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.8.0.9000</span>
       </span>
     </div>
 
@@ -237,7 +237,7 @@ exact number of days through rounding.</p>
 <span class='r-in'>  tbl <span class='op'>=</span> <span class='va'>game_revenue</span>,</span>
 <span class='r-in'>  time_shift <span class='op'>=</span> <span class='st'>"6y"</span></span>
 <span class='r-in'><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2,000 x 11</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2,000 × 11</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    player_id    session_id     session_start       time                item_type</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> ECPANOIXLZH… ECPANOIXLZHF8… 2021-01-01 <span style='color: #949494;'>01:31:03</span> 2021-01-01 <span style='color: #949494;'>01:31:27</span> iap      </span>
@@ -261,7 +261,7 @@ exact number of days through rounding.</p>
 <span class='r-in'><span class='va'>small_table</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>date</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'>tt_time_shift</span><span class='op'>(</span><span class='st'>"-2d 12H"</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 13 x 7</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 13 × 7</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    date_time               a b             c      d e     f    </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> 2016-01-01 <span style='color: #949494;'>23:00:00</span>     2 1-bcd-345     3  <span style='text-decoration: underline;'>3</span>423. TRUE  high </span>

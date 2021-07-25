@@ -102,7 +102,7 @@ get_agent_report() function, where there are more reporting options." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pointblank</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.8.0.9000</span>
       </span>
     </div>
 
@@ -434,7 +434,7 @@ a given target table.</p>
 <span class='r-in'><span class='co'># we can find it as a dataset in this</span></span>
 <span class='r-in'><span class='co'># package</span></span>
 <span class='r-in'><span class='va'>small_table</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 13 x 8</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 13 × 8</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    date_time           date           a b             c      d e     f    </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> 2016-01-04 <span style='color: #949494;'>11:00:00</span> 2016-01-04     2 1-bcd-345     3  <span style='text-decoration: underline;'>3</span>423. TRUE  high </span>
@@ -523,7 +523,7 @@ a given target table.</p>
 <span class='r-in'><span class='co'># that failed; we can see those rows</span></span>
 <span class='r-in'><span class='co'># with `get_data_extracts()` </span></span>
 <span class='r-in'><span class='va'>agent</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> <span class='fu'><a href='get_data_extracts.html'>get_data_extracts</a></span><span class='op'>(</span>i <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2 x 8</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2 × 8</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   date_time           date           a b             c     d e     f    </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> 2016-01-20 <span style='color: #949494;'>04:30:00</span> 2016-01-20     3 5-bce-642     9  838. FALSE high </span>

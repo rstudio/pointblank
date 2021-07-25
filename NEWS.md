@@ -1,4 +1,38 @@
-# pointblank (development version)
+# pointblank 0.8.0
+
+## New features
+
+* The new `draft_validation()` function will create a starter validation .R or .Rmd file with just a table as an input. Uses a new 'column roles' feature to develop a starter set of validation steps based on what kind of data the columns contain (e.g., latitude/longitude values, URLs, email addresses, etc.).
+
+* The validation function `col_vals_within_spec()` (and the variants `expect_col_vals_within_spec()` and `test_col_vals_within_spec()`) will test column values against a specification like phone numbers (`"phone"`), VIN numbers (`"VIN"`), URLs (`"url"`), email addresses (`"email"`), and much more (`"isbn"`, `"postal_code[<country_code>]"`, `"credit_card"`, `"iban[<country_code>]"`, `"swift"`, `"ipv4"`, `"ipv6"`, and `"mac"`).
+
+* A large cross section of row-based validation functions can now operate on segments of the target table, so you can run a particular validation with slices (or segments) of the target table. The segmentation is made possible by use of the new `segments` argument, which takes an expression that serves to segment the target table by column values. It can be given in one of two ways: (1) as a single or multiple column names containing keys to segment on, or (2) as a two-sided formula where the LHS holds a column name and the RHS contains the column values to segment on (allowing for a subset of keys for segmentation).
+
+* The default printing of the *multiagent* object is now a stacked display of *agent* reports. The wide report (useful for comparisons of validations targeting the same table over time) is available in the improved `get_multiagent_report()` function (with `display_mode = "wide"`).
+
+* Exporting the reporting is now much easier with the new `export_report()` function. It will export objects such as the *agent* (for validations), the *informant* (for table metadata), and the *multiagent* (a series of validations), and, also those objects containing customized reports (from `scan_data()`, `get_agent_report()`, `get_informant_report()`, and `get_multiagent_report()`). You'll always get a self-contained HTML file of the report from any use of `export_report()`.
+
+* A new family of functions has been added to **pointblank**: Table Transformers! These functions can radically transform a data table and either provide a wholly different table (like a summary table or table properties table) or do some useful filtering in a single step. This can be useful for preparing the target table for validation or when creating temporary tables (through `preconditions`) for a few validation steps (e.g., validating table properties or string lengths). As a nice bonus these transformer functions will work equally well with data frames, database tables, and Spark tables. The included functions are: `tt_summary_stats()`, `tt_string_info()`, `tt_tbl_dims()`, `tt_time_shift()`, and `tt_time_slice()`.
+
+* Two new datasets have been added: `specifications` and `game_revenue`. The former dataset can be used to test out the `col_vals_within_spec()` validation function. The latter dataset (with 2,000 rows) can be used to experiment with the `tt_time_shift()` and `tt_time_slice()` table transformer functions.
+
+## Minor improvements and bug fixes
+
+* Added the Polish (`"pl"`), Danish (`"da"`), Turkish (`"tr"`), Swedish (`"sv"`), and Dutch (`"nl"`) translations.
+
+* The `scan_data()` function is now a bit more performant, testable, and better at communicating progress in generating the report.
+
+* The `preconditions` argument, used to modify the target table in a validation step, is now improved by (1) checking that a table object is returned after evaluation, and (2) correcting the YAML writing of any `preconditions` expression that's provided as a function.
+
+* The `x_write_disk()` and `x_read_disk()` have been extended to allow the writing and reading of `ptblank_tbl_scan` objects (returned by `scan_data()`).
+
+* Print methods received some love in this release. Now, `scan_data()` table scan reports look much better in **R Markdown**. Reporting objects from `get_agent_report()`, `get_informant_report()`, and `get_multiagent_report()` now have print methods and work beautifully in **R Markdown** as a result.
+
+* The `incorporate()` function, when called on an *informant* object, now emits styled messages to the console. And when using `yaml_exec()` to process an arbitrary amount of YAML-based *agent*s and *informant*s, you'll be given information about that progress in the console.
+
+## Documentation
+
+* Many help files were overhauled so that (1) things are clearer, (2) more details are provided (if things are complex), and (3) many ready-to-run examples are present. The functions with improved help in this release are: `all_passed()`, `get_data_extracts()`, `get_multiagent_report()`, `get_sundered_data()`, `has_columns()`, `write_testthat_file()`, `x_write_disk()`, and `yaml_exec()`.
 
 # pointblank 0.7.0
 

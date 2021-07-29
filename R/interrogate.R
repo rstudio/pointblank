@@ -2056,7 +2056,10 @@ interrogate_complete <- function(agent,
     
     if (is_tbl_dbi(table) || is_tbl_spark(table)) {
       
-      col_expr <- rlang::parse_expr(paste0("!is.na(", column_names, ")", collapse = " && "))
+      col_expr <- 
+        rlang::parse_expr(
+          paste0("!is.na(", column_names, ")", collapse = " && ")
+        )
       
       table_check <- 
         table %>%

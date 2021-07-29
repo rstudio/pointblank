@@ -76,9 +76,6 @@
 #' slice where `"group_2"` exists in the same column. Each group of rows
 #' resolved from the formula will result in a separate validation step.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
 #' Segmentation will always occur after `preconditions` (i.e., statements that
 #' mutate the target table), if any, are applied. With this type of one-two
 #' combo, it's possible to generate labels for segmentation using an expression

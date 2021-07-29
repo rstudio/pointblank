@@ -362,6 +362,13 @@ create_autobrief <- function(agent,
     autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
+  if (assertion_type == "rows_complete") {
+    
+    expectation_text <- 
+      prep_row_complete_expectation_text(column_text, lang = lang)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
+  }
+  
   if (assertion_type == "col_schema_match") {
     
     expectation_text <- prep_col_schema_match_expectation_text(lang = lang)
@@ -645,6 +652,20 @@ prep_row_distinct_expectation_text <- function(column_text,
   } else {
     glue::glue(
       get_lsv("autobriefs/across_row_distinct_expectation_text")[[lang]]
+    )
+  }
+}
+
+prep_row_complete_expectation_text <- function(column_text,
+                                               lang) {
+  
+  if (column_text == "``") {
+    glue::glue(
+      get_lsv("autobriefs/all_row_complete_expectation_text")[[lang]]
+    )
+  } else {
+    glue::glue(
+      get_lsv("autobriefs/across_row_complete_expectation_text")[[lang]]
     )
   }
 }

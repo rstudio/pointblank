@@ -719,6 +719,7 @@ failure_message_gluestring <- function(fn_name,
       "expect_col_is_date" =,
       "expect_col_is_factor" = get_lsv("autobriefs/col_is_failure_text")[[lang]],
       "expect_rows_distinct" = get_lsv("autobriefs/all_row_distinct_failure_text")[[lang]],
+      "expect_rows_complete" = get_lsv("autobriefs/all_row_complete_failure_text")[[lang]],
       "expect_col_schema_match" = get_lsv("autobriefs/col_schema_match_failure_text")[[lang]]
     )
   

@@ -690,11 +690,21 @@ make_validation_steps <- function(steps) {
   
   # nolint end
   
-  gsub(
-    "rows_distinct(\n  columns = NULL\n)", "rows_distinct()",
-    str_exprs,
-    fixed = TRUE
-  )
+  str_exprs <- 
+    gsub(
+      "rows_distinct(\n  columns = NULL\n)", "rows_distinct()",
+      str_exprs,
+      fixed = TRUE
+    )
+  
+  str_exprs <- 
+    gsub(
+      "rows_complete(\n  columns = NULL\n)", "rows_complete()",
+      str_exprs,
+      fixed = TRUE
+    )
+  
+  str_exprs
 }
 
 agent_get_exprs <- function(agent,

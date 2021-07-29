@@ -362,6 +362,13 @@ create_autobrief <- function(agent,
     autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
+  if (assertion_type == "rows_complete") {
+    
+    expectation_text <- 
+      prep_row_complete_expectation_text(column_text, lang = lang)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
+  }
+  
   if (assertion_type == "col_schema_match") {
     
     expectation_text <- prep_col_schema_match_expectation_text(lang = lang)
@@ -649,6 +656,20 @@ prep_row_distinct_expectation_text <- function(column_text,
   }
 }
 
+prep_row_complete_expectation_text <- function(column_text,
+                                               lang) {
+  
+  if (column_text == "``") {
+    glue::glue(
+      get_lsv("autobriefs/all_row_complete_expectation_text")[[lang]]
+    )
+  } else {
+    glue::glue(
+      get_lsv("autobriefs/across_row_complete_expectation_text")[[lang]]
+    )
+  }
+}
+
 prep_col_schema_match_expectation_text <- function(lang) {
   
   glue::glue(get_lsv("autobriefs/col_schema_match_expectation_text")[[lang]])
@@ -698,6 +719,7 @@ failure_message_gluestring <- function(fn_name,
       "expect_col_is_date" =,
       "expect_col_is_factor" = get_lsv("autobriefs/col_is_failure_text")[[lang]],
       "expect_rows_distinct" = get_lsv("autobriefs/all_row_distinct_failure_text")[[lang]],
+      "expect_rows_complete" = get_lsv("autobriefs/all_row_complete_failure_text")[[lang]],
       "expect_col_schema_match" = get_lsv("autobriefs/col_schema_match_failure_text")[[lang]]
     )
   

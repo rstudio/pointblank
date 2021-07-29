@@ -20,18 +20,17 @@
 #' Are row data distinct?
 #'
 #' @description
-#' The `rows_distinct()` validation function, the `expect_rows_distinct()`
-#' expectation function, and the `test_rows_distinct()` test function all check
-#' whether row values (optionally constrained to a selection of specified
-#' `columns`) are, when taken as a complete unit, distinct from all other units
-#' in the table. The validation function can be used directly on a data table or
-#' with an *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation and test functions can only be used with a data table. The types
-#' of data tables that can be used include data frames, tibbles, database tables
-#' (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). As a validation step or as
-#' an expectation, this will operate over the number of test units that is equal
-#' to the number of rows in the table (after any `preconditions` have been
-#' applied).
+#' The `rows_complete()` validation function, the `expect_rows_complete()`
+#' expectation function, and the `test_rows_complete()` test function all check
+#' whether rows contain any `NA`/`NULL` values (optionally constrained to a
+#' selection of specified `columns`). The validation function can be used
+#' directly on a data table or with an *agent* object (technically, a
+#' `ptblank_agent` object) whereas the expectation and test functions can only
+#' be used with a data table. The types of data tables that can be used include
+#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
+#' (`tbl_spark`). As a validation step or as an expectation, this will operate
+#' over the number of test units that is equal to the number of rows in the
+#' table (after any `preconditions` have been applied).
 #'
 #' We can specify the constraining column names in quotes, in `vars()`, and with
 #' the following **tidyselect** helper functions: `starts_with()`,
@@ -108,34 +107,34 @@
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `rows_distinct()` is represented in YAML (under the top-level `steps` key as
+#' `rows_complete()` is represented in YAML (under the top-level `steps` key as
 #' a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `rows_distinct()` as a
+#' function. Here is an example of how a complex call of `rows_complete()` as a
 #' validation step is expressed in R code and in the corresponding YAML
 #' representation.
 #' 
 #' ```
 #' # R statement
 #' agent %>% 
-#'   rows_distinct(
+#'   rows_complete(
 #'     columns = vars(a, b),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `rows_distinct()` step.",
+#'     label = "The `rows_complete()` step.",
 #'     active = FALSE
 #'   )
 #' 
 #' # YAML representation
 #' steps:
-#' - rows_distinct:
+#' - rows_complete:
 #'     columns: vars(a, b)
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
 #'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `rows_distinct()` step.
+#'     label: The `rows_complete()` step.
 #'     active: false
 #' ```
 #' 
@@ -168,11 +167,11 @@
 #' 
 #' # Validate that when considering only
 #' # data in columns `a` and `b`, there
-#' # are no duplicate rows (i.e., all
-#' # rows are distinct)
+#' # are only complete rows (i.e., all
+#' # rows have no `NA` values)
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
-#'   rows_distinct(vars(a, b)) %>%
+#'   rows_complete(vars(a, b)) %>%
 #'   interrogate()
 #' 
 #' # Determine if these column
@@ -182,15 +181,15 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-21
+#' 2-22 
 #' 
-#' @name rows_distinct
+#' @name rows_complete
 NULL
 
-#' @rdname rows_distinct
+#' @rdname rows_complete
 #' @import rlang
 #' @export
-rows_distinct <- function(x,
+rows_complete <- function(x,
                           columns = NULL,
                           preconditions = NULL,
                           segments = NULL,
@@ -199,7 +198,7 @@ rows_distinct <- function(x,
                           label = NULL,
                           brief = NULL,
                           active = TRUE) {
-
+  
   # Get `columns` as a label
   columns_expr <- 
     rlang::as_label(rlang::quo(!!enquo(columns))) %>%
@@ -216,7 +215,7 @@ rows_distinct <- function(x,
         FUN = function(x) as.character(rlang::get_expr(x))
       )
   }
-
+  
   # Resolve the columns based on the expression
   if (!is.null(columns)) {
     columns <- resolve_columns(x = x, var_expr = columns, preconditions)
@@ -234,7 +233,7 @@ rows_distinct <- function(x,
     
     secret_agent <- 
       create_agent(x, label = "::QUIET::") %>%
-      rows_distinct(
+      rows_complete(
         columns = columns,
         preconditions = preconditions,
         segments = segments,
@@ -263,7 +262,7 @@ rows_distinct <- function(x,
     brief <-
       create_autobrief(
         agent = agent,
-        assertion_type = "rows_distinct",
+        assertion_type = "rows_complete",
         column = columns
       )
   }
@@ -288,7 +287,7 @@ rows_distinct <- function(x,
     agent <-
       create_validation_step(
         agent = agent,
-        assertion_type = "rows_distinct",
+        assertion_type = "rows_complete",
         i_o = i_o,
         columns_expr = columns_expr,
         column = list(ifelse(is.null(columns), NA_character_, columns)),
@@ -304,23 +303,23 @@ rows_distinct <- function(x,
         active = active
       )
   }
-
+  
   agent
 }
 
-#' @rdname rows_distinct
+#' @rdname rows_complete
 #' @import rlang
 #' @export
-expect_rows_distinct <- function(object,
+expect_rows_complete <- function(object,
                                  columns = NULL,
                                  preconditions = NULL,
                                  threshold = 1) {
   
-  fn_name <- "expect_rows_distinct"
+  fn_name <- "expect_rows_complete"
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
-    rows_distinct(
+    rows_complete(
       columns = {{ columns }},
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
@@ -361,17 +360,17 @@ expect_rows_distinct <- function(object,
   invisible(act$val)
 }
 
-#' @rdname rows_distinct
+#' @rdname rows_complete
 #' @import rlang
 #' @export
-test_rows_distinct <- function(object,
+test_rows_complete <- function(object,
                                columns = NULL,
                                preconditions = NULL,
                                threshold = 1) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
-    rows_distinct(
+    rows_complete(
       columns = {{ columns }},
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)

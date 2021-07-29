@@ -440,7 +440,8 @@ row_based_step_fns_vector <- function() {
     "col_vals_regex",
     "col_vals_expr",
     "conjointly",
-    "rows_distinct"
+    "rows_distinct",
+    "rows_complete"
   )
 }
 

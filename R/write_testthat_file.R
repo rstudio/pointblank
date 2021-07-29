@@ -280,6 +280,9 @@ write_testthat_file <- function(agent,
         if (grepl("expect_rows_distinct\\(\\)", x)) {
           x <- "expect_rows_distinct(tbl)"
         }
+        if (grepl("expect_rows_complete\\(\\)", x)) {
+          x <- "expect_rows_complete(tbl)"
+        }
         x
       }
     )

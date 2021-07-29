@@ -1065,7 +1065,7 @@ as_agent_yaml_list <- function(agent,
           )
         )
       
-    } else if (validation_fn == "rows_distinct") {
+    } else if (validation_fn %in% c("rows_distinct", "rows_complete")) {
 
       if (is.na(step_list$column[[1]][[1]])) {
         vars_cols <- NULL

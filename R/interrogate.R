@@ -675,6 +675,11 @@ check_table_with_assertion <- function(agent,
         idx = idx,
         table = table
       ),
+      "rows_complete" = interrogate_complete(
+        agent = agent,
+        idx = idx,
+        table = table
+      ),
       "col_schema_match" = interrogate_col_schema_match(
         agent = agent,
         idx = idx,
@@ -2017,6 +2022,71 @@ interrogate_distinct <- function(agent,
   # nocov end
 }
 
+interrogate_complete <- function(agent,
+                                 idx,
+                                 table) {
+  
+  # Determine if grouping columns are provided in the test
+  # for distinct rows and parse the column names
+  if (!is.na(agent$validation_set$column[idx] %>% unlist())) {
+    
+    column_names <- 
+      get_column_as_sym_at_idx(agent = agent, idx = idx) %>%
+      as.character()
+    
+    if (grepl("(,|&)", column_names)) {
+      column_names <- 
+        strsplit(split = "(, |,|&)", column_names) %>%
+        unlist()
+    }
+    
+  } else if (is.na(agent$validation_set$column[idx] %>% unlist())) {
+    column_names <- get_all_cols(agent = agent)
+  }
+  
+  col_syms <- rlang::syms(column_names)
+  
+  # Create function for validating the `rows_complete()` step function
+  tbl_rows_complete <- function(table,
+                                column_names,
+                                col_syms) {
+    
+    # Ensure that the input `table` is actually a table object
+    tbl_validity_check(table = table)
+    
+    if (is_tbl_dbi(table) || is_tbl_spark(table)) {
+      
+      col_expr <- 
+        rlang::parse_expr(
+          paste0("!is.na(", column_names, ")", collapse = " && ")
+        )
+      
+      table_check <- 
+        table %>%
+        dplyr::select({{ column_names }}) %>%
+        dplyr::mutate(pb_is_good_ = col_expr)
+      
+    } else {
+      
+      table_check <- 
+        table %>%
+        dplyr::select({{ column_names }}) %>%
+        dplyr::mutate(pb_is_good_ = stats::complete.cases(.))
+    }
+    
+    table_check
+  }
+  
+  # Perform the validation of the table
+  pointblank_try_catch(
+    tbl_rows_complete(
+      table = table,
+      column_names = {{ column_names }},
+      col_syms = col_syms
+    )
+  )
+}
+
 interrogate_col_schema_match <- function(agent,
                                          idx,
                                          table) {
@@ -2314,7 +2384,7 @@ add_reporting_data <- function(agent,
   agent$validation_set$tbl_checked[[idx]] <- list(tbl_checked$value)
 
   tbl_checked <- tbl_checked$value
-
+  
   # Get total count of rows
   row_count <- 
     tbl_checked %>%

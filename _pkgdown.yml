@@ -64,6 +64,7 @@ reference:
     - col_vals_expr
     - conjointly
     - rows_distinct
+    - rows_complete
     - col_is_character
     - col_is_numeric
     - col_is_integer

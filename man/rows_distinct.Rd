@@ -169,9 +169,6 @@ attempt to obtain two segments where one is a slice of data where the value
 slice where \code{"group_2"} exists in the same column. Each group of rows
 resolved from the formula will result in a separate validation step.
 
-If there are multiple \code{columns} specified then the potential number of
-validation steps will be \code{m} columns multiplied by \code{n} segments resolved.
-
 Segmentation will always occur after \code{preconditions} (i.e., statements that
 mutate the target table), if any, are applied. With this type of one-two
 combo, it's possible to generate labels for segmentation using an expression
@@ -307,6 +304,7 @@ Other validation functions:
 \code{\link{col_vals_null}()},
 \code{\link{col_vals_regex}()},
 \code{\link{col_vals_within_spec}()},
-\code{\link{conjointly}()}
+\code{\link{conjointly}()},
+\code{\link{rows_complete}()}
 }
 \concept{validation functions}

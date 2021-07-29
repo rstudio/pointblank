@@ -2054,7 +2054,6 @@ interrogate_complete <- function(agent,
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)
     
-    
     if (is_tbl_dbi(table) || is_tbl_spark(table)) {
       
       col_expr <- rlang::parse_expr(paste0("!is.na(", column_names, ")", collapse = " && "))
@@ -2069,7 +2068,7 @@ interrogate_complete <- function(agent,
       table_check <- 
         table %>%
         dplyr::select({{ column_names }}) %>%
-        dplyr::mutate(pb_is_good_ = complete.cases(.))
+        dplyr::mutate(pb_is_good_ = stats::complete.cases(.))
     }
     
     table_check
@@ -2382,7 +2381,7 @@ add_reporting_data <- function(agent,
   agent$validation_set$tbl_checked[[idx]] <- list(tbl_checked$value)
 
   tbl_checked <- tbl_checked$value
-
+  
   # Get total count of rows
   row_count <- 
     tbl_checked %>%

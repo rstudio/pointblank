@@ -2062,7 +2062,7 @@ interrogate_complete <- function(agent,
       table_check <- 
         table %>%
         dplyr::select({{ column_names }}) %>%
-        dplyr::summarize(pb_is_good_ = col_expr)
+        dplyr::mutate(pb_is_good_ = col_expr)
       
     } else {
       

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Do column data agree with a predicate expression? — col_vals_expr • pointblank</title>
+<title>Are row data distinct? — rows_complete • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,17 +46,21 @@
 
 
 
-<meta property="og:title" content="Do column data agree with a predicate expression? — col_vals_expr" />
-<meta property="og:description" content="The col_vals_expr() validation function, the expect_col_vals_expr()
-expectation function, and the test_col_vals_expr() test function all check
-whether column values in a table agree with a user-defined predicate
-expression. The validation function can be used directly on a data table or
-with an agent object (technically, a ptblank_agent object) whereas the
-expectation and test functions can only be used with a data table. The types
-of data tables that can be used include data frames, tibbles, database tables
-(tbl_dbi), and Spark DataFrames (tbl_spark). Each validation step or
-expectation will operate over the number of test units that is equal to the
-number of rows in the table (after any preconditions have been applied)." />
+<meta property="og:title" content="Are row data distinct? — rows_complete" />
+<meta property="og:description" content="The rows_complete() validation function, the expect_rows_complete()
+expectation function, and the test_rows_complete() test function all check
+whether rows contain any NA/NULL values (optionally constrained to a
+selection of specified columns). The validation function can be used
+directly on a data table or with an agent object (technically, a
+ptblank_agent object) whereas the expectation and test functions can only
+be used with a data table. The types of data tables that can be used include
+data frames, tibbles, database tables (tbl_dbi), and Spark DataFrames
+(tbl_spark). As a validation step or as an expectation, this will operate
+over the number of test units that is equal to the number of rows in the
+table (after any preconditions have been applied).
+We can specify the constraining column names in quotes, in vars(), and with
+the following tidyselect helper functions: starts_with(),
+ends_with(), contains(), matches(), and everything()." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -168,27 +172,31 @@ number of rows in the table (after any preconditions have been applied)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Do column data agree with a predicate expression?</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/col_vals_expr.R'><code>R/col_vals_expr.R</code></a></small>
-    <div class="hidden name"><code>col_vals_expr.Rd</code></div>
+    <h1>Are row data distinct?</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/rows_complete.R'><code>R/rows_complete.R</code></a></small>
+    <div class="hidden name"><code>rows_complete.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>col_vals_expr()</code> validation function, the <code>expect_col_vals_expr()</code>
-expectation function, and the <code>test_col_vals_expr()</code> test function all check
-whether column values in a table agree with a user-defined predicate
-expression. The validation function can be used directly on a data table or
-with an <em>agent</em> object (technically, a <code>ptblank_agent</code> object) whereas the
-expectation and test functions can only be used with a data table. The types
-of data tables that can be used include data frames, tibbles, database tables
-(<code>tbl_dbi</code>), and Spark DataFrames (<code>tbl_spark</code>). Each validation step or
-expectation will operate over the number of test units that is equal to the
-number of rows in the table (after any <code>preconditions</code> have been applied).</p>
+    <p>The <code>rows_complete()</code> validation function, the <code>expect_rows_complete()</code>
+expectation function, and the <code>test_rows_complete()</code> test function all check
+whether rows contain any <code>NA</code>/<code>NULL</code> values (optionally constrained to a
+selection of specified <code>columns</code>). The validation function can be used
+directly on a data table or with an <em>agent</em> object (technically, a
+<code>ptblank_agent</code> object) whereas the expectation and test functions can only
+be used with a data table. The types of data tables that can be used include
+data frames, tibbles, database tables (<code>tbl_dbi</code>), and Spark DataFrames
+(<code>tbl_spark</code>). As a validation step or as an expectation, this will operate
+over the number of test units that is equal to the number of rows in the
+table (after any <code>preconditions</code> have been applied).</p>
+<p>We can specify the constraining column names in quotes, in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, and with
+the following <strong>tidyselect</strong> helper functions: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>,
+<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>col_vals_expr</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>rows_complete</span><span class='op'>(</span>
   <span class='va'>x</span>,
-  <span class='va'>expr</span>,
+  columns <span class='op'>=</span> <span class='cn'>NULL</span>,
   preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
   segments <span class='op'>=</span> <span class='cn'>NULL</span>,
   actions <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -198,9 +206,14 @@ number of rows in the table (after any <code>preconditions</code> have been appl
   active <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
 
-<span class='fu'>expect_col_vals_expr</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>expr</span>, preconditions <span class='op'>=</span> <span class='cn'>NULL</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'>expect_rows_complete</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  columns <span class='op'>=</span> <span class='cn'>NULL</span>,
+  preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  threshold <span class='op'>=</span> <span class='fl'>1</span>
+<span class='op'>)</span>
 
-<span class='fu'>test_col_vals_expr</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>expr</span>, preconditions <span class='op'>=</span> <span class='cn'>NULL</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></code></pre></div>
+<span class='fu'>test_rows_complete</span><span class='op'>(</span><span class='va'>object</span>, columns <span class='op'>=</span> <span class='cn'>NULL</span>, preconditions <span class='op'>=</span> <span class='cn'>NULL</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -212,10 +225,9 @@ number of rows in the table (after any <code>preconditions</code> have been appl
 created with <code><a href='create_agent.html'>create_agent()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>expr</th>
-      <td><p>An expression to use for this test. This can either be in the
-form of a call made with the <code><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr()</a></code> function or as a one-sided <strong>R</strong>
-formula (using a leading <code>~</code>).</p></td>
+      <th>columns</th>
+      <td><p>The column (or a set of columns, provided as a character
+vector) to which this validation should be applied.</p></td>
     </tr>
     <tr>
       <th>preconditions</th>
@@ -351,8 +363,6 @@ attempt to obtain two segments where one is a slice of data where the value
 <code>"group_1"</code> exists in the column named <code>"a_column"</code>, and, the other is a
 slice where <code>"group_2"</code> exists in the same column. Each group of rows
 resolved from the formula will result in a separate validation step.</p>
-<p>If there are multiple <code>columns</code> specified then the potential number of
-validation steps will be <code>m</code> columns multiplied by <code>n</code> segments resolved.</p>
 <p>Segmentation will always occur after <code>preconditions</code> (i.e., statements that
 mutate the target table), if any, are applied. With this type of one-two
 combo, it's possible to generate labels for segmentation using an expression
@@ -391,51 +401,49 @@ then be automatically generated.</p>
 <p>A <strong>pointblank</strong> agent can be written to YAML with <code><a href='yaml_write.html'>yaml_write()</a></code> and the
 resulting YAML can be used to regenerate an agent (with <code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code>)
 or interrogate the target table (via <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></code>). When
-<code>col_vals_expr()</code> is represented in YAML (under the top-level <code>steps</code> key as
+<code>rows_complete()</code> is represented in YAML (under the top-level <code>steps</code> key as
 a list member), the syntax closely follows the signature of the validation
-function. Here is an example of how a complex call of <code>col_vals_expr()</code> as a
+function. Here is an example of how a complex call of <code>rows_complete()</code> as a
 validation step is expressed in R code and in the corresponding YAML
 representation.</p><pre><code># R statement
 agent %&gt;% 
-  col_vals_expr(
-    expr = ~ a %% 1 == 0,
+  rows_complete(
+    columns = vars(a, b),
     preconditions = ~ . %&gt;% dplyr::filter(a &lt; 10),
     segments = b ~ c("group_1", "group_2"),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-    label = "The `col_vals_expr()` step.",
+    label = "The `rows_complete()` step.",
     active = FALSE
   )
 
 # YAML representation
 steps:
-- col_vals_expr:
-    expr: ~a%%1 == 0
+- rows_complete:
+    columns: vars(a, b)
     preconditions: ~. %&gt;% dplyr::filter(a &lt; 10)
     segments: b ~ c("group_1", "group_2")
     actions:
       warn_fraction: 0.1
       stop_fraction: 0.2
-    label: The `col_vals_expr()` step.
+    label: The `rows_complete()` step.
     active: false
 </code></pre>
 
-<p>In practice, both of these will often be shorter as only the <code>expr</code> argument
-requires a value. Arguments with default values won't be written to YAML when
-using <code><a href='yaml_write.html'>yaml_write()</a></code> (though it is acceptable to include them with their
-default when generating the YAML by other means). It is also possible to
-preview the transformation of an agent to YAML without any writing to disk by
-using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></code> function.</p>
+<p>In practice, both of these will often be shorter. A value for <code>columns</code> is
+only necessary if checking for unique values across a subset of columns.
+Arguments with default values won't be written to YAML when using
+<code><a href='yaml_write.html'>yaml_write()</a></code> (though it is acceptable to include them with their default
+when generating the YAML by other means). It is also possible to preview the
+transformation of an agent to YAML without any writing to disk by using the
+<code><a href='yaml_agent_string.html'>yaml_agent_string()</a></code> function.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
 
-<p>2-19</p>
+<p>2-22</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>These reexported functions (from <strong>rlang</strong> and <strong>dplyr</strong>) work
-nicely within <code>col_vals_expr()</code> and its variants: <code><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>rlang::expr()</a></code>,
-<code><a href='https://dplyr.tidyverse.org/reference/between.html'>dplyr::between()</a></code>, and <code><a href='https://dplyr.tidyverse.org/reference/case_when.html'>dplyr::case_when()</a></code>.</p>
-<p>Other validation functions: 
+    <div class='dont-index'><p>Other validation functions: 
 <code><a href='col_exists.html'>col_exists</a>()</code>,
 <code><a href='col_is_character.html'>col_is_character</a>()</code>,
 <code><a href='col_is_date.html'>col_is_date</a>()</code>,
@@ -448,6 +456,7 @@ nicely within <code>col_vals_expr()</code> and its variants: <code><a href='http
 <code><a href='col_vals_between.html'>col_vals_between</a>()</code>,
 <code><a href='col_vals_decreasing.html'>col_vals_decreasing</a>()</code>,
 <code><a href='col_vals_equal.html'>col_vals_equal</a>()</code>,
+<code><a href='col_vals_expr.html'>col_vals_expr</a>()</code>,
 <code><a href='col_vals_gte.html'>col_vals_gte</a>()</code>,
 <code><a href='col_vals_gt.html'>col_vals_gt</a>()</code>,
 <code><a href='col_vals_in_set.html'>col_vals_in_set</a>()</code>,
@@ -464,107 +473,31 @@ nicely within <code>col_vals_expr()</code> and its variants: <code><a href='http
 <code><a href='col_vals_regex.html'>col_vals_regex</a>()</code>,
 <code><a href='col_vals_within_spec.html'>col_vals_within_spec</a>()</code>,
 <code><a href='conjointly.html'>conjointly</a>()</code>,
-<code><a href='rows_complete.html'>rows_complete</a>()</code>,
 <code><a href='rows_distinct.html'>rows_distinct</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># For all of the examples here, we'll</span></span>
-<span class='r-in'><span class='co'># use a simple table with three numeric</span></span>
-<span class='r-in'><span class='co'># columns (`a`, `b`, and `c`) and three</span></span>
-<span class='r-in'><span class='co'># character columns (`d`, `e`, and `f`)</span></span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Create a simple table with three</span></span>
+<span class='r-in'><span class='co'># columns of numerical values</span></span>
 <span class='r-in'><span class='va'>tbl</span> <span class='op'>&lt;-</span></span>
 <span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span></span>
-<span class='r-in'>    a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>6</span><span class='op'>)</span>,</span>
-<span class='r-in'>    b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>,</span>
-<span class='r-in'>    c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>0.3</span>, <span class='fl'>0.8</span>, <span class='fl'>1.4</span>, <span class='fl'>1.9</span>, <span class='fl'>1.2</span><span class='op'>)</span>,</span>
+<span class='r-in'>    a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>7</span>, <span class='fl'>6</span>, <span class='fl'>5</span>, <span class='fl'>8</span>, <span class='fl'>7</span><span class='op'>)</span>,</span>
+<span class='r-in'>    b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>8</span>, <span class='fl'>3</span><span class='op'>)</span>,</span>
+<span class='r-in'>    c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>3</span><span class='op'>)</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
-<span class='r-in'>  </span>
-<span class='r-in'><span class='va'>tbl</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 × 3</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>       a     b     c</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     1     0   0.5</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     2     0   0.3</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>     1     0   0.8</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span>     7     1   1.4</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span>     8     1   1.9</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span>     6     1   1.2</span>
 <span class='r-in'></span>
-<span class='r-in'><span class='co'># A: Using an `agent` with validation</span></span>
-<span class='r-in'><span class='co'>#    functions and then `interrogate()` </span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># Validate that values in column `a`</span></span>
-<span class='r-in'><span class='co'># are integer-like by using the R modulo</span></span>
-<span class='r-in'><span class='co'># operator and expecting `0`</span></span>
+<span class='r-in'><span class='co'># Validate that when considering only</span></span>
+<span class='r-in'><span class='co'># data in columns `a` and `b`, there</span></span>
+<span class='r-in'><span class='co'># are only complete rows (i.e., all</span></span>
+<span class='r-in'><span class='co'># rows have no `NA` values)</span></span>
 <span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span></span>
-<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span><span class='va'>tbl</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'>col_vals_expr</span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='va'>a</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>1</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>tbl <span class='op'>=</span> <span class='va'>tbl</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>rows_complete</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='co'># Determine if this validation</span></span>
-<span class='r-in'><span class='co'># had no failing test units (there</span></span>
-<span class='r-in'><span class='co'># are 6 test units, one for each row)</span></span>
+<span class='r-in'><span class='co'># Determine if these column</span></span>
+<span class='r-in'><span class='co'># validations have all passed</span></span>
+<span class='r-in'><span class='co'># by using `all_passed()`</span></span>
 <span class='r-in'><span class='fu'><a href='all_passed.html'>all_passed</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># Calling `agent` in the console</span></span>
-<span class='r-in'><span class='co'># prints the agent's report; but we</span></span>
-<span class='r-in'><span class='co'># can get a `gt_tbl` object directly</span></span>
-<span class='r-in'><span class='co'># with `get_agent_report(agent)`</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># B: Using the validation function</span></span>
-<span class='r-in'><span class='co'>#    directly on the data (no `agent`)</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># This way of using validation functions</span></span>
-<span class='r-in'><span class='co'># acts as a data filter: data is passed</span></span>
-<span class='r-in'><span class='co'># through but should `stop()` if there</span></span>
-<span class='r-in'><span class='co'># is a single test unit failing; the</span></span>
-<span class='r-in'><span class='co'># behavior of side effects can be</span></span>
-<span class='r-in'><span class='co'># customized with the `actions` option</span></span>
-<span class='r-in'><span class='va'>tbl</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> </span>
-<span class='r-in'>  <span class='fu'>col_vals_expr</span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='va'>a</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>1</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1 2 1 7 8 6</span>
-<span class='r-in'>  </span>
-<span class='r-in'><span class='co'># C: Using the expectation function</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># With the `expect_*()` form, we would</span></span>
-<span class='r-in'><span class='co'># typically perform one validation at a</span></span>
-<span class='r-in'><span class='co'># time; this is primarily used in</span></span>
-<span class='r-in'><span class='co'># testthat tests</span></span>
-<span class='r-in'><span class='fu'>expect_col_vals_expr</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='op'>~</span> <span class='va'>a</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>1</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># D: Using the test function</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># With the `test_*()` form, we should</span></span>
-<span class='r-in'><span class='co'># get a single logical value returned</span></span>
-<span class='r-in'><span class='co'># to us</span></span>
-<span class='r-in'><span class='fu'>test_col_vals_expr</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='op'>~</span> <span class='va'>a</span> <span class='op'><a href='https://rdrr.io/r/base/Arithmetic.html'>%%</a></span> <span class='fl'>1</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># Variations</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># We can do more complex things by</span></span>
-<span class='r-in'><span class='co'># taking advantage of the `case_when()`</span></span>
-<span class='r-in'><span class='co'># and `between()` functions (available</span></span>
-<span class='r-in'><span class='co'># for use in the pointblank package) </span></span>
-<span class='r-in'><span class='va'>tbl</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'>test_col_vals_expr</span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
-<span class='r-in'>    <span class='va'>b</span> <span class='op'>==</span> <span class='fl'>0</span> <span class='op'>~</span> <span class='va'>a</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/between.html'>between</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>5</span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='va'>c</span> <span class='op'>&lt;</span> <span class='fl'>1</span>,</span>
-<span class='r-in'>    <span class='va'>b</span> <span class='op'>==</span> <span class='fl'>1</span> <span class='op'>~</span> <span class='va'>a</span> <span class='op'>&gt;</span> <span class='fl'>5</span> <span class='op'>&amp;</span> <span class='va'>c</span> <span class='op'>&gt;=</span> <span class='fl'>1</span></span>
-<span class='r-in'>  <span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># If you only want to test a subset of</span></span>
-<span class='r-in'><span class='co'># rows, then the `case_when()` statement</span></span>
-<span class='r-in'><span class='co'># doesn't need to be exhaustive; any</span></span>
-<span class='r-in'><span class='co'># rows that don't fall into the cases</span></span>
-<span class='r-in'><span class='co'># will be pruned (giving us less test</span></span>
-<span class='r-in'><span class='co'># units overall) </span></span>
-<span class='r-in'><span class='va'>tbl</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'>test_col_vals_expr</span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
-<span class='r-in'>    <span class='va'>b</span> <span class='op'>==</span> <span class='fl'>1</span> <span class='op'>~</span> <span class='va'>a</span> <span class='op'>&gt;</span> <span class='fl'>5</span> <span class='op'>&amp;</span> <span class='va'>c</span> <span class='op'>&gt;=</span> <span class='fl'>1</span></span>
-<span class='r-in'>  <span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
 <span class='r-in'></span>
 </code></pre></div>

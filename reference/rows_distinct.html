@@ -365,8 +365,6 @@ attempt to obtain two segments where one is a slice of data where the value
 <code>"group_1"</code> exists in the column named <code>"a_column"</code>, and, the other is a
 slice where <code>"group_2"</code> exists in the same column. Each group of rows
 resolved from the formula will result in a separate validation step.</p>
-<p>If there are multiple <code>columns</code> specified then the potential number of
-validation steps will be <code>m</code> columns multiplied by <code>n</code> segments resolved.</p>
 <p>Segmentation will always occur after <code>preconditions</code> (i.e., statements that
 mutate the target table), if any, are applied. With this type of one-two
 combo, it's possible to generate labels for segmentation using an expression
@@ -476,7 +474,8 @@ transformation of an agent to YAML without any writing to disk by using the
 <code><a href='col_vals_null.html'>col_vals_null</a>()</code>,
 <code><a href='col_vals_regex.html'>col_vals_regex</a>()</code>,
 <code><a href='col_vals_within_spec.html'>col_vals_within_spec</a>()</code>,
-<code><a href='conjointly.html'>conjointly</a>()</code></p></div>
+<code><a href='conjointly.html'>conjointly</a>()</code>,
+<code><a href='rows_complete.html'>rows_complete</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Create a simple table with three</span></span>

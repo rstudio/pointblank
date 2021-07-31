@@ -236,9 +236,9 @@ print.x_list_i <- function(x, ...) {
   )
   
   length_rows <- length(x$warn)
-
+  
   cli::cli_rule(
-    left = "The x-list for `{x$name}`",
+    left = "The x-list for `{x$tbl_name}`",
     right = "STEP {x$i}"
   )
   cli::cli_text(
@@ -274,7 +274,7 @@ print.x_list_i <- function(x, ...) {
     "{.cyan $lang} ({.red chr [1]})"
   )
   cli::cli_rule(
-    right = ifelse(length(x$time) == 0, "NO INTERROGATION PERFORMED", "")
+    right = ifelse(length(x$time_start) == 0, "NO INTERROGATION PERFORMED", "")
   )
 }
 
@@ -308,7 +308,7 @@ print.x_list_n <- function(x, ...) {
   validation_set_cols <- ncol(x$validation_set)
   
   cli::cli_rule(
-    left = "The x-list for `{x$name}`",
+    left = "The x-list for `{x$tbl_name}`",
     right = "ALL STEPS"
   )
   cli::cli_text(
@@ -357,7 +357,7 @@ print.x_list_n <- function(x, ...) {
     "{.cyan $report_html $report_html_small} ({.red chr [1]})"
   )
   cli::cli_rule(
-    right = ifelse(length(x$time) == 0, "NO INTERROGATION PERFORMED", "")
+    right = ifelse(length(x$time_start) == 0, "NO INTERROGATION PERFORMED", "")
   )
 }
 

@@ -246,6 +246,10 @@ get_multiagent_report <- function(multiagent,
                                   lang = NULL,
                                   locale = NULL) {
 
+  if (is.null(lang)) {
+    lang <- "en"
+  }
+  
   for (i in seq_along(multiagent[["agents"]])) {
     
     time_end <- gsub(" ", "T", multiagent[["agents"]][[i]][["time_end"]])

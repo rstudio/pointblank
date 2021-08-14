@@ -4,7 +4,7 @@
 \alias{rows_complete}
 \alias{expect_rows_complete}
 \alias{test_rows_complete}
-\title{Are row data distinct?}
+\title{Are row data complete?}
 \usage{
 rows_complete(
   x,

@@ -17,7 +17,7 @@
 #
 
 
-#' Are row data distinct?
+#' Are row data complete?
 #'
 #' @description
 #' The `rows_complete()` validation function, the `expect_rows_complete()`

@@ -23,8 +23,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ubuntu-r-4.1-2-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ubuntu-r-4.1-2-
+          key: ubuntu-r-4.1-3-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ubuntu-r-4.1-3-
           
       - name: Install system dependencies
         if: runner.os == 'Linux'

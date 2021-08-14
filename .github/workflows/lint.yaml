@@ -6,6 +6,9 @@ jobs:
   lint:
     runs-on: ubuntu-18.04
     
+    env:
+      GITHUB_PAT: ${{ secrets.GHA_PAT }}
+    
     steps:
       - uses: actions/checkout@v2
 

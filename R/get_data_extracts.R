@@ -47,8 +47,8 @@
 #'   out and any sample rows from non-passing validations could potentially be
 #'   available in the object.
 #' @param i The validation step number, which is assigned to each validation
-#'   step in the order of definition. If `NULL` (the default), all data extract
-#'   tables will be provided in a list object.
+#'   step by **pointblank** in the order of definition. If `NULL` (the default),
+#'   all data extract tables will be provided in a list object.
 #' 
 #' @return A list of tables if `i` is not provided, or, a standalone table if
 #'   `i` is given.

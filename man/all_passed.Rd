@@ -4,10 +4,15 @@
 \alias{all_passed}
 \title{Did all of the validations fully \emph{pass}?}
 \usage{
-all_passed(agent)
+all_passed(agent, i = NULL)
 }
 \arguments{
 \item{agent}{An agent object of class \code{ptblank_agent}.}
+
+\item{i}{A vector of validation step numbers. These values are assigned to
+each validation step by \strong{pointblank} in the order of definition. If
+\code{NULL} (the default), all validation steps will be used for the evaluation
+of complete \emph{passing}.}
 }
 \value{
 A logical value.

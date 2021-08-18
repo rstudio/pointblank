@@ -41,6 +41,10 @@
 #' in producing a single logical value from an interrogation.
 #'
 #' @param agent An agent object of class `ptblank_agent`.
+#' @param i A vector of validation step numbers. These values are assigned to
+#'   each validation step by **pointblank** in the order of definition. If
+#'   `NULL` (the default), all validation steps will be used for the evaluation
+#'   of complete *passing*.
 #'
 #' @return A logical value.
 #' 
@@ -69,8 +73,10 @@
 #' 8-4
 #' 
 #' @export
-all_passed <- function(agent) {
+all_passed <- function(agent,
+                       i = NULL) {
   
+  # Stop function if the agent did not interrogate the target data
   if (!has_agent_intel(agent)) {
     
     stop(
@@ -79,5 +85,41 @@ all_passed <- function(agent) {
     )
   }
   
-  all(agent$validation_set$all_passed)
+  # Obtain the vector of logical values in the `all_passed`
+  # column of the agent's `validation_set` tibble
+  all_passed_vec <- agent$validation_set$all_passed
+  
+  # In the rare instance that an interrogation was performed
+  # with an agent having no validation steps, the return value
+  # should be NA
+  if (length(all_passed_vec) < 1) {
+    return(NA)
+  }
+  
+  # If a vector is provided to `i` then subset the `all_passed_vec`
+  # by that vector
+  if (!is.null(i)) {
+    
+    all_passed_vec_range <- seq_along(all_passed_vec)
+    
+    if (!all(i %in% all_passed_vec_range)) {
+      
+      stop(
+        "All values provided for `i` must be in the range of ",
+        "the validation step numbers present in the agent.",
+        call. = FALSE
+      )
+    }
+    
+    all_passed_vec <- all_passed_vec[i]
+  }
+  
+  # Any NA values in `all_passed` would indicate an evaluation
+  # failure during interrogation; so, any NAs should result
+  # in the return value being FALSE
+  if (any(is.na(all_passed_vec))) {
+    return(FALSE)
+  }
+  
+  all(all_passed_vec)
 }

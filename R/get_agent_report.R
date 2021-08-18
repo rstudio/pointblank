@@ -317,7 +317,9 @@ get_agent_report <- function(agent,
     return(report_tbl)
   }
   
+  #
   # Generate a gt table if `display_table == TRUE`
+  #
   
   # nocov start
   validation_set <- validation_set[report_tbl$i, ]
@@ -815,42 +817,48 @@ get_agent_report <- function(agent,
       } 
     )
   
-  seg_col <- validation_set$seg_col
-  seg_val <- validation_set$seg_val
+  # Obtain the `seg_col` and `seg_val` segmentation parameters
+  suppressWarnings({
+    seg_col <- validation_set$seg_col
+    seg_val <- validation_set$seg_val
+  })
   
-  # Make changes to the `precon` column if there is grouping
-  precon_upd <- 
-    seq_along(seg_col) %>%
-    vapply(
-      FUN.VALUE = character(1),
-      USE.NAMES = FALSE,
-      FUN = function(x) {
-        
-        if (is.na(seg_col[x])) {
-          return(precon_upd[x])
+  # Make changes to the `precon` column if there is segmentation
+  if (!is.null(seg_col) || !is.null(seg_val)) {
+    
+    precon_upd <- 
+      seq_along(seg_col) %>%
+      vapply(
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          
+          if (is.na(seg_col[x])) {
+            return(precon_upd[x])
+          }
+          
+          seg_col_x <- seg_col[x]
+          seg_val_x <- seg_val[x]
+          
+          precon_upd[x] <- 
+            make_boxed_text_html(
+              x = icon_status("segmented"),
+              size = size, 
+              color = "#3C898A",
+              background = "transparent",
+              font_size = "10px",
+              padding = 0,
+              tt_text = glue::glue(get_lsv(text = c(
+                "agent_report",
+                "report_on_segmentation"
+              ))[[lang]]),
+              border_radius = "4px"
+            )
+          
+          precon_upd[x]
         }
-        
-        seg_col_x <- seg_col[x]
-        seg_val_x <- seg_val[x]
-        
-        precon_upd[x] <- 
-          make_boxed_text_html(
-            x = icon_status("segmented"),
-            size = size, 
-            color = "#3C898A",
-            background = "transparent",
-            font_size = "10px",
-            padding = 0,
-            tt_text = glue::glue(get_lsv(text = c(
-              "agent_report",
-              "report_on_segmentation"
-            ))[[lang]]),
-            border_radius = "4px"
-          )
-        
-        precon_upd[x]
-      }
-    )
+      )
+  }
   
   # Reformat `eval`
   eval_upd <- 

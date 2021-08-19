@@ -13,8 +13,8 @@ out and any sample rows from non-passing validations could potentially be
 available in the object.}
 
 \item{i}{The validation step number, which is assigned to each validation
-step in the order of definition. If \code{NULL} (the default), all data extract
-tables will be provided in a list object.}
+step by \strong{pointblank} in the order of definition. If \code{NULL} (the default),
+all data extract tables will be provided in a list object.}
 }
 \value{
 A list of tables if \code{i} is not provided, or, a standalone table if

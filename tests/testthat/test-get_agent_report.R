@@ -35,7 +35,8 @@ test_that("Getting an agent report is possible", {
   expect_is(report$N, "logical")
   expect_is(report$extract, "integer")
   
-  
+  # Use `col_is_character()` function to create
+  # a validation step but do not `interrogate()`
   agent_report_empty <-
     create_agent(tbl = small_table) %>%
     col_is_character(columns = "b") %>%
@@ -57,27 +58,89 @@ test_that("Getting an agent report is possible", {
 
 test_that("The `all_passed()` function works", {
   
+  # The following agent will perform an interrogation that results
+  # in all test units in an validation steps to have zero failures
   agent <-
     create_agent(tbl = small_table) %>%
     col_is_character(columns = "b") %>%
     col_vals_gt(vars(c), 1, na_pass = TRUE) %>%
     interrogate()
   
+  # Expect that the interrogation has a completely
+  # 'all passed' state (returning TRUE)
   agent %>% all_passed() %>% expect_true()
   
+  # The following agent will perform an interrogation that results
+  # in two test units failing in the 2nd validation step (the first
+  # *did* pass)
   agent <-
     create_agent(tbl = small_table) %>%
     col_is_character(columns = "b") %>%
     col_vals_gt(vars(c), 1, na_pass = FALSE) %>%
     interrogate()
   
+  # Expect that the interrogation *does not* have
+  # a completely 'all passed' state (returning FALSE)
   agent %>% all_passed() %>% expect_false()
   
+  # The following agent will perform an interrogation that results
+  # in all test units passing in the second validation step, but
+  # the first experiences an evaluation error (since column
+  # `z` doesn't exist in `small_table`)
+  agent <-
+    create_agent(tbl = small_table) %>%
+    col_vals_not_null(vars("z")) %>%
+    col_vals_gt(vars(c), 1, na_pass = TRUE) %>%
+    interrogate()
+  
+  # Expect that the interrogation *does not* have
+  # a completely 'all passed' state (returning FALSE)
+  agent %>% all_passed() %>% expect_false()
+  
+  # If narrowing the `all_passed()` evaluation to only
+  # the second validation step, then we should expect TRUE
+  agent %>% all_passed(i = 2) %>% expect_true()
+  
+  # If narrowing the `all_passed()` evaluation to only
+  # the first validation step, then we should expect FALSE
+  agent %>% all_passed(i = 1) %>% expect_false()
+  
+  # Expect an NA value if an interrogation was carried
+  # out by an agent with no validation steps
+  expect_equal(
+    create_agent(tbl = small_table) %>%
+      interrogate() %>%
+      all_passed(),
+    NA
+  )
+  
+  # Expect an error if `all_passed()` is called on an
+  # agent that did not yet perform an interrogation
   expect_error(
     create_agent(tbl = small_table) %>%
       col_is_character(columns = "b") %>%
       col_vals_gt(vars(c), 1, na_pass = FALSE) %>%
       all_passed()
+  )
+  
+  # Expect an error if `all_passed()` has an `i` vector
+  # with element values not in the range of validation
+  # step indices
+  expect_error(
+    create_agent(tbl = small_table) %>%
+      col_is_character(columns = "b") %>%
+      col_vals_gt(vars(c), 1, na_pass = FALSE) %>%
+      interrogate() %>%
+      all_passed(i = 2:3)
+  )
+  
+  # Expect an error if `all_passed()` has an `i` vector
+  # and there are no validation steps for the agent
+  # with intel
+  expect_error(
+    create_agent(tbl = small_table) %>%
+      interrogate() %>%
+      all_passed(i = 1)
   )
 })
 

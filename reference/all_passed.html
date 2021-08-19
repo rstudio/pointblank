@@ -174,7 +174,7 @@ test units? Using the <code>all_passed()</code> function will let us know whethe
 <code>TRUE</code> or not.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>all_passed</span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>all_passed</span><span class='op'>(</span><span class='va'>agent</span>, i <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,6 +182,13 @@ test units? Using the <code>all_passed()</code> function will let us know whethe
     <tr>
       <th>agent</th>
       <td><p>An agent object of class <code>ptblank_agent</code>.</p></td>
+    </tr>
+    <tr>
+      <th>i</th>
+      <td><p>A vector of validation step numbers. These values are assigned to
+each validation step by <strong>pointblank</strong> in the order of definition. If
+<code>NULL</code> (the default), all validation steps will be used for the evaluation
+of complete <em>passing</em>.</p></td>
     </tr>
     </table>
 

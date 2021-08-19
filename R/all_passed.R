@@ -93,7 +93,20 @@ all_passed <- function(agent,
   # with an agent having no validation steps, the return value
   # should be NA
   if (length(all_passed_vec) < 1) {
-    return(NA)
+    
+    if (is.null(i)) {
+      
+      return(NA)
+      
+    } else {
+      
+      # Stop function if any value is provided for `i`
+      stop(
+        "You cannot provide a value for `i` when the agent ",
+        "contains no validation steps.",
+        call. = FALSE
+      )
+    }
   }
   
   # If a vector is provided to `i` then subset the `all_passed_vec`

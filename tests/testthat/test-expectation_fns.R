@@ -392,6 +392,16 @@ test_that("pointblank expectation function produce the correct results", {
     "failure level \\(11\\) >= failure threshold \\(1\\)"
   )
   
+  eval_batch_expect_fns(
+    expect_fn = expect_col_vals_null,
+    tbl_test =
+      tibble::tibble(
+        x = c(1, NA, NA),  # failing
+        y = c(NA, NA, NA), # passing
+        z = c(NA, NA, NA)  # passing
+      )
+  )
+  
   #
   # expect_col_vals_not_null()
   #

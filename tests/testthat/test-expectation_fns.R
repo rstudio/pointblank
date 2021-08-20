@@ -32,6 +32,19 @@ tbl_not_equal_c_3 <- tbl %>% dplyr::filter(c != 3)
 tbl_c_null <- tbl %>% dplyr::filter(is.na(c))
 tbl_c_not_null <- tbl %>% dplyr::filter(!is.na(c))
 
+eval_batch_expect_fns <- function(expect_fn, tbl_test) {
+  
+  expect_failure(expect_fn(tbl_test, columns = "x"))
+  expect_success(expect_fn(tbl_test, columns = "y"))
+  expect_success(expect_fn(tbl_test, columns = "z"))
+  expect_failure(expect_fn(tbl_test, columns = c("x", "y")))
+  expect_failure(expect_fn(tbl_test, columns = c("y", "x")))
+  expect_failure(expect_fn(tbl_test, columns = c("x", "z")))
+  expect_failure(expect_fn(tbl_test, columns = c("x", "y", "z")))
+  expect_success(expect_fn(tbl_test, columns = c("y", "z")))
+  expect_success(expect_fn(tbl_test, columns = c("z", "y")))
+}
+
 test_that("pointblank expectation function produce the correct results", {
 
   failed_beyond_absolute <- ".*validation failed beyond the absolute threshold level.*"

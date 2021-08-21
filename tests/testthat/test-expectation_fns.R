@@ -32,17 +32,39 @@ tbl_not_equal_c_3 <- tbl %>% dplyr::filter(c != 3)
 tbl_c_null <- tbl %>% dplyr::filter(is.na(c))
 tbl_c_not_null <- tbl %>% dplyr::filter(!is.na(c))
 
-eval_batch_expect_fns <- function(expect_fn, tbl_test) {
+eval_batch_expect_fns <- function(expect_fn, tbl_test, ...) {
   
-  expect_failure(expect_fn(tbl_test, columns = "x"))
-  expect_success(expect_fn(tbl_test, columns = "y"))
-  expect_success(expect_fn(tbl_test, columns = "z"))
-  expect_failure(expect_fn(tbl_test, columns = c("x", "y")))
-  expect_failure(expect_fn(tbl_test, columns = c("y", "x")))
-  expect_failure(expect_fn(tbl_test, columns = c("x", "z")))
-  expect_failure(expect_fn(tbl_test, columns = c("x", "y", "z")))
-  expect_success(expect_fn(tbl_test, columns = c("y", "z")))
-  expect_success(expect_fn(tbl_test, columns = c("z", "y")))
+  args <- list(...)
+  
+  cols_ <-
+    list(
+      "x",
+      "y",
+      "z",
+      c("x", "y"),
+      c("y", "x"),
+      c("x", "z"),
+      c("x", "y", "z"),
+      c("y", "z"),
+      c("z", "y")
+    )
+  
+  fail_succeed <-
+    list(
+      expect_failure,
+      expect_success,
+      expect_success,
+      expect_failure,
+      expect_failure,
+      expect_failure,
+      expect_failure,
+      expect_success,
+      expect_success
+    )
+  
+  for (i in seq_along(cols_)) {
+    fail_succeed[[i]](do.call(expect_fn, c(list(object = tbl_test), list(columns = cols_[[i]]), args)))
+  }
 }
 
 test_that("pointblank expectation function produce the correct results", {

@@ -483,9 +483,13 @@ expect_col_vals_between <- function(object,
   
   column_text <- prep_column_text(vs$column[[fail_idx]])
   value_1 <- 
-    prep_values_text(values = vs$values[[fail_idx]][[1]], limit = 3, lang = "en")
+    prep_values_text(
+      values = vs$values[[fail_idx]][[1]], limit = 3, lang = "en"
+    )
   value_2 <- 
-    prep_values_text(values = vs$values[[fail_idx]][[2]], limit = 3, lang = "en")
+    prep_values_text(
+      values = vs$values[[fail_idx]][[2]], limit = 3, lang = "en"
+    )
 
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),

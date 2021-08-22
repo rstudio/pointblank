@@ -424,7 +424,8 @@ expect_col_vals_not_equal <- function(object,
   
   column_text <- prep_column_text(vs$column[[fail_idx]])
   operator <- "!="
-  values_text <- prep_values_text(values = vs$values[[fail_idx]], limit = 3, lang = "en")
+  values_text <- 
+    prep_values_text(values = vs$values[[fail_idx]], limit = 3, lang = "en")
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),

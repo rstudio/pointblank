@@ -479,7 +479,8 @@ expect_col_vals_within_spec <- function(object,
   act <- testthat::quasi_label(enquo(x), arg = "object")
   
   column_text <- prep_column_text(vs$column[[fail_idx]])
-  values_text <- prep_values_text(values = vs$values[[fail_idx]], limit = 3, lang = "en")
+  values_text <- 
+    prep_values_text(values = vs$values[[fail_idx]], limit = 3, lang = "en")
   
   testthat::expect(
     ok = identical(!as.vector(act$val), TRUE),

@@ -362,6 +362,17 @@ test_that("pointblank expectation function produce the correct results", {
     "failure level \\(5\\) >= failure threshold \\(1\\)"
   )
   
+  eval_batch_expect_fns(
+    expect_fn = expect_col_vals_in_set,
+    tbl_test =
+      tibble::tibble(
+        x = c(4, 4, 7),  # failing
+        y = c(4, 4, 5),  # passing
+        z = c(6, 5, 4)   # passing
+      ),
+    set = c(4, 5, 6)
+  )
+  
   #
   # expect_col_vals_not_in_set()
   #
@@ -383,6 +394,17 @@ test_that("pointblank expectation function produce the correct results", {
   expect_failure(
     expect_col_vals_not_in_set(tbl, columns = vars(b), set = tbl$b),
     "failure level \\(13\\) >= failure threshold \\(1\\)"
+  )
+  
+  eval_batch_expect_fns(
+    expect_fn = expect_col_vals_not_in_set,
+    tbl_test =
+      tibble::tibble(
+        x = c(1, 2, 6),  # failing
+        y = c(1, 2, 3),  # passing
+        z = c(7, 8, 9)   # passing
+      ),
+    set = c(4, 5, 6)
   )
   
   #

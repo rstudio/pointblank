@@ -424,6 +424,17 @@ info_columns <- function(x,
   # Resolve the columns based on the expression
   columns <- resolve_columns(x = x, var_expr = columns, preconditions = NULL)
   
+  if (length(columns) == 1 && is.na(columns)) {
+   
+    warning(
+      "No columns were matched with the expression used, so, no ",
+      "info was added.",
+      call. = FALSE
+    )
+    
+    return(metadata)
+  }
+  
   for (column in columns) {
     for (i in seq_along(metadata_items)) {
       

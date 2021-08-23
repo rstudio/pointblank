@@ -40,7 +40,7 @@ you.
 
 <img src="man/figures/data_quality_reporting_workflow.svg">
 
-##### TABLE VALIDATIONS WITH AN AGENT AND DATA QUALITY REPORTING
+#### TABLE VALIDATIONS WITH AN AGENT AND DATA QUALITY REPORTING
 
 Data validation can be carried out in *Data Quality Reporting* workflow, 
 ultimately resulting in the production of of a data quality analysis report.
@@ -115,7 +115,7 @@ Here are some validation reports for the considerably larger
 
 <img src="man/figures/pipeline_data_validation_workflow.svg">
 
-##### VALIDATIONS DIRECTLY ON DATA
+#### VALIDATIONS DIRECTLY ON DATA
 
 The *Pipeline Data Validation* workflow uses the same collection of validation
 functions but without need of an *agent*. This is useful for an ETL process
@@ -204,7 +204,7 @@ workflow.
 
 <hr>
 
-##### VALIDATIONS IN R MARKDOWN DOCUMENTS
+#### VALIDATIONS IN R MARKDOWN DOCUMENTS
 
 Using **pointblank** in an R Markdown workflow is enabled by default
 once the **pointblank** library is loaded. The framework allows for
@@ -228,7 +228,7 @@ IDE (it’s called `Pointblank Validation`). Try it out\!
 
 <hr>
 
-##### TABLE INFORMATION
+#### TABLE INFORMATION
 
 Table information can be synthesized in an *information management* workflow, giving us a snapshot of a data table we care to collect information on. The **pointblank** *informant* is fed a series of information functions to define bits of information about a table. This info text can pertain to individual columns, the table as a whole, and whatever additional information makes sense for your organization. We can even glean little snippets of information (like column stats or sample values) from the target table and mix them into the data dictionary wherever they're needed.
 
@@ -294,7 +294,7 @@ Here is a link to a hosted information report for the `intendo::intendo_revenue`
 
 <hr>
 
-##### TABLE SCANS
+#### TABLE SCANS
 
 We can use the `scan_data()` function to generate a comprehensive summary of a tabular dataset. This allows us to quickly understand what's in the dataset and it helps us determine if there are any peculiarities within the data. Scanning the `dplyr::storms` dataset with `scan_data(tbl = dplyr::storms)` gives us an interactive HTML report. Here are a few of them, published in **RPubs**:
 
@@ -313,7 +313,7 @@ assembly](https://img.shields.io/static/v1?label=Table%20Scan&message=Ensembl:%2
 
 <hr>
 
-##### OVERVIEW OF PACKAGE FUNCTIONS
+#### OVERVIEW OF PACKAGE FUNCTIONS
 
 There are many functions available in **pointblank** for making
 comprehensive table validations. Each validation function is associated
@@ -332,23 +332,21 @@ logical value (`TRUE` or `FALSE`).
 
 <hr>
 
-##### DISCUSSIONS
+#### DISCUSSIONS
 
 Let's talk about data validation and data documentation in
 [**pointblank** Discussions](https://github.com/rich-iannone/pointblank/discussions)! It's a great place to ask questions about how to use the package, discuss
 some ideas, engage with others, and much more!
 
-##### INSTALLATION
+#### INSTALLATION
 
-Want to try this out? The **pointblank** package is available on
-**CRAN**:
+Want to try this out? The **pointblank** package is available on **CRAN**:
 
 ``` r
 install.packages("pointblank")
 ```
 
-You can also install the development version of **pointblank** from
-**GitHub**:
+You can also install the development version of **pointblank** from **GitHub**:
 
 ``` r
 devtools::install_github("rich-iannone/pointblank")
@@ -360,33 +358,34 @@ make this package better, feel free to file an
 
 <hr>
 
-##### How **pointblank** Fits in with Other Packages that Validate Tabular Data
+#### How **pointblank** Fits in with Other Packages that Validate Tabular Data
 
 The **pointblank** package isn’t the only one of its kind available for
 **R**. The reason for introducing yet another has to do with
 **pointblank**’s goals:
 
-  - ability to work with local tables, database tables, and Spark
-    DataFrames (via **sparklyr**) with minimal changes in the API
-  - great flexibility in data validation workflows, allowing for: (1)
-    report-based validations, (2) inline validations, (3) validation of
+  - making it possible to work with local tables, database tables, and Spark
+    DataFrames (via **sparklyr**) with the same API
+  - providing great flexibility in data validation workflows, allowing for:
+    (1) report-based validations, (2) inline validations, (3) validation of
     data tables in unit tests (with the set of `expect_*()` functions),
     and (4) validation of data tables to support conditional expressions
     (with the set of `test_*()` functions)
   - enabling a workflow for collecting and reporting on useful
-    information about your data tables
-  - extra tools for understanding new datasets (`scan_data()`) and
-    validating data in specialized R Markdown code chunks
-    (`validate_rmd()`)
-  - reporting outputs translated to multiple spoken languages
+    information about your data tables (i.e., making data dictionaries)
+  - giving you a tool for understanding new datasets: `scan_data()`
+  - having the option to translate reporting outputs to multiple
+    spoken languages
   - developing an API that closely follows tidyverse conventions by
     adhering to the [tidyverse style guide](https://style.tidyverse.org)
-  - lots of attention on making the package documentation and examples
+  - ensuring that the package is *extremely* well-tested so that you can
+    trust the validations (there are over 6,000 unit tests so far)
+  - putting lots of attention on making the package documentation and examples
     the best they can be
 
-While **pointblank** is trying to do something different, it may not
-suit your specific needs. Here is a listing of some other validation
-**R** packages:
+While **pointblank** is trying to do something a little different, it may not
+suit your specific needs. That's totally fine, here's a listing of some other
+great **R** packages for data validation:
 
 **assertr** ([GITHUB](https://github.com/ropensci/assertr/), [WEBSITE](https://docs.ropensci.org/assertr/))
 
@@ -396,23 +395,22 @@ suit your specific needs. Here is a listing of some other validation
 
 <hr>
 
-##### Code of Conduct
+#### Code of Conduct
 
 Please note that the pointblank project is released with a [contributor
 code of
 conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).<br>By
 participating in this project you agree to abide by its terms.
 
-##### 📄 License
+#### 📄 License
 
 **pointblank** is licensed under the MIT license.
 See the [`LICENSE.md`](LICENSE.md) file for more details.
 
-##### 🏛️ Governance
+#### 🏛️ Governance
 
 This project is primarily maintained by [Rich Iannone](https://twitter.com/riannone). Other authors may occasionally assist with some of these duties.
 
 <hr>
 
 <img src="man/figures/pointblank-milestones.svg" width="100%">
-

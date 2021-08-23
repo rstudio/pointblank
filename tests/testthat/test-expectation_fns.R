@@ -905,31 +905,6 @@ test_that("pointblank expectation function produce the correct results", {
   )
   
   #
-  # expect_col_is_posix()
-  #
-  
-  expect_col_is_posix(tbl, columns = vars(date_time))
-  
-  expect_failure(expect_col_is_posix(tbl, columns = vars(date)))
-  expect_failure(expect_col_is_posix(tbl, columns = vars(a)))
-  expect_failure(expect_col_is_posix(tbl, columns = vars(b)))
-  expect_failure(expect_col_is_posix(tbl, columns = vars(d)))
-  expect_failure(expect_col_is_posix(tbl, columns = vars(e)))
-  expect_failure(expect_col_is_posix(tbl, columns = vars(f)))
-  expect_failure(expect_col_is_posix(tbl, columns = vars(g)))
-  expect_success(expect_col_is_posix(tbl, columns = vars(g), threshold = 2))
-  
-  expect_error(expect_col_is_posix(tbl, columns = vars(g)), class = "expectation_failure")
-  
-  expect_failure(expect_col_is_posix(tbl, columns = vars(g), threshold = 1), failed_beyond_absolute)
-  expect_failure(expect_col_is_posix(tbl, columns = vars(g), threshold = 0.01), failed_beyond_proportional)
-  
-  expect_failure(
-    expect_col_is_posix(tbl, columns = vars(g)),
-    "failure level \\(1\\) >= failure threshold \\(1\\)"
-  )
-  
-  #
   # expect_col_is_logical()
   #
   
@@ -952,6 +927,16 @@ test_that("pointblank expectation function produce the correct results", {
   expect_failure(
     expect_col_is_logical(tbl, columns = vars(g)),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  eval_batch_expect_fns(
+    expect_fn = expect_col_is_logical,
+    tbl_test =
+      tibble::tibble(
+        x = c(1, 0, 1),            # failing
+        y = c(TRUE, FALSE, TRUE),  # passing
+        z = c(TRUE, NA, FALSE)     # passing
+      )
   )
   
   #
@@ -979,6 +964,51 @@ test_that("pointblank expectation function produce the correct results", {
     "failure level \\(1\\) >= failure threshold \\(1\\)"
   )
   
+  eval_batch_expect_fns(
+    expect_fn = expect_col_is_date,
+    tbl_test =
+      tibble::tibble(
+        x = tbl$date_time[1:3],  # failing
+        y = tbl$date[1:3],       # passing
+        z = tbl$date[4:6]        # passing
+      )
+  )
+  
+  #
+  # expect_col_is_posix()
+  #
+  
+  expect_col_is_posix(tbl, columns = vars(date_time))
+  
+  expect_failure(expect_col_is_posix(tbl, columns = vars(date)))
+  expect_failure(expect_col_is_posix(tbl, columns = vars(a)))
+  expect_failure(expect_col_is_posix(tbl, columns = vars(b)))
+  expect_failure(expect_col_is_posix(tbl, columns = vars(d)))
+  expect_failure(expect_col_is_posix(tbl, columns = vars(e)))
+  expect_failure(expect_col_is_posix(tbl, columns = vars(f)))
+  expect_failure(expect_col_is_posix(tbl, columns = vars(g)))
+  expect_success(expect_col_is_posix(tbl, columns = vars(g), threshold = 2))
+  
+  expect_error(expect_col_is_posix(tbl, columns = vars(g)), class = "expectation_failure")
+  
+  expect_failure(expect_col_is_posix(tbl, columns = vars(g), threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_col_is_posix(tbl, columns = vars(g), threshold = 0.01), failed_beyond_proportional)
+  
+  expect_failure(
+    expect_col_is_posix(tbl, columns = vars(g)),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  eval_batch_expect_fns(
+    expect_fn = expect_col_is_posix,
+    tbl_test =
+      tibble::tibble(
+        x = tbl$date[1:3],       # failing
+        y = tbl$date_time[1:3],  # passing
+        z = tbl$date_time[4:6]   # passing
+      )
+  )
+  
   #
   # expect_col_is_factor()
   #
@@ -1002,6 +1032,16 @@ test_that("pointblank expectation function produce the correct results", {
   expect_failure(
     expect_col_is_factor(tbl, columns = vars(f)),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  eval_batch_expect_fns(
+    expect_fn = expect_col_is_factor,
+    tbl_test =
+      tibble::tibble(
+        x = tbl$f[1:3],  # failing
+        y = tbl$g[1:3],  # passing
+        z = tbl$g[4:6]   # passing
+      )
   )
   
   #
@@ -1029,6 +1069,16 @@ test_that("pointblank expectation function produce the correct results", {
   expect_failure(
     expect_col_exists(tbl, columns = vars(h)),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  eval_batch_expect_fns(
+    expect_fn = expect_col_exists,
+    tbl_test =
+      tibble::tibble(
+        a = c("1", "2", "3"),  # failing
+        y = c(1.2, 2.3, 3.4),  # passing
+        z = c(1.1, 2.2, 3.3)   # passing
+      )
   )
   
   #

@@ -429,6 +429,17 @@ test_that("pointblank expectation function produce the correct results", {
     "failure level \\(1\\) >= failure threshold \\(1\\)"
   )
   
+  eval_batch_expect_fns(
+    expect_fn = expect_col_vals_make_set,
+    tbl_test =
+      tibble::tibble(
+        x = c(1, 2, 2),  # failing
+        y = c(1, 2, 3),  # passing
+        z = c(3, 2, 1)   # passing
+      ),
+    set = c(1, 2, 3)
+  )
+  
   #
   # expect_col_vals_make_subset()
   #
@@ -450,6 +461,17 @@ test_that("pointblank expectation function produce the correct results", {
   expect_failure(
     expect_col_vals_make_subset(tbl, columns = vars(e), set = ""),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  eval_batch_expect_fns(
+    expect_fn = expect_col_vals_make_subset,
+    tbl_test =
+      tibble::tibble(
+        x = c(1, 3, 3),  # failing
+        y = c(1, 2, 3),  # passing
+        z = c(3, 2, 1)   # passing
+      ),
+    set = c(1, 2)
   )
   
   #
@@ -801,6 +823,16 @@ test_that("pointblank expectation function produce the correct results", {
     "failure level \\(1\\) >= failure threshold \\(1\\)"
   )
   
+  eval_batch_expect_fns(
+    expect_fn = expect_col_is_character,
+    tbl_test =
+      tibble::tibble(
+        x = c(1, 2, 3),               # failing
+        y = c("1", "2", "3"),         # passing
+        z = c("one", "two", "three")  # passing
+      )
+  )
+  
   #
   # expect_col_is_numeric()
   #
@@ -827,6 +859,16 @@ test_that("pointblank expectation function produce the correct results", {
     "failure level \\(1\\) >= failure threshold \\(1\\)"
   )
   
+  eval_batch_expect_fns(
+    expect_fn = expect_col_is_numeric,
+    tbl_test =
+      tibble::tibble(
+        x = c("1", "2", "3"),  # failing
+        y = c(1.2, 2.3, 3.4),  # passing
+        z = c(1.1, 2.2, 3.3)   # passing
+      )
+  )
+  
   #
   # expect_col_is_integer()
   #
@@ -850,6 +892,16 @@ test_that("pointblank expectation function produce the correct results", {
   expect_failure(
     expect_col_is_integer(tbl, columns = vars(g)),
     "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  eval_batch_expect_fns(
+    expect_fn = expect_col_is_integer,
+    tbl_test =
+      tibble::tibble(
+        x = c(1.1, 2.2, 3.3),  # failing
+        y = c(1L, 2L, 3L),     # passing
+        z = c(4L, 5L, 6L)      # passing
+      )
   )
   
   #

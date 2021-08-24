@@ -147,9 +147,9 @@ functions can only be used with a data table.
 }
 \section{Column Names}{
 
-If providing multiple column names in any of the supplied validation step
-functions, the result will be an expansion of sub-validation steps to that
-number of column names. Aside from column names in quotes and in \code{vars()},
+If providing multiple column names in any of the supplied validation steps,
+the result will be an expansion of sub-validation steps to that number of
+column names. Aside from column names in quotes and in \code{vars()},
 \strong{tidyselect} helper functions are available for specifying columns. They
 are: \code{starts_with()}, \code{ends_with()}, \code{contains()}, \code{matches()}, and
 \code{everything()}.
@@ -409,6 +409,7 @@ Other validation functions:
 \code{\link{col_vals_null}()},
 \code{\link{col_vals_regex}()},
 \code{\link{col_vals_within_spec}()},
+\code{\link{gauntlet}()},
 \code{\link{rows_complete}()},
 \code{\link{rows_distinct}()}
 }

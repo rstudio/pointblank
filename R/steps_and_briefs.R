@@ -383,6 +383,14 @@ create_autobrief <- function(agent,
     autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
+  if (assertion_type == "gauntlet") {
+    
+    values_text <- values_text %>% tidy_gsub("\"", "'")
+    expectation_text <- 
+      prep_gauntlet_expectation_text(values_text, lang = lang)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text)
+  }
+  
   autobrief
 }
 
@@ -628,6 +636,13 @@ prep_conjointly_expectation_text <- function(values_text,
   
   glue::glue(get_lsv("autobriefs/conjointly_expectation_text")[[lang]])
 }
+
+prep_gauntlet_expectation_text <- function(values_text,
+                                           lang) {
+  
+  glue::glue(get_lsv("autobriefs/gauntlet_expectation_text")[[lang]])
+}
+
 
 prep_col_exists_expectation_text <- function(column_text,
                                              lang) {

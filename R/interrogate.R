@@ -210,7 +210,7 @@ interrogate <- function(agent,
     # Get the assertion type for this verification step
     assertion_type <- get_assertion_type_at_idx(agent = agent, idx = i)
 
-    if (assertion_type != "conjointly") {
+    if (!(assertion_type %in% c("conjointly", "gauntlet"))) {
 
       # Perform table checking based on assertion type
       tbl_checked <- 
@@ -343,6 +343,152 @@ interrogate <- function(agent,
             validation_n = validation_n
           )
         )
+      
+    } else if (assertion_type == "gauntlet") {
+      
+      validation_formulas <- get_values_at_idx(agent = agent, idx = i)
+      validation_n <- length(validation_formulas)
+      
+      gauntlet_failure <- FALSE
+      
+      if (validation_n == 1) {
+        
+        
+      }
+      
+      # Perform validation steps (that exclude the last) in sequence
+      for (k in seq_len(validation_n - 1)) {
+        
+        # Create a double agent
+        double_agent <- create_agent(tbl = table, label = "::QUIET::")
+        
+        deparsed_call <- 
+          validation_formulas[[k]] %>%
+          rlang::f_rhs() %>%
+          rlang::expr_deparse()
+        
+        if (grepl("threshold", deparsed_call)) {
+          
+          threshold_value <-
+            validation_formulas[[k]] %>%
+            rlang::f_rhs() %>%
+            rlang::expr_deparse() %>%
+            tidy_gsub(".*?(threshold\\s+?=\\s+[0-9\\.]+?).+?", "\\1") %>%
+            tidy_gsub("threshold\\s+?=\\s+?", "") %>%
+            as.numeric()
+          
+          double_agent <-
+            eval(
+              expr = parse(
+                text =
+                  validation_formulas[[k]] %>%
+                  rlang::f_rhs() %>%
+                  rlang::expr_deparse() %>%
+                  tidy_gsub("(.", "(double_agent", fixed = TRUE) %>%
+                  tidy_gsub("^test_", "") %>%
+                  tidy_gsub(
+                    "threshold\\s+?=\\s+?[0-9\\.]+?",
+                    paste0(
+                      "actions = action_levels(stop_at = ",
+                      threshold_value, ")"
+                    )
+                  )
+              ),
+              envir = NULL
+            )
+          
+        } else {
+          
+          threshold_value <- 1
+          
+          double_agent <-
+            eval(
+              expr = parse(
+                text =
+                  validation_formulas[[k]] %>%
+                  rlang::f_rhs() %>%
+                  rlang::expr_deparse() %>%
+                  tidy_gsub("(.", "(double_agent", fixed = TRUE) %>%
+                  tidy_gsub("^test_", "") %>%
+                  tidy_gsub(
+                    "\\)$",
+                    paste0(
+                      ", actions = action_levels(stop_at = ",
+                      threshold_value, "))"
+                    )
+                  )
+              ),
+              envir = NULL
+            )
+        }
+        
+        double_agent <- double_agent %>% interrogate()
+        
+        stop_vec <- double_agent$validation_set$stop
+        
+        if (!all(is.na(stop_vec)) && any(stop_vec)) {
+          
+          # Get the tbl_checked
+          stop_idx <- which(stop_vec)
+          
+          tbl_check <-
+            double_agent$validation_set$tbl_checked[[stop_idx]][[1]]
+          
+          # Get the assertion type for this verification step
+          assertion_type <- 
+            get_assertion_type_at_idx(
+              agent = double_agent,
+              idx = stop_idx
+            )
+          
+          tbl_checked <- 
+            check_table_with_assertion(
+              agent = double_agent,
+              idx = stop_idx,
+              table = table,
+              assertion_type
+            )
+          
+          gauntlet_failure <- TRUE
+          
+          break
+        }
+      }
+      
+      if (!gauntlet_failure) {
+        
+        double_agent <- create_agent(tbl = table, label = "::QUIET::")
+        
+        double_agent <-
+          eval(
+            expr = parse(
+              text =
+                validation_formulas[[validation_n]] %>%
+                rlang::f_rhs() %>%
+                rlang::expr_deparse() %>%
+                tidy_gsub("(.", "(double_agent", fixed = TRUE)
+            ),
+            envir = NULL
+          )
+        
+        double_agent <- double_agent %>% interrogate()
+        
+        # Get the assertion type for this verification step
+        assertion_type <- 
+          get_assertion_type_at_idx(
+            agent = double_agent,
+            idx = 1
+          )
+        
+        tbl_checked <- 
+          check_table_with_assertion(
+            agent = double_agent,
+            idx = 1,
+            table = table,
+            assertion_type = assertion_type
+          )
+        
+      }
     }
 
     # Add in the necessary reporting data for the validation

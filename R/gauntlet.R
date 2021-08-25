@@ -153,10 +153,15 @@
 #' writing to disk by using the [yaml_agent_string()] function.
 #'
 #' @inheritParams col_vals_gt
-#' @param ... a collection one-sided formulas that consist of validation
-#'   functions that are to be run in sequence. Typically, validations up until
-#'   the final one would have a `stop_on_fail()` threshold set for short
-#'   circuiting.
+#' @param ... a collection one-sided formulas that consist of `test_*()`
+#'   function calls (e.g., [test_col_vals_between()], etc.) arranged in sequence
+#'   of intended interrogation order. Typically, validations up until
+#'   the final one would have some `threshold` value set (default is `1`) for
+#'   short circuiting within the gauntlet. A finishing validation function
+#'   call (e.g., [col_vals_increasing()], etc.) can optionally be inserted at
+#'   the end of the gauntlet, serving as the main validation step that only
+#'   undergoes interrogation if prior steps adequately pass. An example of this
+#'   is `~ test_column_exists(., vars(a)), ~ col_vals_not_null(., vars(a))`).
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #'
 #' @return For the validation function, the return value is either a

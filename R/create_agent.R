@@ -460,6 +460,7 @@ create_agent <- function(tbl = NULL,
           stop = logical(0),
           row_sample = numeric(0),
           tbl_checked = list(NULL),
+          interrogation_notes = list(NULL),
           time_processed = as.POSIXct(NA)[-1],
           proc_duration_s = numeric(0)
         ),

@@ -282,4 +282,3 @@ gauntlet <- function(x,
   
   agent
 }
-

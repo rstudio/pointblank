@@ -52,6 +52,100 @@ schema_correct <-
 test_that("Interrogating simply returns the expected results", {
   
   #
+  # col_vals_lt()
+  #
+  
+  # Use the `col_vals_lt()` function to perform
+  # a simple validation step
+  tbl_result <- 
+    tbl %>%
+    col_vals_lt(
+      columns = vars(a),
+      value = 10,
+      actions = warn_on_fail()
+    )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- 
+      tbl %>%
+      col_vals_lt(
+        columns = vars(a),
+        value = 7,
+        actions = warn_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- 
+      tbl %>%
+      col_vals_lt(
+        columns = vars(a),
+        value = 7,
+        actions = stop_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
+  
+  #
+  # col_vals_lte()
+  #
+  
+  # Use the `col_vals_lte()` function to perform
+  # a simple validation step
+  tbl_result <- 
+    tbl %>%
+    col_vals_lte(
+      columns = vars(a),
+      value = 8,
+      actions = warn_on_fail()
+    )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- 
+      tbl %>%
+      col_vals_lte(
+        columns = vars(a),
+        value = 7,
+        actions = warn_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- 
+      tbl %>%
+      col_vals_lte(
+        columns = vars(a),
+        value = 7,
+        actions = stop_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
+  
+  #
   # col_vals_equal()
   #
   
@@ -141,6 +235,100 @@ test_that("Interrogating simply returns the expected results", {
       col_vals_not_equal(
         columns = vars(d),
         value = 283.94,
+        actions = stop_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
+  
+  #
+  # col_vals_gte()
+  #
+  
+  # Use the `col_vals_gte()` function to perform
+  # a simple validation step
+  tbl_result <- 
+    tbl %>%
+    col_vals_gte(
+      columns = vars(a),
+      value = 1,
+      actions = warn_on_fail()
+    )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- 
+      tbl %>%
+      col_vals_gte(
+        columns = vars(a),
+        value = 2,
+        actions = warn_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- 
+      tbl %>%
+      col_vals_gte(
+        columns = vars(a),
+        value = 3,
+        actions = stop_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
+  
+  #
+  # col_vals_gt()
+  #
+  
+  # Use the `col_vals_gt()` function to perform
+  # a simple validation step
+  tbl_result <- 
+    tbl %>%
+    col_vals_gt(
+      columns = vars(a),
+      value = 0,
+      actions = warn_on_fail()
+    )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- 
+      tbl %>%
+      col_vals_gt(
+        columns = vars(a),
+        value = 1,
+        actions = warn_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- 
+      tbl %>%
+      col_vals_gt(
+        columns = vars(a),
+        value = 2,
         actions = stop_on_fail()
       )
   )
@@ -689,6 +877,53 @@ test_that("Interrogating simply returns the expected results", {
       tbl %>%
       col_vals_not_null(
         columns = vars(c),
+        actions = stop_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
+  
+  #
+  # col_vals_regex()
+  #
+  
+  # Use the `col_vals_regex()` function to perform
+  # a simple validation step
+  tbl_result <- 
+    tbl %>%
+    col_vals_regex(
+      columns = vars(b),
+      regex = "[0-9]-[a-z]*?-[0-9]*?", 
+      actions = warn_on_fail()
+    )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- 
+      tbl %>%
+      col_vals_regex(
+        columns = vars(b),
+        regex = "[0-7]-[a-z]*?-[0-9]*?",
+        actions = warn_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is equivalent to `tbl`
+  expect_equivalent(tbl, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- 
+      tbl %>%
+      col_vals_regex(
+        columns = vars(b),
+        regex = "[0-7]-[a-z]*?-[0-9]*?",
         actions = stop_on_fail()
       )
   )

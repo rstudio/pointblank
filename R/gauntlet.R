@@ -53,36 +53,6 @@
 #' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
 #' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
-#' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
-#'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
-#'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
-#' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
 #' present in every validation function, takes a specially-crafted list

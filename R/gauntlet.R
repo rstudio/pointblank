@@ -158,6 +158,8 @@ gauntlet <- function(x,
                      brief = NULL,
                      active = TRUE) {
   
+  segments <- NULL
+  
   # Obtain all of the group's elements
   list_elements <- .list
   

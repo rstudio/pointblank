@@ -11,6 +11,20 @@ tbl_conjointly <-
     c = c(2, 6, 8, NA, 3, 8)
   )
 
+tbl_complete_yes <-
+  dplyr::tibble(
+    a = c(5, 7, 6, 5, 8, 7),
+    b = c(3, 4, 6, 8, 9, 11),
+    c = c(2, 6, 8, 2, 3, 8)
+  )
+
+tbl_complete_no <-
+  dplyr::tibble(
+    a = c(5, 7, 6, 5, 8, 7),
+    b = c(3, 4, NA, 8, 9, 11),
+    c = c(2, 6, 8, NA, 3, 8)
+  )
+
 increasing_tbl <-
   dplyr::tibble(
     a = c(5, 6, 7, 8, 9, 12),
@@ -794,6 +808,27 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_failure(
     expect_rows_distinct(tbl),
+    "failure level \\(2\\) >= failure threshold \\(1\\)"
+  )
+  
+  #
+  # expect_rows_complete()
+  #
+  
+  expect_rows_complete(tbl_complete_yes)
+  expect_rows_complete(tbl_complete_no, columns = vars(b, c), threshold = 0.5)
+  expect_success(expect_rows_complete(tbl_complete_no %>% dplyr::select(b, c) %>% dplyr::slice(1:2)))
+  
+  expect_failure(expect_rows_complete(tbl_complete_no))
+  expect_failure(expect_rows_complete(tbl_complete_no, columns = vars(a, b)))
+  
+  expect_error(expect_rows_complete(tbl_complete_no), class = "expectation_failure")
+  
+  expect_failure(expect_rows_complete(tbl_complete_no, threshold = 1), failed_beyond_absolute)
+  expect_failure(expect_rows_complete(tbl_complete_no, threshold = 0.01), failed_beyond_proportional)
+  
+  expect_failure(
+    expect_rows_complete(tbl_complete_no),
     "failure level \\(2\\) >= failure threshold \\(1\\)"
   )
   

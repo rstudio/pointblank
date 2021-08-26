@@ -151,7 +151,6 @@ gauntlet <- function(x,
                      ...,
                      .list = list2(...),
                      preconditions = NULL,
-                     segments = NULL,
                      actions = NULL,
                      step_id = NULL,
                      label = NULL,
@@ -175,6 +174,129 @@ gauntlet <- function(x,
       )
     ]
   
+  assertion_types <-
+    vapply(
+      validation_formulas,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        x %>%
+          rlang::f_rhs() %>%
+          rlang::expr_deparse() %>%
+          tidy_gsub("\\(.*$", "")
+      }
+    )
+  
+  # Check that the vector of `assertion_types` uses valid
+  # validation function names (including the `test_*()` variants)
+  in_set_of_fns <-
+    all(
+      assertion_types %in% 
+        c(
+          all_validations_fns_vec(),
+          paste0("test_", all_validations_fns_vec())
+        )
+    )
+  
+  if (!in_set_of_fns) {
+    
+    stop(
+      "All `gauntlet()` steps must use validation or test function calls.",
+      call. = FALSE
+    )
+  }
+
+  # There must be at least one `test_*()` step; if not, stop the function
+  has_a_test <- 
+    any(assertion_types %in% paste0("test_", all_validations_fns_vec()))
+  
+  if (!has_a_test) {
+    
+    stop(
+      "There must be at least one `test_*()` function call in a `gauntlet()`.",
+      call. = FALSE
+    )
+  }
+  
+  # Check whether the `gauntlet()` has any validation calls
+  any_validations <-
+    any(assertion_types %in% all_validations_fns_vec())
+  
+  # If there are any validations we must ensure a few things
+  # [1] there isn't more than one call
+  # [2] the validation call must be the final call
+  # [3] the finalizing validation mustn't itself yield multiple steps
+  if (any_validations) {
+    
+    # Check [1]: more than one validation function call
+    has_multiple_validations <-
+      sum(assertion_types %in% all_validations_fns_vec()) > 1
+    
+    if (has_multiple_validations) {
+      
+      stop(
+        "There cannot be multiple validation function calls in a `gauntlet()`",
+        call. = FALSE
+      )
+    }
+    # Check [2]: validation function call must be final call
+    validation_is_final_call <-
+      which(assertion_types %in% all_validations_fns_vec()) ==
+      length(assertion_types)
+    
+    if (!validation_is_final_call) {
+      
+      stop(
+        "The validation function call must be the final one in a `gauntlet()`",
+        call. = FALSE
+      )
+    }
+    
+    # Check [3]: the validation function call cannot yield multiple steps
+    validation_step_call_args <-
+      validation_formulas[length(validation_formulas)][[1]] %>% as.call() %>%
+      rlang::call_args()
+    
+    # Check the first argument
+    if (!as.character(validation_step_call_args[[1]]) == ".") {
+      
+      stop(
+        "The first argument to a validation function call must be \".\"",
+        call. = FALSE
+      )
+    }
+    
+    # Check whether the validation function is of type that has an
+    # expandable `columns` argument
+    has_expandable_cols_arg <-
+      assertion_types[length(assertion_types)] %in%
+      base::setdiff(
+        all_validations_fns_vec(),
+        c(
+          "rows_distinct", "rows_complete",
+          "col_vals_expr", "col_schema_match",
+          "conjointly"
+        )
+      )
+    
+    if (has_expandable_cols_arg) {
+
+      has_multiple_cols <- 
+        rlang::as_label(validation_step_call_args[[2]]) %>%
+        gsub("^\"|\"$", "", .) %>%
+        grepl(",", x = .)
+      
+      if (has_multiple_cols) {
+        
+        stop(
+          "The finalizing validation function call must only operate on a ",
+          "single column",
+          call. = FALSE
+        )
+      }
+    }
+  }
+
   # Resolve segments into list
   segments_list <-
     resolve_segments(

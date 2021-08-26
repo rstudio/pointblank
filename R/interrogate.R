@@ -349,15 +349,46 @@ interrogate <- function(agent,
       validation_formulas <- get_values_at_idx(agent = agent, idx = i)
       validation_n <- length(validation_formulas)
       
+      assertion_types <-
+        vapply(
+          validation_formulas,
+          FUN.VALUE = character(1),
+          USE.NAMES = FALSE,
+          FUN = function(x) {
+            x %>%
+              rlang::f_rhs() %>%
+              rlang::expr_deparse() %>%
+              tidy_gsub("\\(.*$", "")
+          }
+        )
       gauntlet_failure <- FALSE
       
-      if (validation_n == 1) {
-        
-        
-      }
+      has_final_validation <-
+        assertion_types[length(assertion_types)] %in% all_validations_fns_vec()
+      
+      test_step_length <- 
+        if (has_final_validation) validation_n - 1 else validation_n
+      
+      # Generate a description for the gauntlet (for a footnote)
+      # TODO: (1) incorporate `lang` to generate translated description
+      #       (2) generate list of steps
+      #       (3) generate number of calls and fully expanded number of steps
+      #       (4) prominent state name of final validation, if present
+      gauntlet_description <-
+        paste0(
+          "Gauntlet with ", test_step_length, " steps and ",
+          if (has_final_validation) "a" else "no",
+          " finishing step."
+        )
+      
+      # Add interrogation notes
+      agent$validation_set[[i, "interrogation_notes"]] <-
+        list(
+          gauntlet_description
+        )
       
       # Perform validation steps (that exclude the last) in sequence
-      for (k in seq_len(validation_n - 1)) {
+      for (k in seq_len(test_step_length)) {
         
         # Create a double agent
         double_agent <- create_agent(tbl = table, label = "::QUIET::")
@@ -453,9 +484,11 @@ interrogate <- function(agent,
           
           break
         }
+        
+        tbl_checked <- pointblank_try_catch(dplyr::tibble(`pb_is_good_` = TRUE))
       }
       
-      if (!gauntlet_failure) {
+      if (!gauntlet_failure && has_final_validation) {
         
         double_agent <- create_agent(tbl = table, label = "::QUIET::")
         
@@ -487,7 +520,6 @@ interrogate <- function(agent,
             table = table,
             assertion_type = assertion_type
           )
-        
       }
     }
 
@@ -506,7 +538,7 @@ interrogate <- function(agent,
 
     # Add extracts of failed rows if validation function operates on
     # values in rows and `extract_failed` is TRUE
-    if (assertion_type %in% row_based_step_fns_vector()) {
+    if (assertion_type %in% row_based_validation_fns_vec()) {
       
       agent <- 
         add_table_extract(

@@ -160,6 +160,8 @@ get_dbi_column_mean <- function(data_column) {
   x
 }
 
+# nocov start
+
 # Get the mean value of a column in a table
 # - works only with `tbl_spark` objects
 # - returns 'numeric' of length 1
@@ -167,6 +169,8 @@ get_spark_column_mean <- function(data_column) {
   
   get_dbi_column_mean(data_column = data_column)
 }
+
+# nocov end
 
 # Get the variance value of a column in a table, after obtaining the mean value
 # - works only with `tbl_dbi` objects
@@ -181,6 +185,8 @@ get_dbi_column_variance <- function(data_column, mean_value) {
   
   x
 }
+
+# nocov start
 
 # Get the variance value of a column in a table, after obtaining the mean value
 # - works only with `tbl_spark` objects
@@ -219,6 +225,8 @@ get_spark_column_qtile_stats <- function(data_column) {
   ) %>% 
     lapply(FUN = function(x) round(x, 2))
 }
+
+# nocov end
 
 # Get a list of quantile statistics for a DBI table column
 # (must be a table with a single column)
@@ -418,6 +426,8 @@ get_tbl_dbi_missing_tbl <- function(data) {
     dplyr::mutate(col_name = factor(col_name, levels = colnames(data)))
 }
 
+# nocov start
+
 # Get a tibble of binned missing value proportions for a table
 # - works only with `tbl_spark` objects
 # - returns 'tibble' of 20 bins * y columns rows, 4 columns
@@ -425,6 +435,8 @@ get_tbl_spark_missing_tbl <- function(data) {
   
   get_tbl_dbi_missing_tbl(data = data)
 }
+
+# nocov end
 
 # Get a tibble of binned missing value proportions for a table
 # - works only with data frame objects
@@ -538,6 +550,8 @@ get_missing_by_column_tbl <- function(data) {
   missing_by_column_tbl
 }
 
+# nocov start
+
 # Get a ggplot2 plot of missing values by column (with up to 20 bins),
 # supported by the `frequency_tbl` and `missing_by_column_tbl` objects
 # - works across all supported data sources
@@ -612,3 +626,5 @@ get_table_slice_gt <- function(data_column,
       table.width = "100%"
     )
 }
+
+# nocov end

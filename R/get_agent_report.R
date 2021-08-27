@@ -230,7 +230,7 @@ get_agent_report <- function(agent,
         ifelse(
           is.null(x),
           NA_character_,
-          paste(x %>% gsub("~", "", .), collapse = ", ")
+          paste(gsub("~", "", x), collapse = ", ")
         )
       } 
     )
@@ -244,7 +244,7 @@ get_agent_report <- function(agent,
         ifelse(
           is.null(x),
           NA_character_,
-          x %>% rlang::as_function() %>% length() %>% as.character()
+          as.character(length(rlang::as_function(x)))
         )
       }
     )
@@ -366,15 +366,17 @@ get_agent_report <- function(agent,
   # Combine label, table type, and action levels into
   # a table subtitle <div>
   combined_subtitle <-
-    htmltools::tagList(
-      htmltools::HTML(agent_label_styled),
-      htmltools::tags$div(
-        style = htmltools::css(
-          height = "25px"
-        ),
-        htmltools::HTML(paste0(table_type, action_levels))
-      ) 
-    ) %>% as.character()
+    as.character(
+      htmltools::tagList(
+        htmltools::HTML(agent_label_styled),
+        htmltools::tags$div(
+          style = htmltools::css(
+            height = "25px"
+          ),
+          htmltools::HTML(paste0(table_type, action_levels))
+        ) 
+      )
+    )
 
   # Generate table execution start/end time (and duration)
   # as a table source note
@@ -394,74 +396,108 @@ get_agent_report <- function(agent,
       USE.NAMES = FALSE,
       FUN = function(x) {
         
-        assertion_type_nchar <- nchar(assertion_type[x])
+        # Get the `assertion_type` as a string
+        assertion_str <- icon_name <- assertion_type[x]
         
+        # Append `()` to the `assertion_str`
+        assertion_str <- paste0(assertion_str, "()")
+        
+        # Get the `label` as a string
+        label_str <- label[x]
+        
+        # Get the `brief` as a string
+        brief_str <- briefs[x]
+        
+        if (assertion_type[x] == "gauntlet" && has_agent_intel(agent)){
+          
+          interrogation_notes <-
+            agent$validation_set[x, ]$interrogation_notes[[1]]
+          
+          assertion_str <- 
+            paste0(
+              assertion_str, ": ",
+              interrogation_notes$total_test_steps,
+              "T",
+              ifelse(interrogation_notes$has_final_validation, "+V", "")
+            )
+        }
+        
+        # Obtain the number of characters contained in the assertion
+        # string; this is important for sizing components appropriately
+        assertion_type_nchar <- nchar(assertion_str)
+        
+        # Declare the text size based on the length of `assertion_str`
+        # and also whether the report is of the standard size or `"small"` 
         text_size <- ifelse(assertion_type_nchar + 2 >= 20, 10, 11)
         text_size <- ifelse(size == "small", 11, text_size)
         
         if (size == "small") {
 
-          htmltools::tags$code(
-            style = htmltools::css(
-              `font-size` = paste0(text_size, "px")
-            ),
-            htmltools::HTML(paste0("&nbsp;", assertion_type[x], "()"))
-          ) %>%
-            as.character()
+          as.character(
+            htmltools::tags$code(
+              style = htmltools::css(
+                `font-size` = paste0(text_size, "px")
+              ),
+              htmltools::HTML(paste0("&nbsp;", assertion_str))
+            )
+          )
           
         } else {
           
-          if (!is.na(label[x])) {
+          if (!is.na(label_str)) {
 
-            htmltools::tags$div(
-              `aria-label` = briefs[x],
-              `data-balloon-pos` = "right",
-              style = htmltools::css(width = "fit-content"),
+            as.character(
               htmltools::tags$div(
-                style = htmltools::css(
-                  float = "left",
-                  width = "30px"
-                ),
-                htmltools::HTML(add_icon_svg(icon = assertion_type[x]))
-              ),
-              htmltools::tags$div(
-                style = htmltools::css(
-                  `line-height` = "0.7em",
-                  `margin-left` = "32px",
-                  `padding-left` = "3px"
-                ),
-                htmltools::tags$p(
+                `aria-label` = brief_str,
+                `data-balloon-pos` = "right",
+                style = htmltools::css(width = "fit-content"),
+                htmltools::tags$div(
                   style = htmltools::css(
-                    margin = "0",
-                    `padding-top` = "4px",
-                    `font-size` = "9px"
+                    float = "left",
+                    width = "30px"
                   ),
-                  htmltools::HTML(label[x])
+                  htmltools::HTML(add_icon_svg(icon = icon_name))
                 ),
-                htmltools::tags$p(
-                  style = htmltools::css(margin = "0"),
-                  htmltools::tags$code(
-                    style = htmltools::css(`font-size` = "11px"),
-                    paste0(assertion_type[x], "()")
+                htmltools::tags$div(
+                  style = htmltools::css(
+                    `line-height` = "0.7em",
+                    `margin-left` = "32px",
+                    `padding-left` = "3px"
+                  ),
+                  htmltools::tags$p(
+                    style = htmltools::css(
+                      margin = "0",
+                      `padding-top` = "4px",
+                      `font-size` = "9px"
+                    ),
+                    htmltools::HTML(label_str)
+                  ),
+                  htmltools::tags$p(
+                    style = htmltools::css(margin = "0"),
+                    htmltools::tags$code(
+                      style = htmltools::css(`font-size` = "11px"),
+                      assertion_str
+                    )
                   )
                 )
               )
-            ) %>% 
-              as.character()
+            )
 
           } else {
 
-            htmltools::tags$div(
-              `aria-label` = briefs[x],
-              `data-balloon-pos` = "right",
-              style = htmltools::css(width = "fit-content"),
-              htmltools::HTML(add_icon_svg(icon = assertion_type[x])),
-              htmltools::tags$code(
-                style = htmltools::css(`font-size` = paste0(text_size, "px")),
-                htmltools::HTML(paste0("&nbsp;", assertion_type[x], "()"))
+            as.character(
+              htmltools::tags$div(
+                `aria-label` = brief_str,
+                `data-balloon-pos` = "right",
+                style = htmltools::css(width = "fit-content"),
+                htmltools::HTML(add_icon_svg(icon = icon_name)),
+                htmltools::tags$code(
+                  style = htmltools::css(`font-size` = paste0(text_size, "px")),
+                  htmltools::HTML(paste0("&nbsp;", assertion_str))
+                )
               )
-            ) %>%
-              as.character()
+            )
+              
           }
         }
       }
@@ -500,42 +536,44 @@ get_agent_report <- function(agent,
           if (size == "small") {
             
             x <- 
-              htmltools::tags$div(
-                htmltools::tags$p(
-                  title = paste(title, collapse = ", "),
-                  style = htmltools::css(
-                    `margin-top` = "0",
-                    `margin-bottom` = "0",
-                    `font-family` = "monospace",
-                    `white-space` = "nowrap",
-                    `text-overflow` = "ellipsis",
-                    overflow = "hidden"
-                  ),
-                  htmltools::HTML(text_fragments)
+              as.character(
+                htmltools::tags$div(
+                  htmltools::tags$p(
+                    title = paste(title, collapse = ", "),
+                    style = htmltools::css(
+                      `margin-top` = "0",
+                      `margin-bottom` = "0",
+                      `font-family` = "monospace",
+                      `white-space` = "nowrap",
+                      `text-overflow` = "ellipsis",
+                      overflow = "hidden"
+                    ),
+                    htmltools::HTML(text_fragments)
+                  )
                 )
-              ) %>% 
-              as.character()
+              )
             
           } else {
             
             x <-
-              htmltools::tags$div(
-                `aria-label` = paste(title, collapse = ", "),
-                `data-balloon-pos` = "left",
-                htmltools::tags$p(
-                  style = htmltools::css(
-                    `margin-top` = "0",
-                    `margin-bottom` = "0",
-                    `font-size` = "11px",
-                    `white-space` = "nowrap",
-                    `text-overflow` = "ellipsis",
-                    overflow = "hidden",
-                    `line-height` = "2em"
-                  ),
-                  htmltools::tags$code(htmltools::HTML(text_fragments))
+              as.character(
+                htmltools::tags$div(
+                  `aria-label` = paste(title, collapse = ", "),
+                  `data-balloon-pos` = "left",
+                  htmltools::tags$p(
+                    style = htmltools::css(
+                      `margin-top` = "0",
+                      `margin-bottom` = "0",
+                      `font-size` = "11px",
+                      `white-space` = "nowrap",
+                      `text-overflow` = "ellipsis",
+                      overflow = "hidden",
+                      `line-height` = "2em"
+                    ),
+                    htmltools::tags$code(htmltools::HTML(text_fragments))
+                  )
                 )
-              ) %>% 
-              as.character()
+              )
           }
         }
         x
@@ -559,12 +597,15 @@ get_agent_report <- function(agent,
           bounds_incl <- as.logical(names(x))
           
           if (rlang::is_quosure(x[[1]])) {
+            
             x_left <- 
               paste0(
                 "<span style=\"color: purple;\">&marker;</span>",
                 rlang::as_label(x[[1]])
               )
+            
           } else {
+            
             x_left <- 
               pb_fmt_number(
                 x[[1]],
@@ -575,12 +616,15 @@ get_agent_report <- function(agent,
           }
           
           if (rlang::is_quosure(x[[2]])) {
+            
             x_right <- 
               paste0(
                 "<span style=\"color: purple;\">&marker;</span>",
                 rlang::as_label(x[[2]])
               )
+            
           } else {
+            
             x_right <-
               pb_fmt_number(
                 x[[2]],
@@ -1013,26 +1057,27 @@ get_agent_report <- function(agent,
               ".csv"
             )
           
-          x <- 
-            htmltools::a(
-              href = paste0("data:text/csv;base64,", file_encoded),
-              download = output_file_name,
-              htmltools::tags$button(
-                `aria-label` = title_text,
-                `data-balloon-pos` = "left",
-                style = htmltools::css(
-                  `background-color` = "#67C2DC",
-                  color = "#FFFFFF",
-                  border = "none",
-                  padding = "5px",
-                  `font-weight` = "bold",
-                  cursor = "pointer",
-                  `border-radius` = "4px"
-                ),
-                "CSV"
+          x <-
+            as.character(
+              htmltools::a(
+                href = paste0("data:text/csv;base64,", file_encoded),
+                download = output_file_name,
+                htmltools::tags$button(
+                  `aria-label` = title_text,
+                  `data-balloon-pos` = "left",
+                  style = htmltools::css(
+                    `background-color` = "#67C2DC",
+                    color = "#FFFFFF",
+                    border = "none",
+                    padding = "5px",
+                    `font-weight` = "bold",
+                    cursor = "pointer",
+                    `border-radius` = "4px"
+                  ),
+                  "CSV"
+                )
               )
-            ) %>%
-            as.character()
+            )
         }
         x
       } 
@@ -1103,7 +1148,6 @@ get_agent_report <- function(agent,
   f_fail_val <- ifelse(f_fail_val < 1 & f_fail_val > 0.99, 0.99, f_fail_val)
   f_fail_val <- as.numeric(f_fail_val)
 
-  
   # Generate the report title with the `title` option
   title_text <- 
     process_title_text(
@@ -1667,20 +1711,22 @@ print_time_duration_report <- function(time_diff_s,
 
 create_agent_label_html <- function(agent) {
   
-  htmltools::tags$span(
-    agent$label,
-    style = htmltools::css(
-      `text-decoration-style` = "solid",
-      `text-decoration-color` = "#ADD8E6",
-      `text-decoration-line` = "underline",
-      `text-underline-position` = "under",
-      color = "#333333",
-      `font-variant-numeric` = "tabular-nums",
-      `padding-left` = "4px",
-      `margin-right` = "5px",
-      `padding-right` = "2px"
+  as.character(
+    htmltools::tags$span(
+      agent$label,
+      style = htmltools::css(
+        `text-decoration-style` = "solid",
+        `text-decoration-color` = "#ADD8E6",
+        `text-decoration-line` = "underline",
+        `text-underline-position` = "under",
+        color = "#333333",
+        `font-variant-numeric` = "tabular-nums",
+        `padding-left` = "4px",
+        `margin-right` = "5px",
+        `padding-right` = "2px"
+      )
     )
-  ) %>% as.character()
+  )
 }
 
 create_table_type_html <- function(tbl_src, tbl_name) {
@@ -1915,23 +1961,25 @@ make_boxed_text_html <- function(x,
     text_html <- text_html %>% htmltools::tagAppendAttributes(`title` = tt_text)
   }
   
-  text_html %>% as.character()
+  as.character(text_html)
 }
 
 icon_status <- function(icon = c("unchanged", "modified", "segmented")) {
   
   icon <- match.arg(icon)
   
-  htmltools::HTML(
-    paste(
-      readLines(
-        con = system.file(
-          "img", "status_icons", paste0(icon, ".svg"),
-          package = "pointblank"
-        ), 
-        warn = FALSE
-      ), collapse = ""
+  as.character(
+    htmltools::HTML(
+      paste(
+        readLines(
+          con = system.file(
+            "img", "status_icons", paste0(icon, ".svg"),
+            package = "pointblank"
+          ), 
+          warn = FALSE
+        ),
+        collapse = ""
+      )
     )
-  ) %>%
-    as.character()
+  )
 }

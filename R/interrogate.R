@@ -361,34 +361,52 @@ interrogate <- function(agent,
               tidy_gsub("\\(.*$", "")
           }
         )
-      gauntlet_failure <- FALSE
+      
+      # Set initial value of `failed_testing`
+      failed_testing <- FALSE
+      
+      # Initialize the `gauntlet_validation_set` tibble; this
+      # will be populated by all validations using gauntlet tests
+      gauntlet_validation_set <- dplyr::tibble()
       
       has_final_validation <-
         assertion_types[length(assertion_types)] %in% all_validations_fns_vec()
       
-      test_step_length <- 
+      # Get the total number of `test_*()` calls supplied
+      test_call_n <- 
         if (has_final_validation) validation_n - 1 else validation_n
       
-      # Generate a description for the gauntlet (for a footnote)
-      # TODO: (1) incorporate `lang` to generate translated description
-      #       (2) generate list of steps
-      #       (3) generate number of calls and fully expanded number of steps
-      #       (4) prominent state name of final validation, if present
-      gauntlet_description <-
-        paste0(
-          "Gauntlet with ", test_step_length, " steps and ",
-          if (has_final_validation) "a" else "no",
-          " finishing step."
-        )
+      #
+      # Determine the total number of test steps
+      #
       
-      # Add interrogation notes
-      agent$validation_set[[i, "interrogation_notes"]] <-
-        list(
-          gauntlet_description
-        )
+      # Create a `double_agent` that will be used just for determining
+      # the number of test steps
+      double_agent <- create_agent(tbl = table, label = "::QUIET::")
       
-      # Perform validation steps (that exclude the last) in sequence
-      for (k in seq_len(test_step_length)) {
+      for (k in seq_len(test_call_n)) {
+        
+        double_agent <-
+          eval(
+            expr = parse(
+              text =
+                validation_formulas[[k]] %>%
+                rlang::f_rhs() %>%
+                rlang::expr_deparse() %>%
+                tidy_gsub("(.", "(double_agent", fixed = TRUE) %>%
+                tidy_gsub("^test_", "") %>%
+                tidy_gsub("threshold\\s+?=\\s.*$", ")") %>%
+                tidy_gsub(",\\s+?\\)$", ")")
+                
+            ),
+            envir = NULL
+          )
+      }
+      
+      test_step_n <- nrow(double_agent$validation_set)
+        
+      # Perform tests as validation steps in sequence
+      for (k in seq_len(test_call_n)) {
         
         # Create a double agent
         double_agent <- create_agent(tbl = table, label = "::QUIET::")
@@ -455,6 +473,18 @@ interrogate <- function(agent,
         
         double_agent <- double_agent %>% interrogate()
         
+        gauntlet_validation_set <-
+          dplyr::bind_rows(
+            gauntlet_validation_set,
+            double_agent$validation_set %>%
+              dplyr::select(
+                -c(step_id, sha1, -warn, -notify, -tbl_checked,
+                   interrogation_notes
+                )
+              ) %>%
+              dplyr::mutate(i_o = .env$k)
+          )
+        
         stop_vec <- double_agent$validation_set$stop
         
         if (!all(is.na(stop_vec)) && any(stop_vec)) {
@@ -480,7 +510,7 @@ interrogate <- function(agent,
               assertion_type
             )
           
-          gauntlet_failure <- TRUE
+          failed_testing <- TRUE
           
           break
         }
@@ -488,7 +518,7 @@ interrogate <- function(agent,
         tbl_checked <- pointblank_try_catch(dplyr::tibble(`pb_is_good_` = TRUE))
       }
       
-      if (!gauntlet_failure && has_final_validation) {
+      if (!failed_testing && has_final_validation) {
         
         double_agent <- create_agent(tbl = table, label = "::QUIET::")
         
@@ -506,6 +536,18 @@ interrogate <- function(agent,
         
         double_agent <- double_agent %>% interrogate()
         
+        gauntlet_validation_set <-
+          dplyr::bind_rows(
+            gauntlet_validation_set,
+            double_agent$validation_set %>%
+              dplyr::select(
+                -c(step_id, sha1, -warn, -notify, -tbl_checked,
+                   interrogation_notes
+                )
+              ) %>%
+              dplyr::mutate(i_o = .env$k)
+          )
+        
         # Get the assertion type for this verification step
         assertion_type <- 
           get_assertion_type_at_idx(
@@ -521,6 +563,25 @@ interrogate <- function(agent,
             assertion_type = assertion_type
           )
       }
+      
+      # Renumber `i` in the gauntlet validation set so that
+      # it is an ascending integer sequence
+      gauntlet_validation_set <-
+        gauntlet_validation_set %>%
+        dplyr::mutate(i = seq_len(nrow(.)))
+      
+      # Add interrogation notes
+      agent$validation_set[[i, "interrogation_notes"]] <-
+        list(
+          list(
+            validation = "gauntlet",
+            total_test_calls = test_call_n,
+            total_test_steps = test_step_n,
+            failed_testing = failed_testing,
+            has_final_validation = has_final_validation,
+            testing_validation_set = gauntlet_validation_set
+          )
+        )
     }
 
     # Add in the necessary reporting data for the validation

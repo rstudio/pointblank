@@ -254,7 +254,8 @@ gauntlet <- function(x,
     
     # Check [3]: the validation function call cannot yield multiple steps
     validation_step_call_args <-
-      validation_formulas[length(validation_formulas)][[1]] %>% as.call() %>%
+      validation_formulas[length(validation_formulas)][[1]] %>%
+      as.call() %>%
       rlang::call_args()
     
     # Check the first argument

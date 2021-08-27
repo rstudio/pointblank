@@ -27,8 +27,9 @@ of intended interrogation order. Typically, validations up until
 the final one would have some \code{threshold} value set (default is \code{1}) for
 short circuiting within the gauntlet. A finishing validation function
 call (e.g., \code{\link[=col_vals_increasing]{col_vals_increasing()}}, etc.) can optionally be inserted at
-the end of the gauntlet, serving as the main validation step that only
-undergoes interrogation if prior steps adequately pass. An example of this
+the end of the gauntlet, serving as a validation step that only
+undergoes interrogation if the prior tests adequately pass. An example of
+this
 is \verb{~ test_column_exists(., vars(a)), ~ col_vals_not_null(., vars(a))}).}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
@@ -89,13 +90,48 @@ called primarily for its potential side-effects (e.g., signaling failure).
 The test function returns a logical value.
 }
 \description{
-The \code{gauntlet()} validation function runs validation step in sequence,
-providing an opportunity to exit the validation pathway at any step where
-test units fail beyond a set \emph{stop} threshold.
+The \code{gauntlet()} validation function allows for a series of tests to run in
+sequence before either culminating in a final validation step or simply
+exiting the gauntlet. This construction allows for pre-checks that make
+sense before a validation step. For example, there may be situations where
+it's vital to check a column type before performing a validation on the
+same column (since having the wrong type can result in an evaluation error
+for the subsequent validation). Another gauntlet workflow might entail
+having a series of checks in a prescribed order and, if all pass, then the
+goal of the check is achieved (e.g., checking if a table matches another
+through a series of increasingly specific tests).
 
-In practice, an example of where a \code{gauntlet()} ensemble validation is useful
-is when subsequent steps would fail if prior steps didn't pass to a known
-degree.
+A gauntlet is composed with a listing of calls, using test function calls
+(\strong{T}) and optionally providing a call with a validation function (\strong{V}).
+The following conditions apply:
+\itemize{
+\item there must be at least one test function in the gauntlet (\strong{T} -> \strong{V} is
+good, \strong{V} is \emph{not})
+\item there can only be one validation function call, \strong{V}; it's optional but,
+if included, it must be placed at the end (\strong{T} -> \strong{T} -> \strong{V} is good,
+these sequences are bad: (1) \strong{T} -> \strong{V} -> \strong{T}, (2) \strong{T} -> \strong{T} ->
+\strong{V} -> \strong{V})
+\item a validation function call (\strong{V}), if included, mustn't itself yield
+multiple validation steps (this may happen when providing multiple \code{columns}
+or any \code{segments})
+}
+
+Here's an example of how to arrange expressions for a gauntlet:\preformatted{~ test_col_exists(., columns = vars(count)),
+~ test_col_is_numeric(., columns = vars(count)),
+~ col_vals_gt(., columns = vars(count), value = 2)
+}
+
+This gauntlet concentrates on the column called \code{count} and first checks
+whether the column exists, then checks if that column is numeric, and then
+finally validates whether all values in the column are greater than \code{2}.
+
+Note that in the above listing of calls, the \code{.} stands in for the target
+table and is always necessary here. Also important is that all \verb{test_*()}
+functions have a \code{threshold} argument that is set to \code{1} by default. Should
+you need to bump up the threshold value it can be changed to a different
+integer value (as an absolute threshold of failing test units) or a
+decimal value between \code{0} and \code{1} (serving as a fractional threshold of
+failing test units).
 }
 \section{Column Names}{
 

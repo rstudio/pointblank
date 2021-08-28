@@ -390,7 +390,9 @@ get_agent_report <- function(agent,
       locale = locale
     )
   
-  # Reformat `type`
+  #
+  # Reformat the `type` column
+  #
   type_upd <- 
     vapply(
       step_indices,
@@ -504,7 +506,9 @@ get_agent_report <- function(agent,
       }
     )
   
-  # Reformat `columns`
+  #
+  # Reformat the `columns` column
+  #
   columns_upd <- 
     vapply(
       step_indices,
@@ -514,6 +518,66 @@ get_agent_report <- function(agent,
         
         # Get the `column` value
         column_i <- validation_set$column[[x]]
+        
+        # Get the `assertion_type` as a string
+        assertion_str <- assertion_type[x]
+        
+        if (assertion_str == "gauntlet") {
+          
+          interrogation_notes <-
+            agent$validation_set[x, ]$interrogation_notes[[1]]
+          
+          if (
+            !interrogation_notes$has_final_validation &&
+            !interrogation_notes$failed_testing
+          ) {
+            
+            return(NA_character_)
+            
+          } else if (
+            !interrogation_notes$has_final_validation &&
+            interrogation_notes$failed_testing
+          ) {
+            
+            # Case where gauntlet does not have a final validation
+            # and testing failed
+            # T -> T ->|
+            
+            # Replace `column_i` with the value at the failing step
+            column_i <- 
+              interrogation_notes$testing_validation_set[
+                nrow(interrogation_notes$testing_validation_set), ]$column[[1]]
+            
+          } else if (
+            interrogation_notes$has_final_validation &&
+            interrogation_notes$failed_testing
+          ) {
+            
+            # Case where tests where unsuccessful and the final
+            # validation step was not reached
+            # T -> T ->| (V)
+            
+            # Replace `column_i` with the value at the failing step
+            column_i <- 
+              interrogation_notes$testing_validation_set[
+                nrow(interrogation_notes$testing_validation_set), ]$column[[1]]
+            
+          } else if (
+            interrogation_notes$has_final_validation &&
+            !interrogation_notes$failed_testing
+          ) {
+            
+            # Case where all tests passed and the final
+            # validation step was reached
+            
+            # Replace `column_i` with the value at the final step (validation)
+            column_i <- 
+              interrogation_notes$testing_validation_set[
+                nrow(interrogation_notes$testing_validation_set), ]$column[[1]]
+          }
+        }
+        
+        
         
         if (
           is.null(column_i) |
@@ -590,7 +654,9 @@ get_agent_report <- function(agent,
       }
     )
   
-  # Reformat `values`
+  #
+  # Reformat the `values` column
+  #
   values_upd <- 
     vapply(
       step_indices,
@@ -598,11 +664,97 @@ get_agent_report <- function(agent,
       USE.NAMES = FALSE,
       FUN = function(x) {
         
+        # Get the `values` value
         values_i <- validation_set$values[[x]]
         
-        if (!is.null(values_i) &&
-            !is.null(names(values_i)) &&
-            all(names(values_i) %in% c("TRUE", "FALSE"))) {
+        # Get the `assertion_type` as a string
+        assertion_str <- assertion_type[x]
+        
+        if (assertion_str == "gauntlet") {
+          
+          interrogation_notes <-
+            agent$validation_set[x, ]$interrogation_notes[[1]]
+          
+          if (
+            !interrogation_notes$has_final_validation &&
+            !interrogation_notes$failed_testing
+          ) {
+            
+            # Case where gauntlet does not have a final validation
+            # but all tests passed
+            
+            total_test_steps <- interrogation_notes$total_test_steps
+            
+            # TODO: change localized string to be: `x TESTS`
+            
+            if (total_test_steps > 1) {
+              
+              return(
+                paste0(
+                  total_test_steps, " ",
+                  get_lsv("agent_report/report_col_steps")[[lang]]
+                )
+              )
+              
+            } else {
+              
+              return( 
+                paste0(
+                  total_test_steps, " ",
+                  get_lsv("agent_report/report_col_step")[[lang]]
+                )
+              )
+            }
+            
+          } else if (
+            !interrogation_notes$has_final_validation &&
+            interrogation_notes$failed_testing
+          ) {
+            
+            # Case where gauntlet does not have a final validation
+            # and testing failed
+            # T -> T ->|
+            
+            # Replace `values_i` with the value at the failing step
+            values_i <- 
+              interrogation_notes$testing_validation_set[
+                nrow(interrogation_notes$testing_validation_set), ]$values[[1]]
+            
+          } else if (
+            interrogation_notes$has_final_validation &&
+            interrogation_notes$failed_testing
+          ) {
+            
+            # Case where tests where unsuccessful and the final
+            # validation step was not reached
+            # T -> T ->| (V)
+            
+            # Replace `values_i` with the value at the failing step
+            
+            values_i <- 
+              interrogation_notes$testing_validation_set[
+                nrow(interrogation_notes$testing_validation_set), ]$values[[1]]
+            
+          } else if (
+            interrogation_notes$has_final_validation &&
+            !interrogation_notes$failed_testing
+          ) {
+            
+            # Case where all tests passed and the final
+            # validation step was reached
+            
+            # Replace `values_i` with the value at the final step (validation)
+            values_i <- 
+              interrogation_notes$testing_validation_set[
+                nrow(interrogation_notes$testing_validation_set), ]$values[[1]]
+          }
+        }
+        
+        if (
+          !is.null(values_i) &&
+          !is.null(names(values_i)) &&
+          all(names(values_i) %in% c("TRUE", "FALSE"))
+        ) {
           
           # Case of in-between comparison validation where there are
           # one or two columns specified as bounds
@@ -738,6 +890,7 @@ get_agent_report <- function(agent,
               text,
               "</p></div>"
             )
+            
           } else {
             
             paste0(

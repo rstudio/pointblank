@@ -408,7 +408,7 @@ get_agent_report <- function(agent,
         # Get the `brief` as a string
         brief_str <- briefs[x]
         
-        if (assertion_type[x] == "gauntlet" && has_agent_intel(agent)){
+        if (assertion_type[x] == "gauntlet" && has_agent_intel(agent)) {
           
           interrogation_notes <-
             agent$validation_set[x, ]$interrogation_notes[[1]]

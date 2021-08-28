@@ -322,6 +322,7 @@ get_agent_report <- function(agent,
   #
   
   # nocov start
+  
   validation_set <- validation_set[report_tbl$i, ]
   eval <- eval[report_tbl$i]
   extracts <- 
@@ -330,6 +331,7 @@ get_agent_report <- function(agent,
         base::intersect(as.numeric(names(agent$extracts)), report_tbl$i)
       )
     ]
+  step_indices <- seq_len(nrow(validation_set))
   
   if (is.null(lang)) {
     
@@ -344,14 +346,14 @@ get_agent_report <- function(agent,
     if (is.null(locale)) locale <- lang
   }
 
-  briefs <- validation_set$brief
   assertion_type <- validation_set$assertion_type
+  briefs <- validation_set$brief
   label <- validation_set$label
   tbl_src <- agent$tbl_src
   tbl_name <- agent$tbl_name
   
   # Generate agent label HTML
-  agent_label_styled <- create_agent_label_html(agent)
+  agent_label_styled <- create_agent_label_html(agent = agent)
   
   # Generate table type HTML
   table_type <- 
@@ -361,7 +363,7 @@ get_agent_report <- function(agent,
     )
 
   # Generate action levels HTML
-  action_levels <- make_action_levels_html(agent, locale)
+  action_levels <- make_action_levels_html(agent = agent, locale = locale)
   
   # Combine label, table type, and action levels into
   # a table subtitle <div>
@@ -390,8 +392,8 @@ get_agent_report <- function(agent,
   
   # Reformat `type`
   type_upd <- 
-    seq_along(assertion_type) %>%
     vapply(
+      step_indices,
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
@@ -432,7 +434,7 @@ get_agent_report <- function(agent,
         text_size <- ifelse(size == "small", 11, text_size)
         
         if (size == "small") {
-
+          
           as.character(
             htmltools::tags$code(
               style = htmltools::css(
@@ -445,7 +447,7 @@ get_agent_report <- function(agent,
         } else {
           
           if (!is.na(label_str)) {
-
+            
             as.character(
               htmltools::tags$div(
                 `aria-label` = brief_str,
@@ -482,9 +484,9 @@ get_agent_report <- function(agent,
                 )
               )
             )
-
+            
           } else {
-
+            
             as.character(
               htmltools::tags$div(
                 `aria-label` = brief_str,
@@ -497,7 +499,6 @@ get_agent_report <- function(agent,
                 )
               )
             )
-              
           }
         }
       }
@@ -505,20 +506,30 @@ get_agent_report <- function(agent,
   
   # Reformat `columns`
   columns_upd <- 
-    validation_set$column %>%
     vapply(
+      step_indices,
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
         
-        if (is.null(x) | (is.list(x) && is.na(unlist(x)))) {
-          x <- NA_character_
-        } else if (is.na(x)) {
-          x <- NA_character_
+        # Get the `column` value
+        column_i <- validation_set$column[[x]]
+        
+        if (
+          is.null(column_i) |
+          (is.list(column_i) && is.na(unlist(column_i)))
+        ) {
+          
+          NA_character_
+          
+        } else if (is.na(column_i)) {
+          
+          NA_character_
+          
         } else {
-
+          
           text <- 
-            x %>%
+            column_i %>%
             unlist() %>%
             strsplit(", ") %>%
             unlist()
@@ -530,104 +541,105 @@ get_agent_report <- function(agent,
               htmltools::tags$span(
                 style = htmltools::css(color = "purple"),
                 htmltools::HTML("&marker;")
-              ), text, collapse = ", "
+              ),
+              text,
+              collapse = ", "
             )
           
           if (size == "small") {
             
-            x <- 
-              as.character(
-                htmltools::tags$div(
-                  htmltools::tags$p(
-                    title = paste(title, collapse = ", "),
-                    style = htmltools::css(
-                      `margin-top` = "0",
-                      `margin-bottom` = "0",
-                      `font-family` = "monospace",
-                      `white-space` = "nowrap",
-                      `text-overflow` = "ellipsis",
-                      overflow = "hidden"
-                    ),
-                    htmltools::HTML(text_fragments)
-                  )
+            as.character(
+              htmltools::tags$div(
+                htmltools::tags$p(
+                  title = paste(title, collapse = ", "),
+                  style = htmltools::css(
+                    `margin-top` = "0",
+                    `margin-bottom` = "0",
+                    `font-family` = "monospace",
+                    `white-space` = "nowrap",
+                    `text-overflow` = "ellipsis",
+                    overflow = "hidden"
+                  ),
+                  htmltools::HTML(text_fragments)
                 )
               )
+            )
             
           } else {
             
-            x <-
-              as.character(
-                htmltools::tags$div(
-                  `aria-label` = paste(title, collapse = ", "),
-                  `data-balloon-pos` = "left",
-                  htmltools::tags$p(
-                    style = htmltools::css(
-                      `margin-top` = "0",
-                      `margin-bottom` = "0",
-                      `font-size` = "11px",
-                      `white-space` = "nowrap",
-                      `text-overflow` = "ellipsis",
-                      overflow = "hidden",
-                      `line-height` = "2em"
-                    ),
-                    htmltools::tags$code(htmltools::HTML(text_fragments))
-                  )
+            as.character(
+              htmltools::tags$div(
+                `aria-label` = paste(title, collapse = ", "),
+                `data-balloon-pos` = "left",
+                htmltools::tags$p(
+                  style = htmltools::css(
+                    `margin-top` = "0",
+                    `margin-bottom` = "0",
+                    `font-size` = "11px",
+                    `white-space` = "nowrap",
+                    `text-overflow` = "ellipsis",
+                    overflow = "hidden",
+                    `line-height` = "2em"
+                  ),
+                  htmltools::tags$code(htmltools::HTML(text_fragments))
                 )
               )
+            )
           }
         }
-        x
       }
     )
   
   # Reformat `values`
   values_upd <- 
-    validation_set$values %>%
     vapply(
+      step_indices,
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
         
-        if (!is.null(x) &&
-            !is.null(names(x)) &&
-            all(names(x) %in% c("TRUE", "FALSE"))) {
-
+        values_i <- validation_set$values[[x]]
+        
+        if (!is.null(values_i) &&
+            !is.null(names(values_i)) &&
+            all(names(values_i) %in% c("TRUE", "FALSE"))) {
+          
           # Case of in-between comparison validation where there are
           # one or two columns specified as bounds
-          bounds_incl <- as.logical(names(x))
+          bounds_incl <- as.logical(names(values_i))
           
-          if (rlang::is_quosure(x[[1]])) {
+          if (rlang::is_quosure(values_i[[1]])) {
             
             x_left <- 
               paste0(
                 "<span style=\"color: purple;\">&marker;</span>",
-                rlang::as_label(x[[1]])
+                rlang::as_label(values_i[[1]])
               )
             
           } else {
             
             x_left <- 
               pb_fmt_number(
-                x[[1]],
+                values_i[[1]],
                 decimals = 4,
                 drop_trailing_zeros = TRUE,
                 locale = locale
               )
           }
           
-          if (rlang::is_quosure(x[[2]])) {
+          if (rlang::is_quosure(values_i[[2]])) {
             
             x_right <- 
               paste0(
                 "<span style=\"color: purple;\">&marker;</span>",
-                rlang::as_label(x[[2]])
+                rlang::as_label(values_i[[2]])
               )
             
           } else {
             
             x_right <-
               pb_fmt_number(
-                x[[2]],
+                values_i[[2]],
                 decimals = 4,
                 drop_trailing_zeros = TRUE,
                 locale = locale
@@ -647,14 +659,14 @@ get_agent_report <- function(agent,
             paste0(
               ifelse(bounds_incl[1], "[", "("),
               pb_fmt_number(
-                rlang::as_label(x[[1]]),
+                rlang::as_label(values_i[[1]]),
                 decimals = 4,
                 drop_trailing_zeros = TRUE,
                 locale = locale
               ),
               ", ",
               pb_fmt_number(
-                rlang::as_label(x[[2]]),
+                rlang::as_label(values_i[[2]]),
                 decimals = 4,
                 drop_trailing_zeros = TRUE,
                 locale = locale
@@ -664,30 +676,32 @@ get_agent_report <- function(agent,
           
           if (size == "small") {
             
-            x <-
-              paste0(
-                "<div><p title=\"", title, "\" style=\"margin-top: 0px; ",
-                "margin-bottom: 0px; ",
-                "font-family: monospace; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
-                "</p></div>"
-              )
+            paste0(
+              "<div><p title=\"", title, "\" style=\"margin-top: 0px; ",
+              "margin-bottom: 0px; ",
+              "font-family: monospace; white-space: nowrap; ",
+              "text-overflow: ellipsis; overflow: hidden;\">",
+              text,
+              "</p></div>"
+            )
             
           } else {
             
-            x <- 
-              paste0(
-                "<div aria-label=\"", title, "\" data-balloon-pos=\"left\">",
-                "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
-                "font-size: 11px; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                "<code>", text, "</code>",
-                "</p></div>"
-              )
+            paste0(
+              "<div aria-label=\"", title, "\" data-balloon-pos=\"left\">",
+              "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
+              "font-size: 11px; white-space: nowrap; ",
+              "text-overflow: ellipsis; overflow: hidden;\">",
+              "<code>", text, "</code>",
+              "</p></div>"
+            )
           }
           
-        } else if (is.list(x) && length(x) > 0 && inherits(x, "col_schema")) {
+        } else if (
+          is.list(values_i) &&
+          length(values_i) > 0 &&
+          inherits(values_i, "col_schema")
+        ) {
           
           # Case of column schema as a value
           
@@ -695,57 +709,60 @@ get_agent_report <- function(agent,
             get_lsv("agent_report/report_column_schema")[[lang]]
           
           column_schema_type_text <- 
-            if (inherits(x, "r_type")) {
+            if (inherits(values_i, "r_type")) {
               get_lsv("agent_report/report_r_col_types")[[lang]]
             } else {
               get_lsv("agent_report/report_r_sql_types")[[lang]]
             }
           
-          x <- 
-            paste0(
-              "<div>",
-              "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
-              "font-size: 0.75rem;\">", column_schema_text, "</p>",
-              "<p style=\"margin-top: 2px; margin-bottom: 0px; ",
-              "font-size: 0.65rem;\">", column_schema_type_text, "</p>",
-              "</div>"
-            )
+          paste0(
+            "<div>",
+            "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
+            "font-size: 0.75rem;\">", column_schema_text, "</p>",
+            "<p style=\"margin-top: 2px; margin-bottom: 0px; ",
+            "font-size: 0.65rem;\">", column_schema_type_text, "</p>",
+            "</div>"
+          )
           
-        } else if (is_call(x)) {
+        } else if (is_call(values_i)) {
           
-          text <- rlang::as_label(x)
-
+          text <- rlang::as_label(values_i)
+          
           if (size == "small") {
-            x <- 
-              paste0(
-                "<div><p title=\"", text, "\" style=\"margin-top: 0px; ",
-                "margin-bottom: 0px; ",
-                "font-family: monospace; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
-                "</p></div>"
-              )
+            
+            paste0(
+              "<div><p title=\"", text, "\" style=\"margin-top: 0px; ",
+              "margin-bottom: 0px; ",
+              "font-family: monospace; white-space: nowrap; ",
+              "text-overflow: ellipsis; overflow: hidden;\">",
+              text,
+              "</p></div>"
+            )
           } else {
-            x <- 
-              paste0(
-                "<div aria-label=\"", text, "\" data-balloon-pos=\"left\">",
-                "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
-                "font-size: 11px; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                "<code>", text, "</code>",
-                "</p></div>"
-              )
+            
+            paste0(
+              "<div aria-label=\"", text, "\" data-balloon-pos=\"left\">",
+              "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
+              "font-size: 11px; white-space: nowrap; ",
+              "text-overflow: ellipsis; overflow: hidden;\">",
+              "<code>", text, "</code>",
+              "</p></div>"
+            )
           }
           
-        } else if (is.list(x) && length(x) > 0 && !inherits(x, "quosures")) {
+        } else if (
+          is.list(values_i) &&
+          length(values_i) > 0 &&
+          !inherits(values_i, "quosures")
+        ) {
           
           # Conjointly case
           
-          if (length(x) > 1) {
+          if (length(values_i) > 1) {
             
             step_text <- 
               paste0(
-                length(x), " ",
+                length(values_i), " ",
                 get_lsv("agent_report/report_col_steps")[[lang]]
               )
             
@@ -753,25 +770,24 @@ get_agent_report <- function(agent,
             
             step_text <- 
               paste0(
-                length(x), " ",
+                length(values_i), " ",
                 get_lsv("agent_report/report_col_step")[[lang]]
               )
           }
           
-          x <- 
-            paste0(
-              "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
-              "font-size: 0.75rem;\">", step_text, "</p></div>"
-            )
+          paste0(
+            "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+            "font-size: 0.75rem;\">", step_text, "</p></div>"
+          )
           
-        } else if (is.null(x)) {
+        } else if (is.null(values_i)) {
           
-          x <- NA_character_
+          NA_character_
           
         } else {
           
           text <-
-            x %>%
+            values_i %>%
             tidy_gsub(
               "~",
               "<span style=\"color: purple;\">&marker;</span>"
@@ -781,31 +797,31 @@ get_agent_report <- function(agent,
           text <- paste(text, collapse = ", ")
           
           if (size == "small") {
-            x <- 
-              paste0(
-                "<div><p title=\"",
-                x %>% tidy_gsub("~", "") %>% paste(., collapse = ", "),
-                "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
-                "font-size: 11px; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
-                "</p></div>"
-              )
+            
+            paste0(
+              "<div><p title=\"",
+              values_i %>% tidy_gsub("~", "") %>% paste(., collapse = ", "),
+              "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
+              "font-size: 11px; white-space: nowrap; ",
+              "text-overflow: ellipsis; overflow: hidden;\">",
+              text,
+              "</p></div>"
+            )
+            
           } else {
-            x <- 
-              paste0(
-                "<div aria-label=\"",
-                x %>% tidy_gsub("~", "") %>% paste(., collapse = ", "),
-                "\" data-balloon-pos=\"left\"><p style=\"margin-top: 0px; ",
-                "margin-bottom: 0px; ",
-                "font-size: 11px; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                "<code>", text, "</code>",
-                "</p></div>"
-              )
+            
+            paste0(
+              "<div aria-label=\"",
+              values_i %>% tidy_gsub("~", "") %>% paste(., collapse = ", "),
+              "\" data-balloon-pos=\"left\"><p style=\"margin-top: 0px; ",
+              "margin-bottom: 0px; ",
+              "font-size: 11px; white-space: nowrap; ",
+              "text-overflow: ellipsis; overflow: hidden;\">",
+              "<code>", text, "</code>",
+              "</p></div>"
+            )
           }
         }
-        x
       } 
     )
   

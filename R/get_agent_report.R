@@ -427,6 +427,7 @@ get_agent_report <- function(agent,
             agent$validation_set[x, ]$interrogation_notes[[1]]
           
           failed_testing <- interrogation_notes$failed_testing
+          
           final_validation_str <- 
             if (interrogation_notes$has_final_validation) "+V" else ""
           
@@ -508,7 +509,7 @@ get_agent_report <- function(agent,
                     style = htmltools::css(margin = "0"),
                     htmltools::tags$code(
                       style = htmltools::css(`font-size` = "11px"),
-                      assertion_str
+                      htmltools::HTML(assertion_str)
                     )
                   )
                 )

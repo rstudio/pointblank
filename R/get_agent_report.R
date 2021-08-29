@@ -550,7 +550,7 @@ get_agent_report <- function(agent,
         # Get the `assertion_type` as a string
         assertion_str <- assertion_type[x]
         
-        if (assertion_str == "gauntlet") {
+        if (assertion_str == "gauntlet" && has_agent_intel(agent)) {
           
           interrogation_notes <-
             agent$validation_set[x, ]$interrogation_notes[[1]]
@@ -696,7 +696,7 @@ get_agent_report <- function(agent,
         # Get the `assertion_type` as a string
         assertion_str <- assertion_type[x]
         
-        if (assertion_str == "gauntlet") {
+        if (assertion_str == "gauntlet" && has_agent_intel(agent)) {
           
           interrogation_notes <-
             agent$validation_set[x, ]$interrogation_notes[[1]]

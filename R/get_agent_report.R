@@ -2174,3 +2174,14 @@ icon_status <- function(icon = c("unchanged", "modified", "segmented")) {
     )
   )
 }
+
+# Function for initializing an empty footnotes table
+initialize_footnotes_tbl <- function() {
+  
+  dplyr::tibble(
+    col_idx = integer(0),
+    row_idx = integer(0),
+    note = character(0)
+  )
+}
+

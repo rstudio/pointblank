@@ -352,6 +352,15 @@ get_agent_report <- function(agent,
   tbl_src <- agent$tbl_src
   tbl_name <- agent$tbl_name
   
+  # Generate the report title with the `title` option
+  title_text <- 
+    process_title_text(
+      title = title,
+      tbl_name = tbl_name,
+      report_type = "agent",
+      lang = lang
+    )
+  
   # Generate agent label HTML
   agent_label_styled <- create_agent_label_html(agent = agent)
   
@@ -1317,14 +1326,7 @@ get_agent_report <- function(agent,
   f_fail_val <- ifelse(f_fail_val < 1 & f_fail_val > 0.99, 0.99, f_fail_val)
   f_fail_val <- as.numeric(f_fail_val)
 
-  # Generate the report title with the `title` option
-  title_text <- 
-    process_title_text(
-      title = title,
-      tbl_name = tbl_name,
-      report_type = "agent",
-      lang = lang
-    )
+  # TODO: Generate footnotes for certain steps
   
   # Generate a gt table
   agent_report <- 
@@ -1717,6 +1719,8 @@ get_agent_report <- function(agent,
         "
       )
   }
+  
+  # TODO: Process footnotes
   
   class(agent_report) <- c("ptblank_agent_report", class(agent_report))
   

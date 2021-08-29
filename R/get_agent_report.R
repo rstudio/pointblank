@@ -426,12 +426,31 @@ get_agent_report <- function(agent,
           interrogation_notes <-
             agent$validation_set[x, ]$interrogation_notes[[1]]
           
-          assertion_str <- 
-            paste0(
-              assertion_str, ": ",
-              interrogation_notes$total_test_steps,
-              "T",
-              ifelse(interrogation_notes$has_final_validation, "+V", "")
+          failed_testing <- interrogation_notes$failed_testing
+          final_validation_str <- 
+            if (interrogation_notes$has_final_validation) "+V" else ""
+          
+          assertion_str <-
+            as.character(
+              paste0(
+                htmltools::HTML(paste0(assertion_str, ": ")),
+                htmltools::tags$span(
+                  style = htmltools::css(
+                    `text-decoration-style` = 
+                      if (failed_testing) "solid" else NULL,
+                    `text-decoration-line` = 
+                      if (failed_testing) "underline" else NULL,
+                    `text-decoration-color` = 
+                      if (failed_testing) "red" else NULL,
+                    `text-underline-position` =
+                      if (failed_testing) "under" else NULL
+                  ), 
+                  htmltools::HTML(
+                    paste0(interrogation_notes$total_test_steps, "T")
+                  )
+                ),
+                final_validation_str
+              )
             )
         }
         
@@ -585,8 +604,6 @@ get_agent_report <- function(agent,
                 nrow(interrogation_notes$testing_validation_set), ]$column[[1]]
           }
         }
-        
-        
         
         if (
           is.null(column_i) |

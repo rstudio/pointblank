@@ -2185,3 +2185,18 @@ initialize_footnotes_tbl <- function() {
   )
 }
 
+# Function for adding a footnote to the `footnotes_tbl`
+store_footnote <- function(footnotes_tbl,
+                           note,
+                           col_idx,
+                           row_idx) {
+  
+  dplyr::bind_rows(
+    footnotes_tbl,
+    dplyr::tibble(
+      col_idx = as.integer(col_idx),
+      row_idx = as.integer(row_idx),
+      note = note
+    )
+  )
+}

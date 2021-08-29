@@ -1740,6 +1740,7 @@ get_agent_report <- function(agent,
   
   # TODO: Process footnotes
   
+  # Add the `ptblank_agent_report` class to the gt table object
   class(agent_report) <- c("ptblank_agent_report", class(agent_report))
   
   # nocov end

@@ -352,6 +352,9 @@ get_agent_report <- function(agent,
   tbl_src <- agent$tbl_src
   tbl_name <- agent$tbl_name
   
+  # Initialize a table for gt footnotes
+  footnotes_tbl <- initialize_footnotes_tbl()
+  
   # Generate the report title with the `title` option
   title_text <- 
     process_title_text(

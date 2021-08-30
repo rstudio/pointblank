@@ -187,7 +187,7 @@ create_autobrief <- function(agent,
                              column = NULL,
                              values = NULL) {
 
-  if (assertion_type == "gauntlet") {
+  if (assertion_type == "serially") {
 
     # Develop a brief that explains how many tests are included
     # and what the final expectation is (if included)
@@ -208,11 +208,11 @@ create_autobrief <- function(agent,
     column <- values$final_validation_column
     values <- values$final_validation_values
     
-    finalize_gauntlet_brief <- TRUE
+    finalize_serially_brief <- TRUE
     
   } else {
     
-    finalize_gauntlet_brief <- FALSE
+    finalize_serially_brief <- FALSE
   }
   
   lang <- agent$lang
@@ -424,21 +424,21 @@ create_autobrief <- function(agent,
     autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
-  if (finalize_gauntlet_brief) {
+  if (finalize_serially_brief) {
     
-    gauntlet_test_text <-
-      get_gauntlet_test_text(
+    serially_test_text <-
+      get_serially_test_text(
         test_step_count = test_step_count,
         lang = lang
       )
     
     if (test_step_count == 1) {
       
-      autobrief <- gauntlet_test_text
+      autobrief <- serially_test_text
     
     } else {
       
-      autobrief <- paste(gauntlet_test_text, autobrief)
+      autobrief <- paste(serially_test_text, autobrief)
     }
   }
   
@@ -688,18 +688,18 @@ prep_conjointly_expectation_text <- function(values_text,
   glue::glue(get_lsv("autobriefs/conjointly_expectation_text")[[lang]])
 }
 
-get_gauntlet_test_text <- function(test_step_count,
+get_serially_test_text <- function(test_step_count,
                                    lang) {
   
   if (test_step_count > 1) {
     
     as.character(
-      glue::glue(get_lsv("autobriefs/gauntlet_expectation_tests_text")[[lang]])
+      glue::glue(get_lsv("autobriefs/serially_expectation_tests_text")[[lang]])
     )
     
   } else {
     
-    get_lsv("autobriefs/gauntlet_expectation_test_text")[[lang]]
+    get_lsv("autobriefs/serially_expectation_test_text")[[lang]]
   }
 }
 

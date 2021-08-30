@@ -424,7 +424,7 @@ get_agent_report <- function(agent,
         # Get the `brief` as a string
         brief_str <- briefs[x]
         
-        if (assertion_type[x] == "gauntlet" && has_agent_intel(agent)) {
+        if (assertion_type[x] == "serially" && has_agent_intel(agent)) {
           
           interrogation_notes <-
             agent$validation_set[x, ]$interrogation_notes[[1]]
@@ -556,7 +556,7 @@ get_agent_report <- function(agent,
         # Get the `assertion_type` as a string
         assertion_str <- assertion_type[x]
         
-        if (assertion_str == "gauntlet" && has_agent_intel(agent)) {
+        if (assertion_str == "serially" && has_agent_intel(agent)) {
           
           interrogation_notes <-
             agent$validation_set[x, ]$interrogation_notes[[1]]
@@ -573,7 +573,7 @@ get_agent_report <- function(agent,
             interrogation_notes$failed_testing
           ) {
             
-            # Case where gauntlet does not have a final validation
+            # Case where `serially()` does not have a final validation
             # and testing failed
             # T -> T ->|
             
@@ -702,15 +702,15 @@ get_agent_report <- function(agent,
         # Get the `assertion_type` as a string
         assertion_str <- assertion_type[x]
         
-        # If the step is a gauntlet, then there are two possibilities
-        # for what should be displayed in the values column
+        # In the `serially()` step, there are two possibilities for what
+        # should be displayed in the values column
         # [1] has final validation: show the values for validation step
         # [2] has no final validation and all tests passed: display the
         #     number of tests performed
         # [3] has no final validation and a test failed: show the values
         #     for the failing test step
         if (
-          assertion_str == "gauntlet"
+          assertion_str == "serially"
         ) {
 
           if (!has_agent_intel(agent)) {
@@ -746,7 +746,7 @@ get_agent_report <- function(agent,
             !interrogation_notes$failed_testing
           ) {
             
-            # Case where gauntlet does not have a final validation
+            # Case where `serially()` does not have a final validation
             # but all tests passed
             
             total_test_steps <- interrogation_notes$total_test_steps
@@ -775,7 +775,7 @@ get_agent_report <- function(agent,
             interrogation_notes$failed_testing
           ) {
             
-            # Case where gauntlet does not have a final validation
+            # Case where `serially()` does not have a final validation
             # and testing failed
             # T -> T ->|
             

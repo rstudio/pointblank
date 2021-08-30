@@ -210,7 +210,7 @@ interrogate <- function(agent,
     # Get the assertion type for this verification step
     assertion_type <- get_assertion_type_at_idx(agent = agent, idx = i)
 
-    if (!(assertion_type %in% c("conjointly", "gauntlet"))) {
+    if (!(assertion_type %in% c("conjointly", "serially"))) {
 
       # Perform table checking based on assertion type
       tbl_checked <- 
@@ -344,7 +344,7 @@ interrogate <- function(agent,
           )
         )
       
-    } else if (assertion_type == "gauntlet") {
+    } else if (assertion_type == "serially") {
       
       validation_formulas <- get_values_at_idx(agent = agent, idx = i)
       validation_n <- length(validation_formulas)
@@ -365,9 +365,9 @@ interrogate <- function(agent,
       # Set initial value of `failed_testing`
       failed_testing <- FALSE
       
-      # Initialize the `gauntlet_validation_set` tibble; this
-      # will be populated by all validations using gauntlet tests
-      gauntlet_validation_set <- dplyr::tibble()
+      # Initialize the `serially_validation_set` tibble; this
+      # will be populated by all validations using `serially()` tests
+      serially_validation_set <- dplyr::tibble()
       
       has_final_validation <-
         assertion_types[length(assertion_types)] %in% all_validations_fns_vec()
@@ -473,9 +473,9 @@ interrogate <- function(agent,
         
         double_agent <- double_agent %>% interrogate()
         
-        gauntlet_validation_set <-
+        serially_validation_set <-
           dplyr::bind_rows(
-            gauntlet_validation_set,
+            serially_validation_set,
             double_agent$validation_set %>%
               dplyr::select(
                 -c(step_id, sha1, -warn, -notify, -tbl_checked,
@@ -536,9 +536,9 @@ interrogate <- function(agent,
         
         double_agent <- double_agent %>% interrogate()
         
-        gauntlet_validation_set <-
+        serially_validation_set <-
           dplyr::bind_rows(
-            gauntlet_validation_set,
+            serially_validation_set,
             double_agent$validation_set %>%
               dplyr::select(
                 -c(step_id, sha1, -warn, -notify, -tbl_checked,
@@ -564,22 +564,22 @@ interrogate <- function(agent,
           )
       }
       
-      # Renumber `i` in the gauntlet validation set so that
+      # Renumber `i` in the `serially()` validation set so that
       # it is an ascending integer sequence
-      gauntlet_validation_set <-
-        gauntlet_validation_set %>%
+      serially_validation_set <-
+        serially_validation_set %>%
         dplyr::mutate(i = seq_len(nrow(.)))
       
       # Add interrogation notes
       agent$validation_set[[i, "interrogation_notes"]] <-
         list(
           list(
-            validation = "gauntlet",
+            validation = "serially",
             total_test_calls = test_call_n,
             total_test_steps = test_step_n,
             failed_testing = failed_testing,
             has_final_validation = has_final_validation,
-            testing_validation_set = gauntlet_validation_set
+            testing_validation_set = serially_validation_set
           )
         )
     }

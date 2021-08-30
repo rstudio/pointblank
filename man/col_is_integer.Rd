@@ -265,8 +265,8 @@ Other validation functions:
 \code{\link{col_vals_regex}()},
 \code{\link{col_vals_within_spec}()},
 \code{\link{conjointly}()},
-\code{\link{gauntlet}()},
 \code{\link{rows_complete}()},
-\code{\link{rows_distinct}()}
+\code{\link{rows_distinct}()},
+\code{\link{serially}()}
 }
 \concept{validation functions}

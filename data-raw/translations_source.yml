@@ -461,7 +461,7 @@ autobriefs:
     da: "Overskridelse af antal fejlslagne enhedstests, hvor der skulle have været fælles 'pass' enheder i følgende udtryk: {values_text}."
     sv: "Överstiger antalet misslyckade enhetstest där det skulle ha varit vanliga 'pass'-enheter i följande termer: {values_text}."
     nl: "Overschrijding van mislukte testeenheden waarbij er gecombineerde 'pass'-eenheden hadden moeten zijn over de volgende uitdrukkingen: {values_text}."
-  gauntlet_expectation_test_text:
+  serially_expectation_test_text:
     en: "Perform a test."
     fr: "Effectuez un seul test."
     de: "Führen Sie einen einzelnen Test durch."
@@ -475,7 +475,7 @@ autobriefs:
     da: "Udfør en enkelt test."
     sv: "Utför ett enda test."
     nl: "Voer een enkele test uit."
-  gauntlet_expectation_tests_text:
+  serially_expectation_tests_text:
     en: "Perform {test_step_count} tests."
     fr: "Effectuez {test_step_count} tests."
     de: "Führen Sie {test_step_count} Tests durch."

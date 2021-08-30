@@ -16,25 +16,26 @@
 # https://rich-iannone.github.io/pointblank/LICENSE.html
 #
 
-#' Run the gauntlet with a series of validation functions
+#' Run several tests and a final validation in a serial manner
 #'
 #' @description 
-#' The `gauntlet()` validation function allows for a series of tests to run in
+#' The `serially()` validation function allows for a series of tests to run in
 #' sequence before either culminating in a final validation step or simply
-#' exiting the gauntlet. This construction allows for pre-checks that make
+#' exiting the series. This construction allows for pre-testing that may make
 #' sense before a validation step. For example, there may be situations where
-#' it's vital to check a column type before performing a validation on the
-#' same column (since having the wrong type can result in an evaluation error
-#' for the subsequent validation). Another gauntlet workflow might entail
-#' having a series of checks in a prescribed order and, if all pass, then the
-#' goal of the check is achieved (e.g., checking if a table matches another
-#' through a series of increasingly specific tests).
+#' it's vital to check a column type before performing a validation on the same
+#' column (since having the wrong type can result in an evaluation error for the
+#' subsequent validation). Another serial workflow might entail having a bundle
+#' of checks in a prescribed order and, if all pass, then the goal of this
+#' testing has been achieved (e.g., checking if a table matches another through
+#' a series of increasingly specific tests).
 #' 
-#' A gauntlet is composed with a listing of calls, using test function calls
-#' (**T**) and optionally providing a call with a validation function (**V**).
-#' The following conditions apply:
+#' A series as specified inside `serially()` is composed with a listing of
+#' calls, and we would draw upon test functions (**T**) to describe tests and
+#' optionally provide a finalizing call with a validation function (**V**).
+#' The following constraints apply:
 #' 
-#' - there must be at least one test function in the gauntlet (**T** -> **V** is
+#' - there must be at least one test function in the series (**T** -> **V** is
 #' good, **V** is *not*)
 #' - there can only be one validation function call, **V**; it's optional but,
 #' if included, it must be placed at the end (**T** -> **T** -> **V** is good,
@@ -44,7 +45,7 @@
 #' multiple validation steps (this may happen when providing multiple `columns`
 #' or any `segments`)
 #' 
-#' Here's an example of how to arrange expressions for a gauntlet:
+#' Here's an example of how to arrange expressions:
 #' 
 #' ```
 #' ~ test_col_exists(., columns = vars(count)),
@@ -52,7 +53,7 @@
 #' ~ col_vals_gt(., columns = vars(count), value = 2)
 #' ```
 #' 
-#' This gauntlet concentrates on the column called `count` and first checks
+#' This series concentrates on the column called `count` and first checks
 #' whether the column exists, then checks if that column is numeric, and then
 #' finally validates whether all values in the column are greater than `2`.
 #' 
@@ -116,29 +117,29 @@
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `gauntlet()` is represented in YAML (under the top-level `steps` key as a
+#' `serially()` is represented in YAML (under the top-level `steps` key as a
 #' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `gauntlet()` as a
+#' function. Here is an example of how a complex call of `serially()` as a
 #' validation step is expressed in R code and in the corresponding YAML
 #' representation.
 #' 
 #' ```
 #' # R statement
 #' agent %>% 
-#'   gauntlet(
+#'   serially(
 #'     ~ col_vals_lt(., vars(a), 8),
 #'     ~ col_vals_gt(., vars(c), vars(a)),
 #'     ~ col_vals_not_null(., vars(b)),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
-#'     label = "The `gauntlet()` step.",
+#'     label = "The `serially()` step.",
 #'     active = FALSE
 #'   )
 #' 
 #' # YAML representation
 #' steps:
-#' - gauntlet:
+#' - serially:
 #'     fns:
 #'     - ~col_vals_lt(., vars(a), 8)
 #'     - ~col_vals_gt(., vars(c), vars(a))
@@ -148,7 +149,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `gauntlet()` step.
+#'     label: The `serially()` step.
 #'     active: false
 #' ```
 #' 
@@ -162,16 +163,15 @@
 #' @inheritParams col_vals_gt
 #' @param ... a collection one-sided formulas that consist of `test_*()`
 #'   function calls (e.g., [test_col_vals_between()], etc.) arranged in sequence
-#'   of intended interrogation order. Typically, validations up until
-#'   the final one would have some `threshold` value set (default is `1`) for
-#'   short circuiting within the gauntlet. A finishing validation function
-#'   call (e.g., [col_vals_increasing()], etc.) can optionally be inserted at
-#'   the end of the gauntlet, serving as a validation step that only
-#'   undergoes interrogation if the prior tests adequately pass. An example of
-#'   this
-#'   is `~ test_column_exists(., vars(a)), ~ col_vals_not_null(., vars(a))`).
+#'   of intended interrogation order. Typically, validations up until the final
+#'   one would have some `threshold` value set (default is `1`) for short
+#'   circuiting within the series A finishing validation function call (e.g.,
+#'   [col_vals_increasing()], etc.) can optionally be inserted at the end of the
+#'   series, serving as a validation step that only undergoes interrogation if
+#'   the prior tests adequately pass. An example of this is
+#'   `~ test_column_exists(., vars(a)), ~ col_vals_not_null(., vars(a))`).
 #' @param .list Allows for the use of a list as an input alternative to `...`.
-#'
+#' 
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
 #'   object or a table was passed to `x`). The expectation function invisibly
@@ -185,7 +185,7 @@
 #' 2-21
 #' 
 #' @export
-gauntlet <- function(x,
+serially <- function(x,
                      ...,
                      .list = list2(...),
                      preconditions = NULL,
@@ -239,11 +239,11 @@ gauntlet <- function(x,
   if (!in_set_of_fns) {
     
     stop(
-      "All `gauntlet()` steps must use validation or test function calls.",
+      "All `serially()` steps must use validation or test function calls.",
       call. = FALSE
     )
   }
-
+  
   # There must be at least one `test_*()` step; if not, stop the function
   has_a_test <- 
     any(assertion_types %in% paste0("test_", all_validations_fns_vec()))
@@ -251,12 +251,12 @@ gauntlet <- function(x,
   if (!has_a_test) {
     
     stop(
-      "There must be at least one `test_*()` function call in a `gauntlet()`.",
+      "There must be at least one `test_*()` function call in `serially()`.",
       call. = FALSE
     )
   }
   
-  # Check whether the `gauntlet()` has any validation calls
+  # Check whether the series has any validation calls
   any_validations <-
     any(assertion_types %in% all_validations_fns_vec())
   
@@ -273,7 +273,7 @@ gauntlet <- function(x,
     if (has_multiple_validations) {
       
       stop(
-        "There cannot be multiple validation function calls in a `gauntlet()`",
+        "There cannot be multiple validation function calls in `serially()`",
         call. = FALSE
       )
     }
@@ -286,7 +286,7 @@ gauntlet <- function(x,
     if (!validation_is_final_call) {
       
       stop(
-        "The validation function call must be the final one in a `gauntlet()`",
+        "The validation function call must be the final one in `serially()`",
         call. = FALSE
       )
     }
@@ -320,7 +320,7 @@ gauntlet <- function(x,
       )
     
     if (has_expandable_cols_arg) {
-
+      
       has_multiple_cols <- 
         rlang::as_label(validation_step_call_args[[2]]) %>%
         gsub("^\"|\"$", "", .) %>%
@@ -336,7 +336,7 @@ gauntlet <- function(x,
       }
     }
   }
-
+  
   # Resolve segments into list
   segments_list <-
     resolve_segments(
@@ -349,7 +349,7 @@ gauntlet <- function(x,
     
     secret_agent <-
       create_agent(x, label = "::QUIET::") %>%
-      gauntlet(
+      serially(
         .list = .list,
         preconditions = preconditions,
         segments = segments,
@@ -381,10 +381,9 @@ gauntlet <- function(x,
             tidy_gsub("\\(.*$", "")
         }
       )
-
-    # Initialize the `gauntlet_validation_set` tibble; this
-    # will be populated by all validations using gauntlet tests
-    gauntlet_validation_set <- dplyr::tibble()
+    
+    # Initialize the `serially_validation_set` tibble
+    serially_validation_set <- dplyr::tibble()
     
     has_final_validation <-
       assertion_types[length(assertion_types)] %in% all_validations_fns_vec()
@@ -457,7 +456,7 @@ gauntlet <- function(x,
     brief <-
       create_autobrief(
         agent = agent,
-        assertion_type = "gauntlet",
+        assertion_type = "serially",
         preconditions = preconditions,
         values = list(
           validation_formulas = validation_formulas,
@@ -491,7 +490,7 @@ gauntlet <- function(x,
     agent <-
       create_validation_step(
         agent = agent,
-        assertion_type = "gauntlet",
+        assertion_type = "serially",
         i_o = i_o,
         columns_expr = NULL,
         column = NULL,

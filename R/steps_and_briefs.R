@@ -187,11 +187,52 @@ create_autobrief <- function(agent,
                              column = NULL,
                              values = NULL) {
 
+  if (assertion_type == "gauntlet") {
+
+    # Develop a brief that explains how many tests are included
+    # and what the final expectation is (if included)
+    
+    # Get number of test steps
+    test_step_count <- values$total_test_calls
+    
+    # Get assertion type for final validation, if present
+    has_final_validation <- values$has_final_validation
+
+    if (has_final_validation) {
+      assertion_type <- values$final_validation_type
+    } else {
+      autobrief <- ""
+    }
+    
+    preconditions <- values$final_validation_preconditions
+    column <- values$final_validation_column
+    values <- values$final_validation_values
+    
+    finalize_gauntlet_brief <- TRUE
+    
+  } else {
+    
+    finalize_gauntlet_brief <- FALSE
+  }
+  
   lang <- agent$lang
-  precondition_text <- prep_precondition_text(preconditions, lang = lang)
-  column_computed_text <- prep_column_computed_text(agent, column, lang = lang)
-  values_text <- prep_values_text(values, lang = lang)
-  column_text <- prep_column_text(column)
+  
+  precondition_text <- 
+    prep_precondition_text(
+      preconditions = preconditions,
+      lang = lang
+    )
+  
+  column_computed_text <- 
+    prep_column_computed_text(
+      agent = agent,
+      column = column,
+      lang = lang
+    )
+  
+  column_text <- prep_column_text(column = column)
+  
+  values_text <- prep_values_text(values = values, lang = lang)
   
   if (assertion_type %in%
       c("col_vals_gt", "col_vals_gte",
@@ -383,12 +424,22 @@ create_autobrief <- function(agent,
     autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
-  if (assertion_type == "gauntlet") {
+  if (finalize_gauntlet_brief) {
     
-    values_text <- values_text %>% tidy_gsub("\"", "'")
-    expectation_text <- 
-      prep_gauntlet_expectation_text(values_text, lang = lang)
-    autobrief <- finalize_autobrief(expectation_text, precondition_text)
+    gauntlet_test_text <-
+      get_gauntlet_test_text(
+        test_step_count = test_step_count,
+        lang = lang
+      )
+    
+    if (test_step_count == 1) {
+      
+      autobrief <- gauntlet_test_text
+    
+    } else {
+      
+      autobrief <- paste(gauntlet_test_text, autobrief)
+    }
   }
   
   autobrief
@@ -637,12 +688,20 @@ prep_conjointly_expectation_text <- function(values_text,
   glue::glue(get_lsv("autobriefs/conjointly_expectation_text")[[lang]])
 }
 
-prep_gauntlet_expectation_text <- function(values_text,
-                                           lang) {
+get_gauntlet_test_text <- function(test_step_count,
+                                   lang) {
   
-  glue::glue(get_lsv("autobriefs/gauntlet_expectation_text")[[lang]])
+  if (test_step_count > 1) {
+    
+    as.character(
+      glue::glue(get_lsv("autobriefs/gauntlet_expectation_tests_text")[[lang]])
+    )
+    
+  } else {
+    
+    get_lsv("autobriefs/gauntlet_expectation_test_text")[[lang]]
+  }
 }
-
 
 prep_col_exists_expectation_text <- function(column_text,
                                              lang) {

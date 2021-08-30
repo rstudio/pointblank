@@ -367,12 +367,107 @@ gauntlet <- function(x,
   
   if (is.null(brief)) {
     
+    validation_n <- length(validation_formulas)
+    
+    assertion_types <-
+      vapply(
+        validation_formulas,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          x %>%
+            rlang::f_rhs() %>%
+            rlang::expr_deparse() %>%
+            tidy_gsub("\\(.*$", "")
+        }
+      )
+
+    # Initialize the `gauntlet_validation_set` tibble; this
+    # will be populated by all validations using gauntlet tests
+    gauntlet_validation_set <- dplyr::tibble()
+    
+    has_final_validation <-
+      assertion_types[length(assertion_types)] %in% all_validations_fns_vec()
+    
+    # Get the total number of `test_*()` calls supplied
+    test_call_n <- 
+      if (has_final_validation) validation_n - 1 else validation_n
+    
+    #
+    # Determine the total number of test steps
+    #
+    
+    # Create a `double_agent` that will be used just for determining
+    # the number of test steps
+    double_agent <- create_agent(tbl = dplyr::tibble(), label = "::QUIET::")
+    
+    for (k in seq_len(test_call_n)) {
+      
+      double_agent <-
+        eval(
+          expr = parse(
+            text =
+              validation_formulas[[k]] %>%
+              rlang::f_rhs() %>%
+              rlang::expr_deparse() %>%
+              tidy_gsub("(.", "(double_agent", fixed = TRUE) %>%
+              tidy_gsub("^test_", "") %>%
+              tidy_gsub("threshold\\s+?=\\s.*$", ")") %>%
+              tidy_gsub(",\\s+?\\)$", ")")
+            
+          ),
+          envir = NULL
+        )
+    }
+    
+    test_step_n <- nrow(double_agent$validation_set)
+    
+    if (has_final_validation) {
+      
+      final_validation_type <- assertion_types[length(assertion_types)]
+      
+      double_agent <- create_agent(tbl = dplyr::tibble(), label = "::QUIET::")
+      
+      double_agent <-
+        eval(
+          expr = parse(
+            text =
+              validation_formulas[[length(validation_formulas)]] %>%
+              rlang::f_rhs() %>%
+              rlang::expr_deparse() %>%
+              tidy_gsub("(.", "(double_agent", fixed = TRUE) %>%
+              tidy_gsub("^test_", "") %>%
+              tidy_gsub("threshold\\s+?=\\s.*$", ")") %>%
+              tidy_gsub(",\\s+?\\)$", ")")
+            
+          ),
+          envir = NULL
+        )
+      
+      final_validation_values <- double_agent$validation_set$values
+      final_validation_column <- double_agent$validation_set$column
+      
+    } else {
+      
+      final_validation_type <- NA_character_
+      final_validation_values <- list(NULL)
+      final_validation_column <- list(NULL)
+    }
+    
     brief <-
       create_autobrief(
         agent = agent,
         assertion_type = "gauntlet",
         preconditions = preconditions,
-        values = validation_formulas
+        values = list(
+          validation_formulas = validation_formulas,
+          total_test_calls = test_call_n,
+          total_test_steps = test_step_n,
+          has_final_validation = has_final_validation,
+          final_validation_type = final_validation_type,
+          final_validation_column = final_validation_column,
+          final_validation_values = final_validation_values
+        )
       )
   }
   

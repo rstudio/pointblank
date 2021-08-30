@@ -548,6 +548,8 @@ get_agent_report <- function(agent,
       USE.NAMES = FALSE,
       FUN = function(x) {
         
+        # TODO: Display all columns used in conjointly case
+        
         # Get the `column` value
         column_i <- validation_set$column[[x]]
         
@@ -700,7 +702,41 @@ get_agent_report <- function(agent,
         # Get the `assertion_type` as a string
         assertion_str <- assertion_type[x]
         
-        if (assertion_str == "gauntlet" && has_agent_intel(agent)) {
+        # If the step is a gauntlet, then there are two possibilities
+        # for what should be displayed in the values column
+        # [1] has final validation: show the values for validation step
+        # [2] has no final validation and all tests passed: display the
+        #     number of tests performed
+        # [3] has no final validation and a test failed: show the values
+        #     for the failing test step
+        if (
+          assertion_str == "gauntlet"
+        ) {
+
+          if (!has_agent_intel(agent)) {
+            
+            # TODO: Get the exact number of test steps rather than
+            # getting the number of expressions (each expr could
+            # expand to multiple steps)
+            
+            step_text <- 
+              paste0(
+                length(values_i), " ",
+                get_lsv(
+                  paste0(
+                    "agent_report/report_col_step",
+                    ifelse(length(values_i) > 1, "s", "")
+                  )
+                )[[lang]]
+              )
+            
+            return(
+              paste0(
+                "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "font-size: 0.75rem;\">", step_text, "</p></div>"
+              )
+            )
+          }
           
           interrogation_notes <-
             agent$validation_set[x, ]$interrogation_notes[[1]]
@@ -716,25 +752,23 @@ get_agent_report <- function(agent,
             total_test_steps <- interrogation_notes$total_test_steps
             
             # TODO: change localized string to be: `x TESTS`
+            step_text <- 
+              paste0(
+                total_test_steps, " ",
+                get_lsv(
+                  paste0(
+                    "agent_report/report_col_step",
+                    ifelse(total_test_steps > 1, "s", "")
+                  )
+                )[[lang]]
+              )
             
-            if (total_test_steps > 1) {
-              
-              return(
-                paste0(
-                  total_test_steps, " ",
-                  get_lsv("agent_report/report_col_steps")[[lang]]
-                )
+            return(
+              paste0(
+                "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "font-size: 0.75rem;\">", step_text, "</p></div>"
               )
-              
-            } else {
-              
-              return( 
-                paste0(
-                  total_test_steps, " ",
-                  get_lsv("agent_report/report_col_step")[[lang]]
-                )
-              )
-            }
+            )
             
           } else if (
             !interrogation_notes$has_final_validation &&
@@ -780,7 +814,27 @@ get_agent_report <- function(agent,
           }
         }
         
-        if (
+        if (assertion_str == "conjointly") {
+          
+          length_values_i <- length(values_i)
+          
+          step_text <- 
+            paste0(
+              length_values_i, " ",
+              get_lsv(
+                paste0(
+                  "agent_report/report_col_step",
+                  ifelse(length_values_i > 1, "s", "")
+                )
+              )[[lang]]
+            )
+          
+          paste0(
+            "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+            "font-size: 0.75rem;\">", step_text, "</p></div>"
+          )
+          
+        } else if (
           !is.null(values_i) &&
           !is.null(names(values_i)) &&
           all(names(values_i) %in% c("TRUE", "FALSE"))
@@ -932,36 +986,6 @@ get_agent_report <- function(agent,
               "</p></div>"
             )
           }
-          
-        } else if (
-          is.list(values_i) &&
-          length(values_i) > 0 &&
-          !inherits(values_i, "quosures")
-        ) {
-          
-          # Conjointly case
-          
-          if (length(values_i) > 1) {
-            
-            step_text <- 
-              paste0(
-                length(values_i), " ",
-                get_lsv("agent_report/report_col_steps")[[lang]]
-              )
-            
-          } else {
-            
-            step_text <- 
-              paste0(
-                length(values_i), " ",
-                get_lsv("agent_report/report_col_step")[[lang]]
-              )
-          }
-          
-          paste0(
-            "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
-            "font-size: 0.75rem;\">", step_text, "</p></div>"
-          )
           
         } else if (is.null(values_i)) {
           

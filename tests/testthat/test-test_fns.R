@@ -11,6 +11,13 @@ tbl_conjointly <-
     c = c(2, 6, 8, NA, 3, 8)
   )
 
+tbl_serially <-
+  dplyr::tibble(
+    a = c(5, 2, 6),
+    b = c(6, 4, 9),
+    c = c(1, 2, 3)
+  )
+
 tbl_complete_yes <-
   dplyr::tibble(
     a = c(5, 7, 6, 5, 8, 7),
@@ -332,6 +339,118 @@ test_that("pointblank expectation functions produce the correct results", {
       ~ col_vals_gt(., vars(a), 6),
       ~ col_vals_lt(., vars(b), 10),
       ~ col_vals_not_null(., vars(c)),
+      threshold = 0.01
+    ), 
+    failed_beyond_proportional
+  )
+  
+  #
+  # test_serially()
+  #
+  
+  expect_true(
+    test_serially(
+      tbl_serially,
+      ~ test_col_is_numeric(., vars(a, b)),    # PASS
+      ~ test_col_vals_not_null(., vars(a, b)), # PASS
+      ~ col_vals_gt(., vars(b), vars(a))       # PASS
+    )
+  )
+  
+  expect_true(
+    test_serially(
+      tbl_serially,
+      ~ test_col_is_numeric(., vars(a, b)),    # PASS
+      ~ test_col_vals_not_null(., vars(a, b)), # PASS
+      ~ col_vals_gt(., vars(b), vars(a)),      # PASS
+      threshold = 5
+    )
+  )
+  
+  expect_true(
+    test_serially(
+      tbl_serially,
+      ~ test_col_is_numeric(., vars(a, b)),    # PASS
+      ~ test_col_vals_not_null(., vars(a, b)), # PASS
+      ~ col_vals_gt(., vars(c), 1),            # PASS 2/3
+      threshold = 2
+    )
+  )
+  
+  expect_false(
+    test_serially(
+      tbl_serially,
+      ~ test_col_is_numeric(., vars(a, b)),    # PASS, PASS
+      ~ test_col_vals_not_null(., vars(a, b)), # PASS, PASS
+      ~ col_vals_gt(., vars(c), 1),            # PASS 2/3
+      threshold = 1
+    )
+  )
+  
+  expect_false(
+    test_serially(
+      tbl_serially,
+      ~ test_col_is_character(., vars(a, b)),  # FAIL, would FAIL
+      ~ test_col_vals_not_null(., vars(a, b)), # would PASS, PASS
+      ~ col_vals_gt(., vars(b), vars(a)),      # would PASS
+    )
+  )
+  
+  expect_false(
+    test_serially(
+      tbl_serially,
+      ~ test_col_is_numeric(., vars(a, b)),      # PASS, PASS
+      ~ test_col_vals_increasing(., vars(c, b)), # PASS, FAIL
+      ~ col_vals_gt(., vars(b), vars(a)),        # would PASS
+    )
+  )
+  
+  expect_true(
+    test_serially(
+      tbl_serially,
+      ~ test_col_is_character(., vars(a, b), threshold = 2),  # PASS, PASS
+      ~ test_col_vals_not_null(., vars(a, b)),                # PASS, PASS
+      ~ col_vals_gt(., vars(b), vars(a))                      # PASS
+    )
+  )
+  
+  expect_false(
+    test_serially(
+      tbl_serially,
+      ~ test_col_is_character(., vars(a, b), threshold = 2),  # PASS, PASS
+      ~ test_col_vals_not_null(., vars(a, b)),                # PASS, PASS
+      ~ col_vals_gt(., vars(c), 1),                           # FAIL
+      threshold = 1
+    )
+  )
+  
+  expect_true(
+    test_serially(
+      tbl_serially,
+      ~ test_col_is_character(., vars(a, b), threshold = 2),  # PASS, PASS
+      ~ test_col_vals_not_null(., vars(a, b)),                # PASS, PASS
+      ~ col_vals_gt(., vars(c), 1),                           # PASS
+      threshold = 2
+    )
+  )
+  
+  expect_false(
+    test_serially(
+      tbl_serially,
+      ~ test_col_is_character(., vars(a, b), threshold = 2),  # PASS, PASS
+      ~ test_col_vals_not_null(., vars(a, b)),                # PASS, PASS
+      ~ col_vals_gt(., vars(c), 1),                           # FAIL
+      threshold = 1
+    ), 
+    failed_beyond_absolute
+  )
+  
+  expect_false(
+    test_serially(
+      tbl_serially,
+      ~ test_col_is_character(., vars(a, b), threshold = 2),  # PASS, PASS
+      ~ test_col_vals_not_null(., vars(a, b)),                # PASS, PASS
+      ~ col_vals_gt(., vars(c), 1),                           # FAIL
       threshold = 0.01
     ), 
     failed_beyond_proportional

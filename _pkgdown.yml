@@ -63,6 +63,7 @@ reference:
     - col_vals_within_spec
     - col_vals_expr
     - conjointly
+    - serially
     - rows_distinct
     - rows_complete
     - col_is_character

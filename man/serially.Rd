@@ -236,7 +236,6 @@ agent \%>\%
     ~ col_vals_gt(., vars(c), vars(a)),
     ~ col_vals_not_null(., vars(b)),
     preconditions = ~ . \%>\% dplyr::filter(a < 10),
-    segments = b ~ c("group_1", "group_2"),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
     label = "The `serially()` step.",
     active = FALSE
@@ -250,7 +249,6 @@ steps:
     - ~col_vals_gt(., vars(c), vars(a))
     - ~col_vals_not_null(., vars(b))
     preconditions: ~. \%>\% dplyr::filter(a < 10)
-    segments: b ~ c("group_1", "group_2")
     actions:
       warn_fraction: 0.1
       stop_fraction: 0.2

@@ -328,10 +328,11 @@ serially <- function(x,
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
+        
         x %>%
           rlang::f_rhs() %>%
-          rlang::expr_deparse() %>%
-          tidy_gsub("\\(.*$", "")
+          as.character() %>%
+          .[[1]]
       }
     )
   
@@ -487,8 +488,8 @@ serially <- function(x,
         FUN = function(x) {
           x %>%
             rlang::f_rhs() %>%
-            rlang::expr_deparse() %>%
-            tidy_gsub("\\(.*$", "")
+            as.character() %>%
+            .[[1]]
         }
       )
     

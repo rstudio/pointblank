@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Perform multiple rowwise validations for joint validity — conjointly • pointblank</title>
+<title>Run several tests and a final validation in a serial manner — serially • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,27 +46,47 @@
 
 
 
-<meta property="og:title" content="Perform multiple rowwise validations for joint validity — conjointly" />
-<meta property="og:description" content="The conjointly() validation function, the expect_conjointly() expectation
-function, and the test_conjointly() test function all check whether test
-units at each index (typically each row) all pass multiple validations. We
-can use validation functions that validate row units (the col_vals_*()
-series), check for column existence (col_exists()), or validate column type
-(the col_is_*() series). Because of the imposed constraint on the allowed
-validation functions, the ensemble of test units are either comprised rows of
-the table (after any common preconditions have been applied) or are single
-test units (for those functions that validate columns).
-Each of the functions used in a conjointly() validation step (composed
-using multiple validation function calls) ultimately perform a rowwise test
-of whether all sub-validations reported a pass for the same test units. In
-practice, an example of a joint validation is testing whether values for
-column a are greater than a specific value while adjacent values in column
-b lie within a specified range. The validation functions to be part of the
-conjoint validation are to be supplied as one-sided R formulas (using a
-leading ~, and having a . stand in as the data object). The validation
-function can be used directly on a data table or with an agent object
-(technically, a ptblank_agent object) whereas the expectation and test
-functions can only be used with a data table." />
+<meta property="og:title" content="Run several tests and a final validation in a serial manner — serially" />
+<meta property="og:description" content="The serially() validation function allows for a series of tests to run in
+sequence before either culminating in a final validation step or simply
+exiting the series. This construction allows for pre-testing that may make
+sense before a validation step. For example, there may be situations where
+it's vital to check a column type before performing a validation on the same
+column (since having the wrong type can result in an evaluation error for the
+subsequent validation). Another serial workflow might entail having a bundle
+of checks in a prescribed order and, if all pass, then the goal of this
+testing has been achieved (e.g., checking if a table matches another through
+a series of increasingly specific tests).
+A series as specified inside serially() is composed with a listing of
+calls, and we would draw upon test functions (T) to describe tests and
+optionally provide a finalizing call with a validation function (V).
+The following constraints apply:
+there must be at least one test function in the series (T -&amp;gt; V is
+good, V is not)
+there can only be one validation function call, V; it's optional but,
+if included, it must be placed at the end (T -&amp;gt; T -&amp;gt; V is good,
+these sequences are bad: (1) T -&amp;gt; V -&amp;gt; T, (2) T -&amp;gt; T -&amp;gt;
+V -&amp;gt; V)
+a validation function call (V), if included, mustn't itself yield
+multiple validation steps (this may happen when providing multiple columns
+or any segments)
+
+
+Here's an example of how to arrange expressions:~ test_col_exists(., columns = vars(count)),
+~ test_col_is_numeric(., columns = vars(count)),
+~ col_vals_gt(., columns = vars(count), value = 2)
+
+
+This series concentrates on the column called count and first checks
+whether the column exists, then checks if that column is numeric, and then
+finally validates whether all values in the column are greater than 2.
+Note that in the above listing of calls, the . stands in for the target
+table and is always necessary here. Also important is that all test_*()
+functions have a threshold argument that is set to 1 by default. Should
+you need to bump up the threshold value it can be changed to a different
+integer value (as an absolute threshold of failing test units) or a
+decimal value between 0 and 1 (serving as a fractional threshold of
+failing test units)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -178,40 +198,59 @@ functions can only be used with a data table." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Perform multiple rowwise validations for joint validity</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/conjointly.R'><code>R/conjointly.R</code></a></small>
-    <div class="hidden name"><code>conjointly.Rd</code></div>
+    <h1>Run several tests and a final validation in a serial manner</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/serially.R'><code>R/serially.R</code></a></small>
+    <div class="hidden name"><code>serially.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>conjointly()</code> validation function, the <code>expect_conjointly()</code> expectation
-function, and the <code>test_conjointly()</code> test function all check whether test
-units at each index (typically each row) all pass multiple validations. We
-can use validation functions that validate row units (the <code>col_vals_*()</code>
-series), check for column existence (<code><a href='col_exists.html'>col_exists()</a></code>), or validate column type
-(the <code>col_is_*()</code> series). Because of the imposed constraint on the allowed
-validation functions, the ensemble of test units are either comprised rows of
-the table (after any common <code>preconditions</code> have been applied) or are single
-test units (for those functions that validate columns).</p>
-<p>Each of the functions used in a <code>conjointly()</code> validation step (composed
-using multiple validation function calls) ultimately perform a rowwise test
-of whether all sub-validations reported a <em>pass</em> for the same test units. In
-practice, an example of a joint validation is testing whether values for
-column <code>a</code> are greater than a specific value while adjacent values in column
-<code>b</code> lie within a specified range. The validation functions to be part of the
-conjoint validation are to be supplied as one-sided <strong>R</strong> formulas (using a
-leading <code>~</code>, and having a <code>.</code> stand in as the data object). The validation
-function can be used directly on a data table or with an <em>agent</em> object
-(technically, a <code>ptblank_agent</code> object) whereas the expectation and test
-functions can only be used with a data table.</p>
+    <p>The <code>serially()</code> validation function allows for a series of tests to run in
+sequence before either culminating in a final validation step or simply
+exiting the series. This construction allows for pre-testing that may make
+sense before a validation step. For example, there may be situations where
+it's vital to check a column type before performing a validation on the same
+column (since having the wrong type can result in an evaluation error for the
+subsequent validation). Another serial workflow might entail having a bundle
+of checks in a prescribed order and, if all pass, then the goal of this
+testing has been achieved (e.g., checking if a table matches another through
+a series of increasingly specific tests).</p>
+<p>A series as specified inside <code>serially()</code> is composed with a listing of
+calls, and we would draw upon test functions (<strong>T</strong>) to describe tests and
+optionally provide a finalizing call with a validation function (<strong>V</strong>).
+The following constraints apply:</p><ul>
+<li><p>there must be at least one test function in the series (<strong>T</strong> -&gt; <strong>V</strong> is
+good, <strong>V</strong> is <em>not</em>)</p></li>
+<li><p>there can only be one validation function call, <strong>V</strong>; it's optional but,
+if included, it must be placed at the end (<strong>T</strong> -&gt; <strong>T</strong> -&gt; <strong>V</strong> is good,
+these sequences are bad: (1) <strong>T</strong> -&gt; <strong>V</strong> -&gt; <strong>T</strong>, (2) <strong>T</strong> -&gt; <strong>T</strong> -&gt;
+<strong>V</strong> -&gt; <strong>V</strong>)</p></li>
+<li><p>a validation function call (<strong>V</strong>), if included, mustn't itself yield
+multiple validation steps (this may happen when providing multiple <code>columns</code>
+or any <code>segments</code>)</p></li>
+</ul>
+
+<p>Here's an example of how to arrange expressions:</p><pre><code>~ test_col_exists(., columns = vars(count)),
+~ test_col_is_numeric(., columns = vars(count)),
+~ col_vals_gt(., columns = vars(count), value = 2)
+</code></pre>
+
+<p>This series concentrates on the column called <code>count</code> and first checks
+whether the column exists, then checks if that column is numeric, and then
+finally validates whether all values in the column are greater than <code>2</code>.</p>
+<p>Note that in the above listing of calls, the <code>.</code> stands in for the target
+table and is always necessary here. Also important is that all <code>test_*()</code>
+functions have a <code>threshold</code> argument that is set to <code>1</code> by default. Should
+you need to bump up the threshold value it can be changed to a different
+integer value (as an absolute threshold of failing test units) or a
+decimal value between <code>0</code> and <code>1</code> (serving as a fractional threshold of
+failing test units).</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>conjointly</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>serially</span><span class='op'>(</span>
   <span class='va'>x</span>,
   <span class='va'>...</span>,
   .list <span class='op'>=</span> <span class='fu'>list2</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>,
   preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
-  segments <span class='op'>=</span> <span class='cn'>NULL</span>,
   actions <span class='op'>=</span> <span class='cn'>NULL</span>,
   step_id <span class='op'>=</span> <span class='cn'>NULL</span>,
   label <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -219,7 +258,7 @@ functions can only be used with a data table.</p>
   active <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
 
-<span class='fu'>expect_conjointly</span><span class='op'>(</span>
+<span class='fu'>expect_serially</span><span class='op'>(</span>
   <span class='va'>object</span>,
   <span class='va'>...</span>,
   .list <span class='op'>=</span> <span class='fu'>list2</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>,
@@ -227,7 +266,7 @@ functions can only be used with a data table.</p>
   threshold <span class='op'>=</span> <span class='fl'>1</span>
 <span class='op'>)</span>
 
-<span class='fu'>test_conjointly</span><span class='op'>(</span>
+<span class='fu'>test_serially</span><span class='op'>(</span>
   <span class='va'>object</span>,
   <span class='va'>...</span>,
   .list <span class='op'>=</span> <span class='fu'>list2</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>,
@@ -246,10 +285,15 @@ created with <code><a href='create_agent.html'>create_agent()</a></code>.</p></t
     </tr>
     <tr>
       <th>...</th>
-      <td><p>a collection one-sided formulas that consist of validation
-functions that validate row units (the <code>col_vals_*()</code> series), column
-existence (<code><a href='col_exists.html'>col_exists()</a></code>), or column type (the <code>col_is_*()</code> series). An
-example of this is <code>~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(., vars(b)</code>).</p></td>
+      <td><p>a collection one-sided formulas that consist of <code>test_*()</code>
+function calls (e.g., <code><a href='col_vals_between.html'>test_col_vals_between()</a></code>, etc.) arranged in sequence
+of intended interrogation order. Typically, validations up until the final
+one would have some <code>threshold</code> value set (default is <code>1</code>) for short
+circuiting within the series. A finishing validation function call (e.g.,
+<code><a href='col_vals_increasing.html'>col_vals_increasing()</a></code>, etc.) can optionally be inserted at the end of the
+series, serving as a validation step that only undergoes interrogation if
+the prior tests adequately pass. An example of this is
+<code>~ test_column_exists(., vars(a)), ~ col_vals_not_null(., vars(a))</code>).</p></td>
     </tr>
     <tr>
       <th>.list</th>
@@ -263,14 +307,6 @@ one-sided R formula using a leading <code>~</code> (e.g.,
 <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code> or as a function (e.g.,
 <code>function(x) dplyr::mutate(x, col = col + 10)</code>. See the <em>Preconditions</em>
 section for more information.</p></td>
-    </tr>
-    <tr>
-      <th>segments</th>
-      <td><p>An optional expression or set of expressions (held in a list)
-that serve to segment the target table by column values. Each expression
-can be given in one of two ways: (1) as column names, or (2) as a two-sided
-formula where the LHS holds a column name and the RHS contains the column
-values to segment on. See the <em>Segments</em> section for more details on this.</p></td>
     </tr>
     <tr>
       <th>actions</th>
@@ -378,34 +414,6 @@ table resides in a database). The code is most easily supplied as a one-sided
 <strong>R</strong> formula (using a leading <code>~</code>). In the formula representation, the <code>.</code>
 serves as the input data table to be transformed (e.g., <code>~ . %&gt;% dplyr::mutate(col_b = col_a + 10)</code>). Alternatively, a function could instead
 be supplied (e.g., <code>function(x) dplyr::mutate(x, col_b = col_a + 10)</code>).</p>
-    <h2 class="hasAnchor" id="segments"><a class="anchor" href="#segments"></a>Segments</h2>
-
-    
-
-<p>By using the <code>segments</code> argument, it's possible to define a particular
-validation with segments (or row slices) of the target table. An optional
-expression or set of expressions that serve to segment the target table by
-column values. Each expression can be given in one of two ways: (1) as column
-names, or (2) as a two-sided formula where the LHS holds a column name and
-the RHS contains the column values to segment on.</p>
-<p>As an example of the first type of expression that can be used,
-<code>vars(a_column)</code> will segment the target table in however many unique values
-are present in the column called <code>a_column</code>. This is great if every unique
-value in a particular column (like different locations, or different dates)
-requires it's own repeating validation.</p>
-<p>With a formula, we can be more selective with which column values should be
-used for segmentation. Using <code>a_column ~ c("group_1", "group_2")</code> will
-attempt to obtain two segments where one is a slice of data where the value
-<code>"group_1"</code> exists in the column named <code>"a_column"</code>, and, the other is a
-slice where <code>"group_2"</code> exists in the same column. Each group of rows
-resolved from the formula will result in a separate validation step.</p>
-<p>If there are multiple <code>columns</code> specified then the potential number of
-validation steps will be <code>m</code> columns multiplied by <code>n</code> segments resolved.</p>
-<p>Segmentation will always occur after <code>preconditions</code> (i.e., statements that
-mutate the target table), if any, are applied. With this type of one-two
-combo, it's possible to generate labels for segmentation using an expression
-for <code>preconditions</code> and refer to those labels in <code>segments</code> without having to
-generate a separate version of the target table.</p>
     <h2 class="hasAnchor" id="actions"><a class="anchor" href="#actions"></a>Actions</h2>
 
     
@@ -439,36 +447,34 @@ then be automatically generated.</p>
 <p>A <strong>pointblank</strong> agent can be written to YAML with <code><a href='yaml_write.html'>yaml_write()</a></code> and the
 resulting YAML can be used to regenerate an agent (with <code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code>)
 or interrogate the target table (via <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></code>). When
-<code>conjointly()</code> is represented in YAML (under the top-level <code>steps</code> key as a
+<code>serially()</code> is represented in YAML (under the top-level <code>steps</code> key as a
 list member), the syntax closely follows the signature of the validation
-function. Here is an example of how a complex call of <code>conjointly()</code> as a
+function. Here is an example of how a complex call of <code>serially()</code> as a
 validation step is expressed in R code and in the corresponding YAML
 representation.</p><pre><code># R statement
 agent %&gt;% 
-  conjointly(
+  serially(
     ~ col_vals_lt(., vars(a), 8),
     ~ col_vals_gt(., vars(c), vars(a)),
     ~ col_vals_not_null(., vars(b)),
     preconditions = ~ . %&gt;% dplyr::filter(a &lt; 10),
-    segments = b ~ c("group_1", "group_2"),
     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
-    label = "The `conjointly()` step.",
+    label = "The `serially()` step.",
     active = FALSE
   )
 
 # YAML representation
 steps:
-- conjointly:
+- serially:
     fns:
     - ~col_vals_lt(., vars(a), 8)
     - ~col_vals_gt(., vars(c), vars(a))
     - ~col_vals_not_null(., vars(b))
     preconditions: ~. %&gt;% dplyr::filter(a &lt; 10)
-    segments: b ~ c("group_1", "group_2")
     actions:
       warn_fraction: 0.1
       stop_fraction: 0.2
-    label: The `conjointly()` step.
+    label: The `serially()` step.
     active: false
 </code></pre>
 
@@ -482,7 +488,7 @@ writing to disk by using the <code><a href='yaml_agent_string.html'>yaml_agent_s
 
     
 
-<p>2-20</p>
+<p>2-21</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other validation functions: 
@@ -514,9 +520,9 @@ writing to disk by using the <code><a href='yaml_agent_string.html'>yaml_agent_s
 <code><a href='col_vals_null.html'>col_vals_null</a>()</code>,
 <code><a href='col_vals_regex.html'>col_vals_regex</a>()</code>,
 <code><a href='col_vals_within_spec.html'>col_vals_within_spec</a>()</code>,
+<code><a href='conjointly.html'>conjointly</a>()</code>,
 <code><a href='rows_complete.html'>rows_complete</a>()</code>,
-<code><a href='rows_distinct.html'>rows_distinct</a>()</code>,
-<code><a href='serially.html'>serially</a>()</code></p></div>
+<code><a href='rows_distinct.html'>rows_distinct</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># For all examples here, we'll use</span></span>
@@ -527,57 +533,70 @@ writing to disk by using the <code><a href='yaml_agent_string.html'>yaml_agent_s
 <span class='r-in'><span class='va'>tbl</span> <span class='op'>&lt;-</span></span>
 <span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span></span>
 <span class='r-in'>    a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>2</span>, <span class='fl'>6</span><span class='op'>)</span>,</span>
-<span class='r-in'>    b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>6</span><span class='op'>)</span>,</span>
-<span class='r-in'>    c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9</span>, <span class='fl'>8</span>, <span class='fl'>7</span><span class='op'>)</span></span>
+<span class='r-in'>    b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>6</span>, <span class='fl'>4</span>, <span class='fl'>9</span><span class='op'>)</span>,</span>
+<span class='r-in'>    c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
 <span class='r-in'>  </span>
 <span class='r-in'><span class='va'>tbl</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 3 × 3</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>       a     b     c</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     5     3     9</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     2     4     8</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>     6     6     7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     5     6     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     2     4     2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>     6     9     3</span>
 <span class='r-in'>  </span>
 <span class='r-in'><span class='co'># A: Using an `agent` with validation</span></span>
 <span class='r-in'><span class='co'>#    functions and then `interrogate()`</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='co'># Validate a number of things on a</span></span>
-<span class='r-in'><span class='co'># row-by-row basis using validation</span></span>
-<span class='r-in'><span class='co'># functions of the `col_vals*` type</span></span>
-<span class='r-in'><span class='co'># (all have the same number of test</span></span>
-<span class='r-in'><span class='co'># units): (1) values in `a` are less</span></span>
-<span class='r-in'><span class='co'># than `8`, (2) values in `c` are</span></span>
-<span class='r-in'><span class='co'># greater than the adjacent values in</span></span>
-<span class='r-in'><span class='co'># `a`, and (3) there aren't any NA</span></span>
-<span class='r-in'><span class='co'># values in `b`</span></span>
-<span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'><span class='co'># The `serially()` function can be set</span></span>
+<span class='r-in'><span class='co'># up to perform a series of tests and</span></span>
+<span class='r-in'><span class='co'># then perform a validation (only if</span></span>
+<span class='r-in'><span class='co'># all tests pass); here, we are going</span></span>
+<span class='r-in'><span class='co'># to (1) test whether columns `a` and</span></span>
+<span class='r-in'><span class='co'># `b` are numeric, (2) check that both</span></span>
+<span class='r-in'><span class='co'># don't have any `NA` values, and (3)</span></span>
+<span class='r-in'><span class='co'># perform a finalizing validation that</span></span>
+<span class='r-in'><span class='co'># checks whether values in `b` are</span></span>
+<span class='r-in'><span class='co'># greater than values in `a`</span></span>
+<span class='r-in'><span class='va'>agent_1</span> <span class='op'>&lt;-</span></span>
 <span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>tbl <span class='op'>=</span> <span class='va'>tbl</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'>conjointly</span><span class='op'>(</span></span>
-<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>,</span>
-<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>c</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span>,</span>
-<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_not_null.html'>col_vals_not_null</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>serially</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_is_numeric.html'>test_col_is_numeric</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_not_null.html'>test_col_vals_not_null</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'>    <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
 <span class='r-in'>  </span>
 <span class='r-in'><span class='co'># Determine if this validation</span></span>
-<span class='r-in'><span class='co'># had no failing test units (there</span></span>
-<span class='r-in'><span class='co'># are 3 test units, one for each row)</span></span>
-<span class='r-in'><span class='fu'><a href='all_passed.html'>all_passed</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># had no failing test units (there are</span></span>
+<span class='r-in'><span class='co'># are 4 tests and a final validation)</span></span>
+<span class='r-in'><span class='fu'><a href='all_passed.html'>all_passed</a></span><span class='op'>(</span><span class='va'>agent_1</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># Calling `agent` in the console</span></span>
 <span class='r-in'><span class='co'># prints the agent's report; but we</span></span>
 <span class='r-in'><span class='co'># can get a `gt_tbl` object directly</span></span>
-<span class='r-in'><span class='co'># with `get_agent_report(agent)`</span></span>
+<span class='r-in'><span class='co'># with `get_agent_report(agent_1)`</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='co'># What's going on? Think of there being</span></span>
-<span class='r-in'><span class='co'># three parallel validations, each</span></span>
-<span class='r-in'><span class='co'># producing a column of `TRUE` or `FALSE`</span></span>
-<span class='r-in'><span class='co'># values (`pass` or `fail`) and line them</span></span>
-<span class='r-in'><span class='co'># up side-by-side, any rows with any</span></span>
-<span class='r-in'><span class='co'># `FALSE` values results in a conjoint</span></span>
-<span class='r-in'><span class='co'># `fail` test unit</span></span>
+<span class='r-in'><span class='co'># What's going on? All four of the tests</span></span>
+<span class='r-in'><span class='co'># passed and so the final validation</span></span>
+<span class='r-in'><span class='co'># occurred; there were no failing test</span></span>
+<span class='r-in'><span class='co'># units in that either!</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The final validation is optional; here</span></span>
+<span class='r-in'><span class='co'># is a different agent where only the</span></span>
+<span class='r-in'><span class='co'># serial tests are performed</span></span>
+<span class='r-in'><span class='va'>agent_2</span> <span class='op'>&lt;-</span></span>
+<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span>tbl <span class='op'>=</span> <span class='va'>tbl</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>serially</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_is_numeric.html'>test_col_is_numeric</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_not_null.html'>test_col_vals_not_null</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='co'># Everything is good here too:</span></span>
+<span class='r-in'><span class='fu'><a href='all_passed.html'>all_passed</a></span><span class='op'>(</span><span class='va'>agent_2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># B: Using the validation function</span></span>
 <span class='r-in'><span class='co'>#    directly on the data (no `agent`)</span></span>
@@ -589,17 +608,17 @@ writing to disk by using the <code><a href='yaml_agent_string.html'>yaml_agent_s
 <span class='r-in'><span class='co'># behavior of side effects can be</span></span>
 <span class='r-in'><span class='co'># customized with the `actions` option</span></span>
 <span class='r-in'><span class='va'>tbl</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'>conjointly</span><span class='op'>(</span></span>
-<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>,</span>
-<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>c</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span>,</span>
-<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_not_null.html'>col_vals_not_null</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>serially</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_is_numeric.html'>test_col_is_numeric</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_not_null.html'>test_col_vals_not_null</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 3 × 3</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>       a     b     c</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     5     3     9</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     2     4     8</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>     6     6     7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     5     6     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     2     4     2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>     6     9     3</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># C: Using the expectation function</span></span>
 <span class='r-in'></span>
@@ -607,11 +626,11 @@ writing to disk by using the <code><a href='yaml_agent_string.html'>yaml_agent_s
 <span class='r-in'><span class='co'># typically perform one validation at a</span></span>
 <span class='r-in'><span class='co'># time; this is primarily used in</span></span>
 <span class='r-in'><span class='co'># testthat tests</span></span>
-<span class='r-in'><span class='fu'>expect_conjointly</span><span class='op'>(</span></span>
+<span class='r-in'><span class='fu'>expect_serially</span><span class='op'>(</span></span>
 <span class='r-in'>  <span class='va'>tbl</span>,</span>
-<span class='r-in'>  <span class='op'>~</span> <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>,</span>
-<span class='r-in'>  <span class='op'>~</span> <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>c</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span>,</span>
-<span class='r-in'>  <span class='op'>~</span> <span class='fu'><a href='col_vals_not_null.html'>col_vals_not_null</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>~</span> <span class='fu'><a href='col_is_numeric.html'>test_col_is_numeric</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='op'>~</span> <span class='fu'><a href='col_vals_not_null.html'>test_col_vals_not_null</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='op'>~</span> <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># D: Using the test function</span></span>
@@ -620,10 +639,10 @@ writing to disk by using the <code><a href='yaml_agent_string.html'>yaml_agent_s
 <span class='r-in'><span class='co'># get a single logical value returned</span></span>
 <span class='r-in'><span class='co'># to us</span></span>
 <span class='r-in'><span class='va'>tbl</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'>test_conjointly</span><span class='op'>(</span></span>
-<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>,</span>
-<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>c</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span>,</span>
-<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_not_null.html'>col_vals_not_null</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>test_serially</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_is_numeric.html'>test_col_is_numeric</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_not_null.html'>test_col_vals_not_null</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='op'>~</span> <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
 <span class='r-in'></span>

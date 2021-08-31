@@ -489,9 +489,10 @@ interrogate <- function(agent,
         
         if (!all(is.na(stop_vec)) && any(stop_vec)) {
           
-          # Get the tbl_checked
-          stop_idx <- which(stop_vec)
+          # Get the first instance of a STOP
+          stop_idx <- min(which(stop_vec))
           
+          # Get the `tbl_checked` object at the `stop_idx` index
           tbl_check <-
             double_agent$validation_set$tbl_checked[[stop_idx]][[1]]
           

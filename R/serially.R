@@ -182,6 +182,12 @@
 #' @section Function ID:
 #' 2-21
 #' 
+#' @name serially
+NULL
+
+#' @rdname serially
+#' @import rlang
+#' 
 #' @export
 serially <- function(x,
                      ...,

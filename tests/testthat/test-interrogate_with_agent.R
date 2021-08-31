@@ -1562,6 +1562,11 @@ test_that("Select validation steps can be `active` or not", {
       ~ col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
       ~ col_vals_not_null(., columns = vars(d))
     ) %>%
+    serially(
+      ~ test_col_vals_gt(., columns = vars(a), value = 0),
+      ~ test_col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
+      ~ col_vals_not_null(., columns = vars(d))
+    ) %>%
     interrogate()
   
   # Expect the `active` parameter in each validation step
@@ -1609,6 +1614,12 @@ test_that("Select validation steps can be `active` or not", {
     conjointly(
       ~ col_vals_gt(., columns = vars(a), value = 1),
       ~ col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
+      ~ col_vals_not_null(., columns = vars(d)),
+      active = FALSE
+    ) %>%
+    serially(
+      ~ test_col_vals_gt(., columns = vars(a), value = 0),
+      ~ test_col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
       ~ col_vals_not_null(., columns = vars(d)),
       active = FALSE
     ) %>%
@@ -1664,6 +1675,12 @@ test_that("Select validation steps can be `active` or not", {
         ~ col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
         ~ col_vals_not_null(., columns = vars(d)),
         actions = al
+      ) %>%
+      serially(
+        ~ test_col_vals_gt(., columns = vars(a), value = 0),
+        ~ test_col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
+        ~ col_vals_not_null(., columns = vars(d)),
+        actions = al
       )
   )
   
@@ -1697,6 +1714,12 @@ test_that("Select validation steps can be `active` or not", {
       conjointly(
         ~ col_vals_gt(., columns = vars(a), value = 1),
         ~ col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
+        ~ col_vals_not_null(., columns = vars(d)),
+        actions = al, active = FALSE
+      ) %>%
+      serially(
+        ~ test_col_vals_gt(., columns = vars(a), value = 0),
+        ~ test_col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
         ~ col_vals_not_null(., columns = vars(d)),
         actions = al, active = FALSE
       )

@@ -54,7 +54,6 @@ test_that("Interrogating conjointly with an agent yields the correct results", {
   validation$validation_set[["preconditions"]] %>% unlist() %>% length() %>%
     expect_equal(0)
   
-  
   # Use three validation step functions in a single
   # `conjointly()` validation step, then, `interrogate()`;
   # use `preconditions` to mutate the `tbl` beforehand

@@ -43,7 +43,7 @@ created with \code{\link[=create_agent]{create_agent()}}.}
 function calls (e.g., \code{\link[=test_col_vals_between]{test_col_vals_between()}}, etc.) arranged in sequence
 of intended interrogation order. Typically, validations up until the final
 one would have some \code{threshold} value set (default is \code{1}) for short
-circuiting within the series A finishing validation function call (e.g.,
+circuiting within the series. A finishing validation function call (e.g.,
 \code{\link[=col_vals_increasing]{col_vals_increasing()}}, etc.) can optionally be inserted at the end of the
 series, serving as a validation step that only undergoes interrogation if
 the prior tests adequately pass. An example of this is

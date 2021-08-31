@@ -424,8 +424,12 @@ get_agent_report <- function(agent,
         # Get the `brief` as a string
         brief_str <- briefs[x]
         
-        if (assertion_type[x] == "serially" && has_agent_intel(agent)) {
-          
+        if (
+          assertion_type[x] == "serially" && 
+          !is.na(agent$validation_set[x, ]$eval_active) &&
+          agent$validation_set[x, ]$eval_active
+          ) {
+
           interrogation_notes <-
             agent$validation_set[x, ]$interrogation_notes[[1]]
           
@@ -556,7 +560,18 @@ get_agent_report <- function(agent,
         # Get the `assertion_type` as a string
         assertion_str <- assertion_type[x]
         
-        if (assertion_str == "serially" && has_agent_intel(agent)) {
+        if (
+          assertion_str == "serially" &&
+          has_agent_intel(agent)
+          ) {
+          
+          if (
+            !is.na(agent$validation_set[x, ]$eval_active) &&
+            !agent$validation_set[x, ]$eval_active
+            ) {
+            
+            return(NA_character_)
+          }
           
           interrogation_notes <-
             agent$validation_set[x, ]$interrogation_notes[[1]]
@@ -709,11 +724,12 @@ get_agent_report <- function(agent,
         #     number of tests performed
         # [3] has no final validation and a test failed: show the values
         #     for the failing test step
-        if (
-          assertion_str == "serially"
-        ) {
+        if (assertion_str == "serially") {
 
-          if (!has_agent_intel(agent)) {
+          if (
+            !has_agent_intel(agent) ||
+            !agent$validation_set[x, ]$eval_active
+          ) {
             
             # TODO: Get the exact number of test steps rather than
             # getting the number of expressions (each expr could

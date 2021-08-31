@@ -163,7 +163,7 @@
 #'   function calls (e.g., [test_col_vals_between()], etc.) arranged in sequence
 #'   of intended interrogation order. Typically, validations up until the final
 #'   one would have some `threshold` value set (default is `1`) for short
-#'   circuiting within the series A finishing validation function call (e.g.,
+#'   circuiting within the series. A finishing validation function call (e.g.,
 #'   [col_vals_increasing()], etc.) can optionally be inserted at the end of the
 #'   series, serving as a validation step that only undergoes interrogation if
 #'   the prior tests adequately pass. An example of this is

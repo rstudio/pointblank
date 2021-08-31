@@ -357,8 +357,8 @@ interrogate <- function(agent,
           FUN = function(x) {
             x %>%
               rlang::f_rhs() %>%
-              rlang::expr_deparse() %>%
-              tidy_gsub("\\(.*$", "")
+              as.character() %>%
+              .[[1]]
           }
         )
       
@@ -414,7 +414,8 @@ interrogate <- function(agent,
         deparsed_call <- 
           validation_formulas[[k]] %>%
           rlang::f_rhs() %>%
-          rlang::expr_deparse()
+          rlang::expr_deparse() %>%
+          paste(collapse = " ")
         
         if (grepl("threshold", deparsed_call)) {
           

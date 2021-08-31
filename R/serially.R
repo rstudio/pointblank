@@ -514,3 +514,83 @@ serially <- function(x,
   
   agent
 }
+
+#' @rdname serially
+#' @import rlang
+#' @export
+expect_serially <- function(object,
+                            ...,
+                            .list = list2(...),
+                            preconditions = NULL,
+                            threshold = 1) {
+  
+  fn_name <- "expect_serially"
+  
+  vs <- 
+    create_agent(tbl = object, label = "::QUIET::") %>%
+    serially(
+      .list = .list,
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>%
+    .$validation_set
+  
+  x <- vs$notify %>% all()
+  
+  threshold_type <- get_threshold_type(threshold = threshold)
+  
+  if (threshold_type == "proportional") {
+    failed_amount <- vs$f_failed
+  } else {
+    failed_amount <- vs$n_failed
+  }
+  
+  # TODO: express warnings and errors here
+  
+  act <- testthat::quasi_label(enquo(x), arg = "object")
+  
+  values_text <- prep_values_text(values = vs$values, limit = 3, lang = "en")
+  
+  testthat::expect(
+    ok = identical(!as.vector(act$val), TRUE),
+    failure_message = glue::glue(
+      failure_message_gluestring(
+        fn_name = fn_name, lang = "en"
+      )
+    )
+  )
+  
+  act$val <- object
+  
+  invisible(act$val)
+}
+
+#' @rdname serially
+#' @import rlang
+#' @export
+test_serially <- function(object,
+                          ...,
+                          .list = list2(...),
+                          preconditions = NULL,
+                          threshold = 1) {
+  
+  vs <- 
+    create_agent(tbl = object, label = "::QUIET::") %>%
+    serially(
+      .list = .list,
+      preconditions = {{ preconditions }},
+      actions = action_levels(notify_at = threshold)
+    ) %>%
+    interrogate() %>%
+    .$validation_set
+  
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
+  
+  all(!vs$notify)
+}

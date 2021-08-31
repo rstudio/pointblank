@@ -221,7 +221,7 @@
 #' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-31
+#' 2-32
 #' 
 #' @name col_schema_match
 NULL

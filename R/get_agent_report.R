@@ -230,7 +230,7 @@ get_agent_report <- function(agent,
         ifelse(
           is.null(x),
           NA_character_,
-          paste(x %>% gsub("~", "", .), collapse = ", ")
+          paste(gsub("~", "", x), collapse = ", ")
         )
       } 
     )
@@ -244,7 +244,7 @@ get_agent_report <- function(agent,
         ifelse(
           is.null(x),
           NA_character_,
-          x %>% rlang::as_function() %>% length() %>% as.character()
+          as.character(length(rlang::as_function(x)))
         )
       }
     )
@@ -322,6 +322,7 @@ get_agent_report <- function(agent,
   #
   
   # nocov start
+  
   validation_set <- validation_set[report_tbl$i, ]
   eval <- eval[report_tbl$i]
   extracts <- 
@@ -330,6 +331,7 @@ get_agent_report <- function(agent,
         base::intersect(as.numeric(names(agent$extracts)), report_tbl$i)
       )
     ]
+  step_indices <- seq_len(nrow(validation_set))
   
   if (is.null(lang)) {
     
@@ -344,14 +346,26 @@ get_agent_report <- function(agent,
     if (is.null(locale)) locale <- lang
   }
 
-  briefs <- validation_set$brief
   assertion_type <- validation_set$assertion_type
+  briefs <- validation_set$brief
   label <- validation_set$label
   tbl_src <- agent$tbl_src
   tbl_name <- agent$tbl_name
   
+  # Initialize a table for gt footnotes
+  footnotes_tbl <- initialize_footnotes_tbl()
+  
+  # Generate the report title with the `title` option
+  title_text <- 
+    process_title_text(
+      title = title,
+      tbl_name = tbl_name,
+      report_type = "agent",
+      lang = lang
+    )
+  
   # Generate agent label HTML
-  agent_label_styled <- create_agent_label_html(agent)
+  agent_label_styled <- create_agent_label_html(agent = agent)
   
   # Generate table type HTML
   table_type <- 
@@ -361,20 +375,22 @@ get_agent_report <- function(agent,
     )
 
   # Generate action levels HTML
-  action_levels <- make_action_levels_html(agent, locale)
+  action_levels <- make_action_levels_html(agent = agent, locale = locale)
   
   # Combine label, table type, and action levels into
   # a table subtitle <div>
   combined_subtitle <-
-    htmltools::tagList(
-      htmltools::HTML(agent_label_styled),
-      htmltools::tags$div(
-        style = htmltools::css(
-          height = "25px"
-        ),
-        htmltools::HTML(paste0(table_type, action_levels))
-      ) 
-    ) %>% as.character()
+    as.character(
+      htmltools::tagList(
+        htmltools::HTML(agent_label_styled),
+        htmltools::tags$div(
+          style = htmltools::css(
+            height = "25px"
+          ),
+          htmltools::HTML(paste0(table_type, action_levels))
+        ) 
+      )
+    )
 
   # Generate table execution start/end time (and duration)
   # as a table source note
@@ -386,103 +402,245 @@ get_agent_report <- function(agent,
       locale = locale
     )
   
-  # Reformat `type`
+  #
+  # Reformat the `type` column
+  #
   type_upd <- 
-    seq_along(assertion_type) %>%
     vapply(
+      step_indices,
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
         
-        assertion_type_nchar <- nchar(assertion_type[x])
+        # Get the `assertion_type` as a string
+        assertion_str <- icon_name <- assertion_type[x]
         
+        # Append `()` to the `assertion_str`
+        assertion_str <- paste0(assertion_str, "()")
+        
+        # Get the `label` as a string
+        label_str <- label[x]
+        
+        # Get the `brief` as a string
+        brief_str <- briefs[x]
+        
+        if (
+          assertion_type[x] == "serially" && 
+          !is.na(agent$validation_set[x, ]$eval_active) &&
+          agent$validation_set[x, ]$eval_active
+          ) {
+
+          interrogation_notes <-
+            agent$validation_set[x, ]$interrogation_notes[[1]]
+          
+          failed_testing <- interrogation_notes$failed_testing
+          
+          final_validation_str <- 
+            if (interrogation_notes$has_final_validation) "+V" else ""
+          
+          assertion_str <-
+            as.character(
+              paste0(
+                htmltools::HTML(paste0(assertion_str, ": ")),
+                htmltools::tags$span(
+                  style = htmltools::css(
+                    `text-decoration-style` = 
+                      if (failed_testing) "solid" else NULL,
+                    `text-decoration-line` = 
+                      if (failed_testing) "underline" else NULL,
+                    `text-decoration-color` = 
+                      if (failed_testing) "red" else NULL,
+                    `text-underline-position` =
+                      if (failed_testing) "under" else NULL
+                  ), 
+                  htmltools::HTML(
+                    paste0(interrogation_notes$total_test_steps, "T")
+                  )
+                ),
+                final_validation_str
+              )
+            )
+        }
+        
+        # Obtain the number of characters contained in the assertion
+        # string; this is important for sizing components appropriately
+        assertion_type_nchar <- nchar(assertion_str)
+        
+        # Declare the text size based on the length of `assertion_str`
+        # and also whether the report is of the standard size or `"small"` 
         text_size <- ifelse(assertion_type_nchar + 2 >= 20, 10, 11)
         text_size <- ifelse(size == "small", 11, text_size)
         
         if (size == "small") {
-
-          htmltools::tags$code(
-            style = htmltools::css(
-              `font-size` = paste0(text_size, "px")
-            ),
-            htmltools::HTML(paste0("&nbsp;", assertion_type[x], "()"))
-          ) %>%
-            as.character()
+          
+          as.character(
+            htmltools::tags$code(
+              style = htmltools::css(
+                `font-size` = paste0(text_size, "px")
+              ),
+              htmltools::HTML(paste0("&nbsp;", assertion_str))
+            )
+          )
           
         } else {
           
-          if (!is.na(label[x])) {
-
-            htmltools::tags$div(
-              `aria-label` = briefs[x],
-              `data-balloon-pos` = "right",
-              style = htmltools::css(width = "fit-content"),
+          if (!is.na(label_str)) {
+            
+            as.character(
               htmltools::tags$div(
-                style = htmltools::css(
-                  float = "left",
-                  width = "30px"
-                ),
-                htmltools::HTML(add_icon_svg(icon = assertion_type[x]))
-              ),
-              htmltools::tags$div(
-                style = htmltools::css(
-                  `line-height` = "0.7em",
-                  `margin-left` = "32px",
-                  `padding-left` = "3px"
-                ),
-                htmltools::tags$p(
+                `aria-label` = brief_str,
+                `data-balloon-pos` = "right",
+                style = htmltools::css(width = "fit-content"),
+                htmltools::tags$div(
                   style = htmltools::css(
-                    margin = "0",
-                    `padding-top` = "4px",
-                    `font-size` = "9px"
+                    float = "left",
+                    width = "30px"
                   ),
-                  htmltools::HTML(label[x])
+                  htmltools::HTML(add_icon_svg(icon = icon_name))
                 ),
-                htmltools::tags$p(
-                  style = htmltools::css(margin = "0"),
-                  htmltools::tags$code(
-                    style = htmltools::css(`font-size` = "11px"),
-                    paste0(assertion_type[x], "()")
+                htmltools::tags$div(
+                  style = htmltools::css(
+                    `line-height` = "0.7em",
+                    `margin-left` = "32px",
+                    `padding-left` = "3px"
+                  ),
+                  htmltools::tags$p(
+                    style = htmltools::css(
+                      margin = "0",
+                      `padding-top` = "4px",
+                      `font-size` = "9px"
+                    ),
+                    htmltools::HTML(label_str)
+                  ),
+                  htmltools::tags$p(
+                    style = htmltools::css(margin = "0"),
+                    htmltools::tags$code(
+                      style = htmltools::css(`font-size` = "11px"),
+                      htmltools::HTML(assertion_str)
+                    )
                   )
                 )
               )
-            ) %>% 
-              as.character()
-
+            )
+            
           } else {
-
-            htmltools::tags$div(
-              `aria-label` = briefs[x],
-              `data-balloon-pos` = "right",
-              style = htmltools::css(width = "fit-content"),
-              htmltools::HTML(add_icon_svg(icon = assertion_type[x])),
-              htmltools::tags$code(
-                style = htmltools::css(`font-size` = paste0(text_size, "px")),
-                htmltools::HTML(paste0("&nbsp;", assertion_type[x], "()"))
+            
+            as.character(
+              htmltools::tags$div(
+                `aria-label` = brief_str,
+                `data-balloon-pos` = "right",
+                style = htmltools::css(width = "fit-content"),
+                htmltools::HTML(add_icon_svg(icon = icon_name)),
+                htmltools::tags$code(
+                  style = htmltools::css(`font-size` = paste0(text_size, "px")),
+                  htmltools::HTML(paste0("&nbsp;", assertion_str))
+                )
               )
-            ) %>%
-              as.character()
+            )
           }
         }
       }
     )
   
-  # Reformat `columns`
+  #
+  # Reformat the `columns` column
+  #
   columns_upd <- 
-    validation_set$column %>%
     vapply(
+      step_indices,
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
         
-        if (is.null(x) | (is.list(x) && is.na(unlist(x)))) {
-          x <- NA_character_
-        } else if (is.na(x)) {
-          x <- NA_character_
+        # TODO: Display all columns used in conjointly case
+        
+        # Get the `column` value
+        column_i <- validation_set$column[[x]]
+        
+        # Get the `assertion_type` as a string
+        assertion_str <- assertion_type[x]
+        
+        if (
+          assertion_str == "serially" &&
+          has_agent_intel(agent)
+          ) {
+          
+          if (
+            !is.na(agent$validation_set[x, ]$eval_active) &&
+            !agent$validation_set[x, ]$eval_active
+            ) {
+            
+            return(NA_character_)
+          }
+          
+          interrogation_notes <-
+            agent$validation_set[x, ]$interrogation_notes[[1]]
+          
+          if (
+            !interrogation_notes$has_final_validation &&
+            !interrogation_notes$failed_testing
+          ) {
+            
+            return(NA_character_)
+            
+          } else if (
+            !interrogation_notes$has_final_validation &&
+            interrogation_notes$failed_testing
+          ) {
+            
+            # Case where `serially()` does not have a final validation
+            # and testing failed
+            # T -> T ->|
+            
+            # Replace `column_i` with the value at the failing step
+            column_i <- 
+              interrogation_notes$testing_validation_set[
+                nrow(interrogation_notes$testing_validation_set), ]$column[[1]]
+            
+          } else if (
+            interrogation_notes$has_final_validation &&
+            interrogation_notes$failed_testing
+          ) {
+            
+            # Case where tests where unsuccessful and the final
+            # validation step was not reached
+            # T -> T ->| (V)
+            
+            # Replace `column_i` with the value at the failing step
+            column_i <- 
+              interrogation_notes$testing_validation_set[
+                nrow(interrogation_notes$testing_validation_set), ]$column[[1]]
+            
+          } else if (
+            interrogation_notes$has_final_validation &&
+            !interrogation_notes$failed_testing
+          ) {
+            
+            # Case where all tests passed and the final
+            # validation step was reached
+            
+            # Replace `column_i` with the value at the final step (validation)
+            column_i <- 
+              interrogation_notes$testing_validation_set[
+                nrow(interrogation_notes$testing_validation_set), ]$column[[1]]
+          }
+        }
+        
+        if (
+          is.null(column_i) |
+          (is.list(column_i) && is.na(unlist(column_i)))
+        ) {
+          
+          NA_character_
+          
+        } else if (is.na(column_i)) {
+          
+          NA_character_
+          
         } else {
-
+          
           text <- 
-            x %>%
+            column_i %>%
             unlist() %>%
             strsplit(", ") %>%
             unlist()
@@ -494,12 +652,14 @@ get_agent_report <- function(agent,
               htmltools::tags$span(
                 style = htmltools::css(color = "purple"),
                 htmltools::HTML("&marker;")
-              ), text, collapse = ", "
+              ),
+              text,
+              collapse = ", "
             )
           
           if (size == "small") {
             
-            x <- 
+            as.character(
               htmltools::tags$div(
                 htmltools::tags$p(
                   title = paste(title, collapse = ", "),
@@ -513,12 +673,12 @@ get_agent_report <- function(agent,
                   ),
                   htmltools::HTML(text_fragments)
                 )
-              ) %>% 
-              as.character()
+              )
+            )
             
           } else {
             
-            x <-
+            as.character(
               htmltools::tags$div(
                 `aria-label` = paste(title, collapse = ", "),
                 `data-balloon-pos` = "left",
@@ -534,56 +694,204 @@ get_agent_report <- function(agent,
                   ),
                   htmltools::tags$code(htmltools::HTML(text_fragments))
                 )
-              ) %>% 
-              as.character()
+              )
+            )
           }
         }
-        x
       }
     )
   
-  # Reformat `values`
+  #
+  # Reformat the `values` column
+  #
   values_upd <- 
-    validation_set$values %>%
     vapply(
+      step_indices,
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
         
-        if (!is.null(x) &&
-            !is.null(names(x)) &&
-            all(names(x) %in% c("TRUE", "FALSE"))) {
+        # Get the `values` value
+        values_i <- validation_set$values[[x]]
+        
+        # Get the `assertion_type` as a string
+        assertion_str <- assertion_type[x]
+        
+        # In the `serially()` step, there are two possibilities for what
+        # should be displayed in the values column
+        # [1] has final validation: show the values for validation step
+        # [2] has no final validation and all tests passed: display the
+        #     number of tests performed
+        # [3] has no final validation and a test failed: show the values
+        #     for the failing test step
+        if (assertion_str == "serially") {
 
+          if (
+            !has_agent_intel(agent) ||
+            !agent$validation_set[x, ]$eval_active
+          ) {
+            
+            # TODO: Get the exact number of test steps rather than
+            # getting the number of expressions (each expr could
+            # expand to multiple steps)
+            
+            step_text <- 
+              paste0(
+                length(values_i), " ",
+                get_lsv(
+                  paste0(
+                    "agent_report/report_col_step",
+                    ifelse(length(values_i) > 1, "s", "")
+                  )
+                )[[lang]]
+              )
+            
+            return(
+              paste0(
+                "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "font-size: 0.75rem;\">", step_text, "</p></div>"
+              )
+            )
+          }
+          
+          interrogation_notes <-
+            agent$validation_set[x, ]$interrogation_notes[[1]]
+          
+          if (
+            !interrogation_notes$has_final_validation &&
+            !interrogation_notes$failed_testing
+          ) {
+            
+            # Case where `serially()` does not have a final validation
+            # but all tests passed
+            
+            total_test_steps <- interrogation_notes$total_test_steps
+            
+            # TODO: change localized string to be: `x TESTS`
+            step_text <- 
+              paste0(
+                total_test_steps, " ",
+                get_lsv(
+                  paste0(
+                    "agent_report/report_col_step",
+                    ifelse(total_test_steps > 1, "s", "")
+                  )
+                )[[lang]]
+              )
+            
+            return(
+              paste0(
+                "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+                "font-size: 0.75rem;\">", step_text, "</p></div>"
+              )
+            )
+            
+          } else if (
+            !interrogation_notes$has_final_validation &&
+            interrogation_notes$failed_testing
+          ) {
+            
+            # Case where `serially()` does not have a final validation
+            # and testing failed
+            # T -> T ->|
+            
+            # Replace `values_i` with the value at the failing step
+            values_i <- 
+              interrogation_notes$testing_validation_set[
+                nrow(interrogation_notes$testing_validation_set), ]$values[[1]]
+            
+          } else if (
+            interrogation_notes$has_final_validation &&
+            interrogation_notes$failed_testing
+          ) {
+            
+            # Case where tests where unsuccessful and the final
+            # validation step was not reached
+            # T -> T ->| (V)
+            
+            # Replace `values_i` with the value at the failing step
+            
+            values_i <- 
+              interrogation_notes$testing_validation_set[
+                nrow(interrogation_notes$testing_validation_set), ]$values[[1]]
+            
+          } else if (
+            interrogation_notes$has_final_validation &&
+            !interrogation_notes$failed_testing
+          ) {
+            
+            # Case where all tests passed and the final
+            # validation step was reached
+            
+            # Replace `values_i` with the value at the final step (validation)
+            values_i <- 
+              interrogation_notes$testing_validation_set[
+                nrow(interrogation_notes$testing_validation_set), ]$values[[1]]
+          }
+        }
+        
+        if (assertion_str == "conjointly") {
+          
+          length_values_i <- length(values_i)
+          
+          step_text <- 
+            paste0(
+              length_values_i, " ",
+              get_lsv(
+                paste0(
+                  "agent_report/report_col_step",
+                  ifelse(length_values_i > 1, "s", "")
+                )
+              )[[lang]]
+            )
+          
+          paste0(
+            "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+            "font-size: 0.75rem;\">", step_text, "</p></div>"
+          )
+          
+        } else if (
+          !is.null(values_i) &&
+          !is.null(names(values_i)) &&
+          all(names(values_i) %in% c("TRUE", "FALSE"))
+        ) {
+          
           # Case of in-between comparison validation where there are
           # one or two columns specified as bounds
-          bounds_incl <- as.logical(names(x))
+          bounds_incl <- as.logical(names(values_i))
           
-          if (rlang::is_quosure(x[[1]])) {
+          if (rlang::is_quosure(values_i[[1]])) {
+            
             x_left <- 
               paste0(
                 "<span style=\"color: purple;\">&marker;</span>",
-                rlang::as_label(x[[1]])
+                rlang::as_label(values_i[[1]])
               )
+            
           } else {
+            
             x_left <- 
               pb_fmt_number(
-                x[[1]],
+                values_i[[1]],
                 decimals = 4,
                 drop_trailing_zeros = TRUE,
                 locale = locale
               )
           }
           
-          if (rlang::is_quosure(x[[2]])) {
+          if (rlang::is_quosure(values_i[[2]])) {
+            
             x_right <- 
               paste0(
                 "<span style=\"color: purple;\">&marker;</span>",
-                rlang::as_label(x[[2]])
+                rlang::as_label(values_i[[2]])
               )
+            
           } else {
+            
             x_right <-
               pb_fmt_number(
-                x[[2]],
+                values_i[[2]],
                 decimals = 4,
                 drop_trailing_zeros = TRUE,
                 locale = locale
@@ -603,14 +911,14 @@ get_agent_report <- function(agent,
             paste0(
               ifelse(bounds_incl[1], "[", "("),
               pb_fmt_number(
-                rlang::as_label(x[[1]]),
+                rlang::as_label(values_i[[1]]),
                 decimals = 4,
                 drop_trailing_zeros = TRUE,
                 locale = locale
               ),
               ", ",
               pb_fmt_number(
-                rlang::as_label(x[[2]]),
+                rlang::as_label(values_i[[2]]),
                 decimals = 4,
                 drop_trailing_zeros = TRUE,
                 locale = locale
@@ -620,30 +928,32 @@ get_agent_report <- function(agent,
           
           if (size == "small") {
             
-            x <-
-              paste0(
-                "<div><p title=\"", title, "\" style=\"margin-top: 0px; ",
-                "margin-bottom: 0px; ",
-                "font-family: monospace; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
-                "</p></div>"
-              )
+            paste0(
+              "<div><p title=\"", title, "\" style=\"margin-top: 0px; ",
+              "margin-bottom: 0px; ",
+              "font-family: monospace; white-space: nowrap; ",
+              "text-overflow: ellipsis; overflow: hidden;\">",
+              text,
+              "</p></div>"
+            )
             
           } else {
             
-            x <- 
-              paste0(
-                "<div aria-label=\"", title, "\" data-balloon-pos=\"left\">",
-                "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
-                "font-size: 11px; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                "<code>", text, "</code>",
-                "</p></div>"
-              )
+            paste0(
+              "<div aria-label=\"", title, "\" data-balloon-pos=\"left\">",
+              "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
+              "font-size: 11px; white-space: nowrap; ",
+              "text-overflow: ellipsis; overflow: hidden;\">",
+              "<code>", text, "</code>",
+              "</p></div>"
+            )
           }
           
-        } else if (is.list(x) && length(x) > 0 && inherits(x, "col_schema")) {
+        } else if (
+          is.list(values_i) &&
+          length(values_i) > 0 &&
+          inherits(values_i, "col_schema")
+        ) {
           
           # Case of column schema as a value
           
@@ -651,83 +961,56 @@ get_agent_report <- function(agent,
             get_lsv("agent_report/report_column_schema")[[lang]]
           
           column_schema_type_text <- 
-            if (inherits(x, "r_type")) {
+            if (inherits(values_i, "r_type")) {
               get_lsv("agent_report/report_r_col_types")[[lang]]
             } else {
               get_lsv("agent_report/report_r_sql_types")[[lang]]
             }
           
-          x <- 
-            paste0(
-              "<div>",
-              "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
-              "font-size: 0.75rem;\">", column_schema_text, "</p>",
-              "<p style=\"margin-top: 2px; margin-bottom: 0px; ",
-              "font-size: 0.65rem;\">", column_schema_type_text, "</p>",
-              "</div>"
-            )
+          paste0(
+            "<div>",
+            "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
+            "font-size: 0.75rem;\">", column_schema_text, "</p>",
+            "<p style=\"margin-top: 2px; margin-bottom: 0px; ",
+            "font-size: 0.65rem;\">", column_schema_type_text, "</p>",
+            "</div>"
+          )
           
-        } else if (is_call(x)) {
+        } else if (is_call(values_i)) {
           
-          text <- rlang::as_label(x)
-
+          text <- rlang::as_label(values_i)
+          
           if (size == "small") {
-            x <- 
-              paste0(
-                "<div><p title=\"", text, "\" style=\"margin-top: 0px; ",
-                "margin-bottom: 0px; ",
-                "font-family: monospace; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
-                "</p></div>"
-              )
-          } else {
-            x <- 
-              paste0(
-                "<div aria-label=\"", text, "\" data-balloon-pos=\"left\">",
-                "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
-                "font-size: 11px; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                "<code>", text, "</code>",
-                "</p></div>"
-              )
-          }
-          
-        } else if (is.list(x) && length(x) > 0 && !inherits(x, "quosures")) {
-          
-          # Conjointly case
-          
-          if (length(x) > 1) {
             
-            step_text <- 
-              paste0(
-                length(x), " ",
-                get_lsv("agent_report/report_col_steps")[[lang]]
-              )
-            
-          } else {
-            
-            step_text <- 
-              paste0(
-                length(x), " ",
-                get_lsv("agent_report/report_col_step")[[lang]]
-              )
-          }
-          
-          x <- 
             paste0(
-              "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
-              "font-size: 0.75rem;\">", step_text, "</p></div>"
+              "<div><p title=\"", text, "\" style=\"margin-top: 0px; ",
+              "margin-bottom: 0px; ",
+              "font-family: monospace; white-space: nowrap; ",
+              "text-overflow: ellipsis; overflow: hidden;\">",
+              text,
+              "</p></div>"
             )
+            
+          } else {
+            
+            paste0(
+              "<div aria-label=\"", text, "\" data-balloon-pos=\"left\">",
+              "<p style=\"margin-top: 0px; margin-bottom: 0px; ",
+              "font-size: 11px; white-space: nowrap; ",
+              "text-overflow: ellipsis; overflow: hidden;\">",
+              "<code>", text, "</code>",
+              "</p></div>"
+            )
+          }
           
-        } else if (is.null(x)) {
+        } else if (is.null(values_i)) {
           
-          x <- NA_character_
+          NA_character_
           
         } else {
           
           text <-
-            x %>%
+            values_i %>%
             tidy_gsub(
               "~",
               "<span style=\"color: purple;\">&marker;</span>"
@@ -737,31 +1020,31 @@ get_agent_report <- function(agent,
           text <- paste(text, collapse = ", ")
           
           if (size == "small") {
-            x <- 
-              paste0(
-                "<div><p title=\"",
-                x %>% tidy_gsub("~", "") %>% paste(., collapse = ", "),
-                "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
-                "font-size: 11px; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                text,
-                "</p></div>"
-              )
+            
+            paste0(
+              "<div><p title=\"",
+              values_i %>% tidy_gsub("~", "") %>% paste(., collapse = ", "),
+              "\" style=\"margin-top: 0px; margin-bottom: 0px; ",
+              "font-size: 11px; white-space: nowrap; ",
+              "text-overflow: ellipsis; overflow: hidden;\">",
+              text,
+              "</p></div>"
+            )
+            
           } else {
-            x <- 
-              paste0(
-                "<div aria-label=\"",
-                x %>% tidy_gsub("~", "") %>% paste(., collapse = ", "),
-                "\" data-balloon-pos=\"left\"><p style=\"margin-top: 0px; ",
-                "margin-bottom: 0px; ",
-                "font-size: 11px; white-space: nowrap; ",
-                "text-overflow: ellipsis; overflow: hidden;\">",
-                "<code>", text, "</code>",
-                "</p></div>"
-              )
+            
+            paste0(
+              "<div aria-label=\"",
+              values_i %>% tidy_gsub("~", "") %>% paste(., collapse = ", "),
+              "\" data-balloon-pos=\"left\"><p style=\"margin-top: 0px; ",
+              "margin-bottom: 0px; ",
+              "font-size: 11px; white-space: nowrap; ",
+              "text-overflow: ellipsis; overflow: hidden;\">",
+              "<code>", text, "</code>",
+              "</p></div>"
+            )
           }
         }
-        x
       } 
     )
   
@@ -1013,26 +1296,27 @@ get_agent_report <- function(agent,
               ".csv"
             )
           
-          x <- 
-            htmltools::a(
-              href = paste0("data:text/csv;base64,", file_encoded),
-              download = output_file_name,
-              htmltools::tags$button(
-                `aria-label` = title_text,
-                `data-balloon-pos` = "left",
-                style = htmltools::css(
-                  `background-color` = "#67C2DC",
-                  color = "#FFFFFF",
-                  border = "none",
-                  padding = "5px",
-                  `font-weight` = "bold",
-                  cursor = "pointer",
-                  `border-radius` = "4px"
-                ),
-                "CSV"
+          x <-
+            as.character(
+              htmltools::a(
+                href = paste0("data:text/csv;base64,", file_encoded),
+                download = output_file_name,
+                htmltools::tags$button(
+                  `aria-label` = title_text,
+                  `data-balloon-pos` = "left",
+                  style = htmltools::css(
+                    `background-color` = "#67C2DC",
+                    color = "#FFFFFF",
+                    border = "none",
+                    padding = "5px",
+                    `font-weight` = "bold",
+                    cursor = "pointer",
+                    `border-radius` = "4px"
+                  ),
+                  "CSV"
+                )
               )
-            ) %>%
-            as.character()
+            )
         }
         x
       } 
@@ -1103,15 +1387,7 @@ get_agent_report <- function(agent,
   f_fail_val <- ifelse(f_fail_val < 1 & f_fail_val > 0.99, 0.99, f_fail_val)
   f_fail_val <- as.numeric(f_fail_val)
 
-  
-  # Generate the report title with the `title` option
-  title_text <- 
-    process_title_text(
-      title = title,
-      tbl_name = tbl_name,
-      report_type = "agent",
-      lang = lang
-    )
+  # TODO: Generate footnotes for certain steps
   
   # Generate a gt table
   agent_report <- 
@@ -1505,6 +1781,9 @@ get_agent_report <- function(agent,
       )
   }
   
+  # TODO: Process footnotes
+  
+  # Add the `ptblank_agent_report` class to the gt table object
   class(agent_report) <- c("ptblank_agent_report", class(agent_report))
   
   # nocov end
@@ -1667,20 +1946,22 @@ print_time_duration_report <- function(time_diff_s,
 
 create_agent_label_html <- function(agent) {
   
-  htmltools::tags$span(
-    agent$label,
-    style = htmltools::css(
-      `text-decoration-style` = "solid",
-      `text-decoration-color` = "#ADD8E6",
-      `text-decoration-line` = "underline",
-      `text-underline-position` = "under",
-      color = "#333333",
-      `font-variant-numeric` = "tabular-nums",
-      `padding-left` = "4px",
-      `margin-right` = "5px",
-      `padding-right` = "2px"
+  as.character(
+    htmltools::tags$span(
+      agent$label,
+      style = htmltools::css(
+        `text-decoration-style` = "solid",
+        `text-decoration-color` = "#ADD8E6",
+        `text-decoration-line` = "underline",
+        `text-underline-position` = "under",
+        color = "#333333",
+        `font-variant-numeric` = "tabular-nums",
+        `padding-left` = "4px",
+        `margin-right` = "5px",
+        `padding-right` = "2px"
+      )
     )
-  ) %>% as.character()
+  )
 }
 
 create_table_type_html <- function(tbl_src, tbl_name) {
@@ -1915,23 +2196,51 @@ make_boxed_text_html <- function(x,
     text_html <- text_html %>% htmltools::tagAppendAttributes(`title` = tt_text)
   }
   
-  text_html %>% as.character()
+  as.character(text_html)
 }
 
 icon_status <- function(icon = c("unchanged", "modified", "segmented")) {
   
   icon <- match.arg(icon)
   
-  htmltools::HTML(
-    paste(
-      readLines(
-        con = system.file(
-          "img", "status_icons", paste0(icon, ".svg"),
-          package = "pointblank"
-        ), 
-        warn = FALSE
-      ), collapse = ""
+  as.character(
+    htmltools::HTML(
+      paste(
+        readLines(
+          con = system.file(
+            "img", "status_icons", paste0(icon, ".svg"),
+            package = "pointblank"
+          ), 
+          warn = FALSE
+        ),
+        collapse = ""
+      )
     )
-  ) %>%
-    as.character()
+  )
+}
+
+# Function for initializing an empty footnotes table
+initialize_footnotes_tbl <- function() {
+  
+  dplyr::tibble(
+    col_idx = integer(0),
+    row_idx = integer(0),
+    note = character(0)
+  )
+}
+
+# Function for adding a footnote to the `footnotes_tbl`
+store_footnote <- function(footnotes_tbl,
+                           note,
+                           col_idx,
+                           row_idx) {
+  
+  dplyr::bind_rows(
+    footnotes_tbl,
+    dplyr::tibble(
+      col_idx = as.integer(col_idx),
+      row_idx = as.integer(row_idx),
+      note = note
+    )
+  )
 }

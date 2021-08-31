@@ -210,7 +210,7 @@ interrogate <- function(agent,
     # Get the assertion type for this verification step
     assertion_type <- get_assertion_type_at_idx(agent = agent, idx = i)
 
-    if (assertion_type != "conjointly") {
+    if (!(assertion_type %in% c("conjointly", "serially"))) {
 
       # Perform table checking based on assertion type
       tbl_checked <- 
@@ -343,6 +343,247 @@ interrogate <- function(agent,
             validation_n = validation_n
           )
         )
+      
+    } else if (assertion_type == "serially") {
+      
+      validation_formulas <- get_values_at_idx(agent = agent, idx = i)
+      validation_n <- length(validation_formulas)
+      
+      assertion_types <-
+        vapply(
+          validation_formulas,
+          FUN.VALUE = character(1),
+          USE.NAMES = FALSE,
+          FUN = function(x) {
+            x %>%
+              rlang::f_rhs() %>%
+              as.character() %>%
+              .[[1]]
+          }
+        )
+      
+      # Set initial value of `failed_testing`
+      failed_testing <- FALSE
+      
+      # Initialize the `serially_validation_set` tibble; this
+      # will be populated by all validations using `serially()` tests
+      serially_validation_set <- dplyr::tibble()
+      
+      has_final_validation <-
+        assertion_types[length(assertion_types)] %in% all_validations_fns_vec()
+      
+      # Get the total number of `test_*()` calls supplied
+      test_call_n <- 
+        if (has_final_validation) validation_n - 1 else validation_n
+      
+      #
+      # Determine the total number of test steps
+      #
+      
+      # Create a `double_agent` that will be used just for determining
+      # the number of test steps
+      double_agent <- create_agent(tbl = table, label = "::QUIET::")
+      
+      for (k in seq_len(test_call_n)) {
+        
+        double_agent <-
+          eval(
+            expr = parse(
+              text =
+                validation_formulas[[k]] %>%
+                rlang::f_rhs() %>%
+                rlang::expr_deparse() %>%
+                tidy_gsub("(.", "(double_agent", fixed = TRUE) %>%
+                tidy_gsub("^test_", "") %>%
+                tidy_gsub("threshold\\s+?=\\s.*$", ")") %>%
+                tidy_gsub(",\\s+?\\)$", ")")
+                
+            ),
+            envir = NULL
+          )
+      }
+      
+      test_step_n <- nrow(double_agent$validation_set)
+        
+      # Perform tests as validation steps in sequence
+      for (k in seq_len(test_call_n)) {
+        
+        # Create a double agent
+        double_agent <- create_agent(tbl = table, label = "::QUIET::")
+        
+        deparsed_call <- 
+          validation_formulas[[k]] %>%
+          rlang::f_rhs() %>%
+          rlang::expr_deparse() %>%
+          paste(collapse = " ")
+        
+        if (grepl("threshold", deparsed_call)) {
+          
+          threshold_value <-
+            validation_formulas[[k]] %>%
+            rlang::f_rhs() %>%
+            rlang::expr_deparse() %>%
+            tidy_gsub(".*?(threshold\\s+?=\\s+[0-9\\.]+?).+?", "\\1") %>%
+            tidy_gsub("threshold\\s+?=\\s+?", "") %>%
+            as.numeric()
+          
+          double_agent <-
+            eval(
+              expr = parse(
+                text =
+                  validation_formulas[[k]] %>%
+                  rlang::f_rhs() %>%
+                  rlang::expr_deparse() %>%
+                  tidy_gsub("(.", "(double_agent", fixed = TRUE) %>%
+                  tidy_gsub("^test_", "") %>%
+                  tidy_gsub(
+                    "threshold\\s+?=\\s+?[0-9\\.]+?",
+                    paste0(
+                      "actions = action_levels(stop_at = ",
+                      threshold_value, ")"
+                    )
+                  )
+              ),
+              envir = NULL
+            )
+          
+        } else {
+          
+          threshold_value <- 1
+          
+          double_agent <-
+            eval(
+              expr = parse(
+                text =
+                  validation_formulas[[k]] %>%
+                  rlang::f_rhs() %>%
+                  rlang::expr_deparse() %>%
+                  tidy_gsub("(.", "(double_agent", fixed = TRUE) %>%
+                  tidy_gsub("^test_", "") %>%
+                  tidy_gsub(
+                    "\\)$",
+                    paste0(
+                      ", actions = action_levels(stop_at = ",
+                      threshold_value, "))"
+                    )
+                  )
+              ),
+              envir = NULL
+            )
+        }
+        
+        double_agent <- double_agent %>% interrogate()
+        
+        serially_validation_set <-
+          dplyr::bind_rows(
+            serially_validation_set,
+            double_agent$validation_set %>%
+              dplyr::select(
+                -c(step_id, sha1, -warn, -notify, -tbl_checked,
+                   interrogation_notes
+                )
+              ) %>%
+              dplyr::mutate(i_o = .env$k)
+          )
+        
+        stop_vec <- double_agent$validation_set$stop
+        
+        if (!all(is.na(stop_vec)) && any(stop_vec)) {
+          
+          # Get the first instance of a STOP
+          stop_idx <- min(which(stop_vec))
+          
+          # Get the `tbl_checked` object at the `stop_idx` index
+          tbl_check <-
+            double_agent$validation_set$tbl_checked[[stop_idx]][[1]]
+          
+          # Get the assertion type for this verification step
+          assertion_type <- 
+            get_assertion_type_at_idx(
+              agent = double_agent,
+              idx = stop_idx
+            )
+          
+          tbl_checked <- 
+            check_table_with_assertion(
+              agent = double_agent,
+              idx = stop_idx,
+              table = table,
+              assertion_type
+            )
+          
+          failed_testing <- TRUE
+          
+          break
+        }
+        
+        tbl_checked <- pointblank_try_catch(dplyr::tibble(`pb_is_good_` = TRUE))
+      }
+      
+      if (!failed_testing && has_final_validation) {
+        
+        double_agent <- create_agent(tbl = table, label = "::QUIET::")
+        
+        double_agent <-
+          eval(
+            expr = parse(
+              text =
+                validation_formulas[[validation_n]] %>%
+                rlang::f_rhs() %>%
+                rlang::expr_deparse() %>%
+                tidy_gsub("(.", "(double_agent", fixed = TRUE)
+            ),
+            envir = NULL
+          )
+        
+        double_agent <- double_agent %>% interrogate()
+        
+        serially_validation_set <-
+          dplyr::bind_rows(
+            serially_validation_set,
+            double_agent$validation_set %>%
+              dplyr::select(
+                -c(step_id, sha1, -warn, -notify, -tbl_checked,
+                   interrogation_notes
+                )
+              ) %>%
+              dplyr::mutate(i_o = .env$k)
+          )
+        
+        # Get the assertion type for this verification step
+        assertion_type <- 
+          get_assertion_type_at_idx(
+            agent = double_agent,
+            idx = 1
+          )
+        
+        tbl_checked <- 
+          check_table_with_assertion(
+            agent = double_agent,
+            idx = 1,
+            table = table,
+            assertion_type = assertion_type
+          )
+      }
+      
+      # Renumber `i` in the `serially()` validation set so that
+      # it is an ascending integer sequence
+      serially_validation_set <-
+        serially_validation_set %>%
+        dplyr::mutate(i = seq_len(nrow(.)))
+      
+      # Add interrogation notes
+      agent$validation_set[[i, "interrogation_notes"]] <-
+        list(
+          list(
+            validation = "serially",
+            total_test_calls = test_call_n,
+            total_test_steps = test_step_n,
+            failed_testing = failed_testing,
+            has_final_validation = has_final_validation,
+            testing_validation_set = serially_validation_set
+          )
+        )
     }
 
     # Add in the necessary reporting data for the validation
@@ -360,7 +601,7 @@ interrogate <- function(agent,
 
     # Add extracts of failed rows if validation function operates on
     # values in rows and `extract_failed` is TRUE
-    if (assertion_type %in% row_based_step_fns_vector()) {
+    if (assertion_type %in% row_based_validation_fns_vec()) {
       
       agent <- 
         add_table_extract(

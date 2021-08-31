@@ -1124,6 +1124,23 @@ as_agent_yaml_list <- function(agent,
             active = as_list_active(step_list$active)
           )
         )
+      
+    } else if (validation_fn == "serially") {
+      
+      lst_step <- 
+        list(
+          validation_fn = list(
+            fns = as.character(step_list$values[[1]]),
+            preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
+            label = step_list$label,
+            active = as_list_active(step_list$active)
+          )
+        )
     }
 
     # Remove list elements that are representative of defaults

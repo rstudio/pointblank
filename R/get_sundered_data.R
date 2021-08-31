@@ -182,7 +182,7 @@ get_sundered_data <- function(agent,
     dplyr::filter(eval_error == FALSE) %>%
     dplyr::filter(
       assertion_type %in%
-        base::setdiff(row_based_step_fns_vector(), "rows_distinct")
+        base::setdiff(row_based_validation_fns_vec(), "rows_distinct")
     ) %>%
     dplyr::filter(active == TRUE)
   

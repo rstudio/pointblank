@@ -246,7 +246,7 @@ transformation of an agent to YAML without any writing to disk by using the
 
 \section{Function ID}{
 
-2-21
+2-22
 }
 
 \examples{
@@ -305,6 +305,7 @@ Other validation functions:
 \code{\link{col_vals_regex}()},
 \code{\link{col_vals_within_spec}()},
 \code{\link{conjointly}()},
-\code{\link{rows_complete}()}
+\code{\link{rows_complete}()},
+\code{\link{serially}()}
 }
 \concept{validation functions}

@@ -2,6 +2,8 @@
 % Please edit documentation in R/serially.R
 \name{serially}
 \alias{serially}
+\alias{expect_serially}
+\alias{test_serially}
 \title{Run several tests and a final validation in a serial manner}
 \usage{
 serially(
@@ -14,6 +16,22 @@ serially(
   label = NULL,
   brief = NULL,
   active = TRUE
+)
+
+expect_serially(
+  object,
+  ...,
+  .list = list2(...),
+  preconditions = NULL,
+  threshold = 1
+)
+
+test_serially(
+  object,
+  ...,
+  .list = list2(...),
+  preconditions = NULL,
+  threshold = 1
 )
 }
 \arguments{
@@ -79,6 +97,20 @@ function \code{\link[=has_columns]{has_columns()}} can be used to determine whet
 validation step active on the basis of one or more columns existing in the
 table (e.g., \code{~ . \%>\% has_columns(vars(d, e))}). The default for \code{active}
 is \code{TRUE}.}
+
+\item{object}{A data frame, tibble (\code{tbl_df} or \code{tbl_dbi}), or Spark
+DataFrame (\code{tbl_spark}) that serves as the target table for the expectation
+function or the test function.}
+
+\item{threshold}{A simple failure threshold value for use with the
+expectation (\code{expect_}) and the test (\code{test_}) function variants. By
+default, this is set to \code{1} meaning that any single unit of failure in data
+validation results in an overall test failure. Whole numbers beyond \code{1}
+indicate that any failing units up to that absolute threshold value will
+result in a succeeding \strong{testthat} test or evaluate to \code{TRUE}. Likewise,
+fractional values (between \code{0} and \code{1}) act as a proportional failure
+threshold, where \code{0.15} means that 15 percent of failing test units results
+in an overall test failure.}
 }
 \value{
 For the validation function, the return value is either a

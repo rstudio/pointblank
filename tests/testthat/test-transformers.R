@@ -7,7 +7,7 @@ test_that("the `tt_summary_stats()` function works", {
   expect_col_schema_match(
     summary_stats_tbl,
     schema = col_schema(
-      .stat. = "character",
+      .param. = "character",
       item_revenue = "numeric",
       session_duration = "numeric"
     )
@@ -18,7 +18,7 @@ test_that("the `tt_summary_stats()` function works", {
   
   # Expect a fixed sequence of character values in the first column
   expect_equal(
-    summary_stats_tbl$.stat.,
+    summary_stats_tbl$.param.,
     c("min", "p05", "q_1", "med", "q_3", "p95", "max", "iqr", "range")
   )
   
@@ -93,7 +93,7 @@ test_that("the `tt_tbl_dims()` function works", {
   expect_col_schema_match(
     dims_tbl,
     schema = col_schema(
-      dim = "character",
+      .param. = "character",
       value = "integer"
     )
   )
@@ -103,7 +103,7 @@ test_that("the `tt_tbl_dims()` function works", {
   
   # Expect a fixed sequence of character values in the first column
   expect_equal(
-    dims_tbl$dim,
+    dims_tbl$.param.,
     c("rows", "columns")
   )
   

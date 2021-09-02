@@ -42,6 +42,34 @@ supplied to the \code{column} argument in \code{get_tt_param()}.
 12-6
 }
 
+\examples{
+# Get summary statistics for the
+# first quarter of the `game_revenue`
+# dataset that's included in the package
+stat_tbl <- 
+  game_revenue \%>\%
+  tt_time_slice(slice_point = 0.25) \%>\%
+  tt_summary_stats()
+
+# Based on player behavior for the first
+# quarter of the year, test whether the
+# maximum session duration during the
+# rest of the year is never higher
+game_revenue \%>\%
+  tt_time_slice(
+    slice_point = 0.25,
+    keep = "right"
+  ) \%>\%
+  test_col_vals_lte(
+    columns = vars(session_duration), 
+    value = get_tt_param(
+      tbl = stat_tbl,
+      param = "max",
+      column = "session_duration"
+    )
+  )
+
+}
 \seealso{
 Other Table Transformers: 
 \code{\link{tt_string_info}()},

@@ -49,7 +49,7 @@
 <meta property="og:title" content="Table Transformer: obtain a summary stats table for numeric columns — tt_summary_stats" />
 <meta property="og:description" content="With any table object, you can produce a summary table that is scoped to
 the numeric column values. The table produced will have a leading column
-called &quot;.stat.&quot; with labels for each of the nine rows, each corresponding
+called &quot;.param.&quot; with labels for each of the nine rows, each corresponding
 to the following summary statistics:
 Minimum (&quot;min&quot;)
 5th Percentile (&quot;p05&quot;)
@@ -184,7 +184,7 @@ order as well." />
     <div class="ref-description">
     <p>With any table object, you can produce a summary table that is scoped to
 the numeric column values. The table produced will have a leading column
-called <code>".stat."</code> with labels for each of the nine rows, each corresponding
+called <code>".param."</code> with labels for each of the nine rows, each corresponding
 to the following summary statistics:</p><ol>
 <li><p>Minimum (<code>"min"</code>)</p></li>
 <li><p>5th Percentile (<code>"p05"</code>)</p></li>
@@ -225,6 +225,7 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Table Transformers: 
+<code><a href='get_tt_param.html'>get_tt_param</a>()</code>,
 <code><a href='tt_string_info.html'>tt_string_info</a>()</code>,
 <code><a href='tt_tbl_dims.html'>tt_tbl_dims</a>()</code>,
 <code><a href='tt_time_shift.html'>tt_time_shift</a>()</code>,
@@ -236,17 +237,17 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
 <span class='r-in'><span class='co'># included in the package</span></span>
 <span class='r-in'><span class='fu'>tt_summary_stats</span><span class='op'>(</span><span class='va'>game_revenue</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 9 × 3</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   .stat. item_revenue session_duration</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> min            0                 3.2</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> p05            0.02              8.2</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> q_1            0.09             18.5</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> med            0.38             26.5</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> q_3            1.25             33.8</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> p95           22.0              39.5</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>7</span> max          143.               41  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>8</span> iqr            1.16             15.3</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>9</span> range        143.               37.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .param. item_revenue session_duration</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> min             0                 3.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> p05             0.02              8.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> q_1             0.09             18.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> med             0.38             26.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> q_3             1.25             33.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> p95            22.0              39.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>7</span> max           143.               41  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>8</span> iqr             1.16             15.3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>9</span> range         143.               37.8</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># Ensure that the maximum revenue</span></span>
 <span class='r-in'><span class='co'># for individual purchases in the</span></span>
@@ -256,20 +257,20 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
 <span class='r-in'>  <span class='fu'><a href='col_vals_lt.html'>col_vals_lt</a></span><span class='op'>(</span></span>
 <span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>item_revenue</span><span class='op'>)</span>,</span>
 <span class='r-in'>    value <span class='op'>=</span> <span class='fl'>150</span>,</span>
-<span class='r-in'>    segments <span class='op'>=</span> <span class='va'>.stat.</span> <span class='op'>~</span> <span class='st'>"max"</span></span>
+<span class='r-in'>    segments <span class='op'>=</span> <span class='va'>.param.</span> <span class='op'>~</span> <span class='st'>"max"</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 9 × 3</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   .stat. item_revenue session_duration</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> min            0                 3.2</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> p05            0.02              8.2</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> q_1            0.09             18.5</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> med            0.38             26.5</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> q_3            1.25             33.8</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> p95           22.0              39.5</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>7</span> max          143.               41  </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>8</span> iqr            1.16             15.3</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>9</span> range        143.               37.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .param. item_revenue session_duration</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> min             0                 3.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> p05             0.02              8.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> q_1             0.09             18.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> med             0.38             26.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> q_3             1.25             33.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> p95            22.0              39.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>7</span> max           143.               41  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>8</span> iqr             1.16             15.3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>9</span> range         143.               37.8</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># For in-app purchases in the</span></span>
 <span class='r-in'><span class='co'># `game_revenue` table, check that</span></span>
@@ -281,20 +282,20 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
 <span class='r-in'>  <span class='fu'><a href='col_vals_between.html'>col_vals_between</a></span><span class='op'>(</span></span>
 <span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>item_revenue</span><span class='op'>)</span>,</span>
 <span class='r-in'>    left <span class='op'>=</span> <span class='fl'>8</span>, right <span class='op'>=</span> <span class='fl'>12</span>,</span>
-<span class='r-in'>    segments <span class='op'>=</span> <span class='va'>.stat.</span> <span class='op'>~</span> <span class='st'>"med"</span></span>
+<span class='r-in'>    segments <span class='op'>=</span> <span class='va'>.param.</span> <span class='op'>~</span> <span class='st'>"med"</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 9 × 3</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   .stat. item_revenue session_duration</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> min            0.4              3.2 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> p05            1.39             5.99</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> q_1            4.49            14.0 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> med           10.5             22.6 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> q_3           20.3             30.6 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> p95           66.0             38.8 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>7</span> max          143.              41   </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>8</span> iqr           15.8             16.7 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>9</span> range        143.              37.8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .param. item_revenue session_duration</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> min             0.4              3.2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> p05             1.39             5.99</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> q_1             4.49            14.0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> med            10.5             22.6 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> q_3            20.3             30.6 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> p95            66.0             38.8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>7</span> max           143.              41   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>8</span> iqr            15.8             16.7 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>9</span> range         143.              37.8 </span>
 <span class='r-in'></span>
 </code></pre></div>
   </div>

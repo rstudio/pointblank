@@ -244,8 +244,8 @@ tt_string_info <- function(tbl) {
 #' of columns.
 #'
 #' The table produced will have two columns and two rows. The first is the
-#' `"dim"` column with the labels `"rows"` and `"columns"`; the second column,
-#' `"value"`, contains the row and column counts.
+#' `".param."` column with the labels `"rows"` and `"columns"`; the second
+#' column, `"value"`, contains the row and column counts.
 #' 
 #' @param tbl A table object to be used as input for the transformation. This
 #'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.

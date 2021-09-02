@@ -16,7 +16,7 @@ A \code{tibble} object.
 \description{
 With any table object, you can produce a summary table that is scoped to
 the numeric column values. The table produced will have a leading column
-called \code{".stat."} with labels for each of the nine rows, each corresponding
+called \code{".param."} with labels for each of the nine rows, each corresponding
 to the following summary statistics:
 \enumerate{
 \item Minimum (\code{"min"})
@@ -53,7 +53,7 @@ tt_summary_stats(game_revenue) \%>\%
   col_vals_lt(
     columns = vars(item_revenue),
     value = 150,
-    segments = .stat. ~ "max"
+    segments = .param. ~ "max"
   )
 
 # For in-app purchases in the
@@ -66,12 +66,13 @@ game_revenue \%>\%
   col_vals_between(
     columns = vars(item_revenue),
     left = 8, right = 12,
-    segments = .stat. ~ "med"
+    segments = .param. ~ "med"
   )
 
 }
 \seealso{
 Other Table Transformers: 
+\code{\link{get_tt_param}()},
 \code{\link{tt_string_info}()},
 \code{\link{tt_tbl_dims}()},
 \code{\link{tt_time_shift}()},

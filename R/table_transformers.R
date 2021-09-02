@@ -132,6 +132,8 @@ tt_summary_stats <- function(tbl) {
       summary_stats_tbl <- dplyr::bind_cols(summary_stats_tbl, stats_col)
     }
   }
+
+  attr(summary_stats_tbl, which = "tt_type") <- "summary_stats"
   
   summary_stats_tbl
 }
@@ -228,6 +230,8 @@ tt_string_info <- function(tbl) {
       string_info_tbl <- dplyr::bind_cols(string_info_tbl, info_col)
     }
   }
+  
+  attr(string_info_tbl, which = "tt_type") <- "string_info"
 
   string_info_tbl
 }
@@ -293,6 +297,8 @@ tt_tbl_dims <- function(tbl) {
       .param. = c("rows", "columns"),
       value = as.integer(c(n_rows, n_cols))
     )
+  
+  attr(tbl_dims_tbl, which = "tt_type") <- "tbl_dims"
   
   tbl_dims_tbl
 }

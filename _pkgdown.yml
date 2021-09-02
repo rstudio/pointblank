@@ -230,6 +230,7 @@ reference:
     - tt_tbl_dims
     - tt_time_shift
     - tt_time_slice
+    - get_tt_param
     
   - title: Utility and Helper Functions
     contents:

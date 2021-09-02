@@ -19,8 +19,8 @@ nothing more than the table's dimensions: the number of rows and the number
 of columns.
 
 The table produced will have two columns and two rows. The first is the
-\code{"dim"} column with the labels \code{"rows"} and \code{"columns"}; the second column,
-\code{"value"}, contains the row and column counts.
+\code{".param."} column with the labels \code{"rows"} and \code{"columns"}; the second
+column, \code{"value"}, contains the row and column counts.
 }
 \section{Function ID}{
 
@@ -42,13 +42,13 @@ tt_tbl_dims(game_revenue) \%>\%
   col_vals_gt(
     columns = vars(value),
     value = 1500,
-    segments = dim ~ "rows"
+    segments = .param. ~ "rows"
   )
 
 # We can check `small_table` for
 # an exact number of columns (`8`)
 tt_tbl_dims(small_table) \%>\%
-  dplyr::filter(dim == "columns") \%>\%
+  dplyr::filter(.param. == "columns") \%>\%
   col_vals_equal(
     columns = vars(value),
     value = 8
@@ -57,6 +57,7 @@ tt_tbl_dims(small_table) \%>\%
 }
 \seealso{
 Other Table Transformers: 
+\code{\link{get_tt_param}()},
 \code{\link{tt_string_info}()},
 \code{\link{tt_summary_stats}()},
 \code{\link{tt_time_shift}()},

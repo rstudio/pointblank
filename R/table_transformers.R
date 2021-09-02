@@ -22,7 +22,7 @@
 #' @description
 #' With any table object, you can produce a summary table that is scoped to
 #' the numeric column values. The table produced will have a leading column
-#' called `".stat."` with labels for each of the nine rows, each corresponding
+#' called `".param."` with labels for each of the nine rows, each corresponding
 #' to the following summary statistics:
 #' 
 #' 1. Minimum (`"min"`)
@@ -58,7 +58,7 @@
 #'   col_vals_lt(
 #'     columns = vars(item_revenue),
 #'     value = 150,
-#'     segments = .stat. ~ "max"
+#'     segments = .param. ~ "max"
 #'   )
 #' 
 #' # For in-app purchases in the
@@ -71,7 +71,7 @@
 #'   col_vals_between(
 #'     columns = vars(item_revenue),
 #'     left = 8, right = 12,
-#'     segments = .stat. ~ "med"
+#'     segments = .param. ~ "med"
 #'   )
 #' 
 #' @family Table Transformers
@@ -92,7 +92,7 @@ tt_summary_stats <- function(tbl) {
   
   summary_stats_tbl <- 
     dplyr::tibble(
-      `.stat.` = c(
+      `.param.` = c(
         "min", "p05", "q_1", "med", "q_3",
         "p95", "max", "iqr", "range"
       )
@@ -263,13 +263,13 @@ tt_string_info <- function(tbl) {
 #'   col_vals_gt(
 #'     columns = vars(value),
 #'     value = 1500,
-#'     segments = dim ~ "rows"
+#'     segments = .param. ~ "rows"
 #'   )
 #' 
 #' # We can check `small_table` for
 #' # an exact number of columns (`8`)
 #' tt_tbl_dims(small_table) %>%
-#'   dplyr::filter(dim == "columns") %>%
+#'   dplyr::filter(.param. == "columns") %>%
 #'   col_vals_equal(
 #'     columns = vars(value),
 #'     value = 8
@@ -288,10 +288,13 @@ tt_tbl_dims <- function(tbl) {
   n_cols <- get_table_total_columns(data = tbl)
   n_rows <- get_table_total_rows(data = tbl)
   
-  dplyr::tibble(
-    dim = c("rows", "columns"),
-    value = as.integer(c(n_rows, n_cols))
-  )
+  tbl_dims_tbl <-
+    dplyr::tibble(
+      .param. = c("rows", "columns"),
+      value = as.integer(c(n_rows, n_cols))
+    )
+  
+  tbl_dims_tbl
 }
 
 #' Table Transformer: shift the times of a table

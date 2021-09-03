@@ -2,7 +2,7 @@
 % Please edit documentation in R/table_transformers.R
 \name{tt_string_info}
 \alias{tt_string_info}
-\title{Table Transformer: obtain an information table for string columns}
+\title{Table Transformer: obtain a summary table for string columns}
 \usage{
 tt_string_info(tbl)
 }
@@ -14,10 +14,10 @@ can be a data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} ob
 A \code{tibble} object.
 }
 \description{
-With any table object, you can produce an information table that is scoped to
-string-based columns. The table produced will have a leading column called
-\code{".param."} with labels for each of the three rows, each corresponding to
-the following pieces of information pertaining to string length:
+With any table object, you can produce a summary table that is scoped to
+string-based columns. The output summary table will have a leading column
+called \code{".param."} with labels for each of the three rows, each corresponding
+to the following pieces of information pertaining to string length:
 \enumerate{
 \item Mean String Length (\code{"length_mean"})
 \item Minimum String Length (\code{"length_min"})
@@ -58,7 +58,7 @@ tt_string_info(game_revenue) \%>\%
 # `small_table` dataset is no
 # greater than `4`
 tt_string_info(small_table) \%>\%
-  col_vals_lte(
+  test_col_vals_lte(
     columns = vars(f),
     value = 4
   )
@@ -68,6 +68,7 @@ tt_string_info(small_table) \%>\%
 Other Table Transformers: 
 \code{\link{get_tt_param}()},
 \code{\link{tt_summary_stats}()},
+\code{\link{tt_tbl_colnames}()},
 \code{\link{tt_tbl_dims}()},
 \code{\link{tt_time_shift}()},
 \code{\link{tt_time_slice}()}

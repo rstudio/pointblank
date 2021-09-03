@@ -899,9 +899,7 @@ get_tt_param <- function(tbl,
       
     } else {
       
-      string_length_params <-
-        c("length_mean", "length_min", "length_max")
-      
+      string_length_params <- c("length_mean", "length_min", "length_max")
       
       if (!(param %in% string_length_params)) {
         

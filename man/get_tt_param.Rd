@@ -39,7 +39,7 @@ supplied to the \code{column} argument in \code{get_tt_param()}.
 }
 \section{Function ID}{
 
-12-6
+12-7
 }
 
 \examples{
@@ -74,6 +74,7 @@ game_revenue \%>\%
 Other Table Transformers: 
 \code{\link{tt_string_info}()},
 \code{\link{tt_summary_stats}()},
+\code{\link{tt_tbl_colnames}()},
 \code{\link{tt_tbl_dims}()},
 \code{\link{tt_time_shift}()},
 \code{\link{tt_time_slice}()}

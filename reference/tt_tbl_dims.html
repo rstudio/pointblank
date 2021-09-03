@@ -47,12 +47,11 @@
 
 
 <meta property="og:title" content="Table Transformer: get the dimensions of a table — tt_tbl_dims" />
-<meta property="og:description" content="With any table object, you can produce an information table that contains
-nothing more than the table's dimensions: the number of rows and the number
-of columns.
-The table produced will have two columns and two rows. The first is the
-&quot;.param.&quot; column with the labels &quot;rows&quot; and &quot;columns&quot;; the second
-column, &quot;value&quot;, contains the row and column counts." />
+<meta property="og:description" content="With any table object, you can produce a summary table that contains nothing
+more than the table's dimensions: the number of rows and the number of
+columns. The output summary table will have two columns and two rows. The
+first is the &quot;.param.&quot; column with the labels &quot;rows&quot; and &quot;columns&quot;; the
+second column, &quot;value&quot;, contains the row and column counts." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -170,12 +169,11 @@ column, &quot;value&quot;, contains the row and column counts." />
     </div>
 
     <div class="ref-description">
-    <p>With any table object, you can produce an information table that contains
-nothing more than the table's dimensions: the number of rows and the number
-of columns.</p>
-<p>The table produced will have two columns and two rows. The first is the
-<code>".param."</code> column with the labels <code>"rows"</code> and <code>"columns"</code>; the second
-column, <code>"value"</code>, contains the row and column counts.</p>
+    <p>With any table object, you can produce a summary table that contains nothing
+more than the table's dimensions: the number of rows and the number of
+columns. The output summary table will have two columns and two rows. The
+first is the <code>".param."</code> column with the labels <code>"rows"</code> and <code>"columns"</code>; the
+second column, <code>"value"</code>, contains the row and column counts.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>tt_tbl_dims</span><span class='op'>(</span><span class='va'>tbl</span><span class='op'>)</span></code></pre></div>
@@ -204,6 +202,7 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
 <code><a href='get_tt_param.html'>get_tt_param</a>()</code>,
 <code><a href='tt_string_info.html'>tt_string_info</a>()</code>,
 <code><a href='tt_summary_stats.html'>tt_summary_stats</a>()</code>,
+<code><a href='tt_tbl_colnames.html'>tt_tbl_colnames</a>()</code>,
 <code><a href='tt_time_shift.html'>tt_time_shift</a>()</code>,
 <code><a href='tt_time_slice.html'>tt_time_slice</a>()</code></p></div>
 
@@ -224,29 +223,22 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
 <span class='r-in'><span class='co'># we check that `game_revenue` has</span></span>
 <span class='r-in'><span class='co'># at least 1500 rows</span></span>
 <span class='r-in'><span class='fu'>tt_tbl_dims</span><span class='op'>(</span><span class='va'>game_revenue</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>col_vals_gt</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>.param.</span> <span class='op'>==</span> <span class='st'>"rows"</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_gt.html'>test_col_vals_gt</a></span><span class='op'>(</span></span>
 <span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>value</span><span class='op'>)</span>,</span>
-<span class='r-in'>    value <span class='op'>=</span> <span class='fl'>1500</span>,</span>
-<span class='r-in'>    segments <span class='op'>=</span> <span class='va'>.param.</span> <span class='op'>~</span> <span class='st'>"rows"</span></span>
+<span class='r-in'>    value <span class='op'>=</span> <span class='fl'>1500</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2 × 2</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   .param. value</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> rows     <span style='text-decoration: underline;'>2</span>000</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> columns    11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># We can check `small_table` for</span></span>
 <span class='r-in'><span class='co'># an exact number of columns (`8`)</span></span>
 <span class='r-in'><span class='fu'>tt_tbl_dims</span><span class='op'>(</span><span class='va'>small_table</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>.param.</span> <span class='op'>==</span> <span class='st'>"columns"</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'><a href='col_vals_equal.html'>col_vals_equal</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_equal.html'>test_col_vals_equal</a></span><span class='op'>(</span></span>
 <span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>value</span><span class='op'>)</span>,</span>
 <span class='r-in'>    value <span class='op'>=</span> <span class='fl'>8</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1 × 2</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   .param. value</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> columns     8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
 <span class='r-in'></span>
 </code></pre></div>
   </div>

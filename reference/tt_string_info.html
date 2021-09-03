@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Table Transformer: obtain an information table for string columns — tt_string_info • pointblank</title>
+<title>Table Transformer: obtain a summary table for string columns — tt_string_info • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,11 +46,11 @@
 
 
 
-<meta property="og:title" content="Table Transformer: obtain an information table for string columns — tt_string_info" />
-<meta property="og:description" content="With any table object, you can produce an information table that is scoped to
-string-based columns. The table produced will have a leading column called
-&quot;.param.&quot; with labels for each of the three rows, each corresponding to
-the following pieces of information pertaining to string length:
+<meta property="og:title" content="Table Transformer: obtain a summary table for string columns — tt_string_info" />
+<meta property="og:description" content="With any table object, you can produce a summary table that is scoped to
+string-based columns. The output summary table will have a leading column
+called &quot;.param.&quot; with labels for each of the three rows, each corresponding
+to the following pieces of information pertaining to string length:
 Mean String Length (&quot;length_mean&quot;)
 Minimum String Length (&quot;length_min&quot;)
 Maximum String Length (&quot;length_max&quot;)
@@ -170,16 +170,16 @@ order as well." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Table Transformer: obtain an information table for string columns</h1>
+    <h1>Table Transformer: obtain a summary table for string columns</h1>
     <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/table_transformers.R'><code>R/table_transformers.R</code></a></small>
     <div class="hidden name"><code>tt_string_info.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>With any table object, you can produce an information table that is scoped to
-string-based columns. The table produced will have a leading column called
-<code>".param."</code> with labels for each of the three rows, each corresponding to
-the following pieces of information pertaining to string length:</p><ol>
+    <p>With any table object, you can produce a summary table that is scoped to
+string-based columns. The output summary table will have a leading column
+called <code>".param."</code> with labels for each of the three rows, each corresponding
+to the following pieces of information pertaining to string length:</p><ol>
 <li><p>Mean String Length (<code>"length_mean"</code>)</p></li>
 <li><p>Minimum String Length (<code>"length_min"</code>)</p></li>
 <li><p>Maximum String Length (<code>"length_max"</code>)</p></li>
@@ -215,6 +215,7 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
     <div class='dont-index'><p>Other Table Transformers: 
 <code><a href='get_tt_param.html'>get_tt_param</a>()</code>,
 <code><a href='tt_summary_stats.html'>tt_summary_stats</a>()</code>,
+<code><a href='tt_tbl_colnames.html'>tt_tbl_colnames</a>()</code>,
 <code><a href='tt_tbl_dims.html'>tt_tbl_dims</a>()</code>,
 <code><a href='tt_time_shift.html'>tt_time_shift</a>()</code>,
 <code><a href='tt_time_slice.html'>tt_time_slice</a>()</code></p></div>
@@ -256,16 +257,11 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
 <span class='r-in'><span class='co'># `small_table` dataset is no</span></span>
 <span class='r-in'><span class='co'># greater than `4`</span></span>
 <span class='r-in'><span class='fu'>tt_string_info</span><span class='op'>(</span><span class='va'>small_table</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'><a href='col_vals_lte.html'>col_vals_lte</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='col_vals_lte.html'>test_col_vals_lte</a></span><span class='op'>(</span></span>
 <span class='r-in'>    columns <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>,</span>
 <span class='r-in'>    value <span class='op'>=</span> <span class='fl'>4</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 3 × 3</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   .param.         b     f</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> length_mean     9  3.46</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> length_min      9  3   </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> length_max      9  4   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
 <span class='r-in'></span>
 </code></pre></div>
   </div>

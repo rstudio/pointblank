@@ -930,6 +930,25 @@ get_tt_param <- function(tbl,
       tbl %>%
       dplyr::filter(.param. == .env$param) %>%
       dplyr::pull(value)
+  
+  } else if (tt_type == "tbl_colnames") {
+    
+    # Stop function if the `param` value provided isn't in the range of
+    # column indices present in `tbl`
+    if (!(param %in% tbl$.param.)) {
+      
+      stop(
+        "The column index given as `param` isn't present in the summary table",
+        call. = FALSE
+      )
+    }
+    
+    # Obtain the value from the `tbl` through a `filter()` and `pull()`
+    param_value <-
+      tbl %>%
+      dplyr::filter(.param. == as.integer(.env$param)) %>%
+      dplyr::pull(value)
+    
   }
   
   param_value

@@ -458,7 +458,7 @@ tt_tbl_colnames <- function(tbl) {
 #' 
 #' @family Table Transformers
 #' @section Function ID:
-#' 12-4
+#' 12-5
 #' 
 #' @export
 tt_time_shift <- function(tbl,
@@ -638,7 +638,7 @@ tt_time_shift <- function(tbl,
 #' 
 #' @family Table Transformers
 #' @section Function ID:
-#' 12-5
+#' 12-6
 #' 
 #' @export
 tt_time_slice <- function(tbl,
@@ -820,7 +820,7 @@ tt_time_slice <- function(tbl,
 #' 
 #' @family Table Transformers
 #' @section Function ID:
-#' 12-6
+#' 12-7
 #' 
 #' @export
 get_tt_param <- function(tbl,

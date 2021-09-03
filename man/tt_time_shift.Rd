@@ -42,7 +42,7 @@ exact number of days through rounding.
 }
 \section{Function ID}{
 
-12-4
+12-5
 }
 
 \examples{
@@ -70,6 +70,7 @@ Other Table Transformers:
 \code{\link{get_tt_param}()},
 \code{\link{tt_string_info}()},
 \code{\link{tt_summary_stats}()},
+\code{\link{tt_tbl_colnames}()},
 \code{\link{tt_tbl_dims}()},
 \code{\link{tt_time_slice}()}
 }

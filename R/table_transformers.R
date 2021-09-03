@@ -916,7 +916,7 @@ get_tt_param <- function(tbl,
       dplyr::filter(.param. == .env$param) %>%
       dplyr::pull(.env$column)
     
-  } else {
+  } else if (tt_type == "tbl_dims") {
     
     if (!(param %in% c("rows", "columns"))) {
       

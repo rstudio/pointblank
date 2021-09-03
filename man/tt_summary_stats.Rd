@@ -41,7 +41,7 @@ order as well.
 
 \examples{
 # Get summary statistics for the
-# `game_revenue` dataset that's
+# `game_revenue` dataset that is
 # included in the package
 tt_summary_stats(game_revenue)
 
@@ -68,6 +68,41 @@ game_revenue \%>\%
     left = 8, right = 12,
     segments = .param. ~ "med"
   )
+
+# While performing validations of the
+# `game_revenue` table with an agent
+# we can include the same revenue
+# check by using `tt_summary_stats()`
+# in the `preconditions` argument (this
+# will transform the target table for
+# the validation step); we also need
+# to get just a segment of that table
+# (the row with the median values)
+agent <- 
+  create_agent(
+    read_fn = ~ game_revenue,
+    tbl_name = "game_revenue",
+    label = "An example.",
+    actions = action_levels(
+      warn_at = 0.10,
+      stop_at = 0.25,
+      notify_at = 0.35
+    )
+  ) \%>\%
+  rows_complete() \%>\%
+  rows_distinct() \%>\%
+  col_vals_between(
+    columns = vars(item_revenue),
+    left = 8, right = 12,
+    preconditions = ~ . \%>\%
+      dplyr::filter(item_type == "iap") \%>\%
+      tt_summary_stats(),
+    segments = .param. ~ "med"
+  ) \%>\%
+  interrogate()
+
+# This should all pass but let's check:
+all_passed(agent)
 
 }
 \seealso{

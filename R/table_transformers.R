@@ -297,10 +297,10 @@ tt_string_info <- function(tbl) {
 #' # we check that `game_revenue` has
 #' # at least 1500 rows
 #' tt_tbl_dims(game_revenue) %>%
-#'   col_vals_gt(
+#'   dplyr::filter(.param. == "rows") %>%
+#'   test_col_vals_gt(
 #'     columns = vars(value),
-#'     value = 1500,
-#'     segments = .param. ~ "rows"
+#'     value = 1500
 #'   )
 #' 
 #' # We can check `small_table` for

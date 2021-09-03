@@ -910,6 +910,7 @@ get_tt_param <- function(tbl,
       }
     }
     
+    # Obtain the value from the `tbl` through a `select()`, `filter()`, `pull()`
     param_value <-
       tbl %>%
       dplyr::select(.data$.param., .env$column) %>%
@@ -926,6 +927,7 @@ get_tt_param <- function(tbl,
       )
     }
     
+    # Obtain the value from the `tbl` through a `filter()` and `pull()`
     param_value <-
       tbl %>%
       dplyr::filter(.param. == .env$param) %>%

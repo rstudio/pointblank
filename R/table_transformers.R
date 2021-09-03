@@ -219,7 +219,7 @@ tt_summary_stats <- function(tbl) {
 #' # `small_table` dataset is no
 #' # greater than `4`
 #' tt_string_info(small_table) %>%
-#'   col_vals_lte(
+#'   test_col_vals_lte(
 #'     columns = vars(f),
 #'     value = 4
 #'   )

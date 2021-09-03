@@ -228,6 +228,7 @@ reference:
     - tt_summary_stats
     - tt_string_info
     - tt_tbl_dims
+    - tt_tbl_colnames
     - tt_time_shift
     - tt_time_slice
     - get_tt_param

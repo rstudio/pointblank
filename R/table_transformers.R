@@ -176,10 +176,10 @@ tt_summary_stats <- function(tbl) {
 #' Table Transformer: obtain a summary table for string columns
 #' 
 #' @description
-#' With any table object, you can produce an information table that is scoped to
-#' string-based columns. The table produced will have a leading column called
-#' `".param."` with labels for each of the three rows, each corresponding to
-#' the following pieces of information pertaining to string length:
+#' With any table object, you can produce a summary table that is scoped to
+#' string-based columns. The output summary table will have a leading column
+#' called `".param."` with labels for each of the three rows, each corresponding
+#' to the following pieces of information pertaining to string length:
 #'
 #' 1. Mean String Length (`"length_mean"`)
 #' 2. Minimum String Length (`"length_min"`)

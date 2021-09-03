@@ -20,8 +20,8 @@
 #' Table Transformer: obtain a summary stats table for numeric columns
 #' 
 #' @description
-#' With any table object, you can produce a summary table that is scoped to
-#' the numeric column values. The table produced will have a leading column
+#' With any table object, you can produce a summary table that is scoped to the
+#' numeric column values. The output summary table will have a leading column
 #' called `".param."` with labels for each of the nine rows, each corresponding
 #' to the following summary statistics:
 #' 

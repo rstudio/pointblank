@@ -338,6 +338,74 @@ tt_tbl_dims <- function(tbl) {
   tbl_dims_tbl
 }
 
+
+#' Table Transformer: get a table's column names
+#' 
+#' @description
+#' With any table object, you can produce a summary table that contains table's
+#' column names. The output summary table will have two columns and as many rows
+#' as there are columns in the input table. The first column is the `".param."`
+#' column, which is an integer-based column containing the indices of the
+#' columns from the input table. The second column, `"value"`, contains the
+#' column names from the input table.
+#' 
+#' @param tbl A table object to be used as input for the transformation. This
+#'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#' 
+#' @return A `tibble` object.
+#' 
+#' @examples
+#' # Get the column names of the
+#' # `game_revenue` dataset that's
+#' # included in the package
+#' tt_tbl_colnames(game_revenue)
+#' 
+#' # This output table is useful when
+#' # you want to validate the
+#' # column names of the table; here,
+#' # we check that `game_revenue` has
+#' # certain column names present
+#' tt_tbl_colnames(game_revenue) %>%
+#'   test_col_vals_make_subset(
+#'     columns = vars(value),
+#'     set = c("acquisition", "country")
+#'   )
+#' 
+#' # We can check to see whether the
+#' # column names in the `specifications`
+#' # table are all less than 15
+#' # characters in length
+#' specifications %>%
+#'   tt_tbl_colnames() %>%
+#'   tt_string_info() %>%
+#'   test_col_vals_lt(
+#'     columns = vars(value),
+#'     value = 15
+#'   )
+#' 
+#' @family Table Transformers
+#' @section Function ID:
+#' 12-4
+#' 
+#' @export
+tt_tbl_colnames <- function(tbl) {
+  
+  # Determine whether the `tbl` object is acceptable here
+  check_is_a_table_object(tbl = tbl)
+  
+  tbl_colnames <- get_table_column_names(data = tbl)
+  
+  tbl_colnames_tbl <-
+    dplyr::tibble(
+      .param. = seq_along(tbl_colnames),
+      value = tbl_colnames
+    )
+  
+  attr(tbl_colnames_tbl, which = "tt_type") <- "tbl_colnames"
+  
+  tbl_colnames_tbl
+}
+
 #' Table Transformer: shift the times of a table
 #' 
 #' @description

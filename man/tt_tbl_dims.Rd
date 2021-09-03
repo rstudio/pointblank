@@ -14,13 +14,11 @@ can be a data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} ob
 A \code{tibble} object.
 }
 \description{
-With any table object, you can produce an information table that contains
-nothing more than the table's dimensions: the number of rows and the number
-of columns.
-
-The table produced will have two columns and two rows. The first is the
-\code{".param."} column with the labels \code{"rows"} and \code{"columns"}; the second
-column, \code{"value"}, contains the row and column counts.
+With any table object, you can produce a summary table that contains nothing
+more than the table's dimensions: the number of rows and the number of
+columns. The output summary table will have two columns and two rows. The
+first is the \code{".param."} column with the labels \code{"rows"} and \code{"columns"}; the
+second column, \code{"value"}, contains the row and column counts.
 }
 \section{Function ID}{
 
@@ -39,17 +37,17 @@ tt_tbl_dims(game_revenue)
 # we check that `game_revenue` has
 # at least 1500 rows
 tt_tbl_dims(game_revenue) \%>\%
-  col_vals_gt(
+  dplyr::filter(.param. == "rows") \%>\%
+  test_col_vals_gt(
     columns = vars(value),
-    value = 1500,
-    segments = .param. ~ "rows"
+    value = 1500
   )
 
 # We can check `small_table` for
 # an exact number of columns (`8`)
 tt_tbl_dims(small_table) \%>\%
   dplyr::filter(.param. == "columns") \%>\%
-  col_vals_equal(
+  test_col_vals_equal(
     columns = vars(value),
     value = 8
   )
@@ -60,6 +58,7 @@ Other Table Transformers:
 \code{\link{get_tt_param}()},
 \code{\link{tt_string_info}()},
 \code{\link{tt_summary_stats}()},
+\code{\link{tt_tbl_colnames}()},
 \code{\link{tt_time_shift}()},
 \code{\link{tt_time_slice}()}
 }

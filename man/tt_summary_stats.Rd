@@ -14,8 +14,8 @@ can be a data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} ob
 A \code{tibble} object.
 }
 \description{
-With any table object, you can produce a summary table that is scoped to
-the numeric column values. The table produced will have a leading column
+With any table object, you can produce a summary table that is scoped to the
+numeric column values. The output summary table will have a leading column
 called \code{".param."} with labels for each of the nine rows, each corresponding
 to the following summary statistics:
 \enumerate{
@@ -109,6 +109,7 @@ all_passed(agent)
 Other Table Transformers: 
 \code{\link{get_tt_param}()},
 \code{\link{tt_string_info}()},
+\code{\link{tt_tbl_colnames}()},
 \code{\link{tt_tbl_dims}()},
 \code{\link{tt_time_shift}()},
 \code{\link{tt_time_slice}()}

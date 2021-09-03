@@ -173,7 +173,7 @@ tt_summary_stats <- function(tbl) {
   summary_stats_tbl
 }
 
-#' Table Transformer: obtain an information table for string columns
+#' Table Transformer: obtain a summary table for string columns
 #' 
 #' @description
 #' With any table object, you can produce an information table that is scoped to

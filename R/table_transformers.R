@@ -307,7 +307,7 @@ tt_string_info <- function(tbl) {
 #' # an exact number of columns (`8`)
 #' tt_tbl_dims(small_table) %>%
 #'   dplyr::filter(.param. == "columns") %>%
-#'   col_vals_equal(
+#'   test_col_vals_equal(
 #'     columns = vars(value),
 #'     value = 8
 #'   )

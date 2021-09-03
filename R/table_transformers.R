@@ -831,11 +831,11 @@ get_tt_param <- function(tbl,
   # in the table object
   tt_type <- attr(tbl, which = "tt_type", exact = TRUE)
   
-  # Stop function if `param` isn't a character vector of length 1
-  if (!is.character(param) && length(param) != 1) {
+  # Stop function if `param` isn't a vector of length 1
+  if (length(param) != 1) {
     
     stop(
-      "The value for `param` must be a character vector of length 1.",
+      "The value for `param` must be a vector of length 1.",
       call. = FALSE
     )
   }

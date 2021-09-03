@@ -844,8 +844,9 @@ get_tt_param <- function(tbl,
     
     stop(
       "The summary table provided in `tbl` wasn't produced in pointblank:\n",
-      "* use either `tt_summary_stats()`, `tt_tbl_dims()`, or ",
-      "`tt_string_info()` to create a summary table based on an input table.",
+      "* use either `tt_summary_stats()`, `tt_string_info()`, ",
+      "`tt_tbl_dims()`, or `tt_tbl_colnames()` to create a summary table ",
+      "based on an input table.",
       call. = FALSE
     )
   }

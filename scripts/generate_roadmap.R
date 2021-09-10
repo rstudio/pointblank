@@ -5,17 +5,22 @@ library(png)
 
 myrepo <- create_repo_ref("rich-iannone", "pointblank")
 issues <- get_issues(myrepo, state = "open")
-issues_df <- parse_issues(issues)
+issues_df <- dplyr::as_tibble(parse_issues(issues))
 
 tbl <- 
   issues_df %>%
-  dplyr::as_tibble() %>%
   dplyr::filter(!is.na(milestone_title)) %>%
-  tidyr::separate(
-    col = labels_name,
-    into = c("difficulty", "effort", "priority", "type"),
-    sep = ",",
-    remove = FALSE
+  dplyr::select(number, title, labels_name, milestone_title) %>%
+  tidyr::unnest(labels_name) %>%
+  dplyr::filter(grepl("(Type|Difficulty|Effort|Priority)", labels_name)) %>%
+  dplyr::filter(!grepl("Question", labels_name)) %>%
+  tidyr::separate(labels_name, into = c("category", "value"), sep = ": ") %>%
+  tidyr::pivot_wider(names_from = category, values_from = value) %>%
+  dplyr::rename(
+    type = Type,
+    difficulty = Difficulty,
+    effort = Effort,
+    priority = Priority
   ) %>%
   tidyr::separate(
     col = milestone_title,
@@ -25,14 +30,7 @@ tbl <-
   ) %>%
   dplyr::mutate(major = gsub("v", "", major)) %>% 
   dplyr::mutate_at(.vars = vars(major, minor, patch), .funs = as.integer) %>%
-  dplyr::mutate(type = ifelse(labels_name == "Release", "✈ Release", type)) %>%
-  dplyr::filter(!grepl("Question", labels_name)) %>%
-  dplyr::filter(!grepl("Help", labels_name)) %>%
-  dplyr::filter(!grepl("Good", labels_name)) %>%
-  dplyr::select(
-    number, title, milestone_title, major, minor, patch,
-    type, priority, difficulty, effort
-  ) %>%
+  # dplyr::mutate(type = ifelse(labels_name == "Release", "✈ Release", type)) %>%
   dplyr::mutate(difficulty = gsub(".*?([1-3]).*", "\\1", difficulty)) %>%
   dplyr::mutate(effort = gsub(".*?([1-3]).*", "\\1", effort)) %>%
   dplyr::mutate(priority = gsub(".*?([1-3]).*", "\\1", priority)) %>%

@@ -210,7 +210,7 @@ interrogate <- function(agent,
     # Get the assertion type for this verification step
     assertion_type <- get_assertion_type_at_idx(agent = agent, idx = i)
 
-    if (!(assertion_type %in% c("conjointly", "serially"))) {
+    if (!(assertion_type %in% c("conjointly", "serially", "specially"))) {
 
       # Perform table checking based on assertion type
       tbl_checked <- 
@@ -584,6 +584,18 @@ interrogate <- function(agent,
             testing_validation_set = serially_validation_set
           )
         )
+    
+    } else if (assertion_type == "specially") {
+      
+      validation_function <- get_values_at_idx(agent = agent, idx = i)[[1]]
+      
+      validation_res <- validation_function(table)
+    
+      if (is.logical(validation_res)) {
+    
+        tbl_checked <- 
+          pointblank_try_catch(dplyr::tibble(`pb_is_good_` = validation_res))
+      }
     }
 
     # Add in the necessary reporting data for the validation

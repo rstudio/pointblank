@@ -411,6 +411,7 @@ Other validation functions:
 \code{\link{col_vals_within_spec}()},
 \code{\link{rows_complete}()},
 \code{\link{rows_distinct}()},
-\code{\link{serially}()}
+\code{\link{serially}()},
+\code{\link{specially}()}
 }
 \concept{validation functions}

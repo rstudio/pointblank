@@ -16,21 +16,13 @@
 # https://rich-iannone.github.io/pointblank/LICENSE.html
 #
 
-#' Run several tests and a final validation in a serial manner
+#' Perform a specialized validation with a user-defined function
 #'
 #' @description 
 #' The `specially()` validation function allows for ...
 #' 
 #' The function to provide to `specially()` must either return a table or a
 #' logical vector:
-#' 
-#' @section Column Names:
-#' If providing multiple column names in any of the supplied validation steps,
-#' the result will be an expansion of sub-validation steps to that number of
-#' column names. Aside from column names in quotes and in `vars()`,
-#' **tidyselect** helper functions are available for specifying columns. They
-#' are: `starts_with()`, `ends_with()`, `contains()`, `matches()`, and
-#' `everything()`.
 #' 
 #' @section Preconditions:
 #' Providing expressions as `preconditions` means **pointblank** will preprocess

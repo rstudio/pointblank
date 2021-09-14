@@ -19,10 +19,9 @@
 #' Perform a specialized validation with a user-defined function
 #'
 #' @description 
-#' The `specially()` validation function allows for ...
-#' 
-#' The function to provide to `specially()` must either return a table or a
-#' logical vector:
+#' The `specially()` validation function allows for custom validation with a
+#' provided function. The function to provide to `specially()` must either
+#' return a logical vector or a table where the final column is logical.
 #' 
 #' @section Preconditions:
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
@@ -105,9 +104,9 @@
 #' writing to disk by using the [yaml_agent_string()] function.
 #'
 #' @inheritParams col_vals_gt
-#' @param fn A function performs the specialized validation on the data. It must
-#'   either return a table with a logical column in the rightmost position, or,
-#'   a logical vector.
+#' @param fn A function that performs the specialized validation on the data. It
+#'   must either return a logical vector or a table where the last column is a
+#'   logical column.
 #' 
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent

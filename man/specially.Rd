@@ -4,7 +4,7 @@
 \alias{specially}
 \alias{expect_specially}
 \alias{test_specially}
-\title{Run several tests and a final validation in a serial manner}
+\title{Perform a specialized validation with a user-defined function}
 \usage{
 specially(
   x,
@@ -26,9 +26,9 @@ test_specially(object, fn, preconditions = NULL, threshold = 1)
 (\code{tbl_spark}), or, an \emph{agent} object of class \code{ptblank_agent} that is
 created with \code{\link[=create_agent]{create_agent()}}.}
 
-\item{fn}{A function performs the specialized validation on the data. It must
-either return a table with a logical column in the rightmost position, or,
-a logical vector.}
+\item{fn}{A function that performs the specialized validation on the data. It
+must either return a logical vector or a table where the last column is a
+logical column.}
 
 \item{preconditions}{An optional expression for mutating the input table
 before proceeding with the validation. This can either be provided as a
@@ -100,21 +100,10 @@ called primarily for its potential side-effects (e.g., signaling failure).
 The test function returns a logical value.
 }
 \description{
-The \code{specially()} validation function allows for ...
-
-The function to provide to \code{specially()} must either return a table or a
-logical vector:
+The \code{specially()} validation function allows for custom validation with a
+provided function. The function to provide to \code{specially()} must either
+return a logical vector or a table where the final column is logical.
 }
-\section{Column Names}{
-
-If providing multiple column names in any of the supplied validation steps,
-the result will be an expansion of sub-validation steps to that number of
-column names. Aside from column names in quotes and in \code{vars()},
-\strong{tidyselect} helper functions are available for specifying columns. They
-are: \code{starts_with()}, \code{ends_with()}, \code{contains()}, \code{matches()}, and
-\code{everything()}.
-}
-
 \section{Preconditions}{
 
 Providing expressions as \code{preconditions} means \strong{pointblank} will preprocess

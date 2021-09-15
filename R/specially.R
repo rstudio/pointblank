@@ -20,17 +20,24 @@
 #'
 #' @description 
 #' The `specially()` validation function allows for custom validation with a
-#' provided function. The function to provide to `specially()` must either
-#' return a logical vector or a table where the final column is logical.
+#' function that *you* provide. The major proviso for the provided function is
+#' that it must either return a logical vector or a table where the final column
+#' is logical. The function will operate on the table object, or, because you
+#' can do whatever you like, it could also operate on other types of objects. To
+#' do this, you can transform the input table in `preconditions` or inject an
+#' entirely different object there. During interrogation, there won't be any
+#' checks to ensure that the data is a table object.
 #' 
 #' @section Preconditions:
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table table during interrogation as a preparatory step. It might
-#' happen that a particular validation requires a calculated column, some
-#' filtering of rows, or the addition of columns via a join, etc. Especially for
-#' an *agent*-based report this can be advantageous since we can develop a large
+#' the target table during interrogation as a preparatory step. It might happen
+#' that a particular validation requires a calculated column, some filtering of
+#' rows, or the addition of columns via a join, etc. Especially for an
+#' *agent*-based report this can be advantageous since we can develop a large
 #' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' as needed, along the way. Within `specially()`, because this function is
+#' special, there won't be internal checking as to whether the
+#' `preconditions`-based output is a table.
 #'
 #' The table mutation is totally isolated in scope to the validation step(s)
 #' where `preconditions` is used. Using **dplyr** code is suggested here since

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Do the columns contain integer values? — col_is_integer • pointblank</title>
+<title>Perform a specialized validation with a user-defined function — specially • pointblank</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,18 +46,15 @@
 
 
 
-<meta property="og:title" content="Do the columns contain integer values? — col_is_integer" />
-<meta property="og:description" content="The col_is_integer() validation function, the expect_col_is_integer()
-expectation function, and the test_col_is_integer() test function all check
-whether one or more columns in a table is of the integer type. Like many of
-the col_is_*()-type functions in pointblank, the only requirement is a
-specification of the column names. The validation function can be used
-directly on a data table or with an agent object (technically, a
-ptblank_agent object) whereas the expectation and test functions can only
-be used with a data table. The types of data tables that can be used include
-data frames, tibbles, database tables (tbl_dbi), and Spark DataFrames
-(tbl_spark). Each validation step or expectation will operate over a single
-test unit, which is whether the column is an integer-type column or not." />
+<meta property="og:title" content="Perform a specialized validation with a user-defined function — specially" />
+<meta property="og:description" content="The specially() validation function allows for custom validation with a
+function that you provide. The major proviso for the provided function is
+that it must either return a logical vector or a table where the final column
+is logical. The function will operate on the table object, or, because you
+can do whatever you like, it could also operate on other types of objects. To
+do this, you can transform the input table in preconditions or inject an
+entirely different object there. During interrogation, there won't be any
+checks to ensure that the data is a table object." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -169,28 +166,26 @@ test unit, which is whether the column is an integer-type column or not." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Do the columns contain integer values?</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/col_is_integer.R'><code>R/col_is_integer.R</code></a></small>
-    <div class="hidden name"><code>col_is_integer.Rd</code></div>
+    <h1>Perform a specialized validation with a user-defined function</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rich-iannone/pointblank/blob/master/R/specially.R'><code>R/specially.R</code></a></small>
+    <div class="hidden name"><code>specially.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>col_is_integer()</code> validation function, the <code>expect_col_is_integer()</code>
-expectation function, and the <code>test_col_is_integer()</code> test function all check
-whether one or more columns in a table is of the integer type. Like many of
-the <code>col_is_*()</code>-type functions in <strong>pointblank</strong>, the only requirement is a
-specification of the column names. The validation function can be used
-directly on a data table or with an <em>agent</em> object (technically, a
-<code>ptblank_agent</code> object) whereas the expectation and test functions can only
-be used with a data table. The types of data tables that can be used include
-data frames, tibbles, database tables (<code>tbl_dbi</code>), and Spark DataFrames
-(<code>tbl_spark</code>). Each validation step or expectation will operate over a single
-test unit, which is whether the column is an integer-type column or not.</p>
+    <p>The <code>specially()</code> validation function allows for custom validation with a
+function that <em>you</em> provide. The major proviso for the provided function is
+that it must either return a logical vector or a table where the final column
+is logical. The function will operate on the table object, or, because you
+can do whatever you like, it could also operate on other types of objects. To
+do this, you can transform the input table in <code>preconditions</code> or inject an
+entirely different object there. During interrogation, there won't be any
+checks to ensure that the data is a table object.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>col_is_integer</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>specially</span><span class='op'>(</span>
   <span class='va'>x</span>,
-  <span class='va'>columns</span>,
+  <span class='va'>fn</span>,
+  preconditions <span class='op'>=</span> <span class='cn'>NULL</span>,
   actions <span class='op'>=</span> <span class='cn'>NULL</span>,
   step_id <span class='op'>=</span> <span class='cn'>NULL</span>,
   label <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -198,9 +193,9 @@ test unit, which is whether the column is an integer-type column or not.</p>
   active <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
 
-<span class='fu'>expect_col_is_integer</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>columns</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'>expect_specially</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>fn</span>, preconditions <span class='op'>=</span> <span class='cn'>NULL</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
-<span class='fu'>test_col_is_integer</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>columns</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></code></pre></div>
+<span class='fu'>test_specially</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>fn</span>, preconditions <span class='op'>=</span> <span class='cn'>NULL</span>, threshold <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -212,9 +207,19 @@ test unit, which is whether the column is an integer-type column or not.</p>
 created with <code><a href='create_agent.html'>create_agent()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>columns</th>
-      <td><p>The column (or a set of columns, provided as a character
-vector) to which this validation should be applied.</p></td>
+      <th>fn</th>
+      <td><p>A function that performs the specialized validation on the data. It
+must either return a logical vector or a table where the last column is a
+logical column.</p></td>
+    </tr>
+    <tr>
+      <th>preconditions</th>
+      <td><p>An optional expression for mutating the input table
+before proceeding with the validation. This can either be provided as a
+one-sided R formula using a leading <code>~</code> (e.g.,
+<code>~ . %&gt;% dplyr::mutate(col = col + 10)</code> or as a function (e.g.,
+<code>function(x) dplyr::mutate(x, col = col + 10)</code>. See the <em>Preconditions</em>
+section for more information.</p></td>
     </tr>
     <tr>
       <th>actions</th>
@@ -294,30 +299,43 @@ object or a table was passed to <code>x</code>). The expectation function invisi
 returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
 The test function returns a logical value.</p>
-    <h2 class="hasAnchor" id="column-names"><a class="anchor" href="#column-names"></a>Column Names</h2>
+    <h2 class="hasAnchor" id="preconditions"><a class="anchor" href="#preconditions"></a>Preconditions</h2>
 
     
 
-<p>If providing multiple column names, the result will be an expansion of
-validation steps to that number of column names (e.g., <code>vars(col_a, col_b)</code>
-will result in the entry of two validation steps). Aside from column names in
-quotes and in <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code>, <strong>tidyselect</strong> helper functions are available for
-specifying columns. They are: <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with()</a></code>, <code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains()</a></code>,
-<code><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches()</a></code>, and <code><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything()</a></code>.</p>
+<p>Providing expressions as <code>preconditions</code> means <strong>pointblank</strong> will preprocess
+the target table during interrogation as a preparatory step. It might happen
+that a particular validation requires a calculated column, some filtering of
+rows, or the addition of columns via a join, etc. Especially for an
+<em>agent</em>-based report this can be advantageous since we can develop a large
+validation plan with a single target table and make minor adjustments to it,
+as needed, along the way. Within <code>specially()</code>, because this function is
+special, there won't be internal checking as to whether the
+<code>preconditions</code>-based output is a table.</p>
+<p>The table mutation is totally isolated in scope to the validation step(s)
+where <code>preconditions</code> is used. Using <strong>dplyr</strong> code is suggested here since
+the statements can be translated to SQL if necessary (i.e., if the target
+table resides in a database). The code is most easily supplied as a one-sided
+<strong>R</strong> formula (using a leading <code>~</code>). In the formula representation, the <code>.</code>
+serves as the input data table to be transformed (e.g., <code>~ . %&gt;% dplyr::mutate(col_b = col_a + 10)</code>). Alternatively, a function could instead
+be supplied (e.g., <code>function(x) dplyr::mutate(x, col_b = col_a + 10)</code>).</p>
     <h2 class="hasAnchor" id="actions"><a class="anchor" href="#actions"></a>Actions</h2>
 
     
 
 <p>Often, we will want to specify <code>actions</code> for the validation. This argument,
-present in every validation function, takes a specially-crafted list object
-that is best produced by the <code><a href='action_levels.html'>action_levels()</a></code> function. Read that function's
-documentation for the lowdown on how to create reactions to above-threshold
-failure levels in validation. The basic gist is that you'll want at least a
-single threshold level (specified as either the fraction of test units
-failed, or, an absolute value), often using the <code>warn_at</code> argument. This is
-especially true when <code>x</code> is a table object because, otherwise, nothing
-happens. For the <code>col_is_*()</code>-type functions, using <code>action_levels(warn_at = 1)</code> or <code>action_levels(stop_at = 1)</code> are good choices depending on the
-situation (the first produces a warning, the other <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>s).</p>
+present in every validation function, takes a specially-crafted list
+object that is best produced by the <code><a href='action_levels.html'>action_levels()</a></code> function. Read that
+function's documentation for the lowdown on how to create reactions to
+above-threshold failure levels in validation. The basic gist is that you'll
+want at least a single threshold level (specified as either the fraction of
+test units failed, or, an absolute value), often using the <code>warn_at</code>
+argument. This is especially true when <code>x</code> is a table object because,
+otherwise, nothing happens. For the <code>col_vals_*()</code>-type functions, using
+<code>action_levels(warn_at = 0.25)</code> or <code>action_levels(stop_at = 0.25)</code> are good
+choices depending on the situation (the first produces a warning when a
+quarter of the total test units fails, the other <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>s at the same
+threshold level).</p>
     <h2 class="hasAnchor" id="briefs"><a class="anchor" href="#briefs"></a>Briefs</h2>
 
     
@@ -334,41 +352,43 @@ then be automatically generated.</p>
 <p>A <strong>pointblank</strong> agent can be written to YAML with <code><a href='yaml_write.html'>yaml_write()</a></code> and the
 resulting YAML can be used to regenerate an agent (with <code><a href='yaml_read_agent.html'>yaml_read_agent()</a></code>)
 or interrogate the target table (via <code><a href='yaml_agent_interrogate.html'>yaml_agent_interrogate()</a></code>). When
-<code>col_is_integer()</code> is represented in YAML (under the top-level <code>steps</code> key as
-a list member), the syntax closely follows the signature of the validation
-function. Here is an example of how a complex call of <code>col_is_integer()</code> as a
+<code><a href='serially.html'>serially()</a></code> is represented in YAML (under the top-level <code>steps</code> key as a
+list member), the syntax closely follows the signature of the validation
+function. Here is an example of how a complex call of <code><a href='serially.html'>serially()</a></code> as a
 validation step is expressed in R code and in the corresponding YAML
 representation.</p><pre><code># R statement
 agent %&gt;% 
-  col_is_integer(
-    vars(a),
-    actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-    label = "The `col_is_integer()` step.",
+  specially(
+    fn = function(x) { ... },
+    preconditions = ~ . %&gt;% dplyr::filter(a &lt; 10),
+    actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
+    label = "The `specially()` step.",
     active = FALSE
   )
 
 # YAML representation
 steps:
-- col_is_integer:
-    columns: vars(a)
+- specially:
+    fn: function(x) { ... }
+    preconditions: ~. %&gt;% dplyr::filter(a &lt; 10)
     actions:
       warn_fraction: 0.1
       stop_fraction: 0.2
-    label: The `col_is_integer()` step.
+    label: The `specially()` step.
     active: false
 </code></pre>
 
-<p>In practice, both of these will often be shorter as only the <code>columns</code>,
-argument requires a value. Arguments with default values won't be written to
-YAML when using <code><a href='yaml_write.html'>yaml_write()</a></code> (though it is acceptable to include them with
-their default when generating the YAML by other means). It is also possible
-to preview the transformation of an agent to YAML without any writing to disk
-by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></code> function.</p>
+<p>In practice, both of these will often be shorter as only the expressions for
+validation steps are necessary. Arguments with default values won't be
+written to YAML when using <code><a href='yaml_write.html'>yaml_write()</a></code> (though it is acceptable to include
+them with their default when generating the YAML by other means). It is also
+possible to preview the transformation of an agent to YAML without any
+writing to disk by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></code> function.</p>
     <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
     
 
-<p>2-26</p>
+<p>2-22</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other validation functions: 
@@ -376,6 +396,7 @@ by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></cod
 <code><a href='col_is_character.html'>col_is_character</a>()</code>,
 <code><a href='col_is_date.html'>col_is_date</a>()</code>,
 <code><a href='col_is_factor.html'>col_is_factor</a>()</code>,
+<code><a href='col_is_integer.html'>col_is_integer</a>()</code>,
 <code><a href='col_is_logical.html'>col_is_logical</a>()</code>,
 <code><a href='col_is_numeric.html'>col_is_numeric</a>()</code>,
 <code><a href='col_is_posix.html'>col_is_posix</a>()</code>,
@@ -402,77 +423,8 @@ by using the <code><a href='yaml_agent_string.html'>yaml_agent_string()</a></cod
 <code><a href='conjointly.html'>conjointly</a>()</code>,
 <code><a href='rows_complete.html'>rows_complete</a>()</code>,
 <code><a href='rows_distinct.html'>rows_distinct</a>()</code>,
-<code><a href='serially.html'>serially</a>()</code>,
-<code><a href='specially.html'>specially</a>()</code></p></div>
+<code><a href='serially.html'>serially</a>()</code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># For all examples here, we'll use</span></span>
-<span class='r-in'><span class='co'># a simple table with a character</span></span>
-<span class='r-in'><span class='co'># column (`a`) and a integer column</span></span>
-<span class='r-in'><span class='co'># (`b`)</span></span>
-<span class='r-in'><span class='va'>tbl</span> <span class='op'>&lt;-</span></span>
-<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span></span>
-<span class='r-in'>    a <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span>,</span>
-<span class='r-in'>    b <span class='op'>=</span> <span class='fl'>2</span><span class='op'>:</span><span class='fl'>7</span></span>
-<span class='r-in'>  <span class='op'>)</span></span>
-<span class='r-in'>  </span>
-<span class='r-in'><span class='co'># A: Using an `agent` with validation</span></span>
-<span class='r-in'><span class='co'>#    functions and then `interrogate()`</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># Validate that column `b` has the</span></span>
-<span class='r-in'><span class='co'># `integer` class</span></span>
-<span class='r-in'><span class='va'>agent</span> <span class='op'>&lt;-</span></span>
-<span class='r-in'>  <span class='fu'><a href='create_agent.html'>create_agent</a></span><span class='op'>(</span><span class='va'>tbl</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'>col_is_integer</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'><a href='interrogate.html'>interrogate</a></span><span class='op'>(</span><span class='op'>)</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># Determine if this validation</span></span>
-<span class='r-in'><span class='co'># had no failing test units (1)</span></span>
-<span class='r-in'><span class='fu'><a href='all_passed.html'>all_passed</a></span><span class='op'>(</span><span class='va'>agent</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># Calling `agent` in the console</span></span>
-<span class='r-in'><span class='co'># prints the agent's report; but we</span></span>
-<span class='r-in'><span class='co'># can get a `gt_tbl` object directly</span></span>
-<span class='r-in'><span class='co'># with `get_agent_report(agent)`</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># B: Using the validation function</span></span>
-<span class='r-in'><span class='co'>#    directly on the data (no `agent`)</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># This way of using validation functions</span></span>
-<span class='r-in'><span class='co'># acts as a data filter: data is passed</span></span>
-<span class='r-in'><span class='co'># through but should `stop()` if there</span></span>
-<span class='r-in'><span class='co'># is a single test unit failing; the</span></span>
-<span class='r-in'><span class='co'># behavior of side effects can be</span></span>
-<span class='r-in'><span class='co'># customized with the `actions` option</span></span>
-<span class='r-in'><span class='va'>tbl</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> <span class='fu'>col_is_integer</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 × 2</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   a         b</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> a         2</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> b         3</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> c         4</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> d         5</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> e         6</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> f         7</span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># C: Using the expectation function</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># With the `expect_*()` form, we would</span></span>
-<span class='r-in'><span class='co'># typically perform one validation at a</span></span>
-<span class='r-in'><span class='co'># time; this is primarily used in</span></span>
-<span class='r-in'><span class='co'># testthat tests</span></span>
-<span class='r-in'><span class='fu'>expect_col_is_integer</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># D: Using the test function</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># With the `test_*()` form, we should</span></span>
-<span class='r-in'><span class='co'># get a single logical value returned</span></span>
-<span class='r-in'><span class='co'># to us</span></span>
-<span class='r-in'><span class='va'>tbl</span> <span class='op'><a href='pipe.html'>%&gt;%</a></span> <span class='fu'>test_col_is_integer</span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
-<span class='r-in'></span>
-</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

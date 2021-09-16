@@ -211,10 +211,10 @@ unit should be counted as a \emph{pass} or a \emph{fail}. The default of \code{n
 \section{Preconditions}{
 
 Providing expressions as \code{preconditions} means \strong{pointblank} will preprocess
-the target table table during interrogation as a preparatory step. It might
-happen that a particular validation requires a calculated column, some
-filtering of rows, or the addition of columns via a join, etc. Especially for
-an \emph{agent}-based report this can be advantageous since we can develop a large
+the target table during interrogation as a preparatory step. It might happen
+that a particular validation requires a calculated column, some filtering of
+rows, or the addition of columns via a join, etc. Especially for an
+\emph{agent}-based report this can be advantageous since we can develop a large
 validation plan with a single target table and make minor adjustments to it,
 as needed, along the way.
 

@@ -889,6 +889,8 @@ tidy_gsub <- function(x,
 
 capture_formula <- function(formula, separate = TRUE) {
   
+  # TODO: add option to use `htmltools::htmlEscape()`
+  
   attributes(formula) <- NULL
   
   output <- utils::capture.output(formula) %>% 
@@ -902,6 +904,18 @@ capture_formula <- function(formula, separate = TRUE) {
       output <- strsplit(output, " ~ ") %>% unlist()
       output[2] <- paste("~", output[2])
     }
+  }
+  
+  output
+}
+
+capture_function <- function(fn, escape = TRUE) {
+  
+  output <- utils::capture.output(fn)
+  output <- paste(output[1:(length(output) - 1)], collapse = "\n")
+  
+  if (escape) {
+    output <- htmltools::htmlEscape(output)  
   }
   
   output

@@ -894,6 +894,11 @@ check_table_with_assertion <- function(agent,
         idx = idx,
         table = table
       ),
+      "specially" = interrogate_specially(
+        agent = agent,
+        idx = idx,
+        x = table
+      ),
       "col_exists" = interrogate_col_exists(
         agent = agent,
         idx = idx,
@@ -2042,6 +2047,60 @@ interrogate_expr <- function(agent,
   
   # Perform rowwise validations for the column
   pointblank_try_catch(tbl_val_expr(table = table, expr = expr))
+}
+
+interrogate_specially <- function(agent,
+                                  idx,
+                                  x) {
+  
+  # Get the user-defined function
+  fn <- get_values_at_idx(agent = agent, idx = idx)[[1]]
+  
+  # Create function for validating the `col_vals_expr()` step function
+  val_with_fn <- function(x, fn) {
+    
+    if (!is.function(fn)) {
+      stop("The value provided for `fn` is not a function.", call. = FALSE)
+    }
+    
+    res <- fn(x)
+    
+    if (is.logical(res)) {
+      
+      tbl <- dplyr::tibble(`pb_is_good_` = res)
+      
+    } else if (is_a_table_object(res)) {
+      
+      n_cols_res <- get_table_total_columns(res)
+      
+      res_tbl_vec <- dplyr::pull(dplyr::collect(res[, n_cols_res]))
+      
+      if (!is.logical(res_tbl_vec)) {
+        
+        stop(
+          "If the provided function for `specially()` yields a table, the ",
+          "final column must be logical.",
+          call. = FALSE
+        )
+      }
+      
+      tbl <- dplyr::tibble(`pb_is_good_` = res_tbl_vec)
+      
+    } else {
+      
+      stop(
+        "The function used in `specially()` must return the following:\n",
+        "* a logical vector, or\n",
+        "* a table where the final column is logical",
+        call. = FALSE
+      )
+    }
+    
+    tbl
+  }
+  
+  # Perform validation with the function on x
+  pointblank_try_catch(val_with_fn(x = x, fn = fn))
 }
 
 interrogate_null <- function(agent,

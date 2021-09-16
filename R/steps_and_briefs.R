@@ -424,6 +424,12 @@ create_autobrief <- function(agent,
     autobrief <- finalize_autobrief(expectation_text, precondition_text)
   }
   
+  if (assertion_type == "specially") {
+    
+    expectation_text <- prep_specially_expectation_text(lang = lang)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text) 
+  }
+  
   if (finalize_serially_brief) {
     
     serially_test_text <-
@@ -686,6 +692,11 @@ prep_conjointly_expectation_text <- function(values_text,
                                              lang) {
   
   glue::glue(get_lsv("autobriefs/conjointly_expectation_text")[[lang]])
+}
+
+prep_specially_expectation_text <- function(lang) {
+  
+  glue::glue(get_lsv("autobriefs/specially_expectation_text")[[lang]])
 }
 
 get_serially_test_text <- function(test_step_count,

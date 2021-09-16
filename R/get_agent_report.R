@@ -220,13 +220,18 @@ get_agent_report <- function(agent,
         )
       }
     )
-  
+
   values <- 
     validation_set$values %>%
     vapply(
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
+        
+        if (is.function(x)) {
+          x <- capture_function(x)
+        }
+        
         ifelse(
           is.null(x),
           NA_character_,
@@ -716,6 +721,10 @@ get_agent_report <- function(agent,
         
         # Get the `assertion_type` as a string
         assertion_str <- assertion_type[x]
+        
+        if (assertion_str == "specially") {
+          values_i <- capture_function(values_i)
+        }
         
         # In the `serially()` step, there are two possibilities for what
         # should be displayed in the values column

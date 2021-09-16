@@ -64,6 +64,7 @@ reference:
     - col_vals_expr
     - conjointly
     - serially
+    - specially
     - rows_distinct
     - rows_complete
     - col_is_character

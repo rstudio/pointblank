@@ -306,6 +306,7 @@ Other validation functions:
 \code{\link{col_vals_within_spec}()},
 \code{\link{conjointly}()},
 \code{\link{rows_complete}()},
-\code{\link{serially}()}
+\code{\link{serially}()},
+\code{\link{specially}()}
 }
 \concept{validation functions}

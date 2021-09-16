@@ -609,6 +609,10 @@ to_list_label <- function(label) {
   list(label = label)
 }
 
+to_list_fn <- function(fn) {
+  list(fn = fn)
+}
+
 to_list_info_label <- function(label) {
   list(info_label = label)
 }
@@ -1133,6 +1137,24 @@ as_agent_yaml_list <- function(agent,
             fns = as.character(step_list$values[[1]]),
             preconditions = as_list_preconditions(step_list$preconditions),
             segments = as_list_segments(step_list$seg_expr),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
+            label = step_list$label,
+            active = as_list_active(step_list$active)
+          )
+        )
+      
+    } else if (validation_fn == "specially") {
+      
+      lst_step <- 
+        list(
+          validation_fn = list(
+            fn = to_list_fn(
+              capture_function(fn = step_list$values[[1]], escape = FALSE)
+            ),
+            preconditions = as_list_preconditions(step_list$preconditions),
             actions = as_action_levels(
               step_list$actions[[1]],
               action_levels_default

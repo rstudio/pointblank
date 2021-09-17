@@ -62,9 +62,6 @@ reference:
     - col_vals_regex
     - col_vals_within_spec
     - col_vals_expr
-    - conjointly
-    - serially
-    - specially
     - rows_distinct
     - rows_complete
     - col_is_character
@@ -76,6 +73,9 @@ reference:
     - col_is_factor
     - col_exists
     - col_schema_match
+    - conjointly
+    - serially
+    - specially
     
   - title: Information Functions
     desc: >

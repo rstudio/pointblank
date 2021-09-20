@@ -440,7 +440,6 @@ all_validations_fns_vec <- function() {
     "col_vals_regex",
     "col_vals_within_spec",
     "col_vals_expr",
-    "conjointly",
     "rows_distinct",
     "rows_complete",
     "col_is_character",
@@ -451,7 +450,9 @@ all_validations_fns_vec <- function() {
     "col_is_posix",
     "col_is_factor",
     "col_exists",
-    "col_schema_match"
+    "col_schema_match",
+    "conjointly",
+    "specially"
   )
 }
 

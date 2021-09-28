@@ -1192,8 +1192,11 @@ get_column_text <- function(step_list, expanded) {
   
   if (!expanded) {
     
-    if (step_list$column[[1]] == step_list$columns_expr) {
+    if (!is.na(step_list$column[[1]]) &&
+        step_list$column[[1]] == step_list$columns_expr) {
+      
       column_text <- as_vars_fn(step_list$column[[1]])
+      
     } else {
       column_text <- step_list$columns_expr
     }

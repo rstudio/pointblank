@@ -484,6 +484,38 @@ row_based_validation_fns_vec <- function() {
   )
 }
 
+column_expansion_fns_vec <- function() {
+  
+  c(
+    "col_vals_lt",
+    "col_vals_lte",
+    "col_vals_equal",
+    "col_vals_not_equal",
+    "col_vals_gte",
+    "col_vals_gt",
+    "col_vals_between",
+    "col_vals_not_between",
+    "col_vals_in_set",
+    "col_vals_not_in_set",
+    "col_vals_make_set",
+    "col_vals_make_subset",
+    "col_vals_null",
+    "col_vals_not_null",
+    "col_vals_increasing",
+    "col_vals_decreasing",
+    "col_vals_regex",
+    "col_vals_within_spec",
+    "col_is_character",
+    "col_is_numeric",
+    "col_is_integer",
+    "col_is_logical",
+    "col_is_date",
+    "col_is_posix",
+    "col_is_factor",
+    "col_exists"
+  )
+}
+
 get_tbl_dbi_src_info <- function(tbl) {
   utils::capture.output(tbl %>% unclass() %>% .$src)
 }

@@ -1567,6 +1567,11 @@ test_that("Select validation steps can be `active` or not", {
       ~ test_col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
       ~ col_vals_not_null(., columns = vars(d))
     ) %>%
+    specially(
+      fn = function(x) {
+        as.integer(x$date) <= as.integer(x$date_time)
+      }
+    ) %>%
     interrogate()
   
   # Expect the `active` parameter in each validation step
@@ -1621,6 +1626,12 @@ test_that("Select validation steps can be `active` or not", {
       ~ test_col_vals_gt(., columns = vars(a), value = 0),
       ~ test_col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
       ~ col_vals_not_null(., columns = vars(d)),
+      active = FALSE
+    ) %>%
+    specially(
+      fn = function(x) {
+        as.integer(x$date) <= as.integer(x$date_time)
+      },
       active = FALSE
     ) %>%
     interrogate()
@@ -1681,6 +1692,12 @@ test_that("Select validation steps can be `active` or not", {
         ~ test_col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
         ~ col_vals_not_null(., columns = vars(d)),
         actions = al
+      ) %>%
+      specially(
+        fn = function(x) {
+          as.integer(x$date) <= as.integer(x$date_time)
+        },
+        actions = al
       )
   )
   
@@ -1722,6 +1739,94 @@ test_that("Select validation steps can be `active` or not", {
         ~ test_col_vals_lt(., columns = vars(c), value = 10, na_pass = TRUE),
         ~ col_vals_not_null(., columns = vars(d)),
         actions = al, active = FALSE
+      ) %>%
+      specially(
+        fn = function(x) {
+          as.integer(x$date) <= as.integer(x$date_time)
+        },
+        actions = al
       )
   )
+})
+
+test_that("Some validation steps become inactive based on select expressions", {
+
+  agent <- create_agent(tbl = small_table, label = "::QUIET::")
+  
+  check_eval_active_false <- function(agent) {
+    
+    suppressMessages(
+      agent %>%
+        interrogate() %>% 
+        .$validation_set %>%
+        dplyr::pull(eval_active) %>% 
+        expect_false()
+    )
+  }
+  
+  eval_select <- function(select_expr) {
+    rlang::eval_bare(rlang::f_rhs(select_expr))
+  }
+  
+  select_exprs <-
+    c(
+      ~ starts_with("z"),
+      ~ ends_with("z"),
+      ~ contains("z"),
+      ~ matches("z")
+    )
+  
+  for (i in seq_along(select_exprs)) {
+    
+    agent %>% col_vals_lt(eval_select(select_exprs[[i]]), value = 5) %>%
+      check_eval_active_false()
+    agent %>% col_vals_lte(eval_select(select_exprs[[i]]), value = 5) %>%
+      check_eval_active_false()
+    agent %>% col_vals_equal(eval_select(select_exprs[[i]]), value = 5) %>%
+      check_eval_active_false()
+    agent %>% col_vals_not_equal(eval_select(select_exprs[[i]]), value = 5) %>%
+      check_eval_active_false()
+    agent %>% col_vals_gte(eval_select(select_exprs[[i]]), value = 5) %>%
+      check_eval_active_false()
+    agent %>% col_vals_gt(eval_select(select_exprs[[i]]), value = 5) %>%
+      check_eval_active_false()
+    agent %>% col_vals_between(eval_select(select_exprs[[i]]), 2, 5) %>%
+      check_eval_active_false()
+    agent %>% col_vals_not_between(eval_select(select_exprs[[i]]), 2, 5) %>%
+      check_eval_active_false()
+    agent %>% col_vals_in_set(eval_select(select_exprs[[i]]), c(2, 5)) %>%
+      check_eval_active_false()
+    agent %>% col_vals_not_in_set(eval_select(select_exprs[[i]]), c(2, 5)) %>%
+      check_eval_active_false()
+    agent %>% col_vals_make_set(eval_select(select_exprs[[i]]), c(2, 5)) %>%
+      check_eval_active_false()
+    agent %>% col_vals_make_subset(eval_select(select_exprs[[i]]), c(2, 5)) %>%
+      check_eval_active_false()
+    agent %>% col_vals_null(eval_select(select_exprs[[i]])) %>%
+      check_eval_active_false()
+    agent %>% col_vals_not_null(eval_select(select_exprs[[i]])) %>%
+      check_eval_active_false()
+    agent %>% col_vals_increasing(eval_select(select_exprs[[i]])) %>%
+      check_eval_active_false()
+    agent %>% col_vals_decreasing(eval_select(select_exprs[[i]])) %>%
+      check_eval_active_false()
+    agent %>% col_vals_regex(eval_select(select_exprs[[i]]), regex = "abc") %>%
+      check_eval_active_false()
+    agent %>% col_vals_within_spec(eval_select(select_exprs[[i]]), spec = "email") %>%
+      check_eval_active_false()
+    agent %>% col_is_character(eval_select(select_exprs[[i]])) %>%
+      check_eval_active_false()
+    agent %>% col_is_numeric(eval_select(select_exprs[[i]])) %>%
+      check_eval_active_false()
+    agent %>% col_is_integer(eval_select(select_exprs[[i]])) %>%
+      check_eval_active_false()
+    agent %>% col_is_logical(eval_select(select_exprs[[i]])) %>%
+      check_eval_active_false()
+    agent %>% col_is_date(eval_select(select_exprs[[i]])) %>%
+      check_eval_active_false()
+    agent %>% col_is_posix(eval_select(select_exprs[[i]])) %>%
+      check_eval_active_false()
+    agent %>% col_is_factor(eval_select(select_exprs[[i]])) %>%
+      check_eval_active_false()
+  }
 })

@@ -132,7 +132,7 @@ maintained in the YAML representation and is never written in processed form.
 
 \section{Function ID}{
 
-3-3
+3-4
 }
 
 \examples{
@@ -192,6 +192,7 @@ informant <-
 }
 \seealso{
 Other Information Functions: 
+\code{\link{info_columns_from_tbl}()},
 \code{\link{info_columns}()},
 \code{\link{info_snippet}()},
 \code{\link{info_tabular}()},

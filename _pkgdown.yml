@@ -92,6 +92,7 @@ reference:
     contents:
     - info_tabular
     - info_columns
+    - info_columns_from_tbl
     - info_section
     - info_snippet
     - snip_list

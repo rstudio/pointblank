@@ -408,7 +408,7 @@ info_columns <- function(x,
                          columns,
                          ...,
                          .add = TRUE) {
-
+  
   # Capture the `columns` expression
   columns <- rlang::enquo(columns)
   
@@ -436,6 +436,7 @@ info_columns <- function(x,
   }
   
   for (column in columns) {
+    
     for (i in seq_along(metadata_items)) {
       
       item_name <- names(metadata_items[i])
@@ -471,6 +472,103 @@ info_columns <- function(x,
   metadata$metadata$columns <- metadata_columns
   
   metadata
+}
+
+
+#' Add column information from another data table
+#' 
+#' @description
+#' The `info_columns_from_tbl()` function is a wrapper around the
+#' [info_columns()] function and is useful if you wish to apply *info text*
+#' to columns where that information already exists in a data frame (or in some
+#' form that can readily be coaxed into a data frame). The form of the input
+#' `tbl` (the one that contains column metadata) has a few basic requirements:
+#' 
+#' - the data frame must have two columns
+#' - both columns must be of class `character`
+#' - the first column should contain column names and the second should contain
+#' the *info text*
+#' 
+#' Each column that matches across tables (i.e., the `tbl` and the target table
+#' of the informant) will have a new entry for the `"info"` property. Empty or
+#' missing info text will be pruned from `tbl`.
+#' 
+#' @param x An informant object of class `ptblank_informant`.
+#' @param tbl The two-column data frame which contains metadata about the target
+#'   table in the informant object. 
+#' @param .add Should new text be added to existing text? This is `TRUE` by
+#'   default; setting to `FALSE` replaces any existing text for the `"info"`
+#'   property.
+#' 
+#' @return A `ptblank_informant` object.
+#' 
+#' @family Information Functions
+#' @section Function ID:
+#' 3-3
+#' 
+#' @seealso The [info_columns()] function, which allows for manual entry of
+#'   *info text*.
+#'
+#' @export
+info_columns_from_tbl <- function(x,
+                                  tbl,
+                                  .add = TRUE) {
+
+  # Ensure that `tbl` passes a validation check 
+  tbl <- check_info_columns_tbl(tbl = tbl)
+  
+  # Call `info_columns()` for every row in `tbl`
+  for (i in seq_along(tbl$column)) {
+
+    x <- 
+      info_columns(
+        x = x,
+        columns = tbl$column[i],
+        info = tbl$info[i],
+        .add = .add
+      )
+  }  
+  
+  x
+}
+
+check_info_columns_tbl <- function(tbl) {
+  
+  if (
+    !inherits(tbl, "data.frame") &&
+    !ncol(tbl) == 2 &&
+    !inherits(dplyr::pull(tbl, 1), "character") &&
+    !inherits(dplyr::pull(tbl, 2), "character")
+  ) {
+    
+    stop(
+      "The input `tbl` must fulfill the following conditions:\n",
+      "* inherits from data.frame\n",
+      "* has two columns\n",
+      "* both columns must be of type `character`",
+      call. = FALSE
+    )
+  }
+  
+  # Standardize the column names in `tbl`
+  colnames(tbl) <- c("column", "info")
+  
+  # Filter out any missing or NA values in the `info` column
+  tbl <- 
+    tbl %>%
+    dplyr::filter(!is.na(info) & !grepl("^\\s*$", info))
+  
+  colnames_in_tbl <- dplyr::pull(tbl, column)
+  
+  if (anyDuplicated(colnames_in_tbl) != 0) {
+    
+    stop(
+      "The input `tbl` contains duplicate column names in the first column.",
+      call. = FALSE
+    )
+  }
+  
+  tbl
 }
 
 #' Add information that focuses on some key aspect of the data table
@@ -648,7 +746,7 @@ info_columns <- function(x,
 #'
 #' @family Information Functions
 #' @section Function ID:
-#' 3-3
+#' 3-4
 #'
 #' @export
 info_section <- function(x,
@@ -675,6 +773,7 @@ info_section <- function(x,
     item_value <- metadata_items[[i]]
     
     if (!(item_name %in% names(metadata_section))) {
+      
       # Case where `item_name` doesn't exist for the section
       metadata_section <- 
         c(
@@ -682,6 +781,7 @@ info_section <- function(x,
           metadata_items[i]
         )
     } else {
+      
       # Case where `item_name` exists for the section
       metadata_section[[item_name]] <- item_value
     }
@@ -844,7 +944,7 @@ info_section <- function(x,
 #' 
 #' @family Information Functions
 #' @section Function ID:
-#' 3-4
+#' 3-5
 #' 
 #' @export
 info_snippet <- function(x,
@@ -949,7 +1049,7 @@ info_snippet <- function(x,
 #' 
 #' @family Information Functions
 #' @section Function ID:
-#' 3-5
+#' 3-6
 #' 
 #' @export
 snip_list <- function(column,
@@ -1158,7 +1258,7 @@ snip_list <- function(column,
 #' 
 #' @family Information Functions
 #' @section Function ID:
-#' 3-6
+#' 3-7
 #' 
 #' @export
 snip_stats <- function(column,
@@ -1219,7 +1319,7 @@ snip_stats <- function(column,
 #' 
 #' @family Information Functions
 #' @section Function ID:
-#' 3-7
+#' 3-8
 #' 
 #' @export
 snip_lowest <- function(column) {
@@ -1277,7 +1377,7 @@ snip_lowest <- function(column) {
 #' 
 #' @family Information Functions
 #' @section Function ID:
-#' 3-8
+#' 3-9
 #' 
 #' @export
 snip_highest <- function(column) {

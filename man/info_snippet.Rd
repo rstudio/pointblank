@@ -95,7 +95,7 @@ columns:
 
 \section{Function ID}{
 
-3-4
+3-5
 }
 
 \examples{
@@ -160,6 +160,7 @@ informant <-
 }
 \seealso{
 Other Information Functions: 
+\code{\link{info_columns_from_tbl}()},
 \code{\link{info_columns}()},
 \code{\link{info_section}()},
 \code{\link{info_tabular}()},

@@ -42,6 +42,9 @@ missing info text will be pruned from \code{tbl}.
 }
 
 \seealso{
+The \code{\link[=info_columns]{info_columns()}} function, which allows for manual entry of
+\emph{info text}.
+
 Other Information Functions: 
 \code{\link{info_columns}()},
 \code{\link{info_section}()},

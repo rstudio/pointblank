@@ -19,7 +19,7 @@ alphabetical value from a column in the target table.
 }
 \section{Function ID}{
 
-3-8
+3-9
 }
 
 \examples{
@@ -53,6 +53,7 @@ informant <-
 }
 \seealso{
 Other Information Functions: 
+\code{\link{info_columns_from_tbl}()},
 \code{\link{info_columns}()},
 \code{\link{info_section}()},
 \code{\link{info_snippet}()},

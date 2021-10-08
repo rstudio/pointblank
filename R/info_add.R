@@ -505,6 +505,9 @@ info_columns <- function(x,
 #' @family Information Functions
 #' @section Function ID:
 #' 3-3
+#' 
+#' @seealso The [info_columns()] function, which allows for manual entry of
+#'   *info text*.
 #'
 #' @export
 info_columns_from_tbl <- function(x,

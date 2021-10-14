@@ -493,29 +493,13 @@ get_column_description_gt <- function(data_column,
         get_lsv("table_scan/tbl_lab_NAs")[[lang]],
         "`Inf`/`-Inf`"
       ),
-      value = c(distinct_count, na_cells, inf_cells),
-      pct = NA_real_
-    ) %>%
-    dplyr::mutate(pct = dplyr::case_when(
-      dplyr::row_number() == 1 ~ distinct_count / n_rows,
-      dplyr::row_number() == 2 ~ na_cells / n_rows,
-      dplyr::row_number() == 3 ~ inf_cells / n_rows,
-      TRUE ~ NA_real_
-    ))
-
+      value = c(distinct_count, na_cells, inf_cells)
+    )
+  
   column_description_gt <-
     gt::gt(column_description_tbl) %>%
     gt::fmt_markdown(columns = "label") %>%
     gt::fmt_number(columns = "value", decimals = 0, locale = locale) %>%
-    gt::fmt_percent(columns = "pct", decimals = 2, locale = locale) %>%
-    gt::cols_merge(columns = c("value", "pct"), pattern = "{1} ({2})") %>%
-    gt::cols_align(align = "right", columns = "value") %>%
-    gt::text_transform(
-      locations = gt::cells_body(columns = "value"),
-      fn = function(x) {
-        gsub("^0 \\(.*", "0", x)
-      }
-    ) %>%
     gt::tab_options(
       column_labels.hidden = TRUE,
       table.border.top.style = "none",

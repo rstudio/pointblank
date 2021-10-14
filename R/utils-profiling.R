@@ -628,3 +628,28 @@ get_table_slice_gt <- function(data_column,
 }
 
 # nocov end
+
+# Get a vector of column labels for a data frame
+# - works only with data frame objects
+# - returns 'character' of length n (NA if label not present or empty)
+get_tbl_df_column_labels <- function(data) {
+  
+  n_columns <- get_table_total_columns(data = data)
+  
+  column_labels <- rep(NA_character_, n_columns)
+  
+  if (!inherits(data, "data.frame")) {
+    return(column_labels)
+  }
+  
+  vapply(
+    data,
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    FUN = function(x) {
+      label <- attr(x, "label", exact = TRUE)
+      if (is.null(label)) label <- NA_character_
+      label
+    }
+  )
+}

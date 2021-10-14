@@ -400,6 +400,8 @@ probe_columns <- function(data,
   
   col_names <- get_table_column_names(data = data)
   
+  col_labels <- get_tbl_df_column_labels(data = data)
+  
   tbl_info <- get_tbl_information(tbl = data)
   
   col_types <- gsub("integer64", "integer", tbl_info$r_col_types, fixed = TRUE)
@@ -411,12 +413,14 @@ probe_columns <- function(data,
         
         col_name <- col_names[x]
         col_type <- col_types[x]
+        col_label <- col_labels[x]
         
         switch(
           col_type,
           character = probe_columns_character(
             data = data,
             column = col_name,
+            col_label = col_label,
             n_rows = n_rows,
             lang = lang,
             locale = locale
@@ -424,6 +428,7 @@ probe_columns <- function(data,
           Date = probe_columns_date(
             data = data,
             column = col_name,
+            col_label = col_label,
             n_rows = n_rows,
             lang = lang,
             locale = locale
@@ -431,6 +436,7 @@ probe_columns <- function(data,
           factor = probe_columns_factor(
             data = data,
             column = col_name,
+            col_label = col_label,
             n_rows = n_rows,
             lang = lang,
             locale = locale
@@ -438,6 +444,7 @@ probe_columns <- function(data,
           integer = probe_columns_integer(
             data = data,
             column = col_name,
+            col_label = col_label,
             n_rows = n_rows,
             lang = lang,
             locale = locale
@@ -445,6 +452,7 @@ probe_columns <- function(data,
           logical = probe_columns_logical(
             data = data,
             column = col_name,
+            col_label = col_label,
             n_rows = n_rows,
             lang = lang,
             locale = locale
@@ -452,6 +460,7 @@ probe_columns <- function(data,
           numeric = probe_columns_numeric(
             data = data,
             column = col_name,
+            col_label = col_label,
             n_rows = n_rows,
             lang = lang,
             locale = locale
@@ -459,6 +468,7 @@ probe_columns <- function(data,
           POSIXct = probe_columns_posix(
             data = data,
             column = col_name,
+            col_label = col_label,
             n_rows = n_rows,
             lang = lang,
             locale = locale
@@ -466,6 +476,7 @@ probe_columns <- function(data,
           probe_columns_other(
             data = data,
             column = col_name,
+            col_label = col_label,
             n_rows = n_rows
           )
         )
@@ -733,8 +744,8 @@ get_common_values_gt <- function(data_column,
       dplyr::summarize(other_values_n, sum = sum(n, na.rm = TRUE))
     other_values_n <- dplyr::ungroup(other_values_n)
     other_values_n <- dplyr::pull(other_values_n, sum)
-    
-    common_values_gt <-
+
+    common_values_tbl <-
       dplyr::bind_rows(
         top_ten_rows %>% 
           utils::head(9) %>%
@@ -754,7 +765,12 @@ get_common_values_gt <- function(data_column,
           n = other_values_n,
           frequency = other_values_n / n_rows
         )
-      ) %>%
+      )
+    
+    n_rows_summary_tbl <- nrow(common_values_tbl)
+    
+    common_values_gt <-
+      common_values_tbl %>%
       gt::gt() %>%
       gt::cols_label(
         value = get_lsv("table_scan/tbl_lab_value")[[lang]],
@@ -764,14 +780,23 @@ get_common_values_gt <- function(data_column,
       gt::fmt_missing(columns = "value", missing_text = "**NA**") %>%
       gt::text_transform(
         locations = gt::cells_body(columns = "value"),
-        fn = function(x) ifelse(x == "**NA**", "<code>NA</code>", x)
+        fn = function(x) {
+          ifelse(
+            x == "**NA**",
+            "<code>NA</code>",
+            x
+          )
+        }
       ) %>%
       gt::fmt_percent(
         columns = "frequency",
         decimals = 1,
         locale = locale
       ) %>%
-      gt::fmt_markdown(columns = "value") %>%
+      gt::fmt_markdown(
+        columns = "value",
+        rows = n_rows_summary_tbl
+      ) %>%
       gt::tab_options(
         table.border.top.style = "none",
         table.width = "100%"
@@ -955,6 +980,7 @@ get_character_nchar_plot <- function(data_column,
 
 probe_columns_numeric <- function(data,
                                   column,
+                                  col_label,
                                   n_rows,
                                   lang,
                                   locale) {
@@ -1006,6 +1032,7 @@ probe_columns_numeric <- function(data,
   
   list(
     column_name = column,
+    column_label = col_label,
     column_type = "numeric",
     column_description_gt = column_description_gt,
     column_stats_gt = column_numeric_stats_gt,
@@ -1019,6 +1046,7 @@ probe_columns_numeric <- function(data,
 
 probe_columns_integer <- function(data,
                                   column,
+                                  col_label,
                                   n_rows,
                                   lang,
                                   locale) {
@@ -1027,6 +1055,7 @@ probe_columns_integer <- function(data,
     probe_columns_numeric(
       data = data,
       column = column,
+      col_label = col_label,
       n_rows = n_rows,
       lang = lang,
       locale = locale
@@ -1039,6 +1068,7 @@ probe_columns_integer <- function(data,
 
 probe_columns_character <- function(data,
                                     column,
+                                    col_label,
                                     n_rows,
                                     lang,
                                     locale) {
@@ -1076,6 +1106,7 @@ probe_columns_character <- function(data,
   
   list(
     column_name = column,
+    column_label = col_label,
     column_type = "character",
     column_description_gt = column_description_gt,
     column_common_gt = column_common_values_gt,
@@ -1086,6 +1117,7 @@ probe_columns_character <- function(data,
 
 probe_columns_logical <- function(data,
                                   column,
+                                  col_label,
                                   n_rows,
                                   lang,
                                   locale) {
@@ -1102,6 +1134,7 @@ probe_columns_logical <- function(data,
   
   list(
     column_name = column,
+    column_label = col_label,
     column_type = "logical",
     column_description_gt = column_description_gt
   )
@@ -1109,6 +1142,7 @@ probe_columns_logical <- function(data,
 
 probe_columns_factor <- function(data,
                                  column,
+                                 col_label,
                                  n_rows,
                                  lang,
                                  locale) {
@@ -1125,6 +1159,7 @@ probe_columns_factor <- function(data,
   
   list(
     column_name = column,
+    column_label = col_label,
     column_type = "factor",
     column_description_gt = column_description_gt
   )
@@ -1132,6 +1167,7 @@ probe_columns_factor <- function(data,
 
 probe_columns_date <- function(data,
                                column,
+                               col_label,
                                n_rows,
                                lang,
                                locale) {
@@ -1148,6 +1184,7 @@ probe_columns_date <- function(data,
   
   list(
     column_name = column,
+    column_label = col_label,
     column_type = "date",
     column_description_gt = column_description_gt
   )
@@ -1155,6 +1192,7 @@ probe_columns_date <- function(data,
 
 probe_columns_posix <- function(data,
                                 column,
+                                col_label,
                                 n_rows,
                                 lang,
                                 locale) {
@@ -1171,6 +1209,7 @@ probe_columns_posix <- function(data,
   
   list(
     column_name = column,
+    column_label = col_label,
     column_type = "datetime",
     column_description_gt = column_description_gt
   )
@@ -1178,6 +1217,7 @@ probe_columns_posix <- function(data,
 
 probe_columns_other <- function(data,
                                 column,
+                                col_label,
                                 n_rows) {
   
   data_column <- data %>% dplyr::select({{ column }})
@@ -1186,6 +1226,7 @@ probe_columns_other <- function(data,
   
   list(
     column_name = column,
+    column_label = col_label,
     column_type = column_classes
   )
 }
@@ -1792,12 +1833,31 @@ probe_columns_assemble <- function(data,
                     class = "col-sm-3",
                     htmltools::tags$p(
                       class = "h4",
+                      style = htmltools::css(
+                        `margin-bottom` = "0",
+                        `margin-top` = "-2px"
+                      ),
                       title = x$column_name,
                       htmltools::tags$a(
                         href = paste0("#pp_var_", id_val),
                         x$column_name,
                         htmltools::tags$br(),
+                        if (!is.na(x$column_label)) {
+                          htmltools::tagList(
+                            htmltools::tags$p(
+                              x$column_label,
+                              style = htmltools::css(
+                                `font-size` = "small",
+                                color = "gray",
+                                `margin-bottom` = "0"
+                              )
+                            )
+                          )
+                        },
                         htmltools::tags$small(
+                          style = htmltools::css(
+                            `margin-top` = "0"
+                          ),
                           htmltools::tags$code(x$column_type)
                         )
                       )
@@ -2004,12 +2064,31 @@ probe_columns_assemble <- function(data,
                     class = "col-sm-3",
                     htmltools::tags$p(
                       class = "h4",
+                      style = htmltools::css(
+                        `margin-bottom` = "0",
+                        `margin-top` = "-2px"
+                      ),
                       title = x$column_name,
                       htmltools::tags$a(
                         href = paste0("#pp_var_", id_val),
                         x$column_name,
                         htmltools::tags$br(),
+                        if (!is.na(x$column_label)) {
+                          htmltools::tagList(
+                            htmltools::tags$p(
+                              x$column_label,
+                              style = htmltools::css(
+                                `font-size` = "small",
+                                color = "gray",
+                                `margin-bottom` = "0"
+                              )
+                            )
+                          )
+                        },
                         htmltools::tags$small(
+                          style = htmltools::css(
+                            `margin-top` = "0"
+                          ),
                           htmltools::tags$code(x$column_type)
                         )
                       )
@@ -2165,12 +2244,31 @@ probe_columns_assemble <- function(data,
                     class = "col-sm-3",
                     htmltools::tags$p(
                       class = "h4",
+                      style = htmltools::css(
+                        `margin-bottom` = "0",
+                        `margin-top` = "-2px"
+                      ),
                       title = x$column_name,
                       htmltools::tags$a(
                         href = paste0("#pp_var_", id_val),
                         x$column_name,
                         htmltools::tags$br(),
+                        if (!is.na(x$column_label)) {
+                          htmltools::tagList(
+                            htmltools::tags$p(
+                              x$column_label,
+                              style = htmltools::css(
+                                `font-size` = "small",
+                                color = "gray",
+                                `margin-bottom` = "0"
+                              )
+                            )
+                          )
+                        },
                         htmltools::tags$small(
+                          style = htmltools::css(
+                            `margin-top` = "0"
+                          ),
                           htmltools::tags$code(x$column_type)
                         )
                       )

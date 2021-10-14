@@ -334,10 +334,9 @@ get_table_column_histogram <- function(data_column, lang, locale) {
       dplyr::filter(!is.na(nchar)) %>%
       dplyr::mutate_all(.funs = as.numeric) %>%
       ggplot2::ggplot(ggplot2::aes(x = nchar, y = n)) +
-      ggplot2::geom_col(fill = "steelblue") +
+      ggplot2::geom_col(fill = "steelblue", width = 0.5) +
       ggplot2::geom_hline(yintercept = 0, color = "#B2B2B2") +
       ggplot2::labs(x = x_label, y = y_label) +
-      ggplot2::scale_x_continuous(limits = c(0, NA)) +
       ggplot2::scale_y_continuous(labels = scales::comma_format()) +
       ggplot2::theme_minimal()
   )

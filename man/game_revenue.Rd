@@ -52,6 +52,7 @@ dplyr::glimpse(game_revenue)
 }
 \seealso{
 Other Datasets: 
+\code{\link{game_revenue_info}},
 \code{\link{small_table_sqlite}()},
 \code{\link{small_table}},
 \code{\link{specifications}}

@@ -21,8 +21,8 @@ A \code{ptblank_informant} object.
 }
 \description{
 The \code{info_columns_from_tbl()} function is a wrapper around the
-\code{\link[=info_columns]{info_columns()}} function and is useful if you wish to apply \emph{info text}
-to columns where that information already exists in a data frame (or in some
+\code{\link[=info_columns]{info_columns()}} function and is useful if you wish to apply \emph{info text} to
+columns where that information already exists in a data frame (or in some
 form that can readily be coaxed into a data frame). The form of the input
 \code{tbl} (the one that contains column metadata) has a few basic requirements:
 \itemize{

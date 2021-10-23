@@ -124,7 +124,7 @@ test_that("A table store object can be created and used effectively", {
   
   # Ensure that the `tbl_df` tables are generally the same tables as
   # defined in the table store object
-  expect_equal(
+  expect_identical(
     tbl_small_table_high, small_table %>% dplyr::filter(f == "high"),
     ignore_attr = TRUE
   )
@@ -135,13 +135,10 @@ test_that("A table store object can be created and used effectively", {
   
   # Expect certain attributes to be available in the tables accessed
   # from the table store
-  expect_equal(
-    names(attributes(tbl_small_table_high)),
-    c("names", "class", "row.names", "spec", "pb_tbl_name", "pb_access_time")
+  expect_true(
+    all(c("pb_tbl_name", "pb_access_time") %in% names(attributes(tbl_small_table_high)))
   )
-  
-  expect_equal(
-    names(attributes(tbl_some_specifications)),
-    c("names", "row.names", "class", "pb_tbl_name", "pb_access_time")
+  expect_true(
+    all(c("pb_tbl_name", "pb_access_time") %in% names(attributes(tbl_some_specifications)))
   )
 })

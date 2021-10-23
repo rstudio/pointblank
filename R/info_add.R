@@ -479,8 +479,8 @@ info_columns <- function(x,
 #' 
 #' @description
 #' The `info_columns_from_tbl()` function is a wrapper around the
-#' [info_columns()] function and is useful if you wish to apply *info text*
-#' to columns where that information already exists in a data frame (or in some
+#' [info_columns()] function and is useful if you wish to apply *info text* to
+#' columns where that information already exists in a data frame (or in some
 #' form that can readily be coaxed into a data frame). The form of the input
 #' `tbl` (the one that contains column metadata) has a few basic requirements:
 #' 

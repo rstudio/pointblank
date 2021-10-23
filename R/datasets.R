@@ -188,3 +188,29 @@ small_table_sqlite <- function() {
 #' 14-4
 #'
 "game_revenue"
+
+#' A table with game revenue data
+#'
+#' This table contains metadata for the `game_revenue` table. The first column
+#' (named `column`) provides the column names from `game_revenue`. The second
+#' column (`info`) contains descriptions for each of the columns in that
+#' dataset.
+#'
+#' @format A tibble with 11 rows and 2 variables:
+#' \describe{
+#' \item{column}{A `character` column with unique identifiers for each
+#' user/player.}
+#' \item{info}{A `character` column that contains unique identifiers for
+#' each player session.}
+#' }
+#'
+#' @examples
+#' # Here is a glimpse at the data
+#' # available in `game_revenue_info`
+#' dplyr::glimpse(game_revenue_info)
+#'
+#' @family Datasets
+#' @section Function ID:
+#' 14-5
+#'
+"game_revenue_info"

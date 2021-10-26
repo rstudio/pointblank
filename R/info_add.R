@@ -502,6 +502,55 @@ info_columns <- function(x,
 #' 
 #' @return A `ptblank_informant` object.
 #' 
+#' @examples 
+#' # Create a pointblank `informant`
+#' # object with `create_informant()`;
+#' # we specify a `read_fn` with the
+#' # `~` followed by a statement that
+#' # gets the `game_revenue` dataset
+#' informant <- 
+#'   create_informant(
+#'     read_fn = ~ game_revenue,
+#'     tbl_name = "game_revenue",
+#'     label = "An example."
+#'   )
+#' 
+#' # We can add *info text* to describe
+#' # the columns in the table by using
+#' # information in another table; the
+#' # `info_columns_from_tbl()` takes a
+#' # table object where the first column
+#' # has the column names and the second
+#' # contains the *info text* (the
+#' # `game_revenue_info` dataset contains
+#' # metadata for `game_revenue`)
+#' informant <-
+#'   informant %>%
+#'   info_columns_from_tbl(
+#'     tbl = game_revenue_info
+#'   )
+#' 
+#' # We can continue to add more *info
+#' # text* since the process is additive;
+#' # the `info_columns_from_tbl()`
+#' # function populates the `info`
+#' # subsection
+#' informant <-
+#'   informant %>%
+#'   info_columns(
+#'     columns = "item_revenue",
+#'     info = "Revenue reported in USD."
+#'   ) %>%
+#'   info_columns(
+#'     columns = "acquisition",
+#'     `top list` = "{top5_aq}"
+#'   ) %>%
+#'   info_snippet(
+#'     snippet_name = "top5_aq",
+#'     fn = snip_list(column = "acquisition")
+#'   ) %>%
+#'   incorporate()
+#' 
 #' @family Information Functions
 #' @section Function ID:
 #' 3-3
@@ -714,7 +763,8 @@ check_info_columns_tbl <- function(tbl) {
 #'     section_name = "Notes",
 #'     creation = "Dataset generated on (2020-01-15).",
 #'     usage = "`small_table %>% dplyr::glimpse()`"
-#'   )
+#'   ) %>%
+#'   incorporate()
 #' 
 #' # Upon printing the `informant` object, we see
 #' # the addition of the 'Notes' section and its

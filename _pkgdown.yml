@@ -250,6 +250,7 @@ reference:
     - small_table_sqlite
     - specifications
     - game_revenue
+    - game_revenue_info
     
 navbar:
   type: default

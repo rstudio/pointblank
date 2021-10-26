@@ -162,7 +162,8 @@ informant <-
     section_name = "Notes",
     creation = "Dataset generated on (2020-01-15).",
     usage = "`small_table \%>\% dplyr::glimpse()`"
-  )
+  ) \%>\%
+  incorporate()
 
 # Upon printing the `informant` object, we see
 # the addition of the 'Notes' section and its

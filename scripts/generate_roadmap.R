@@ -12,7 +12,8 @@ tbl <-
   dplyr::filter(!is.na(milestone_title)) %>%
   dplyr::select(number, title, labels_name, milestone_title) %>%
   tidyr::unnest(labels_name) %>%
-  dplyr::filter(grepl("(Type|Difficulty|Effort|Priority)", labels_name)) %>%
+  dplyr::filter(grepl("(Type|Difficulty|Effort|Priority|Release)", labels_name)) %>%
+  dplyr::mutate(labels_name = ifelse(labels_name == "Release", "Type: ✈ Release", labels_name)) %>%
   dplyr::filter(!grepl("Question", labels_name)) %>%
   tidyr::separate(labels_name, into = c("category", "value"), sep = ": ") %>%
   tidyr::pivot_wider(names_from = category, values_from = value) %>%
@@ -30,7 +31,6 @@ tbl <-
   ) %>%
   dplyr::mutate(major = gsub("v", "", major)) %>% 
   dplyr::mutate_at(.vars = vars(major, minor, patch), .funs = as.integer) %>%
-  # dplyr::mutate(type = ifelse(labels_name == "Release", "✈ Release", type)) %>%
   dplyr::mutate(difficulty = gsub(".*?([1-3]).*", "\\1", difficulty)) %>%
   dplyr::mutate(effort = gsub(".*?([1-3]).*", "\\1", effort)) %>%
   dplyr::mutate(priority = gsub(".*?([1-3]).*", "\\1", priority)) %>%

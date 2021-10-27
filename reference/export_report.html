@@ -71,7 +71,7 @@ browser."><meta property="og:image" content="/logo.svg"><!-- mathjax --><script 
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -86,7 +86,7 @@ browser."><meta property="og:image" content="/logo.svg"><!-- mathjax --><script 
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Export an <em>agent</em>, <em>informant</em>, <em>multiagent</em>, or table scan to HTML</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/object_ops.R"><code>R/object_ops.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/object_ops.R" class="external-link"><code>R/object_ops.R</code></a></small>
     <div class="hidden name"><code>export_report.Rd</code></div>
     </div>
 
@@ -102,32 +102,37 @@ browser.</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">export_report</span><span class="op">(</span><span class="va">x</span>, <span class="va">filename</span>, path <span class="op">=</span> <span class="cn">NULL</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>An <em>agent</em> object of class <code>ptblank_agent</code>, an <em>informant</em> of class
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>x</dt>
+<dd><p>An <em>agent</em> object of class <code>ptblank_agent</code>, an <em>informant</em> of class
 <code>ptblank_informant</code>, a <em>multiagent</em> of class <code>ptblank_multiagent</code>, a table
 scan of class <code>ptblank_tbl_scan</code>, or, customized reporting objects
 (<code>ptblank_agent_report</code>, <code>ptblank_informant_report</code>,
-<code>ptblank_multiagent_report.wide</code>, <code>ptblank_multiagent_report.long</code>).</p></td>
-    </tr><tr><th>filename</th>
-      <td><p>The filename to create on disk for the HTML export of the
-object provided. It's recommended that the extension <code>".html"</code> is included.</p></td>
-    </tr><tr><th>path</th>
-      <td><p>An optional path to which the file should be saved (this is
-automatically combined with <code>filename</code>).</p></td>
-    </tr><tr><th>quiet</th>
-      <td><p>Should the function <em>not</em> inform when the file is written? By
-default this is <code>FALSE</code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+<code>ptblank_multiagent_report.wide</code>, <code>ptblank_multiagent_report.long</code>).</p></dd>
+<dt>filename</dt>
+<dd><p>The filename to create on disk for the HTML export of the
+object provided. It's recommended that the extension <code>".html"</code> is included.</p></dd>
+<dt>path</dt>
+<dd><p>An optional path to which the file should be saved (this is
+automatically combined with <code>filename</code>).</p></dd>
+<dt>quiet</dt>
+<dd><p>Should the function <em>not</em> inform when the file is written? By
+default this is <code>FALSE</code>.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>Invisibly returns <code>TRUE</code> if the file has been written.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>9-3</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Object Ops: 
 <code><a href="activate_steps.html">activate_steps</a>()</code>,
 <code><a href="deactivate_steps.html">deactivate_steps</a>()</code>,
@@ -138,9 +143,12 @@ default this is <code>FALSE</code>.</p></td>
 <code><a href="set_tbl.html">set_tbl</a>()</code>,
 <code><a href="x_read_disk.html">x_read_disk</a>()</code>,
 <code><a href="x_write_disk.html">x_write_disk</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+    <div id="examples">
+    <h2>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># A: Writing an agent report as HTML </span></span>
 <span class="r-in"></span>
@@ -183,13 +191,13 @@ default this is <code>FALSE</code>.</p></td>
 <span class="r-in"><span class="co"># want; then, we `interrogate()`</span></span>
 <span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
 <span class="r-in">  <span class="va">agent</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="col_exists.html">col_exists</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_exists.html">col_exists</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># The agent report can be written to an</span></span>
@@ -243,11 +251,11 @@ default this is <code>FALSE</code>.</p></td>
 <span class="r-in">    fn <span class="op">=</span> <span class="fu"><a href="snip_lowest.html">snip_lowest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
+<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
 <span class="r-in">    info <span class="op">=</span> <span class="st">"From {low_a} to {high_a}."</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,</span>
+<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,</span>
 <span class="r-in">    info <span class="op">=</span> <span class="st">"Time-based values."</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
@@ -271,7 +279,7 @@ default this is <code>FALSE</code>.</p></td>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># We can get an report that describes all</span></span>
 <span class="r-in"><span class="co"># of the data in the `storms` dataset</span></span>
-<span class="r-in"><span class="va">tbl_scan</span> <span class="op">&lt;-</span> <span class="fu"><a href="scan_data.html">scan_data</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html">storms</a></span><span class="op">)</span></span>
+<span class="r-in"><span class="va">tbl_scan</span> <span class="op">&lt;-</span> <span class="fu"><a href="scan_data.html">scan_data</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">storms</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># The table scan object can be written</span></span>
 <span class="r-in"><span class="co"># to an HTML file with `export_report()`</span></span>
@@ -283,6 +291,7 @@ default this is <code>FALSE</code>.</p></td>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

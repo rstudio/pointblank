@@ -67,7 +67,7 @@ the of items in that list with the limit value."><meta property="og:image" conte
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -82,7 +82,7 @@ the of items in that list with the limit value."><meta property="og:image" conte
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>A <code>fn</code> for <code>info_snippet()</code>: get a list of column categories</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/info_add.R"><code>R/info_add.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/info_add.R" class="external-link"><code>R/info_add.R</code></a></small>
     <div class="hidden name"><code>snip_list.Rd</code></div>
     </div>
 
@@ -95,7 +95,7 @@ the of items in that list with the <code>limit</code> value.</p>
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">snip_list</span><span class="op">(</span>
   <span class="va">column</span>,
   limit <span class="op">=</span> <span class="fl">5</span>,
-  sorting <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"inorder"</span>, <span class="st">"infreq"</span>, <span class="st">"inseq"</span><span class="op">)</span>,
+  sorting <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"inorder"</span>, <span class="st">"infreq"</span>, <span class="st">"inseq"</span><span class="op">)</span>,
   reverse <span class="op">=</span> <span class="cn">FALSE</span>,
   sep <span class="op">=</span> <span class="st">","</span>,
   and_or <span class="op">=</span> <span class="cn">NULL</span>,
@@ -105,48 +105,50 @@ the of items in that list with the <code>limit</code> value.</p>
   lang <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>column</th>
-      <td><p>The name of the column that contains the target values.</p></td>
-    </tr><tr><th>limit</th>
-      <td><p>A limit of items put into the generated list. The returned text
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>column</dt>
+<dd><p>The name of the column that contains the target values.</p></dd>
+<dt>limit</dt>
+<dd><p>A limit of items put into the generated list. The returned text
 will state the remaining number of items beyond the <code>limit</code>. By default,
-the limit is <code>5</code>.</p></td>
-    </tr><tr><th>sorting</th>
-      <td><p>A keyword used to designate the type of sorting to use for the
+the limit is <code>5</code>.</p></dd>
+<dt>sorting</dt>
+<dd><p>A keyword used to designate the type of sorting to use for the
 list. The three options are <code>"inorder"</code> (the default), <code>"infreq"</code>, and
 <code>"inseq"</code>. With <code>"inorder"</code>, distinct items are listed in the order in
 which they firsts appear. Using <code>"infreq"</code> orders the items by the
 decreasing frequency of each item. The <code>"inseq"</code> option applies an
-alphanumeric sorting to the distinct list items.</p></td>
-    </tr><tr><th>reverse</th>
-      <td><p>An option to reverse the ordering of list items. By default,
+alphanumeric sorting to the distinct list items.</p></dd>
+<dt>reverse</dt>
+<dd><p>An option to reverse the ordering of list items. By default,
 this is <code>FALSE</code> but using <code>TRUE</code> will reverse the items before applying the
-<code>limit</code>.</p></td>
-    </tr><tr><th>sep</th>
-      <td><p>The separator to use between list items. By default, this is a
-comma.</p></td>
-    </tr><tr><th>and_or</th>
-      <td><p>The type of conjunction to use between the final and
+<code>limit</code>.</p></dd>
+<dt>sep</dt>
+<dd><p>The separator to use between list items. By default, this is a
+comma.</p></dd>
+<dt>and_or</dt>
+<dd><p>The type of conjunction to use between the final and
 penultimate list items (should the item length be below the <code>limit</code> value).
 If <code>NULL</code> (the default) is used, then the 'and' conjunction will be used.
 Alternatively, the following keywords can be used: <code>"and"</code>, <code>"or"</code>, or
-an empty string (for no conjunction at all).</p></td>
-    </tr><tr><th>oxford</th>
-      <td><p>Whether to use an Oxford comma under certain conditions. By
-default, this is <code>TRUE</code>.</p></td>
-    </tr><tr><th>as_code</th>
-      <td><p>Should each list item appear in a 'code font' (i.e., as
+an empty string (for no conjunction at all).</p></dd>
+<dt>oxford</dt>
+<dd><p>Whether to use an Oxford comma under certain conditions. By
+default, this is <code>TRUE</code>.</p></dd>
+<dt>as_code</dt>
+<dd><p>Should each list item appear in a 'code font' (i.e., as
 monospaced text)? By default this is <code>TRUE</code>. Using <code>FALSE</code> keeps all list
-items in the same font as the rest of the information report.</p></td>
-    </tr><tr><th>quot_str</th>
-      <td><p>An option for whether list items should be set in double
+items in the same font as the rest of the information report.</p></dd>
+<dt>quot_str</dt>
+<dd><p>An option for whether list items should be set in double
 quotes. If <code>NULL</code> (the default), the quotation marks are mainly associated
 with list items derived from <code>character</code> or <code>factor</code> values; numbers,
 dates, and logical values won't have quotation marks. We can explicitly use
-quotations (or not) with either <code>TRUE</code> or <code>FALSE</code> here.</p></td>
-    </tr><tr><th>lang</th>
-      <td><p>The language to use for any joining words (from the <code>and_or</code>
+quotations (or not) with either <code>TRUE</code> or <code>FALSE</code> here.</p></dd>
+<dt>lang</dt>
+<dd><p>The language to use for any joining words (from the <code>and_or</code>
 option) or additional words in the generated list string. By default,
 <code>NULL</code> will use whichever <code>lang</code> setting is available in the parent
 <em>informant</em> object (this is settable in the <code><a href="create_informant.html">create_informant()</a></code> <code>lang</code>
@@ -154,17 +156,20 @@ argument). If specified here as an override, the language options are
 English (<code>"en"</code>), French (<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>),
 Spanish (<code>"es"</code>), Portuguese (<code>"pt"</code>), Turkish (<code>"tr"</code>), Chinese (<code>"zh"</code>),
 Russian (<code>"ru"</code>), Polish (<code>"pl"</code>), Danish (<code>"da"</code>), Swedish (<code>"sv"</code>), and
-Dutch (<code>"nl"</code>).</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+Dutch (<code>"nl"</code>).</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A formula needed for <code><a href="info_snippet.html">info_snippet()</a></code>'s <code>fn</code> argument.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>3-6</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Information Functions: 
 <code><a href="info_columns_from_tbl.html">info_columns_from_tbl</a>()</code>,
 <code><a href="info_columns.html">info_columns</a>()</code>,
@@ -174,8 +179,11 @@ Dutch (<code>"nl"</code>).</p></td>
 <code><a href="snip_highest.html">snip_highest</a>()</code>,
 <code><a href="snip_lowest.html">snip_lowest</a>()</code>,
 <code><a href="snip_stats.html">snip_stats</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Generate an informant object, add</span></span>
 <span class="r-in"><span class="co"># a snippet with `info_snippet()`</span></span>
 <span class="r-in"><span class="co"># and `snip_list()` (giving us a</span></span>
@@ -212,6 +220,7 @@ Dutch (<code>"nl"</code>).</p></td>
 <span class="r-in"><span class="co"># to see the information report</span></span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

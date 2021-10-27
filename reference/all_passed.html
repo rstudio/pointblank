@@ -68,7 +68,7 @@ TRUE or not."><meta property="og:image" content="/logo.svg"><!-- mathjax --><scr
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -83,7 +83,7 @@ TRUE or not."><meta property="og:image" content="/logo.svg"><!-- mathjax --><scr
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Did all of the validations fully <em>pass</em>?</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/all_passed.R"><code>R/all_passed.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/all_passed.R" class="external-link"><code>R/all_passed.R</code></a></small>
     <div class="hidden name"><code>all_passed.Rd</code></div>
     </div>
 
@@ -96,19 +96,23 @@ test units? Using the <code>all_passed()</code> function will let us know whethe
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">all_passed</span><span class="op">(</span><span class="va">agent</span>, i <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>agent</th>
-      <td><p>An agent object of class <code>ptblank_agent</code>.</p></td>
-    </tr><tr><th>i</th>
-      <td><p>A vector of validation step numbers. These values are assigned to
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>agent</dt>
+<dd><p>An agent object of class <code>ptblank_agent</code>.</p></dd>
+<dt>i</dt>
+<dd><p>A vector of validation step numbers. These values are assigned to
 each validation step by <strong>pointblank</strong> in the order of definition. If
 <code>NULL</code> (the default), all validation steps will be used for the evaluation
-of complete <em>passing</em>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+of complete <em>passing</em>.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A logical value.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>The <code>all_passed()</code> function provides a single logical value based on an
 interrogation performed in the <em>agent</em>-based workflow. For very large-scale
 validation (where data quality is a known issue, and is perhaps something to
@@ -121,32 +125,37 @@ and have a <code>threshold</code> option for failure levels. Another option is t
 utilize post-interrogation objects within the <em>agent</em>'s x-list (obtained by
 using the <code><a href="get_agent_x_list.html">get_agent_x_list()</a></code> function). This allows for many possibilities
 in producing a single logical value from an interrogation.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>8-4</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Post-interrogation: 
 <code><a href="get_agent_x_list.html">get_agent_x_list</a>()</code>,
 <code><a href="get_data_extracts.html">get_data_extracts</a>()</code>,
 <code><a href="get_sundered_data.html">get_sundered_data</a>()</code>,
 <code><a href="write_testthat_file.html">write_testthat_file</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create a simple table with</span></span>
 <span class="r-in"><span class="co"># a column of numerical values</span></span>
 <span class="r-in"><span class="va">tbl</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Validate that values in column</span></span>
 <span class="r-in"><span class="co"># `a` are always greater than 4</span></span>
 <span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
 <span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_increasing.html">col_vals_increasing</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_vals_increasing.html">col_vals_increasing</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Determine if these column</span></span>
@@ -156,6 +165,7 @@ in producing a single logical value from an interrogation.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

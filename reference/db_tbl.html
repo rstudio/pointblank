@@ -77,7 +77,7 @@ desired, these can be supplied directly by enclosing those values in I()."><meta
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -92,7 +92,7 @@ desired, these can be supplied directly by enclosing those values in I()."><meta
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get a table from a database</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/tbl_from_db.R"><code>R/tbl_from_db.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/tbl_from_db.R" class="external-link"><code>R/tbl_from_db.R</code></a></small>
     <div class="hidden name"><code>db_tbl.Rd</code></div>
     </div>
 
@@ -100,7 +100,7 @@ desired, these can be supplied directly by enclosing those values in I()."><meta
     <p>If your target table is in a database, the <code>db_tbl()</code> function is a handy way
 of accessing it. This function simplifies the process of getting a <code>tbl_dbi</code>
 object, which usually involves a combination of building a connection to a
-database and using the <code><a href="https://dplyr.tidyverse.org/reference/tbl.html">dplyr::tbl()</a></code> function with the connection and the
+database and using the <code><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">dplyr::tbl()</a></code> function with the connection and the
 table name (or a reference to a table in a schema). You can use <code>db_tbl()</code> as
 the basis for obtaining a database table for the <code>read_fn</code> parameter in
 <code><a href="create_agent.html">create_agent()</a></code> or <code><a href="create_informant.html">create_informant()</a></code>. This can be done by using a leading
@@ -109,7 +109,7 @@ great option is supplying a table-prep formula involving <code>db_tbl()</code> t
 <code><a href="tbl_store.html">tbl_store()</a></code> so that you have access to database tables though single names
 via a table store.</p>
 <p>The username and password are supplied though environment variables. If
-desired, these can be supplied directly by enclosing those values in <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>.</p>
+desired, these can be supplied directly by enclosing those values in <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code>.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">db_tbl</span><span class="op">(</span>
@@ -122,38 +122,43 @@ desired, these can be supplied directly by enclosing those values in <code><a hr
   password <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>table</th>
-      <td><p>The name of the table, or, a reference to a table in a schema
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>table</dt>
+<dd><p>The name of the table, or, a reference to a table in a schema
 (two-element vector with the names of schema and table). Alternatively,
 this can be supplied as a data table to copy into an in-memory database
 connection. This only works if: (1) the <code>db</code> is either <code>"sqlite"</code> or
 <code>"duckdb"</code>, (2) the <code>dbname</code> was chosen as <code>":memory:"</code>, and (3) the
-<code>data_tbl</code> is a data frame or a tibble object.</p></td>
-    </tr><tr><th>dbname</th>
-      <td><p>The database name.</p></td>
-    </tr><tr><th>dbtype</th>
-      <td><p>Either an appropriate driver function (e.g.,
-<code><a href="https://rpostgres.r-dbi.org/reference/Postgres.html">RPostgres::Postgres()</a></code>) or a shortname for the database type. Valid names
+<code>data_tbl</code> is a data frame or a tibble object.</p></dd>
+<dt>dbname</dt>
+<dd><p>The database name.</p></dd>
+<dt>dbtype</dt>
+<dd><p>Either an appropriate driver function (e.g.,
+<code><a href="https://rpostgres.r-dbi.org/reference/Postgres.html" class="external-link">RPostgres::Postgres()</a></code>) or a shortname for the database type. Valid names
 are: <code>"postgresql"</code>, <code>"postgres"</code>, or <code>"pgsql"</code> (PostgreSQL, using the
-<code><a href="https://rpostgres.r-dbi.org/reference/Postgres.html">RPostgres::Postgres()</a></code> driver function); <code>"mysql"</code> (MySQL, using
-<code><a href="https://rdrr.io/pkg/RMySQL/man/MySQLDriver-class.html">RMySQL::MySQL()</a></code>); <code>"duckdb"</code> (DuckDB, using <code><a href="https://rdrr.io/pkg/duckdb/man/duckdb.html">duckdb::duckdb()</a></code>); and
-<code>"sqlite"</code> (SQLite, using <code><a href="https://rsqlite.r-dbi.org/reference/SQLite.html">RSQLite::SQLite()</a></code>).</p></td>
-    </tr><tr><th>host, port</th>
-      <td><p>The database host and optional port number.</p></td>
-    </tr><tr><th>user, password</th>
-      <td><p>The environment variables used to access the username
-and password for the database.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+<code><a href="https://rpostgres.r-dbi.org/reference/Postgres.html" class="external-link">RPostgres::Postgres()</a></code> driver function); <code>"mysql"</code> (MySQL, using
+<code><a href="https://rdrr.io/pkg/RMySQL/man/MySQLDriver-class.html" class="external-link">RMySQL::MySQL()</a></code>); <code>"duckdb"</code> (DuckDB, using <code><a href="https://rdrr.io/pkg/duckdb/man/duckdb.html" class="external-link">duckdb::duckdb()</a></code>); and
+<code>"sqlite"</code> (SQLite, using <code><a href="https://rsqlite.r-dbi.org/reference/SQLite.html" class="external-link">RSQLite::SQLite()</a></code>).</p></dd>
+<dt>host, port</dt>
+<dd><p>The database host and optional port number.</p></dd>
+<dt>user, password</dt>
+<dd><p>The environment variables used to access the username
+and password for the database.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A <code>tbl_dbi</code> object.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>1-6</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Planning and Prep: 
 <code><a href="action_levels.html">action_levels</a>()</code>,
 <code><a href="create_agent.html">create_agent</a>()</code>,
@@ -165,8 +170,11 @@ and password for the database.</p></td>
 <code><a href="tbl_source.html">tbl_source</a>()</code>,
 <code><a href="tbl_store.html">tbl_store</a>()</code>,
 <code><a href="validate_rmd.html">validate_rmd</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># You can use an in-memory database</span></span>
 <span class="r-in"><span class="co"># table and supply an in-memory table</span></span>
 <span class="r-in"><span class="co"># to it too:</span></span>
@@ -177,7 +185,7 @@ and password for the database.</p></td>
 <span class="r-in">    dbtype <span class="op">=</span> <span class="st">"duckdb"</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># It's also possible to obtain a remote</span></span>
 <span class="r-in"><span class="co"># file and shove it into an in-memory</span></span>
@@ -207,8 +215,8 @@ and password for the database.</p></td>
 <span class="r-in">    dbtype <span class="op">=</span> <span class="st">"postgres"</span>, </span>
 <span class="r-in">    host <span class="op">=</span> <span class="st">"hh-pgsql-public.ebi.ac.uk"</span>,</span>
 <span class="r-in">    port <span class="op">=</span> <span class="fl">5432</span>,</span>
-<span class="r-in">    user <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="st">"reader"</span><span class="op">)</span>,</span>
-<span class="r-in">    password <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="st">"NWDMCE5xdipIjRrp"</span><span class="op">)</span></span>
+<span class="r-in">    user <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"reader"</span><span class="op">)</span>,</span>
+<span class="r-in">    password <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"NWDMCE5xdipIjRrp"</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Using `I()` for the user name and</span></span>
@@ -251,7 +259,7 @@ and password for the database.</p></td>
 <span class="r-in">      dbname <span class="op">=</span> <span class="st">":memory:"</span>,</span>
 <span class="r-in">      dbtype <span class="op">=</span> <span class="st">"duckdb"</span></span>
 <span class="r-in">    <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span></span>
+<span class="r-in">      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Now it's easy to access either of these</span></span>
@@ -283,6 +291,7 @@ and password for the database.</p></td>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

@@ -70,7 +70,7 @@ to pointblank YAML with yaml_write(informant = &amp;lt;informant&amp;gt;, ...)).
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,7 +85,7 @@ to pointblank YAML with yaml_write(informant = &amp;lt;informant&amp;gt;, ...)).
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get a table information report from an <em>informant</em> object</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/get_informant_report.R"><code>R/get_informant_report.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/get_informant_report.R" class="external-link"><code>R/get_informant_report.R</code></a></small>
     <div class="hidden name"><code>get_informant_report.Rd</code></div>
     </div>
 
@@ -106,26 +106,28 @@ to <strong>pointblank</strong> YAML with <code>yaml_write(informant = &lt;inform
   locale <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>informant</th>
-      <td><p>An informant object of class <code>ptblank_informant</code>.</p></td>
-    </tr><tr><th>size</th>
-      <td><p>The size of the display table, which can be either <code>"standard"</code>
-(the default, with a width of 875px) or <code>"small"</code> (width of 575px).</p></td>
-    </tr><tr><th>title</th>
-      <td><p>Options for customizing the title of the report. The default is
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>informant</dt>
+<dd><p>An informant object of class <code>ptblank_informant</code>.</p></dd>
+<dt>size</dt>
+<dd><p>The size of the display table, which can be either <code>"standard"</code>
+(the default, with a width of 875px) or <code>"small"</code> (width of 575px).</p></dd>
+<dt>title</dt>
+<dd><p>Options for customizing the title of the report. The default is
 the keyword <code>":default:"</code> which produces generic title text that refers to
 the <strong>pointblank</strong> package in the language governed by the <code>lang</code> option.
 Another keyword option is <code>":tbl_name:"</code>, and that presents the name of the
 table as the title for the report. If no title is wanted, then the
 <code>":none:"</code> keyword option can be used. Aside from keyword options, text can
-be provided for the title and <code><a href="https://glue.tidyverse.org/reference/glue.html">glue::glue()</a></code> calls can be used to construct
+be provided for the title and <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code> calls can be used to construct
 the text string. If providing text, it will be interpreted as Markdown text
 and transformed internally to HTML. To circumvent such a transformation,
-use text in <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code> to explicitly state that the supplied text should not be
-transformed.</p></td>
-    </tr><tr><th>lang</th>
-      <td><p>The language to use for the <em>information report</em> (a summary table
+use text in <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code> to explicitly state that the supplied text should not be
+transformed.</p></dd>
+<dt>lang</dt>
+<dd><p>The language to use for the <em>information report</em> (a summary table
 that provides the validation plan and the results from the interrogation.
 By default, <code>NULL</code> will create English (<code>"en"</code>) text. Other options include
 French (<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), Spanish (<code>"es"</code>),
@@ -133,29 +135,35 @@ Portuguese (<code>"pt"</code>), Turkish (<code>"tr"</code>), Chinese (<code>"zh"
 Polish (<code>"pl"</code>), Danish (<code>"da"</code>), Swedish (<code>"sv"</code>), and Dutch (<code>"nl"</code>).
 This <code>lang</code> option will override any previously set language setting (e.g.,
 by the
-<code><a href="create_agent.html">create_agent()</a></code> call).</p></td>
-    </tr><tr><th>locale</th>
-      <td><p>An optional locale ID to use for formatting values in the
+<code><a href="create_agent.html">create_agent()</a></code> call).</p></dd>
+<dt>locale</dt>
+<dd><p>An optional locale ID to use for formatting values in the
 <em>information report</em> summary table according the locale's rules. Examples
 include <code>"en_US"</code> for English (United States) and <code>"fr_FR"</code> for French
 (France); more simply, this can be a language identifier without a country
 designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</code>). This
 <code>locale</code> option will override any previously set locale value (e.g., by the
-<code><a href="create_agent.html">create_agent()</a></code> call).</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+<code><a href="create_agent.html">create_agent()</a></code> call).</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A <strong>gt</strong> table object.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>7-2</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Incorporate and Report: 
 <code><a href="incorporate.html">incorporate</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Generate an informant object using</span></span>
 <span class="r-in"><span class="co"># the `small_table` dataset</span></span>
 <span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span> <span class="fu"><a href="create_informant.html">create_informant</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span></span>
@@ -170,11 +178,12 @@ designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</c
 <span class="r-in"><span class="co"># Alternatively, we can get the same report</span></span>
 <span class="r-in"><span class="co"># by using `get_informant_report()`</span></span>
 <span class="r-in"><span class="va">report</span> <span class="op">&lt;-</span> <span class="fu">get_informant_report</span><span class="op">(</span><span class="va">informant</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">report</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">report</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ptblank_informant_report" "gt_tbl"                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3] "list"                    </span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

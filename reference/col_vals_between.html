@@ -85,7 +85,7 @@ applied)."><meta property="og:image" content="/logo.svg"><!-- mathjax --><script
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -100,7 +100,7 @@ applied)."><meta property="og:image" content="/logo.svg"><!-- mathjax --><script
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Do column data lie between two specified values or data in other columns?</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/col_vals_between.R"><code>R/col_vals_between.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/col_vals_between.R" class="external-link"><code>R/col_vals_between.R</code></a></small>
     <div class="hidden name"><code>col_vals_between.Rd</code></div>
     </div>
 
@@ -110,7 +110,7 @@ expectation function, and the <code>test_col_vals_between()</code> test function
 check whether column values in a table fall within a range. The range
 specified with three arguments: <code>left</code>, <code>right</code>, and <code>inclusive</code>. The <code>left</code>
 and <code>right</code> values specify the lower and upper bounds. The bounds can be
-specified as single, literal values or as column names given in <code><a href="https://dplyr.tidyverse.org/reference/vars.html">vars()</a></code>. The
+specified as single, literal values or as column names given in <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>. The
 <code>inclusive</code> argument, as a vector of two logical values relating to <code>left</code>
 and <code>right</code>, states whether each bound is inclusive or not. The default is
 <code>c(TRUE, TRUE)</code>, where both endpoints are inclusive (i.e., <code>[left, right]</code>).
@@ -133,7 +133,7 @@ applied).</p>
   <span class="va">columns</span>,
   <span class="va">left</span>,
   <span class="va">right</span>,
-  inclusive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>,
+  inclusive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>,
   na_pass <span class="op">=</span> <span class="cn">FALSE</span>,
   preconditions <span class="op">=</span> <span class="cn">NULL</span>,
   segments <span class="op">=</span> <span class="cn">NULL</span>,
@@ -149,7 +149,7 @@ applied).</p>
   <span class="va">columns</span>,
   <span class="va">left</span>,
   <span class="va">right</span>,
-  inclusive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>,
+  inclusive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>,
   na_pass <span class="op">=</span> <span class="cn">FALSE</span>,
   preconditions <span class="op">=</span> <span class="cn">NULL</span>,
   threshold <span class="op">=</span> <span class="fl">1</span>
@@ -160,56 +160,58 @@ applied).</p>
   <span class="va">columns</span>,
   <span class="va">left</span>,
   <span class="va">right</span>,
-  inclusive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>,
+  inclusive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>,
   na_pass <span class="op">=</span> <span class="cn">FALSE</span>,
   preconditions <span class="op">=</span> <span class="cn">NULL</span>,
   threshold <span class="op">=</span> <span class="fl">1</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), Spark DataFrame
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>x</dt>
+<dd><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), Spark DataFrame
 (<code>tbl_spark</code>), or, an <em>agent</em> object of class <code>ptblank_agent</code> that is
-created with <code><a href="create_agent.html">create_agent()</a></code>.</p></td>
-    </tr><tr><th>columns</th>
-      <td><p>The column (or a set of columns, provided as a character
-vector) to which this validation should be applied.</p></td>
-    </tr><tr><th>left</th>
-      <td><p>The lower bound for the range. The validation includes this bound
+created with <code><a href="create_agent.html">create_agent()</a></code>.</p></dd>
+<dt>columns</dt>
+<dd><p>The column (or a set of columns, provided as a character
+vector) to which this validation should be applied.</p></dd>
+<dt>left</dt>
+<dd><p>The lower bound for the range. The validation includes this bound
 value (if the first element in <code>inclusive</code> is <code>TRUE</code>) in addition to values
 greater than <code>left</code>. This can be a single value or a compatible column
-given in <code><a href="https://dplyr.tidyverse.org/reference/vars.html">vars()</a></code>.</p></td>
-    </tr><tr><th>right</th>
-      <td><p>The upper bound for the range. The validation includes this
+given in <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>.</p></dd>
+<dt>right</dt>
+<dd><p>The upper bound for the range. The validation includes this
 bound value (if the second element in <code>inclusive</code> is <code>TRUE</code>) in addition to
 values lower than <code>right</code>. This can be a single value or a compatible
-column given in <code><a href="https://dplyr.tidyverse.org/reference/vars.html">vars()</a></code>.</p></td>
-    </tr><tr><th>inclusive</th>
-      <td><p>A two-element logical value that indicates whether the
+column given in <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>.</p></dd>
+<dt>inclusive</dt>
+<dd><p>A two-element logical value that indicates whether the
 <code>left</code> and <code>right</code> bounds should be inclusive. By default, both bounds
-are inclusive.</p></td>
-    </tr><tr><th>na_pass</th>
-      <td><p>Should any encountered <code>NA</code> values be considered as passing
-test units? This is by default <code>FALSE</code>. Set to <code>TRUE</code> to give <code>NA</code>s a pass.</p></td>
-    </tr><tr><th>preconditions</th>
-      <td><p>An optional expression for mutating the input table
+are inclusive.</p></dd>
+<dt>na_pass</dt>
+<dd><p>Should any encountered <code>NA</code> values be considered as passing
+test units? This is by default <code>FALSE</code>. Set to <code>TRUE</code> to give <code>NA</code>s a pass.</p></dd>
+<dt>preconditions</dt>
+<dd><p>An optional expression for mutating the input table
 before proceeding with the validation. This can either be provided as a
 one-sided R formula using a leading <code>~</code> (e.g.,
 <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code> or as a function (e.g.,
 <code>function(x) dplyr::mutate(x, col = col + 10)</code>. See the <em>Preconditions</em>
-section for more information.</p></td>
-    </tr><tr><th>segments</th>
-      <td><p>An optional expression or set of expressions (held in a list)
+section for more information.</p></dd>
+<dt>segments</dt>
+<dd><p>An optional expression or set of expressions (held in a list)
 that serve to segment the target table by column values. Each expression
 can be given in one of two ways: (1) as column names, or (2) as a two-sided
 formula where the LHS holds a column name and the RHS contains the column
-values to segment on. See the <em>Segments</em> section for more details on this.</p></td>
-    </tr><tr><th>actions</th>
-      <td><p>A list containing threshold levels so that the validation step
+values to segment on. See the <em>Segments</em> section for more details on this.</p></dd>
+<dt>actions</dt>
+<dd><p>A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
-with the <code><a href="action_levels.html">action_levels()</a></code> helper function.</p></td>
-    </tr><tr><th>step_id</th>
-      <td><p>One or more optional identifiers for the single or multiple
+with the <code><a href="action_levels.html">action_levels()</a></code> helper function.</p></dd>
+<dt>step_id</dt>
+<dd><p>One or more optional identifiers for the single or multiple
 validation steps generated from calling a validation function. The use of
 step IDs serves to distinguish validation steps from each other and provide
 an opportunity for supplying a more meaningful label compared to the step
@@ -219,19 +221,19 @@ more values can be provided, and the exact number of ID values should (1)
 match the number of validation steps that the validation function call will
 produce (influenced by the number of <code>columns</code> provided), (2) be an ID
 string not used in any previous validation step, and (3) be a vector with
-unique values.</p></td>
-    </tr><tr><th>label</th>
-      <td><p>An optional label for the validation step. This label appears in
-the <em>agent</em> report and for the best appearance it should be kept short.</p></td>
-    </tr><tr><th>brief</th>
-      <td><p>An optional, text-based description for the validation step. If
+unique values.</p></dd>
+<dt>label</dt>
+<dd><p>An optional label for the validation step. This label appears in
+the <em>agent</em> report and for the best appearance it should be kept short.</p></dd>
+<dt>brief</dt>
+<dd><p>An optional, text-based description for the validation step. If
 nothing is provided here then an <em>autobrief</em> is generated by the <em>agent</em>,
 using the language provided in <code><a href="create_agent.html">create_agent()</a></code>'s <code>lang</code> argument (which
 defaults to <code>"en"</code> or English). The <em>autobrief</em> incorporates details of the
 validation step so it's often the preferred option in most cases (where a
-<code>label</code> might be better suited to succinctly describe the validation).</p></td>
-    </tr><tr><th>active</th>
-      <td><p>A logical value indicating whether the validation step should
+<code>label</code> might be better suited to succinctly describe the validation).</p></dd>
+<dt>active</dt>
+<dd><p>A logical value indicating whether the validation step should
 be active. If the validation function is working with an <em>agent</em>, <code>FALSE</code>
 will make the validation step inactive (still reporting its presence and
 keeping indexes for the steps unchanged). If the validation function will
@@ -243,13 +245,13 @@ evaluate to a single logical value. With this approach, the <strong>pointblank</
 function <code><a href="has_columns.html">has_columns()</a></code> can be used to determine whether to make a
 validation step active on the basis of one or more columns existing in the
 table (e.g., <code>~ . %&gt;% has_columns(vars(d, e))</code>). The default for <code>active</code>
-is <code>TRUE</code>.</p></td>
-    </tr><tr><th>object</th>
-      <td><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), or Spark
+is <code>TRUE</code>.</p></dd>
+<dt>object</dt>
+<dd><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), or Spark
 DataFrame (<code>tbl_spark</code>) that serves as the target table for the expectation
-function or the test function.</p></td>
-    </tr><tr><th>threshold</th>
-      <td><p>A simple failure threshold value for use with the
+function or the test function.</p></dd>
+<dt>threshold</dt>
+<dd><p>A simple failure threshold value for use with the
 expectation (<code>expect_</code>) and the test (<code>test_</code>) function variants. By
 default, this is set to <code>1</code> meaning that any single unit of failure in data
 validation results in an overall test failure. Whole numbers beyond <code>1</code>
@@ -257,34 +259,38 @@ indicate that any failing units up to that absolute threshold value will
 result in a succeeding <strong>testthat</strong> test or evaluate to <code>TRUE</code>. Likewise,
 fractional values (between <code>0</code> and <code>1</code>) act as a proportional failure
 threshold, where <code>0.15</code> means that 15 percent of failing test units results
-in an overall test failure.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+in an overall test failure.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>For the validation function, the return value is either a
 <code>ptblank_agent</code> object or a table object (depending on whether an agent
 object or a table was passed to <code>x</code>). The expectation function invisibly
 returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
 The test function returns a logical value.</p>
-    <h2 class="hasAnchor" id="column-names"><a class="anchor" href="#column-names"></a>Column Names</h2>
-
+    </div>
+    <div id="column-names">
+    <h2>Column Names</h2>
     
 
 <p>If providing multiple column names to <code>columns</code>, the result will be an
 expansion of validation steps to that number of column names (e.g.,
 <code>vars(col_a, col_b)</code> will result in the entry of two validation steps). Aside
-from column names in quotes and in <code><a href="https://dplyr.tidyverse.org/reference/vars.html">vars()</a></code>, <strong>tidyselect</strong> helper functions
-are available for specifying columns. They are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html">everything()</a></code>.</p>
-    <h2 class="hasAnchor" id="missing-values"><a class="anchor" href="#missing-values"></a>Missing Values</h2>
-
+from column names in quotes and in <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>, <strong>tidyselect</strong> helper functions
+are available for specifying columns. They are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p>
+    </div>
+    <div id="missing-values">
+    <h2>Missing Values</h2>
     
 
 <p>This validation function supports special handling of <code>NA</code> values. The
 <code>na_pass</code> argument will determine whether an <code>NA</code> value appearing in a test
 unit should be counted as a <em>pass</em> or a <em>fail</em>. The default of <code>na_pass = FALSE</code> means that any <code>NA</code>s encountered will accumulate failing test units.</p>
-    <h2 class="hasAnchor" id="preconditions"><a class="anchor" href="#preconditions"></a>Preconditions</h2>
-
+    </div>
+    <div id="preconditions">
+    <h2>Preconditions</h2>
     
 
 <p>Providing expressions as <code>preconditions</code> means <strong>pointblank</strong> will preprocess
@@ -301,8 +307,9 @@ table resides in a database). The code is most easily supplied as a one-sided
 <strong>R</strong> formula (using a leading <code>~</code>). In the formula representation, the <code>.</code>
 serves as the input data table to be transformed (e.g., <code>~ . %&gt;% dplyr::mutate(col_b = col_a + 10)</code>). Alternatively, a function could instead
 be supplied (e.g., <code>function(x) dplyr::mutate(x, col_b = col_a + 10)</code>).</p>
-    <h2 class="hasAnchor" id="segments"><a class="anchor" href="#segments"></a>Segments</h2>
-
+    </div>
+    <div id="segments">
+    <h2>Segments</h2>
     
 
 <p>By using the <code>segments</code> argument, it's possible to define a particular
@@ -329,8 +336,9 @@ mutate the target table), if any, are applied. With this type of one-two
 combo, it's possible to generate labels for segmentation using an expression
 for <code>preconditions</code> and refer to those labels in <code>segments</code> without having to
 generate a separate version of the target table.</p>
-    <h2 class="hasAnchor" id="actions"><a class="anchor" href="#actions"></a>Actions</h2>
-
+    </div>
+    <div id="actions">
+    <h2>Actions</h2>
     
 
 <p>Often, we will want to specify <code>actions</code> for the validation. This argument,
@@ -344,10 +352,11 @@ argument. This is especially true when <code>x</code> is a table object because,
 otherwise, nothing happens. For the <code>col_vals_*()</code>-type functions, using
 <code>action_levels(warn_at = 0.25)</code> or <code>action_levels(stop_at = 0.25)</code> are good
 choices depending on the situation (the first produces a warning when a
-quarter of the total test units fails, the other <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code>s at the same
+quarter of the total test units fails, the other <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code>s at the same
 threshold level).</p>
-    <h2 class="hasAnchor" id="briefs"><a class="anchor" href="#briefs"></a>Briefs</h2>
-
+    </div>
+    <div id="briefs">
+    <h2>Briefs</h2>
     
 
 <p>Want to describe this validation step in some detail? Keep in mind that this
@@ -355,8 +364,9 @@ is only useful if <code>x</code> is an <em>agent</em>. If that's the case, <code
 with some text that fits. Don't worry if you don't want to do it. The
 <em>autobrief</em> protocol is kicked in when <code>brief = NULL</code> and a simple brief will
 then be automatically generated.</p>
-    <h2 class="hasAnchor" id="yaml"><a class="anchor" href="#yaml"></a>YAML</h2>
-
+    </div>
+    <div id="yaml">
+    <h2>YAML</h2>
     
 
 <p>A <strong>pointblank</strong> agent can be written to YAML with <code><a href="yaml_write.html">yaml_write()</a></code> and the
@@ -406,13 +416,15 @@ won't be written to YAML when using <code><a href="yaml_write.html">yaml_write()
 to include them with their default when generating the YAML by other means).
 It is also possible to preview the transformation of an agent to YAML without
 any writing to disk by using the <code><a href="yaml_agent_string.html">yaml_agent_string()</a></code> function.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>2-7</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>The analogue to this function: <code><a href="col_vals_not_between.html">col_vals_not_between()</a></code>.</p>
 <p>Other validation functions: 
 <code><a href="col_exists.html">col_exists</a>()</code>,
@@ -447,8 +459,11 @@ any writing to disk by using the <code><a href="yaml_agent_string.html">yaml_age
 <code><a href="rows_distinct.html">rows_distinct</a>()</code>,
 <code><a href="serially.html">serially</a>()</code>,
 <code><a href="specially.html">specially</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># The `small_table` dataset in the</span></span>
 <span class="r-in"><span class="co"># package has a column of numeric</span></span>
 <span class="r-in"><span class="co"># values in `c` (there are a few NAs</span></span>
@@ -467,7 +482,7 @@ any writing to disk by using the <code><a href="yaml_agent_string.html">yaml_age
 <span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
 <span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">col_vals_between</span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">9</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">9</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in">  </span>
@@ -493,9 +508,9 @@ any writing to disk by using the <code><a href="yaml_agent_string.html">yaml_age
 <span class="r-in"><span class="co"># customized with the `actions` option</span></span>
 <span class="r-in"><span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">col_vals_between</span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">9</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">9</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  3  8  3 NA  7  4  3  2  9  9  7  8 NA</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># C: Using the expectation function</span></span>
@@ -505,7 +520,7 @@ any writing to disk by using the <code><a href="yaml_agent_string.html">yaml_age
 <span class="r-in"><span class="co"># time; this is primarily used in</span></span>
 <span class="r-in"><span class="co"># testthat tests</span></span>
 <span class="r-in"><span class="fu">expect_col_vals_between</span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">small_table</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">9</span>,</span>
+<span class="r-in">  <span class="va">small_table</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">9</span>,</span>
 <span class="r-in">  na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
@@ -516,7 +531,7 @@ any writing to disk by using the <code><a href="yaml_agent_string.html">yaml_age
 <span class="r-in"><span class="co"># to us</span></span>
 <span class="r-in"><span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">test_col_vals_between</span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">9</span>,</span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">9</span>,</span>
 <span class="r-in">    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
@@ -535,13 +550,14 @@ any writing to disk by using the <code><a href="yaml_agent_string.html">yaml_age
 <span class="r-in"><span class="co"># outside of the upper (or right) bound</span></span>
 <span class="r-in"><span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">test_col_vals_between</span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">9</span>,</span>
-<span class="r-in">    inclusive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">9</span>,</span>
+<span class="r-in">    inclusive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span class="r-in">    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

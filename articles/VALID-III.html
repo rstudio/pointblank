@@ -114,7 +114,7 @@
       <h1 data-toc-skip>Introduction to the <strong>Expectations in Unit Tests</strong> Workflow (<strong>VALID-III</strong>)</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/vignettes/VALID-III.Rmd" class="external-link"><code>vignettes/VALID-III.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/vignettes/VALID-III.Rmd" class="external-link"><code>vignettes/VALID-III.Rmd</code></a></small>
       <div class="hidden name"><code>VALID-III.Rmd</code></div>
 
     </div>
@@ -176,9 +176,9 @@
 <code><a href="../reference/col_schema_match.html">expect_col_schema_match()</a></code>: Expect that columns in the table (and their types) match a predefined schema.</li>
 </ul>
 <p>Now that we know that the functions are similar in intent but different in name, let’s learn how to use these functions effectively.</p>
-<div id="using-expect_-functions-in-the-testthat-way" class="section level1">
-<h1 class="hasAnchor">
-<a href="#using-expect_-functions-in-the-testthat-way" class="anchor" aria-hidden="true"></a>Using <code>expect_*()</code> Functions in the <strong>testthat</strong> Way</h1>
+<div class="section level1">
+<h1 id="using-expect_-functions-in-the-testthat-way">Using <code>expect_*()</code> Functions in the <strong>testthat</strong> Way<a class="anchor" aria-label="anchor" href="#using-expect_-functions-in-the-testthat-way"></a>
+</h1>
 <p>The <strong>testthat</strong> package has collection of functions that begin with <code>expect_</code>. It’s no coincidence that the <strong>pointblank</strong> for the <strong>VALID-III</strong> workflow adopts the same naming convention. The idea is to use these functions interchangeably with those from <strong>testthat</strong> in the standard <strong>testthat</strong> workflow (in a <code>test-&lt;name&gt;.R</code> file, inside the <code>tests/testthat</code> folder). The big difference here is that instead of testing function outputs, we are testing data tables. However, tables may be returned from function calls and the <code>expect_*()</code> functions offered up by <strong>pointblank</strong> might offer more flexibility for testing that data. For instance <code><a href="../reference/col_vals_between.html">expect_col_vals_between()</a></code> allows us to write an expectation with fine control on boundary values (and whether they are inclusive bounds), whether <code>NA</code> values should be ignored, and we can even set a failure threshold if that makes sense for the expectation.</p>
 <p>Here’s an example of how to generate some tests on data with <strong>testthat</strong> and also with <strong>pointblank</strong>. For the <code>small_table</code> dataset, let’s write expectations that show that non-NA values in column <code>c</code> are between <code>2</code> and <code>9</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -190,9 +190,9 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/col_vals_between.html">expect_col_vals_between</a></span><span class="op">(</span><span class="va">small_table</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">9</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>The arguments in the <code><a href="../reference/col_vals_between.html">expect_col_vals_between()</a></code> give us everything we need to check tabular data without having to do subsetting and perform other transformations. There are a few added benefits. Should data come from a data source other than locals data frame, the SQL expressions are handled internally and they have been tested extensively across the supported database types and in Spark DataFrames as well.</p>
 </div>
-<div id="these-expect_-functions-are-simpler-than-their-counterparts" class="section level1">
-<h1 class="hasAnchor">
-<a href="#these-expect_-functions-are-simpler-than-their-counterparts" class="anchor" aria-hidden="true"></a>These <code>expect_*()</code> Functions Are Simpler Than Their Counterparts</h1>
+<div class="section level1">
+<h1 id="these-expect_-functions-are-simpler-than-their-counterparts">These <code>expect_*()</code> Functions Are Simpler Than Their Counterparts<a class="anchor" aria-label="anchor" href="#these-expect_-functions-are-simpler-than-their-counterparts"></a>
+</h1>
 <p>All of the <code>expect_*()</code> functions have the same leading arguments of their validation function counterparts but they omit the following arguments at the end of their signatures:</p>
 <ul>
 <li><code>actions</code></li>
@@ -224,7 +224,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>

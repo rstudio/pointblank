@@ -114,7 +114,7 @@
       <h1 data-toc-skip>Introduction to the <strong>Data Tests for Conditionals</strong> Workflow (<strong>VALID-IV</strong>)</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/vignettes/VALID-IV.Rmd" class="external-link"><code>vignettes/VALID-IV.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/vignettes/VALID-IV.Rmd" class="external-link"><code>vignettes/VALID-IV.Rmd</code></a></small>
       <div class="hidden name"><code>VALID-IV.Rmd</code></div>
 
     </div>
@@ -175,9 +175,8 @@
 <li>
 <code><a href="../reference/col_schema_match.html">test_col_schema_match()</a></code>: Test whether columns in the table (and their types) match a predefined schema.</li>
 </ul>
-<div id="exactly-like-the-expect_-functions-except-you-get-a-true-or-false" class="section level1">
-<h1 class="hasAnchor">
-<a href="#exactly-like-the-expect_-functions-except-you-get-a-true-or-false" class="anchor" aria-hidden="true"></a>Exactly Like the <code>expect_*()</code> Functions Except You Get a <code>TRUE</code> or <code>FALSE</code>
+<div class="section level1">
+<h1 id="exactly-like-the-expect_-functions-except-you-get-a-true-or-false">Exactly Like the <code>expect_*()</code> Functions Except You Get a <code>TRUE</code> or <code>FALSE</code><a class="anchor" aria-label="anchor" href="#exactly-like-the-expect_-functions-except-you-get-a-true-or-false"></a>
 </h1>
 <p>The interface of each <code>test_*()</code> function is an exact match to the <code>expect_*()</code> counterpart. If you haven’t used either of those but have used the standard validation functions, here’s a quick rundown.</p>
 <p>The following arguments from the validation functions (e.g., <code><a href="../reference/col_vals_in_set.html">col_vals_in_set()</a></code> and many more) have been removed in the corresponding <code>test_*()</code> functions:</p>
@@ -192,9 +191,9 @@
 <p>The rules for threshold setting (in <code><a href="../reference/action_levels.html">action_levels()</a></code>, <code><a href="../reference/action_levels.html">warn_on_fail()</a></code>, and <code><a href="../reference/action_levels.html">stop_on_fail()</a></code>) will be explained in some detail here. Whole numbers beyond <code>1</code> indicate that any failing units up to that absolute threshold value will result in a <code>TRUE</code>. Likewise, fractional values (between <code>0</code> and <code>1</code>) act as a proportional failure threshold, where <code>0.25</code> means that 25% or more failing test units results in a <code>FALSE</code>.</p>
 <p>We can use the <code>preconditions</code> argument in cases where we’d like to transform the input data before evaluation of the test. If you would like to do things to the input table like summarize it, perform filtering, mutate one or more columns, perform table joins, etc., then this is a good way to go about that.</p>
 </div>
-<div id="heres-several-examples-quick-snap" class="section level1">
-<h1 class="hasAnchor">
-<a href="#heres-several-examples-quick-snap" class="anchor" aria-hidden="true"></a>Here’s Several Examples Quick Snap</h1>
+<div class="section level1">
+<h1 id="heres-several-examples-quick-snap">Here’s Several Examples Quick Snap<a class="anchor" aria-label="anchor" href="#heres-several-examples-quick-snap"></a>
+</h1>
 <p>Let’s have some examples before leaving this article. They will all use our <code>small_table</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">small_table</span></code></pre></div>
@@ -362,7 +361,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>

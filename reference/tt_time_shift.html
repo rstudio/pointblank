@@ -70,7 +70,7 @@ function).'><meta property="og:image" content="/logo.svg"><!-- mathjax --><scrip
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,7 +85,7 @@ function).'><meta property="og:image" content="/logo.svg"><!-- mathjax --><scrip
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Table Transformer: shift the times of a table</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/table_transformers.R"><code>R/table_transformers.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/table_transformers.R" class="external-link"><code>R/table_transformers.R</code></a></small>
     <div class="hidden name"><code>tt_time_shift.Rd</code></div>
     </div>
 
@@ -94,30 +94,34 @@ function).'><meta property="og:image" content="/logo.svg"><!-- mathjax --><scrip
 be precisely shifted with <code>tt_time_shift()</code> and specification of the time
 shift. We can either provide a string with the time shift components and the
 shift direction (like <code>"-4y 10d"</code>) or a <code>difftime</code> object (which can be
-created via <strong>lubridate</strong> expressions or by using the <code><a href="https://rdrr.io/r/base/difftime.html">base::difftime()</a></code>
+created via <strong>lubridate</strong> expressions or by using the <code><a href="https://rdrr.io/r/base/difftime.html" class="external-link">base::difftime()</a></code>
 function).</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">tt_time_shift</span><span class="op">(</span><span class="va">tbl</span>, time_shift <span class="op">=</span> <span class="st">"0y 0m 0d 0H 0M 0S"</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>tbl</th>
-      <td><p>A table object to be used as input for the transformation. This
-can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.</p></td>
-    </tr><tr><th>time_shift</th>
-      <td><p>Either a character-based representation that specifies the
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>tbl</dt>
+<dd><p>A table object to be used as input for the transformation. This
+can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.</p></dd>
+<dt>time_shift</dt>
+<dd><p>Either a character-based representation that specifies the
 time difference by which all time values in time-based columns will be
 shifted, or, a <code>difftime</code> object. The character string is constructed in
 the format <code>"0y 0m 0d 0H 0M 0S"</code> and individual time components can be
 omitted (i.e., <code>"1y 5d"</code> is a valid specification of shifting time values
 ahead one year and five days). Adding a <code>"-"</code> at the beginning of the
-string (e.g., <code>"-2y"</code>) will shift time values back.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+string (e.g., <code>"-2y"</code>) will shift time values back.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object
 depending on what was provided as <code>tbl</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>The <code>time_shift</code> specification cannot have a higher time granularity than the
 least granular time column in the input table. Put in simpler terms, if there
 are any date-based based columns (or just a single date-based column) then
@@ -126,13 +130,15 @@ the time shifting can only be in terms of years, months, and days. Using a
 result in a truncation to <code>"20d"</code>. Similarly, a <code>difftime</code> object will be
 altered in the same circumstances, however, the object will resolved to an
 exact number of days through rounding.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>12-5</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Table Transformers: 
 <code><a href="get_tt_param.html">get_tt_param</a>()</code>,
 <code><a href="tt_string_info.html">tt_string_info</a>()</code>,
@@ -140,8 +146,11 @@ exact number of days through rounding.</p>
 <code><a href="tt_tbl_colnames.html">tt_tbl_colnames</a>()</code>,
 <code><a href="tt_tbl_dims.html">tt_tbl_dims</a>()</code>,
 <code><a href="tt_time_slice.html">tt_time_slice</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># With the `game_revenue` dataset,</span></span>
 <span class="r-in"><span class="co"># which has entries in the first</span></span>
 <span class="r-in"><span class="co"># 21 days of 2015, move all of the</span></span>
@@ -173,7 +182,7 @@ exact number of days through rounding.</p>
 <span class="r-in"><span class="co"># shift the times back 2 days and</span></span>
 <span class="r-in"><span class="co"># 12 hours</span></span>
 <span class="r-in"><span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">tt_time_shift</span><span class="op">(</span><span class="st">"-2d 12H"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 13 × 7</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    date_time               a b             c      d e     f    </span>
@@ -193,6 +202,7 @@ exact number of days through rounding.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2016-01-27 <span style="color: #949494;">23:23:00</span>     1 3-dka-303    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">2</span>230. TRUE  high </span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

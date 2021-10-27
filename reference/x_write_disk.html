@@ -72,7 +72,7 @@ is not of the tbl_dbi or the tbl_spark class."><meta property="og:image" content
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -87,7 +87,7 @@ is not of the tbl_dbi or the tbl_spark class."><meta property="og:image" content
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Write an <em>agent</em>, <em>informant</em>, <em>multiagent</em>, or table scan to disk</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/object_ops.R"><code>R/object_ops.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/object_ops.R" class="external-link"><code>R/object_ops.R</code></a></small>
     <div class="hidden name"><code>x_write_disk.Rd</code></div>
     </div>
 
@@ -111,49 +111,55 @@ is not of the <code>tbl_dbi</code> or the <code>tbl_spark</code> class.</p>
   quiet <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>An <em>agent</em> object of class <code>ptblank_agent</code>, an <em>informant</em> of class
-<code>ptblank_informant</code>, or an table scan of class <code>ptblank_tbl_scan</code>.</p></td>
-    </tr><tr><th>filename</th>
-      <td><p>The filename to create on disk for the <code>agent</code>, <code>informant</code>,
-or table scan.</p></td>
-    </tr><tr><th>path</th>
-      <td><p>An optional path to which the file should be saved (this is
-automatically combined with <code>filename</code>).</p></td>
-    </tr><tr><th>keep_tbl</th>
-      <td><p>An option to keep a data table that is associated with the
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>x</dt>
+<dd><p>An <em>agent</em> object of class <code>ptblank_agent</code>, an <em>informant</em> of class
+<code>ptblank_informant</code>, or an table scan of class <code>ptblank_tbl_scan</code>.</p></dd>
+<dt>filename</dt>
+<dd><p>The filename to create on disk for the <code>agent</code>, <code>informant</code>,
+or table scan.</p></dd>
+<dt>path</dt>
+<dd><p>An optional path to which the file should be saved (this is
+automatically combined with <code>filename</code>).</p></dd>
+<dt>keep_tbl</dt>
+<dd><p>An option to keep a data table that is associated with the
 <em>agent</em> or <em>informant</em> (which is the case when the <em>agent</em>, for example, is
 created using <code>create_agent(tbl = &lt;data table, ...)</code>). The default is
 <code>FALSE</code> where the data table is removed before writing to disk. For
 database tables of the class <code>tbl_dbi</code> and for Spark DataFrames
 (<code>tbl_spark</code>) the table is always removed (even if <code>keep_tbl</code> is set to
-<code>TRUE</code>).</p></td>
-    </tr><tr><th>keep_extracts</th>
-      <td><p>An option to keep any collected extract data for failing
+<code>TRUE</code>).</p></dd>
+<dt>keep_extracts</dt>
+<dd><p>An option to keep any collected extract data for failing
 rows. Only applies to <em>agent</em> objects. By default, this is <code>FALSE</code> (i.e.,
-extract data is removed).</p></td>
-    </tr><tr><th>quiet</th>
-      <td><p>Should the function <em>not</em> inform when the file is written? By
-default this is <code>FALSE</code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+extract data is removed).</p></dd>
+<dt>quiet</dt>
+<dd><p>Should the function <em>not</em> inform when the file is written? By
+default this is <code>FALSE</code>.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>Invisibly returns <code>TRUE</code> if the file has been written.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>It is recommended to set up a table-prep formula so that the <em>agent</em> and
 <em>informant</em> can access refreshed data after being read from disk through
 <code><a href="x_read_disk.html">x_read_disk()</a></code>. This can be done initially with the <code>read_fn</code> argument of
 <code><a href="create_agent.html">create_agent()</a></code>/<code><a href="create_informant.html">create_informant()</a></code> or, later, with <code><a href="set_read_fn.html">set_read_fn()</a></code>.
 Alternatively, we can reintroduce the <em>agent</em> or <em>informant</em> to a data table
 with the <code><a href="set_tbl.html">set_tbl()</a></code> function.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>9-1</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Object Ops: 
 <code><a href="activate_steps.html">activate_steps</a>()</code>,
 <code><a href="deactivate_steps.html">deactivate_steps</a>()</code>,
@@ -164,9 +170,12 @@ with the <code><a href="set_tbl.html">set_tbl()</a></code> function.</p>
 <code><a href="set_read_fn.html">set_read_fn</a>()</code>,
 <code><a href="set_tbl.html">set_tbl</a>()</code>,
 <code><a href="x_read_disk.html">x_read_disk</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+    <div id="examples">
+    <h2>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># A: Writing an `agent` to disk </span></span>
 <span class="r-in"></span>
@@ -209,13 +218,13 @@ with the <code><a href="set_tbl.html">set_tbl()</a></code> function.</p>
 <span class="r-in"><span class="co"># want; then, we `interrogate()`</span></span>
 <span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
 <span class="r-in">  <span class="va">agent</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu"><a href="col_exists.html">col_exists</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_exists.html">col_exists</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_vals_regex.html">col_vals_regex</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, regex <span class="op">=</span> <span class="st">"[0-9]-[a-z]{3}-[0-9]{3}"</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="rows_distinct.html">rows_distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_vals_lte.html">col_vals_lte</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># The `agent` can be written to a file with</span></span>
@@ -274,11 +283,11 @@ with the <code><a href="set_tbl.html">set_tbl()</a></code> function.</p>
 <span class="r-in">    fn <span class="op">=</span> <span class="fu"><a href="snip_lowest.html">snip_lowest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
+<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
 <span class="r-in">    info <span class="op">=</span> <span class="st">"From {low_a} to {high_a}."</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,</span>
+<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,</span>
 <span class="r-in">    info <span class="op">=</span> <span class="st">"Time-based values."</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
@@ -316,11 +325,11 @@ with the <code><a href="set_tbl.html">set_tbl()</a></code> function.</p>
 <span class="r-in">    actions <span class="op">=</span> <span class="va">al</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span>, na_pass <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span class="r-in">    label <span class="op">=</span> <span class="st">"b &gt; g"</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_is_character.html">col_is_character</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">b</span>, <span class="va">f</span><span class="op">)</span>,</span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">b</span>, <span class="va">f</span><span class="op">)</span>,</span>
 <span class="r-in">    label <span class="op">=</span> <span class="st">"Verifying character-type columns"</span> </span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -347,7 +356,7 @@ with the <code><a href="set_tbl.html">set_tbl()</a></code> function.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># We can get an report that describes all</span></span>
 <span class="r-in"><span class="co"># of the data in the `storms` dataset</span></span>
-<span class="r-in"><span class="va">tbl_scan</span> <span class="op">&lt;-</span> <span class="fu"><a href="scan_data.html">scan_data</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html">storms</a></span><span class="op">)</span></span>
+<span class="r-in"><span class="va">tbl_scan</span> <span class="op">&lt;-</span> <span class="fu"><a href="scan_data.html">scan_data</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">storms</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># The table scan object can be written</span></span>
 <span class="r-in"><span class="co"># to a file with `x_write_disk()`</span></span>
@@ -359,6 +368,7 @@ with the <code><a href="set_tbl.html">set_tbl()</a></code> function.</p>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in">  </span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

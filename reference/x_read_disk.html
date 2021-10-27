@@ -75,7 +75,7 @@ still be present (along with results from the last interrogation)."><meta proper
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -90,7 +90,7 @@ still be present (along with results from the last interrogation)."><meta proper
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Read an <em>agent</em>, <em>informant</em>, <em>multiagent</em>, or table scan from disk</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/object_ops.R"><code>R/object_ops.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/object_ops.R" class="external-link"><code>R/object_ops.R</code></a></small>
     <div class="hidden name"><code>x_read_disk.Rd</code></div>
     </div>
 
@@ -110,21 +110,25 @@ still be present (along with results from the last interrogation).</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">x_read_disk</span><span class="op">(</span><span class="va">filename</span>, path <span class="op">=</span> <span class="cn">NULL</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>filename</th>
-      <td><p>The name of a file that was previously written by
-<code><a href="x_write_disk.html">x_write_disk()</a></code>.</p></td>
-    </tr><tr><th>path</th>
-      <td><p>An optional path to the file (combined with <code>filename</code>).</p></td>
-    </tr><tr><th>quiet</th>
-      <td><p>Should the function <em>not</em> inform when the file is read? By
-default this is <code>FALSE</code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>filename</dt>
+<dd><p>The name of a file that was previously written by
+<code><a href="x_write_disk.html">x_write_disk()</a></code>.</p></dd>
+<dt>path</dt>
+<dd><p>An optional path to the file (combined with <code>filename</code>).</p></dd>
+<dt>quiet</dt>
+<dd><p>Should the function <em>not</em> inform when the file is read? By
+default this is <code>FALSE</code>.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>Either a <code>ptblank_agent</code>, <code>ptblank_informant</code>, or a
 <code>ptblank_tbl_scan</code> object.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>Should a written-to-disk <em>agent</em> or <em>informant</em> possess a table-prep formula
 (can be set any time with <code><a href="set_read_fn.html">set_read_fn()</a></code>) or a specific table (settable with
 <code><a href="set_tbl.html">set_tbl()</a></code>) we could use the <code><a href="interrogate.html">interrogate()</a></code> or <code><a href="incorporate.html">incorporate()</a></code> function
@@ -134,13 +138,15 @@ validation steps will be used, more can be added before calling
 <code><a href="interrogate.html">interrogate()</a></code>. For an <em>information management</em> workflow with an <em>informant</em>
 object, using <code><a href="incorporate.html">incorporate()</a></code> will update aspects of the reporting such as
 table dimensions, and info snippets/text will be regenerated.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>9-2</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Object Ops: 
 <code><a href="activate_steps.html">activate_steps</a>()</code>,
 <code><a href="deactivate_steps.html">deactivate_steps</a>()</code>,
@@ -151,9 +157,12 @@ table dimensions, and info snippets/text will be regenerated.</p>
 <code><a href="set_read_fn.html">set_read_fn</a>()</code>,
 <code><a href="set_tbl.html">set_tbl</a>()</code>,
 <code><a href="x_write_disk.html">x_write_disk</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+    <div id="examples">
+    <h2>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># A: Reading an agent from disk </span></span>
 <span class="r-in"></span>
@@ -203,6 +212,7 @@ table dimensions, and info snippets/text will be regenerated.</p>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

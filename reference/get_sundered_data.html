@@ -74,7 +74,7 @@ but their values can be easily customized."><meta property="og:image" content="/
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -89,7 +89,7 @@ but their values can be easily customized."><meta property="og:image" content="/
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sunder the data, splitting it into 'pass' and 'fail' pieces</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/get_sundered_data.R"><code>R/get_sundered_data.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/get_sundered_data.R" class="external-link"><code>R/get_sundered_data.R</code></a></small>
     <div class="hidden name"><code>get_sundered_data.Rd</code></div>
     </div>
 
@@ -108,18 +108,20 @@ but their values can be easily customized.</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">get_sundered_data</span><span class="op">(</span>
   <span class="va">agent</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pass"</span>, <span class="st">"fail"</span>, <span class="st">"combined"</span><span class="op">)</span>,
-  pass_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pass"</span>, <span class="st">"fail"</span><span class="op">)</span>,
+  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pass"</span>, <span class="st">"fail"</span>, <span class="st">"combined"</span><span class="op">)</span>,
+  pass_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pass"</span>, <span class="st">"fail"</span><span class="op">)</span>,
   id_cols <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>agent</th>
-      <td><p>An agent object of class <code>ptblank_agent</code>. It should have had
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>agent</dt>
+<dd><p>An agent object of class <code>ptblank_agent</code>. It should have had
 <code><a href="interrogate.html">interrogate()</a></code> called on it, such that the validation steps were actually
-carried out.</p></td>
-    </tr><tr><th>type</th>
-      <td><p>The desired piece of data resulting from the splitting. Options
+carried out.</p></dd>
+<dt>type</dt>
+<dd><p>The desired piece of data resulting from the splitting. Options
 for returning a single table are <code>"pass"</code> (the default) and <code>"fail"</code>. Each
 of these options return a single table with, in the <code>"pass"</code> case, only the
 rows that passed across all validation steps (i.e., had no failing test
@@ -128,22 +130,24 @@ set of rows in the <code>"fail"</code> case. Providing <code>NULL</code> returns
 split data tables in a list (with the names of <code>"pass"</code> and <code>"fail"</code>). The
 option <code>"combined"</code> applies a categorical (pass/fail) label (settable in
 the <code>pass_fail</code> argument) in a new <code>.pb_combined</code> flag column. For this
-case the ordering of rows is fully retained from the input table.</p></td>
-    </tr><tr><th>pass_fail</th>
-      <td><p>A vector for encoding the flag column with 'pass' and 'fail'
+case the ordering of rows is fully retained from the input table.</p></dd>
+<dt>pass_fail</dt>
+<dd><p>A vector for encoding the flag column with 'pass' and 'fail'
 values when <code>type = "combined"</code>. The default is <code>c("pass", "fail")</code> but
-other options could be <code>c(TRUE, FALSE)</code>, <code>c(1, 0)</code>, or <code>c(1L, 0L)</code>.</p></td>
-    </tr><tr><th>id_cols</th>
-      <td><p>An optional specification of one or more identifying columns.
+other options could be <code>c(TRUE, FALSE)</code>, <code>c(1, 0)</code>, or <code>c(1L, 0L)</code>.</p></dd>
+<dt>id_cols</dt>
+<dd><p>An optional specification of one or more identifying columns.
 When taken together, we can count on this single column or grouping of
 columns to distinguish rows. If the table undergoing validation is not a
-data frame or tibble, then columns need to be specified for <code>id_cols</code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+data frame or tibble, then columns need to be specified for <code>id_cols</code>.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A list of table objects if <code>type</code> is <code>NULL</code>, or, a single table if a
 <code>type</code> is given.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>There are some caveats to sundering. The validation steps considered for this
 splitting has to be of the row-based variety (e.g., the <code>col_vals_*()</code>
 functions or <code><a href="conjointly.html">conjointly()</a></code>, but not <code><a href="rows_distinct.html">rows_distinct()</a></code>). Furthermore,
@@ -156,20 +160,25 @@ in-consideration validation steps use the same specified <code>preconditions</co
 function. Put another way, we cannot split the target table using a
 collection of in-consideration validation steps that use different forms of
 the input table.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>8-3</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Post-interrogation: 
 <code><a href="all_passed.html">all_passed</a>()</code>,
 <code><a href="get_agent_x_list.html">get_agent_x_list</a>()</code>,
 <code><a href="get_data_extracts.html">get_data_extracts</a>()</code>,
 <code><a href="write_testthat_file.html">write_testthat_file</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create a series of two validation</span></span>
 <span class="r-in"><span class="co"># steps focused on testing row values</span></span>
 <span class="r-in"><span class="co"># for part of the `small_table` object;</span></span>
@@ -177,13 +186,13 @@ the input table.</p>
 <span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
 <span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span></span>
 <span class="r-in">    read_fn <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">a</span><span class="op">:</span><span class="va">f</span><span class="op">)</span>,</span>
+<span class="r-in">      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">a</span><span class="op">:</span><span class="va">f</span><span class="op">)</span>,</span>
 <span class="r-in">    label <span class="op">=</span> <span class="st">"`get_sundered_data()`"</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_vals_between.html">col_vals_between</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,</span>
-<span class="r-in">    left <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, right <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,</span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>,</span>
+<span class="r-in">    left <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, right <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,</span>
 <span class="r-in">    na_pass <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -252,7 +261,7 @@ the input table.</p>
 <span class="r-in"><span class="va">agent</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">get_sundered_data</span><span class="op">(</span></span>
 <span class="r-in">    type <span class="op">=</span> <span class="st">"combined"</span>,</span>
-<span class="r-in">    pass_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in">    pass_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 13 × 7</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        a b             c      d e     f     .pb_combined</span>
@@ -296,6 +305,7 @@ the input table.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span>     1 3-dka-303    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">2</span>230. TRUE  high             0</span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

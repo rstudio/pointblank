@@ -70,7 +70,7 @@ stopifnot() does not."><meta property="og:image" content="/logo.svg"><!-- mathja
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,47 +85,55 @@ stopifnot() does not."><meta property="og:image" content="/logo.svg"><!-- mathja
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>The next generation of <code>stopifnot()</code>-type functions: <code>stop_if_not()</code></h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/validate_rmd.R"><code>R/validate_rmd.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/validate_rmd.R" class="external-link"><code>R/validate_rmd.R</code></a></small>
     <div class="hidden name"><code>stop_if_not.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This is <code><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot()</a></code> but with a twist: it works well as a standalone,
-replacement for <code><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot()</a></code> but is also customized for use in validation
+    <p>This is <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> but with a twist: it works well as a standalone,
+replacement for <code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> but is also customized for use in validation
 checks in R Markdown documents where <strong>pointblank</strong> is loaded. Using
 <code>stop_if_not()</code> in a code chunk where the <code>validate = TRUE</code> option is set
 will yield the correct reporting of successes and failures whereas
-<code><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot()</a></code> <em>does not</em>.</p>
+<code><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot()</a></code> <em>does not</em>.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">stop_if_not</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>...</th>
-      <td><p>R expressions that should each evaluate to (a logical vector of
-all) <code>TRUE</code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>...</dt>
+<dd><p>R expressions that should each evaluate to (a logical vector of
+all) <code>TRUE</code>.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p><code>NULL</code> if all statements in <code>...</code> are <code>TRUE</code>.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>13-5</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Utility and Helper Functions: 
 <code><a href="affix_datetime.html">affix_datetime</a>()</code>,
 <code><a href="affix_date.html">affix_date</a>()</code>,
 <code><a href="col_schema.html">col_schema</a>()</code>,
 <code><a href="from_github.html">from_github</a>()</code>,
 <code><a href="has_columns.html">has_columns</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># This checks whether the number of</span></span>
 <span class="r-in"><span class="co"># rows in `small_table` is greater</span></span>
 <span class="r-in"><span class="co"># than `10`</span></span>
-<span class="r-in"><span class="fu">stop_if_not</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">stop_if_not</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">10</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># This will stop for sure: there</span></span>
@@ -141,6 +149,7 @@ all) <code>TRUE</code>.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

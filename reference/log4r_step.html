@@ -70,7 +70,7 @@ with lower severity) so long as the call to log4r_step() is present."><meta prop
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,7 +85,7 @@ with lower severity) so long as the call to log4r_step() is present."><meta prop
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Enable logging of failure conditions at the validation step level</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/logging.R"><code>R/logging.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/logging.R" class="external-link"><code>R/logging.R</code></a></small>
     <div class="hidden name"><code>log4r_step.Rd</code></div>
     </div>
 
@@ -100,28 +100,33 @@ with lower severity) so long as the call to <code>log4r_step()</code> is present
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">log4r_step</span><span class="op">(</span><span class="va">x</span>, message <span class="op">=</span> <span class="cn">NULL</span>, append_to <span class="op">=</span> <span class="st">"pb_log_file"</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>A reference to the x-list object prepared by the <code>agent</code>. This
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>x</dt>
+<dd><p>A reference to the x-list object prepared by the <code>agent</code>. This
 version of the x-list is the same as that generated via
 <code>get_agent_x_list(&lt;agent&gt;, i = &lt;step&gt;)</code> except this version is internally
-generated and hence only available in an internal evaluation context.</p></td>
-    </tr><tr><th>message</th>
-      <td><p>The message to use for the log entry. When not provided, a
+generated and hence only available in an internal evaluation context.</p></dd>
+<dt>message</dt>
+<dd><p>The message to use for the log entry. When not provided, a
 default glue string is used for the messaging. This is dynamic since the
-internal <code><a href="https://glue.tidyverse.org/reference/glue.html">glue::glue()</a></code> call occurs in the same environment as <code>x</code>, the
+internal <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code> call occurs in the same environment as <code>x</code>, the
 x-list that's constrained to the validation step. The default message, used
 when <code>message = NULL</code> is the glue string <code>"Step {x$i} exceeded the {level} failure threshold (f_failed = {x$f_failed}) ['{x$type}']"</code>. As can be seen,
 a custom message can be crafted that uses other elements of the x-list with
-the <code>{x$&lt;component&gt;}</code> construction.</p></td>
-    </tr><tr><th>append_to</th>
-      <td><p>The file to which log entries at the warn level are
-appended. This can alternatively be one or more <strong>log4r</strong> appenders.</p></td>
-    </tr></table><h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+the <code>{x$&lt;component&gt;}</code> construction.</p></dd>
+<dt>append_to</dt>
+<dd><p>The file to which log entries at the warn level are
+appended. This can alternatively be one or more <strong>log4r</strong> appenders.</p></dd>
+</dl></div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>5-1</p>
+    </div>
+    </div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

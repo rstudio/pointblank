@@ -74,7 +74,7 @@ with just the snippet_name inside (e.g., &quot;This column has {n_cat} categorie
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -89,7 +89,7 @@ with just the snippet_name inside (e.g., &quot;This column has {n_cat} categorie
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Generate a useful text 'snippet' from the target table</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/info_add.R"><code>R/info_add.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/info_add.R" class="external-link"><code>R/info_add.R</code></a></small>
     <div class="hidden name"><code>info_snippet.Rd</code></div>
     </div>
 
@@ -108,27 +108,31 @@ with just the <code>snippet_name</code> inside (e.g., <code>"This column has {n_
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">info_snippet</span><span class="op">(</span><span class="va">x</span>, <span class="va">snippet_name</span>, <span class="va">fn</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>An informant object of class <code>ptblank_informant</code>.</p></td>
-    </tr><tr><th>snippet_name</th>
-      <td><p>The name for snippet, which is used for interpolating the
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>x</dt>
+<dd><p>An informant object of class <code>ptblank_informant</code>.</p></dd>
+<dt>snippet_name</dt>
+<dd><p>The name for snippet, which is used for interpolating the
 result of the snippet formula into <em>info text</em> defined by an <code>info_*()</code>
-function.</p></td>
-    </tr><tr><th>fn</th>
-      <td><p>A formula that obtains a snippet of data from the target table.
+function.</p></dd>
+<dt>fn</dt>
+<dd><p>A formula that obtains a snippet of data from the target table.
 It's best to use a leading dot (<code>.</code>) that stands for the table itself and
 use pipes to construct a series of operations to be performed on the table
 (e.g., <code>~ . %&gt;% dplyr::pull(column_2) %&gt;% max(na.rm = TRUE)</code>). So long as
 the result is a length-1 vector, it'll likely be valid for insertion into
 some info text. Alternatively, a <code>snip_*()</code> function can be used here
 (these functions always return a formula that's suitable for all types of
-data sources).</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+data sources).</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A <code>ptblank_informant</code> object.</p>
-    <h2 class="hasAnchor" id="snip-functions-provided-in-pointblank"><a class="anchor" href="#snip-functions-provided-in-pointblank"></a>Snip functions provided in <strong>pointblank</strong></h2>
-
+    </div>
+    <div id="snip-functions-provided-in-pointblank">
+    <h2>Snip functions provided in <strong>pointblank</strong></h2>
     
 
 <p>For convenience, there are several <code>snip_*()</code> functions provided in the
@@ -139,8 +143,9 @@ are:</p><ul><li><p><code><a href="snip_list.html">snip_list()</a></code>: get a 
 <li><p><code><a href="snip_highest.html">snip_highest()</a></code> : get the highest value from a column</p></li>
 </ul><p>As it's understood what the target table is, only the <code>column</code> in each of
 these functions is necessary for obtaining the resultant text.</p>
-    <h2 class="hasAnchor" id="yaml"><a class="anchor" href="#yaml"></a>YAML</h2>
-
+    </div>
+    <div id="yaml">
+    <h2>YAML</h2>
     
 
 <p>A <strong>pointblank</strong> informant can be written to YAML with <code><a href="yaml_write.html">yaml_write()</a></code> and the
@@ -175,18 +180,21 @@ columns:
     _type: integer
 </code></pre>
 
-    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
-
+    </div>
+    <div id="figures">
+    <h2>Figures</h2>
     
 
 <p><img src="figures/man_info_snippet_1.png" width="100%"></p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>3-5</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Information Functions: 
 <code><a href="info_columns_from_tbl.html">info_columns_from_tbl</a>()</code>,
 <code><a href="info_columns.html">info_columns</a>()</code>,
@@ -196,8 +204,11 @@ columns:
 <code><a href="snip_list.html">snip_list</a>()</code>,
 <code><a href="snip_lowest.html">snip_lowest</a>()</code>,
 <code><a href="snip_stats.html">snip_stats</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Take the `small_table` and</span></span>
 <span class="r-in"><span class="co"># assign it to `test_table`; we'll</span></span>
 <span class="r-in"><span class="co"># modify it later</span></span>
@@ -217,18 +228,18 @@ columns:
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">info_snippet</span><span class="op">(</span></span>
 <span class="r-in">    snippet_name <span class="op">=</span> <span class="st">"row_count"</span>,</span>
-<span class="r-in">    fn <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in">    fn <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">info_snippet</span><span class="op">(</span></span>
 <span class="r-in">    snippet_name <span class="op">=</span> <span class="st">"max_a"</span>,</span>
 <span class="r-in">    fn <span class="op">=</span> <span class="fu"><a href="snip_highest.html">snip_highest</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
+<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
 <span class="r-in">    info <span class="op">=</span> <span class="st">"In the range of 1 to {max_a}. (SIMPLE)"</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,</span>
+<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>,</span>
 <span class="r-in">    info <span class="op">=</span> <span class="st">"Time-based values (e.g., `Sys.time()`)."</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="info_columns.html">info_columns</a></span><span class="op">(</span></span>
@@ -248,8 +259,8 @@ columns:
 <span class="r-in"><span class="co"># Let's modify `test_table` to give</span></span>
 <span class="r-in"><span class="co"># it more rows and an extra column</span></span>
 <span class="r-in"><span class="va">test_table</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">test_table</span>, <span class="va">test_table</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>h <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="va">c</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">test_table</span>, <span class="va">test_table</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>h <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="va">c</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Using `incorporate()` will cause</span></span>
 <span class="r-in"><span class="co"># the snippets to be reprocessed, and,</span></span>
@@ -259,6 +270,7 @@ columns:
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in incorporate(.)</span> object 'informant' not found</span>
 <span class="r-in">  </span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

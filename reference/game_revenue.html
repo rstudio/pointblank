@@ -67,7 +67,7 @@ range from 2015-01-01 to 2015-01-21."><meta property="og:image" content="/logo.s
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -82,7 +82,7 @@ range from 2015-01-01 to 2015-01-21."><meta property="og:image" content="/logo.s
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>A table with game revenue data</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/datasets.R"><code>R/datasets.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/datasets.R" class="external-link"><code>R/datasets.R</code></a></small>
     <div class="hidden name"><code>game_revenue.Rd</code></div>
     </div>
 
@@ -94,48 +94,76 @@ range from <code>2015-01-01</code> to <code>2015-01-21</code>.</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="va">game_revenue</span></code></pre></div>
 
-
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A tibble with 2,000 rows and 11 variables:</p><dl><dt>player_id</dt><dd><p>A <code>character</code> column with unique identifiers for each
+    <div id="ref-sections">
+    <div id="format">
+    <h2>Format</h2>
+    <p>A tibble with 2,000 rows and 11 variables:</p><dl><dt>player_id</dt>
+<dd><p>A <code>character</code> column with unique identifiers for each
 user/player.</p></dd>
-<dt>session_id</dt><dd><p>A <code>character</code> column that contains unique identifiers for
+
+<dt>session_id</dt>
+<dd><p>A <code>character</code> column that contains unique identifiers for
 each player session.</p></dd>
-<dt>session_start</dt><dd><p>A date-time column that indicates when the session
+
+<dt>session_start</dt>
+<dd><p>A date-time column that indicates when the session
 (containing the revenue event) started.</p></dd>
-<dt>time</dt><dd><p>A date-time column that indicates exactly when the player
+
+<dt>time</dt>
+<dd><p>A date-time column that indicates exactly when the player
 purchase (or revenue event) occurred.</p></dd>
-<dt>item_type</dt><dd><p>A <code>character</code> column that provides the class of the item
+
+<dt>item_type</dt>
+<dd><p>A <code>character</code> column that provides the class of the item
 purchased.</p></dd>
-<dt>item_name</dt><dd><p>A <code>character</code> column that provides the name of the item
+
+<dt>item_name</dt>
+<dd><p>A <code>character</code> column that provides the name of the item
 purchased.</p></dd>
-<dt>item_revenue</dt><dd><p>A <code>numeric</code> column with the revenue amounts per item
+
+<dt>item_revenue</dt>
+<dd><p>A <code>numeric</code> column with the revenue amounts per item
 purchased.</p></dd>
-<dt>session_duration</dt><dd><p>A <code>numeric</code> column that states the length of the
+
+<dt>session_duration</dt>
+<dd><p>A <code>numeric</code> column that states the length of the
 session (in minutes) for which the purchase occurred.</p></dd>
-<dt>start_day</dt><dd><p>A <code>Date</code> column that provides the date of first login for
+
+<dt>start_day</dt>
+<dd><p>A <code>Date</code> column that provides the date of first login for
 the player making a purchase.</p></dd>
-<dt>acquisition</dt><dd><p>A <code>character</code> column that provides the method of
+
+<dt>acquisition</dt>
+<dd><p>A <code>character</code> column that provides the method of
 acquisition for the player.</p></dd>
-<dt>country</dt><dd><p>A <code>character</code> column that provides the probable country of
+
+<dt>country</dt>
+<dd><p>A <code>character</code> column that provides the probable country of
 residence for the player.</p></dd>
 
-</dl><h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
 
+</dl></div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>14-4</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Datasets: 
+<code><a href="game_revenue_info.html">game_revenue_info</a></code>,
 <code><a href="small_table_sqlite.html">small_table_sqlite</a>()</code>,
 <code><a href="small_table.html">small_table</a></code>,
 <code><a href="specifications.html">specifications</a></code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Here is a glimpse at the data</span></span>
 <span class="r-in"><span class="co"># available in `game_revenue`</span></span>
-<span class="r-in"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">game_revenue</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">game_revenue</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 2,000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ player_id        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "ECPANOIXLZHF896", "ECPANOIXLZHF896", "ECPANOIXLZHF89…</span>
@@ -151,6 +179,7 @@ residence for the player.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ country          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Germany", "Germany", "Germany", "Germany", "Germany"…</span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

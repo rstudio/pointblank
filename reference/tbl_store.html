@@ -77,7 +77,7 @@ or create_informant() via $ notation (e.g, create_agent(read_fn = &amp;lt;tbl_st
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -92,7 +92,7 @@ or create_informant() via $ notation (e.g, create_agent(read_fn = &amp;lt;tbl_st
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Define a store of tables with table-prep formulas: a table store</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/tbl_store.R"><code>R/tbl_store.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/tbl_store.R" class="external-link"><code>R/tbl_store.R</code></a></small>
     <div class="hidden name"><code>tbl_store.Rd</code></div>
     </div>
 
@@ -114,19 +114,23 @@ or <code><a href="create_informant.html">create_informant()</a></code> via <code
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">tbl_store</span><span class="op">(</span><span class="va">...</span>, .list <span class="op">=</span> <span class="fu">list2</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>...</th>
-      <td><p>Expressions that contain table-prep formulas and table names for
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>...</dt>
+<dd><p>Expressions that contain table-prep formulas and table names for
 data retrieval. Two-sided formulas (e.g, <code>&lt;LHS&gt; ~ &lt;RHS&gt;</code>) are to be used,
 where the left-hand side is a given name and the right-hand is the portion
-that is is used to obtain the table.</p></td>
-    </tr><tr><th>.list</th>
-      <td><p>Allows for the use of a list as an input alternative to <code>...</code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+that is is used to obtain the table.</p></dd>
+<dt>.list</dt>
+<dd><p>Allows for the use of a list as an input alternative to <code>...</code>.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A <code>tbl_store</code> object that contains table-prep formulas.</p>
-    <h2 class="hasAnchor" id="yaml"><a class="anchor" href="#yaml"></a>YAML</h2>
-
+    </div>
+    <div id="yaml">
+    <h2>YAML</h2>
     
 
 <p>A <strong>pointblank</strong> table store can be written to YAML with <code><a href="yaml_write.html">yaml_write()</a></code> and
@@ -137,18 +141,17 @@ processing of both agents and informants can be performed with
 <code><a href="yaml_agent_interrogate.html">yaml_agent_interrogate()</a></code> and <code><a href="yaml_informant_incorporate.html">yaml_informant_incorporate()</a></code>. With the
 following R code, a table store with two table-prep formulas is generated and
 written to YAML (if no filename is given then the YAML is written to
-<code>"tbl_store.yml"</code>).</p><pre class="sourceCode r"><code><span class="co"># R statement for generating the "tbl_store.yml" file</span>
-<span class="fu">tbl_store</span><span class="op">(</span>
-  <span class="va">tbl_duckdb</span> <span class="op">~</span> <span class="fu"><a href="db_tbl.html">db_tbl</a></span><span class="op">(</span><span class="va">small_table</span>, dbname <span class="op">=</span> <span class="st">":memory:"</span>, dbtype <span class="op">=</span> <span class="st">"duckdb"</span><span class="op">)</span>,
-  <span class="va">sml_table_high</span> <span class="op">~</span> <span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span>
-<span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="yaml_write.html">yaml_write</a></span><span class="op">(</span><span class="op">)</span>
+<code>"tbl_store.yml"</code>).</p><pre><code><span class="co"># R statement for generating the "tbl_store.yml" file</span>
+<span class="fu"><a href="../reference/tbl_store.html">tbl_store</a></span><span class="op">(</span>
+  <span class="va">tbl_duckdb</span> <span class="op">~</span> <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span><span class="va">small_table</span>, dbname <span class="op">=</span> <span class="st">":memory:"</span>, dbtype <span class="op">=</span> <span class="st">"duckdb"</span><span class="op">)</span>,
+  <span class="va">sml_table_high</span> <span class="op">~</span> <span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span>
+<span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/yaml_write.html">yaml_write</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># YAML representation ("tbl_store.yml")</span>
 <span class="va">tbls</span><span class="op">:</span>
-  <span class="va">tbl_duckdb</span><span class="op">:</span> <span class="op">~</span> <span class="fu"><a href="db_tbl.html">db_tbl</a></span><span class="op">(</span><span class="va">small_table</span>, dbname <span class="op">=</span> <span class="st">":memory:"</span>, dbtype <span class="op">=</span> <span class="st">"duckdb"</span><span class="op">)</span>
-  <span class="va">sml_table_high</span><span class="op">:</span> <span class="op">~</span> <span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span>
-</code></pre>
+  <span class="va">tbl_duckdb</span><span class="op">:</span> <span class="op">~</span> <span class="fu"><a href="../reference/db_tbl.html">db_tbl</a></span><span class="op">(</span><span class="va">small_table</span>, dbname <span class="op">=</span> <span class="st">":memory:"</span>, dbtype <span class="op">=</span> <span class="st">"duckdb"</span><span class="op">)</span>
+  <span class="va">sml_table_high</span><span class="op">:</span> <span class="op">~</span> <span class="va">small_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">f</span> <span class="op">==</span> <span class="st">"high"</span><span class="op">)</span></code></pre>
 
 <p>This is useful when you want to get fresh pulls of prepared data from a
 source materialized in an R session (with the <code><a href="tbl_get.html">tbl_get()</a></code> function. For
@@ -179,13 +182,15 @@ steps:
 <p>Now, whenever the <code>sml_table_high</code> table needs to be validated, it can be
 done with <code><a href="yaml_agent_interrogate.html">yaml_agent_interrogate()</a></code> (e.g.,
 <code>yaml_agent_interrogate("agent-sml_table_high.yml")</code>).</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>1-8</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Planning and Prep: 
 <code><a href="action_levels.html">action_levels</a>()</code>,
 <code><a href="create_agent.html">create_agent</a>()</code>,
@@ -197,9 +202,12 @@ done with <code><a href="yaml_agent_interrogate.html">yaml_agent_interrogate()</
 <code><a href="tbl_get.html">tbl_get</a>()</code>,
 <code><a href="tbl_source.html">tbl_source</a>()</code>,
 <code><a href="validate_rmd.html">validate_rmd</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+    <div id="examples">
+    <h2>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Define a `tbl_store` object by adding</span></span>
 <span class="r-in"><span class="co"># table-prep formulas inside the</span></span>
@@ -217,8 +225,8 @@ done with <code><a href="yaml_agent_interrogate.html">yaml_agent_interrogate()</
 <span class="r-in">      dbtype <span class="op">=</span> <span class="st">"postgres"</span>,</span>
 <span class="r-in">      host <span class="op">=</span> <span class="st">"hh-pgsql-public.ebi.ac.uk"</span>,</span>
 <span class="r-in">      port <span class="op">=</span> <span class="fl">5432</span>,</span>
-<span class="r-in">      user <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="st">"reader"</span><span class="op">)</span>,</span>
-<span class="r-in">      password <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="st">"NWDMCE5xdipIjRrp"</span><span class="op">)</span></span>
+<span class="r-in">      user <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"reader"</span><span class="op">)</span>,</span>
+<span class="r-in">      password <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"NWDMCE5xdipIjRrp"</span><span class="op">)</span></span>
 <span class="r-in">    <span class="op">)</span>,</span>
 <span class="r-in">    <span class="va">all_revenue</span> <span class="op">~</span> <span class="fu"><a href="db_tbl.html">db_tbl</a></span><span class="op">(</span></span>
 <span class="r-in">      table <span class="op">=</span> <span class="fu"><a href="file_tbl.html">file_tbl</a></span><span class="op">(</span></span>
@@ -295,6 +303,7 @@ done with <code><a href="yaml_agent_interrogate.html">yaml_agent_interrogate()</
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

@@ -70,7 +70,7 @@ informational content for that section.'><meta property="og:image" content="/log
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,7 +85,7 @@ informational content for that section.'><meta property="og:image" content="/log
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Add information that focuses on some key aspect of the data table</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/info_add.R"><code>R/info_add.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/info_add.R" class="external-link"><code>R/info_add.R</code></a></small>
     <div class="hidden name"><code>info_section.Rd</code></div>
     </div>
 
@@ -100,22 +100,26 @@ informational content for that section.</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">info_section</span><span class="op">(</span><span class="va">x</span>, <span class="va">section_name</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>An informant object of class <code>ptblank_informant</code>.</p></td>
-    </tr><tr><th>section_name</th>
-      <td><p>The name of the section for which this information
-pertains.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Information entries as a series of named arguments. The names
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>x</dt>
+<dd><p>An informant object of class <code>ptblank_informant</code>.</p></dd>
+<dt>section_name</dt>
+<dd><p>The name of the section for which this information
+pertains.</p></dd>
+<dt>...</dt>
+<dd><p>Information entries as a series of named arguments. The names
 refer to subsection titles within the section defined as <code>section_name</code> and
 the RHS is the <em>info text</em> (informational text that can be written as
-Markdown and further styled with <em>Text Tricks</em>).</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+Markdown and further styled with <em>Text Tricks</em>).</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A <code>ptblank_informant</code> object.</p>
-    <h2 class="hasAnchor" id="info-text"><a class="anchor" href="#info-text"></a>Info Text</h2>
-
+    </div>
+    <div id="info-text">
+    <h2>Info Text</h2>
     
 
 <p>The <em>info text</em> that's used for any of the <code>info_*()</code> functions readily
@@ -150,8 +154,9 @@ expressed in different units of measure (e.g., <code>12px</code>, <code>1em</cod
 lengths can be expressed as positive or negative values (e.g., for
 <code>letter-spacing</code>). Color values can be expressed in a few ways, the most
 common being in the form of hexadecimal color values or as CSS color names.</p>
-    <h2 class="hasAnchor" id="yaml"><a class="anchor" href="#yaml"></a>YAML</h2>
-
+    </div>
+    <div id="yaml">
+    <h2>YAML</h2>
     
 
 <p>A <strong>pointblank</strong> informant can be written to YAML with <code><a href="yaml_write.html">yaml_write()</a></code> and the
@@ -201,18 +206,21 @@ done when printing an informant (or invoking <code><a href="get_informant_report
 <em>informant</em>) and the processing of snippets (generation and insertion) is
 done when using the <code><a href="incorporate.html">incorporate()</a></code> function. Thus, the source text is always
 maintained in the YAML representation and is never written in processed form.</p>
-    <h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
-
+    </div>
+    <div id="figures">
+    <h2>Figures</h2>
     
 
 <p><img src="figures/man_info_section_1.png" width="100%"></p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>3-4</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Information Functions: 
 <code><a href="info_columns_from_tbl.html">info_columns_from_tbl</a>()</code>,
 <code><a href="info_columns.html">info_columns</a>()</code>,
@@ -222,8 +230,11 @@ maintained in the YAML representation and is never written in processed form.</p
 <code><a href="snip_list.html">snip_list</a>()</code>,
 <code><a href="snip_lowest.html">snip_lowest</a>()</code>,
 <code><a href="snip_stats.html">snip_stats</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create a pointblank `informant`</span></span>
 <span class="r-in"><span class="co"># object with `create_informant()`;</span></span>
 <span class="r-in"><span class="co"># we specify a `read_fn` with the</span></span>
@@ -250,13 +261,20 @@ maintained in the YAML representation and is never written in processed form.</p
 <span class="r-in">    section_name <span class="op">=</span> <span class="st">"Notes"</span>,</span>
 <span class="r-in">    creation <span class="op">=</span> <span class="st">"Dataset generated on (2020-01-15)."</span>,</span>
 <span class="r-in">    usage <span class="op">=</span> <span class="st">"`small_table %&gt;% dplyr::glimpse()`"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="incorporate.html">incorporate</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Incorporation Started</span> <span style="color: #00BBBB;">───────────────────────────────────────────────────────</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Information gathered.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Information built.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Incorporation Completed</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Upon printing the `informant` object, we see</span></span>
 <span class="r-in"><span class="co"># the addition of the 'Notes' section and its</span></span>
 <span class="r-in"><span class="co"># own information</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># The `informant` object can be written to</span></span>
 <span class="r-in"><span class="co"># a YAML file with the `yaml_write()`</span></span>
@@ -278,6 +296,7 @@ maintained in the YAML representation and is never written in processed form.</p
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

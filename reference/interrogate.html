@@ -69,7 +69,7 @@ how the interrogation went down."><meta property="og:image" content="/logo.svg">
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -84,7 +84,7 @@ how the interrogation went down."><meta property="og:image" content="/logo.svg">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Given an agent that has a validation plan, perform an interrogation</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/interrogate.R"><code>R/interrogate.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/interrogate.R" class="external-link"><code>R/interrogate.R</code></a></small>
     <div class="hidden name"><code>interrogate.Rd</code></div>
     </div>
 
@@ -105,56 +105,64 @@ how the interrogation went down.</p>
   sample_limit <span class="op">=</span> <span class="fl">5000</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>agent</th>
-      <td><p>An agent object of class <code>ptblank_agent</code> that is created with
-<code><a href="create_agent.html">create_agent()</a></code>.</p></td>
-    </tr><tr><th>extract_failed</th>
-      <td><p>An option to collect rows that didn't pass a particular
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>agent</dt>
+<dd><p>An agent object of class <code>ptblank_agent</code> that is created with
+<code><a href="create_agent.html">create_agent()</a></code>.</p></dd>
+<dt>extract_failed</dt>
+<dd><p>An option to collect rows that didn't pass a particular
 validation step. The default is <code>TRUE</code> and further options allow for fine
-control of how these rows are collected.</p></td>
-    </tr><tr><th>get_first_n</th>
-      <td><p>If the option to collect non-passing rows is chosen, there
+control of how these rows are collected.</p></dd>
+<dt>get_first_n</dt>
+<dd><p>If the option to collect non-passing rows is chosen, there
 is the option here to collect the first <code>n</code> rows here. Supply the number of
 rows to extract from the top of the non-passing rows table (the ordering of
-data from the original table is retained).</p></td>
-    </tr><tr><th>sample_n</th>
-      <td><p>If the option to collect non-passing rows is chosen, this
+data from the original table is retained).</p></dd>
+<dt>sample_n</dt>
+<dd><p>If the option to collect non-passing rows is chosen, this
 option allows for the sampling of <code>n</code> rows. Supply the number of rows to
 sample from the non-passing rows table. If <code>n</code> is greater than the number
-of non-passing rows, then all the rows will be returned.</p></td>
-    </tr><tr><th>sample_frac</th>
-      <td><p>If the option to collect non-passing rows is chosen, this
+of non-passing rows, then all the rows will be returned.</p></dd>
+<dt>sample_frac</dt>
+<dd><p>If the option to collect non-passing rows is chosen, this
 option allows for the sampling of a fraction of those rows. Provide a
 number in the range of <code>0</code> and <code>1</code>. The number of rows to return may be
 extremely large (and this is especially when querying remote databases),
 however, the <code>sample_limit</code> option will apply a hard limit to the returned
-rows.</p></td>
-    </tr><tr><th>sample_limit</th>
-      <td><p>A value that limits the possible number of rows returned
-when sampling non-passing rows using the <code>sample_frac</code> option.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+rows.</p></dd>
+<dt>sample_limit</dt>
+<dd><p>A value that limits the possible number of rows returned
+when sampling non-passing rows using the <code>sample_frac</code> option.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A <code>ptblank_agent</code> object.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>6-1</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Interrogate and Report: 
 <code><a href="get_agent_report.html">get_agent_report</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+    <div id="examples">
+    <h2>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Create a simple table with two</span></span>
 <span class="r-in"><span class="co"># columns of numerical values</span></span>
 <span class="r-in"><span class="va">tbl</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
-<span class="r-in">    a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">8</span>, <span class="fl">7</span><span class="op">)</span>,</span>
-<span class="r-in">    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span class="r-in">    a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">8</span>, <span class="fl">7</span><span class="op">)</span>,</span>
+<span class="r-in">    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Validate that values in column</span></span>
@@ -164,12 +172,13 @@ when sampling non-passing rows using the <code>sample_frac</code> option.</p></t
 <span class="r-in"><span class="co"># the whole process</span></span>
 <span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
 <span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">interrogate</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

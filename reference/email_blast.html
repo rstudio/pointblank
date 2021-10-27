@@ -74,7 +74,7 @@ an x-list obtained from using the get_agent_x_list() function."><meta property="
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -89,7 +89,7 @@ an x-list obtained from using the get_agent_x_list() function."><meta property="
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Send email at a validation step or at the end of an interrogation</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/emailing.R"><code>R/emailing.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/emailing.R" class="external-link"><code>R/emailing.R</code></a></small>
     <div class="hidden name"><code>email_blast.Rd</code></div>
     </div>
 
@@ -115,38 +115,41 @@ an x-list obtained from using the <code><a href="get_agent_x_list.html">get_agen
   msg_header <span class="op">=</span> <span class="cn">NULL</span>,
   msg_body <span class="op">=</span> <span class="fu"><a href="stock_msg_body.html">stock_msg_body</a></span><span class="op">(</span><span class="op">)</span>,
   msg_footer <span class="op">=</span> <span class="fu"><a href="stock_msg_footer.html">stock_msg_footer</a></span><span class="op">(</span><span class="op">)</span>,
-  send_condition <span class="op">=</span> <span class="op">~</span><span class="cn">TRUE</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">x</span><span class="op">$</span><span class="va">notify</span>
+  send_condition <span class="op">=</span> <span class="op">~</span><span class="cn">TRUE</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">x</span><span class="op">$</span><span class="va">notify</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>A reference to the x-list object prepared internally by the agent.
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>x</dt>
+<dd><p>A reference to the x-list object prepared internally by the agent.
 This version of the x-list is the same as that generated via
 <code>get_agent_x_list(&lt;agent&gt;)</code> except this version is internally generated and
-hence only available in an internal evaluation context.</p></td>
-    </tr><tr><th>to, from</th>
-      <td><p>The email addresses for the recipients and of the sender.</p></td>
-    </tr><tr><th>credentials</th>
-      <td><p>A credentials list object that is produced by either of
-the <code><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html">blastula::creds()</a></code>, <code><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html">blastula::creds_anonymous()</a></code>,
-<code><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html">blastula::creds_key()</a></code>, or <code><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html">blastula::creds_file()</a></code> functions. Please
+hence only available in an internal evaluation context.</p></dd>
+<dt>to, from</dt>
+<dd><p>The email addresses for the recipients and of the sender.</p></dd>
+<dt>credentials</dt>
+<dd><p>A credentials list object that is produced by either of
+the <code><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">blastula::creds()</a></code>, <code><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">blastula::creds_anonymous()</a></code>,
+<code><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">blastula::creds_key()</a></code>, or <code><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">blastula::creds_file()</a></code> functions. Please
 refer to the <strong>blastula</strong> documentation for information on how to use these
-functions.</p></td>
-    </tr><tr><th>msg_subject</th>
-      <td><p>The subject line of the email message.</p></td>
-    </tr><tr><th>msg_header, msg_body, msg_footer</th>
-      <td><p>Content for the header, body, and
-footer components of the HTML email message.</p></td>
-    </tr><tr><th>send_condition</th>
-      <td><p>An expression that should evaluate to a logical vector
+functions.</p></dd>
+<dt>msg_subject</dt>
+<dd><p>The subject line of the email message.</p></dd>
+<dt>msg_header, msg_body, msg_footer</dt>
+<dd><p>Content for the header, body, and
+footer components of the HTML email message.</p></dd>
+<dt>send_condition</dt>
+<dd><p>An expression that should evaluate to a logical vector
 of length 1. If evaluated as <code>TRUE</code> then the email will be sent, if <code>FALSE</code>
 then that won't happen. The expression can use x-list variables (e.g.,
 <code>x$notify</code>, <code>x$type</code>, etc.) and all of those variables can be explored
 using the <code><a href="get_agent_x_list.html">get_agent_x_list()</a></code> function. The default expression is <code>~TRUE %in% x$notify</code>, which results in <code>TRUE</code> if there are any <code>TRUE</code> values in
 the <code>x$notify</code> logical vector (i.e., any validation step results in a
-'notify' condition).</p></td>
-    </tr></table><h2 class="hasAnchor" id="yaml"><a class="anchor" href="#yaml"></a>YAML</h2>
-
+'notify' condition).</p></dd>
+</dl></div>
+    <div id="yaml">
+    <h2>YAML</h2>
     
 
 <p>A <strong>pointblank</strong> agent can be written to YAML with <code><a href="yaml_write.html">yaml_write()</a></code> and the
@@ -199,19 +202,24 @@ steps:
     value: 7.0
 </code></pre>
 
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>4-1</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Emailing: 
 <code><a href="email_create.html">email_create</a>()</code>,
 <code><a href="stock_msg_body.html">stock_msg_body</a>()</code>,
 <code><a href="stock_msg_footer.html">stock_msg_footer</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create an `action_levels()` list</span></span>
 <span class="r-in"><span class="co"># with absolute values for the</span></span>
 <span class="r-in"><span class="co"># `warn`, and `notify` states (with</span></span>
@@ -222,7 +230,7 @@ steps:
 <span class="r-in">    notify_at <span class="op">=</span> <span class="fl">2</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in">  </span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Validate that values in column</span></span>
 <span class="r-in"><span class="co"># `a` from `small_tbl` are always &gt; 1</span></span>
@@ -240,20 +248,20 @@ steps:
 <span class="r-in">    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
 <span class="r-in">    label <span class="op">=</span> <span class="st">"An example."</span>,</span>
 <span class="r-in">    actions <span class="op">=</span> <span class="va">al</span>,</span>
-<span class="r-in">    end_fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span class="r-in">    end_fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span class="r-in">      <span class="op">~</span> <span class="fu">email_blast</span><span class="op">(</span></span>
 <span class="r-in">        <span class="va">x</span>,</span>
 <span class="r-in">        to <span class="op">=</span> <span class="st">"joe_public@example.com"</span>,</span>
 <span class="r-in">        from <span class="op">=</span> <span class="st">"pb_notif@example.com"</span>,</span>
 <span class="r-in">        msg_subject <span class="op">=</span> <span class="st">"Table Validation"</span>,</span>
-<span class="r-in">        credentials <span class="op">=</span> <span class="fu">blastula</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html">creds_key</a></span><span class="op">(</span></span>
+<span class="r-in">        credentials <span class="op">=</span> <span class="fu">blastula</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/credential_helpers.html" class="external-link">creds_key</a></span><span class="op">(</span></span>
 <span class="r-in">          id <span class="op">=</span> <span class="st">"smtp2go"</span></span>
 <span class="r-in">        <span class="op">)</span>,</span>
 <span class="r-in">      <span class="op">)</span></span>
 <span class="r-in">    <span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="op">}</span></span>
@@ -275,12 +283,13 @@ steps:
 <span class="r-in">    label <span class="op">=</span> <span class="st">"An example."</span>,</span>
 <span class="r-in">    actions <span class="op">=</span> <span class="va">al</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="email_create.html">email_create</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in">  </span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

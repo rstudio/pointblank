@@ -85,7 +85,7 @@ directly on data (more information on this is provided in Details).'><meta prope
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -100,7 +100,7 @@ directly on data (more information on this is provided in Details).'><meta prope
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Set action levels: failure thresholds and functions to invoke</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/action_levels.R"><code>R/action_levels.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/action_levels.R" class="external-link"><code>R/action_levels.R</code></a></small>
     <div class="hidden name"><code>action_levels.Rd</code></div>
     </div>
 
@@ -134,9 +134,11 @@ directly on data (more information on this is provided in <em>Details</em>).</p>
 
 <span class="fu">stop_on_fail</span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>warn_at, stop_at, notify_at</th>
-      <td><p>The threshold number or fraction of
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>warn_at, stop_at, notify_at</dt>
+<dd><p>The threshold number or fraction of
 test units that can provide a <em>fail</em> result before entering the
 <code>warn</code>, <code>stop</code>, or <code>notify</code> failure states. If this a decimal value between
 <code>0</code> and <code>1</code> then it's a proportional failure threshold (e.g., <code>0.15</code>
@@ -144,21 +146,22 @@ indicates that if 15% percent of the test units are found to <em>fail</em>,
 then the designated failure state is entered). Absolute values starting
 from <code>1</code> can be used instead, and this constitutes an absolute failure
 threshold (e.g., <code>10</code> means that if 10 of the test units are found to
-<em>fail</em>, the failure state is entered).</p></td>
-    </tr><tr><th>fns</th>
-      <td><p>A named list of functions that is to be paired with the
+<em>fail</em>, the failure state is entered).</p></dd>
+<dt>fns</dt>
+<dd><p>A named list of functions that is to be paired with the
 appropriate failure states. The syntax for this list involves using failure
 state names from the set of <code>warn</code>, <code>stop</code>, and <code>notify</code>. The functions
 corresponding to the failure states are provided as formulas (e.g.,
 <code>list(warn = ~ warning("Too many failures."))</code>. A series of expressions for
-each named state can be used by enclosing the set of statements with <code><a href="https://rdrr.io/r/base/Paren.html">{ }</a></code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+each named state can be used by enclosing the set of statements with <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{ }</a></code>.</p></dd>
+</dl></div>
+    <div id="details">
+    <h2>Details</h2>
     <p>The output of the <code>action_levels()</code> call in <code>actions</code> will be interpreted
 slightly differently if using an <em>agent</em> or using validation functions
 directly on a data table. For convenience, when working directly on data, any
 values supplied to <code>warn_at</code> or <code>stop_at</code> will be automatically given a stock
-<code><a href="https://rdrr.io/r/base/warning.html">warning()</a></code> or <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code> function. For example using
+<code><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning()</a></code> or <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> function. For example using
 <code>small_table %&gt;% col_is_integer("date")</code> will provide a detailed stop message
 by default, indicating the reason for the failure. If you were to supply the
 <code>fns</code> for <code>stop</code> or <code>warn</code> manually then the stock functions would be
@@ -175,13 +178,15 @@ commonly used in this workflow as it is in the <em>agent</em>-based one.</p>
 <code>end_fns</code> argument is a better choice since that scheme provides useful data
 on the entire interrogation, allowing for finer control on side effects and
 reducing potential for duplicating any side effects.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>1-5</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Planning and Prep: 
 <code><a href="create_agent.html">create_agent</a>()</code>,
 <code><a href="create_informant.html">create_informant</a>()</code>,
@@ -193,8 +198,11 @@ reducing potential for duplicating any side effects.</p>
 <code><a href="tbl_source.html">tbl_source</a>()</code>,
 <code><a href="tbl_store.html">tbl_store</a>()</code>,
 <code><a href="validate_rmd.html">validate_rmd</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
 <span class="r-in"><span class="co"># For these examples, we will use the</span></span>
 <span class="r-in"><span class="co"># included `small_table` dataset</span></span>
@@ -245,10 +253,10 @@ reducing potential for duplicating any side effects.</p>
 <span class="r-in">    actions <span class="op">=</span> <span class="va">al</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span></span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">20000</span></span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">20000</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
@@ -275,11 +283,11 @@ reducing potential for duplicating any side effects.</p>
 <span class="r-in">    actions <span class="op">=</span> <span class="va">al</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span>,</span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span>,</span>
 <span class="r-in">    actions <span class="op">=</span> <span class="fu">warn_on_fail</span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">20000</span></span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">20000</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
@@ -294,7 +302,7 @@ reducing potential for duplicating any side effects.</p>
 <span class="r-in"><span class="va">x_list</span><span class="op">$</span><span class="va">warn</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE FALSE</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># In the context of using validation</span></span>
 <span class="r-in"><span class="co"># functions directly on data (i.e., no</span></span>
@@ -305,7 +313,7 @@ reducing potential for duplicating any side effects.</p>
 <span class="r-in"><span class="co"># `small_table` data)</span></span>
 <span class="r-in"><span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span>,</span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span>,</span>
 <span class="r-in">    actions <span class="op">=</span> <span class="fu">warn_on_fail</span><span class="op">(</span>warn_at <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
@@ -314,11 +322,11 @@ reducing potential for duplicating any side effects.</p>
 <span class="r-in"><span class="co"># default) will have the same effect as</span></span>
 <span class="r-in"><span class="co"># using `stop_on_fail(stop_at = 1)` </span></span>
 <span class="r-in"><span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span>,</span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">2</span>,</span>
 <span class="r-in">    actions <span class="op">=</span> <span class="fu">stop_on_fail</span><span class="op">(</span>stop_at <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
@@ -332,6 +340,7 @@ reducing potential for duplicating any side effects.</p>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

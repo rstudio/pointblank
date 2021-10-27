@@ -72,7 +72,7 @@ are both present."><meta property="og:image" content="/logo.svg"><!-- mathjax --
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -87,7 +87,7 @@ are both present."><meta property="og:image" content="/logo.svg"><!-- mathjax --
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Determine if one or more columns exist in a table.</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/has_columns.R"><code>R/has_columns.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/has_columns.R" class="external-link"><code>R/has_columns.R</code></a></small>
     <div class="hidden name"><code>has_columns.Rd</code></div>
     </div>
 
@@ -97,37 +97,45 @@ specified name is present in a table object. This function works well enough
 on a table object but it can also be used as part of a formula in any
 validation function's <code>active</code> argument. Using <code>active = ~ . %&gt;% has_columns("column_1")</code> means that the validation step will be inactive if
 the target table doesn't contain a column named <code>column_1</code>. We can also use
-multiple columns in <code><a href="https://dplyr.tidyverse.org/reference/vars.html">vars()</a></code> so having <code>active = ~ . %&gt;% has_columns(vars(column_1, column_2))</code> in a validation step will make it
+multiple columns in <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code> so having <code>active = ~ . %&gt;% has_columns(vars(column_1, column_2))</code> in a validation step will make it
 inactive at <code><a href="interrogate.html">interrogate()</a></code> time unless the columns <code>column_1</code> and <code>column_2</code>
 are both present.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">has_columns</span><span class="op">(</span><span class="va">x</span>, <span class="va">columns</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>The table object.</p></td>
-    </tr><tr><th>columns</th>
-      <td><p>One or more column names that are to be checked for existence
-in the table <code>x</code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>x</dt>
+<dd><p>The table object.</p></dd>
+<dt>columns</dt>
+<dd><p>One or more column names that are to be checked for existence
+in the table <code>x</code>.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A length-1 logical vector.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>13-2</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Utility and Helper Functions: 
 <code><a href="affix_datetime.html">affix_datetime</a>()</code>,
 <code><a href="affix_date.html">affix_date</a>()</code>,
 <code><a href="col_schema.html">col_schema</a>()</code>,
 <code><a href="from_github.html">from_github</a>()</code>,
 <code><a href="stop_if_not.html">stop_if_not</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># The `small_table` dataset in the</span></span>
 <span class="r-in"><span class="co"># package has the columns `date_time`,</span></span>
 <span class="r-in"><span class="co"># `date`, and the `a` through `f`</span></span>
@@ -161,18 +169,18 @@ in the table <code>x</code>.</p></td>
 <span class="r-in"><span class="co"># Multiple column names can be supplied;</span></span>
 <span class="r-in"><span class="co"># this is `TRUE` because both columns are</span></span>
 <span class="r-in"><span class="co"># present in `small_table`</span></span>
-<span class="r-in"><span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">has_columns</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">has_columns</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># It's possible to supply column names</span></span>
 <span class="r-in"><span class="co"># in `vars()` as well</span></span>
-<span class="r-in"><span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">has_columns</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">has_columns</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Because column `h` isn't present, this</span></span>
 <span class="r-in"><span class="co"># returns `FALSE` (all specified columns</span></span>
 <span class="r-in"><span class="co"># need to be present to obtain `TRUE`)</span></span>
-<span class="r-in"><span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">has_columns</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">h</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">small_table</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">has_columns</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">h</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># The `has_columns()` function can be</span></span>
@@ -195,22 +203,23 @@ in the table <code>x</code>.</p></td>
 <span class="r-in">    tbl_name <span class="op">=</span> <span class="st">"small_table"</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_vals_gt.html">col_vals_gt</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
-<span class="r-in">    active <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">has_columns</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">c</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span>, value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
+<span class="r-in">    active <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">has_columns</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">c</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_vals_lt.html">col_vals_lt</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">h</span><span class="op">)</span>, value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,</span>
-<span class="r-in">    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>h <span class="op">=</span> <span class="va">d</span> <span class="op">-</span> <span class="va">a</span><span class="op">)</span>,</span>
-<span class="r-in">    active <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">has_columns</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">d</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">h</span><span class="op">)</span>, value <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>,</span>
+<span class="r-in">    preconditions <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>h <span class="op">=</span> <span class="va">d</span> <span class="op">-</span> <span class="va">a</span><span class="op">)</span>,</span>
+<span class="r-in">    active <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">has_columns</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">d</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_is_character.html">col_is_character</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">j</span><span class="op">)</span>,</span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">j</span><span class="op">)</span>,</span>
 <span class="r-in">    active <span class="op">=</span> <span class="op">~</span> <span class="va">.</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">has_columns</span><span class="op">(</span><span class="st">"j"</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Step <span style="color: #00BB00;">3</span> is not set as <span style="color: #00BB00;">active</span>. Skipping.</span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

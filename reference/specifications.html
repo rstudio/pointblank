@@ -71,7 +71,7 @@ validating with any of the aforementioned functions."><meta property="og:image" 
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -86,7 +86,7 @@ validating with any of the aforementioned functions."><meta property="og:image" 
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>A table containing data pertaining to various specifications</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/datasets.R"><code>R/datasets.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/datasets.R" class="external-link"><code>R/datasets.R</code></a></small>
     <div class="hidden name"><code>specifications.Rd</code></div>
     </div>
 
@@ -102,49 +102,79 @@ validating with any of the aforementioned functions.</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="va">specifications</span></code></pre></div>
 
-
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A tibble with 8 rows and 12 variables:</p><dl><dt>isbn_numbers</dt><dd><p>ISBN-13 numbers; can be validated with the <code>"isbn"</code>
+    <div id="ref-sections">
+    <div id="format">
+    <h2>Format</h2>
+    <p>A tibble with 8 rows and 12 variables:</p><dl><dt>isbn_numbers</dt>
+<dd><p>ISBN-13 numbers; can be validated with the <code>"isbn"</code>
 specification.</p></dd>
-<dt>vin_numbers</dt><dd><p>VIN numbers (identifiers for motor vehicles); can be
+
+<dt>vin_numbers</dt>
+<dd><p>VIN numbers (identifiers for motor vehicles); can be
 validated with the <code>"vin"</code> specification.</p></dd>
-<dt>zip_codes</dt><dd><p>Postal codes for the U.S.; can be validated with the
+
+<dt>zip_codes</dt>
+<dd><p>Postal codes for the U.S.; can be validated with the
 <code>"postal[USA]"</code> specification or its <code>"zip"</code> alias.</p></dd>
-<dt>credit_card_numbers</dt><dd><p>Credit card numbers; can be validated with the
+
+<dt>credit_card_numbers</dt>
+<dd><p>Credit card numbers; can be validated with the
 <code>"credit_card"</code> specification or the <code>"cc"</code> alias.</p></dd>
-<dt>iban_austria</dt><dd><p>IBAN numbers for Austrian accounts; can be validated with
+
+<dt>iban_austria</dt>
+<dd><p>IBAN numbers for Austrian accounts; can be validated with
 the <code>"iban[AUT]"</code> specification.</p></dd>
-<dt>swift_numbers</dt><dd><p>Swift-BIC numbers; can be validated with the <code>"swift"</code>
+
+<dt>swift_numbers</dt>
+<dd><p>Swift-BIC numbers; can be validated with the <code>"swift"</code>
 specification.</p></dd>
-<dt>phone_numbers</dt><dd><p>Phone numbers; can be validated with the <code>"phone"</code>
+
+<dt>phone_numbers</dt>
+<dd><p>Phone numbers; can be validated with the <code>"phone"</code>
 specification.</p></dd>
-<dt>email_addresses</dt><dd><p>Email addresses; can be validated with the <code>"email"</code>
+
+<dt>email_addresses</dt>
+<dd><p>Email addresses; can be validated with the <code>"email"</code>
 specification.</p></dd>
-<dt>urls</dt><dd><p>URLs; can be validated with the  <code>"url"</code> specification.</p></dd>
-<dt>ipv4_addresses</dt><dd><p>IPv4 addresses; can be validated with the <code>"ipv4"</code>
-specification</p></dd>
-<dt>ipv6_addresses</dt><dd><p>IPv6 addresses; can be validated with the <code>"ipv6"</code>
-specification</p></dd>
-<dt>mac_addresses</dt><dd><p>MAC addresses; can be validated with the <code>"mac"</code>
+
+<dt>urls</dt>
+<dd><p>URLs; can be validated with the  <code>"url"</code> specification.</p></dd>
+
+<dt>ipv4_addresses</dt>
+<dd><p>IPv4 addresses; can be validated with the <code>"ipv4"</code>
 specification</p></dd>
 
-</dl><h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
+<dt>ipv6_addresses</dt>
+<dd><p>IPv6 addresses; can be validated with the <code>"ipv6"</code>
+specification</p></dd>
 
+<dt>mac_addresses</dt>
+<dd><p>MAC addresses; can be validated with the <code>"mac"</code>
+specification</p></dd>
+
+
+</dl></div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>14-3</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Datasets: 
+<code><a href="game_revenue_info.html">game_revenue_info</a></code>,
 <code><a href="game_revenue.html">game_revenue</a></code>,
 <code><a href="small_table_sqlite.html">small_table_sqlite</a>()</code>,
 <code><a href="small_table.html">small_table</a></code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Here is a glimpse at the data</span></span>
 <span class="r-in"><span class="co"># available in `specifications`</span></span>
-<span class="r-in"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">specifications</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">specifications</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ isbn_numbers        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "978 1 85715 201 2", "978-1-84159-362-3", "978 1 8…</span>
@@ -161,6 +191,7 @@ specification</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ mac_addresses       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "01-2d-4c-ef-89-ab", "01-2D-4C-EF-89-AB", "01:2d:4…</span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

@@ -114,7 +114,7 @@
       <h1 data-toc-skip>Advanced Information Management</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/vignettes/INFO-2.Rmd" class="external-link"><code>vignettes/INFO-2.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/vignettes/INFO-2.Rmd" class="external-link"><code>vignettes/INFO-2.Rmd</code></a></small>
       <div class="hidden name"><code>INFO-2.Rmd</code></div>
 
     </div>
@@ -122,9 +122,9 @@
     
     
 <p>In the <a href="../articles/INFO-1.html"><em>Intro to Information Management</em></a> article, we learned all about how to synthesize information on a table, giving us a useful report that can be published and widely shared. We used a <strong>pointblank</strong> <em>informant</em> with a set of information functions to generate <em>info text</em> and put that text into the appropriate report sections. We’re going to take this a few steps further and look into some more functionality makes <em>info text</em> more dynamic and also include a finalizing step in this workflow that accounts for evolving data.</p>
-<div id="getting-snippets-of-useful-text-with-the-info_snippet-function" class="section level1">
-<h1 class="hasAnchor">
-<a href="#getting-snippets-of-useful-text-with-the-info_snippet-function" class="anchor" aria-hidden="true"></a>Getting Snippets of Useful Text With the <code>info_snippet()</code> Function</h1>
+<div class="section level1">
+<h1 id="getting-snippets-of-useful-text-with-the-info_snippet-function">Getting Snippets of Useful Text With the <code>info_snippet()</code> Function<a class="anchor" aria-label="anchor" href="#getting-snippets-of-useful-text-with-the-info_snippet-function"></a>
+</h1>
 <p>A great source of information about the table can be the table itself. Suppose you want to show some categorical values from a particular column. Maybe you’d like to display the range of values in an important numeric column. Perhaps show some KPI values that can be calculated using data in the table? This can all be done with the <code><a href="../reference/info_snippet.html">info_snippet()</a></code> function. You give the snippet a name and you give it a function call. Let’s do this for the <code>small_table</code> dataset available in <strong>pointblank</strong>. This is what that table looks like:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">small_table</span></code></pre></div>
@@ -204,9 +204,9 @@
 <p><br></p>
 <p>This time, sweet success. The value appears and the overall formatting looks great! This is a very useful thing, so long as we remember to use the <code><a href="../reference/incorporate.html">incorporate()</a></code> function to make it happen (more on that in the next section).</p>
 </div>
-<div id="ensuring-that-snippets-and-other-table-metadata-element-are-up-to-date" class="section level1">
-<h1 class="hasAnchor">
-<a href="#ensuring-that-snippets-and-other-table-metadata-element-are-up-to-date" class="anchor" aria-hidden="true"></a>Ensuring That Snippets (and Other Table Metadata Element) Are Up-to-Date</h1>
+<div class="section level1">
+<h1 id="ensuring-that-snippets-and-other-table-metadata-element-are-up-to-date">Ensuring That Snippets (and Other Table Metadata Element) Are Up-to-Date<a class="anchor" aria-label="anchor" href="#ensuring-that-snippets-and-other-table-metadata-element-are-up-to-date"></a>
+</h1>
 <p>Tables can change with time. Whether that data source is a public dataset, an organization’s data table, or a continually-updated Excel file (😱), we should be ready for change. In the previous example, we used the <code><a href="../reference/incorporate.html">incorporate()</a></code> function to finalize the report. Without it, our snippet didn’t work. There are two major things that <code><a href="../reference/incorporate.html">incorporate()</a></code> does for you in the <em>Information Management</em> workflow.</p>
 <ol style="list-style-type: decimal">
 <li><p>Evaluation of text snippets in all <code><a href="../reference/info_snippet.html">info_snippet()</a></code> calls, and, insertion of snippets in <em>info text</em> within <code>"{&lt;snippet_name&gt;}"</code>.</p></li>
@@ -259,9 +259,8 @@ This is an excerpt of the complete report, showing just the header.
 <p>Great! Using <code><a href="../reference/incorporate.html">incorporate()</a></code> has accurately updated the reporting of row and column counts in the header. And it’s also very much worth noting that the use of a <code>read_fn</code> is important here. Had <code>target_table</code> been given to the <code>tbl</code> argument of <code><a href="../reference/create_informant.html">create_informant()</a></code>, that table would be bound to the informant in its initial state (with 13 rows and 8 columns) and any updates to the table wouldn’t be reflected in the reporting upon using <code><a href="../reference/incorporate.html">incorporate()</a></code>. The table-reading function is meant for obtaining the table each and every time the table is needed.</p>
 <p>In short, unless you have no uses of <code><a href="../reference/info_snippet.html">info_snippet()</a></code> and the table isn’t expected to change, it’s recommended to use <code><a href="../reference/incorporate.html">incorporate()</a></code> as the final call in this workflow.</p>
 </div>
-<div id="helpful-pointblank-functions-that-work-exceedingly-well-with-info_snippet" class="section level1">
-<h1 class="hasAnchor">
-<a href="#helpful-pointblank-functions-that-work-exceedingly-well-with-info_snippet" class="anchor" aria-hidden="true"></a>Helpful <strong>pointblank</strong> Functions that Work Exceedingly Well with <code>info_snippet()</code>
+<div class="section level1">
+<h1 id="helpful-pointblank-functions-that-work-exceedingly-well-with-info_snippet">Helpful <strong>pointblank</strong> Functions that Work Exceedingly Well with <code>info_snippet()</code><a class="anchor" aria-label="anchor" href="#helpful-pointblank-functions-that-work-exceedingly-well-with-info_snippet"></a>
 </h1>
 <p>There are a few functions available in <strong>pointblank</strong> that make it much easier to get commonly-used text snippets. All of them begin with the <code>snip_</code> prefix and they are:</p>
 <ul>
@@ -273,9 +272,9 @@ This is an excerpt of the complete report, showing just the header.
 <code><a href="../reference/snip_highest.html">snip_highest()</a></code>: Gets the highest value from a column</li>
 </ul>
 <p>Each of these functions can be used directly as a <code>fn</code> value and we don’t have to specify the table since its assumed that the target table is where we’ll be snipping data from. Let’s have a look at each of these in action.</p>
-<div id="the-snip_list-function" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-snip_list-function" class="anchor" aria-hidden="true"></a>The <code>snip_list()</code> Function</h2>
+<div class="section level2">
+<h2 id="the-snip_list-function">The <code>snip_list()</code> Function<a class="anchor" aria-label="anchor" href="#the-snip_list-function"></a>
+</h2>
 <p>When describing some aspect of the target table, we may want to extract some values from a column and include them as a piece of info text. We’d want the values to be nicely formatted as a list (with commas) and we’d probably prefer that this be constrained to a certain size (so as to not potentially generate massive amounts of text). This can be efficiently done with <code><a href="../reference/snip_list.html">snip_list()</a></code>. Let’s experiment with the combination of <code><a href="../reference/snip_list.html">snip_list()</a></code> and <code><a href="../reference/info_snippet.html">info_snippet()</a></code>, extending the <strong>palmerpenguins</strong> example from the <a href="../articles/INFO-I.html"><em>Intro to Information Management</em></a> article.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span> 
@@ -336,9 +335,9 @@ This is an excerpt of the complete report, showing just the bottom of the <stron
 <p><br></p>
 <p>Again, no issues with the formatting and display of values. We got the <em>info text</em> <code>"The study year ("2007", "2008", and "2009" )."</code> for our efforts here and it saved us from having to determine this, plus, should the data be updated with new <code>year</code> values, that will be reflected in this info text upon using <code><a href="../reference/incorporate.html">incorporate()</a></code>. Refreshed <em>info text</em> really provides huge benefits, especially when the data changes a lot (e.g., database tables).</p>
 </div>
-<div id="the-snip_lowest-and-snip_highest-functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-snip_lowest-and-snip_highest-functions" class="anchor" aria-hidden="true"></a>The <code>snip_lowest()</code> and <code>snip_highest()</code> Functions</h2>
+<div class="section level2">
+<h2 id="the-snip_lowest-and-snip_highest-functions">The <code>snip_lowest()</code> and <code>snip_highest()</code> Functions<a class="anchor" aria-label="anchor" href="#the-snip_lowest-and-snip_highest-functions"></a>
+</h2>
 <p>We can get the lowest and highest values from a column and inject those formatted values into some <em>info_text</em>. Let’s do that for some of the measured values in the <code>penguins</code> dataset with <code><a href="../reference/snip_lowest.html">snip_lowest()</a></code> and <code><a href="../reference/snip_highest.html">snip_highest()</a></code>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">informant_pp</span> <span class="op">&lt;-</span>
@@ -387,14 +386,14 @@ species, A factor denoting penguin species (Adélie, Chinstrap, and Gentoo); (2)
 <p>We can see from the report output that we can creatively use the lowest and highest values obtained by <code><a href="../reference/snip_lowest.html">snip_lowest()</a></code> and <code><a href="../reference/snip_highest.html">snip_highest()</a></code> to specify a range or simply show some maximum value. While the ordering of the <code><a href="../reference/info_columns.html">info_columns()</a></code> calls in the example affects the overall layout of the text (through the text appending behavior), the placement of <code><a href="../reference/info_snippet.html">info_snippet()</a></code> calls <em>does not</em> matter. And, again, we must use <code><a href="../reference/incorporate.html">incorporate()</a></code> to update all of the text snippets and render them in their appropriate locations (inside each <code>{&lt;snippet_name&gt;}</code>).</p>
 </div>
 </div>
-<div id="text-tricks" class="section level1">
-<h1 class="hasAnchor">
-<a href="#text-tricks" class="anchor" aria-hidden="true"></a><em>Text Tricks</em>
+<div class="section level1">
+<h1 id="text-tricks">
+<em>Text Tricks</em><a class="anchor" aria-label="anchor" href="#text-tricks"></a>
 </h1>
 <p>While your <em>info text</em> can be jazzed up with Markdown, there are a few extra tricks that make authoring the text a bit more pleasurable. Once you know about these <em>text tricks</em> you’ll be able to express information in many more interesting ways.</p>
-<div id="links-and-dates" class="section level2">
-<h2 class="hasAnchor">
-<a href="#links-and-dates" class="anchor" aria-hidden="true"></a>Links and Dates</h2>
+<div class="section level2">
+<h2 id="links-and-dates">Links and Dates<a class="anchor" aria-label="anchor" href="#links-and-dates"></a>
+</h2>
 <p>If you have links in your text, <strong>pointblank</strong> will try to identify them and style them nicely. This amounts to using a pleasing, light-blue color and underlines that appear on hover. It doesn’t take much to style links but it does require <em>something</em>. So, Markdown links written as <code>&lt; link url &gt;</code> or <code>[ link text ]( link url )</code> will both get the transformation treatment.</p>
 <p>Sometimes you want dates to stand out from text. Try enclosing a date expressed in the ISO-8601 standard with parentheses, like this: <code>(2004-12-01)</code>. What will happen is that date will be set in a monospaced variation of the reporting font, and, it will be underlined in a striking shade of purple.</p>
 <p>Here’s how we might use these features while otherwise adding more information to the <strong>palmerpenguins</strong> reporting:</p>
@@ -424,9 +423,9 @@ This is an excerpt of the complete report, showing just the <strong>TABLE</stron
 </p>
 <p><br></p>
 </div>
-<div id="labels" class="section level2">
-<h2 class="hasAnchor">
-<a href="#labels" class="anchor" aria-hidden="true"></a>Labels</h2>
+<div class="section level2">
+<h2 id="labels">Labels<a class="anchor" aria-label="anchor" href="#labels"></a>
+</h2>
 <p>We can take portions of text and present them as labels. These will help you call out important attributes in short form and may eliminate the need for oft-repeated statements. You might apply to labels to signify priority, category, or any other information you find useful. To do this we have two options,</p>
 <ol style="list-style-type: decimal">
 <li>Use double parentheses around text to capture it in a rectangular label: <code>((label text))</code>
@@ -460,9 +459,9 @@ This is an excerpt of the complete report, showing just the <strong>COLUMNS</str
 </p>
 <p><br></p>
 </div>
-<div id="get-stylin" class="section level2">
-<h2 class="hasAnchor">
-<a href="#get-stylin" class="anchor" aria-hidden="true"></a>Get Stylin’</h2>
+<div class="section level2">
+<h2 id="get-stylin">Get Stylin’<a class="anchor" aria-label="anchor" href="#get-stylin"></a>
+</h2>
 <p>If you want to use CSS styles on spans of <em>info text</em>, it’s possible with the following construction:</p>
 <p><code>[[ info text ]]&lt;&lt; CSS style rules &gt;&gt;</code></p>
 <p>It’s important to ensure that each CSS rule is concluded with a <code>;</code> character in this syntax. Styling the word <code>factor</code> inside a piece of <em>info text</em> might look like this:</p>
@@ -537,7 +536,7 @@ This is an excerpt of the complete report, showing just the bottom of the <stron
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>

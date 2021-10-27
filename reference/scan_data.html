@@ -5,16 +5,28 @@ some level of precision. Make this the initial step of a well-balanced
 data quality reporting workflow. The reporting output contains several
 sections to make everything more digestible, and these are:
 
-OverviewTable dimensions, duplicate row counts, column types, and
+Overview
+Table dimensions, duplicate row counts, column types, and
 reproducibility information
-VariablesA summary for each table variable and further statistics and
+
+Variables
+A summary for each table variable and further statistics and
 summaries depending on the variable type
-InteractionsA matrix plot that shows interactions between variables
-CorrelationsA set of correlation matrix plots for numerical
+
+Interactions
+A matrix plot that shows interactions between variables
+
+Correlations
+A set of correlation matrix plots for numerical
 variables
-Missing ValuesA summary figure that shows the degree of missingness
+
+Missing Values
+A summary figure that shows the degree of missingness
 across variables
-SampleA table that provides the head and tail rows of the dataset
+
+Sample
+A table that provides the head and tail rows of the dataset
+
 
 
 
@@ -89,7 +101,7 @@ within."><meta property="og:image" content="/logo.svg"><!-- mathjax --><script s
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -104,7 +116,7 @@ within."><meta property="og:image" content="/logo.svg"><!-- mathjax --><script s
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Thoroughly scan a table to better understand it</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/scan_data.R"><code>R/scan_data.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/scan_data.R" class="external-link"><code>R/scan_data.R</code></a></small>
     <div class="hidden name"><code>scan_data.Rd</code></div>
     </div>
 
@@ -114,20 +126,32 @@ an <em>agent</em> to validate the data, it's a good idea to understand the data 
 some level of precision. Make this the initial step of a well-balanced
 <em>data quality reporting</em> workflow. The reporting output contains several
 sections to make everything more digestible, and these are:</p>
-<dl><dt>Overview</dt><dd><p>Table dimensions, duplicate row counts, column types, and
+<dl><dt>Overview</dt>
+<dd><p>Table dimensions, duplicate row counts, column types, and
 reproducibility information</p></dd>
-<dt>Variables</dt><dd><p>A summary for each table variable and further statistics and
+
+<dt>Variables</dt>
+<dd><p>A summary for each table variable and further statistics and
 summaries depending on the variable type</p></dd>
-<dt>Interactions</dt><dd><p>A matrix plot that shows interactions between variables</p></dd>
-<dt>Correlations</dt><dd><p>A set of correlation matrix plots for numerical
+
+<dt>Interactions</dt>
+<dd><p>A matrix plot that shows interactions between variables</p></dd>
+
+<dt>Correlations</dt>
+<dd><p>A set of correlation matrix plots for numerical
 variables</p></dd>
-<dt>Missing Values</dt><dd><p>A summary figure that shows the degree of missingness
+
+<dt>Missing Values</dt>
+<dd><p>A summary figure that shows the degree of missingness
 across variables</p></dd>
-<dt>Sample</dt><dd><p>A table that provides the head and tail rows of the dataset</p></dd>
+
+<dt>Sample</dt>
+<dd><p>A table that provides the head and tail rows of the dataset</p></dd>
+
 
 </dl><p>The output HTML report will appear in the RStudio Viewer and can also be
 integrated in R Markdown HTML output. If you need the output HTML as a
-string, it's possible to get that by using <code><a href="https://rdrr.io/r/base/character.html">as.character()</a></code> (e.g.,
+string, it's possible to get that by using <code><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character()</a></code> (e.g.,
 <code>scan_data(tbl = mtcars) %&gt;% as.character()</code>). The resulting HTML string is a
 complete HTML document where <strong>Bootstrap</strong> and <strong>jQuery</strong> are embedded
 within.</p>
@@ -142,12 +166,14 @@ within.</p>
   locale <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>tbl</th>
-      <td><p>The input table. This can be a data frame, tibble, a <code>tbl_dbi</code>
-object, or a <code>tbl_spark</code> object.</p></td>
-    </tr><tr><th>sections</th>
-      <td><p>The sections to include in the finalized <code>Table Scan</code> report.
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>tbl</dt>
+<dd><p>The input table. This can be a data frame, tibble, a <code>tbl_dbi</code>
+object, or a <code>tbl_spark</code> object.</p></dd>
+<dt>sections</dt>
+<dd><p>The sections to include in the finalized <code>Table Scan</code> report.
 A string with key characters representing section names is required here.
 The default string is <code>"OVICMS"</code> wherein each letter stands for the
 following sections in their default order: <code>"O"</code>: <code>"overview"</code>; <code>"V"</code>:
@@ -155,37 +181,40 @@ following sections in their default order: <code>"O"</code>: <code>"overview"</c
 <code>"missing"</code>; and <code>"S"</code>: <code>"sample"</code>. This string can be comprised of less
 characters and the order can be changed to suit the desired layout of the
 report. For <code>tbl_dbi</code> and <code>tbl_spark</code> objects supplied to <code>tbl</code>, the
-<code>"interactions"</code> and <code>"correlations"</code> sections are currently excluded.</p></td>
-    </tr><tr><th>navbar</th>
-      <td><p>Should there be a navigation bar anchored to the top of the
-report page? By default this is <code>TRUE</code>.</p></td>
-    </tr><tr><th>width</th>
-      <td><p>An optional fixed width (in pixels) for the HTML report. By
-default, no fixed width is applied.</p></td>
-    </tr><tr><th>lang</th>
-      <td><p>The language to use for label text in the report. By default,
+<code>"interactions"</code> and <code>"correlations"</code> sections are currently excluded.</p></dd>
+<dt>navbar</dt>
+<dd><p>Should there be a navigation bar anchored to the top of the
+report page? By default this is <code>TRUE</code>.</p></dd>
+<dt>width</dt>
+<dd><p>An optional fixed width (in pixels) for the HTML report. By
+default, no fixed width is applied.</p></dd>
+<dt>lang</dt>
+<dd><p>The language to use for label text in the report. By default,
 <code>NULL</code> will create English (<code>"en"</code>) text. Other options include French
 (<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>), Spanish (<code>"es"</code>), Portuguese
 (<code>"pt"</code>), Turkish (<code>"tr"</code>), Chinese (<code>"zh"</code>),  Russian (<code>"ru"</code>), Polish
-(<code>"pl"</code>), Danish (<code>"da"</code>), Swedish (<code>"sv"</code>), and Dutch (<code>"nl"</code>).</p></td>
-    </tr><tr><th>locale</th>
-      <td><p>An optional locale ID to use for formatting values in the
+(<code>"pl"</code>), Danish (<code>"da"</code>), Swedish (<code>"sv"</code>), and Dutch (<code>"nl"</code>).</p></dd>
+<dt>locale</dt>
+<dd><p>An optional locale ID to use for formatting values in the
 report according the locale's rules. Examples include <code>"en_US"</code> for English
 (United States) and <code>"fr_FR"</code> for French (France); more simply, this can be
 a language identifier without a country designation, like <code>"es"</code> for
-Spanish (Spain, same as <code>"es_ES"</code>).</p></td>
-    </tr></table><h2 class="hasAnchor" id="figures"><a class="anchor" href="#figures"></a>Figures</h2>
-
+Spanish (Spain, same as <code>"es_ES"</code>).</p></dd>
+</dl></div>
+    <div id="figures">
+    <h2>Figures</h2>
     
 
 <p><img src="figures/man_scan_data_1.png" width="100%"></p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>1-1</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Planning and Prep: 
 <code><a href="action_levels.html">action_levels</a>()</code>,
 <code><a href="create_agent.html">create_agent</a>()</code>,
@@ -197,17 +226,21 @@ Spanish (Spain, same as <code>"es_ES"</code>).</p></td>
 <code><a href="tbl_source.html">tbl_source</a>()</code>,
 <code><a href="tbl_store.html">tbl_store</a>()</code>,
 <code><a href="validate_rmd.html">validate_rmd</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+    <div id="examples">
+    <h2>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Get an HTML document that describes all of</span></span>
 <span class="r-in"><span class="co"># the data in the `dplyr::storms` dataset</span></span>
-<span class="r-in"><span class="va">tbl_scan</span> <span class="op">&lt;-</span> <span class="fu">scan_data</span><span class="op">(</span>tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html">storms</a></span><span class="op">)</span></span>
+<span class="r-in"><span class="va">tbl_scan</span> <span class="op">&lt;-</span> <span class="fu">scan_data</span><span class="op">(</span>tbl <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/storms.html" class="external-link">storms</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

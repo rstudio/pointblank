@@ -78,7 +78,7 @@ ends_with(), contains(), matches(), and everything()."><meta property="og:image"
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -93,7 +93,7 @@ ends_with(), contains(), matches(), and everything()."><meta property="og:image"
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Are row data complete?</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/rows_complete.R"><code>R/rows_complete.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/rows_complete.R" class="external-link"><code>R/rows_complete.R</code></a></small>
     <div class="hidden name"><code>rows_complete.Rd</code></div>
     </div>
 
@@ -109,9 +109,9 @@ data frames, tibbles, database tables (<code>tbl_dbi</code>), and Spark DataFram
 (<code>tbl_spark</code>). As a validation step or as an expectation, this will operate
 over the number of test units that is equal to the number of rows in the
 table (after any <code>preconditions</code> have been applied).</p>
-<p>We can specify the constraining column names in quotes, in <code><a href="https://dplyr.tidyverse.org/reference/vars.html">vars()</a></code>, and with
-the following <strong>tidyselect</strong> helper functions: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html">everything()</a></code>.</p>
+<p>We can specify the constraining column names in quotes, in <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>, and with
+the following <strong>tidyselect</strong> helper functions: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">rows_complete</span><span class="op">(</span>
@@ -135,33 +135,35 @@ the following <strong>tidyselect</strong> helper functions: <code><a href="https
 
 <span class="fu">test_rows_complete</span><span class="op">(</span><span class="va">object</span>, columns <span class="op">=</span> <span class="cn">NULL</span>, preconditions <span class="op">=</span> <span class="cn">NULL</span>, threshold <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), Spark DataFrame
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>x</dt>
+<dd><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), Spark DataFrame
 (<code>tbl_spark</code>), or, an <em>agent</em> object of class <code>ptblank_agent</code> that is
-created with <code><a href="create_agent.html">create_agent()</a></code>.</p></td>
-    </tr><tr><th>columns</th>
-      <td><p>The column (or a set of columns, provided as a character
-vector) to which this validation should be applied.</p></td>
-    </tr><tr><th>preconditions</th>
-      <td><p>An optional expression for mutating the input table
+created with <code><a href="create_agent.html">create_agent()</a></code>.</p></dd>
+<dt>columns</dt>
+<dd><p>The column (or a set of columns, provided as a character
+vector) to which this validation should be applied.</p></dd>
+<dt>preconditions</dt>
+<dd><p>An optional expression for mutating the input table
 before proceeding with the validation. This can either be provided as a
 one-sided R formula using a leading <code>~</code> (e.g.,
 <code>~ . %&gt;% dplyr::mutate(col = col + 10)</code> or as a function (e.g.,
 <code>function(x) dplyr::mutate(x, col = col + 10)</code>. See the <em>Preconditions</em>
-section for more information.</p></td>
-    </tr><tr><th>segments</th>
-      <td><p>An optional expression or set of expressions (held in a list)
+section for more information.</p></dd>
+<dt>segments</dt>
+<dd><p>An optional expression or set of expressions (held in a list)
 that serve to segment the target table by column values. Each expression
 can be given in one of two ways: (1) as column names, or (2) as a two-sided
 formula where the LHS holds a column name and the RHS contains the column
-values to segment on. See the <em>Segments</em> section for more details on this.</p></td>
-    </tr><tr><th>actions</th>
-      <td><p>A list containing threshold levels so that the validation step
+values to segment on. See the <em>Segments</em> section for more details on this.</p></dd>
+<dt>actions</dt>
+<dd><p>A list containing threshold levels so that the validation step
 can react accordingly when exceeding the set levels. This is to be created
-with the <code><a href="action_levels.html">action_levels()</a></code> helper function.</p></td>
-    </tr><tr><th>step_id</th>
-      <td><p>One or more optional identifiers for the single or multiple
+with the <code><a href="action_levels.html">action_levels()</a></code> helper function.</p></dd>
+<dt>step_id</dt>
+<dd><p>One or more optional identifiers for the single or multiple
 validation steps generated from calling a validation function. The use of
 step IDs serves to distinguish validation steps from each other and provide
 an opportunity for supplying a more meaningful label compared to the step
@@ -171,19 +173,19 @@ more values can be provided, and the exact number of ID values should (1)
 match the number of validation steps that the validation function call will
 produce (influenced by the number of <code>columns</code> provided), (2) be an ID
 string not used in any previous validation step, and (3) be a vector with
-unique values.</p></td>
-    </tr><tr><th>label</th>
-      <td><p>An optional label for the validation step. This label appears in
-the <em>agent</em> report and for the best appearance it should be kept short.</p></td>
-    </tr><tr><th>brief</th>
-      <td><p>An optional, text-based description for the validation step. If
+unique values.</p></dd>
+<dt>label</dt>
+<dd><p>An optional label for the validation step. This label appears in
+the <em>agent</em> report and for the best appearance it should be kept short.</p></dd>
+<dt>brief</dt>
+<dd><p>An optional, text-based description for the validation step. If
 nothing is provided here then an <em>autobrief</em> is generated by the <em>agent</em>,
 using the language provided in <code><a href="create_agent.html">create_agent()</a></code>'s <code>lang</code> argument (which
 defaults to <code>"en"</code> or English). The <em>autobrief</em> incorporates details of the
 validation step so it's often the preferred option in most cases (where a
-<code>label</code> might be better suited to succinctly describe the validation).</p></td>
-    </tr><tr><th>active</th>
-      <td><p>A logical value indicating whether the validation step should
+<code>label</code> might be better suited to succinctly describe the validation).</p></dd>
+<dt>active</dt>
+<dd><p>A logical value indicating whether the validation step should
 be active. If the validation function is working with an <em>agent</em>, <code>FALSE</code>
 will make the validation step inactive (still reporting its presence and
 keeping indexes for the steps unchanged). If the validation function will
@@ -195,13 +197,13 @@ evaluate to a single logical value. With this approach, the <strong>pointblank</
 function <code><a href="has_columns.html">has_columns()</a></code> can be used to determine whether to make a
 validation step active on the basis of one or more columns existing in the
 table (e.g., <code>~ . %&gt;% has_columns(vars(d, e))</code>). The default for <code>active</code>
-is <code>TRUE</code>.</p></td>
-    </tr><tr><th>object</th>
-      <td><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), or Spark
+is <code>TRUE</code>.</p></dd>
+<dt>object</dt>
+<dd><p>A data frame, tibble (<code>tbl_df</code> or <code>tbl_dbi</code>), or Spark
 DataFrame (<code>tbl_spark</code>) that serves as the target table for the expectation
-function or the test function.</p></td>
-    </tr><tr><th>threshold</th>
-      <td><p>A simple failure threshold value for use with the
+function or the test function.</p></dd>
+<dt>threshold</dt>
+<dd><p>A simple failure threshold value for use with the
 expectation (<code>expect_</code>) and the test (<code>test_</code>) function variants. By
 default, this is set to <code>1</code> meaning that any single unit of failure in data
 validation results in an overall test failure. Whole numbers beyond <code>1</code>
@@ -209,17 +211,19 @@ indicate that any failing units up to that absolute threshold value will
 result in a succeeding <strong>testthat</strong> test or evaluate to <code>TRUE</code>. Likewise,
 fractional values (between <code>0</code> and <code>1</code>) act as a proportional failure
 threshold, where <code>0.15</code> means that 15 percent of failing test units results
-in an overall test failure.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+in an overall test failure.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>For the validation function, the return value is either a
 <code>ptblank_agent</code> object or a table object (depending on whether an agent
 object or a table was passed to <code>x</code>). The expectation function invisibly
 returns its input but, in the context of testing data, the function is
 called primarily for its potential side-effects (e.g., signaling failure).
 The test function returns a logical value.</p>
-    <h2 class="hasAnchor" id="preconditions"><a class="anchor" href="#preconditions"></a>Preconditions</h2>
-
+    </div>
+    <div id="preconditions">
+    <h2>Preconditions</h2>
     
 
 <p>Providing expressions as <code>preconditions</code> means <strong>pointblank</strong> will preprocess
@@ -236,8 +240,9 @@ table resides in a database). The code is most easily supplied as a one-sided
 <strong>R</strong> formula (using a leading <code>~</code>). In the formula representation, the <code>.</code>
 serves as the input data table to be transformed (e.g., <code>~ . %&gt;% dplyr::mutate(col_b = col_a + 10)</code>). Alternatively, a function could instead
 be supplied (e.g., <code>function(x) dplyr::mutate(x, col_b = col_a + 10)</code>).</p>
-    <h2 class="hasAnchor" id="segments"><a class="anchor" href="#segments"></a>Segments</h2>
-
+    </div>
+    <div id="segments">
+    <h2>Segments</h2>
     
 
 <p>By using the <code>segments</code> argument, it's possible to define a particular
@@ -262,8 +267,9 @@ mutate the target table), if any, are applied. With this type of one-two
 combo, it's possible to generate labels for segmentation using an expression
 for <code>preconditions</code> and refer to those labels in <code>segments</code> without having to
 generate a separate version of the target table.</p>
-    <h2 class="hasAnchor" id="actions"><a class="anchor" href="#actions"></a>Actions</h2>
-
+    </div>
+    <div id="actions">
+    <h2>Actions</h2>
     
 
 <p>Often, we will want to specify <code>actions</code> for the validation. This argument,
@@ -277,10 +283,11 @@ argument. This is especially true when <code>x</code> is a table object because,
 otherwise, nothing happens. For the <code>col_vals_*()</code>-type functions, using
 <code>action_levels(warn_at = 0.25)</code> or <code>action_levels(stop_at = 0.25)</code> are good
 choices depending on the situation (the first produces a warning when a
-quarter of the total test units fails, the other <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code>s at the same
+quarter of the total test units fails, the other <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code>s at the same
 threshold level).</p>
-    <h2 class="hasAnchor" id="briefs"><a class="anchor" href="#briefs"></a>Briefs</h2>
-
+    </div>
+    <div id="briefs">
+    <h2>Briefs</h2>
     
 
 <p>Want to describe this validation step in some detail? Keep in mind that this
@@ -288,8 +295,9 @@ is only useful if <code>x</code> is an <em>agent</em>. If that's the case, <code
 with some text that fits. Don't worry if you don't want to do it. The
 <em>autobrief</em> protocol is kicked in when <code>brief = NULL</code> and a simple brief will
 then be automatically generated.</p>
-    <h2 class="hasAnchor" id="yaml"><a class="anchor" href="#yaml"></a>YAML</h2>
-
+    </div>
+    <div id="yaml">
+    <h2>YAML</h2>
     
 
 <p>A <strong>pointblank</strong> agent can be written to YAML with <code><a href="yaml_write.html">yaml_write()</a></code> and the
@@ -330,13 +338,15 @@ Arguments with default values won't be written to YAML when using
 when generating the YAML by other means). It is also possible to preview the
 transformation of an agent to YAML without any writing to disk by using the
 <code><a href="yaml_agent_string.html">yaml_agent_string()</a></code> function.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>2-21</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other validation functions: 
 <code><a href="col_exists.html">col_exists</a>()</code>,
 <code><a href="col_is_character.html">col_is_character</a>()</code>,
@@ -370,15 +380,18 @@ transformation of an agent to YAML without any writing to disk by using the
 <code><a href="rows_distinct.html">rows_distinct</a>()</code>,
 <code><a href="serially.html">serially</a>()</code>,
 <code><a href="specially.html">specially</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create a simple table with three</span></span>
 <span class="r-in"><span class="co"># columns of numerical values</span></span>
 <span class="r-in"><span class="va">tbl</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
-<span class="r-in">    a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">8</span>, <span class="fl">7</span><span class="op">)</span>,</span>
-<span class="r-in">    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>,</span>
-<span class="r-in">    c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span class="r-in">    a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">8</span>, <span class="fl">7</span><span class="op">)</span>,</span>
+<span class="r-in">    b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">8</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span class="r-in">    c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Validate that when considering only</span></span>
@@ -387,7 +400,7 @@ transformation of an agent to YAML without any writing to disk by using the
 <span class="r-in"><span class="co"># rows have no `NA` values)</span></span>
 <span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
 <span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">rows_complete</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">rows_complete</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Determine if these column</span></span>
@@ -397,6 +410,7 @@ transformation of an agent to YAML without any writing to disk by using the
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

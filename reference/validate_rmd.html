@@ -76,7 +76,7 @@ options."><meta property="og:image" content="/logo.svg"><!-- mathjax --><script 
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -91,7 +91,7 @@ options."><meta property="og:image" content="/logo.svg"><!-- mathjax --><script 
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Modify <strong>pointblank</strong> validation testing options within R Markdown documents</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/validate_rmd.R"><code>R/validate_rmd.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/validate_rmd.R" class="external-link"><code>R/validate_rmd.R</code></a></small>
     <div class="hidden name"><code>validate_rmd.Rd</code></div>
     </div>
 
@@ -112,24 +112,28 @@ options.</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">validate_rmd</span><span class="op">(</span>summary <span class="op">=</span> <span class="cn">TRUE</span>, log_to_file <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>summary</th>
-      <td><p>If <code>TRUE</code> (the default), then there will be a leading summary
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>summary</dt>
+<dd><p>If <code>TRUE</code> (the default), then there will be a leading summary
 of all validations in the rendered R Markdown document. With <code>FALSE</code>, this
-element is not shown.</p></td>
-    </tr><tr><th>log_to_file</th>
-      <td><p>An option to log errors to a text file. By default, no
+element is not shown.</p></dd>
+<dt>log_to_file</dt>
+<dd><p>An option to log errors to a text file. By default, no
 logging is done but <code>TRUE</code> will write log entries to
 <code>"validation_errors.log"</code> in the working directory. To both enable logging
 and to specify a file name, include a path to a log file of the desired
-name.</p></td>
-    </tr></table><h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+name.</p></dd>
+</dl></div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>1-4</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Planning and Prep: 
 <code><a href="action_levels.html">action_levels</a>()</code>,
 <code><a href="create_agent.html">create_agent</a>()</code>,
@@ -141,6 +145,8 @@ name.</p></td>
 <code><a href="tbl_get.html">tbl_get</a>()</code>,
 <code><a href="tbl_source.html">tbl_source</a>()</code>,
 <code><a href="tbl_store.html">tbl_store</a>()</code></p></div>
+    </div>
+    </div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

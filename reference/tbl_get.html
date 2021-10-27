@@ -73,7 +73,7 @@ then have a look at the tbl_source() function."><meta property="og:image" conten
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,7 +88,7 @@ then have a look at the tbl_source() function."><meta property="og:image" conten
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Obtain a materialized table via a table store</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/tbl_store.R"><code>R/tbl_store.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/tbl_store.R" class="external-link"><code>R/tbl_store.R</code></a></small>
     <div class="hidden name"><code>tbl_get.Rd</code></div>
     </div>
 
@@ -106,25 +106,30 @@ then have a look at the <code><a href="tbl_source.html">tbl_source()</a></code> 
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">tbl_get</span><span class="op">(</span><span class="va">tbl</span>, store <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>tbl</th>
-      <td><p>The table to retrieve from a table <code>store</code>. This table could be
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>tbl</dt>
+<dd><p>The table to retrieve from a table <code>store</code>. This table could be
 identified by its name (e.g., <code>tbl = "large_table"</code>) or by supplying a
 reference using a subset (with <code>$</code>) of the <code>tbl_store</code> object (e.g., <code>tbl = store$large_table</code>). If using the latter method then nothing needs to be
-supplied to <code>store</code>.</p></td>
-    </tr><tr><th>store</th>
-      <td><p>Either a table store object created by the <code><a href="tbl_store.html">tbl_store()</a></code>
-function or a path to a table store YAML file created by <code><a href="yaml_write.html">yaml_write()</a></code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+supplied to <code>store</code>.</p></dd>
+<dt>store</dt>
+<dd><p>Either a table store object created by the <code><a href="tbl_store.html">tbl_store()</a></code>
+function or a path to a table store YAML file created by <code><a href="yaml_write.html">yaml_write()</a></code>.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A table object.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>1-10</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Planning and Prep: 
 <code><a href="action_levels.html">action_levels</a>()</code>,
 <code><a href="create_agent.html">create_agent</a>()</code>,
@@ -136,9 +141,12 @@ function or a path to a table store YAML file created by <code><a href="yaml_wri
 <code><a href="tbl_source.html">tbl_source</a>()</code>,
 <code><a href="tbl_store.html">tbl_store</a>()</code>,
 <code><a href="validate_rmd.html">validate_rmd</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+    <div id="examples">
+    <h2>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Define a `tbl_store` object by adding</span></span>
 <span class="r-in"><span class="co"># table-prep formulas in `tbl_store()`</span></span>
@@ -155,8 +163,8 @@ function or a path to a table store YAML file created by <code><a href="yaml_wri
 <span class="r-in">      dbtype <span class="op">=</span> <span class="st">"postgres"</span>,</span>
 <span class="r-in">      host <span class="op">=</span> <span class="st">"hh-pgsql-public.ebi.ac.uk"</span>,</span>
 <span class="r-in">      port <span class="op">=</span> <span class="fl">5432</span>,</span>
-<span class="r-in">      user <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="st">"reader"</span><span class="op">)</span>,</span>
-<span class="r-in">      password <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="st">"NWDMCE5xdipIjRrp"</span><span class="op">)</span></span>
+<span class="r-in">      user <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"reader"</span><span class="op">)</span>,</span>
+<span class="r-in">      password <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="st">"NWDMCE5xdipIjRrp"</span><span class="op">)</span></span>
 <span class="r-in">    <span class="op">)</span>,</span>
 <span class="r-in">    <span class="va">all_revenue</span> <span class="op">~</span> <span class="fu"><a href="db_tbl.html">db_tbl</a></span><span class="op">(</span></span>
 <span class="r-in">      table <span class="op">=</span> <span class="fu"><a href="file_tbl.html">file_tbl</a></span><span class="op">(</span></span>
@@ -188,6 +196,7 @@ function or a path to a table store YAML file created by <code><a href="yaml_wri
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

@@ -114,7 +114,7 @@
       <h1 data-toc-skip>Intro to Information Management</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/vignettes/INFO-1.Rmd" class="external-link"><code>vignettes/INFO-1.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/vignettes/INFO-1.Rmd" class="external-link"><code>vignettes/INFO-1.Rmd</code></a></small>
       <div class="hidden name"><code>INFO-1.Rmd</code></div>
 
     </div>
@@ -122,9 +122,9 @@
     
     
 <p>With the <em>Information Management</em> workflow, table information can be synthesized, giving us a snapshot of a data table we care to collect information on. The <strong>pointblank</strong> <em>informant</em> is given a series of information functions to define portions of information about a table. This <em>info text</em> can pertain to individual columns, the table as a whole, and whatever additional information makes sense for your organization. We can even glean little snippets of information from the target table and mix them into the <em>info text</em> to make the overall information more dynamic.</p>
-<div id="starting-with-a-simple-example" class="section level1">
-<h1 class="hasAnchor">
-<a href="#starting-with-a-simple-example" class="anchor" aria-hidden="true"></a>Starting with a Simple Example</h1>
+<div class="section level1">
+<h1 id="starting-with-a-simple-example">Starting with a Simple Example<a class="anchor" aria-label="anchor" href="#starting-with-a-simple-example"></a>
+</h1>
 <p>This workflow is somewhat similar in concept and usage to the <strong>Data Quality Reporting</strong> Workflow (<strong>VALID-I</strong>). Instead of an <em>agent</em>, we use an <em>informant</em> and we get that informant with the <code><a href="../reference/create_informant.html">create_informant()</a></code> function. We point the <em>informant</em> to a target table and this can be a data frame, a tibble, a database table (as a <code>tbl_dbi</code> object), or a Spark DataFrame (as a <code>tbl_spark</code> object).</p>
 <p>The <code>small_table</code> dataset is included in the <strong>pointblank</strong> package. It’s a small, uninteresting dataset but it’s useful for simple examples. This is what it looks like:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -205,9 +205,8 @@
 <p><br></p>
 <p>As can be seen, the report is a bit more filled out with information. The <strong>TABLE</strong> and <strong>COLUMNS</strong> sections are in their prescribed order and the new section we named <strong>FURTHER INFORMATION</strong> follows those (and it has one subsection called <strong>EXAMPLES and DOCUMENTATION</strong>). Let’s explore how each of the three different <code>info_*()</code> functions work.</p>
 </div>
-<div id="the-table-section-and-info_tabular" class="section level1">
-<h1 class="hasAnchor">
-<a href="#the-table-section-and-info_tabular" class="anchor" aria-hidden="true"></a>The <strong>TABLE</strong> Section and <code>info_tabular()</code>
+<div class="section level1">
+<h1 id="the-table-section-and-info_tabular">The <strong>TABLE</strong> Section and <code>info_tabular()</code><a class="anchor" aria-label="anchor" href="#the-table-section-and-info_tabular"></a>
 </h1>
 <p>The <code><a href="../reference/info_tabular.html">info_tabular()</a></code> function adds information to the <strong>TABLE</strong> section. We use named arguments to define subsection names and their content. In the previous example <code>info_tabular(description = "This table is included in the **pointblank** pkg.")</code> was used to make the <strong>DESCRIPTION</strong> subsection (all section titles are automatically capitalized), and the <em>info text</em> is the Markdown text <code>"This table is included in the **pointblank** pkg."</code>. We can define as many subsections to the <strong>TABLE</strong> section as we need, either in the same <code><a href="../reference/info_tabular.html">info_tabular()</a></code> call or across multiple calls. If we want to use more complicated subsection names than a single word, then we can enclose that text in back ticks. For example, why not put some emoji in your subsection name?</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -229,9 +228,8 @@ This is an excerpt of the complete report, showing just the report header and th
 <li>information on the frequency of updates</li>
 </ul>
 </div>
-<div id="the-columns-section-and-info_columns" class="section level1">
-<h1 class="hasAnchor">
-<a href="#the-columns-section-and-info_columns" class="anchor" aria-hidden="true"></a>The <strong>COLUMNS</strong> Section and <code>info_columns()</code>
+<div class="section level1">
+<h1 id="the-columns-section-and-info_columns">The <strong>COLUMNS</strong> Section and <code>info_columns()</code><a class="anchor" aria-label="anchor" href="#the-columns-section-and-info_columns"></a>
 </h1>
 <p>The section that follows the <strong>TABLE</strong> section is <strong>COLUMNS</strong>. This section provides an opportunity to describe each table column in as much detail as necessary. Here, individual columns serve as subsections (automatically generated upon using <code><a href="../reference/create_informant.html">create_informant()</a></code>) and there can be subsections within each column as well.</p>
 <p>The interesting thing about the information provided here via <code><a href="../reference/info_columns.html">info_columns()</a></code> is that the information is additive. We can make multiple calls of <code><a href="../reference/info_columns.html">info_columns()</a></code> and disperse common pieces of <em>info text</em> to multiple columns and append the text to any existing. Let’s take a look at this in practice with the far more interesting <code>palmerpenguins::penguins</code> dataset. Here, we fill in information for each column by adapting <a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">documentation</a> from the <strong>palmerpenguins</strong> package.</p>
@@ -300,9 +298,8 @@ species, A factor denoting penguin species (Adélie, Chinstrap, and Gentoo); (2)
 <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>: Select all columns.</li>
 </ul>
 </div>
-<div id="extra-sections-and-info_section" class="section level1">
-<h1 class="hasAnchor">
-<a href="#extra-sections-and-info_section" class="anchor" aria-hidden="true"></a>Extra Sections and <code>info_section()</code>
+<div class="section level1">
+<h1 id="extra-sections-and-info_section">Extra Sections and <code>info_section()</code><a class="anchor" aria-label="anchor" href="#extra-sections-and-info_section"></a>
 </h1>
 <p>For all that information that we can’t or don’t want to put in the <strong>TABLE</strong> or <strong>COLUMNS</strong> sections, we can place it extra sections (and their subsections) with the <code><a href="../reference/info_section.html">info_section()</a></code> function. These sections go below the aforementioned sections in the order of creation. Let’s put together some extra sections that further describe the <code>palmerpenguins::penguins</code> dataset.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -377,7 +374,7 @@ This is an excerpt of the complete report, showing just the <strong>SOURCE</stro
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>

@@ -69,7 +69,7 @@ second column, &quot;value&quot;, contains the row and column counts."><meta pro
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -84,7 +84,7 @@ second column, &quot;value&quot;, contains the row and column counts."><meta pro
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Table Transformer: get the dimensions of a table</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/table_transformers.R"><code>R/table_transformers.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/table_transformers.R" class="external-link"><code>R/table_transformers.R</code></a></small>
     <div class="hidden name"><code>tt_tbl_dims.Rd</code></div>
     </div>
 
@@ -98,20 +98,25 @@ second column, <code>"value"</code>, contains the row and column counts.</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">tt_tbl_dims</span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>tbl</th>
-      <td><p>A table object to be used as input for the transformation. This
-can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>tbl</dt>
+<dd><p>A table object to be used as input for the transformation. This
+can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spark</code> object.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A <code>tibble</code> object.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>12-3</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Table Transformers: 
 <code><a href="get_tt_param.html">get_tt_param</a>()</code>,
 <code><a href="tt_string_info.html">tt_string_info</a>()</code>,
@@ -119,8 +124,11 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
 <code><a href="tt_tbl_colnames.html">tt_tbl_colnames</a>()</code>,
 <code><a href="tt_time_shift.html">tt_time_shift</a>()</code>,
 <code><a href="tt_time_slice.html">tt_time_slice</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Get the dimensions of the</span></span>
 <span class="r-in"><span class="co"># `game_revenue` dataset that's</span></span>
 <span class="r-in"><span class="co"># included in the package</span></span>
@@ -137,9 +145,9 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
 <span class="r-in"><span class="co"># we check that `game_revenue` has</span></span>
 <span class="r-in"><span class="co"># at least 1500 rows</span></span>
 <span class="r-in"><span class="fu">tt_tbl_dims</span><span class="op">(</span><span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.param.</span> <span class="op">==</span> <span class="st">"rows"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.param.</span> <span class="op">==</span> <span class="st">"rows"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_vals_gt.html">test_col_vals_gt</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,</span>
+<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,</span>
 <span class="r-in">    value <span class="op">=</span> <span class="fl">1500</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
@@ -147,14 +155,15 @@ can be a data frame, a tibble, a <code>tbl_dbi</code> object, or a <code>tbl_spa
 <span class="r-in"><span class="co"># We can check `small_table` for</span></span>
 <span class="r-in"><span class="co"># an exact number of columns (`8`)</span></span>
 <span class="r-in"><span class="fu">tt_tbl_dims</span><span class="op">(</span><span class="va">small_table</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.param.</span> <span class="op">==</span> <span class="st">"columns"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.param.</span> <span class="op">==</span> <span class="st">"columns"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="col_vals_equal.html">test_col_vals_equal</a></span><span class="op">(</span></span>
-<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,</span>
+<span class="r-in">    columns <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,</span>
 <span class="r-in">    value <span class="op">=</span> <span class="fl">8</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

@@ -68,7 +68,7 @@ where GitHub URLs for raw user content are needed."><meta property="og:image" co
   <a href="../news/index.html">News</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/rich-iannone/pointblank/">
+  <a href="https://github.com/rich-iannone/pointblank/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -83,7 +83,7 @@ where GitHub URLs for raw user content are needed."><meta property="og:image" co
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Specify a file for download from GitHub</h1>
-    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/R/tbl_from_file.R"><code>R/tbl_from_file.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/R/tbl_from_file.R" class="external-link"><code>R/tbl_from_file.R</code></a></small>
     <div class="hidden name"><code>from_github.Rd</code></div>
     </div>
 
@@ -96,35 +96,43 @@ where GitHub URLs for raw user content are needed.</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">from_github</span><span class="op">(</span><span class="va">file</span>, <span class="va">repo</span>, subdir <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>file</th>
-      <td><p>The name of the file to target in a GitHub repository. This can
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>file</dt>
+<dd><p>The name of the file to target in a GitHub repository. This can
 be a path leading to and including the file. This is combined with any path
-given in <code>subdir</code>.</p></td>
-    </tr><tr><th>repo</th>
-      <td><p>The GitHub repository address in the format
-<code>username/repo[/subdir][@ref|#pull|@*release]</code>.</p></td>
-    </tr><tr><th>subdir</th>
-      <td><p>A path string representing a subdirectory in the GitHub
-repository. This is combined with any path components included in <code>file</code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+given in <code>subdir</code>.</p></dd>
+<dt>repo</dt>
+<dd><p>The GitHub repository address in the format
+<code>username/repo[/subdir][@ref|#pull|@*release]</code>.</p></dd>
+<dt>subdir</dt>
+<dd><p>A path string representing a subdirectory in the GitHub
+repository. This is combined with any path components included in <code>file</code>.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A character vector of length 1 that contains a URL.</p>
-    <h2 class="hasAnchor" id="function-id"><a class="anchor" href="#function-id"></a>Function ID</h2>
-
+    </div>
+    <div id="function-id">
+    <h2>Function ID</h2>
     
 
 <p>13-6</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other Utility and Helper Functions: 
 <code><a href="affix_datetime.html">affix_datetime</a>()</code>,
 <code><a href="affix_date.html">affix_date</a>()</code>,
 <code><a href="col_schema.html">col_schema</a>()</code>,
 <code><a href="has_columns.html">has_columns</a>()</code>,
 <code><a href="stop_if_not.html">stop_if_not</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># A valid URL to a data file in GitHub can be</span></span>
 <span class="r-in"><span class="co"># obtained from the HEAD of the default branch</span></span>
 <span class="r-in"><span class="co"># from_github(</span></span>
@@ -186,6 +194,7 @@ repository. This is combined with any path components included in <code>file</co
 <span class="r-in"></span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

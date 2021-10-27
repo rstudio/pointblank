@@ -114,7 +114,7 @@
       <h1 data-toc-skip>Introduction to the <strong>Data Quality Reporting</strong> Workflow (<strong>VALID-I</strong>)</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/master/vignettes/VALID-I.Rmd" class="external-link"><code>vignettes/VALID-I.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rich-iannone/pointblank/blob/HEAD/vignettes/VALID-I.Rmd" class="external-link"><code>vignettes/VALID-I.Rmd</code></a></small>
       <div class="hidden name"><code>VALID-I.Rmd</code></div>
 
     </div>
@@ -123,9 +123,8 @@
     
 <p><img src="images/VALID-I.svg" width="100%"></p>
 <p>When trying to assess the state of data quality for tabular data, we want to perform a full accounting of assertions on the data without stopping anywhere in the interrogation of the data. We use an object called an <em>agent</em> to collect our validation instructions, perform the interrogation, and then serve as an artifact for reporting or further analysis. We give that agent the name or a function that retrieves the target table. The types of data tables that can be used include data frames, tibbles, database tables (<code>tbl_dbi</code>), and Spark DataFrames (<code>tbl_spark</code>).</p>
-<div id="the-elements-of-this-workflow-an-agent-validation-functions-and-interrogate" class="section level1">
-<h1 class="hasAnchor">
-<a href="#the-elements-of-this-workflow-an-agent-validation-functions-and-interrogate" class="anchor" aria-hidden="true"></a>The Elements of this Workflow: an <em>agent</em>, validation functions, and <code>interrogate()</code>
+<div class="section level1">
+<h1 id="the-elements-of-this-workflow-an-agent-validation-functions-and-interrogate">The Elements of this Workflow: an <em>agent</em>, validation functions, and <code>interrogate()</code><a class="anchor" aria-label="anchor" href="#the-elements-of-this-workflow-an-agent-validation-functions-and-interrogate"></a>
 </h1>
 <p>The <em>agent</em> that we need for this workflow is created with the <code><a href="../reference/create_agent.html">create_agent()</a></code> function. An agent can handle one target table at any given time and two different arguments can be used to specify that table. The first is <code>tbl</code>, where the input table is directly supplied to the <em>agent</em>. Alternatively, a function can be used to read in the input data table with the <code>read_fn</code> argument in one of two ways: (1) using a function (e.g., <code>function() { &lt;table reading code&gt; }</code>) or, (2) with an <strong>R</strong> formula expression (e.g., <code>~ &lt;table reading code&gt;</code>).</p>
 <p>The <em>agent</em> needs directives on what to do with the table, so, we provide validation functions. Some check for the existence or type of column (<code><a href="../reference/col_exists.html">col_exists()</a></code> or the group of <code>col_is_*()</code> functions). Others check each cell in a column for satisfying a specific condition (the <code>col_vals_*()</code> functions). We can use as many of these as necessary for satisfactory validation testing of the table in question. There are certainly quite a few of them, so here’s a list of the validation functions with a questioning phrase for each function’s purpose:</p>
@@ -183,9 +182,9 @@
 </ul>
 <p>The final function that needs to be called is the <code><a href="../reference/interrogate.html">interrogate()</a></code> function. The validation functions, when called on an <em>agent</em> object, don’t act on the target table until <code><a href="../reference/interrogate.html">interrogate()</a></code> is used. Until interrogation, the usage of validation functions serves as instructions. During the interrogation phase those instructions turn into actions, with the <em>agent</em> then carrying out all steps of the interrogation plan.</p>
 </div>
-<div id="a-simple-example-with-the-basics" class="section level1">
-<h1 class="hasAnchor">
-<a href="#a-simple-example-with-the-basics" class="anchor" aria-hidden="true"></a>A Simple Example with the Basics</h1>
+<div class="section level1">
+<h1 id="a-simple-example-with-the-basics">A Simple Example with the Basics<a class="anchor" aria-label="anchor" href="#a-simple-example-with-the-basics"></a>
+</h1>
 <p>For our examples going forward, we’ll use the <code>small_table</code> dataset. It’s included in the <strong>pointblank</strong> package. It isn’t very large, which makes it great for simple examples. Here it is in its entirety:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">small_table</span></code></pre></div>
@@ -252,9 +251,9 @@
 ##  [38;5;250m1 [39m 2016-01-04  [38;5;246m00:32:00 [39m 2016-01-04     3 5-egh-163     8  [4m1 [24m [4m0 [24m000. TRUE  low</code></pre>
 <p>Recall that validation <em>step 5</em> asserted that all values in column <code>d</code> should be between <code>0</code> and <code>5000</code>, however, this extract of <code>small_table</code> shows that column <code>d</code> has a value of <code>10000</code> which lies outside the specified range.</p>
 </div>
-<div id="using-threshold-levels-and-actions" class="section level1">
-<h1 class="hasAnchor">
-<a href="#using-threshold-levels-and-actions" class="anchor" aria-hidden="true"></a>Using Threshold Levels and Actions</h1>
+<div class="section level1">
+<h1 id="using-threshold-levels-and-actions">Using Threshold Levels and Actions<a class="anchor" aria-label="anchor" href="#using-threshold-levels-and-actions"></a>
+</h1>
 <p>It can be useful to gauge data quality by setting failure thresholds for validation steps. For example, it may be acceptable at some point in time to tolerate up to 5% of failing test units for a given validation. Or, having several levels of data quality might be useful and instructive, where failing test units across validations are grouped into the 0-5%, 5-10%, and 10%- bands.</p>
 <p>We can specify failure threshold levels with the <code><a href="../reference/action_levels.html">action_levels()</a></code> function. Using the function generates an <code>action_levels</code> object that can be passed to the <code>actions</code> argument of <code><a href="../reference/create_agent.html">create_agent()</a></code> (thereby creating a default for every validation step). In the following, we use relative values (as real numbers between <code>0</code> and <code>1</code>) to define thresholds for the <code>WARN</code> and <code>STOP</code> conditions.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -389,7 +388,7 @@ $lang (chr [1])
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>

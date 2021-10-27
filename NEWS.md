@@ -1,5 +1,27 @@
 # pointblank (development version)
 
+## New features
+
+* The new `rows_complete()` validation function (along with the `expect_rows_complete()` and `test_rows_complete()` expectation and test variants) check whether rows contain any `NA`/`NULL` values (optionally constrained to a selection of specified `columns`).
+
+* The new function `serially()` (along with `expect_serially()` and `test_serially()`) allows for a series of tests to run in sequence before either culminating in a final validation step or simply exiting the series. This construction allows for pre-testing that may make sense before a validation step. For example, there may be situations where it's vital to check a column type before performing a validation on the same column.
+
+* The `specially()`/`expect_specially()`/`test_specially()` functions enable custom validations/tests/expectations with a user-defined function. We still have `preconditions` and other common args available for convenience. The great thing about this is that because we require the UDF to return a logical vector of passing/failing test units (or a table where the rightmost column is logical), we can incorporate the results quite easily in the standard **pointblank** reporting.
+
+* The `info_columns_from_tbl()` function is a super-convenient wrapper for the `info_columns()` function. Say you're making a data dictionary with an *informant* and you already have the table metadata somewhere as a table: you can use that here and not have to call `info_columns()` many, many times.
+
+* Added the `game_revenue_info` dataset which contains metadata for the extant `game_revenue` dataset. Both datasets pair nicely together in examples that create a data dictionary with `create_informant()` and `info_columns_from_tbl()`.
+
+* Added the table transformer function `tt_tbl_colnames()` to get a table's column names for validation.
+
+## Minor improvements and bug fixes
+
+* Input data tables with `label` attribute values in their columns will be displayed in the 'Variables' section of the `scan_data()` report. This is useful when scanning importing SAS tables (which often have labeled variables).
+
+* The `all_passed()` function has been improved such that failed validation steps (that return an evaluation error, perhaps because of a missing column) result in `FALSE`; the `i` argument has been added to `all_passed()` to optionally get a subset of validation steps before evaluation.
+
+* For those `expect_*()` functions that can handle multiple columns, **pointblank** now correctly stops at the first failure and provides the correct reporting for that. Passing multiple columns really should mean processing multiple steps in serial, and previously this was handled incorrectly.
+
 # pointblank 0.8.0
 
 ## New features

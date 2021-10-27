@@ -197,22 +197,22 @@
 <p>Let’s have some examples before leaving this article. They will all use our <code>small_table</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">small_table</span></code></pre></div>
-<pre><code>##  [38;5;246m# A tibble: 13 × 8 [39m
-##    date_time           date           a b             c      d e     f    
-##     [3m [38;5;246m&lt;dttm&gt; [39m [23m               [3m [38;5;246m&lt;date&gt; [39m [23m      [3m [38;5;246m&lt;int&gt; [39m [23m  [3m [38;5;246m&lt;chr&gt; [39m [23m      [3m [38;5;246m&lt;dbl&gt; [39m [23m   [3m [38;5;246m&lt;dbl&gt; [39m [23m  [3m [38;5;246m&lt;lgl&gt; [39m [23m  [3m [38;5;246m&lt;chr&gt; [39m [23m
-##  [38;5;250m 1 [39m 2016-01-04  [38;5;246m11:00:00 [39m 2016-01-04     2 1-bcd-345     3   [4m3 [24m423. TRUE  high 
-##  [38;5;250m 2 [39m 2016-01-04  [38;5;246m00:32:00 [39m 2016-01-04     3 5-egh-163     8  [4m1 [24m [4m0 [24m000. TRUE  low  
-##  [38;5;250m 3 [39m 2016-01-05  [38;5;246m13:32:00 [39m 2016-01-05     6 8-kdg-938     3   [4m2 [24m343. TRUE  high 
-##  [38;5;250m 4 [39m 2016-01-06  [38;5;246m17:23:00 [39m 2016-01-06     2 5-jdo-903     [31mNA [39m   [4m3 [24m892. FALSE mid  
-##  [38;5;250m 5 [39m 2016-01-09  [38;5;246m12:36:00 [39m 2016-01-09     8 3-ldm-038     7   284. TRUE  low  
-##  [38;5;250m 6 [39m 2016-01-11  [38;5;246m06:15:00 [39m 2016-01-11     4 2-dhe-923     4   [4m3 [24m291. TRUE  mid  
-##  [38;5;250m 7 [39m 2016-01-15  [38;5;246m18:46:00 [39m 2016-01-15     7 1-knw-093     3   843. TRUE  high 
-##  [38;5;250m 8 [39m 2016-01-17  [38;5;246m11:27:00 [39m 2016-01-17     4 5-boe-639     2   [4m1 [24m036. FALSE low  
-##  [38;5;250m 9 [39m 2016-01-20  [38;5;246m04:30:00 [39m 2016-01-20     3 5-bce-642     9   838. FALSE high 
-##  [38;5;250m10 [39m 2016-01-20  [38;5;246m04:30:00 [39m 2016-01-20     3 5-bce-642     9   838. FALSE high 
-##  [38;5;250m11 [39m 2016-01-26  [38;5;246m20:07:00 [39m 2016-01-26     4 2-dmx-010     7   834. TRUE  low  
-##  [38;5;250m12 [39m 2016-01-28  [38;5;246m02:51:00 [39m 2016-01-28     2 7-dmx-010     8   108. FALSE low  
-##  [38;5;250m13 [39m 2016-01-30  [38;5;246m11:23:00 [39m 2016-01-30     1 3-dka-303     [31mNA [39m   [4m2 [24m230. TRUE  high</code></pre>
+<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 13 × 8</span></span>
+<span class="co">##    date_time           date           a b             c      d e     f    </span>
+<span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="co">## <span style="color: #BCBCBC;"> 1</span> 2016-01-04 <span style="color: #949494;">11:00:00</span> 2016-01-04     2 1-bcd-345     3  <span style="text-decoration: underline;">3</span>423. TRUE  high </span>
+<span class="co">## <span style="color: #BCBCBC;"> 2</span> 2016-01-04 <span style="color: #949494;">00:32:00</span> 2016-01-04     3 5-egh-163     8 <span style="text-decoration: underline;">10</span>000. TRUE  low  </span>
+<span class="co">## <span style="color: #BCBCBC;"> 3</span> 2016-01-05 <span style="color: #949494;">13:32:00</span> 2016-01-05     6 8-kdg-938     3  <span style="text-decoration: underline;">2</span>343. TRUE  high </span>
+<span class="co">## <span style="color: #BCBCBC;"> 4</span> 2016-01-06 <span style="color: #949494;">17:23:00</span> 2016-01-06     2 5-jdo-903    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">3</span>892. FALSE mid  </span>
+<span class="co">## <span style="color: #BCBCBC;"> 5</span> 2016-01-09 <span style="color: #949494;">12:36:00</span> 2016-01-09     8 3-ldm-038     7   284. TRUE  low  </span>
+<span class="co">## <span style="color: #BCBCBC;"> 6</span> 2016-01-11 <span style="color: #949494;">06:15:00</span> 2016-01-11     4 2-dhe-923     4  <span style="text-decoration: underline;">3</span>291. TRUE  mid  </span>
+<span class="co">## <span style="color: #BCBCBC;"> 7</span> 2016-01-15 <span style="color: #949494;">18:46:00</span> 2016-01-15     7 1-knw-093     3   843. TRUE  high </span>
+<span class="co">## <span style="color: #BCBCBC;"> 8</span> 2016-01-17 <span style="color: #949494;">11:27:00</span> 2016-01-17     4 5-boe-639     2  <span style="text-decoration: underline;">1</span>036. FALSE low  </span>
+<span class="co">## <span style="color: #BCBCBC;"> 9</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
+<span class="co">## <span style="color: #BCBCBC;">10</span> 2016-01-20 <span style="color: #949494;">04:30:00</span> 2016-01-20     3 5-bce-642     9   838. FALSE high </span>
+<span class="co">## <span style="color: #BCBCBC;">11</span> 2016-01-26 <span style="color: #949494;">20:07:00</span> 2016-01-26     4 2-dmx-010     7   834. TRUE  low  </span>
+<span class="co">## <span style="color: #BCBCBC;">12</span> 2016-01-28 <span style="color: #949494;">02:51:00</span> 2016-01-28     2 7-dmx-010     8   108. FALSE low  </span>
+<span class="co">## <span style="color: #BCBCBC;">13</span> 2016-01-30 <span style="color: #949494;">11:23:00</span> 2016-01-30     1 3-dka-303    <span style="color: #BB0000;">NA</span>  <span style="text-decoration: underline;">2</span>230. TRUE  high</span></code></pre>
 <p>If you’d like to test your <strong>pointblank</strong> validation skill, guess whether each of these is <code>TRUE</code> or <code>FALSE</code> before hovering over the line of code. <br><br></p>
 
 <style>

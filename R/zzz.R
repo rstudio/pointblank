@@ -94,6 +94,7 @@ utils::globalVariables(
     "Frequency",
     "head.ref",
     "i",
+    "info",
     "item",
     "i_o",
     "interrogation_notes",

@@ -18,7 +18,7 @@
 
 ## Minor improvements and bug fixes
 
-* Input data tables with `label` attribute values in their columns will be displayed in the 'Variables' section of the `scan_data()` report. This is useful when scanning importing SAS tables (which often have labeled variables).
+* Input data tables with `label` attribute values in their columns will be displayed in the 'Variables' section of the `scan_data()` report. This is useful when scanning imported SAS tables (which often have labeled variables).
 
 * The `all_passed()` function has been improved such that failed validation steps (that return an evaluation error, perhaps because of a missing column) result in `FALSE`; the `i` argument has been added to `all_passed()` to optionally get a subset of validation steps before evaluation.
 

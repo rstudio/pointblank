@@ -3,7 +3,7 @@
 \docType{data}
 \name{game_revenue_info}
 \alias{game_revenue_info}
-\title{A table with game revenue data}
+\title{A table with metadata for the \code{game_revenue} dataset}
 \format{
 A tibble with 11 rows and 2 variables:
 \describe{
@@ -20,7 +20,8 @@ game_revenue_info
 This table contains metadata for the \code{game_revenue} table. The first column
 (named \code{column}) provides the column names from \code{game_revenue}. The second
 column (\code{info}) contains descriptions for each of the columns in that
-dataset.
+dataset. This table is in the correct format for use in the
+\code{\link[=info_columns_from_tbl]{info_columns_from_tbl()}} function.
 }
 \section{Function ID}{
 

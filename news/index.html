@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pointblank</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Development version">0.9.0</span>
       </span>
     </div>
 
@@ -84,9 +84,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="development version" id="pointblank-development-version">pointblank (development version)<a class="anchor" aria-label="anchor" href="#pointblank-development-version"></a></h2>
+<h2 class="page-header" data-toc-text="0.9.0" id="pointblank-090">pointblank 0.9.0<small>2021-10-28</small><a class="anchor" aria-label="anchor" href="#pointblank-090"></a></h2>
 <div class="section level3">
-<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<h3 id="new-features-0-9-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-9-0"></a></h3>
 <ul><li><p>The new <code><a href="../reference/rows_complete.html">rows_complete()</a></code> validation function (along with the <code><a href="../reference/rows_complete.html">expect_rows_complete()</a></code> and <code><a href="../reference/rows_complete.html">test_rows_complete()</a></code> expectation and test variants) check whether rows contain any <code>NA</code>/<code>NULL</code> values (optionally constrained to a selection of specified <code>columns</code>).</p></li>
 <li><p>The new function <code><a href="../reference/serially.html">serially()</a></code> (along with <code><a href="../reference/serially.html">expect_serially()</a></code> and <code><a href="../reference/serially.html">test_serially()</a></code>) allows for a series of tests to run in sequence before either culminating in a final validation step or simply exiting the series. This construction allows for pre-testing that may make sense before a validation step. For example, there may be situations where it’s vital to check a column type before performing a validation on the same column.</p></li>
 <li><p>The <code><a href="../reference/specially.html">specially()</a></code>/<code><a href="../reference/specially.html">expect_specially()</a></code>/<code><a href="../reference/specially.html">test_specially()</a></code> functions enable custom validations/tests/expectations with a user-defined function. We still have <code>preconditions</code> and other common args available for convenience. The great thing about this is that because we require the UDF to return a logical vector of passing/failing test units (or a table where the rightmost column is logical), we can incorporate the results quite easily in the standard <strong>pointblank</strong> reporting.</p></li>
@@ -95,7 +95,7 @@
 <li><p>Added the table transformer function <code><a href="../reference/tt_tbl_colnames.html">tt_tbl_colnames()</a></code> to get a table’s column names for validation.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
+<h3 id="minor-improvements-and-bug-fixes-0-9-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-0-9-0"></a></h3>
 <ul><li><p>Input data tables with <code>label</code> attribute values in their columns will be displayed in the ‘Variables’ section of the <code><a href="../reference/scan_data.html">scan_data()</a></code> report. This is useful when scanning importing SAS tables (which often have labeled variables).</p></li>
 <li><p>The <code><a href="../reference/all_passed.html">all_passed()</a></code> function has been improved such that failed validation steps (that return an evaluation error, perhaps because of a missing column) result in <code>FALSE</code>; the <code>i</code> argument has been added to <code><a href="../reference/all_passed.html">all_passed()</a></code> to optionally get a subset of validation steps before evaluation.</p></li>
 <li><p>For those <code>expect_*()</code> functions that can handle multiple columns, <strong>pointblank</strong> now correctly stops at the first failure and provides the correct reporting for that. Passing multiple columns really should mean processing multiple steps in serial, and previously this was handled incorrectly.</p></li>

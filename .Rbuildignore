@@ -13,6 +13,7 @@
 ^CRAN-RELEASE$
 ^data-raw$
 ^tests/manual_tests$
+^inst/translations$
 vignettes
 ^codemeta\.json$
 ^LICENSE\.md$

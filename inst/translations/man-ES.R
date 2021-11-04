@@ -79,13 +79,13 @@
 #'   conjunto de declaraciones con `{ }`.
 #' 
 #' @examples 
-#' # For these examples, we will use the
-#' # included `small_table` dataset
+#' # Para estos ejemplos, usaremos el conjunto
+#' # de datos `small_table` incluido
 #' small_table
 #' 
-#' # Create an `action_levels` object
-#' # with fractional values for the
-#' # `warn`, `stop`, and `notify` states
+#' # Crea un objeto `action_levels` con valores
+#' # fraccionarios para el `warn_at`,
+#' # `stop_at` y `notify_at` estados
 #' al <- 
 #'   action_levels(
 #'     warn_at = 0.2,
@@ -93,14 +93,14 @@
 #'     notify_at = 0.5
 #'   )
 #'   
-#' # A summary of settings for the `al`
-#' # object is shown by printing it
+#' # Un resumen de la configuración de `al`
+#' # El objeto se muestra imprimiéndolo
 #' al
 #' 
-#' # Create a pointblank agent and
-#' # apply the `al` object to `actions`;
-#' # add two validation steps and
-#' # interrogate the `small_table`
+#' # Cree un agente a quemarropa y
+#' # aplicar el objeto `al` a las `actions`;
+#' # agregue dos pasos de validación y
+#' # interrogar a la `small_table`
 #' agent_1 <-
 #'   create_agent(
 #'     tbl = small_table,
@@ -114,22 +114,23 @@
 #'   ) %>%
 #'   interrogate()
 #' 
-#' # The report from the agent will show
-#' # that the `warn` state has been entered
-#' # for the first validation step but not
-#' # the second one; we can confirm this
-#' # in the console by inspecting the
-#' # `warn` component in the agent's x-list
+#' # El informe del agente mostrará
+#' # que se ha entrado en el estado de advertencia
+#' # para el primer paso de validación pero no
+#' # el segundo; podemos confirmar esto
+#' # en la consola inspeccionando el
+#' # Componente `warn` en la x-list del agente
 #' x_list <- get_agent_x_list(agent_1)
 #' x_list$warn
 #' 
-#' # Applying the `action_levels` object
-#' # to the agent means that all validation
-#' # steps will inherit these settings but
-#' # we can override this by applying
-#' # another such object to the validation
-#' # step instead (this time using the
-#' # `warn_on_fail()` shorthand)
+#' # Aplicar el objeto `action_levels`
+#' # para el agente significa que toda
+#' # validación los pasos heredarán esta
+#' # configuración, pero podemos anular
+#' # esto aplicando otro objeto similar a
+#' # la validación paso en su lugar (esta
+#' # vez usando el `warn_on_fail()`
+#' # abreviatura)
 #' agent_2 <-
 #'   create_agent(
 #'     tbl = small_table,
@@ -144,35 +145,35 @@
 #'   ) %>%
 #'   interrogate()
 #'
-#' # In this case, the first validation
-#' # step has a less stringent failure
-#' # threshold for the `warn` state and it's
-#' # high enough that the condition is not
-#' # entered; this can be confirmed in the
-#' # console through inspection of the
-#' # x-list `warn` component
+#' # En este caso, la primera validación
+#' # el paso tiene una falla menos estricta
+#' # umbral para el estado de advertencia y es
+#' # lo suficientemente alto como para que la
+#' # condición no sea ingresó; esto se puede
+#' # confirmar en el consola a través de la
+#' # inspección de la componente x-list `warn`
 #' x_list <- get_agent_x_list(agent_2)
 #' x_list$warn
 #'
 #' if (interactive()) {
 #'
-#' # In the context of using validation
-#' # functions directly on data (i.e., no
-#' # involvement of an agent) we want to
-#' # trigger warnings and raise errors; the
-#' # following will yield a warning if
-#' # it is executed (returning the
-#' # `small_table` data)
+#' # En el contexto del uso de la validación
+#' # funciona directamente en los datos (es
+#' # decir, no participación de un agente)
+#' # queremos desencadenar advertencias y
+#' # generar errores; los siguiente dará una
+#' # advertencia si se ejecuta (devolviendo el
+#' # datos de `small_table`)
 #' small_table %>%
 #'   col_vals_gt(
 #'     vars(a), value = 2,
 #'     actions = warn_on_fail(warn_at = 2)
 #'   )
 #' 
-#' # With the same pipeline, not supplying
-#' # anything for `actions` (it's `NULL` by
-#' # default) will have the same effect as
-#' # using `stop_on_fail(stop_at = 1)` 
+#' # Con el mismo oleoducto, no suministrando
+#' # cualquier cosa para `actions` (es` NULL`
+#' # por predeterminado) tendrá el mismo
+#' # efecto que usando `stop_on_fail (stop_at = 1)`
 #' small_table %>%
 #'   col_vals_gt(vars(a), value = 2)
 #' 
@@ -182,12 +183,13 @@
 #'     actions = stop_on_fail(stop_at = 1)
 #'   )
 #' 
-#' # This is because the `stop_on_fail()`
-#' # call is auto-injected in the default
-#' # case (when operating on data) for your
-#' # convenience; behind the scenes a
-#' # 'secret agent' uses 'covert actions':
-#' # all so you can type less
+#' # Esto se debe a que el `stop_on_fail()`
+#' # la llamada se inyecta automáticamente
+#' # de forma predeterminada caso (cuando
+#' # se opera con datos) para su conveniencia;
+#' # detrás de escena un agente secreto' utiliza
+#' # 'acciones encubiertas': todo para que
+#' # puedas escribir menos
 #' 
 #' }
 #' 

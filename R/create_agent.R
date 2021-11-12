@@ -141,7 +141,7 @@
 #' It's recommended that table-prep formulas are supplied to the `read_fn`
 #' argument of `create_agent()`. In this way, when an *agent* is read from disk
 #' through [x_read_disk()], it can be reused to access the target table (which
-#' may changed, hence the need to use an expression for this).
+#' may change, hence the need to use an expression for this).
 #' 
 #' @section Combining Several Agents in a *multiagent* Object:
 #' Multiple *agent* objects can be part of a *multiagent* object, and two

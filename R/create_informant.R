@@ -23,7 +23,7 @@
 #' The `create_informant()` function creates an *informant* object, which is
 #' used in an *information management* workflow. The overall aim of this
 #' workflow is to record, collect, and generate useful information on data
-#' tables. We can supply as information that is useful for describing a
+#' tables. We can supply any information that is useful for describing a
 #' particular data table. The *informant* object created by the
 #' `create_informant()` function takes information-focused functions:
 #' [info_columns()], [info_tabular()], [info_section()], and [info_snippet()].

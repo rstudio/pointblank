@@ -2,7 +2,7 @@
 % Please edit documentation in R/has_columns.R
 \name{has_columns}
 \alias{has_columns}
-\title{Determine if one or more columns exist in a table.}
+\title{Determine if one or more columns exist in a table}
 \usage{
 has_columns(x, columns)
 }

@@ -2,12 +2,12 @@
 % Please edit documentation in R/datasets.R
 \name{small_table_sqlite}
 \alias{small_table_sqlite}
-\title{A SQLite version of the \code{small_table} dataset}
+\title{An SQLite version of the \code{small_table} dataset}
 \usage{
 small_table_sqlite()
 }
 \description{
-The \code{small_table_sqlite()} function creates a SQLite, \code{tbl_dbi} version of
+The \code{small_table_sqlite()} function creates an SQLite, \code{tbl_dbi} version of
 the \code{small_table} dataset. A requirement is the availability of the \strong{DBI}
 and \strong{RSQLite} packages. These packages can be installed by using
 \code{install.packages("DBI")} and \code{install.packages("RSQLite")}.
@@ -19,7 +19,7 @@ and \strong{RSQLite} packages. These packages can be installed by using
 
 \examples{
 # Use `small_table_sqlite()` to
-# create a SQLite version of the
+# create an SQLite version of the
 # `small_table` table
 #
 # small_table_sqlite <- small_table_sqlite()

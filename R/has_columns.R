@@ -17,7 +17,7 @@
 #
 
 
-#' Determine if one or more columns exist in a table. 
+#' Determine if one or more columns exist in a table
 #' 
 #' @description
 #' This utility function can help you easily determine whether a column of a

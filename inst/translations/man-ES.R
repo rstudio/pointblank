@@ -200,28 +200,29 @@
 #' @name action_levels
 
 # activate_steps-----------------------------------------------------------
-#' Activate one or more of an *agent*'s validation steps
+#' Activar uno o más de los pasos de validación de un *agent*
 #'
 #' @description 
-#' If certain validation steps need to be activated after the creation of the
-#' validation plan for an *agent*, use the `activate_steps()` function. This is
-#' equivalent to using the `active = TRUE` for the selected validation steps
-#' (`active` is an argument in all validation functions). This will replace any
-#' function that may have been defined for the `active` argument during creation
-#' of the targeted validation steps.
+#' Si es necesario activar ciertos pasos de validación después de la creación
+#' del plan de validación para un *agent*, use la función `active_steps()`.
+#' Este es equivalente a usar `active = TRUE` para los pasos de validación
+#' seleccionados (`active` es un argumento en todas las funciones de
+#' validación). Esto reemplazará a cualquier función que puede haber sido
+#' definida para el argumento `active` durante la creación de los pasos de
+#' validación específicos.
 #'
-#' @param agent An agent object of class `ptblank_agent`.
-#' @param i The validation step number, which is assigned to each validation
-#'   step in the order of definition.
+#' @param agent Un objeto de agente de clase `ptblank_agent`.
+#' @param i El número de paso de validación, que se asigna a cada paso de
+#'   validación en el orden de definición.
 #'
-#' @return A `ptblank_agent` object.
+#' @return Un objeto `ptblank_agent`.
 #' 
 #' @examples 
-#' # Create an agent that has the
-#' # `small_table` object as the
-#' # target table, add a few inactive
-#' # validation steps, and then use
-#' # `interrogate()`
+#' # Cree un agente que tenga objeto
+#' # `small_table` como el tabla de 
+#' # destino, agregue algunos inactivos
+#' # pasos de validación, y luego use
+#' # `interrogar()`
 #' agent_1 <- 
 #'   create_agent(
 #'     read_fn = ~ small_table,
@@ -238,12 +239,12 @@
 #'   ) %>%
 #'   interrogate()
 #' 
-#' # In the above, the data is
-#' # not actually interrogated
-#' # because the `active` setting
-#' # was `FALSE` in all steps; we
-#' # can selectively change this
-#' # with `activate_steps()`
+#' # En lo anterior, los datos son no
+#' # realmente interrogado porque el
+#' # ajuste `active` fue `FALSE` en
+#' # todos los pasos; nosotros puede
+#' # cambiar esto de forma selectiva
+#' # con `active_steps()`
 #' agent_2 <-
 #'   agent_1 %>%
 #'   activate_steps(i = 1) %>%
@@ -253,62 +254,66 @@
 #' @section Function ID:
 #' 9-6
 #' 
-#' @seealso For the opposite behavior, use the [deactivate_steps()] function.
+#' @seealso Para el comportamiento opuesto, use la función [deactivate_steps()].
 #'
 #' @export
 
 # affix_date---------------------------------------------------------------
-#' Put the current date into a file name
+#' Ponga la fecha actual en un nombre de archivo
 #' 
 #' @description
-#' This function helps to affix the current date to a filename. This is useful
-#' when writing *agent* and/or *informant* objects to disk as part of a
-#' continuous process. The date can be in terms of UTC time or the local system
-#' time. The date can be affixed either to the end of the filename (before the
-#' file extension) or at the beginning with a customizable delimiter.
+#' Esta función ayuda a fijar la fecha actual a un nombre de archivo. Esto es
+#' útil al escribir objetos *agent* y *informante* en el disco como parte de un
+#' proceso continuo. La fecha puede ser en términos de hora UTC o del sistema
+#' local. tiempo. La fecha se puede colocar al final del nombre del archivo
+#' (antes del extensión de archivo) o al principio con un delimitador
+#' personalizable.
 #' 
-#' The [x_write_disk()], [yaml_write()] functions allow for the writing of
-#' **pointblank** objects to disk. Furthermore the [log4r_step()] function has
-#' the `append_to` argument that accepts filenames, and, it's reasonable that a
-#' series of log files could be differentiated by a date component in the naming
-#' scheme. The modification of the filename string takes effect immediately but
-#' not at the time of writing a file to disk. In most cases, especially when
-#' using `affix_date()` with the aforementioned file-writing functions, the file
-#' timestamps should approximate the time components affixed to the filenames.
+#' Las funciones [x_write_disk()], [yaml_write()] permiten la escritura de
+#' objetos **pointblank** al disco. Además, la función [log4r_step()] tiene
+#' el argumento `append_to` que acepta nombres de archivo, y es razonable que un
+#' La serie de archivos de registro se puede diferenciar por un componente de
+#' fecha en el nombre esquema. La modificación de la cadena del nombre del
+#' archivo tiene efecto inmediatamente, pero no en el momento de escribir un
+#' archivo en el disco. En la mayoría de los casos, especialmente cuando usando
+#' `affix_date()` con las funciones de escritura de archivos antes mencionadas,
+#' el archivo las marcas de tiempo deben aproximarse a los componentes de tiempo
+#' fijados a los nombres de archivo.
 #' 
-#' @param filename The filename to modify.
-#' @param position Where to place the formatted date. This could either be at
-#'   the `"end"` of the filename (the default) or at the `"start"`.
-#' @param format A [base::strptime()] format string for formatting the date. By
-#'   default, this is `"%Y-%m-%d"` which expresses the date according to the ISO
-#'   8601 standard (as `YYYY-MM-DD`). Refer to the documentation on
-#'   [base::strptime()] for conversion specifications if planning to use a
-#'   different format string.
-#' @param delimiter The delimiter characters to use for separating the date
-#'   string from the original file name.
-#' @param utc_time An option for whether to use the current UTC time to
-#'   establish the date (the default, with `TRUE`), or, use the system's local
-#'   time (`FALSE`).
+#' @param filename El nombre de archivo que se va a modificar.
+#' @param position Dónde colocar la fecha formateada. Esto podría estar al
+#'   `"end"` del nombre del archivo (el predeterminado) o al `"start"`.
+#' @param format Una cadena de formato [base::strptime()] para formatear la
+#'   fecha. Por predeterminado, esto es `"%Y-%m-%d"` que expresa la fecha de
+#'   acuerdo con la ISO 8601 estándar (como 'AAAA-MM-DD'). Consulte la
+#'   documentación en [base::strptime()] para las especificaciones de conversión
+#'   si planea usar un cadena de formato diferente.
+#' @param delimiter Los caracteres delimitadores que se utilizarán para separar
+#'   la fecha. cadena del nombre del archivo original.
+#' @param utc_time Una opción para utilizar la hora UTC actual para establecer
+#'   la fecha (la predeterminada, con `TRUE`), o, utilizar el local del sistema
+#'   tiempo (`FALSE`).
 #'   
-#' @return A character vector.
+#' @return Un vector de caracteres.
 #'   
 #' @examples 
-#' # Taking the generic `pb_file` name for
-#' # a file, we add the current date to it
-#' # as a suffix
+#' # Tomando el nombre genérico de `pb_file`
+#' # para un archivo, le agregamos la fecha
+#' # actual como sufijo
 #' affix_date(filename = "pb_file")
 #' 
-#' # File extensions won't get in the way:
+#' # Las extensiones de archivo no se
+#' # interpondrán en el camino:
 #' affix_date(filename = "pb_file.rds")
 #' 
-#' # The date can be used as a prefix
+#' # La fecha se puede utilizar como prefijo
 #' affix_date(
 #'   filename = "pb_file",
 #'   position = "start"
 #' )
 #' 
-#' # The date pattern can be changed and so
-#' # can the delimiter
+#' # El patrón de fecha se puede cambiar
+#' # y así puede el delimitador
 #' affix_date(
 #'   filename = "pb_file.yml",
 #'   format = "%Y%m%d",
@@ -317,11 +322,13 @@
 #' 
 #' if (interactive()) {
 #' 
-#' # We can use a file-naming convention
-#' # involving dates when writing output
-#' # files immediately after interrogating;
-#' # useful when interrogating directly
-#' # from YAML in a scheduled process
+#' # Podemos usar una convención de
+#' # nomenclatura de archivos que
+#' # involucran fechas al escribir la
+#' # salida archivos inmediatamente
+#' # después de interrogar; útil al
+#' # interrogar directamente de YAML
+#' # en un proceso programado
 #' yaml_agent_interrogate(
 #'   filename = system.file(
 #'     "yaml", "agent-small_table.yml",
@@ -343,76 +350,83 @@
 #' @section Function ID:
 #' 13-3
 #' 
-#' @seealso The [affix_datetime()] function provides the same features except it
-#'   produces a date-time string by default.
+#' @seealso La función [affix_datetime()] proporciona las mismas características
+#'   excepto que produce una cadena de fecha y hora de forma predeterminada.
 #' 
 #' @export
 
 # affix_datetime-----------------------------------------------------------
-#' Put the current date-time into a file name
+#' Ponga la fecha y hora actual en un nombre de archivo
 #' 
 #' @description
-#' This function helps to affix the current date-time to a filename. This is
-#' useful when writing *agent* and/or *informant* objects to disk as part of a
-#' continuous process. The date-time string can be based on the current UTC time
-#' or the local system time. The date-time can be affixed either to the end of
-#' the filename (before the file extension) or at the beginning with a
-#' customizable delimiter. Optionally, the time zone information can be
-#' included. If the date-time is based on the local system time, the user system
-#' time zone is shown with the format `<time>(+/-)hhmm`. If using UTC time, then
-#' the `<time>Z` format is adopted.
+#' Esta función ayuda a fijar la fecha y hora actual a un nombre de archivo.
+#' Este es útil al escribir objetos *agent* y *informant* en el disco
+#' como parte de un proceso continuo. La cadena de fecha y hora puede basarse en
+#' la hora UTC actual. o la hora del sistema local. La fecha y hora se puede
+#' colocar al final de el nombre del archivo (antes de la extensión del archivo)
+#' o al principio con un delimitador personalizable. Opcionalmente, la
+#' información de la zona horaria puede ser incluido. Si la fecha y hora se basa
+#' en la hora del sistema local, el sistema del usuario La zona horaria se
+#' muestra con el formato `<time>(+/-)hhmm`. Si usa la hora UTC, entonces se
+#' adopta el formato `<time>Z`.
 #' 
-#' The [x_write_disk()], [yaml_write()] functions allow for the writing of
-#' **pointblank** objects to disk. The modification of the filename string takes
-#' effect immediately but not at the time of writing a file to disk. In most
-#' cases, especially when using `affix_datetime()` with the aforementioned
-#' file-writing functions, the file timestamps should approximate the time
-#' components affixed to the filenames.
+#' Las funciones [x_write_disk()], [yaml_write()] permiten la escritura de
+#' objetos **pointblank** al disco. La modificación de la cadena de nombre de
+#' archivo toma efecto inmediatamente, pero no en el momento de escribir un
+#' archivo en el disco. En la mayoría casos, especialmente cuando se usa
+#' `affix_datetime()` con el mencionado funciones de escritura de archivos, las
+#' marcas de tiempo del archivo deben aproximarse al tiempo componentes
+#' adheridos a los nombres de archivo.
 #' 
 #' @inheritParams affix_date
-#' @param position Where to place the formatted date-time. This could either be
-#'   at the `"end"` of the filename (the default) or at the `"start"`.
-#' @param format A [base::strptime()] format string for formatting the
-#'   date-time. By default, this is `"%Y-%m-%dT%H:%M:%S"` which expresses the
-#'   date according to the ISO 8601 standard. For example, if the current
-#'   date-time is `2020-12-04 13:11:23`, the formatted string would become
-#'   `"2020-12-04T13:11:23"`. Refer to the documentation on [base::strptime()]
-#'   for conversion specifications if planning to use a different format string.
-#' @param delimiter The delimiter characters to use for separating the date-time
-#'   string from the original file name.
-#' @param utc_time An option for whether to use the current UTC time to
-#'   establish the date-time (the default, with `TRUE`), or, use the system's
-#'   local time (`FALSE`).
-#' @param add_tz Should the time zone (as an offset from UTC) be provided? If
-#'   `TRUE` then the UTC offset will be either provided as `<time>Z` (if
-#'   `utc_time = TRUE`) or `<time>(+/-)hhmm`. By default, this is `FALSE`.
+#' @param position Dónde colocar la fecha y hora formateada. Esto podría ser al
+#'   `"end"` del nombre del archivo (predeterminado) o al `"start"`.
+#' @param format Una cadena de formato [base::strptime()] para formatear el
+#'   fecha y hora. De forma predeterminada, es `"%Y-%m-%dT%H:%M:%S"` que expresa
+#'   la fecha según la norma ISO 8601. Por ejemplo, si la corriente fecha-hora
+#'   es `2020-12-04 13:11:23`, la cadena formateada se convertiría en
+#'   `"2020-12-04T13:11:23"`. Consulte la documentación en [base::strptime()]
+#'   para las especificaciones de conversión si planea utilizar una cadena de
+#'   formato diferente.
+#' @param delimiter Los caracteres delimitadores que se utilizarán para separar
+#'   la cadena de fecha y hora del nombre del archivo original.
+#' @param utc_time Una opción para usar la hora UTC actual para establecer la
+#'   fecha y hora (la predeterminada, con `TRUE`), o usar la hora local del
+#'   sistema (`FALSE`).
+#' @param add_tz ¿Debería proporcionarse la zona horaria (como un desfase de
+#'   UTC)? Si es `TRUE`, la compensación UTC se proporcionará como `<time>Z`
+#'   (si `utc_time = TRUE`) o `<time>(+/-)hhmm`. De forma predeterminada, es
+#'   `FALSE`.
 #'
-#' @return A character vector.
+#' @return Un vector de caracteres.
 #' 
 #' @examples 
-#' # Taking the generic `pb_file` name for
-#' # a file, we add the current date-time to it
-#' # as a suffix
+#' # Tomando el nombre genérico de `pb_file`
+#' # para un archivo, le agregamos la fecha y
+#' # hora actual como sufijo
 #' affix_datetime(filename = "pb_file")
 #' 
-#' # File extensions won't get in the way:
+#' # Las extensiones de archivo no se
+#' # interpondrán en el camino:
 #' affix_datetime(filename = "pb_file.rds")
 #' 
-#' # The date-time can be used as a prefix
+#' # La fecha y hora se puede utilizar
+#' # como prefijo
 #' affix_datetime(
 #'   filename = "pb_file",
 #'   position = "start"
 #' )
 #' 
-#' # The date-time pattern can be changed and so
-#' # can the delimiter
+#' # El patrón de fecha y hora se puede
+#' # cambiar y así puede el delimitador
 #' affix_datetime(
 #'   filename = "pb_file.yml",
 #'   format = "%Y%m%d_%H%M%S",
 #'   delimiter = "-"
 #' )
 #' 
-#' # Time zone information can be included
+#' # Se puede incluir información sobre
+#' # la zona horaria
 #' affix_datetime(
 #'   filename = "pb_file.yml",
 #'   add_tz = TRUE
@@ -420,11 +434,13 @@
 #' 
 #' if (interactive()) {
 #' 
-#' # We can use a file-naming convention
-#' # involving date-times when writing output
-#' # files immediately after interrogating;
-#' # useful when interrogating directly
-#' # from YAML in a scheduled process
+#' # Podemos usar una convención de
+#' # nomenclatura de archivos que
+#' # involucran fechas y horas al
+#' # escribir la salida archivos
+#' # inmediatamente después de interrogar;
+#' # útil al interrogar directamente
+#' # de YAML en un proceso programado
 #' yaml_agent_interrogate(
 #'   filename = system.file(
 #'     "yaml", "agent-small_table.yml",
@@ -446,52 +462,54 @@
 #' @section Function ID:
 #' 13-4
 #'
-#' @seealso The [affix_date()] function provides the same features except it
-#'   produces a date string by default.
+#' @seealso La función [affix_date()] proporciona las mismas características
+#'   excepto que produce una cadena de fecha por defecto.
 #' 
 #' @export
 
 # col_exists---------------------------------------------------------------
-#' Do one or more columns actually exist?
+#' ¿Existe realmente una o más columnas?
 #'
 #' @description
-#' The `col_exists()` validation function, the `expect_col_exists()` expectation
-#' function, and the `test_col_exists()` test function all check whether one or
-#' more columns exist in the target table. The only requirement is specification
-#' of the column names. The validation function can be used directly on a data
-#' table or with an *agent* object (technically, a `ptblank_agent` object)
-#' whereas the expectation and test functions can only be used with a data
-#' table. The types of data tables that can be used include data frames,
-#' tibbles, database tables (`tbl_dbi`), and Spark DataFrames (`tbl_spark`).
-#' Each validation step or expectation will operate over a single test unit,
-#' which is whether the column exists or not.
+#' La función de validación `col_exists()`, la expectativa `wait_col_exists()`
+#' función, y la función de prueba `test_col_exists()` comprueban si uno o
+#' existen más columnas en la tabla de destino. El único requisito es la
+#' especificación de los nombres de las columnas. La función de validación se
+#' puede utilizar directamente en un dato. tabla o con un objeto * agent *
+#' (técnicamente, un objeto `ptblank_agent`) mientras que las funciones de
+#' expectativa y prueba solo se pueden usar con datos mesa. Los tipos de tablas
+#' de datos que se pueden utilizar incluyen marcos de datos, tibbles, tablas de
+#' base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada paso de
+#' validación o expectativa operará en una sola unidad de prueba, que es si la
+#' columna existe o no.
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #'
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list object
-#' that is best produced by the [action_levels()] function. Read that function's
-#' documentation for the lowdown on how to create reactions to above-threshold
-#' failure levels in validation. The basic gist is that you'll want at least a
-#' single threshold level (specified as either the fraction of test units
-#' failed, or, an absolute value), often using the `warn_at` argument. Using
-#' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
-#' depending on the situation (the first produces a warning, the other
-#' `stop()`s).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que se produce mejor con la función [action_levels()]. Lee esa
+#' función documentación para la verdad sobre cómo crear reacciones por encima
+#' del umbral niveles de falla en la validación. La esencia básica es que
+#' querrás al menos un nivel de umbral único (especificado como la fracción de
+#' unidades de prueba falló, o un valor absoluto), a menudo usando el argumento
+#' `warn_at`. Utilizando `action_levels(warn_at = 1)` o `action_levels(stop_at =
+#' 1)` son buenas opciones dependiendo de la situación (el primero produce una
+#' advertencia, el otro `stop()`).
 #'
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -609,7 +627,7 @@
 #' @name col_exists
 
 # col_is_character---------------------------------------------------------
-#' Do the columns contain character/string data?
+#' ¿Las columnas contienen datos de caracteres / cadenas?
 #'
 #' @description
 #' The `col_is_character()` validation function, the `expect_col_is_character()`
@@ -625,12 +643,13 @@
 #' test unit, which is whether the column is a character-type column or not.
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #'
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -646,11 +665,11 @@
 #' situation (the first produces a warning, the other `stop()`s).
 #'
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #'
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -761,7 +780,7 @@
 #' @name col_is_character
 
 # col_is_date--------------------------------------------------------------
-#' Do the columns contain R `Date` objects?
+#' ¿Las columnas contienen objetos R `Date`?
 #'
 #' @description
 #' The `col_is_date()` validation function, the `expect_col_is_date()`
@@ -777,12 +796,13 @@
 #' test unit, which is whether the column is a `Date`-type column or not.
 #' 
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -799,11 +819,11 @@
 #' `stop()`s).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #'
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -916,7 +936,7 @@
 #' @name col_is_date
 
 # col_is_factor------------------------------------------------------------
-#' Do the columns contain R `factor` objects?
+#' ¿Las columnas contienen objetos de `factor` R?
 #'
 #' @description
 #' The `col_is_factor()` validation function, the `expect_col_is_factor()`
@@ -932,12 +952,13 @@
 #' test unit, which is whether the column is a factor-type column or not.
 #' 
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -954,11 +975,11 @@
 #' `stop()`s).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -1073,7 +1094,7 @@
 #' @name col_is_factor
 
 # col_is_integer-----------------------------------------------------------
-#' Do the columns contain integer values?
+#' ¿Las columnas contienen valores enteros?
 #'
 #' @description
 #' The `col_is_integer()` validation function, the `expect_col_is_integer()`
@@ -1089,12 +1110,13 @@
 #' test unit, which is whether the column is an integer-type column or not.
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -1110,11 +1132,11 @@
 #' situation (the first produces a warning, the other `stop()`s).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -1226,7 +1248,7 @@
 #' @name col_is_integer
 
 # col_is_logical-----------------------------------------------------------
-#' Do the columns contain logical values?
+#' ¿Las columnas contienen valores lógicos?
 #'
 #' @description
 #' The `col_is_logical()` validation function, the `expect_col_is_logical()`
@@ -1243,12 +1265,13 @@
 #' logical-type column or not.
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -1265,11 +1288,11 @@
 #' `stop()`s).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -1382,7 +1405,7 @@
 #' @name col_is_logical
 
 # col_is_numeric-----------------------------------------------------------
-#' Do the columns contain numeric values?
+#' ¿Las columnas contienen valores numéricos?
 #'
 #' @description
 #' The `col_is_numeric()` validation function, the `expect_col_is_numeric()`
@@ -1398,12 +1421,13 @@
 #' test unit, which is whether the column is a numeric-type column or not.
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -1420,11 +1444,11 @@
 #' `stop()`s).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -1538,7 +1562,7 @@
 #' @name col_is_numeric
 
 # col_is_posix-------------------------------------------------------------
-#' Do the columns contain `POSIXct` dates?
+#' ¿Las columnas contienen fechas `POSIXct`?
 #'
 #' @description
 #' The `col_is_posix()` validation function, the `expect_col_is_posix()`
@@ -1554,12 +1578,13 @@
 #' test unit, which is whether the column is a `POSIXct`-type column or not.
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -1576,11 +1601,11 @@
 #' `stop()`s).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML: 
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -1693,7 +1718,8 @@
 #' @name col_is_posix
 
 # col_schema---------------------------------------------------------------
-#' Generate a table column schema manually or with a reference table
+#' Genere un esquema de columna de tabla manualmente o con una tabla de
+#' referencia
 #' 
 #' A table column schema object, as can be created by `col_schema()`, is
 #' necessary when using the [col_schema_match()] validation function (which
@@ -1775,7 +1801,7 @@
 #' @export
 
 # col_schema_match---------------------------------------------------------
-#' Do columns in the table (and their types) match a predefined schema?
+#' ¿Las columnas de la tabla (y sus tipos) coinciden con un esquema predefinido?
 #'
 #' @description
 #' The `col_schema_match()` validation function, the `expect_col_schema_match()`
@@ -1820,11 +1846,11 @@
 #' `stop()`s).
 #'
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -1984,7 +2010,8 @@
 #' @name col_schema_match
 
 # col_vals_between---------------------------------------------------------
-#' Do column data lie between two specified values or data in other columns?
+#' ¿Los datos de la columna se encuentran entre dos valores especificados o los
+#' datos de otras columnas?
 #'
 #' @description
 #' The `col_vals_between()` validation function, the `expect_col_vals_between()`
@@ -2010,12 +2037,13 @@
 #' applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names to `columns`, the result will be an
-#' expansion of validation steps to that number of column names (e.g.,
-#' `vars(col_a, col_b)` will result in the entry of two validation steps). Aside
-#' from column names in quotes and in `vars()`, **tidyselect** helper functions
-#' are available for specifying columns. They are: `starts_with()`,
-#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #'
 #' @section Missing Values:
 #' This validation function supports special handling of `NA` values. The
@@ -2087,11 +2115,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -2263,7 +2291,7 @@
 #' @name col_vals_between
 
 # col_vals_decreasing------------------------------------------------------
-#' Are column data decreasing by row?
+#' ¿Los datos de las columnas están disminuyendo por filas?
 #'
 #' @description
 #' The `col_vals_decreasing()` validation function, the
@@ -2282,12 +2310,13 @@
 #' any `preconditions` have been applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names to `columns`, the result will be an
-#' expansion of validation steps to that number of column names (e.g.,
-#' `vars(col_a, col_b)` will result in the entry of two validation steps). Aside
-#' from column names in quotes and in `vars()`, **tidyselect** helper functions
-#' are available for specifying columns. They are: `starts_with()`,
-#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #'
 #' @section Missing Values:
 #' This validation function supports special handling of `NA` values. The
@@ -2359,11 +2388,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -2443,7 +2472,8 @@
 #' @name col_vals_decreasing
 
 # col_vals_equal-----------------------------------------------------------
-#' Are column data equal to a fixed value or data in another column?
+#' ¿Son los datos de la columna iguales a un valor fijo o los datos de otra
+#' columna?
 #' 
 #' @description
 #' The `col_vals_equal()` validation function, the `expect_col_vals_equal()`
@@ -2459,12 +2489,13 @@
 #' number of rows in the table (after any `preconditions` have been applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names to `columns`, the result will be an
-#' expansion of validation steps to that number of column names (e.g.,
-#' `vars(col_a, col_b)` will result in the entry of two validation steps). Aside
-#' from column names in quotes and in `vars()`, **tidyselect** helper functions
-#' are available for specifying columns. They are: `starts_with()`,
-#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #'
 #' @section Missing Values:
 #' This validation function supports special handling of `NA` values. The
@@ -2536,11 +2567,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -2674,7 +2705,7 @@
 #' @name col_vals_equal
 
 # col_vals_expr------------------------------------------------------------
-#' Do column data agree with a predicate expression?
+#' ¿Coinciden los datos de la columna con una expresión de predicado?
 #'
 #' @description
 #' The `col_vals_expr()` validation function, the `expect_col_vals_expr()`
@@ -2752,11 +2783,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -2909,7 +2940,8 @@
 #' @name col_vals_expr
 
 # col_vals_gt--------------------------------------------------------------
-#' Are column data greater than a fixed value or data in another column?
+#' ¿Los datos de la columna son mayores que un valor fijo o los datos de otra
+#' columna?
 #'
 #' @description
 #' The `col_vals_gt()` validation function, the `expect_col_vals_gt()`
@@ -2926,12 +2958,13 @@
 #' number of rows in the table (after any `preconditions` have been applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names to `columns`, the result will be an
-#' expansion of validation steps to that number of column names (e.g.,
-#' `vars(col_a, col_b)` will result in the entry of two validation steps). Aside
-#' from column names in quotes and in `vars()`, **tidyselect** helper functions
-#' are available for specifying columns. They are: `starts_with()`,
-#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #'
 #' @section Missing Values:
 #' This validation function supports special handling of `NA` values. The
@@ -3003,11 +3036,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -3211,8 +3244,8 @@
 #' @name col_vals_gt
 
 # col_vals_gte-------------------------------------------------------------
-#' Are column data greater than or equal to a fixed value or data in another
-#' column?
+#' ¿Los datos de la columna son mayores o iguales a un valor fijo o los datos de
+#' otra columna?
 #'
 #' @description
 #' The `col_vals_gte()` validation function, the `expect_col_vals_gte()`
@@ -3230,12 +3263,13 @@
 #' `preconditions` have been applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names to `columns`, the result will be an
-#' expansion of validation steps to that number of column names (e.g.,
-#' `vars(col_a, col_b)` will result in the entry of two validation steps). Aside
-#' from column names in quotes and in `vars()`, **tidyselect** helper functions
-#' are available for specifying columns. They are: `starts_with()`,
-#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #'
 #' @section Missing Values:
 #' This validation function supports special handling of `NA` values. The
@@ -3306,11 +3340,11 @@
 #' units fails, the other `stop()`s at the same threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -3445,7 +3479,7 @@
 #' @name col_vals_gte
 
 # col_vals_in_set----------------------------------------------------------
-#' Are column data part of a specified set of values?
+#' ¿Los datos de la columna forman parte de un conjunto de valores específico?
 #'
 #' @description
 #' The `col_vals_in_set()` validation function, the `expect_col_vals_in_set()`
@@ -3460,12 +3494,13 @@
 #' number of rows in the table (after any `preconditions` have been applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #' 
 #' @section Preconditions:
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
@@ -3531,11 +3566,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -3670,7 +3705,7 @@
 #' @name col_vals_in_set
 
 # col_vals_increasing------------------------------------------------------
-#' Are column data increasing by row?
+#' ¿Los datos de la columna aumentan por fila?
 #'
 #' @description
 #' The `col_vals_increasing()` validation function, the
@@ -3689,12 +3724,13 @@
 #' any `preconditions` have been applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names to `columns`, the result will be an
-#' expansion of validation steps to that number of column names (e.g.,
-#' `vars(col_a, col_b)` will result in the entry of two validation steps). Aside
-#' from column names in quotes and in `vars()`, **tidyselect** helper functions
-#' are available for specifying columns. They are: `starts_with()`,
-#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #'
 #' @section Missing Values:
 #' This validation function supports special handling of `NA` values. The
@@ -3766,11 +3802,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -3850,7 +3886,8 @@
 #' @name col_vals_increasing
 
 # col_vals_lt--------------------------------------------------------------
-#' Are column data less than a fixed value or data in another column?
+#' ¿Los datos de la columna son menores que un valor fijo o los datos de otra
+#' columna?
 #'
 #' @description
 #' The `col_vals_lt()` validation function, the `expect_col_vals_lt()`
@@ -3867,12 +3904,13 @@
 #' number of rows in the table (after any `preconditions` have been applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names to `columns`, the result will be an
-#' expansion of validation steps to that number of column names (e.g.,
-#' `vars(col_a, col_b)` will result in the entry of two validation steps). Aside
-#' from column names in quotes and in `vars()`, **tidyselect** helper functions
-#' are available for specifying columns. They are: `starts_with()`,
-#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #'
 #' @section Missing Values:
 #' This validation function supports special handling of `NA` values. The
@@ -3944,11 +3982,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -4082,8 +4120,8 @@
 #' @name col_vals_lt
 
 # col_vals_lte-------------------------------------------------------------
-#' Are column data less than or equal to a fixed value or data in another
-#' column?
+#' ¿Los datos de la columna son menores o iguales a un valor fijo o los datos de
+#' otra columna?
 #'
 #' @description
 #' The `col_vals_lte()` validation function, the `expect_col_vals_lte()`
@@ -4101,12 +4139,13 @@
 #' `preconditions` have been applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names to `columns`, the result will be an
-#' expansion of validation steps to that number of column names (e.g.,
-#' `vars(col_a, col_b)` will result in the entry of two validation steps). Aside
-#' from column names in quotes and in `vars()`, **tidyselect** helper functions
-#' are available for specifying columns. They are: `starts_with()`,
-#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #'
 #' @section Missing Values:
 #' This validation function supports special handling of `NA` values. The
@@ -4178,11 +4217,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -4317,7 +4356,8 @@
 #' @name col_vals_lte
 
 # col_vals_make_set--------------------------------------------------------
-#' Is a set of values entirely accounted for in a column of values?
+#' ¿Un conjunto de valores se tiene en cuenta por completo en una columna de
+#' valores?
 #'
 #' @description
 #' The `col_vals_make_set()` validation function, the
@@ -4337,12 +4377,13 @@
 #' the `set` (any outside value seen will make this additional test unit fail).
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #' 
 #' @section Preconditions:
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
@@ -4408,11 +4449,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -4545,7 +4586,7 @@
 #' @name col_vals_make_set
 
 # col_vals_make_subset-----------------------------------------------------
-#' Is a set of values a subset of a column of values?
+#' ¿Es un conjunto de valores un subconjunto de una columna de valores?
 #'
 #' @description
 #' The `col_vals_make_subset()` validation function, the
@@ -4560,12 +4601,13 @@
 #' number of test units that is equal to the number of elements in the `set`.
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #' 
 #' @section Preconditions:
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
@@ -4631,11 +4673,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -4771,7 +4813,8 @@
 #' @name col_vals_make_subset
 
 # col_vals_not_between-----------------------------------------------------
-#' Do column data lie outside of two specified values or data in other columns?
+#' ¿Los datos de la columna se encuentran fuera de dos valores especificados o
+#' los datos de otras columnas?
 #' 
 #' @description
 #' The `col_vals_not_between()` validation function, the
@@ -4796,12 +4839,13 @@
 #' `preconditions` have been applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names to `columns`, the result will be an
-#' expansion of validation steps to that number of column names (e.g.,
-#' `vars(col_a, col_b)` will result in the entry of two validation steps). Aside
-#' from column names in quotes and in `vars()`, **tidyselect** helper functions
-#' are available for specifying columns. They are: `starts_with()`,
-#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #'
 #' @section Missing Values:
 #' This validation function supports special handling of `NA` values. The
@@ -4873,11 +4917,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -5048,7 +5092,8 @@
 #' @name col_vals_not_between
 
 # col_vals_not_equal-------------------------------------------------------
-#' Are column data not equal to a fixed value or data in another column?
+#' ¿Los datos de la columna no son iguales a un valor fijo o los datos de otra
+#' columna?
 #' 
 #' @description
 #' The `col_vals_not_equal()` validation function, the
@@ -5064,12 +5109,13 @@
 #' any `preconditions` have been applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #'
 #' @section Missing Values:
 #' This validation function supports special handling of `NA` values. The
@@ -5141,11 +5187,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -5280,7 +5326,7 @@
 #' @name col_vals_not_equal
 
 # col_vals_not_in_set------------------------------------------------------
-#' Are data not part of a specified set of values?
+#' ¿Los datos no forman parte de un conjunto específico de valores?
 #'
 #' @description
 #' The `col_vals_not_in_set()` validation function, the
@@ -5296,12 +5342,13 @@
 #' the table (after any `preconditions` have been applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #' 
 #' @section Preconditions:
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
@@ -5367,11 +5414,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -5506,7 +5553,7 @@
 #' @name col_vals_not_in_set
 
 # col_vals_not_null--------------------------------------------------------
-#' Are column data not `NULL`/`NA`?
+#' ¿Los datos de la columna no son `NULL`/`NA`?
 #'
 #' @description
 #' The `col_vals_not_null()` validation function, the
@@ -5522,12 +5569,13 @@
 #' number of rows in the table (after any `preconditions` have been applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #' 
 #' @section Preconditions:
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
@@ -5593,11 +5641,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -5723,7 +5771,7 @@
 #' @name col_vals_not_null
 
 # col_vals_null------------------------------------------------------------
-#' Are column data `NULL`/`NA`?
+#' ¿Son los datos de la columna `NULL`/`NA`?
 #'
 #' @description
 #' The `col_vals_null()` validation function, the `expect_col_vals_null()`
@@ -5738,12 +5786,13 @@
 #' number of rows in the table (after any `preconditions` have been applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #' 
 #' @section Preconditions:
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
@@ -5809,11 +5858,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -5939,7 +5988,8 @@
 #' @name col_vals_null
 
 # col_vals_regex-----------------------------------------------------------
-#' Do strings in column data match a regex pattern?
+#' ¿Las cadenas en los datos de la columna coinciden con un patrón de
+#' expresiones regulares?
 #' 
 #' @description
 #' The `col_vals_regex()` validation function, the `expect_col_vals_regex()`
@@ -5954,12 +6004,13 @@
 #' number of rows in the table (after any `preconditions` have been applied).
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #'
 #' @section Missing Values:
 #' This validation function supports special handling of `NA` values. The
@@ -6031,11 +6082,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -6170,7 +6221,7 @@
 #' @name col_vals_regex
 
 # col_vals_within_spec-----------------------------------------------------
-#' Do values in column data fit within a specification?
+#' ¿Los valores de los datos de la columna se ajustan a una especificación?
 #' 
 #' @description
 #' The `col_vals_within_spec()` validation function, the
@@ -6234,12 +6285,13 @@
 #' Only a single `spec` value should be provided per function call.
 #'
 #' @section Column Names:
-#' If providing multiple column names, the result will be an expansion of
-#' validation steps to that number of column names (e.g., `vars(col_a, col_b)`
-#' will result in the entry of two validation steps). Aside from column names in
-#' quotes and in `vars()`, **tidyselect** helper functions are available for
-#' specifying columns. They are: `starts_with()`, `ends_with()`, `contains()`,
-#' `matches()`, and `everything()`.
+#' Si proporciona varios nombres de columna, el resultado será una expansión de
+#' pasos de validación para ese número de nombres de columna (por ejemplo,
+#' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
+#' Aparte de los nombres de las columnas en comillas y en `vars()`,
+#' **tidyselect** funciones auxiliares están disponibles para especificando
+#' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
+#' `matches()`, y `everything()`.
 #'
 #' @section Missing Values:
 #' This validation function supports special handling of `NA` values. The
@@ -6311,11 +6363,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -6455,7 +6507,7 @@
 #' @name col_vals_within_spec
 
 # conjointly---------------------------------------------------------------
-#' Perform multiple rowwise validations for joint validity
+#' Realice múltiples validaciones por filas para la validez conjunta
 #'
 #' @description 
 #' The `conjointly()` validation function, the `expect_conjointly()` expectation
@@ -6552,11 +6604,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -6722,65 +6774,72 @@
 #' @name conjointly
 
 # create_agent-------------------------------------------------------------
-#' Create a **pointblank** *agent* object
+#' Crear un objeto **pointblank** *agent*
 #'
 #' @description
-#' The `create_agent()` function creates an *agent* object, which is used in a
-#' *data quality reporting* workflow. The overall aim of this workflow is to
-#' generate useful reporting information for assessing the level of data quality
-#' for the target table. We can supply as many validation functions as the user
-#' wishes to write, thereby increasing the level of validation coverage for that
-#' table. The *agent* assigned by the `create_agent()` call takes validation
-#' functions, which expand to validation steps (each one is numbered). This
-#' process is known as developing a *validation plan*.
+#' La función `create_agent()` crea un objeto *agent*, que se utiliza en un
+#' flujo de trabajo de *informes de calidad de datos*. El objetivo general de
+#' este flujo de trabajo es generar información de informes útil para evaluar el
+#' nivel de calidad de los datos para la tabla de destino. Podemos proporcionar
+#' tantas funciones de validación como el usuario desee escribir, aumentando así
+#' el nivel de cobertura de validación para esa tabla. El *agent* asignado por
+#' la llamada `create_agent()` toma funciones de validación, que se expanden a
+#' los pasos de validación (cada uno está numerado). Este proceso se conoce como
+#' desarrollo de un *plan de validación*.
 #'
-#' The validation functions, when called on an *agent*, are merely instructions
-#' up to the point the [interrogate()] function is called. That kicks off the
-#' process of the *agent* acting on the *validation plan* and getting results
-#' for each step. Once the interrogation process is complete, we can say that
-#' the *agent* has intel. Calling the *agent* itself will result in a reporting
-#' table. This reporting of the interrogation can also be accessed with the
-#' [get_agent_report()] function, where there are more reporting options.
+#' Las funciones de validación, cuando se llaman en un *agente*, son
+#' simplemente instrucciones hasta el punto en que se llama a la función
+#' [interrogate()]. Eso inicia el proceso del *agent* actuando sobre el *
+#' plan de validación * y obteniendo resultados para cada paso. Una vez que se
+#' completa el proceso de interrogación, podemos decir que el *agent* tiene
+#' inteligencia. Llamar al *agent* en sí mismo dará como resultado una tabla
+#' de informes. También se puede acceder a este informe de la interrogación con
+#' la función [get_agent_report()], donde hay más opciones de informe.
 #'
 #' @section Data Products Obtained from an Agent:
-#' A very detailed list object, known as an x-list, can be obtained by using the
-#' [get_agent_x_list()] function on the *agent*. This font of information can be
-#' taken as a whole, or, broken down by the step number (with the `i` argument).
+#' Se puede obtener un objeto de lista muy detallado, conocido como x-list,
+#' usando la función [get_agent_x_list()] en el *agent*. Esta fuente de
+#' información puede tomarse como un todo o desglosarse por el número de paso
+#' (con el argumento `i`).
 #'
-#' Sometimes it is useful to see which rows were the failing ones. By using the
-#' [get_data_extracts()] function on the *agent*, we either get a list of
-#' tibbles (for those steps that have data extracts) or one tibble if the
-#' validation step is specified with the `i` argument.
+#' A veces es útil ver qué filas fallaron. Al usar la función
+#' [get_data_extracts()] en el *agent*, obtenemos una lista de tibbles (para
+#' aquellos pasos que tienen extracciones de datos) o un tibble si el paso de
+#' validación se especifica con el argumento `i`.
 #'
-#' The target data can be split into pieces that represent the 'pass' and 'fail'
-#' portions with the [get_sundered_data()] function. A primary requirement is an
-#' agent that has had [interrogate()] called on it. In addition, the validation
-#' steps considered for this data splitting need to be those that operate on
-#' values down a column (e.g., the `col_vals_*()` functions or [conjointly()]).
-#' With these in-consideration validation steps, rows with no failing test units
-#' across all validation steps comprise the 'pass' data piece, and rows with at
-#' least one failing test unit across the same series of validations constitute
-#' the 'fail' piece.
+#' Los datos de destino se pueden dividir en partes que representan las
+#' porciones de 'pasa' y 'falla' con la función [get_sundered_data()]. Un
+#' requisito principal es un agente al que se le haya llamado a [interrogate()].
+#' Además, los pasos de validación considerados para esta división de datos
+#' deben ser aquellos que operan en valores en una columna (por ejemplo, las
+#' funciones `col_vals_*()` o [conjointly()]). Con estos pasos de validación en
+#' consideración, las filas sin unidades de prueba fallidas en todos los pasos
+#' de validación comprenden la pieza de datos 'aprobada', y las filas con al
+#' menos una unidad de prueba fallida en la misma serie de validaciones
+#' constituyen la pieza 'fallida'.
 #'
-#' If we just need to know whether all validations completely passed (i.e., all
-#' steps had no failing test units), the [all_passed()] function could be used
-#' on the *agent*. However, in practice, it's not often the case that all data
-#' validation steps are free from any failing units.
+#' Si solo necesitamos saber si todas las validaciones pasaron por completo (es
+#' decir, todos los pasos no tenían unidades de prueba fallidas), la función
+#' [all_passed()] podría usarse en el *agente*. Sin embargo, en la práctica, no
+#' es frecuente que todos los pasos de validación de datos estén libres de
+#' unidades defectuosas.
 #' 
-#' While printing an *agent* will display the *agent* report in the Viewer, we
-#' can alternatively use the [get_agent_report()] to take advantage of other
-#' options (e.g., overriding the language, modifying the arrangement of report
-#' rows, etc.), and to return the report as independent objects. For example,
-#' with the `display_table = TRUE` option (the default), [get_agent_report()]
-#' will return a **gt** table object (`"gt_tbl"`). If `display_table` is set to
-#' `FALSE`, we'll get a data frame back instead.
+#' Si bien la impresión de un *agent* mostrará el informe *agent* en el Viewer,
+#' podemos usar alternativamente [get_agent_report()] para aprovechar otras
+#' opciones (por ejemplo, cambiar el idioma, modificar la disposición de las
+#' filas del informe, etc.) y devolver el informe como objetos independientes.
+#' Por ejemplo, con la opción `display_table = TRUE` (la predeterminada),
+#' [get_agent_report()] devolverá un objeto de tabla **gt** (`"gt_tbl"`). Si
+#' `display_table` se establece en `FALSE`, obtendremos un marco de datos en su
+#' lugar.
 #' 
 #' @section YAML: 
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). Here is an
-#' example of how a complex call of `create_agent()` is expressed in R code and
-#' in the corresponding YAML representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]) . Aquí hay un ejemplo de cómo se expresa una
+#' llamada compleja de `create_agent()` en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -6819,94 +6878,103 @@
 #' embed_report: true
 #' ```
 #' 
-#' In practice, this block of YAML will be shorter since arguments with default
-#' values won't be written to YAML when using [yaml_write()] (though it is
-#' acceptable to include them with their default when generating the YAML by
-#' other means). The only requirement for writing the YAML representation of an
-#' *agent* is having `read_fn` specified (any table supplied to `tbl` is
-#' ignored).
-#' 
-#' What typically follows this chunk of YAML is a `steps` part, and that
-#' corresponds to the addition of validation steps via validation functions.
-#' Help articles for each validation function have a *YAML* section that
-#' describes how a given validation function is translated to YAML.
-#' 
-#' Should you need to preview the transformation of an *agent* to YAML (without
-#' any committing anything to disk), use the [yaml_agent_string()] function. If
-#' you already have a `.yml` file that holds an *agent*, you can get a glimpse
-#' of the R expressions that are used to regenerate that agent with
+#' En la práctica, este bloque de YAML será más corto ya que los argumentos con
+#' valores predeterminados no se escribirán en YAML cuando se use [yaml_write()]
+#' (aunque es aceptable incluirlos con su valor predeterminado al generar el
+#' YAML por otros medios). El único requisito para escribir la representación
+#' YAML de un *agent* es tener especificado `read_fn` (cualquier tabla
+#' proporcionada a `tbl` es ignorado).
+#'
+#' Lo que sigue típicamente a este fragmento de YAML es una parte de "pasos", y
+#' eso corresponde a la adición de pasos de validación a través de funciones de
+#' validación. Los artículos de ayuda para cada función de validación tienen una
+#' sección *YAML* que describe cómo una función de validación determinada se
+#' traduce a YAML.
+#'
+#' Si necesita obtener una vista previa de la transformación de un *agent* a
+#' YAML (sin enviar nada al disco), use la función [yaml_agent_string()]. Si ya
+#' tiene un archivo `.yml` que contiene un *agent*, puede echar un vistazo a las
+#' expresiones R que se utilizan para regenerar ese agente con
 #' [yaml_agent_show_exprs()].
 #' 
 #' @section Writing an Agent to Disk:
-#' An *agent* object can be written to disk with the [x_write_disk()] function.
-#' This can be useful for keeping a history of validations and generating views
-#' of data quality over time. Agents are stored in the serialized RDS format and
-#' can be easily retrieved with the [x_read_disk()] function.
+#' Se puede escribir un objeto *agent* en el disco con la función
+#' [x_write_disk()]. Esto puede resultar útil para mantener un historial de
+#' validaciones y generar vistas de la calidad de los datos a lo largo del
+#' tiempo. Los agentes se almacenan en formato RDS serializado y se pueden
+#' recuperar fácilmente con la función [x_read_disk()].
 #'
-#' It's recommended that table-prep formulas are supplied to the `read_fn`
-#' argument of `create_agent()`. In this way, when an *agent* is read from disk
-#' through [x_read_disk()], it can be reused to access the target table (which
-#' may changed, hence the need to use an expression for this).
+#' Se recomienda que las fórmulas de preparación de tablas se proporcionen al
+#' argumento `read_fn` de `create_agent()`. De esta manera, cuando se lee un
+#' *agent* desde el disco a través de [x_read_disk()], se puede reutilizar para
+#' acceder a la tabla de destino (que puede cambiar, de ahí la necesidad de usar
+#' una expresión para esto).
 #' 
 #' @section Combining Several Agents in a *multiagent* Object:
-#' Multiple *agent* objects can be part of a *multiagent* object, and two
-#' functions can be used for this: [create_multiagent()] and
-#' [read_disk_multiagent()]. By gathering multiple agents that have performed
-#' interrogations in the past, we can get a *multiagent* report showing how data
-#' quality evolved over time. This use case is interesting for data quality
-#' monitoring and management, and, the reporting (which can be customized with
-#' [get_multiagent_report()]) is robust against changes in validation steps for
-#' a given target table.
+#' Varios objetos *agent* pueden formar parte de un objeto *agent* múltiple, y
+#' se pueden usar dos funciones para esto: [create_multiagent()] y
+#' [read_disk_multiagent()]. Al recopilar varios agentes que han realizado
+#' interrogaciones en el pasado, podemos obtener un informe *multiagent* que
+#' muestra cómo evolucionó la calidad de los datos con el tiempo. Este caso de
+#' uso es interesante para el control y la gestión de la calidad de los datos, y
+#' los informes (que se pueden personalizar con [get_multiagent_report()]) son
+#' sólidos frente a los cambios en los pasos de validación para una tabla de
+#' destino determinada.
 #'
-#' @param tbl The input table. This can be a data frame, a tibble, a `tbl_dbi`
-#'   object, or a `tbl_spark` object. Alternatively, a function can be used to
-#'   read in the input data table with the `read_fn` argument (in which case,
-#'   `tbl` can be `NULL`).
-#' @param read_fn A table-prep formula that's used to access the target table.
-#'   Even if a `tbl` is provided, this formula will be invoked to obtain the
-#'   data (i.e., the `read_fn` takes priority). There are two ways to specify a
-#'   `read_fn`: (1) with a right-hand side (RHS) formula expression (e.g.,
-#'   `~ { <table reading code>}`) or (2) as a function (e.g., 
-#'   `function() { <table reading code>}`).
-#' @param tbl_name A optional name to assign to the input table object. If no
-#'   value is provided, a name will be generated based on whatever information
-#'   is available. This table name will be displayed in the header area of the
-#'   agent report generated by printing the *agent* or calling
-#'   [get_agent_report()].
-#' @param label An optional label for the validation plan. If no value is
-#'   provided, a label will be generated based on the current system time.
-#'   Markdown can be used here to make the label more visually appealing (it
-#'   will appear in the header area of the agent report).
-#' @param actions A option to include a list with threshold levels so that all
-#'   validation steps can react accordingly when exceeding the set levels. This
-#'   is to be created with the [action_levels()] helper function. Should an
-#'   action levels list be used for a specific validation step, the default set
-#'   specified here will be overridden.
-#' @param end_fns A list of expressions that should be invoked at the end of an
-#'   interrogation. Each expression should be in the form of a one-sided R
-#'   formula, so overall this construction should be used: `end_fns = list(~ <R
-#'   statements>, ~ <R statements>, ...)`. An example of a function included in
-#'   **pointblank** that can be sensibly used here is [email_blast()], which
-#'   sends an email of the validation report (based on a sending condition).
-#' @param embed_report An option to embed a **gt**-based validation report into
-#'   the `ptblank_agent` object. If `FALSE` (the default) then the table object
-#'   will be not generated and available with the *agent* upon returning from
-#'   the interrogation.
-#' @param lang The language to use for automatic creation of briefs (short
-#'   descriptions for each validation step) and for the *agent report* (a
-#'   summary table that provides the validation plan and the results from the
-#'   interrogation. By default, `NULL` will create English (`"en"`) text. Other
-#'   options include French (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish
-#'   (`"es"`), Portuguese (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`), Russian
-#'   (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch
-#'   (`"nl"`).
-#' @param locale An optional locale ID to use for formatting values in the
-#'   *agent report* summary table according the locale's rules. Examples include
-#'   `"en_US"` for English (United States) and `"fr_FR"` for French (France);
-#'   more simply, this can be a language identifier without a country
-#'   designation, like "es" for Spanish (Spain, same as `"es_ES"`).
+#' @param tbl La tabla de entrada. Puede ser un marco de datos, un tibble, un
+#'   objeto `tbl_dbi` o un objeto `tbl_spark`. Alternativamente, se puede usar
+#'   una función para leer en la tabla de datos de entrada con el argumento
+#'   `read_fn` (en cuyo caso, `tbl` puede ser `NULL`).
+#' @param read_fn Una fórmula de preparación de tablas que se usa para acceder a
+#'   la tabla de destino. Incluso si se proporciona un `tbl`, esta fórmula se
+#'   invocará para obtener los datos (es decir, el `read_fn` tiene prioridad).
+#'   Hay dos formas de especificar un `read_fn`: (1) con una expresión de
+#'   fórmula del lado derecho (RHS) (p. Ej., `~ {<código de lectura de la
+#'   tabla>}`) o (2) como una función (p. Ej., `function () {<código de lectura
+#'   de la tabla>}`).
+#' @param tbl_name Un nombre opcional para asignar al objeto de la tabla de
+#'   entrada. Si no se proporciona ningún valor, se generará un nombre en
+#'   función de la información disponible. Este nombre de tabla se mostrará en
+#'   el área de encabezado del informe del agente generado al imprimir el
+#'   *agent* o llamar a [get_agent_report()].
+#' @param label Una etiqueta opcional para el plan de validación. Si no se
+#'   proporciona ningún valor, se generará una etiqueta basada en la hora actual
+#'   del sistema. Markdown se puede usar aquí para hacer que la etiqueta sea más
+#'   atractiva visualmente (aparecerá en el área de encabezado del informe del
+#'   agente).
+#' @param actions Una opción para incluir una lista con niveles de umbral para
+#'   que todos los pasos de validación puedan reaccionar en consecuencia al
+#'   exceder los niveles establecidos. Esto se creará con la función auxiliar
+#'   [action_levels()]. Si se utiliza una lista de niveles de acción para un
+#'   paso de validación específico, se anulará el conjunto predeterminado
+#'   especificado aquí.
+#' @param end_fns Una lista de expresiones que deben invocarse al final de un
+#'   interrogatorio. Cada expresión debe tener la forma de una fórmula R
+#'   unilateral, por lo que en general se debe usar esta construcción: `end_fns
+#'   = list (~ <declaraciones R>, ~ <declaraciones R>, ...)`. Un ejemplo de una
+#'   función incluida en **pointblank** que se puede utilizar con sensatez
+#'   aquí es [email_blast()], que envía un correo electrónico del informe de
+#'   validación (basado en una condición de envío).
+#' @param embed_report Una opción para incrustar un informe de validación basado
+#'   en **gt** en el objeto `ptblank_agent`. Si es `FALSE` (el valor
+#'   predeterminado), el objeto de la tabla no se generará ni estará disponible
+#'   con el *agent* al regresar del interrogatorio.
+#' @param lang El idioma que se utilizará para la creación automática de
+#'   resúmenes (descripciones breves para cada paso de validación) y para el
+#'   *informe del agente* (una tabla de resumen que proporciona el plan de
+#'   validación y los resultados de la interrogación. De forma predeterminada,
+#'   `NULL` creará inglés (`"en"`) texto. Otras opciones incluyen francés
+#'   (`"fr"`), alemán (`"de"`), italiano (`"it"`), español (`"es"`), portugués
+#'   (`"pt"`), turco (`"tr"`), chino (`"zh"`), ruso (`"ru"`), polaco (`"pl"`),
+#'   danés (`"da"`) , Sueco (`"sv"`) y holandés (`"nl"`).
+#' @param locale Un ID de configuración regional opcional que se utilizará para
+#'   formatear valores en la tabla de resumen *informe del agente* de acuerdo
+#'   con las reglas de la configuración regional. Los ejemplos incluyen
+#'   `"en_US"` para inglés (Estados Unidos) y `"fr_FR"` para francés (Francia);
+#'   más simplemente, puede ser un identificador de idioma sin una designación
+#'   de país, como "es" para español (España, igual que `"es_ES"`).
 #'   
-#' @return A `ptblank_agent` object.
+#' @return Un objeto `ptblank_agent`.
 #'   
 #' @examples
 #' # Let's walk through a data quality
@@ -7019,46 +7087,48 @@
 #' @export
 
 # create_informant---------------------------------------------------------
-#' Create a **pointblank** *informant* object
+#' Crear un objeto **pointblank** *informant*
 #'
 #' @description
-#' The `create_informant()` function creates an *informant* object, which is
-#' used in an *information management* workflow. The overall aim of this
-#' workflow is to record, collect, and generate useful information on data
-#' tables. We can supply as information that is useful for describing a
-#' particular data table. The *informant* object created by the
-#' `create_informant()` function takes information-focused functions:
-#' [info_columns()], [info_tabular()], [info_section()], and [info_snippet()].
+#' La función `create_informant()` crea un objeto *informant*, que se utiliza en
+#' un flujo de trabajo de *gestión de información*. El objetivo general de este
+#' flujo de trabajo es registrar, recopilar y generar información útil en tablas
+#' de datos. Podemos proporcionar cualquier información que sea útil para
+#' describir una tabla de datos en particular. El objeto *informant* creado por
+#' la función `create_informant()` toma funciones enfocadas en información:
+#' [info_columns()], [info_tabular()], [info_section()], y [info_snippet()].
 #'
-#' The `info_*()` series of functions allows for a progressive build up of
-#' information about the target table. The [info_columns()] and [info_tabular()]
-#' functions facilitate the entry of *info text* that concerns the table columns
-#' and the table proper; the [info_section()] function allows for the creation
-#' of arbitrary sections that can have multiple subsections full of additional
-#' *info text*. The system allows for dynamic values culled from the target
-#' table by way of [info_snippet()], for getting named text extracts from
-#' queries, and the use of `{<snippet_name>}` in the *info text*. To make the
-#' use of [info_snippet()] more convenient for common queries, a set of
-#' `snip_*()` functions are provided in the package ([snip_list()],
-#' [snip_stats()], [snip_lowest()], and [snip_highest()]) though you are free to
-#' use your own expressions.
+#' La serie de funciones `info_*()` permite una acumulación progresiva de
+#' información sobre la tabla de destino. Las funciones [info_columns()] y
+#' [info_tabular()] facilitan la entrada de *texto de información* que concierne
+#' a las columnas de la tabla y la tabla propiamente dicha; la función
+#' [info_section()] permite la creación de secciones arbitrarias que pueden
+#' tener múltiples subsecciones llenas de *texto de información* adicional. El
+#' sistema permite valores dinámicos seleccionados de la tabla de destino
+#' mediante [info_snippet()], para obtener extractos de texto con nombre de
+#' consultas y el uso de `{<snippet_name>}` en el *texto de información*. Para
+#' hacer el uso de [info_snippet()] más conveniente para consultas comunes, se
+#' proporciona un conjunto de funciones `snip_*()` en el paquete ([snip_list()],
+#' [snip_stats()], [snip_lowest()], y [snip_highest()]) aunque puedes usar tus
+#' propias expresiones.
 #' 
-#' Because snippets need to query the target table to return fragments of *info
-#' text*, the [incorporate()] function needs to be used to initiate this action.
-#' This is also necessary for the *informant* to update other metadata elements
-#' such as row and column counts. Once the incorporation process is complete,
-#' snippets and other metadata will be updated. Calling the *informant* itself
-#' will result in a reporting table. This reporting can also be accessed with
-#' the [get_informant_report()] function, where there are more reporting
-#' options.
+#' Debido a que los fragmentos necesitan consultar la tabla de destino para
+#' devolver fragmentos de *texto de información*, la función [incorporate()]
+#' debe usarse para iniciar esta acción. Esto también es necesario para que el
+#' *informant* actualice otros elementos de metadatos, como los recuentos de
+#' filas y columnas. Una vez que se complete el proceso de incorporación, se
+#' actualizarán los fragmentos y otros metadatos. Llamar al *informant* en sí
+#' mismo dará como resultado una tabla de informes. También se puede acceder a
+#' este informe con la función [get_informant_report()], donde hay más opciones
+#' de informe.
 #' 
 #' @section YAML: 
-#' A **pointblank** informant can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an informant (with
-#' [yaml_read_informant()]) or perform the 'incorporate' action using the target
-#' table (via [yaml_informant_incorporate()]). Here is an example of how a
-#' complex call of `create_informant()` is expressed in R code and in the
-#' corresponding YAML representation.
+#' Se puede escribir un informante **pointblank** en YAML con [yaml_write()] y
+#' el YAML resultante se puede usar para regenerar un informante (con
+#' [yaml_read_informant()]) o realizar la acción 'incorporar' usando la tabla de
+#' destino (a través de [yaml_informant_incorporate()]). Aquí hay un ejemplo de
+#' cómo una llamada compleja de `create_informant()` se expresa en código R y en
+#' la representación YAML correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -7101,59 +7171,65 @@
 #'     _type: character
 #' ```
 #' 
-#' The generated YAML includes some top-level keys where `type` and `read_fn`
-#' are mandatory, and, two metadata sections: `table` and `columns`. Keys that
-#' begin with an underscore character are those that are updated whenever
-#' [incorporate()] is called on an *informant*. The `table` metadata section can
-#' have multiple subsections with *info text*. The `columns` metadata section
-#' can similarly have have multiple subsections, so long as they are children to
-#' each of the column keys (in the above YAML example, `date_time` and `date`
-#' are column keys and they match the table's column names). Additional sections
-#' can be added but they must have key names on the top level that don't
-#' duplicate the default set (i.e., `type`, `table`, `columns`, etc. are treated
-#' as reserved keys).
+#' El YAML generado incluye algunas claves de nivel superior donde `type` y
+#' `read_fn` son obligatorios, y dos secciones de metadatos: `table` y
+#' `columns`. Las claves que comienzan con un carácter de subrayado son las que
+#' se actualizan cada vez que se llama a [incorporate()] en un *informant*. La
+#' sección de metadatos `table` puede tener múltiples subsecciones con *texto de
+#' información*. De manera similar, la sección de metadatos `columns` puede
+#' tener múltiples subsecciones, siempre que sean elementos secundarios de cada
+#' una de las claves de columna (en el ejemplo de YAML anterior, `date_time` y
+#' `date` son claves de columna y coinciden con los nombres de columna de la
+#' tabla). Se pueden agregar secciones adicionales, pero deben tener nombres de
+#' clave en el nivel superior que no dupliquen el conjunto predeterminado (es
+#' decir, `type`,` table`, `columns`, etc. se tratan como claves reservadas).
 #' 
 #' @section Writing an Informant to Disk:
-#' An *informant* object can be written to disk with the [x_write_disk()]
-#' function. Informants are stored in the serialized RDS format and can be
-#' easily retrieved with the [x_read_disk()] function.
+#' Se puede escribir un objeto *informant* en el disco con la función
+#' [x_write_disk()]. Los informantes se almacenan en formato RDS serializado y
+#' se pueden recuperar fácilmente con la función [x_read_disk()].
 #'
-#' It's recommended that table-prep formulas are supplied to the `read_fn`
-#' argument of `create_informant()`. In this way, when an *informant* is read
-#' from disk through [x_read_disk()], it can be reused to access the target
-#' table (which may changed, hence the need to use an expression for this).
+#' Se recomienda que las fórmulas de preparación de tablas se proporcionen al
+#' argumento `read_fn` de `create_informant()`. De esta manera, cuando se lee un
+#' *informante* desde el disco a través de [x_read_disk()], se puede reutilizar
+#' para acceder a la tabla de destino (que puede cambiar, de ahí la necesidad de
+#' usar una expresión para esto).
 #'
-#' @param tbl The input table. This can be a data frame, a tibble, a `tbl_dbi`
-#'   object, or a `tbl_spark` object. Alternatively, a function can be used to
-#'   read in the input data table with the `read_fn` argument (in which case,
-#'   `tbl` can be `NULL`).
-#' @param read_fn A function that's used for reading in the data. Even if a
-#'   `tbl` is provided, this function will be invoked to obtain the data (i.e.,
-#'   the `read_fn` takes priority). There are two ways to specify a `read_fn`:
-#'   (1) using a function (e.g., `function() { <table reading code> }`) or, (2)
-#'   with an R formula expression.
-#' @param agent A pointblank *agent* object. This object can be used instead of
-#'   supplying a table in `tbl` or a table-prep formula in `read_fn`.
-#' @param tbl_name A optional name to assign to the input table object. If no
-#'   value is provided, a name will be generated based on whatever information
-#'   is available.
-#' @param label An optional label for the information report. If no value is
-#'   provided, a label will be generated based on the current system time.
-#'   Markdown can be used here to make the label more visually appealing (it
-#'   will appear in the header area of the information report).
-#' @param lang The language to use for the information report (a summary table
-#'   that provides all of the available information for the table. By default,
-#'   `NULL` will create English (`"en"`) text. Other options include French
-#'   (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish (`"es"`), Portuguese
-#'   (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`), Russian (`"ru"`), Polish
-#'   (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
-#' @param locale An optional locale ID to use for formatting values in the
-#'   information report according the locale's rules. Examples include `"en_US"`
-#'   for English (United States) and `"fr_FR"` for French (France); more simply,
-#'   this can be a language identifier without a country designation, like "es"
-#'   for Spanish (Spain, same as `"es_ES"`).
+#' @param tbl La tabla de entrada. Puede ser un marco de datos, un tibble, un
+#'   objeto `tbl_dbi` o un objeto `tbl_spark`. Alternativamente, se puede usar
+#'   una función para leer en la tabla de datos de entrada con el argumento
+#'   `read_fn` (en cuyo caso, `tbl` puede ser `NULL`).
+#' @param read_fn Una función que se usa para leer los datos. Incluso si se
+#'   proporciona un `tbl`, esta función se invocará para obtener los datos (es
+#'   decir, el `read_fn` tiene prioridad). Hay dos formas de especificar un
+#'   `read_fn`: (1) usando una función (por ejemplo, `function () {<código de
+#'   lectura de la tabla>}`) o, (2) con una expresión de fórmula R.
+#' @param agent Un objeto *agente* a quemarropa. Este objeto se puede utilizar
+#'   en lugar de proporcionar una tabla en `tbl` o una fórmula de preparación de
+#'   tablas en `read_fn`.
+#' @param tbl_name Un nombre opcional para asignar al objeto de la tabla de
+#'   entrada. Si no se proporciona ningún valor, se generará un nombre en
+#'   función de la información disponible.
+#' @param label Una etiqueta opcional para el informe de información. Si no se
+#'   proporciona ningún valor, se generará una etiqueta basada en la hora actual
+#'   del sistema. Markdown se puede utilizar aquí para hacer que la etiqueta sea
+#'   más atractiva visualmente (aparecerá en el área de encabezado del informe
+#'   de información).
+#' @param lang El idioma que se utilizará para el informe de información (una
+#'   tabla de resumen que proporciona toda la información disponible para la
+#'   tabla. De forma predeterminada, `NULL` creará texto en inglés (`"en"`).
+#'   Otras opciones incluyen francés (`"fr"`), Alemán (`"de"`), italiano
+#'   (`"it"`), español (`"es"`), portugués (`"pt"`), turco (`"tr"`), chino
+#'   (`"zh"`), ruso (`"ru"`), polaco (`"pl"`), danés (`"da"`), sueco (`"sv"`) y
+#'   holandés (`"nl"`).
+#' @param locale Un ID de configuración regional opcional que se utilizará para
+#'   dar formato a los valores en el informe de información de acuerdo con las
+#'   reglas de la configuración regional. Los ejemplos incluyen `"en_US"` para
+#'   inglés (Estados Unidos) y `"fr_FR"` para francés (Francia); más
+#'   simplemente, puede ser un identificador de idioma sin una designación de
+#'   país, como "es" para español (España, igual que `"es_ES"`).
 #'   
-#' @return A `ptblank_informant` object.
+#' @return Un objeto `ptblank_informant`.
 #' 
 #' @examples 
 #' # Let's walk through how we can
@@ -7195,35 +7271,36 @@
 #' @export
 
 # create_multiagent--------------------------------------------------------
-#' Create a **pointblank** *multiagent* object
+#' Crear un objeto **pointblank** *multiagent*
 #'
 #' @description 
-#' Multiple *agents* can be part of a single object called the *multiagent*.
-#' This can be useful when gathering multiple agents that have performed
-#' interrogations in the past (perhaps saved to disk with [x_write_disk()]).
-#' When be part of a *multiagent*, we can get a report that shows how data
-#' quality evolved over time. This can be of interest when it's important to
-#' monitor data quality and even the evolution of the validation plan itself.
-#' The reporting table, generated by printing a `ptblank_multiagent` object or
-#' by using the [get_multiagent_report()] function, is, by default, organized by
-#' the interrogation time and it automatically recognizes which validation steps
-#' are equivalent across interrogations.
+#' Varios *agents* pueden formar parte de un solo objeto llamado *multiagent*.
+#' Esto puede ser útil cuando se reúnen varios agentes que han realizado
+#' interrogaciones en el pasado (quizás guardados en el disco con
+#' [x_write_disk()]). Cuando formamos parte de un *multiagent*, podemos obtener
+#' un informe que muestra cómo la calidad de los datos evolucionó con el tiempo.
+#' Esto puede ser de interés cuando es importante monitorear la calidad de los
+#' datos e incluso la evolución del propio plan de validación. La tabla de
+#' informes, generada imprimiendo un objeto `ptblank_multiagent` o usando la
+#' función [get_multiagent_report()], está, por defecto, organizada por el
+#' tiempo de interrogación y reconoce automáticamente qué pasos de validación
+#' son equivalentes entre interrogaciones.
 #'
-#' @param ... One or more **pointblank** agent objects.
-#' @param lang The language to use for any reporting that will be generated from
-#'   the *multiagent*. (e.g., individual *agent reports*, *multiagent reports*,
-#'   etc.). By default, `NULL` will create English (`"en"`) text. Other options
-#'   include French (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish
-#'   (`"es"`), Portuguese (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`), Russian
-#'   (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch
-#'   (`"nl"`).
-#' @param locale An optional locale ID to use for formatting values in the
-#'   reporting outputs according the locale's rules. Examples include `"en_US"`
-#'   for English (United States) and `"fr_FR"` for French (France); more simply,
-#'   this can be a language identifier without a country designation, like "es"
-#'   for Spanish (Spain, same as `"es_ES"`).
+#' @param ... Uno o más objetos de *agent* **pointblank**.
+#' @param lang El idioma que se utilizará para cualquier informe que se generará
+#'   a partir del *multiagente*. De forma predeterminada, `NULL` creará texto en
+#'   inglés (`"en"`). Otras opciones incluyen francés (`"fr"`), alemán (`"de"`),
+#'   italiano (`"it"`), español (`"es"`), portugués (`"pt"`), turco (`"tr"`),
+#'   chino (`"zh"`), ruso (`"ru"`), polaco (`"pl"`), danés (`"da"`), sueco
+#'   (`"sv"`) y holandés (`"nl"`).
+#' @param locale Un ID de configuración regional opcional que se utilizará para
+#'   formatear valores en las salidas de informes de acuerdo con las reglas de
+#'   la configuración regional. Los ejemplos incluyen `"en_US"` para inglés
+#'   (Estados Unidos) y `"fr_FR"` para francés (Francia); más simplemente, puede
+#'   ser un identificador de idioma sin una designación de país, como "es" para
+#'   español (España, igual que `"es_ES"`).
 #'   
-#' @return A `ptblank_multiagent` object.
+#' @return Un objeto `ptblank_multiagent`.
 #' 
 #' @examples 
 #' if (interactive()) {
@@ -7352,42 +7429,44 @@
 #' @export
 
 # db_tbl-------------------------------------------------------------------
-#' Get a table from a database
+#' Obtener una tabla de una base de datos
 #' 
 #' @description 
-#' If your target table is in a database, the `db_tbl()` function is a handy way
-#' of accessing it. This function simplifies the process of getting a `tbl_dbi`
-#' object, which usually involves a combination of building a connection to a
-#' database and using the `dplyr::tbl()` function with the connection and the
-#' table name (or a reference to a table in a schema). You can use `db_tbl()` as
-#' the basis for obtaining a database table for the `read_fn` parameter in
-#' [create_agent()] or [create_informant()]. This can be done by using a leading
-#' `~` before the `db_tbl()` call (e.g,. `read_fn = ~db_tbl(...)`). Another
-#' great option is supplying a table-prep formula involving `db_tbl()` to
-#' [tbl_store()] so that you have access to database tables though single names
-#' via a table store.
+#' Si su tabla de destino está en una base de datos, la función `db_tbl()` es
+#' una forma práctica de acceder a ella. Esta función simplifica el proceso de
+#' obtener un objeto `tbl_dbi`, que generalmente implica una combinación de
+#' construir una conexión a una base de datos y usar la función `dplyr::tbl()`
+#' con la conexión y el nombre de la tabla (o una referencia a una tabla en un
+#' esquema). Puede usar `db_tbl()` como base para obtener una tabla de base de
+#' datos para el parámetro `read_fn` en [create_agent()] o [create_informant()].
+#' Esto se puede hacer usando un `~` antes de la llamada `db_tbl()` (por
+#' ejemplo, `read_fn = ~ db_tbl (...)`). Otra gran opción es proporcionar una
+#' fórmula de preparación de tablas que involucre `db_tbl()` a [tbl_store()]
+#' para que tenga acceso a las tablas de la base de datos a través de nombres
+#' únicos a través de un almacén de tablas.
 #'
-#' The username and password are supplied though environment variables. If
-#' desired, these can be supplied directly by enclosing those values in [I()].
+#' El nombre de usuario y la contraseña se proporcionan a través de variables de
+#' entorno. Si lo desea, estos se pueden proporcionar directamente encerrando
+#' esos valores en [I()].
 #' 
-#' @param table The name of the table, or, a reference to a table in a schema
-#'   (two-element vector with the names of schema and table). Alternatively,
-#'   this can be supplied as a data table to copy into an in-memory database
-#'   connection. This only works if: (1) the `db` is either `"sqlite"` or
-#'   `"duckdb"`, (2) the `dbname` was chosen as `":memory:"`, and (3) the
-#'   `data_tbl` is a data frame or a tibble object.
-#' @param dbname The database name.
-#' @param dbtype Either an appropriate driver function (e.g.,
-#'   `RPostgres::Postgres()`) or a shortname for the database type. Valid names
-#'   are: `"postgresql"`, `"postgres"`, or `"pgsql"` (PostgreSQL, using the
-#'   `RPostgres::Postgres()` driver function); `"mysql"` (MySQL, using
-#'   `RMySQL::MySQL()`); `"duckdb"` (DuckDB, using `duckdb::duckdb()`); and
-#'   `"sqlite"` (SQLite, using `RSQLite::SQLite()`).
-#' @param host,port The database host and optional port number.
-#' @param user,password The environment variables used to access the username
-#'   and password for the database.
+#' @param table El nombre de la tabla, o una referencia a una tabla en un
+#'   esquema (vector de dos elementos con los nombres de esquema y tabla).
+#'   Alternativamente, esto se puede proporcionar como una tabla de datos para
+#'   copiar en una conexión de base de datos en memoria. Esto solo funciona si:
+#'   (1) el `db` es` "sqlite"` o `"duckdb" `, (2) el `dbname` fue elegido como
+#'   `":memory:"`, y (3) el `data_tbl` es un marco de datos o un objeto tibble.
+#' @param dbname El nombre de la base de datos.
+#' @param dbtype Ya sea una función de controlador apropiada (por ejemplo,
+#'   `RPostgres::Postgres()`) o un nombre corto para el tipo de base de datos.
+#'   Los nombres válidos son: `"postgresql"`, `"postgres"`, o `"pgsql"`
+#'   (PostgreSQL, usando la función del controlador `RPostgres::Postgres()`);
+#'   `"mysql"` (MySQL, usando `RMySQL::MySQL()`); `"duckdb"` (DuckDB, usando
+#'   `duckdb::duckdb()`); y `"sqlite"` (SQLite, usando `RSQLite::SQLite()`).
+#' @param host,port El host de la base de datos y el número de puerto opcional.
+#' @param user,password Las variables de entorno utilizadas para acceder al
+#'   nombre de usuario y la contraseña de la base de datos.
 #'   
-#' @return A `tbl_dbi` object.
+#' @return Un objeto `tbl_dbi`.
 #' 
 #' @examples 
 #' # You can use an in-memory database
@@ -7512,22 +7591,23 @@
 #' @export
 
 # deactivate_steps---------------------------------------------------------
-#' Deactivate one or more of an *agent*'s validation steps
+#' Desactive uno o más de los pasos de validación de un *agent*
 #'
 #' @description
-#' Should the deactivation of one or more validation steps be necessary after
-#' creation of the validation plan for an *agent*, the `deactivate_steps()`
-#' function will be helpful for that. This has the same effect as using the
-#' `active = FALSE` option (`active` is an argument in all validation functions)
-#' for the selected validation steps. Please note that this directly edits the
-#' validation step, wiping out any function that may have been defined for
-#' whether the step should be active or not.
+#' Si fuera necesario desactivar uno o más pasos de validación después de la
+#' creación del plan de validación para un *agent*, la función
+#' `deactivate_steps()` será útil para ello. Esto tiene el mismo efecto que usar
+#' la opción `active = FALSE` (`active` es un argumento en todas las funciones
+#' de validación) para los pasos de validación seleccionados. Tenga en cuenta
+#' que esto edita directamente el paso de validación, eliminando cualquier
+#' función que pueda haber sido definida para si el paso debería estar activo o
+#' no.
 #'
-#' @param agent An agent object of class `ptblank_agent`.
-#' @param i The validation step number, which is assigned to each validation
-#'   step in the order of definition.
+#' @param agent Un objeto de agente de clase `ptblank_agent`.
+#' @param i El número de paso de validación, que se asigna a cada paso de
+#'   validación en el orden de definición.
 #'
-#' @return A `ptblank_agent` object.
+#' @return Un objeto `ptblank_agent`.
 #' 
 #' @examples 
 #' # Create an agent that has the
@@ -7567,50 +7647,55 @@
 #' @export
 
 # draft_validation---------------------------------------------------------
-#' Draft a starter **pointblank** validation .R/.Rmd file with a data table
+#' Redacte un archivo inicial **pointblank** validation .R / .Rmd con una tabla
+#' de datos
 #' 
 #' @description
-#' Generate a draft validation plan in a new .R or .Rmd file using an input data
-#' table. Using this workflow, the data table will be scanned to learn about its
-#' column data and a set of starter validation steps (constituting a validation
-#' plan) will be written. It's best to use a data extract that contains at least
-#' 1000 rows and is relatively free of spurious data.
+#' Genere un borrador del plan de validación en un nuevo archivo .R o .Rmd
+#' usando una tabla de datos de entrada. Con este flujo de trabajo, se escaneará
+#' la tabla de datos para conocer los datos de su columna y se escribirá un
+#' conjunto de pasos de validación de inicio (que constituyen un plan de
+#' validación). Es mejor utilizar un extracto de datos que contenga al menos
+#' 1000 filas y que esté relativamente libre de datos falsos.
 #'
-#' Once in the file, it's possible to tweak the validation steps to better fit
-#' the expectations to the particular domain. While column inference is used to
-#' generate reasonable validation plans, it is difficult to infer the acceptable
-#' values without domain expertise. However, using `draft_validation()` could
-#' get you started on floor 10 of tackling data quality issues and is in any
-#' case better than starting with an empty code editor view.
+#' Una vez en el archivo, es posible modificar los pasos de validación para que
+#' se ajusten mejor a las expectativas del dominio en particular. Si bien la
+#' inferencia de columna se utiliza para generar planes de validación
+#' razonables, es difícil inferir los valores aceptables sin experiencia en el
+#' dominio. Sin embargo, usar `draft_validation()` podría ayudarlo a comenzar
+#' en el piso 10 para abordar los problemas de calidad de los datos y, en
+#' cualquier caso, es mejor que comenzar con una vista de editor de código
+#' vacía.
 #' 
-#' @param tbl The input table. This can be a data frame, tibble, a `tbl_dbi`
-#'   object, or a `tbl_spark` object.
-#' @param tbl_name A optional name to assign to the input table object. If no
-#'   value is provided, a name will be generated based on whatever information
-#'   is available. This table name will be displayed in the header area of the
-#'   agent report generated by printing the *agent* or calling
-#'   [get_agent_report()].
-#' @param file_name An optional name for the .R or .Rmd file. This should be a
-#'   name without an extension. By default, this is taken from the `tbl_name`
-#'   but if nothing is supplied for that, the name will contain the text
-#'   `"draft_validation_"` followed by the current date and time.
-#' @param path A path can be specified here if there shouldn't be an attempt to
-#'   place the generated file in the working directory.
-#' @param lang The language to use when creating comments for the automatically-
-#'   generated validation steps. By default, `NULL` will create English (`"en"`)
-#'   text. Other options include French (`"fr"`), German (`"de"`), Italian
-#'   (`"it"`), Spanish (`"es"`), Portuguese (`"pt"`), Turkish (`"tr"`), Chinese
-#'   (`"zh"`), Russian (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish
-#'   (`"sv"`), and Dutch (`"nl"`).
-#' @param output_type An option for choosing what type of output should be
-#'   generated. By default, this is an .R script (`"R"`) but this could
-#'   alternatively be an R Markdown document (`"Rmd"`).
-#' @param add_comments Should there be comments that explain the features of the
-#'   validation plan in the generated document? By default, this is `TRUE`.
-#' @param overwrite Should a file of the same name be overwritten? By default,
-#'   this is `FALSE`.
-#' @param quiet Should the function *not* inform when the file is written? By
-#'   default this is `FALSE`.
+#' @param tbl La tabla de entrada. Puede ser un marco de datos, tibble, un
+#'   objeto `tbl_dbi` o un objeto `tbl_spark`.
+#' @param tbl_name Un nombre opcional para asignar al objeto de la tabla de
+#'   entrada. Si no se proporciona ningún valor, se generará un nombre en
+#'   función de la información disponible. Este nombre de tabla se mostrará en
+#'   el área de encabezado del informe del agente generado al imprimir el
+#'   *agent* o llamar a [get_agent_report()].
+#' @param file_name Un nombre opcional para el archivo .R o .Rmd. Debe ser un
+#'   nombre sin extensión. Por defecto, esto se toma del `tbl_name` pero si no
+#'   se proporciona nada para eso, el nombre contendrá el texto
+#'   `"draft_validation_" `seguido de la fecha y hora actuales.
+#' @param path Aquí se puede especificar una ruta si no se debe intentar colocar
+#'   el archivo generado en el directorio de trabajo.
+#' @param lang El idioma que se utilizará al crear comentarios para los pasos de
+#'   validación generados automáticamente. De forma predeterminada, `NULL`
+#'   creará texto en inglés (`"en"`). Otras opciones incluyen francés (`"fr"`),
+#'   alemán (`"de"`), italiano (`"it"`), español (`"es"`), portugués (`"pt"`),
+#'   turco (`"tr"`), chino (`"zh"`), ruso (`"ru"`), polaco (`"pl"`), danés
+#'   (`"da"`), sueco (`"sv"` ) y holandés (`"nl"`).
+#' @param output_type Una opción para elegir qué tipo de salida se debe generar.
+#'   De forma predeterminada, este es un script .R (`"R"`) pero podría ser
+#'   alternativamente un documento R Markdown (`"Rmd"`).
+#' @param add_comments ¿Debería haber comentarios que expliquen las
+#'   características del plan de validación en el documento generado? De forma
+#'   predeterminada, es `TRUE`.
+#' @param overwrite ¿Debería sobrescribirse un archivo con el mismo nombre? De
+#'   forma predeterminada, es `FALSE`.
+#' @param quiet ¿Debería la función *no* informar cuando se escribe el archivo?
+#'   Por defecto, esto es `FALSE`.
 #'   
 #' @return Invisibly returns `TRUE` if the file has been written. 
 #' 
@@ -7630,7 +7715,8 @@
 #' @export
 
 # email_blast--------------------------------------------------------------
-#' Send email at a validation step or at the end of an interrogation
+#' Envíe un correo electrónico en un paso de validación o al final de un
+#' interrogatorio
 #' 
 #' @description
 #' The `email_blast()` function is useful for sending an email message that
@@ -7797,7 +7883,8 @@
 #' @export 
 
 # email_create-------------------------------------------------------------
-#' Create an email object from a **pointblank** *agent* or *informant*
+#' Cree un objeto de correo electrónico a partir de un **pointblank** *agent* o
+#' *informant*
 #' 
 #' @description
 #' The `email_create()` function produces an email message object that could be
@@ -7909,7 +7996,7 @@
 #' @export 
 
 # export_report------------------------------------------------------------
-#' Export an *agent*, *informant*, *multiagent*, or table scan to HTML
+#' Exportar un *agent*, *informant*, *multiagent* o escaneo de tabla a HTML
 #' 
 #' @description 
 #' The *agent*, *informant*, *multiagent*, and the table scan object can be
@@ -8084,7 +8171,7 @@
 #' @export
 
 # file_tbl-----------------------------------------------------------------
-#' Get a table from a local or remote file
+#' Obtener una tabla de un archivo local o remoto
 #' 
 #' @description 
 #' If your target table is in a file, stored either locally or remotely, the
@@ -8122,7 +8209,7 @@
 #' @param verify If `TRUE` (the default) then a verification of the data object
 #'   having the `data.frame` class will be carried out.
 #'   
-#' @return A `tbl_df` object.
+#' @return Un objeto `tbl_df`.
 #' 
 #' @examples 
 #' # A local CSV file can be obtained as
@@ -8262,7 +8349,7 @@
 #' @export
 
 # from_github--------------------------------------------------------------
-#' Specify a file for download from GitHub
+#' Especificar un archivo para descargar desde GitHub
 #' 
 #' The `from_github()` function is helpful for generating a valid URL that
 #' points to a data file in a public GitHub repository. This function can be
@@ -8346,7 +8433,7 @@
 #' @export
 
 # game_revenue-------------------------------------------------------------
-#' A table with game revenue data
+#' Una tabla con datos de ingresos del juego
 #'
 #' This table is a subset of the `sj_all_revenue` table from the **intendo**
 #' data package. It's the first 2,000 rows from that table where revenue records
@@ -8389,7 +8476,7 @@
 #'
 
 # game_revenue_info--------------------------------------------------------
-#' A table with metadata for the `game_revenue` dataset
+#' Una tabla con metadatos para el conjunto de datos `game_revenue`
 #'
 #' This table contains metadata for the `game_revenue` table. The first column
 #' (named `column`) provides the column names from `game_revenue`. The second
@@ -8416,7 +8503,7 @@
 #'
 
 # get_agent_report---------------------------------------------------------
-#' Get a summary report from an agent
+#' Obtenga un informe resumido de una *agent*
 #' 
 #' @description 
 #' We can get an informative summary table from an agent by using the
@@ -8485,7 +8572,7 @@
 #' available for the validation step
 #' }
 #' 
-#' @param agent An agent object of class `ptblank_agent`.
+#' @param agent Un objeto de agente de clase `ptblank_agent`.
 #' @param arrange_by A choice to arrange the report table rows by the validation
 #'   step number (`"i"`, the default), or, to arrange in descending order by
 #'   severity of the failure state (with `"severity"`).
@@ -8583,7 +8670,7 @@
 #' @export
 
 # get_agent_x_list---------------------------------------------------------
-#' Get the agent's **x-list**
+#' Obtenga la **x-list** del agente
 #'
 #' @description 
 #' The agent's **x-list** is a record of information that the agent possesses at
@@ -8658,14 +8745,14 @@
 #' HTML has inlined styles, making it more suitable for email message bodies
 #' }
 #'
-#' @param agent An agent object of class `ptblank_agent`.
+#' @param agent Un objeto de agente de clase `ptblank_agent`.
 #' @param i The validation step number, which is assigned to each validation
 #'   step in the order of invocation. If `NULL` (the default), the **x-list**
 #'   will provide information for all validation steps. If a valid step number
 #'   is provided then **x-list** will have information pertaining only to that
 #'   step.
 #' 
-#' @return A `list` object.
+#' @return Un objeto `list`.
 #' 
 #' @examples
 #' # Create a simple data frame with
@@ -8712,7 +8799,7 @@
 #' @export
 
 # get_data_extracts--------------------------------------------------------
-#' Collect data extracts from a validation step
+#' Recopile extractos de datos de un paso de validación
 #'
 #' @description
 #' In an agent-based workflow (i.e., initiating with [create_agent()]), after
@@ -8737,7 +8824,7 @@
 #' Only functions from that combined set of validation functions can yield data
 #' extracts.
 #'
-#' @param agent An agent object of class `ptblank_agent`. It should have had
+#' @param agent Un objeto de agente de clase `ptblank_agent`. It should have had
 #'   [interrogate()] called on it, such that the validation steps were carried
 #'   out and any sample rows from non-passing validations could potentially be
 #'   available in the object.
@@ -8788,7 +8875,7 @@
 #' @export
 
 # get_informant_report-----------------------------------------------------
-#' Get a table information report from an *informant* object
+#' Obtener un informe de información de la tabla de un objeto *informant*
 #' 
 #' @description 
 #' We can get a table information report from an informant object that's
@@ -8855,7 +8942,7 @@
 #' @export
 
 # get_multiagent_report----------------------------------------------------
-#' Get a summary report using multiple agents
+#' Obtenga un informe resumido utilizando varios agentes
 #' 
 #' @description 
 #' We can get an informative summary table from a collective of agents by using
@@ -9079,7 +9166,7 @@
 #' @export
 
 # get_sundered_data--------------------------------------------------------
-#' Sunder the data, splitting it into 'pass' and 'fail' pieces
+#' Divida los datos, dividiéndolos en partes de 'pasa' y 'falla'
 #'
 #' @description
 #' Validation of the data is one thing but, sometimes, you want to use the best
@@ -9108,7 +9195,7 @@
 #' collection of in-consideration validation steps that use different forms of
 #' the input table.
 #'
-#' @param agent An agent object of class `ptblank_agent`. It should have had
+#' @param agent Un objeto de agente de clase `ptblank_agent`. It should have had
 #'   [interrogate()] called on it, such that the validation steps were actually
 #'   carried out.
 #' @param type The desired piece of data resulting from the splitting. Options
@@ -9197,7 +9284,7 @@
 #' @export
 
 # get_tt_param-------------------------------------------------------------
-#' Get a parameter value from a summary table
+#' Obtener un valor de parámetro de una tabla de resumen
 #' 
 #' @description The `get_tt_param()` function can help you to obtain a single
 #' parameter value from a summary table generated by the `tt_*()` functions
@@ -9262,7 +9349,7 @@
 #' @export
 
 # has_columns--------------------------------------------------------------
-#' Determine if one or more columns exist in a table. 
+#' Determinar si existen una o más columnas en una tabla
 #' 
 #' @description
 #' This utility function can help you easily determine whether a column of a
@@ -9351,7 +9438,7 @@
 #' @export
 
 # incorporate--------------------------------------------------------------
-#' Given an *informant* object, update and incorporate table snippets
+#' Dado un objeto *informant*, actualice e incorpore fragmentos de tabla
 #' 
 #' @description 
 #' When the *informant* object has a number of snippets available (by using
@@ -9365,7 +9452,7 @@
 #' 
 #' @param informant An informant object of class `ptblank_informant`.
 #' 
-#' @return A `ptblank_informant` object.
+#' @return Un objeto `ptblank_informant`.
 #' 
 #' @examples 
 #' if (interactive()) {
@@ -9441,7 +9528,8 @@
 #' @export
 
 # info_columns-------------------------------------------------------------
-#' Add information that focuses on aspects of a data table's columns
+#' Agregar información que se centre en aspectos de las columnas de una tabla de
+#' datos
 #' 
 #' @description
 #' Upon creation of an *informant* object (with the [create_informant()]
@@ -9568,7 +9656,7 @@
 #' @param .add Should new text be added to existing text? This is `TRUE` by
 #'   default; setting to `FALSE` replaces any existing text for a property.
 #' 
-#' @return A `ptblank_informant` object.
+#' @return Un objeto `ptblank_informant`.
 #' 
 #' @examples 
 #' # Create a pointblank `informant`
@@ -9637,7 +9725,7 @@
 #' @export
 
 # info_columns_from_tbl----------------------------------------------------
-#' Add column information from another data table
+#' Agregar información de columna de otra tabla de datos
 #' 
 #' @description
 #' The `info_columns_from_tbl()` function is a wrapper around the
@@ -9662,7 +9750,7 @@
 #'   default; setting to `FALSE` replaces any existing text for the `"info"`
 #'   property.
 #' 
-#' @return A `ptblank_informant` object.
+#' @return Un objeto `ptblank_informant`.
 #' 
 #' @examples 
 #' # Create a pointblank `informant`
@@ -9723,7 +9811,7 @@
 #' @export
 
 # info_section-------------------------------------------------------------
-#' Add information that focuses on some key aspect of the data table
+#' Agregue información que se centre en algún aspecto clave de la tabla de datos
 #' 
 #' @description 
 #' While the [info_tabular()] and [info_columns()] functions allow us to
@@ -9837,7 +9925,7 @@
 #'   the RHS is the *info text* (informational text that can be written as
 #'   Markdown and further styled with *Text Tricks*).
 #' 
-#' @return A `ptblank_informant` object.
+#' @return Un objeto `ptblank_informant`.
 #' 
 #' @examples 
 #' # Create a pointblank `informant`
@@ -9904,7 +9992,7 @@
 #' @export
 
 # info_snippet-------------------------------------------------------------
-#' Generate a useful text 'snippet' from the target table
+#' Genere un 'snippet' de texto útil a partir de la tabla de destino
 #' 
 #' @description 
 #' Getting little snippets of information from a table goes hand-in-hand with
@@ -9981,7 +10069,7 @@
 #'   (these functions always return a formula that's suitable for all types of
 #'   data sources).
 #' 
-#' @return A `ptblank_informant` object.
+#' @return Un objeto `ptblank_informant`.
 #' 
 #' @examples 
 #' # Take the `small_table` and
@@ -10052,7 +10140,8 @@
 #' @export
 
 # info_tabular-------------------------------------------------------------
-#' Add information that focuses on aspects of the data table as a whole
+#' Agregue información que se centre en aspectos de la tabla de datos en su
+#' conjunto
 #' 
 #' @description 
 #' When an *informant* object is created with the [create_informant()] function,
@@ -10152,7 +10241,7 @@
 #'   *info text* (informational text that can be written as Markdown and further
 #'   styled with *Text Tricks*).
 #' 
-#' @return A `ptblank_informant` object.
+#' @return Un objeto `ptblank_informant`.
 #' 
 #' @examples 
 #' # Create a pointblank `informant`
@@ -10213,7 +10302,7 @@
 #' @export
 
 # interrogate--------------------------------------------------------------
-#' Given an agent that has a validation plan, perform an interrogation
+#' Dado un agente que tiene un plan de validación, realice un interrogatorio
 #'
 #' @description 
 #' When the agent has all the information on what to do (i.e., a validation plan
@@ -10244,7 +10333,7 @@
 #' @param sample_limit A value that limits the possible number of rows returned
 #'   when sampling non-passing rows using the `sample_frac` option.
 #'   
-#' @return A `ptblank_agent` object.
+#' @return Un objeto `ptblank_agent`.
 #'   
 #' @examples
 #' if (interactive()) {
@@ -10276,7 +10365,8 @@
 #' @export
 
 # log4r_step---------------------------------------------------------------
-#' Enable logging of failure conditions at the validation step level
+#' Habilite el registro de condiciones de falla en el nivel del paso de
+#' validación
 #' 
 #' @description 
 #' The `log4r_step()` function can be used as an action in the [action_levels()]
@@ -10308,7 +10398,7 @@
 #' @export
 
 # print.action_levels------------------------------------------------------
-#' Print the `action_levels` object
+#' Imprime el objeto `action_levels`
 #'
 #' This function will allow the `action_levels` to be nicely printed.
 #' 
@@ -10319,7 +10409,7 @@
 #' @export
 
 # print.ptblank_agent------------------------------------------------------
-#' Print the `ptblank_agent` object
+#' Imprime el objeto `ptblank_agent`
 #'
 #' This function will allow the agent object to print a useful HTML-based
 #' report.
@@ -10332,7 +10422,7 @@
 #' @export
 
 # print.ptblank_informant--------------------------------------------------
-#' Print the `ptblank_informant` object
+#' Imprime el objeto  `ptblank_informant`
 #'
 #' This function will allow the informant object to print a useful HTML-based
 #' report.
@@ -10345,7 +10435,7 @@
 #' @export
 
 # print.ptblank_multiagent-------------------------------------------------
-#' Print the `ptblank_multiagent` object
+#' Imprime el objeto `ptblank_multiagent`
 #'
 #' This function will allow the multiagent object to print a useful HTML-based
 #' report.
@@ -10358,7 +10448,7 @@
 #' @export
 
 # print.ptblank_multiagent_report.long-------------------------------------
-#' Print the `ptblank_multiagent_report.long` object
+#' Imprime el objeto `ptblank_multiagent_report.long`
 #'
 #' This function will print the `ptblank_multiagent_report.long` object, which
 #' is an HTML-based report.
@@ -10371,7 +10461,7 @@
 #' @export
 
 # print.ptblank_tbl_scan---------------------------------------------------
-#' Print the `ptblank_tbl_scan` object
+#' Imprime el objeto `ptblank_tbl_scan`
 #'
 #' This function will print the `ptblank_tbl_scan` object, which is an
 #' HTML-based report.
@@ -10385,7 +10475,7 @@
 #' @export
 
 # print.read_fn------------------------------------------------------------
-#' Print the `read_fn` object
+#' Imprime el objeto `read_fn`
 #'
 #' This function will allow the `read_fn` to be nicely printed.
 #' 
@@ -10396,7 +10486,7 @@
 #' @export
 
 # print.tbl_store----------------------------------------------------------
-#' Print the `tbl_store` object
+#' Imprime el objeto `tbl_store`
 #'
 #' This function will allow the `tbl_store` to be nicely printed.
 #' 
@@ -10407,7 +10497,7 @@
 #' @export
 
 # print.x_list_i-----------------------------------------------------------
-#' Print a single-step x-list to the console
+#' Imprima una x-list de un solo paso en la consola
 #'
 #' This function will print an x-list object, for a single step, to the console.
 #' 
@@ -10418,7 +10508,7 @@
 #' @export
 
 # print.x_list_n-----------------------------------------------------------
-#' Print an x-list comprising all validation steps to the console
+#' Imprima una x-list que incluya todos los pasos de validación en la consola
 #'
 #' This function will print a x-list object, with all validation steps included,
 #' to the console.
@@ -10430,7 +10520,7 @@
 #' @export
 
 # read_disk_multiagent-----------------------------------------------------
-#' Read **pointblank** *agents* stored on disk as a *multiagent* 
+#' Leer objetos **pointblank** *agent* almacenados en el disco como *multiagent*
 #'
 #' @description 
 #' An *agent* or *informant* can be written to disk with the [x_write_disk()]
@@ -10449,7 +10539,7 @@
 #'   case that files are specified in `filenames` (the `path` combined with all
 #'   `filenames`), or, required when providing a `pattern` for file names.
 #'   
-#' @return A `ptblank_multiagent` object.
+#' @return Un objeto `ptblank_multiagent`.
 #' 
 #' @family The multiagent
 #' @section Function ID:
@@ -10458,7 +10548,8 @@
 #' @export
 
 # remove_read_fn-----------------------------------------------------------
-#' Remove a table-prep formula associated with an *agent* or *informant*
+#' Eliminar una fórmula de preparación de tablas asociada con un *agent* o
+#' *informant*
 #' 
 #' @description 
 #' Removing an *agent* or an *informant*'s association to a table-pre formula
@@ -10523,7 +10614,7 @@
 #' @export
 
 # remove_steps-------------------------------------------------------------
-#' Remove one or more of an *agent*'s validation steps
+#' Eliminar uno o más de los pasos de validación de un objeto *agent*
 #'
 #' @description
 #' Validation steps can be removed from an *agent* object through use of the
@@ -10532,12 +10623,12 @@
 #' steps from the *agent*'s validation plan. Please note that when removing
 #' validation steps all stored data extracts will be removed from the *agent*.
 #'
-#' @param agent An agent object of class `ptblank_agent`.
+#' @param agent Un objeto de agente de clase `ptblank_agent`.
 #' @param i The validation step number, which is assigned to each validation
 #'   step in the order of definition. If `NULL` (the default) then step removal
 #'   won't occur by index.
 #'   
-#' @return A `ptblank_agent` object.
+#' @return Un objeto `ptblank_agent`.
 #' 
 #' @examples 
 #' # Create an agent that has the
@@ -10567,7 +10658,7 @@
 #'   remove_steps(i = 2) %>%
 #'   interrogate()
 #'
-#' @return A `ptblank_agent` object.
+#' @return Un objeto `ptblank_agent`.
 #' 
 #' @family Object Ops
 #' @section Function ID:
@@ -10580,7 +10671,7 @@
 #' @export
 
 # remove_tbl---------------------------------------------------------------
-#' Remove a data table associated with an *agent* or *informant*
+#' Eliminar una tabla de datos asociada con un *agent* o *informant*
 #' 
 #' @description 
 #' Removing an *agent* or *informant*'s association to a data table can be done
@@ -10647,7 +10738,7 @@
 #' @export
 
 # rows_complete------------------------------------------------------------
-#' Are row data complete?
+#' ¿Están completos los datos de las filas?
 #'
 #' @description
 #' The `rows_complete()` validation function, the `expect_rows_complete()`
@@ -10727,11 +10818,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -10816,7 +10907,7 @@
 #' @name rows_complete
 
 # rows_distinct------------------------------------------------------------
-#' Are row data distinct?
+#' ¿Son distintos los datos de las filas?
 #'
 #' @description
 #' The `rows_distinct()` validation function, the `expect_rows_distinct()`
@@ -10897,11 +10988,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -10986,7 +11077,7 @@
 #' @name rows_distinct
 
 # scan_data----------------------------------------------------------------
-#' Thoroughly scan a table to better understand it
+#' Escanee minuciosamente una tabla para comprenderla mejor
 #'
 #' @description
 #' Generate an HTML report that scours the input table data. Before calling up
@@ -11060,7 +11151,7 @@
 #' @export
 
 # serially-----------------------------------------------------------------
-#' Run several tests and a final validation in a serial manner
+#' Ejecutar varias pruebas y una validación final en serie
 #'
 #' @description 
 #' The `serially()` validation function allows for a series of tests to run in
@@ -11151,11 +11242,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -11335,7 +11426,7 @@
 #' @name serially
 
 # set_read_fn--------------------------------------------------------------
-#' Set a table-prep formula to an *agent* or *informant*
+#' Establezca una fórmula de preparación de mesa para un *agent* o *informant*
 #'
 #' @description
 #' A table-prep formula can be associated with an *agent* or *informant* with
@@ -11399,7 +11490,7 @@
 #' @export
 
 # set_tbl------------------------------------------------------------------
-#' Set a data table to an *agent* or *informant*
+#' Establecer una tabla de datos para un *agent* o *informant*
 #' 
 #' @description 
 #' Setting a data table to an *agent* or *informant* with `set_tbl()` replaces
@@ -11465,7 +11556,7 @@
 #' @export
 
 # small_table--------------------------------------------------------------
-#' A small table that is useful for testing
+#' Una pequeña tabla que es útil para realizar pruebas
 #'
 #' This is a small table with a few different types of columns. It's probably
 #' just useful when testing the functions from **pointblank**. Rows 9 and 10 are
@@ -11497,7 +11588,7 @@
 #'
 
 # small_table_sqlite-------------------------------------------------------
-#' A SQLite version of the `small_table` dataset
+#' Una versión SQLite del conjunto de datos `small_table`
 #' 
 #' The `small_table_sqlite()` function creates a SQLite, `tbl_dbi` version of
 #' the `small_table` dataset. A requirement is the availability of the **DBI**
@@ -11518,7 +11609,7 @@
 #' @export
 
 # snip_highest-------------------------------------------------------------
-#' A `fn` for `info_snippet()`: get the highest value from a column
+#' Un `fn` para `info_snippet()`: obtiene el valor más alto de una columna
 #' 
 #' The `snip_lowest()` function can be used as an [info_snippet()] function
 #' (i.e., provided to `fn`) to get the highest numerical, time value, or
@@ -11563,7 +11654,7 @@
 #' @export
 
 # snip_list----------------------------------------------------------------
-#' A `fn` for `info_snippet()`: get a list of column categories
+#' Un `fn` para `info_snippet()`: obtener una lista de categorías de columnas
 #' 
 #' The `snip_list()` function can be used as an [info_snippet()] function (i.e.,
 #' provided to `fn`) to get a catalog list from a table column. You can limit
@@ -11647,7 +11738,7 @@
 #' @export
 
 # snip_lowest--------------------------------------------------------------
-#' A `fn` for `info_snippet()`: get the lowest value from a column
+#' Un `fn` para `info_snippet()`: obtener el valor más bajo de una columna
 #' 
 #' The `snip_lowest()` function can be used as an [info_snippet()] function
 #' (i.e., provided to `fn`) to get the lowest numerical, time value, or
@@ -11692,7 +11783,7 @@
 #' @export
 
 # snip_stats---------------------------------------------------------------
-#' A `fn` for `info_snippet()`: get an inline statistical summary
+#' Un `fn` para `info_snippet()`: obtener un resumen estadístico en línea
 #'
 #' @description
 #' The `snip_stats()` function can be used as an [info_snippet()] function
@@ -11750,7 +11841,7 @@
 #' @export
 
 # specially----------------------------------------------------------------
-#' Perform a specialized validation with a user-defined function
+#' Realizar una validación especializada con una función definida por el usuario
 #'
 #' @description 
 #' The `specially()` validation function allows for custom validation with a
@@ -11798,11 +11889,11 @@
 #' threshold level).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
@@ -11863,7 +11954,7 @@
 #' @name specially
 
 # specifications-----------------------------------------------------------
-#' A table containing data pertaining to various specifications
+#' Una tabla que contiene datos pertenecientes a varias especificaciones
 #'
 #' The `specifications` dataset is useful for testing the
 #' [col_vals_within_spec()], [test_col_vals_within_spec()], and
@@ -11911,7 +12002,8 @@
 #'
 
 # stock_msg_body-----------------------------------------------------------
-#' Provide simple email message body components: body
+#' Proporcione componentes simples del cuerpo del mensaje de correo electrónico:
+#' "body"
 #' 
 #' The `stock_msg_body()` function simply provides some stock text for an email
 #' message sent via [email_blast()] or obtained as a standalone object through
@@ -11927,7 +12019,8 @@
 #' @export
 
 # stock_msg_footer---------------------------------------------------------
-#' Provide simple email message body components: footer
+#' Proporcione componentes simples del cuerpo del mensaje de correo electrónico:
+#' "footer"
 #' 
 #' The `stock_msg_footer()` functions simply provide some stock text for an
 #' email message sent via [email_blast()] or obtained as a standalone object
@@ -11943,7 +12036,7 @@
 #' @export
 
 # stop_if_not--------------------------------------------------------------
-#' The next generation of `stopifnot()`-type functions: `stop_if_not()`
+#' La próxima generación de funciones de tipo `stopifnot()`: `stop_if_not()`
 #'
 #' This is `stopifnot()` but with a twist: it works well as a standalone,
 #' replacement for `stopifnot()` but is also customized for use in validation
@@ -11981,7 +12074,7 @@
 #' @export
 
 # tbl_get------------------------------------------------------------------
-#' Obtain a materialized table via a table store
+#' Obtenga una mesa materializada a través de una tienda de mesa
 #' 
 #' @description 
 #' The `tbl_get()` function gives us the means to materialize a table that has
@@ -12062,7 +12155,7 @@
 #' @export
 
 # tbl_source---------------------------------------------------------------
-#' Obtain a table-prep formula from a table store
+#' Obtenga una fórmula de preparación de mesa en una tienda de mesa
 #' 
 #' @description
 #' The `tbl_source()` function provides a convenient means to access a
@@ -12154,7 +12247,8 @@
 #' @export
 
 # tbl_store----------------------------------------------------------------
-#' Define a store of tables with table-prep formulas: a table store
+#' Definir un almacén de tablas con fórmulas de preparación de tablas: un "table
+#' store"
 #' 
 #' @description 
 #' It can be useful to set up all the data sources you need and just draw from
@@ -12342,7 +12436,7 @@
 #' @export
 
 # tt_string_info-----------------------------------------------------------
-#' Table Transformer: obtain a summary table for string columns
+#' Table Transformer: obtenga una tabla de resumen para columnas de cadena
 #' 
 #' @description
 #' With any table object, you can produce a summary table that is scoped to
@@ -12361,7 +12455,7 @@
 #' @param tbl A table object to be used as input for the transformation. This
 #'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #' 
-#' @return A `tibble` object.
+#' @return Un objeto `tibble`.
 #' 
 #' @examples 
 #' # Get string information for the
@@ -12400,7 +12494,8 @@
 #' @export
 
 # tt_summary_stats---------------------------------------------------------
-#' Table Transformer: obtain a summary stats table for numeric columns
+#' Table Transformer: obtener una tabla de estadísticas de resumen para columnas
+#' numéricas
 #' 
 #' @description
 #' With any table object, you can produce a summary table that is scoped to the
@@ -12425,7 +12520,7 @@
 #' @param tbl A table object to be used as input for the transformation. This
 #'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #' 
-#' @return A `tibble` object.
+#' @return Un objeto `tibble`.
 #' 
 #' @examples 
 #' # Get summary statistics for the
@@ -12499,7 +12594,7 @@
 #' @export
 
 # tt_tbl_colnames----------------------------------------------------------
-#' Table Transformer: get a table's column names
+#' Table Transformer: obtener los nombres de las columnas de una tabla
 #' 
 #' @description
 #' With any table object, you can produce a summary table that contains table's
@@ -12512,7 +12607,7 @@
 #' @param tbl A table object to be used as input for the transformation. This
 #'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #' 
-#' @return A `tibble` object.
+#' @return Un objeto `tibble`.
 #' 
 #' @examples
 #' # Get the column names of the
@@ -12550,7 +12645,7 @@
 #' @export
 
 # tt_tbl_dims--------------------------------------------------------------
-#' Table Transformer: get the dimensions of a table
+#' Table Transformer: obtener las dimensiones de una mesa
 #' 
 #' @description
 #' With any table object, you can produce a summary table that contains nothing
@@ -12562,7 +12657,7 @@
 #' @param tbl A table object to be used as input for the transformation. This
 #'   can be a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
 #' 
-#' @return A `tibble` object.
+#' @return Un objeto `tibble`.
 #' 
 #' @examples
 #' # Get the dimensions of the
@@ -12598,7 +12693,7 @@
 #' @export
 
 # tt_time_shift------------------------------------------------------------
-#' Table Transformer: shift the times of a table
+#' Table Transformer: cambiar los tiempos de una mesa
 #' 
 #' @description
 #' With any table object containing date or date-time columns, these values can
@@ -12657,7 +12752,8 @@
 #' @export
 
 # tt_time_slice------------------------------------------------------------
-#' Table Transformer: slice a table with a slice point on a time column
+#' Table Transformer: cortar una tabla con un punto de corte en una columna de
+#' tiempo
 #' 
 #' @description
 #' With any table object containing date, date-time columns, or a mixture
@@ -12727,7 +12823,8 @@
 #' @export
 
 # validate_rmd-------------------------------------------------------------
-#' Modify **pointblank** validation testing options within R Markdown documents
+#' Modificar las opciones de prueba de validación **pointblank** dentro de los
+#' documentos de R Markdown
 #' 
 #' @description 
 #' Using **pointblank** in an R Markdown workflow is enabled by default once the
@@ -12759,7 +12856,7 @@
 #' @export
 
 # write_testthat_file------------------------------------------------------
-#' Transform a **pointblank** agent to a **testthat** test file
+#' Transforma un agente **pointblank** en un **testthat** archivo de prueba
 #' 
 #' @description
 #' With a **pointblank** *agent*, we can write a **testthat** test file and opt
@@ -12852,7 +12949,7 @@
 #' )
 #' ```
 #' 
-#' @param agent An agent object of class `ptblank_agent`.
+#' @param agent Un objeto de agente de clase `ptblank_agent`.
 #' @param name An optional name for for the **testhat** test file. This should
 #'   be a name without extension and without the leading `"test-"` text. If
 #'   nothing is supplied, the name will be derived from the `tbl_name` in the
@@ -12959,7 +13056,7 @@
 #' @export
 
 # x_read_disk--------------------------------------------------------------
-#' Read an *agent*, *informant*, *multiagent*, or table scan from disk
+#' Leer un *agent*, *informant*, *multiagent* o escaneo de tabla desde el disco
 #' 
 #' @description 
 #' An *agent*, *informant*, *multiagent*, or table scan that has been written to
@@ -13051,7 +13148,7 @@
 #' @export
 
 # x_write_disk-------------------------------------------------------------
-#' Write an *agent*, *informant*, *multiagent*, or table scan to disk
+#' Escriba un *agent*, *informant*, *multiagent* o escaneo de tabla al disco
 #' 
 #' @description 
 #' Writing an *agent*, *informant*, *multiagent*, or even a table scan to disk
@@ -13292,7 +13389,7 @@
 #' @export
 
 # yaml_agent_interrogate---------------------------------------------------
-#' Get an *agent* from **pointblank** YAML and `interrogate()`
+#' Obtenga un *agent* de **pointblank** YAML e `interrogate()`
 #'
 #' @description 
 #' The `yaml_agent_interrogate()` function operates much like the
@@ -13308,7 +13405,7 @@
 #'   *agent*.
 #' @param path An optional path to the YAML file (combined with `filename`).
 #' 
-#' @return A `ptblank_agent` object.
+#' @return Un objeto `ptblank_agent`.
 #'
 #' @examples
 #' if (interactive()) {
@@ -13414,7 +13511,7 @@
 #' @export
 
 # yaml_agent_show_exprs----------------------------------------------------
-#' Display validation expressions using **pointblank** YAML
+#' Mostrar expresiones de validación usando **pointblank** YAML
 #'
 #' @description 
 #' The `yaml_agent_show_exprs()` function follows the specifications of a
@@ -13495,7 +13592,7 @@
 #' @export
 
 # yaml_agent_string--------------------------------------------------------
-#' Display **pointblank** YAML using an agent or a YAML file
+#' Mostrar **pointblank** YAML usando un agente o un archivo YAML
 #' 
 #' @description 
 #' With **pointblank** YAML, we can serialize an agent's validation plan (with
@@ -13589,7 +13686,7 @@
 #' @export
 
 # yaml_exec----------------------------------------------------------------
-#' Execute all agent and informant YAML tasks
+#' Ejecutar todas las tareas YAML de agentes e informantes
 #' 
 #' @description
 #' The `yaml_exec()` function takes all relevant **pointblank** YAML files in a
@@ -13697,7 +13794,7 @@
 #' @export
 
 # yaml_informant_incorporate-----------------------------------------------
-#' Get an *informant* from **pointblank** YAML and `incorporate()`
+#' Obtener un *informant* de **pointblank** YAML e `incorporate()`
 #'
 #' @description 
 #' The `yaml_informant_incorporate()` function operates much like the
@@ -13714,7 +13811,7 @@
 #'   *informant*.
 #' @param path An optional path to the YAML file (combined with `filename`).
 #' 
-#' @return A `ptblank_informant` object.
+#' @return Un objeto `ptblank_informant`.
 #'
 #' @examples
 #' if (interactive()) {
@@ -13811,7 +13908,7 @@
 #' @export
 
 # yaml_read_agent----------------------------------------------------------
-#' Read a **pointblank** YAML file to create an *agent* object
+#' Leer un archivo YAML **pointblank** para crear un objeto *agent*
 #'
 #' @description 
 #' With `yaml_read_agent()` we can read a **pointblank** YAML file that
@@ -13833,7 +13930,7 @@
 #'   *agent*.
 #' @param path An optional path to the YAML file (combined with `filename`).
 #'   
-#' @return A `ptblank_agent` object.
+#' @return Un objeto `ptblank_agent`.
 #'   
 #' @examples
 #' if (interactive()) {
@@ -13940,7 +14037,7 @@
 #' @export
 
 # yaml_read_informant------------------------------------------------------
-#' Read a **pointblank** YAML file to create an *informant* object
+#' Leer un archivo YAML **pointblank** para crear un objeto *informant*
 #'
 #' @description 
 #' With `yaml_read_informant()` we can read a **pointblank** YAML file that
@@ -14064,7 +14161,7 @@
 #' @export
 
 # yaml_write---------------------------------------------------------------
-#' Write **pointblank** objects to YAML files
+#' Escribir objetos **pointblank** en archivos YAML
 #' 
 #' @description
 #' With `yaml_write()` we can take different **pointblank** objects (these are

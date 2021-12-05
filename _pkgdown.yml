@@ -2,7 +2,9 @@ destination: docs
 
 home:
   strip_header: true
-  
+
+url: https://rich-iannone.github.io/pointblank
+
 template:
   bootstrap: 5
 

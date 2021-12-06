@@ -1,417 +1,417 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/404.html</loc>
   </url>
   <url>
-    <loc>/CODE_OF_CONDUCT.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>/CONTRIBUTING.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/CONTRIBUTING.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/PULL_REQUEST_TEMPLATE.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/PULL_REQUEST_TEMPLATE.html</loc>
   </url>
   <url>
-    <loc>/articles/INFO-1.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/articles/INFO-1.html</loc>
   </url>
   <url>
-    <loc>/articles/INFO-2.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/articles/INFO-2.html</loc>
   </url>
   <url>
-    <loc>/articles/VALID-I.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/articles/VALID-I.html</loc>
   </url>
   <url>
-    <loc>/articles/VALID-II.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/articles/VALID-II.html</loc>
   </url>
   <url>
-    <loc>/articles/VALID-III.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/articles/VALID-III.html</loc>
   </url>
   <url>
-    <loc>/articles/VALID-IV.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/articles/VALID-IV.html</loc>
   </url>
   <url>
-    <loc>/articles/VALID-V.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/articles/VALID-V.html</loc>
   </url>
   <url>
-    <loc>/articles/VALID-VI.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/articles/VALID-VI.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/validation_workflows.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/articles/validation_workflows.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/action_levels.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/action_levels.html</loc>
   </url>
   <url>
-    <loc>/reference/activate_steps.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/activate_steps.html</loc>
   </url>
   <url>
-    <loc>/reference/affix_date.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/affix_date.html</loc>
   </url>
   <url>
-    <loc>/reference/affix_datetime.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/affix_datetime.html</loc>
   </url>
   <url>
-    <loc>/reference/all_passed.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/all_passed.html</loc>
   </url>
   <url>
-    <loc>/reference/col_exists.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_exists.html</loc>
   </url>
   <url>
-    <loc>/reference/col_is_character.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_is_character.html</loc>
   </url>
   <url>
-    <loc>/reference/col_is_date.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_is_date.html</loc>
   </url>
   <url>
-    <loc>/reference/col_is_factor.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_is_factor.html</loc>
   </url>
   <url>
-    <loc>/reference/col_is_integer.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_is_integer.html</loc>
   </url>
   <url>
-    <loc>/reference/col_is_logical.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_is_logical.html</loc>
   </url>
   <url>
-    <loc>/reference/col_is_numeric.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_is_numeric.html</loc>
   </url>
   <url>
-    <loc>/reference/col_is_posix.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_is_posix.html</loc>
   </url>
   <url>
-    <loc>/reference/col_schema.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_schema.html</loc>
   </url>
   <url>
-    <loc>/reference/col_schema_match.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_schema_match.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_between.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_between.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_decreasing.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_decreasing.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_equal.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_equal.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_expr.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_expr.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_gt.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_gt.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_gte.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_gte.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_in_set.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_in_set.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_increasing.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_increasing.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_lt.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_lt.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_lte.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_lte.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_make_set.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_make_set.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_make_subset.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_make_subset.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_not_between.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_not_between.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_not_equal.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_not_equal.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_not_in_set.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_not_in_set.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_not_null.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_not_null.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_null.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_null.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_regex.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_regex.html</loc>
   </url>
   <url>
-    <loc>/reference/col_vals_within_spec.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/col_vals_within_spec.html</loc>
   </url>
   <url>
-    <loc>/reference/conjointly.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/conjointly.html</loc>
   </url>
   <url>
-    <loc>/reference/create_agent.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/create_agent.html</loc>
   </url>
   <url>
-    <loc>/reference/create_informant.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/create_informant.html</loc>
   </url>
   <url>
-    <loc>/reference/create_multiagent.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/create_multiagent.html</loc>
   </url>
   <url>
-    <loc>/reference/db_tbl.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/db_tbl.html</loc>
   </url>
   <url>
-    <loc>/reference/deactivate_steps.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/deactivate_steps.html</loc>
   </url>
   <url>
-    <loc>/reference/draft_validation.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/draft_validation.html</loc>
   </url>
   <url>
-    <loc>/reference/email_blast.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/email_blast.html</loc>
   </url>
   <url>
-    <loc>/reference/email_create.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/email_create.html</loc>
   </url>
   <url>
-    <loc>/reference/export_report.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/export_report.html</loc>
   </url>
   <url>
-    <loc>/reference/file_tbl.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/file_tbl.html</loc>
   </url>
   <url>
-    <loc>/reference/from_github.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/from_github.html</loc>
   </url>
   <url>
-    <loc>/reference/game_revenue.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/game_revenue.html</loc>
   </url>
   <url>
-    <loc>/reference/game_revenue_info.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/game_revenue_info.html</loc>
   </url>
   <url>
-    <loc>/reference/get_agent_report.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/get_agent_report.html</loc>
   </url>
   <url>
-    <loc>/reference/get_agent_x_list.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/get_agent_x_list.html</loc>
   </url>
   <url>
-    <loc>/reference/get_data_extracts.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/get_data_extracts.html</loc>
   </url>
   <url>
-    <loc>/reference/get_informant_report.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/get_informant_report.html</loc>
   </url>
   <url>
-    <loc>/reference/get_multiagent_report.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/get_multiagent_report.html</loc>
   </url>
   <url>
-    <loc>/reference/get_sundered_data.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/get_sundered_data.html</loc>
   </url>
   <url>
-    <loc>/reference/get_tt_param.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/get_tt_param.html</loc>
   </url>
   <url>
-    <loc>/reference/has_columns.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/has_columns.html</loc>
   </url>
   <url>
-    <loc>/reference/incorporate.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/incorporate.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/info_columns.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/info_columns.html</loc>
   </url>
   <url>
-    <loc>/reference/info_columns_from_tbl.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/info_columns_from_tbl.html</loc>
   </url>
   <url>
-    <loc>/reference/info_section.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/info_section.html</loc>
   </url>
   <url>
-    <loc>/reference/info_snippet.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/info_snippet.html</loc>
   </url>
   <url>
-    <loc>/reference/info_tabular.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/info_tabular.html</loc>
   </url>
   <url>
-    <loc>/reference/interrogate.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/interrogate.html</loc>
   </url>
   <url>
-    <loc>/reference/log4r_step.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/log4r_step.html</loc>
   </url>
   <url>
-    <loc>/reference/pipe.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>/reference/print.action_levels.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/print.action_levels.html</loc>
   </url>
   <url>
-    <loc>/reference/print.ptblank_agent.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/print.ptblank_agent.html</loc>
   </url>
   <url>
-    <loc>/reference/print.ptblank_informant.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/print.ptblank_informant.html</loc>
   </url>
   <url>
-    <loc>/reference/print.ptblank_multiagent.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/print.ptblank_multiagent.html</loc>
   </url>
   <url>
-    <loc>/reference/print.ptblank_multiagent_report.long.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/print.ptblank_multiagent_report.long.html</loc>
   </url>
   <url>
-    <loc>/reference/print.ptblank_tbl_scan.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/print.ptblank_tbl_scan.html</loc>
   </url>
   <url>
-    <loc>/reference/print.read_fn.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/print.read_fn.html</loc>
   </url>
   <url>
-    <loc>/reference/print.tbl_store.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/print.tbl_store.html</loc>
   </url>
   <url>
-    <loc>/reference/print.x_list_i.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/print.x_list_i.html</loc>
   </url>
   <url>
-    <loc>/reference/print.x_list_n.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/print.x_list_n.html</loc>
   </url>
   <url>
-    <loc>/reference/read_disk_multiagent.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/read_disk_multiagent.html</loc>
   </url>
   <url>
-    <loc>/reference/reexports.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/reexports.html</loc>
   </url>
   <url>
-    <loc>/reference/remove_read_fn.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/remove_read_fn.html</loc>
   </url>
   <url>
-    <loc>/reference/remove_steps.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/remove_steps.html</loc>
   </url>
   <url>
-    <loc>/reference/remove_tbl.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/remove_tbl.html</loc>
   </url>
   <url>
-    <loc>/reference/rows_complete.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/rows_complete.html</loc>
   </url>
   <url>
-    <loc>/reference/rows_distinct.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/rows_distinct.html</loc>
   </url>
   <url>
-    <loc>/reference/scan_data.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/scan_data.html</loc>
   </url>
   <url>
-    <loc>/reference/serially.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/serially.html</loc>
   </url>
   <url>
-    <loc>/reference/set_read_fn.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/set_read_fn.html</loc>
   </url>
   <url>
-    <loc>/reference/set_tbl.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/set_tbl.html</loc>
   </url>
   <url>
-    <loc>/reference/small_table.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/small_table.html</loc>
   </url>
   <url>
-    <loc>/reference/small_table_sqlite.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/small_table_sqlite.html</loc>
   </url>
   <url>
-    <loc>/reference/snip_highest.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/snip_highest.html</loc>
   </url>
   <url>
-    <loc>/reference/snip_list.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/snip_list.html</loc>
   </url>
   <url>
-    <loc>/reference/snip_lowest.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/snip_lowest.html</loc>
   </url>
   <url>
-    <loc>/reference/snip_stats.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/snip_stats.html</loc>
   </url>
   <url>
-    <loc>/reference/specially.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/specially.html</loc>
   </url>
   <url>
-    <loc>/reference/specifications.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/specifications.html</loc>
   </url>
   <url>
-    <loc>/reference/stock_msg_body.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/stock_msg_body.html</loc>
   </url>
   <url>
-    <loc>/reference/stock_msg_footer.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/stock_msg_footer.html</loc>
   </url>
   <url>
-    <loc>/reference/stop_if_not.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/stop_if_not.html</loc>
   </url>
   <url>
-    <loc>/reference/tbl_get.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/tbl_get.html</loc>
   </url>
   <url>
-    <loc>/reference/tbl_source.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/tbl_source.html</loc>
   </url>
   <url>
-    <loc>/reference/tbl_store.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/tbl_store.html</loc>
   </url>
   <url>
-    <loc>/reference/tt_string_info.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/tt_string_info.html</loc>
   </url>
   <url>
-    <loc>/reference/tt_summary_stats.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/tt_summary_stats.html</loc>
   </url>
   <url>
-    <loc>/reference/tt_tbl_colnames.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/tt_tbl_colnames.html</loc>
   </url>
   <url>
-    <loc>/reference/tt_tbl_dims.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/tt_tbl_dims.html</loc>
   </url>
   <url>
-    <loc>/reference/tt_time_shift.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/tt_time_shift.html</loc>
   </url>
   <url>
-    <loc>/reference/tt_time_slice.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/tt_time_slice.html</loc>
   </url>
   <url>
-    <loc>/reference/validate_rmd.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/validate_rmd.html</loc>
   </url>
   <url>
-    <loc>/reference/write_testthat_file.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/write_testthat_file.html</loc>
   </url>
   <url>
-    <loc>/reference/x_read_disk.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/x_read_disk.html</loc>
   </url>
   <url>
-    <loc>/reference/x_write_disk.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/x_write_disk.html</loc>
   </url>
   <url>
-    <loc>/reference/yaml_agent_interrogate.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/yaml_agent_interrogate.html</loc>
   </url>
   <url>
-    <loc>/reference/yaml_agent_show_exprs.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/yaml_agent_show_exprs.html</loc>
   </url>
   <url>
-    <loc>/reference/yaml_agent_string.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/yaml_agent_string.html</loc>
   </url>
   <url>
-    <loc>/reference/yaml_exec.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/yaml_exec.html</loc>
   </url>
   <url>
-    <loc>/reference/yaml_informant_incorporate.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/yaml_informant_incorporate.html</loc>
   </url>
   <url>
-    <loc>/reference/yaml_read_agent.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/yaml_read_agent.html</loc>
   </url>
   <url>
-    <loc>/reference/yaml_read_informant.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/yaml_read_informant.html</loc>
   </url>
   <url>
-    <loc>/reference/yaml_write.html</loc>
+    <loc>https://rich-iannone.github.io/pointblank/reference/yaml_write.html</loc>
   </url>
 </urlset>

@@ -1,6 +1,6 @@
 pandoc: 2.7.3
-pkgdown: 2.0.0.9000
-pkgdown_sha: 3e17275dfe27b1176d9cb596f679c23808d7b3d7
+pkgdown: 2.0.1.9000
+pkgdown_sha: 1c2bedc10283fe39c5e539083021cb87f208903a
 articles:
   INFO-1: INFO-1.html
   INFO-2: INFO-2.html
@@ -11,5 +11,8 @@ articles:
   VALID-V: VALID-V.html
   VALID-VI: VALID-VI.html
   validation_workflows: validation_workflows.html
-last_built: 2021-12-02T16:33Z
+last_built: 2021-12-06T15:29Z
+urls:
+  reference: https://rich-iannone.github.io/pointblank/reference
+  article: https://rich-iannone.github.io/pointblank/articles
 

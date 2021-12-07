@@ -6,7 +6,7 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     
     env:
       GITHUB_PAT: ${{ secrets.GHA_PAT }}
@@ -14,11 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-r@master
+      - uses: r-lib/actions/setup-pandoc@v1
+      
+      - uses: r-lib/actions/setup-r@v1
         with:
-          r-version: 'release'
-
-      - uses: r-lib/actions/setup-pandoc@master
+          use-public-rspm: true
 
       - name: Query dependencies
         run: |
@@ -26,25 +26,10 @@ jobs:
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
         shell: Rscript {0}
 
-      - name: Cache R packages
-        uses: actions/cache@v1
+      - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: macOS-r-4.0-3-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: macOS-r-4.0-3-
-
-      - name: Install system dependencies
-        run: |
-          brew install mariadb-connector-c
-
-      - name: Install dependencies
-        run: |
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_dev("pkgdown")
-        shell: Rscript {0}
-
-      - name: Install package
-        run: R CMD INSTALL .
+          extra-packages: pkgdown
+          needs: website
         
       - name: Deploy package
         run: |

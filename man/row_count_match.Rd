@@ -256,7 +256,7 @@ function.
 
 \section{Function ID}{
 
-2-21
+2-31
 }
 
 \examples{
@@ -275,7 +275,7 @@ tbl <-
 tbl_2 <-
   dplyr::tibble(
     e = c("a", NA, "a", "c"),
-    f = c(2.6, 1.2, 0, NA),
+    f = c(2.6, 1.2, 0, NA)
   )
 
 # Validate that when considering only

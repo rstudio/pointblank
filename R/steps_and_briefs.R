@@ -430,6 +430,12 @@ create_autobrief <- function(agent,
     autobrief <- finalize_autobrief(expectation_text, precondition_text) 
   }
   
+  if (assertion_type == "row_count_match") {
+    
+    expectation_text <- prep_row_count_match_expectation_text(lang = lang)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text) 
+  }
+  
   if (finalize_serially_brief) {
     
     serially_test_text <-
@@ -758,6 +764,11 @@ prep_row_complete_expectation_text <- function(column_text,
 prep_col_schema_match_expectation_text <- function(lang) {
   
   glue::glue(get_lsv("autobriefs/col_schema_match_expectation_text")[[lang]])
+}
+
+prep_row_count_match_expectation_text <- function(lang) {
+  
+  glue::glue(get_lsv("autobriefs/row_count_match_expectation_text")[[lang]])
 }
 
 prep_col_vals_expr_expectation_text <- function(lang) {

@@ -338,6 +338,8 @@ file_tbl <- function(file,
 #'   `username/repo[/subdir][@ref|#pull|@*release]`.
 #' @param subdir A path string representing a subdirectory in the GitHub
 #'   repository. This is combined with any path components included in `file`.
+#' @param default_branch The name of the default branch for the repo. This is
+#'   usually `"main"` (the default used here).
 #'   
 #' @return A character vector of length 1 that contains a URL.
 #' 
@@ -408,7 +410,8 @@ file_tbl <- function(file,
 #' @export
 from_github <- function(file,
                         repo,
-                        subdir = NULL) {
+                        subdir = NULL,
+                        default_branch = "main") {
   
   # get the username, repo, subdir component
   u_r_s <- gsub("(@|#).*", "", repo)
@@ -468,7 +471,7 @@ from_github <- function(file,
          dplyr::pull(merge_commit_sha))[1]
     
   } else {
-    ref_res <- "master"
+    ref_res <- default_branch
   }
   
   if (!is.null(subdir_file)) {
@@ -478,7 +481,7 @@ from_github <- function(file,
   } else {
     file_path <- file
   }
-
+  
   url <-
     as.character(
       glue::glue(

@@ -58,7 +58,7 @@ A \code{ptblank_informant} object.
 The \code{create_informant()} function creates an \emph{informant} object, which is
 used in an \emph{information management} workflow. The overall aim of this
 workflow is to record, collect, and generate useful information on data
-tables. We can supply as information that is useful for describing a
+tables. We can supply any information that is useful for describing a
 particular data table. The \emph{informant} object created by the
 \code{create_informant()} function takes information-focused functions:
 \code{\link[=info_columns]{info_columns()}}, \code{\link[=info_tabular]{info_tabular()}}, \code{\link[=info_section]{info_section()}}, and \code{\link[=info_snippet]{info_snippet()}}.

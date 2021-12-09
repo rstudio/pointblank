@@ -78,6 +78,7 @@ reference:
     - col_is_factor
     - col_exists
     - col_schema_match
+    - row_count_match
     - conjointly
     - serially
     - specially

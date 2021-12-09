@@ -939,6 +939,11 @@ check_table_with_assertion <- function(agent,
         agent = agent,
         idx = idx,
         table = table
+      ),
+      "row_count_match" = interrogate_row_count_match(
+        agent = agent,
+        idx = idx,
+        table = table
       )
     )
   
@@ -2544,6 +2549,40 @@ interrogate_col_schema_match <- function(agent,
       table = table,
       table_schema_x = table_schema_x,
       table_schema_y = table_schema_y
+    )
+  )
+}
+
+interrogate_row_count_match <- function(agent,
+                                        idx,
+                                        table) {
+  
+  # Get the comparison table (this is user-supplied)
+  tbl_compare <- materialize_table(tbl = agent$validation_set$values[[idx]])
+  
+  # Create function for validating the `row_count_match()` step function
+  tbl_row_count_match <- function(table,
+                                  tbl_compare) {
+    
+    # Ensure that the input `table` and `tbl_compare` objects
+    # are actually table objects
+    # TODO: improve failure message for check of `tbl_compare`
+    tbl_validity_check(table = table)
+    tbl_validity_check(table = tbl_compare)
+    
+    # Check for exact matching in row counts between the two tables
+    if (get_table_total_rows(table) == get_table_total_rows(tbl_compare)) {
+      dplyr::tibble(pb_is_good_ = TRUE)
+    } else {
+      dplyr::tibble(pb_is_good_ = FALSE)
+    }
+  }
+  
+  # Perform the validation of the table 
+  pointblank_try_catch(
+    tbl_row_count_match(
+      table = table,
+      tbl_compare = tbl_compare
     )
   )
 }

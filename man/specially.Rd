@@ -197,7 +197,7 @@ writing to disk by using the \code{\link[=yaml_agent_string]{yaml_agent_string()
 
 \section{Function ID}{
 
-2-33
+2-34
 }
 
 \seealso{
@@ -231,6 +231,7 @@ Other validation functions:
 \code{\link{col_vals_regex}()},
 \code{\link{col_vals_within_spec}()},
 \code{\link{conjointly}()},
+\code{\link{row_count_match}()},
 \code{\link{rows_complete}()},
 \code{\link{rows_distinct}()},
 \code{\link{serially}()}

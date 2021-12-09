@@ -304,6 +304,7 @@ Other validation functions:
 \code{\link{col_vals_regex}()},
 \code{\link{col_vals_within_spec}()},
 \code{\link{conjointly}()},
+\code{\link{row_count_match}()},
 \code{\link{rows_distinct}()},
 \code{\link{serially}()},
 \code{\link{specially}()}

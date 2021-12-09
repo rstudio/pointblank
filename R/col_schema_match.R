@@ -434,7 +434,12 @@ test_col_schema_match <- function(object,
 #' @param ... A set of named arguments where the names refer to column names and
 #'   the values are one or more column types.
 #' @param .tbl An option to use a table object to define the schema. If this is
-#'   provided then any values provided to `...` will be ignored.
+#'   provided then any values provided to `...` will be ignored. This can either
+#'   be a table object, a table-prep formula.This can be a table object such as
+#'   a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#'   Alternatively, a table-prep formula (`~ <table reading code>`) or a
+#'   function (`function() <table reading code>`) can be used to lazily read in
+#'   the table at interrogation time.
 #' @param .db_col_types Determines whether the column types refer to R column
 #'   types (`"r"`) or SQL column types (`"sql"`).
 #'   
@@ -515,7 +520,8 @@ col_schema <- function(...,
   
   if (!is.null(.tbl)) {
     
-    # Validate .tbl object
+    # Validate .tbl object but first materialize the table
+    .tbl <- materialize_table(tbl = .tbl)
     
     # Generate schema from tbl object
     if (inherits(.tbl, "data.frame")) {

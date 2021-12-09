@@ -140,6 +140,36 @@ get_all_cols <- function(agent) {
   agent$col_names
 }
 
+materialize_table <- function(tbl,
+                              check = TRUE) {
+  
+  if (is.null(tbl)) {
+    stop("A table must be provided.", call. = FALSE)
+  }
+  
+  if (pointblank:::is_a_table_object(tbl)) {
+    return(tbl)
+  } else if (inherits(tbl, "function")) {
+    tbl <- rlang::exec(tbl)
+  } else if (rlang::is_formula(tbl)) {
+    tbl <- tbl %>% rlang::f_rhs() %>% rlang::eval_tidy()
+  } else {
+    
+    stop(
+      "The `tbl` object must either be a table, a function, or a formula.\n",
+      "* A table-prep formula can be used (with the expression on the RHS).\n",
+      "* A function can be made with `function()` {<table reading code>}.",
+      call. = FALSE
+    )
+  }  
+  
+  if (check) {
+    pointblank:::is_a_table_object(tbl)
+  }
+  
+  tbl
+}
+
 resolve_expr_to_cols <- function(tbl, var_expr) {
   
   var_expr <- enquo(var_expr)

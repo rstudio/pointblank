@@ -839,6 +839,16 @@ get_agent_report <- function(agent,
           }
         }
         
+        if (assertion_str == "row_count_match") {
+          
+          return(
+            paste0(
+              "<div><p style=\"margin-top: 0px; margin-bottom: 0px; ",
+              "font-size: 0.75rem;\">EXTERNAL TABLE</p></div>"
+            )
+          )
+        }
+        
         if (assertion_str == "conjointly") {
           
           length_values_i <- length(values_i)

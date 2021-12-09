@@ -1092,6 +1092,29 @@ as_agent_yaml_list <- function(agent,
           )
         )
     
+    } else if (validation_fn == "row_count_match") {
+      
+      # TODO: disallow YAML writing if value obtained from
+      # `get_arg_value(step_list$values)` is a table object or is
+      # not a function or table-prep formula
+      tbl_compare <- step_list$values
+      
+      
+      lst_step <- 
+        list(
+          validation_fn = list(
+            tbl_compare = as_list_preconditions(tbl_compare),
+            preconditions = as_list_preconditions(step_list$preconditions),
+            segments = as_list_segments(step_list$seg_expr),
+            actions = as_action_levels(
+              step_list$actions[[1]],
+              action_levels_default
+            ),
+            label = step_list$label,
+            active = as_list_active(step_list$active)
+          )
+        )
+      
     } else if (validation_fn == "col_schema_match") {
       
       schema_list <- get_schema_list(schema = step_list$values[[1]])

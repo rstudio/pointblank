@@ -673,6 +673,23 @@ test_that("pointblank expectation functions produce the correct results", {
       threshold = 0.01
     )
   )
+  
+  #
+  # test_row_count_match()
+  #
+  
+  expect_true(test_row_count_match(tbl, tbl_compare = tbl))
+  expect_true(test_row_count_match(tbl, tbl_compare = pointblank::small_table))
+  expect_true(test_row_count_match(tbl, tbl_compare = ~ pointblank::small_table))
+  expect_true(test_row_count_match(tbl, tbl_compare = function() pointblank::small_table))
+  expect_false(test_row_count_match(tbl, tbl_compare = tbl_conjointly))
+  expect_false(test_row_count_match(tbl_conjointly, tbl_compare = tbl))
+  expect_true(test_row_count_match(tbl_conjointly, tbl_compare = tbl_complete_yes))
+  expect_true(test_row_count_match(tbl_complete_yes, tbl_compare = tbl_conjointly))
+  expect_true(test_row_count_match(tbl_complete_no, tbl_compare = tbl_complete_yes))
+  expect_true(test_row_count_match(tbl_complete_yes, tbl_compare = tbl_complete_no))
+  expect_true(test_row_count_match(increasing_tbl, tbl_compare = decreasing_tbl))
+  expect_true(test_row_count_match(decreasing_tbl, tbl_compare = increasing_tbl))
 })
 
 test_that("expect errors to be expressed by pointblank under some conditions", {

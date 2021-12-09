@@ -187,10 +187,10 @@
 #'     f = c(2.6, 1.2, 0, NA)
 #'   )
 #' 
-#' # Validate that when considering only
-#' # data in columns `a` and `b`, there
-#' # are only complete rows (i.e., all
-#' # rows have no `NA` values)
+#' # Validate that the count of rows
+#' # in the target table (`tbl`) matches
+#' # that of the comparison table
+#' # (`tbl_2`)
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   row_count_match(tbl_compare = tbl_2) %>%

@@ -563,6 +563,10 @@ make_validation_steps <- function(steps) {
                 return(paste("  ", val, collapse = ",\n"))
               }
               
+              if (arg_name == "tbl_compare") {
+                return(paste("  tbl =", gsub("\n", " ", val), collapse = ",\n"))
+              }
+              
               if (arg_name == "inclusive") {
                 if (all(val)) {
                   return("")

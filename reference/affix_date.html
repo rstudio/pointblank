@@ -161,18 +161,18 @@ produces a date-time string by default.</p>
 <span class="r-in"><span class="co"># a file, we add the current date to it</span></span>
 <span class="r-in"><span class="co"># as a suffix</span></span>
 <span class="r-in"><span class="fu">affix_date</span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"pb_file"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pb_file_2021-12-06"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pb_file_2021-12-09"</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># File extensions won't get in the way:</span></span>
 <span class="r-in"><span class="fu">affix_date</span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"pb_file.rds"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pb_file_2021-12-06.rds"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pb_file_2021-12-09.rds"</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># The date can be used as a prefix</span></span>
 <span class="r-in"><span class="fu">affix_date</span><span class="op">(</span></span>
 <span class="r-in">  filename <span class="op">=</span> <span class="st">"pb_file"</span>,</span>
 <span class="r-in">  position <span class="op">=</span> <span class="st">"start"</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2021-12-06_pb_file"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2021-12-09_pb_file"</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># The date pattern can be changed and so</span></span>
 <span class="r-in"><span class="co"># can the delimiter</span></span>
@@ -181,7 +181,7 @@ produces a date-time string by default.</p>
 <span class="r-in">  format <span class="op">=</span> <span class="st">"%Y%m%d"</span>,</span>
 <span class="r-in">  delimiter <span class="op">=</span> <span class="st">"-"</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pb_file-20211206.yml"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pb_file-20211209.yml"</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>
@@ -218,7 +218,7 @@ produces a date-time string by default.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
     </footer></div>

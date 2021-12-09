@@ -199,7 +199,7 @@ can be easily retrieved with the \code{\link[=x_read_disk]{x_read_disk()}} funct
 It's recommended that table-prep formulas are supplied to the \code{read_fn}
 argument of \code{create_agent()}. In this way, when an \emph{agent} is read from disk
 through \code{\link[=x_read_disk]{x_read_disk()}}, it can be reused to access the target table (which
-may changed, hence the need to use an expression for this).
+may change, hence the need to use an expression for this).
 }
 
 \section{Combining Several Agents in a \emph{multiagent} Object}{

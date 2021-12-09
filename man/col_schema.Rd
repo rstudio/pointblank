@@ -11,7 +11,12 @@ col_schema(..., .tbl = NULL, .db_col_types = c("r", "sql"))
 the values are one or more column types.}
 
 \item{.tbl}{An option to use a table object to define the schema. If this is
-provided then any values provided to \code{...} will be ignored.}
+provided then any values provided to \code{...} will be ignored. This can either
+be a table object, a table-prep formula.This can be a table object such as
+a data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.
+Alternatively, a table-prep formula (\verb{~ <table reading code>}) or a
+function (\verb{function() <table reading code>}) can be used to lazily read in
+the table at interrogation time.}
 
 \item{.db_col_types}{Determines whether the column types refer to R column
 types (\code{"r"}) or SQL column types (\code{"sql"}).}

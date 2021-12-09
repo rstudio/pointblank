@@ -1366,6 +1366,34 @@ test_that("pointblank expectation function produce the correct results", {
     ), 
     "failure level \\(1\\) >= failure threshold \\(1\\)"
   )
+  
+  #
+  # expect_row_count_match()
+  #
+  
+  expect_row_count_match(tbl, tbl_compare = tbl)
+  expect_row_count_match(tbl, tbl_compare = pointblank::small_table)
+  expect_row_count_match(tbl, tbl_compare = ~ pointblank::small_table)
+  expect_row_count_match(tbl, tbl_compare = function() pointblank::small_table)
+  
+  expect_failure(
+    expect_row_count_match(tbl, tbl_compare = tbl_conjointly),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  expect_error(
+    expect_row_count_match(tbl, tbl_compare = tbl_conjointly),
+    class = "expectation_failure"
+  )
+  
+  expect_row_count_match(tbl_conjointly, tbl_compare = tbl_complete_yes)
+  expect_row_count_match(tbl_complete_yes, tbl_compare = tbl_conjointly)
+  
+  expect_row_count_match(tbl_complete_no, tbl_compare = tbl_complete_yes)
+  expect_row_count_match(tbl_complete_yes, tbl_compare = tbl_complete_no)
+  
+  expect_row_count_match(increasing_tbl, tbl_compare = decreasing_tbl)
+  expect_row_count_match(decreasing_tbl, tbl_compare = increasing_tbl)
 })
 
 test_that("expect errors to be expressed by pointblank under some conditions", {

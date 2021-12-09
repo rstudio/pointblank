@@ -4,7 +4,7 @@
 \alias{from_github}
 \title{Specify a file for download from GitHub}
 \usage{
-from_github(file, repo, subdir = NULL)
+from_github(file, repo, subdir = NULL, default_branch = "main")
 }
 \arguments{
 \item{file}{The name of the file to target in a GitHub repository. This can
@@ -16,6 +16,9 @@ given in \code{subdir}.}
 
 \item{subdir}{A path string representing a subdirectory in the GitHub
 repository. This is combined with any path components included in \code{file}.}
+
+\item{default_branch}{The name of the default branch for the repo. This is
+usually \code{"main"} (the default used here).}
 }
 \value{
 A character vector of length 1 that contains a URL.

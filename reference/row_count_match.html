@@ -401,10 +401,10 @@ function.</p>
 <span class="r-in">    f <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.6</span>, <span class="fl">1.2</span>, <span class="fl">0</span>, <span class="cn">NA</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># Validate that when considering only</span></span>
-<span class="r-in"><span class="co"># data in columns `a` and `b`, there</span></span>
-<span class="r-in"><span class="co"># are only complete rows (i.e., all</span></span>
-<span class="r-in"><span class="co"># rows have no `NA` values)</span></span>
+<span class="r-in"><span class="co"># Validate that the count of rows</span></span>
+<span class="r-in"><span class="co"># in the target table (`tbl`) matches</span></span>
+<span class="r-in"><span class="co"># that of the comparison table</span></span>
+<span class="r-in"><span class="co"># (`tbl_2`)</span></span>
 <span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
 <span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">row_count_match</span><span class="op">(</span>tbl_compare <span class="op">=</span> <span class="va">tbl_2</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>

@@ -481,6 +481,8 @@ all_validations_fns_vec <- function() {
     "col_is_factor",
     "col_exists",
     "col_schema_match",
+    "row_count_match",
+    "tbl_match",
     "conjointly",
     "specially"
   )

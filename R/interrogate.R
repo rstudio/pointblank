@@ -2600,8 +2600,8 @@ interrogate_tbl_match <- function(agent,
   tbl_compare <- materialize_table(tbl = agent$validation_set$values[[idx]])
   
   # Create function for validating the `tbl_match()` step function
-  tbl_row_count_match <- function(table,
-                                  tbl_compare) {
+  tbl_match <- function(table,
+                        tbl_compare) {
     
     # Ensure that the input `table` and `tbl_compare` objects
     # are actually table objects
@@ -2615,11 +2615,11 @@ interrogate_tbl_match <- function(agent,
     
     col_schema_matching <-
       test_col_schema_match(table, schema = col_schema(.tbl = tbl_compare))
-    
+
     if (!col_schema_matching) {
       return(dplyr::tibble(pb_is_good_ = FALSE))
     }
-    
+
     #
     # Stage 2: Check for exact matching in row counts between the two tables
     #
@@ -2637,18 +2637,22 @@ interrogate_tbl_match <- function(agent,
     #
     
     column_count <- get_table_total_columns(table)
+    row_count <- get_table_total_rows(table)
     
     column_all_matched <- c()
     
     for (i in seq_len(column_count)) {
       
-      # TODO: deal with two tables that require copying data
       col_pair_match <- 
         dplyr::bind_cols(
-          dplyr::rename(dplyr::select(tbl_target, i), a = 1),
-          dplyr::rename(dplyr::select(tbl_compare, i), b = 1)
+          dplyr::collect(dplyr::rename(dplyr::select(table, i), a = 1)),
+          dplyr::collect(dplyr::rename(dplyr::select(tbl_compare, i), b = 1))
         ) %>%
-        test_col_vals_equal(columns = vars(a), value = vars(b))
+        test_col_vals_equal(
+          columns = vars(a),
+          value = vars(b),
+          na_pass = TRUE
+        )
       
       column_all_matched <- c(column_all_matched, col_pair_match)
     }
@@ -2658,7 +2662,7 @@ interrogate_tbl_match <- function(agent,
   
   # Perform the validation of the table 
   pointblank_try_catch(
-    tbl_row_count_match(
+    tbl_match(
       table = table,
       tbl_compare = tbl_compare
     )

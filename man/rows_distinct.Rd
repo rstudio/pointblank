@@ -308,6 +308,7 @@ Other validation functions:
 \code{\link{row_count_match}()},
 \code{\link{rows_complete}()},
 \code{\link{serially}()},
-\code{\link{specially}()}
+\code{\link{specially}()},
+\code{\link{tbl_match}()}
 }
 \concept{validation functions}

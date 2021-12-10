@@ -266,7 +266,7 @@ writing to disk by using the \code{\link[=yaml_agent_string]{yaml_agent_string()
 
 \section{Function ID}{
 
-2-33
+2-34
 }
 
 \examples{
@@ -411,6 +411,7 @@ Other validation functions:
 \code{\link{row_count_match}()},
 \code{\link{rows_complete}()},
 \code{\link{rows_distinct}()},
-\code{\link{specially}()}
+\code{\link{specially}()},
+\code{\link{tbl_match}()}
 }
 \concept{validation functions}

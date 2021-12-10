@@ -944,6 +944,11 @@ check_table_with_assertion <- function(agent,
         agent = agent,
         idx = idx,
         table = table
+      ),
+      "tbl_match" = interrogate_tbl_match(
+        agent = agent,
+        idx = idx,
+        table = table
       )
     )
   
@@ -2576,6 +2581,79 @@ interrogate_row_count_match <- function(agent,
     } else {
       dplyr::tibble(pb_is_good_ = FALSE)
     }
+  }
+  
+  # Perform the validation of the table 
+  pointblank_try_catch(
+    tbl_row_count_match(
+      table = table,
+      tbl_compare = tbl_compare
+    )
+  )
+}
+
+interrogate_tbl_match <- function(agent,
+                                  idx,
+                                  table) {
+  
+  # Get the comparison table (this is user-supplied)
+  tbl_compare <- materialize_table(tbl = agent$validation_set$values[[idx]])
+  
+  # Create function for validating the `tbl_match()` step function
+  tbl_row_count_match <- function(table,
+                                  tbl_compare) {
+    
+    # Ensure that the input `table` and `tbl_compare` objects
+    # are actually table objects
+    # TODO: improve failure message for check of `tbl_compare`
+    tbl_validity_check(table = table)
+    tbl_validity_check(table = tbl_compare)
+    
+    #
+    # Stage 1: Check that the column schemas match for both tables
+    #
+    
+    col_schema_matching <-
+      test_col_schema_match(table, schema = col_schema(.tbl = tbl_compare))
+    
+    if (!col_schema_matching) {
+      return(dplyr::tibble(pb_is_good_ = FALSE))
+    }
+    
+    #
+    # Stage 2: Check for exact matching in row counts between the two tables
+    #
+    
+    row_count_matching <-
+      get_table_total_rows(table) == get_table_total_rows(tbl_compare)
+    
+    if (!row_count_matching) {
+      return(dplyr::tibble(pb_is_good_ = FALSE))
+    }
+    
+    #
+    # Stage 3: Check for exact data by cell across matched columns
+    #          between the two tables
+    #
+    
+    column_count <- get_table_total_columns(table)
+    
+    column_all_matched <- c()
+    
+    for (i in seq_len(column_count)) {
+      
+      # TODO: deal with two tables that require copying data
+      col_pair_match <- 
+        dplyr::bind_cols(
+          dplyr::rename(dplyr::select(tbl_target, i), a = 1),
+          dplyr::rename(dplyr::select(tbl_compare, i), b = 1)
+        ) %>%
+        test_col_vals_equal(columns = vars(a), value = vars(b))
+      
+      column_all_matched <- c(column_all_matched, col_pair_match)
+    }
+    
+    dplyr::tibble(pb_is_good_ = all(column_all_matched))
   }
   
   # Perform the validation of the table 

@@ -60,6 +60,7 @@ utils::globalVariables(
     "alpha_3",
     "::all_na::",
     "assertion_type",
+    "b",
     "bin_num",
     "brief",
     "color",

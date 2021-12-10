@@ -79,6 +79,7 @@ reference:
     - col_exists
     - col_schema_match
     - row_count_match
+    - tbl_match
     - conjointly
     - serially
     - specially

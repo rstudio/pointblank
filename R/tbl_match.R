@@ -16,37 +16,63 @@
 # https://rich-iannone.github.io/pointblank/LICENSE.html
 #
 
-#' Perform a specialized validation with a user-defined function
+
+#' Does the target table match a comparison table?
 #'
-#' @description 
-#' The `specially()` validation function allows for custom validation with a
-#' function that *you* provide. The major proviso for the provided function is
-#' that it must either return a logical vector or a table where the final column
-#' is logical. The function will operate on the table object, or, because you
-#' can do whatever you like, it could also operate on other types of objects. To
-#' do this, you can transform the input table in `preconditions` or inject an
-#' entirely different object there. During interrogation, there won't be any
-#' checks to ensure that the data is a table object.
+#' @description
+#' The `tbl_match()` validation function, the `expect_tbl_match()` expectation
+#' function, and the `test_tbl_match()` test function all check whether the
+#' target table's composition matches that of a comparison table. The validation
+#' function can be used directly on a data table or with an *agent* object
+#' (technically, a `ptblank_agent` object) whereas the expectation and test
+#' functions can only be used with a data table. The types of data tables that
+#' can be used include data frames, tibbles, database tables (`tbl_dbi`), and
+#' Spark DataFrames (`tbl_spark`). As a validation step or as an expectation,
+#' there is a single test unit that hinges on whether the two tables are the
+#' same (after any `preconditions` have been applied).
 #' 
 #' @section Preconditions:
 #' Providing expressions as `preconditions` means **pointblank** will preprocess
 #' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way. Within `specially()`, because this function is
-#' special, there won't be internal checking as to whether the
-#' `preconditions`-based output is a table.
+#' that this particular validation requires some operation on the target table
+#' before the comparison takes place. Using `preconditions` can be useful at
+#' times since since we can develop a large validation plan with a single target
+#' table and make minor adjustments to it, as needed, along the way.
 #'
 #' The table mutation is totally isolated in scope to the validation step(s)
 #' where `preconditions` is used. Using **dplyr** code is suggested here since
 #' the statements can be translated to SQL if necessary (i.e., if the target
 #' table resides in a database). The code is most easily supplied as a one-sided
 #' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' serves as the input data table to be transformed. Alternatively, a function
+#' could instead be supplied.
+#' 
+#' @section Segments:
+#' By using the `segments` argument, it's possible to define a particular
+#' validation with segments (or row slices) of the target table. An optional
+#' expression or set of expressions that serve to segment the target table by
+#' column values. Each expression can be given in one of two ways: (1) as column
+#' names, or (2) as a two-sided formula where the LHS holds a column name and
+#' the RHS contains the column values to segment on.
+#' 
+#' As an example of the first type of expression that can be used,
+#' `vars(a_column)` will segment the target table in however many unique values
+#' are present in the column called `a_column`. This is great if every unique
+#' value in a particular column (like different locations, or different dates)
+#' requires it's own repeating validation.
+#'
+#' With a formula, we can be more selective with which column values should be
+#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
+#' attempt to obtain two segments where one is a slice of data where the value
+#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
+#' slice where `"group_2"` exists in the same column. Each group of rows
+#' resolved from the formula will result in a separate validation step.
+#'
+#' Segmentation will always occur after `preconditions` (i.e., statements that
+#' mutate the target table), if any, are applied. With this type of one-two
+#' combo, it's possible to generate labels for segmentation using an expression
+#' for `preconditions` and refer to those labels in `segments` without having to
+#' generate a separate version of the target table.
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -74,75 +100,122 @@
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `serially()` is represented in YAML (under the top-level `steps` key as a
+#' `tbl_match()` is represented in YAML (under the top-level `steps` key as a
 #' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `serially()` as a
+#' function. Here is an example of how a complex call of `tbl_match()` as a
 #' validation step is expressed in R code and in the corresponding YAML
 #' representation.
 #' 
 #' ```
 #' # R statement
 #' agent %>% 
-#'   specially(
-#'     fn = function(x) { ... },
+#'   tbl_match(
+#'     tbl_compare = ~ file_tbl(
+#'       file = from_github(
+#'         file = "all_revenue_large.rds",
+#'         repo = "rich-iannone/intendo",
+#'         subdir = "data-large"
+#'         )
+#'       ),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
-#'     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
-#'     label = "The `specially()` step.",
+#'     segments = b ~ c("group_1", "group_2"),
+#'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
+#'     label = "The `tbl_match()` step.",
 #'     active = FALSE
 #'   )
 #' 
 #' # YAML representation
 #' steps:
-#' - specially:
-#'     fn: function(x) { ... }
+#' - tbl_match:
+#'     tbl_compare: ~ file_tbl(
+#'       file = from_github(
+#'         file = "all_revenue_large.rds",
+#'         repo = "rich-iannone/intendo",
+#'         subdir = "data-large"
+#'         )
+#'       )
 #'     preconditions: ~. %>% dplyr::filter(a < 10)
+#'     segments: b ~ c("group_1", "group_2")
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `specially()` step.
+#'     label: The `tbl_match()` step.
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the expressions for
-#' validation steps are necessary. Arguments with default values won't be
-#' written to YAML when using [yaml_write()] (though it is acceptable to include
-#' them with their default when generating the YAML by other means). It is also
-#' possible to preview the transformation of an agent to YAML without any
-#' writing to disk by using the [yaml_agent_string()] function.
+#' In practice, both of these will often be shorter. Arguments with default
+#' values won't be written to YAML when using [yaml_write()] (though it is
+#' acceptable to include them with their default when generating the YAML by
+#' other means). It is also possible to preview the transformation of an agent
+#' to YAML without any writing to disk by using the [yaml_agent_string()]
+#' function.
 #'
 #' @inheritParams col_vals_gt
-#' @param fn A function that performs the specialized validation on the data. It
-#'   must either return a logical vector or a table where the last column is a
-#'   logical column.
-#' 
+#' @param tbl_compare A table to compare against the target table. This can
+#'   either be a table object, a table-prep formula. This can be a table object
+#'   such as a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark`
+#'   object. Alternatively, a table-prep formula (`~ <table reading code>`) or a
+#'   function (`function() <table reading code>`) can be used to lazily read in
+#'   the table at interrogation time.
+#'   
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
 #'   object or a table was passed to `x`). The expectation function invisibly
 #'   returns its input but, in the context of testing data, the function is
 #'   called primarily for its potential side-effects (e.g., signaling failure).
 #'   The test function returns a logical value.
+#'   
+#' @examples
+#' # Create a simple table with three
+#' # columns and four rows of values
+#' tbl <-
+#'   dplyr::tibble(
+#'     a = c(5, 7, 6, 5),
+#'     b = c(7, 1, 0, 0),
+#'     c = c(1, 1, 1, 3)
+#'   )
 #'
+#' # Create a second table which is 
+#' # the same as `tbl`
+#' tbl_2 <-
+#'   dplyr::tibble(
+#'     a = c(5, 7, 6, 5),
+#'     b = c(7, 1, 0, 0),
+#'     c = c(1, 1, 1, 3)
+#'   )
+#' 
+#' # Validate that the target table
+#' # (`tbl`) and the comparison table
+#' # (`tbl_2`) are equivalent in terms
+#' # of content
+#' agent <-
+#'   create_agent(tbl = tbl) %>%
+#'   tbl_match(tbl_compare = tbl_2) %>%
+#'   interrogate()
+#' 
+#' # Determine if this validation passed
+#' # by using `all_passed()`
+#' all_passed(agent)
+#' 
 #' @family validation functions
 #' @section Function ID:
-#' 2-35
+#' 2-32
 #' 
-#' @name specially
+#' @name tbl_match
 NULL
 
-#' @rdname specially
+#' @rdname tbl_match
 #' @import rlang
-#' 
 #' @export
-specially <- function(x,
-                      fn,
+tbl_match <- function(x,
+                      tbl_compare,
                       preconditions = NULL,
+                      segments = NULL,
                       actions = NULL,
                       step_id = NULL,
                       label = NULL,
                       brief = NULL,
                       active = TRUE) {
-  
-  segments <- NULL
   
   # Resolve segments into list
   segments_list <-
@@ -154,14 +227,15 @@ specially <- function(x,
   
   if (is_a_table_object(x)) {
     
-    secret_agent <-
+    secret_agent <- 
       create_agent(x, label = "::QUIET::") %>%
-      specially(
-        fn = fn,
+      tbl_match(
+        tbl_compare = tbl_compare,
         preconditions = preconditions,
-        actions = prime_actions(actions),
+        segments = segments,
         label = label,
         brief = brief,
+        actions = prime_actions(actions),
         active = active
       ) %>%
       interrogate()
@@ -176,7 +250,7 @@ specially <- function(x,
     brief <-
       create_autobrief(
         agent = agent,
-        assertion_type = "specially"
+        assertion_type = "tbl_match"
       )
   }
   
@@ -191,7 +265,7 @@ specially <- function(x,
   check_step_id_duplicates(step_id, agent)
   
   # Add one or more validation steps based on the
-  # length of `segments_list`
+  # length of `segments`
   for (i in seq_along(segments_list)) {
     
     seg_col <- names(segments_list[i])
@@ -200,12 +274,11 @@ specially <- function(x,
     agent <-
       create_validation_step(
         agent = agent,
-        assertion_type = "specially",
+        assertion_type = "tbl_match",
         i_o = i_o,
-        columns_expr = NULL,
-        column = NULL,
-        values = fn,
-        na_pass = NULL,
+        columns_expr = NA_character_,
+        column = NA_character_,
+        values = tbl_compare,
         preconditions = preconditions,
         seg_expr = segments,
         seg_col = seg_col,
@@ -221,20 +294,20 @@ specially <- function(x,
   agent
 }
 
-#' @rdname specially
+#' @rdname tbl_match
 #' @import rlang
 #' @export
-expect_specially <- function(object,
-                             fn,
+expect_tbl_match <- function(object,
+                             tbl_compare,
                              preconditions = NULL,
                              threshold = 1) {
   
-  fn_name <- "expect_specially"
+  fn_name <- "expect_tbl_match"
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
-    specially(
-      fn = fn,
+    tbl_match(
+      tbl_compare = {{ tbl_compare }},
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
     ) %>%
@@ -251,7 +324,12 @@ expect_specially <- function(object,
     failed_amount <- vs$n_failed
   }
   
-  # TODO: express warnings and errors here
+  if (inherits(vs$capture_stack[[1]]$warning, "simpleWarning")) {
+    warning(conditionMessage(vs$capture_stack[[1]]$warning))
+  }
+  if (inherits(vs$capture_stack[[1]]$error, "simpleError")) {
+    stop(conditionMessage(vs$capture_stack[[1]]$error))
+  }
   
   act <- testthat::quasi_label(enquo(x), arg = "object")
   
@@ -269,18 +347,18 @@ expect_specially <- function(object,
   invisible(act$val)
 }
 
-#' @rdname specially
+#' @rdname tbl_match
 #' @import rlang
 #' @export
-test_specially <- function(object,
-                           fn,
+test_tbl_match <- function(object,
+                           tbl_compare,
                            preconditions = NULL,
                            threshold = 1) {
   
   vs <- 
     create_agent(tbl = object, label = "::QUIET::") %>%
-    specially(
-      fn = fn,
+    tbl_match(
+      tbl_compare = {{ tbl_compare }},
       preconditions = {{ preconditions }},
       actions = action_levels(notify_at = threshold)
     ) %>%

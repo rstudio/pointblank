@@ -147,7 +147,7 @@ materialize_table <- function(tbl,
     stop("A table must be provided.", call. = FALSE)
   }
   
-  if (pointblank:::is_a_table_object(tbl)) {
+  if (is_a_table_object(tbl)) {
     return(tbl)
   } else if (inherits(tbl, "function")) {
     tbl <- rlang::exec(tbl)
@@ -164,7 +164,7 @@ materialize_table <- function(tbl,
   }  
   
   if (check) {
-    pointblank:::is_a_table_object(tbl)
+    is_a_table_object(tbl)
   }
   
   tbl
@@ -481,6 +481,8 @@ all_validations_fns_vec <- function() {
     "col_is_factor",
     "col_exists",
     "col_schema_match",
+    "row_count_match",
+    "tbl_match",
     "conjointly",
     "specially"
   )

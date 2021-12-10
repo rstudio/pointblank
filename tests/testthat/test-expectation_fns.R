@@ -1394,6 +1394,88 @@ test_that("pointblank expectation function produce the correct results", {
   
   expect_row_count_match(increasing_tbl, tbl_compare = decreasing_tbl)
   expect_row_count_match(decreasing_tbl, tbl_compare = increasing_tbl)
+  
+  
+  #
+  # expect_tbl_match()
+  #
+  
+  expect_tbl_match(tbl, tbl_compare = tbl)
+  expect_tbl_match(pointblank::small_table, tbl_compare = pointblank::small_table)
+  expect_tbl_match(pointblank::small_table, tbl_compare = ~ pointblank::small_table)
+  expect_tbl_match(pointblank::small_table, tbl_compare = function() pointblank::small_table)
+  
+  expect_failure(
+    expect_tbl_match(tbl, tbl_compare = tbl_conjointly),
+    "failure level \\(1\\) >= failure threshold \\(1\\)"
+  )
+  
+  expect_error(
+    expect_tbl_match(tbl, tbl_compare = tbl_conjointly),
+    class = "expectation_failure"
+  )
+  
+  expect_tbl_match(tbl, tbl_compare = tbl)
+  expect_tbl_match(pointblank::small_table, tbl_compare = pointblank::small_table)
+  expect_tbl_match(pointblank::small_table, tbl_compare = ~ pointblank::small_table)
+  expect_tbl_match(pointblank::small_table, tbl_compare = function() pointblank::small_table)
+  expect_tbl_match(tbl_complete_no, tbl_compare = tbl_complete_no)
+  expect_tbl_match(tbl_complete_yes, tbl_compare = tbl_complete_yes)
+  expect_tbl_match(tbl_conjointly, tbl_compare = tbl_conjointly)
+  expect_tbl_match(increasing_tbl, tbl_compare = increasing_tbl)
+  expect_tbl_match(decreasing_tbl, tbl_compare = decreasing_tbl)
+  
+  expect_tbl_match(gt::countrypops, tbl_compare = gt::countrypops)
+  expect_tbl_match(gt::sza, tbl_compare = gt::sza)
+  expect_tbl_match(gt::gtcars, tbl_compare = gt::gtcars)
+  expect_tbl_match(gt::sp500, tbl_compare = gt::sp500)
+  expect_tbl_match(gt::pizzaplace, tbl_compare = gt::pizzaplace)
+  expect_tbl_match(gt::exibble, tbl_compare = gt::exibble)
+  expect_tbl_match(ggplot2::diamonds, tbl_compare = ggplot2::diamonds)
+  expect_tbl_match(ggplot2::economics_long, tbl_compare = ggplot2::economics_long)
+  expect_tbl_match(ggplot2::faithfuld, tbl_compare = ggplot2::faithfuld)
+  expect_tbl_match(ggplot2::luv_colours, tbl_compare = ggplot2::luv_colours)
+  expect_tbl_match(ggplot2::midwest, tbl_compare = ggplot2::midwest)
+  expect_tbl_match(ggplot2::mpg, tbl_compare = ggplot2::mpg)
+  expect_tbl_match(ggplot2::msleep, tbl_compare = ggplot2::msleep)
+  expect_tbl_match(ggplot2::presidential, tbl_compare = ggplot2::presidential)
+  expect_tbl_match(ggplot2::seals, tbl_compare = ggplot2::seals)
+  expect_tbl_match(ggplot2::txhousing, tbl_compare = ggplot2::txhousing)
+  expect_tbl_match(dplyr::band_instruments, tbl_compare = dplyr::band_instruments)
+  expect_tbl_match(dplyr::band_members, tbl_compare = dplyr::band_members)
+  expect_tbl_match(dplyr::starwars, tbl_compare = dplyr::starwars)
+  expect_tbl_match(dplyr::storms, tbl_compare = dplyr::storms)
+  expect_tbl_match(tidyr::billboard, tbl_compare = tidyr::billboard)
+  expect_tbl_match(tidyr::construction, tbl_compare = tidyr::construction)
+  expect_tbl_match(tidyr::fish_encounters, tbl_compare = tidyr::fish_encounters)
+  expect_tbl_match(tidyr::population, tbl_compare = tidyr::population)
+  expect_tbl_match(tidyr::relig_income, tbl_compare = tidyr::relig_income)
+  expect_tbl_match(tidyr::smiths, tbl_compare = tidyr::smiths)
+  expect_tbl_match(tidyr::us_rent_income, tbl_compare = tidyr::us_rent_income)
+  expect_tbl_match(tidyr::who, tbl_compare = tidyr::who)
+  expect_tbl_match(tidyr::world_bank_pop, tbl_compare = tidyr::world_bank_pop)
+  expect_tbl_match(lubridate::lakers, tbl_compare = lubridate::lakers)
+  expect_tbl_match(datasets::airquality, tbl_compare = datasets::airquality)
+  expect_tbl_match(datasets::chickwts, tbl_compare = datasets::chickwts)
+  expect_tbl_match(datasets::iris, tbl_compare = datasets::iris)
+  expect_tbl_match(datasets::LifeCycleSavings, tbl_compare = datasets::LifeCycleSavings)
+  expect_tbl_match(datasets::longley, tbl_compare = datasets::longley)
+  expect_tbl_match(datasets::morley, tbl_compare = datasets::morley)
+  expect_tbl_match(datasets::mtcars, tbl_compare = datasets::mtcars)
+  expect_tbl_match(datasets::Orange, tbl_compare = datasets::Orange)
+  expect_tbl_match(datasets::pressure, tbl_compare = datasets::pressure)
+  expect_tbl_match(datasets::quakes, tbl_compare = datasets::quakes)
+  expect_tbl_match(datasets::rock, tbl_compare = datasets::rock)
+  expect_tbl_match(datasets::swiss, tbl_compare = datasets::swiss)
+  expect_tbl_match(datasets::USJudgeRatings, tbl_compare = datasets::USJudgeRatings)
+  
+  expect_error(expect_tbl_match(tbl, tbl_compare = tbl %>% dplyr::slice_head(n = 12)), class = "expectation_failure")
+  expect_error(expect_tbl_match(tbl, tbl_compare = tbl %>% dplyr::rename(datetime = date_time)), class = "expectation_failure")
+  expect_error(expect_tbl_match(tbl, tbl_compare = tbl %>% dplyr::select(a, dplyr::everything())), class = "expectation_failure")
+  
+  expect_tbl_match(tbl, tbl_compare = tbl %>% dplyr::group_by(e, f))
+  expect_tbl_match(tbl %>% dplyr::group_by(e, g), tbl_compare = tbl %>% dplyr::group_by(e, f))
+  expect_tbl_match(tbl %>% dplyr::group_by(e, g), tbl_compare = tbl)
 })
 
 test_that("expect errors to be expressed by pointblank under some conditions", {

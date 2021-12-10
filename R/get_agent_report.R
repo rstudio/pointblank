@@ -839,7 +839,7 @@ get_agent_report <- function(agent,
           }
         }
         
-        if (assertion_str == "row_count_match") {
+        if (assertion_str %in% c("row_count_match", "tbl_match")) {
           
           return(
             paste0(

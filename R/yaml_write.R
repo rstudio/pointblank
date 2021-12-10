@@ -1092,13 +1092,12 @@ as_agent_yaml_list <- function(agent,
           )
         )
     
-    } else if (validation_fn == "row_count_match") {
+    } else if (validation_fn %in% c("row_count_match", "tbl_match")) {
       
       # TODO: disallow YAML writing if value obtained from
       # `get_arg_value(step_list$values)` is a table object or is
       # not a function or table-prep formula
       tbl_compare <- step_list$values
-      
       
       lst_step <- 
         list(

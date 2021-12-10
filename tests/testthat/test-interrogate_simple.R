@@ -1520,6 +1520,59 @@ test_that("Interrogating simply returns the expected results", {
   expect_false(exists("tbl_result"))
   
   #
+  # tbl_match()
+  #
+  
+  # Use the `tbl_match()` function to perform
+  # a simple validation step
+  tbl_result <- 
+    small_table %>%
+    tbl_match(
+      tbl_compare = pointblank::small_table,
+      actions = warn_on_fail()
+    )
+  
+  # Expect that `tbl_result` is equivalent to `small_table`
+  expect_equivalent(small_table, tbl_result)
+  
+  # Use the `tbl_match()` function to perform
+  # another simple validation step
+  tbl_result <- 
+    small_table %>%
+    tbl_match(tbl_compare = ~ pointblank::small_table)
+  
+  # Expect that `tbl_result` is equivalent to `small_table`
+  expect_equivalent(small_table, tbl_result)
+  
+  # Perform a simple validation that yields a warning
+  expect_warning(
+    tbl_result <- 
+      tbl_complete_yes %>%
+      tbl_match(
+        tbl_compare = pointblank::small_table,
+        actions = warn_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is equivalent to `tbl_complete_yes`
+  expect_equivalent(tbl_complete_yes, tbl_result)
+  
+  rm(tbl_result)
+  
+  # Perform a simple validation step that results in stopping
+  expect_error(
+    tbl_result <- 
+      tbl_complete_yes %>%
+      tbl_match(
+        tbl_compare = pointblank::small_table,
+        actions = stop_on_fail()
+      )
+  )
+  
+  # Expect that `tbl_result` is never created
+  expect_false(exists("tbl_result"))
+  
+  #
   # conjointly()
   #
   

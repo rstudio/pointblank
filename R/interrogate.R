@@ -2605,9 +2605,13 @@ interrogate_tbl_match <- function(agent,
     
     # Ensure that the input `table` and `tbl_compare` objects
     # are actually table objects
-    # TODO: improve failure message for check of `tbl_compare`
+    # TODO: improve failure message to specify which table might not be one
     tbl_validity_check(table = table)
     tbl_validity_check(table = tbl_compare)
+    
+    # Ensure that both tables are `ungroup()`ed first
+    table <- dplyr::ungroup(table)
+    tbl_compare <- dplyr::ungroup(tbl_compare)
     
     #
     # Stage 1: Check that the column schemas match for both tables
@@ -2636,6 +2640,8 @@ interrogate_tbl_match <- function(agent,
     #          between the two tables
     #
     
+    # TODO: handle edge case where both tables have zero rows
+    
     column_count <- get_table_total_columns(table)
     row_count <- get_table_total_rows(table)
     
@@ -2648,11 +2654,9 @@ interrogate_tbl_match <- function(agent,
           dplyr::collect(dplyr::rename(dplyr::select(table, i), a = 1)),
           dplyr::collect(dplyr::rename(dplyr::select(tbl_compare, i), b = 1))
         ) %>%
-        test_col_vals_equal(
-          columns = vars(a),
-          value = vars(b),
-          na_pass = TRUE
-        )
+        dplyr::mutate(pb_is_good_ = identical(a, b)) %>%
+        dplyr::pull(pb_is_good_) %>%
+        all()
       
       column_all_matched <- c(column_all_matched, col_pair_match)
     }

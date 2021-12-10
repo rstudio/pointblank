@@ -436,6 +436,12 @@ create_autobrief <- function(agent,
     autobrief <- finalize_autobrief(expectation_text, precondition_text) 
   }
   
+  if (assertion_type == "tbl_match") {
+    
+    expectation_text <- prep_tbl_match_expectation_text(lang = lang)
+    autobrief <- finalize_autobrief(expectation_text, precondition_text) 
+  }
+  
   if (finalize_serially_brief) {
     
     serially_test_text <-
@@ -771,6 +777,11 @@ prep_row_count_match_expectation_text <- function(lang) {
   glue::glue(get_lsv("autobriefs/row_count_match_expectation_text")[[lang]])
 }
 
+prep_tbl_match_expectation_text <- function(lang) {
+  
+  glue::glue(get_lsv("autobriefs/tbl_match_expectation_text")[[lang]])
+}
+
 prep_col_vals_expr_expectation_text <- function(lang) {
   
   glue::glue(get_lsv("autobriefs/col_vals_expr_expectation_text")[[lang]])
@@ -786,6 +797,8 @@ failure_message_gluestring <- function(fn_name,
   }
   
   # nolint start
+  
+  # TODO: Add all missing entries for failure text
   
   failure_text <- 
     switch(
@@ -816,7 +829,9 @@ failure_message_gluestring <- function(fn_name,
       "expect_col_is_factor" = get_lsv("autobriefs/col_is_failure_text")[[lang]],
       "expect_rows_distinct" = get_lsv("autobriefs/all_row_distinct_failure_text")[[lang]],
       "expect_rows_complete" = get_lsv("autobriefs/all_row_complete_failure_text")[[lang]],
-      "expect_col_schema_match" = get_lsv("autobriefs/col_schema_match_failure_text")[[lang]]
+      "expect_col_schema_match" = get_lsv("autobriefs/col_schema_match_failure_text")[[lang]],
+      "expect_row_count_match" = get_lsv("autobriefs/row_count_match_failure_text")[[lang]],
+      "expect_tbl_match" = get_lsv("autobriefs/tbl_match_failure_text")[[lang]]
     )
   
   # nolint end

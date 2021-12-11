@@ -205,9 +205,8 @@ translate_with_file <- function(pkg_root = ".",
                                 subdir = "inst/translations",
                                 article_names = NULL) {
   
-  
-  # Create path that contains the testthat test file name
-  file_path <- as.character(fs::path_norm(fs::path(pkg_root, path, name)))
+  # Create file path
+  file_path <- as.character(fs::path_norm(fs::path(pkg_root, subdir, name)))
   
   # Check if the file to use exists
   if (!fs::file_exists(file_path)) {

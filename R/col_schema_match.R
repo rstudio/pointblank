@@ -137,6 +137,7 @@
 #'   least). This can be taken a step further and using `NULL` for a column type
 #'   in the user-defined schema will skip the validation check of a column type.
 #'   By default, `is_exact` is set to `TRUE`.
+#' 
 #' @return For the validation function, the return value is either a
 #'   `ptblank_agent` object or a table object (depending on whether an agent
 #'   object or a table was passed to `x`). The expectation function invisibly

@@ -161,9 +161,9 @@ then be automatically generated.
 A \strong{pointblank} agent can be written to YAML with \code{\link[=yaml_write]{yaml_write()}} and the
 resulting YAML can be used to regenerate an agent (with \code{\link[=yaml_read_agent]{yaml_read_agent()}})
 or interrogate the target table (via \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}}). When
-\code{serially()} is represented in YAML (under the top-level \code{steps} key as a
+\code{specially()} is represented in YAML (under the top-level \code{steps} key as a
 list member), the syntax closely follows the signature of the validation
-function. Here is an example of how a complex call of \code{serially()} as a
+function. Here is an example of how a complex call of \code{specially()} as a
 validation step is expressed in R code and in the corresponding YAML
 representation.\preformatted{# R statement
 agent \%>\% 

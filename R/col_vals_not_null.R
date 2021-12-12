@@ -145,7 +145,7 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`,
+#' In practice, both of these will often be shorter as only the `columns`
 #' argument requires a value. Arguments with default values won't be written to
 #' YAML when using [yaml_write()] (though it is acceptable to include them with
 #' their default when generating the YAML by other means). It is also possible

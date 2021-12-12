@@ -556,12 +556,13 @@
 #'   provided as a vector of column names using `c()` or bare column names
 #'   enclosed in [vars()].
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # For all examples here, we'll use
@@ -715,12 +716,13 @@
 #'
 #' @inheritParams col_vals_gt
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # For all examples here, we'll use
@@ -871,12 +873,13 @@
 #'
 #' @inheritParams col_vals_gt
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # The `small_table` dataset in the
@@ -1029,12 +1032,13 @@
 #'
 #' @inheritParams col_vals_gt
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'
 #' @examples
 #' # Let's modify the `f` column in the
@@ -1188,12 +1192,13 @@
 #' 
 #' @inheritParams col_vals_gt
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # For all examples here, we'll use
@@ -1346,12 +1351,13 @@
 #'
 #' @inheritParams col_vals_gt
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # The `small_table` dataset in the
@@ -1504,12 +1510,13 @@
 #' 
 #' @inheritParams col_vals_gt
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # The `small_table` dataset in the
@@ -1663,12 +1670,13 @@
 #'
 #' @inheritParams col_vals_gt
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # The `small_table` dataset in the
@@ -1938,12 +1946,14 @@
 #'   least). This can be taken a step further and using `NULL` for a column type
 #'   in the user-defined schema will skip the validation check of a column type.
 #'   By default, `is_exact` is set to `TRUE`.
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' 
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #' 
 #' @examples
 #' 
@@ -2204,12 +2214,13 @@
 #'   `left` and `right` bounds should be inclusive. By default, both bounds
 #'   are inclusive.
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # The `small_table` dataset in the
@@ -2475,12 +2486,13 @@
 #'   allowed across numerical test units. Note that setting a value here also
 #'   has the effect of setting `allow_stationary` to `TRUE`.
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #' 
 #' @family validation functions
 #' @section Function ID:
@@ -2646,12 +2658,13 @@
 #'   value or a compatible column given in `vars()`. Any column values equal to
 #'   what is specified here will pass validation.
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #' 
 #' @examples
 #' # For all of the examples here, we'll
@@ -2859,12 +2872,13 @@
 #'   form of a call made with the `expr()` function or as a one-sided **R**
 #'   formula (using a leading `~`).
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #' 
 #' @examples
 #' # For all of the examples here, we'll
@@ -3112,81 +3126,90 @@
 #' possible to preview the transformation of an agent to YAML without any
 #' writing to disk by using the [yaml_agent_string()] function.
 #'
-#' @param x A data frame, tibble (`tbl_df` or `tbl_dbi`), Spark DataFrame
-#'   (`tbl_spark`), or, an *agent* object of class `ptblank_agent` that is
-#'   created with [create_agent()].
-#' @param object A data frame, tibble (`tbl_df` or `tbl_dbi`), or Spark
-#'   DataFrame (`tbl_spark`) that serves as the target table for the expectation
-#'   function or the test function.
-#' @param columns The column (or a set of columns, provided as a character
-#'   vector) to which this validation should be applied.
-#' @param value A value used for this comparison. This can be a single value or
-#'   a compatible column given in `vars()`. Any column values greater than what
-#'   is specified here will pass validation.
-#' @param na_pass Should any encountered `NA` values be considered as passing
-#'   test units? This is by default `FALSE`. Set to `TRUE` to give `NA`s a pass.
-#' @param preconditions An optional expression for mutating the input table
-#'   before proceeding with the validation. This can either be provided as a
-#'   one-sided R formula using a leading `~` (e.g.,
-#'   `~ . %>% dplyr::mutate(col = col + 10)` or as a function (e.g.,
-#'   `function(x) dplyr::mutate(x, col = col + 10)`. See the *Preconditions*
-#'   section for more information.
-#' @param segments An optional expression or set of expressions (held in a list)
-#'   that serve to segment the target table by column values. Each expression
-#'   can be given in one of two ways: (1) as column names, or (2) as a two-sided
-#'   formula where the LHS holds a column name and the RHS contains the column
-#'   values to segment on. See the *Segments* section for more details on this.
-#' @param actions A list containing threshold levels so that the validation step
-#'   can react accordingly when exceeding the set levels. This is to be created
-#'   with the [action_levels()] helper function.
-#' @param step_id One or more optional identifiers for the single or multiple
-#'   validation steps generated from calling a validation function. The use of
-#'   step IDs serves to distinguish validation steps from each other and provide
-#'   an opportunity for supplying a more meaningful label compared to the step
-#'   index. By default this is `NULL`, and **pointblank** will automatically
-#'   generate the step ID value (based on the step index) in this case. One or
-#'   more values can be provided, and the exact number of ID values should (1)
-#'   match the number of validation steps that the validation function call will
-#'   produce (influenced by the number of `columns` provided), (2) be an ID
-#'   string not used in any previous validation step, and (3) be a vector with
-#'   unique values.
-#' @param threshold A simple failure threshold value for use with the
-#'   expectation (`expect_`) and the test (`test_`) function variants. By
-#'   default, this is set to `1` meaning that any single unit of failure in data
-#'   validation results in an overall test failure. Whole numbers beyond `1`
-#'   indicate that any failing units up to that absolute threshold value will
-#'   result in a succeeding **testthat** test or evaluate to `TRUE`. Likewise,
-#'   fractional values (between `0` and `1`) act as a proportional failure
-#'   threshold, where `0.15` means that 15 percent of failing test units results
-#'   in an overall test failure.
-#' @param label An optional label for the validation step. This label appears in
-#'   the *agent* report and for the best appearance it should be kept short.
-#' @param brief An optional, text-based description for the validation step. If
-#'   nothing is provided here then an *autobrief* is generated by the *agent*,
-#'   using the language provided in [create_agent()]'s `lang` argument (which
-#'   defaults to `"en"` or English). The *autobrief* incorporates details of the
-#'   validation step so it's often the preferred option in most cases (where a
-#'   `label` might be better suited to succinctly describe the validation).
-#' @param active A logical value indicating whether the validation step should
-#'   be active. If the validation function is working with an *agent*, `FALSE`
-#'   will make the validation step inactive (still reporting its presence and
-#'   keeping indexes for the steps unchanged). If the validation function will
-#'   be operating directly on data (no *agent* involvement), then any step with
-#'   `active = FALSE` will simply pass the data through with no validation
-#'   whatsoever. Aside from a logical vector, a one-sided R formula using a
-#'   leading `~` can be used with `.` (serving as the input data table) to
-#'   evaluate to a single logical value. With this approach, the **pointblank**
-#'   function [has_columns()] can be used to determine whether to make a
-#'   validation step active on the basis of one or more columns existing in the
-#'   table (e.g., `~ . %>% has_columns(vars(d, e))`). The default for `active`
-#'   is `TRUE`.
+#' @param x Un data.frame, tibble (`tbl_df` o `tbl_dbi`), Spark DataFrame
+#'   (`tbl_spark`), o un *agent* objeto de clase `ptblank_agent` que se crea
+#'   con [create_agent()].
+#' @param object Un data.frame, tibble (`tbl_df` o `tbl_dbi`) o Spark DataFrame
+#'   (`tbl_spark`) que sirve como tabla de destino para la función de
+#'   expectativa o la función de prueba.
+#' @param columns La columna (o un conjunto de columnas, proporcionado como un
+#'   vector de caracteres) a la que se debe aplicar esta validación.
+#' @param value Un valor utilizado para esta comparación. Puede ser un valor
+#'   único o una columna compatible dada en `vars()`. Cualquier valor de columna
+#'   mayor que el especificado aquí pasará la validación.
+#' @param na_pass ¿Debería considerarse que los valores de `NA` encontrados
+#'   pasan unidades de prueba? Esto es por defecto `FALSE`. Ajústelo en `TRUE`
+#'   para darle un pase a `NA`.
+#' @param preconditions Una expresión opcional para mutar la tabla de entrada
+#'   antes de continuar con la validación. Esto se puede proporcionar como una
+#'   fórmula R unilateral usando un `~` inicial (por ejemplo,
+#'   `~ . %>% dplyr::mutate(col = col + 10)` o como una función (por ejemplo,
+#'   `function (x) dplyr::mutate(x, col = col + 10)`. Consulte la sección
+#'   *Preconditions* para obtener más información.
+#' @param segments Una expresión opcional o un conjunto de expresiones
+#'   (contenidas en una lista) que sirven para segmentar la tabla de destino por
+#'   valores de columna. Cada expresión se puede dar de una de dos maneras: (1)
+#'   como nombres de columna, o (2) como una fórmula de dos lados donde el LHS
+#'   contiene un nombre de columna y el RHS contiene los valores de columna para
+#'   segmentar. Consulte la sección *Segments* para obtener más detalles sobre
+#'   esto.
+#' @param actions Una lista que contiene los niveles de umbral para que el paso
+#'   de validación pueda reaccionar en consecuencia al superar los niveles
+#'   establecidos. Esto se creará con la función auxiliar [action_levels()].
+#' @param step_id Uno o más identificadores opcionales para los pasos de
+#'   validación únicos o múltiples generados al llamar a una función de
+#'   validación. El uso de ID de pasos sirve para distinguir los pasos de
+#'   validación entre sí y brinda la oportunidad de proporcionar una etiqueta
+#'   más significativa en comparación con el índice de pasos. De forma
+#'   predeterminada, es `NULL`, y **pointblank** generará automáticamente el
+#'   valor de ID de paso (basado en el índice de paso) en este caso. Se pueden
+#'   proporcionar uno o más valores, y el número exacto de valores de ID debe
+#'   (1) coincidir con el número de pasos de validación que producirá la llamada
+#'   a la función de validación (influenciado por el número de `columns`
+#'   proporcionadas), (2) ser un ID cadena no utilizada en ningún paso de
+#'   validación anterior, y (3) ser un vector con valores únicos.
+#' @param threshold Un valor de umbral de falla simple para usar con las
+#'   variantes de función expectativa (`expect_`) y prueba (`test_`). De
+#'   forma predeterminada, se establece en `1`, lo que significa que cualquier
+#'   unidad de falla en la validación de datos da como resultado una falla
+#'   general de la prueba. Los números enteros más allá de `1` indican que
+#'   cualquier unidad defectuosa hasta ese valor de umbral absoluto dará como
+#'   resultado una **thatthat** prueba o evalúe como `TRUE`. Asimismo,
+#'   los valores fraccionarios (entre `0` y `1`) actúan como un umbral de falla
+#'   proporcional, donde `0.15` significa que el `15` por ciento de las unidades
+#'   de prueba que fallan dan como resultado una falla general de la prueba.
+#' @param label Una etiqueta opcional para el paso de validación. Esta etiqueta
+#'   aparece en el informe del *agente* y, para una mejor apariencia, debe ser
+#'   breve.
+#' @param brief Una descripción opcional basada en texto para el paso de
+#'   validación. Si no se proporciona nada aquí, el objeto *agent* genera un
+#'   *autobrief*, utilizando el lenguaje proporcionado en el argumento `lang` de
+#'   [create_agent()] (que por defecto es `"en"` o inglés). El *autobrief*
+#'   incorpora detalles del paso de validación, por lo que a menudo es la opción
+#'   preferida en la mayoría de los casos (donde un `label` podría ser más
+#'   adecuada para describir sucintamente la validación).
+#' @param active Un valor lógico que indica si el paso de validación debe estar
+#'   activo. Si la función de validación está trabajando con un objeto *agente*,
+#'   `FALSE` hará que el paso de validación esté inactivo (aún informando su
+#'   presencia y manteniendo los índices de los pasos sin cambios). Si la
+#'   función de validación operará directamente en los datos (sin participación
+#'   de *agente*), entonces cualquier paso con `active = FALSE` simplemente
+#'   pasará los datos sin validación alguna. Aparte de un vector lógico, una
+#'   fórmula R unilateral que usa un `~` inicial se puede usar con `.` (que
+#'   sirve como la tabla de datos de entrada) para evaluar a un solo valor
+#'   lógico. Con este enfoque, la función **pointblank** [has_columns()] se
+#'   puede utilizar para determinar si se debe activar un paso de validación
+#'   sobre la base de una o más columnas existentes en la tabla (por ejemplo,
+#'   `~ . %>% has_columns(vars(d, e))`). El valor predeterminado de `active` es
+#'   `TRUE`.
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an *agent*
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # For all of the examples here, we'll
@@ -3422,12 +3445,13 @@
 #'   a compatible column given in `vars()`. Any column values greater than or
 #'   equal to what is specified here will pass validation.
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # For all of the examples here, we'll
@@ -3650,12 +3674,13 @@
 #' @param set A vector of numeric or string-based elements, where column values
 #'   found within this `set` will be considered as passing.
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # The `small_table` dataset in the
@@ -3897,12 +3922,13 @@
 #'   allowed across numerical test units. Note that setting a value here also
 #'   has the effect of setting `allow_stationary` to `TRUE`.
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #' 
 #' @family validation functions
 #' @section Function ID:
@@ -4068,12 +4094,13 @@
 #'   a compatible column given in `vars()`. Any column values less than what is
 #'   specified here will pass validation.
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # For all of the examples here, we'll
@@ -4304,12 +4331,13 @@
 #'   a compatible column given in `vars()`. Any column values less than or equal
 #'   to what is specified here will pass validation.
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # For all of the examples here, we'll
@@ -4538,12 +4566,13 @@
 #' @param set A vector of elements that is expected to be equal to the set of
 #'   unique values in the target column.
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # The `small_table` dataset in the
@@ -4763,12 +4792,13 @@
 #' @param set A vector of elements that is expected to be a subset of the unique
 #'   values in the target column.
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # The `small_table` dataset in the
@@ -5018,12 +5048,13 @@
 #'   
 #' @inheritParams col_vals_between
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # The `small_table` dataset in the
@@ -5278,12 +5309,13 @@
 #'   value or a compatible column given in `vars()`. Any column values not equal
 #'   to what is specified here will pass validation.
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'
 #' @examples
 #' # For all of the examples here, we'll
@@ -5507,12 +5539,13 @@
 #' @param set A vector of numeric or string-based elements, where column values
 #'   found within this `set` will be considered as failing.
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # The `small_table` dataset in the
@@ -5728,12 +5761,13 @@
 #'
 #' @inheritParams col_vals_gt
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #' 
 #' @examples
 #' # For all examples here, we'll use
@@ -5947,12 +5981,13 @@
 #'
 #' @inheritParams col_vals_gt
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # For all examples here, we'll use
@@ -6179,12 +6214,13 @@
 #'   column. Any regex matches to values in the target `columns` will pass
 #'   validation.
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #' 
 #' @examples
 #' # The `small_table` dataset in the
@@ -6460,12 +6496,13 @@
 #' @param spec A specification string. Examples are `"email"`, `"url"`, and
 #'   `"postal[USA]"`. All options are explained in the *Specifications* section.
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #' 
 #' @examples
 #' # The `specifications` dataset in the
@@ -6707,12 +6744,13 @@
 #'   vars(b)`).
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #'
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'
 #' @examples
 #' # For all examples here, we'll use
@@ -10925,12 +10963,13 @@
 #'   reading code>`) can be used to lazily read in the table at interrogation
 #'   time.
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # Create a simple table with three
@@ -11103,12 +11142,13 @@
 #'
 #' @inheritParams col_vals_gt
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # Create a simple table with three
@@ -11274,12 +11314,13 @@
 #'
 #' @inheritParams col_vals_gt
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # Create a simple table with three
@@ -11541,12 +11582,13 @@
 #'   `~ test_column_exists(., vars(a)), ~ col_vals_not_null(., vars(a))`).
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'
 #' @examples
 #' # For all examples here, we'll use
@@ -12177,12 +12219,13 @@
 #'   must either return a logical vector or a table where the last column is a
 #'   logical column.
 #' 
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'
 #' @family validation functions
 #' @section Function ID:
@@ -12534,12 +12577,13 @@
 #'   function (`function() <table reading code>`) can be used to lazily read in
 #'   the table at interrogation time.
 #'   
-#' @return For the validation function, the return value is either a
-#'   `ptblank_agent` object or a table object (depending on whether an agent
-#'   object or a table was passed to `x`). The expectation function invisibly
-#'   returns its input but, in the context of testing data, the function is
-#'   called primarily for its potential side-effects (e.g., signaling failure).
-#'   The test function returns a logical value.
+#' @return Para la función de validación, el valor de retorno es un objeto
+#'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
+#'   *agent* o una tabla a `x`). La función de expectativa devuelve
+#'   invisiblemente su entrada pero, en el contexto de los datos de prueba, la
+#'   función se llama principalmente por sus posibles efectos secundarios (por
+#'   ejemplo, falla de señalización). La función de prueba devuelve un valor
+#'   lógico.
 #'   
 #' @examples
 #' # Create a simple table with three

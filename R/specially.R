@@ -74,9 +74,9 @@
 #' A **pointblank** agent can be written to YAML with [yaml_write()] and the
 #' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
 #' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `serially()` is represented in YAML (under the top-level `steps` key as a
+#' `specially()` is represented in YAML (under the top-level `steps` key as a
 #' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `serially()` as a
+#' function. Here is an example of how a complex call of `specially()` as a
 #' validation step is expressed in R code and in the corresponding YAML
 #' representation.
 #' 

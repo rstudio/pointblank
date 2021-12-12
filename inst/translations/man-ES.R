@@ -512,14 +512,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_exists()` is represented in YAML (under the top-level `steps` key as a
-#' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_exists()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_exists()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_exists()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -672,14 +673,15 @@
 #' generará automáticamente.
 #'
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_is_character()` is represented in YAML (under the top-level `steps` key
-#' as a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_is_character()` as
-#' a validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_is_character()` se representa en
+#' YAML (bajo la clave de nivel superior `steps` como un miembro de la lista),
+#' la sintaxis sigue de cerca la firma de la función de validación. A
+#' continuación se muestra un ejemplo de cómo una llamada compleja de
+#' `col_is_character()` como paso de validación se expresa en código R y en la
+#' representación YAML correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -826,14 +828,15 @@
 #' generará automáticamente.
 #'
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_is_date()` is represented in YAML (under the top-level `steps` key as a
-#' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_is_date()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_is_date()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_is_date()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -982,14 +985,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_is_factor()` is represented in YAML (under the top-level `steps` key as
-#' a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_is_factor()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_is_factor()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_is_factor()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -1139,14 +1143,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_is_integer()` is represented in YAML (under the top-level `steps` key as
-#' a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_is_integer()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_is_integer()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_is_integer()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -1295,14 +1300,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_is_logical()` is represented in YAML (under the top-level `steps` key as
-#' a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_is_logical()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_is_logical()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_is_logical()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -1451,14 +1457,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_is_numeric()` is represented in YAML (under the top-level `steps` key as
-#' a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_is_numeric()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_is_numeric()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_is_numeric()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -1608,14 +1615,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML: 
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_is_posix()` is represented in YAML (under the top-level `steps` key as a
-#' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_is_posix()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_is_posix()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_is_posix()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -1853,14 +1861,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_schema_match()` is represented in YAML (under the top-level `steps` key
-#' as a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_schema_match()` as
-#' a validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_schema_match()` se representa en
+#' YAML (bajo la clave de nivel superior `steps` como un miembro de la lista),
+#' la sintaxis sigue de cerca la firma de la función de validación. A
+#' continuación se muestra un ejemplo de cómo una llamada compleja de
+#' `col_schema_match()` como paso de validación se expresa en código R y en la
+#' representación YAML correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -2122,14 +2131,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_between()` is represented in YAML (under the top-level `steps` key
-#' as a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_vals_between()` as
-#' a validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_between()` se representa en
+#' YAML (bajo la clave de nivel superior `steps` como un miembro de la lista),
+#' la sintaxis sigue de cerca la firma de la función de validación. A
+#' continuación se muestra un ejemplo de cómo una llamada compleja de
+#' `col_vals_between()` como paso de validación se expresa en código R y en la
+#' representación YAML correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -2395,14 +2405,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_decreasing()` is represented in YAML (under the top-level `steps`
-#' key as a list member), the syntax closely follows the signature of the
-#' validation function. Here is an example of how a complex call of
-#' `col_vals_decreasing()` as a validation step is expressed in R code and in
-#' the corresponding YAML representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_decreasing()` se representa en
+#' YAML (bajo la clave de nivel superior `steps` como un miembro de la lista),
+#' la sintaxis sigue de cerca la firma de la función de validación. A
+#' continuación se muestra un ejemplo de cómo una llamada compleja de
+#' `col_vals_decreasing()` como paso de validación se expresa en código R y en
+#' la representación YAML correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -2574,14 +2585,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_equal()` is represented in YAML (under the top-level `steps` key as
-#' a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_vals_equal()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_equal()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_vals_equal()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -2790,14 +2802,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_expr()` is represented in YAML (under the top-level `steps` key as
-#' a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_vals_expr()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_expr()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_vals_expr()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -3043,14 +3056,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_gt()` is represented in YAML (under the top-level `steps` key as a
-#' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_vals_gt()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_gt()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_vals_gt()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -3347,14 +3361,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_gte()` is represented in YAML (under the top-level `steps` key as a
-#' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_vals_gte()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_gte()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_vals_gte()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -3573,14 +3588,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_in_set()` is represented in YAML (under the top-level `steps` key
-#' as a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_vals_in_set()` as
-#' a validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_in_set()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_vals_in_set()`
+#' como paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -3809,14 +3825,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_increasing()` is represented in YAML (under the top-level `steps`
-#' key as a list member), the syntax closely follows the signature of the
-#' validation function. Here is an example of how a complex call of
-#' `col_vals_increasing()` as a validation step is expressed in R code and in
-#' the corresponding YAML representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_increasing()` se representa en
+#' YAML (bajo la clave de nivel superior `steps` como un miembro de la lista),
+#' la sintaxis sigue de cerca la firma de la función de validación. A
+#' continuación se muestra un ejemplo de cómo una llamada compleja de
+#' `col_vals_increasing()` como paso de validación se expresa en código R y en
+#' la representación YAML correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -3989,14 +4006,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_lt()` is represented in YAML (under the top-level `steps` key as a
-#' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_vals_lt()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_lt()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_vals_lt()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -4224,14 +4242,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_lte()` is represented in YAML (under the top-level `steps` key as a
-#' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_vals_lte()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_lte()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_vals_lte()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -4456,14 +4475,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_make_set()` is represented in YAML (under the top-level `steps` key
-#' as a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_vals_make_set()`
-#' as a validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_make_set()` se representa en
+#' YAML (bajo la clave de nivel superior `steps` como un miembro de la lista),
+#' la sintaxis sigue de cerca la firma de la función de validación. A
+#' continuación se muestra un ejemplo de cómo una llamada compleja de
+#' `col_vals_make_set()` como paso de validación se expresa en código R y en la
+#' representación YAML correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -4680,14 +4700,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_make_subset()` is represented in YAML (under the top-level `steps`
-#' key as a list member), the syntax closely follows the signature of the
-#' validation function. Here is an example of how a complex call of
-#' `col_vals_make_subset()` as a validation step is expressed in R code and in
-#' the corresponding YAML representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_make_subset()` se representa en
+#' YAML (bajo la clave de nivel superior `steps` como un miembro de la lista),
+#' la sintaxis sigue de cerca la firma de la función de validación. A
+#' continuación se muestra un ejemplo de cómo una llamada compleja de
+#' `col_vals_make_subset()` como paso de validación se expresa en código R y en
+#' la representación YAML correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -4924,14 +4945,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_not_between()` is represented in YAML (under the top-level `steps`
-#' key as a list member), the syntax closely follows the signature of the
-#' validation function. Here is an example of how a complex call of
-#' `col_vals_not_between()` as a validation step is expressed in R code and in
-#' the corresponding YAML representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_not_between()` se representa en
+#' YAML (bajo la clave de nivel superior `steps` como un miembro de la lista),
+#' la sintaxis sigue de cerca la firma de la función de validación. A
+#' continuación se muestra un ejemplo de cómo una llamada compleja de
+#' `col_vals_not_between()` como paso de validación se expresa en código R y en
+#' la representación YAML correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -5194,14 +5216,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_not_equal()` is represented in YAML (under the top-level `steps`
-#' key as a list member), the syntax closely follows the signature of the
-#' validation function. Here is an example of how a complex call of
-#' `col_vals_not_equal()` as a validation step is expressed in R code and in the
-#' corresponding YAML representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_not_equal()` se representa en
+#' YAML (bajo la clave de nivel superior `steps` como un miembro de la lista),
+#' la sintaxis sigue de cerca la firma de la función de validación. A
+#' continuación se muestra un ejemplo de cómo una llamada compleja de
+#' `col_vals_not_equal()` como paso de validación se expresa en código R y en la
+#' representación YAML correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -5421,14 +5444,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_not_in_set()` is represented in YAML (under the top-level `steps`
-#' key as a list member), the syntax closely follows the signature of the
-#' validation function. Here is an example of how a complex call of
-#' `col_vals_not_in_set()` as a validation step is expressed in R code and in
-#' the corresponding YAML representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_not_in_set()` se representa en
+#' YAML (bajo la clave de nivel superior `steps` como un miembro de la lista),
+#' la sintaxis sigue de cerca la firma de la función de validación. A
+#' continuación se muestra un ejemplo de cómo una llamada compleja de
+#' `col_vals_not_in_set()` como paso de validación se expresa en código R y en
+#' la representación YAML correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -5648,14 +5672,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_not_null()` is represented in YAML (under the top-level `steps` key
-#' as a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_vals_not_null()`
-#' as a validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_not_null()` se representa en
+#' YAML (bajo la clave de nivel superior `steps` como un miembro de la lista),
+#' la sintaxis sigue de cerca la firma de la función de validación. A
+#' continuación se muestra un ejemplo de cómo una llamada compleja de
+#' `col_vals_not_null()` como paso de validación se expresa en código R y en la
+#' representación YAML correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -5865,14 +5890,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_null()` is represented in YAML (under the top-level `steps` key as
-#' a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_vals_null()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_null()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_vals_null()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -6089,14 +6115,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_regex()` is represented in YAML (under the top-level `steps` key as
-#' a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `col_vals_regex()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_regex()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `col_vals_regex()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -6370,14 +6397,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `col_vals_within_spec()` is represented in YAML (under the top-level `steps`
-#' key as a list member), the syntax closely follows the signature of the
-#' validation function. Here is an example of how a complex call of
-#' `col_vals_within_spec()` as a validation step is expressed in R code and in
-#' the corresponding YAML representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `col_vals_within_spec()` se representa en
+#' YAML (bajo la clave de nivel superior `steps` como un miembro de la lista),
+#' la sintaxis sigue de cerca la firma de la función de validación. A
+#' continuación se muestra un ejemplo de cómo una llamada compleja de
+#' `col_vals_within_spec()` como paso de validación se expresa en código R y en
+#' la representación YAML correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -6611,14 +6639,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `conjointly()` is represented in YAML (under the top-level `steps` key as a
-#' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `conjointly()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `conjointly()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `conjointly()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -10820,14 +10849,15 @@
 #' then be automatically generated.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `row_count_match()` is represented in YAML (under the top-level `steps` key
-#' as a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `row_count_match()` as
-#' a validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `row_count_match()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `row_count_match()`
+#' como paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -11015,14 +11045,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `rows_complete()` is represented in YAML (under the top-level `steps` key as
-#' a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `rows_complete()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `rows_complete()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `rows_complete()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -11185,14 +11216,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `rows_distinct()` is represented in YAML (under the top-level `steps` key as
-#' a list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `rows_distinct()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `rows_distinct()` se representa en YAML
+#' (bajo la clave de nivel superior `steps` como un miembro de la lista), la
+#' sintaxis sigue de cerca la firma de la función de validación. A continuación
+#' se muestra un ejemplo de cómo una llamada compleja de `rows_distinct()` como
+#' paso de validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -11439,14 +11471,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `serially()` is represented in YAML (under the top-level `steps` key as a
-#' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `serially()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `serially()` se representa en YAML (bajo
+#' la clave de nivel superior `steps` como un miembro de la lista), la sintaxis
+#' sigue de cerca la firma de la función de validación. A continuación se
+#' muestra un ejemplo de cómo una llamada compleja de `serially()` como paso de
+#' validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -12086,14 +12119,15 @@
 #' generará automáticamente.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `serially()` is represented in YAML (under the top-level `steps` key as a
-#' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `serially()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `specially()` se representa en YAML (bajo
+#' la clave de nivel superior `steps` como un miembro de la lista), la sintaxis
+#' sigue de cerca la firma de la función de validación. A continuación se
+#' muestra un ejemplo de cómo una llamada compleja de `specially()` como paso de
+#' validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement
@@ -12425,14 +12459,15 @@
 #' then be automatically generated.
 #' 
 #' @section YAML:
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). When
-#' `tbl_match()` is represented in YAML (under the top-level `steps` key as a
-#' list member), the syntax closely follows the signature of the validation
-#' function. Here is an example of how a complex call of `tbl_match()` as a
-#' validation step is expressed in R code and in the corresponding YAML
-#' representation.
+#' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
+#' YAML resultante se puede usar para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (a través de
+#' [yaml_agent_interrogate()]). Cuando `tbl_match()` se representa en YAML (bajo
+#' la clave de nivel superior `steps` como un miembro de la lista), la sintaxis
+#' sigue de cerca la firma de la función de validación. A continuación se
+#' muestra un ejemplo de cómo una llamada compleja de `tbl_match()` como paso de
+#' validación se expresa en código R y en la representación YAML
+#' correspondiente.
 #' 
 #' ```
 #' # R statement

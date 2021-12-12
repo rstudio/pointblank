@@ -483,7 +483,7 @@
 #' validación o expectativa operará en una sola unidad de prueba, que es si la
 #' columna existe o no.
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -523,7 +523,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_exists(
 #'     vars(a),
@@ -532,7 +532,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_exists:
 #'     columns: vars(a)
@@ -543,12 +543,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`,
-#' argument requires a value. Arguments with default values won't be written to
-#' YAML when using [yaml_write()] (though it is acceptable to include them with
-#' their default when generating the YAML by other means). It is also possible
-#' to preview the transformation of an agent to YAML without any writing to disk
-#' by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo el argumento de
+#' las `columns` requiere un valor. Los argumentos con valores predeterminados
+#' no se escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
 #' @param columns One or more columns from the table in focus. This can be
@@ -643,7 +644,7 @@
 #' (`tbl_spark`). Each validation step or expectation will operate over a single
 #' test unit, which is whether the column is a character-type column or not.
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -684,7 +685,7 @@
 #' representación YAML correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_is_character(
 #'     vars(a),
@@ -693,7 +694,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_is_character:
 #'     columns: vars(a)
@@ -704,12 +705,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`,
-#' argument requires a value. Arguments with default values won't be written to
-#' YAML when using [yaml_write()] (though it is acceptable to include them with
-#' their default when generating the YAML by other means). It is also possible
-#' to preview the transformation of an agent to YAML without any writing to disk
-#' by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo el argumento de
+#' las `columns` requiere un valor. Los argumentos con valores predeterminados
+#' no se escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
 #' 
@@ -797,7 +799,7 @@
 #' (`tbl_spark`). Each validation step or expectation will operate over a single
 #' test unit, which is whether the column is a `Date`-type column or not.
 #' 
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -839,7 +841,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_is_date(
 #'     vars(a),
@@ -848,7 +850,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_is_date:
 #'     columns: vars(a)
@@ -859,12 +861,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`,
-#' argument requires a value. Arguments with default values won't be written to
-#' YAML when using [yaml_write()] (though it is acceptable to include them with
-#' their default when generating the YAML by other means). It is also possible
-#' to preview the transformation of an agent to YAML without any writing to disk
-#' by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo el argumento de
+#' las `columns` requiere un valor. Los argumentos con valores predeterminados
+#' no se escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
 #' 
@@ -954,7 +957,7 @@
 #' (`tbl_spark`). Each validation step or expectation will operate over a single
 #' test unit, which is whether the column is a factor-type column or not.
 #' 
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -996,7 +999,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_is_factor(
 #'     vars(a),
@@ -1005,7 +1008,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_is_factor:
 #'     columns: vars(a)
@@ -1016,12 +1019,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`,
-#' argument requires a value. Arguments with default values won't be written to
-#' YAML when using [yaml_write()] (though it is acceptable to include them with
-#' their default when generating the YAML by other means). It is also possible
-#' to preview the transformation of an agent to YAML without any writing to disk
-#' by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo el argumento de
+#' las `columns` requiere un valor. Los argumentos con valores predeterminados
+#' no se escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
 #' 
@@ -1113,7 +1117,7 @@
 #' (`tbl_spark`). Each validation step or expectation will operate over a single
 #' test unit, which is whether the column is an integer-type column or not.
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -1154,7 +1158,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_is_integer(
 #'     vars(a),
@@ -1163,7 +1167,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_is_integer:
 #'     columns: vars(a)
@@ -1174,12 +1178,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`,
-#' argument requires a value. Arguments with default values won't be written to
-#' YAML when using [yaml_write()] (though it is acceptable to include them with
-#' their default when generating the YAML by other means). It is also possible
-#' to preview the transformation of an agent to YAML without any writing to disk
-#' by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo el argumento de
+#' las `columns` requiere un valor. Los argumentos con valores predeterminados
+#' no se escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #' 
 #' @inheritParams col_vals_gt
 #' 
@@ -1269,7 +1274,7 @@
 #' operate over a single test unit, which is whether the column is an
 #' logical-type column or not.
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -1311,7 +1316,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_is_logical(
 #'     vars(a),
@@ -1320,7 +1325,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_is_logical:
 #'     columns: vars(a)
@@ -1331,12 +1336,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`,
-#' argument requires a value. Arguments with default values won't be written to
-#' YAML when using [yaml_write()] (though it is acceptable to include them with
-#' their default when generating the YAML by other means). It is also possible
-#' to preview the transformation of an agent to YAML without any writing to disk
-#' by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo el argumento de
+#' las `columns` requiere un valor. Los argumentos con valores predeterminados
+#' no se escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
 #' 
@@ -1426,7 +1432,7 @@
 #' (`tbl_spark`). Each validation step or expectation will operate over a single
 #' test unit, which is whether the column is a numeric-type column or not.
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -1468,7 +1474,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_is_numeric(
 #'     vars(a),
@@ -1477,7 +1483,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_is_numeric:
 #'     columns: vars(a)
@@ -1488,12 +1494,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`,
-#' argument requires a value. Arguments with default values won't be written to
-#' YAML when using [yaml_write()] (though it is acceptable to include them with
-#' their default when generating the YAML by other means). It is also possible
-#' to preview the transformation of an agent to YAML without any writing to disk
-#' by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo el argumento de
+#' las `columns` requiere un valor. Los argumentos con valores predeterminados
+#' no se escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #' 
 #' @inheritParams col_vals_gt
 #' 
@@ -1584,7 +1591,7 @@
 #' (`tbl_spark`). Each validation step or expectation will operate over a single
 #' test unit, which is whether the column is a `POSIXct`-type column or not.
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -1626,7 +1633,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_is_posix(
 #'     vars(a),
@@ -1635,7 +1642,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_is_posix:
 #'     columns: vars(a)
@@ -1646,12 +1653,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`,
-#' argument requires a value. Arguments with default values won't be written to
-#' YAML when using [yaml_write()] (though it is acceptable to include them with
-#' their default when generating the YAML by other means). It is also possible
-#' to preview the transformation of an agent to YAML without any writing to disk
-#' by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo el argumento de
+#' las `columns` requiere un valor. Los argumentos con valores predeterminados
+#' no se escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
 #' 
@@ -1872,7 +1880,7 @@
 #' representación YAML correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_schema_match(
 #'     schema = col_schema(
@@ -1887,7 +1895,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_schema_match:
 #'     schema:
@@ -2045,7 +2053,7 @@
 #' to the number of rows in the table (after any `preconditions` have been
 #' applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -2142,7 +2150,7 @@
 #' representación YAML correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_between(
 #'     columns = vars(a),
@@ -2157,7 +2165,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_between:
 #'     columns: vars(a)
@@ -2319,7 +2327,7 @@
 #' number of test units that is equal to the number of rows in the table (after
 #' any `preconditions` have been applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -2416,7 +2424,7 @@
 #' la representación YAML correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_decreasing(
 #'     columns = vars(a),
@@ -2430,7 +2438,7 @@
 #'     active = FALSE
 #'   ) %>% yaml_agent_string()
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_decreasing:
 #'     columns: vars(a)
@@ -2446,12 +2454,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`
-#' argument requires a value. Arguments with default values won't be written to
-#' YAML when using [yaml_write()] (though it is acceptable to include them with
-#' their default when generating the YAML by other means). It is also possible
-#' to preview the transformation of an agent to YAML without any writing to disk
-#' by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo el argumento de
+#' las `columns` requiere un valor. Los argumentos con valores predeterminados
+#' no se escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #' 
 #' @inheritParams col_vals_gt
 #' @param allow_stationary An option to allow pauses in decreasing values. For
@@ -2499,7 +2508,7 @@
 #' expectation will operate over the number of test units that is equal to the
 #' number of rows in the table (after any `preconditions` have been applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -2596,7 +2605,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_equal(
 #'     columns = vars(a),
@@ -2609,7 +2618,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_equal:
 #'     columns: vars(a)
@@ -2624,12 +2633,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns` and
-#' `value` arguments require values. Arguments with default values won't be
-#' written to YAML when using [yaml_write()] (though it is acceptable to include
-#' them with their default when generating the YAML by other means). It is also
-#' possible to preview the transformation of an agent to YAML without any
-#' writing to disk by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo el argumento de
+#' las `columns` requiere un valor. Los argumentos con valores predeterminados
+#' no se escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
 #' @param value A value used for this test of equality. This can be a single
@@ -2813,7 +2823,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_expr(
 #'     expr = ~ a %% 1 == 0,
@@ -2824,7 +2834,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_expr:
 #'     expr: ~a%%1 == 0
@@ -2970,7 +2980,7 @@
 #' expectation will operate over the number of test units that is equal to the
 #' number of rows in the table (after any `preconditions` have been applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -3067,7 +3077,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_gt(
 #'     columns = vars(a),
@@ -3080,7 +3090,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_gt:
 #'     columns: vars(a)
@@ -3276,7 +3286,7 @@
 #' units that is equal to the number of rows in the table (after any
 #' `preconditions` have been applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -3372,7 +3382,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_gte(
 #'     columns = vars(a),
@@ -3385,7 +3395,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_gte:
 #'     columns: vars(a)
@@ -3508,7 +3518,7 @@
 #' expectation will operate over the number of test units that is equal to the
 #' number of rows in the table (after any `preconditions` have been applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -3599,7 +3609,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_in_set(
 #'     columns = vars(a),
@@ -3611,7 +3621,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_in_set:
 #'     columns: vars(a)
@@ -3739,7 +3749,7 @@
 #' number of test units that is equal to the number of rows in the table (after
 #' any `preconditions` have been applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -3836,7 +3846,7 @@
 #' la representación YAML correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_increasing(
 #'     columns = vars(a),
@@ -3850,7 +3860,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_increasing:
 #'     columns: vars(a)
@@ -3866,12 +3876,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`
-#' argument requires a value. Arguments with default values won't be written to
-#' YAML when using [yaml_write()] (though it is acceptable to include them with
-#' their default when generating the YAML by other means). It is also possible
-#' to preview the transformation of an agent to YAML without any writing to disk
-#' by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo el argumento de
+#' las `columns` requiere un valor. Los argumentos con valores predeterminados
+#' no se escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #' 
 #' @inheritParams col_vals_gt
 #' @param allow_stationary An option to allow pauses in decreasing values. For
@@ -3920,7 +3931,7 @@
 #' expectation will operate over the number of test units that is equal to the
 #' number of rows in the table (after any `preconditions` have been applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -4017,7 +4028,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_lt(
 #'     columns = vars(a),
@@ -4030,7 +4041,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_lt:
 #'     columns: vars(a)
@@ -4156,7 +4167,7 @@
 #' units that is equal to the number of rows in the table (after any
 #' `preconditions` have been applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -4253,7 +4264,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_lte(
 #'     columns = vars(a),
@@ -4266,7 +4277,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_lte:
 #'     columns: vars(a)
@@ -4395,7 +4406,7 @@
 #' in the `set` plus a test unit reserved for detecting column values outside of
 #' the `set` (any outside value seen will make this additional test unit fail).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -4486,7 +4497,7 @@
 #' representación YAML correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_make_set(
 #'     columns = vars(a),
@@ -4498,7 +4509,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_make_set:
 #'     columns: vars(a)
@@ -4620,7 +4631,7 @@
 #' (`tbl_spark`). Each validation step or expectation will operate over the
 #' number of test units that is equal to the number of elements in the `set`.
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -4711,7 +4722,7 @@
 #' la representación YAML correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_make_subset(
 #'     columns = vars(a),
@@ -4723,7 +4734,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_make_subset:
 #'     columns: vars(a)
@@ -4859,7 +4870,7 @@
 #' units that is equal to the number of rows in the table (after any
 #' `preconditions` have been applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -4956,7 +4967,7 @@
 #' la representación YAML correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_not_between(
 #'     columns = vars(a),
@@ -4971,7 +4982,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_not_between:
 #'     columns: vars(a)
@@ -5130,7 +5141,7 @@
 #' number of test units that is equal to the number of rows in the table (after
 #' any `preconditions` have been applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -5227,7 +5238,7 @@
 #' representación YAML correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_not_equal(
 #'     columns = vars(a),
@@ -5240,7 +5251,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_not_equal:
 #'     columns: vars(a)
@@ -5364,7 +5375,7 @@
 #' operate over the number of test units that is equal to the number of rows in
 #' the table (after any `preconditions` have been applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -5455,7 +5466,7 @@
 #' la representación YAML correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_not_in_set(
 #'     columns = vars(a),
@@ -5467,7 +5478,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_not_in_set:
 #'     columns: vars(a)
@@ -5592,7 +5603,7 @@
 #' expectation will operate over the number of test units that is equal to the
 #' number of rows in the table (after any `preconditions` have been applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -5683,7 +5694,7 @@
 #' representación YAML correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_not_null(
 #'     vars(a),
@@ -5694,7 +5705,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_not_null:
 #'     columns: vars(a)
@@ -5707,12 +5718,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`,
-#' argument requires a value. Arguments with default values won't be written to
-#' YAML when using [yaml_write()] (though it is acceptable to include them with
-#' their default when generating the YAML by other means). It is also possible
-#' to preview the transformation of an agent to YAML without any writing to disk
-#' by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo el argumento de
+#' las `columns` requiere un valor. Los argumentos con valores predeterminados
+#' no se escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
 #' 
@@ -5810,7 +5822,7 @@
 #' expectation will operate over the number of test units that is equal to the
 #' number of rows in the table (after any `preconditions` have been applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -5901,7 +5913,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_null(
 #'     vars(a),
@@ -5912,7 +5924,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_null:
 #'     columns: vars(a)
@@ -5925,12 +5937,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`,
-#' argument requires a value. Arguments with default values won't be written to
-#' YAML when using [yaml_write()] (though it is acceptable to include them with
-#' their default when generating the YAML by other means). It is also possible
-#' to preview the transformation of an agent to YAML without any writing to disk
-#' by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo el argumento de
+#' las `columns` requiere un valor. Los argumentos con valores predeterminados
+#' no se escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
 #' 
@@ -6029,7 +6042,7 @@
 #' expectation will operate over the number of test units that is equal to the
 #' number of rows in the table (after any `preconditions` have been applied).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -6126,7 +6139,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_regex(
 #'     columns = vars(a),
@@ -6139,7 +6152,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_regex:
 #'     columns: vars(a)
@@ -6311,7 +6324,7 @@
 #' 
 #' Only a single `spec` value should be provided per function call.
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
 #' `vars(col_a, col_b)` dará lugar a la entrada de dos pasos de validación).
@@ -6408,7 +6421,7 @@
 #' la representación YAML correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   col_vals_within_spec(
 #'     columns = vars(a),
@@ -6421,7 +6434,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - col_vals_within_spec:
 #'     columns: vars(a)
@@ -6560,7 +6573,7 @@
 #' (technically, a `ptblank_agent` object) whereas the expectation and test
 #' functions can only be used with a data table.
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' If providing multiple column names in any of the supplied validation steps,
 #' the result will be an expansion of sub-validation steps to that number of
 #' column names. Aside from column names in quotes and in `vars()`,
@@ -6650,7 +6663,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   conjointly(
 #'     ~ col_vals_lt(., vars(a), 8),
@@ -6663,7 +6676,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - conjointly:
 #'     fns:
@@ -6871,7 +6884,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' create_agent(
 #'   read_fn = ~ small_table,
 #'   tbl_name = "small_table",
@@ -6890,7 +6903,7 @@
 #'   locale = "fr_CA"
 #' )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' type: agent
 #' read_fn: ~small_table
 #' tbl_name: small_table
@@ -7160,7 +7173,7 @@
 #' la representación YAML correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' create_informant(
 #'   read_fn = ~ small_table,
 #'   tbl_name = "small_table",
@@ -7169,7 +7182,7 @@
 #'   locale = "fr_CA"
 #' )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' type: informant
 #' read_fn: ~small_table
 #' tbl_name: small_table
@@ -7769,7 +7782,7 @@
 #' representation.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' create_agent(
 #'   read_fn = ~ small_table,
 #'   tbl_name = "small_table",
@@ -7790,7 +7803,7 @@
 #'   col_vals_gt(vars(a), 1) %>%
 #'   col_vals_lt(vars(a), 7) 
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' type: agent
 #' read_fn: ~small_table
 #' tbl_name: small_table
@@ -9625,7 +9638,7 @@
 #' the YAML representation.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' informant %>% 
 #'   info_columns(
 #'     columns = "date_time",
@@ -9644,7 +9657,7 @@
 #'     info = "UTC time."
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' columns:
 #'   date_time:
 #'     _type: POSIXct, POSIXt
@@ -9903,7 +9916,7 @@
 #' expressed in both R code and in the YAML representation.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' informant %>% 
 #'   info_section(
 #'     section_name = "History",
@@ -9919,7 +9932,7 @@
 #'     `Notes 2` = "**Bold notes**."
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' History:
 #'   Changes: |2-
 #'   
@@ -10059,7 +10072,7 @@
 #' demonstrate their relationship here).
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' informant %>% 
 #'   info_columns(
 #'     columns = "date_time",
@@ -10071,7 +10084,7 @@
 #'   ) %>%
 #'   incorporate()
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' meta_snippets:
 #'   latest_date: ~. %>% dplyr::pull(date) %>% max(na.rm = TRUE)
 #' ...
@@ -10235,14 +10248,14 @@
 #' expressed in R code and in the corresponding YAML representation.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' informant %>% 
 #'   info_tabular(
 #'     section_1 = "*info text* 1.",
 #'     `section 2` = "*info text* 2 and {snippet_1}"
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' table:
 #'   _columns: 23
 #'   _rows: 205.0
@@ -10860,7 +10873,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   row_count_match(
 #'     tbl_compare = ~ file_tbl(
@@ -10877,7 +10890,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - row_count_match:
 #'     tbl_compare: ~ file_tbl(
@@ -11056,7 +11069,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   rows_complete(
 #'     columns = vars(a, b),
@@ -11067,7 +11080,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - rows_complete:
 #'     columns: vars(a, b)
@@ -11227,7 +11240,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   rows_distinct(
 #'     columns = vars(a, b),
@@ -11238,7 +11251,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - rows_distinct:
 #'     columns: vars(a, b)
@@ -11422,7 +11435,7 @@
 #' decimal value between `0` and `1` (serving as a fractional threshold of
 #' failing test units).
 #'
-#' @section Column Names:
+#' @section Nombres de columnas:
 #' If providing multiple column names in any of the supplied validation steps,
 #' the result will be an expansion of sub-validation steps to that number of
 #' column names. Aside from column names in quotes and in `vars()`,
@@ -11482,7 +11495,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   serially(
 #'     ~ col_vals_lt(., vars(a), 8),
@@ -11494,7 +11507,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - serially:
 #'     fns:
@@ -12130,7 +12143,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   specially(
 #'     fn = function(x) { ... },
@@ -12140,7 +12153,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - specially:
 #'     fn: function(x) { ... }
@@ -12470,7 +12483,7 @@
 #' correspondiente.
 #' 
 #' ```
-#' # R statement
+#' # Código R
 #' agent %>% 
 #'   tbl_match(
 #'     tbl_compare = ~ file_tbl(
@@ -12487,7 +12500,7 @@
 #'     active = FALSE
 #'   )
 #' 
-#' # YAML representation
+#' # Representación YAML
 #' steps:
 #' - tbl_match:
 #'     tbl_compare: ~ file_tbl(
@@ -12698,7 +12711,7 @@
 #' ) %>%
 #'   yaml_write()
 #' 
-#' # YAML representation ("tbl_store.yml")
+#' # Representación YAML ("tbl_store.yml")
 #' tbls:
 #'   tbl_duckdb: ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb")
 #'   sml_table_high: ~ small_table %>% dplyr::filter(f == "high")
@@ -12721,7 +12734,7 @@
 #'   col_exists(vars(date, date_time)) %>%
 #'   write_yaml()
 #'   
-#' # YAML representation ("agent-sml_table_high.yml")
+#' # Representación YAML ("agent-sml_table_high.yml")
 #' read_fn: ~ tbl_source("sml_table_high", "tbl_store.yml")
 #' tbl_name: sml_table_high
 #' label: An example that uses a table store.

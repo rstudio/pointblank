@@ -51,7 +51,7 @@
 #' especially true when `x` is a table object because, otherwise, nothing
 #' happens. For the `col_is_*()`-type functions, using `action_levels(warn_at =
 #' 1)` or `action_levels(stop_at = 1)` are good choices depending on the
-#' situation (the first produces a warning, the other `stop()`s).
+#' situation (the first produces a warning, the other will `stop()`).
 #'
 #' @section Briefs:
 #' Want to describe this validation step in some detail? Keep in mind that this

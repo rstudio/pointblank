@@ -308,7 +308,7 @@ agent_1 <-
   
 # Determine if this validation
 # had no failing test units (there are
-# are 4 tests and a final validation)
+# 4 tests and a final validation)
 all_passed(agent_1)
 
 # Calling `agent` in the console

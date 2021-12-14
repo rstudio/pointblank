@@ -70,8 +70,8 @@ agent <-
   col_schema_match(schema_obj) \%>\%
   interrogate()
 
-# Determine if these three validation
-# steps passed by using `all_passed()`
+# Determine if this validation step
+# passed by using `all_passed()`
 all_passed(agent)
 
 # We can alternatively create

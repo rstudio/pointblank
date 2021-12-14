@@ -124,7 +124,7 @@ single threshold level (specified as either the fraction of test units
 failed, or, an absolute value), often using the \code{warn_at} argument. This is
 especially true when \code{x} is a table object because, otherwise, nothing
 happens. For the \verb{col_is_*()}-type functions, using \code{action_levels(warn_at = 1)} or \code{action_levels(stop_at = 1)} are good choices depending on the
-situation (the first produces a warning, the other \code{stop()}s).
+situation (the first produces a warning, the other will \code{stop()}).
 }
 
 \section{Briefs}{

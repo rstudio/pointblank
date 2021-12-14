@@ -234,7 +234,6 @@ by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 }
 
 \examples{
-
 # For all examples here, we'll use
 # a simple table with two columns:
 # one `integer` (`a`) and the other

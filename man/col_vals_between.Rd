@@ -161,11 +161,9 @@ table or with an \emph{agent} object (technically, a \code{ptblank_agent} object
 whereas the expectation and test functions can only be used with a data
 table. The types of data tables that can be used include data frames,
 tibbles, database tables (\code{tbl_dbi}), and Spark DataFrames (\code{tbl_spark}).
-Each validation step or expectation will operate over a single test unit,
-which is whether the column is an integer-type column or not. Each validation
-step or expectation will operate over the number of test units that is equal
-to the number of rows in the table (after any \code{preconditions} have been
-applied).
+Each validation step or expectation will operate over the number of test
+units that is equal to the number of rows in the table (after any
+\code{preconditions} have been applied).
 }
 \section{Column Names}{
 

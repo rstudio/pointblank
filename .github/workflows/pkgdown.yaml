@@ -6,7 +6,7 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     
     env:
       GITHUB_PAT: ${{ secrets.GHA_PAT }}

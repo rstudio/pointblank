@@ -39,7 +39,7 @@ test_serially(
 (\code{tbl_spark}), or, an \emph{agent} object of class \code{ptblank_agent} that is
 created with \code{\link[=create_agent]{create_agent()}}.}
 
-\item{...}{a collection one-sided formulas that consist of \verb{test_*()}
+\item{...}{A collection one-sided formulas that consist of \verb{test_*()}
 function calls (e.g., \code{\link[=test_col_vals_between]{test_col_vals_between()}}, etc.) arranged in sequence
 of intended interrogation order. Typically, validations up until the final
 one would have some \code{threshold} value set (default is \code{1}) for short

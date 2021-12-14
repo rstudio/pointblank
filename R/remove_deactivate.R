@@ -119,12 +119,13 @@ activate_steps <- function(agent,
 #'   ) %>%
 #'   col_exists(vars(date)) %>%
 #'   col_vals_regex(
-#'     vars(b), regex = "[0-9]-[a-z]{3}-[0-9]"
+#'     vars(b),
+#'     regex = "[0-9]-[a-z]{3}-[0-9]"
 #'   ) %>%
 #'   interrogate()
 #'   
-#' # The second validation step has
-#' # is being reconsidered and may
+#' # The second validation step is
+#' # now being reconsidered and may
 #' # be either phased out or improved
 #' # upon; in the interim period it
 #' # was decided that the step should

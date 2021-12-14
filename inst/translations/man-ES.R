@@ -2130,7 +2130,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -2419,7 +2419,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -2612,7 +2612,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -2844,7 +2844,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -3114,7 +3114,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -3286,7 +3286,7 @@
 #'   proporcional, donde `0.15` significa que el `15` por ciento de las unidades
 #'   de prueba que fallan dan como resultado una falla general de la prueba.
 #' @param label Una etiqueta opcional para el paso de validación. Esta etiqueta
-#'   aparece en el informe del *agente* y, para una mejor apariencia, debe ser
+#'   aparece en el informe del *agent* y, para una mejor apariencia, debe ser
 #'   breve.
 #' @param brief Una descripción opcional basada en texto para el paso de
 #'   validación. Si no se proporciona nada aquí, el objeto *agent* genera un
@@ -3296,11 +3296,11 @@
 #'   preferida en la mayoría de los casos (donde un `label` podría ser más
 #'   adecuada para describir sucintamente la validación).
 #' @param active Un valor lógico que indica si el paso de validación debe estar
-#'   activo. Si la función de validación está trabajando con un objeto *agente*,
+#'   activo. Si la función de validación está trabajando con un objeto *agent*,
 #'   `FALSE` hará que el paso de validación esté inactivo (aún informando su
 #'   presencia y manteniendo los índices de los pasos sin cambios). Si la
 #'   función de validación operará directamente en los datos (sin participación
-#'   de *agente*), entonces cualquier paso con `active = FALSE` simplemente
+#'   de *agent*), entonces cualquier paso con `active = FALSE` simplemente
 #'   pasará los datos sin validación alguna. Aparte de un vector lógico, una
 #'   fórmula R unilateral que usa un `~` inicial se puede usar con `.` (que
 #'   sirve como la tabla de datos de entrada) para evaluar a un solo valor
@@ -3441,7 +3441,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -3681,7 +3681,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -3931,7 +3931,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -4124,7 +4124,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -4373,7 +4373,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -4618,7 +4618,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -4855,7 +4855,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -5113,7 +5113,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -5397,7 +5397,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -5637,7 +5637,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -5877,7 +5877,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -6109,7 +6109,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -6349,7 +6349,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -6644,7 +6644,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -6901,7 +6901,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -7158,7 +7158,7 @@
 #' los pasos de validación (cada uno está numerado). Este proceso se conoce como
 #' desarrollo de un *plan de validación*.
 #'
-#' Las funciones de validación, cuando se llaman en un *agente*, son
+#' Las funciones de validación, cuando se llaman en un *agent*, son
 #' simplemente instrucciones hasta el punto en que se llama a la función
 #' [interrogate()]. Eso inicia el proceso del *agent* actuando sobre el *
 #' plan de validación * y obteniendo resultados para cada paso. Una vez que se
@@ -7575,7 +7575,7 @@
 #'   decir, el `read_fn` tiene prioridad). Hay dos formas de especificar un
 #'   `read_fn`: (1) usando una función (por ejemplo, `function () {<código de
 #'   lectura de la tabla>}`) o, (2) con una expresión de fórmula R.
-#' @param agent Un objeto *agente* a quemarropa. Este objeto se puede utilizar
+#' @param agent Un objeto *agent* a quemarropa. Este objeto se puede utilizar
 #'   en lugar de proporcionar una tabla en `tbl` o una fórmula de preparación de
 #'   tablas en `read_fn`.
 #' @param tbl_name Un nombre opcional para asignar al objeto de la tabla de
@@ -11143,7 +11143,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que esta validación en particular requiera alguna
 #' operación en la tabla de destino antes de que se lleve a cabo la comparación
-#' del recuento de filas. Especialmente para un informe basado en *agente*, esto
+#' del recuento de filas. Especialmente para un informe basado en *agent*, esto
 #' puede ser ventajoso ya que podemos desarrollar un gran plan de validación con
 #' una sola tabla de destino y realice ajustes menores en ella, según sea
 #' necesario, a lo largo del camino.
@@ -11343,7 +11343,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -11521,7 +11521,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -11810,7 +11810,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino.
@@ -12466,7 +12466,7 @@
 #' preprocesará la tabla de destino durante la interrogación como paso
 #' preparatorio. Puede suceder que una validación en particular requiera una
 #' columna calculada, algún filtrado de filas o la adición de columnas a través
-#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' de una combinación, etc. Especialmente para un informe basado en *agent*,
 #' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
 #' validación con una sola tabla de destino y realice ajustes menores en ella,
 #' según sea necesario, a lo largo del camino. Dentro de `specially()`, debido a

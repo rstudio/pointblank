@@ -190,7 +190,7 @@
 #'   
 #' # Determine if this validation
 #' # had no failing test units (there
-#' # are 2 test units, one for element
+#' # are 2 test units, one per element
 #' # in the `set`)
 #' all_passed(agent)
 #' 

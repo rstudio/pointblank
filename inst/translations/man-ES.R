@@ -11868,7 +11868,7 @@
 #'     ~ col_vals_not_null(., vars(b)),
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
-#'     label = "The `serially()` step.",
+#'     label = "El paso `serially()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -11883,16 +11883,17 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `serially()` step.
+#'     label: El paso `serially()`.
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the expressions for
-#' validation steps are necessary. Arguments with default values won't be
-#' written to YAML when using [yaml_write()] (though it is acceptable to include
-#' them with their default when generating the YAML by other means). It is also
-#' possible to preview the transformation of an agent to YAML without any
-#' writing to disk by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo son necesarias
+#' las expresiones para los pasos de validación. Los argumentos con valores
+#' predeterminados no se escribirán en YAML cuando se use [yaml_write()] (aunque
+#' es aceptable incluirlos con sus valores predeterminados al generar el YAML
+#' por otros medios). También es posible obtener una vista previa de la
+#' transformación de un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
 #' @param ... a collection one-sided formulas that consist of `test_*()`
@@ -12524,7 +12525,7 @@
 #'     fn = function(x) { ... },
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
-#'     label = "The `specially()` step.",
+#'     label = "El paso `specially()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -12536,21 +12537,22 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `specially()` step.
+#'     label: El paso `specially()`.
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the expressions for
-#' validation steps are necessary. Arguments with default values won't be
-#' written to YAML when using [yaml_write()] (though it is acceptable to include
-#' them with their default when generating the YAML by other means). It is also
-#' possible to preview the transformation of an agent to YAML without any
-#' writing to disk by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo son necesarias
+#' las expresiones para los pasos de validación. Los argumentos con valores
+#' predeterminados no se escribirán en YAML cuando se use [yaml_write()] (aunque
+#' es aceptable incluirlos con sus valores predeterminados al generar el YAML
+#' por otros medios). También es posible obtener una vista previa de la
+#' transformación de un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
-#' @param fn A function that performs the specialized validation on the data. It
-#'   must either return a logical vector or a table where the last column is a
-#'   logical column.
+#' @param fn Una función que realiza la validación especializada de los datos.
+#'   Debe devolver un vector lógico o una tabla donde la última columna es una
+#'   columna lógica.
 #' 
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto

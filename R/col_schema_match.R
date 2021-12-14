@@ -146,7 +146,6 @@
 #'   The test function returns a logical value.
 #' 
 #' @examples
-#' 
 #' # For all examples here, we'll use
 #' # a simple table with two columns:
 #' # one `integer` (`a`) and the other
@@ -473,8 +472,8 @@ test_col_schema_match <- function(object,
 #'   col_schema_match(schema_obj) %>%
 #'   interrogate()
 #' 
-#' # Determine if these three validation
-#' # steps passed by using `all_passed()`
+#' # Determine if this validation step
+#' # passed by using `all_passed()`
 #' all_passed(agent)
 #' 
 #' # We can alternatively create

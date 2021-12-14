@@ -471,7 +471,7 @@
 #' ¿Existe realmente una o más columnas?
 #'
 #' @description
-#' La función de validación `col_exists()`, la expectativa `wait_col_exists()`
+#' La función de validación `col_exists()`, la expectativa `expect_col_exists()`
 #' función, y la función de prueba `test_col_exists()` comprueban si uno o
 #' existen más columnas en la tabla de destino. El único requisito es la
 #' especificación de los nombres de las columnas. La función de validación se
@@ -2088,7 +2088,7 @@
 #'
 #' @description
 #' La función de validación `col_vals_between()`, la función de expectativa
-#' `hope_col_vals_between()` y la función de prueba `test_col_vals_between()`
+#' `expect_col_vals_between()` y la función de prueba `test_col_vals_between()`
 #' comprueban si los valores de las columnas de una tabla están dentro de un
 #' rango. El rango especificado con tres argumentos: `left`, `right` e
 #' `inclusive`. Los valores `left` y `right` especifican los límites superior e
@@ -2383,7 +2383,7 @@
 #'
 #' @description
 #' La función de validación `col_vals_decreasing()`, la función de expectativa
-#' `wait_col_vals_decreasing()` y la función de prueba
+#' `expect_col_vals_decreasing()` y la función de prueba
 #' `test_col_vals_decreasing()` comprueban si los valores de las columnas en una
 #' tabla están disminuyendo cuando se mueve hacia abajo en una tabla. Hay
 #' opciones para permitir valores `NA` en la columna de destino, permitir fases

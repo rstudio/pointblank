@@ -227,7 +227,7 @@
 #'   create_agent(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example."
+#'     label = "Un ejemplo."
 #'   ) %>%
 #'   col_exists(
 #'     vars(date),
@@ -528,7 +528,7 @@
 #'   col_exists(
 #'     vars(a),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_exists()` step.",
+#'     label = "El paso `col_exists()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -539,7 +539,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_exists()` step.
+#'     label: El paso `col_exists()`.
 #'     active: false
 #' ```
 #' 
@@ -552,9 +552,9 @@
 #' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
-#' @param columns One or more columns from the table in focus. This can be
-#'   provided as a vector of column names using `c()` or bare column names
-#'   enclosed in [vars()].
+#' @param columns Una o más columnas de la tabla en foco. Esto se puede
+#'   proporcionar como un vector de nombres de columnas usando `c()` o nombres
+#'   de columnas desnudos encerrados entre [vars()].
 #'   
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -565,63 +565,68 @@
 #'   lógico.
 #'   
 #' @examples
-#' # For all examples here, we'll use
-#' # a simple table with two columns:
-#' # `a` and `b`
+#' # Para todos los ejemplos aquí,
+#' # usaremos una tabla simple con
+#' # dos columnas: `a` y` b`
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 7, 6, 5, 8, 7),
 #'     b = c(7, 1, 0, 0, 0, 3)
 #'   )
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
-#' # Validate that columns `a` and `b`
-#' # exist in the `tbl` table; this
-#' # makes two distinct validation
-#' # steps since two columns were
-#' # provided to `vars()`
+#' # Valide que las columnas `a` y` b`
+#' # existan en la tabla `tbl`; esto hace
+#' # dos pasos de validación distintos ya
+#' # que se proporcionaron dos columnas
+#' # a `vars()`
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_exists(vars(a, b)) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation
-#' # had no failing test units (1)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba defectuosas (1)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>% col_exists(vars(a, b))
 #' 
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we need
-#' # to be more exacting and provide one
-#' # column at a time; this is primarily
-#' # used in testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_exists(tbl, vars(a))
 #' expect_col_exists(tbl, vars(b))
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us (even if there are multiple
-#' # columns tested, as is the case below)
+#' # Con el formulario `test_*()`,
+#' # deberíamos obtener un único valor
+#' # lógico que se nos devuelva (incluso
+#' # si hay varias columnas probadas,
+#' # como es el caso a continuación)
 #' tbl %>% test_col_exists(vars(a, b))
 #' 
 #' @family validation functions
@@ -633,17 +638,18 @@
 #' ¿Las columnas contienen datos de caracteres / cadenas?
 #'
 #' @description
-#' The `col_is_character()` validation function, the `expect_col_is_character()`
-#' expectation function, and the `test_col_is_character()` test function all
-#' check whether one or more columns in a table is of the character type. Like
-#' many of the `col_is_*()`-type functions in **pointblank**, the only
-#' requirement is a specification of the column names. The validation function
-#' can be used directly on a data table or with an *agent* object (technically,
-#' a `ptblank_agent` object) whereas the expectation and test functions can only
-#' be used with a data table. The types of data tables that can be used include
-#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
-#' (`tbl_spark`). Each validation step or expectation will operate over a single
-#' test unit, which is whether the column is a character-type column or not.
+#' La función de validación `col_is_character()`, la función de expectativa
+#' `expect_col_is_character()` y la función de prueba `test_col_is_character()`
+#' comprueban si una o más columnas de una tabla son del tipo carácter. Como
+#' muchas de las funciones de tipo `col_is_*()` en **pointblank**, el único
+#' requisito es una especificación de los nombres de las columnas. La función de
+#' validación se puede usar directamente en una tabla de datos o con un objeto
+#' *agent* (técnicamente, un objeto `ptblank_agent`) mientras que las funciones
+#' de expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos
+#' de tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre una sola unidad de prueba, que
+#' es si la columna es una columna de tipo carácter o no.
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -655,17 +661,18 @@
 #' `matches()`, y `everything()`.
 #'
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list object
-#' that is best produced by the [action_levels()] function. Read that function's
-#' documentation for the lowdown on how to create reactions to above-threshold
-#' failure levels in validation. The basic gist is that you'll want at least a
-#' single threshold level (specified as either the fraction of test units
-#' failed, or, an absolute value), often using the `warn_at` argument. This is
-#' especially true when `x` is a table object because, otherwise, nothing
-#' happens. For the `col_is_*()`-type functions, using `action_levels(warn_at =
-#' 1)` or `action_levels(stop_at = 1)` are good choices depending on the
-#' situation (the first produces a warning, the other `stop()`s).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_is_*()`, usar `action_levels(warn_at = 1)` o
+#' `action_levels(stop_at = 1)` son buenas opciones dependiendo de la situación
+#' (la primera produce una advertencia, la otra `stop()`).
 #'
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -691,7 +698,7 @@
 #'   col_is_character(
 #'     vars(a),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_is_character()` step.",
+#'     label = "El paso `col_is_character()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -702,7 +709,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_is_character()` step.
+#'     label: El paso `col_is_character()`.
 #'     active: false
 #' ```
 #' 
@@ -725,58 +732,62 @@
 #'   lógico.
 #'   
 #' @examples
-#' # For all examples here, we'll use
-#' # a simple table with a numeric column
-#' # (`a`) and a character column (`b`)
+#' # Para todos los ejemplos aquí,
+#' # usaremos una tabla simple con una
+#' # columna numérica (`a`) y una
+#' # columna de caracteres (`b`)
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 7, 6, 5, 8, 7),
 #'     b = LETTERS[1:6]
 #'   )
 #'   
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
-#' # Validate that column `b` has the
-#' # `character` class
+#' # Validar que la columna `b` tenga la
+#' # clase `character`
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_is_character(vars(b)) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation
-#' # had no failing test units (1)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba defectuosas (1)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>% col_is_character(vars(b))
 #' 
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_is_character(tbl, vars(b))
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' tbl %>% test_col_is_character(vars(b))
 #' 
 #' @family validation functions
@@ -789,17 +800,18 @@
 #' ¿Las columnas contienen objetos R `Date`?
 #'
 #' @description
-#' The `col_is_date()` validation function, the `expect_col_is_date()`
-#' expectation function, and the `test_col_is_date()` test function all check
-#' whether one or more columns in a table is of the **R** `Date` type. Like many
-#' of the `col_is_*()`-type functions in **pointblank**, the only requirement is
-#' a specification of the column names. The validation function can be used
-#' directly on a data table or with an *agent* object (technically, a
-#' `ptblank_agent` object) whereas the expectation and test functions can only
-#' be used with a data table. The types of data tables that can be used include
-#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
-#' (`tbl_spark`). Each validation step or expectation will operate over a single
-#' test unit, which is whether the column is a `Date`-type column or not.
+#' La función de validación `col_is_date()`, la función de expectativa
+#' `expect_col_is_date()` y la función de prueba `test_col_is_date()` comprueban
+#' si una o más columnas en una tabla es del tipo **R** `Date`. Como muchas de
+#' las funciones de tipo `col_is_*()` en **pointblank**, el único requisito es
+#' una especificación de los nombres de las columnas. La función de validación
+#' se puede usar directamente en una tabla de datos o con un objeto *agent*
+#' (técnicamente, un objeto `ptblank_agent`) mientras que las funciones de
+#' expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos de
+#' tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre una sola unidad de prueba, que
+#' es si la columna es una columna de tipo `Date` o no.
 #' 
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -811,18 +823,18 @@
 #' `matches()`, y `everything()`.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_is_*()`-type functions, using 
-#' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
-#' depending on the situation (the first produces a warning, the other
-#' `stop()`s).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_is_*()`, usar `action_levels(warn_at = 1)` o
+#' `action_levels(stop_at = 1)` son buenas opciones dependiendo de la situación
+#' (la primera produce una advertencia, la otra `stop()`).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -848,7 +860,7 @@
 #'   col_is_date(
 #'     vars(a),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_is_date()` step.",
+#'     label = "El paso `col_is_date()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -859,7 +871,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_is_date()` step.
+#'     label: El paso `col_is_date()`.
 #'     active: false
 #' ```
 #' 
@@ -888,53 +900,56 @@
 #' # that that column is of the `Date`
 #' # class
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
-#' # Validate that the column `date` has
-#' # the `Date` class
+#' # Validar que la columna `date`
+#' # tenga la clase `Date`
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_is_date(vars(date)) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (1)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba defectuosas (1)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' small_table %>%
 #'   col_is_date(vars(date)) %>%
 #'   dplyr::slice(1:5)
 #' 
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_is_date(
 #'   small_table, vars(date)
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' small_table %>%
 #'   test_col_is_date(vars(date))
 #' 
@@ -948,17 +963,18 @@
 #' ¿Las columnas contienen objetos de `factor` R?
 #'
 #' @description
-#' The `col_is_factor()` validation function, the `expect_col_is_factor()`
-#' expectation function, and the `test_col_is_factor()` test function all check
-#' whether one or more columns in a table is of the factor type. Like many of
-#' the `col_is_*()`-type functions in **pointblank**, the only requirement is a
-#' specification of the column names. The validation function can be used
-#' directly on a data table or with an *agent* object (technically, a
-#' `ptblank_agent` object) whereas the expectation and test functions can only
-#' be used with a data table. The types of data tables that can be used include
-#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
-#' (`tbl_spark`). Each validation step or expectation will operate over a single
-#' test unit, which is whether the column is a factor-type column or not.
+#' La función de validación `col_is_factor()`, la función de expectativa
+#' `expect_col_is_factor()` y la función de prueba `test_col_is_factor()`
+#' comprueban si una o más columnas en una tabla son del tipo factor. Como
+#' muchas de las funciones de tipo `col_is_*()` en **pointblank**, el único
+#' requisito es una especificación de los nombres de las columnas. La función de
+#' validación se puede usar directamente en una tabla de datos o con un objeto
+#' *agent* (técnicamente, un objeto `ptblank_agent`) mientras que las funciones
+#' de expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos
+#' de tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre una sola unidad de prueba, que
+#' es si la columna es una columna de tipo factor o no.
 #' 
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -970,18 +986,18 @@
 #' `matches()`, y `everything()`.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_is_*()`-type functions, using 
-#' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
-#' depending on the situation (the first produces a warning, the other
-#' `stop()`s).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_is_*()`, usar `action_levels(warn_at = 1)` o
+#' `action_levels(stop_at = 1)` son buenas opciones dependiendo de la situación
+#' (la primera produce una advertencia, la otra `stop()`).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -1007,7 +1023,7 @@
 #'   col_is_factor(
 #'     vars(a),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_is_factor()` step.",
+#'     label = "El paso `col_is_factor()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -1018,7 +1034,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_is_factor()` step.
+#'     label: El paso `col_is_factor()`.
 #'     active: false
 #' ```
 #' 
@@ -1041,62 +1057,65 @@
 #'   lógico.
 #'
 #' @examples
-#' # Let's modify the `f` column in the
-#' # `small_table` dataset so that the
-#' # values are factors instead of having
-#' # the `character` class; the following
-#' # examples will validate that the `f`
-#' # column was successfully mutated and
-#' # now consists of factors
+#' # Modifiquemos la columna `f` en la
+#' # tabla `small_table` para que los
+#' # valores sean factores en lugar de
+#' # tener la clase `character`; los
+#' # siguientes ejemplos validarán que la
+#' # columna `f` se mutó con éxito y
+#' # ahora consta de factores
 #' tbl <- 
 #'   small_table %>%
 #'   dplyr::mutate(f = factor(f))
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
-#' # Validate that the column `f` in the
-#' # `tbl` object is of the `factor` class
+#' # Validar que la columna `f` en el
+#' # objeto `tbl` sea de la clase `factor`
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_is_factor(vars(f)) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (1)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba defectuosas (1)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>%
 #'   col_is_factor(vars(f)) %>%
 #'   dplyr::slice(1:5)
 #' 
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_is_factor(tbl, vars(f))
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' tbl %>% test_col_is_factor(vars(f))
 #' 
 #' @family validation functions
@@ -1109,17 +1128,18 @@
 #' ¿Las columnas contienen valores enteros?
 #'
 #' @description
-#' The `col_is_integer()` validation function, the `expect_col_is_integer()`
-#' expectation function, and the `test_col_is_integer()` test function all check
-#' whether one or more columns in a table is of the integer type. Like many of
-#' the `col_is_*()`-type functions in **pointblank**, the only requirement is a
-#' specification of the column names. The validation function can be used
-#' directly on a data table or with an *agent* object (technically, a
-#' `ptblank_agent` object) whereas the expectation and test functions can only
-#' be used with a data table. The types of data tables that can be used include
-#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
-#' (`tbl_spark`). Each validation step or expectation will operate over a single
-#' test unit, which is whether the column is an integer-type column or not.
+#' La función de validación `col_is_integer()`, la función de expectativa
+#' `expect_col_is_integer()` y la función de prueba `test_col_is_integer()`
+#' comprueban si una o más columnas de una tabla son de tipo entero. Como muchas
+#' de las funciones de tipo `col_is_*()` en **pointblank**, el único requisito
+#' es una especificación de los nombres de las columnas. La función de
+#' validación se puede usar directamente en una tabla de datos o con un objeto
+#' *agent* (técnicamente, un objeto `ptblank_agent`) mientras que las funciones
+#' de expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos
+#' de tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre una sola unidad de prueba, que
+#' es si la columna es una columna de tipo entero o no.
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -1131,17 +1151,18 @@
 #' `matches()`, y `everything()`.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list object
-#' that is best produced by the [action_levels()] function. Read that function's
-#' documentation for the lowdown on how to create reactions to above-threshold
-#' failure levels in validation. The basic gist is that you'll want at least a
-#' single threshold level (specified as either the fraction of test units
-#' failed, or, an absolute value), often using the `warn_at` argument. This is
-#' especially true when `x` is a table object because, otherwise, nothing
-#' happens. For the `col_is_*()`-type functions, using `action_levels(warn_at =
-#' 1)` or `action_levels(stop_at = 1)` are good choices depending on the
-#' situation (the first produces a warning, the other `stop()`s).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_is_*()`, usar `action_levels(warn_at = 1)` o
+#' `action_levels(stop_at = 1)` son buenas opciones dependiendo de la situación
+#' (la primera produce una advertencia, la otra `stop()`).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -1167,7 +1188,7 @@
 #'   col_is_integer(
 #'     vars(a),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_is_integer()` step.",
+#'     label = "El paso `col_is_integer()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -1178,7 +1199,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_is_integer()` step.
+#'     label: El paso `col_is_integer()`.
 #'     active: false
 #' ```
 #' 
@@ -1201,59 +1222,62 @@
 #'   lógico.
 #'   
 #' @examples
-#' # For all examples here, we'll use
-#' # a simple table with a character
-#' # column (`a`) and a integer column
-#' # (`b`)
+#' # Para todos los ejemplos aquí, usaremos
+#' # una tabla simple con una columna de
+#' # caracteres (`a`) y una columna de
+#' # números enteros (`b`)
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = letters[1:6],
 #'     b = 2:7
 #'   )
 #'   
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
-#' # Validate that column `b` has the
-#' # `integer` class
+#' # Validar que la columna `b` tenga la
+#' # clase `integer`
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_is_integer(vars(b)) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation
-#' # had no failing test units (1)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba defectuosas (1)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>% col_is_integer(vars(b))
 #' 
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_is_integer(tbl, vars(b))
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' tbl %>% test_col_is_integer(vars(b))
 #' 
 #' @family validation functions
@@ -1266,18 +1290,18 @@
 #' ¿Las columnas contienen valores lógicos?
 #'
 #' @description
-#' The `col_is_logical()` validation function, the `expect_col_is_logical()`
-#' expectation function, and the `test_col_is_logical()` test function all check
-#' whether one or more columns in a table is of the logical (`TRUE`/`FALSE`)
-#' type. Like many of the `col_is_*()`-type functions in **pointblank**, the
-#' only requirement is a specification of the column names. The validation
-#' function can be used directly on a data table or with an *agent* object
-#' (technically, a `ptblank_agent` object) whereas the expectation and test
-#' functions can only be used with a data table. The types of data tables that
-#' can be used include data frames, tibbles, database tables (`tbl_dbi`), and
-#' Spark DataFrames (`tbl_spark`). Each validation step or expectation will
-#' operate over a single test unit, which is whether the column is an
-#' logical-type column or not.
+#' La función de validación `col_is_logical()`, la función de expectativa
+#' `expect_col_is_logical()` y la función de prueba `test_col_is_logical()`
+#' verifican si una o más columnas en una tabla son lógicas (`TRUE`/` FALSE`).
+#' Como muchas de las funciones de tipo `col_is_*()` en **pointblank**, el único
+#' requisito es una especificación de los nombres de las columnas. La función de
+#' validación se puede usar directamente en una tabla de datos o con un objeto
+#' *agent* (técnicamente, un objeto `ptblank_agent`) mientras que las funciones
+#' de expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos
+#' de tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre una sola unidad de prueba, que
+#' es si la columna es una columna de tipo lógico o no.
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -1289,18 +1313,18 @@
 #' `matches()`, y `everything()`.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list object
-#' that is best produced by the [action_levels()] function. Read that function's
-#' documentation for the lowdown on how to create reactions to above-threshold
-#' failure levels in validation. The basic gist is that you'll want at least a
-#' single threshold level (specified as either the fraction of test units
-#' failed, or, an absolute value), often using the `warn_at` argument. This is
-#' especially true when `x` is a table object because, otherwise, nothing
-#' happens. For the `col_is_*()`-type functions, using 
-#' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
-#' depending on the situation (the first produces a warning, the other
-#' `stop()`s).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_is_*()`, usar `action_levels(warn_at = 1)` o
+#' `action_levels(stop_at = 1)` son buenas opciones dependiendo de la situación
+#' (la primera produce una advertencia, la otra `stop()`).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -1326,7 +1350,7 @@
 #'   col_is_logical(
 #'     vars(a),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_is_logical()` step.",
+#'     label = "El paso `col_is_logical()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -1337,7 +1361,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_is_logical()` step.
+#'     label: El paso `col_is_logical()`.
 #'     active: false
 #' ```
 #' 
@@ -1360,59 +1384,62 @@
 #'   lógico.
 #'   
 #' @examples
-#' # The `small_table` dataset in the
-#' # package has an `e` column which has
-#' # logical values; the following examples
-#' # will validate that that column is of
-#' # the `logical` class
+#' # La tabla `small_table` del paquete
+#' # tiene una columna `e` que tiene valores
+#' # lógicos; los siguientes ejemplos
+#' # validarán que esa columna es de la
+#' # clase `logical`
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
-#' # Validate that the column `e` has the
-#' # `logical` class
+#' # Validar que la columna `e` tenga la
+#' # clase `logical`
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_is_logical(vars(e)) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (1)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba defectuosas (1)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' small_table %>%
 #'   col_is_logical(vars(e)) %>%
 #'   dplyr::slice(1:5)
 #' 
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_is_logical(
 #'   small_table, vars(e)
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' small_table %>%
 #'   test_col_is_logical(vars(e))
 #' 
@@ -1426,17 +1453,18 @@
 #' ¿Las columnas contienen valores numéricos?
 #'
 #' @description
-#' The `col_is_numeric()` validation function, the `expect_col_is_numeric()`
-#' expectation function, and the `test_col_is_numeric()` test function all check
-#' whether one or more columns in a table is of the numeric type. Like many of
-#' the `col_is_*()`-type functions in **pointblank**, the only requirement is a
-#' specification of the column names. The validation function can be used
-#' directly on a data table or with an *agent* object (technically, a
-#' `ptblank_agent` object) whereas the expectation and test functions can only
-#' be used with a data table. The types of data tables that can be used include
-#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
-#' (`tbl_spark`). Each validation step or expectation will operate over a single
-#' test unit, which is whether the column is a numeric-type column or not.
+#' La función de validación `col_is_numeric()`, la función de expectativa
+#' `expect_col_is_numeric()` y la función de prueba `test_col_is_numeric()`
+#' verifican si una o más columnas en una tabla son de tipo numérico. Como
+#' muchas de las funciones de tipo `col_is_*()` en **pointblank**, el único
+#' requisito es una especificación de los nombres de las columnas. La función de
+#' validación se puede usar directamente en una tabla de datos o con un objeto
+#' *agent* (técnicamente, un objeto `ptblank_agent`) mientras que las funciones
+#' de expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos
+#' de tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre una sola unidad de prueba, que
+#' es si la columna es de tipo numérico o no.
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -1448,18 +1476,18 @@
 #' `matches()`, y `everything()`.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_is_*()`-type functions, using 
-#' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
-#' depending on the situation (the first produces a warning, the other
-#' `stop()`s).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_is_*()`, usar `action_levels(warn_at = 1)` o
+#' `action_levels(stop_at = 1)` son buenas opciones dependiendo de la situación
+#' (la primera produce una advertencia, la otra `stop()`).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -1485,7 +1513,7 @@
 #'   col_is_numeric(
 #'     vars(a),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_is_numeric()` step.",
+#'     label = "El paso `col_is_numeric()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -1496,7 +1524,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_is_numeric()` step.
+#'     label: El paso `col_is_numeric()`.
 #'     active: false
 #' ```
 #' 
@@ -1519,60 +1547,62 @@
 #'   lógico.
 #'   
 #' @examples
-#' # The `small_table` dataset in the
-#' # package has a `d` column that is
-#' # known to be numeric; the following
-#' # examples will validate that that
-#' # column is indeed of the `numeric`
-#' # class
+#' # La tabla `small_table` del paquete
+#' # tiene una columna `d` que se sabe
+#' # que es numérica; los siguientes
+#' # ejemplos validarán que esa columna
+#' # es de hecho de la clase `numeric`
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
-#' # Validate that the column `d` has
-#' # the `numeric` class
+#' # Validar que la columna `d` tenga
+#' # la clase `numeric`
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_is_numeric(vars(d)) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (1)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba defectuosas (1)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' small_table %>%
 #'   col_is_numeric(vars(d)) %>%
 #'   dplyr::slice(1:5)
 #' 
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_is_numeric(
 #'   small_table, vars(d)
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' small_table %>%
 #'   test_col_is_numeric(vars(d))
 #' 
@@ -1586,17 +1616,19 @@
 #' ¿Las columnas contienen fechas `POSIXct`?
 #'
 #' @description
-#' The `col_is_posix()` validation function, the `expect_col_is_posix()`
-#' expectation function, and the `test_col_is_posix()` test function all check
-#' whether one or more columns in a table is of the R `POSIXct` date-time type.
-#' Like many of the `col_is_*()`-type functions in **pointblank**, the only
-#' requirement is a specification of the column names. The validation function
-#' can be used directly on a data table or with an *agent* object (technically,
-#' a `ptblank_agent` object) whereas the expectation and test functions can only
-#' be used with a data table. The types of data tables that can be used include
-#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
-#' (`tbl_spark`). Each validation step or expectation will operate over a single
-#' test unit, which is whether the column is a `POSIXct`-type column or not.
+#' La función de validación `col_is_posix()`, la función de expectativa
+#' `expect_col_is_posix()` y la función de prueba `test_col_is_posix()`
+#' comprueban si una o más columnas en una tabla es del tipo de fecha y hora R
+#' `POSIXct`. Como muchas de las funciones de tipo `col_is_*()` en
+#' **pointblank**, el único requisito es una especificación de los nombres de
+#' las columnas. La función de validación se puede usar directamente en una
+#' tabla de datos o con un objeto *agent* (técnicamente, un objeto
+#' `ptblank_agent`) mientras que las funciones de expectativa y prueba solo se
+#' pueden usar con una tabla de datos. Los tipos de tablas de datos que se
+#' pueden utilizar incluyen marcos de datos, tibbles, tablas de base de datos
+#' (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada paso de validación o
+#' expectativa operará sobre una sola unidad de prueba, que es si la columna es
+#' una columna de tipo `POSIXct` o no.
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -1608,18 +1640,18 @@
 #' `matches()`, y `everything()`.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_is_*()`-type functions, using 
-#' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
-#' depending on the situation (the first produces a warning, the other
-#' `stop()`s).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_is_*()`, usar `action_levels(warn_at = 1)` o
+#' `action_levels(stop_at = 1)` son buenas opciones dependiendo de la situación
+#' (la primera produce una advertencia, la otra `stop()`).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -1645,7 +1677,7 @@
 #'   col_is_posix(
 #'     vars(a),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_is_posix()` step.",
+#'     label = "El paso `col_is_posix()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -1656,7 +1688,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_is_posix()` step.
+#'     label: El paso `col_is_posix()`.
 #'     active: false
 #' ```
 #' 
@@ -1679,59 +1711,62 @@
 #'   lógico.
 #'   
 #' @examples
-#' # The `small_table` dataset in the
-#' # package has a `date_time` column;
-#' # the following examples will validate
-#' # that that column is of the `POSIXct`
-#' # and `POSIXt` classes
+#' # La tabla `small_table` del paquete
+#' # tiene una columna `date_time`; los
+#' # siguientes ejemplos validarán que esa
+#' # columna es de las clases `POSIXct`
+#' # y `POSIXt`
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
-#' # Validate that the column `date_time`
-#' # is indeed a date-time column
+#' # Valide que la columna `date_time` sea
+#' # de hecho una columna de fecha y hora
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_is_posix(vars(date_time)) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (1)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba defectuosas (1)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' small_table %>%
 #'   col_is_posix(vars(date_time)) %>%
 #'   dplyr::slice(1:5)
 #' 
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_is_posix(
 #'   small_table, vars(date_time)
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' small_table %>%
 #'   test_col_is_posix(vars(date_time))
 #' 
@@ -1745,63 +1780,63 @@
 #' Genere un esquema de columna de tabla manualmente o con una tabla de
 #' referencia
 #' 
-#' A table column schema object, as can be created by `col_schema()`, is
-#' necessary when using the [col_schema_match()] validation function (which
-#' checks whether the table object under study matches a known column schema).
-#' The `col_schema` object can be made by carefully supplying the column names
-#' and their types as a set of named arguments, or, we could provide a table
-#' object, which could be of the `data.frame`, `tbl_df`, `tbl_dbi`, or
-#' `tbl_spark` varieties. There's an additional option, which is just for
-#' validating the schema of a `tbl_dbi` or `tbl_spark` object: we can validate
-#' the schema based on R column types (e.g., `"numeric"`, `"character"`, etc.),
-#' SQL column types (e.g., `"double"`, `"varchar"`, etc.), or Spark SQL column
-#' types (`"DoubleType"`, `"StringType"`, etc.). This is great if we want to
-#' validate table column schemas both on the server side and when tabular data
-#' is collected and loaded into R.
+#' Un objeto de esquema de columna de tabla, como puede ser creado por
+#' `col_schema()`, es necesario cuando se usa la función de validación
+#' [col_schema_match()] (que verifica si el objeto de tabla en estudio coincide
+#' con un esquema de columna conocido). El objeto `col_schema` se puede crear
+#' proporcionando cuidadosamente los nombres de las columnas y sus tipos como un
+#' conjunto de argumentos con nombre, o podríamos proporcionar un objeto de
+#' tabla, que podría ser de `data.frame`, `tbl_df`, `tbl_dbi`, o `tbl_spark`.
+#' Hay una opción adicional, que es solo para validar el esquema de
+#' un objeto `tbl_dbi` o `tbl_spark`: podemos validar el esquema en función de
+#' los tipos de columna R (por ejemplo, `"numeric"`, `"character"`, etc.),
+#' tipos de columna SQL (por ejemplo, `"double"`, `"varchar"`, etc.), o
+#' tipos de columna Spark SQL (`"DoubleType"`, `"StringType"`, etc.). Esto
+#' es genial si queremos validar los esquemas de columna de la tabla tanto en el
+#' lado del servidor como cuando se recopilan y cargan datos tabulares en R.
 #' 
-#' @param ... A set of named arguments where the names refer to column names and
-#'   the values are one or more column types.
-#' @param .tbl An option to use a table object to define the schema. If this is
-#'   provided then any values provided to `...` will be ignored.
-#' @param .db_col_types Determines whether the column types refer to R column
-#'   types (`"r"`) or SQL column types (`"sql"`).
+#' @param ... Un conjunto de argumentos con nombre donde los nombres se refieren
+#'   a nombres de columna y los valores son uno o más tipos de columna.
+#' @param .tbl Una opción para usar un objeto de tabla para definir el esquema.
+#'   Si se proporciona esto, se ignorarán los valores proporcionados a `...`.
+#' @param .db_col_types Determina si los tipos de columna se refieren a tipos de
+#'   columna R (`"r"`) o tipos de columna SQL (`"sql"`).
 #'   
 #' @examples 
-#' # Create a simple table with two
-#' # columns: one `integer` and the
-#' # other `character`
+#' # Cree una tabla simple con dos
+#' # columnas: una `integer` y la
+#' # otra `character`
 #' tbl <- 
 #'   dplyr::tibble(
 #'     a = 1:5,
 #'     b = letters[1:5]
 #'   )
 #' 
-#' # Create a column schema object
-#' # that describes the columns and
-#' # their types (in the expected
-#' # order)
+#' # Cree un objeto de esquema de
+#' # columna que describa las columnas
+#' # y sus tipos (en el orden esperado)
 #' schema_obj <- 
 #'   col_schema(
 #'     a = "integer",
 #'     b = "character"
 #'   )
 #' 
-#' # Validate that the schema object
-#' # `schema_obj` exactly defines
-#' # the column names and column types
-#' # of the `tbl` table
+#' # Valide que el objeto de esquema
+#' # `schema_obj` defina exactamente los
+#' # nombres de columna y los tipos de
+#' # columna de la tabla `tbl`
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   col_schema_match(schema_obj) %>%
 #'   interrogate()
 #' 
-#' # Determine if these three validation
-#' # steps passed by using `all_passed()`
+#' # Determine si este paso de validación
+#' # pasó usando `all_passed()`
 #' all_passed(agent)
 #' 
-#' # We can alternatively create
-#' # a column schema object from a
-#' # `tbl_df` object
+#' # Alternativamente, podemos crear un
+#' # objeto de esquema de columna a partir
+#' # de un objeto `tbl_df`
 #' schema_obj <-
 #'   col_schema(
 #'     .tbl = dplyr::tibble(
@@ -1810,9 +1845,9 @@
 #'     )
 #'   )
 #'
-#' # This should provide the same
-#' # interrogation results as in the
-#' # previous example
+#' # Esto debería proporcionar los mismos
+#' # resultados de interrogación que en
+#' # el ejemplo anterior
 #' create_agent(tbl = tbl) %>%
 #'   col_schema_match(schema_obj) %>%
 #'   interrogate() %>%
@@ -1828,46 +1863,50 @@
 #' ¿Las columnas de la tabla (y sus tipos) coinciden con un esquema predefinido?
 #'
 #' @description
-#' The `col_schema_match()` validation function, the `expect_col_schema_match()`
-#' expectation function, and the `test_col_schema_match()` test function all
-#' work in conjunction with a `col_schema` object (generated through the
-#' [col_schema()] function) to determine whether the expected schema matches
-#' that of the target table. The validation function can be used directly on a
-#' data table or with an *agent* object (technically, a `ptblank_agent` object)
-#' whereas the expectation and test functions can only be used with a data
-#' table. The types of data tables that can be used include data frames,
-#' tibbles, database tables (`tbl_dbi`), and Spark DataFrames (`tbl_spark`).
+#' La función de validación `col_schema_match()`, la función de expectativa
+#' `expect_col_schema_match()` y la función de prueba `test_col_schema_match()`
+#' funcionan en conjunto con un objeto `col_schema` (generado a través de la
+#' función [col_schema()]) para determinar si el esquema esperado coincide con
+#' el de la tabla de destino. La función de validación se puede usar
+#' directamente en una tabla de datos o con un objeto *agent* (técnicamente, un
+#' objeto `ptblank_agent`) mientras que las funciones de expectativa y prueba
+#' solo se pueden usar con una tabla de datos. Los tipos de tablas de datos que
+#' se pueden utilizar incluyen marcos de datos, tibbles, tablas de base de datos
+#' (`tbl_dbi`) y Spark DataFrames (`tbl_spark`).
 #' 
-#' The validation step or expectation operates over a single test unit, which is
-#' whether the schema matches that of the table (within the constraints enforced
-#' by the `complete`, `in_order`, and `is_exact` options). If the target table
-#' is a `tbl_dbi` or a `tbl_spark` object, we can choose to validate the column
-#' schema that is based on R column types (e.g., `"numeric"`, `"character"`,
-#' etc.), SQL column types (e.g., `"double"`, `"varchar"`, etc.), or Spark SQL
-#' types (e.g,. `"DoubleType"`, `"StringType"`, etc.). That option is defined in
-#' the [col_schema()] function (it is the `.db_col_types` argument).
+#' El paso de validación o expectativa opera sobre una sola unidad de prueba,
+#' que es si el esquema coincide con el de la tabla (dentro de las restricciones
+#' impuestas por las opciones `complete`, `in_order` y `is_exact`). Si la tabla
+#' de destino es un objeto `tbl_dbi` o `tbl_spark`, podemos optar por validar el
+#' esquema de columna que se basa en los tipos de columna R (por ejemplo,
+#' `"numeric"`, `"character"`, etc.), Tipos de columna SQL (p. Ej., `"Double"`,
+#' `"varchar"`, etc.) o tipos de Spark SQL (p. Ej., `"DoubleType"`,
+#' `"StringType"`, etc.). Esa opción se define en la función [col_schema()] (es
+#' el argumento `.db_col_types`).
 #' 
-#' There are options to make schema checking less stringent (by default, this
-#' validation operates with highest level of strictness). With the `complete`
-#' option set to `FALSE`, we can supply a `col_schema` object with a partial
-#' inclusion of columns. Using `in_order` set to `FALSE` means that there is no
-#' requirement for the columns defined in the `schema` object to be in the same
-#' order as in the target table. Finally, the `is_exact` option set to `FALSE`
-#' means that all column classes/types don't have to be provided for a
-#' particular column. It can even be `NULL`, skipping the check of the column
-#' type.
+#' Hay opciones para hacer que la verificación de esquemas sea menos estricta
+#' (de forma predeterminada, esta validación opera con el nivel más alto de
+#' rigor). Con la opción `complete` establecida en `FALSE`, podemos proporcionar
+#' un objeto `col_schema` con una inclusión parcial de columnas. El uso de
+#' `in_order` establecido en` FALSE` significa que no es necesario que las
+#' columnas definidas en el objeto `schema` estén en el mismo orden que en la
+#' tabla de destino. Finalmente, la opción `is_exact` establecida en `FALSE`
+#' significa que no es necesario proporcionar todas las clases / tipos de
+#' columna para una columna en particular. Incluso puede ser `NULL`, omitiendo
+#' la verificación del tipo de columna.
 #'
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list object
-#' that is best produced by the [action_levels()] function. Read that function's
-#' documentation for the lowdown on how to create reactions to above-threshold
-#' failure levels in validation. The basic gist is that you'll want at least a
-#' single threshold level (specified as either the fraction of test units
-#' failed, or, an absolute value), often using the `warn_at` argument. Using
-#' `action_levels(warn_at = 1)` or `action_levels(stop_at = 1)` are good choices
-#' depending on the situation (the first produces a warning, the other
-#' `stop()`s).
+#' A menudo, querremos especificar "acciones" para la validación. Este
+#' argumento, presente en cada función de validación, toma un objeto de lista
+#' especialmente diseñado que es mejor producido por la función
+#' [action_levels()]. Lea la documentación de esa función para obtener
+#' información sobre cómo crear reacciones a niveles de falla por encima del
+#' umbral en la validación. La esencia básica es que querrá al menos un nivel de
+#' umbral único (especificado como la fracción de unidades de prueba fallidas o
+#' un valor absoluto), a menudo utilizando el argumento `warn_at`. El uso de
+#' `action_levels(warn_at = 1)` o `action_levels(stop_at = 1)` son buenas
+#' opciones dependiendo de la situación (el primero produce una advertencia, el
+#' otro `stop()`).
 #'
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -1899,7 +1938,7 @@
 #'     in_order = FALSE,
 #'     is_exact = FALSE,
 #'     actions = action_levels(stop_at = 1),
-#'     label = "The `col_schema_match()` step.",
+#'     label = "El paso `col_schema_match()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -1914,38 +1953,43 @@
 #'     is_exact: false
 #'     actions:
 #'       stop_count: 1.0
-#'     label: The `col_schema_match()` step.
+#'     label: El paso `col_schema_match()`.
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `schema`
-#' argument requires a value. Arguments with default values won't be written to
-#' YAML when using [yaml_write()] (though it is acceptable to include them with
-#' their default when generating the YAML by other means). It is also possible
-#' to preview the transformation of an agent to YAML without any writing to disk
-#' by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos ya que solo el argumento
+#' `schema` requiere un valor. Los argumentos con valores predeterminados no se
+#' escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #' 
 #' @inheritParams col_vals_gt
-#' @param schema A table schema of type `col_schema` which can be generated
-#'   using the [col_schema()] function.
-#' @param complete A requirement to account for all table columns in the
-#'   provided `schema`. By default, this is `TRUE` and so that all column names
-#'   in the target table must be present in the schema object. This restriction
-#'   can be relaxed by using `FALSE`, where we can provide a subset of table
-#'   columns in the schema.
-#' @param in_order A stringent requirement for enforcing the order of columns in
-#'   the provided `schema`. By default, this is `TRUE` and the order of columns
-#'   in both the schema and the target table must match. By setting to `FALSE`,
-#'   this strict order requirement is removed.
-#' @param is_exact Determines whether the check for column types should be exact
-#'   or even performed at all. For example, columns in R data frames may have
-#'   multiple classes (e.g., a date-time column can have both the `"POSIXct"`
-#'   and the `"POSIXt"` classes). If using `is_exact == FALSE`, the column type
-#'   in the user-defined schema for a date-time value can be set as either
-#'   `"POSIXct"` *or* `"POSIXt"` and pass validation (with this column, at
-#'   least). This can be taken a step further and using `NULL` for a column type
-#'   in the user-defined schema will skip the validation check of a column type.
-#'   By default, `is_exact` is set to `TRUE`.
+#' @param schema Un esquema de tabla de tipo `col_schema` que se puede generar
+#'   usando la función [col_schema()].
+#' @param complete Este es un requisito para tener en cuenta todas las columnas
+#'   de la tabla en el `schema` proporcionado. De forma predeterminada, es
+#'   `TRUE`, por lo que todos los nombres de columna de la tabla de destino
+#'   deben estar presentes en el objeto de esquema. Esta restricción se puede
+#'   relajar usando `FALSE`, donde podemos proporcionar un subconjunto de
+#'   columnas de tabla en el esquema.
+#' @param in_order Este es un requisito estricto para hacer cumplir el orden de
+#'   las columnas en el `schema` proporcionado. De forma predeterminada, es
+#'   `TRUE` y el orden de las columnas tanto en el esquema como en la tabla de
+#'   destino debe coincidir. Al establecerlo en `FALSE`, se elimina este
+#'   requisito de orden estricto.
+#' @param is_exact Esta opción determina si la verificación de los tipos de
+#'   columna debe ser exacta o incluso realizada. Por ejemplo, las columnas en
+#'   los marcos de datos R pueden tener varias clases (por ejemplo, una columna
+#'   de fecha y hora puede tener las clases `POSIXct` y `POSIXt`). Si usa
+#'   `is_exact == FALSE`, el tipo de columna en el esquema definido por el
+#'   usuario para un valor de fecha y hora se puede establecer como `"POSIXct"`
+#'   *o* `"POSIXt"` y pasar la validación (con esta columna, por lo menos). Esto
+#'   se puede ir un paso más allá y el uso de `NULL` para un tipo de columna en
+#'   el esquema definido por el usuario omitirá la verificación de validación de
+#'   un tipo de columna. De forma predeterminada, `is_exact` se establece en
+#'   `TRUE`.
 #' 
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -1956,7 +2000,6 @@
 #'   lógico.
 #' 
 #' @examples
-#' 
 #' # For all examples here, we'll use
 #' # a simple table with two columns:
 #' # one `integer` (`a`) and the other
@@ -1982,8 +2025,8 @@
 #'     b = "character"
 #'   )
 #'   
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that the schema object
 #' # `schema_obj` exactly defines
@@ -1999,35 +2042,38 @@
 #' # whether there is a match)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>% col_schema_match(schema_obj)
 #'
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_schema_match(tbl, schema_obj)
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' tbl %>% test_col_schema_match(schema_obj)
 #' 
 #' @family validation functions
@@ -2041,27 +2087,27 @@
 #' datos de otras columnas?
 #'
 #' @description
-#' The `col_vals_between()` validation function, the `expect_col_vals_between()`
-#' expectation function, and the `test_col_vals_between()` test function all
-#' check whether column values in a table fall within a range. The range
-#' specified with three arguments: `left`, `right`, and `inclusive`. The `left`
-#' and `right` values specify the lower and upper bounds. The bounds can be
-#' specified as single, literal values or as column names given in `vars()`. The
-#' `inclusive` argument, as a vector of two logical values relating to `left`
-#' and `right`, states whether each bound is inclusive or not. The default is
-#' `c(TRUE, TRUE)`, where both endpoints are inclusive (i.e., `[left, right]`).
-#' For partially-unbounded versions of this function, we can use the
-#' [col_vals_lt()], [col_vals_lte()], [col_vals_gt()], or [col_vals_gte()]
-#' validation functions. The validation function can be used directly on a data
-#' table or with an *agent* object (technically, a `ptblank_agent` object)
-#' whereas the expectation and test functions can only be used with a data
-#' table. The types of data tables that can be used include data frames,
-#' tibbles, database tables (`tbl_dbi`), and Spark DataFrames (`tbl_spark`).
-#' Each validation step or expectation will operate over a single test unit,
-#' which is whether the column is an integer-type column or not. Each validation
-#' step or expectation will operate over the number of test units that is equal
-#' to the number of rows in the table (after any `preconditions` have been
-#' applied).
+#' La función de validación `col_vals_between()`, la función de expectativa
+#' `hope_col_vals_between()` y la función de prueba `test_col_vals_between()`
+#' comprueban si los valores de las columnas de una tabla están dentro de un
+#' rango. El rango especificado con tres argumentos: `left`, `right` e
+#' `inclusive`. Los valores `left` y `right` especifican los límites superior e
+#' inferior. Los límites se pueden especificar como valores literales simples o
+#' como nombres de columna dados en `vars()`. El argumento `inclusive`, como un
+#' vector de dos valores lógicos relacionados con "izquierda" y "derecha",
+#' establece si cada límite es inclusivo o no. El valor predeterminado es
+#' `c(TRUE, TRUE)`, donde ambos extremos son inclusivos (es decir, `[izquierda,
+#' derecha]`). Para versiones parcialmente ilimitadas de esta función, podemos
+#' usar las funciones de validación [col_vals_lt()], [col_vals_lte()],
+#' [col_vals_gt()] o [col_vals_gte()]. La función de validación se puede usar
+#' directamente en una tabla de datos o con un objeto *agent* (técnicamente, un
+#' objeto `ptblank_agent`) mientras que las funciones de expectativa y prueba
+#' solo se pueden usar con una tabla de datos. Los tipos de tablas de datos que
+#' se pueden utilizar incluyen marcos de datos, tibbles, tablas de base de datos
+#' (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada paso de validación o
+#' expectativa operará sobre el número de unidades de prueba que es igual al
+#' número de filas en la tabla (después de que se hayan aplicado las
+#' `preconditions`).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -2072,74 +2118,82 @@
 #' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, y `everything()`.
 #'
-#' @section Missing Values:
-#' This validation function supports special handling of `NA` values. The
-#' `na_pass` argument will determine whether an `NA` value appearing in a test
-#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
-#' FALSE` means that any `NA`s encountered will accumulate failing test units.
+#' @section Valores faltantes:
+#' Esta función de validación admite el manejo especial de valores `NA`. El
+#' argumento `na_pass` determinará si un valor de `NA` que aparece en una unidad
+#' de prueba debe pasar o no. El valor predeterminado de `na_pass = FALSE`
+#' significa que cualquier `NA` encontrado acumulará unidades de prueba
+#' fallidas.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -2171,7 +2225,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_between()` step.",
+#'     label = "El paso `col_vals_between()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -2190,29 +2244,30 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_between()` step.
+#'     label: El paso `col_vals_between()`.
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`,
-#' `left`, and `right` arguments require values. Arguments with default values
-#' won't be written to YAML when using [yaml_write()] (though it is acceptable
-#' to include them with their default when generating the YAML by other means).
-#' It is also possible to preview the transformation of an agent to YAML without
-#' any writing to disk by using the [yaml_agent_string()] function.
+#' En la práctica, ambos suelen ser más cortos, ya que solo los argumentos de
+#' las `columns`, `left` y `right` requieren valores. Los argumentos con valores
+#' predeterminados no se escribirán en YAML cuando se use [yaml_write()] (aunque
+#' es aceptable incluirlos con sus valores predeterminados al generar el YAML
+#' por otros medios). También es posible obtener una vista previa de la
+#' transformación de un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
-#' @param left The lower bound for the range. The validation includes this bound
-#'   value (if the first element in `inclusive` is `TRUE`) in addition to values
-#'   greater than `left`. This can be a single value or a compatible column
-#'   given in `vars()`.
-#' @param right The upper bound for the range. The validation includes this
-#'   bound value (if the second element in `inclusive` is `TRUE`) in addition to
-#'   values lower than `right`. This can be a single value or a compatible
-#'   column given in `vars()`.
-#' @param inclusive A two-element logical value that indicates whether the
-#'   `left` and `right` bounds should be inclusive. By default, both bounds
-#'   are inclusive.
+#' @param left El límite inferior del rango. La validación incluye este valor
+#'   límite (si el primer elemento en `inclusive` es `TRUE`) además de valores
+#'   mayores que `left`. Puede ser un valor único o una columna compatible dada
+#'   en `vars()`.
+#' @param right El límite superior del rango. La validación incluye este valor
+#'   límite (si el segundo elemento en `inclusive` es `TRUE`) además de valores
+#'   inferiores a `right`. Puede ser un valor único o una columna compatible
+#'   dada en `vars()`.
+#' @param inclusive Un valor lógico de dos elementos que indica si los límites
+#'   `left` y` right` deben ser inclusivos. De forma predeterminada, ambos
+#'   límites son inclusivos.
 #'   
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -2223,21 +2278,21 @@
 #'   lógico.
 #'   
 #' @examples
-#' # The `small_table` dataset in the
-#' # package has a column of numeric
-#' # values in `c` (there are a few NAs
-#' # in that column); the following
-#' # examples will validate the values
-#' # in that numeric column
+#' # El conjunto de datos `small_table` en
+#' # el paquete tiene una columna de valores
+#' # numéricos en `c` (hay algunas `NA` en
+#' # esa columna); los siguientes ejemplos
+#' # validarán los valores en esa
+#' # columna numérica
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
-#' # Validate that values in column `c`
-#' # are all between `1` and `9`; because
-#' # there are NA values, we'll choose to
-#' # let those pass validation by setting
-#' # `na_pass = TRUE`
+#' # Valide que los valores en la columna
+#' # `c` estén todos entre `1` y `9`;
+#' # debido a que hay valores `NA`,
+#' # elegiremos dejar que pasen la
+#' # validación configurando `na_pass = TRUE`
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_vals_between(
@@ -2245,65 +2300,69 @@
 #'   ) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 13 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 13
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' small_table %>%
 #'   col_vals_between(
 #'     vars(c), 1, 9, na_pass = TRUE
 #'   ) %>%
 #'   dplyr::pull(c)
 #'
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_between(
 #'   small_table, vars(c), 1, 9,
 #'   na_pass = TRUE
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' small_table %>%
 #'   test_col_vals_between(
 #'     vars(c), 1, 9,
 #'     na_pass = TRUE
 #'   )
 #'
-#' # An additional note on the bounds for
-#' # this function: they are inclusive by
-#' # default (i.e., values of exactly 1
-#' # and 9 will pass); we can modify the
-#' # inclusiveness of the upper and lower
-#' # bounds with the `inclusive` option,
-#' # which is a length-2 logical vector
+#' # Una nota adicional sobre los límites
+#' # de esta función: son inclusivos por
+#' # defecto (es decir, se aprobarán valores
+#' # de exactamente `1` y `9`); podemos
+#' # modificar la inclusividad de los límites
+#' # superior e inferior con la opción
+#' # `inclusive`, que es un vector lógico
+#' # de longitud 2
 #' 
-#' # Testing with the upper bound being
-#' # non-inclusive, we get `FALSE` since
-#' # two values are `9` and they now fall
-#' # outside of the upper (or right) bound
+#' # Al probar con el límite superior no
+#' # inclusivo, obtenemos `FALSO` ya que dos
+#' # valores son `9` y ahora quedan fuera
+#' # del límite superior (o derecho)
 #' small_table %>%
 #'   test_col_vals_between(
 #'     vars(c), 1, 9,
@@ -2315,7 +2374,7 @@
 #' @section Function ID:
 #' 2-7
 #' 
-#' @seealso The analogue to this function: [col_vals_not_between()].
+#' @seealso El análogo a esta función: [col_vals_not_between()].
 #' 
 #' @name col_vals_between
 
@@ -2323,20 +2382,21 @@
 #' ¿Los datos de las columnas están disminuyendo por filas?
 #'
 #' @description
-#' The `col_vals_decreasing()` validation function, the
-#' `expect_col_vals_decreasing()` expectation function, and the
-#' `test_col_vals_decreasing()` test function all check whether column values in
-#' a table are decreasing when moving down a table. There are options for
-#' allowing `NA` values in the target column, allowing stationary phases (where
-#' consecutive values don't change), and even on for allowing increasing
-#' movements up to a certain threshold. The validation function can be used
-#' directly on a data table or with an *agent* object (technically, a
-#' `ptblank_agent` object) whereas the expectation and test functions can only
-#' be used with a data table. The types of data tables that can be used include
-#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
-#' (`tbl_spark`). Each validation step or expectation will operate over the
-#' number of test units that is equal to the number of rows in the table (after
-#' any `preconditions` have been applied).
+#' La función de validación `col_vals_decreasing()`, la función de expectativa
+#' `wait_col_vals_decreasing()` y la función de prueba
+#' `test_col_vals_decreasing()` comprueban si los valores de las columnas en una
+#' tabla están disminuyendo cuando se mueve hacia abajo en una tabla. Hay
+#' opciones para permitir valores `NA` en la columna de destino, permitir fases
+#' estacionarias (donde los valores consecutivos no cambian), e incluso para
+#' permitir movimientos crecientes hasta un cierto umbral. La función de
+#' validación se puede usar directamente en una tabla de datos o con un objeto
+#' *agent* (técnicamente, un objeto `ptblank_agent`) mientras que las funciones
+#' de expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos
+#' de tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre el número de unidades de
+#' prueba que es igual al número de filas en la tabla (después de que se hayan
+#' aplicado las `preconditions`).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -2347,74 +2407,82 @@
 #' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, y `everything()`.
 #'
-#' @section Missing Values:
-#' This validation function supports special handling of `NA` values. The
-#' `na_pass` argument will determine whether an `NA` value appearing in a test
-#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
-#' FALSE` means that any `NA`s encountered will accumulate failing test units.
+#' @section Valores faltantes:
+#' Esta función de validación admite el manejo especial de valores `NA`. El
+#' argumento `na_pass` determinará si un valor de `NA` que aparece en una unidad
+#' de prueba debe pasar o no. El valor predeterminado de `na_pass = FALSE`
+#' significa que cualquier `NA` encontrado acumulará unidades de prueba
+#' fallidas.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -2445,7 +2513,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_decreasing()` step.",
+#'     label = "El paso `col_vals_decreasing()`.",
 #'     active = FALSE
 #'   ) %>% yaml_agent_string()
 #' 
@@ -2461,7 +2529,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_decreasing()` step.
+#'     label: El paso `col_vals_decreasing()`.
 #'     active: false
 #' ```
 #' 
@@ -2474,17 +2542,18 @@
 #' [yaml_agent_string()].
 #' 
 #' @inheritParams col_vals_gt
-#' @param allow_stationary An option to allow pauses in decreasing values. For
-#'   example if the values for the test units are `[85, 82, 82, 80, 77]` then
-#'   the third unit (`82`, appearing a second time) would be marked with *fail*
-#'   when `allow_stationary` is `FALSE` (the default). Using `allow_stationary =
-#'   TRUE` will result in all the test units in `[85, 82, 82, 80, 77]` to be
-#'   marked with *pass*.
-#' @param increasing_tol An optional threshold value that allows for movement of
-#'   numerical values in the positive direction. By default this is `NULL` but
-#'   using a numerical value with set the absolute threshold of positive travel
-#'   allowed across numerical test units. Note that setting a value here also
-#'   has the effect of setting `allow_stationary` to `TRUE`.
+#' @param allow_stationary Una opción para permitir pausas en valores
+#'   decrecientes. Por ejemplo, si los valores de las unidades de prueba son
+#'   `[85, 82, 82, 80, 77]`, la tercera unidad (`82`, que aparece por segunda
+#'   vez) fallará cuando `allow_stationary` sea `FALSE` (el valor predeterminado
+#'   ). El uso de `allow_stationary = TRUE` dará como resultado que todas las
+#'   unidades de prueba en `[85, 82, 82, 80, 77]` se marquen con aprobado.
+#' @param increasing_tol Un valor de umbral opcional que permite el movimiento
+#'   de valores numéricos en la dirección positiva. De forma predeterminada, es
+#'   `NULL`, pero se utiliza un valor numérico para establecer el umbral
+#'   absoluto de recorrido positivo permitido en las unidades de prueba
+#'   numéricas. Tenga en cuenta que establecer un valor aquí también tiene el
+#'   efecto de establecer `allow_stationary` en `TRUE`.
 #' 
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -2498,7 +2567,7 @@
 #' @section Function ID:
 #' 2-14
 #' 
-#' @seealso The analogous function that moves in the opposite direction:
+#' @seealso La función análoga que se mueve en la dirección opuesta:
 #' [col_vals_increasing()].
 #' 
 #' @name col_vals_decreasing
@@ -2508,17 +2577,19 @@
 #' columna?
 #' 
 #' @description
-#' The `col_vals_equal()` validation function, the `expect_col_vals_equal()`
-#' expectation function, and the `test_col_vals_equal()` test function all check
-#' whether column values in a table are equal to a specified `value`. The
-#' `value` can be specified as a single, literal value or as a column name given
-#' in `vars()`. The validation function can be used directly on a data table or
-#' with an *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation and test functions can only be used with a data table. The types
-#' of data tables that can be used include data frames, tibbles, database tables
-#' (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). Each validation step or
-#' expectation will operate over the number of test units that is equal to the
-#' number of rows in the table (after any `preconditions` have been applied).
+#' La función de validación `col_vals_equal()`, la función de expectativa
+#' `expect_col_vals_equal()` y la función de prueba `test_col_vals_equal()`
+#' comprueban si los valores de las columnas en una tabla son iguales a un
+#' `value` especificado. El `value` se puede especificar como un valor literal
+#' único o como un nombre de columna dado en `vars()`. La función de validación
+#' se puede usar directamente en una tabla de datos o con un objeto *agent*
+#' (técnicamente, un objeto `ptblank_agent`) mientras que las funciones de
+#' expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos de
+#' tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre el número de unidades de
+#' prueba que es igual al número de filas en la tabla (después de que se hayan
+#' aplicado las `preconditions`).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -2529,74 +2600,82 @@
 #' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, y `everything()`.
 #'
-#' @section Missing Values:
-#' This validation function supports special handling of `NA` values. The
-#' `na_pass` argument will determine whether an `NA` value appearing in a test
-#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
-#' FALSE` means that any `NA`s encountered will accumulate failing test units.
+#' @section Valores faltantes:
+#' Esta función de validación admite el manejo especial de valores `NA`. El
+#' argumento `na_pass` determinará si un valor de `NA` que aparece en una unidad
+#' de prueba debe pasar o no. El valor predeterminado de `na_pass = FALSE`
+#' significa que cualquier `NA` encontrado acumulará unidades de prueba
+#' fallidas.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -2626,7 +2705,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_equal()` step.",
+#'     label = "El paso `col_vals_equal()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -2641,7 +2720,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_equal()` step.
+#'     label: El paso `col_vals_equal()`.
 #'     active: false
 #' ```
 #' 
@@ -2654,9 +2733,9 @@
 #' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
-#' @param value A value used for this test of equality. This can be a single
-#'   value or a compatible column given in `vars()`. Any column values equal to
-#'   what is specified here will pass validation.
+#' @param value Un valor utilizado para esta prueba de igualdad. Puede ser un
+#'   valor único o una columna compatible dada en `vars()`. Cualquier valor de
+#'   columna igual a lo que se especifica aquí pasará la validación.
 #' 
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -2667,10 +2746,11 @@
 #'   lógico.
 #' 
 #' @examples
-#' # For all of the examples here, we'll
-#' # use a simple table with three numeric
-#' # columns (`a`, `b`, and `c`) and three
-#' # character columns (`d`, `e`, and `f`)
+#' # Para todos los ejemplos aquí,
+#' # usaremos una tabla simple con tres
+#' # columnas numéricas (`a`,` b` y `c`)
+#' # y tres columnas de caracteres
+#' # (`d`, `e` y `f`)
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 5, 5, 5, 5, 5),
@@ -2683,52 +2763,55 @@
 #'   
 #' tbl
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()` 
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
-#' # Validate that values in column `a`
-#' # are all equal to the value of `5`
+#' # Valide que los valores en la columna
+#' # `a` sean todos iguales al valor de `5`
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_vals_equal(vars(a), 5) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 6 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 6
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>% 
 #'   col_vals_equal(vars(a), 5) %>%
 #'   dplyr::pull(a)
 #'   
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_equal(tbl, vars(a), 5)
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' test_col_vals_equal(tbl, vars(a), 5)
 #' 
 #' @family validation functions
@@ -2743,79 +2826,88 @@
 #' ¿Coinciden los datos de la columna con una expresión de predicado?
 #'
 #' @description
-#' The `col_vals_expr()` validation function, the `expect_col_vals_expr()`
-#' expectation function, and the `test_col_vals_expr()` test function all check
-#' whether column values in a table agree with a user-defined predicate
-#' expression. The validation function can be used directly on a data table or
-#' with an *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation and test functions can only be used with a data table. The types
-#' of data tables that can be used include data frames, tibbles, database tables
-#' (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). Each validation step or
-#' expectation will operate over the number of test units that is equal to the
-#' number of rows in the table (after any `preconditions` have been applied).
+#' La función de validación `col_vals_expr()`, la función de expectativa
+#' `expect_col_vals_expr()` y la función de prueba `test_col_vals_expr()`
+#' comprueban si los valores de las columnas en una tabla concuerdan con una
+#' expresión de predicado definida por el usuario. La función de validación se
+#' puede usar directamente en una tabla de datos o con un objeto *agent*
+#' (técnicamente, un objeto `ptblank_agent`) mientras que las funciones de
+#' expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos de
+#' tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre el número de unidades de
+#' prueba que es igual al número de filas en la tabla (después de que se hayan
+#' aplicado las `preconditions`).
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -2843,7 +2935,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_expr()` step.",
+#'     label = "El paso `col_vals_expr()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -2856,21 +2948,22 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_expr()` step.
+#'     label: El paso `col_vals_expr()`.
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `expr` argument
-#' requires a value. Arguments with default values won't be written to YAML when
-#' using [yaml_write()] (though it is acceptable to include them with their
-#' default when generating the YAML by other means). It is also possible to
-#' preview the transformation of an agent to YAML without any writing to disk by
-#' using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos ya que solo el argumento
+#' `expr` requiere un valor. Los argumentos con valores predeterminados no se
+#' escribirán en YAML cuando se use [yaml_write()] (aunque es aceptable
+#' incluirlos con sus valores predeterminados al generar el YAML por otros
+#' medios). También es posible obtener una vista previa de la transformación de
+#' un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'   
 #' @inheritParams col_vals_gt
-#' @param expr An expression to use for this test. This can either be in the
-#'   form of a call made with the `expr()` function or as a one-sided **R**
-#'   formula (using a leading `~`).
+#' @param expr Una expresión para usar en esta prueba. Esto puede ser en forma
+#'   de una llamada realizada con la función `expr()` o como una fórmula **R**
+#'   unilateral (usando un `~` inicial).
 #'   
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -2881,10 +2974,11 @@
 #'   lógico.
 #' 
 #' @examples
-#' # For all of the examples here, we'll
-#' # use a simple table with three numeric
-#' # columns (`a`, `b`, and `c`) and three
-#' # character columns (`d`, `e`, and `f`)
+#' # Para todos los ejemplos aquí,
+#' # usaremos una tabla simple con tres
+#' # columnas numéricas (`a`, `b` y `c`)
+#' # y tres columnas de caracteres
+#' # (`d`, `e` y `f`)
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(1, 2, 1, 7, 8, 6),
@@ -2894,73 +2988,76 @@
 #'   
 #' tbl
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()` 
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
-#' # Validate that values in column `a`
-#' # are integer-like by using the R modulo
-#' # operator and expecting `0`
+#' # Valide que los valores en la columna
+#' # `a` sean de tipo entero usando el
+#' # operador de módulo R y esperando `0`
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_vals_expr(expr(a %% 1 == 0)) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 6 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 6
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>% 
 #'   col_vals_expr(expr(a %% 1 == 0)) %>%
 #'   dplyr::pull(a)
 #'   
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_expr(tbl, ~ a %% 1 == 0)
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' test_col_vals_expr(tbl, ~ a %% 1 == 0)
 #' 
-#' # Variations
+#' # Variaciones
 #' 
-#' # We can do more complex things by
-#' # taking advantage of the `case_when()`
-#' # and `between()` functions (available
-#' # for use in the pointblank package) 
+#' # Podemos hacer cosas más complejas
+#' # aprovechando las funciones `case_when()`
+#' # y `between()` (disponibles para su uso
+#' # en el paquete pointblank)
 #' tbl %>%
 #'   test_col_vals_expr(~ case_when(
 #'     b == 0 ~ a %>% between(0, 5) & c < 1,
 #'     b == 1 ~ a > 5 & c >= 1
 #'   ))
 #' 
-#' # If you only want to test a subset of
-#' # rows, then the `case_when()` statement
-#' # doesn't need to be exhaustive; any
-#' # rows that don't fall into the cases
-#' # will be pruned (giving us less test
-#' # units overall) 
+#' # Si solo desea probar un subconjunto de
+#' # filas, entonces la declaración
+#' # `case_when()` no necesita ser exhaustiva;
+#' # todas las filas que no caigan en los
+#' # casos se recortarán (lo que nos dará
+#' # menos unidades de prueba en general)
 #' tbl %>%
 #'   test_col_vals_expr(~ case_when(
 #'     b == 1 ~ a > 5 & c >= 1
@@ -2970,9 +3067,9 @@
 #' @section Function ID:
 #' 2-19
 #' 
-#' @seealso These reexported functions (from **rlang** and **dplyr**) work
-#'   nicely within `col_vals_expr()` and its variants: [rlang::expr()],
-#'   [dplyr::between()], and [dplyr::case_when()].
+#' @seealso Estas funciones reexportadas (de **rlang** y **dplyr**) funcionan
+#'   bien dentro de `col_vals_expr()` y sus variantes: [rlang::expr()],
+#'   [dplyr::between()] y [dplyr::case_when()].
 #' 
 #' @name col_vals_expr
 
@@ -2981,18 +3078,20 @@
 #' columna?
 #'
 #' @description
-#' The `col_vals_gt()` validation function, the `expect_col_vals_gt()`
-#' expectation function, and the `test_col_vals_gt()` test function all check
-#' whether column values in a table are *greater than* a specified `value` (the
-#' exact comparison used in this function is `col_val > value`). The `value` can
-#' be specified as a single, literal value or as a column name given in
-#' `vars()`. The validation function can be used directly on a data table or
-#' with an *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation and test functions can only be used with a data table. The types
-#' of data tables that can be used include data frames, tibbles, database tables
-#' (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). Each validation step or
-#' expectation will operate over the number of test units that is equal to the
-#' number of rows in the table (after any `preconditions` have been applied).
+#' La función de validación `col_vals_gt()`, la función de expectativa
+#' `expect_col_vals_gt()` y la función de prueba `test_col_vals_gt()` comprueban
+#' si los valores de las columnas en una tabla son *mayores que* un `value`
+#' especificado (la comparación exacta utilizada en esta función es `col_val >
+#' value`). El `value` se puede especificar como un valor literal único o como
+#' un nombre de columna dado en `vars()`. La función de validación se puede usar
+#' directamente en una tabla de datos o con un objeto *agent* (técnicamente, un
+#' objeto `ptblank_agent`) mientras que las funciones de expectativa y prueba
+#' solo se pueden usar con una tabla de datos. Los tipos de tablas de datos que
+#' se pueden utilizar incluyen marcos de datos, tibbles, tablas de base de datos
+#' (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada paso de validación o
+#' expectativa operará sobre el número de unidades de prueba que es igual al
+#' número de filas en la tabla (después de que se hayan aplicado las
+#' `preconditions`).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -3003,74 +3102,82 @@
 #' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, y `everything()`.
 #'
-#' @section Missing Values:
-#' This validation function supports special handling of `NA` values. The
-#' `na_pass` argument will determine whether an `NA` value appearing in a test
-#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
-#' FALSE` means that any `NA`s encountered will accumulate failing test units.
+#' @section Valores faltantes:
+#' Esta función de validación admite el manejo especial de valores `NA`. El
+#' argumento `na_pass` determinará si un valor de `NA` que aparece en una unidad
+#' de prueba debe pasar o no. El valor predeterminado de `na_pass = FALSE`
+#' significa que cualquier `NA` encontrado acumulará unidades de prueba
+#' fallidas.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -3100,7 +3207,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_gt()` step.",
+#'     label = "El paso `col_vals_gt()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -3115,7 +3222,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_gt()` step.
+#'     label: El paso `col_vals_gt()`.
 #'     active: false
 #' ```
 #' 
@@ -3228,8 +3335,8 @@
 #'   
 #' tbl
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()` 
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that values in column `a`
 #' # are all greater than the value of `4`
@@ -3238,45 +3345,48 @@
 #'   col_vals_gt(vars(a), value = 4) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 6 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 6
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>% 
 #'   col_vals_gt(vars(a), value = 4) %>%
 #'   dplyr::pull(a)
 #'   
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_gt(
 #'   tbl, vars(a),
 #'   value = 4
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' test_col_vals_gt(
 #'   tbl, vars(a), 
 #'   value = 4
@@ -3295,19 +3405,20 @@
 #' otra columna?
 #'
 #' @description
-#' The `col_vals_gte()` validation function, the `expect_col_vals_gte()`
-#' expectation function, and the `test_col_vals_gte()` test function all check
-#' whether column values in a table are *greater than or equal to* a specified
-#' `value` (the exact comparison used in this function is `col_val >= value`).
-#' The `value` can be specified as a single, literal value or as a column name
-#' given in `vars()`. The validation step function can be used directly on a
-#' data table or with an *agent* object (technically, a `ptblank_agent` object)
-#' whereas the expectation and test functions can only be used with a data
-#' table. The types of data tables that can be used include data frames,
-#' tibbles, database tables (`tbl_dbi`), and Spark DataFrames (`tbl_spark`).
-#' Each validation step or expectation will operate over the number of test
-#' units that is equal to the number of rows in the table (after any
-#' `preconditions` have been applied).
+#' La función de validación `col_vals_gte()`, la función de expectativa
+#' `expect_col_vals_gte()` y la función de prueba `test_col_vals_gte()`
+#' comprueban si los valores de las columnas en una tabla son *mayores o iguales
+#' a* un `value` especificado (el La comparación exacta utilizada en esta
+#' función es `col_val> = value`). El `value` se puede especificar como un valor
+#' literal único o como un nombre de columna dado en `vars()`. La función de
+#' validación se puede usar directamente en una tabla de datos o con un objeto
+#' *agent* (técnicamente, un objeto `ptblank_agent`) mientras que las funciones
+#' de expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos
+#' de tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre el número de unidades de
+#' prueba que es igual al número de filas en la tabla (después de que se hayan
+#' aplicado las `preconditions`).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -3318,73 +3429,82 @@
 #' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, y `everything()`.
 #'
-#' @section Missing Values:
-#' This validation function supports special handling of `NA` values. The
-#' `na_pass` argument will determine whether an `NA` value appearing in a test
-#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
-#' FALSE` means that any `NA`s encountered will accumulate failing test units.
+#' @section Valores faltantes:
+#' Esta función de validación admite el manejo especial de valores `NA`. El
+#' argumento `na_pass` determinará si un valor de `NA` que aparece en una unidad
+#' de prueba debe pasar o no. El valor predeterminado de `na_pass = FALSE`
+#' significa que cualquier `NA` encontrado acumulará unidades de prueba
+#' fallidas.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list object
-#' that is best produced by the [action_levels()] function. Read that function's
-#' documentation for the lowdown on how to create reactions to above-threshold
-#' failure levels in validation. The basic gist is that you'll want at least a
-#' single threshold level (specified as either the fraction of test units
-#' failed, or, an absolute value), often using the `warn_at` argument. This is
-#' especially true when `x` is a table object because, otherwise, nothing
-#' happens. For the `col_vals_*()`-type functions, using `action_levels(warn_at
-#' = 0.25)` or `action_levels(stop_at = 0.25)` are good choices depending on the
-#' situation (the first produces a warning when a quarter of the total test
-#' units fails, the other `stop()`s at the same threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -3414,7 +3534,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_gte()` step.",
+#'     label = "El paso `col_vals_gte()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -3429,7 +3549,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_gte()` step.
+#'     label: El paso `col_vals_gte()`.
 #'     active: false
 #' ```
 #' 
@@ -3470,8 +3590,8 @@
 #'   
 #' tbl
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()` 
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that values in column `a`
 #' # are all greater than or equal to the
@@ -3481,42 +3601,45 @@
 #'   col_vals_gte(vars(a), 5) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 6 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 6
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>% 
 #'   col_vals_gte(vars(a), 5) %>%
 #'   dplyr::pull(a)
 #'   
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_gte(tbl, vars(a), 5)
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' test_col_vals_gte(tbl, vars(a), 5)
 #' 
 #' @family validation functions
@@ -3531,16 +3654,18 @@
 #' ¿Los datos de la columna forman parte de un conjunto de valores específico?
 #'
 #' @description
-#' The `col_vals_in_set()` validation function, the `expect_col_vals_in_set()`
-#' expectation function, and the `test_col_vals_in_set()` test function all
-#' check whether column values in a table are part of a specified `set` of
-#' values. The validation step function can be used directly on a data table or
-#' with an *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation and test functions can only be used with a data table. The types
-#' of data tables that can be used include data frames, tibbles, database tables
-#' (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). Each validation step or
-#' expectation will operate over the number of test units that is equal to the
-#' number of rows in the table (after any `preconditions` have been applied).
+#' La función de validación `col_vals_in_set()`, la función de expectativa
+#' `expect_col_vals_in_set()` y la función de prueba `test_col_vals_in_set()`
+#' comprueban si los valores de las columnas en una tabla son parte de un `set`
+#' de valores especificado. La función de validación se puede usar directamente
+#' en una tabla de datos o con un objeto *agent* (técnicamente, un objeto
+#' `ptblank_agent`) mientras que las funciones de expectativa y prueba solo se
+#' pueden usar con una tabla de datos. Los tipos de tablas de datos que se
+#' pueden utilizar incluyen marcos de datos, tibbles, tablas de base de datos
+#' (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada paso de validación o
+#' expectativa operará sobre el número de unidades de prueba que es igual al
+#' número de filas en la tabla (después de que se hayan aplicado las
+#' `preconditions`).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -3552,67 +3677,74 @@
 #' `matches()`, y `everything()`.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -3641,7 +3773,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_in_set()` step.",
+#'     label = "El paso `col_vals_in_set()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -3659,7 +3791,7 @@
 #'    actions:
 #'      warn_fraction: 0.1
 #'      stop_fraction: 0.2
-#'    label: The `col_vals_in_set()` step.
+#'    label: El paso `col_vals_in_set()`.
 #'    active: false
 #' ```
 #' 
@@ -3687,8 +3819,8 @@
 #' # package will be used to validate that
 #' # column values are part of a given set
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that values in column `f`
 #' # are all part of the set of values
@@ -3700,25 +3832,28 @@
 #'   ) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 13 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 13
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' small_table %>%
 #'   col_vals_in_set(
 #'     vars(f), c("low", "mid", "high")
@@ -3726,22 +3861,22 @@
 #'   dplyr::pull(f) %>%
 #'   unique()
 #'
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_in_set(
 #'   small_table,
 #'   vars(f), c("low", "mid", "high")
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' small_table %>%
 #'   test_col_vals_in_set(
 #'     vars(f), c("low", "mid", "high")
@@ -3759,20 +3894,21 @@
 #' ¿Los datos de la columna aumentan por fila?
 #'
 #' @description
-#' The `col_vals_increasing()` validation function, the
-#' `expect_col_vals_increasing()` expectation function, and the
-#' `test_col_vals_increasing()` test function all check whether column values in
-#' a table are increasing when moving down a table. There are options for
-#' allowing `NA` values in the target column, allowing stationary phases (where
-#' consecutive values don't change), and even on for allowing decreasing
-#' movements up to a certain threshold. The validation function can be used
-#' directly on a data table or with an *agent* object (technically, a
-#' `ptblank_agent` object) whereas the expectation and test functions can only
-#' be used with a data table. The types of data tables that can be used include
-#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
-#' (`tbl_spark`). Each validation step or expectation will operate over the
-#' number of test units that is equal to the number of rows in the table (after
-#' any `preconditions` have been applied).
+#' La función de validación `col_vals_increasing()`, la función de expectativa
+#' `expect_col_vals_increasing()` y la función de prueba
+#' `test_col_vals_increasing()` comprueban si los valores de las columnas en una
+#' tabla están aumentando cuando se mueve hacia abajo en una tabla. Hay opciones
+#' para permitir valores `NA` en la columna de destino, permitir fases
+#' estacionarias (donde los valores consecutivos no cambian), e incluso para
+#' permitir movimientos decrecientes hasta un cierto umbral. La función de
+#' validación se puede usar directamente en una tabla de datos o con un objeto
+#' *agent* (técnicamente, un objeto `ptblank_agent`) mientras que las funciones
+#' de expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos
+#' de tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre el número de unidades de
+#' prueba que es igual al número de filas en la tabla (después de que se hayan
+#' aplicado las `preconditions`).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -3783,74 +3919,82 @@
 #' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, y `everything()`.
 #'
-#' @section Missing Values:
-#' This validation function supports special handling of `NA` values. The
-#' `na_pass` argument will determine whether an `NA` value appearing in a test
-#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
-#' FALSE` means that any `NA`s encountered will accumulate failing test units.
+#' @section Valores faltantes:
+#' Esta función de validación admite el manejo especial de valores `NA`. El
+#' argumento `na_pass` determinará si un valor de `NA` que aparece en una unidad
+#' de prueba debe pasar o no. El valor predeterminado de `na_pass = FALSE`
+#' significa que cualquier `NA` encontrado acumulará unidades de prueba
+#' fallidas.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -3881,7 +4025,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_increasing()` step.",
+#'     label = "El paso `col_vals_increasing()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -3897,7 +4041,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_increasing()` step.
+#'     label: El paso `col_vals_increasing()`.
 #'     active: false
 #' ```
 #' 
@@ -3944,18 +4088,20 @@
 #' columna?
 #'
 #' @description
-#' The `col_vals_lt()` validation function, the `expect_col_vals_lt()`
-#' expectation function, and the `test_col_vals_lt()` test function all check
-#' whether column values in a table are *less than* a specified `value` (the
-#' exact comparison used in this function is `col_val < value`). The `value` can
-#' be specified as a single, literal value or as a column name given in
-#' `vars()`. The validation function can be used directly on a data table or
-#' with an *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation and test functions can only be used with a data table. The types
-#' of data tables that can be used include data frames, tibbles, database tables
-#' (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). Each validation step or
-#' expectation will operate over the number of test units that is equal to the
-#' number of rows in the table (after any `preconditions` have been applied).
+#' La función de validación `col_vals_lt()`, la función de expectativa
+#' `expect_col_vals_lt()` y la función de prueba `test_col_vals_lt()` comprueban
+#' si los valores de las columnas en una tabla son *menores que* un `value`
+#' especificado (la comparación exacta utilizada en esta función es
+#' `col_val < value`). El `value` se puede especificar como un valor literal
+#' único o como un nombre de columna dado en `vars()`. La función de validación
+#' se puede usar directamente en una tabla de datos o con un objeto *agent*
+#' (técnicamente, un objeto `ptblank_agent`) mientras que las funciones de
+#' expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos de
+#' tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre el número de unidades de
+#' prueba que es igual al número de filas en la tabla (después de que se hayan
+#' aplicado las `preconditions`).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -3966,74 +4112,82 @@
 #' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, y `everything()`.
 #'
-#' @section Missing Values:
-#' This validation function supports special handling of `NA` values. The
-#' `na_pass` argument will determine whether an `NA` value appearing in a test
-#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
-#' FALSE` means that any `NA`s encountered will accumulate failing test units.
+#' @section Valores faltantes:
+#' Esta función de validación admite el manejo especial de valores `NA`. El
+#' argumento `na_pass` determinará si un valor de `NA` que aparece en una unidad
+#' de prueba debe pasar o no. El valor predeterminado de `na_pass = FALSE`
+#' significa que cualquier `NA` encontrado acumulará unidades de prueba
+#' fallidas.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -4063,7 +4217,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_lt()` step.",
+#'     label = "El paso `col_vals_lt()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -4078,7 +4232,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_lt()` step.
+#'     label: El paso `col_vals_lt()`.
 #'     active: false
 #' ```
 #' 
@@ -4119,8 +4273,8 @@
 #'   
 #' tbl
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()` 
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that values in column `c`
 #' # are all less than the value of `5`
@@ -4129,42 +4283,45 @@
 #'   col_vals_lt(vars(c), 5) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 6 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 6
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>% 
 #'   col_vals_lt(vars(c), 5) %>%
 #'   dplyr::pull(c)
 #'   
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_lt(tbl, vars(c), 5)
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' test_col_vals_lt(tbl, vars(c), 5)
 #' 
 #' @family validation functions
@@ -4180,19 +4337,20 @@
 #' otra columna?
 #'
 #' @description
-#' The `col_vals_lte()` validation function, the `expect_col_vals_lte()`
-#' expectation function, and the `test_col_vals_lte()` test function all check
-#' whether column values in a table are *less than or equal to* a specified
-#' `value` (the exact comparison used in this function is `col_val <= value`).
-#' The `value` can be specified as a single, literal value or as a column name
-#' given in `vars()`. The validation step function can be used directly on a
-#' data table or with an *agent* object (technically, a `ptblank_agent` object)
-#' whereas the expectation and test functions can only be used with a data
-#' table. The types of data tables that can be used include data frames,
-#' tibbles, database tables (`tbl_dbi`), and Spark DataFrames (`tbl_spark`).
-#' Each validation step or expectation will operate over the number of test
-#' units that is equal to the number of rows in the table (after any
-#' `preconditions` have been applied).
+#' La función de validación `col_vals_lte()`, la función de expectativa
+#' `expect_col_vals_lte()` y la función de prueba `test_col_vals_lte()`
+#' comprueban si los valores de las columnas en una tabla son *menores o iguales
+#' a* un `value` especificado (la comparación exacta utilizada en esta función
+#' es `col_val < value`). El `value` se puede especificar como un valor literal
+#' único o como un nombre de columna dado en `vars()`. La función de validación
+#' se puede usar directamente en una tabla de datos o con un objeto *agent*
+#' (técnicamente, un objeto `ptblank_agent`) mientras que las funciones de
+#' expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos de
+#' tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre el número de unidades de
+#' prueba que es igual al número de filas en la tabla (después de que se hayan
+#' aplicado las `preconditions`).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -4203,74 +4361,82 @@
 #' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, y `everything()`.
 #'
-#' @section Missing Values:
-#' This validation function supports special handling of `NA` values. The
-#' `na_pass` argument will determine whether an `NA` value appearing in a test
-#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
-#' FALSE` means that any `NA`s encountered will accumulate failing test units.
+#' @section Valores faltantes:
+#' Esta función de validación admite el manejo especial de valores `NA`. El
+#' argumento `na_pass` determinará si un valor de `NA` que aparece en una unidad
+#' de prueba debe pasar o no. El valor predeterminado de `na_pass = FALSE`
+#' significa que cualquier `NA` encontrado acumulará unidades de prueba
+#' fallidas.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -4300,7 +4466,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_lte()` step.",
+#'     label = "El paso `col_vals_lte()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -4315,7 +4481,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_lte()` step.
+#'     label: El paso `col_vals_lte()`.
 #'     active: false
 #' ```
 #' 
@@ -4356,8 +4522,8 @@
 #'   
 #' tbl
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()` 
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that values in column `c`
 #' # are all less than or equal to the
@@ -4367,42 +4533,45 @@
 #'   col_vals_lte(vars(c), 4) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 6 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 6
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>% 
 #'   col_vals_lte(vars(c), 4) %>%
 #'   dplyr::pull(c)
 #'   
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_lte(tbl, vars(c), 4)
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' test_col_vals_lte(tbl, vars(c), 4)
 #' 
 #' @family validation functions
@@ -4418,21 +4587,22 @@
 #' valores?
 #'
 #' @description
-#' The `col_vals_make_set()` validation function, the
-#' `expect_col_vals_make_set()` expectation function, and the
-#' `test_col_vals_make_set()` test function all check whether `set` values are
-#' all seen at least once in a table column. A necessary criterion here is that
-#' no *additional* values (outside those definied in the `set`) should be seen
-#' (this requirement is relaxed in the [col_vals_make_subset()] validation
-#' function and in its expectation and test variants). The validation step
-#' function can be used directly on a data table or with an *agent* object
-#' (technically, a `ptblank_agent` object) whereas the expectation and test
-#' functions can only be used with a data table. The types of data tables that
-#' can be used include data frames, tibbles, database tables (`tbl_dbi`), and
-#' Spark DataFrames (`tbl_spark`). Each validation step or expectation will
-#' operate over the number of test units that is equal to the number of elements
-#' in the `set` plus a test unit reserved for detecting column values outside of
-#' the `set` (any outside value seen will make this additional test unit fail).
+#' La función de validación `col_vals_make_set()`, la función de expectativa
+#' `expect_col_vals_make_set()` y la función de prueba
+#' `test_col_vals_make_set()` comprueban si los valores de `set` se ven al menos
+#' una vez en una columna de la tabla. Un criterio necesario aquí es que no se
+#' deben ver *valores adicionales* (fuera de los definidos en el `set`) (este
+#' requisito se relaja en la función de validación [col_vals_make_subset()] y en
+#' sus variantes de expectativa y prueba). La función de validación se puede
+#' usar directamente en una tabla de datos o con un objeto *agent*
+#' (técnicamente, un objeto `ptblank_agent`) mientras que las funciones de
+#' expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos de
+#' tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Each
+#' validation step or expectation will operate over the number of test units
+#' that is equal to the number of elements in the `set` plus a test unit
+#' reserved for detecting column values outside of the `set` (any outside value
+#' seen will make this additional test unit fail).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -4444,67 +4614,74 @@
 #' `matches()`, y `everything()`.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -4533,7 +4710,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_make_set()` step.",
+#'     label = "El paso `col_vals_make_set()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -4551,7 +4728,7 @@
 #'    actions:
 #'      warn_fraction: 0.1
 #'      stop_fraction: 0.2
-#'    label: The `col_vals_make_set()` step.
+#'    label: El paso `col_vals_make_set()`.
 #'    active: false
 #' ```
 #' 
@@ -4579,8 +4756,8 @@
 #' # package will be used to validate that
 #' # column values are part of a given set
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that values in column `f`
 #' # comprise the values of `low`, `mid`,
@@ -4592,25 +4769,28 @@
 #'   ) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 4 test units)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 4
+#' # unidades de prueba)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' small_table %>%
 #'   col_vals_make_set(
 #'     vars(f), c("low", "mid", "high")
@@ -4618,22 +4798,22 @@
 #'   dplyr::pull(f) %>%
 #'   unique()
 #'
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_make_set(
 #'   small_table,
 #'   vars(f), c("low", "mid", "high")
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' small_table %>%
 #'   test_col_vals_make_set(
 #'     vars(f), c("low", "mid", "high")
@@ -4649,16 +4829,17 @@
 #' ¿Es un conjunto de valores un subconjunto de una columna de valores?
 #'
 #' @description
-#' The `col_vals_make_subset()` validation function, the
-#' `expect_col_vals_make_subset()` expectation function, and the
-#' `test_col_vals_make_subset()` test function all check whether all `set`
-#' values are seen at least once in a table column. The validation step function
-#' can be used directly on a data table or with an *agent* object (technically,
-#' a `ptblank_agent` object) whereas the expectation and test functions can only
-#' be used with a data table. The types of data tables that can be used include
-#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
-#' (`tbl_spark`). Each validation step or expectation will operate over the
-#' number of test units that is equal to the number of elements in the `set`.
+#' La función de validación `col_vals_make_subset()`, la función de expectativa
+#' `expect_col_vals_make_subset()` y la función de prueba
+#' `test_col_vals_make_subset()` comprueban si todos los valores de `set` se ven
+#' al menos una vez en una columna de tabla. La función de validación se puede
+#' usar directamente en una tabla de datos o con un objeto *agent*
+#' (técnicamente, un objeto `ptblank_agent`) mientras que las funciones de
+#' expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos de
+#' tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre el número de unidades de
+#' prueba que es igual al número de elementos en el `set`.
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -4670,67 +4851,74 @@
 #' `matches()`, y `everything()`.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -4759,7 +4947,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_make_subset()` step.",
+#'     label = "El paso `col_vals_make_subset()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -4777,7 +4965,7 @@
 #'    actions:
 #'      warn_fraction: 0.1
 #'      stop_fraction: 0.2
-#'    label: The `col_vals_make_subset()` step.
+#'    label: El paso `col_vals_make_subset()`.
 #'    active: false
 #' ```
 #' 
@@ -4805,8 +4993,8 @@
 #' # package will be used to validate that
 #' # column values are part of a given set
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that the distinct set of values
 #' # in column `f` contains at least the
@@ -4822,24 +5010,27 @@
 #'   
 #' # Determine if this validation
 #' # had no failing test units (there
-#' # are 2 test units, one for element
+#' # are 2 test units, one per element
 #' # in the `set`)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' small_table %>%
 #'   col_vals_make_subset(
 #'     vars(f), c("low", "high")
@@ -4847,22 +5038,22 @@
 #'   dplyr::pull(f) %>%
 #'   unique()
 #'
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_make_subset(
 #'   small_table,
 #'   vars(f), c("low", "high")
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' small_table %>%
 #'   test_col_vals_make_subset(
 #'     vars(f), c("low", "high")
@@ -4879,26 +5070,27 @@
 #' los datos de otras columnas?
 #' 
 #' @description
-#' The `col_vals_not_between()` validation function, the
-#' `expect_col_vals_not_between()` expectation function, and the
-#' `test_col_vals_not_between()` test function all check whether column values
-#' in a table *do not* fall within a range. The range specified with three
-#' arguments: `left`, `right`, and `inclusive`. The `left` and `right` values
-#' specify the lower and upper bounds. The bounds can be specified as single,
-#' literal values or as column names given in `vars()`. The `inclusive`
-#' argument, as a vector of two logical values relating to `left` and `right`,
-#' states whether each bound is inclusive or not. The default is `c(TRUE,
-#' TRUE)`, where both endpoints are inclusive (i.e., `[left, right]`). For
-#' partially-unbounded versions of this function, we can use the
-#' [col_vals_lt()], [col_vals_lte()], [col_vals_gt()], or [col_vals_gte()]
-#' validation functions. The validation function can be used directly on a data
-#' table or with an *agent* object (technically, a `ptblank_agent` object)
-#' whereas the expectation and test functions can only be used with a data
-#' table. The types of data tables that can be used include data frames,
-#' tibbles, database tables (`tbl_dbi`), and Spark DataFrames (`tbl_spark`).
-#' Each validation step or expectation will operate over the number of test
-#' units that is equal to the number of rows in the table (after any
-#' `preconditions` have been applied).
+#' La función de validación `col_vals_not_between()`, la función de expectativa
+#' `expect_col_vals_not_between()` y la función de prueba
+#' `test_col_vals_not_between()` comprueban si los valores de las columnas en
+#' una tabla *no* caen dentro de un rango. El rango especificado con tres
+#' argumentos: `left`, `right` e `inclusive`. Los valores `left` y `right`
+#' especifican los límites superior e inferior. Los límites se pueden
+#' especificar como valores literales simples o como nombres de columna dados en
+#' `vars()`. El argumento `inclusive`, como un vector de dos valores lógicos
+#' relacionados con `left` y `right`, establece si cada límite es inclusivo o
+#' no. El valor predeterminado es `c(TRUE, TRUE)`, donde ambos extremos son
+#' inclusivos (es decir, `[izquierda, derecha]`). Para versiones parcialmente
+#' ilimitadas de esta función, podemos usar las funciones de validación
+#' [col_vals_lt()], [col_vals_lte()], [col_vals_gt()] o [col_vals_gte()]. La
+#' función de validación se puede usar directamente en una tabla de datos o con
+#' un objeto *agent* (técnicamente, un objeto `ptblank_agent`) mientras que las
+#' funciones de expectativa y prueba solo se pueden usar con una tabla de datos.
+#' Los tipos de tablas de datos que se pueden utilizar incluyen marcos de datos,
+#' tibbles, tablas de base de datos (`tbl_dbi`) y Spark DataFrames
+#' (`tbl_spark`). Cada paso de validación o expectativa operará sobre el número
+#' de unidades de prueba que es igual al número de filas en la tabla (después de
+#' que se hayan aplicado las `preconditions`).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -4909,74 +5101,82 @@
 #' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, y `everything()`.
 #'
-#' @section Missing Values:
-#' This validation function supports special handling of `NA` values. The
-#' `na_pass` argument will determine whether an `NA` value appearing in a test
-#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
-#' FALSE` means that any `NA`s encountered will accumulate failing test units.
+#' @section Valores faltantes:
+#' Esta función de validación admite el manejo especial de valores `NA`. El
+#' argumento `na_pass` determinará si un valor de `NA` que aparece en una unidad
+#' de prueba debe pasar o no. El valor predeterminado de `na_pass = FALSE`
+#' significa que cualquier `NA` encontrado acumulará unidades de prueba
+#' fallidas.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -5008,7 +5208,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_not_between()` step.",
+#'     label = "El paso `col_vals_not_between()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -5027,7 +5227,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_not_between()` step.
+#'     label: El paso `col_vals_not_between()`.
 #'     active: false
 #' ```
 #' 
@@ -5064,8 +5264,8 @@
 #' # examples will validate the values
 #' # in that numeric column
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that values in column `c`
 #' # are all between `10` and `20`; because
@@ -5079,47 +5279,50 @@
 #'   ) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 13 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 13
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' small_table %>%
 #'   col_vals_not_between(
 #'     vars(c), 10, 20, na_pass = TRUE
 #'   ) %>%
 #'   dplyr::pull(c)
 #'
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_not_between(
 #'   small_table, vars(c), 10, 20,
 #'   na_pass = TRUE
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' small_table %>%
 #'   test_col_vals_not_between(
 #'     vars(c), 10, 20,
@@ -5151,7 +5354,7 @@
 #' @section Function ID:
 #' 2-8
 #' 
-#' @seealso The analogue to this function: [col_vals_between()].
+#' @seealso El análogo a esta función: [col_vals_between()].
 #' 
 #' @name col_vals_not_between
 
@@ -5160,17 +5363,18 @@
 #' columna?
 #' 
 #' @description
-#' The `col_vals_not_equal()` validation function, the
-#' `expect_col_vals_not_equal()` expectation function, and the
-#' `test_col_vals_not_equal()` test function all check whether column values in
-#' a table *are not* equal to a specified `value`. The validation step function
-#' can be used directly on a data table or with an *agent* object (technically,
-#' a `ptblank_agent` object) whereas the expectation and test functions can only
-#' be used with a data table. The types of data tables that can be used include
-#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
-#' (`tbl_spark`). Each validation step or expectation will operate over the
-#' number of test units that is equal to the number of rows in the table (after
-#' any `preconditions` have been applied).
+#' La función de validación `col_vals_not_equal()`, la función de expectativa
+#' `expect_col_vals_not_equal()` y la función de prueba
+#' `test_col_vals_not_equal()` comprueban si los valores de las columnas en una
+#' tabla *no son* iguales a un `value` especificado. La función de validación se
+#' puede usar directamente en una tabla de datos o con un objeto *agent*
+#' (técnicamente, un objeto `ptblank_agent`) mientras que las funciones de
+#' expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos de
+#' tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre el número de unidades de
+#' prueba que es igual al número de filas en la tabla (después de que se hayan
+#' aplicado las `preconditions`).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -5181,74 +5385,82 @@
 #' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, y `everything()`.
 #'
-#' @section Missing Values:
-#' This validation function supports special handling of `NA` values. The
-#' `na_pass` argument will determine whether an `NA` value appearing in a test
-#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
-#' FALSE` means that any `NA`s encountered will accumulate failing test units.
+#' @section Valores faltantes:
+#' Esta función de validación admite el manejo especial de valores `NA`. El
+#' argumento `na_pass` determinará si un valor de `NA` que aparece en una unidad
+#' de prueba debe pasar o no. El valor predeterminado de `na_pass = FALSE`
+#' significa que cualquier `NA` encontrado acumulará unidades de prueba
+#' fallidas.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -5278,7 +5490,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_not_equal()` step.",
+#'     label = "El paso `col_vals_not_equal()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -5293,7 +5505,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_not_equal()` step.
+#'     label: El paso `col_vals_not_equal()`.
 #'     active: false
 #' ```
 #' 
@@ -5334,8 +5546,8 @@
 #'   
 #' tbl
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()` 
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that values in column `a`
 #' # are all *not* equal to the value
@@ -5345,42 +5557,45 @@
 #'   col_vals_not_equal(vars(a), 6) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 6 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 6
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>% 
 #'   col_vals_not_equal(vars(a), 6) %>%
 #'   dplyr::pull(a)
 #'   
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_not_equal(tbl, vars(a), 6)
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' test_col_vals_not_equal(tbl, vars(a), 6)
 #' 
 #' @family validation functions
@@ -5395,17 +5610,18 @@
 #' ¿Los datos no forman parte de un conjunto específico de valores?
 #'
 #' @description
-#' The `col_vals_not_in_set()` validation function, the
-#' `expect_col_vals_not_in_set()` expectation function, and the
-#' `test_col_vals_not_in_set()` test function all check whether column values in
-#' a table *are not part* of a specified `set` of values. The validation
-#' function can be used directly on a data table or with an *agent* object
-#' (technically, a `ptblank_agent` object) whereas the expectation and test
-#' functions can only be used with a data table. The types of data tables that
-#' can be used include data frames, tibbles, database tables (`tbl_dbi`), and
-#' Spark DataFrames (`tbl_spark`). Each validation step or expectation will
-#' operate over the number of test units that is equal to the number of rows in
-#' the table (after any `preconditions` have been applied).
+#' La función de validación `col_vals_not_in_set()`, la función de expectativa
+#' `expect_col_vals_not_in_set()` y la función de prueba
+#' `test_col_vals_not_in_set()` comprueban si los valores de columna en una
+#' tabla *no son parte* de un `conjunto` de valores especificado. La función de
+#' validación se puede usar directamente en una tabla de datos o con un objeto
+#' *agent* (técnicamente, un objeto `ptblank_agent`) mientras que las funciones
+#' de expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos
+#' de tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre el número de unidades de
+#' prueba que es igual al número de filas en la tabla (después de que se hayan
+#' aplicado las `preconditions`).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -5417,67 +5633,74 @@
 #' `matches()`, y `everything()`.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list object
-#' that is best produced by the [action_levels()] function. Read that function's
-#' documentation for the lowdown on how to create reactions to above-threshold
-#' failure levels in validation. The basic gist is that you'll want at least a
-#' single threshold level (specified as either the fraction of test units
-#' failed, or, an absolute value), often using the `warn_at` argument. This is
-#' especially true when `x` is a table object because, otherwise, nothing
-#' happens. For the `col_vals_*()`-type functions, using
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -5506,7 +5729,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_not_in_set()` step.",
+#'     label = "El paso `col_vals_not_in_set()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -5524,7 +5747,7 @@
 #'    actions:
 #'      warn_fraction: 0.1
 #'      stop_fraction: 0.2
-#'    label: The `col_vals_not_in_set()` step.
+#'    label: El paso `col_vals_not_in_set()`.
 #'    active: false
 #' ```
 #' 
@@ -5552,8 +5775,8 @@
 #' # package will be used to validate that
 #' # column values are part of a given set
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that values in column `f`
 #' # contain none of the values `lows`,
@@ -5565,25 +5788,28 @@
 #'   ) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 13 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 13
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' small_table %>%
 #'   col_vals_not_in_set(
 #'     vars(f), c("lows", "mids", "highs")
@@ -5591,22 +5817,22 @@
 #'   dplyr::pull(f) %>%
 #'   unique()
 #'
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_not_in_set(
 #'   small_table,
 #'   vars(f), c("lows", "mids", "highs")
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' small_table %>%
 #'   test_col_vals_not_in_set(
 #'     vars(f), c("lows", "mids", "highs")
@@ -5624,17 +5850,18 @@
 #' ¿Los datos de la columna no son `NULL`/`NA`?
 #'
 #' @description
-#' The `col_vals_not_null()` validation function, the
-#' `expect_col_vals_not_null()` expectation function, and the
-#' `test_col_vals_not_null()` test function all check whether column values in a
-#' table *are not* `NA` values or, in the database context, *not* `NULL` values.
-#' The validation function can be used directly on a data table or with an
-#' *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation and test functions can only be used with a data table. The types
-#' of data tables that can be used include data frames, tibbles, database tables
-#' (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). Each validation step or
-#' expectation will operate over the number of test units that is equal to the
-#' number of rows in the table (after any `preconditions` have been applied).
+#' La función de validación `col_vals_not_null()`, la función de expectativa
+#' `expect_col_vals_not_null()` y la función de prueba
+#' `test_col_vals_not_null()` comprueban si los valores de columna en una tabla
+#' *no son* valores de `NA` o, en el contexto de la base de datos, *no* valores
+#' `NULL`. La función de validación se puede usar directamente en una tabla de
+#' datos o con un objeto *agent* (técnicamente, un objeto `ptblank_agent`)
+#' mientras que las funciones de expectativa y prueba solo se pueden usar con
+#' una tabla de datos. Los tipos de tablas de datos que se pueden utilizar
+#' incluyen marcos de datos, tibbles, tablas de base de datos (`tbl_dbi`) y
+#' Spark DataFrames (`tbl_spark`). Cada paso de validación o expectativa operará
+#' sobre el número de unidades de prueba que es igual al número de filas en la
+#' tabla (después de que se hayan aplicado las `preconditions`).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -5646,67 +5873,74 @@
 #' `matches()`, y `everything()`.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -5734,7 +5968,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_not_null()` step.",
+#'     label = "El paso `col_vals_not_null()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -5747,7 +5981,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_not_null()` step.
+#'     label: El paso `col_vals_not_null()`.
 #'     active: false
 #' ```
 #' 
@@ -5783,8 +6017,8 @@
 #'   
 #' tbl
 #'   
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that all values in column
 #' # `b` are *not* NA (they would be
@@ -5795,42 +6029,45 @@
 #'   col_vals_not_null(vars(b)) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 5 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 5
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>%
 #'   col_vals_not_null(vars(b)) %>%
 #'   dplyr::pull(b)
 #'
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_not_null(tbl, vars(b))
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' tbl %>% test_col_vals_not_null(vars(b))
 #' 
 #' @family validation functions
@@ -5845,17 +6082,19 @@
 #' ¿Son los datos de la columna `NULL`/`NA`?
 #'
 #' @description
-#' The `col_vals_null()` validation function, the `expect_col_vals_null()`
-#' expectation function, and the `test_col_vals_null()` test function all check
-#' whether column values in a table are `NA` values or, in the database context,
-#' `NULL` values. The validation function can be used directly on a data table
-#' or with an *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation and test functions can only be used with a data table. The types
-#' of data tables that can be used include data frames, tibbles, database tables
-#' (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). Each validation step or
-#' expectation will operate over the number of test units that is equal to the
-#' number of rows in the table (after any `preconditions` have been applied).
-#'
+#' La función de validación `col_vals_null()`, la función de expectativa
+#' `expect_col_vals_null()` y la función de prueba `test_col_vals_null()`
+#' comprueban si los valores de las columnas en una tabla son valores `NA` o, en
+#' el contexto de la base de datos, `NULL` valores. La función de validación se
+#' puede usar directamente en una tabla de datos o con un objeto *agent*
+#' (técnicamente, un objeto `ptblank_agent`) mientras que las funciones de
+#' expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos de
+#' tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre el número de unidades de
+#' prueba que es igual al número de filas en la tabla (después de que se hayan
+#' aplicado las `preconditions`).
+#' 
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
 #' pasos de validación para ese número de nombres de columna (por ejemplo,
@@ -5866,67 +6105,74 @@
 #' `matches()`, y `everything()`.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -5954,7 +6200,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_null()` step.",
+#'     label = "El paso `col_vals_null()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -5967,7 +6213,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_null()` step.
+#'     label: El paso `col_vals_null()`.
 #'     active: false
 #' ```
 #' 
@@ -6003,8 +6249,8 @@
 #'   
 #' tbl
 #'   
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that all values in column
 #' # `c` are NA (they would be NULL in a
@@ -6015,42 +6261,45 @@
 #'   col_vals_null(vars(c)) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 5 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 5
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>%
 #'   col_vals_null(vars(c)) %>%
 #'   dplyr::pull(c)
 #'
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_null(tbl, vars(c))
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' tbl %>% test_col_vals_null(vars(c))
 #' 
 #' @family validation functions
@@ -6066,16 +6315,18 @@
 #' expresiones regulares?
 #' 
 #' @description
-#' The `col_vals_regex()` validation function, the `expect_col_vals_regex()`
-#' expectation function, and the `test_col_vals_regex()` test function all check
-#' whether column values in a table correspond to a `regex` matching expression.
-#' The validation step function can be used directly on a data table or with an
-#' *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation and test functions can only be used with a data table. The types
-#' of data tables that can be used include data frames, tibbles, database tables
-#' (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). Each validation step or
-#' expectation will operate over the number of test units that is equal to the
-#' number of rows in the table (after any `preconditions` have been applied).
+#' La función de validación `col_vals_regex()`, la función de expectativa
+#' `expect_col_vals_regex()` y la función de prueba `test_col_vals_regex()`
+#' comprueban si los valores de las columnas en una tabla corresponden a una
+#' expresión coincidente de `regex`. La función de validación se puede usar
+#' directamente en una tabla de datos o con un objeto *agent* (técnicamente, un
+#' objeto `ptblank_agent`) mientras que las funciones de expectativa y prueba
+#' solo se pueden usar con una tabla de datos. Los tipos de tablas de datos que
+#' se pueden utilizar incluyen marcos de datos, tibbles, tablas de base de datos
+#' (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada paso de validación o
+#' expectativa operará sobre el número de unidades de prueba que es igual al
+#' número de filas en la tabla (después de que se hayan aplicado las
+#' `preconditions`).
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -6086,74 +6337,82 @@
 #' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, y `everything()`.
 #'
-#' @section Missing Values:
-#' This validation function supports special handling of `NA` values. The
-#' `na_pass` argument will determine whether an `NA` value appearing in a test
-#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
-#' FALSE` means that any `NA`s encountered will accumulate failing test units.
+#' @section Valores faltantes:
+#' Esta función de validación admite el manejo especial de valores `NA`. El
+#' argumento `na_pass` determinará si un valor de `NA` que aparece en una unidad
+#' de prueba debe pasar o no. El valor predeterminado de `na_pass = FALSE`
+#' significa que cualquier `NA` encontrado acumulará unidades de prueba
+#' fallidas.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -6183,7 +6442,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_regex()` step.",
+#'     label = "El paso `col_vals_regex()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -6198,7 +6457,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_regex()` step.
+#'     label: El paso `col_vals_regex()`.
 #'     active: false
 #' ```
 #' 
@@ -6236,8 +6495,8 @@
 #' # be used throughout
 #' pattern <- "[0-9]-[a-z]{3}-[0-9]{3}"
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that all values in column
 #' # `b` match the regex `pattern`
@@ -6246,45 +6505,48 @@
 #'   col_vals_regex(vars(b), pattern) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 13 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 13
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' small_table %>%
 #'   col_vals_regex(vars(b), pattern) %>%
 #'   dplyr::slice(1:5)
 #'
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_regex(
 #'   small_table,
 #'   vars(b), pattern
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' small_table %>%
 #'   test_col_vals_regex(
 #'     vars(b), pattern
@@ -6300,20 +6562,21 @@
 #' ¿Los valores de los datos de la columna se ajustan a una especificación?
 #' 
 #' @description
-#' The `col_vals_within_spec()` validation function, the
-#' `expect_col_vals_within_spec()` expectation function, and the
-#' `test_col_vals_within_spec()` test function all check whether column values
-#' in a table correspond to a specification (`spec`) type (details of which are
-#' available in the *Specifications* section). The validation step function
-#' can be used directly on a data table or with an *agent* object (technically,
-#' a `ptblank_agent` object) whereas the expectation and test functions can only
-#' be used with a data table. The types of data tables that can be used include
-#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
-#' (`tbl_spark`). Each validation step or expectation will operate over the
-#' number of test units that is equal to the number of rows in the table (after
-#' any `preconditions` have been applied).
+#' La función de validación `col_vals_within_spec()`, la función de expectativa
+#' `expect_col_vals_within_spec()` y la función de prueba
+#' `test_col_vals_within_spec()` comprueban si los valores de columna en una
+#' tabla corresponden a un tipo de especificación (`spec`) (los detalles son
+#' disponible en la sección *Especificaciones*) La función de validación se
+#' puede usar directamente en una tabla de datos o con un objeto *agent*
+#' (técnicamente, un objeto `ptblank_agent`) mientras que las funciones de
+#' expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos de
+#' tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre el número de unidades de
+#' prueba que es igual al número de filas en la tabla (después de que se hayan
+#' aplicado las `preconditions`).
 #' 
-#' @section Specifications:
+#' @section Especificaciones:
 #' A specification type must be used with the `spec` argument. This is a
 #' character-based keyword that corresponds to the type of data in the specified
 #' `columns`. The following keywords can be used:
@@ -6369,74 +6632,82 @@
 #' columnas. Ellos son: `starts_with()`, `ends_with()`, `contains()`,
 #' `matches()`, y `everything()`.
 #'
-#' @section Missing Values:
-#' This validation function supports special handling of `NA` values. The
-#' `na_pass` argument will determine whether an `NA` value appearing in a test
-#' unit should be counted as a *pass* or a *fail*. The default of `na_pass =
-#' FALSE` means that any `NA`s encountered will accumulate failing test units.
+#' @section Valores faltantes:
+#' Esta función de validación admite el manejo especial de valores `NA`. El
+#' argumento `na_pass` determinará si un valor de `NA` que aparece en una unidad
+#' de prueba debe pasar o no. El valor predeterminado de `na_pass = FALSE`
+#' significa que cualquier `NA` encontrado acumulará unidades de prueba
+#' fallidas.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()` en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -6466,7 +6737,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(b < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `col_vals_within_spec()` step.",
+#'     label = "El paso `col_vals_within_spec()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -6481,7 +6752,7 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `col_vals_within_spec()` step.
+#'     label: El paso `col_vals_within_spec()`.
 #'     active: false
 #' ```
 #' 
@@ -6516,8 +6787,8 @@
 #' # five rows)
 #' spec_slice <- specifications[1:5, ]
 #' 
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate that all values in the column
 #' # `email_addresses` are correct
@@ -6529,25 +6800,28 @@
 #'   ) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 5 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 5
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' spec_slice %>%
 #'   col_vals_within_spec(
 #'     vars(email_addresses),
@@ -6555,23 +6829,23 @@
 #'   ) %>%
 #'   dplyr::select(email_addresses)
 #'
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_col_vals_within_spec(
 #'   spec_slice,
 #'   vars(email_addresses),
 #'   spec = "email"
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' spec_slice %>%
 #'   test_col_vals_within_spec(
 #'     vars(email_addresses),
@@ -6588,98 +6862,109 @@
 #' Realice múltiples validaciones por filas para la validez conjunta
 #'
 #' @description 
-#' The `conjointly()` validation function, the `expect_conjointly()` expectation
-#' function, and the `test_conjointly()` test function all check whether test
-#' units at each index (typically each row) all pass multiple validations. We
-#' can use validation functions that validate row units (the `col_vals_*()`
-#' series), check for column existence ([col_exists()]), or validate column type
-#' (the `col_is_*()` series). Because of the imposed constraint on the allowed
-#' validation functions, the ensemble of test units are either comprised rows of
-#' the table (after any common `preconditions` have been applied) or are single
-#' test units (for those functions that validate columns).
+#' La función de validación `conjointly()`, la función de expectativa
+#' `expect_conjointly()` y la función de prueba `test_conjointly()` comprueban
+#' si las unidades de prueba en cada índice (típicamente cada fila) pasan todas
+#' las validaciones múltiples. Podemos usar funciones de validación que validan
+#' las unidades de fila (la serie `col_vals_*()`), verificar la existencia de la
+#' columna ([col_exists()]), o validar el tipo de columna (la serie
+#' `col_is_*()`). Debido a la restricción impuesta sobre las funciones de
+#' validación permitidas, el conjunto de unidades de prueba está compuesto por
+#' filas de la tabla (después de que se hayan aplicado las `preconditions`
+#' comunes) o son unidades de prueba únicas (para aquellas funciones que validan
+#' columnas).
 #' 
-#' Each of the functions used in a `conjointly()` validation step (composed
-#' using multiple validation function calls) ultimately perform a rowwise test
-#' of whether all sub-validations reported a *pass* for the same test units. In
-#' practice, an example of a joint validation is testing whether values for
-#' column `a` are greater than a specific value while adjacent values in column
-#' `b` lie within a specified range. The validation functions to be part of the
-#' conjoint validation are to be supplied as one-sided **R** formulas (using a
-#' leading `~`, and having a `.` stand in as the data object). The validation
-#' function can be used directly on a data table or with an *agent* object
-#' (technically, a `ptblank_agent` object) whereas the expectation and test
-#' functions can only be used with a data table.
+#' Cada una de las funciones usadas en un paso de validación `conjointly()`
+#' (compuesto usando múltiples llamadas a funciones de validación) finalmente
+#' realiza una prueba por filas de si todas las subvalidaciones reportaron un
+#' *aprobado* para las mismas unidades de prueba. En la práctica, un ejemplo de
+#' validación conjunta es probar si los valores de la columna `a` son mayores
+#' que un valor específico, mientras que los valores adyacentes en la columna
+#' `b` se encuentran dentro de un rango específico. Las funciones de validación
+#' que serán parte de la validación conjunta deben ser suministradas como
+#' fórmulas **R** unilaterales (usando un `~` inicial y con un `.` como el
+#' objeto de datos). La función de validación se puede usar directamente en una
+#' tabla de datos o con un objeto *agent* (técnicamente, un objeto
+#' `ptblank_agent`) mientras que las funciones de expectativa y prueba solo se
+#' pueden usar con una tabla de datos.
 #'
 #' @section Nombres de columnas:
-#' If providing multiple column names in any of the supplied validation steps,
-#' the result will be an expansion of sub-validation steps to that number of
-#' column names. Aside from column names in quotes and in `vars()`,
-#' **tidyselect** helper functions are available for specifying columns. They
-#' are: `starts_with()`, `ends_with()`, `contains()`, `matches()`, and
-#' `everything()`.
+#' Si proporciona varios nombres de columna en cualquiera de los pasos de
+#' validación proporcionados, el resultado será una expansión de los pasos de
+#' subvalidación a ese número de nombres de columna. Aparte de los nombres de
+#' las columnas entre comillas y en `vars()`, las funciones auxiliares
+#' **tidyselect** están disponibles para especificar columnas. Son:
+#' `starts_with()`, `ends_with()`, `contains()`, `matches()` y `everything()`.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
+#' Si hay varias `columns` especificadas, el número potencial de pasos de
+#' validación será `m` columnas multiplicadas por `n` segmentos resueltos.
 #'
-#' If there are multiple `columns` specified then the potential number of
-#' validation steps will be `m` columns multiplied by `n` segments resolved.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()`s en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -6709,7 +6994,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2), 
-#'     label = "The `conjointly()` step.",
+#'     label = "El paso `conjointly()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -6725,23 +7010,24 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `conjointly()` step.
+#'     label: El paso `conjointly()`.
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the expressions for
-#' validation steps are necessary. Arguments with default values won't be
-#' written to YAML when using [yaml_write()] (though it is acceptable to include
-#' them with their default when generating the YAML by other means). It is also
-#' possible to preview the transformation of an agent to YAML without any
-#' writing to disk by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que solo son necesarias
+#' las expresiones para los pasos de validación. Los argumentos con valores
+#' predeterminados no se escribirán en YAML cuando se use [yaml_write()] (aunque
+#' es aceptable incluirlos con sus valores predeterminados al generar el YAML
+#' por otros medios). También es posible obtener una vista previa de la
+#' transformación de un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
-#' @param ... a collection one-sided formulas that consist of validation
-#'   functions that validate row units (the `col_vals_*()` series), column
-#'   existence ([col_exists()]), or column type (the `col_is_*()` series). An
-#'   example of this is `~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(.,
-#'   vars(b)`).
+#' @param ... Una colección de fórmulas unilaterales que constan de funciones de
+#'   validación que validan unidades de fila (la serie `col_vals_*()`),
+#'   existencia de columna ([col_exists()]) o tipo de columna (la serie
+#'   `col_is_*()`). Un ejemplo de esto es `~ col_vals_gte(., vars(a), 5.5),
+#'   ~ col_vals_not_null(., vars(b)`).
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #'
 #' @return Para la función de validación, el valor de retorno es un objeto
@@ -6753,11 +7039,12 @@
 #'   lógico.
 #'
 #' @examples
-#' # For all examples here, we'll use
-#' # a simple table with three numeric
-#' # columns (`a`, `b`, and `c`); this is
-#' # a very basic table but it'll be more
-#' # useful when explaining things later
+#' # Para todos los ejemplos aquí, usaremos
+#' # una tabla simple con tres columnas
+#' # numéricas (`a`, `b` y `c`); esta es
+#' # una tabla muy básica, pero será más
+#' # útil cuando se expliquen las cosas
+#' # más adelante
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 2, 6),
@@ -6767,8 +7054,8 @@
 #'   
 #' tbl
 #'   
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # Validate a number of things on a
 #' # row-by-row basis using validation
@@ -6788,33 +7075,37 @@
 #'     ) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 3 test units, one for each row)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 3
+#' # unidades de prueba, una para cada fila)
 #' all_passed(agent)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent)`
 #' 
-#' # What's going on? Think of there being
-#' # three parallel validations, each
-#' # producing a column of `TRUE` or `FALSE`
-#' # values (`pass` or `fail`) and line them
-#' # up side-by-side, any rows with any
-#' # `FALSE` values results in a conjoint
-#' # `fail` test unit
+#' # ¿Que esta pasando? Piense en que hay
+#' # tres validaciones paralelas, cada una
+#' # de las cuales produce una columna de
+#' # valores `TRUE` o `FALSE` ("pasa" o
+#' # "falla") y alinéelos uno al lado del
+#' # otro, cualquier fila con cualquier
+#' # valor `FALSE` da como resultado una
+#' # unidad de prueba conjunta "fallida"
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>%
 #'   conjointly(
 #'     ~ col_vals_lt(., vars(a), value = 8),
@@ -6822,12 +7113,13 @@
 #'     ~ col_vals_not_null(., vars(b))
 #'   )
 #'
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_conjointly(
 #'   tbl,
 #'   ~ col_vals_lt(., vars(a), value = 8),
@@ -6835,11 +7127,10 @@
 #'   ~ col_vals_not_null(., vars(b))
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' tbl %>%
 #'   test_conjointly(
 #'     ~ col_vals_lt(., vars(a), value = 8),
@@ -6900,7 +7191,7 @@
 #'
 #' Si solo necesitamos saber si todas las validaciones pasaron por completo (es
 #' decir, todos los pasos no tenían unidades de prueba fallidas), la función
-#' [all_passed()] podría usarse en el *agente*. Sin embargo, en la práctica, no
+#' [all_passed()] podría usarse en el *agent*. Sin embargo, en la práctica, no
 #' es frecuente que todos los pasos de validación de datos estén libres de
 #' unidades defectuosas.
 #' 
@@ -6926,7 +7217,7 @@
 #' create_agent(
 #'   read_fn = ~ small_table,
 #'   tbl_name = "small_table",
-#'   label = "An example.",
+#'   label = "Un ejemplo.",
 #'   actions = action_levels(
 #'     warn_at = 0.10,
 #'     stop_at = 0.25,
@@ -6945,7 +7236,7 @@
 #' type: agent
 #' read_fn: ~small_table
 #' tbl_name: small_table
-#' label: An example.
+#' label: Un ejemplo.
 #' lang: fr
 #' locale: fr_CA
 #' actions:
@@ -6977,7 +7268,7 @@
 #' expresiones R que se utilizan para regenerar ese agente con
 #' [yaml_agent_show_exprs()].
 #' 
-#' @section Writing an Agent to Disk:
+#' @section Escribir un agente en el disco:
 #' Se puede escribir un objeto *agent* en el disco con la función
 #' [x_write_disk()]. Esto puede resultar útil para mantener un historial de
 #' validaciones y generar vistas de la calidad de los datos a lo largo del
@@ -6990,7 +7281,7 @@
 #' acceder a la tabla de destino (que puede cambiar, de ahí la necesidad de usar
 #' una expresión para esto).
 #' 
-#' @section Combining Several Agents in a *multiagent* Object:
+#' @section Combinación de varios agentes en un objeto *multiagent*:
 #' Varios objetos *agent* pueden formar parte de un objeto *agent* múltiple, y
 #' se pueden usar dos funciones para esto: [create_multiagent()] y
 #' [read_disk_multiagent()]. Al recopilar varios agentes que han realizado
@@ -7057,18 +7348,18 @@
 #' @return Un objeto `ptblank_agent`.
 #'   
 #' @examples
-#' # Let's walk through a data quality
-#' # analysis of an extremely small table;
-#' # it's actually called `small_table` and
-#' # we can find it as a dataset in this
-#' # package
+#' # Analicemos un análisis de la calidad de
+#' # los datos de una tabla extremadamente pequeña;
+#' # en realidad se llama `small_table` y podemos
+#' # encontrarlo como un conjunto de datos en
+#' # este paquete
 #' small_table
 #' 
-#' # We ought to think about what's
-#' # tolerable in terms of data quality so
-#' # let's designate proportional failure
-#' # thresholds to the `warn`, `stop`, and
-#' # `notify` states using `action_levels()`
+#' # Debemos pensar en lo que es tolerable en
+#' # términos de calidad de los datos, así que
+#' # designemos umbrales de falla proporcionales
+#' # a los estados `warn`,` stop` y `notify`
+#' # usando `action_levels()`
 #' al <- 
 #'   action_levels(
 #'       warn_at = 0.10,
@@ -7076,26 +7367,26 @@
 #'     notify_at = 0.35
 #'   )
 #' 
-#' # Now create a pointblank `agent` object
-#' # and give it the `al` object (which
-#' # serves as a default for all validation
-#' # steps which can be overridden); the
-#' # static thresholds provided by `al` will
-#' # make the reporting a bit more useful
+#' # Ahora cree un objeto `agent` en blanco y
+#' # asígnele el objeto` al` (que sirve como valor
+#' # predeterminado para todos los pasos de
+#' # validación que se pueden anular); los umbrales
+#' # estáticos proporcionados por `al` harán que
+#' # los informes sean un poco más útiles
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example.",
+#'     label = "Un ejemplo.",
 #'     actions = al
 #'   )
 #'
-#' # Then, as with any `agent` object, we
-#' # can add steps to the validation plan by
-#' # using as many validation functions as we
-#' # want; then, we use `interrogate()` to
-#' # physically perform the validations and
-#' # gather intel
+#' # Luego, como con cualquier objeto `agent`,
+#' # podemos agregar pasos al plan de validación
+#' # usando tantas funciones de validación como
+#' # queramos; luego, usamos `interrogate()`
+#' # para realizar físicamente las validaciones
+#' # y recopilar información
 #' agent <-
 #'   agent %>% 
 #'   col_exists(vars(date, date_time)) %>%
@@ -7117,44 +7408,44 @@
 #'   ) %>%
 #'   interrogate()
 #'   
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent)`
+#' # Llamar a un objeto *agent* en la consola
+#' # imprime el informe del agente; pero
+#' # podemos obtener un objeto `gt_tbl`
+#' # directamente con `get_agent_report(agent)`
 #' report <- get_agent_report(agent)
 #' class(report)
 #' 
-#' # What can you do with the report?
-#' # Print it from an R Markdown code
-#' # chunk, use it in a **blastula** email,
-#' # put it in a webpage, or further
-#' # modify it with the **gt** package
+#' # ¿Qué puedes hacer con el informe? Imprima
+#' # desde un fragmento de código R Markdown,
+#' # úselo en un correo electrónico **blastula**,
+#' # colóquelo en una página web o modifíquelo
+#' # con el paquete **gt**
 #' 
-#' # From the report we know that Step
-#' # 4 had two test units (rows, really)
-#' # that failed; we can see those rows
-#' # with `get_data_extracts()` 
+#' # Por el informe sabemos que el Paso 4
+#' # tenía dos unidades de prueba (filas,
+#' # en realidad) que fallaron; podemos ver
+#' # esas filas con `get_data_extracts()`
 #' agent %>% get_data_extracts(i = 4)
 #' 
-#' # We can get an x-list for the whole
-#' # validation (8 steps), or, just for
-#' # the 4th step with `get_agent_x_list()`
+#' # Podemos obtener una 'x-list' para toda
+#' # la validación (8 pasos), o solo para el
+#' # cuarto paso con `get_agent_x_list()`
 #' xl_step_4 <-
 #'   agent %>% get_agent_x_list(i = 4)
 #'  
-#' # And then we can peruse the different
-#' # parts of the list; let's get the
-#' # fraction of test units that failed
+#' # Y luego podemos examinar las diferentes
+#' # partes de la lista; obtengamos la fracción
+#' # de unidades de prueba que fallaron
 #' xl_step_4$f_failed
 #' 
-#' # Just printing the x-list will tell
-#' # us what's available therein
+#' # Simplemente imprimiendo la lista x nos
+#' # dirá qué hay disponible allí
 #' xl_step_4
 #' 
-#' # An x-list not specific to any step
-#' # will have way more information and a
-#' # slightly different structure; see
-#' # `help(get_agent_x_list)` for more info
+#' # Una 'x-list' que no sea específica de
+#' # ningún paso tendrá mucha más información
+#' # y una estructura ligeramente diferente; ver
+#' # `help(get_agent_x_list)` para más información
 #' # get_agent_x_list(agent)
 #' 
 #' @section Figures:
@@ -7215,7 +7506,7 @@
 #' create_informant(
 #'   read_fn = ~ small_table,
 #'   tbl_name = "small_table",
-#'   label = "An example.",
+#'   label = "Un ejemplo.",
 #'   lang = "fr", 
 #'   locale = "fr_CA"
 #' )
@@ -7224,7 +7515,7 @@
 #' type: informant
 #' read_fn: ~small_table
 #' tbl_name: small_table
-#' info_label: An example.
+#' info_label: Un ejemplo.
 #' lang: fr
 #' locale: fr_CA
 #' table:
@@ -7264,7 +7555,7 @@
 #' clave en el nivel superior que no dupliquen el conjunto predeterminado (es
 #' decir, `type`,` table`, `columns`, etc. se tratan como claves reservadas).
 #' 
-#' @section Writing an Informant to Disk:
+#' @section Escribir un objeto *informant* en el disco:
 #' Se puede escribir un objeto *informant* en el disco con la función
 #' [x_write_disk()]. Los informantes se almacenan en formato RDS serializado y
 #' se pueden recuperar fácilmente con la función [x_read_disk()].
@@ -7312,32 +7603,32 @@
 #' @return Un objeto `ptblank_informant`.
 #' 
 #' @examples 
-#' # Let's walk through how we can
-#' # generate some useful information for a
-#' # really small table; it's actually
-#' # called `small_table` and we can find
-#' # it as a dataset in this package
+#' # Veamos cómo podemos generar información
+#' # útil para una mesa realmente pequeña; en
+#' # realidad se llama `small_table` y podemos
+#' # encontrarlo como un conjunto de datos en
+#' # este paquete
 #' small_table
 #' 
-#' # Create a pointblank `informant`
-#' # object with `create_informant()`
-#' # and the `small_table` dataset
+#' # Cree un objeto `informant` en blanco con
+#' # `create_informant()` y el conjunto de
+#' # datos `small_table`
 #' informant <- 
 #'   create_informant(
 #'     read_fn = ~small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example."
+#'     label = "Un ejemplo."
 #'   )
 #' 
-#' # This function creates some information
-#' # without any extra help by profiling
-#' # the supplied table object; it adds
-#' # the sections: (1) 'table' and
-#' # (2) 'columns' and we can print the
-#' # object to see the information report
+#' # Esta función crea información sin ninguna
+#' # ayuda adicional al perfilar el objeto de
+#' # tabla proporcionado; agrega las secciones:
+#' # (1) 'tabla' y (2) 'columnas' y podemos
+#' # imprimir el objeto para ver el informe
+#' # de información
 #' 
-#' # Alternatively, we can get the same report
-#' # by using `get_informant_report()`
+#' # Alternativamente, podemos obtener el mismo
+#' # informe usando `get_informant_report()`
 #' report <- get_informant_report(informant)
 #' class(report)
 #' 
@@ -7385,17 +7676,19 @@
 #' @examples 
 #' if (interactive()) {
 #' 
-#' # Let's walk through several theoretical
-#' # data quality analyses of an extremely
-#' # small table; that table is called
-#' # `small_table` and we can find it as a
-#' # dataset in this package
+#' # Repasemos varios análisis teóricos de
+#' # la calidad de los datos de una tabla
+#' # extremadamente pequeña; esa tabla se
+#' # llama `small_table` y podemos
+#' # encontrarla como un conjunto de datos
+#' # en este paquete
 #' small_table
 #' 
-#' # To set failure limits and signal
-#' # conditions, we designate proportional
-#' # failure thresholds to the `warn`, `stop`,
-#' # and `notify` states using `action_levels()`
+#' # Para establecer límites de falla y
+#' # condiciones de señal, designamos
+#' # umbrales de falla proporcionales a
+#' # los estados `warn`, `stop` y
+#' # `notify` usando `action_levels()`
 #' al <- 
 #'   action_levels(
 #'     warn_at = 0.05,
@@ -7403,16 +7696,17 @@
 #'     notify_at = 0.20
 #'   )
 #' 
-#' # We will create four different agents
-#' # and have slightly different validation
-#' # steps in each of them; in the first,
-#' # `agent_1`, eight different validation
-#' # steps are created and the agent will
-#' # interrogate the `small_table`
+#' # Crearemos cuatro agentes diferentes
+#' # y tendremos pasos de validación
+#' # ligeramente diferentes en cada uno
+#' # de ellos; en el primero, `agent_1`,
+#' # se crean ocho pasos de validación
+#' # diferentes y el agente interrogará
+#' # a la `small_table`
 #' agent_1 <-
 #'   create_agent(
 #'     read_fn = ~ small_table,
-#'     label = "An example.",
+#'     label = "Un ejemplo.",
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(
@@ -7444,9 +7738,10 @@
 #'   col_is_integer(vars(a)) %>%
 #'   interrogate()
 #' 
-#' # The second agent, `agent_2`, retains
-#' # all of the steps of `agent_1` and adds
-#' # two more (the last of which is inactive)
+#' # El segundo agente, `agent_2`,
+#' # conserva todos los pasos de `agent_1`
+#' # y agrega dos más (el último de los
+#' # cuales está inactivo)
 #' agent_2 <- 
 #'   agent_1 %>%
 #'   col_exists(vars(date, date_time)) %>%
@@ -7457,9 +7752,9 @@
 #'   ) %>%
 #'   interrogate()
 #' 
-#' # The third agent, `agent_3`, adds a single
-#' # validation step, removes the fifth one,
-#' # and deactivates the first
+#' # El tercer agente, `agent_3`, agrega
+#' # un solo paso de validación, elimina
+#' # el quinto y desactiva el primero
 #' agent_3 <- 
 #'   agent_2 %>%
 #'   col_vals_in_set(
@@ -7470,9 +7765,9 @@
 #'   deactivate_steps(i = 1) %>%
 #'   interrogate()
 #' 
-#' # The fourth and final agent, `agent_4`,
-#' # reactivates steps 1 and 10, and removes
-#' # the sixth step
+#' # El cuarto y último agente, `agent_4`,
+#' # reactiva los pasos 1 y 10, y elimina
+#' # el sexto paso
 #' agent_4 <-
 #'   agent_3 %>%
 #'   activate_steps(i = 1) %>%
@@ -7480,19 +7775,20 @@
 #'   remove_steps(i = 6) %>%
 #'   interrogate()
 #' 
-#' # While all the agents are slightly
-#' # different from each other, we can still
-#' # get a combined report of them by
-#' # creating a 'multiagent'
+#' # Si bien todos los agentes son
+#' # ligeramente diferentes entre sí, aún
+#' # podemos obtener un informe combinado
+#' # de ellos creando un objeto 'multiagent'
 #' multiagent <-
 #'   create_multiagent(
 #'     agent_1, agent_2, agent_3, agent_4
 #'   )
 #' 
-#' # Calling `multiagent` in the console
-#' # prints the multiagent report; but we
-#' # can get a `gt_tbl` object with the
-#' # `get_multiagent_report(agent)` function
+#' # Llamar a un objeto `multiagent` en
+#' # la consola imprime el informe
+#' # multiagente; pero podemos obtener un
+#' # objeto `gt_tbl` con la función
+#' # `get_multiagent_report()`
 #' report <- get_multiagent_report(multiagent)
 #' 
 #' class(report)
@@ -7549,9 +7845,9 @@
 #' @return Un objeto `tbl_dbi`.
 #' 
 #' @examples 
-#' # You can use an in-memory database
-#' # table and supply an in-memory table
-#' # to it too:
+#' # Puede usar una tabla de base de
+#' # datos en memoria y proporcionarle
+#' # una tabla en memoria también:
 #' small_table_duckdb <- 
 #'   db_tbl(
 #'     table = small_table,
@@ -7561,10 +7857,10 @@
 #'
 #' if (interactive()) {
 #'
-#' # It's also possible to obtain a remote
-#' # file and shove it into an in-memory
-#' # database; use the all-powerful
-#' # `file_tbl()` + `db_tbl()` combo
+#' # También es posible obtener un
+#' # archivo remoto y guardarlo en una
+#' # base de datos en memoria; use el
+#' # combo `file_tbl()` + `db_tbl()`
 #' all_revenue_large_duckdb <-
 #'   db_tbl(
 #'     table = file_tbl(
@@ -7578,10 +7874,11 @@
 #'     dbtype = "duckdb"
 #'   )
 #' 
-#' # For remote databases, it's much the
-#' # same; here's an example that accesses
-#' # the `rna` table (in the RNA Central
-#' # public database) using `db_tbl()`
+#' # Para las bases de datos remotas,
+#' # es muy similar; aquí hay un ejemplo
+#' # que accede a la tabla `rna` (en la
+#' # base de datos pública de RNA Central)
+#' # usando `db_tbl()`
 #' rna_db_tbl <- 
 #'   db_tbl(
 #'     table = "rna",
@@ -7593,13 +7890,15 @@
 #'     password = I("NWDMCE5xdipIjRrp")
 #'   )
 #' 
-#' # Using `I()` for the user name and
-#' # password means that you're passing in
-#' # the actual values but, normally, you
-#' # would want use the names of environment
-#' # variables (envvars) to securely access
-#' # the appropriate username and password
-#' # values when connecting to a DB:
+#' # El uso de `I()` para el nombre de
+#' # usuario y la contraseña significa que
+#' # está pasando los valores reales pero,
+#' # normalmente, querrá usar los nombres
+#' # de las variables de entorno (envvars)
+#' # para acceder de forma segura a los
+#' # valores de nombre de usuario y
+#' # contraseña apropiados cuando se
+#' # conecte a una base de datos:
 #' example_db_tbl <- 
 #'   db_tbl(
 #'     table = "<table_name>",
@@ -7611,16 +7910,20 @@
 #'     password = "<DB_PASSWORD>"
 #'   )
 #'
-#' # Environment variables can be created
-#' # by editing the user `.Renviron` file and
-#' # the `usethis::edit_r_environ()` function
-#' # makes this pretty easy to do
+#' # Las variables de entorno se pueden
+#' # crear editando el archivo de usuario
+#' # `.Renviron` y la función
+#' # `usethis::edit_r_environ()` hace que
+#' # esto sea bastante fácil de hacer
 #' 
-#' # Storing table-prep formulas in a table
-#' # store makes it easier to work with DB
-#' # tables in pointblank; here's how to
-#' # generate a table store with two named
-#' # entries for table preparations
+#' # El almacenamiento de fórmulas de
+#' # preparación de tablas en una tienda
+#' # de tablas facilita el trabajo con
+#' # tablas de base de datos en blanco;
+#' # aquí se explica cómo generar un
+#' # almacén de tablas con dos entradas
+#' # con nombre para la preparación de
+#' # la tabla
 #' tbls <-
 #'   tbl_store(
 #'     small_table_duck ~ db_tbl(
@@ -7636,16 +7939,18 @@
 #'       dplyr::filter(f == "high")
 #'   )
 #' 
-#' # Now it's easy to access either of these
-#' # tables (the second is a mutated version)
-#' # via the `tbl_get()` function
+#' # Ahora es fácil acceder a cualquiera
+#' # de estas tablas (la segunda es una
+#' # versión mutada) a través de la
+#' # función `tbl_get()`
 #' tbl_get("small_table_duck", store = tbls)
 #' tbl_get("small_high_duck", store = tbls)
 #' 
-#' # The table-prep formulas in `tbls`
-#' # could also be used in functions with
-#' # the `read_fn` argument; this is thanks
-#' # to the `tbl_source()` function
+#' # Las fórmulas de preparación de tablas
+#' # en `tbls` también podrían usarse en
+#' # funciones con el argumento `read_fn`;
+#' # esto es gracias a la función
+#' # `tbl_source()`
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~ tbl_source(
@@ -7690,29 +7995,29 @@
 #' @return Un objeto `ptblank_agent`.
 #' 
 #' @examples 
-#' # Create an agent that has the
-#' # `small_table` object as the
-#' # target table, add a few
-#' # validation steps, and then use
-#' # `interrogate()`
+#' # Cree un agente que tenga el objeto
+#' # `small_table` como tabla de destino,
+#' # agregue algunos pasos de validación
+#' # y luego use `interrogate()`
 #' agent_1 <- 
 #'   create_agent(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example."
+#'     label = "Un ejemplo."
 #'   ) %>%
 #'   col_exists(vars(date)) %>%
 #'   col_vals_regex(
-#'     vars(b), regex = "[0-9]-[a-z]{3}-[0-9]"
+#'     vars(b),
+#'     regex = "[0-9]-[a-z]{3}-[0-9]"
 #'   ) %>%
 #'   interrogate()
 #'   
-#' # The second validation step has
-#' # is being reconsidered and may
-#' # be either phased out or improved
-#' # upon; in the interim period it
-#' # was decided that the step should
-#' # be deactivated for now
+#' # El segundo paso de validación
+#' # se está reconsiderando ahora y
+#' # puede eliminarse gradualmente o
+#' # mejorarse; en el período
+#' # intermedio se decidió que el paso
+#' # debería desactivarse por ahora
 #' agent_2 <-
 #'   agent_1 %>%
 #'   deactivate_steps(i = 2) %>%
@@ -7757,7 +8062,7 @@
 #' @param file_name Un nombre opcional para el archivo .R o .Rmd. Debe ser un
 #'   nombre sin extensión. Por defecto, esto se toma del `tbl_name` pero si no
 #'   se proporciona nada para eso, el nombre contendrá el texto
-#'   `"draft_validation_" `seguido de la fecha y hora actuales.
+#'   `"draft_validation_"` seguido de la fecha y hora actuales.
 #' @param path Aquí se puede especificar una ruta si no se debe intentar colocar
 #'   el archivo generado en el directorio de trabajo.
 #' @param lang El idioma que se utilizará al crear comentarios para los pasos de
@@ -7777,13 +8082,13 @@
 #' @param quiet ¿Debería la función *no* informar cuando se escribe el archivo?
 #'   Por defecto, esto es `FALSE`.
 #'   
-#' @return Invisibly returns `TRUE` if the file has been written. 
+#' @return Devuelve de forma invisible `TRUE` si el archivo se ha escrito.
 #' 
 #' @examples
 #' if (interactive()) {
 #' 
-#' # Draft validation plan for the
-#' # `dplyr::storms` dataset
+#' # Proyecto de plan de validación
+#' # para la tabla `dplyr::storms`
 #' draft_validation(tbl = dplyr::storms)
 #' 
 #' }
@@ -7824,7 +8129,7 @@
 #' create_agent(
 #'   read_fn = ~ small_table,
 #'   tbl_name = "small_table",
-#'   label = "An example.",
+#'   label = "Un ejemplo.",
 #'   actions = al,
 #'   end_fns = list(
 #'     ~ email_blast(
@@ -7845,7 +8150,7 @@
 #' type: agent
 #' read_fn: ~small_table
 #' tbl_name: small_table
-#' label: An example.
+#' label: Un ejemplo.
 #' lang: en
 #' locale: en
 #' actions:
@@ -7914,7 +8219,7 @@
 #'   create_agent(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example.",
+#'     label = "Un ejemplo.",
 #'     actions = al,
 #'     end_fns = list(
 #'       ~ email_blast(
@@ -7948,7 +8253,7 @@
 #'   create_agent(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example.",
+#'     label = "Un ejemplo.",
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(vars(a), value = 5) %>%
@@ -8012,7 +8317,7 @@
 #'   create_agent(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example.",
+#'     label = "Un ejemplo.",
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(vars(a), value = 1) %>%
@@ -8031,7 +8336,7 @@
 #'   create_agent(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example.",
+#'     label = "Un ejemplo.",
 #'     actions = al
 #'   ) %>%
 #'   col_vals_gt(vars(a), value = 5) %>%
@@ -8049,7 +8354,7 @@
 #'   create_informant(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example."
+#'     label = "Un ejemplo."
 #'   ) %>%
 #'   info_tabular(
 #'     info = "A simple table in the
@@ -8515,9 +8820,9 @@
 # game_revenue-------------------------------------------------------------
 #' Una tabla con datos de ingresos del juego
 #'
-#' This table is a subset of the `sj_all_revenue` table from the **intendo**
-#' data package. It's the first 2,000 rows from that table where revenue records
-#' range from `2015-01-01` to `2015-01-21`.
+#' Esta tabla es un subconjunto de la tabla `sj_all_revenue` del paquete de
+#' datos **intendo**. Son las primeras 2000 filas de esa tabla donde los
+#' registros de ingresos van desde `2015-01-01` hasta `2015-01-21`.
 #'
 #' @format A tibble with 2,000 rows and 11 variables:
 #' \describe{
@@ -8546,8 +8851,8 @@
 #' }
 #'
 #' @examples
-#' # Here is a glimpse at the data
-#' # available in `game_revenue`
+#' # Aquí hay un vistazo a los datos
+#' # disponibles en `game_revenue`
 #' dplyr::glimpse(game_revenue)
 #'
 #' @family Datasets
@@ -9748,7 +10053,7 @@
 #'   create_informant(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example."
+#'     label = "Un ejemplo."
 #'   )
 #' 
 #' # We can add *info text* to describe
@@ -9842,7 +10147,7 @@
 #'   create_informant(
 #'     read_fn = ~ game_revenue,
 #'     tbl_name = "game_revenue",
-#'     label = "An example."
+#'     label = "Un ejemplo."
 #'   )
 #' 
 #' # We can add *info text* to describe
@@ -10017,7 +10322,7 @@
 #'   create_informant(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example."
+#'     label = "Un ejemplo."
 #'   )
 #' 
 #' # The `informant` object has the 'table'
@@ -10167,7 +10472,7 @@
 #'   create_informant(
 #'     read_fn = ~ test_table,
 #'     tbl_name = "test_table",
-#'     label = "An example."
+#'     label = "Un ejemplo."
 #'   ) %>%
 #'   info_snippet(
 #'     snippet_name = "row_count",
@@ -10333,7 +10638,7 @@
 #'   create_informant(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example."
+#'     label = "Un ejemplo."
 #'   )
 #' 
 #' # We can add *info text* to describe
@@ -10666,7 +10971,7 @@
 #'     tbl = small_table,
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example.",
+#'     label = "Un ejemplo.",
 #'     actions = al
 #'   ) %>%
 #'   col_exists(vars(date, date_time)) %>%
@@ -10720,7 +11025,7 @@
 #'   create_agent(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example."
+#'     label = "Un ejemplo."
 #'   ) %>%
 #'   col_exists(vars(date)) %>%
 #'   col_vals_regex(
@@ -10786,7 +11091,7 @@
 #'   create_agent(
 #'     tbl = small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example.",
+#'     label = "Un ejemplo.",
 #'     actions = al
 #'   ) %>%
 #'   col_exists(vars(date, date_time)) %>%
@@ -10834,13 +11139,14 @@
 #' applied).
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that this particular validation requires some operation on the target table
-#' before the row count comparison takes place. Using `preconditions` can be
-#' useful at times since since we can develop a large validation plan with a
-#' single target table and make minor adjustments to it, as needed, along the
-#' way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que esta validación en particular requiera alguna
+#' operación en la tabla de destino antes de que se lleve a cabo la comparación
+#' del recuento de filas. Especialmente para un informe basado en *agente*, esto
+#' puede ser ventajoso ya que podemos desarrollar un gran plan de validación con
+#' una sola tabla de destino y realice ajustes menores en ella, según sea
+#' necesario, a lo largo del camino.
 #'
 #' The table mutation is totally isolated in scope to the validation step(s)
 #' where `preconditions` is used. Using **dplyr** code is suggested here since
@@ -10850,32 +11156,35 @@
 #' serves as the input data table to be transformed. Alternatively, a function
 #' could instead be supplied.
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -10999,8 +11308,8 @@
 #'   row_count_match(tbl_compare = tbl_2) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation passed
-#' # by using `all_passed()`
+#' # Determine si esta validación
+#' # pasó usando `all_passed()`
 #' all_passed(agent)
 #' 
 #' @family validation functions
@@ -11030,49 +11339,55 @@
 #' `ends_with()`, `contains()`, `matches()`, and `everything()`.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -11202,49 +11517,55 @@
 #' `ends_with()`, `contains()`, `matches()`, and `everything()`.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -11485,22 +11806,25 @@
 #' `everything()`.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -11605,8 +11929,8 @@
 #'   
 #' tbl
 #'   
-#' # A: Using an `agent` with validation
-#' #    functions and then `interrogate()`
+#' # A: Usando un `agent` con funciones de
+#' #    validación y luego `interrogate()`
 #' 
 #' # The `serially()` function can be set
 #' # up to perform a series of tests and
@@ -11627,15 +11951,15 @@
 #'     ) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (there are
-#' # are 4 tests and a final validation)
+#' # Determine si esta validación no tuvo
+#' # unidades de prueba fallidas (hay 4
+#' # pruebas y una validación final)
 #' all_passed(agent_1)
 #' 
-#' # Calling `agent` in the console
-#' # prints the agent's report; but we
-#' # can get a `gt_tbl` object directly
-#' # with `get_agent_report(agent_1)`
+#' # Llamar a `agent` en la consola imprime
+#' # el informe del agente; pero podemos
+#' # obtener un objeto `gt_tbl` directamente
+#' # con `get_agent_report(agent_1)`
 #' 
 #' # What's going on? All four of the tests
 #' # passed and so the final validation
@@ -11656,15 +11980,18 @@
 #' # Everything is good here too:
 #' all_passed(agent_2)
 #' 
-#' # B: Using the validation function
-#' #    directly on the data (no `agent`)
+#' # B: Usando la función de validación
+#' #    directamente en los datos
+#' #    (sin `agent`)
 #' 
-#' # This way of using validation functions
-#' # acts as a data filter: data is passed
-#' # through but should `stop()` if there
-#' # is a single test unit failing; the
-#' # behavior of side effects can be
-#' # customized with the `actions` option
+#' # Esta forma de utilizar las funciones
+#' # de validación actúa como un filtro de
+#' # datos: los datos se pasan a través,
+#' # pero deben `stop()` si hay una sola
+#' # unidad de prueba que falla; el
+#' # comportamiento de los efectos
+#' # secundarios se puede personalizar con
+#' # la opción `actions`
 #' tbl %>%
 #'   serially(
 #'     ~ test_col_is_numeric(., vars(a, b)),
@@ -11672,12 +11999,13 @@
 #'     ~ col_vals_gt(., vars(b), vars(a))
 #'   )
 #'
-#' # C: Using the expectation function
+#' # C: Usando la función de expectativa
 #' 
-#' # With the `expect_*()` form, we would
-#' # typically perform one validation at a
-#' # time; this is primarily used in
-#' # testthat tests
+#' # Con el formulario `expect_*()`,
+#' # necesitamos ser más exactos y
+#' # proporcionar una columna a la vez;
+#' # esto se usa principalmente en
+#' # pruebas `testthat`
 #' expect_serially(
 #'   tbl,
 #'   ~ test_col_is_numeric(., vars(a, b)),
@@ -11685,11 +12013,10 @@
 #'   ~ col_vals_gt(., vars(b), vars(a))
 #' )
 #' 
-#' # D: Using the test function
+#' # D: Usando la función de prueba
 #' 
-#' # With the `test_*()` form, we should
-#' # get a single logical value returned
-#' # to us
+#' # Con la forma `test_*()`, deberíamos
+#' # obtener un único valor lógico devuelto
 #' tbl %>%
 #'   test_serially(
 #'     ~ test_col_is_numeric(., vars(a, b)),
@@ -11739,7 +12066,7 @@
 #'   create_agent(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example.",
+#'     label = "Un ejemplo.",
 #'     actions = al
 #'   ) %>%
 #'   col_exists(vars(date, date_time)) %>%
@@ -11806,7 +12133,7 @@
 #'   create_agent(
 #'     tbl = small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example.",
+#'     label = "Un ejemplo.",
 #'     actions = al
 #'   ) %>%
 #'   col_exists(vars(date, date_time)) %>%
@@ -11836,28 +12163,31 @@
 # small_table--------------------------------------------------------------
 #' Una pequeña tabla que es útil para realizar pruebas
 #'
-#' This is a small table with a few different types of columns. It's probably
-#' just useful when testing the functions from **pointblank**. Rows 9 and 10 are
-#' exact duplicates. The `c` column contains two `NA` values.
+#' Esta es una pequeña tabla con algunos tipos diferentes de columnas.
+#' Probablemente sea útil cuando se prueban las funciones desde **pointblank**.
+#' Las filas 9 y 10 son duplicados exactos. La columna `c` contiene dos valores
+#' `NA`.
 #'
-#' @format A tibble with 13 rows and 8 variables:
+#' @format Un tibble con 13 filas y 8 variables:
 #' \describe{
-#' \item{date_time}{A date-time column (of the `POSIXct` class) with dates that
-#' correspond exactly to those in the `date` column. Time values are somewhat
-#' randomized but all 'seconds' values are `00`.}
-#' \item{date}{A `Date` column with dates from `2016-01-04` to `2016-01-30`.}
-#' \item{a}{An `integer` column with values ranging from `1` to `8`.}
-#' \item{b}{A `character` column with values that adhere to a common pattern.}
-#' \item{c}{An `integer` column with values ranging from `2` to `9`. Contains
-#' two `NA` values.}
-#' \item{d}{A numeric column with values ranging from `108` to `10000`.}
-#' \item{e}{A `logical` column.}
-#' \item{f}{A `character` column with `"low"`, `"mid"`, and `"high"` values.}
+#' \item{date_time}{Una columna de fecha y hora (de la clase `POSIXct`) con
+#' fechas que corresponden exactamente a las de la columna `date`. Los valores
+#' de tiempo son algo aleatorios, pero todos los valores de 'segundos' son
+#' `00`.}
+#' \item{date}{Una columna `Date` con fechas desde `2016-01-04` a `2016-01-30`.}
+#' \item{a}{Una columna `integer` con valores comprendidos entre `1` y `8`.}
+#' \item{b}{Una columna de `character` con valores que se adhieren a un patrón
+#' común.}
+#' \item{c}{Una columna `integer` con valores comprendidos entre `2` y `9`.
+#' Contiene dos valores `NA`.}
+#' \item{d}{Una columna numérica con valores que van desde `108` a `10000`.}
+#' \item{e}{Una columna `logical`.}
+#' \item{f}{Una columna `character` con valores `"low"`, `"mid"` y `"high"`}
 #' }
 #'
 #' @examples
-#' # Here is a glimpse at the data
-#' # available in `small_table`
+#' # Aquí hay un vistazo a los datos
+#' # disponibles en `small_table`
 #' dplyr::glimpse(small_table)
 #'
 #' @family Datasets
@@ -11910,7 +12240,7 @@
 #'   create_informant(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example."
+#'     label = "Un ejemplo."
 #'   ) %>% 
 #'   info_columns(
 #'     columns = "a",
@@ -11994,7 +12324,7 @@
 #'   create_informant(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example."
+#'     label = "Un ejemplo."
 #'   ) %>% 
 #'   info_columns(
 #'     columns = "f",
@@ -12039,7 +12369,7 @@
 #'   create_informant(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example."
+#'     label = "Un ejemplo."
 #'   ) %>% 
 #'   info_columns(
 #'     columns = "a",
@@ -12097,7 +12427,7 @@
 #'   create_informant(
 #'     read_fn = ~ small_table,
 #'     tbl_name = "small_table",
-#'     label = "An example."
+#'     label = "Un ejemplo."
 #'   ) %>% 
 #'   info_columns(
 #'     columns = "a",
@@ -12132,24 +12462,27 @@
 #' checks to ensure that the data is a table object.
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that a particular validation requires a calculated column, some filtering of
-#' rows, or the addition of columns via a join, etc. Especially for an
-#' *agent*-based report this can be advantageous since we can develop a large
-#' validation plan with a single target table and make minor adjustments to it,
-#' as needed, along the way. Within `specially()`, because this function is
-#' special, there won't be internal checking as to whether the
-#' `preconditions`-based output is a table.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que una validación en particular requiera una
+#' columna calculada, algún filtrado de filas o la adición de columnas a través
+#' de una combinación, etc. Especialmente para un informe basado en *agente*,
+#' esto puede ser ventajoso ya que podemos desarrollar un gran plan de
+#' validación con una sola tabla de destino y realice ajustes menores en ella,
+#' según sea necesario, a lo largo del camino. Dentro de `specially()`, debido a
+#' que esta función es especial, no habrá comprobación interna de si la salida
+#' basada en `preconditions` es una tabla.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed (e.g., `~ . %>%
-#' dplyr::mutate(col_b = col_a + 10)`). Alternatively, a function could instead
-#' be supplied (e.g., `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere
+#' usar el código **dplyr** ya que las declaraciones se pueden traducir a SQL
+#' si es necesario (es decir, si la tabla de destino reside en una base de
+#' datos). El código se proporciona más fácilmente como una fórmula **R**
+#' unilateral (utilizando un `~` inicial). En la representación de la fórmula,
+#' el `.` sirve como la tabla de datos de entrada que se va a transformar (por
+#' ejemplo, ` ~ . %>% dplyr::mutate(col_b = col_a + 10) `). Alternativamente, se
+#' podría proporcionar una función (por ejemplo, 
+#' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -12450,12 +12783,13 @@
 #' same (after any `preconditions` have been applied).
 #' 
 #' @section Preconditions:
-#' Providing expressions as `preconditions` means **pointblank** will preprocess
-#' the target table during interrogation as a preparatory step. It might happen
-#' that this particular validation requires some operation on the target table
-#' before the comparison takes place. Using `preconditions` can be useful at
-#' times since since we can develop a large validation plan with a single target
-#' table and make minor adjustments to it, as needed, along the way.
+#' Proporcionar expresiones como `preconditions` significa que **pointblank**
+#' preprocesará la tabla de destino durante la interrogación como paso
+#' preparatorio. Puede suceder que esta validación en particular requiera alguna
+#' operación en la tabla de destino antes de que se lleve a cabo la comparación.
+#' El uso de `preconditions` puede ser útil en ocasiones, ya que podemos
+#' desarrollar un gran plan de validación con una sola tabla de destino y
+#' realizarle pequeños ajustes, según sea necesario, a lo largo del camino.
 #'
 #' The table mutation is totally isolated in scope to the validation step(s)
 #' where `preconditions` is used. Using **dplyr** code is suggested here since
@@ -12465,32 +12799,35 @@
 #' serves as the input data table to be transformed. Alternatively, a function
 #' could instead be supplied.
 #' 
-#' @section Segments:
-#' By using the `segments` argument, it's possible to define a particular
-#' validation with segments (or row slices) of the target table. An optional
-#' expression or set of expressions that serve to segment the target table by
-#' column values. Each expression can be given in one of two ways: (1) as column
-#' names, or (2) as a two-sided formula where the LHS holds a column name and
-#' the RHS contains the column values to segment on.
+#' @section Segmentos:
+#' Al usar el argumento `segments`, es posible definir una validación particular
+#' con segmentos (o porciones de fila) de la tabla de destino. Una expresión
+#' opcional o un conjunto de expresiones que sirven para segmentar la tabla de
+#' destino por valores de columna. Cada expresión se puede dar de una de dos
+#' maneras: (1) como nombres de columna, o (2) como una fórmula de dos lados
+#' donde el LHS contiene un nombre de columna y el RHS contiene los valores de
+#' columna para segmentar.
 #' 
-#' As an example of the first type of expression that can be used,
-#' `vars(a_column)` will segment the target table in however many unique values
-#' are present in the column called `a_column`. This is great if every unique
-#' value in a particular column (like different locations, or different dates)
-#' requires it's own repeating validation.
+#' Como ejemplo del primer tipo de expresión que se puede utilizar,
+#' `vars(a_column)` segmentará la tabla de destino en la forma en que estén
+#' presentes muchos valores únicos en la columna llamada `a_column`. Esto es
+#' excelente si cada valor único en una columna en particular (como diferentes
+#' ubicaciones o diferentes fechas) requiere su propia validación repetida.
+#' 
+#' Con una fórmula, podemos ser más selectivos con los valores de columna que se
+#' deben usar para la segmentación. El uso de `a_column ~ c("group_1",
+#' "group_2")` intentará obtener dos segmentos donde uno es una porción de datos
+#' donde el valor `"group_1"` existe en la columna llamada `"a_column"`, y el
+#' otro es un segmento donde existe `"group_2"` en la misma columna. Cada grupo
+#' de filas resuelto a partir de la fórmula dará como resultado un paso de
+#' validación independiente.
 #'
-#' With a formula, we can be more selective with which column values should be
-#' used for segmentation. Using `a_column ~ c("group_1", "group_2")` will
-#' attempt to obtain two segments where one is a slice of data where the value
-#' `"group_1"` exists in the column named `"a_column"`, and, the other is a
-#' slice where `"group_2"` exists in the same column. Each group of rows
-#' resolved from the formula will result in a separate validation step.
-#'
-#' Segmentation will always occur after `preconditions` (i.e., statements that
-#' mutate the target table), if any, are applied. With this type of one-two
-#' combo, it's possible to generate labels for segmentation using an expression
-#' for `preconditions` and refer to those labels in `segments` without having to
-#' generate a separate version of the target table.
+#' La segmentación siempre ocurrirá después de que se apliquen las
+#' `preconditions` (es decir, declaraciones que mutan la tabla de destino), si
+#' las hay. Con este tipo de combinación, es posible generar etiquetas
+#' para la segmentación usando una expresión para `preconditions` y hacer
+#' referencia a esas etiquetas en `segments` sin tener que generar una versión
+#' separada de la tabla de destino.
 #' 
 #' @section Actions:
 #' Often, we will want to specify `actions` for the validation. This argument,
@@ -13034,7 +13371,7 @@
 #'   create_agent(
 #'     read_fn = ~ game_revenue,
 #'     tbl_name = "game_revenue",
-#'     label = "An example.",
+#'     label = "Un ejemplo.",
 #'     actions = action_levels(
 #'       warn_at = 0.10,
 #'       stop_at = 0.25,
@@ -13467,7 +13804,7 @@
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~ small_table,
-#'     label = "An example.",
+#'     label = "Un ejemplo.",
 #'     actions = al
 #'   ) %>%
 #'   col_exists(vars(date, date_time)) %>%

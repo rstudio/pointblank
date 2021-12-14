@@ -157,7 +157,7 @@
 #' # Calling `multiagent` in the console
 #' # prints the multiagent report; but we
 #' # can get a `gt_tbl` object with the
-#' # `get_multiagent_report(agent)` function
+#' # `get_multiagent_report()` function
 #' report <- get_multiagent_report(multiagent)
 #' 
 #' class(report)

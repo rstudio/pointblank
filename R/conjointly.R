@@ -168,7 +168,7 @@
 #' writing to disk by using the [yaml_agent_string()] function.
 #'
 #' @inheritParams col_vals_gt
-#' @param ... a collection one-sided formulas that consist of validation
+#' @param ... A collection one-sided formulas that consist of validation
 #'   functions that validate row units (the `col_vals_*()` series), column
 #'   existence ([col_exists()]), or column type (the `col_is_*()` series). An
 #'   example of this is `~ col_vals_gte(., vars(a), 5.5), ~ col_vals_not_null(.,

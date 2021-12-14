@@ -6,7 +6,7 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     
     env:
       GITHUB_PAT: ${{ secrets.GHA_PAT }}
@@ -14,9 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-pandoc@v1
+      - uses: r-lib/actions/setup-pandoc@v2
       
-      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
 
@@ -26,7 +26,7 @@ jobs:
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
         shell: Rscript {0}
 
-      - uses: r-lib/actions/setup-r-dependencies@v1
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: pkgdown
           needs: website

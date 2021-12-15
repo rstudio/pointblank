@@ -8,9 +8,9 @@
 #' @description
 #' La función `action_levels()` trabaja con el argumento `actions` que está
 #' presente en la función [create_agent()] y en cada función de paso de
-#' validación (que también tiene un argumento` actions`). Con él, podemos
+#' validación (que también tiene un argumento `actions`). Con él, podemos
 #' proporcionar niveles de umbral *falla* para cualquier combinación de
-#' estados de advertencia, detención o notificación.
+#' estados de `warn`, `stop` o `notify`.
 #' 
 #' Podemos reaccionar ante cualquier entrada de un estado proporcionando las
 #' funciones correspondientes al argumento `fns`. Se someterán a evaluación en
@@ -26,9 +26,9 @@
 #' que operan directamente sobre los datos (p. Ej., `mtcars %>%
 #' col_vals_lt("mpg", 35)`). Hay dos funciones auxiliares que son convenientes
 #' cuando se usan funciones de validación directamente en datos (el flujo de
-#' trabajo sin `agente`): `warn_on_fail()` y `stop_on_fail()`. Estos ayudantes
+#' trabajo sin `agent`): `warn_on_fail()` y `stop_on_fail()`. Estos ayudantes
 #' advierten o se detienen (el umbral de falla predeterminado para cada uno se
-#' establece en "1") y lo hacen con advertencias informativas o mensajes de
+#' establece en `1`) y lo hacen con advertencias informativas o mensajes de
 #' error. El ayudante `stop_on_fail()` se aplica de forma predeterminada cuando
 #' se utilizan funciones de validación directamente en los datos (se proporciona
 #' más información sobre esto en *Detalles*).
@@ -8985,12 +8985,12 @@
 #' @param lang The language to use for automatic creation of briefs (short
 #'   descriptions for each validation step) and for the *agent report* (a
 #'   summary table that provides the validation plan and the results from the
-#'   interrogation. By default, `NULL` will create English (`"en"`) text. Other
-#'   options include French (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish
-#'   (`"es"`), Portuguese (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`), Russian
-#'   (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch
-#'   (`"nl"`). This `lang` option will override any previously set language
-#'   setting (e.g., by the [create_agent()] call).
+#'   interrogation. De forma predeterminada, `NULL` creará texto en inglés
+#'   (`"en"`). Otras opciones incluyen francés (`"fr"`), alemán (`"de"`),
+#'   italiano (`"it"`), español (`"es"`), portugués (`"pt"`), turco (`"tr"`),
+#'   chino (`"zh"`), ruso (`"ru"`), polaco (`"pl"`), danés (`"da"`), sueco
+#'   (`"sv"` ) y holandés (`"nl"`). This `lang` option will override any
+#'   previously set language setting (e.g., by the [create_agent()] call).
 #' @param locale An optional locale ID to use for formatting values in the
 #'   *agent report* summary table according the locale's rules. Examples include
 #'   `"en_US"` for English (United States) and `"fr_FR"` for French (France);
@@ -9286,13 +9286,12 @@
 #'   transformed.
 #' @param lang The language to use for the *information report* (a summary table
 #'   that provides the validation plan and the results from the interrogation.
-#'   By default, `NULL` will create English (`"en"`) text. Other options include
-#'   French (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish (`"es"`),
-#'   Portuguese (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`), Russian (`"ru"`),
-#'   Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
-#'   This `lang` option will override any previously set language setting (e.g.,
-#'   by the
-#'   [create_agent()] call).
+#'   De forma predeterminada, `NULL` creará texto en inglés (`"en"`). Otras
+#'   opciones incluyen francés (`"fr"`), alemán (`"de"`), italiano (`"it"`),
+#'   español (`"es"`), portugués (`"pt"`), turco (`"tr"`), chino (`"zh"`), ruso
+#'   (`"ru"`), polaco (`"pl"`), danés (`"da"`), sueco (`"sv"` ) y holandés
+#'   (`"nl"`). This `lang` option will override any previously set language
+#'   setting (e.g., by the [create_agent()] call).
 #' @param locale An optional locale ID to use for formatting values in the
 #'   *information report* summary table according the locale's rules. Examples
 #'   include `"en_US"` for English (United States) and `"fr_FR"` for French
@@ -9386,13 +9385,12 @@
 #'   Markdown text and transformed internally to HTML. To circumvent such a
 #'   transformation, use text in [I()] to explicitly state that the supplied
 #'   text should not be transformed.
-#' @param lang The language to use for the long or wide report forms. By
-#'   default, `NULL` will preserve any language set in the component reports.
-#'   The following options will force the same language across all component
-#'   reports: English (`"en"`), French (`"fr"`), German (`"de"`), Italian
-#'   (`"it"`), Spanish (`"es"`), Portuguese (`"pt"`), Turkish (`"tr"`), Chinese
-#'   (`"zh"`), Russian (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish
-#'   (`"sv"`), and Dutch (`"nl"`).
+#' @param lang The language to use for the long or wide report forms. De forma
+#'   predeterminada, `NULL` creará texto en inglés (`"en"`). Otras opciones
+#'   incluyen francés (`"fr"`), alemán (`"de"`), italiano (`"it"`), español
+#'   (`"es"`), portugués (`"pt"`), turco (`"tr"`), chino (`"zh"`), ruso
+#'   (`"ru"`), polaco (`"pl"`), danés (`"da"`), sueco (`"sv"` ) y holandés
+#'   (`"nl"`).
 #' @param locale An optional locale ID to use for formatting values in the long
 #'   or wide report forms (according the locale's rules). Examples include
 #'   `"en_US"` for English (United States) and `"fr_FR"` for French (France);
@@ -11123,20 +11121,21 @@
 #' @export
 
 # rows_count_match---------------------------------------------------------
-#' Does the row count match that of a different table?
+#' ¿El recuento de filas coincide con el de una tabla diferente?
 #'
 #' @description
-#' The `row_count_match()` validation function, the `expect_row_count_match()`
-#' expectation function, and the `test_row_count_match()` test function all
-#' check whether the row count in the target table matches that of a comparison
-#' table. The validation function can be used directly on a data table or with
-#' an *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation and test functions can only be used with a data table. The types
-#' of data tables that can be used include data frames, tibbles, database tables
-#' (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). As a validation step or as
-#' an expectation, there is a single test unit that hinges on whether the row
-#' counts for the two tables are the same (after any `preconditions` have been
-#' applied).
+#' La función de validación `row_count_match()`, la función de expectativa
+#' `expect_row_count_match()` y la función de prueba `test_row_count_match()`
+#' comprueban si el recuento de filas en la tabla de destino coincide con el de
+#' una tabla de comparación. La función de validación se puede usar directamente
+#' en una tabla de datos o con un objeto *agent* (técnicamente, un objeto
+#' `ptblank_agent`) mientras que las funciones de expectativa y prueba solo se
+#' pueden usar con una tabla de datos. Los tipos de tablas de datos que se
+#' pueden utilizar incluyen marcos de datos, tibbles, tablas de base de datos
+#' (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Como paso de validación o como
+#' expectativa, hay una única unidad de prueba que depende de si los recuentos
+#' de filas para las dos tablas son iguales (después de que se hayan aplicado
+#' las `preconditions`).
 #' 
 #' @section Preconditions:
 #' Proporcionar expresiones como `preconditions` significa que **pointblank**
@@ -11148,13 +11147,14 @@
 #' una sola tabla de destino y realice ajustes menores en ella, según sea
 #' necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed. Alternatively, a function
-#' could instead be supplied.
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere usar
+#' el código **dplyr** ya que las declaraciones se pueden traducir a SQL si es
+#' necesario (es decir, si la tabla de destino reside en una base de datos). El
+#' código se proporciona más fácilmente como una fórmula **R** unilateral
+#' (utilizando un `~` inicial). En la representación de la fórmula, el `.` sirve
+#' como la tabla de datos de entrada que se va a transformar. Alternativamente,
+#' se podría proporcionar una función.
 #' 
 #' @section Segmentos:
 #' Al usar el argumento `segments`, es posible definir una validación particular
@@ -11187,26 +11187,23 @@
 #' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que se produce mejor con la función [action_levels()]. Lee esa
+#' función documentación para la verdad sobre cómo crear reacciones por encima
+#' del umbral niveles de falla en la validación. La esencia básica es que
+#' querrás al menos un nivel de umbral único (especificado como la fracción de
+#' unidades de prueba falló, o un valor absoluto), a menudo usando el argumento
+#' `warn_at`. Utilizando `action_levels(warn_at = 1)` o `action_levels(stop_at =
+#' 1)` son buenas opciones dependiendo de la situación (el primero produce una
+#' advertencia, el otro `stop()`).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
@@ -11233,7 +11230,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `row_count_match()` step.",
+#'     label = "El paso `row_count_match()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -11252,25 +11249,25 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `row_count_match()` step.
+#'     label: El paso `row_count_match()`.
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter. Arguments with default
-#' values won't be written to YAML when using [yaml_write()] (though it is
-#' acceptable to include them with their default when generating the YAML by
-#' other means). It is also possible to preview the transformation of an agent
-#' to YAML without any writing to disk by using the [yaml_agent_string()]
-#' function.
+#' En la práctica, ambos serán a menudo más cortos. Los argumentos con valores
+#' por defecto no se escribirán en YAML cuando se utilice [yaml_write()] (aunque
+#' es aceptable incluirlos con su valor por defecto al generar el YAML por otros
+#' medios). También es posible previsualizar la transformación de un agente a
+#' YAML sin necesidad de escribirlo en el disco, utilizando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
-#' @param tbl_compare A table to compare against the target table in terms of
-#'   row count values. This can either be a table object, a table-prep
-#'   formula.This can be a table object such as a data frame, a tibble, a
-#'   `tbl_dbi` object, or a `tbl_spark` object. Alternatively, a table-prep
-#'   formula (`~ <table reading code>`) or a function (`function() <table
-#'   reading code>`) can be used to lazily read in the table at interrogation
-#'   time.
+#' @param tbl_compare Una tabla para comparar con la tabla de destino en
+#'   términos de valores de recuento de filas. Puede ser un objeto de tabla como
+#'   un marco de datos, un tibble, un objeto `tbl_dbi` o un objeto `tbl_spark`.
+#'   Como alternativa, se puede utilizar una fórmula de preparación de tabla (`~
+#'   <código de lectura de tabla>`) o una función (`function() <código de
+#'   lectura de tabla>`) para leer perezosamente la tabla en el momento de la
+#'   interrogación.
 #'   
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -11322,21 +11319,22 @@
 #' ¿Están completos los datos de las filas?
 #'
 #' @description
-#' The `rows_complete()` validation function, the `expect_rows_complete()`
-#' expectation function, and the `test_rows_complete()` test function all check
-#' whether rows contain any `NA`/`NULL` values (optionally constrained to a
-#' selection of specified `columns`). The validation function can be used
-#' directly on a data table or with an *agent* object (technically, a
-#' `ptblank_agent` object) whereas the expectation and test functions can only
-#' be used with a data table. The types of data tables that can be used include
-#' data frames, tibbles, database tables (`tbl_dbi`), and Spark DataFrames
-#' (`tbl_spark`). As a validation step or as an expectation, this will operate
-#' over the number of test units that is equal to the number of rows in the
-#' table (after any `preconditions` have been applied).
+#' La función de validación `rows_complete()`, la función de expectativa
+#' `expect_rows_complete()` y la función de prueba `test_rows_complete()`
+#' comprueban si las filas contienen algún valor `NA`/`NULL` (opcionalmente
+#' restringido a una selección de `columns`). La función de validación se puede
+#' usar directamente en una tabla de datos o con un objeto *agent*
+#' (técnicamente, un objeto `ptblank_agent`) mientras que las funciones de
+#' expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos de
+#' tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre el número de unidades de
+#' prueba que es igual al número de filas en la tabla (después de que se hayan
+#' aplicado las `preconditions`).
 #'
-#' We can specify the constraining column names in quotes, in `vars()`, and with
-#' the following **tidyselect** helper functions: `starts_with()`,
-#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
+#' Podemos especificar los nombres de las columnas restrictivas entre comillas,
+#' en `var()`, y con las siguientes funciones auxiliares **tidyselect**:
+#' `starts_with()`, `ends_with()`, `contains()`, `matches()` y `everything()`.
 #' 
 #' @section Preconditions:
 #' Proporcionar expresiones como `preconditions` significa que **pointblank**
@@ -11390,19 +11388,19 @@
 #' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Usar
+#' `action_levels(warn_at = 0.25)` o `action_levels(stop_at = 0.25)` son buenas
+#' opciones dependiendo de la situación (la primera produce una advertencia
+#' cuando una cuarta parte de la prueba total las unidades fallan, las otras
+#' `stop()` en el mismo nivel de umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -11430,7 +11428,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `rows_complete()` step.",
+#'     label = "El paso `rows_complete()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -11443,17 +11441,17 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `rows_complete()` step.
+#'     label: El paso `rows_complete()`.
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter. A value for `columns` is
-#' only necessary if checking for unique values across a subset of columns.
-#' Arguments with default values won't be written to YAML when using
-#' [yaml_write()] (though it is acceptable to include them with their default
-#' when generating the YAML by other means). It is also possible to preview the
-#' transformation of an agent to YAML without any writing to disk by using the
-#' [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos. Un valor para `columns` sólo
+#' es sólo es necesario si se buscan valores únicos en un subconjunto de
+#' columnas. Los argumentos con valores por defecto no se escribirán en YAML
+#' cuando se utilice [yaml_write()] (aunque es aceptable incluirlos con su valor
+#' por defecto al generar el YAML por otros medios). También es posible
+#' previsualizar la transformación de un agente a YAML sin necesidad de
+#' escribirlo en el disco, utilizando la función [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
 #'   
@@ -11466,8 +11464,8 @@
 #'   lógico.
 #'   
 #' @examples
-#' # Create a simple table with three
-#' # columns of numerical values
+#' # Cree una tabla sencilla con tres
+#' # columnas de valores numéricos
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 7, 6, 5, 8, 7),
@@ -11475,18 +11473,18 @@
 #'     c = c(1, 1, 1, 3, 3, 3)
 #'   )
 #' 
-#' # Validate that when considering only
-#' # data in columns `a` and `b`, there
-#' # are only complete rows (i.e., all
-#' # rows have no `NA` values)
+#' # Validar que al considerar sólo
+#' # los datos de las columnas `a` y
+#' # `b`, sólo hay filas completas (es
+#' # decir, todas las filas no tienen
+#' # valores `NA`)
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   rows_complete(vars(a, b)) %>%
 #'   interrogate()
 #' 
-#' # Determine if these column
-#' # validations have all passed
-#' # by using `all_passed()`
+#' # Determine si esta validación
+#' # pasó usando `all_passed()`
 #' all_passed(agent)
 #' 
 #' @family validation functions
@@ -11499,22 +11497,23 @@
 #' ¿Son distintos los datos de las filas?
 #'
 #' @description
-#' The `rows_distinct()` validation function, the `expect_rows_distinct()`
-#' expectation function, and the `test_rows_distinct()` test function all check
-#' whether row values (optionally constrained to a selection of specified
-#' `columns`) are, when taken as a complete unit, distinct from all other units
-#' in the table. The validation function can be used directly on a data table or
-#' with an *agent* object (technically, a `ptblank_agent` object) whereas the
-#' expectation and test functions can only be used with a data table. The types
-#' of data tables that can be used include data frames, tibbles, database tables
-#' (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). As a validation step or as
-#' an expectation, this will operate over the number of test units that is equal
-#' to the number of rows in the table (after any `preconditions` have been
-#' applied).
+#' La función de validación `rows_distinct()`, la función de expectativa
+#' `expect_rows_distinct()` y la función de prueba `test_rows_distinct()`
+#' comprueban si los valores de las filas (opcionalmente restringidos a una
+#' selección de `columns` especificadas) son, cuando se toman como una unidad
+#' completa, distintos de todas las demás unidades de la tabla. La función de
+#' validación se puede usar directamente en una tabla de datos o con un objeto
+#' *agent* (técnicamente, un objeto `ptblank_agent`) mientras que las funciones
+#' de expectativa y prueba solo se pueden usar con una tabla de datos. Los tipos
+#' de tablas de datos que se pueden utilizar incluyen marcos de datos, tibbles,
+#' tablas de base de datos (`tbl_dbi`) y Spark DataFrames (`tbl_spark`). Cada
+#' paso de validación o expectativa operará sobre el número de unidades de
+#' prueba que es igual al número de filas en la tabla (después de que se hayan
+#' aplicado las `preconditions`).
 #'
-#' We can specify the constraining column names in quotes, in `vars()`, and with
-#' the following **tidyselect** helper functions: `starts_with()`,
-#' `ends_with()`, `contains()`, `matches()`, and `everything()`.
+#' Podemos especificar los nombres de las columnas restrictivas entre comillas,
+#' en `var()`, y con las siguientes funciones auxiliares **tidyselect**:
+#' `starts_with()`, `ends_with()`, `contains()`, `matches()` y `everything()`.
 #' 
 #' @section Preconditions:
 #' Proporcionar expresiones como `preconditions` significa que **pointblank**
@@ -11568,19 +11567,19 @@
 #' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Usar
+#' `action_levels(warn_at = 0.25)` o `action_levels(stop_at = 0.25)` son buenas
+#' opciones dependiendo de la situación (la primera produce una advertencia
+#' cuando una cuarta parte de la prueba total las unidades fallan, las otras
+#' `stop()` en el mismo nivel de umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -11608,7 +11607,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `rows_distinct()` step.",
+#'     label = "El paso `rows_distinct()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -11621,17 +11620,17 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `rows_distinct()` step.
+#'     label: El paso `rows_distinct()`.
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter. A value for `columns` is
-#' only necessary if checking for unique values across a subset of columns.
-#' Arguments with default values won't be written to YAML when using
-#' [yaml_write()] (though it is acceptable to include them with their default
-#' when generating the YAML by other means). It is also possible to preview the
-#' transformation of an agent to YAML without any writing to disk by using the
-#' [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos. Un valor para `columns` sólo
+#' es sólo es necesario si se buscan valores únicos en un subconjunto de
+#' columnas. Los argumentos con valores por defecto no se escribirán en YAML
+#' cuando se utilice [yaml_write()] (aunque es aceptable incluirlos con su valor
+#' por defecto al generar el YAML por otros medios). También es posible
+#' previsualizar la transformación de un agente a YAML sin necesidad de
+#' escribirlo en el disco, utilizando la función [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
 #'   
@@ -11662,9 +11661,8 @@
 #'   rows_distinct(vars(a, b)) %>%
 #'   interrogate()
 #' 
-#' # Determine if these column
-#' # validations have all passed
-#' # by using `all_passed()`
+#' # Determine si esta validación
+#' # pasó usando `all_passed()`
 #' all_passed(agent)
 #' 
 #' @family validation functions
@@ -11677,63 +11675,69 @@
 #' Escanee minuciosamente una tabla para comprenderla mejor
 #'
 #' @description
-#' Generate an HTML report that scours the input table data. Before calling up
-#' an *agent* to validate the data, it's a good idea to understand the data with
-#' some level of precision. Make this the initial step of a well-balanced 
-#' *data quality reporting* workflow. The reporting output contains several
-#' sections to make everything more digestible, and these are:
+#' Generar un informe HTML que recorra los datos de la tabla de entrada. Antes
+#' de llamar a un *agente* para validar los datos, es una buena idea entender
+#' los datos con cierto nivel de precisión. Haga que este sea el paso inicial de
+#' un flujo de trabajo bien equilibrado de  *flujo de trabajo de información
+#' sobre la calidad de los datos. La salida del informe contiene varias
+#' secciones para hacer todo más digerible, y estas son:
 #' 
 #' \describe{
-#' \item{Overview}{Table dimensions, duplicate row counts, column types, and
-#' reproducibility information}
-#' \item{Variables}{A summary for each table variable and further statistics and
-#' summaries depending on the variable type}
-#' \item{Interactions}{A matrix plot that shows interactions between variables}
-#' \item{Correlations}{A set of correlation matrix plots for numerical
-#' variables}
-#' \item{Missing Values}{A summary figure that shows the degree of missingness
-#' across variables}
-#' \item{Sample}{A table that provides the head and tail rows of the dataset}
+#' \item{Overview}{Dimensiones de la tabla, recuento de filas duplicadas, tipos
+#' de columnas y información de reproducibilidad}
+#' \item{Variables}{Un resumen para cada variable de la tabla y más estadísticas
+#' y resúmenes en función del tipo de variable}
+#' \item{Interactions}{Un gráfico matricial que muestra las interacciones entre
+#' las variables}
+#' \item{Correlations}{Un conjunto de gráficos de matrices de correlación para
+#' variables numéricas variables numéricas}
+#' \item{Missing Values}{Una figura de resumen que muestra el grado de ausencia
+#' en todas las variables}
+#' \item{Sample}{Una tabla que proporciona las filas de cabeza y cola del
+#' conjunto de datos}
 #' }
 #' 
-#' The output HTML report will appear in the RStudio Viewer and can also be
-#' integrated in R Markdown HTML output. If you need the output HTML as a
-#' string, it's possible to get that by using `as.character()` (e.g.,
-#' `scan_data(tbl = mtcars) %>% as.character()`). The resulting HTML string is a
-#' complete HTML document where **Bootstrap** and **jQuery** are embedded
-#' within.
+#' El informe HTML de salida aparecerá en el visor de RStudio y también puede
+#' integrarse en la salida HTML de R Markdown. Si necesita el HTML de salida
+#' como una cadena, es posible obtenerlo utilizando `as.character()` (por
+#' ejemplo, `scan_data(tbl = mtcars) %>% as.character()`). La cadena HTML
+#' resultante es un documento HTML completo donde **Bootstrap** y **jQuery**
+#' están incrustados en su interior.
 #' 
-#' @param tbl The input table. This can be a data frame, tibble, a `tbl_dbi`
-#'   object, or a `tbl_spark` object.
-#' @param sections The sections to include in the finalized `Table Scan` report.
-#'   A string with key characters representing section names is required here.
-#'   The default string is `"OVICMS"` wherein each letter stands for the
-#'   following sections in their default order: `"O"`: `"overview"`; `"V"`:
-#'   `"variables"`; `"I"`: `"interactions"`; `"C"`: `"correlations"`; `"M"`:
-#'   `"missing"`; and `"S"`: `"sample"`. This string can be comprised of less
-#'   characters and the order can be changed to suit the desired layout of the
-#'   report. For `tbl_dbi` and `tbl_spark` objects supplied to `tbl`, the
-#'   `"interactions"` and `"correlations"` sections are currently excluded.
-#' @param navbar Should there be a navigation bar anchored to the top of the
-#'   report page? By default this is `TRUE`.
-#' @param width An optional fixed width (in pixels) for the HTML report. By
-#'   default, no fixed width is applied.
-#' @param lang The language to use for label text in the report. By default,
-#'   `NULL` will create English (`"en"`) text. Other options include French
-#'   (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish (`"es"`), Portuguese
-#'   (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`),  Russian (`"ru"`), Polish
-#'   (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
-#' @param locale An optional locale ID to use for formatting values in the
-#'   report according the locale's rules. Examples include `"en_US"` for English
-#'   (United States) and `"fr_FR"` for French (France); more simply, this can be
-#'   a language identifier without a country designation, like `"es"` for
-#'   Spanish (Spain, same as `"es_ES"`).
+#' @param tbl La tabla de entrada. Puede ser un marco de datos, un tibble, un
+#'   objeto `tbl_dbi` o un objeto `tbl_spark`.
+#' @param sections Las secciones a incluir en el informe finalizado de `Escaneo
+#'   de Tablas`. Aquí se requiere una cadena con caracteres clave que
+#'   representen los nombres de las secciones. La cadena por defecto es
+#'   `"OVICMS"` donde cada letra representa las siguientes secciones en su orden
+#'   por defecto: `"O"`: `"overview"`; `"V"`: `"variables"`; `"I"`:
+#'   `"interactions"`; `"C"`: `"correlations"`; `"M"`: `"missing"`; y `"S"`:
+#'   `"sample"`. Esta cadena puede estar compuesta por menos caracteres y el
+#'   orden puede cambiarse para adaptarse al diseño deseado del informe. En el
+#'   caso de los objetos `tbl_dbi` y `tbl_spark` suministrados a `tbl`, las
+#'   secciones de `"interactions"` y `"correlations"` están excluidas.
+#' @param navbar ¿Debe haber una barra de navegación anclada en la parte
+#'   superior de la página del informe? Por defecto es `TRUE`.
+#' @param width Una anchura fija opcional (en píxeles) para el informe HTML. Por
+#'   defecto no se aplica ninguna anchura fija.
+#' @param lang El idioma que se utilizará para el texto de la etiqueta en el
+#'   informe. De forma predeterminada, `NULL` creará texto en inglés (`"en"`).
+#'   Otras opciones incluyen francés (`"fr"`), alemán (`"de"`), italiano
+#'   (`"it"`), español (`"es"`), portugués (`"pt"`), turco (`"tr"`), chino
+#'   (`"zh"`), ruso (`"ru"`), polaco (`"pl"`), danés (`"da"`), sueco (`"sv"` ) y
+#'   holandés (`"nl"`).
+#' @param locale Un identificador opcional de la configuración regional que se
+#'   utilizará para formatear los valores en el informe de acuerdo con las
+#'   reglas de la configuración regional. Los ejemplos incluyen `"en_US"` para
+#'   el inglés (Estados Unidos) y `"fr_FR"` para el francés (Francia); más
+#'   sencillamente, puede ser un identificador de idioma sin designación de
+#'   país, como `"es"` para español (España, igual que `"es_ES"`).
 #'   
 #' @examples
 #' if (interactive()) {
 #' 
-#' # Get an HTML document that describes all of
-#' # the data in the `dplyr::storms` dataset
+#' # Obtener un documento HTML que describa
+#' # los datos de la tabla `dplyr::storms`
 #' tbl_scan <- scan_data(tbl = dplyr::storms)
 #' 
 #' }
@@ -11751,33 +11755,34 @@
 #' Ejecutar varias pruebas y una validación final en serie
 #'
 #' @description 
-#' The `serially()` validation function allows for a series of tests to run in
-#' sequence before either culminating in a final validation step or simply
-#' exiting the series. This construction allows for pre-testing that may make
-#' sense before a validation step. For example, there may be situations where
-#' it's vital to check a column type before performing a validation on the same
-#' column (since having the wrong type can result in an evaluation error for the
-#' subsequent validation). Another serial workflow might entail having a bundle
-#' of checks in a prescribed order and, if all pass, then the goal of this
-#' testing has been achieved (e.g., checking if a table matches another through
-#' a series of increasingly specific tests).
+#' La función de validación `serially()` permite ejecutar una serie de pruebas
+#' en secuencia antes de culminar con un paso de validación final o simplemente
+#' salir de la serie. Esta construcción permite realizar pruebas previas que
+#' pueden tener sentido antes de un paso de validación. Por ejemplo, puede haber
+#' situaciones en las que es vital comprobar el tipo de columna antes de
+#' realizar una validación en la misma columna (ya que tener un tipo incorrecto
+#' puede dar lugar a un error de evaluación para la validación posterior). Otro
+#' flujo de trabajo en serie podría implicar tener un conjunto de comprobaciones
+#' en un orden prescrito y, si todas pasan, entonces el objetivo de estas
+#' pruebas se ha alcanzado (por ejemplo, comprobar si una tabla coincide con
+#' otra a través de una serie de pruebas cada vez más específicas).
 #' 
-#' A series as specified inside `serially()` is composed with a listing of
-#' calls, and we would draw upon test functions (**T**) to describe tests and
-#' optionally provide a finalizing call with a validation function (**V**).
-#' The following constraints apply:
+#' Una serie como se especifica dentro de `serially()` se compone con un listado
+#' de llamadas, y nos basaríamos en las funciones de prueba (**T**) para
+#' describir las pruebas y opcionalmente proporcionar una llamada final con una
+#' función de validación (**V**). Se aplican las siguientes restricciones:
 #' 
-#' - there must be at least one test function in the series (**T** -> **V** is
-#' good, **V** is *not*)
-#' - there can only be one validation function call, **V**; it's optional but,
-#' if included, it must be placed at the end (**T** -> **T** -> **V** is good,
-#' these sequences are bad: (1) **T** -> **V** -> **T**, (2) **T** -> **T** -> 
-#' **V** -> **V**)
-#' - a validation function call (**V**), if included, mustn't itself yield
-#' multiple validation steps (this may happen when providing multiple `columns`
-#' or any `segments`)
+#' - debe haber al menos una función de prueba en la serie (**T** -> **V** es
+#' buena, **V** es *no*)
+#' - sólo puede haber una llamada a la función de validación, **V**; es opcional
+#' pero, si se incluye, debe colocarse al final (**T** -> **T** -> **V** es
+#' buena, estas secuencias son malas: (1) **T** -> **V** -> **T**, (2) **T** ->
+#' **T** -> **V** -> **V**)
+#' - una llamada a la función de validación (**V**), si se incluye, no debe
+#' producir por sí misma múltiples pasos de validación (esto puede ocurrir
+#' cuando se proporcionan múltiples `columns` o cualquier `segments`)
 #' 
-#' Here's an example of how to arrange expressions:
+#' Este es un ejemplo de cómo organizar las expresiones:
 #' 
 #' ```
 #' ~ test_col_exists(., columns = vars(count)),
@@ -11785,25 +11790,26 @@
 #' ~ col_vals_gt(., columns = vars(count), value = 2)
 #' ```
 #' 
-#' This series concentrates on the column called `count` and first checks
-#' whether the column exists, then checks if that column is numeric, and then
-#' finally validates whether all values in the column are greater than `2`.
+#' Esta serie se concentra en la columna llamada `count` y primero comprueba si
+#' la columna existe, luego comprueba si esa columna es numérica, y luego
+#' finalmente valida si todos los valores de la columna son mayores que `2`.
 #' 
-#' Note that in the above listing of calls, the `.` stands in for the target
-#' table and is always necessary here. Also important is that all `test_*()`
-#' functions have a `threshold` argument that is set to `1` by default. Should
-#' you need to bump up the threshold value it can be changed to a different
-#' integer value (as an absolute threshold of failing test units) or a
-#' decimal value between `0` and `1` (serving as a fractional threshold of
-#' failing test units).
+#' Tenga en cuenta que en la lista de llamadas anterior, el `.` representa la
+#' tabla de destino y siempre es necesario aquí. También es importante que todas
+#' las funciones `test_*()` tienen un argumento `threshold` que se establece en
+#' `1` por defecto. Si necesita aumentar el valor del umbral, puede cambiarlo a
+#' un valor entero diferente (como umbral absoluto de unidades de prueba que
+#' fallan) o a un valor decimal entre `0` y `1` (que sirve como umbral
+#' fraccionario de unidades de prueba que fallan). unidades de prueba que
+#' fallan).
 #'
 #' @section Nombres de columnas:
-#' If providing multiple column names in any of the supplied validation steps,
-#' the result will be an expansion of sub-validation steps to that number of
-#' column names. Aside from column names in quotes and in `vars()`,
-#' **tidyselect** helper functions are available for specifying columns. They
-#' are: `starts_with()`, `ends_with()`, `contains()`, `matches()`, and
-#' `everything()`.
+#' Si se proporcionan varios nombres de columna en cualquiera de los pasos de
+#' validación suministrados, el resultado será una expansión de los pasos de
+#' subvalidación a ese número de nombres de columna. Aparte de los nombres de
+#' columnas entre comillas y en `vars()`, las funciones de ayuda **tidyselect**
+#' están disponibles para especificar columnas. Son: `starts_with()`,
+#' `ends_with()`, `contains()`, `matches()` y `everything()`.
 #' 
 #' @section Preconditions:
 #' Proporcionar expresiones como `preconditions` significa que **pointblank**
@@ -11827,19 +11833,20 @@
 #' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()`s en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -11896,16 +11903,18 @@
 #' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
-#' @param ... a collection one-sided formulas that consist of `test_*()`
-#'   function calls (e.g., [test_col_vals_between()], etc.) arranged in sequence
-#'   of intended interrogation order. Typically, validations up until the final
-#'   one would have some `threshold` value set (default is `1`) for short
-#'   circuiting within the series. A finishing validation function call (e.g.,
-#'   [col_vals_increasing()], etc.) can optionally be inserted at the end of the
-#'   series, serving as a validation step that only undergoes interrogation if
-#'   the prior tests adequately pass. An example of this is
-#'   `~ test_column_exists(., vars(a)), ~ col_vals_not_null(., vars(a))`).
-#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @param ... Una colección de fórmulas unilaterales que consisten en llamadas a
+#'   funciones `test_*()` (por ejemplo, [test_col_vals_between()], etc.)
+#'   dispuestas en la secuencia del orden de interrogación previsto.
+#'   Típicamente, las validaciones hasta la final tendrían algún valor de
+#'   `threshold` establecido (por defecto es `1`) para el cortocircuito dentro
+#'   de la serie. Una llamada a la función de validación final (por ejemplo,
+#'   [col_vals_increasing()], etc.) puede insertarse opcionalmente al final de
+#'   la serie, sirviendo como un paso de validación que sólo se somete a
+#'   interrogación si las pruebas anteriores pasan adecuadamente. Un ejemplo de
+#'   esto es `~ test_column_exists(., vars(a)), ~ col_vals_not_null(.,
+#'   vars(a))`).
+#' @param .list Permite el uso de una lista como alternativa de entrada a `...`.
 #' 
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -12220,7 +12229,7 @@
 # snip_highest-------------------------------------------------------------
 #' Un `fn` para `info_snippet()`: obtiene el valor más alto de una columna
 #' 
-#' The `snip_lowest()` function can be used as an [info_snippet()] function
+#' The `snip_highest()` function can be used as an [info_snippet()] function
 #' (i.e., provided to `fn`) to get the highest numerical, time value, or
 #' alphabetical value from a column in the target table.
 #' 
@@ -12453,14 +12462,15 @@
 #' Realizar una validación especializada con una función definida por el usuario
 #'
 #' @description 
-#' The `specially()` validation function allows for custom validation with a
-#' function that *you* provide. The major proviso for the provided function is
-#' that it must either return a logical vector or a table where the final column
-#' is logical. The function will operate on the table object, or, because you
-#' can do whatever you like, it could also operate on other types of objects. To
-#' do this, you can transform the input table in `preconditions` or inject an
-#' entirely different object there. During interrogation, there won't be any
-#' checks to ensure that the data is a table object.
+#' La función de validación `specially()` permite una validación personalizada
+#' con una función que *usted* proporciona. La principal condición para la
+#' función proporcionada es que debe devolver un vector lógico o una tabla donde
+#' la columna final sea lógica. La función operará sobre el objeto tabla o, como
+#' puede hacer lo que quiera, también podría operar sobre otros tipos de
+#' objetos. Para ello, puede transformar la tabla de entrada en `preconditions`
+#' o inyectar allí un objeto totalmente diferente. Durante la interrogación, no
+#' habrá ninguna comprobación para asegurar que los datos son un objeto de
+#' tabla.
 #' 
 #' @section Preconditions:
 #' Proporcionar expresiones como `preconditions` significa que **pointblank**
@@ -12486,19 +12496,20 @@
 #' `function(x) dplyr::mutate(x, col_b = col_a + 10)`).
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que es mejor producido por la función [action_levels()]. Lea la
+#' documentación de esa función para obtener información sobre cómo crear
+#' reacciones a niveles de falla por encima del umbral en la validación. La
+#' esencia básica es que querrá al menos un nivel de umbral único (especificado
+#' como la fracción de unidades de prueba fallidas o un valor absoluto), a
+#' menudo utilizando el argumento `warn_at`. Esto es especialmente cierto cuando
+#' `x` es un objeto de tabla porque, de lo contrario, no sucede nada. Para las
+#' funciones de tipo `col_vals_*()`, usar `action_levels(warn_at = 0.25)` o
+#' `action_levels(stop_at = 0.25)` son buenas opciones dependiendo de la
+#' situación (la primera produce una advertencia cuando una cuarta parte de la
+#' prueba total las unidades fallan, las otras `stop()`s en el mismo nivel de
+#' umbral).
 #' 
 #' @section Briefs:
 #' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
@@ -12571,13 +12582,14 @@
 # specifications-----------------------------------------------------------
 #' Una tabla que contiene datos pertenecientes a varias especificaciones
 #'
-#' The `specifications` dataset is useful for testing the
-#' [col_vals_within_spec()], [test_col_vals_within_spec()], and
-#' [expect_col_vals_within_spec()] functions. For each column, holding character
-#' values for different specifications, rows 1-5 contain valid values, the 6th
-#' row is an NA value, and the final two values (rows 7 and 8) are invalid.
-#' Different specification (`spec`) keywords apply to each of columns when
-#' validating with any of the aforementioned functions.
+#' La tabla `specifications` es útil para probar las funciones
+#' [col_vals_within_spec()], [test_col_vals_within_spec()] y
+#' [expect_col_vals_within_spec()]. Para cada columna, que contiene valores de
+#' caracteres para diferentes especificaciones, las filas 1-5 contienen valores
+#' válidos, la 6ª fila es un valor NA, y los dos últimos valores (filas 7 y 8)
+#' son inválidos. Las diferentes palabras clave de especificación (`spec`) se
+#' aplican a cada una de las columnas cuando al validar con cualquiera de las
+#' funciones mencionadas.
 #'
 #' @format A tibble with 8 rows and 12 variables:
 #' \describe{
@@ -12607,8 +12619,8 @@
 #' }
 #'
 #' @examples
-#' # Here is a glimpse at the data
-#' # available in `specifications`
+#' # He aquí un vistazo a los datos
+#' # disponibles en `specifications`
 #' dplyr::glimpse(specifications)
 #'
 #' @family Datasets
@@ -12620,11 +12632,11 @@
 #' Proporcione componentes simples del cuerpo del mensaje de correo electrónico:
 #' "body"
 #' 
-#' The `stock_msg_body()` function simply provides some stock text for an email
-#' message sent via [email_blast()] or obtained as a standalone object through
-#' [email_create()].
+#' La función `stock_msg_body()` simplemente proporciona un texto de stock para
+#' un mensaje de correo electrónico enviado a través de [email_blast()] u
+#' obtenido como un objeto independiente a través de [email_create()].
 #'
-#' @return Text suitable for the `msg_body` arguments of [email_blast()] and
+#' @return Texto adecuado para el argumento `msg_body` de [email_blast()] y
 #'   [email_create()].
 #' 
 #' @family Emailing
@@ -12637,11 +12649,11 @@
 #' Proporcione componentes simples del cuerpo del mensaje de correo electrónico:
 #' "footer"
 #' 
-#' The `stock_msg_footer()` functions simply provide some stock text for an
-#' email message sent via [email_blast()] or obtained as a standalone object
-#' through [email_create()].
+#' La función `stock_msg_footer()` simplemente proporciona un texto de stock
+#' para un mensaje de correo electrónico enviado a través de [email_blast()] u
+#' obtenido como un objeto independiente a través de [email_create()].
 #'
-#' @return Text suitable for the `msg_footer` argument of [email_blast()] and
+#' @return Texto adecuado para el argumento `msg_footer` de [email_blast()] y
 #'   [email_create()].
 #' 
 #' @family Emailing
@@ -12770,7 +12782,7 @@
 #' @export
 
 # tbl_match----------------------------------------------------------------
-#' Does the target table match a comparison table?
+#' ¿La tabla de destino coincide con una tabla de comparación?
 #'
 #' @description
 #' The `tbl_match()` validation function, the `expect_tbl_match()` expectation
@@ -12832,26 +12844,23 @@
 #' separada de la tabla de destino.
 #' 
 #' @section Actions:
-#' Often, we will want to specify `actions` for the validation. This argument,
-#' present in every validation function, takes a specially-crafted list
-#' object that is best produced by the [action_levels()] function. Read that
-#' function's documentation for the lowdown on how to create reactions to
-#' above-threshold failure levels in validation. The basic gist is that you'll
-#' want at least a single threshold level (specified as either the fraction of
-#' test units failed, or, an absolute value), often using the `warn_at`
-#' argument. This is especially true when `x` is a table object because,
-#' otherwise, nothing happens. For the `col_vals_*()`-type functions, using 
-#' `action_levels(warn_at = 0.25)` or `action_levels(stop_at = 0.25)` are good
-#' choices depending on the situation (the first produces a warning when a
-#' quarter of the total test units fails, the other `stop()`s at the same
-#' threshold level).
+#' A menudo, querremos especificar `actions` para la validación. Este argumento,
+#' presente en cada función de validación, toma un objeto de lista especialmente
+#' diseñado que se produce mejor con la función [action_levels()]. Lee esa
+#' función documentación para la verdad sobre cómo crear reacciones por encima
+#' del umbral niveles de falla en la validación. La esencia básica es que
+#' querrás al menos un nivel de umbral único (especificado como la fracción de
+#' unidades de prueba falló, o un valor absoluto), a menudo usando el argumento
+#' `warn_at`. Utilizando `action_levels(warn_at = 1)` o `action_levels(stop_at =
+#' 1)` son buenas opciones dependiendo de la situación (el primero produce una
+#' advertencia, el otro `stop()`).
 #' 
 #' @section Briefs:
-#' Want to describe this validation step in some detail? Keep in mind that this
-#' is only useful if `x` is an *agent*. If that's the case, `brief` the agent
-#' with some text that fits. Don't worry if you don't want to do it. The
-#' *autobrief* protocol is kicked in when `brief = NULL` and a simple brief will
-#' then be automatically generated.
+#' ¿Quiere describir este paso de validación con algún detalle? Tenga en cuenta
+#' que esto sólo es útil si `x` es un objeto *agent*. Si ese es el caso, use un
+#' texto `brief` que se ajuste a la situación. No se preocupe si no quiere
+#' hacerlo. Un *autobrief* se activa cuando `brief = NULL` y el texto luego se
+#' generará automáticamente.
 #' 
 #' @section YAML:
 #' Se puede escribir un agente **pointblank** en YAML con [yaml_write()] y el
@@ -12878,7 +12887,7 @@
 #'     preconditions = ~ . %>% dplyr::filter(a < 10),
 #'     segments = b ~ c("group_1", "group_2"),
 #'     actions = action_levels(warn_at = 0.1, stop_at = 0.2),
-#'     label = "The `tbl_match()` step.",
+#'     label = "El paso `tbl_match()`.",
 #'     active = FALSE
 #'   )
 #' 
@@ -12897,24 +12906,25 @@
 #'     actions:
 #'       warn_fraction: 0.1
 #'       stop_fraction: 0.2
-#'     label: The `tbl_match()` step.
+#'     label: El paso `tbl_match()`.
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter. Arguments with default
-#' values won't be written to YAML when using [yaml_write()] (though it is
-#' acceptable to include them with their default when generating the YAML by
-#' other means). It is also possible to preview the transformation of an agent
-#' to YAML without any writing to disk by using the [yaml_agent_string()]
-#' function.
+#' En la práctica, ambos serán a menudo más cortos. Los argumentos con valores
+#' por defecto no se escribirán en YAML cuando se utilice [yaml_write()] (aunque
+#' es aceptable incluirlos con su valor por defecto al generar el YAML por otros
+#' medios). También es posible previsualizar la transformación de un agente a
+#' YAML sin necesidad de escribirlo en el disco, utilizando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
-#' @param tbl_compare A table to compare against the target table. This can
-#'   either be a table object, a table-prep formula. This can be a table object
-#'   such as a data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark`
-#'   object. Alternatively, a table-prep formula (`~ <table reading code>`) or a
-#'   function (`function() <table reading code>`) can be used to lazily read in
-#'   the table at interrogation time.
+#' @param tbl_compare Una tabla para comparar con la tabla de destino. Esto
+#'   puede ser un objeto de tabla, una fórmula de preparación de tabla. Puede
+#'   ser un objeto de tabla como un marco de datos, un tibble, un objeto
+#'   `tbl_dbi` o un objeto `tbl_spark`. Como alternativa, se puede utilizar una
+#'   fórmula de preparación de tabla (`~ <código de lectura de tabla>`) o una
+#'   función (`function() <código de lectura de tabla>`) para leer perezosamente
+#'   la tabla en el momento de la interrogación.
 #'   
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -13667,48 +13677,51 @@
 #' Transforma un agente **pointblank** en un **testthat** archivo de prueba
 #' 
 #' @description
-#' With a **pointblank** *agent*, we can write a **testthat** test file and opt
-#' to place it in the `testthat/tests` if it is available in the project path
-#' (we can specify an alternate path as well). This works by transforming the
-#' validation steps to a series of `expect_*()` calls inside individual
-#' [testthat::test_that()] statements.
+#' Con un objeto **pointblank** *agent*, podemos escribir un archivo de prueba
+#' **testthat** y optar por colocarlo en `testthat/tests` si está disponible en
+#' la ruta del proyecto (también podemos especificar una ruta alternativa). Esto
+#' funciona transformando los pasos de validación en una serie de llamadas a
+#' `expect_*()` dentro de declaraciones individuales [testthat::test_that()].
 #' 
-#' A hard requirement for using `write_testthat_file()` on an agent is the
-#' presence of a `read_fn`, which is a function that is invoked to obtain the
-#' target table. The `read_fn` statement will be placed at the top of the
-#' **testthat** test file so that the target table is available for each of the
-#' [testthat::test_that()] statements that follow. If an *agent* does not have a
-#' `read_fn` it can be added via the [set_read_fn()].
+#' Un requisito indispensable para utilizar `write_testthat_file()` en un agente
+#' es la presencia de una `read_fn`, que es una función que se invoca para
+#' obtener la tabla de destino. La sentencia `read_fn` se colocará en la parte
+#' superior del archivo de prueba **testthat** para que la tabla de destino esté
+#' disponible para cada una de las sentencias [testthat::test_that()] que le
+#' siguen. Si un objeto *agent* no tiene una `read_fn` puede añadirse a través
+#' de [set_read_fn()].
 #' 
-#' Thresholds will be obtained from those applied for the `stop` state. This can
-#' be set up for a **pointblank** *agent* by passing an `action_levels` object
-#' to the `actions` argument of [create_agent()] or the same argument of any
-#' included validation function. If `stop` thresholds are not available, then a
-#' threshold value of `1` will be used for each generated `expect_*()` statement
-#' in the resulting **testthat** test file.
+#' Los umbrales se obtendrán a partir de los aplicados para el estado `stop`.
+#' Esto puede configurarse para un objeto *agente** en blanco pasando un objeto
+#' `action_levels` al argumento `actions` de [create_agent()] o el mismo
+#' argumento de cualquier función de validación incluida. Si los umbrales `stop`
+#' no están disponibles, se utilizará un valor de umbral de `1` para cada
+#' sentencia `expect_*()` generada en el archivo de prueba **testthat**
+#' resultante.
 #' 
-#' There is no requirement that the **agent** first undergo interrogation with
-#' [interrogate()]. However, it may be useful as a dry run to interactively
-#' perform an interrogation on the target data before generating the
-#' **testthat** test file.
+#' No es necesario que el objeto **agent** se someta primero a una interrogación
+#' con [interrogate()]. Sin embargo, puede ser útil como prueba de
+#' funcionamiento realizar interactivamente una interrogación en los datos de
+#' destino antes de generar el archivo de prueba **testthat**.
 #' 
 #' @details 
-#' Tests for inactive validation steps will be skipped with a clear message
-#' indicating that the reason for skipping was due to the test not being active.
-#' Any inactive validation steps can be forced into an active state by using the
-#' [activate_steps()] on an *agent* (the opposite is possible with the
-#' [deactivate_steps()] function).
+#' Las pruebas de los pasos de validación inactivos se omitirán con un mensaje
+#' claro que indique que el motivo de la omisión se debe a que la prueba no está
+#' activa. Cualquier paso de validación inactivo puede ser forzado a un estado
+#' activo utilizando la función [activate_steps()] en un objeto *agent* (lo
+#' contrario es posible con la función [deactivate_steps()]).
 #' 
-#' The **testthat** package comes with a series of `skip_on_*()` functions which
-#' conveniently cause the test file to be skipped entirely if certain conditions
-#' are met. We can quickly set any number of these at the top of the
-#' **testthat** test file by supplying keywords as a vector to the `skips`
-#' option of `write_testthat_file()`. For instance, setting 
-#' `skips = c("cran", "windows)` will add the **testthat** `skip_on_cran()` and
-#' `skip_on_os("windows")` statements, meaning that the generated test file
-#' won't run on a CRAN system or if the system OS is Windows.
+#' El paquete **testthat** viene con una serie de funciones `skip_on_*()` que
+#' convenientemente hacen que el archivo de prueba se salte por completo si se
+#' cumplen ciertas condiciones. Podemos establecer rápidamente cualquier número
+#' de ellas en la parte superior del archivo de prueba **testthat**
+#' suministrando palabras clave como un vector a la opción `skips` de
+#' `write_testthat_file()`. Por ejemplo, si establecemos
+#' `skips = c("cran", "windows)` añadiremos el código `skip_on_cran()` y
+#' `skip_on_os("windows")`, lo que significa que el archivo de prueba generado
+#' no se ejecutará en un sistema CRAN o si el sistema operativo es Windows.
 #' 
-#' Here is an example of **testthat** test file output:
+#' Este es un ejemplo de la salida del archivo de prueba **testthat**:
 #' 
 #' `test-small_table.R`
 #' ```
@@ -13737,7 +13750,7 @@
 #' 
 #' ```
 #' 
-#' This was generated by the following set of statements:
+#' Esto fue generado por el siguiente conjunto de declaraciones:
 #' 
 #' ```
 #' library(pointblank)
@@ -13758,30 +13771,33 @@
 #' ```
 #' 
 #' @param agent Un objeto de agente de clase `ptblank_agent`.
-#' @param name An optional name for for the **testhat** test file. This should
-#'   be a name without extension and without the leading `"test-"` text. If
-#'   nothing is supplied, the name will be derived from the `tbl_name` in the
-#'   agent. If that's not present, a generic name will be used.
-#' @param path A path can be specified here if there shouldn't be an attempt to
-#'   place the file in `testthat/tests`.
-#' @param overwrite Should a **testthat** file of the same name be overwritten?
-#'   By default, this is `FALSE`.
-#' @param skips This is an optional vector of test-skipping keywords modeled
-#'   after the **testthat** `skip_on_*()` functions. The following keywords can
-#'   be used to include `skip_on_*()` statements: `"cran"`
-#'   ([testthat::skip_on_cran()]), `"travis"` ([testthat::skip_on_travis()]),
-#'   `"appveyor"` ([testthat::skip_on_appveyor()]), `"ci"`
-#'   ([testthat::skip_on_ci()]), `"covr"` ([testthat::skip_on_covr()]), `"bioc"`
-#'   ([testthat::skip_on_bioc()]). There are keywords for skipping tests on
-#'   certain operating systems and all of them will insert a specific
-#'   [testthat::skip_on_os()] call. These are `"windows"`
+#' @param name Un nombre opcional para el archivo de prueba **testhat**. Debe
+#'   ser un nombre sin extensión y sin el texto inicial `"test-"`. Si no se
+#'   suministra nada, el nombre se derivará del `tbl_name` en el objeto agente.
+#'   Si no está presente, se utilizará un nombre genérico.
+#' @param path Aquí se puede especificar una ruta si no se debe intentar colocar
+#'   el archivo en `testthat/tests`.
+#' @param overwrite ¿Debe sobrescribirse un archivo **testthat** del mismo
+#'   nombre? Por defecto, esto es `FALSE`.
+#' @param skips Se trata de un vector opcional de palabras clave de omisión de
+#'   pruebas modelado a partir de las funciones **testthat** `skip_on_*()`. Las
+#'   siguientes palabras clave pueden utilizarse para incluir declaraciones
+#'   `skip_on_*()`: `"cran"` ([testthat::skip_on_cran()]), `"travis"`
+#'   ([testthat::skip_on_travis()]), `"appveyor"`
+#'   ([testthat::skip_on_appveyor()]), `"ci"` ([testthat::skip_on_ci()]),
+#'   `"covr"` ([testthat::skip_on_covr()]), `"bioc"`
+#'   ([testthat::skip_on_bioc()]). Existen palabras clave para omitir pruebas en
+#'   determinados sistemas operativos y todas ellas insertarán una llamada
+#'   específica [testthat::skip_on_os()]. Estas son `"windows"`
 #'   (`skip_on_os("windows")`), `"mac"` (`skip_on_os("mac")`), `"linux"`
-#'   (`skip_on_os("linux")`), and `"solaris"` (`skip_on_os("solaris")`). These
-#'   calls will be placed at the top of the generated **testthat** test file.
-#' @param quiet Should the function *not* inform when the file is written? By
-#'   default this is `FALSE`.
+#'   (`skip_on_os("linux")`) y `"solaris"` (`skip_on_os("solaris")`). Estas
+#'   declaraciones se colocarán en la parte superior del archivo de prueba
+#'   **testthat** generado.
+#' @param quiet ¿La función no debe informar cuando se escribe el archivo? En
+#'   por defecto es `FALSE`.
 #'   
-#' @return Invisibly returns `TRUE` if the **testthat** file has been written. 
+#' @return Devuelve invisiblemente `TRUE` si el archivo **testthat** ha sido
+#'   escrito.
 #' 
 #' @examples
 #' if (interactive()) {

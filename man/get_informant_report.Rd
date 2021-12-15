@@ -37,8 +37,7 @@ French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish (\cod
 Portuguese (\code{"pt"}), Turkish (\code{"tr"}), Chinese (\code{"zh"}), Russian (\code{"ru"}),
 Polish (\code{"pl"}), Danish (\code{"da"}), Swedish (\code{"sv"}), and Dutch (\code{"nl"}).
 This \code{lang} option will override any previously set language setting (e.g.,
-by the
-\code{\link[=create_agent]{create_agent()}} call).}
+by the \code{\link[=create_agent]{create_agent()}} call).}
 
 \item{locale}{An optional locale ID to use for formatting values in the
 \emph{information report} summary table according the locale's rules. Examples

@@ -11,7 +11,7 @@ Text suitable for the \code{msg_footer} argument of \code{\link[=email_blast]{em
 \code{\link[=email_create]{email_create()}}.
 }
 \description{
-The \code{stock_msg_footer()} functions simply provide some stock text for an
+The \code{stock_msg_footer()} function simply provides some stock text for an
 email message sent via \code{\link[=email_blast]{email_blast()}} or obtained as a standalone object
 through \code{\link[=email_create]{email_create()}}.
 }

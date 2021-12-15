@@ -7,7 +7,7 @@
 stock_msg_body()
 }
 \value{
-Text suitable for the \code{msg_body} arguments of \code{\link[=email_blast]{email_blast()}} and
+Text suitable for the \code{msg_body} argument of \code{\link[=email_blast]{email_blast()}} and
 \code{\link[=email_create]{email_create()}}.
 }
 \description{

@@ -4763,16 +4763,18 @@
 #'   lógico.
 #'   
 #' @examples
-#' # The `small_table` dataset in the
-#' # package will be used to validate that
-#' # column values are part of a given set
+#' # La tabla `small_table` del paquete se
+#' # utilizará para validar que los valores
+#' # de las columnas forman parte de un
+#' # conjunto determinado
 #' 
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # Validate that values in column `f`
-#' # comprise the values of `low`, `mid`,
-#' # and `high`, and, no other values
+#' # Validar que los valores de la columna
+#' # `f` comprenden los valores de `low`,
+#' # `mid` y `high`, y que no haya
+#' # otros valores
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_vals_make_set(
@@ -5000,18 +5002,20 @@
 #'   lógico.
 #'   
 #' @examples
-#' # The `small_table` dataset in the
-#' # package will be used to validate that
-#' # column values are part of a given set
+#' # La tabla `small_table` del paquete se
+#' # utilizará para validar que los valores
+#' # de las columnas forman parte de un
+#' # conjunto determinado
 #' 
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # Validate that the distinct set of values
-#' # in column `f` contains at least the
-#' # subset defined as `low` and `high` (the
-#' # column actually has both of those and
-#' # some `mid` values)
+#' # Validar que el conjunto de valores
+#' # distintos de la columna `f` contenga
+#' # al menos el subconjunto definido como
+#' # `low` y `high` (la columna tiene
+#' # realmente ambos y algunos
+#' # valores `mid`)
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_vals_make_subset(
@@ -5019,10 +5023,10 @@
 #'   ) %>%
 #'   interrogate()
 #'   
-#' # Determine if this validation
-#' # had no failing test units (there
-#' # are 2 test units, one per element
-#' # in the `set`)
+#' # Determina si esta validación no tiene
+#' # unidades de prueba fallidas (hay 2
+#' # unidades de prueba, una por elemento
+#' # en el `set`)
 #' all_passed(agent)
 #' 
 #' # Llamar a `agent` en la consola imprime
@@ -5242,12 +5246,13 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`,
-#' `left`, and `right` arguments require values. Arguments with default values
-#' won't be written to YAML when using [yaml_write()] (though it is acceptable
-#' to include them with their default when generating the YAML by other means).
-#' It is also possible to preview the transformation of an agent to YAML without
-#' any writing to disk by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que sólo las `columns`,
+#' `left` y `right` requieren valores. Los argumentos con valores
+#' predeterminados no se escribirán en YAML cuando se use [yaml_write()] (aunque
+#' es aceptable incluirlos con sus valores predeterminados al generar el YAML
+#' por otros medios). También es posible obtener una vista previa de la
+#' transformación de un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
 #' @param left,right Los valores límite inferior (o izquierdo) y superior (o
@@ -5520,17 +5525,18 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns` and
-#' `value` arguments require values. Arguments with default values won't be
-#' written to YAML when using [yaml_write()] (though it is acceptable to include
-#' them with their default when generating the YAML by other means). It is also
-#' possible to preview the transformation of an agent to YAML without any
-#' writing to disk by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos, ya que sólo los argumentos
+#' `columns` y `value` requieren valores. Los argumentos con valores
+#' predeterminados no se escribirán en YAML cuando se use [yaml_write()] (aunque
+#' es aceptable incluirlos con sus valores predeterminados al generar el YAML
+#' por otros medios). También es posible obtener una vista previa de la
+#' transformación de un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #' 
 #' @inheritParams col_vals_gt
-#' @param value A value used for this test of inequality. This can be a single
-#'   value or a compatible column given in `vars()`. Any column values not equal
-#'   to what is specified here will pass validation.
+#' @param value Un valor utilizado para esta prueba de desigualdad. Puede ser un
+#'   valor único o una columna compatible dada en `vars()`. Cualquier valor de
+#'   columna que no sea igual a lo que se especifica aquí pasará la validación.
 #' 
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -5561,9 +5567,9 @@
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # Validate that values in column `a`
-#' # are all *not* equal to the value
-#' # of `6`
+#' # Validar que los valores de la columna
+#' # `a` son todos *no* iguales al valor
+#' # de `6`.
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_vals_not_equal(vars(a), 6) %>%
@@ -5763,16 +5769,18 @@
 #'    active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns`, and
-#' `set` arguments require values. Arguments with default values won't be
-#' written to YAML when using [yaml_write()] (though it is acceptable to include
-#' them with their default when generating the YAML by other means). It is also
-#' possible to preview the transformation of an agent to YAML without any
-#' writing to disk by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos ya que sólo los argumentos
+#' `columns` y `set` requieren valores. Los argumentos con valores
+#' predeterminados no se escribirán en YAML cuando se use [yaml_write()] (aunque
+#' es aceptable incluirlos con sus valores predeterminados al generar el YAML
+#' por otros medios). También es posible obtener una vista previa de la
+#' transformación de un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #' 
 #' @inheritParams col_vals_gt
-#' @param set A vector of numeric or string-based elements, where column values
-#'   found within this `set` will be considered as failing.
+#' @param set Un vector de elementos numéricos o de cadena, donde los valores de
+#'   las columnas encontrados dentro de este `set` serán considerados como
+#'   fallidos.
 #'   
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -5783,16 +5791,17 @@
 #'   lógico.
 #'   
 #' @examples
-#' # The `small_table` dataset in the
-#' # package will be used to validate that
-#' # column values are part of a given set
+#' # La tabla `small_table` del paquete se
+#' # utilizará para validar que los valores
+#' # de las columnas no forman parte de un
+#' # conjunto determinado
 #' 
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # Validate that values in column `f`
-#' # contain none of the values `lows`,
-#' # `mids`, and `highs`
+#' # Valida que los valores de la columna
+#' # `f` no contengan ninguno de los valores
+#' # `lows`, `mids` y `highs`.
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_vals_not_in_set(
@@ -6016,9 +6025,10 @@
 #'   lógico.
 #' 
 #' @examples
-#' # For all examples here, we'll use
-#' # a simple table with four columns:
-#' # `a`, `b`, `c`, and `d`
+#' # Para todos los ejemplos aquí,
+#' # usaremos una tabla simple con
+#' # cuatro columnas: `a`, `b`, `c`
+#' # y `d`
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c( 5,  7,  6,  5,  8),
@@ -6032,10 +6042,10 @@
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # Validate that all values in column
-#' # `b` are *not* NA (they would be
-#' # non-NULL in a database context, which
-#' # isn't the case here)
+#' # Validar que todos los valores de la
+#' # columna `b` son *no* NA (serían no
+#' # `NULL` en un contexto de base de datos,
+#' # lo que no es el caso aquí)
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_vals_not_null(vars(b)) %>%
@@ -6248,9 +6258,10 @@
 #'   lógico.
 #'   
 #' @examples
-#' # For all examples here, we'll use
-#' # a simple table with four columns:
-#' # `a`, `b`, `c`, and `d`
+#' # Para todos los ejemplos aquí,
+#' # usaremos una tabla simple con
+#' # cuatro columnas: `a`, `b`, `c`
+#' # y `d`
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c( 5,  7,  6,  5,  8),
@@ -6264,10 +6275,10 @@
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # Validate that all values in column
-#' # `c` are NA (they would be NULL in a
-#' # database context, which isn't the
-#' # case here)
+#' # Validar que todos los valores de la
+#' # columna `c` son NA (serían `NULL` en
+#' # un contexto de base de datos,
+#' # lo que no es el caso aquí)
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_vals_null(vars(c)) %>%
@@ -6473,17 +6484,18 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns` and
-#' `regex` arguments require values. Arguments with default values won't be
-#' written to YAML when using [yaml_write()] (though it is acceptable to include
-#' them with their default when generating the YAML by other means). It is also
-#' possible to preview the transformation of an agent to YAML without any
-#' writing to disk by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos ya que sólo los argumentos
+#' `columns` y `regex` requieren valores. Los argumentos con valores
+#' predeterminados no se escribirán en YAML cuando se use [yaml_write()] (aunque
+#' es aceptable incluirlos con sus valores predeterminados al generar el YAML
+#' por otros medios). También es posible obtener una vista previa de la
+#' transformación de un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
-#' @param regex A regular expression pattern to test for a match to the target
-#'   column. Any regex matches to values in the target `columns` will pass
-#'   validation.
+#' @param regex Un patrón de expresión regular para comprobar si coincide con la
+#'   columna de destino. Cualquier coincidencia de regex con los valores de las
+#'   `columns` de destino pasará la validación.
 #' 
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -6494,24 +6506,25 @@
 #'   lógico.
 #' 
 #' @examples
-#' # The `small_table` dataset in the
-#' # package has a character-based `b`
-#' # column with values that adhere to
-#' # a very particular pattern; the
-#' # following examples will validate
-#' # that that column abides by a regex
-#' # pattern
+#' # La tabla `small_table` del paquete
+#' # tiene una columna `b` basada en
+#' # caracteres con valores que se
+#' # adhieren a un patrón muy particular;
+#' # los siguientes ejemplos validarán
+#' # que esa columna cumple con una
+#' # regex patrón
 #' small_table
 #' 
-#' # This is the regex pattern that will
-#' # be used throughout
+#' # Este es el patrón regex que se
+#' # utilizará en el resto de los ejemplos
 #' pattern <- "[0-9]-[a-z]{3}-[0-9]{3}"
 #' 
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # Validate that all values in column
-#' # `b` match the regex `pattern`
+#' # Validar que todos los valores de la
+#' # columna `b` coinciden con el
+#' # regex `pattern`
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_vals_regex(vars(b), pattern) %>%
@@ -6589,51 +6602,59 @@
 #' aplicado las `preconditions`).
 #' 
 #' @section Especificaciones:
-#' A specification type must be used with the `spec` argument. This is a
-#' character-based keyword that corresponds to the type of data in the specified
-#' `columns`. The following keywords can be used:
+#' Se debe utilizar un tipo de especificación con el argumento `spec`. Se trata
+#' de una palabra clave basada en caracteres que corresponde al tipo de datos en
+#' las `columns` especificadas. Se pueden utilizar las siguientes palabras
+#' clave:
 #' 
-#' - `"isbn"`: The International Standard Book Number (ISBN) is a unique
-#' numerical identifier for books, pamphletes, educational kits, microforms, and
-#' digital/electronic publications. The specification has been formalized in
-#' ISO 2108. This keyword can be used to validate 10- or 13-digit ISBNs.
-#' - `"VIN"`: A vehicle identification number (VIN) is a unique code (which
-#' includes a serial number) used by the automotive industry to identify
-#' individual motor vehicles, motorcycles, scooters, and mopeds as stipulated
-#' by ISO 3779 and ISO 4030.
-#' - `"postal_code[<country_code>]"`: A postal code (also known as postcodes,
-#' PIN, or ZIP codes, depending on region) is a series of letters, digits, or
-#' both (sometimes including spaces/punctuation) included in a postal address to
-#' aid in sorting mail. Because the coding varies by country, a country code in
-#' either the 2- (ISO 3166-1 alpha-2) or 3-letter (ISO 3166-1 alpha-3) formats
-#' needs to be supplied along with the keywords (e.g., for postal codes in
-#' Germany, `"postal_code[DE]"` or `"postal_code[DEU]"` can be used). The
-#' keyword alias `"zip"` can be used for US ZIP codes.
-#' - `"credit_card"`: A credit card number can be validated and this check works
-#' across a large variety of credit type issuers (where card numbers are
-#' allocated in accordance with ISO/IEC 7812). Numbers can be of various lengths
-#' (typically, they are of 14-19 digits) and the key validation performed here
-#' is the usage of the Luhn algorithm.
-#' - `"iban[<country_code>]"`: The International Bank Account Number (IBAN) is a
-#' system of identifying bank accounts across different countries for the
-#' purpose of improving cross-border transactions. IBAN values are validated
-#' through conversion to integer values and performing a basic mod-97 operation
-#' (as described in ISO 7064) on them. Because the length and coding varies by
-#' country, a country code in either the 2- (ISO 3166-1 alpha-2) or 3-letter
-#' (ISO 3166-1 alpha-3) formats needs to be supplied along with the keywords
-#' (e.g., for IBANs in Germany, `"iban[DE]"` or `"iban[DEU]"` can be used).
-#' - `"swift"`: Business Identifier Codes (also known as SWIFT-BIC, BIC,
-#' or SWIFT code) are defined in a standard format as described by ISO 9362.
-#' These codes are unique identifiers for both financial and non-financial
-#' institutions. SWIFT stands for the Society for Worldwide Interbank Financial
-#' Telecommunication. These numbers are used when transferring money between
-#' banks, especially important for international wire transfers.
-#' - `"phone"`, `"email"`, `"url"`, `"ipv4"`, `"ipv6"`, `"mac"`: Phone numbers,
-#' email addresses, Internet URLs, IPv4 or IPv6 addresses, and MAC addresses can
-#' be validated with their respective keywords. These validations use
-#' regex-based matching to determine validity.
+#' - `"isbn"`: El número de libro estándar internacional (ISBN) es un
+#' identificador numérico único para libros, panfletos, kits educativos,
+#' microformas y publicaciones digitales/electrónicas. La especificación se ha
+#' formalizado en ISO 2108. Esta palabra clave puede utilizarse para validar los
+#' ISBN de 10 o 13 dígitos.
+#' - `"VIN"`: Un número de identificación del vehículo (VIN) es un código único
+#' (que incluye un número de serie) utilizado por la industria del automóvil
+#' para identificar vehículos de motor, motocicletas, scooters y ciclomotores
+#' individuales, según lo estipulado ISO 3779 e ISO 4030.
+#' - `"postal_code[<country_code>]"`: Un código postal (también conocido como
+#' código postal, PIN o ZIP, dependiendo de la región) es una serie de letras,
+#' dígitos o ambos (a veces incluyendo espacios/puntuación) incluidos en una
+#' dirección postal para ayudar a clasificar el correo. Dado que la codificación
+#' varía según el país, es necesario proporcionar un código de país en los
+#' formatos de 2 (ISO 3166-1 alpha-2) o 3 letras (ISO 3166-1 alpha-3) junto con
+#' las palabras clave (por ejemplo, para los códigos postales de Alemania, se
+#' puede utilizar `"postal_code[DE]"` o `"postal_code[DEU]"`). El puede
+#' utilizarse el alias de la palabra clave `"zip"` para los códigos postales de
+#' Estados Unidos.
+#' - `"credit_card"`: Se puede validar un número de tarjeta de crédito y esta
+#' comprobación funciona en una gran variedad de emisores de tipo de crédito
+#' (donde los números de tarjeta se asignan de acuerdo con la norma ISO/IEC
+#' 7812). Los números pueden tener varias longitudes (normalmente, son de 14 a
+#' 19 dígitos) y la validación clave que se realiza aquí es el uso del algoritmo
+#' Luhn.
+#' - `"iban[<country_code>]"`: El número internacional de cuenta bancaria (IBAN)
+#' es un sistema de identificación de cuentas bancarias en diferentes países con
+#' el fin de mejorar las transacciones transfronterizas. Los valores IBAN se
+#' validan mediante la conversión a valores enteros y la realización de una
+#' operación básica de mod-97 (como se describe en la norma ISO 7064) sobre
+#' ellos. Dado que la longitud y la codificación varían en función del país, es
+#' necesario proporcionar un código de país en formato de 2 (ISO 3166-1 alpha-2)
+#' o 3 letras (ISO 3166-1 alpha-3) junto con las palabras clave (por ejemplo,
+#' para los IBAN de Alemania, se puede utilizar `"iban[DE]"` o `"iban[DEU]"`).
+#' - `"swift"`: Los códigos de identificación comercial (también conocidos como
+#' SWIFT-BIC, BIC o código SWIFT) se definen en un formato estándar descrito por
+#' la norma ISO 9362. Estos códigos son identificadores únicos para
+#' instituciones financieras y no financieras. SWIFT son las siglas de Society
+#' for Worldwide Interbank Financial Telecommunication. Estos números se
+#' utilizan al transferir dinero entre bancos, especialmente importante para las
+#' transferencias internacionales.
+#' - `"phone"`, `"email"`, `"url"`, `"ipv4"`, `"ipv6"`, `"mac"`: Los números de
+#' teléfono, las direcciones de correo electrónico, las URL de Internet, las
+#' direcciones IPv4 o IPv6 y las direcciones MAC pueden validarse con sus
+#' respectivas palabras clave. Estas validaciones utilizan coincidencias basadas
+#' en regex para determinar la validez.
 #' 
-#' Only a single `spec` value should be provided per function call.
+#' Sólo debe proporcionarse un único valor `spec` por llamada a la función.
 #'
 #' @section Nombres de columnas:
 #' Si proporciona varios nombres de columna, el resultado será una expansión de
@@ -6768,16 +6789,18 @@
 #'     active: false
 #' ```
 #' 
-#' In practice, both of these will often be shorter as only the `columns` and
-#' `spec` arguments require values. Arguments with default values won't be
-#' written to YAML when using [yaml_write()] (though it is acceptable to include
-#' them with their default when generating the YAML by other means). It is also
-#' possible to preview the transformation of an agent to YAML without any
-#' writing to disk by using the [yaml_agent_string()] function.
+#' En la práctica, ambos serán a menudo más cortos ya que sólo los argumentos
+#' `columns` y `spec` requieren valores. Los argumentos con valores
+#' predeterminados no se escribirán en YAML cuando se use [yaml_write()] (aunque
+#' es aceptable incluirlos con sus valores predeterminados al generar el YAML
+#' por otros medios). También es posible obtener una vista previa de la
+#' transformación de un agente a YAML sin escribir en el disco usando la función
+#' [yaml_agent_string()].
 #'
 #' @inheritParams col_vals_gt
-#' @param spec A specification string. Examples are `"email"`, `"url"`, and
-#'   `"postal[USA]"`. All options are explained in the *Specifications* section.
+#' @param spec Una cadena de especificación. Los ejemplos son `"email"`,
+#'   `"url"`, y `"postal[USA]"`. Todas las opciones se explican en la sección
+#'   *Especificaciones*.
 #' 
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -6788,22 +6811,22 @@
 #'   lógico.
 #' 
 #' @examples
-#' # The `specifications` dataset in the
-#' # package has columns of character data
-#' # that correspond to each of the
-#' # specifications that can be tested;
-#' # the following examples will validate
-#' # that the `email_addresses` column
-#' # has 5 correct values (this is true if
-#' # we get a subset of the data: the first
-#' # five rows)
+#' # La tabla `specifications` del paquete
+#' # tiene columnas de datos de caracteres
+#' # que corresponden a cada una de las
+#' # especificaciones que se pueden probar;
+#' # los siguientes ejemplos validarán que
+#' # la columna `email_addresses` tiene 5
+#' # valores correctos (esto es cierto si
+#' # obtenemos un subconjunto de los datos:
+#' # las primeras cinco filas)
 #' spec_slice <- specifications[1:5, ]
 #' 
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # Validate that all values in the column
-#' # `email_addresses` are correct
+#' # Validar que todos los valores de la
+#' # columna `email_addresses` son correctos
 #' agent <-
 #'   create_agent(spec_slice) %>%
 #'   col_vals_within_spec(
@@ -7040,7 +7063,7 @@
 #'   existencia de columna ([col_exists()]) o tipo de columna (la serie
 #'   `col_is_*()`). Un ejemplo de esto es `~ col_vals_gte(., vars(a), 5.5),
 #'   ~ col_vals_not_null(., vars(b)`).
-#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @param .list Permite el uso de una lista como alternativa de entrada a `...`.
 #'
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -7069,15 +7092,14 @@
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # Validate a number of things on a
-#' # row-by-row basis using validation
-#' # functions of the `col_vals*` type
-#' # (all have the same number of test
-#' # units): (1) values in `a` are less
-#' # than `8`, (2) values in `c` are
-#' # greater than the adjacent values in
-#' # `a`, and (3) there aren't any NA
-#' # values in `b`
+#' # Valida una serie de cosas fila por fila
+#' # utilizando funciones de validación del
+#' # tipo `col_vals*` (todas tienen el mismo
+#' # número de unidades de prueba): (1) los
+#' # valores de `a` son menores que `8`,
+#' # (2) los valores de `c` son mayores que
+#' # los valores adyacentes de `a`, y (3) no
+#' # hay valores `NA` en `b`.
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   conjointly(
@@ -8116,25 +8138,27 @@
 #' interrogatorio
 #' 
 #' @description
-#' The `email_blast()` function is useful for sending an email message that
-#' explains the result of a **pointblank** validation. It is powered by the
-#' **blastula** and **glue** packages. This function should be invoked as part
-#' of the `end_fns` argument of [create_agent()]. It's also possible to invoke
-#' `email_blast()` as part of the `fns` argument of the [action_levels()]
-#' function (i.e., to send multiple email messages at the granularity of
-#' different validation steps exceeding failure thresholds).
+#' La función `email_blast()` es útil para enviar un mensaje de correo
+#' electrónico que explica el resultado de una validación de **pointblank**. Se
+#' alimenta de los paquetes **blastula** y **glue**. Esta función debe ser
+#' invocada como parte del argumento `end_fns` de [create_agent()]. También es
+#' posible invocar `email_blast()` como parte del argumento `fns` de la función
+#' [action_levels()] (es decir, para enviar múltiples mensajes de correo
+#' electrónico en la granularidad de diferentes pasos de validación que superen
+#' los umbrales de fallo).
 #'
-#' To better get a handle on emailing with `email_blast()`, the analogous
-#' [email_create()] function can be used with a **pointblank** agent object or
-#' an x-list obtained from using the [get_agent_x_list()] function.
+#' Para manejar mejor el envío de correos electrónicos con `email_blast()`, se
+#' puede utilizar la función análoga [email_create()] con un objeto agente
+#' **pointblank** o una lista x obtenida mediante la función
+#' [get_agent_x_list()].
 #' 
 #' @section YAML: 
-#' A **pointblank** agent can be written to YAML with [yaml_write()] and the
-#' resulting YAML can be used to regenerate an agent (with [yaml_read_agent()])
-#' or interrogate the target table (via [yaml_agent_interrogate()]). Here is an
-#' example of how the use of `email_blast()` inside the `end_fns` argument of
-#' [create_agent()] is expressed in R code and in the corresponding YAML
-#' representation.
+#' Un objeto agente **pointblank** puede escribirse en YAML con [yaml_write()] y
+#' el YAML resultante puede utilizarse para regenerar un agente (con
+#' [yaml_read_agent()]) o interrogar la tabla de destino (mediante
+#' [yaml_agent_interrogate()]). He aquí un ejemplo de cómo se expresa el uso de
+#' `email_blast()` dentro del argumento `end_fns` de [create_agent()] en código
+#' R y en la correspondiente representación YAML.
 #' 
 #' ```
 #' # Código R
@@ -8182,33 +8206,37 @@
 #'     value: 7.0
 #' ```
 #' 
-#' @param x A reference to the x-list object prepared internally by the agent.
-#'   This version of the x-list is the same as that generated via
-#'   `get_agent_x_list(<agent>)` except this version is internally generated and
-#'   hence only available in an internal evaluation context.
-#' @param to,from The email addresses for the recipients and of the sender.
-#' @param credentials A credentials list object that is produced by either of
-#'   the [blastula::creds()], [blastula::creds_anonymous()],
-#'   [blastula::creds_key()], or [blastula::creds_file()] functions. Please
-#'   refer to the **blastula** documentation for information on how to use these
-#'   functions.
-#' @param msg_subject The subject line of the email message.
-#' @param msg_header,msg_body,msg_footer Content for the header, body, and
-#'   footer components of the HTML email message.
-#' @param send_condition An expression that should evaluate to a logical vector
-#'   of length 1. If evaluated as `TRUE` then the email will be sent, if `FALSE`
-#'   then that won't happen. The expression can use x-list variables (e.g.,
-#'   `x$notify`, `x$type`, etc.) and all of those variables can be explored
-#'   using the [get_agent_x_list()] function. The default expression is `~TRUE
-#'   %in% x$notify`, which results in `TRUE` if there are any `TRUE` values in
-#'   the `x$notify` logical vector (i.e., any validation step results in a
-#'   'notify' condition).
+#' @param x Una referencia al objeto x-list preparado internamente por el
+#'   agente. Esta versión de la x-list es la misma que la generada a través de
+#'   `get_agent_x_list(<agent>)` excepto que esta versión se genera
+#'   internamente y por lo tanto sólo está disponible en un contexto de
+#'   evaluación interna.
+#' @param to,from Las direcciones de correo electrónico de los destinatarios y
+#'   del remitente.
+#' @param credentials Un objeto de lista de credenciales producido por
+#'   cualquiera de las funciones [blastula::creds()],
+#'   [blastula::creds_anonymous()], [blastula::creds_key()] o
+#'   [blastula::creds_file()]. Consulte la documentación de **blastula** para
+#'   obtener información sobre cómo utilizar estas funciones.
+#' @param msg_subject La línea de asunto del mensaje de correo electrónico.
+#' @param msg_header,msg_body,msg_footer Contenido para la cabecera, el cuerpo y
+#'   el pie de página del mensaje de correo electrónico HTML.
+#' @param send_condition Una expresión que debe evaluarse como un vector lógico
+#'   de longitud 1. Si se evalúa como `TRUE` entonces se enviará el correo
+#'   electrónico, si `FALSE` entonces no ocurrirá. La expresión puede usar
+#'   variables de la lista x (por ejemplo, `x$notify`, `x$type`, etc.) y todas
+#'   esas variables pueden ser exploradas usando la función
+#'   [get_agent_x_list()]. La expresión por defecto es `~TRUE %in% x$notify`,
+#'   que da como resultado `TRUE` si hay algún valor `TRUE` en el vector lógico
+#'   `x$notify` (es decir, cualquier paso de validación da como resultado una
+#'   condición condición de 'notify').
 #'   
 #' @examples
-#' # Create an `action_levels()` list
-#' # with absolute values for the
-#' # `warn`, and `notify` states (with
-#' # thresholds of 1 and 2 'fail' units)
+#' # Crear una lista `action_levels()`
+#' # con valores absolutos para los
+#' # estados `warn` y `notify` (con
+#' # umbrales de 1 y 2 unidades
+#' # de "fallo")
 #' al <- 
 #'   action_levels(
 #'     warn_at = 1,
@@ -8217,16 +8245,16 @@
 #'   
 #' if (interactive()) {
 #' 
-#' # Validate that values in column
-#' # `a` from `small_tbl` are always > 1
-#' # and that they are always < 7; first,
-#' # apply the `actions_levels()`
-#' # directive to `actions` and set up
-#' # an `email_blast()` as one of the
-#' # `end_fns` (by default, the email
-#' # will be sent if there is a single
-#' # 'notify' state across all
-#' # validation steps)
+#' # Validar que los valores de la
+#' # columna `a` de `small_tbl` sean
+#' # siempre > 1 y que sean siempre < 7;
+#' # en primer lugar, aplicar la
+#' # directiva `actions_levels()` a `actions`
+#' # y configurar un `email_blast()` como
+#' # uno de los `end_fns` (por defecto, el
+#' # correo electrónico se enviará si hay
+#' # un único estado `notify` en todos
+#' # los pasos de validación)
 #' agent <-
 #'   create_agent(
 #'     read_fn = ~ small_table,
@@ -8251,16 +8279,18 @@
 #' 
 #' }
 #' 
-#' # The above example was intentionally
-#' # not run because email credentials
-#' # aren't available and the `to`
-#' # and `from` email addresses are
-#' # nonexistent
+#' # El ejemplo anterior no se ha ejecutado
+#' # intencionadamente porque las
+#' # credenciales de correo electrónico no
+#' # están disponibles y las direcciones de
+#' # correo electrónico `to` y `from`
+#' # son inexistentes
 #' 
-#' # To get a blastula email object
-#' # instead of eagerly sending the
-#' # message, we can use the 
-#' # `email_create()` function
+#' # Para obtener un objeto de correo
+#' # electrónico de blastula en lugar de
+#' # enviar el mensaje de forma ansiosa,
+#' # podemos utilizar la función función
+#' # `email_create()`
 #' email_object <-
 #'   create_agent(
 #'     read_fn = ~ small_table,
@@ -8284,12 +8314,13 @@
 #' *informant*
 #' 
 #' @description
-#' The `email_create()` function produces an email message object that could be
-#' sent using the **blastula** package. The `x` that we need for this could
-#' either be a **pointblank** agent, the *agent* x-list (produced from the
-#' *agent* with the [get_agent_x_list()] function), or a **pointblank**
-#' *informant*. In all cases, the email message will appear in the Viewer and a
-#' **blastula** `email_message` object will be returned.
+#' La función `email_create()` produce un objeto de mensaje de correo
+#' electrónico que puede ser enviar utilizando el paquete **blastula**. La "x"
+#' que necesitamos para esto puede ser ser un agente **pointblank**, la lista x
+#' del *agente* (producida desde el *agente* con la función
+#' [get_agent_x_list()]), o un **pointblank** *informante*. En todos los casos,
+#' el mensaje de correo electrónico aparecerá en el Visor y una **blastula**
+#' `email_message` object será devuelto.
 #'
 #' @param x A **pointblank** *agent*, an *agent* x-list, or a **pointblank**
 #'   *informant*. The x-list object can be created with the [get_agent_x_list()]
@@ -8404,38 +8435,42 @@
 #' document written to disk is self-contained and easily viewable in a web
 #' browser.
 #'
-#' @param x An *agent* object of class `ptblank_agent`, an *informant* of class
-#'   `ptblank_informant`, a *multiagent* of class `ptblank_multiagent`, a table
-#'   scan of class `ptblank_tbl_scan`, or, customized reporting objects
-#'   (`ptblank_agent_report`, `ptblank_informant_report`,
-#'   `ptblank_multiagent_report.wide`, `ptblank_multiagent_report.long`).
-#' @param filename The filename to create on disk for the HTML export of the
-#'   object provided. It's recommended that the extension `".html"` is included.
-#' @param path An optional path to which the file should be saved (this is
-#'   automatically combined with `filename`).
-#' @param quiet Should the function *not* inform when the file is written? By
-#'   default this is `FALSE`.
+#' @param x Un objeto *agent* de la clase `ptblank_agent`, un *informant* de
+#'   la clase `ptblank_informant`, un *multiagente* de la clase
+#'   `ptblank_multiagent`, un escaneo de tabla de la clase `ptblank_tbl_scan`,
+#'   o, objetos de informe personalizados (`ptblank_agent_report`,
+#'   `ptblank_informant_report`, `ptblank_multiagent_report.wide`,
+#'   `ptblank_multiagent_report.long`).
+#' @param filename El nombre del archivo que se creará en el disco para la
+#'   exportación HTML del objeto proporcionado. Se recomienda incluir la
+#'   extensión `".html"`.
+#' @param path Una ruta opcional en la que se debe guardar el archivo (esto es
+#'   se combina automáticamente con `filename`).
+#' @param quiet ¿La función no debe informar cuando se escribe el archivo? En
+#'   por defecto es `FALSE`.
 #'   
-#' @return Invisibly returns `TRUE` if the file has been written.
+#' @return Devuelve invisiblemente `TRUE` si el archivo ha sido escrito.
 #' 
 #' @examples
 #' if (interactive()) {
 #' 
-#' # A: Writing an agent report as HTML 
+#' # A: Escribir un informe de agente como HTML
 #' 
-#' # Let's go through the process of (1)
-#' # developing an agent with a validation
-#' # plan (to be used for the data quality
-#' # analysis of the `small_table` dataset),
-#' # (2) interrogating the agent with the
-#' # `interrogate()` function, and (3) writing
-#' # the agent and all its intel to a file
+#' # Vamos a recorrer el proceso de
+#' # (1) desarrollar un agente con un plan de
+#' # validación (que se utilizará para el
+#' # análisis de la calidad de los datos de
+#' # la tabla `small_table`), (2) interrogar
+#' # al agente con la función `interrogate()`,
+#' # y (3) escribir el agente y toda su
+#' # información en un archivo
 #' 
-#' # Creating an `action_levels` object is a
-#' # common workflow step when creating a
-#' # pointblank agent; we designate failure
-#' # thresholds to the `warn`, `stop`, and
-#' # `notify` states using `action_levels()`
+#' # La creación de un objeto `action_levels`
+#' # es un paso común del flujo de trabajo al
+#' # crear un agente pointblank; designamos
+#' # los umbrales de fallo a los estados
+#' # `warn`, `stop` y `notify` utilizando
+#' # `action_levels()`
 #' al <- 
 #'   action_levels(
 #'     warn_at = 0.10,
@@ -8443,11 +8478,12 @@
 #'     notify_at = 0.35
 #'   )
 #' 
-#' # Now create a pointblank `agent` object
-#' # and give it the `al` object (which
-#' # serves as a default for all validation
-#' # steps which can be overridden); the
-#' # data will be referenced in a `read_fn`
+#' # Ahora cree un objeto pointblank `agent`
+#' # y déle el objeto `al` (que sirve como
+#' # valor por defecto para todos los pasos
+#' # de validación que pueden ser anulados);
+#' # el datos serán referenciados en un
+#' # `read_fn`.
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~ small_table,
@@ -8456,10 +8492,11 @@
 #'     actions = al
 #'   )
 #' 
-#' # Then, as with any agent object, we
-#' # can add steps to the validation plan by
-#' # using as many validation functions as we
-#' # want; then, we `interrogate()`
+#' # Luego, como con cualquier objeto
+#' # agente, podemos añadir pasos al plan
+#' # de validación utilizando tantas
+#' # funciones de validación como que
+#' # queramos; entonces, `interrogate()`
 #' agent <-
 #'   agent %>% 
 #'   col_exists(vars(date, date_time)) %>%
@@ -8471,20 +8508,23 @@
 #'   col_vals_lte(vars(c), value = 5) %>%
 #'   interrogate()
 #'
-#' # The agent report can be written to an
-#' # HTML file with `export_report()`
+#' # El informe del agente se puede
+#' # escribir en un archivo HTML con
+#' # `export_report()`
 #' export_report(
 #'   agent,
 #'   filename = "agent-small_table.html"
 #' )
 #' 
-#' # If you're consistently writing agent
-#' # reports when periodically checking data,
-#' # we could make use of `affix_date()` or
-#' # `affix_datetime()` depending on the
-#' # granularity you need; here's an example
-#' # that writes the file with the format:
-#' # 'agent-small_table-YYYY-mm-dd_HH-MM-SS.html'
+#' # Si estás escribiendo constantemente
+#' # informes de agente cuando compruebas
+#' # periódicamente los datos, podríamos
+#' # hacer uso de `affix_date()` o
+#' # `affix_datetime()` dependiendo de la
+#' # granularidad que necesites; aquí
+#' # tienes un ejemplo que escribe el
+#' # fichero con el formato
+#' # 'agent-small_table-YYYY-mm-dd_HH-MM-SS'
 #' export_report(
 #'   agent,
 #'   filename = affix_datetime(
@@ -8492,21 +8532,24 @@
 #'   )
 #' )
 #' 
-#' # B: Writing an informant report as HTML
+#' # B: Escribir un informe de informante
+#' #    como HTML
 #' 
-#' # Let's go through the process of (1)
-#' # creating an informant object that
-#' # minimally describes the `small_table`
-#' # dataset, (2) ensuring that data is
-#' # captured from the target table using
-#' # the `incorporate()` function, and (3)
-#' # writing the informant report to HTML
+#' # Vamos a repasar el proceso de (1)
+#' # crear un objeto informante que
+#' # describa mínimamente la tabla
+#' # `small_table`, (2) asegurarnos de que
+#' # se capturan los datos de la tabla de
+#' # destino utilizando la función
+#' # `incorporate()`, y (3) escribir el
+#' # informe informante en HTML
 #' 
-#' # Create a pointblank `informant`
-#' # object with `create_informant()`
-#' # and the `small_table` dataset;
-#' # `incorporate()` so that info snippets
-#' # are integrated into the text
+#' # Crear un objeto `informant` en
+#' # blanco con `create_informant()` y
+#' # el conjunto de datos `small_table`;
+#' # `incorporate()` para que los
+#' # fragmentos de información se integren
+#' # en el texto
 #' informant <- 
 #'   create_informant(
 #'     read_fn = ~ small_table,
@@ -8535,10 +8578,11 @@
 #'   ) %>%
 #'   incorporate()
 #'
-#' # The informant report can be written
-#' # to an HTML file with `export_report()`;
-#' # let's do this with `affix_date()` so
-#' # the filename has a datestamp
+#' # El informe del informante puede
+#' # escribirse en un archivo HTML con
+#' # `export_report()`; hagámoslo con
+#' # `affix_date()` para que el nombre del
+#' # archivo tenga una marca de fecha
 #' export_report(
 #'   informant,
 #'   filename = affix_date(
@@ -8546,14 +8590,17 @@
 #'   )
 #' )
 #' 
-#' # C: Writing a table scan as HTML
+#' # C: Escribir una exploración de l
+#' #    tabla como HTML
 #' 
-#' # We can get an report that describes all
-#' # of the data in the `storms` dataset
+#' # Podemos obtener un informe qu
+#' # describa todos los datos de la
+#' # tabla `storms`
 #' tbl_scan <- scan_data(tbl = dplyr::storms)
 #' 
-#' # The table scan object can be written
-#' # to an HTML file with `export_report()`
+#' # El objeto de escaneo de la tabla
+#' # puede ser escrito en un archivo
+#' # HTML con `export_report()`
 #' export_report(
 #'   tbl_scan,
 #'   filename = "tbl_scan-storms.html"
@@ -8836,30 +8883,30 @@
 #' datos **intendo**. Son las primeras 2000 filas de esa tabla donde los
 #' registros de ingresos van desde `2015-01-01` hasta `2015-01-21`.
 #'
-#' @format A tibble with 2,000 rows and 11 variables:
+#' @format Un tibble con 2.000 filas y 11 variables:
 #' \describe{
-#' \item{player_id}{A `character` column with unique identifiers for each
-#' user/player.}
-#' \item{session_id}{A `character` column that contains unique identifiers for
-#' each player session.}
-#' \item{session_start}{A date-time column that indicates when the session
-#' (containing the revenue event) started.}
-#' \item{time}{A date-time column that indicates exactly when the player
-#' purchase (or revenue event) occurred.}
-#' \item{item_type}{A `character` column that provides the class of the item
-#' purchased.}
-#' \item{item_name}{A `character` column that provides the name of the item
-#' purchased.}
-#' \item{item_revenue}{A `numeric` column with the revenue amounts per item
-#' purchased.}
-#' \item{session_duration}{A `numeric` column that states the length of the
-#' session (in minutes) for which the purchase occurred.}
-#' \item{start_day}{A `Date` column that provides the date of first login for
-#' the player making a purchase.}
-#' \item{acquisition}{A `character` column that provides the method of
-#' acquisition for the player.}
-#' \item{country}{A `character` column that provides the probable country of
-#' residence for the player.}
+#' \item{player_id}{Una columna de `character` con identificadores únicos para
+#' cada usuario/jugador.}
+#' \item{session_id}{Una columna de `character` que contiene identificadores
+#' únicos para cada sesión de jugador.}
+#' \item{session_start}{Una columna de fecha-hora que indica cuándo la sesión
+#' (que contiene el evento de ingresos) comenzó.}
+#' \item{time}{Una columna de fecha-hora que indica exactamente cuándo el
+#' jugador (o evento de ingresos).}
+#' \item{item_type}{Una columna de `character` que proporciona la clase del
+#' artículo comprado.}
+#' \item{item_name}{Una columna de `character` que proporciona el nombre del
+#' artículo comprado.}
+#' \item{item_revenue}{Una columna `numeric` con los importes de los ingresos
+#' por artículo comprado.}
+#' \item{session_duration}{Una columna `numeric` que indica la duración de la
+#' sesión (en minutos) en la que se produjo la compra.}
+#' \item{start_day}{Una columna `Date` que proporciona la fecha del primer
+#' ingreso de el jugador que realiza la compra.}
+#' \item{acquisition}{Una columna de `character` que proporciona el método de
+#' adquisición para el jugador.}
+#' \item{country}{Una columna de `character` que proporciona el probable país
+#' de residencia del jugador.}
 #' }
 #'
 #' @examples
@@ -8875,23 +8922,23 @@
 # game_revenue_info--------------------------------------------------------
 #' Una tabla con metadatos para el conjunto de datos `game_revenue`
 #'
-#' This table contains metadata for the `game_revenue` table. The first column
-#' (named `column`) provides the column names from `game_revenue`. The second
-#' column (`info`) contains descriptions for each of the columns in that
-#' dataset. This table is in the correct format for use in the
-#' [info_columns_from_tbl()] function.
+#' Esta tabla contiene metadatos para la tabla `game_revenue`. La primera
+#' columna (llamada `column`) proporciona los nombres de las columnas de
+#' `game_revenue`. La segunda columna (`info`) contiene las descripciones de
+#' cada una de las columnas de ese conjunto de datos. Esta tabla tiene el
+#' formato correcto para su uso en la función [info_columns_from_tbl()].
 #'
-#' @format A tibble with 11 rows and 2 variables:
+#' @format Un tibble con 11 filas y 2 variables:
 #' \describe{
-#' \item{column}{A `character` column with unique identifiers for each
-#' user/player.}
-#' \item{info}{A `character` column that contains unique identifiers for
-#' each player session.}
+#' \item{column}{Una columna de `character` con identificadores únicos para
+#' cada usuario/jugador.}
+#' \item{info}{Una columna de `character` que contiene identificadores únicos
+#' para cada sesión de jugador.}
 #' }
 #'
 #' @examples
-#' # Here is a glimpse at the data
-#' # available in `game_revenue_info`
+#' # Aquí hay un vistazo a los datos
+#' # disponibles en `game_revenue_info`
 #' dplyr::glimpse(game_revenue_info)
 #'
 #' @family Datasets
@@ -9397,12 +9444,12 @@
 #'   Markdown text and transformed internally to HTML. To circumvent such a
 #'   transformation, use text in [I()] to explicitly state that the supplied
 #'   text should not be transformed.
-#' @param lang The language to use for the long or wide report forms. De forma
-#'   predeterminada, `NULL` creará texto en inglés (`"en"`). Otras opciones
-#'   incluyen francés (`"fr"`), alemán (`"de"`), italiano (`"it"`), español
-#'   (`"es"`), portugués (`"pt"`), turco (`"tr"`), chino (`"zh"`), ruso
-#'   (`"ru"`), polaco (`"pl"`), danés (`"da"`), sueco (`"sv"` ) y holandés
-#'   (`"nl"`).
+#' @param lang La lengua a utilizar para los formularios de informes largos o
+#'   amplios. De forma predeterminada, `NULL` creará texto en inglés (`"en"`).
+#'   Otras opciones incluyen francés (`"fr"`), alemán (`"de"`), italiano
+#'   (`"it"`), español (`"es"`), portugués (`"pt"`), turco (`"tr"`), chino
+#'   (`"zh"`), ruso (`"ru"`), polaco (`"pl"`), danés (`"da"`), sueco (`"sv"` ) y
+#'   holandés (`"nl"`).
 #' @param locale An optional locale ID to use for formatting values in the long
 #'   or wide report forms (according the locale's rules). Examples include
 #'   `"en_US"` for English (United States) and `"fr_FR"` for French (France);
@@ -9410,7 +9457,7 @@
 #'   designation, like `"es"` for Spanish (Spain, same as `"es_ES"`). This
 #'   `locale` option will override any previously set locale values.
 #' 
-#' @return A **gt** table object if `display_table = TRUE` or a tibble if
+#' @return Un objeto de tabla **gt** si `display_table = TRUE` o un tibble si
 #'   `display_table = FALSE`.
 #' 
 #' @examples 

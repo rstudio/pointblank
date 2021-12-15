@@ -2000,13 +2000,14 @@
 #'   lógico.
 #' 
 #' @examples
-#' # For all examples here, we'll use
-#' # a simple table with two columns:
-#' # one `integer` (`a`) and the other
-#' # `character` (`b`); the following
-#' # examples will validate that the
-#' # table columns abides match a schema
-#' # object as created by `col_schema()`
+#' # Para todos los ejemplos aquí,
+#' # usaremos una tabla simple con dos
+#' # columnas: una `integral` (`a`) y la
+#' # otra `caracteres` (`b`); los
+#' # siguientes ejemplos validarán que
+#' # las columnas de la tabla coinciden
+#' # con un esquema creado por
+#' # `col_schema()`.
 #' tbl <- 
 #'   dplyr::tibble(
 #'     a = 1:5,
@@ -2015,10 +2016,11 @@
 #'   
 #' tbl
 #' 
-#' # Create a column schema object with
-#' # the helper function `col_schema()`
-#' # that describes the columns and
-#' # their types (in the expected order)
+#' # Crear un objeto de esquema de
+#' # columnas con la función de ayuda
+#' # `col_schema()` que describa las
+#' # columnas y sus tipos (en el
+#' # orden esperado)
 #' schema_obj <- 
 #'   col_schema(
 #'     a = "integer",
@@ -2028,18 +2030,18 @@
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # Validate that the schema object
-#' # `schema_obj` exactly defines
-#' # the column names and column types
+#' # Validar que el objeto de esquema
+#' # `schema_obj` define exactamente los
+#' # nombres y tipos de columnas
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_schema_match(schema_obj) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation
-#' # had no failing test units (there is
-#' # a single test unit governed by
-#' # whether there is a match)
+#' # Determinar si esta validación no tenía
+#' # unidades de prueba que fallaran (hay
+#' # una única unidad de prueba gobernada
+#' # por si hay una coincidencia)
 #' all_passed(agent)
 #' 
 #' # Llamar a `agent` en la consola imprime
@@ -3319,10 +3321,11 @@
 #'   lógico.
 #'   
 #' @examples
-#' # For all of the examples here, we'll
-#' # use a simple table with three numeric
-#' # columns (`a`, `b`, and `c`) and three
-#' # character columns (`d`, `e`, and `f`)
+#' # Para todos los ejemplos,
+#' # utilizaremos una tabla sencilla
+#' # con tres columnas numéricas
+#' # (`a`, `b` y `c`) y tres columnas
+#' # de caracteres (`d`, `e` y `f`)
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 5, 5, 5, 5, 5),
@@ -3338,8 +3341,9 @@
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # Validate that values in column `a`
-#' # are all greater than the value of `4`
+#' # Valida que los valores de la columna
+#' # `a` son todos mayores que el valor
+#' # de `4`.
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_vals_gt(vars(a), value = 4) %>%
@@ -3396,7 +3400,8 @@
 #' @section Function ID:
 #' 2-6
 #' 
-#' @seealso The analogous function with a left-closed bound: [col_vals_gte()].
+#' @seealso La función análoga con un límite cerrado a la izquierda:
+#'   [col_vals_gte()].
 #' 
 #' @name col_vals_gt
 
@@ -3561,9 +3566,9 @@
 #' writing to disk by using the [yaml_agent_string()] function.
 #'   
 #' @inheritParams col_vals_gt
-#' @param value A value used for this comparison. This can be a single value or
-#'   a compatible column given in `vars()`. Any column values greater than or
-#'   equal to what is specified here will pass validation.
+#' @param value Un valor utilizado para esta comparación. Puede ser un valor
+#'   único o una columna compatible dada en `vars()`. Cualquier valor de columna
+#'   mayor o igual a lo especificado aquí pasará la validación.
 #'   
 #' @return Para la función de validación, el valor de retorno es un objeto
 #'   `ptblank_agent` o un objeto de tabla (dependiendo de si se pasó un objeto
@@ -3574,10 +3579,11 @@
 #'   lógico.
 #'   
 #' @examples
-#' # For all of the examples here, we'll
-#' # use a simple table with three numeric
-#' # columns (`a`, `b`, and `c`) and three
-#' # character columns (`d`, `e`, and `f`)
+#' # Para todos los ejemplos,
+#' # utilizaremos una tabla sencilla
+#' # con tres columnas numéricas
+#' # (`a`, `b` y `c`) y tres columnas
+#' # de caracteres (`d`, `e` y `f`)
 #' tbl <-
 #'   dplyr::tibble(
 #'       a = c(5, 5, 5, 5, 5, 5),
@@ -3815,16 +3821,18 @@
 #'   lógico.
 #'   
 #' @examples
-#' # The `small_table` dataset in the
-#' # package will be used to validate that
-#' # column values are part of a given set
+#' # La tabla `small_table` del paquete
+#' # se utilizará para validar que los
+#' # valores de las columnas forman
+#' # parte de un conjunto determinado
 #' 
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # Validate that values in column `f`
-#' # are all part of the set of values
-#' # containing `low`, `mid`, and `high`
+#' # Validar que los valores de la
+#' # columna `f` forman parte del
+#' # conjunto de valores que contienen
+#' # `low`, `mid` y `high`
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_vals_in_set(
@@ -3886,7 +3894,7 @@
 #' @section Function ID:
 #' 2-9
 #' 
-#' @seealso The analogue to this function: [col_vals_not_in_set()].
+#' @seealso El análogo de esta función: [col_vals_not_in_set()].
 #' 
 #' @name col_vals_in_set
 
@@ -4257,10 +4265,11 @@
 #'   lógico.
 #'   
 #' @examples
-#' # For all of the examples here, we'll
-#' # use a simple table with three numeric
-#' # columns (`a`, `b`, and `c`) and three
-#' # character columns (`d`, `e`, and `f`)
+#' # Para todos los ejemplos, utilizaremos
+#' # una tabla sencilla con tres columnas
+#' # numéricas (`a`, `b` y `c`) y tres
+#' # columnas de caracteres (`d`, `e`
+#' # y `f`)
 #' tbl <-
 #'   dplyr::tibble(
 #'       a = c(5, 5, 5, 5, 5, 5),
@@ -4276,8 +4285,9 @@
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # Validate that values in column `c`
-#' # are all less than the value of `5`
+#' # Valida que los valores de la columna
+#' # `c` son todos menores que el valor
+#' # de `5`.
 #' agent <-
 #'   create_agent(tbl) %>%
 #'   col_vals_lt(vars(c), 5) %>%
@@ -4506,10 +4516,11 @@
 #'   lógico.
 #'   
 #' @examples
-#' # For all of the examples here, we'll
-#' # use a simple table with three numeric
-#' # columns (`a`, `b`, and `c`) and three
-#' # character columns (`d`, `e`, and `f`)
+#' # Para todos los ejemplos, utilizaremos
+#' # una tabla sencilla con tres columnas
+#' # numéricas (`a`, `b` y `c`) y tres
+#' # columnas de caracteres (`d`, `e`
+#' # y `f`)
 #' tbl <-
 #'   dplyr::tibble(
 #'       a = c(5, 5, 5, 5, 5, 5),
@@ -5239,12 +5250,12 @@
 #' any writing to disk by using the [yaml_agent_string()] function.
 #'
 #' @inheritParams col_vals_gt
-#' @param left,right The lower (or left) and upper (or right) boundary values
-#'   for the range. These can be expressed as single values, compatible columns
-#'   given in `vars()`, or a combination of both. By default, any column values
-#'   greater than or equal to `left` *and* less than or equal to `right` will
-#'   fail validation. The inclusivity of the bounds can be modified by the
-#'   `inclusive` option.
+#' @param left,right Los valores límite inferior (o izquierdo) y superior (o
+#'   derecho) del rango. Pueden expresarse como valores individuales, columnas
+#'   compatibles dadas en `vars()`, o una combinación de ambos. Por defecto,
+#'   cualquier valor de columna mayor o igual que `left` *y* menor o igual que
+#'   `right` fallará la validación. La inclusividad de los límites puede ser
+#'   modificada por la opción `inclusive`.
 #'   
 #' @inheritParams col_vals_between
 #' 
@@ -5257,21 +5268,21 @@
 #'   lógico.
 #'   
 #' @examples
-#' # The `small_table` dataset in the
-#' # package has a column of numeric
-#' # values in `c` (there are a few NAs
-#' # in that column); the following
-#' # examples will validate the values
-#' # in that numeric column
+#' # La tabla `small_table` del paquete
+#' # tiene una columna de valores
+#' # numéricos en `c` (hay algunos `NA`
+#' # en esa columna); los siguientes
+#' # ejemplos validarán los valores de
+#' # esa columna numérica
 #' 
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # Validate that values in column `c`
-#' # are all between `10` and `20`; because
-#' # there are NA values, we'll choose to
-#' # let those pass validation by setting
-#' # `na_pass = TRUE`
+#' # Valida que los valores de la
+#' # columna `c` estén todos entre `10`
+#' # y `20`; como hay valores `NA`,
+#' # elegiremos que pasen la validación
+#' # poniendo `na_pass = TRUE`.
 #' agent <-
 #'   create_agent(small_table) %>%
 #'   col_vals_not_between(
@@ -5329,20 +5340,20 @@
 #'     na_pass = TRUE
 #'   )
 #'
-#' # An additional note on the bounds for
-#' # this function: they are inclusive by
-#' # default; we can modify the
-#' # inclusiveness of the upper and lower
-#' # bounds with the `inclusive` option,
-#' # which is a length-2 logical vector
+#' # Una nota adicional sobre los límites
+#' # de esta función: son inclusivos por
+#' # defecto; podemos modificar la
+#' # inclusividad de los límites superior
+#' # e inferior con la opción `inclusive`,
+#' # que es un vector lógico de longitud 2
 #' 
-#' # In changing the lower bound to be
-#' # `9` and making it non-inclusive, we
-#' # get `TRUE` since although two values
-#' # are `9` and they fall outside of the
-#' # lower (or left) bound (and any values
-#' # 'not between' count as passing test
-#' # units)
+#' # Al cambiar el límite inferior para
+#' # que sea `9` y hacerlo no inclusivo,
+#' # obtenemos `TRUE` ya que aunque dos
+#' # valores son `9` y quedan fuera del
+#' # límite inferior (o izquierdo) (y
+#' # cualquier valor `no entre` cuenta
+#' # como unidades de prueba que pasan)
 #' small_table %>%
 #'   test_col_vals_not_between(
 #'     vars(c), 9, 20,
@@ -5530,10 +5541,11 @@
 #'   lógico.
 #'
 #' @examples
-#' # For all of the examples here, we'll
-#' # use a simple table with three numeric
-#' # columns (`a`, `b`, and `c`) and three
-#' # character columns (`d`, `e`, and `f`)
+#' # Para todos los ejemplos, utilizaremos
+#' # una tabla sencilla con tres columnas
+#' # numéricas (`a`, `b` y `c`) y tres
+#' # columnas de caracteres (`d`, `e`
+#' # y `f`)
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 5, 5, 5, 5, 5),
@@ -11925,11 +11937,12 @@
 #'   lógico.
 #'
 #' @examples
-#' # For all examples here, we'll use
-#' # a simple table with three numeric
-#' # columns (`a`, `b`, and `c`); this is
-#' # a very basic table but it'll be more
-#' # useful when explaining things later
+#' # Para todos los ejemplos aquí,
+#' # usaremos una tabla simple con tres
+#' # columnas numéricas (`a`, `b` y `c`);
+#' # esta es una tabla muy básica pero
+#' # será más útil a la hora de explicar
+#' # las cosas más adelante
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 2, 6),
@@ -11942,16 +11955,17 @@
 #' # A: Usando un `agent` con funciones de
 #' #    validación y luego `interrogate()`
 #' 
-#' # The `serially()` function can be set
-#' # up to perform a series of tests and
-#' # then perform a validation (only if
-#' # all tests pass); here, we are going
-#' # to (1) test whether columns `a` and
-#' # `b` are numeric, (2) check that both
-#' # don't have any `NA` values, and (3)
-#' # perform a finalizing validation that
-#' # checks whether values in `b` are
-#' # greater than values in `a`
+#' # La función `serially()` puede
+#' # configurarse para realizar una serie
+#' # de pruebas y luego realizar una
+#' # validación (sólo si se superan todas
+#' # las pruebas); en este caso, vamos a
+#' # (1) comprobar si las columnas `a` y `b`
+#' # son numéricas, (2) comprobar que ambas
+#' # no tienen ningún valor `NA`, y
+#' # (3) realizar una validación final que
+#' # compruebe si los valores de `b` son
+#' # mayores que los valores de `a`.
 #' agent_1 <-
 #'   create_agent(tbl = tbl) %>%
 #'   serially(
@@ -11971,14 +11985,16 @@
 #' # obtener un objeto `gt_tbl` directamente
 #' # con `get_agent_report(agent_1)`
 #' 
-#' # What's going on? All four of the tests
-#' # passed and so the final validation
-#' # occurred; there were no failing test
-#' # units in that either!
+#' # ¿Qué ocurre? Las cuatro pruebas han
+#' # sido aprobadas y, por tanto, se ha
+#' # producido la validación final;
+#' # ¡tampoco ha habido unidades de prueba
+#' # que hayan fallado!
 #' 
-#' # The final validation is optional; here
-#' # is a different agent where only the
-#' # serial tests are performed
+#' # La validación final es opcional;
+#' # aquí hay un agente diferente en el
+#' # que sólo se realizan las pruebas en
+#' # serie se realizan
 #' agent_2 <-
 #'   create_agent(tbl = tbl) %>%
 #'   serially(
@@ -11987,7 +12003,7 @@
 #'   ) %>%
 #'   interrogate()
 #'   
-#' # Everything is good here too:
+#' # Todo es bueno aquí también:
 #' all_passed(agent_2)
 #' 
 #' # B: Usando la función de validación
@@ -12044,22 +12060,24 @@
 #' Establezca una fórmula de preparación de mesa para un *agent* o *informant*
 #'
 #' @description
-#' A table-prep formula can be associated with an *agent* or *informant* with
-#' `set_read_fn()`. Should both a `tbl` *and* a `read_fn` be associated with the
-#' *agent* or *informant*, the `read_fn` will take priority. We can specify a
-#' value for `read_fn` with an RHS formula expression (e.g., `~ { <table reading
-#' code> }`). The table-prep formula can removed with [remove_read_fn()] or
-#' replaced with `set_read_fn()`.
+#' Una fórmula de preparación de tablas puede asociarse a un *agent* o
+#' *informant* con `set_read_fn()`. En caso de que tanto un `tbl` *como un
+#' `read_fn` estén asociados al objeto *agent* o *informant*, el `read_fn`
+#' tendrá prioridad. Podemos especificar un valor valor para `read_fn` con una
+#' expresión de fórmula RHS (por ejemplo, `~ { <código de lectura de tabla> }`).
+#' La fórmula de lectura de la tabla puede eliminarse con [remove_read_fn()] o
+#' reemplazada con `set_read_fn()`.
 #' 
-#' @param x An *agent* object of class `ptblank_agent`, or, an *informant* of
-#'   class `ptblank_informant`.
-#' @param read_fn An R formula expression (e.g., `~ { <table reading code> }`)
-#'   that is used to prepare a table.
+#' @param x Un objeto *agent* de la clase `ptblank_agent`, o, un objeto
+#'   *informant* de clase `ptblank_informant`.
+#' @param read_fn Una expresión de fórmula R (por ejemplo, `~ { <código de
+#'   lectura de la tabla> }`) que se utiliza para preparar una tabla.
 #'
 #' @examples
-#' # Set proportional failure thresholds
-#' # to the `warn`, `stop`, and `notify`
-#' # states using `action_levels()`
+#' # Establecer umbrales de fallo
+#' # proporcionales a los estados
+#' # `warn`, `stop` y `notify`
+#' # utilizando `action_levels()`
 #' al <- 
 #'   action_levels(
 #'       warn_at = 0.10,
@@ -12067,11 +12085,12 @@
 #'     notify_at = 0.35
 #'   )
 #' 
-#' # Create an agent that reads in
-#' # `small_table` with a table-prep
-#' # formula; apply the actions,
-#' # add some validation steps and then
-#' # interrogate the data
+#' # Crear un objeto agente que
+#' # lea en `small_table` con una
+#' # fórmula de preparación de tabla;
+#' # aplicar las acciones, añadir
+#' # algunos pasos de validación y
+#' # luego interrogar los datos
 #' agent_1 <- 
 #'   create_agent(
 #'     read_fn = ~ small_table,
@@ -12086,11 +12105,12 @@
 #'   rows_distinct() %>%
 #'   interrogate()
 #'   
-#' # Change the table-prep formula to use
-#' # a mutated version of `small_table`
-#' # (one that removes duplicate rows);
-#' # then, interrogate the target table
-#' # again
+#' # Cambie la fórmula de preparación
+#' # de la tabla para utilizar una
+#' # versión mutada de `small_table`
+#' # (que elimine las filas duplicadas);
+#' # a continuación, interrogue la
+#' # tabla de destino de nuevo
 #' agent_2 <-
 #'   agent_1 %>%
 #'   set_read_fn(
@@ -12117,16 +12137,17 @@
 #' this is undesirable, it be removed with the [remove_read_fn()] function. The
 #' association to a table can be removed with with [remove_tbl()].
 #'
-#' @param x An *agent* object of class `ptblank_agent`, or, an *informant* of
-#'   class `ptblank_informant`.
+#' @param x Un objeto *agent* de la clase `ptblank_agent`, o, un objeto
+#'   *informant* de clase `ptblank_informant`.
 #' @param tbl The input table for the `agent`. This can be a data frame, a
 #'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Any table already
 #'   associated with the *agent* or *informant* will be overwritten.
 #' 
 #' @examples
-#' # Set proportional failure thresholds
-#' # to the `warn`, `stop`, and `notify`
-#' # states using `action_levels()`
+#' # Establecer umbrales de fallo
+#' # proporcionales a los estados
+#' # `warn`, `stop` y `notify`
+#' # utilizando `action_levels()`
 #' al <- 
 #'   action_levels(
 #'       warn_at = 0.10,
@@ -12134,11 +12155,12 @@
 #'     notify_at = 0.35
 #'   )
 #' 
-#' # Create an agent that has
-#' # `small_table` set as the target
-#' # table via `tbl`; apply the actions,
-#' # add some validation steps and then
-#' # interrogate the data
+#' # Crear un objeto agente que
+#' # lea en `small_table` con una
+#' # fórmula de preparación de tabla;
+#' # aplicar las acciones, añadir
+#' # algunos pasos de validación y
+#' # luego interrogar los datos
 #' agent_1 <- 
 #'   create_agent(
 #'     tbl = small_table,
@@ -12208,16 +12230,16 @@
 # small_table_sqlite-------------------------------------------------------
 #' Una versión SQLite del conjunto de datos `small_table`
 #' 
-#' The `small_table_sqlite()` function creates a SQLite, `tbl_dbi` version of
-#' the `small_table` dataset. A requirement is the availability of the **DBI**
-#' and **RSQLite** packages. These packages can be installed by using 
-#' `install.packages("DBI")` and `install.packages("RSQLite")`.
+#' La función `small_table_sqlite()` crea una versión SQLite, `tbl_dbi` de la
+#' tabla `small_table`. Un requisito es la disponibilidad de los paquetes
+#' **DBI** y **RSQLite**. Estos paquetes se pueden instalar con
+#' `install.packages("DBI")` y `install.packages("RSQLite")`.
 #' 
 #' @examples
-#' # Use `small_table_sqlite()` to
-#' # create a SQLite version of the
-#' # `small_table` table
-#' #
+#' # Utilice `small_table_sqlite()`
+#' # para crear una versión SQLite
+#' # de la tabla de la tabla
+#' # `small_table`
 #' # small_table_sqlite <- small_table_sqlite()
 #' 
 #' @family Datasets
@@ -12229,13 +12251,13 @@
 # snip_highest-------------------------------------------------------------
 #' Un `fn` para `info_snippet()`: obtiene el valor más alto de una columna
 #' 
-#' The `snip_highest()` function can be used as an [info_snippet()] function
-#' (i.e., provided to `fn`) to get the highest numerical, time value, or
-#' alphabetical value from a column in the target table.
+#' La función `snip_highest()` puede utilizarse como una función
+#' [info_snippet()] (es decir, proporcionada a `fn`) para obtener el mayor valor
+#' numérico, temporal o valor alfabético de una columna de la tabla de destino.
 #' 
-#' @param column The name of the column that contains the target values.
+#' @param column El nombre de la columna que contiene los valores de destino.
 #'   
-#' @return A formula needed for [info_snippet()]'s `fn` argument.
+#' @return Una fórmula necesaria para el argumento `fn` de [info_snippet()].
 #' 
 #' @examples 
 #' # Generate an informant object, add
@@ -12278,7 +12300,7 @@
 #' provided to `fn`) to get a catalog list from a table column. You can limit
 #' the of items in that list with the `limit` value.
 #' 
-#' @param column The name of the column that contains the target values.
+#' @param column El nombre de la columna que contiene los valores de destino.
 #' @param limit A limit of items put into the generated list. The returned text
 #'   will state the remaining number of items beyond the `limit`. By default,
 #'   the limit is `5`.
@@ -12318,7 +12340,7 @@
 #'   Russian (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and
 #'   Dutch (`"nl"`).
 #'   
-#' @return A formula needed for [info_snippet()]'s `fn` argument.
+#' @return Una fórmula necesaria para el argumento `fn` de [info_snippet()].
 #' 
 #' @examples 
 #' # Generate an informant object, add
@@ -12362,9 +12384,9 @@
 #' (i.e., provided to `fn`) to get the lowest numerical, time value, or
 #' alphabetical value from a column in the target table.
 #' 
-#' @param column The name of the column that contains the target values.
+#' @param column El nombre de la columna que contiene los valores de destino.
 #'   
-#' @return A formula needed for [info_snippet()]'s `fn` argument.
+#' @return Una fórmula necesaria para el argumento `fn` de [info_snippet()].
 #' 
 #' @examples 
 #' # Generate an informant object, add
@@ -12417,12 +12439,12 @@
 #' 3. Bowley's seven-figure summary (`"bowley"`): minimum, P10, Q1, median, Q3,
 #' P90, maximum
 #'
-#' @param column The name of the column that contains the target values.
+#' @param column El nombre de la columna que contiene los valores de destino.
 #' @param type The type of summary. By default, the `"5num"` keyword is used to
 #'   generate a five-number summary. Two other options provide seven-number
 #'   summaries: `"7num"` and `"bowley"`.
 #'   
-#' @return A formula needed for [info_snippet()]'s `fn` argument.
+#' @return Una fórmula necesaria para el argumento `fn` de [info_snippet()].
 #' 
 #' @examples 
 #' # Generate an informant object, add
@@ -12785,16 +12807,17 @@
 #' ¿La tabla de destino coincide con una tabla de comparación?
 #'
 #' @description
-#' The `tbl_match()` validation function, the `expect_tbl_match()` expectation
-#' function, and the `test_tbl_match()` test function all check whether the
-#' target table's composition matches that of a comparison table. The validation
-#' function can be used directly on a data table or with an *agent* object
-#' (technically, a `ptblank_agent` object) whereas the expectation and test
-#' functions can only be used with a data table. The types of data tables that
-#' can be used include data frames, tibbles, database tables (`tbl_dbi`), and
-#' Spark DataFrames (`tbl_spark`). As a validation step or as an expectation,
-#' there is a single test unit that hinges on whether the two tables are the
-#' same (after any `preconditions` have been applied).
+#' La función de validación `tbl_match()`, la función de expectativa
+#' `expect_tbl_match()` y la función de prueba `test_tbl_match()` comprueban si
+#' la composición de la tabla de destino coincide con la de una tabla de
+#' comparación. La función de validación se puede usar directamente en una tabla
+#' de datos o con un objeto *agent* (técnicamente, un objeto `ptblank_agent`)
+#' mientras que las funciones de expectativa y prueba solo se pueden usar con
+#' una tabla de datos. Los tipos de tablas de datos que se pueden utilizar
+#' incluyen marcos de datos, tibbles, tablas de base de datos (`tbl_dbi`) y
+#' Spark DataFrames (`tbl_spark`). Como paso de validación o como expectativa,
+#' hay una sola unidad de prueba que depende de si las dos tablas son las son
+#' iguales (después de haber aplicado cualquier `preconditions`).
 #' 
 #' @section Preconditions:
 #' Proporcionar expresiones como `preconditions` significa que **pointblank**
@@ -12805,13 +12828,14 @@
 #' desarrollar un gran plan de validación con una sola tabla de destino y
 #' realizarle pequeños ajustes, según sea necesario, a lo largo del camino.
 #'
-#' The table mutation is totally isolated in scope to the validation step(s)
-#' where `preconditions` is used. Using **dplyr** code is suggested here since
-#' the statements can be translated to SQL if necessary (i.e., if the target
-#' table resides in a database). The code is most easily supplied as a one-sided
-#' **R** formula (using a leading `~`). In the formula representation, the `.`
-#' serves as the input data table to be transformed. Alternatively, a function
-#' could instead be supplied.
+#' La mutación de la tabla está totalmente aislada en el alcance de los pasos de
+#' validación en los que se utilizan las `preconditions`. Aquí se sugiere usar
+#' el código **dplyr** ya que las declaraciones se pueden traducir a SQL si es
+#' necesario (es decir, si la tabla de destino reside en una base de datos). El
+#' código se proporciona más fácilmente como una fórmula **R** unilateral
+#' (utilizando un `~` inicial). En la representación de la fórmula, el `.` sirve
+#' como la tabla de datos de entrada que se va a transformar. Como alternativa,
+#' se puede suministrar una función.
 #' 
 #' @section Segmentos:
 #' Al usar el argumento `segments`, es posible definir una validación particular
@@ -12935,8 +12959,8 @@
 #'   lógico.
 #'   
 #' @examples
-#' # Create a simple table with three
-#' # columns and four rows of values
+#' # Cree una tabla simple con tres
+#' # columnas y cuatro filas de valores
 #' tbl <-
 #'   dplyr::tibble(
 #'     a = c(5, 7, 6, 5),
@@ -12944,8 +12968,8 @@
 #'     c = c(1, 1, 1, 3)
 #'   )
 #'
-#' # Create a second table which is 
-#' # the same as `tbl`
+#' # Crear una segunda tabla que sea
+#' # igual a `tbl`.
 #' tbl_2 <-
 #'   dplyr::tibble(
 #'     a = c(5, 7, 6, 5),
@@ -12953,17 +12977,17 @@
 #'     c = c(1, 1, 1, 3)
 #'   )
 #' 
-#' # Validate that the target table
-#' # (`tbl`) and the comparison table
-#' # (`tbl_2`) are equivalent in terms
-#' # of content
+#' # Validar que la tabla de destino
+#' # (`tbl`) y la tabla de comparación
+#' # (`tbl_2`) son equivalentes en
+#' # términos de contenido
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   tbl_match(tbl_compare = tbl_2) %>%
 #'   interrogate()
 #' 
-#' # Determine if this validation passed
-#' # by using `all_passed()`
+#' # Determine si esta validación
+#' # pasó usando `all_passed()`
 #' all_passed(agent)
 #' 
 #' @family validation functions
@@ -12976,31 +13000,35 @@
 #' Obtenga una fórmula de preparación de mesa en una tienda de mesa
 #' 
 #' @description
-#' The `tbl_source()` function provides a convenient means to access a
-#' table-prep formula from either a `tbl_store` object or a table store YAML
-#' file (which can be created with the [yaml_write()] function). A call to
-#' `tbl_source()` is most useful as an input to the `read_fn` argument of
-#' [create_agent()], [create_informant()], or [set_read_fn()].
+#' La función `tbl_source()` proporciona un medio conveniente para acceder a una
+#' fórmula de preparación de tablas desde un objeto `tbl_store` o un archivo
+#' YAML de almacenamiento de tablas (que puede ser creado con la función
+#' [yaml_write()]). Una llamada a `tbl_source()` es más útil como entrada al
+#' argumento `read_fn` de [create_agent()], [create_informant()], o
+#' [set_read_fn()].
 #'
-#' Should you need to obtain the table itself (that is generated via the
-#' table-prep formula), then the [tbl_get()] function should be used for that.
+#' Si necesita obtener la tabla propiamente dicha (que se genera a través de la
+#' fórmula fórmula de preparación de la tabla), se debe utilizar la función
+#' [tbl_get()] para ello.
 #' 
-#' @param tbl The table name associated with a table-prep formula. This is part
-#'   of the table `store`. This table could be identified by its name (e.g.,
-#'   `tbl = "large_table"`) or by supplying a reference using a subset (with
-#'   `$`) of the `tbl_store` object (e.g., `tbl = store$large_table`). If using
-#'   the latter method then nothing needs to be supplied to `store`.
-#' @param store Either a table store object created by the [tbl_store()]
-#'   function or a path to a table store YAML file created by [yaml_write()].
+#' @param tbl El nombre de la tabla asociado a una fórmula de preparación de la
+#'   tabla. Forma parte de la tabla `store`. Esta tabla puede identificarse por
+#'   su nombre (por ejemplo, `tbl = "large_table"`) o proporcionando una
+#'   referencia utilizando un subconjunto (con `$`) del objeto `tbl_store` (por
+#'   ejemplo, `tbl = store$large_table`). Si se utiliza este último método, no
+#'   es necesario suministrar nada a `store`.
+#' @param store O bien un objeto de almacén de tablas creado por la función
+#'   [tbl_store()] o una ruta a un archivo YAML del almacén de tablas creado por
+#'   [yaml_write()].
 #' 
-#' @return A table-prep formula.
+#' @return Una fórmula de preparación de la tabla.
 #' 
 #' @examples 
 #' if (interactive()) {
 #' 
-#' # Let's create a `tbl_store` object by
-#' # giving two table-prep formulas to
-#' # `tbl_store()`
+#' # Vamos a crear un objeto `tbl_store`
+#' # dándole dos fórmulas de preparación
+#' # de la tabla a `tbl_store()`
 #' tbls <- 
 #'   tbl_store(
 #'     small_table_duck ~ db_tbl(
@@ -13011,9 +13039,10 @@
 #'     sml_table ~ pointblank::small_table
 #'   )
 #' 
-#' # We can pass a table-prep formula
-#' # to `create_agent()` and interrogate
-#' # the table shortly thereafter
+#' # Podemos pasar una fórmula de
+#' # preparación de la tabla a
+#' # `create_agent()` e interrogar la
+#' # tabla poco después
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~ tbl_source("sml_table", tbls),
@@ -13023,17 +13052,18 @@
 #'   col_exists(vars(date, date_time)) %>%
 #'   interrogate()
 #'
-#' # Both the `tbl_store` object and the
-#' # `agent` can be transformed to YAML with
-#' # the `yaml_write()` function
+#' # Tanto el objeto `tbl_store` como el
+#' # objeto `agent` pueden ser transformados
+#' # a YAML con la función `yaml_write()`.
 #' 
-#' # This writes the `tbl_store.yml` file
-#' # by default (but a different name
-#' # could be used)
+#' # Esto escribe el archivo `tbl_store.yml`
+#' # por defecto (pero un nombre diferente
+#' # podría usarse)
 #' yaml_write(tbls)
 #' 
-#' # Let's modify the agent's `read_fn` to point
-#' # to the YAML representation of the `tbl_store`
+#' # Modifiquemos el `read_fn` del agente
+#' # para que apunte a la representación
+#' # YAML del `tbl_store`.
 #' agent <-
 #'   agent %>% 
 #'   set_read_fn(
@@ -13043,14 +13073,15 @@
 #'       )
 #'   )
 #' 
-#' # Then we can write agent to a YAML
-#' # file (writes to `agent-sml_table.yml`
-#' # by default)
+#' # Entonces podemos escribir el agente
+#' # en un archivo YAML (escribe en
+#' # `agent-sml_table.yml` por defecto)
 #' yaml_write(agent)
 #' 
-#' # Now that both are in this on-disk format
-#' # an interrogation can be done by accessing
-#' # the agent YAML
+#' # Ahora que ambos están en este
+#' # formato en el disco se puede hacer
+#' # una interrogación accediendo a el
+#' # agente YAML
 #' agent <-
 #'   yaml_agent_interrogate(
 #'     filename = "agent-sml_table.yml"
@@ -13069,35 +13100,39 @@
 #' store"
 #' 
 #' @description 
-#' It can be useful to set up all the data sources you need and just draw from
-#' them when necessary. This upfront configuration with `tbl_store()` lets us
-#' define the methods for obtaining tabular data from mixed sources (e.g.,
-#' database tables, tables generated from flat files, etc.) and provide names
-#' for these data preparation procedures. Then we have a convenient way to
-#' access the materialized tables with [tbl_get()], or, the table-prep formulas
-#' with [tbl_source()]. Table-prep formulas can be as simple as getting a table
-#' from a location, or, it can involve as much mutation as is necessary (imagine
-#' procuring several mutated variations of the same source table, generating a
-#' table from multiple sources, or pre-filtering a database table according to
-#' the system time). Another nice aspect of organizing table-prep formulas in a
-#' single object is supplying it to the `read_fn` argument of [create_agent()]
-#' or [create_informant()] via `$` notation (e.g, `create_agent(read_fn =
-#' <tbl_store>$<name>)`) or with [tbl_source()] (e.g., `create_agent(read_fn = ~
-#' tbl_source("<name>", <tbl_store>))`).
+#' Puede ser útil configurar todas las fuentes de datos que necesites y sólo
+#' extraerlas cuando sea necesario. Esta configuración por adelantado con
+#' `tbl_store()` nos permite definir los métodos para obtener datos tabulares de
+#' fuentes mixtas (por ejemplo, tablas de bases de datos, tablas generadas a
+#' partir de archivos planos, etc.) y proporcionar nombres para estos
+#' procedimientos de preparación de datos. Entonces tenemos una forma
+#' conveniente de acceder a las tablas materializadas con [tbl_get()], o, a las
+#' fórmulas de preparación de tablas con [tbl_source()]. Las fórmulas table-prep
+#' pueden ser tan simples como obtener una tabla de una ubicación, o, puede
+#' involucrar tanta mutación como sea necesaria (imagine obtener varias
+#' variaciones mutadas de la misma tabla fuente, generar una tabla desde
+#' múltiples fuentes, o pre-filtrar una tabla de la base de datos de acuerdo al
+#' tiempo del sistema). Otro aspecto agradable de organizar las fórmulas de
+#' preparación de tablas en un solo objeto es suministrarlo al argumento
+#' `read_fn` de [create_agent()] o [create_informant()] mediante la notación `$`
+#' (por ejemplo, `create_agent(read_fn = <tbl_store>$<nombre>)`) o con
+#' [tbl_source()] (por ejemplo, `create_agent(read_fn = ~ tbl_source("<nombre>",
+#' <tbl_store>))`).
 #' 
 #' @section YAML:
-#' A **pointblank** table store can be written to YAML with [yaml_write()] and
-#' the resulting YAML can be used in several ways. The ideal scenario is to have
-#' pointblank agents and informants also in YAML form. This way the agent and
-#' informant can refer to the table store YAML (via [tbl_source()]), and, the
-#' processing of both agents and informants can be performed with
-#' [yaml_agent_interrogate()] and [yaml_informant_incorporate()]. With the
-#' following R code, a table store with two table-prep formulas is generated and
-#' written to YAML (if no filename is given then the YAML is written to
+#' Un **pointblank** `tbl_store` se puede escribir en YAML con [yaml_write()] y
+#' el YAML resultante se puede utilizar de varias maneras. El escenario ideal es
+#' tener agentes e informantes pointblank también en forma YAML. De esta manera
+#' el agente y el informante pueden referirse a la tabla de almacenamiento YAML
+#' (a través de [tbl_source()]), y, el procesamiento de ambos agentes e
+#' informantes puede realizarse con [yaml_agent_interrogate()] y
+#' [yaml_informant_incorporate()]. Con el siguiente código de R, se genera un
+#' almacén de tablas con dos fórmulas de preparación de tablas y se escribe en
+#' YAML (si no se da un nombre de archivo, el YAML se escribe en
 #' `"tbl_store.yml"`).
 #' 
 #' ```
-#' # R statement for generating the "tbl_store.yml" file
+#' # Código R para generar el archivo "tbl_store.yml"
 #' tbl_store(
 #'   tbl_duckdb ~ db_tbl(small_table, dbname = ":memory:", dbtype = "duckdb"),
 #'   sml_table_high ~ small_table %>% dplyr::filter(f == "high")
@@ -13110,15 +13145,16 @@
 #'   sml_table_high: ~ small_table %>% dplyr::filter(f == "high")
 #' ```
 #' 
-#' This is useful when you want to get fresh pulls of prepared data from a
-#' source materialized in an R session (with the [tbl_get()] function. For
-#' example, the `sml_table_high` table can be obtained by using
-#' `tbl_get("sml_table_high", "tbl_store.yml")`. To get an agent to check this
-#' prepared data periodically, then the following example with [tbl_source()]
-#' will be useful:
+#' Esto es útil cuando se quiere obtener tiradas frescas de datos preparados de
+#' una fuente materializada en una sesión de R (con la función [tbl_get()]. Por
+#' ejemplo, la tabla `sml_table_high` puede obtenerse utilizando
+#' `tbl_get("sml_table_high", "tbl_store.yml")`. Para conseguir que un agente
+#' compruebe estos datos preparados periódicamente, será útil el siguiente
+#' ejemplo con [tbl_source()]:
 #' 
 #' ```
-#' # Generate agent that checks `sml_table_high`, write it to YAML
+#' # Generar un objeto agente que compruebe
+#' # `sml_table_high`, escribirlo en YAML
 #' create_agent(
 #'   read_fn = ~ tbl_source("sml_table_high", "tbl_store.yml"),
 #'   label = "An example that uses a table store.",
@@ -13139,24 +13175,24 @@
 #'     columns: vars(date, date_time)
 #' ```
 #' 
-#' Now, whenever the `sml_table_high` table needs to be validated, it can be
-#' done with [yaml_agent_interrogate()] (e.g., 
+#' Ahora, siempre que la tabla `sml_table_high` necesite ser validada, se puede
+#' hacer con [yaml_agent_interrogate()] (por ejemplo,
 #' `yaml_agent_interrogate("agent-sml_table_high.yml")`).
 #' 
-#' @param ... Expressions that contain table-prep formulas and table names for
-#'   data retrieval. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) are to be used,
-#'   where the left-hand side is a given name and the right-hand is the portion
-#'   that is is used to obtain the table.
-#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @param ... Expresiones que contienen fórmulas de preparación de tablas y
+#'   nombres de tablas para la recuperación de datos. Deben utilizarse fórmulas
+#'   de dos lados (por ejemplo, `<LHS> ~ <RHS>`), donde el lado izquierdo es un
+#'   nombre dado y el derecho es la parte que se utiliza para obtener la tabla.
+#' @param .list Permite el uso de una lista como alternativa de entrada a `...`.
 #' 
-#' @return A `tbl_store` object that contains table-prep formulas.
+#' @return Un objeto `tbl_store` que contiene fórmulas de preparación de tablas.
 #' 
 #' @examples 
 #' if (interactive()) {
 #' 
-#' # Define a `tbl_store` object by adding
-#' # table-prep formulas inside the
-#' # `tbl_store()` call
+#' # Definir un objeto `tbl_store` añadiendo
+#' # fórmulas de preparación de tablas
+#' # dentro de la `tbl_store()` llamada
 #' tbls <- 
 #'   tbl_store(
 #'     small_table_duck ~ db_tbl(
@@ -13187,35 +13223,37 @@
 #'     sml_table ~ pointblank::small_table
 #'   )
 #' 
-#' # Once this object is available, you
-#' # can check that the table of interest
-#' # is produced to your specification with
-#' # the `tbl_get()` function
+#' # Una vez que este objeto está disponible,
+#' # se puede comprobar que la tabla de
+#' # interés se produce a su especificación
+#' # con la función `tbl_get()`.
 #' tbl_get(
 #'   tbl = "small_table_duck",
 #'   store = tbls
 #' )
 #' 
-#' # Another simpler way to get the same
-#' # table materialized is by using `$` to
-#' # get the entry of choice for `tbl_get()`
+#' # Otra forma más sencilla de obtener la
+#' # misma tabla materializada es utilizando
+#' # `$` para obtener la entrada de
+#' # elección para `tbl_get()`.
 #' tbls$small_table_duck %>% tbl_get()
 #' 
-#' # Creating an agent is easy when all
-#' # table-prep formulas are encapsulated
-#' # in a `tbl_store` object; use `$` 
-#' # notation to pass the appropriate
-#' # procedure for reading a table to the
-#' # `read_fn` argument
+#' # La creación de un agente es fácil
+#' # cuando todas las fórmulas de
+#' # preparación de tablas están
+#' # encapsuladas en un objeto `tbl_store`;
+#' # utilice la notación `$` para pasar el
+#' # procedimiento apropiado para leer una
+#' # tabla al argumento `read_fn`
 #' agent_1 <-
 #'   create_agent(
 #'     read_fn = tbls$small_table_duck
 #'   )
 #'   
-#' # There are other ways to use the
-#' # table store to assign a target table
-#' # to an agent, like using the
-#' # `tbl_source()` function
+#' # Existen otras formas de utilizar el
+#' # almacén de tablas para asignar una
+#' # tabla de destino a un agente, como
+#' # el uso de la función `tbl_source()`
 #' agent_2 <-
 #'   create_agent(
 #'     read_fn = ~ tbl_source(
@@ -13224,19 +13262,21 @@
 #'       )
 #'   )
 #' 
-#' # The table store can be moved to
-#' # YAML with `yaml_write` and the
-#' # `tbl_source()` call could then
-#' # refer to that on-disk table store;
-#' # let's do that YAML conversion
+#' # El almacén de tablas puede ser
+#' # trasladado a YAML con `yaml_write`
+#' # y la llamada `tbl_source()` podría
+#' # entonces referirse a ese almacén
+#' # de tablas en disco; hagamos esa
+#' # conversión a YAML
 #' yaml_write(tbls)
 #' 
-#' # The above writes the `tbl_store.yml`
-#' # file (by not providing a `filename`
-#' # this default filename is chosen);
-#' # next, modify the `tbl_source()`
-#' # so that `store` refer to the YAML
-#' # file
+#' # Lo anterior escribe el archivo
+#' # `tbl_store.yml` (al no
+#' # proporcionar un `filename` se
+#' # elige este nombre de archivo por
+#' # defecto); a continuación, modifica
+#' # el `tbl_source()` para que `store`
+#' # haga referencia al archivo YAML 
 #' agent_3 <-
 #'   create_agent(
 #'     read_fn = ~ tbl_source(

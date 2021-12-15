@@ -17,9 +17,10 @@
 # RStudio files
 .Rproj.user/
 
-# produced vignettes
+# Produced vignettes and related files 
 vignettes/*.html
 vignettes/*.pdf
+vignettes/pb_log_file
 
 # OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
 .httr-oauth
@@ -35,6 +36,9 @@ vignettes/*.pdf
 
 # docs in `inst
 inst/doc
+
+# The docs dir
+docs
 
 # RDS files in certain directories
 tests/manual_tests/*.rds

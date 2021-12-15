@@ -1,0 +1,256 @@
+---
+title: "Introduction to the **Data Tests for Conditionals** Workflow (**VALID-IV**)"
+output: html_document
+---
+
+```{r setup, message=FALSE, warning=FALSE, include=FALSE}
+library(pointblank)
+```
+
+<img src="images/VALID-IV.svg" width=100%>
+
+The *VALID-IV: Data Tests for Conditionals* workflow is probably not much of a workflow really. But maybe you consider programming and control flow a sort of workflow. If that's the case and you are programming with data, the functions of this workflow might be useful for that. A set of `test_*()` functions, with the same arguments as the corresponding `expect_*()` functions of the [**VALID-III**](../articles/VALID-III.html) workflow, are used with data tables and the result of each call returns a single logical value (`TRUE` or `FALSE`). Here's the complete list of functions with a phrase for what each function tests:
+
+- `test_col_vals_lt()`: Test whether column data are less than a specified value.
+- `test_col_vals_lte()`: Test whether column data are less than or equal to a specified value.
+- `test_col_vals_equal()`: Test whether column data are equal to a specified value.
+- `test_col_vals_not_equal()`: Test whether column data are not equal to a specified value.
+- `test_col_vals_gte()`: Test whether column data are greater than or equal to a specified value.
+- `test_col_vals_gt()`: Test whether column data are greater than a specified value.
+- `test_col_vals_between()`: Test whether column data are between two specified values.
+- `test_col_vals_not_between()`: Test whether column data are not between two specified values.
+- `test_col_vals_in_set()`: Test whether column data are part of a specified set of values.
+- `test_col_vals_not_in_set()`: Test whether column data are not part of a specified set of values.
+- `test_col_vals_null()`: Test whether column data are `NULL`/`NA`.
+- `test_col_vals_not_null()`: Test whether column data are not `NULL`/`NA`.
+- `test_col_vals_regex()`: Test whether strings in column data match a regex pattern.
+- `test_col_vals_expr()`: Test whether column data agree with a predicate expression.
+- `test_conjointly()`: Test whether multiple rowwise validations result in joint validity.
+- `test_rows_distinct()`: Test whether row data are distinct.
+- `test_col_is_character()`: Test whether the columns contain character/string data.
+- `test_col_is_numeric()`: Test whether the columns contain numeric values.
+- `test_col_is_integer()`: Test whether the columns contain integer values.
+- `test_col_is_logical()`: Test whether the columns contain logical values.
+- `test_col_is_date()`: Test whether the columns contain R `Date` objects.
+- `test_col_is_posix()`: Test whether the columns contain `POSIXct` dates.
+- `test_col_is_factor()`: Test whether the columns contain R `factor` objects.
+- `test_col_exists()`: Test whether one or more columns actually exist.
+- `test_col_schema_match()`: Test whether columns in the table (and their types) match a predefined schema.
+
+# Exactly Like the `expect_*()` Functions Except You Get a `TRUE` or `FALSE`
+
+The interface of each `test_*()` function is an exact match to the `expect_*()` counterpart. If you haven't used either of those but have used the standard validation functions, here's a quick rundown.
+
+The following arguments from the validation functions (e.g., `col_vals_in_set()` and many more) have been removed in the corresponding `test_*()` functions:
+
+- `actions`
+- `step_id`
+- `label`
+- `brief`
+- `active`
+
+Instead of `actions` we do get the `threshold` argument as a simplified replacement. What's supplied here is a single failure threshold value. By default this is set to `1` meaning that a single test that fails will result in an overall failure and the return of `FALSE` (otherwise, `TRUE`). 
+
+The rules for threshold setting (in `action_levels()`, `warn_on_fail()`, and `stop_on_fail()`) will be explained in some detail here. Whole numbers beyond `1` indicate that any failing units up to that absolute threshold value will result in a `TRUE`. Likewise, fractional values (between `0` and `1`) act as a proportional failure threshold, where `0.25` means that 25% or more failing test units results in a `FALSE`.
+
+We can use the `preconditions` argument in cases where we'd like to transform the input data before evaluation of the test. If you would like to do things to the input table like summarize it, perform filtering, mutate one or more columns, perform table joins, etc., then this is a good way to go about that.
+
+# Here's Several Examples Quick Snap
+
+Let's have some examples before leaving this article. They will all use our `small_table`:
+
+```{r small_table, paged.print=FALSE}
+small_table
+```
+
+If you'd like to test your **pointblank** validation skill, guess whether each of these is `TRUE` or `FALSE` before hovering over the line of code.
+<br>
+<br>
+
+```{=html}
+
+<style>
+.btn {
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid gray;
+  color: black;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  text-align: center;
+}
+.btn:hover, .btn:focus {
+  color: black;
+  outline: 0;
+}
+
+.true {
+  -webkit-transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out;
+  border-color: gray;
+  color: black;
+  transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out;
+}
+.true:hover {
+  box-shadow: 0 0 40px 40px lightgreen inset;
+  border: 1px solid green;
+}
+.true:hover::after {
+  box-shadow: none;
+  font-weight: 600;
+  content: 'TRUE';
+}
+.true code {
+  padding: 1px 4px 2px 4px;
+  background: transparent;
+  text-align: left;
+}
+
+.false {
+  -webkit-transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out;
+  border-color: gray;
+  color: black;
+  transition: box-shadow 200ms ease-in-out, color 200ms ease-in-out;
+}
+.false:hover {
+  box-shadow: 0 0 40px 40px #CC0000 inset;
+  color: white;
+  border: 1px solid #7A0000;
+}
+.false:hover::after {
+  box-shadow: none;
+  font-weight: 600;
+  text-align: right;
+  content: 'FALSE';
+}
+.false code {
+  padding: 1px 4px 2px 4px;
+  background: transparent;
+  text-align: left;
+}
+
+
+</style>
+
+<button class="btn true">
+<code>small_table %>%
+  test_col_is_logical(vars(e))</code>
+</button>
+
+<br>
+
+<button class="btn false">
+<code>small_table %>% 
+  test_col_vals_between(
+    vars(c), left = 1, right = 10
+  )</code>
+</button>
+
+<br>
+
+<button class="btn true">
+<code>small_table %>% 
+  test_col_vals_between(
+    vars(c), left = 0, right = vars(d),
+    na_pass = TRUE, threshold = 0.5
+  )</code>
+</button>
+
+<br>
+
+<button class="btn false">
+<code>small_table %>% 
+  test_col_vals_between(
+    vars(c), left = 0, right = vars(d),
+    na_pass = TRUE, threshold = 3
+  )</code>
+</button>
+
+<br>
+
+<button class="btn false">
+<code>small_table %>% 
+  test_col_schema_match(
+    col_schema(.tbl = small_table_sqlite())
+  )</code>
+</button>
+
+<br>
+
+<button class="btn true">
+<code>small_table %>%
+  test_col_vals_regex(vars(b), regex = ".-[a-z]{3}.*")
+</code>
+</button>
+
+<br>
+
+<button class="btn false">
+<code>small_table %>% test_col_exists(columns = "g")</code>
+</button>
+
+<br>
+
+<button class="btn false">
+<code>small_table %>% 
+  test_col_vals_gt(
+    vars(z), value = vars(a),
+    preconditions = ~ . %>% dplyr::mutate(z = c + e), threshold = 0.5
+  )</code>
+</button>
+
+```
+
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_is_logical(vars(e))
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_vals_between(vars(c), left = 1, right = 10)
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_vals_between(vars(c), left = 0, right = vars(d), na_pass = TRUE, threshold = 0.5)
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_vals_between(vars(c), left = 0, right = vars(d), na_pass = TRUE, threshold = 3)
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_schema_match(col_schema(.tbl = small_table_sqlite()))
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_vals_in_set(vars(a), set = 1:10)
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_vals_regex(vars(b), regex = ".-[a-z]{3}.*")
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% test_col_exists(columns = "g")
+```
+
+```{r echo=FALSE, eval=FALSE}
+small_table %>% 
+  test_col_vals_gt(
+    vars(z), value = vars(a),
+    preconditions = ~ . %>% dplyr::mutate(z = c + e), threshold = 0.5
+  )
+```
+
+<br>
+And there you have it. A nice set of examples revealing their truthy/falsy nature only `::after` closer inspection.

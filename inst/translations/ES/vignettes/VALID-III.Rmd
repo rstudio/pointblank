@@ -1,0 +1,78 @@
+---
+title: "Introduction to the **Expectations in Unit Tests** Workflow (**VALID-III**)"
+output: html_document
+---
+
+```{r setup, message=FALSE, warning=FALSE, include=FALSE}
+library(pointblank)
+library(testthat)
+```
+
+<img src="images/VALID-III.svg" width=100%>
+
+The *VALID-III: Expectations in Unit Tests* workflow is all about checking your data alongside your usual **testthat** tests. The functions used for this workflow all begin with the `expect_` prefix and are based on the set of validation functions used in the [**VALID-I**](../articles/VALID-I.html) and [**VALID-II**](../articles/VALID-II.html) workflows. Here's the complete list of functions with a phrase for each function's expectation:
+
+- `expect_col_vals_lt()`: Expect that column data are less than a specified value.
+- `expect_col_vals_lte()`: Expect that column data are less than or equal to a specified value.
+- `expect_col_vals_equal()`: Expect that column data are equal to a specified value.
+- `expect_col_vals_not_equal()`: Expect that column data are not equal to a specified value.
+- `expect_col_vals_gte()`: Expect that column data are greater than or equal to a specified value.
+- `expect_col_vals_gt()`: Expect that column data are greater than a specified value.
+- `expect_col_vals_between()`: Expect that column data are between two specified values.
+- `expect_col_vals_not_between()`: Expect that column data are not between two specified values.
+- `expect_col_vals_in_set()`: Expect that column data are part of a specified set of values.
+- `expect_col_vals_not_in_set()`: Expect that column data are not part of a specified set of values.
+- `expect_col_vals_null()`: Expect that column data are `NULL`/`NA`.
+- `expect_col_vals_not_null()`: Expect that column data are not `NULL`/`NA`.
+- `expect_col_vals_regex()`: Expect that strings in column data match a regex pattern.
+- `expect_col_vals_expr()`: Expect that column data agree with a predicate expression.
+- `expect_conjointly()`: Expect that multiple rowwise validations result in joint validity.
+- `expect_rows_distinct()`: Expect that row data are distinct.
+- `expect_col_is_character()`: Expect that the columns contain character/string data.
+- `expect_col_is_numeric()`: Expect that the columns contain numeric values.
+- `expect_col_is_integer()`: Expect that the columns contain integer values.
+- `expect_col_is_logical()`: Expect that the columns contain logical values.
+- `expect_col_is_date()`: Expect that the columns contain R `Date` objects.
+- `expect_col_is_posix()`: Expect that the columns contain `POSIXct` dates.
+- `expect_col_is_factor()`: Expect that the columns contain R `factor` objects.
+- `expect_col_exists()`: Expect that one or more columns actually exist.
+- `expect_col_schema_match()`: Expect that columns in the table (and their types) match a predefined schema.
+
+Now that we know that the functions are similar in intent but different in name, let's learn how to use these functions effectively.
+
+# Using `expect_*()` Functions in the **testthat** Way
+
+The **testthat** package has collection of functions that begin with `expect_`. It's no coincidence that the **pointblank** for the **VALID-III** workflow adopts the same naming convention. The idea is to use these functions interchangeably with those from **testthat** in the standard **testthat** workflow (in a `test-<name>.R` file, inside the `tests/testthat` folder). The big difference here is that instead of testing function outputs, we are testing data tables. However, tables may be returned from function calls and the `expect_*()` functions offered up by **pointblank** might offer more flexibility for testing that data. For instance `expect_col_vals_between()` allows us to write an expectation with fine control on boundary values (and whether they are inclusive bounds), whether `NA` values should be ignored, and we can even set a failure threshold if that makes sense for the expectation.
+
+Here's an example of how to generate some tests on data with **testthat** and also with **pointblank**. For the `small_table` dataset, let's write expectations that show that non-NA values in column `c` are between `2` and `9`.
+
+```{r}
+testthat::expect_true(all(na.omit(small_table$c) >= 2))
+testthat::expect_true(all(na.omit(small_table$c) <= 9))
+```
+
+There is no **testthat** function that tests for values between two values. The original strategy was to use `testthat::expect_gte()` and `testthat::lte()` with `small_table$c` as the `object` in both, however, that doesn't work because that results in a logical vector greater than length 1. Also, there is no allowance for `NA` values to be skipped. The best I could do was the above.
+
+The **pointblank** version of this task makes for a more succinct and understandable expectation expression:
+
+```{r}
+expect_col_vals_between(small_table, vars(c), 2, 9, na_pass = TRUE)
+```
+
+The arguments in the `expect_col_vals_between()` give us everything we need to check tabular data without having to do subsetting and perform other transformations. There are a few added benefits. Should data come from a data source other than locals data frame, the SQL expressions are handled internally and they have been tested extensively across the supported database types and in Spark DataFrames as well.
+
+# These `expect_*()` Functions Are Simpler Than Their Counterparts
+
+All of the `expect_*()` functions have the same leading arguments of their validation function counterparts but they omit the following arguments at the end of their signatures:
+
+- `actions`
+- `step_id`
+- `label`
+- `brief`
+- `active`
+
+While we lose the `actions` argument, we get in its place the `threshold` argument. This is a simple failure threshold value for use with the expectation (`expect_*`) and the test (`test_*`) functions. By default, `threshold` is set to `1` which means that any single test unit failing will result in an overall failure (i.e., the expectation will fail). 
+
+As with the thresholds set in the `action_levels()` functions (or the shortcut functions `warn_on_fail()` and `stop_on_fail()`), whole numbers beyond `1` indicate that any failing units up to that absolute threshold value will result in a succeeding expectation. Likewise, fractional values (between `0` and `1`) act as a proportional failure threshold, where `0.25` means that 25% of failing test units results in a failed expectation.
+
+The `preconditions` argument can be used to transform the input data before evaluation of the expectation. This is useful is some cases where you might need to summarize the input data table, mutate columns, perform some filtering, or even perform table joins beforehand.

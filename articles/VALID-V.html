@@ -64,6 +64,9 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">News</a>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="https://rich-iannone.github.io/pointblank/es">En Español</a>
+</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -82,7 +85,8 @@
     
   </div>
 </nav><div class="container template-article">
-<script src="VALID-V_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Introduction to the **Table Scan** Workflow (**VALID-V**)</h1>
             
@@ -109,7 +113,7 @@
 </h1>
 <p>The output HTML report will appear in the RStudio Viewer and can also be integrated in <strong>R Markdown</strong> HTML output. Here’s an example that uses the <code>penguins_raw</code> dataset from the <strong>palmerpenguins</strong> package. In the <code><a href="../reference/scan_data.html">scan_data()</a></code> call, the option to deactivate the display of the navigation bar has been taken with <code>navbar = FALSE</code>, which makes some sense when integrating this type of output in a larger document.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/scan_data.html">scan_data</a></span><span class="op">(</span><span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va">penguins_raw</span>, navbar <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/scan_data.html">scan_data</a></span><span class="op">(</span><span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins_raw.html" class="external-link">penguins_raw</a></span>, navbar <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <iframe style="margin:0 auto; min-width: 100%;" id="palmerpenguins" title="Table Scan of Palmer Penguins data" height="800" src="https://naughty-blackwell-e9eb67.netlify.app">
 </iframe>
 <p>As could be seen, the first two sections had a lot of additional information tucked behind detail views (with the <code>Toggle details</code> buttons) and within tab sets. Should this amount of information be a little overwhelming, there is the option to disable one or more sections. With <code><a href="../reference/scan_data.html">scan_data()</a></code>’s <code>sections</code> argument, you can specify just the sections that are needed for a specific scan.</p>

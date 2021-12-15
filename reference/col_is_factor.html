@@ -60,6 +60,9 @@ test unit, which is whether the column is a factor-type column or not."><meta pr
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">News</a>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="https://rich-iannone.github.io/pointblank/es">En Español</a>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -201,17 +204,15 @@ specifying columns. They are: <code><a href="https://tidyselect.r-lib.org/refere
     
 
 <p>Often, we will want to specify <code>actions</code> for the validation. This argument,
-present in every validation function, takes a specially-crafted list
-object that is best produced by the <code><a href="action_levels.html">action_levels()</a></code> function. Read that
-function's documentation for the lowdown on how to create reactions to
-above-threshold failure levels in validation. The basic gist is that you'll
-want at least a single threshold level (specified as either the fraction of
-test units failed, or, an absolute value), often using the <code>warn_at</code>
-argument. This is especially true when <code>x</code> is a table object because,
-otherwise, nothing happens. For the <code>col_is_*()</code>-type functions, using
-<code>action_levels(warn_at = 1)</code> or <code>action_levels(stop_at = 1)</code> are good choices
-depending on the situation (the first produces a warning, the other
-<code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code>s).</p>
+present in every validation function, takes a specially-crafted list object
+that is best produced by the <code><a href="action_levels.html">action_levels()</a></code> function. Read that function's
+documentation for the lowdown on how to create reactions to above-threshold
+failure levels in validation. The basic gist is that you'll want at least a
+single threshold level (specified as either the fraction of test units
+failed, or, an absolute value), often using the <code>warn_at</code> argument. This is
+especially true when <code>x</code> is a table object because, otherwise, nothing
+happens. For the <code>col_is_*()</code>-type functions, using <code>action_levels(warn_at = 1)</code> or <code>action_levels(stop_at = 1)</code> are good choices depending on the
+situation (the first produces a warning, the other will <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code>).</p>
     </div>
     <div class="section level2">
     <h2 id="briefs">Briefs<a class="anchor" aria-label="anchor" href="#briefs"></a></h2>

@@ -409,7 +409,7 @@ check_msg_components_all_null <- function(msg_header, msg_body, msg_footer) {
 #' message sent via [email_blast()] or obtained as a standalone object through
 #' [email_create()].
 #'
-#' @return Text suitable for the `msg_body` arguments of [email_blast()] and
+#' @return Text suitable for the `msg_body` argument of [email_blast()] and
 #'   [email_create()].
 #' 
 #' @family Emailing
@@ -452,7 +452,7 @@ stock_msg_body <- function() {
 
 #' Provide simple email message body components: footer
 #' 
-#' The `stock_msg_footer()` functions simply provide some stock text for an
+#' The `stock_msg_footer()` function simply provides some stock text for an
 #' email message sent via [email_blast()] or obtained as a standalone object
 #' through [email_create()].
 #'

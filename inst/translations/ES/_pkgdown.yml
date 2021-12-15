@@ -11,14 +11,15 @@ template:
 reference:
   - title: Planning and Prep
     desc: >
-      Should you need to understand your data a bit more, use the `scan_data()`
-      function. It provides a comprehensive report on the data you might be
-      planning on validating. If going down the road of preparing a data quality
-      analysis, call on an *agent* to carry out that eventual plan with
-      `create_agent()`. The agent here is to be told which table is the target,
-      and, we devise a stepwise validation plan with validation functions. If
-      collecting and publishing table information is your goal, then begin with
-      the `create_informant()` function.
+      Si necesita entender sus datos un poco más, utilice la función
+      `scan_data()`. Proporciona un informe completo sobre los datos que
+      podría estar planeando validar. Si va por el camino de preparar un
+      análisis de calidad de datos, llame a un *agente* para llevar a
+      cabo ese eventual plan con `create_agent()`. Al agente se le debe
+      decir qué tabla es el objetivo, y, diseñamos un plan de validación
+      por pasos con funciones de validación. Si tu objetivo es recoger y
+      publicar información de la tabla, entonces empieza con la función
+      `create_informant()`.
     contents:
     - scan_data
     - create_agent
@@ -34,19 +35,20 @@ reference:
 
   - title: Validation, Expectation, and Test Functions
     desc: >
-      Validation steps are either used with an *agent* object or, more simply,
-      just with the table of interest. When used with an *agent*, each step
-      function called works to build up a validation plan (which is executed
-      with the `interrogate()` function). If used directly on data (that is, no
-      agent is involved whatsoever), then the data is checked and passed
-      through. However, if we (1) set `warn_*` and/or `stop_*` thresholds and
-      (2) the level of failed validation units exceeds those set levels, then
-      we'll get either a warning or a stop. Each validation step function is
-      assoicated with an expectation function (of the form `expect_*()`). These
-      expectation functions are equivalent in usage and behavior to those in
-      the **testthat** package. Finallly, each validation function has an
-      associated test function (of the form `test_*()`) which always returns a
-      logical value.
+      Los pasos de validación se utilizan con un objeto *agente* o, más
+      sencillamente, sólo con la tabla de interés. Cuando se utiliza con un
+      objeto *agent*, cada función llamada trabaja para construir un plan de
+      validación (que se ejecuta con la función `interrogate()`). Si se utiliza
+      directamente sobre los datos (es decir, no interviene ningún agente),
+      entonces se comprueban los datos y se pasan. Sin embargo, si
+      (1) establecemos umbrales de `warn_*` y/o `stop_*` y (2) el nivel de
+      unidades de validación fallidas supera esos niveles establecidos,
+      entonces obtendremos una advertencia o una parada. Cada función de
+      validación está asociada a una función de expectativa (de la forma
+      `expect_*()`). Estas funciones de expectativa son equivalentes en uso
+      y comportamiento a las del paquete **testthat**. Por último, cada
+      función de validación tiene una función de prueba asociada (de la forma
+      `test_*()`) que siempre devuelve un valor lógico.
     contents:
     - col_vals_lt
     - col_vals_lte
@@ -86,16 +88,18 @@ reference:
     
   - title: Information Functions
     desc: >
-      We can progressively add information to an *informant* object by using the
-      collection of `info_*()` functions. We can add more table-based properties
-      with the `info_tabular()` function, details about the nature of each
-      column with the `info_columns()` function, and add sections of our own
-      choosing (and the info that make sense for those sections) with the
-      `info_section()` function. Snippets of information can be gleaned from the
-      target table by using the `info_snippet()` function. These bits of
-      information can be incorporated in text defined by the other `info_*()`
-      functions via `{ }`. Some great `snip_*()` functions are included to make
-      info-snipping as easy (and useful!) as can be.
+      Podemos añadir progresivamente información a un objeto *informant*
+      utilizando la colección de funciones `info_*()`. Podemos añadir más
+      propiedades basadas en la tabla con la función `info_tabular()`,
+      detalles sobre la naturaleza de cada columna con la función
+      `info_columns()`, y añadir secciones de nuestra elección (y la
+      información que tenga sentido para esas secciones) con la función
+      `info_section()`. Se pueden extraer fragmentos de información de la
+      tabla de destino utilizando la función `info_snippet()`. Estos
+      fragmentos de información pueden incorporarse al texto definido por
+      las demás funciones `info_*()` mediante `{ }`. Se han incluido
+      algunas funciones `snip_*()` para que el recorte de información sea
+      tan fácil (y útil) como sea posible.
     contents:
     - info_tabular
     - info_columns
@@ -109,11 +113,11 @@ reference:
     
   - title: Emailing
     desc: >
-      Sometimes we want to email a report of a validation because of the
-      importance of the information contained therein. The `email_blast()`
-      function can be used within the `end_fns` argument of `create_agent()`,
-      giving us options to send a customizable message only if specified
-      conditions are met.
+      A veces queremos enviar por correo electrónico un informe de una
+      validación debido a la importancia de la información que contiene. La
+      función `email_blast()` puede utilizarse dentro del argumento `end_fns`
+      de `create_agent()`, lo que nos da la opción de enviar un mensaje
+      personalizado sólo si se condiciones especificadas.
     contents:
     - email_blast
     - email_create
@@ -122,47 +126,52 @@ reference:
     
   - title: Logging
     desc: >
-      Logging validation failure conditions makes for a good practice during
-      data quality analysis. The `log4r_step()` function allows for simple
-      generation of log entries and specification of logging destinations.
+      El registro de las condiciones de fallo de validación es una buena
+      práctica durante análisis de la calidad de los datos. La función
+      `log4r_step()` permite generar fácilmente generación de entradas de
+      registro y la especificación de los destinos de registro.
     contents:
     - log4r_step
 
   - title: "Agent: Interrogate and Report"
     desc: >
-      If we have an *agent* object that has a plan (i.e., validation steps),
-      the `interrogate()` function instructs the *agent* to interrogate the
-      target table. The agent will go to work and also perform specified
-      side-effect functions at the step level and upon completion (if those are
-      functions are defined). After interrogation, we can get a report through
-      printing, however, we can take advantage of more options by using the
-      `get_agent_report()` function.
+      Si tenemos un objeto *agente* que tiene un plan (es decir, pasos de
+      validación), la función `interrogar()` ordena al *agente* que
+      interrogue la tabla de destino. El agente se pondrá a trabajar y
+      también realizará las funciones de efecto secundario especificadas
+      funciones de efecto secundario especificadas en el nivel de paso y al
+      finalizar (si esas funciones están definidas). Tras la interrogación,
+      podemos obtener un informe mediante impresión, sin embargo, podemos
+      aprovechar más opciones utilizando la función función
+      `get_agent_report()`.
     contents:
     - interrogate
     - get_agent_report
     
   - title: "Informant: Incorporate and Report"
     desc: >
-      If we have an *informant* object that has been loaded with information
-      from using the `info_*()` functions, the `incorporate()` function works
-      to regenerate snippets and integrate those into the info text. After
-      refreshing the table information, we can get an information report through
-      printing, or, by using `get_informant_report()` function.
+      Si tenemos un objeto *informante* que ha sido cargado con información
+      de las funciones `info_*()`, la función `incorporar()` funciona para
+      regenerar fragmentos e integrarlos en el texto informativo. Después de
+      refrescar la información de la tabla, podemos obtener un informe de
+      información mediante impresión, o bien, utilizando la función
+      `get_informant_report()`.
     contents:
     - incorporate
     - get_informant_report
     
   - title: Post-interrogation
     desc: >
-      The agent always has a special list called an x-list. Access that by
-      invoking the `get_agent_x_list()` and you'll then have a smorgasbord of
-      information about how the validation went down. Table extracts are
-      collected by default for failed rows (up to a limit) and we can access
-      those with `get_data_extracts()`. Table rows can be sundered into 'pass'
-      and 'fail' pieces. Access those table fragments with the
-      `get_sundered_data()` function. Want to know if all validation steps have
-      passed with flying colors? Sometimes that could happen; use the
-      `all_passed()` function to find out.
+      El objeto `agente` siempre tiene una lista especial llamada 'x-list'.
+      Acceda a ella invocando la función `get_agent_x_list()` y tendrá una
+      gran cantidad de información sobre cómo se realizó la validación. Los
+      extractos de la tabla son se recogen por defecto para las filas
+      fallidas (hasta un límite) y podemos acceder con `get_data_extracts()`.
+      Las filas de la tabla se pueden dividir en fragmentos de "pase" y
+      "fallo". Accede a esos fragmentos de la tabla con la función
+      `get_sundered_data()`. ¿Quieres saber si todos los pasos de validación
+      han pasado con éxito? A veces puede ocurrir; utilice la función
+      `all_passed()` para averiguarlo.
     contents:
     - get_agent_x_list
     - get_data_extracts
@@ -172,12 +181,13 @@ reference:
     
   - title: Object Ops
     desc: >
-      We have options for writing an agent or informant to disk with the 
-      `x_write_disk()` function. The on-disk object can be retrieved with the
-      `x_read_disk()` function. You can export a report as an HTML file with
-      `export_report()`. A set of functions are also available for
-      managing associations to a data table (either directly or with a
-      table-prep formula), and, for editing an agent's validation steps.
+      Tenemos opciones para escribir un agente o informante en el disco con
+      la función `x_write_disk()`. El objeto en disco puede ser recuperado
+      con la función función `x_read_disk()`. Puede exportar un informe como
+      archivo HTML con `export_report()`. También se dispone de un conjunto
+      de funciones para gestionar las asociaciones a una tabla de datos
+      (directamente o con una fórmula de preparación de la tabla), y para
+      editar los pasos de validación de un agente.
     contents:
     - x_write_disk
     - x_read_disk
@@ -192,13 +202,16 @@ reference:
     
   - title: The Multiagent
     desc: >
-      The multiagent is a group of agents, each tasked with their own
-      interrogation to perform. As a group, they provide an interesting and
-      informative bit of reporting that tracks the evolution of data quality
-      checks over time. With a *multiagent* object, we can get a data quality
-      report that handles changes in the target data and matches data validation
-      steps across all agent. The predominant application is retrospective
-      analysis of data quality for a target table.
+      El objeto `multiagente` es un grupo de agentes, cada uno de los
+      cuales tiene que realizar su propio interrogatorio. Como grupo,
+      proporcionan un interesante e interesante e informativo que sigue
+      la evolución de los controles de calidad de los datos calidad de los
+      datos a lo largo del tiempo. Con un objeto *multiagente*, podemos
+      obtener un informe de calidad de datos de calidad de los datos que
+      maneja los cambios en los datos de destino y hace coincidir los pasos
+      de validación de los datos de datos en todos los agentes. La
+      aplicación predominante es el análisis retrospectivo de la calidad
+      de los datos de una tabla objetivo.
     contents:
     - create_multiagent
     - read_disk_multiagent
@@ -206,13 +219,14 @@ reference:
   
   - title: pointblank YAML
     desc: >
-      YAML files can be used in **pointblank** for two distinct purposes: (1)
-      to define agents and their validation plans, and (2) to define information
-      for tables. The `yaml_write()` function allows us write agent and/or
-      informant YAML from the namesake objects. We can read them back from disk
-      by using the `yaml_read_agent()` and `yaml_read_informant()` functions. As
-      a nice shortcut, we can interrogate a table directly from a **pointblank**
-      YAML file with `yaml_agent_interrogate()`.
+      Los archivos YAML pueden ser utilizados en **pointblank** para dos
+      propósitos distintos: (1) para definir objetos agente y sus planes
+      de validación, y (2) para definir información para las tablas. La
+      función `yaml_write()` nos permite escribir YAML de agente y/o
+      informante desde los objetos homónimos. Podemos leerlos de nuevo
+      desde el disco utilizando las funciones `yaml_read_agent()` y
+      `yaml_read_informant()`. Como un buen atajo, podemos interrogar a
+      una tabla directamente desde un archivo con `yaml_agent_interrogate()`.
     contents:
     - yaml_write
     - yaml_read_agent
@@ -225,14 +239,16 @@ reference:
     
   - title: Table Transformers
     desc: >
-      **Table Transformer** functions can radically transform a data table and
-      either provide a wholly different table (like a summary table or table
-      properties table) or do some useful filtering in a single step. This can
-      be useful for preparing the target table for validation, creating a
-      temporary table for a few validation steps, or even as something used
-      outside of the **pointblank** workflows. As a nice bonus these
-      transformer functions will work equally well with data frames, database
-      tables, and Spark tables.
+      Las funciones del **Table Transformers** pueden transformar
+      radicalmente una tabla de datos y proporcionar una tabla totalmente
+      diferente (como una tabla de resumen o una tabla de propiedades de la
+      tabla) o hacer algún filtrado útil en un solo paso. Esto puede ser
+      útil para preparar la tabla de destino para la validación, la creación
+      de una tabla temporal para unos pocos pasos de validación, o incluso
+      como algo que se utiliza fuera de los flujos de trabajo **pointblank**.
+      Como ventaja, estas funciones transformadoras funcionan igualmente
+      bien con marcos de datos, tablas de bases de datos y tablas de Spark y
+      tablas de Spark.
     contents:
     - tt_summary_stats
     - tt_string_info

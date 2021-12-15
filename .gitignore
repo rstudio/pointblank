@@ -34,11 +34,12 @@ vignettes/pb_log_file
 *.knit.md
 .Rproj.user
 
-# docs in `inst
+# docs in `inst`
 inst/doc
 
-# The docs dir
+# The docs and pkgdown dirs
 docs
+pkgdown
 
 # RDS files in certain directories
 tests/manual_tests/*.rds

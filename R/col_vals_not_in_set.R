@@ -172,7 +172,8 @@
 #' @examples
 #' # The `small_table` dataset in the
 #' # package will be used to validate that
-#' # column values are part of a given set
+#' # column values are not part of a
+#' # given set
 #' 
 #' # A: Using an `agent` with validation
 #' #    functions and then `interrogate()`

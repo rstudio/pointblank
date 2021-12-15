@@ -1,5 +1,7 @@
 destination: docs/es
 
+lang: es
+
 home:
   strip_header: true
 
@@ -9,7 +11,7 @@ template:
   bootstrap: 5
 
 reference:
-  - title: Planning and Prep
+  - title: Planificación y preparación
     desc: >
       Si necesita entender sus datos un poco más, utilice la función
       `scan_data()`. Proporciona un informe completo sobre los datos que
@@ -33,7 +35,7 @@ reference:
     - tbl_get
     - draft_validation
 
-  - title: Validation, Expectation, and Test Functions
+  - title: Funciones de validación, expectativa y prueba
     desc: >
       Los pasos de validación se utilizan con un objeto *agente* o, más
       sencillamente, sólo con la tabla de interés. Cuando se utiliza con un
@@ -86,7 +88,7 @@ reference:
     - serially
     - specially
     
-  - title: Information Functions
+  - title: Funciones de información
     desc: >
       Podemos añadir progresivamente información a un objeto *informant*
       utilizando la colección de funciones `info_*()`. Podemos añadir más
@@ -111,7 +113,7 @@ reference:
     - snip_lowest
     - snip_highest
     
-  - title: Emailing
+  - title: Creación de correo electrónico
     desc: >
       A veces queremos enviar por correo electrónico un informe de una
       validación debido a la importancia de la información que contiene. La
@@ -124,7 +126,7 @@ reference:
     - stock_msg_body
     - stock_msg_footer
     
-  - title: Logging
+  - title: Registro
     desc: >
       El registro de las condiciones de fallo de validación es una buena
       práctica durante análisis de la calidad de los datos. La función
@@ -133,7 +135,7 @@ reference:
     contents:
     - log4r_step
 
-  - title: "Agent: Interrogate and Report"
+  - title: "El agente: Interrogar e informar"
     desc: >
       Si tenemos un objeto *agente* que tiene un plan (es decir, pasos de
       validación), la función `interrogar()` ordena al *agente* que
@@ -148,7 +150,7 @@ reference:
     - interrogate
     - get_agent_report
     
-  - title: "Informant: Incorporate and Report"
+  - title: "El informante: incorporar e informar"
     desc: >
       Si tenemos un objeto *informante* que ha sido cargado con información
       de las funciones `info_*()`, la función `incorporar()` funciona para
@@ -160,7 +162,7 @@ reference:
     - incorporate
     - get_informant_report
     
-  - title: Post-interrogation
+  - title: Después del interrogatorio
     desc: >
       El objeto `agente` siempre tiene una lista especial llamada 'x-list'.
       Acceda a ella invocando la función `get_agent_x_list()` y tendrá una
@@ -179,7 +181,7 @@ reference:
     - all_passed
     - write_testthat_file
     
-  - title: Object Ops
+  - title: Operaciones con objetos
     desc: >
       Tenemos opciones para escribir un agente o informante en el disco con
       la función `x_write_disk()`. El objeto en disco puede ser recuperado
@@ -200,7 +202,7 @@ reference:
     - deactivate_steps
     - remove_steps
     
-  - title: The Multiagent
+  - title: El Multiagente
     desc: >
       El objeto `multiagente` es un grupo de agentes, cada uno de los
       cuales tiene que realizar su propio interrogatorio. Como grupo,
@@ -258,7 +260,7 @@ reference:
     - tt_time_slice
     - get_tt_param
     
-  - title: Utility and Helper Functions
+  - title: Funciones de utilidad y ayuda
     contents:
     - col_schema
     - has_columns
@@ -267,7 +269,7 @@ reference:
     - stop_if_not
     - from_github
     
-  - title: Datasets
+  - title: Conjuntos de datos
     contents:
     - small_table
     - small_table_sqlite
@@ -280,25 +282,25 @@ navbar:
   left:
   - text: Articles
     menu:
-    - text: 'Validation Workflows'
+    - text: 'Flujos de trabajo de validación'
     - text: 'Overview'
       href: articles/validation_workflows.html
-    - text: 'VALID-I: Data Quality Reporting'
+    - text: 'VALID-I: Informes sobre la calidad de los datos'
       href: articles/VALID-I.html
-    - text: 'VALID-II: Pipeline Data Validation'
+    - text: 'VALID-II: Validación de datos en los pipelines'
       href: articles/VALID-II.html
-    - text: 'VALID-III: Expectations in Unit Tests'
+    - text: 'VALID-III: Expectativas en las pruebas unitarias'
       href: articles/VALID-III.html
-    - text: 'VALID-IV: Data Tests for Conditionals'
+    - text: 'VALID-IV: Pruebas de datos para condicionales'
       href: articles/VALID-IV.html
     - text: 'VALID-V: Table Scan'
       href: articles/VALID-V.html
-    - text: 'VALID-VI: R Markdown Document Validation'
+    - text: 'VALID-VI: Validación de documentos R Markdown'
       href: articles/VALID-VI.html
-    - text: 'Information Management'
-    - text: 'Intro to Information Management'
+    - text: 'Gestión de la información'
+    - text: 'Introducción a la gestión de la información'
       href: 'articles/INFO-1.html'
-    - text: 'Advanced Information Management'
+    - text: 'Temas avanzados de gestión de la información'
       href: 'articles/INFO-2.html'
     - text: In English
       href: https://rich-iannone.github.io/pointblank

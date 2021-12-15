@@ -1389,7 +1389,7 @@ snip_lowest <- function(column) {
 
 #' A `fn` for `info_snippet()`: get the highest value from a column
 #' 
-#' The `snip_lowest()` function can be used as an [info_snippet()] function
+#' The `snip_highest()` function can be used as an [info_snippet()] function
 #' (i.e., provided to `fn`) to get the highest numerical, time value, or
 #' alphabetical value from a column in the target table.
 #' 

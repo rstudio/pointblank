@@ -7392,7 +7392,7 @@
 #' # Debemos pensar en lo que es tolerable en
 #' # términos de calidad de los datos, así que
 #' # designemos umbrales de falla proporcionales
-#' # a los estados `warn`,` stop` y `notify`
+#' # a los estados `warn`, `stop` y `notify`
 #' # usando `action_levels()`
 #' al <- 
 #'   action_levels(
@@ -8336,26 +8336,31 @@
 #' @examples
 #' if (interactive()) {
 #' 
-#' # Create an `action_levels()` list
-#' # with absolute values for the
-#' # `warn`, and `notify` states (with
-#' # thresholds of 1 and 2 'fail' units)
+#' # Crear una lista `action_levels()`
+#' # con valores absolutos para los
+#' # estados `warn`, y `notify` (con
+#' # umbrales de 1 y 2 unidades
+#' # de `fallo`)
 #' al <- 
 #'   action_levels(
 #'     warn_at = 1,
 #'     notify_at = 2
 #'   )
 #' 
-#' # In a workflow that involves an
-#' # `agent` object, we can make use of
-#' # the `end_fns` argument and
-#' # programmatically email the report
-#' # with the `email_blast()` function,
-#' # however, an alternate workflow is to
-#' # produce the email object and choose
-#' # to send outside of the pointblank API;
-#' # the `email_create()` function lets
-#' # us do this with an `agent` object
+#' # En un flujo de trabajo que
+#' # implique un objeto `agente`,
+#' # podemos hacer uso del argumento
+#' # `end_fns` y enviar el informe por
+#' # correo electrónico de forma
+#' # programática con la función
+#' # `email_blast()`, sin embargo, un
+#' # flujo de trabajo alternativo es
+#' # producir el objeto de correo
+#' # electrónico y elegir enviarlo
+#' # fuera de la API de pointblank; la
+#' # función `email_create()` nos
+#' # permite hacer esto con un
+#' # objeto `agente`
 #' email_object_1 <-
 #'   create_agent(
 #'     read_fn = ~ small_table,
@@ -8368,13 +8373,16 @@
 #'   interrogate() %>%
 #'   email_create()
 #' 
-#' # We can view the HTML email just
-#' # by printing `email_object`; it
-#' # should appear in the Viewer
+#' # Podemos ver el correo HTML
+#' # simplemente imprimiendo
+#' # `email_object`; debería debería
+#' # aparecer en el Visor
 #' 
-#' # The `email_create()` function can
-#' # also be used on an agent x-list to
-#' # get the same email message object
+#' # La función `email_create()` también
+#' # puede utilizarse en una x-list de
+#' # agentes para obtener el mismo
+#' # objeto de mensaje de correo
+#' # electrónico
 #' email_object_2 <-
 #'   create_agent(
 #'     read_fn = ~ small_table,
@@ -8388,11 +8396,11 @@
 #'   get_agent_x_list() %>%
 #'   email_create()
 #' 
-#' # An information report that's
-#' # produced by the informant can
-#' # made into an email message object;
-#' # let's create an informant and use
-#' # `email_create()`
+#' # Un informe producido por el
+#' # informante puede convertirse en
+#' # un objeto de mensaje de correo
+#' # electrónico; creemos un informante
+#' # y utilicemos `email_create()`
 #' email_object_3 <-
 #'   create_informant(
 #'     read_fn = ~ small_table,
@@ -8427,13 +8435,13 @@
 #' Exportar un *agent*, *informant*, *multiagent* o escaneo de tabla a HTML
 #' 
 #' @description 
-#' The *agent*, *informant*, *multiagent*, and the table scan object can be
-#' easily written as HTML with `export_report()`. Furthermore, any report
-#' objects from the *agent*, *informant*, and *multiagent* (generated using
-#' [get_agent_report()], [get_informant_report()], and
-#' [get_multiagent_report()]) can be provided here for HTML export. Each HTML
-#' document written to disk is self-contained and easily viewable in a web
-#' browser.
+#' El *agent*, el *informant*, el *multiagent* y el objeto de exploración de la
+#' tabla pueden escribirse fácilmente como HTML con `export_report()`. Además,
+#' cualquier objeto de informe del *agente*, *informante* y *multiagente*
+#' (generados mediante [get_agent_report()], [get_informant_report()] y
+#' [get_multiagent_report()]) puede ser proporcionado aquí para su exportación
+#' en HTML. Cada documento HTML escrito en el disco es autocontenido y
+#' fácilmente visualizable en un en un navegador web.
 #'
 #' @param x Un objeto *agent* de la clase `ptblank_agent`, un *informant* de
 #'   la clase `ptblank_informant`, un *multiagente* de la clase
@@ -8618,75 +8626,82 @@
 #' Obtener una tabla de un archivo local o remoto
 #' 
 #' @description 
-#' If your target table is in a file, stored either locally or remotely, the
-#' `file_tbl()` function can make it possible to access it in a single function
-#' call. Compatible file types for this function are: CSV (`.csv`), TSV
-#' (`.tsv`), RDA (`.rda`), and RDS (`.rds`) files. This function generates an
-#' in-memory `tbl_dbl` object, which can be used as a target table for
-#' [create_agent()] and [create_informant()]. The ideal option for data access
-#' with `file_tbl()` is using this function as the `read_fn` parameter in either
-#' of the aforementioned `create_*()` functions. This can be done by using a
-#' leading `~` (e.g,. `read_fn = ~file_tbl(...)`).
+#' Si su tabla de destino se encuentra en un archivo, almacenado local o
+#' remotamente, la función `file_tbl()` puede hacer posible el acceso a la misma
+#' en una sola llamada a la función. Los tipos de archivo compatibles con esta
+#' función son: CSV (`.csv`), TSV (`.tsv`), RDA (`.rda`) y RDS (`.rds`). Esta
+#' función genera un objeto `tbl_dbl` en memoria, que puede utilizarse como
+#' tabla de destino para [create_agent()] y [create_informant()]. La opción
+#' ideal para el acceso a los datos con `file_tbl()` es utilizar esta función
+#' como parámetro `read_fn` en cualquiera de las funciones `create_*()` antes
+#' mencionadas. Esto puede hacerse utilizando un `~` inicial (por ejemplo,.
+#' `read_fn = ~file_tbl(...)`).
 #'
-#' In the remote data use case, we can specify a URL starting with `http://`,
-#' `https://`, etc., and ending with the file containing the data table. If data
-#' files are available in a GitHub repository then we can use the
-#' [from_github()] function to specify the name and location of the table data
-#' in a repository.
+#' En el caso de uso de datos remotos, podemos especificar una URL que empiece
+#' por `http://`, `https://`, etc., y que termine con el archivo que contiene la
+#' tabla de datos. Si los archivos de datos están disponibles en un repositorio
+#' de GitHub, podemos utilizar la función [from_github()] para especificar el
+#' nombre y la ubicación de los datos de la tabla en un repositorio.
 #' 
-#' @param file The complete file path leading to a compatible data table either
-#'   in the user system or at a `http://`, `https://`, `ftp://`, or `ftps://`
-#'   URL. For a file hosted in a GitHub repository, a call to the
-#'   [from_github()] function can be used here.
-#' @param type The file type. This is normally inferred by file extension and is
-#'   by default `NULL` to indicate that the extension will dictate the type of
-#'   file reading that is performed internally. However, if there is no
-#'   extension (and valid extensions are `.csv`, `.tsv`, `.rda`, and `.rds`), we
-#'   can provide the type as either of `csv`, `tsv`, `rda`, or `rds`.
-#' @param ... Options passed to **readr**'s `read_csv()` or `read_tsv()`
-#'   function. Both functions have the same arguments and one or the other will
-#'   be used internally based on the file extension or an explicit value given
-#'   to `type`.
-#' @param keep In the case of a downloaded file, should it be stored in the
-#'   working directory (`keep = TRUE`) or should it be downloaded to a temporary
-#'   directory? By default, this is `FALSE`.
-#' @param verify If `TRUE` (the default) then a verification of the data object
-#'   having the `data.frame` class will be carried out.
+#' @param file La ruta completa del archivo que lleva a una tabla de datos
+#'   compatible, ya sea en el sistema del usuario o en una URL `http://`,
+#'   `https://`, `ftp://` o `ftps://`. En el caso de un archivo alojado en un
+#'   repositorio de GitHub, una llamada a la función [from_github()] se puede
+#'   utilizar aquí.
+#' @param type El tipo de archivo. Normalmente se infiere por la extensión del
+#'   archivo y por defecto es `NULL` para indicar que la extensión dictará el
+#'   tipo de lectura del archivo que se realiza internamente. Sin embargo, si no
+#'   hay extensión (y las extensiones válidas son `.csv`, `.tsv`, `.rda` y
+#'   `.rds`), podemos podemos proporcionar el tipo como `csv`, `tsv`, `rda`, o
+#'   `rds`.
+#' @param ... Opciones pasadas a la función `read_csv()` o `read_tsv()` de
+#'   **readr**. Ambas funciones tienen los mismos argumentos y se utilizará una
+#'   u otra internamente en función de la extensión del archivo o de un valor
+#'   explícito dado a `type`.
+#' @param keep En el caso de un archivo descargado, ¿debe almacenarse en el
+#'   directorio de trabajo (`keep = TRUE`) o debe descargarse en un directorio
+#'   temporal? Por defecto, esto es `FALSE`.
+#' @param verify Si es `TRUE` (el valor por defecto) entonces se realizará una
+#'   verificación del objeto de datos con la clase `data.frame`.
 #'   
 #' @return Un objeto `tbl_df`.
 #' 
 #' @examples 
-#' # A local CSV file can be obtained as
-#' # a tbl object by supplying a path to
-#' # the file and some CSV reading options
-#' # (the ones used by `readr::read_csv()`)
-#' # to the `file_tbl()` function; for
-#' # this example we could obtain a path
-#' # to a CSV file in the pointblank
-#' # package with `system.file()`:
+#' # Un archivo CSV local puede obtenerse
+#' # como un objeto tbl suministrando una
+#' # ruta al archivo y algunas opciones
+#' # de lectura CSV (las utilizadas por
+#' # `readr::read_csv()`) a la función
+#' # `file_tbl()`; para este ejemplo
+#' # podríamos obtener una ruta a un
+#' # archivo CSV en el paquete pointblank
+#' # con `system.file()`:
 #' csv_path <- 
 #'   system.file(
 #'     "data_files", "small_table.csv",
 #'     package = "pointblank"
 #'   )
 #' 
-#' # Then use that path in `file_tbl()`
-#' # with the option to specify the column
-#' # types in that CSV  
+#' # A continuación, utilice esa ruta
+#' # en `file_tbl()` con la opción de
+#' # especificar los tipos de columna
+#' # en ese CSV  
 #' tbl <- 
 #'   file_tbl(
 #'     file = csv_path,
 #'     col_types = "TDdcddlc"
 #'   )
 #'   
-#' # Now that we have a `tbl` object that
-#' # is a tibble, it can be introduced to
-#' # `create_agent()` for validation
+#' # Ahora que tenemos un objeto `tbl`
+#' # que es un tibble, se puede
+#' # introducir en `create_agent()`
+#' # para su validación
 #' agent <- create_agent(tbl = tbl)
 #'
-#' # A different strategy is to provide
-#' # the data-reading function call
-#' # directly to `create_agent()`:
+#' # Una estrategia diferente es
+#' # proporcionar la llamada a la
+#' # función de lectura de datos
+#' # directamente a `create_agent()`:
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~ file_tbl(
@@ -8699,21 +8714,23 @@
 #'   ) %>%
 #'   col_vals_gt(vars(a), value = 0)
 #'
-#' # All of the file-reading instructions
-#' # are encapsulated in the `read_fn` so
-#' # the agent will always obtain the most
-#' # recent version of the dataset (and the
-#' # logic can be translated to YAML, for
-#' # later use)
+#' # Todas las instrucciones de lectura
+#' # de archivos se encapsulan en el
+#' # `read_fn` para que el agente obtenga
+#' # siempre la versión más reciente del
+#' # conjunto de datos (y la lógica puede
+#' # traducirse a YAML, para uso posterior)
 #' 
 #' if (interactive()) {
 #' 
-#' # A CSV can be obtained from a public
-#' # GitHub repo by using the `from_github()`
-#' # helper function; let's create an agent
-#' # a supply a table-prep formula that
-#' # gets the same CSV file from the GitHub
-#' # repository for the pointblank package 
+#' # Se puede obtener un CSV de un
+#' # repositorio público de GitHub
+#' # utilizando la función de ayuda
+#' # `from_github()`; creemos un agente
+#' # que suministre una fórmula de
+#' # preparación de tablas que obtenga el
+#' # mismo archivo CSV del repositorio de
+#' # GitHub para el paquete pointblank 
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~ file_tbl(
@@ -8727,18 +8744,20 @@
 #'   col_vals_gt(vars(a), value = 0) %>%
 #'   interrogate()
 #' 
-#' # This interrogated the data that was
-#' # obtained from the remote source file,
-#' # and, there's nothing to clean up (by
-#' # default, the downloaded file goes into
-#' # a system temp directory)
+#' # Esto interroga los datos que se
+#' # obtuvieron del archivo fuente remoto,
+#' # y, no hay nada que limpiar (por defecto,
+#' # el archivo descargado va a un
+#' # directorio temporal del sistema)
 #' 
-#' # Storing table-prep formulas in a table
-#' # store makes it easier to work with
-#' # tabular data originating from files;
-#' # here's how to generate a table store
-#' # with two named entries for table
-#' # preparations
+#' # El almacenamiento de fórmulas de
+#' # preparación de tablas en un almacén
+#' # de tablas facilita el trabajo con
+#' # datos tabulares procedentes de
+#' # archivos; a continuación se explica
+#' # cómo generar un almacén de tablas con
+#' # dos entradas con nombre para la tabla
+#' # preparaciones
 #' tbls <-
 #'   tbl_store(
 #'     small_table_file ~ file_tbl(
@@ -8758,16 +8777,18 @@
 #'       dplyr::filter(f == "high")
 #'   )
 #' 
-#' # Now it's easy to access either of these
-#' # tables (the second is a mutated version)
-#' # via the `tbl_get()` function
+#' # Ahora es fácil acceder a cualquiera
+#' # de estas tablas (la segunda es una
+#' # versión mutada) mediante la
+#' # función `tbl_get()`
 #' tbl_get("small_table_file", store = tbls)
 #' tbl_get("small_high_file", store = tbls)
 #' 
-#' # The table-prep formulas in `tbls`
-#' # could also be used in functions with
-#' # the `read_fn` argument; this is thanks
-#' # to the `tbl_source()` function
+#' # Las fórmulas de preparación de
+#' # tablas en `tbls` también pueden
+#' # utilizarse en funciones con el
+#' # argumento `read_fn`; esto es gracias
+#' # a la función `tbl_source()`
 #' agent <- 
 #'   create_agent(
 #'     read_fn = ~ tbl_source(
@@ -8795,42 +8816,48 @@
 # from_github--------------------------------------------------------------
 #' Especificar un archivo para descargar desde GitHub
 #' 
-#' The `from_github()` function is helpful for generating a valid URL that
-#' points to a data file in a public GitHub repository. This function can be
-#' used in the `file` argument of the [file_tbl()] function or anywhere else
-#' where GitHub URLs for raw user content are needed.
+#' La función `from_github()` es útil para generar una URL válida que apunte a
+#' un archivo de datos en un repositorio público de GitHub. Esta función se
+#' puede utilizar en el argumento `file` de la función [file_tbl()] o en
+#' cualquier otro lugar donde se necesiten URLs de GitHub para el contenido
+#' bruto del usuario.
 #' 
-#' @param file The name of the file to target in a GitHub repository. This can
-#'   be a path leading to and including the file. This is combined with any path
-#'   given in `subdir`.
-#' @param repo The GitHub repository address in the format
+#' @param file El nombre del archivo al que se apunta en un repositorio de
+#'   GitHub. Puede ser una ruta que lleve al archivo y lo incluya. Esto se
+#'   combina con cualquier ruta dada en `subdir`.
+#' @param repo La dirección del repositorio de GitHub en el formato
 #'   `username/repo[/subdir][@ref|#pull|@*release]`.
-#' @param subdir A path string representing a subdirectory in the GitHub
-#'   repository. This is combined with any path components included in `file`.
+#' @param subdir Una cadena de ruta que representa un subdirectorio en el
+#'   repositorio de GitHub de GitHub. Se combina con cualquier componente de la
+#'   ruta incluido en `file`.
 #'   
-#' @return A character vector of length 1 that contains a URL.
+#' @return Un vector de caracteres de longitud 1 que contiene una URL.
 #' 
 #' @examples
-#' # A valid URL to a data file in GitHub can be
-#' # obtained from the HEAD of the default branch
+#' # Una URL válida a un archivo de datos
+#' # en GitHub puede ser obtenida en el
+#' # HEAD de la rama por defecto
 #' # from_github(
 #' #   file = "inst/data_files/small_table.csv",
 #' #   repo = "rich-iannone/pointblank"
 #' # )
 #' 
-#' # The path to the file location can be supplied
-#' # fully or partially to `subdir`
+#' # La ruta de acceso a la ubicación del
+#' # archivo puede ser suministrada total
+#' # o parcialmente a `subdir`.
 #' # from_github(
 #' #   file = "small_table.csv",
 #' #   repo = "rich-iannone/pointblank",
 #' #   subdir = "inst/data_files"
 #' # )
 #' 
-#' # We can use the first call in combination with
-#' # `file_tbl()` and `create_agent()`; this
-#' # supplies a table-prep formula that gets
-#' # a CSV file from the GitHub repository for the
-#' # pointblank package 
+#' # Podemos utilizar la primera llamada
+#' # en combinación con `file_tbl()` y
+#' # `create_agent()`; esto proporciona
+#' # una fórmula de preparación de tablas
+#' # que obtiene un archivo CSV del
+#' # repositorio de GitHub para el
+#' # paquete pointblank 
 #' # agent <- 
 #' #   create_agent(
 #' #     read_fn = ~ file_tbl(
@@ -8844,27 +8871,31 @@
 #' #   col_vals_gt(vars(a), 0) %>%
 #' #   interrogate()
 #' 
-#' # The `from_github()` helper function is
-#' # pretty powerful and can get at lots of
-#' # different files in a repository
+#' # La función de ayuda `from_github()`
+#' # es bastante potente y puede llegar
+#' # a muchos diferentes archivos en
+#' # un repositorio
 #' 
-#' # A data file from GitHub can be obtained from
-#' # a commit at release time
+#' # Un archivo de datos de GitHub puede
+#' # obtenerse de un commit en el
+#' # momento de la publicación
 #' # from_github(
 #' #   file = "inst/extdata/small_table.csv",
 #' #   repo = "rich-iannone/pointblank@v0.2.1"
 #' # )
 #' 
-#' # A file may also be obtained from a repo at the
-#' # point in time of a specific commit (partial or
-#' # full SHA-1 hash for the commit can be used)
+#' # También se puede obtener un archivo
+#' # de un repo en el momento de un commit
+#' # específico (se puede utilizar el hash
+#' # parcial o hash SHA-1 completo de
+#' # la confirmación)
 #' # from_github(
 #' #   file = "data-raw/small_table.csv",
 #' #   repo = "rich-iannone/pointblank@e04a71"
 #' # )
 #' 
-#' # A file may also be obtained from an
-#' # *open* pull request
+#' # Un archivo también puede obtenerse
+#' # de un *abierto* pull request
 #' # from_github(
 #' #   file = "data-raw/small_table.csv",
 #' #   repo = "rich-iannone/pointblank#248"
@@ -8950,152 +8981,168 @@
 #' Obtenga un informe resumido de una *agent*
 #' 
 #' @description 
-#' We can get an informative summary table from an agent by using the
-#' `get_agent_report()` function. The table can be provided in two substantially
-#' different forms: as a **gt** based display table (the default), or, as a
-#' tibble. The amount of fields with intel is different depending on whether or
-#' not the agent performed an interrogation (with the [interrogate()] function).
-#' Basically, before [interrogate()] is called, the agent will contain just the
-#' validation plan (however many rows it has depends on how many validation
-#' functions were supplied a part of that plan). Post-interrogation, information
-#' on the passing and failing test units is provided, along with indicators on
-#' whether certain failure states were entered (provided they were set through
-#' `actions`). The display table variant of the agent report, the default form,
-#' will have the following columns:
+#' Podemos obtener una tabla resumen informativa de un agente utilizando la
+#' función `get_agent_report()`. La tabla puede ser proporcionada en dos formas
+#' sustancialmente diferentes: como una tabla de visualización basada en **gt**
+#' (el valor por defecto), o, como un tibble. La cantidad de campos con intel es
+#' diferente dependiendo de si el agente realizó o no una interrogación (con la
+#' función [interrogate()]). Básicamente, antes de llamar a [interrogate()], el
+#' agente contendrá sólo el plan de validación (el número de filas que tenga
+#' depende de cuántas funciones de validación se hayan suministrado como parte
+#' de ese plan). Después de la interrogación, se proporciona información sobre
+#' las unidades de prueba que pasan y que fallan, junto con indicadores sobre si
+#' se han introducido ciertos estados de fallo (siempre que se hayan establecido
+#' a través de `actions`). La variante de la tabla de visualización del informe
+#' del agente, la forma por defecto, tendrá las siguientes columnas:
 #' 
 #' \itemize{
-#' \item i (unlabeled): the validation step number
-#' \item STEP: the name of the validation function used for the validation step
-#' \item COLUMNS: the names of the target columns used in the validation step
-#' (if applicable)
-#' \item VALUES: the values used in the validation step, where applicable; this
-#' could be as literal values, as column names, an expression, a set of
-#' sub-validations (for a [conjointly()] validation step), etc.
-#' \item TBL: indicates whether any there were any preconditions to apply
-#' before interrogation; if not, a script 'I' stands for 'identity' but, if so,
-#' a right-facing arrow appears
-#' \item EVAL: a character value that denotes the result of each validation
-#' step functions' evaluation during interrogation
-#' \item *N*: the total number of test units for the validation step
-#' \item PASS: the number of test units that received a *pass*
-#' \item FAIL: the fraction of test units that received a *pass*
-#' \item W, S, N: indicators that show whether the `warn`, `stop`, or `notify`
-#' states were entered; unset states appear as dashes, states that are set with
-#' thresholds appear as unfilled circles when not entered and filled when
-#' thresholds are exceeded (colors for W, S, and N are amber, red, and blue)
-#' \item EXT: a column that provides buttons with data extracts for each
-#' validation step where failed rows are available (as CSV files)
+#' \item i (sin etiquetas): el número de paso de validación
+#' \item STEP: el nombre de la función de validación utilizada para el paso
+#' de validación
+#' \item COLUMNS: los nombres de las columnas de destino utilizadas en el paso
+#' de validación (si procede)
+#' \item VALUES: los valores utilizados en el paso de validación, cuando sea
+#' aplicable; esto podría ser como valores literales, como nombres de
+#' columnas, una expresión, un conjunto de subvalidaciones (para un paso de
+#' validación [conjointly()]), etc.
+#' \item TBL: indica si había alguna condición previa que aplicar antes de la
+#' interrogación; si no es así, aparece una aparece una flecha hacia la derecha
+#' \item EVAL: un valor de carácter que denota el resultado de cada validación
+#' evaluación de las funciones de paso durante la interrogación
+#' \item *N*: el número total de unidades de prueba para la etapa de validación
+#' \item PASS: el número de unidades de prueba que han recibido un *paso*.
+#' \item FAIL: la fracción de unidades de prueba que recibieron un *paso*.
+#' \item W, S, N: Indicadores que muestran si se han introducido los estados
+#' de `warn`, `stop` o `notify`; los estados no establecidos aparecen como
+#' guiones, los estados establecidos con umbrales aparecen como círculos sin
+#' rellenar cuando no se han introducido y rellenos cuando se superan los
+#' umbrales (los colores para W, S y N son ámbar, rojo y azul).
+#' \item EXT: una columna que proporciona botones con extractos de datos para
+#' cada paso de validación en el que están disponibles las filas fallidas
+#' (como archivos CSV)
 #' }
 #' 
-#' The small version of the display table (obtained using `size = "small"`)
-#' omits the `COLUMNS`, `TBL`, and `EXT` columns. The width of the small table
-#' is 575px; the standard table is 875px wide.
+#' La versión pequeña de la tabla de visualización (obtenida con `size =
+#' "small") omite las columnas `COLUMNS`, `TBL` y `EXT`. El ancho de la tabla
+#' pequeña es de 575px; la tabla estándar tiene 875px de ancho.
 #' 
-#' If choosing to get a tibble (with `display_table = FALSE`), it will have the
-#' following columns:
+#' Si se elige obtener un tibble (con `display_table = FALSE`), tendrá las
+#' siguientes columnas:
 #' 
 #' \itemize{
-#' \item i: the validation step number
-#' \item type: the name of the validation function used for the validation step
-#' \item columns: the names of the target columns used in the validation step
-#' (if applicable)
-#' \item values: the values used in the validation step, where applicable; for
-#' a [conjointly()] validation step, this is a listing of all sub-validations
-#' \item precon: indicates whether any there are any preconditions to apply
-#' before interrogation and, if so, the number of statements used
-#' \item active: a logical value that indicates whether a validation step is
-#' set to `"active"` during an interrogation
-#' \item eval: a character value that denotes the result of each validation
-#' step functions' evaluation during interrogation
-#' \item units: the total number of test units for the validation step
-#' \item n_pass: the number of test units that received a *pass*
-#' \item f_pass: the fraction of test units that received a *pass*
-#' \item W, S, N: logical value stating whether the `warn`, `stop`, or `notify`
-#' states were entered
-#' \item extract: a logical value that indicates whether a data extract is
-#' available for the validation step
+#' \item i: el número de paso de validación
+#' \item type: el nombre de la función de validación utilizada para el paso
+#' de validación
+#' \item columns: los nombres de las columnas de destino utilizadas en el paso
+#' de validación (si procede)
+#' \item values: los valores utilizados en el paso de validación, cuando sea
+#' aplicable; esto podría ser como valores literales, como nombres de
+#' columnas, una expresión, un conjunto de subvalidaciones (para un paso de
+#' validación [conjointly()]), etc.
+#' \item precon: indica si hay que aplicar alguna condición previa antes del
+#' interrogatorio y, en caso afirmativo, el número de declaraciones utilizadas
+#' \item active: un valor lógico que indica si un paso de validación se
+#' establece como `"active"` durante una interrogación
+#' \item eval: un valor de carácter que denota el resultado de cada validación
+#' evaluación de las funciones de paso durante la interrogación
+#' \item units: el número total de unidades de prueba para la etapa de
+#' validación
+#' \item n_pass: el número de unidades de prueba que han recibido un *paso*
+#' \item f_pass: la fracción de unidades de prueba que recibieron un *paso*
+#' \item W, S, N: valor lógico que indica si los estados `warn`, `stop` o
+#' `notify` fueron introducidos
+#' \item extract: un valor lógico que indica si un extracto de datos está
+#' disponible para el paso de validación
 #' }
 #' 
 #' @param agent Un objeto de agente de clase `ptblank_agent`.
-#' @param arrange_by A choice to arrange the report table rows by the validation
-#'   step number (`"i"`, the default), or, to arrange in descending order by
-#'   severity of the failure state (with `"severity"`).
-#' @param keep An option to keep `"all"` of the report's table rows (the
-#'   default), or, keep only those rows that reflect one or more
-#'   `"fail_states"`.
-#' @param display_table Should a display table be generated? If `TRUE` (the
-#'   default), and if the **gt** package is installed, a display table for the
-#'   report will be shown in the Viewer. If `FALSE`, or if **gt** is not
-#'   available, then a tibble will be returned.
-#' @param size The size of the display table, which can be either `"standard"`
-#'   (the default) or `"small"`. This only applies to a display table (where
-#'   `display_table = TRUE`).
-#' @param title Options for customizing the title of the report. The default is
-#'   the keyword `":default:"` which produces generic title text that refers to
-#'   the **pointblank** package in the language governed by the `lang` option.
-#'   Another keyword option is `":tbl_name:"`, and that presents the name of the
-#'   table as the title for the report. If no title is wanted, then the
-#'   `":none:"` keyword option can be used. Aside from keyword options, text can
-#'   be provided for the title and `glue::glue()` calls can be used to construct
-#'   the text string. If providing text, it will be interpreted as Markdown text
-#'   and transformed internally to HTML. To circumvent such a transformation,
-#'   use text in [I()] to explicitly state that the supplied text should not be
-#'   transformed.
-#' @param lang The language to use for automatic creation of briefs (short
-#'   descriptions for each validation step) and for the *agent report* (a
-#'   summary table that provides the validation plan and the results from the
-#'   interrogation. De forma predeterminada, `NULL` creará texto en inglés
-#'   (`"en"`). Otras opciones incluyen francés (`"fr"`), alemán (`"de"`),
-#'   italiano (`"it"`), español (`"es"`), portugués (`"pt"`), turco (`"tr"`),
-#'   chino (`"zh"`), ruso (`"ru"`), polaco (`"pl"`), danés (`"da"`), sueco
-#'   (`"sv"` ) y holandés (`"nl"`). This `lang` option will override any
-#'   previously set language setting (e.g., by the [create_agent()] call).
-#' @param locale An optional locale ID to use for formatting values in the
-#'   *agent report* summary table according the locale's rules. Examples include
-#'   `"en_US"` for English (United States) and `"fr_FR"` for French (France);
-#'   more simply, this can be a language identifier without a country
-#'   designation, like `"es"` for Spanish (Spain, same as `"es_ES"`). This
-#'   `locale` option will override any previously set locale value (e.g., by the
-#'   [create_agent()] call).
+#' @param arrange_by Una opción para organizar las filas de la tabla de informes
+#'   por el número de paso de validación (`"i"`, el valor predeterminado), o,
+#'   para organizar en orden descendente por severidad del estado de fallo (con
+#'   `"severity"`).
+#' @param keep Una opción para mantener `"all"` las filas de la tabla del
+#'   informe (el valor predeterminado), o, mantener sólo aquellas filas que
+#'   reflejan uno o más `"fail_states"`.
+#' @param display_table ¿Debe generarse una tabla de visualización? Si es `TRUE`
+#'   (por defecto), y si el paquete **gt** está instalado, se mostrará una tabla
+#'   de visualización del informe en el Visor. Si es `FALSE`, o si **gt** no
+#'   está está disponible, entonces se devolverá un tibble.
+#' @param size El tamaño de la tabla de visualización, que puede ser
+#'   `"standard"` (por defecto) o `"small"`. Esto sólo se aplica a una tabla de
+#'   visualización (donde `display_table = TRUE`).
+#' @param title Opciones para personalizar el título del informe. La opción por
+#'   defecto es la palabra clave `":default:"`, que produce un texto de título
+#'   genérico que hace referencia al paquete **pointblank** en el idioma regido
+#'   por la opción `lang`. Otra opción de palabra clave es `":tbl_name:"`, que
+#'   presenta el nombre de la tabla como título del informe. Si no se desea
+#'   ningún título, se puede utilizar la opción de palabra clave `":none:"`.
+#'   Aparte de las opciones de palabras clave, se puede proporcionar texto para
+#'   el título y se pueden utilizar llamadas a `glue::glue()` para construir la
+#'   cadena de texto. Si se proporciona texto, se interpretará como texto
+#'   Markdown y se transformará internamente en HTML. Para evitar dicha
+#'   transformación, utilice text en [I()] para indicar explícitamente que el
+#'   texto suministrado no debe ser transformado.
+#' @param lang El lenguaje que se utilizará para la creación automática de
+#'   resúmenes (descripciones breves para cada paso de validación) y para el
+#'   *agent report* (una tabla resumen que proporciona el plan de validación y
+#'   los resultados de la interrogación. De forma predeterminada, `NULL` creará
+#'   texto en inglés (`"en"`). Otras opciones incluyen francés (`"fr"`), alemán
+#'   (`"de"`), italiano (`"it"`), español (`"es"`), portugués (`"pt"`), turco
+#'   (`"tr"`), chino (`"zh"`), ruso (`"ru"`), polaco (`"pl"`), danés (`"da"`),
+#'   sueco (`"sv"` ) y holandés (`"nl"`). Esta opción `lang` anulará cualquier
+#'   previamente establecido (por ejemplo, por la llamada [create_agent()]).
+#' @param locale Un identificador opcional de la configuración regional que se
+#'   utilizará para formatear los valores en la tabla de resumen del *informe de
+#'   agente* de acuerdo con las reglas de la configuración regional. Los
+#'   ejemplos incluyen `"en_US"` para el inglés (Estados Unidos) y `"fr_FR"`
+#'   para el francés (Francia); más simplemente, puede ser un identificador de
+#'   idioma sin designación de país, como `"es"` para el español (España, igual
+#'   que `"es_ES"`). Esta opción `locale` anulará cualquier valor de locale
+#'   previamente establecido (por ejemplo, por la opción [create_agent()]).
 #' 
-#' @return A **gt** table object if `display_table = TRUE` or a tibble if
+#' @return Un objeto de tabla **gt** si `display_table = TRUE` o un tibble si
 #'   `display_table = FALSE`.
 #' 
 #' @examples
-#' # Create a simple table with a
-#' # column of numerical values
+#' # Crear una tabla simple con una
+#' # columna de valores numéricos
 #' tbl <- 
 #'   dplyr::tibble(a = c(5, 7, 8, 5))
 #' 
-#' # Validate that values in column
-#' # `a` are always greater than 4
+#' # Validar que los valores de la
+#' # columna `a` sean siempre mayores
+#' # que 4
 #' agent <-
 #'   create_agent(tbl = tbl) %>%
 #'   col_vals_gt(vars(a), value = 4) %>%
 #'   interrogate()
 #' 
-#' # Get a tibble-based report from the
-#' # agent by using `get_agent_report()`
-#' # with `display_table = FALSE`
+#' # Obtenga un informe basado en
+#' # tibble del agente utilizando
+#' # `get_agent_report()` y
+#' # `display_table = FALSE`
 #' agent %>%
 #'   get_agent_report(display_table = FALSE)
 #'   
-#' # View a the report by printing the
-#' # `agent` object anytime, but, return a
-#' # gt table object by using this with
-#' # `display_table = TRUE` (the default)
+#' # Ver un informe imprimiendo el
+#' # objeto `agente` en cualquier momento,
+#' # pero, devolver un objeto de tabla gt
+#' # usando esto con `display_table = TRUE`
+#' # (por defecto)
 #' report <- get_agent_report(agent)
 #' class(report)
 #' 
-#' # What can you do with the report?
-#' # Print it from an R Markdown code,
-#' # use it in an email, put it in a
-#' # webpage, or further modify it with
-#' # the **gt** package
+#' # ¿Qué puedes hacer con el informe?
+#' # Imprimirlo desde un código R Markdown,
+#' # utilizarlo en un correo electrónico,
+#' # ponerlo en una página web, o
+#' # modificarlo aún más con el paquete
+#' # **gt**
 #' 
-#' # The agent report as a **gt** display
-#' # table comes in two sizes: "standard"
-#' # (the default) and "small"
+#' # El informe del agente como tabla
+#' # de visualización **gt** viene en
+#' # dos tamaños: "standard" (el
+#' # predeterminado) y "small"
 #' small_report <- 
 #'   get_agent_report(
 #'     agent = agent,
@@ -9104,8 +9151,8 @@
 #' 
 #' class(small_report)
 #' 
-#' # The standard report is 875px wide
-#' # the small one is 575px wide
+#' # El informe estándar tiene 875px
+#' # de ancho y el pequeño 575px
 #' 
 #' @family Interrogate and Report
 #' @section Function ID:

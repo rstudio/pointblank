@@ -302,12 +302,12 @@ navbar:
       href: 'articles/INFO-1.html'
     - text: 'Temas avanzados de gestión de la información'
       href: 'articles/INFO-2.html'
-    - text: In English
-      href: https://rich-iannone.github.io/pointblank
   - text: Reference
     href: reference/index.html
   - text: News
     href: news/index.html
+  - text: In English
+    href: https://rich-iannone.github.io/pointblank
 
 development:
   version_tooltip: "Development version"

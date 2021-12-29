@@ -27,7 +27,7 @@ the limit is \code{5}.}
 \item{sorting}{A keyword used to designate the type of sorting to use for the
 list. The three options are \code{"inorder"} (the default), \code{"infreq"}, and
 \code{"inseq"}. With \code{"inorder"}, distinct items are listed in the order in
-which they firsts appear. Using \code{"infreq"} orders the items by the
+which they first appear. Using \code{"infreq"} orders the items by the
 decreasing frequency of each item. The \code{"inseq"} option applies an
 alphanumeric sorting to the distinct list items.}
 

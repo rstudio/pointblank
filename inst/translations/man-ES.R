@@ -12226,20 +12226,21 @@
 #' Establecer una tabla de datos para un *agent* o *informant*
 #' 
 #' @description 
-#' Setting a data table to an *agent* or *informant* with `set_tbl()` replaces
-#' any associated table (a data frame, a tibble, objects of class `tbl_dbi` or
-#' `tbl_spark`). If a data table is associated with an *agent* or *informant*
-#' through the `tbl` argument *and* the same object has a table-prep formula
-#' (settable in [create_agent()] and [create_informant()]'s `read_fn` argument
-#' or with [set_read_fn()]), the table-prep formula will take precedence. If
-#' this is undesirable, it be removed with the [remove_read_fn()] function. The
-#' association to a table can be removed with with [remove_tbl()].
+#' Establecer una tabla de datos a un *agente* o *informante* con `set_tbl()`
+#' reemplaza cualquier tabla asociada (un marco de datos, un tibble, objetos de
+#' clase `tbl_dbi` o `tbl_spark`). Si una tabla de datos está asociada a un
+#' *agent* o *informant* a través del argumento `tbl` *y* el mismo objeto
+#' tiene una fórmula de preparación de tabla (configurable en el argumento
+#' `read_fn` de [create_agent()] y [create_informant()] o con [set_read_fn()]),
+#' la fórmula de preparación de tabla tendrá prioridad. Si esto no es deseable,
+#' se puede eliminar con la función [remove_read_fn()]. La asociación a una
+#' tabla puede eliminarse con [remove_tbl()].
 #'
 #' @param x Un objeto *agent* de la clase `ptblank_agent`, o, un objeto
 #'   *informant* de clase `ptblank_informant`.
-#' @param tbl The input table for the `agent`. This can be a data frame, a
-#'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Any table already
-#'   associated with the *agent* or *informant* will be overwritten.
+#' @param tbl La tabla de entrada para el `agent`. Puede ser un data frame, un
+#'   tibble, un objeto `tbl_dbi` o un objeto `tbl_spark`. Cualquier tabla ya
+#'   asociada al *agent* o al *informant* será sobrescrita.
 #' 
 #' @examples
 #' # Establecer umbrales de fallo
@@ -12273,10 +12274,11 @@
 #'   rows_distinct() %>%
 #'   interrogate()
 #'   
-#' # Replace the agent's association to
-#' # `small_table` with a mutated version
-#' # of it (one that removes duplicate rows);
-#' # then, interrogate the new target table
+#' # Sustituir la asociación del agente a
+#' # `small_table` por una versión mutada
+#' # de la misma (que elimine las filas
+#' # duplicadas); a continuación,
+#' # interrogar a la nueva tabla de destino
 #' agent_2 <-
 #'   agent_1 %>%
 #'   set_tbl(
@@ -12358,14 +12360,15 @@
 #' @return Una fórmula necesaria para el argumento `fn` de [info_snippet()].
 #' 
 #' @examples 
-#' # Generate an informant object, add
-#' # a snippet with `info_snippet()`
-#' # and `snip_highest()` (giving us a
-#' # method to get the highest value in
-#' # column `a`); define a location for
-#' # the snippet result in `{ }` and
-#' # then `incorporate()` the snippet
-#' # into the info text
+#' # Generar un objeto informante,
+#' # añadir un snippet con
+#' # `info_snippet()` y `snip_highest()`
+#' # (dándonos un método para obtener
+#' # el valor más alto de la columna `a`);
+#' # definir una ubicación para el
+#' # resultado del snippet en `{ }` y
+#' # luego `incorporate()` el snippet en
+#' # el info text
 #' informant <- 
 #'   create_informant(
 #'     read_fn = ~ small_table,
@@ -12382,8 +12385,9 @@
 #'   ) %>%
 #'   incorporate()
 #' 
-#' # We can print the `informant` object
-#' # to see the information report
+#' # Podemos imprimir el objeto
+#' # `informant` para ver el informe
+#' # de información
 #' 
 #' @family Information Functions
 #' @section Function ID:
@@ -12399,57 +12403,63 @@
 #' the of items in that list with the `limit` value.
 #' 
 #' @param column El nombre de la columna que contiene los valores de destino.
-#' @param limit A limit of items put into the generated list. The returned text
-#'   will state the remaining number of items beyond the `limit`. By default,
-#'   the limit is `5`.
-#' @param sorting A keyword used to designate the type of sorting to use for the
-#'   list. The three options are `"inorder"` (the default), `"infreq"`, and
-#'   `"inseq"`. With `"inorder"`, distinct items are listed in the order in
-#'   which they firsts appear. Using `"infreq"` orders the items by the
-#'   decreasing frequency of each item. The `"inseq"` option applies an
-#'   alphanumeric sorting to the distinct list items.
-#' @param reverse An option to reverse the ordering of list items. By default,
-#'   this is `FALSE` but using `TRUE` will reverse the items before applying the
-#'   `limit`.
-#' @param sep The separator to use between list items. By default, this is a
-#'   comma.
-#' @param and_or The type of conjunction to use between the final and
-#'   penultimate list items (should the item length be below the `limit` value).
-#'   If `NULL` (the default) is used, then the 'and' conjunction will be used.
-#'   Alternatively, the following keywords can be used: `"and"`, `"or"`, or
-#'   an empty string (for no conjunction at all).
-#' @param oxford Whether to use an Oxford comma under certain conditions. By
-#'   default, this is `TRUE`.
-#' @param as_code Should each list item appear in a 'code font' (i.e., as
-#'   monospaced text)? By default this is `TRUE`. Using `FALSE` keeps all list
-#'   items in the same font as the rest of the information report.
-#' @param quot_str An option for whether list items should be set in double
-#'   quotes. If `NULL` (the default), the quotation marks are mainly associated
-#'   with list items derived from `character` or `factor` values; numbers,
-#'   dates, and logical values won't have quotation marks. We can explicitly use
-#'   quotations (or not) with either `TRUE` or `FALSE` here.
-#' @param lang The language to use for any joining words (from the `and_or`
-#'   option) or additional words in the generated list string. By default,
-#'   `NULL` will use whichever `lang` setting is available in the parent
-#'   *informant* object (this is settable in the [create_informant()] `lang`
-#'   argument). If specified here as an override, the language options are
-#'   English (`"en"`), French (`"fr"`), German (`"de"`), Italian (`"it"`),
-#'   Spanish (`"es"`), Portuguese (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`),
-#'   Russian (`"ru"`), Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and
-#'   Dutch (`"nl"`).
+#' @param limit Un límite de elementos puestos en la lista generada. El texto
+#'   devuelto indicará el número restante de elementos más allá del `limit`. Por
+#'   defecto, el límite es `5`.
+#' @param sorting Una palabra clave utilizada para designar el tipo de
+#'   ordenación a utilizar para la lista. Las tres opciones son `"inorder"` (por
+#'   defecto), `"infreq"` e `"inseq"`. Con `"inorder"`, los distintos elementos
+#'   se listan en el orden en que aparecen por primera vez. Con `"infreq"` se
+#'   ordenan los elementos por la frecuencia decreciente de cada uno de ellos.
+#'   La opción `"inseq"` aplica una ordenación alfanumérica a los distintos
+#'   elementos de la lista.
+#' @param reverse Una opción para invertir el orden de los elementos de la
+#'   lista. Por defecto, esto es `FALSE` pero si se utiliza `TRUE` se invertirán
+#'   los elementos antes de aplicar el `limit`.
+#' @param sep El separador a utilizar entre los elementos de la lista. Por
+#'   defecto, es una coma.
+#' @param and_or El tipo de conjunción a utilizar entre el último y el penúltimo
+#'   elemento de la lista (en caso de que la longitud del elemento sea inferior
+#'   al valor `limit`). Si se utiliza `NULL` (el valor por defecto), se
+#'   utilizará la conjunción `y`. Como alternativa, se pueden utilizar las
+#'   siguientes palabras clave: `"y"`, `"o"`, o una cadena vacía (para no usar
+#'   ninguna conjunción).
+#' @param oxford Si se utiliza la coma de Oxford en determinadas condiciones. En
+#'   por defecto, es `TRUE`.
+#' @param as_code ¿Debe aparecer cada elemento de la lista en una "fuente de
+#'   código" (es decir, como texto monoespaciado)? Por defecto es `TRUE`. El uso
+#'   de `FALSE` mantiene todos los elementos de la lista de la lista en el mismo
+#'   tipo de letra que el resto del informe.
+#' @param quot_str Una opción para saber si los elementos de la lista deben ir
+#'   entre comillas dobles. Si es `NULL` (el valor por defecto), las comillas se
+#'   asocian principalmente a los elementos de la lista derivados de valores de
+#'   `character` o `factor`; los números, las fechas y los valores lógicos no
+#'   tendrán comillas. Podemos utilizar explícitamente comillas (o no) con
+#'   `TRUE` o `FALSE` aquí.
+#' @param lang El idioma que se utilizará para cualquier palabra de unión (de la
+#'   opción `and_or ) o palabras adicionales en la cadena de la lista generada.
+#'   Por defecto, `NULL` utilizará cualquier configuración de `lang` que esté
+#'   disponible en el objeto *informante* padre (se puede establecer en el
+#'   argumento `lang` de [create_informant()]). Si se especifica aquí como una
+#'   anulación, las opciones de idioma son francés (`"fr"`), alemán (`"de"`),
+#'   italiano (`"it"`), español (`"es"`), portugués (`"pt"`), turco (`"tr"`),
+#'   chino (`"zh"`), ruso (`"ru"`), polaco (`"pl"`), danés (`"da"`), sueco
+#'   (`"sv"` ) y holandés (`"nl"`).
 #'   
 #' @return Una fórmula necesaria para el argumento `fn` de [info_snippet()].
 #' 
 #' @examples 
-#' # Generate an informant object, add
-#' # a snippet with `info_snippet()`
-#' # and `snip_list()` (giving us a
-#' # method to get a distinct list of
-#' # column values for column `f`);
-#' # define a location for the snippet
-#' # result in `{ }` and then
-#' # `incorporate()` the snippet into
-#' # the info text
+#' # Generar un objeto informante,
+#' # añadir un snippet con
+#' # `info_snippet()` y
+#' # `snip_list()` (dándonos un
+#' # método para obtener una lista
+#' # distinta de valores de columna
+#' # para la columna `f`); definir
+#' # una ubicación para el resultado
+#' # del snippet en `{ }` y luego
+#' # `incorporate()` el snippet en
+#' # el texto informativo
 #' informant <- 
 #'   create_informant(
 #'     read_fn = ~ small_table,
@@ -12466,8 +12476,9 @@
 #'   ) %>%
 #'   incorporate()
 #' 
-#' # We can print the `informant` object
-#' # to see the information report
+#' # Podemos imprimir el objeto
+#' # `informant` para ver el informe
+#' # de información
 #' 
 #' @family Information Functions
 #' @section Function ID:
@@ -12478,23 +12489,24 @@
 # snip_lowest--------------------------------------------------------------
 #' Un `fn` para `info_snippet()`: obtener el valor más bajo de una columna
 #' 
-#' The `snip_lowest()` function can be used as an [info_snippet()] function
-#' (i.e., provided to `fn`) to get the lowest numerical, time value, or
-#' alphabetical value from a column in the target table.
+#' La función `snip_lowest()` puede utilizarse como una función [info_snippet()]
+#' (es decir, proporcionada a `fn`) para obtener el valor numérico, de tiempo o
+#' alfabético más bajo de una columna de la tabla de destino.
 #' 
 #' @param column El nombre de la columna que contiene los valores de destino.
 #'   
 #' @return Una fórmula necesaria para el argumento `fn` de [info_snippet()].
 #' 
 #' @examples 
-#' # Generate an informant object, add
-#' # a snippet with `info_snippet()`
-#' # and `snip_lowest()` (giving us a
-#' # method to get the lowest value in
-#' # column `a`); define a location for
-#' # the snippet result in `{ }` and
-#' # then `incorporate()` the snippet
-#' # into the info text
+#' # Generar un objeto informante,
+#' # añadir un snippet con
+#' # `info_snippet()` y `snip_lowest()`
+#' # (dándonos un método para obtener
+#' # el valor más alto de la columna `a`);
+#' # definir una ubicación para el
+#' # resultado del snippet en `{ }` y
+#' # luego `incorporate()` el snippet en
+#' # el info text
 #' informant <- 
 #'   create_informant(
 #'     read_fn = ~ small_table,
@@ -12511,8 +12523,9 @@
 #'   ) %>%
 #'   incorporate()
 #' 
-#' # We can print the `informant` object
-#' # to see the information report
+#' # Podemos imprimir el objeto
+#' # `informant` para ver el informe
+#' # de información
 #' 
 #' @family Information Functions
 #' @section Function ID:
@@ -12524,35 +12537,39 @@
 #' Un `fn` para `info_snippet()`: obtener un resumen estadístico en línea
 #'
 #' @description
-#' The `snip_stats()` function can be used as an [info_snippet()] function
-#' (i.e., provided to `fn`) to produce a five- or seven-number statistical
-#' summary. This inline summary works well within a paragraph of text and can
-#' help in describing the distribution of numerical values in a column.
+#' La función `snip_stats()` puede utilizarse como una función [info_snippet()]
+#' (es decir, proporcionada a `fn`) para producir un resumen estadístico de
+#' cinco o siete números. Este resumen en línea funciona bien dentro de un
+#' párrafo de texto y puede ayudar a describir la distribución de los valores
+#' numéricos en una columna.
 #'
-#' For a given column, three different types of inline statistical summaries can
-#' be provided:
+#' Para una columna determinada, se pueden proporcionar tres tipos diferentes de
+#' resúmenes estadísticos en línea en línea:
 #' 
-#' 1. a five-number summary (`"5num"`): minimum, Q1, median, Q3, maximum
-#' 2. a seven-number summary (`"7num"`): P2, P9, Q1, median, Q3, P91, P98
-#' 3. Bowley's seven-figure summary (`"bowley"`): minimum, P10, Q1, median, Q3,
-#' P90, maximum
+#' 1. un resumen de cinco números (`"5num"`): mínimo, Q1, mediana, Q3, máximo
+#' 2. un resumen de siete números (`"7num"`): P2, P9, Q1, mediana, Q3, P91, P98
+#' 3. Resumen de siete cifras de Bowley (`"bowley"`): mínimo, P10, Q1, mediana,
+#' Q3, P90, máximo
 #'
 #' @param column El nombre de la columna que contiene los valores de destino.
-#' @param type The type of summary. By default, the `"5num"` keyword is used to
-#'   generate a five-number summary. Two other options provide seven-number
-#'   summaries: `"7num"` and `"bowley"`.
+#' @param type El tipo de resumen. Por defecto, la palabra clave `"5num"` se
+#'   utiliza para generar un resumen de cinco números. Otras dos opciones
+#'   proporcionan resúmenes de siete números de siete números: `"7num"` y
+#'   `"bowley"`.
 #'   
 #' @return Una fórmula necesaria para el argumento `fn` de [info_snippet()].
 #' 
 #' @examples 
-#' # Generate an informant object, add
-#' # a snippet with `info_snippet()`
-#' # and `snip_stats()` (giving us a
-#' # method to get some summary stats for
-#' # column `a`); define a location for
-#' # the snippet result in `{ }` and
-#' # then `incorporate()` the snippet
-#' # into the info text
+#' # Generar un objeto informante,
+#' # añadir un fragmento con
+#' # `info_snippet()` y `snip_stats()`
+#' # (lo que nos da un método para
+#' # obtener algunas estadísticas de
+#' # resumen para la columna `a`);
+#' # definir una ubicación para el
+#' # resultado del fragmento en `{ }`
+#' # y luego `incorporate()` el
+#' # fragmento en el texto informativo
 #' informant <- 
 #'   create_informant(
 #'     read_fn = ~ small_table,
@@ -12569,8 +12586,9 @@
 #'   ) %>%
 #'   incorporate()
 #' 
-#' # We can print the `informant` object
-#' # to see the information report
+#' # Podemos imprimir el objeto
+#' # `informant` para ver el informe
+#' # de información
 #' 
 #' @family Information Functions
 #' @section Function ID:

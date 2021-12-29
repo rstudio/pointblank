@@ -6,7 +6,6 @@
 <!-- badges: start -->
 <a href="https://cran.r-project.org/package=pointblank"><img src="https://www.r-pkg.org/badges/version/pointblank" alt="CRAN status" /></a>
 <a href="https://github.com/rich-iannone/pointblank/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/R-CMD-check/badge.svg" alt="R build status" /></a>
-<a href="https://github.com/rich-iannone/pointblank/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/pkgdown/badge.svg" alt="Package Site" /></a>
 <a href="https://github.com/rich-iannone/pointblank/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/lint/badge.svg" alt="Linting" /></a>
 <a href="https://app.codecov.io/gh/rich-iannone/pointblank?branch=main"><img src="https://codecov.io/gh/rich-iannone/pointblank/branch/main/graph/badge.svg" alt="Coverage status" /></a>
 

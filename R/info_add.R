@@ -1033,7 +1033,7 @@ info_snippet <- function(x,
 #' @param sorting A keyword used to designate the type of sorting to use for the
 #'   list. The three options are `"inorder"` (the default), `"infreq"`, and
 #'   `"inseq"`. With `"inorder"`, distinct items are listed in the order in
-#'   which they firsts appear. Using `"infreq"` orders the items by the
+#'   which they first appear. Using `"infreq"` orders the items by the
 #'   decreasing frequency of each item. The `"inseq"` option applies an
 #'   alphanumeric sorting to the distinct list items.
 #' @param reverse An option to reverse the ordering of list items. By default,

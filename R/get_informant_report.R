@@ -41,21 +41,20 @@
 #'   and transformed internally to HTML. To circumvent such a transformation,
 #'   use text in [I()] to explicitly state that the supplied text should not be
 #'   transformed.
-#' @param lang The language to use for the *information report* (a summary table
-#'   that provides the validation plan and the results from the interrogation.
+#' @param lang The language to use for the *information report*.
 #'   By default, `NULL` will create English (`"en"`) text. Other options include
 #'   French (`"fr"`), German (`"de"`), Italian (`"it"`), Spanish (`"es"`),
 #'   Portuguese (`"pt"`), Turkish (`"tr"`), Chinese (`"zh"`), Russian (`"ru"`),
 #'   Polish (`"pl"`), Danish (`"da"`), Swedish (`"sv"`), and Dutch (`"nl"`).
 #'   This `lang` option will override any previously set language setting (e.g.,
-#'   by the [create_agent()] call).
+#'   by the [create_informant()] call).
 #' @param locale An optional locale ID to use for formatting values in the
 #'   *information report* summary table according the locale's rules. Examples
 #'   include `"en_US"` for English (United States) and `"fr_FR"` for French
 #'   (France); more simply, this can be a language identifier without a country
 #'   designation, like `"es"` for Spanish (Spain, same as `"es_ES"`). This
 #'   `locale` option will override any previously set locale value (e.g., by the
-#'   [create_agent()] call).
+#'   [create_informant()] call).
 #' 
 #' @return A **gt** table object.
 #' 

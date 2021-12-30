@@ -14,7 +14,7 @@
 <!-- badges: end -->
 
 
-Con el paquete **pointblank** es realmente fácil validar metódicamente sus datos, ya sea en forma de marcos de datos o de tablas de bases de datos. Además del conjunto de herramientas de herramientas de validación, el paquete le ofrece los medios para proporcionar y mantener la información que *define* sus tablas.
+Con el paquete **pointblank** es realmente fácil validar metódicamente tus datos, ya sea en forma de data frames o como tablas de base de datos. El paquete también te permite proporcionar y mantener actualizada la información que *define* tus tablas.
 
 Para la *validación* de tablas, el objeto *agente* trabaja con una gran colección de funciones de validación sencillas (¡pero potentes!). Podemos habilitar comprobaciones de validación mucho más sofisticadas utilizando expresiones personalizadas y también mediante la mutación gradual de la tabla de destino (a través de algo que llamamos `preconditions`).
 

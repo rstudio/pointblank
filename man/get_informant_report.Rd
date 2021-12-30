@@ -30,14 +30,13 @@ and transformed internally to HTML. To circumvent such a transformation,
 use text in \code{\link[=I]{I()}} to explicitly state that the supplied text should not be
 transformed.}
 
-\item{lang}{The language to use for the \emph{information report} (a summary table
-that provides the validation plan and the results from the interrogation.
+\item{lang}{The language to use for the \emph{information report}.
 By default, \code{NULL} will create English (\code{"en"}) text. Other options include
 French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}), Spanish (\code{"es"}),
 Portuguese (\code{"pt"}), Turkish (\code{"tr"}), Chinese (\code{"zh"}), Russian (\code{"ru"}),
 Polish (\code{"pl"}), Danish (\code{"da"}), Swedish (\code{"sv"}), and Dutch (\code{"nl"}).
 This \code{lang} option will override any previously set language setting (e.g.,
-by the \code{\link[=create_agent]{create_agent()}} call).}
+by the \code{\link[=create_informant]{create_informant()}} call).}
 
 \item{locale}{An optional locale ID to use for formatting values in the
 \emph{information report} summary table according the locale's rules. Examples
@@ -45,7 +44,7 @@ include \code{"en_US"} for English (United States) and \code{"fr_FR"} for French
 (France); more simply, this can be a language identifier without a country
 designation, like \code{"es"} for Spanish (Spain, same as \code{"es_ES"}). This
 \code{locale} option will override any previously set locale value (e.g., by the
-\code{\link[=create_agent]{create_agent()}} call).}
+\code{\link[=create_informant]{create_informant()}} call).}
 }
 \value{
 A \strong{gt} table object.

@@ -46,7 +46,6 @@ time, it has intel from the interrogation."><meta property="og:image" content="h
     <h6 class="dropdown-header" data-toc-skip>Gestión de la información</h6>
     <a class="dropdown-item" href="../articles/INFO-1.html">Introducción a la gestión de la información</a>
     <a class="dropdown-item" href="../articles/INFO-2.html">Temas avanzados de gestión de la información</a>
-    <a class="external-link dropdown-item" href="https://rich-iannone.github.io/pointblank">In English</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -54,6 +53,9 @@ time, it has intel from the interrogation."><meta property="og:image" content="h
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">News</a>
+</li>
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://rich-iannone.github.io/pointblank">In English</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Cambiar la navegación" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Buscar" autocomplete="off"></form>
@@ -136,11 +138,12 @@ time, it has intel from the interrogation.</p>
 <span class="r-in"><span class="co"># the target data will be interrogated</span></span>
 <span class="r-in"><span class="co"># (one step) with `yaml_agent_interrogate()`</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># Creating an `action_levels` object is a</span></span>
-<span class="r-in"><span class="co"># common workflow step when creating a</span></span>
-<span class="r-in"><span class="co"># pointblank agent; we designate failure</span></span>
-<span class="r-in"><span class="co"># thresholds to the `warn`, `stop`, and</span></span>
-<span class="r-in"><span class="co"># `notify` states using `action_levels()`</span></span>
+<span class="r-in"><span class="co"># La creación de un objeto `action_levels`</span></span>
+<span class="r-in"><span class="co"># es un paso común del flujo de trabajo al</span></span>
+<span class="r-in"><span class="co"># crear un agente pointblank; designamos</span></span>
+<span class="r-in"><span class="co"># los umbrales de fallo a los estados</span></span>
+<span class="r-in"><span class="co"># `warn`, `stop` y `notify` utilizando</span></span>
+<span class="r-in"><span class="co"># `action_levels()`</span></span>
 <span class="r-in"><span class="va">al</span> <span class="op">&lt;-</span> </span>
 <span class="r-in">  <span class="fu"><a href="action_levels.html">action_levels</a></span><span class="op">(</span></span>
 <span class="r-in">    warn_at <span class="op">=</span> <span class="fl">0.10</span>,</span>

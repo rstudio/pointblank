@@ -62,7 +62,6 @@ fijados a los nombres de archivo."><meta property="og:image" content="https://ri
     <h6 class="dropdown-header" data-toc-skip>Gestión de la información</h6>
     <a class="dropdown-item" href="../articles/INFO-1.html">Introducción a la gestión de la información</a>
     <a class="dropdown-item" href="../articles/INFO-2.html">Temas avanzados de gestión de la información</a>
-    <a class="external-link dropdown-item" href="https://rich-iannone.github.io/pointblank">In English</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -70,6 +69,9 @@ fijados a los nombres de archivo."><meta property="og:image" content="https://ri
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">News</a>
+</li>
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://rich-iannone.github.io/pointblank">In English</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Cambiar la navegación" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Buscar" autocomplete="off"></form>
@@ -171,19 +173,19 @@ excepto que produce una cadena de fecha y hora de forma predeterminada.</p>
 <span class="r-in"><span class="co"># para un archivo, le agregamos la fecha</span></span>
 <span class="r-in"><span class="co"># actual como sufijo</span></span>
 <span class="r-in"><span class="fu">affix_date</span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"pb_file"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pb_file_2021-12-15"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pb_file_2021-12-31"</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Las extensiones de archivo no se</span></span>
 <span class="r-in"><span class="co"># interpondrán en el camino:</span></span>
 <span class="r-in"><span class="fu">affix_date</span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"pb_file.rds"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pb_file_2021-12-15.rds"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pb_file_2021-12-31.rds"</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># La fecha se puede utilizar como prefijo</span></span>
 <span class="r-in"><span class="fu">affix_date</span><span class="op">(</span></span>
 <span class="r-in">  filename <span class="op">=</span> <span class="st">"pb_file"</span>,</span>
 <span class="r-in">  position <span class="op">=</span> <span class="st">"start"</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2021-12-15_pb_file"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2021-12-31_pb_file"</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># El patrón de fecha se puede cambiar</span></span>
 <span class="r-in"><span class="co"># y así puede el delimitador</span></span>
@@ -192,7 +194,7 @@ excepto que produce una cadena de fecha y hora de forma predeterminada.</p>
 <span class="r-in">  format <span class="op">=</span> <span class="st">"%Y%m%d"</span>,</span>
 <span class="r-in">  delimiter <span class="op">=</span> <span class="st">"-"</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pb_file-20211215.yml"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pb_file-20211231.yml"</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>

@@ -36,7 +36,6 @@ the of items in that list with the limit value."><meta property="og:image" conte
     <h6 class="dropdown-header" data-toc-skip>Gestión de la información</h6>
     <a class="dropdown-item" href="../articles/INFO-1.html">Introducción a la gestión de la información</a>
     <a class="dropdown-item" href="../articles/INFO-2.html">Temas avanzados de gestión de la información</a>
-    <a class="external-link dropdown-item" href="https://rich-iannone.github.io/pointblank">In English</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -44,6 +43,9 @@ the of items in that list with the limit value."><meta property="og:image" conte
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">News</a>
+</li>
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://rich-iannone.github.io/pointblank">In English</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Cambiar la navegación" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Buscar" autocomplete="off"></form>
@@ -93,52 +95,49 @@ the of items in that list with the <code>limit</code> value.</p>
     <dl><dt>column</dt>
 <dd><p>El nombre de la columna que contiene los valores de destino.</p></dd>
 <dt>limit</dt>
-<dd><p>A limit of items put into the generated list. The returned text
-will state the remaining number of items beyond the <code>limit</code>. By default,
-the limit is <code>5</code>.</p></dd>
+<dd><p>Un límite de elementos puestos en la lista generada. El texto
+devuelto indicará el número restante de elementos más allá del <code>limit</code>. Por
+defecto, el límite es <code>5</code>.</p></dd>
 <dt>sorting</dt>
-<dd><p>A keyword used to designate the type of sorting to use for the
-list. The three options are <code>"inorder"</code> (the default), <code>"infreq"</code>, and
-<code>"inseq"</code>. With <code>"inorder"</code>, distinct items are listed in the order in
-which they firsts appear. Using <code>"infreq"</code> orders the items by the
-decreasing frequency of each item. The <code>"inseq"</code> option applies an
-alphanumeric sorting to the distinct list items.</p></dd>
+<dd><p>Una palabra clave utilizada para designar el tipo de
+ordenación a utilizar para la lista. Las tres opciones son <code>"inorder"</code> (por
+defecto), <code>"infreq"</code> e <code>"inseq"</code>. Con <code>"inorder"</code>, los distintos elementos
+se listan en el orden en que aparecen por primera vez. Con <code>"infreq"</code> se
+ordenan los elementos por la frecuencia decreciente de cada uno de ellos.
+La opción <code>"inseq"</code> aplica una ordenación alfanumérica a los distintos
+elementos de la lista.</p></dd>
 <dt>reverse</dt>
-<dd><p>An option to reverse the ordering of list items. By default,
-this is <code>FALSE</code> but using <code>TRUE</code> will reverse the items before applying the
-<code>limit</code>.</p></dd>
+<dd><p>Una opción para invertir el orden de los elementos de la
+lista. Por defecto, esto es <code>FALSE</code> pero si se utiliza <code>TRUE</code> se invertirán
+los elementos antes de aplicar el <code>limit</code>.</p></dd>
 <dt>sep</dt>
-<dd><p>The separator to use between list items. By default, this is a
-comma.</p></dd>
+<dd><p>El separador a utilizar entre los elementos de la lista. Por
+defecto, es una coma.</p></dd>
 <dt>and_or</dt>
-<dd><p>The type of conjunction to use between the final and
-penultimate list items (should the item length be below the <code>limit</code> value).
-If <code>NULL</code> (the default) is used, then the 'and' conjunction will be used.
-Alternatively, the following keywords can be used: <code>"and"</code>, <code>"or"</code>, or
-an empty string (for no conjunction at all).</p></dd>
+<dd><p>El tipo de conjunción a utilizar entre el último y el penúltimo
+elemento de la lista (en caso de que la longitud del elemento sea inferior
+al valor <code>limit</code>). Si se utiliza <code>NULL</code> (el valor por defecto), se
+utilizará la conjunción <code>y</code>. Como alternativa, se pueden utilizar las
+siguientes palabras clave: <code>"y"</code>, <code>"o"</code>, o una cadena vacía (para no usar
+ninguna conjunción).</p></dd>
 <dt>oxford</dt>
-<dd><p>Whether to use an Oxford comma under certain conditions. By
-default, this is <code>TRUE</code>.</p></dd>
+<dd><p>Si se utiliza la coma de Oxford en determinadas condiciones. En
+por defecto, es <code>TRUE</code>.</p></dd>
 <dt>as_code</dt>
-<dd><p>Should each list item appear in a 'code font' (i.e., as
-monospaced text)? By default this is <code>TRUE</code>. Using <code>FALSE</code> keeps all list
-items in the same font as the rest of the information report.</p></dd>
+<dd><p>¿Debe aparecer cada elemento de la lista en una "fuente de
+código" (es decir, como texto monoespaciado)? Por defecto es <code>TRUE</code>. El uso
+de <code>FALSE</code> mantiene todos los elementos de la lista de la lista en el mismo
+tipo de letra que el resto del informe.</p></dd>
 <dt>quot_str</dt>
-<dd><p>An option for whether list items should be set in double
-quotes. If <code>NULL</code> (the default), the quotation marks are mainly associated
-with list items derived from <code>character</code> or <code>factor</code> values; numbers,
-dates, and logical values won't have quotation marks. We can explicitly use
-quotations (or not) with either <code>TRUE</code> or <code>FALSE</code> here.</p></dd>
+<dd><p>Una opción para saber si los elementos de la lista deben ir
+entre comillas dobles. Si es <code>NULL</code> (el valor por defecto), las comillas se
+asocian principalmente a los elementos de la lista derivados de valores de
+<code>character</code> o <code>factor</code>; los números, las fechas y los valores lógicos no
+tendrán comillas. Podemos utilizar explícitamente comillas (o no) con
+<code>TRUE</code> o <code>FALSE</code> aquí.</p></dd>
 <dt>lang</dt>
-<dd><p>The language to use for any joining words (from the <code>and_or</code>
-option) or additional words in the generated list string. By default,
-<code>NULL</code> will use whichever <code>lang</code> setting is available in the parent
-<em>informant</em> object (this is settable in the <code><a href="create_informant.html">create_informant()</a></code> <code>lang</code>
-argument). If specified here as an override, the language options are
-English (<code>"en"</code>), French (<code>"fr"</code>), German (<code>"de"</code>), Italian (<code>"it"</code>),
-Spanish (<code>"es"</code>), Portuguese (<code>"pt"</code>), Turkish (<code>"tr"</code>), Chinese (<code>"zh"</code>),
-Russian (<code>"ru"</code>), Polish (<code>"pl"</code>), Danish (<code>"da"</code>), Swedish (<code>"sv"</code>), and
-Dutch (<code>"nl"</code>).</p></dd>
+<dd><p>El idioma que se utilizará para cualquier palabra de unión (de la
+opción <code>and_or ) o palabras adicionales en la cadena de la lista generada. Por defecto, </code>NULL<code>utilizará cualquier configuración de</code>lang<code>que esté disponible en el objeto *informante* padre (se puede establecer en el argumento</code>lang<code> de [create_informant()]). Si se especifica aquí como una anulación, las opciones de idioma son francés (</code>"fr"<code>), alemán (</code>"de"<code>), italiano (</code>"it"<code>), español (</code>"es"<code>), portugués (</code>"pt"<code>), turco (</code>"tr"<code>), chino (</code>"zh"<code>), ruso (</code>"ru"<code>), polaco (</code>"pl"<code>), danés (</code>"da"<code>), sueco (</code>"sv"<code> ) y holandés (</code>"nl"`).</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="valor">Valor<a class="anchor" aria-label="anchor" href="#valor"></a></h2>
@@ -165,15 +164,17 @@ Dutch (<code>"nl"</code>).</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Ejemplos<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Generate an informant object, add</span></span>
-<span class="r-in"><span class="co"># a snippet with `info_snippet()`</span></span>
-<span class="r-in"><span class="co"># and `snip_list()` (giving us a</span></span>
-<span class="r-in"><span class="co"># method to get a distinct list of</span></span>
-<span class="r-in"><span class="co"># column values for column `f`);</span></span>
-<span class="r-in"><span class="co"># define a location for the snippet</span></span>
-<span class="r-in"><span class="co"># result in `{ }` and then</span></span>
-<span class="r-in"><span class="co"># `incorporate()` the snippet into</span></span>
-<span class="r-in"><span class="co"># the info text</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Generar un objeto informante,</span></span>
+<span class="r-in"><span class="co"># añadir un snippet con</span></span>
+<span class="r-in"><span class="co"># `info_snippet()` y</span></span>
+<span class="r-in"><span class="co"># `snip_list()` (dándonos un</span></span>
+<span class="r-in"><span class="co"># método para obtener una lista</span></span>
+<span class="r-in"><span class="co"># distinta de valores de columna</span></span>
+<span class="r-in"><span class="co"># para la columna `f`); definir</span></span>
+<span class="r-in"><span class="co"># una ubicación para el resultado</span></span>
+<span class="r-in"><span class="co"># del snippet en `{ }` y luego</span></span>
+<span class="r-in"><span class="co"># `incorporate()` el snippet en</span></span>
+<span class="r-in"><span class="co"># el texto informativo</span></span>
 <span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span> </span>
 <span class="r-in">  <span class="fu"><a href="create_informant.html">create_informant</a></span><span class="op">(</span></span>
 <span class="r-in">    read_fn <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
@@ -197,8 +198,9 @@ Dutch (<code>"nl"</code>).</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Incorporation Completed</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># We can print the `informant` object</span></span>
-<span class="r-in"><span class="co"># to see the information report</span></span>
+<span class="r-in"><span class="co"># Podemos imprimir el objeto</span></span>
+<span class="r-in"><span class="co"># `informant` para ver el informe</span></span>
+<span class="r-in"><span class="co"># de información</span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

@@ -42,7 +42,6 @@ to pointblank YAML with yaml_write(informant = &amp;lt;informant&amp;gt;, ...)).
     <h6 class="dropdown-header" data-toc-skip>Gestión de la información</h6>
     <a class="dropdown-item" href="../articles/INFO-1.html">Introducción a la gestión de la información</a>
     <a class="dropdown-item" href="../articles/INFO-2.html">Temas avanzados de gestión de la información</a>
-    <a class="external-link dropdown-item" href="https://rich-iannone.github.io/pointblank">In English</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -50,6 +49,9 @@ to pointblank YAML with yaml_write(informant = &amp;lt;informant&amp;gt;, ...)).
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">News</a>
+</li>
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://rich-iannone.github.io/pointblank">In English</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Cambiar la navegación" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Buscar" autocomplete="off"></form>
@@ -112,22 +114,22 @@ and transformed internally to HTML. To circumvent such a transformation,
 use text in <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code> to explicitly state that the supplied text should not be
 transformed.</p></dd>
 <dt>lang</dt>
-<dd><p>The language to use for the <em>information report</em> (a summary table
-that provides the validation plan and the results from the interrogation.
-De forma predeterminada, <code>NULL</code> creará texto en inglés (<code>"en"</code>). Otras
-opciones incluyen francés (<code>"fr"</code>), alemán (<code>"de"</code>), italiano (<code>"it"</code>),
-español (<code>"es"</code>), portugués (<code>"pt"</code>), turco (<code>"tr"</code>), chino (<code>"zh"</code>), ruso
-(<code>"ru"</code>), polaco (<code>"pl"</code>), danés (<code>"da"</code>), sueco (<code>"sv"</code> ) y holandés
-(<code>"nl"</code>). This <code>lang</code> option will override any previously set language
-setting (e.g., by the <code><a href="create_agent.html">create_agent()</a></code> call).</p></dd>
+<dd><p>La lengua a utilizar para el informe. De forma predeterminada,
+<code>NULL</code> creará texto en inglés (<code>"en"</code>). Otras opciones incluyen francés
+(<code>"fr"</code>), alemán (<code>"de"</code>), italiano (<code>"it"</code>), español (<code>"es"</code>), portugués
+(<code>"pt"</code>), turco (<code>"tr"</code>), chino (<code>"zh"</code>), ruso (<code>"ru"</code>), polaco (<code>"pl"</code>),
+danés (<code>"da"</code>), sueco (<code>"sv"</code> ) y holandés (<code>"nl"</code>). This <code>lang</code> option
+will override any previously set language setting (e.g., by the
+<code><a href="create_informant.html">create_informant()</a></code> call).</p></dd>
 <dt>locale</dt>
-<dd><p>An optional locale ID to use for formatting values in the
-<em>information report</em> summary table according the locale's rules. Examples
-include <code>"en_US"</code> for English (United States) and <code>"fr_FR"</code> for French
-(France); more simply, this can be a language identifier without a country
-designation, like <code>"es"</code> for Spanish (Spain, same as <code>"es_ES"</code>). This
-<code>locale</code> option will override any previously set locale value (e.g., by the
-<code><a href="create_agent.html">create_agent()</a></code> call).</p></dd>
+<dd><p>Un identificador opcional de la configuración regional que se
+utilizará para formatear los valores en el informe informe de acuerdo con
+las reglas de la configuración regional. Los ejemplos incluyen <code>"en_US"</code>
+para el inglés (Estados Unidos) y <code>"fr_FR"</code> para el francés (Francia); más
+simplemente, puede ser un identificador de idioma sin designación de país,
+como <code>"es"</code> para el español (España, igual que <code>"es_ES"</code>). Esta opción
+<code>locale</code> anulará cualquier valor de locale previamente establecido (por
+ejemplo, por la opción <code><a href="create_informant.html">create_informant()</a></code>).</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="valor">Valor<a class="anchor" aria-label="anchor" href="#valor"></a></h2>

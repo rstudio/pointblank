@@ -36,7 +36,6 @@ numérico, temporal o valor alfabético de una columna de la tabla de destino.">
     <h6 class="dropdown-header" data-toc-skip>Gestión de la información</h6>
     <a class="dropdown-item" href="../articles/INFO-1.html">Introducción a la gestión de la información</a>
     <a class="dropdown-item" href="../articles/INFO-2.html">Temas avanzados de gestión de la información</a>
-    <a class="external-link dropdown-item" href="https://rich-iannone.github.io/pointblank">In English</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -44,6 +43,9 @@ numérico, temporal o valor alfabético de una columna de la tabla de destino.">
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">News</a>
+</li>
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://rich-iannone.github.io/pointblank">In English</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Cambiar la navegación" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Buscar" autocomplete="off"></form>
@@ -107,14 +109,15 @@ numérico, temporal o valor alfabético de una columna de la tabla de destino.</
 
     <div class="section level2">
     <h2 id="ref-examples">Ejemplos<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Generate an informant object, add</span></span>
-<span class="r-in"><span class="co"># a snippet with `info_snippet()`</span></span>
-<span class="r-in"><span class="co"># and `snip_highest()` (giving us a</span></span>
-<span class="r-in"><span class="co"># method to get the highest value in</span></span>
-<span class="r-in"><span class="co"># column `a`); define a location for</span></span>
-<span class="r-in"><span class="co"># the snippet result in `{ }` and</span></span>
-<span class="r-in"><span class="co"># then `incorporate()` the snippet</span></span>
-<span class="r-in"><span class="co"># into the info text</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Generar un objeto informante,</span></span>
+<span class="r-in"><span class="co"># añadir un snippet con</span></span>
+<span class="r-in"><span class="co"># `info_snippet()` y `snip_highest()`</span></span>
+<span class="r-in"><span class="co"># (dándonos un método para obtener</span></span>
+<span class="r-in"><span class="co"># el valor más alto de la columna `a`);</span></span>
+<span class="r-in"><span class="co"># definir una ubicación para el</span></span>
+<span class="r-in"><span class="co"># resultado del snippet en `{ }` y</span></span>
+<span class="r-in"><span class="co"># luego `incorporate()` el snippet en</span></span>
+<span class="r-in"><span class="co"># el info text</span></span>
 <span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span> </span>
 <span class="r-in">  <span class="fu"><a href="create_informant.html">create_informant</a></span><span class="op">(</span></span>
 <span class="r-in">    read_fn <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
@@ -138,8 +141,9 @@ numérico, temporal o valor alfabético de una columna de la tabla de destino.</
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Incorporation Completed</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># We can print the `informant` object</span></span>
-<span class="r-in"><span class="co"># to see the information report</span></span>
+<span class="r-in"><span class="co"># Podemos imprimir el objeto</span></span>
+<span class="r-in"><span class="co"># `informant` para ver el informe</span></span>
+<span class="r-in"><span class="co"># de información</span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

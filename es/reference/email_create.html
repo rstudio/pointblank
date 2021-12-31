@@ -46,7 +46,6 @@ email_message object será devuelto.'><meta property="og:image" content="https:/
     <h6 class="dropdown-header" data-toc-skip>Gestión de la información</h6>
     <a class="dropdown-item" href="../articles/INFO-1.html">Introducción a la gestión de la información</a>
     <a class="dropdown-item" href="../articles/INFO-2.html">Temas avanzados de gestión de la información</a>
-    <a class="external-link dropdown-item" href="https://rich-iannone.github.io/pointblank">In English</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -54,6 +53,9 @@ email_message object será devuelto.'><meta property="og:image" content="https:/
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">News</a>
+</li>
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://rich-iannone.github.io/pointblank">In English</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Cambiar la navegación" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Buscar" autocomplete="off"></form>
@@ -132,26 +134,31 @@ footer components of the HTML email message.</p></dd>
     <h2 id="ref-examples">Ejemplos<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># Create an `action_levels()` list</span></span>
-<span class="r-in"><span class="co"># with absolute values for the</span></span>
-<span class="r-in"><span class="co"># `warn`, and `notify` states (with</span></span>
-<span class="r-in"><span class="co"># thresholds of 1 and 2 'fail' units)</span></span>
+<span class="r-in"><span class="co"># Crear una lista `action_levels()`</span></span>
+<span class="r-in"><span class="co"># con valores absolutos para los</span></span>
+<span class="r-in"><span class="co"># estados `warn`, y `notify` (con</span></span>
+<span class="r-in"><span class="co"># umbrales de 1 y 2 unidades</span></span>
+<span class="r-in"><span class="co"># de `fallo`)</span></span>
 <span class="r-in"><span class="va">al</span> <span class="op">&lt;-</span> </span>
 <span class="r-in">  <span class="fu"><a href="action_levels.html">action_levels</a></span><span class="op">(</span></span>
 <span class="r-in">    warn_at <span class="op">=</span> <span class="fl">1</span>,</span>
 <span class="r-in">    notify_at <span class="op">=</span> <span class="fl">2</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># In a workflow that involves an</span></span>
-<span class="r-in"><span class="co"># `agent` object, we can make use of</span></span>
-<span class="r-in"><span class="co"># the `end_fns` argument and</span></span>
-<span class="r-in"><span class="co"># programmatically email the report</span></span>
-<span class="r-in"><span class="co"># with the `email_blast()` function,</span></span>
-<span class="r-in"><span class="co"># however, an alternate workflow is to</span></span>
-<span class="r-in"><span class="co"># produce the email object and choose</span></span>
-<span class="r-in"><span class="co"># to send outside of the pointblank API;</span></span>
-<span class="r-in"><span class="co"># the `email_create()` function lets</span></span>
-<span class="r-in"><span class="co"># us do this with an `agent` object</span></span>
+<span class="r-in"><span class="co"># En un flujo de trabajo que</span></span>
+<span class="r-in"><span class="co"># implique un objeto `agente`,</span></span>
+<span class="r-in"><span class="co"># podemos hacer uso del argumento</span></span>
+<span class="r-in"><span class="co"># `end_fns` y enviar el informe por</span></span>
+<span class="r-in"><span class="co"># correo electrónico de forma</span></span>
+<span class="r-in"><span class="co"># programática con la función</span></span>
+<span class="r-in"><span class="co"># `email_blast()`, sin embargo, un</span></span>
+<span class="r-in"><span class="co"># flujo de trabajo alternativo es</span></span>
+<span class="r-in"><span class="co"># producir el objeto de correo</span></span>
+<span class="r-in"><span class="co"># electrónico y elegir enviarlo</span></span>
+<span class="r-in"><span class="co"># fuera de la API de pointblank; la</span></span>
+<span class="r-in"><span class="co"># función `email_create()` nos</span></span>
+<span class="r-in"><span class="co"># permite hacer esto con un</span></span>
+<span class="r-in"><span class="co"># objeto `agente`</span></span>
 <span class="r-in"><span class="va">email_object_1</span> <span class="op">&lt;-</span></span>
 <span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span></span>
 <span class="r-in">    read_fn <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
@@ -164,13 +171,16 @@ footer components of the HTML email message.</p></dd>
 <span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">email_create</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># We can view the HTML email just</span></span>
-<span class="r-in"><span class="co"># by printing `email_object`; it</span></span>
-<span class="r-in"><span class="co"># should appear in the Viewer</span></span>
+<span class="r-in"><span class="co"># Podemos ver el correo HTML</span></span>
+<span class="r-in"><span class="co"># simplemente imprimiendo</span></span>
+<span class="r-in"><span class="co"># `email_object`; debería debería</span></span>
+<span class="r-in"><span class="co"># aparecer en el Visor</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># The `email_create()` function can</span></span>
-<span class="r-in"><span class="co"># also be used on an agent x-list to</span></span>
-<span class="r-in"><span class="co"># get the same email message object</span></span>
+<span class="r-in"><span class="co"># La función `email_create()` también</span></span>
+<span class="r-in"><span class="co"># puede utilizarse en una x-list de</span></span>
+<span class="r-in"><span class="co"># agentes para obtener el mismo</span></span>
+<span class="r-in"><span class="co"># objeto de mensaje de correo</span></span>
+<span class="r-in"><span class="co"># electrónico</span></span>
 <span class="r-in"><span class="va">email_object_2</span> <span class="op">&lt;-</span></span>
 <span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span></span>
 <span class="r-in">    read_fn <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
@@ -184,11 +194,11 @@ footer components of the HTML email message.</p></dd>
 <span class="r-in">  <span class="fu"><a href="get_agent_x_list.html">get_agent_x_list</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">email_create</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># An information report that's</span></span>
-<span class="r-in"><span class="co"># produced by the informant can</span></span>
-<span class="r-in"><span class="co"># made into an email message object;</span></span>
-<span class="r-in"><span class="co"># let's create an informant and use</span></span>
-<span class="r-in"><span class="co"># `email_create()`</span></span>
+<span class="r-in"><span class="co"># Un informe producido por el</span></span>
+<span class="r-in"><span class="co"># informante puede convertirse en</span></span>
+<span class="r-in"><span class="co"># un objeto de mensaje de correo</span></span>
+<span class="r-in"><span class="co"># electrónico; creemos un informante</span></span>
+<span class="r-in"><span class="co"># y utilicemos `email_create()`</span></span>
 <span class="r-in"><span class="va">email_object_3</span> <span class="op">&lt;-</span></span>
 <span class="r-in">  <span class="fu"><a href="create_informant.html">create_informant</a></span><span class="op">(</span></span>
 <span class="r-in">    read_fn <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>

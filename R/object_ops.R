@@ -836,7 +836,7 @@ set_tbl <- function(x,
     x$tbl_name <- tbl_name
   }
   
-  if (is_ptblank_agent(x)) {
+  if (is_ptblank_informant(x)) {
     
     # Obtain basic information on the table and
     # set the relevant list elements

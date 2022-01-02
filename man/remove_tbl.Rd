@@ -2,23 +2,21 @@
 % Please edit documentation in R/object_ops.R
 \name{remove_tbl}
 \alias{remove_tbl}
-\title{Remove a data table associated with an \emph{agent} or \emph{informant}}
+\title{Remove a data table associated with an \emph{agent}}
 \usage{
 remove_tbl(x)
 }
 \arguments{
-\item{x}{An \emph{agent} object of class \code{ptblank_agent}, or, an \emph{informant} of
-class \code{ptblank_informant}.}
+\item{x}{An \emph{agent} object of class \code{ptblank_agent}.}
 }
 \description{
-Removing an \emph{agent} or \emph{informant}'s association to a data table can be done
-with the \code{remove_tbl()} function. This can be useful to ensure that the table
-data isn't unintentionally written to disk. It is usually best to avoid
-directly associating a table to an \emph{agent} or \emph{informant} through the \code{tbl}
+Removing an \emph{agent}'s association to a data table can be done
+with the \code{remove_tbl()} function. This can be useful to ensure that the
+table data isn't unintentionally written to disk. It is usually best to
+avoid directly associating a table to an \emph{agent} through the \code{tbl}
 argument, instead opting for setting a table-prep formula (via
-\code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}'s \code{read_fn} argument, or, with
-\code{\link[=set_read_fn]{set_read_fn()}}). If necessary, the association to a table can be set again
-with \code{\link[=set_tbl]{set_tbl()}}.
+\code{\link[=create_agent]{create_agent()}}'s \code{read_fn} argument, or, with \code{\link[=set_read_fn]{set_read_fn()}}). If
+necessary, the association to a table can be set again with \code{\link[=set_tbl]{set_tbl()}}.
 }
 \section{Function ID}{
 

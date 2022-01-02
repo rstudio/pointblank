@@ -148,8 +148,8 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   # Expect the new `tbl` data to be in the agent object
   expect_s3_class(agent_test_4$tbl, "tbl_df")
   
-  # Expect the `tbl_name` to be `small_table`
-  expect_equal(agent_test_4$tbl_name, "small_table")
+  # Expect the `tbl_name` to remain as `small_table_sqlite()`
+  expect_equal(agent_test_4$tbl_name, "small_table_sqlite()")
   
   # Expect the `db_tbl_name` to be NA
   expect_equal(agent_test_4$db_tbl_name, NA_character_)
@@ -173,8 +173,8 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   # Expect the new `tbl` data to be in the agent object
   expect_s3_class(agent_test_4$tbl, "tbl_df")
   
-  # Expect the `tbl_name` to be `table`
-  expect_equal(agent_test_4$tbl_name, "table")
+  # Expect the `tbl_name` to still be `small_table_sqlite()`
+  expect_equal(agent_test_4$tbl_name, "small_table_sqlite()")
   
   # Expect the `db_tbl_name` to be NA
   expect_equal(agent_test_4$db_tbl_name, NA_character_)
@@ -203,4 +203,42 @@ test_that("The `x_write_disk()` and `x_read_disk()` functions works as expected"
   
   # Don't expect the `read_fn` element to be in the agent object
   expect_null(agent_test_4$read_fn)
+})
+
+test_that("The `set_tbl()` function works as expected", {
+  
+  #
+  # Tests with an agent
+  #
+  
+  # Create an agent and supply it with the `specifications` table
+  agent <- create_agent(tbl = specifications)
+  
+  expect_null(agent$read_fn)
+  expect_equal(agent$tbl_name, "specifications")
+  expect_match(agent$label, "\\[.*?\\]")
+  expect_equal(agent$col_names, colnames(specifications))
+  
+  # Replace the table in the agent with `game_revenue`
+  agent_replace_1 <- agent %>% set_tbl(tbl = game_revenue)
+  
+  expect_null(agent_replace_1$read_fn)
+  expect_equal(agent_replace_1$tbl_name, "specifications")
+  expect_equal(agent_replace_1$label, agent$label)
+  expect_equal(agent_replace_1$col_names, colnames(game_revenue))
+  
+  # Replace the table in the agent with `game_revenue` and change the
+  # table name and label
+  agent_replace_2 <- 
+    agent %>% 
+    set_tbl(
+      tbl = game_revenue,
+      tbl_name = "game_revenue",
+      label = "Checking the game revenue table."
+    )
+  
+  expect_null(agent_replace_2$read_fn)
+  expect_equal(agent_replace_2$tbl_name, "game_revenue")
+  expect_match(agent_replace_2$label, "Checking the game revenue table.")
+  expect_equal(agent_replace_2$col_names, colnames(game_revenue))
 })

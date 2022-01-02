@@ -2,27 +2,33 @@
 % Please edit documentation in R/object_ops.R
 \name{set_tbl}
 \alias{set_tbl}
-\title{Set a data table to an \emph{agent} or \emph{informant}}
+\title{Set a data table to an \emph{agent}}
 \usage{
-set_tbl(x, tbl)
+set_tbl(x, tbl, tbl_name = NULL, label = NULL)
 }
 \arguments{
-\item{x}{An \emph{agent} object of class \code{ptblank_agent}, or, an \emph{informant} of
-class \code{ptblank_informant}.}
+\item{x}{An \emph{agent} object of class \code{ptblank_agent}.}
 
 \item{tbl}{The input table for the \code{agent}. This can be a data frame, a
 tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object. Any table already
-associated with the \emph{agent} or \emph{informant} will be overwritten.}
+associated with the \emph{agent} will be overwritten.}
+
+\item{tbl_name}{A optional name to assign to the new input table object. If
+no value is provided, a name will be generated based on whatever
+information is available.}
+
+\item{label}{An optional label for the validation plan. If no value is
+provided then any existing label will be retained.}
 }
 \description{
-Setting a data table to an \emph{agent} or \emph{informant} with \code{set_tbl()} replaces
-any associated table (a data frame, a tibble, objects of class \code{tbl_dbi} or
-\code{tbl_spark}). If a data table is associated with an \emph{agent} or \emph{informant}
-through the \code{tbl} argument \emph{and} the same object has a table-prep formula
-(settable in \code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}'s \code{read_fn} argument
-or with \code{\link[=set_read_fn]{set_read_fn()}}), the table-prep formula will take precedence. If
-this is undesirable, it be removed with the \code{\link[=remove_read_fn]{remove_read_fn()}} function. The
-association to a table can be removed with with \code{\link[=remove_tbl]{remove_tbl()}}.
+Setting a data table to an \emph{agent} with \code{set_tbl()} replaces any
+associated table (a data frame, a tibble, objects of class \code{tbl_dbi} or
+\code{tbl_spark}). If a data table is associated with an \emph{agent} through the
+\code{tbl} argument \emph{and} the same object has a table-prep formula (settable in
+\code{\link[=create_agent]{create_agent()}}'s \code{read_fn} argument or with \code{\link[=set_read_fn]{set_read_fn()}}), the
+table-prep formula will take precedence. If this is undesirable, it be
+removed with the \code{\link[=remove_read_fn]{remove_read_fn()}} function. The association to a table
+can be removed with with \code{\link[=remove_tbl]{remove_tbl()}}.
 }
 \section{Function ID}{
 

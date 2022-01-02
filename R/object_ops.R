@@ -752,23 +752,26 @@ export_report <- function(x,
 }
 
 
-#' Set a data table to an *agent* or *informant*
+#' Set a data table to an *agent*
 #' 
-#' @description 
-#' Setting a data table to an *agent* or *informant* with `set_tbl()` replaces
-#' any associated table (a data frame, a tibble, objects of class `tbl_dbi` or
-#' `tbl_spark`). If a data table is associated with an *agent* or *informant*
-#' through the `tbl` argument *and* the same object has a table-prep formula
-#' (settable in [create_agent()] and [create_informant()]'s `read_fn` argument
-#' or with [set_read_fn()]), the table-prep formula will take precedence. If
-#' this is undesirable, it be removed with the [remove_read_fn()] function. The
-#' association to a table can be removed with with [remove_tbl()].
+#' @description Setting a data table to an *agent* with `set_tbl()` replaces any
+#'   associated table (a data frame, a tibble, objects of class `tbl_dbi` or
+#'   `tbl_spark`). If a data table is associated with an *agent* through the
+#'   `tbl` argument *and* the same object has a table-prep formula (settable in
+#'   [create_agent()]'s `read_fn` argument or with [set_read_fn()]), the
+#'   table-prep formula will take precedence. If this is undesirable, it be
+#'   removed with the [remove_read_fn()] function. The association to a table
+#'   can be removed with with [remove_tbl()].
 #'
-#' @param x An *agent* object of class `ptblank_agent`, or, an *informant* of
-#'   class `ptblank_informant`.
+#' @param x An *agent* object of class `ptblank_agent`.
 #' @param tbl The input table for the `agent`. This can be a data frame, a
 #'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Any table already
-#'   associated with the *agent* or *informant* will be overwritten.
+#'   associated with the *agent* will be overwritten.
+#' @param tbl_name A optional name to assign to the new input table object. If
+#'   no value is provided, a name will be generated based on whatever
+#'   information is available.
+#' @param label An optional label for the validation plan. If no value is
+#'   provided then any existing label will be retained.
 #' 
 #' @examples
 #' # Set proportional failure thresholds
@@ -817,26 +820,22 @@ export_report <- function(x,
 #' 
 #' @export
 set_tbl <- function(x,
-                    tbl) {
+                    tbl,
+                    tbl_name = NULL,
+                    label = NULL) {
   
   # Set the table on the `$tbl` list element
   x$tbl <- tbl
   
   if (is_ptblank_agent(x)) {
     
-    # TODO: only attempt to set a `tbl_name` if it is NULL
-    
-    # Get the name of the table and set it to
-    # the `$tbl_name` list element
-    tbl_name <- deparse(match.call()$tbl)
-    if (tbl_name == ".") {
-      tbl_name <- "table"
+    if (!is.null(tbl_name)) {
+      x$tbl_name <- tbl_name
     }
     
-    x$tbl_name <- tbl_name
-  }
-  
-  if (is_ptblank_informant(x)) {
+    if (!is.null(label)) {
+      x$label <- label
+    }
     
     # Obtain basic information on the table and
     # set the relevant list elements
@@ -856,20 +855,17 @@ set_tbl <- function(x,
   invisible(x)
 }
 
-#' Remove a data table associated with an *agent* or *informant*
+#' Remove a data table associated with an *agent*
 #' 
-#' @description 
-#' Removing an *agent* or *informant*'s association to a data table can be done
-#' with the `remove_tbl()` function. This can be useful to ensure that the table
-#' data isn't unintentionally written to disk. It is usually best to avoid
-#' directly associating a table to an *agent* or *informant* through the `tbl`
-#' argument, instead opting for setting a table-prep formula (via
-#' [create_agent()] and [create_informant()]'s `read_fn` argument, or, with
-#' [set_read_fn()]). If necessary, the association to a table can be set again
-#' with [set_tbl()].
+#' @description Removing an *agent*'s association to a data table can be done
+#'   with the `remove_tbl()` function. This can be useful to ensure that the
+#'   table data isn't unintentionally written to disk. It is usually best to
+#'   avoid directly associating a table to an *agent* through the `tbl`
+#'   argument, instead opting for setting a table-prep formula (via
+#'   [create_agent()]'s `read_fn` argument, or, with [set_read_fn()]). If
+#'   necessary, the association to a table can be set again with [set_tbl()].
 #' 
-#' @param x An *agent* object of class `ptblank_agent`, or, an *informant* of
-#'   class `ptblank_informant`.
+#' @param x An *agent* object of class `ptblank_agent`.
 #' 
 #' @examples
 #' # Set proportional failure thresholds

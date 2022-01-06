@@ -183,9 +183,6 @@ reference:
     - x_read_disk
     - export_report
     - set_tbl
-    - remove_tbl
-    - set_read_fn
-    - remove_read_fn
     - activate_steps
     - deactivate_steps
     - remove_steps

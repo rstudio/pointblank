@@ -112,7 +112,7 @@ test_table <- small_table
 # the info text
 informant <- 
   create_informant(
-    read_fn = ~ test_table,
+    tbl = ~ test_table,
     tbl_name = "test_table",
     label = "An example."
   ) \%>\%

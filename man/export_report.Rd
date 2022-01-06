@@ -68,10 +68,10 @@ al <-
 # and give it the `al` object (which
 # serves as a default for all validation
 # steps which can be overridden); the
-# data will be referenced in a `read_fn`
+# data will be referenced in `tbl`
 agent <- 
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "`export_report()`",
     actions = al
@@ -130,7 +130,7 @@ export_report(
 # are integrated into the text
 informant <- 
   create_informant(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "`export_report()`"
   ) \%>\%
@@ -187,10 +187,7 @@ export_report(
 Other Object Ops: 
 \code{\link{activate_steps}()},
 \code{\link{deactivate_steps}()},
-\code{\link{remove_read_fn}()},
 \code{\link{remove_steps}()},
-\code{\link{remove_tbl}()},
-\code{\link{set_read_fn}()},
 \code{\link{set_tbl}()},
 \code{\link{x_read_disk}()},
 \code{\link{x_write_disk}()}

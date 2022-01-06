@@ -90,8 +90,10 @@ draft_validation <- function(tbl,
   
   output_type <- match.arg(output_type)
   
-  column_roles <- get_column_roles(tbl)
-  column_names <- colnames(tbl)
+  tbl_material <- materialize_table(tbl = tbl)
+  
+  column_roles <- get_column_roles(data = tbl_material)
+  column_names <- colnames(tbl_material)
   
   agent <- 
     create_agent(
@@ -101,6 +103,8 @@ draft_validation <- function(tbl,
       actions = action_levels(warn_at = 0.05, stop_at = 0.10),
       lang = lang
     )
+  
+  agent$tbl <- tbl_material
   
   # Add column-based validation steps to the agent on
   # the basis of column roles
@@ -114,17 +118,18 @@ draft_validation <- function(tbl,
       )
   }
   
+  
   # Add the `rows_distinct()` validation step if all rows in the
   # table are distinct
-  total_rows <- get_table_total_rows(data = tbl)
-  distinct_rows <- get_table_total_distinct_rows(data = tbl)
+  total_rows <- get_table_total_rows(data = tbl_material)
+  distinct_rows <- get_table_total_distinct_rows(data = tbl_material)
   
   if (distinct_rows == total_rows) {
     agent <- rows_distinct(agent)
   }
   
   # Add the `col_schema_match()` validation step
-  agent <- col_schema_match(agent, schema = col_schema(.tbl = tbl))
+  agent <- col_schema_match(agent, schema = col_schema(.tbl = tbl_material))
   
   # Get the `read_fn` text from `tbl`
   read_fn_name <- deparse(match.call()$tbl)
@@ -142,7 +147,7 @@ draft_validation <- function(tbl,
   if (file_name == ".") {
     file_name <- NULL
   }
-
+  
   # Create the filename for the pointblank file
   file_name <- 
     resolve_file_filename(
@@ -184,8 +189,10 @@ draft_validation <- function(tbl,
     )
   }
   
-  # Set a temporary `read_fn`
-  agent <- set_read_fn(x = agent, read_fn = "")
+  # Set a temporary `read_fn` value if one doesn't exist in the agent
+  if (is.null(agent$read_fn)) {
+    agent$read_fn <- ""
+  }
   
   # Extract all briefs from the validation steps
   briefs <- agent$validation_set$brief
@@ -195,9 +202,9 @@ draft_validation <- function(tbl,
   
   agent_exprs <-
     gsub(
-      "read_fn = ,\n",
+      "tbl = ,\n",
       paste0(
-        "read_fn = ~ ",
+        "tbl = ~ ",
         ifelse(
           is.null(read_fn_name),
           "CODE_TO_ACCESS_TABLE, # <- Add R code that obtains the data table",
@@ -318,7 +325,7 @@ draft_validation <- function(tbl,
 }
 
 add_valdn_steps_with_role <- function(agent, column, column_role) {
-
+  
   if (grepl("string", column_role)) {
     
     if (inherits(agent$tbl, "data.frame") && 

@@ -65,7 +65,7 @@ example of how the use of \code{email_blast()} inside the \code{end_fns} argumen
 \code{\link[=create_agent]{create_agent()}} is expressed in R code and in the corresponding YAML
 representation.\preformatted{# R statement
 create_agent(
-  read_fn = ~ small_table,
+  tbl = ~ small_table,
   tbl_name = "small_table",
   label = "An example.",
   actions = al,
@@ -86,7 +86,7 @@ create_agent(
 
 # YAML representation
 type: agent
-read_fn: ~small_table
+tbl: ~small_table
 tbl_name: small_table
 label: An example.
 lang: en
@@ -139,7 +139,7 @@ if (interactive()) {
 # validation steps)
 agent <-
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example.",
     actions = al,
@@ -173,7 +173,7 @@ agent <-
 # `email_create()` function
 email_object <-
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example.",
     actions = al

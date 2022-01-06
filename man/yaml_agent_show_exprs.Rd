@@ -36,7 +36,7 @@ if (interactive()) {
 # of the target table
 agent <- 
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "A simple example with the `small_table`.",
     actions = action_levels(

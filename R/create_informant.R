@@ -61,7 +61,7 @@
 #' ```
 #' # R statement
 #' create_informant(
-#'   read_fn = ~ small_table,
+#'   tbl = ~ small_table,
 #'   tbl_name = "small_table",
 #'   label = "An example.",
 #'   lang = "fr", 
@@ -70,7 +70,7 @@
 #' 
 #' # YAML representation
 #' type: informant
-#' read_fn: ~small_table
+#' tbl: ~small_table
 #' tbl_name: small_table
 #' info_label: An example.
 #' lang: fr
@@ -99,9 +99,9 @@
 #'     _type: character
 #' ```
 #' 
-#' The generated YAML includes some top-level keys where `type` and `read_fn`
-#' are mandatory, and, two metadata sections: `table` and `columns`. Keys that
-#' begin with an underscore character are those that are updated whenever
+#' The generated YAML includes some top-level keys where `type` and `tbl` are
+#' mandatory, and, two metadata sections: `table` and `columns`. Keys that begin
+#' with an underscore character are those that are updated whenever
 #' [incorporate()] is called on an *informant*. The `table` metadata section can
 #' have multiple subsections with *info text*. The `columns` metadata section
 #' can similarly have have multiple subsections, so long as they are children to
@@ -116,22 +116,21 @@
 #' function. Informants are stored in the serialized RDS format and can be
 #' easily retrieved with the [x_read_disk()] function.
 #'
-#' It's recommended that table-prep formulas are supplied to the `read_fn`
-#' argument of `create_informant()`. In this way, when an *informant* is read
-#' from disk through [x_read_disk()], it can be reused to access the target
-#' table (which may changed, hence the need to use an expression for this).
+#' It's recommended that table-prep formulas are supplied to the `tbl` argument
+#' of `create_informant()`. In this way, when an *informant* is read from disk
+#' through [x_read_disk()], it can be reused to access the target table (which
+#' may changed, hence the need to use an expression for this).
 #'
 #' @param tbl The input table. This can be a data frame, a tibble, a `tbl_dbi`
-#'   object, or a `tbl_spark` object. Alternatively, a function can be used to
-#'   read in the input data table with the `read_fn` argument (in which case,
-#'   `tbl` can be `NULL`).
-#' @param read_fn A function that's used for reading in the data. Even if a
-#'   `tbl` is provided, this function will be invoked to obtain the data (i.e.,
-#'   the `read_fn` takes priority). There are two ways to specify a `read_fn`:
-#'   (1) using a function (e.g., `function() { <table reading code> }`) or, (2)
-#'   with an R formula expression.
-#' @param agent A pointblank *agent* object. This object can be used instead of
-#'   supplying a table in `tbl` or a table-prep formula in `read_fn`.
+#'   object, or a `tbl_spark` object. Alternatively, an expression can be
+#'   supplied to serve as instructions on how to retrieve the target table at
+#'   incorporation-time. There are two ways to specify an association to a
+#'   target table: (1) as a table-prep formula, which is a right-hand side (RHS)
+#'   formula expression (e.g., `~ { <table reading code>}`), or (2) as a
+#'   function (e.g., `function() { <table reading code>}`).
+#' @param agent A pointblank *agent* object. The table from this object can be
+#'   extracted and used in the new informant instead of supplying a table in
+#'   `tbl`.
 #' @param tbl_name A optional name to assign to the input table object. If no
 #'   value is provided, a name will be generated based on whatever information
 #'   is available.
@@ -150,6 +149,8 @@
 #'   for English (United States) and `"fr_FR"` for French (France); more simply,
 #'   this can be a language identifier without a country designation, like "es"
 #'   for Spanish (Spain, same as `"es_ES"`).
+#' @param read_fn The `read_fn` argument is deprecated. Instead, supply a
+#'   table-prep formula or function to `tbl`.
 #'   
 #' @return A `ptblank_informant` object.
 #' 
@@ -166,7 +167,7 @@
 #' # and the `small_table` dataset
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   )
@@ -192,14 +193,57 @@
 #' 
 #' @export
 create_informant <- function(tbl = NULL,
-                             read_fn = NULL,
-                             agent = NULL,
                              tbl_name = NULL,
                              label = NULL,
+                             agent = NULL,
                              lang = NULL,
-                             locale = NULL) {
-
-  read_fn_given <- !is.null(read_fn)
+                             locale = NULL,
+                             read_fn = NULL) {
+  
+  # If nothing is provided for either `tbl`, `read_fn`, or `agent`,
+  # this function needs to be stopped
+  if (is.null(tbl) && is.null(agent) && is.null(read_fn)) {
+    
+    stop(
+      "A table object, table-prep formula, or agent must be supplied:\n",
+      " * Use a table object or a table-prep formula in the `tbl` argument.\n",
+      " * Or, provide an `agent` with an association to a table.",
+      call. = FALSE
+    )
+  }
+  
+  # Stop function if both a table and an agent are provided 
+  if ((!is.null(tbl) | !is.null(read_fn)) && !is.null(agent)) {
+    
+    stop(
+      "A `tbl` and a `agent` cannot both be provided.",
+      call. = FALSE
+    )
+  }
+  
+  # Try to infer the table name if one isn't
+  # explicitly given in `tbl_name`
+  if (!is.null(tbl) && is.null(tbl_name)) {
+    tbl_name <- deparse(match.call()$tbl)
+    if (tbl_name[1] == ".") {
+      tbl_name <- NA_character_
+    }
+  } 
+  if (is.null(tbl_name)) {
+    tbl_name <- NA_character_
+  }
+  
+  # The `read_fn` argument is undergoing soft deprecation so if it is
+  # not missing, issue a warning and migrate the supplied value over to
+  # the `tbl` argument
+  if (is.null(agent)) {
+    
+    tbl <- 
+      check_table_input(
+        tbl = tbl,
+        read_fn = read_fn
+      )
+  }
   
   # Generate a label if none provided
   label <- generate_label(label = label)
@@ -210,110 +254,40 @@ create_informant <- function(tbl = NULL,
   # Set the `locale` to the `lang` value if `locale` isn't set
   if (is.null(locale)) locale <- lang
   
-  # If nothing is provided for either `tbl`, `read_fn`, or `agent`,
-  # this function needs to be stopped
-  if (is.null(tbl) && is.null(read_fn) && is.null(agent)) {
+  if (!is.null(agent)) {
     
-    stop(
-      "A table object, table-prep formula, or agent must be supplied:\n",
-      " * Use a table object in the `tbl` argument.\n",
-      " * Or supply a table-prep formula in `read_fn`.\n",
-      " * Or even an agent with some association to a table.",
-      call. = FALSE
-    )
-  }
-  
-  # Stop function if both a table and an agent are provided 
-  if (!is.null(tbl) && !is.null(agent)) {
-    
-    stop("A `tbl` and a `agent` cannot both be provided.", call. = FALSE)
-  }
-  
-  # Try to infer the table name if one isn't
-  # explicitly given in `tbl_name`
-  if (!is.null(tbl) && is.null(tbl_name)) {
-    tbl_name <- deparse(match.call()$tbl)
-    if (tbl_name == ".") {
-      tbl_name <- NA_character_
-    }
-  } 
-  if (is.null(tbl_name)) {
-    tbl_name <- NA_character_
-  }
-  
-  # Prefer reading a table from a `read_fn` if it's available
-  # TODO: Verify that the table is a table object
-  # and provide an error if it isn't
-  if (!is.null(read_fn)) {
-    
-    if (inherits(read_fn, "function")) {
-      
-      tbl <- rlang::exec(read_fn)
-    
-    } else if (rlang::is_formula(read_fn)) {
-
-      tbl <- 
-        read_fn %>% 
-        rlang::f_rhs() %>% 
-        rlang::eval_tidy(env = caller_env(n = 1))
-      
-      if (inherits(tbl, "read_fn")) {
-        
-        if (inherits(tbl, "with_tbl_name") && is.na(tbl_name)) {
-          tbl_name <- tbl %>% rlang::f_lhs() %>% as.character()
-        }
-        
-        tbl <-
-          tbl %>%
-          rlang::f_rhs() %>%
-          rlang::eval_tidy(env = caller_env(n = 1))
-      }
-      
-    } else {
-      stop(
-        "The `read_fn` object must be a function or an R formula.\n",
-        "* A function can be made with `function()` {<table reading code>}.\n",
-        "* An R formula can also be used, with the expression on the RHS.",
-        call. = FALSE
-      )
-    }
-  }
-  
-  if (!is.null(tbl) || !is.null(read_fn)) {
-    
-    x <- 
-      create_agent(
-        tbl = tbl,
-        read_fn = read_fn,
-        tbl_name = tbl_name
+    tbl_list <- 
+      list(
+        tbl = agent$tbl,
+        read_fn = agent$read_fn,
+        tbl_name = agent$tbl_name
       )
     
   } else {
-    x <- agent
-    if (is.null(read_fn)) read_fn <- agent$read_fn
+    
+    tbl_list <- process_table_input(tbl = tbl, tbl_name = tbl_name)
   }
   
-  table.name <- x$tbl_name
-  table.type <- x$tbl_src
-  
-  column_names <- x$col_names
-  column_types_r <- x$col_types
-  column_types_sql <- x$db_col_types
-
-  .tbl <- x$tbl
-  
-  table.columns <- length(column_names)
-  
-  if (inherits(.tbl, "ArrowObject")) {
-    table.rows <- nrow(.tbl)
+  # Materialize the table and get the number of rows and columns
+  if (!is.null(tbl_list$read_fn)) {
+    tbl <- materialize_table(tbl_list$read_fn)
   } else {
-    table.rows <- 
-      dplyr::count(.tbl, name = "n") %>%
-      dplyr::pull(n) %>%
-      as.numeric()
+    tbl <- tbl_list$tbl
+  }
+
+  tbl_info <- get_tbl_information(tbl = tbl)
+  table.type <- tbl_info$tbl_src
+  table.columns <- get_table_total_columns(data = tbl)
+  
+  if (inherits(tbl, "ArrowObject")) {
+    table.rows <- nrow(tbl)
+  } else {
+    table.rows <- get_table_total_rows(data = tbl)
   }
   
-  column_list <- list(columns = lapply(col_schema(.tbl = .tbl), as.list))
+  column_list <- list(columns = lapply(col_schema(.tbl = tbl), as.list))
+  column_names <- get_table_column_names(data = tbl)
+  column_types_sql <- tbl_info$db_col_types
   
   for (i in seq_along(column_names)) {
     
@@ -340,7 +314,7 @@ create_informant <- function(tbl = NULL,
     c(
       list(
         table = list(
-          name = table.name,
+          name = tbl_list$tbl_name,
           `_columns` = table.columns,
           `_rows` = table.rows,
           `_type` = table.type
@@ -352,9 +326,9 @@ create_informant <- function(tbl = NULL,
   # Create the metadata list object
   metadata <-
     list(
-      tbl = if (!read_fn_given) tbl,
-      read_fn = read_fn,
-      tbl_name = table.name,
+      tbl = tbl_list$tbl,
+      read_fn = tbl_list$read_fn,
+      tbl_name = tbl_list$tbl_name,
       info_label = label,
       meta_snippets = list(),
       lang = lang,

@@ -1504,7 +1504,7 @@ test_that("Interrogating with an agent incorporates the `na_pass` option", {
     all_passed() %>%
     expect_true()
   
-  create_agent(read_fn = ~ specifications[1:6, ]) %>%
+  create_agent(tbl = ~ specifications[1:6, ]) %>%
     col_vals_within_spec(columns = vars(isbn_numbers), spec = "isbn13", na_pass = TRUE) %>%
     col_vals_within_spec(columns = vars(vin_numbers), spec = "VIN", na_pass = TRUE) %>%
     col_vals_within_spec(columns = vars(zip_codes), spec = "zip", na_pass = TRUE) %>%

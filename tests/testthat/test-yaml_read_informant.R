@@ -4,7 +4,7 @@ test_that("Reading an informant from YAML is possible", {
   # add information with some other `info_*()` functions
   informant <- 
     create_informant(
-      read_fn = ~ readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc"),
+      tbl = ~ readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc"),
       tbl_name = "test_table",
       label = "An example."
     ) %>%
@@ -36,7 +36,7 @@ test_that("Reading an informant from YAML is possible", {
       row_count = "There are {row_count} rows available."
     )
   
-  yaml_write(informant)
+  yaml_write(informant, filename = "informant-test_table.yml")
   
   informant_from_yaml <- yaml_read_informant(filename = "informant-test_table.yml")
   

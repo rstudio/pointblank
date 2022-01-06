@@ -178,7 +178,7 @@ yaml_exec <- function(path = NULL,
     
     y <- yaml::read_yaml(file_path)
     
-    if (all(c("read_fn", "tbl_name", "locale", "steps") %in% names(y))) {
+    if (all(c("tbl", "tbl_name", "locale", "steps") %in% names(y))) {
       agent_file_paths <- c(agent_file_paths, file_path)
     }
   }

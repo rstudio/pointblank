@@ -49,7 +49,7 @@
 #' # the info text
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~ test_table,
+#'     tbl = ~ test_table,
 #'     tbl_name = "test_table"
 #'   ) %>%
 #'   info_snippet(
@@ -117,7 +117,7 @@ incorporate <- function(informant) {
   info_gather_start_time <- Sys.time()
   
   # Get the target table for this informant object
-  # TODO: Use the same scheme that the `agent` does
+  # TODO: extend the materialize table function to use an agent or informant
   tbl <- informant$tbl
   tbl_name <- informant$tbl_name
   read_fn <- informant$read_fn
@@ -125,8 +125,6 @@ incorporate <- function(informant) {
   # Extract the informant's `lang` and `locale` values
   lang <- informant$lang
   locale <- informant$locale
-  
-  # TODO: Verify that either `tbl` or `read_fn` is available
   
   # Prefer reading a table from a `read_fn` if it's available
   # TODO: Verify that the table is a table object
@@ -158,6 +156,7 @@ incorporate <- function(informant) {
       
     } else {
       
+      # TODO: Improve the `stop()` message here
       stop(
         "The `read_fn` object must be a function or an R formula.\n",
         "* A function can be made with `function()` {<table reading code>}.\n",
@@ -172,7 +171,7 @@ incorporate <- function(informant) {
   #  - _rows
   #  - _type
   
-  x <- create_agent(tbl = tbl, read_fn = read_fn)
+  x <- create_agent(tbl = tbl)
   
   table.type <- x$tbl_src
   column_names <- x$col_names

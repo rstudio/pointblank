@@ -546,7 +546,7 @@ prep_column_computed_text <- function(agent,
                                       column,
                                       lang) {
   
-  if (is.null(column)) return("")
+  if (is.null(column) || is.null(agent$col_names)) return("")
   
   column_is_computed <- ifelse(column %in% agent$col_names, FALSE, TRUE)
   

@@ -31,9 +31,9 @@
 #' procuring several mutated variations of the same source table, generating a
 #' table from multiple sources, or pre-filtering a database table according to
 #' the system time). Another nice aspect of organizing table-prep formulas in a
-#' single object is supplying it to the `read_fn` argument of [create_agent()]
-#' or [create_informant()] via `$` notation (e.g, `create_agent(read_fn =
-#' <tbl_store>$<name>)`) or with [tbl_source()] (e.g., `create_agent(read_fn = ~
+#' single object is supplying it to the `tbl` argument of [create_agent()] or
+#' [create_informant()] via `$` notation (e.g, `create_agent(tbl =
+#' <tbl_store>$<name>)`) or with [tbl_source()] (e.g., `create_agent(tbl = ~
 #' tbl_source("<name>", <tbl_store>))`).
 #' 
 #' @section YAML:
@@ -71,7 +71,7 @@
 #' ```
 #' # Generate agent that checks `sml_table_high`, write it to YAML
 #' create_agent(
-#'   read_fn = ~ tbl_source("sml_table_high", "tbl_store.yml"),
+#'   tbl = ~ tbl_source("sml_table_high", "tbl_store.yml"),
 #'   label = "An example that uses a table store.",
 #'   actions = action_levels(warn_at = 0.10)
 #' ) %>% 
@@ -79,7 +79,7 @@
 #'   write_yaml()
 #'   
 #' # YAML representation ("agent-sml_table_high.yml")
-#' read_fn: ~ tbl_source("sml_table_high", "tbl_store.yml")
+#' tbl: ~ tbl_source("sml_table_high", "tbl_store.yml")
 #' tbl_name: sml_table_high
 #' label: An example that uses a table store.
 #' actions:
@@ -157,10 +157,10 @@
 #' # in a `tbl_store` object; use `$` 
 #' # notation to pass the appropriate
 #' # procedure for reading a table to the
-#' # `read_fn` argument
+#' # `tbl` argument
 #' agent_1 <-
 #'   create_agent(
-#'     read_fn = tbls$small_table_duck
+#'     tbl = tbls$small_table_duck
 #'   )
 #'   
 #' # There are other ways to use the
@@ -169,7 +169,7 @@
 #' # `tbl_source()` function
 #' agent_2 <-
 #'   create_agent(
-#'     read_fn = ~ tbl_source(
+#'     tbl = ~ tbl_source(
 #'       tbl = "small_table_duck",
 #'       store = tbls
 #'       )
@@ -190,7 +190,7 @@
 #' # file
 #' agent_3 <-
 #'   create_agent(
-#'     read_fn = ~ tbl_source(
+#'     tbl = ~ tbl_source(
 #'       tbl = "small_table_duck",
 #'       store = "tbl_store.yml"
 #'     )
@@ -309,8 +309,8 @@ add_to_name_list <- function(name_list,
 #' The `tbl_source()` function provides a convenient means to access a
 #' table-prep formula from either a `tbl_store` object or a table store YAML
 #' file (which can be created with the [yaml_write()] function). A call to
-#' `tbl_source()` is most useful as an input to the `read_fn` argument of
-#' [create_agent()], [create_informant()], or [set_read_fn()].
+#' `tbl_source()` is most useful as an input to the `tbl` argument of
+#' [create_agent()], [create_informant()], or [set_tbl()].
 #'
 #' Should you need to obtain the table itself (that is generated via the
 #' table-prep formula), then the [tbl_get()] function should be used for that.
@@ -346,7 +346,7 @@ add_to_name_list <- function(name_list,
 #' # the table shortly thereafter
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~ tbl_source("sml_table", tbls),
+#'     tbl = ~ tbl_source("sml_table", tbls),
 #'     label = "An example that uses a table store.",
 #'     actions = action_levels(warn_at = 0.10)
 #'   ) %>% 
@@ -362,11 +362,13 @@ add_to_name_list <- function(name_list,
 #' # could be used)
 #' yaml_write(tbls)
 #' 
-#' # Let's modify the agent's `read_fn` to point
-#' # to the YAML representation of the `tbl_store`
+#' # Let's modify the agent's target
+#' # to point to the table labeled as
+#' # `"sml_table"` in the YAML
+#' # representation of the `tbl_store`
 #' agent <-
 #'   agent %>% 
-#'   set_read_fn(
+#'   set_tbl(
 #'     ~ tbl_source(
 #'         tbl = "sml_table",
 #'         store = "tbl_store.yml"
@@ -422,8 +424,8 @@ tbl_source <- function(tbl,
 #' `tbl_store` object).
 #'
 #' Should you want a table-prep formula from a table store to use as a value for
-#' `read_fn` (in [create_agent()], [create_informant()], or [set_read_fn()]),
-#' then have a look at the [tbl_source()] function.
+#' `tbl` (in [create_agent()], [create_informant()], or [set_tbl()]), then have
+#' a look at the [tbl_source()] function.
 #'
 #' @param tbl The table to retrieve from a table `store`. This table could be
 #'   identified by its name (e.g., `tbl = "large_table"`) or by supplying a

@@ -6,7 +6,7 @@ test_that("Getting a multiagent report is possible", {
   
   agent_1 <-
     create_agent(
-      read_fn = ~ small_table,
+      tbl = ~ small_table,
       label = "An example.",
       actions = al
     ) %>%
@@ -23,7 +23,7 @@ test_that("Getting a multiagent report is possible", {
   
   agent_2 <- 
     create_agent(
-      read_fn = ~ small_table,
+      tbl = ~ small_table,
       label = "An example.",
       actions = al
     ) %>%
@@ -37,7 +37,7 @@ test_that("Getting a multiagent report is possible", {
   
   agent_3 <- 
     create_agent(
-      read_fn = ~ small_table,
+      tbl = ~ small_table,
       label = "An example.",
       actions = al
     ) %>%
@@ -67,7 +67,7 @@ test_that("Getting a multiagent report is possible", {
   
   agent_5 <-
     create_agent(
-      read_fn = ~ small_table,
+      tbl = ~ small_table,
       label = "An example.",
       actions = al
     ) %>%

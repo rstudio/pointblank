@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.R
 \name{print.read_fn}
 \alias{print.read_fn}
-\title{Print the \code{read_fn} object}
+\title{Print the a table-prep formula}
 \usage{
 \method{print}{read_fn}(x, ...)
 }
@@ -12,6 +12,6 @@
 \item{...}{Any additional parameters.}
 }
 \description{
-This function will allow the \code{read_fn} to be nicely printed.
+This function will allow a table-prep formula to be nicely printed.
 }
 \keyword{internal}

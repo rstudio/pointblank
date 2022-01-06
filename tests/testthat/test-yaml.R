@@ -22,7 +22,7 @@ test_that("YAML writing and reading works as expected", {
   al <- action_levels(warn_at = 0.1, stop_at = 0.2)
 
   agent <-
-    create_agent(read_fn = ~ small_table, actions = al) %>%
+    create_agent(tbl = ~ small_table, actions = al) %>%
     col_vals_in_set(vars(f), set = c("low", "mid", "high")) %>%
     col_vals_between("a", 2, 8) %>%
     col_vals_lt(vars(a), vars(d), na_pass = TRUE, preconditions = ~. %>% dplyr::filter(a > 3)) %>%
@@ -65,7 +65,7 @@ test_that("YAML writing and reading works as expected", {
   expect_null(suppressMessages(yaml_agent_string(agent = agent)))
   expect_match(
     as.character(testthat::capture_messages(yaml_agent_string(agent = agent))),
-    "read_fn: .*?tbl_name: .*?label: .*?actions:.*?warn_fraction: 0.1.*?stop_fraction: 0.2.*?steps:.*"
+    "tbl: ~small_table.*?tbl_name: .*?label: .*?actions:.*?warn_fraction: 0.1.*?stop_fraction: 0.2.*?steps:.*"
   )
 
   # Write the agent to a pointblank YAML file in the temp directory
@@ -79,7 +79,7 @@ test_that("YAML writing and reading works as expected", {
   expect_null(suppressMessages(yaml_agent_string(filename = file.path(work_path, "test.yaml"))))
   expect_match(
     as.character(testthat::capture_messages(yaml_agent_string(filename = file.path(work_path, "test.yaml")))),
-    "read_fn: .*?tbl_name: .*?label: .*?actions:.*?warn_fraction: 0.1.*?stop_fraction: 0.2.*?steps:.*"
+    "tbl: ~small_table.*?tbl_name: .*?label: .*?actions:.*?warn_fraction: 0.1.*?stop_fraction: 0.2.*?steps:.*"
   )
 
   # Generate an agent with a plan defined by the YAML file
@@ -90,9 +90,9 @@ test_that("YAML writing and reading works as expected", {
   expect_s3_class(agent_plan, "ptblank_agent")
   expect_false(inherits(agent_plan, "has_intel"))
 
-  # Expect the `tbl` data to be in the agent object (obtained
-  # by way of the `read_fn`)
-  expect_s3_class(agent_plan$tbl, "tbl_df")
+  # Expect the `tbl` data to be NULL since the table only materializes
+  # during an interrogation
+  expect_null(agent_plan$tbl)
   expect_true(inherits(agent_plan$read_fn, "formula"))
 
   # Expect there to be 16 validation steps available in the validation set
@@ -216,7 +216,7 @@ if (fs::dir_exists(path = work_path)) {
 
 test_that("Individual validation steps make the YAML round-trip successfully", {
   
-  agent <- create_agent(read_fn = ~ small_table, label = "testthat")
+  agent <- create_agent(tbl = ~ small_table, label = "testthat")
 
   #
   # col_vals_lt()
@@ -700,7 +700,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
   # col_vals_within_spec()
   #
   
-  agent_spec <- create_agent(read_fn = ~ specifications, label = "testthat")
+  agent_spec <- create_agent(tbl = ~ specifications, label = "testthat")
 
   expect_equal(
     get_oneline_expr_str(agent_spec %>% col_vals_within_spec(columns = vars(isbn_numbers), spec = "isbn13")),
@@ -722,7 +722,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
       c = c(0.5, 0.3, 0.8, 1.4, 1.9, 1.2),
     )
   
-  agent_expr <- create_agent(read_fn = ~ tbl_1, label = "testthat")
+  agent_expr <- create_agent(tbl = ~ tbl_1, label = "testthat")
   
   expect_equal(
     get_oneline_expr_str(agent_expr %>% col_vals_expr(expr(a %% 1 == 0))),
@@ -758,7 +758,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
       c = c(9, 8, 7)
     )
   
-  agent_conjointly <- create_agent(read_fn = ~ tbl_2, label = "testthat")
+  agent_conjointly <- create_agent(tbl = ~ tbl_2, label = "testthat")
   
   expect_equal(
     get_oneline_expr_str(
@@ -879,7 +879,7 @@ test_that("Individual validation steps make the YAML round-trip successfully", {
       b = "character"
     )
   
-  agent_col_schema <- create_agent(read_fn = ~ tbl_3, label = "testthat")
+  agent_col_schema <- create_agent(tbl = ~ tbl_3, label = "testthat")
   
   expect_equal(
     get_oneline_expr_str(agent_col_schema %>% col_schema_match(schema_obj)),

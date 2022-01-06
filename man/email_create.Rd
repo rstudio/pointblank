@@ -63,7 +63,7 @@ al <-
 # us do this with an `agent` object
 email_object_1 <-
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example.",
     actions = al
@@ -82,7 +82,7 @@ email_object_1 <-
 # get the same email message object
 email_object_2 <-
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example.",
     actions = al
@@ -100,7 +100,7 @@ email_object_2 <-
 # `email_create()`
 email_object_3 <-
   create_informant(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example."
   ) \%>\%

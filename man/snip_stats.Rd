@@ -47,7 +47,7 @@ P90, maximum
 # into the info text
 informant <- 
   create_informant(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example."
   ) \%>\% 

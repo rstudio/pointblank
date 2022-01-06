@@ -122,7 +122,7 @@
 #' # interrogate the `small_table`
 #' agent_1 <-
 #'   create_agent(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "`get_multiagent_report()`",
 #'     actions = al

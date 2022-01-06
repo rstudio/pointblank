@@ -54,10 +54,11 @@ is not of the \code{tbl_dbi} or the \code{tbl_spark} class.
 \details{
 It is recommended to set up a table-prep formula so that the \emph{agent} and
 \emph{informant} can access refreshed data after being read from disk through
-\code{\link[=x_read_disk]{x_read_disk()}}. This can be done initially with the \code{read_fn} argument of
-\code{\link[=create_agent]{create_agent()}}/\code{\link[=create_informant]{create_informant()}} or, later, with \code{\link[=set_read_fn]{set_read_fn()}}.
-Alternatively, we can reintroduce the \emph{agent} or \emph{informant} to a data table
-with the \code{\link[=set_tbl]{set_tbl()}} function.
+\code{\link[=x_read_disk]{x_read_disk()}}. This can be done initially with the \code{tbl} argument of
+\code{\link[=create_agent]{create_agent()}}/\code{\link[=create_informant]{create_informant()}} by passing in a table-prep formula or a
+function that can obtain the target table when invoked. Alternatively, we can
+use the \code{\link[=set_tbl]{set_tbl()}} with a similarly crafted \code{tbl} expression to ensure that
+an \emph{agent} or \emph{informant} can retrieve a table at a later time.
 }
 \section{Function ID}{
 
@@ -93,10 +94,10 @@ al <-
 # and give it the `al` object (which
 # serves as a default for all validation
 # steps which can be overridden); the
-# data will be referenced in a `read_fn`
+# data will be referenced in `tbl`
 agent <- 
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "`x_write_disk()`",
     actions = al
@@ -160,7 +161,7 @@ x_write_disk(
 # are integrated into the text
 informant <- 
   create_informant(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "`x_write_disk()`"
   ) \%>\%
@@ -209,7 +210,7 @@ x_write_disk(
 # validation steps, and `interrogate()`
 agent_b <-
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "`x_write_disk()`",
     actions = al
@@ -263,10 +264,7 @@ Other Object Ops:
 \code{\link{activate_steps}()},
 \code{\link{deactivate_steps}()},
 \code{\link{export_report}()},
-\code{\link{remove_read_fn}()},
 \code{\link{remove_steps}()},
-\code{\link{remove_tbl}()},
-\code{\link{set_read_fn}()},
 \code{\link{set_tbl}()},
 \code{\link{x_read_disk}()}
 }

@@ -7,7 +7,7 @@ test_that("Getting an information report is possible", {
   # `incorporate()` the snippets into the info text
   informant <- 
     create_informant(
-      read_fn = ~ readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc"),
+      tbl = ~ readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc"),
       tbl_name = "test_table",
       label = "An example."
     ) %>%
@@ -58,7 +58,7 @@ test_that("Getting a more advanced information report is possible", {
   
   informant <- 
     create_informant(
-      read_fn = ~ readr::read_csv(file = "penguins.csv", col_types = "ccddddcd"),
+      tbl = ~ readr::read_csv(file = "penguins.csv", col_types = "ccddddcd"),
       tbl_name = "penguins",
       label = "The `penguins` dataset from the **palmerpenguins** 📦."
     ) %>% 

@@ -40,9 +40,9 @@ call. Compatible file types for this function are: CSV (\code{.csv}), TSV
 (\code{.tsv}), RDA (\code{.rda}), and RDS (\code{.rds}) files. This function generates an
 in-memory \code{tbl_dbl} object, which can be used as a target table for
 \code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}. The ideal option for data access
-with \code{file_tbl()} is using this function as the \code{read_fn} parameter in either
+with \code{file_tbl()} is using this function within the \code{tbl} parameter in either
 of the aforementioned \verb{create_*()} functions. This can be done by using a
-leading \code{~} (e.g,. \code{read_fn = ~file_tbl(...)}).
+leading \code{~} (e.g,. \code{tbl = ~ file_tbl(...)}).
 
 In the remote data use case, we can specify a URL starting with \verb{http://},
 \verb{https://}, etc., and ending with the file containing the data table. If data
@@ -89,7 +89,7 @@ agent <- create_agent(tbl = tbl)
 # directly to `create_agent()`:
 agent <- 
   create_agent(
-    read_fn = ~ file_tbl(
+    tbl = ~ file_tbl(
       file = system.file(
         "data_files", "small_table.csv",
         package = "pointblank"
@@ -100,11 +100,11 @@ agent <-
   col_vals_gt(vars(a), value = 0)
 
 # All of the file-reading instructions
-# are encapsulated in the `read_fn` so
-# the agent will always obtain the most
-# recent version of the dataset (and the
-# logic can be translated to YAML, for
-# later use)
+# are encapsulated in the `tbl`
+# expression so the agent will always
+# obtain the most recent version of
+# the table (and the logic can be
+# translated to YAML, for later use)
 
 if (interactive()) {
 
@@ -116,7 +116,7 @@ if (interactive()) {
 # repository for the pointblank package 
 agent <- 
   create_agent(
-    read_fn = ~ file_tbl(
+    tbl = ~ file_tbl(
       file = from_github(
         file = "inst/data_files/small_table.csv",
         repo = "rich-iannone/pointblank"
@@ -166,11 +166,11 @@ tbl_get("small_high_file", store = tbls)
 
 # The table-prep formulas in `tbls`
 # could also be used in functions with
-# the `read_fn` argument; this is thanks
+# the `tbl` argument; this is thanks
 # to the `tbl_source()` function
 agent <- 
   create_agent(
-    read_fn = ~ tbl_source(
+    tbl = ~ tbl_source(
       "small_table_file",
       store = tbls
     )
@@ -178,7 +178,7 @@ agent <-
 
 informant <- 
   create_informant(
-    read_fn = ~ tbl_source(
+    tbl = ~ tbl_source(
       "small_high_file",
       store = tbls
     )

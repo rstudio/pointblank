@@ -55,7 +55,7 @@ extracts.
 # `interrogate()` immediately
 agent <-
   create_agent(
-    read_fn = ~ small_table \%>\%
+    tbl = ~ small_table \%>\%
       dplyr::select(a:f),
     label = "`get_data_extracts()`"
   ) \%>\%

@@ -1,5 +1,5 @@
 type: informant
-read_fn: ~ tbl_source("small_table", "tbl_store.yml")
+tbl: ~ tbl_source("small_table", "tbl_store.yml")
 tbl_name: small_table
 info_label: A simple example with the `small_table`.
 lang: en

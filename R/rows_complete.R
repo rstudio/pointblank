@@ -202,21 +202,14 @@ rows_complete <- function(x,
     rlang::as_label(rlang::quo(!!enquo(columns))) %>%
     gsub("^\"|\"$", "", .)
   
-  # Normalize the `columns` expression
-  if (inherits(columns, "quosures")) {
-    
-    columns <- 
-      vapply(
-        columns,
-        FUN.VALUE = character(1),
-        USE.NAMES = FALSE,
-        FUN = function(x) as.character(rlang::get_expr(x))
-      )
-  }
+  # Capture the `columns` expression
+  columns <- rlang::enquo(columns)
   
   # Resolve the columns based on the expression
-  if (!is.null(columns)) {
+  if (!is.null(rlang::eval_tidy(columns)) && !is.null(columns)) {
     columns <- resolve_columns(x = x, var_expr = columns, preconditions)
+  } else {
+    columns <- NULL
   }
   
   # Resolve segments into list

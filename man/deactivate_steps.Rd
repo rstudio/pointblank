@@ -26,7 +26,7 @@ whether the step should be active or not.
 }
 \section{Function ID}{
 
-9-7
+9-6
 }
 
 \examples{
@@ -37,7 +37,7 @@ whether the step should be active or not.
 # `interrogate()`
 agent_1 <- 
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example."
   ) \%>\%
@@ -66,10 +66,7 @@ For the opposite behavior, use the \code{\link[=activate_steps]{activate_steps()
 Other Object Ops: 
 \code{\link{activate_steps}()},
 \code{\link{export_report}()},
-\code{\link{remove_read_fn}()},
 \code{\link{remove_steps}()},
-\code{\link{remove_tbl}()},
-\code{\link{set_read_fn}()},
 \code{\link{set_tbl}()},
 \code{\link{x_read_disk}()},
 \code{\link{x_write_disk}()}

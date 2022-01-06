@@ -2,17 +2,21 @@ library(pointblank)
 library(intendo)
 library(here)
 
+intendo_revenue <- intendo::all_revenue()
+
 # Create an `action_levels` object, setting
 # *warn* and *stop* thresholds at 0.01 and 0.10
 al <- action_levels(warn_at = 0.01, stop_at = 0.10)
 
 agent_revenue_tibble <-
   create_agent(
-    read_fn = ~ intendo::intendo_revenue,
+    tbl = intendo_revenue,
     tbl_name = "intendo::intendo_revenue",
     label = "The **intendo** revenue table.", 
     actions = al
   ) %>%
+  col_vals_gte(columns = vars(time), value = vars(start_day)) %>%
+  # FIXME: adapt all tests to the new schema
   col_vals_lt(
     vars(revenue), value = vars(price),
     preconditions = ~ . %>% dplyr::filter(type != "ad"),

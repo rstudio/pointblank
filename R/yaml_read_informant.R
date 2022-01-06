@@ -209,11 +209,11 @@ yaml_read_informant <- function(filename,
 #' 
 #' # Now create a pointblank `informant`
 #' # object; the data will be referenced
-#' # in a `read_fn` (a requirement for
+#' # with `tbl` (a requirement for
 #' # writing to YAML)
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~small_table,
+#'     tbl = ~ small_table,
 #'     label = "A simple example with the `small_table`."
 #'   )
 #' 
@@ -261,9 +261,9 @@ yaml_read_informant <- function(filename,
 #'   )
 #' 
 #' # We can incorporate the data (which
-#' # is accessible through the `read_fn`)
-#' # into the info text through direct
-#' # use of the YAML file with
+#' # is accessible through the table-prep
+#' # formula) into the info text through
+#' # direct use of the YAML file with
 #' # `yaml_informant_incorporate()`
 #' informant <- 
 #'   yaml_informant_incorporate(filename = yml_file)
@@ -289,7 +289,7 @@ yaml_read_informant <- function(filename,
 #' @export
 yaml_informant_incorporate <- function(filename,
                                        path = NULL) {
-
+  
   if (!is.null(path)) {
     filename <- file.path(path, filename)
   }
@@ -319,11 +319,16 @@ expr_from_informant_yaml <- function(path,
   check_info_yaml_columns(y)
   check_info_yaml_others(y)
   
+  # Backcompatibility with YAML files that have the deprecated `read_fn` key
   if ("read_fn" %in% names(y)) {
-    read_fn <- paste0("  read_fn = ", y$read_fn)
-  } else {
-    read_fn <- NULL
+    
+    read_fn_idx <- which(names(y) == "read_fn")
+    names(y)[read_fn_idx] <- "tbl"
   }
+  
+  # Get the `tbl`, `table_name`, `info_label`, `lang`, and `locale`
+  # values from the YAML file and create argument strings
+  tbl <- paste0("  tbl = ", y$tbl)
   
   if (!is.null(y$table$name)) {
     tbl_name <- paste0("  tbl_name = \"", y$table$name, "\"")
@@ -356,13 +361,7 @@ expr_from_informant_yaml <- function(path,
   expr_str <-
     paste0(
       "create_informant(\n",
-      paste(
-        c(
-          read_fn, tbl_name, label, 
-          lang, locale
-        ),
-        collapse = ",\n"
-      ),
+      paste(c(tbl, tbl_name, label, lang, locale), collapse = ",\n"),
       "\n) ",
       info_snippets
     )
@@ -373,6 +372,7 @@ expr_from_informant_yaml <- function(path,
     expr_str <- paste0(expr_str, "%>%\nincorporate()")
   }
   
+  y$tbl <- NULL
   y$read_fn <- NULL
   y$lang <- NULL
   y$locale <- NULL

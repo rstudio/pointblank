@@ -59,11 +59,11 @@ al <-
 # and give it the `al` object (which
 # serves as a default for all validation
 # steps which can be overridden); the
-# data will be referenced in a `read_fn`
+# data will be referenced in `tbl`
 # (a requirement for writing to YAML)
 agent <- 
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "A simple example with the `small_table`.",
     actions = al
@@ -108,7 +108,7 @@ yaml_agent_string(filename = yml_file)
 yaml_agent_string(agent = agent)
 
 # We can interrogate the data (which
-# is accessible through the `read_fn`)
+# is accessible through `tbl`)
 # through direct use of the YAML file
 # with `yaml_agent_interrogate()`
 agent <- 

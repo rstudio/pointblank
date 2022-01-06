@@ -80,7 +80,7 @@
 #' ```
 #' # R statement
 #' create_agent(
-#'   read_fn = ~ small_table,
+#'   tbl = ~ small_table,
 #'   tbl_name = "small_table",
 #'   label = "An example.",
 #'   actions = action_levels(
@@ -99,7 +99,7 @@
 #' 
 #' # YAML representation
 #' type: agent
-#' read_fn: ~small_table
+#' tbl: ~small_table
 #' tbl_name: small_table
 #' label: An example.
 #' lang: fr
@@ -118,8 +118,7 @@
 #' values won't be written to YAML when using [yaml_write()] (though it is
 #' acceptable to include them with their default when generating the YAML by
 #' other means). The only requirement for writing the YAML representation of an
-#' *agent* is having `read_fn` specified (any table supplied to `tbl` is
-#' ignored).
+#' *agent* is having `tbl` specified as table-prep formula.
 #' 
 #' What typically follows this chunk of YAML is a `steps` part, and that
 #' corresponds to the addition of validation steps via validation functions.
@@ -138,7 +137,7 @@
 #' of data quality over time. Agents are stored in the serialized RDS format and
 #' can be easily retrieved with the [x_read_disk()] function.
 #'
-#' It's recommended that table-prep formulas are supplied to the `read_fn`
+#' It's recommended that table-prep formulas are supplied to the `tbl`
 #' argument of `create_agent()`. In this way, when an *agent* is read from disk
 #' through [x_read_disk()], it can be reused to access the target table (which
 #' may change, hence the need to use an expression for this).
@@ -154,15 +153,12 @@
 #' a given target table.
 #'
 #' @param tbl The input table. This can be a data frame, a tibble, a `tbl_dbi`
-#'   object, or a `tbl_spark` object. Alternatively, a function can be used to
-#'   read in the input data table with the `read_fn` argument (in which case,
-#'   `tbl` can be `NULL`).
-#' @param read_fn A table-prep formula that's used to access the target table.
-#'   Even if a `tbl` is provided, this formula will be invoked to obtain the
-#'   data (i.e., the `read_fn` takes priority). There are two ways to specify a
-#'   `read_fn`: (1) with a right-hand side (RHS) formula expression (e.g.,
-#'   `~ { <table reading code>}`) or (2) as a function (e.g., 
-#'   `function() { <table reading code>}`).
+#'   object, or a `tbl_spark` object. Alternatively, an expression can be
+#'   supplied to serve as instructions on how to retrieve the target table at
+#'   interrogation-time. There are two ways to specify an association to a
+#'   target table: (1) as a table-prep formula, which is a right-hand side (RHS)
+#'   formula expression (e.g., `~ { <table reading code>}`), or (2) as a
+#'   function (e.g., `function() { <table reading code>}`).
 #' @param tbl_name A optional name to assign to the input table object. If no
 #'   value is provided, a name will be generated based on whatever information
 #'   is available. This table name will be displayed in the header area of the
@@ -200,6 +196,8 @@
 #'   `"en_US"` for English (United States) and `"fr_FR"` for French (France);
 #'   more simply, this can be a language identifier without a country
 #'   designation, like "es" for Spanish (Spain, same as `"es_ES"`).
+#' @param read_fn The `read_fn` argument is deprecated. Instead, supply a
+#'   table-prep formula or function to `tbl`.
 #'   
 #' @return A `ptblank_agent` object.
 #'   
@@ -231,7 +229,7 @@
 #' # make the reporting a bit more useful
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example.",
 #'     actions = al
@@ -313,15 +311,36 @@
 #'   
 #' @export
 create_agent <- function(tbl = NULL,
-                         read_fn = NULL,
                          tbl_name = NULL,
                          label = NULL,
                          actions = NULL,
                          end_fns = NULL,
                          embed_report = FALSE,
                          lang = NULL,
-                         locale = NULL) {
-
+                         locale = NULL,
+                         read_fn = NULL) {
+  
+  # Try to infer the table name if one isn't
+  # explicitly given in `tbl_name`
+  if (!is.null(tbl) && is.null(tbl_name)) {
+    tbl_name <- deparse(match.call()$tbl)
+    if (tbl_name[1] == ".") {
+      tbl_name <- NA_character_
+    }
+  } 
+  if (is.null(tbl_name)) {
+    tbl_name <- NA_character_
+  }
+  
+  # The `read_fn` argument is undergoing soft deprecation so if it is
+  # not missing, issue a warning and migrate the supplied value over to
+  # the `tbl` argument
+  tbl <- 
+    check_table_input(
+      tbl = tbl,
+      read_fn = read_fn
+    )
+  
   # Generate a label if none provided
   label <- generate_label(label = label)
 
@@ -330,94 +349,38 @@ create_agent <- function(tbl = NULL,
   
   # Set the `locale` to the `lang` value if `locale` isn't set
   if (is.null(locale)) locale <- lang
-
-  # If nothing is provided for either `tbl` or `read_fn`,
-  # this function needs to be stopped
-  if (is.null(tbl) && is.null(read_fn)) {
-    
-    stop(
-      "A table object or table-prep formula must be supplied:\n",
-      " * Use a table object in the `tbl` argument.\n",
-      " * Or supply a table-prep formula in `read_fn`.\n",
-      " * You can do both, the table-prep formula will take priority though.",
-      call. = FALSE
-    )
-  }
   
-  # Try to infer the table name if one isn't
-  # explicitly given in `tbl_name`
-  if (!is.null(tbl) && is.null(tbl_name)) {
-    tbl_name <- deparse(match.call()$tbl)
-    if (tbl_name == ".") {
-      tbl_name <- NA_character_
-    }
-  } 
-  if (is.null(tbl_name)) {
-    tbl_name <- NA_character_
-  }
-  
-  # Prefer reading a table from a `read_fn` if it's available
-  # TODO: Verify that the table is a table object
-  # and provide an error if it isn't
-  if (!is.null(read_fn)) {
-    
-    if (inherits(read_fn, "function")) {
-      
-      tbl <- rlang::exec(read_fn)
-      
-    } else if (rlang::is_formula(read_fn)) {
-      
-      tbl <- 
-        read_fn %>% 
-        rlang::f_rhs() %>% 
-        rlang::eval_tidy(env = caller_env(n = 1))
-      
-      if (inherits(tbl, "read_fn")) {
-
-        if (inherits(tbl, "with_tbl_name") && is.na(tbl_name)) {
-          tbl_name <- tbl %>% rlang::f_lhs() %>% as.character()
-        }
-        
-        tbl <-
-          tbl %>%
-          rlang::f_rhs() %>%
-          rlang::eval_tidy(env = caller_env(n = 1))
-      }
-      
-    } else {
-      
-      stop(
-        "The `read_fn` object must be a function or an R formula.\n",
-        "* A function can be made with `function()` {<table reading code>}.\n",
-        "* An R formula can also be used, with the expression on the RHS.",
-        call. = FALSE
-      )
-    }
-  }
-  
-  # Get some basic information on the table, which will be
-  # returned as a list
-  tbl_information <- get_tbl_information(tbl = tbl)
-
   # If any `end_fns` are specified we always attempt to
   # embed the validation report
   if (!is.null(end_fns)) {
     embed_report <- TRUE
   }
 
+  tbl_list <- process_table_input(tbl = tbl, tbl_name = tbl_name)
+  
+  # Create a variable that states whether the target table is
+  # directly supplied (i.e., safe to be queried now)
+  is_direct_tbl <- !is.null(tbl_list$tbl)
+  
+  # If the table is supplied as an in-memory table, get some basic information
+  # on the table, which will be returned as a list
+  if (is_direct_tbl) {
+    tbl_info <- get_tbl_information(tbl = tbl)
+  }
+  
   # Create the agent list object
   agent <-
     list(
-      tbl = tbl,
-      read_fn = read_fn,
-      tbl_name = tbl_name,
+      tbl = tbl_list$tbl,
+      read_fn = tbl_list$read_fn,
+      tbl_name = tbl_list$tbl_name,
       label = label,
-      db_tbl_name = tbl_information$db_tbl_name,
-      tbl_src = tbl_information$tbl_src,
-      tbl_src_details = tbl_information$tbl_src_details,
-      col_names = tbl_information$col_names,
-      col_types = tbl_information$r_col_types,
-      db_col_types = tbl_information$db_col_types,
+      db_tbl_name = if (is_direct_tbl) tbl_info$db_tbl_name else NULL,
+      tbl_src = if (is_direct_tbl) tbl_info$tbl_src else NULL,
+      tbl_src_details = if (is_direct_tbl) tbl_info$tbl_src_details else NULL,
+      col_names = if (is_direct_tbl) tbl_info$col_names else NULL,
+      col_types = if (is_direct_tbl) tbl_info$r_col_types else NULL,
+      db_col_types = if (is_direct_tbl) tbl_info$db_col_types else NULL,
       actions = actions,
       end_fns = list(end_fns),
       embed_report = embed_report,

@@ -229,7 +229,7 @@ write_testthat_file <- function(agent,
       call. = FALSE
     )
   }
-
+  
   # Select only the necessary columns from the agent's `validation_set` 
   agent_validation_set <- 
     agent$validation_set %>% 

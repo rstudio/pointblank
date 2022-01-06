@@ -26,12 +26,14 @@
 #' validation steps to a series of `expect_*()` calls inside individual
 #' [testthat::test_that()] statements.
 #' 
-#' A hard requirement for using `write_testthat_file()` on an agent is the
-#' presence of a `read_fn`, which is a function that is invoked to obtain the
-#' target table. The `read_fn` statement will be placed at the top of the
-#' **testthat** test file so that the target table is available for each of the
-#' [testthat::test_that()] statements that follow. If an *agent* does not have a
-#' `read_fn` it can be added via the [set_read_fn()].
+#' A major requirement for using `write_testthat_file()` on an agent is the
+#' presence of an expression that can retrieve the target table. Typically, we
+#' might supply a table-prep formula, which is a formula that can be invoked to
+#' obtain the target table. This user-supplied statement will be used by
+#' `write_testthat_file()` to generate a table-loading statement at the top of
+#' the new **testthat** test file so that the target table is available for each
+#' of the [testthat::test_that()] statements that follow. If an *agent* does not
+#' have a table-prep formula set, it can be added via the [set_tbl()] function.
 #' 
 #' Thresholds will be obtained from those applied for the `stop` state. This can
 #' be set up for a **pointblank** *agent* by passing an `action_levels` object
@@ -97,7 +99,7 @@
 #' 
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     actions = action_levels(stop_at = 0.25)
 #'   ) %>%
 #'   col_exists(vars(date_time)) %>%
@@ -158,7 +160,7 @@
 #' # more useful after interrogation
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     label = "An example.",
 #'     actions = al
 #'   ) %>%
@@ -223,6 +225,7 @@ write_testthat_file <- function(agent,
                                 quiet = FALSE) {
 
   # Enforce that the agent must have a `read_fn`
+  # TODO: Improve the content of the `stop()` message
   if (is.null(agent$read_fn)) {
     stop(
       "The agent must have a `read_fn` value when transforming into tests.",

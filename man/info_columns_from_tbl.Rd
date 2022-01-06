@@ -44,12 +44,12 @@ missing info text will be pruned from \code{tbl}.
 \examples{
 # Create a pointblank `informant`
 # object with `create_informant()`;
-# we specify a `read_fn` with the
+# we can specify a `tbl` with the
 # `~` followed by a statement that
 # gets the `game_revenue` dataset
 informant <- 
   create_informant(
-    read_fn = ~ game_revenue,
+    tbl = ~ game_revenue,
     tbl_name = "game_revenue",
     label = "An example."
   )

@@ -46,11 +46,11 @@ if (interactive()) {
 
 # Now create a pointblank `informant`
 # object; the data will be referenced
-# in a `read_fn` (a requirement for
+# with `tbl` (a requirement for
 # writing to YAML)
 informant <- 
   create_informant(
-    read_fn = ~small_table,
+    tbl = ~ small_table,
     label = "A simple example with the `small_table`."
   )
 
@@ -98,9 +98,9 @@ yml_file <-
   )
 
 # We can incorporate the data (which
-# is accessible through the `read_fn`)
-# into the info text through direct
-# use of the YAML file with
+# is accessible through the table-prep
+# formula) into the info text through
+# direct use of the YAML file with
 # `yaml_informant_incorporate()`
 informant <- 
   yaml_informant_incorporate(filename = yml_file)

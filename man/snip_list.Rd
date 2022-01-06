@@ -92,7 +92,7 @@ the of items in that list with the \code{limit} value.
 # the info text
 informant <- 
   create_informant(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example."
   ) \%>\% 

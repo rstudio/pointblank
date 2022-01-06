@@ -29,8 +29,8 @@ from a location, or, it can involve as much mutation as is necessary (imagine
 procuring several mutated variations of the same source table, generating a
 table from multiple sources, or pre-filtering a database table according to
 the system time). Another nice aspect of organizing table-prep formulas in a
-single object is supplying it to the \code{read_fn} argument of \code{\link[=create_agent]{create_agent()}}
-or \code{\link[=create_informant]{create_informant()}} via \code{$} notation (e.g, \verb{create_agent(read_fn = <tbl_store>$<name>)}) or with \code{\link[=tbl_source]{tbl_source()}} (e.g., \verb{create_agent(read_fn = ~ tbl_source("<name>", <tbl_store>))}).
+single object is supplying it to the \code{tbl} argument of \code{\link[=create_agent]{create_agent()}} or
+\code{\link[=create_informant]{create_informant()}} via \code{$} notation (e.g, \verb{create_agent(tbl = <tbl_store>$<name>)}) or with \code{\link[=tbl_source]{tbl_source()}} (e.g., \verb{create_agent(tbl = ~ tbl_source("<name>", <tbl_store>))}).
 }
 \section{YAML}{
 
@@ -62,7 +62,7 @@ example, the \code{sml_table_high} table can be obtained by using
 prepared data periodically, then the following example with \code{\link[=tbl_source]{tbl_source()}}
 will be useful:\preformatted{# Generate agent that checks `sml_table_high`, write it to YAML
 create_agent(
-  read_fn = ~ tbl_source("sml_table_high", "tbl_store.yml"),
+  tbl = ~ tbl_source("sml_table_high", "tbl_store.yml"),
   label = "An example that uses a table store.",
   actions = action_levels(warn_at = 0.10)
 ) \%>\% 
@@ -70,7 +70,7 @@ create_agent(
   write_yaml()
   
 # YAML representation ("agent-sml_table_high.yml")
-read_fn: ~ tbl_source("sml_table_high", "tbl_store.yml")
+tbl: ~ tbl_source("sml_table_high", "tbl_store.yml")
 tbl_name: sml_table_high
 label: An example that uses a table store.
 actions:
@@ -146,10 +146,10 @@ tbls$small_table_duck \%>\% tbl_get()
 # in a `tbl_store` object; use `$` 
 # notation to pass the appropriate
 # procedure for reading a table to the
-# `read_fn` argument
+# `tbl` argument
 agent_1 <-
   create_agent(
-    read_fn = tbls$small_table_duck
+    tbl = tbls$small_table_duck
   )
   
 # There are other ways to use the
@@ -158,7 +158,7 @@ agent_1 <-
 # `tbl_source()` function
 agent_2 <-
   create_agent(
-    read_fn = ~ tbl_source(
+    tbl = ~ tbl_source(
       tbl = "small_table_duck",
       store = tbls
       )
@@ -179,7 +179,7 @@ yaml_write(tbls)
 # file
 agent_3 <-
   create_agent(
-    read_fn = ~ tbl_source(
+    tbl = ~ tbl_source(
       tbl = "small_table_duck",
       store = "tbl_store.yml"
     )

@@ -16,9 +16,12 @@ create_informant(
 }
 \arguments{
 \item{tbl}{The input table. This can be a data frame, a tibble, a \code{tbl_dbi}
-object, or a \code{tbl_spark} object. Alternatively, a function can be used to
-read in the input data table with the \code{read_fn} argument (in which case,
-\code{tbl} can be \code{NULL}).}
+object, or a \code{tbl_spark} object. Alternatively, an expression can be
+supplied to serve as instructions on how to retrieve the target table at
+incorporation-time. There are two ways to specify an association to a
+target table: (1) as a table-prep formula, which is a right-hand side (RHS)
+formula expression (e.g., \verb{~ \{ <table reading code>\}}), or (2) as a
+function (e.g., \verb{function() \{ <table reading code>\}}).}
 
 \item{tbl_name}{A optional name to assign to the input table object. If no
 value is provided, a name will be generated based on whatever information
@@ -29,8 +32,9 @@ provided, a label will be generated based on the current system time.
 Markdown can be used here to make the label more visually appealing (it
 will appear in the header area of the information report).}
 
-\item{agent}{A pointblank \emph{agent} object. This object can be used instead of
-supplying a table in \code{tbl} or a table-prep formula in \code{read_fn}.}
+\item{agent}{A pointblank \emph{agent} object. The table from this object can be
+extracted and used in the new informant instead of supplying a table in
+\code{tbl}.}
 
 \item{lang}{The language to use for the information report (a summary table
 that provides all of the available information for the table. By default,
@@ -45,11 +49,8 @@ for English (United States) and \code{"fr_FR"} for French (France); more simply,
 this can be a language identifier without a country designation, like "es"
 for Spanish (Spain, same as \code{"es_ES"}).}
 
-\item{read_fn}{A function that's used for reading in the data. Even if a
-\code{tbl} is provided, this function will be invoked to obtain the data (i.e.,
-the \code{read_fn} takes priority). There are two ways to specify a \code{read_fn}:
-(1) using a function (e.g., \verb{function() \{ <table reading code> \}}) or, (2)
-with an R formula expression.}
+\item{read_fn}{The \code{read_fn} argument is deprecated. Instead, supply a
+table-prep formula or function to \code{tbl}.}
 }
 \value{
 A \code{ptblank_informant} object.
@@ -94,7 +95,7 @@ table (via \code{\link[=yaml_informant_incorporate]{yaml_informant_incorporate()
 complex call of \code{create_informant()} is expressed in R code and in the
 corresponding YAML representation.\preformatted{# R statement
 create_informant(
-  read_fn = ~ small_table,
+  tbl = ~ small_table,
   tbl_name = "small_table",
   label = "An example.",
   lang = "fr", 
@@ -103,7 +104,7 @@ create_informant(
 
 # YAML representation
 type: informant
-read_fn: ~small_table
+tbl: ~small_table
 tbl_name: small_table
 info_label: An example.
 lang: fr
@@ -132,9 +133,9 @@ columns:
     _type: character
 }
 
-The generated YAML includes some top-level keys where \code{type} and \code{read_fn}
-are mandatory, and, two metadata sections: \code{table} and \code{columns}. Keys that
-begin with an underscore character are those that are updated whenever
+The generated YAML includes some top-level keys where \code{type} and \code{tbl} are
+mandatory, and, two metadata sections: \code{table} and \code{columns}. Keys that begin
+with an underscore character are those that are updated whenever
 \code{\link[=incorporate]{incorporate()}} is called on an \emph{informant}. The \code{table} metadata section can
 have multiple subsections with \emph{info text}. The \code{columns} metadata section
 can similarly have have multiple subsections, so long as they are children to
@@ -151,10 +152,10 @@ An \emph{informant} object can be written to disk with the \code{\link[=x_write_
 function. Informants are stored in the serialized RDS format and can be
 easily retrieved with the \code{\link[=x_read_disk]{x_read_disk()}} function.
 
-It's recommended that table-prep formulas are supplied to the \code{read_fn}
-argument of \code{create_informant()}. In this way, when an \emph{informant} is read
-from disk through \code{\link[=x_read_disk]{x_read_disk()}}, it can be reused to access the target
-table (which may changed, hence the need to use an expression for this).
+It's recommended that table-prep formulas are supplied to the \code{tbl} argument
+of \code{create_informant()}. In this way, when an \emph{informant} is read from disk
+through \code{\link[=x_read_disk]{x_read_disk()}}, it can be reused to access the target table (which
+may changed, hence the need to use an expression for this).
 }
 
 \section{Figures}{
@@ -180,7 +181,7 @@ small_table
 # and the `small_table` dataset
 informant <- 
   create_informant(
-    read_fn = ~small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example."
   )

@@ -80,7 +80,7 @@ game_revenue \%>\%
 # (the row with the median values)
 agent <- 
   create_agent(
-    read_fn = ~ game_revenue,
+    tbl = ~ game_revenue,
     tbl_name = "game_revenue",
     label = "An example.",
     actions = action_levels(

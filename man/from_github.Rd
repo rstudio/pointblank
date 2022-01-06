@@ -57,7 +57,7 @@ where GitHub URLs for raw user content are needed.
 # pointblank package 
 # agent <- 
 #   create_agent(
-#     read_fn = ~ file_tbl(
+#     tbl = ~ file_tbl(
 #       file = from_github(
 #         file = "inst/data_files/small_table.csv",
 #         repo = "rich-iannone/pointblank"

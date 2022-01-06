@@ -38,7 +38,7 @@ validation steps all stored data extracts will be removed from the \emph{agent}.
 # `interrogate()`
 agent_1 <- 
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example."
   ) \%>\%

@@ -18,9 +18,9 @@ db_tbl(
 \item{table}{The name of the table, or, a reference to a table in a schema
 (two-element vector with the names of schema and table). Alternatively,
 this can be supplied as a data table to copy into an in-memory database
-connection. This only works if: (1) the \code{db} is either \code{"sqlite"} or
-\code{"duckdb"}, (2) the \code{dbname} was chosen as \code{":memory:"}, and (3) the
-\code{data_tbl} is a data frame or a tibble object.}
+connection. This only works if: (1) the \code{db} is chosen as either \code{"sqlite"}
+or \code{"duckdb"}, (2) the \code{dbname} was is set to \code{":memory:"}, and (3) the
+object supplied to \code{table} is a data frame or a tibble object.}
 
 \item{dbname}{The database name.}
 
@@ -45,15 +45,16 @@ of accessing it. This function simplifies the process of getting a \code{tbl_dbi
 object, which usually involves a combination of building a connection to a
 database and using the \code{dplyr::tbl()} function with the connection and the
 table name (or a reference to a table in a schema). You can use \code{db_tbl()} as
-the basis for obtaining a database table for the \code{read_fn} parameter in
-\code{\link[=create_agent]{create_agent()}} or \code{\link[=create_informant]{create_informant()}}. This can be done by using a leading
-\code{~} before the \code{db_tbl()} call (e.g,. \code{read_fn = ~db_tbl(...)}). Another
+the basis for obtaining a database table for the \code{tbl} parameter in
+\code{\link[=create_agent]{create_agent()}} or \code{\link[=create_informant]{create_informant()}}. This is most useful when using a
+leading \code{~} before the \code{db_tbl()} call (e.g,. \code{tbl = ~ db_tbl(...)}). Another
 great option is supplying a table-prep formula involving \code{db_tbl()} to
 \code{\link[=tbl_store]{tbl_store()}} so that you have access to database tables though single names
 via a table store.
 
-The username and password are supplied though environment variables. If
-desired, these can be supplied directly by enclosing those values in \code{\link[=I]{I()}}.
+The username and password are supplied though environment variable names. If
+desired, values for the username and password can be supplied directly by
+enclosing such values in \code{\link[=I]{I()}}.
 }
 \section{Function ID}{
 
@@ -156,11 +157,11 @@ tbl_get("small_high_duck", store = tbls)
 
 # The table-prep formulas in `tbls`
 # could also be used in functions with
-# the `read_fn` argument; this is thanks
+# the `tbl` argument; this is thanks
 # to the `tbl_source()` function
 agent <- 
   create_agent(
-    read_fn = ~ tbl_source(
+    tbl = ~ tbl_source(
       "small_table_duck",
       store = tbls
     )
@@ -168,7 +169,7 @@ agent <-
 
 informant <- 
   create_informant(
-    read_fn = ~ tbl_source(
+    tbl = ~ tbl_source(
       "small_high_duck",
       store = tbls
     )

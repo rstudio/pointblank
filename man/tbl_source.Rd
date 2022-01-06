@@ -23,8 +23,8 @@ A table-prep formula.
 The \code{tbl_source()} function provides a convenient means to access a
 table-prep formula from either a \code{tbl_store} object or a table store YAML
 file (which can be created with the \code{\link[=yaml_write]{yaml_write()}} function). A call to
-\code{tbl_source()} is most useful as an input to the \code{read_fn} argument of
-\code{\link[=create_agent]{create_agent()}}, \code{\link[=create_informant]{create_informant()}}, or \code{\link[=set_read_fn]{set_read_fn()}}.
+\code{tbl_source()} is most useful as an input to the \code{tbl} argument of
+\code{\link[=create_agent]{create_agent()}}, \code{\link[=create_informant]{create_informant()}}, or \code{\link[=set_tbl]{set_tbl()}}.
 
 Should you need to obtain the table itself (that is generated via the
 table-prep formula), then the \code{\link[=tbl_get]{tbl_get()}} function should be used for that.

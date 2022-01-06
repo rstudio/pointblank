@@ -2,16 +2,22 @@
 % Please edit documentation in R/object_ops.R
 \name{set_tbl}
 \alias{set_tbl}
-\title{Set a data table to an \emph{agent}}
+\title{Set a data table to an \emph{agent} or an \emph{informant}}
 \usage{
 set_tbl(x, tbl, tbl_name = NULL, label = NULL)
 }
 \arguments{
-\item{x}{An \emph{agent} object of class \code{ptblank_agent}.}
+\item{x}{An \emph{agent} object of class \code{ptblank_agent}, or, an \emph{informant} of
+class \code{ptblank_informant}.}
 
-\item{tbl}{The input table for the \code{agent}. This can be a data frame, a
-tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object. Any table already
-associated with the \emph{agent} will be overwritten.}
+\item{tbl}{The input table for the \emph{agent} or the \emph{informant}. This can be a
+data frame, a tibble, a \code{tbl_dbi} object, or a \code{tbl_spark} object.
+Alternatively, an expression can be supplied to serve as instructions on
+how to retrieve the target table at interrogation- or incorporation-time.
+There are two ways to specify an association to a target table: (1) as a
+table-prep formula, which is a right-hand side (RHS) formula expression
+(e.g., \verb{~ \{ <table reading code>\}}), or (2) as a function (e.g.,
+\verb{function() \{ <table reading code>\}}).}
 
 \item{tbl_name}{A optional name to assign to the new input table object. If
 no value is provided, a name will be generated based on whatever
@@ -21,12 +27,9 @@ information is available.}
 provided then any existing label will be retained.}
 }
 \description{
-Setting a data table to an \emph{agent} with \code{set_tbl()} replaces any
-associated table (a data frame, a tibble, objects of class \code{tbl_dbi} or
-\code{tbl_spark}). If a data table is associated with an \emph{agent} through the
-\code{tbl} argument \emph{and} the same object has a table-prep formula (settable in
-\code{\link[=create_agent]{create_agent()}}'s \code{tbl} argument or with \code{\link[=set_read_fn]{set_read_fn()}}), the
-table-prep formula will take precedence.
+Setting a data table to an \emph{agent} or an \emph{informant} with
+\code{set_tbl()} replaces any associated table (a data frame, a tibble, objects
+of class \code{tbl_dbi} or \code{tbl_spark}).
 }
 \section{Function ID}{
 

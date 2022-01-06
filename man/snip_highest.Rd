@@ -33,7 +33,7 @@ alphabetical value from a column in the target table.
 # into the info text
 informant <- 
   create_informant(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example."
   ) \%>\% 

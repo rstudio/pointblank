@@ -152,12 +152,12 @@ maintained in the YAML representation and is never written in processed form.
 \examples{
 # Create a pointblank `informant`
 # object with `create_informant()`;
-# we specify a `read_fn` with the
+# we can specify a `tbl` with the
 # `~` followed by a statement that
 # gets the `small_table` dataset
 informant <- 
   create_informant(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example."
   )

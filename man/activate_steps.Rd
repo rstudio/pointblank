@@ -36,7 +36,7 @@ of the targeted validation steps.
 # `interrogate()`
 agent_1 <- 
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "An example."
   ) \%>\%

@@ -34,11 +34,10 @@ still be present (along with results from the last interrogation).
 }
 \details{
 Should a written-to-disk \emph{agent} or \emph{informant} possess a table-prep formula
-(can be set any time with \code{\link[=set_read_fn]{set_read_fn()}}) or a specific table (settable with
-\code{\link[=set_tbl]{set_tbl()}}) we could use the \code{\link[=interrogate]{interrogate()}} or \code{\link[=incorporate]{incorporate()}} function
-again. For a \emph{data quality reporting} workflow, it is useful to
-\code{\link[=interrogate]{interrogate()}} target tables that evolve over time. While the same
-validation steps will be used, more can be added before calling
+or a specific in-memory tablewe could use the \code{\link[=interrogate]{interrogate()}} or
+\code{\link[=incorporate]{incorporate()}} function again. For a \emph{data quality reporting} workflow, it
+is useful to \code{\link[=interrogate]{interrogate()}} target tables that evolve over time. While the
+same validation steps will be used, more can be added before calling
 \code{\link[=interrogate]{interrogate()}}. For an \emph{information management} workflow with an \emph{informant}
 object, using \code{\link[=incorporate]{incorporate()}} will update aspects of the reporting such as
 table dimensions, and info snippets/text will be regenerated.

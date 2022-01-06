@@ -1,9 +1,7 @@
 # Create an agent with 4 validation steps (using 3 validation function calls)
 # where the 3rd step (based on `col_vals_regex()`) is not active
 agent <- 
-  create_agent(
-    read_fn = ~ small_table
-  ) %>%
+  create_agent(tbl = ~ small_table) %>%
   col_exists(vars(date, date_time)) %>%
   col_vals_regex(
     vars(b), "[0-9]-[a-z]{3}-[0-9]{3}", active = FALSE

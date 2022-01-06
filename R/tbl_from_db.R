@@ -27,22 +27,23 @@
 #' object, which usually involves a combination of building a connection to a
 #' database and using the `dplyr::tbl()` function with the connection and the
 #' table name (or a reference to a table in a schema). You can use `db_tbl()` as
-#' the basis for obtaining a database table for the `read_fn` parameter in
-#' [create_agent()] or [create_informant()]. This can be done by using a leading
-#' `~` before the `db_tbl()` call (e.g,. `read_fn = ~db_tbl(...)`). Another
+#' the basis for obtaining a database table for the `tbl` parameter in
+#' [create_agent()] or [create_informant()]. This is most useful when using a
+#' leading `~` before the `db_tbl()` call (e.g,. `tbl = ~ db_tbl(...)`). Another
 #' great option is supplying a table-prep formula involving `db_tbl()` to
 #' [tbl_store()] so that you have access to database tables though single names
 #' via a table store.
 #'
-#' The username and password are supplied though environment variables. If
-#' desired, these can be supplied directly by enclosing those values in [I()].
+#' The username and password are supplied though environment variable names. If
+#' desired, values for the username and password can be supplied directly by
+#' enclosing such values in [I()].
 #' 
 #' @param table The name of the table, or, a reference to a table in a schema
 #'   (two-element vector with the names of schema and table). Alternatively,
 #'   this can be supplied as a data table to copy into an in-memory database
-#'   connection. This only works if: (1) the `db` is either `"sqlite"` or
-#'   `"duckdb"`, (2) the `dbname` was chosen as `":memory:"`, and (3) the
-#'   `data_tbl` is a data frame or a tibble object.
+#'   connection. This only works if: (1) the `db` is chosen as either `"sqlite"`
+#'   or `"duckdb"`, (2) the `dbname` was is set to `":memory:"`, and (3) the
+#'   object supplied to `table` is a data frame or a tibble object.
 #' @param dbname The database name.
 #' @param dbtype Either an appropriate driver function (e.g.,
 #'   `RPostgres::Postgres()`) or a shortname for the database type. Valid names
@@ -152,11 +153,11 @@
 #' 
 #' # The table-prep formulas in `tbls`
 #' # could also be used in functions with
-#' # the `read_fn` argument; this is thanks
+#' # the `tbl` argument; this is thanks
 #' # to the `tbl_source()` function
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~ tbl_source(
+#'     tbl = ~ tbl_source(
 #'       "small_table_duck",
 #'       store = tbls
 #'     )
@@ -164,7 +165,7 @@
 #' 
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~ tbl_source(
+#'     tbl = ~ tbl_source(
 #'       "small_high_duck",
 #'       store = tbls
 #'     )

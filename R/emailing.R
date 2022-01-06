@@ -43,7 +43,7 @@
 #' ```
 #' # R statement
 #' create_agent(
-#'   read_fn = ~ small_table,
+#'   tbl = ~ small_table,
 #'   tbl_name = "small_table",
 #'   label = "An example.",
 #'   actions = al,
@@ -64,7 +64,7 @@
 #' 
 #' # YAML representation
 #' type: agent
-#' read_fn: ~small_table
+#' tbl: ~small_table
 #' tbl_name: small_table
 #' label: An example.
 #' lang: en
@@ -133,7 +133,7 @@
 #' # validation steps)
 #' agent <-
 #'   create_agent(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example.",
 #'     actions = al,
@@ -167,7 +167,7 @@
 #' # `email_create()` function
 #' email_object <-
 #'   create_agent(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example.",
 #'     actions = al
@@ -272,7 +272,7 @@ email_blast <- function(x,
 #' # us do this with an `agent` object
 #' email_object_1 <-
 #'   create_agent(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example.",
 #'     actions = al
@@ -291,7 +291,7 @@ email_blast <- function(x,
 #' # get the same email message object
 #' email_object_2 <-
 #'   create_agent(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example.",
 #'     actions = al
@@ -309,7 +309,7 @@ email_blast <- function(x,
 #' # `email_create()`
 #' email_object_3 <-
 #'   create_informant(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   ) %>%

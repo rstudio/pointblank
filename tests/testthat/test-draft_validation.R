@@ -17,7 +17,7 @@ write_draft_snapshot_test <- function(dataset,
                                       lang = NULL,
                                       output_type = "R",
                                       add_comments = TRUE) {
-  
+
   tbl <- dataset
   
   suppressMessages(

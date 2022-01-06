@@ -861,9 +861,13 @@ set_tbl <- function(x,
       table.rows <- get_table_total_rows(data = tbl_material)
     }
     
+    # nolint start
+    
     x$metadata$table$`_columns` <- table.columns
     x$metadata$table$`_rows` <- table.rows
     x$metadata$table$`_type` <- table.type
+    
+    # nolint end
     
     # Use incorporate to force an revision of metadata
     x <- incorporate(informant = x)

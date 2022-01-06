@@ -1984,21 +1984,28 @@ create_agent_label_html <- function(agent) {
 }
 
 create_table_type_html <- function(tbl_src, tbl_name) {
-  
-  text <- 
-    switch(
-      tbl_src,
-      data.frame = c("#9933CC", "#FFFFFF", "data frame"),
-      tbl_df = c("#F1D35A", "#222222", "tibble"),
-      sqlite = c("#BACBEF", "#222222", "SQLite"),
-      duckdb = c("#000000", "#FFFFFF", "DuckDB"),
-      mysql = c("#EBAD40", "#222222", "MySQL"),
-      postgres = c("#3E638B", "#FFFFFF", "PostgreSQL"),
-      tbl_spark = c("#E66F21", "#FFFFFF", "Spark DataFrame"),
-      Arrow = c("#353A3F", "#FFFFFF", "Apache Arrow"),
-      c("#E2E2E2", "#222222", tbl_src)
-    )
 
+  if (is.null(tbl_src)) {
+    
+    text <- c("#C2C2C2", "#222222", "?")
+    
+  } else {
+    
+    text <- 
+      switch(
+        tbl_src,
+        data.frame = c("#9933CC", "#FFFFFF", "data frame"),
+        tbl_df = c("#F1D35A", "#222222", "tibble"),
+        sqlite = c("#BACBEF", "#222222", "SQLite"),
+        duckdb = c("#000000", "#FFFFFF", "DuckDB"),
+        mysql = c("#EBAD40", "#222222", "MySQL"),
+        postgres = c("#3E638B", "#FFFFFF", "PostgreSQL"),
+        tbl_spark = c("#E66F21", "#FFFFFF", "Spark DataFrame"),
+        Arrow = c("#353A3F", "#FFFFFF", "Apache Arrow"),
+        c("#E2E2E2", "#222222", tbl_src)
+      )
+  }
+  
   if (all(!is.na(text)) && (is.na(tbl_name) || tbl_name == "NA")) {
     
     paste0(
@@ -2010,6 +2017,7 @@ create_table_type_html <- function(tbl_src, tbl_name) {
       text[3],
       "</span>"
     )
+    
   } else if (all(!is.na(text)) && !is.na(tbl_name)) {
     
     as.character(

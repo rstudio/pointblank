@@ -324,7 +324,7 @@ create_agent <- function(tbl = NULL,
   # explicitly given in `tbl_name`
   if (!is.null(tbl) && is.null(tbl_name)) {
     tbl_name <- deparse(match.call()$tbl)
-    if (tbl_name == ".") {
+    if (tbl_name[1] == ".") {
       tbl_name <- NA_character_
     }
   } 

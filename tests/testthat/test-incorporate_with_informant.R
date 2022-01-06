@@ -5,7 +5,7 @@ test_that("Incorporating an informant yields the correct results", {
   # `incorporate()` the snippets into the info text
   informant <- 
     create_informant(
-      read_fn = ~ readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc"),
+      tbl = ~ readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc"),
       tbl_name = "test_table",
       label = "An example."
     ) %>%
@@ -75,16 +75,9 @@ test_that("Incorporating an informant yields the correct results", {
   expect_error(
     regexp = NA,
     informant %>% 
-      set_read_fn(
-        read_fn = function() readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc")
+      set_tbl(
+        tbl = function() readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc")
       ) %>% 
-      incorporate()
-  )
-  
-  # Expect an error if the `read_fn` isn't valid
-  expect_error(
-    informant %>% 
-      set_read_fn(read_fn = small_table) %>% 
       incorporate()
   )
   
@@ -92,11 +85,12 @@ test_that("Incorporating an informant yields the correct results", {
   n_row_i <- informant_inc$metadata_rev$table$`_rows`
   n_columns_i <- informant_inc$metadata_rev$table$`_columns`
   
-  # Modify the `read_fn` to read in a slightly altered table
+  # Modify the internal `read_fn` to read in a slightly altered table
   informant_inc_2 <- 
     informant_inc %>%
-    set_read_fn(
-      read_fn = ~ readr::read_csv(file = "test_table_2.csv", col_types = "TDdcddlcd")) %>%
+    set_tbl(
+      tbl = ~ readr::read_csv(file = "test_table_2.csv", col_types = "TDdcddlcd")
+    ) %>%
     incorporate()
   
   # Get the row and column count values
@@ -117,7 +111,7 @@ test_that("Incorporating an informant from YAML yields the correct results", {
   # add information with some other `info_*()` functions
   informant <- 
     create_informant(
-      read_fn = ~ readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc"),
+      tbl = ~ readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc"),
       tbl_name = "test_table",
       label = "An example."
     ) %>%
@@ -149,7 +143,7 @@ test_that("Incorporating an informant from YAML yields the correct results", {
       row_count = "There are {row_count} rows available."
     )
   
-  yaml_write(informant)
+  yaml_write(informant, filename = "informant-test_table.yml")
   
   informant_from_yaml <- yaml_read_informant(filename = "informant-test_table.yml")
   
@@ -191,16 +185,9 @@ test_that("Incorporating an informant from YAML yields the correct results", {
   expect_error(
     regexp = NA,
     informant_inc_yaml %>% 
-      set_read_fn(
-        read_fn = function() readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc")
+      set_tbl(
+        tbl = function() readr::read_csv(file = "test_table.csv", col_types = "TDdcddlc")
       ) %>% 
-      incorporate()
-  )
-  
-  # Expect an error if the `read_fn` isn't valid
-  expect_error(
-    informant_inc_yaml %>% 
-      set_read_fn(read_fn = small_table) %>% 
       incorporate()
   )
   
@@ -211,7 +198,7 @@ test_that("Incorporating an informant from YAML yields the correct results", {
   # Modify the `read_fn` in the YAML file to read in a slightly altered table
   yaml_file_lines <- readLines("informant-test_table.yml")
   
-  read_fn_line <- which(grepl("read_fn", yaml_file_lines))
+  read_fn_line <- which(grepl("tbl:", yaml_file_lines))
   
   yaml_file_lines[read_fn_line] <- 
     yaml_file_lines[read_fn_line] %>%

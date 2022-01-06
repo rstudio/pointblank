@@ -123,6 +123,7 @@ interrogate <- function(agent,
       
     } else {
 
+      # TODO: create a better `stop()` message
       stop(
         "The `read_fn` object must be a function or an R formula.\n",
         "* A function can be made with `function()` {<table reading code>}.\n",

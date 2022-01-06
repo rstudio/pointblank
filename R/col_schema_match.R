@@ -269,7 +269,7 @@ col_schema_match <- function(x,
   }
   
   if (is_a_table_object(x)) {
-
+    
     secret_agent <- 
       create_agent(x, label = "::QUIET::") %>%
       col_schema_match(

@@ -55,7 +55,7 @@ tbls <-
 # the table shortly thereafter
 agent <- 
   create_agent(
-    read_fn = ~ tbl_source("sml_table", tbls),
+    tbl = ~ tbl_source("sml_table", tbls),
     label = "An example that uses a table store.",
     actions = action_levels(warn_at = 0.10)
   ) \%>\% 
@@ -71,11 +71,13 @@ agent <-
 # could be used)
 yaml_write(tbls)
 
-# Let's modify the agent's `read_fn` to point
-# to the YAML representation of the `tbl_store`
+# Let's modify the agent's target
+# to point to the table labeled as
+# `"sml_table"` in the YAML
+# representation of the `tbl_store`
 agent <-
   agent \%>\% 
-  set_read_fn(
+  set_tbl(
     ~ tbl_source(
         tbl = "sml_table",
         store = "tbl_store.yml"

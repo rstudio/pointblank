@@ -6,14 +6,14 @@
 \usage{
 create_agent(
   tbl = NULL,
-  read_fn = NULL,
   tbl_name = NULL,
   label = NULL,
   actions = NULL,
   end_fns = NULL,
   embed_report = FALSE,
   lang = NULL,
-  locale = NULL
+  locale = NULL,
+  read_fn = NULL
 )
 }
 \arguments{
@@ -21,13 +21,6 @@ create_agent(
 object, or a \code{tbl_spark} object. Alternatively, a function can be used to
 read in the input data table with the \code{read_fn} argument (in which case,
 \code{tbl} can be \code{NULL}).}
-
-\item{read_fn}{A table-prep formula that's used to access the target table.
-Even if a \code{tbl} is provided, this formula will be invoked to obtain the
-data (i.e., the \code{read_fn} takes priority). There are two ways to specify a
-\code{read_fn}: (1) with a right-hand side (RHS) formula expression (e.g.,
-\verb{~ \{ <table reading code>\}}) or (2) as a function (e.g.,
-\verb{function() \{ <table reading code>\}}).}
 
 \item{tbl_name}{A optional name to assign to the input table object. If no
 value is provided, a name will be generated based on whatever information
@@ -71,6 +64,13 @@ options include French (\code{"fr"}), German (\code{"de"}), Italian (\code{"it"}
 \code{"en_US"} for English (United States) and \code{"fr_FR"} for French (France);
 more simply, this can be a language identifier without a country
 designation, like "es" for Spanish (Spain, same as \code{"es_ES"}).}
+
+\item{read_fn}{A table-prep formula that's used to access the target table.
+Even if a \code{tbl} is provided, this formula will be invoked to obtain the
+data (i.e., the \code{read_fn} takes priority). There are two ways to specify a
+\code{read_fn}: (1) with a right-hand side (RHS) formula expression (e.g.,
+\verb{~ \{ <table reading code>\}}) or (2) as a function (e.g.,
+\verb{function() \{ <table reading code>\}}).}
 }
 \value{
 A \code{ptblank_agent} object.

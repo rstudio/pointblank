@@ -25,7 +25,7 @@ of the targeted validation steps.
 }
 \section{Function ID}{
 
-9-6
+9-5
 }
 
 \examples{
@@ -68,10 +68,7 @@ For the opposite behavior, use the \code{\link[=deactivate_steps]{deactivate_ste
 Other Object Ops: 
 \code{\link{deactivate_steps}()},
 \code{\link{export_report}()},
-\code{\link{remove_read_fn}()},
 \code{\link{remove_steps}()},
-\code{\link{remove_tbl}()},
-\code{\link{set_read_fn}()},
 \code{\link{set_tbl}()},
 \code{\link{x_read_disk}()},
 \code{\link{x_write_disk}()}

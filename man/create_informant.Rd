@@ -6,12 +6,12 @@
 \usage{
 create_informant(
   tbl = NULL,
-  read_fn = NULL,
-  agent = NULL,
   tbl_name = NULL,
   label = NULL,
+  agent = NULL,
   lang = NULL,
-  locale = NULL
+  locale = NULL,
+  read_fn = NULL
 )
 }
 \arguments{
@@ -19,15 +19,6 @@ create_informant(
 object, or a \code{tbl_spark} object. Alternatively, a function can be used to
 read in the input data table with the \code{read_fn} argument (in which case,
 \code{tbl} can be \code{NULL}).}
-
-\item{read_fn}{A function that's used for reading in the data. Even if a
-\code{tbl} is provided, this function will be invoked to obtain the data (i.e.,
-the \code{read_fn} takes priority). There are two ways to specify a \code{read_fn}:
-(1) using a function (e.g., \verb{function() \{ <table reading code> \}}) or, (2)
-with an R formula expression.}
-
-\item{agent}{A pointblank \emph{agent} object. This object can be used instead of
-supplying a table in \code{tbl} or a table-prep formula in \code{read_fn}.}
 
 \item{tbl_name}{A optional name to assign to the input table object. If no
 value is provided, a name will be generated based on whatever information
@@ -37,6 +28,9 @@ is available.}
 provided, a label will be generated based on the current system time.
 Markdown can be used here to make the label more visually appealing (it
 will appear in the header area of the information report).}
+
+\item{agent}{A pointblank \emph{agent} object. This object can be used instead of
+supplying a table in \code{tbl} or a table-prep formula in \code{read_fn}.}
 
 \item{lang}{The language to use for the information report (a summary table
 that provides all of the available information for the table. By default,
@@ -50,6 +44,12 @@ information report according the locale's rules. Examples include \code{"en_US"}
 for English (United States) and \code{"fr_FR"} for French (France); more simply,
 this can be a language identifier without a country designation, like "es"
 for Spanish (Spain, same as \code{"es_ES"}).}
+
+\item{read_fn}{A function that's used for reading in the data. Even if a
+\code{tbl} is provided, this function will be invoked to obtain the data (i.e.,
+the \code{read_fn} takes priority). There are two ways to specify a \code{read_fn}:
+(1) using a function (e.g., \verb{function() \{ <table reading code> \}}) or, (2)
+with an R formula expression.}
 }
 \value{
 A \code{ptblank_informant} object.

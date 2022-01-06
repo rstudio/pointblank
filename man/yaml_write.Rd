@@ -17,9 +17,9 @@ yaml_write(
 \item{...}{Any mix of \strong{pointblank} objects such as the \emph{agent}
 (\code{ptblank_agent}), the \emph{informant} (\code{ptblank_informant}), or the table
 store (\code{tbl_store}). The agent and informant can be combined into a single
-YAML file (so as both objects have the same value for \code{read_fn}). A table
-store cannot be combined with either an agent or an informant so it must
-undergo conversion alone.}
+YAML file (so long as both objects refer to the same table). A table store
+cannot be combined with either an agent or an informant so it must undergo
+conversion alone.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
@@ -58,11 +58,10 @@ the \code{\link[=yaml_agent_interrogate]{yaml_agent_interrogate()}} function. Th
 can also be written to YAML with \code{yaml_write()}.
 
 One requirement for writing an \emph{agent} or an \emph{informant} to YAML is that we
-need to have a table-prep formula (\code{read_fn}) specified (it's an R formula
-that is used to read the target table when \code{\link[=interrogate]{interrogate()}} or \code{\link[=incorporate]{incorporate()}}
-is called). This option can be set when using
-\code{\link[=create_agent]{create_agent()}}/\code{\link[=create_informant]{create_informant()}} or with \code{\link[=set_read_fn]{set_read_fn()}} (useful with an
-existing agent or informant object).
+need to have a table-prep formula specified (it's an R formula that is used
+to read the target table when \code{\link[=interrogate]{interrogate()}} or \code{\link[=incorporate]{incorporate()}} is called).
+This option can be set when using \code{\link[=create_agent]{create_agent()}}/\code{\link[=create_informant]{create_informant()}} or
+with \code{\link[=set_tbl]{set_tbl()}} (useful with an existing agent or informant object).
 }
 \section{Function ID}{
 
@@ -95,11 +94,11 @@ al <-
 # and give it the `al` object (which
 # serves as a default for all validation
 # steps which can be overridden); the
-# data will be referenced in a `read_fn`
+# data will be referenced in `tbl`
 # (a requirement for writing to YAML)
 agent <- 
   create_agent(
-    read_fn = ~ small_table,
+    tbl = ~ small_table,
     tbl_name = "small_table",
     label = "A simple example with the `small_table`.",
     actions = al
@@ -152,7 +151,7 @@ agent <-
 class(agent)
 
 # We can interrogate the data (which
-# is accessible through the `read_fn`)
+# is accessible through `tbl`)
 # with `interrogate()` and get an
 # agent with intel, or, we can
 # interrogate directly from the YAML

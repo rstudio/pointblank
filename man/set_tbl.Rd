@@ -25,10 +25,8 @@ Setting a data table to an \emph{agent} with \code{set_tbl()} replaces any
 associated table (a data frame, a tibble, objects of class \code{tbl_dbi} or
 \code{tbl_spark}). If a data table is associated with an \emph{agent} through the
 \code{tbl} argument \emph{and} the same object has a table-prep formula (settable in
-\code{\link[=create_agent]{create_agent()}}'s \code{read_fn} argument or with \code{\link[=set_read_fn]{set_read_fn()}}), the
-table-prep formula will take precedence. If this is undesirable, it be
-removed with the \code{\link[=remove_read_fn]{remove_read_fn()}} function. The association to a table
-can be removed with with \code{\link[=remove_tbl]{remove_tbl()}}.
+\code{\link[=create_agent]{create_agent()}}'s \code{tbl} argument or with \code{\link[=set_read_fn]{set_read_fn()}}), the
+table-prep formula will take precedence.
 }
 \section{Function ID}{
 
@@ -82,10 +80,7 @@ Other Object Ops:
 \code{\link{activate_steps}()},
 \code{\link{deactivate_steps}()},
 \code{\link{export_report}()},
-\code{\link{remove_read_fn}()},
 \code{\link{remove_steps}()},
-\code{\link{remove_tbl}()},
-\code{\link{set_read_fn}()},
 \code{\link{x_read_disk}()},
 \code{\link{x_write_disk}()}
 }

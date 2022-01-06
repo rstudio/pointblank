@@ -122,12 +122,12 @@
 #' @examples 
 #' # Create a pointblank `informant`
 #' # object with `create_informant()`;
-#' # we specify a `read_fn` with the
+#' # we can specify a `tbl` with the
 #' # `~` followed by a statement that
 #' # gets the `small_table` dataset
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   )
@@ -342,12 +342,12 @@ info_tabular <- function(x,
 #' @examples 
 #' # Create a pointblank `informant`
 #' # object with `create_informant()`;
-#' # we specify a `read_fn` with the
+#' # we can specify a `tbl` with the
 #' # `~` followed by a statement that
 #' # gets the `small_table` dataset
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   )
@@ -505,12 +505,12 @@ info_columns <- function(x,
 #' @examples 
 #' # Create a pointblank `informant`
 #' # object with `create_informant()`;
-#' # we specify a `read_fn` with the
+#' # we can specify a `tbl` with the
 #' # `~` followed by a statement that
 #' # gets the `game_revenue` dataset
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~ game_revenue,
+#'     tbl = ~ game_revenue,
 #'     tbl_name = "game_revenue",
 #'     label = "An example."
 #'   )
@@ -739,12 +739,12 @@ check_info_columns_tbl <- function(tbl) {
 #' @examples 
 #' # Create a pointblank `informant`
 #' # object with `create_informant()`;
-#' # we specify a `read_fn` with the
+#' # we can specify a `tbl` with the
 #' # `~` followed by a statement that
 #' # gets the `small_table` dataset
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   )
@@ -944,7 +944,7 @@ info_section <- function(x,
 #' # the info text
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~ test_table,
+#'     tbl = ~ test_table,
 #'     tbl_name = "test_table",
 #'     label = "An example."
 #'   ) %>%
@@ -1080,7 +1080,7 @@ info_snippet <- function(x,
 #' # the info text
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   ) %>% 
@@ -1289,7 +1289,7 @@ snip_list <- function(column,
 #' # into the info text
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   ) %>% 
@@ -1350,7 +1350,7 @@ snip_stats <- function(column,
 #' # into the info text
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   ) %>% 
@@ -1408,7 +1408,7 @@ snip_lowest <- function(column) {
 #' # into the info text
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   ) %>% 

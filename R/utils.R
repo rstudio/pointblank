@@ -34,7 +34,20 @@ has_agent_intel <- function(agent) {
 }
 
 get_tbl_object <- function(agent) {
-  agent$tbl
+  
+  if (!is.null(agent$tbl)) {
+    
+    tbl <- agent$tbl
+    
+  } else if (!is.null(agent$read_fn)) {
+    
+    tbl <- materialize_table(agent$read_fn)
+    
+  } else {
+    tbl <- NULL
+  }
+  
+  tbl
 }
 
 is_a_table_object <- function(x) {
@@ -152,7 +165,13 @@ materialize_table <- function(tbl,
   } else if (inherits(tbl, "function")) {
     tbl <- rlang::exec(tbl)
   } else if (rlang::is_formula(tbl)) {
+    
     tbl <- tbl %>% rlang::f_rhs() %>% rlang::eval_tidy()
+    
+    if (inherits(tbl, "read_fn")) {
+      tbl <- tbl %>% rlang::f_rhs() %>% rlang::eval_tidy()
+    }
+    
   } else {
     
     stop(
@@ -185,6 +204,13 @@ resolve_expr_to_cols <- function(tbl, var_expr) {
 
 resolve_columns <- function(x, var_expr, preconditions) {
   
+  # If getting a character vector as `var_expr`, simply return the vector
+  # since this should already be a vector of column names and it's not necessary
+  # to resolve this against the target table
+  if (is.character(var_expr)) {
+    return(var_expr)
+  }
+  
   # nocov start
   
   # Return an empty character vector if the expr is NULL
@@ -196,7 +222,7 @@ resolve_columns <- function(x, var_expr, preconditions) {
   
   # nocov end
   
-  # Get the column names
+  # Get the column names from a non-NULL, non-character expression
   if (is.null(preconditions)) {
     
     if (inherits(x, c("data.frame", "tbl_df", "tbl_dbi"))) {
@@ -433,6 +459,77 @@ check_is_a_table_object <- function(tbl) {
       call. = FALSE
     )
   }
+}
+
+# This function verifies that some target table input is provided
+# A portion of this is dedicated to checking the `read_fn` argument which
+# is undergoing soft deprecation in `create_agent()` and `create_informant()`
+check_table_input <- function(tbl,
+                              read_fn) {
+  
+  if (is.null(tbl) && is.null(read_fn)) {
+    
+    stop(
+      "The `tbl` argument requires a table, this could either be:\n",
+      " * An in-memory table, a database table, or a Spark table\n",
+      " * A function or table-prep formula for getting a table during ",
+      "interrogation",
+      call. = FALSE
+    )
+  }
+  
+  if (!is.null(read_fn)) {
+    
+    warning(
+      "The `read_fn` argument is undergoing soft deprecation; instead:\n",
+      " * Use the in the `tbl` argument for in-memory tables.\n",
+      " * Or supply a function or table-prep formula to `tbl`.",
+      call. = FALSE
+    )
+    
+    if (!is.null(tbl)) {
+      message(
+        "The value supplied to `read_fn` has ignored since `tbl` ",
+        "is also defined."
+      )
+    } else {
+      tbl <- read_fn
+    }
+  }
+  
+  tbl
+}
+
+process_table_input <- function(tbl,
+                                tbl_name) {
+
+  if (inherits(tbl, "function")) {
+    
+    read_fn <- tbl
+    tbl <- NULL
+    
+  } else if (rlang::is_formula(tbl)) {
+    
+    read_fn <- tbl
+    tbl <- NULL
+    
+    if (inherits(read_fn, "read_fn")) {
+      
+      if (inherits(read_fn, "with_tbl_name") && is.na(tbl_name)) {
+        tbl_name <- read_fn %>% rlang::f_lhs() %>% as.character()
+      }
+    }
+    
+  } else {
+    
+    read_fn <- NULL
+  }
+  
+  list(
+    tbl = tbl,
+    read_fn = read_fn,
+    tbl_name = tbl_name
+  )
 }
 
 generate_indexed_vals <- function(x, numbers, sep = ".") {

@@ -528,9 +528,9 @@ print.tbl_store <- function(x, ...) {
   cli::cli_rule()
 }
 
-#' Print the `read_fn` object
+#' Print the a table-prep formula
 #'
-#' This function will allow the `read_fn` to be nicely printed.
+#' This function will allow a table-prep formula to be nicely printed.
 #' 
 #' @param x An object of class `read_fn`.
 #' @param ... Any additional parameters.

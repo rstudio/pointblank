@@ -28,9 +28,9 @@
 #' (`.tsv`), RDA (`.rda`), and RDS (`.rds`) files. This function generates an
 #' in-memory `tbl_dbl` object, which can be used as a target table for
 #' [create_agent()] and [create_informant()]. The ideal option for data access
-#' with `file_tbl()` is using this function as the `read_fn` parameter in either
+#' with `file_tbl()` is using this function within the `tbl` parameter in either
 #' of the aforementioned `create_*()` functions. This can be done by using a
-#' leading `~` (e.g,. `read_fn = ~file_tbl(...)`).
+#' leading `~` (e.g,. `tbl = ~ file_tbl(...)`).
 #'
 #' In the remote data use case, we can specify a URL starting with `http://`,
 #' `https://`, etc., and ending with the file containing the data table. If data
@@ -93,7 +93,7 @@
 #' # directly to `create_agent()`:
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~ file_tbl(
+#'     tbl = ~ file_tbl(
 #'       file = system.file(
 #'         "data_files", "small_table.csv",
 #'         package = "pointblank"
@@ -104,11 +104,11 @@
 #'   col_vals_gt(vars(a), value = 0)
 #'
 #' # All of the file-reading instructions
-#' # are encapsulated in the `read_fn` so
-#' # the agent will always obtain the most
-#' # recent version of the dataset (and the
-#' # logic can be translated to YAML, for
-#' # later use)
+#' # are encapsulated in the `tbl`
+#' # expression so the agent will always
+#' # obtain the most recent version of
+#' # the table (and the logic can be
+#' # translated to YAML, for later use)
 #' 
 #' if (interactive()) {
 #' 
@@ -120,7 +120,7 @@
 #' # repository for the pointblank package 
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~ file_tbl(
+#'     tbl = ~ file_tbl(
 #'       file = from_github(
 #'         file = "inst/data_files/small_table.csv",
 #'         repo = "rich-iannone/pointblank"
@@ -170,11 +170,11 @@
 #' 
 #' # The table-prep formulas in `tbls`
 #' # could also be used in functions with
-#' # the `read_fn` argument; this is thanks
+#' # the `tbl` argument; this is thanks
 #' # to the `tbl_source()` function
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~ tbl_source(
+#'     tbl = ~ tbl_source(
 #'       "small_table_file",
 #'       store = tbls
 #'     )
@@ -182,7 +182,7 @@
 #' 
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~ tbl_source(
+#'     tbl = ~ tbl_source(
 #'       "small_high_file",
 #'       store = tbls
 #'     )
@@ -366,7 +366,7 @@ file_tbl <- function(file,
 #' # pointblank package 
 #' # agent <- 
 #' #   create_agent(
-#' #     read_fn = ~ file_tbl(
+#' #     tbl = ~ file_tbl(
 #' #       file = from_github(
 #' #         file = "inst/data_files/small_table.csv",
 #' #         repo = "rich-iannone/pointblank"

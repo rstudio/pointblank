@@ -33,18 +33,17 @@
 #' can also be written to YAML with `yaml_write()`.
 #'
 #' One requirement for writing an *agent* or an *informant* to YAML is that we
-#' need to have a table-prep formula (`read_fn`) specified (it's an R formula
-#' that is used to read the target table when [interrogate()] or [incorporate()]
-#' is called). This option can be set when using
-#' [create_agent()]/[create_informant()] or with [set_read_fn()] (useful with an
-#' existing agent or informant object).
+#' need to have a table-prep formula specified (it's an R formula that is used
+#' to read the target table when [interrogate()] or [incorporate()] is called).
+#' This option can be set when using [create_agent()]/[create_informant()] or
+#' with [set_tbl()] (useful with an existing agent or informant object).
 #' 
 #' @param ... Any mix of **pointblank** objects such as the *agent*
 #'   (`ptblank_agent`), the *informant* (`ptblank_informant`), or the table
 #'   store (`tbl_store`). The agent and informant can be combined into a single
-#'   YAML file (so as both objects have the same value for `read_fn`). A table
-#'   store cannot be combined with either an agent or an informant so it must
-#'   undergo conversion alone.
+#'   YAML file (so long as both objects refer to the same table). A table store
+#'   cannot be combined with either an agent or an informant so it must undergo
+#'   conversion alone.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #' @param filename The name of the YAML file to create on disk. It is
 #'   recommended that either the `.yaml` or `.yml` extension be used for this
@@ -89,11 +88,11 @@
 #' # and give it the `al` object (which
 #' # serves as a default for all validation
 #' # steps which can be overridden); the
-#' # data will be referenced in a `read_fn`
+#' # data will be referenced in `tbl`
 #' # (a requirement for writing to YAML)
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "A simple example with the `small_table`.",
 #'     actions = al
@@ -146,7 +145,7 @@
 #' class(agent)
 #' 
 #' # We can interrogate the data (which
-#' # is accessible through the `read_fn`)
+#' # is accessible through `tbl`)
 #' # with `interrogate()` and get an
 #' # agent with intel, or, we can
 #' # interrogate directly from the YAML
@@ -194,6 +193,7 @@ yaml_write <- function(...,
     )
   
   if ("tbl_store" %in% object_types) {
+    
     tbl_store <- obj_list[[object_types == "tbl_store"]]
     
     x <- as_tbl_store_yaml_list(tbl_store = tbl_store)
@@ -357,7 +357,7 @@ yaml_write <- function(...,
 #' # of the target table
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "A simple example with the `small_table`.",
 #'     actions = action_levels(
@@ -602,7 +602,7 @@ get_schema_list <- function(schema) {
 }
 
 to_list_read_fn <- function(read_fn) {
-  list(read_fn = paste(as.character(read_fn), collapse = ""))
+  list(tbl = paste(as.character(read_fn), collapse = ""))
 }
 
 to_list_label <- function(label) {
@@ -720,7 +720,7 @@ as_agent_yaml_list <- function(agent,
 
   if (is.null(agent$read_fn)) {
     stop(
-      "The agent must have a `read_fn` value to transform it into YAML.",
+      "The agent must have a `tbl` value that can be put into YAML.",
        call. = FALSE
     )
   }
@@ -1198,13 +1198,13 @@ as_agent_yaml_list <- function(agent,
   
   c(
     type = "agent",               # YAML type: `agent`
-    lst_read_fn,                  # table-prep formula
+    lst_read_fn,                  # table-prep formula (stored in key `tbl`)
     lst_tbl_name,                 # table name
     lst_label,                    # agent label
     lst_lang,                     # agent language
     lst_locale,                   # agent locale
-    lst_action_levels,            # agent action levels stmt
-    lst_end_fns,                  # agent end functions stmt
+    lst_action_levels,            # agent action levels statement
+    lst_end_fns,                  # agent end functions statement
     lst_embed_report,             # agent embed report in saved file
     list(steps = all_steps)       # list of validation steps
   )
@@ -1235,7 +1235,7 @@ as_informant_yaml_list <- function(informant) {
 
   if (is.null(informant$read_fn)) {
     stop(
-      "The informant must have a `read_fn` value to transform it into YAML.",
+      "The informant must have a `tbl` value that can be put into YAML.",
       call. = FALSE
     )
   }
@@ -1274,12 +1274,12 @@ as_informant_yaml_list <- function(informant) {
   
   c(
     type = "informant",           # YAML type: `informant`
-    lst_read_fn,                  # table-prep formula
+    lst_read_fn,                  # table-prep formula (stored in key `tbl`)
     lst_tbl_name,                 # table name
     lst_info_label,               # informant label
     lst_lang,                     # informant language
     lst_locale,                   # informant locale
-    lst_meta_snippets,            # informant metadata snippet stmts
+    lst_meta_snippets,            # informant metadata snippet statements
     informant$metadata            # informant metadata entries
   )
 }

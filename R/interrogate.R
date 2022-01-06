@@ -91,15 +91,14 @@ interrogate <- function(agent,
   
   # Add the starting time to the `agent` object
   agent$time_start <- Sys.time()
-
+  
   # Stop function if `agent$tbl` and `agent$read_fn` are both NULL
   if (is.null(agent$tbl) && is.null(agent$read_fn)) {
     
     stop(
       "We can't `interrogate()` because the agent doesn't have a data table ",
       "or a function to obtain one:\n",
-      "* Use the `set_tbl()` function to specify a table, or\n",
-      "* Use `set_read_fn()` to supply a table-prep formula.",
+      "* Use the `set_tbl()` function to specify a table",
       call. = FALSE
     )
   }
@@ -112,6 +111,16 @@ interrogate <- function(agent,
       agent$tbl <- rlang::exec(agent$read_fn)
     } else if (rlang::is_formula(agent$read_fn)) {
       agent$tbl <- agent$read_fn %>% rlang::f_rhs() %>% rlang::eval_tidy()
+      
+      if (inherits(agent$tbl, "read_fn")) {
+        
+        if (inherits(agent$tbl, "with_tbl_name")) {
+          agent$tbl_name <- agent$tbl %>% rlang::f_lhs() %>% as.character()
+        }
+        
+        agent$tbl <- materialize_table(agent$tbl)
+      }
+      
     } else {
 
       stop(
@@ -121,7 +130,7 @@ interrogate <- function(agent,
         call. = FALSE
       )
     }
-
+    
     # Obtain basic information on the table and
     # set the relevant list elements
     tbl_information <- get_tbl_information(tbl = agent$tbl)
@@ -133,7 +142,7 @@ interrogate <- function(agent,
     agent$col_types <- tbl_information$r_col_types
     agent$db_col_types <- tbl_information$db_col_types
 
-    agent$extracts <- NULL
+    agent$extracts <- list()
   }
 
   # Quieting of an agent's remarks either when the agent has the
@@ -1011,7 +1020,7 @@ tbl_val_comparison <- function(table,
                                operator,
                                value,
                                na_pass) {
-
+  
   # Ensure that the input `table` is actually a table object
   tbl_validity_check(table = table)
   
@@ -2258,7 +2267,7 @@ interrogate_col_type <- function(agent,
 interrogate_distinct <- function(agent,
                                  idx,
                                  table) {
-
+  
   # Determine if grouping columns are provided in the test
   # for distinct rows and parse the column names
   if (!is.na(agent$validation_set$column[idx] %>% unlist())) {

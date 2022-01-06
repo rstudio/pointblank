@@ -80,7 +80,7 @@
 #' ```
 #' # R statement
 #' create_agent(
-#'   read_fn = ~ small_table,
+#'   tbl = ~ small_table,
 #'   tbl_name = "small_table",
 #'   label = "An example.",
 #'   actions = action_levels(
@@ -99,7 +99,7 @@
 #' 
 #' # YAML representation
 #' type: agent
-#' read_fn: ~small_table
+#' tbl: ~small_table
 #' tbl_name: small_table
 #' label: An example.
 #' lang: fr
@@ -118,8 +118,7 @@
 #' values won't be written to YAML when using [yaml_write()] (though it is
 #' acceptable to include them with their default when generating the YAML by
 #' other means). The only requirement for writing the YAML representation of an
-#' *agent* is having `read_fn` specified (any table supplied to `tbl` is
-#' ignored).
+#' *agent* is having `tbl` specified as table-prep formula.
 #' 
 #' What typically follows this chunk of YAML is a `steps` part, and that
 #' corresponds to the addition of validation steps via validation functions.
@@ -138,7 +137,7 @@
 #' of data quality over time. Agents are stored in the serialized RDS format and
 #' can be easily retrieved with the [x_read_disk()] function.
 #'
-#' It's recommended that table-prep formulas are supplied to the `read_fn`
+#' It's recommended that table-prep formulas are supplied to the `tbl`
 #' argument of `create_agent()`. In this way, when an *agent* is read from disk
 #' through [x_read_disk()], it can be reused to access the target table (which
 #' may change, hence the need to use an expression for this).
@@ -154,15 +153,12 @@
 #' a given target table.
 #'
 #' @param tbl The input table. This can be a data frame, a tibble, a `tbl_dbi`
-#'   object, or a `tbl_spark` object. Alternatively, a function can be used to
-#'   read in the input data table with the `read_fn` argument (in which case,
-#'   `tbl` can be `NULL`).
-#' @param read_fn A table-prep formula that's used to access the target table.
-#'   Even if a `tbl` is provided, this formula will be invoked to obtain the
-#'   data (i.e., the `read_fn` takes priority). There are two ways to specify a
-#'   `read_fn`: (1) with a right-hand side (RHS) formula expression (e.g.,
-#'   `~ { <table reading code>}`) or (2) as a function (e.g., 
-#'   `function() { <table reading code>}`).
+#'   object, or a `tbl_spark` object. Alternatively, an expression can be
+#'   supplied to serve as instructions on how to retrieve the target table at
+#'   interrogation-time. There are two ways to specify an association to a
+#'   target table: (1) as a table-prep formula, which is a right-hand side (RHS)
+#'   formula expression (e.g., `~ { <table reading code>}`), or (2) as a
+#'   function (e.g., `function() { <table reading code>}`).
 #' @param tbl_name A optional name to assign to the input table object. If no
 #'   value is provided, a name will be generated based on whatever information
 #'   is available. This table name will be displayed in the header area of the
@@ -200,6 +196,8 @@
 #'   `"en_US"` for English (United States) and `"fr_FR"` for French (France);
 #'   more simply, this can be a language identifier without a country
 #'   designation, like "es" for Spanish (Spain, same as `"es_ES"`).
+#' @param read_fn The `read_fn` argument is deprecated. Instead, supply a
+#'   table-prep formula or function to `tbl`.
 #'   
 #' @return A `ptblank_agent` object.
 #'   
@@ -231,7 +229,7 @@
 #' # make the reporting a bit more useful
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example.",
 #'     actions = al

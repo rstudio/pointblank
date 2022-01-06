@@ -220,11 +220,11 @@ yaml_read_agent <- function(filename,
 #' # and give it the `al` object (which
 #' # serves as a default for all validation
 #' # steps which can be overridden); the
-#' # data will be referenced in a `read_fn`
+#' # data will be referenced in `tbl`
 #' # (a requirement for writing to YAML)
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "A simple example with the `small_table`.",
 #'     actions = al
@@ -269,7 +269,7 @@ yaml_read_agent <- function(filename,
 #' yaml_agent_string(agent = agent)
 #' 
 #' # We can interrogate the data (which
-#' # is accessible through the `read_fn`)
+#' # is accessible through `tbl`)
 #' # through direct use of the YAML file
 #' # with `yaml_agent_interrogate()`
 #' agent <- 
@@ -330,7 +330,7 @@ yaml_agent_interrogate <- function(filename,
 #' # of the target table
 #' agent <- 
 #'   create_agent(
-#'     read_fn = ~ small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "A simple example with the `small_table`.",
 #'     actions = action_levels(
@@ -396,13 +396,20 @@ yaml_agent_show_exprs <- function(filename,
 
 expr_from_agent_yaml <- function(path,
                                  interrogate = FALSE) {
-
+  
   # Read the YAML file with `yaml::read_yaml()`
   y <- yaml::read_yaml(file = path)
   
-  # Get the `table_name`, `read_fn`, `label`, and `active`
+  # Backcompatibility with YAML files that have the deprecated `read_fn` key
+  if ("read_fn" %in% names(y)) {
+    
+    read_fn_idx <- which(names(y) == "read_fn")
+    names(y)[read_fn_idx] <- "tbl"
+  }
+  
+  # Get the `table_name`, `tbl`, `label`, and `active`
   # fields from the YAML file and create argument strings
-  read_fn <- paste0("  read_fn = ", y$read_fn)
+  tbl <- paste0("  tbl = ", y$tbl)
   label <- paste0("  label = \"", y$label, "\"")
   
   # Create argument strings for the `actions` and
@@ -446,7 +453,7 @@ expr_from_agent_yaml <- function(path,
       "create_agent(\n",
       paste(
         c(
-          read_fn, actions, end_fns,
+          tbl, actions, end_fns,
           tbl_name, label, embed_report,
           lang, locale
         ),

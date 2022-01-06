@@ -100,51 +100,57 @@ test_that("Creating a valid `agent` object is possible", {
     NA_character_
   )
   
-  # Expect that using a `read_fn` to read in a table name but
-  # not specifying `tbl_name` results in an `NA` for `tbl_name`
+  # Expect that using a table-prep formula to read in a table but
+  # not specifying `tbl_name` results in an variation of the formula
+  # RHS for `tbl_name`
   expect_equal(
-    create_agent(read_fn = ~ pointblank::small_table) %>% .$tbl_name,
+    create_agent(tbl = ~ pointblank::small_table) %>% .$tbl_name,
+    "~pointblank::small_table"
+  )
+  
+  # Expect that using a `read_fn` to read in a table but
+  # not specifying `tbl_name` results in an `NA` for `tbl_name`; also,
+  # expect a warning
+  expect_equal(
+    expect_warning(
+      create_agent(read_fn = ~ pointblank::small_table)
+    ) %>% .$tbl_name,
     NA_character_
   )
   
-  # Expect that there is a preference for reading a table from
-  # a `read_fn` if it's available (i.e., disregards `tbl` value)
+  # Expect that if a table is supplied to both `tbl` and `read_fn`
+  # there is a preference for using the value from `tbl`; also,
+  # expect a warning and a message
   agent_2 <- 
-    create_agent(
-      tbl = tbl,
-      read_fn = ~ pointblank::small_table
+    expect_message(
+      expect_warning(
+        create_agent(
+          tbl = tbl,
+          read_fn = ~ pointblank::small_table
+        )
+      )
     )
   
-  expect_equal(
-    agent_2$col_names,
-    c("date_time", "date", "a", "b", "c", "d", "e", "f")
-  )
+  expect_equal(agent_2$col_names, c("a", "b"))
   
-  agent_3 <- 
-    create_agent(
-      tbl = tbl,
-      read_fn = function() pointblank::small_table
+  agent_3 <-
+    expect_message(
+      expect_warning(
+        create_agent(
+          tbl = tbl,
+          read_fn = function() pointblank::small_table
+        )
+      )
     )
   
-  expect_equal(
-    agent_3$col_names,
-    c("date_time", "date", "a", "b", "c", "d", "e", "f")
-  )
-  
-  # Expect an error if the `read_fn` isn't a function
-  # or an R formula
-  expect_error(
-    create_agent(
-      read_fn = pointblank::small_table
-    )
-  )
+  expect_equal(agent_3$col_names, c("a", "b"))
   
   # Expect that the `embed_report` option will always
   # be TRUE if we use any `end_fns` (even if we set
   # it to FALSE)
   agent_4 <- 
     create_agent(
-      read_fn = ~ pointblank::small_table,
+      tbl = ~ pointblank::small_table,
       end_fns = ~ print(Sys.time()),
       embed_report = FALSE
     )

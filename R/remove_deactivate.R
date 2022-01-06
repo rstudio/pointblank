@@ -68,7 +68,7 @@
 #' 
 #' @family Object Ops
 #' @section Function ID:
-#' 9-6
+#' 9-5
 #' 
 #' @seealso For the opposite behavior, use the [deactivate_steps()] function.
 #'
@@ -137,7 +137,7 @@ activate_steps <- function(agent,
 #'
 #' @family Object Ops
 #' @section Function ID:
-#' 9-7
+#' 9-6
 #'
 #' @seealso For the opposite behavior, use the [activate_steps()] function.
 #'
@@ -205,7 +205,7 @@ deactivate_steps <- function(agent,
 #' 
 #' @family Object Ops
 #' @section Function ID:
-#' 9-8
+#' 9-7
 #' 
 #' @seealso Instead of removal, the [deactivate_steps()] function will simply
 #'   change the `active` status of one or more validation steps to `FALSE` (and

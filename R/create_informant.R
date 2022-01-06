@@ -61,7 +61,7 @@
 #' ```
 #' # R statement
 #' create_informant(
-#'   read_fn = ~ small_table,
+#'   tbl = ~ small_table,
 #'   tbl_name = "small_table",
 #'   label = "An example.",
 #'   lang = "fr", 
@@ -70,7 +70,7 @@
 #' 
 #' # YAML representation
 #' type: informant
-#' read_fn: ~small_table
+#' tbl: ~small_table
 #' tbl_name: small_table
 #' info_label: An example.
 #' lang: fr
@@ -99,9 +99,9 @@
 #'     _type: character
 #' ```
 #' 
-#' The generated YAML includes some top-level keys where `type` and `read_fn`
-#' are mandatory, and, two metadata sections: `table` and `columns`. Keys that
-#' begin with an underscore character are those that are updated whenever
+#' The generated YAML includes some top-level keys where `type` and `tbl` are
+#' mandatory, and, two metadata sections: `table` and `columns`. Keys that begin
+#' with an underscore character are those that are updated whenever
 #' [incorporate()] is called on an *informant*. The `table` metadata section can
 #' have multiple subsections with *info text*. The `columns` metadata section
 #' can similarly have have multiple subsections, so long as they are children to
@@ -116,22 +116,21 @@
 #' function. Informants are stored in the serialized RDS format and can be
 #' easily retrieved with the [x_read_disk()] function.
 #'
-#' It's recommended that table-prep formulas are supplied to the `read_fn`
-#' argument of `create_informant()`. In this way, when an *informant* is read
-#' from disk through [x_read_disk()], it can be reused to access the target
-#' table (which may changed, hence the need to use an expression for this).
+#' It's recommended that table-prep formulas are supplied to the `tbl` argument
+#' of `create_informant()`. In this way, when an *informant* is read from disk
+#' through [x_read_disk()], it can be reused to access the target table (which
+#' may changed, hence the need to use an expression for this).
 #'
 #' @param tbl The input table. This can be a data frame, a tibble, a `tbl_dbi`
-#'   object, or a `tbl_spark` object. Alternatively, a function can be used to
-#'   read in the input data table with the `read_fn` argument (in which case,
-#'   `tbl` can be `NULL`).
-#' @param read_fn A function that's used for reading in the data. Even if a
-#'   `tbl` is provided, this function will be invoked to obtain the data (i.e.,
-#'   the `read_fn` takes priority). There are two ways to specify a `read_fn`:
-#'   (1) using a function (e.g., `function() { <table reading code> }`) or, (2)
-#'   with an R formula expression.
-#' @param agent A pointblank *agent* object. This object can be used instead of
-#'   supplying a table in `tbl` or a table-prep formula in `read_fn`.
+#'   object, or a `tbl_spark` object. Alternatively, an expression can be
+#'   supplied to serve as instructions on how to retrieve the target table at
+#'   incorporation-time. There are two ways to specify an association to a
+#'   target table: (1) as a table-prep formula, which is a right-hand side (RHS)
+#'   formula expression (e.g., `~ { <table reading code>}`), or (2) as a
+#'   function (e.g., `function() { <table reading code>}`).
+#' @param agent A pointblank *agent* object. The table from this object can be
+#'   extracted and used in the new informant instead of supplying a table in
+#'   `tbl`.
 #' @param tbl_name A optional name to assign to the input table object. If no
 #'   value is provided, a name will be generated based on whatever information
 #'   is available.
@@ -150,6 +149,8 @@
 #'   for English (United States) and `"fr_FR"` for French (France); more simply,
 #'   this can be a language identifier without a country designation, like "es"
 #'   for Spanish (Spain, same as `"es_ES"`).
+#' @param read_fn The `read_fn` argument is deprecated. Instead, supply a
+#'   table-prep formula or function to `tbl`.
 #'   
 #' @return A `ptblank_informant` object.
 #' 
@@ -166,7 +167,7 @@
 #' # and the `small_table` dataset
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~small_table,
+#'     tbl = ~ small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example."
 #'   )

@@ -32,10 +32,11 @@
 #' @details
 #' It is recommended to set up a table-prep formula so that the *agent* and
 #' *informant* can access refreshed data after being read from disk through
-#' [x_read_disk()]. This can be done initially with the `read_fn` argument of
-#' [create_agent()]/[create_informant()] or, later, with [set_read_fn()].
-#' Alternatively, we can reintroduce the *agent* or *informant* to a data table
-#' with the [set_tbl()] function.
+#' [x_read_disk()]. This can be done initially with the `tbl` argument of
+#' [create_agent()]/[create_informant()] by passing in a table-prep formula or a
+#' function that can obtain the target table when invoked. Alternatively, we can
+#' use the [set_tbl()] with a similarly crafted `tbl` expression to ensure that
+#' an *agent* or *informant* can retrieve a table at a later time.
 #' 
 #' @param x An *agent* object of class `ptblank_agent`, an *informant* of class
 #'   `ptblank_informant`, or an table scan of class `ptblank_tbl_scan`.
@@ -364,11 +365,10 @@ x_write_disk <- function(x,
 #' 
 #' @details
 #' Should a written-to-disk *agent* or *informant* possess a table-prep formula
-#' (can be set any time with [set_read_fn()]) or a specific table (settable with
-#' [set_tbl()]) we could use the [interrogate()] or [incorporate()] function
-#' again. For a *data quality reporting* workflow, it is useful to
-#' [interrogate()] target tables that evolve over time. While the same
-#' validation steps will be used, more can be added before calling
+#' or a specific in-memory tablewe could use the [interrogate()] or
+#' [incorporate()] function again. For a *data quality reporting* workflow, it
+#' is useful to [interrogate()] target tables that evolve over time. While the
+#' same validation steps will be used, more can be added before calling
 #' [interrogate()]. For an *information management* workflow with an *informant*
 #' object, using [incorporate()] will update aspects of the reporting such as
 #' table dimensions, and info snippets/text will be regenerated.
@@ -752,19 +752,22 @@ export_report <- function(x,
 }
 
 
-#' Set a data table to an *agent*
+#' Set a data table to an *agent* or an *informant*
 #' 
-#' @description Setting a data table to an *agent* with `set_tbl()` replaces any
-#'   associated table (a data frame, a tibble, objects of class `tbl_dbi` or
-#'   `tbl_spark`). If a data table is associated with an *agent* through the
-#'   `tbl` argument *and* the same object has a table-prep formula (settable in
-#'   [create_agent()]'s `tbl` argument or with [set_read_fn()]), the
-#'   table-prep formula will take precedence.
+#' @description Setting a data table to an *agent* or an *informant* with
+#'   `set_tbl()` replaces any associated table (a data frame, a tibble, objects
+#'   of class `tbl_dbi` or `tbl_spark`).
 #'
-#' @param x An *agent* object of class `ptblank_agent`.
-#' @param tbl The input table for the `agent`. This can be a data frame, a
-#'   tibble, a `tbl_dbi` object, or a `tbl_spark` object. Any table already
-#'   associated with the *agent* will be overwritten.
+#' @param x An *agent* object of class `ptblank_agent`, or, an *informant* of
+#'   class `ptblank_informant`.
+#' @param tbl The input table for the *agent* or the *informant*. This can be a
+#'   data frame, a tibble, a `tbl_dbi` object, or a `tbl_spark` object.
+#'   Alternatively, an expression can be supplied to serve as instructions on
+#'   how to retrieve the target table at interrogation- or incorporation-time.
+#'   There are two ways to specify an association to a target table: (1) as a
+#'   table-prep formula, which is a right-hand side (RHS) formula expression
+#'   (e.g., `~ { <table reading code>}`), or (2) as a function (e.g.,
+#'   `function() { <table reading code>}`).
 #' @param tbl_name A optional name to assign to the new input table object. If
 #'   no value is provided, a name will be generated based on whatever
 #'   information is available.

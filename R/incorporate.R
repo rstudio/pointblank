@@ -49,7 +49,7 @@
 #' # the info text
 #' informant <- 
 #'   create_informant(
-#'     read_fn = ~ test_table,
+#'     tbl = ~ test_table,
 #'     tbl_name = "test_table"
 #'   ) %>%
 #'   info_snippet(
@@ -156,6 +156,7 @@ incorporate <- function(informant) {
       
     } else {
       
+      # TODO: Improve the `stop()` message here
       stop(
         "The `read_fn` object must be a function or an R formula.\n",
         "* A function can be made with `function()` {<table reading code>}.\n",

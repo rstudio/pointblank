@@ -157,7 +157,6 @@ interrogate <- function(agent,
   # TODO: Handle possible expansion of table through evaluation
   # of all `seg_expr` values
   
-  
   # Get the agent's validation step indices
   validation_steps <- seq_len(nrow(agent$validation_set))
   
@@ -191,6 +190,7 @@ interrogate <- function(agent,
       
       agent$validation_set[[i, "eval_active"]] <- 
         agent$validation_set[[i, "active"]][[1]]
+      
     }
     
     # Set the validation step as `active = FALSE` if there is a
@@ -1035,9 +1035,10 @@ tbl_val_comparison <- function(table,
   # Construct a string-based expression for the validation
   expression <- paste(column, operator, value)
 
-  table_sql_server <- any(grepl("sql server|sqlserver", tolower(class(table))))
-
-  if (table_sql_server) {
+  # Count good obs
+  # Check Microsoft SQL Server source
+  if (agent$tbl_src == "mssql") {
+    message("The source is Microsoft SQL Server source, this might take some time...")
     table %>%
       dplyr::mutate(pb_is_good_ = dplyr::case_when(
         !!rlang::parse_expr(expression) ~ 1,
@@ -2835,13 +2836,10 @@ add_reporting_data <- function(agent,
     dplyr::summarize(n = dplyr::n()) %>%
     dplyr::pull(n) %>%
     as.numeric()
-  
-  # Test if connection is SQL Server
-  tbl_checked_sql_server <- 
-    any(grepl("sql server|sqlserver", tolower(class(tbl_checked))))
-  
+
   # Get total count of TRUE rows
-  if (tbl_checked_sql_server) {
+  # Check Microsoft SQL Server source
+  if (agent$tbl_src == "mssql") {
     
     # nocov start
     
@@ -2865,7 +2863,8 @@ add_reporting_data <- function(agent,
   }
   
   # Get total count of FALSE rows
-  if (tbl_checked_sql_server) {
+  # Check if source is Microsoft SQL Server
+  if (agent$tbl_src == "mssql") {
     
     # nocov start
     
@@ -3114,12 +3113,9 @@ add_table_extract <- function(agent,
     return(agent)
   }
 
-  tbl_checked <- tbl_checked$value
-  
-  tbl_type <- tbl_checked %>% class()
-  
-  if (grepl("sql server|sqlserver", agent$tbl_src_details)) {
-    
+  # Count bad obs
+  # Check Microsoft SQL Server source
+  if (agent$tbl_src == "mssql") {
     # nocov start
     
     problem_rows <- 

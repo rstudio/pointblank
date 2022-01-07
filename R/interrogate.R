@@ -1078,6 +1078,7 @@ interrogate_between <- function(agent,
   } else {
     left <- unname(left)
   }
+  
   if (inherits(right, "list")) {
     right <- right[[1]] %>% rlang::get_expr()
   } else {
@@ -1190,6 +1191,7 @@ interrogate_between <- function(agent,
   
   tbl_evaled
 }
+
 tbl_val_ib_incl_incl <- function(table,
                                  column,
                                  left,
@@ -1206,14 +1208,30 @@ tbl_val_ib_incl_incl <- function(table,
     right = {{ right }}
   )
   
-  table %>%
-    dplyr::mutate(pb_is_good_ = dplyr::case_when(
-      {{ column }} >= {{ left }} & {{ column }} <= {{ right }} ~ TRUE,
-      {{ column }} < {{ left }} | {{ column }} > {{ right }} ~ FALSE,
-      is.na({{ column }}) & na_pass ~ TRUE,
-      is.na({{ column }}) & na_pass == FALSE ~ FALSE
-    ))
+  # Check if source is Microsoft SQL Server
+  if (agent$tbl_src == "mssql") {
+    message("The input is Microsoft SQL Server, we need to collect the data and transform")
+    na_pass_mssql <- ifelse(na_pass, 1, 0)
+    table %>%
+      dplyr::select({{ column }}) %>% 
+      dplyr::collect() %>% 
+      dplyr::mutate(pb_is_good_ = dplyr::case_when(
+        {{ column }} >= {{ left }} & {{ column }} <= {{ right }} ~ 1,
+        {{ column }} < {{ left }} | {{ column }} > {{ right }} ~ 0,
+        is.na({{ column }}) & na_pass ~ 1,
+        is.na({{ column }}) & na_pass == FALSE ~ 0
+      )) 
+  } else {
+    table %>%
+      dplyr::mutate(pb_is_good_ = dplyr::case_when(
+        {{ column }} >= {{ left }} & {{ column }} <= {{ right }} ~ TRUE,
+        {{ column }} < {{ left }} | {{ column }} > {{ right }} ~ FALSE,
+        is.na({{ column }}) & na_pass ~ TRUE,
+        is.na({{ column }}) & na_pass == FALSE ~ FALSE
+      ))
+  }
 }
+
 tbl_val_ib_excl_incl <- function(table,
                                  column,
                                  left,

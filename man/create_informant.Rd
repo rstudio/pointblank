@@ -181,7 +181,7 @@ small_table
 # and the `small_table` dataset
 informant <- 
   create_informant(
-    tbl = ~ small_table,
+    tbl = pointblank::small_table,
     tbl_name = "small_table",
     label = "An example."
   )

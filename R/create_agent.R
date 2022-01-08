@@ -226,10 +226,12 @@
 #' # serves as a default for all validation
 #' # steps which can be overridden); the
 #' # static thresholds provided by `al` will
-#' # make the reporting a bit more useful
+#' # make the reporting a bit more useful;
+#' # we also provide a target table and we'll
+#' # use `pointblank::small_table` 
 #' agent <- 
 #'   create_agent(
-#'     tbl = ~ small_table,
+#'     tbl = pointblank::small_table,
 #'     tbl_name = "small_table",
 #'     label = "An example.",
 #'     actions = al
@@ -269,11 +271,10 @@
 #' report <- get_agent_report(agent)
 #' class(report)
 #' 
-#' # What can you do with the report?
+#' # What can you do with the report object?
 #' # Print it from an R Markdown code
 #' # chunk, use it in a **blastula** email,
-#' # put it in a webpage, or further
-#' # modify it with the **gt** package
+#' # put it in a webpage, etc.
 #' 
 #' # From the report we know that Step
 #' # 4 had two test units (rows, really)

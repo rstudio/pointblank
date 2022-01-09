@@ -38,11 +38,10 @@ If your target table is in a file, stored either locally or remotely, the
 \code{file_tbl()} function can make it possible to access it in a single function
 call. Compatible file types for this function are: CSV (\code{.csv}), TSV
 (\code{.tsv}), RDA (\code{.rda}), and RDS (\code{.rds}) files. This function generates an
-in-memory \code{tbl_dbl} object, which can be used as a target table for
-\code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}. The ideal option for data access
-with \code{file_tbl()} is using this function within the \code{tbl} parameter in either
-of the aforementioned \verb{create_*()} functions. This can be done by using a
-leading \code{~} (e.g,. \code{tbl = ~ file_tbl(...)}).
+in-memory \code{tbl_df} object, which can be used as a target table for
+\code{\link[=create_agent]{create_agent()}} and \code{\link[=create_informant]{create_informant()}}. Another great option is supplying
+a table-prep formula involving \code{file_tbl()} to \code{\link[=tbl_store]{tbl_store()}} so that you have
+access to tables based on flat files though single names via a table store.
 
 In the remote data use case, we can specify a URL starting with \verb{http://},
 \verb{https://}, etc., and ending with the file containing the data table. If data

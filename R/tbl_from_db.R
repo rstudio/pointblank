@@ -28,11 +28,9 @@
 #' database and using the `dplyr::tbl()` function with the connection and the
 #' table name (or a reference to a table in a schema). You can use `db_tbl()` as
 #' the basis for obtaining a database table for the `tbl` parameter in
-#' [create_agent()] or [create_informant()]. This is most useful when using a
-#' leading `~` before the `db_tbl()` call (e.g,. `tbl = ~ db_tbl(...)`). Another
-#' great option is supplying a table-prep formula involving `db_tbl()` to
-#' [tbl_store()] so that you have access to database tables though single names
-#' via a table store.
+#' [create_agent()] or [create_informant()]. Another great option is supplying a
+#' table-prep formula involving `db_tbl()` to [tbl_store()] so that you have
+#' access to database tables though single names via a table store.
 #'
 #' The username and password are supplied though environment variable names. If
 #' desired, values for the username and password can be supplied directly by

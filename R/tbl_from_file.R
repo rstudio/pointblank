@@ -26,11 +26,10 @@
 #' `file_tbl()` function can make it possible to access it in a single function
 #' call. Compatible file types for this function are: CSV (`.csv`), TSV
 #' (`.tsv`), RDA (`.rda`), and RDS (`.rds`) files. This function generates an
-#' in-memory `tbl_dbl` object, which can be used as a target table for
-#' [create_agent()] and [create_informant()]. The ideal option for data access
-#' with `file_tbl()` is using this function within the `tbl` parameter in either
-#' of the aforementioned `create_*()` functions. This can be done by using a
-#' leading `~` (e.g,. `tbl = ~ file_tbl(...)`).
+#' in-memory `tbl_df` object, which can be used as a target table for
+#' [create_agent()] and [create_informant()]. Another great option is supplying
+#' a table-prep formula involving `file_tbl()` to [tbl_store()] so that you have
+#' access to tables based on flat files though single names via a table store.
 #'
 #' In the remote data use case, we can specify a URL starting with `http://`,
 #' `https://`, etc., and ending with the file containing the data table. If data

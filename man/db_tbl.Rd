@@ -46,11 +46,9 @@ object, which usually involves a combination of building a connection to a
 database and using the \code{dplyr::tbl()} function with the connection and the
 table name (or a reference to a table in a schema). You can use \code{db_tbl()} as
 the basis for obtaining a database table for the \code{tbl} parameter in
-\code{\link[=create_agent]{create_agent()}} or \code{\link[=create_informant]{create_informant()}}. This is most useful when using a
-leading \code{~} before the \code{db_tbl()} call (e.g,. \code{tbl = ~ db_tbl(...)}). Another
-great option is supplying a table-prep formula involving \code{db_tbl()} to
-\code{\link[=tbl_store]{tbl_store()}} so that you have access to database tables though single names
-via a table store.
+\code{\link[=create_agent]{create_agent()}} or \code{\link[=create_informant]{create_informant()}}. Another great option is supplying a
+table-prep formula involving \code{db_tbl()} to \code{\link[=tbl_store]{tbl_store()}} so that you have
+access to database tables though single names via a table store.
 
 The username and password are supplied though environment variable names. If
 desired, values for the username and password can be supplied directly by

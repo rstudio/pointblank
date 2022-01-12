@@ -68,6 +68,16 @@ is_arrow_object <- function(x) {
   inherits(x, "ArrowObject")
 }
 
+is_tbl_mssql <- function(x) {
+  
+  if (!is_tbl_dbi(x)) {
+    return(FALSE)
+  } 
+  
+  tbl_src_details <- tolower(get_tbl_dbi_src_details(x))
+  grepl("sql server|sqlserver", tbl_src_details)
+}
+
 # nocov end
 
 # Generate a label for the `agent` or `informant` object
@@ -674,7 +684,7 @@ get_r_column_names_types <- function(tbl) {
 }
 
 get_tbl_information <- function(tbl) {
-
+  
   if (is.data.frame(tbl)) {
     
     tbl_information <- get_tbl_information_df(tbl)

@@ -1271,13 +1271,17 @@ interrogate_set <- function(agent,
       # Ensure that the `column` provided is valid
       column_validity_checks_column(table = table, column = {{ column }})
       
+      true <- if (is_tbl_mssql(table)) 1 else TRUE
+      false <- if (is_tbl_mssql(table)) 0 else FALSE
+      na_pass_bool <- if (na_pass) true else false
+      
       table %>%
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
-          {{ column }} %in% set ~ TRUE,
-          !({{ column }} %in% set) ~ FALSE
+          {{ column }} %in% set ~ {{ true }},
+          !({{ column }} %in% set) ~ {{ false }}
         )) %>%
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
-          is.na(pb_is_good_) ~ na_pass,
+          is.na({{ column }}) ~ na_pass_bool,
           TRUE ~ pb_is_good_
         ))
     }
@@ -1440,13 +1444,17 @@ interrogate_set <- function(agent,
       # Ensure that the `column` provided is valid
       column_validity_checks_column(table = table, column = {{ column }})
       
+      true <- if (is_tbl_mssql(table)) 1 else TRUE
+      false <- if (is_tbl_mssql(table)) 0 else FALSE
+      na_pass_bool <- if (na_pass) false else true
+      
       table %>%
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
-          !({{ column }} %in% set) ~ TRUE,
-          {{ column }} %in% set ~ FALSE
+          !({{ column }} %in% set) ~ {{ true }},
+          {{ column }} %in% set ~ {{ false }}
         )) %>%
         dplyr::mutate(pb_is_good_ = dplyr::case_when(
-          is.na(pb_is_good_) ~ !na_pass,
+          is.na({{ column }}) ~ na_pass_bool,
           TRUE ~ pb_is_good_
         ))
     }
@@ -1630,6 +1638,15 @@ interrogate_regex <- function(agent,
       stop(
         "Regex-based validations are currently not supported on SQLite ",
         "database tables.",
+        call. = FALSE
+      )
+    }
+    
+    if (tbl_type == "mssql") {
+      
+      stop(
+        "Regex-based validations are currently not supported on Microsoft ",
+        "SQL Server database tables.",
         call. = FALSE
       )
     }
@@ -2011,7 +2028,14 @@ interrogate_null <- function(agent,
     # Ensure that the `column` provided is valid
     column_validity_checks_column(table = table, column = {{ column }})
     
-    table %>% dplyr::mutate(pb_is_good_ = is.na({{ column }}))
+    true <- if (is_tbl_mssql(table)) 1 else TRUE
+    false <- if (is_tbl_mssql(table)) 0 else FALSE
+    
+    table %>%
+      dplyr::mutate(pb_is_good_ = dplyr::case_when(
+        is.na({{ column }}) ~ {{ true }},
+        TRUE ~ {{ false }}
+      ))
   }
   
   # Perform rowwise validations for the column
@@ -2035,7 +2059,14 @@ interrogate_not_null <- function(agent,
     # Ensure that the `column` provided is valid
     column_validity_checks_column(table = table, column = {{ column }})
     
-    table %>% dplyr::mutate(pb_is_good_ = !is.na({{ column }}))
+    true <- if (is_tbl_mssql(table)) 1 else TRUE
+    false <- if (is_tbl_mssql(table)) 0 else FALSE
+    
+    table %>%
+      dplyr::mutate(pb_is_good_ = dplyr::case_when(
+        is.na({{ column }}) ~ {{ false }},
+        TRUE ~ {{ true }}
+      ))
   }
   
   # Perform rowwise validations for the column

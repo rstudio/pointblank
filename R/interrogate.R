@@ -1392,6 +1392,7 @@ interrogate_set <- function(agent,
         dplyr::pull({{ column }})
       
       if (na_pass) {
+        
         # Remove any NA values from the vector
         table_col_distinct_values <-
           table_col_distinct_values[!is.na(table_col_distinct_values)]
@@ -1494,11 +1495,23 @@ interrogate_direction <- function(agent,
     direction <- "decreasing"
   }
 
-  # Create function for validating the `col_vals_in_set()` step function
+  # Create function for validating any `col_vals_increasing()` and
+  # `col_vals_decreasing()` steps
   tbl_val_direction <- function(table,
                                 column,
                                 na_pass,
                                 direction) {
+    
+    # Exit if the table is from the `mssql` source 
+    if (is_tbl_mssql(table)) {
+      
+      stop(
+        "Direction-based validations (`col_vals_increasing()`/
+        `col_vals_decreasing()`) are currently not supported on Microsoft ",
+        "SQL Server database tables.",
+        call. = FALSE
+      )
+    }
     
     # Ensure that the input `table` is actually a table object
     tbl_validity_check(table = table)

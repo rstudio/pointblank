@@ -43,7 +43,10 @@ create_validation_step <- function(agent,
       list(
         assertion_type = assertion_type,
         column = ifelse(is.null(column), list(NULL), list(column)),
-        values = ifelse(is.null(values), list(NULL), list(values)),
+        values = ifelse(
+          is.null(values) || is_a_table_object(values),
+          list(NULL), list(values)
+        ),
         na_pass = ifelse(is.null(na_pass), NA, as.logical(na_pass)),
         preconditions = ifelse(
           is.null(preconditions), list(NULL), list(preconditions)

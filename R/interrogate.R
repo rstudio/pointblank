@@ -2335,7 +2335,6 @@ interrogate_col_schema_match <- function(agent,
   if (inherits(table, "tbl_dbi") || inherits(table, "tbl_spark")) {
     
     if (inherits(table_schema_y, "sql_type")) {
-      
       if (all(!is.na(agent$db_col_types))) {
         
         table_schema_x <-
@@ -2511,7 +2510,7 @@ interrogate_tbl_match <- function(agent,
     
     # Ensure that the input `table` and `tbl_compare` objects
     # are actually table objects
-    # TODO: improve failure message to specify which table might not be one
+    # TODO: improve failure message to specify which table isn't valid
     tbl_validity_check(table = table)
     tbl_validity_check(table = tbl_compare)
     

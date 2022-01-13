@@ -34,7 +34,7 @@ agent <-
     schema = col_schema(
       id = "integer64",
       upi = "character",
-      timestamp = "POSIXct",
+      timestamp = c("POSIXct", "POSIXt"),
       userstamp = "character",
       crc64 = "character",
       len = "integer",

@@ -34,18 +34,19 @@ reference:
 
   - title: Validation, Expectation, and Test Functions
     desc: >
-      Validation steps are either used with an *agent* object or, more simply,
-      just with the table of interest. When used with an *agent*, each step
-      function called works to build up a validation plan (which is executed
-      with the `interrogate()` function). If used directly on data (that is, no
-      agent is involved whatsoever), then the data is checked and passed
-      through. However, if we (1) set `warn_*` and/or `stop_*` thresholds and
-      (2) the level of failed validation units exceeds those set levels, then
-      we'll get either a warning or a stop. Each validation step function is
-      assoicated with an expectation function (of the form `expect_*()`). These
+      Validation functions are either used with an *agent* object or, more
+      simply, just with the table of interest. When used with an *agent*, each
+      validation works to build up a validation plan (which is executed
+      with the `interrogate()` function). If one or more validation functions
+      are used directly on data (that is, no agent is involved whatsoever),
+      then the data is checked and passed through if there are no problems.
+      We can fine tune the `warn_*` and/or `stop_*` thresholds and so that if
+      the level of failed validation units exceeds those set levels, then
+      we'll get either a warning or an error. Each validation function is
+      associated with an expectation function (of the form `expect_*()`). These
       expectation functions are equivalent in usage and behavior to those in
-      the **testthat** package. Finallly, each validation function has an
-      associated test function (of the form `test_*()`) which always returns a
+      the **testthat** package. Finally, each validation function has an
+      associated test function (of the form `test_*()`) that always returns a
       logical value.
     contents:
     - col_vals_lt

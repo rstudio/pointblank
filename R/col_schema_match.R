@@ -541,10 +541,7 @@ col_schema <- function(...,
       x <- 
         switch(
           db_col_types,
-          "r" = col_schema_from_names_types(
-            names = tbl_info$col_names,
-            types = tbl_info$r_col_types
-          ),
+          "r" = create_col_schema_from_df(tbl = .tbl),
           "sql" = col_schema_from_names_types(
             names = tbl_info$col_names,
             types = tbl_info$db_col_types
@@ -567,7 +564,17 @@ db_col_type <- function(db_type) {
   # Generate a standardized vector for an `db_col_type`
 }
 
+# Generates a list of R column types from any type of table
 create_col_schema_from_df <- function(tbl) {
+  
+  if (is_a_table_object(tbl) && !is_tbl_df(tbl)) {
+    
+    tbl <- 
+      tbl %>%
+      utils::head(1) %>%
+      dplyr::collect()
+    
+  }
   
   lapply(tbl, class)
 }

@@ -2514,6 +2514,16 @@ interrogate_tbl_match <- function(agent,
     tbl_validity_check(table = table)
     tbl_validity_check(table = tbl_compare)
     
+    # Exit if either table is from the `mssql` source 
+    if (is_tbl_mssql(table) || is_tbl_mssql(tbl_compare)) {
+      
+      stop(
+        "The `table_match()` validation is currently not supported ",
+        "on Microsoft SQL Server database tables.",
+        call. = FALSE
+      )
+    }
+    
     # Ensure that both tables are `ungroup()`ed first
     table <- dplyr::ungroup(table)
     tbl_compare <- dplyr::ungroup(tbl_compare)

@@ -2533,7 +2533,10 @@ interrogate_tbl_match <- function(agent,
     #
     
     col_schema_matching <-
-      test_col_schema_match(table, schema = col_schema(.tbl = tbl_compare))
+      test_col_schema_match(
+        object = table,
+        schema = col_schema(.tbl = tbl_compare, .db_col_types = "r")
+      )
 
     if (!col_schema_matching) {
       return(dplyr::tibble(pb_is_good_ = FALSE))

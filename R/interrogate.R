@@ -2351,18 +2351,8 @@ interrogate_col_schema_match <- function(agent,
       
     } else if (inherits(table_schema_y, "r_type")) {
       
-      if (all(!is.na(agent$col_types))) {
-        
-        table_schema_x <-
-          col_schema_from_names_types(
-            names = agent$col_names,
-            types = agent$col_types
-          )
-        
-        class(table_schema_x) <- c("r_type", "col_schema")
-      } else {
-        table_schema_x <- col_schema(.tbl = table, .db_col_types = "r")
-      }
+      table_schema_x <- create_col_schema_from_df(tbl = table)
+      class(table_schema_x) <- c("r_type", "col_schema")
     }
     
   # nocov end

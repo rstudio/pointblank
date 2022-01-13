@@ -54,6 +54,10 @@ is_a_table_object <- function(x) {
   inherits(x, c("data.frame", "tbl_df", "tbl_dbi", "tbl_spark"))
 }
 
+is_tbl_df <- function(x) {
+  inherits(x, c("data.frame", "tbl_df"))
+}
+
 is_tbl_dbi <- function(x) {
   inherits(x, "tbl_dbi")
 }

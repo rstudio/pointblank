@@ -821,7 +821,7 @@ get_tbl_information_dbi <- function(tbl) {
       q_types <-
         as.character(
           glue::glue(
-            "SELECT TOP 9 {n_cols} DATA_TYPE \\
+            "SELECT TOP {n_cols} DATA_TYPE \\
           FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}'"
           )
         )

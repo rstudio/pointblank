@@ -54,6 +54,10 @@ is_a_table_object <- function(x) {
   inherits(x, c("data.frame", "tbl_df", "tbl_dbi", "tbl_spark"))
 }
 
+is_tbl_df <- function(x) {
+  inherits(x, c("data.frame", "tbl_df"))
+}
+
 is_tbl_dbi <- function(x) {
   inherits(x, "tbl_dbi")
 }
@@ -66,6 +70,16 @@ is_tbl_spark <- function(x) {
 
 is_arrow_object <- function(x) {
   inherits(x, "ArrowObject")
+}
+
+is_tbl_mssql <- function(x) {
+  
+  if (!is_tbl_dbi(x)) {
+    return(FALSE)
+  } 
+  
+  tbl_src_details <- tolower(get_tbl_dbi_src_details(x))
+  grepl("sql server|sqlserver", tbl_src_details)
 }
 
 # nocov end
@@ -674,7 +688,7 @@ get_r_column_names_types <- function(tbl) {
 }
 
 get_tbl_information <- function(tbl) {
-
+  
   if (is.data.frame(tbl)) {
     
     tbl_information <- get_tbl_information_df(tbl)
@@ -807,7 +821,7 @@ get_tbl_information_dbi <- function(tbl) {
       q_types <-
         as.character(
           glue::glue(
-            "SELECT TOP 9 {n_cols} DATA_TYPE \\
+            "SELECT TOP {n_cols} DATA_TYPE \\
           FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{db_tbl_name}'"
           )
         )

@@ -75,19 +75,22 @@
 #' following columns:
 #' 
 #' \itemize{
-#' \item i: the validation step number
-#' \item type: the name of the validation function used for the validation step
+#' \item i: the validation step number.
+#' \item type: the name of the validation function used for the validation step.
 #' \item columns: the names of the target columns used in the validation step
-#' (if applicable)
+#' (if applicable).
 #' \item values: the values used in the validation step, where applicable; for
-#' a [conjointly()] validation step, this is a listing of all sub-validations
+#' a [conjointly()] validation step, this is a listing of all sub-validations.
 #' \item precon: indicates whether any there are any preconditions to apply
-#' before interrogation and, if so, the number of statements used
+#' before interrogation and, if so, the number of statements used.
 #' \item active: a logical value that indicates whether a validation step is
-#' set to `"active"` during an interrogation
-#' \item eval: a character value that denotes the result of each validation
-#' step functions' evaluation during interrogation
-#' \item units: the total number of test units for the validation step
+#' set to `"active"` during an interrogation.
+#' \item eval: a character value that denotes the success of interrogation
+#' evaluation for each step. A value of `"OK"` indicates no issues with
+#' evaluation. The `"WARNING"` value indicates a warning occurred during
+#' evaluation. The `"ERROR"` VALUES indicates that evaluation failed due to an
+#' error. With `"W+E"` both warnings and an error occurred during evaluation.
+#' \item units: the total number of test units for the validation step.
 #' \item n_pass: the number of *passing* test units.
 #' \item f_pass: the fraction of *passing* test units.
 #' \item W, S, N: logical value stating whether the `warn`, `stop`, or `notify`

@@ -74,7 +74,7 @@ small_table \%>\% has_columns(vars(a, h))
 # agent report)
 agent <- 
   create_agent(
-    tbl = ~ small_table,
+    tbl = small_table,
     tbl_name = "small_table"
   ) \%>\%
   col_vals_gt(

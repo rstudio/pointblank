@@ -37,7 +37,7 @@ whether the step should be active or not.
 # `interrogate()`
 agent_1 <- 
   create_agent(
-    tbl = ~ small_table,
+    tbl = small_table,
     tbl_name = "small_table",
     label = "An example."
   ) \%>\%

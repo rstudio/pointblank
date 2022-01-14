@@ -139,7 +139,7 @@ if (interactive()) {
 # validation steps)
 agent <-
   create_agent(
-    tbl = ~ small_table,
+    tbl = small_table,
     tbl_name = "small_table",
     label = "An example.",
     actions = al,
@@ -173,7 +173,7 @@ agent <-
 # `email_create()` function
 email_object <-
   create_agent(
-    tbl = ~ small_table,
+    tbl = small_table,
     tbl_name = "small_table",
     label = "An example.",
     actions = al

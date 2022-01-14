@@ -26,8 +26,8 @@
 #' whether column values in a table are *less than or equal to* a specified
 #' `value` (the exact comparison used in this function is `col_val <= value`).
 #' The `value` can be specified as a single, literal value or as a column name
-#' given in `vars()`. The validation step function can be used directly on a
-#' data table or with an *agent* object (technically, a `ptblank_agent` object)
+#' given in `vars()`. The validation function can be used directly on a data
+#' table or with an *agent* object (technically, a `ptblank_agent` object)
 #' whereas the expectation and test functions can only be used with a data
 #' table. The types of data tables that can be used include data frames,
 #' tibbles, database tables (`tbl_dbi`), and Spark DataFrames (`tbl_spark`).

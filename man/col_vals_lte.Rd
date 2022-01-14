@@ -135,8 +135,8 @@ expectation function, and the \code{test_col_vals_lte()} test function all check
 whether column values in a table are \emph{less than or equal to} a specified
 \code{value} (the exact comparison used in this function is \code{col_val <= value}).
 The \code{value} can be specified as a single, literal value or as a column name
-given in \code{vars()}. The validation step function can be used directly on a
-data table or with an \emph{agent} object (technically, a \code{ptblank_agent} object)
+given in \code{vars()}. The validation function can be used directly on a data
+table or with an \emph{agent} object (technically, a \code{ptblank_agent} object)
 whereas the expectation and test functions can only be used with a data
 table. The types of data tables that can be used include data frames,
 tibbles, database tables (\code{tbl_dbi}), and Spark DataFrames (\code{tbl_spark}).

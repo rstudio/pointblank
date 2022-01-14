@@ -23,8 +23,8 @@
 #' The `col_vals_in_set()` validation function, the `expect_col_vals_in_set()`
 #' expectation function, and the `test_col_vals_in_set()` test function all
 #' check whether column values in a table are part of a specified `set` of
-#' values. The validation step function can be used directly on a data table or
-#' with an *agent* object (technically, a `ptblank_agent` object) whereas the
+#' values. The validation function can be used directly on a data table or with
+#' an *agent* object (technically, a `ptblank_agent` object) whereas the
 #' expectation and test functions can only be used with a data table. The types
 #' of data tables that can be used include data frames, tibbles, database tables
 #' (`tbl_dbi`), and Spark DataFrames (`tbl_spark`). Each validation step or

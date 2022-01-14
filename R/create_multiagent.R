@@ -76,7 +76,7 @@
 #' # interrogate the `small_table`
 #' agent_1 <-
 #'   create_agent(
-#'     tbl = ~ small_table,
+#'     tbl = small_table,
 #'     label = "An example.",
 #'     actions = al
 #'   ) %>%

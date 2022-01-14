@@ -209,8 +209,8 @@ yaml_read_informant <- function(filename,
 #' 
 #' # Now create a pointblank `informant`
 #' # object; the data will be referenced
-#' # with `tbl` (a requirement for
-#' # writing to YAML)
+#' # to `tbl` with a table-prep formula
+#' # (a requirement for writing to YAML)
 #' informant <- 
 #'   create_informant(
 #'     tbl = ~ small_table,

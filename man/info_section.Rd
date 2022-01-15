@@ -152,10 +152,6 @@ informant <-
 # and 'columns' sections; we can create
 # entirely different sections with their
 # own properties using `info_section()`
-
-# We can add *info text* to sections
-# entirely different than `table` and
-# `columns` with `info_section()`
 informant <-
   informant \%>\%
   info_section(

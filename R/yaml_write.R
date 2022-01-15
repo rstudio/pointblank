@@ -602,7 +602,14 @@ get_schema_list <- function(schema) {
 }
 
 to_list_read_fn <- function(read_fn) {
-  list(tbl = paste(as.character(read_fn), collapse = ""))
+
+  if (inherits(read_fn, "function")) {
+    read_fn_char <- utils::capture.output(read_fn)
+  } else {
+    read_fn_char <- paste(as.character(read_fn), collapse = "")
+  }
+  
+  list(tbl = read_fn_char)
 }
 
 to_list_label <- function(label) {

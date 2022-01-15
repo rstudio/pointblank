@@ -144,8 +144,8 @@
 #' using the [yaml_agent_string()] function.
 #'   
 #' @inheritParams col_vals_gt
-#' @param expr An expression to use for this test. This can either be in the
-#'   form of a call made with the `expr()` function or as a one-sided **R**
+#' @param expr An expression to use for this validation. This can either be in
+#'   the form of a call made with the `expr()` function or as a one-sided **R**
 #'   formula (using a leading `~`).
 #'   
 #' @return For the validation function, the return value is either a

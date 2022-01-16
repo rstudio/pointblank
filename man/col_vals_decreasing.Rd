@@ -301,6 +301,97 @@ by using the \code{\link[=yaml_agent_string]{yaml_agent_string()}} function.
 2-14
 }
 
+\examples{
+# The `game_revenue` dataset in
+# the package has the column
+# `session_start`, which contains
+# date-time values; let's create
+# a column of difftime values (in
+# `time_left`) that describes the
+# time remaining in the month
+# relative to the session start
+game_revenue_2 <-
+  game_revenue \%>\%
+  dplyr::mutate(
+    time_left = 
+      lubridate::ymd_hms(
+        "2015-02-01 00:00:00"
+      ) - session_start
+  )
+
+# Let's ensure that the difftime
+# values in the new `time_left`
+# column has values that are
+# decreasing from top to bottom
+
+# A: Using an `agent` with validation
+#    functions and then `interrogate()`
+
+# Validate that all difftime values
+# in the column `time_left` are
+# decreasing, and, allow for repeating
+# values (`allow_stationary` will be
+# set to `TRUE`)
+agent <-
+  create_agent(game_revenue_2) \%>\%
+  col_vals_decreasing(
+    vars(time_left),
+    allow_stationary = TRUE
+  ) \%>\%
+  interrogate()
+  
+# Determine if this validation
+# had no failing test units (there
+# are 2000 test units)
+all_passed(agent)
+
+# Calling `agent` in the console
+# prints the agent's report; but we
+# can get a `gt_tbl` object directly
+# with `get_agent_report(agent)`
+
+# B: Using the validation function
+#    directly on the data (no `agent`)
+
+# This way of using validation functions
+# acts as a data filter: data is passed
+# through but should `stop()` if there
+# is a single test unit failing; the
+# behavior of side effects can be
+# customized with the `actions` option
+game_revenue_2 \%>\%
+  col_vals_decreasing(
+    vars(time_left),
+    allow_stationary = TRUE
+  ) \%>\%
+  dplyr::select(time_left) \%>\%
+  dplyr::distinct() \%>\%
+  dplyr::count()
+
+# C: Using the expectation function
+
+# With the `expect_*()` form, we would
+# typically perform one validation at a
+# time; this is primarily used in
+# testthat tests
+expect_col_vals_decreasing(
+  game_revenue_2,
+  vars(time_left),
+  allow_stationary = TRUE
+)
+
+# D: Using the test function
+
+# With the `test_*()` form, we should
+# get a single logical value returned
+# to us
+game_revenue_2 \%>\%
+  test_col_vals_decreasing(
+    vars(time_left),
+    allow_stationary = TRUE
+  )
+
+}
 \seealso{
 The analogous function that moves in the opposite direction:
 \code{\link[=col_vals_increasing]{col_vals_increasing()}}.

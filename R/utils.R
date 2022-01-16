@@ -595,6 +595,7 @@ all_validations_fns_vec <- function() {
     "row_count_match",
     "tbl_match",
     "conjointly",
+    "serially",
     "specially"
   )
 }

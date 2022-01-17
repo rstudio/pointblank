@@ -177,8 +177,8 @@ reference:
       `x_write_disk()` function. The on-disk object can be retrieved with the
       `x_read_disk()` function. You can export a report as an HTML file with
       `export_report()`. A set of functions are also available for
-      managing associations to a data table (either directly or with a
-      table-prep formula), and, for editing an agent's validation steps.
+      setting a data table to an existing object, and, for editing an agent's
+      validation steps.
     contents:
     - x_write_disk
     - x_read_disk

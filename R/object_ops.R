@@ -754,9 +754,10 @@ export_report <- function(x,
 
 #' Set a data table to an *agent* or an *informant*
 #' 
-#' @description Setting a data table to an *agent* or an *informant* with
-#'   `set_tbl()` replaces any associated table (a data frame, a tibble, objects
-#'   of class `tbl_dbi` or `tbl_spark`).
+#' @description 
+#' Setting a data table to an *agent* or an *informant* with `set_tbl()`
+#' replaces any associated table (a data frame, a tibble, objects of class
+#' `tbl_dbi` or `tbl_spark`).
 #'
 #' @param x An *agent* object of class `ptblank_agent`, or, an *informant* of
 #'   class `ptblank_informant`.

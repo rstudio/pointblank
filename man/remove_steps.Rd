@@ -51,7 +51,7 @@ agent_1 <-
 # The second validation step has
 # been determined to be unneeded and
 # is to be removed; this can be done
-# by used `remove_steps()` with the
+# by using `remove_steps()` with the
 # agent object
 agent_2 <-
   agent_1 \%>\%

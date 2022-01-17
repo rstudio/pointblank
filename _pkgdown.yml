@@ -190,13 +190,13 @@ reference:
     
   - title: The Multiagent
     desc: >
-      The multiagent is a group of agents, each tasked with their own
-      interrogation to perform. As a group, they provide an interesting and
-      informative bit of reporting that tracks the evolution of data quality
-      checks over time. With a *multiagent* object, we can get a data quality
-      report that handles changes in the target data and matches data validation
-      steps across all agent. The predominant application is retrospective
-      analysis of data quality for a target table.
+      The *multiagent* is a group of agents, all bundled together into a single
+      object. With this grouping, we can generate unified reporting across the
+      component agents with the `get_multiagent_report()` function. One style
+      of reporting (`"long"`) provides a serial listing of agent reports. The
+      other option (`"wide"`) is useful for tracking the evolution of data
+      quality checks over time since common steps across all interrogations
+      will form individual rows (and each interrogation will form a column).
     contents:
     - create_multiagent
     - read_disk_multiagent

@@ -83,7 +83,7 @@ informant <-
 # called "multiagent-small_table.rds",
 # we could read that to a new multiagent
 # object with `x_read_disk()`
-agent <-
+multiagent <-
   x_read_disk("multiagent-small_table.rds")
 
 # D: Reading a table scan from disk

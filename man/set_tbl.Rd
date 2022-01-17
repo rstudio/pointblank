@@ -27,9 +27,9 @@ information is available.}
 provided then any existing label will be retained.}
 }
 \description{
-Setting a data table to an \emph{agent} or an \emph{informant} with
-\code{set_tbl()} replaces any associated table (a data frame, a tibble, objects
-of class \code{tbl_dbi} or \code{tbl_spark}).
+Setting a data table to an \emph{agent} or an \emph{informant} with \code{set_tbl()}
+replaces any associated table (a data frame, a tibble, objects of class
+\code{tbl_dbi} or \code{tbl_spark}).
 }
 \section{Function ID}{
 

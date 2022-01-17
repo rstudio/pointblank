@@ -206,11 +206,13 @@ reference:
     desc: >
       YAML files can be used in **pointblank** for two distinct purposes: (1)
       to define agents and their validation plans, and (2) to define information
-      for tables. The `yaml_write()` function allows us write agent and/or
+      for tables. The `yaml_write()` function allows us write agent or
       informant YAML from the namesake objects. We can read them back from disk
       by using the `yaml_read_agent()` and `yaml_read_informant()` functions. As
-      a nice shortcut, we can interrogate a table directly from a **pointblank**
-      YAML file with `yaml_agent_interrogate()`.
+      a nice shortcut, we read *agent* YAML and interrogate immediately with
+      `yaml_agent_interrogate()`; in a similar manner, we can read *informant*
+      YAML and incorporate table information with
+      `yaml_informant_incorporate()`.
     contents:
     - yaml_write
     - yaml_read_agent

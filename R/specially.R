@@ -199,7 +199,7 @@
 #'     fn = function(x) nrow(x) == 3
 #'   )
 #' 
-#' # ##### Variations
+#' # Variations
 #'
 #' # We can do more complex things with
 #' # `specially()` and its variants

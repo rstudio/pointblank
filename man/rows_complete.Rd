@@ -256,6 +256,11 @@ tbl <-
     c = c(1, 1, 1, 3, 3, 3)
   )
 
+tbl
+
+# A: Using an `agent` with validation
+#    functions and then `interrogate()` 
+
 # Validate that when considering only
 # data in columns `a` and `b`, there
 # are only complete rows (i.e., all
@@ -268,6 +273,38 @@ agent <-
 # Determine if this validation passed
 # by using `all_passed()`
 all_passed(agent)
+
+# B: Using the validation function
+#    directly on the data (no `agent`)
+
+# This way of using validation functions
+# acts as a data filter: data is passed
+# through but should `stop()` if there
+# is a single test unit failing; the
+# behavior of side effects can be
+# customized with the `actions` option
+tbl \%>\%
+  rows_complete(vars(a, b)) \%>\%
+  dplyr::pull(a)
+
+# C: Using the expectation function
+
+# With the `expect_*()` form, we would
+# typically perform one validation at a
+# time; this is primarily used in
+# testthat tests
+expect_rows_complete(
+  tbl, vars(a, b)
+)
+
+# D: Using the test function
+
+# With the `test_*()` form, we should
+# get a single logical value returned
+# to us
+test_rows_complete(
+  tbl, vars(a, b)
+)
 
 }
 \seealso{

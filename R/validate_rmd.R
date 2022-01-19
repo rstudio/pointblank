@@ -123,35 +123,6 @@ validate_rmd <- function(summary = TRUE,
   }
 }
 
-# validate_rmd_setup <- function() {
-#   
-#   knitr::opts_hooks$set(
-#     error = function(options) {
-#       if (isTRUE(options$validate)) {
-#         options$error <- TRUE
-#       }
-#       options
-#     }
-#   )
-#   
-#   error <- knitr_error_hook(knitr::knit_hooks$get("error"))
-#   document <- knitr_document_hook(knitr::knit_hooks$get("document"))
-#   
-#   knitr::knit_hooks$set(
-#     chunk = knitr_chunk_hook,
-#     error = error,
-#     document = document
-#   )
-#   
-#   reset_doc_counts()
-#   
-#   # Store default logical values for the summary and logging options
-#   test_options$summary <- TRUE
-#   test_options$perform_logging <- FALSE
-#   
-#   validate_rmd_dependencies()
-# }
-
 log4r_error <- function(message) {
   
   if (test_options$perform_logging) {

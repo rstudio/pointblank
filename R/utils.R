@@ -495,9 +495,11 @@ check_table_input <- function(tbl,
   if (!is.null(read_fn)) {
     
     warning(
-      "The `read_fn` argument is undergoing soft deprecation; instead:\n",
-      " * Use the in the `tbl` argument for in-memory tables.\n",
-      " * Or supply a function or table-prep formula to `tbl`.",
+      "Use `tbl` to specify a target table (`read_fn` is now undergoing ",
+      "deprecation):\n",
+      " * `tbl` can now accept a table-prep formula or a function to ",
+      "get the target table at interrogation-time, and\n",
+      " * A table can be supplied directly to `tbl` (as before)\n",
       call. = FALSE
     )
     

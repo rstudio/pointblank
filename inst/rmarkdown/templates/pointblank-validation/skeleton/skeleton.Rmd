@@ -7,8 +7,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 
 library(pointblank)
-# Use `validate_rmd()` here to set options for the
-# pointblank validation workflow within R Markdown documents
+
+# Using `validate_rmd()` here to enable validation mode for R Markdown
+# documents; options for the can be set here, as well
+validate_rmd()
 ```
 
 We can validate data inside of specialized code chunks. The **pointblank** makes this possible by loading it, as above. We'll perform some simple validations using `small_table`.
@@ -49,7 +51,7 @@ small_table %>%
   col_vals_gt(vars(d), vars(c), na_pass = TRUE)
 ```
 
-We can provide a single, agent-based interrogation inside of a `validate` chunk. Don't put anything else in the chunk though (the agent likes to work alone).
+We can provide a single, agent-based interrogation inside of a `validate` chunk (the reporting is visible once the `Agent Report` button is pressed). For best rendering results, don't place anything else inside the chunk. This acts as standalone reporting and will not result in document-level errors or warnings.
 
 ```{r validate = TRUE}
 small_table %>%

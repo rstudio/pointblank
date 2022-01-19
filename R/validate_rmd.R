@@ -23,18 +23,18 @@ test_options <- new.env(parent = emptyenv())
 
 #' Perform **pointblank** validation testing within R Markdown documents
 #' 
-#' @description
+#' @description 
 #' The `validate_rmd()` function sets up a framework for validation testing
 #' within specialized validation code chunks inside an R Markdown document. To
 #' enable this functionality, `validate_rmd()` should be called early within an
 #' R Markdown document code chunk (preferably in the `setup` chunk) to signal
 #' that validation should occur within specific code chunks. The validation code
 #' chunks require the `validate = TRUE` option to be set. Using **pointblank**
-#' validation step functions on data in these marked code chunks will flag
-#' overall failure if the stop threshold is exceeded anywhere. All errors are
-#' reported in the validation code chunk after rendering the document to HTML,
-#' where a centered status button either indicates success or the number of
-#' overall failures. Clicking the button reveals the otherwise hidden validation
+#' validation functions on data in these marked code chunks will flag overall
+#' failure if the stop threshold is exceeded anywhere. All errors are reported
+#' in the validation code chunk after rendering the document to HTML, where a
+#' centered status button either indicates success or the number of overall
+#' failures. Clicking the button reveals the otherwise hidden validation
 #' statements and their error messages (if any).
 #'
 #' @param summary If `TRUE` (the default), then there will be a leading summary

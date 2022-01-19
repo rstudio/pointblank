@@ -24,11 +24,11 @@ enable this functionality, \code{validate_rmd()} should be called early within a
 R Markdown document code chunk (preferably in the \code{setup} chunk) to signal
 that validation should occur within specific code chunks. The validation code
 chunks require the \code{validate = TRUE} option to be set. Using \strong{pointblank}
-validation step functions on data in these marked code chunks will flag
-overall failure if the stop threshold is exceeded anywhere. All errors are
-reported in the validation code chunk after rendering the document to HTML,
-where a centered status button either indicates success or the number of
-overall failures. Clicking the button reveals the otherwise hidden validation
+validation functions on data in these marked code chunks will flag overall
+failure if the stop threshold is exceeded anywhere. All errors are reported
+in the validation code chunk after rendering the document to HTML, where a
+centered status button either indicates success or the number of overall
+failures. Clicking the button reveals the otherwise hidden validation
 statements and their error messages (if any).
 }
 \section{Function ID}{

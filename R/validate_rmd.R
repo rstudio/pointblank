@@ -21,21 +21,21 @@ test_options <- new.env(parent = emptyenv())
 
 #nocov start
 
-#' Modify **pointblank** validation testing options within R Markdown documents
+#' Perform **pointblank** validation testing within R Markdown documents
 #' 
-#' @description 
-#' Using **pointblank** in an R Markdown workflow is enabled by default once the
-#' **pointblank** library is loaded. The framework allows for validation testing
-#' within specialized validation code chunks where the `validate = TRUE` option
-#' is set. Using **pointblank** validation functions on data in these
-#' marked code chunks will flag overall failure if the stop threshold is
-#' exceeded anywhere. All errors are reported in the validation code chunk after
-#' rendering the document to HTML, where green or red status buttons indicate
-#' whether all validations succeeded or failures occurred. Clicking any such
-#' button reveals the otherwise hidden validation statements and their error
-#' messages (if any). While the framework for such testing is set up by default,
-#' the `validate_rmd()` function offers an opportunity to set UI and logging
-#' options.
+#' @description
+#' The `validate_rmd()` function sets up a framework for validation testing
+#' within specialized validation code chunks inside an R Markdown document. To
+#' enable this functionality, `validate_rmd()` should be called early within an
+#' R Markdown document code chunk (preferably in the `setup` chunk) to signal
+#' that validation should occur within specific code chunks. The validation code
+#' chunks require the `validate = TRUE` option to be set. Using **pointblank**
+#' validation step functions on data in these marked code chunks will flag
+#' overall failure if the stop threshold is exceeded anywhere. All errors are
+#' reported in the validation code chunk after rendering the document to HTML,
+#' where a centered status button either indicates success or the number of
+#' overall failures. Clicking the button reveals the otherwise hidden validation
+#' statements and their error messages (if any).
 #'
 #' @param summary If `TRUE` (the default), then there will be a leading summary
 #'   of all validations in the rendered R Markdown document. With `FALSE`, this

@@ -274,6 +274,11 @@ agent <-
 # by using `all_passed()`
 all_passed(agent)
 
+# Calling `agent` in the console
+# prints the agent's report; but we
+# can get a `gt_tbl` object directly
+# with `get_agent_report(agent)`
+
 # B: Using the validation function
 #    directly on the data (no `agent`)
 

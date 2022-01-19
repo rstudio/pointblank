@@ -54,6 +54,33 @@ test_options <- new.env(parent = emptyenv())
 validate_rmd <- function(summary = TRUE,
                          log_to_file = NULL) {
   
+  
+  knitr::opts_hooks$set(
+    error = function(options) {
+      if (isTRUE(options$validate)) {
+        options$error <- TRUE
+      }
+      options
+    }
+  )
+  
+  error <- knitr_error_hook(knitr::knit_hooks$get("error"))
+  document <- knitr_document_hook(knitr::knit_hooks$get("document"))
+  
+  knitr::knit_hooks$set(
+    chunk = knitr_chunk_hook,
+    error = error,
+    document = document
+  )
+  
+  reset_doc_counts()
+  
+  # Store default logical values for the summary and logging options
+  test_options$summary <- TRUE
+  test_options$perform_logging <- FALSE
+  
+  validate_rmd_dependencies()
+  
   # Store the `summary` value to `test_options`
   test_options$summary <- summary
   
@@ -96,34 +123,34 @@ validate_rmd <- function(summary = TRUE,
   }
 }
 
-validate_rmd_setup <- function() {
-  
-  knitr::opts_hooks$set(
-    error = function(options) {
-      if (isTRUE(options$validate)) {
-        options$error <- TRUE
-      }
-      options
-    }
-  )
-  
-  error <- knitr_error_hook(knitr::knit_hooks$get("error"))
-  document <- knitr_document_hook(knitr::knit_hooks$get("document"))
-  
-  knitr::knit_hooks$set(
-    chunk = knitr_chunk_hook,
-    error = error,
-    document = document
-  )
-  
-  reset_doc_counts()
-  
-  # Store default logical values for the summary and logging options
-  test_options$summary <- TRUE
-  test_options$perform_logging <- FALSE
-  
-  validate_rmd_dependencies()
-}
+# validate_rmd_setup <- function() {
+#   
+#   knitr::opts_hooks$set(
+#     error = function(options) {
+#       if (isTRUE(options$validate)) {
+#         options$error <- TRUE
+#       }
+#       options
+#     }
+#   )
+#   
+#   error <- knitr_error_hook(knitr::knit_hooks$get("error"))
+#   document <- knitr_document_hook(knitr::knit_hooks$get("document"))
+#   
+#   knitr::knit_hooks$set(
+#     chunk = knitr_chunk_hook,
+#     error = error,
+#     document = document
+#   )
+#   
+#   reset_doc_counts()
+#   
+#   # Store default logical values for the summary and logging options
+#   test_options$summary <- TRUE
+#   test_options$perform_logging <- FALSE
+#   
+#   validate_rmd_dependencies()
+# }
 
 log4r_error <- function(message) {
   
@@ -369,7 +396,7 @@ knitr_chunk_hook <- function(x, options) {
   }
   
   is_agent_tbl_output <- function(output_vec) {
-    grepl("#report .gt_table", output_vec, fixed = TRUE)
+    grepl("#pb_agent .gt_table", output_vec, fixed = TRUE)
   }
   
   code_vec <- extract_code(x)
@@ -527,9 +554,9 @@ knitr_chunk_hook <- function(x, options) {
                 htmltools::tags$div(
                   class = "panel-body",
                   style = htmltools::css(
-                    `padding-left` = "15px",
+                    `padding-left` = "13px",
                     `padding-top` = "15px",
-                    `padding-right` = "15px",
+                    `padding-right` = "13px",
                     `padding-bottom` = "15px",
                     background = "#FAFAFA",
                     width = "100%",

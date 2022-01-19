@@ -174,6 +174,8 @@
 #'     b = c(7, 1, 0, 0),
 #'     c = c(1, 1, 1, 3)
 #'   )
+#' 
+#' tbl
 #'
 #' # Create a second table which is
 #' # quite different but has the
@@ -183,6 +185,9 @@
 #'     e = c("a", NA, "a", "c"),
 #'     f = c(2.6, 1.2, 0, NA)
 #'   )
+#' 
+#' # A: Using an `agent` with validation
+#' #    functions and then `interrogate()` 
 #' 
 #' # Validate that the count of rows
 #' # in the target table (`tbl`) matches
@@ -196,6 +201,43 @@
 #' # Determine if this validation passed
 #' # by using `all_passed()`
 #' all_passed(agent)
+#' 
+#' # Calling `agent` in the console
+#' # prints the agent's report; but we
+#' # can get a `gt_tbl` object directly
+#' # with `get_agent_report(agent)`
+#' 
+#' # B: Using the validation function
+#' #    directly on the data (no `agent`)
+#' 
+#' # This way of using validation functions
+#' # acts as a data filter: data is passed
+#' # through but should `stop()` if there
+#' # is a single test unit failing; the
+#' # behavior of side effects can be
+#' # customized with the `actions` option
+#' tbl %>%
+#'   row_count_match(tbl_compare = tbl_2)
+#' 
+#' # C: Using the expectation function
+#' 
+#' # With the `expect_*()` form, we would
+#' # typically perform one validation at a
+#' # time; this is primarily used in
+#' # testthat tests
+#' expect_row_count_match(
+#'   tbl, tbl_compare = tbl_2
+#' )
+#' 
+#' # D: Using the test function
+#' 
+#' # With the `test_*()` form, we should
+#' # get a single logical value returned
+#' # to us
+#' tbl %>% 
+#'   row_count_match(
+#'     tbl_compare = tbl_2
+#'   )
 #' 
 #' @family validation functions
 #' @section Function ID:

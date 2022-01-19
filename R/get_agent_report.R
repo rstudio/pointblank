@@ -71,6 +71,9 @@
 #' omits the `COLUMNS`, `TBL`, and `EXT` columns. The width of the small table
 #' is 575px; the standard table is 875px wide.
 #' 
+#' The `ptblank_agent_report` can be exported to a standalone HTML document
+#' with the [export_report()] function.
+#' 
 #' If choosing to get a tibble (with `display_table = FALSE`), it will have the
 #' following columns:
 #' 
@@ -141,8 +144,8 @@
 #'   `locale` option will override any previously set locale value (e.g., by the
 #'   [create_agent()] call).
 #' 
-#' @return A **gt** table object if `display_table = TRUE` or a tibble if
-#'   `display_table = FALSE`.
+#' @return A `ptblank_agent_report` object if `display_table = TRUE` or a tibble
+#'   if `display_table = FALSE`.
 #' 
 #' @examples
 #' # Create a simple table with a

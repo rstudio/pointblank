@@ -66,8 +66,8 @@ designation, like \code{"es"} for Spanish (Spain, same as \code{"es_ES"}). This
 \code{\link[=create_agent]{create_agent()}} call).}
 }
 \value{
-A \strong{gt} table object if \code{display_table = TRUE} or a tibble if
-\code{display_table = FALSE}.
+A \code{ptblank_agent_report} object if \code{display_table = TRUE} or a tibble
+if \code{display_table = FALSE}.
 }
 \description{
 We can get an informative summary table from an agent by using the
@@ -120,6 +120,9 @@ only appear when there is data to collect.
 The small version of the display table (obtained using \code{size = "small"})
 omits the \code{COLUMNS}, \code{TBL}, and \code{EXT} columns. The width of the small table
 is 575px; the standard table is 875px wide.
+
+The \code{ptblank_agent_report} can be exported to a standalone HTML document
+with the \code{\link[=export_report]{export_report()}} function.
 
 If choosing to get a tibble (with \code{display_table = FALSE}), it will have the
 following columns:

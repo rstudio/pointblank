@@ -43,6 +43,80 @@
 #' @param append_to The file to which log entries at the warn level are
 #'   appended. This can alternatively be one or more **log4r** appenders.
 #' 
+#' @return Nothing is returned however log files may be written in very specific
+#'   conditions.
+#' 
+#' @examples 
+#' We can create an `action_levels`
+#' # object that has a threshold for
+#' # the `warn` state, and, an
+#' # associated function that should
+#' # be invoked whenever the `warn`
+#' # state is entered. Here, the
+#' # function call with `log4r_step()`
+#' # will be invoked whenever there
+#' # is one failing test unit. It's
+#' # important to match things up here;
+#' # notice that `warn_at` is given a
+#' # threshold and the list of functions
+#' # given to `fns` has a `warn` component
+#' al <-
+#'   action_levels(
+#'     warn_at = 1,
+#'     fns = list(
+#'       warn = ~ log4r_step(
+#'         x, append_to = "example_log"
+#'       )
+#'     )
+#'   )
+#' 
+#' Printing `al` will show us the
+#' # settings for the
+#' # `action_levels` object:
+#' al
+#' 
+#' # Let's create an agent with
+#' # `small_table` as the target
+#' # table, apply the `action_levels`
+#' # object created above as `al`,
+#' # add two validation steps, and
+#' # then `interrogate()` the data
+#' agent <- 
+#'   create_agent(
+#'     tbl = ~ small_table,
+#'     tbl_name = "small_table",
+#'     actions = al
+#'   ) %>%
+#'   col_vals_gt(vars(d), 300) %>%
+#'   col_vals_in_set(
+#'     vars(f), c("low", "high")
+#'   ) %>%
+#'   interrogate()
+#' 
+#' # From the agent report, we can
+#' # see that both steps have yielded
+#' # warnings upon interrogation
+#' # (i.e., filled yellow circles
+#' # in the `W` column).
+#' 
+#' # We can see this more directly
+#' # by inspecting the `warn`
+#' # component of the agent's x-list:
+#' get_agent_x_list(agent)$warn
+#' 
+#' # Upon entering the `warn` state
+#' # in each validation step during
+#' # interrogation, the `log4r_step()`
+#' # function call was invoked! This
+#' # will generate an `"example_log"`
+#' # file in the working directory
+#' # and log entries will be appended
+#' # to the file
+#' 
+#' if (file.exists("example_log")) {
+#'   file.remove("example_log")
+#' }
+#' 
 #' @family Logging
 #' @section Function ID:
 #' 5-1

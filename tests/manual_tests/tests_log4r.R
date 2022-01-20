@@ -7,20 +7,27 @@ library(glue)
 
 agent <-
   create_agent(
-    tbl = small_table,
-    read_fn = ~small_table,
+    tbl = ~ small_table,
     label = "small_table_tests",
     actions = action_levels(
       warn_at = 3,
       fns = list(
         warn = ~ {
-          # Create a log4r `logger` object
-          logger <- logger("WARN", appenders = file_appender("log_file"))
           
-          # Call the `warn()` function; the `glue()` statement has access to any
-          # parameter values available in the agent's x-list (use `x$<param>`
-          # with confidence; use the `get_agent_x_list()` function to see
-          # what is in there)
+          # Create a log4r `logger` object
+          # with a `WARN` threshold
+          logger <-
+            log4r::logger(
+              threshold = "WARN",
+              appenders = log4r::file_appender("log_file")
+            )
+          
+          # Call the `warn()` function; the
+          # `glue()` statement has access to any
+          # parameter values available in the
+          # agent's x-list with `x$<param>`
+          # (use `get_agent_x_list()` function
+          # to get familiar with what is in there)
           log4r::warn(logger, glue::glue(
             "Step {x$i} exceeded the `warn` threshold (f_failed = {x$f_failed}) ['{x$name}']"
           ))
@@ -30,6 +37,8 @@ agent <-
   ) %>%
   col_vals_gt(vars(d), 1000) %>%
   col_vals_in_set(vars(f), c("low", "high"))
+
+agent %>% interrogate()
 
 agent %>% yaml_write(filename = "test_log4r.yaml")
 

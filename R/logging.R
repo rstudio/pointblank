@@ -47,7 +47,7 @@
 #'   conditions.
 #' 
 #' @examples 
-#' We can create an `action_levels`
+#' # We can create an `action_levels`
 #' # object that has a threshold for
 #' # the `warn` state, and, an
 #' # associated function that should
@@ -70,7 +70,7 @@
 #'     )
 #'   )
 #' 
-#' Printing `al` will show us the
+#' # Printing `al` will show us the
 #' # settings for the
 #' # `action_levels` object:
 #' al

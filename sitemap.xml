@@ -292,13 +292,7 @@
     <loc>https://rich-iannone.github.io/pointblank/reference/reexports.html</loc>
   </url>
   <url>
-    <loc>https://rich-iannone.github.io/pointblank/reference/remove_read_fn.html</loc>
-  </url>
-  <url>
     <loc>https://rich-iannone.github.io/pointblank/reference/remove_steps.html</loc>
-  </url>
-  <url>
-    <loc>https://rich-iannone.github.io/pointblank/reference/remove_tbl.html</loc>
   </url>
   <url>
     <loc>https://rich-iannone.github.io/pointblank/reference/row_count_match.html</loc>
@@ -314,9 +308,6 @@
   </url>
   <url>
     <loc>https://rich-iannone.github.io/pointblank/reference/serially.html</loc>
-  </url>
-  <url>
-    <loc>https://rich-iannone.github.io/pointblank/reference/set_read_fn.html</loc>
   </url>
   <url>
     <loc>https://rich-iannone.github.io/pointblank/reference/set_tbl.html</loc>

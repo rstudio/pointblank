@@ -92,7 +92,7 @@
           
           <code><a href="validate_rmd.html">validate_rmd()</a></code> 
         </dt>
-        <dd>Modify <strong>pointblank</strong> validation testing options within R Markdown documents</dd>
+        <dd>Perform <strong>pointblank</strong> validation testing within R Markdown documents</dd>
       </dl><dl><dt>
           
           <code><a href="action_levels.html">action_levels()</a></code> <code><a href="action_levels.html">warn_on_fail()</a></code> <code><a href="action_levels.html">stop_on_fail()</a></code> 
@@ -131,7 +131,7 @@
       </dl></div><div class="section level2">
       <h2 id="validation-expectation-and-test-functions">Validation, Expectation, and Test Functions<a class="anchor" aria-label="anchor" href="#validation-expectation-and-test-functions"></a></h2>
       
-      <p class="section-desc"></p><p>Validation steps are either used with an <em>agent</em> object or, more simply, just with the table of interest. When used with an <em>agent</em>, each step function called works to build up a validation plan (which is executed with the <code><a href="../reference/interrogate.html">interrogate()</a></code> function). If used directly on data (that is, no agent is involved whatsoever), then the data is checked and passed through. However, if we (1) set <code>warn_*</code> and/or <code>stop_*</code> thresholds and (2) the level of failed validation units exceeds those set levels, then we’ll get either a warning or a stop. Each validation step function is assoicated with an expectation function (of the form <code>expect_*()</code>). These expectation functions are equivalent in usage and behavior to those in the <strong>testthat</strong> package. Finallly, each validation function has an associated test function (of the form <code>test_*()</code>) which always returns a logical value.</p>
+      <p class="section-desc"></p><p>Validation functions are either used with an <em>agent</em> object or, more simply, just with the table of interest. When used with an <em>agent</em>, each validation works to build up a validation plan (which is executed with the <code><a href="../reference/interrogate.html">interrogate()</a></code> function). If one or more validation functions are used directly on data (that is, no agent is involved whatsoever), then the data is checked and passed through if there are no problems. We can fine tune the <code>warn_*</code> and/or <code>stop_*</code> thresholds and so that if the level of failed validation units exceeds those set levels, then we’ll get either a warning or an error. Each validation function is associated with an expectation function (of the form <code>expect_*()</code>). These expectation functions are equivalent in usage and behavior to those in the <strong>testthat</strong> package. Finally, each validation function has an associated test function (of the form <code>test_*()</code>) that always returns a logical value.</p>
 
       
     </div><div id="" class="section level2">
@@ -500,7 +500,7 @@ column?</dd>
       </dl></div><div class="section level2">
       <h2 id="object-ops">Object Ops<a class="anchor" aria-label="anchor" href="#object-ops"></a></h2>
       
-      <p class="section-desc"></p><p>We have options for writing an agent or informant to disk with the <code><a href="../reference/x_write_disk.html">x_write_disk()</a></code> function. The on-disk object can be retrieved with the <code><a href="../reference/x_read_disk.html">x_read_disk()</a></code> function. You can export a report as an HTML file with <code><a href="../reference/export_report.html">export_report()</a></code>. A set of functions are also available for managing associations to a data table (either directly or with a table-prep formula), and, for editing an agent’s validation steps.</p>
+      <p class="section-desc"></p><p>We have options for writing an agent or informant to disk with the <code><a href="../reference/x_write_disk.html">x_write_disk()</a></code> function. The on-disk object can be retrieved with the <code><a href="../reference/x_read_disk.html">x_read_disk()</a></code> function. You can export a report as an HTML file with <code><a href="../reference/export_report.html">export_report()</a></code>. A set of functions are also available for setting a data table to an existing object, and, for editing an agent’s validation steps.</p>
 
       
     </div><div id="" class="section level2">
@@ -527,22 +527,7 @@ column?</dd>
           
           <code><a href="set_tbl.html">set_tbl()</a></code> 
         </dt>
-        <dd>Set a data table to an <em>agent</em> or <em>informant</em></dd>
-      </dl><dl><dt>
-          
-          <code><a href="remove_tbl.html">remove_tbl()</a></code> 
-        </dt>
-        <dd>Remove a data table associated with an <em>agent</em> or <em>informant</em></dd>
-      </dl><dl><dt>
-          
-          <code><a href="set_read_fn.html">set_read_fn()</a></code> 
-        </dt>
-        <dd>Set a table-prep formula to an <em>agent</em> or <em>informant</em></dd>
-      </dl><dl><dt>
-          
-          <code><a href="remove_read_fn.html">remove_read_fn()</a></code> 
-        </dt>
-        <dd>Remove a table-prep formula associated with an <em>agent</em> or <em>informant</em></dd>
+        <dd>Set a data table to an <em>agent</em> or an <em>informant</em></dd>
       </dl><dl><dt>
           
           <code><a href="activate_steps.html">activate_steps()</a></code> 
@@ -561,7 +546,7 @@ column?</dd>
       </dl></div><div class="section level2">
       <h2 id="the-multiagent">The Multiagent<a class="anchor" aria-label="anchor" href="#the-multiagent"></a></h2>
       
-      <p class="section-desc"></p><p>The multiagent is a group of agents, each tasked with their own interrogation to perform. As a group, they provide an interesting and informative bit of reporting that tracks the evolution of data quality checks over time. With a <em>multiagent</em> object, we can get a data quality report that handles changes in the target data and matches data validation steps across all agent. The predominant application is retrospective analysis of data quality for a target table.</p>
+      <p class="section-desc"></p><p>The <em>multiagent</em> is a group of agents, all bundled together into a single object. With this grouping, we can generate unified reporting across the component agents with the <code><a href="../reference/get_multiagent_report.html">get_multiagent_report()</a></code> function. One style of reporting (<code>"long"</code>) provides a serial listing of agent reports. The other option (<code>"wide"</code>) is useful for tracking the evolution of data quality checks over time since common steps across all interrogations will form individual rows (and each interrogation will form a column).</p>
 
       
     </div><div id="" class="section level2">
@@ -587,7 +572,7 @@ column?</dd>
       </dl></div><div class="section level2">
       <h2 id="pointblank-yaml">pointblank YAML<a class="anchor" aria-label="anchor" href="#pointblank-yaml"></a></h2>
       
-      <p class="section-desc"></p><p>YAML files can be used in <strong>pointblank</strong> for two distinct purposes: (1) to define agents and their validation plans, and (2) to define information for tables. The <code><a href="../reference/yaml_write.html">yaml_write()</a></code> function allows us write agent and/or informant YAML from the namesake objects. We can read them back from disk by using the <code><a href="../reference/yaml_read_agent.html">yaml_read_agent()</a></code> and <code><a href="../reference/yaml_read_informant.html">yaml_read_informant()</a></code> functions. As a nice shortcut, we can interrogate a table directly from a <strong>pointblank</strong> YAML file with <code><a href="../reference/yaml_agent_interrogate.html">yaml_agent_interrogate()</a></code>.</p>
+      <p class="section-desc"></p><p>YAML files can be used in <strong>pointblank</strong> for two distinct purposes: (1) to define agents and their validation plans, and (2) to define information for tables. The <code><a href="../reference/yaml_write.html">yaml_write()</a></code> function allows us write agent or informant YAML from the namesake objects. We can read them back from disk by using the <code><a href="../reference/yaml_read_agent.html">yaml_read_agent()</a></code> and <code><a href="../reference/yaml_read_informant.html">yaml_read_informant()</a></code> functions. As a nice shortcut, we read <em>agent</em> YAML and interrogate immediately with <code><a href="../reference/yaml_agent_interrogate.html">yaml_agent_interrogate()</a></code>; in a similar manner, we can read <em>informant</em> YAML and incorporate table information with <code><a href="../reference/yaml_informant_incorporate.html">yaml_informant_incorporate()</a></code>.</p>
 
       
     </div><div id="" class="section level2">
@@ -768,7 +753,7 @@ column?</dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
 </div>
 
     </footer></div>

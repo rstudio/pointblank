@@ -436,6 +436,90 @@ by using the <code><a href="yaml_agent_string.html">yaml_agent_string()</a></cod
 <code><a href="tbl_match.html">tbl_match</a>()</code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># The `game_revenue` dataset in</span></span>
+<span class="r-in"><span class="co"># the package has the column</span></span>
+<span class="r-in"><span class="co"># `session_start`, which contains</span></span>
+<span class="r-in"><span class="co"># date-time values; let's ensure</span></span>
+<span class="r-in"><span class="co"># that this column has values that</span></span>
+<span class="r-in"><span class="co"># are increasing from top to bottom</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># A: Using an `agent` with validation</span></span>
+<span class="r-in"><span class="co">#    functions and then `interrogate()`</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Validate that all date-time values</span></span>
+<span class="r-in"><span class="co"># in the column `session_start` are</span></span>
+<span class="r-in"><span class="co"># increasing, and, allow for repeating</span></span>
+<span class="r-in"><span class="co"># values (`allow_stationary` will be</span></span>
+<span class="r-in"><span class="co"># set to `TRUE`)</span></span>
+<span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span></span>
+<span class="r-in">  <span class="fu"><a href="create_agent.html">create_agent</a></span><span class="op">(</span><span class="va">game_revenue</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">col_vals_increasing</span><span class="op">(</span></span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">session_start</span><span class="op">)</span>,</span>
+<span class="r-in">    allow_stationary <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="interrogate.html">interrogate</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in">  </span>
+<span class="r-in"><span class="co"># Determine if this validation</span></span>
+<span class="r-in"><span class="co"># had no failing test units (there</span></span>
+<span class="r-in"><span class="co"># are 2000 test units)</span></span>
+<span class="r-in"><span class="fu"><a href="all_passed.html">all_passed</a></span><span class="op">(</span><span class="va">agent</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Calling `agent` in the console</span></span>
+<span class="r-in"><span class="co"># prints the agent's report; but we</span></span>
+<span class="r-in"><span class="co"># can get a `gt_tbl` object directly</span></span>
+<span class="r-in"><span class="co"># with `get_agent_report(agent)`</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># B: Using the validation function</span></span>
+<span class="r-in"><span class="co">#    directly on the data (no `agent`)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># This way of using validation functions</span></span>
+<span class="r-in"><span class="co"># acts as a data filter: data is passed</span></span>
+<span class="r-in"><span class="co"># through but should `stop()` if there</span></span>
+<span class="r-in"><span class="co"># is a single test unit failing; the</span></span>
+<span class="r-in"><span class="co"># behavior of side effects can be</span></span>
+<span class="r-in"><span class="co"># customized with the `actions` option</span></span>
+<span class="r-in"><span class="va">game_revenue</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">col_vals_increasing</span><span class="op">(</span></span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">session_start</span><span class="op">)</span>,</span>
+<span class="r-in">    allow_stationary <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in">  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">session_start</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>   618</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># C: Using the expectation function</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># With the `expect_*()` form, we would</span></span>
+<span class="r-in"><span class="co"># typically perform one validation at a</span></span>
+<span class="r-in"><span class="co"># time; this is primarily used in</span></span>
+<span class="r-in"><span class="co"># testthat tests</span></span>
+<span class="r-in"><span class="fu">expect_col_vals_increasing</span><span class="op">(</span></span>
+<span class="r-in">  <span class="va">game_revenue</span>,</span>
+<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">session_start</span><span class="op">)</span>,</span>
+<span class="r-in">  allow_stationary <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># D: Using the test function</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># With the `test_*()` form, we should</span></span>
+<span class="r-in"><span class="co"># get a single logical value returned</span></span>
+<span class="r-in"><span class="co"># to us</span></span>
+<span class="r-in"><span class="va">game_revenue</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">test_col_vals_increasing</span><span class="op">(</span></span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">session_start</span><span class="op">)</span>,</span>
+<span class="r-in">    allow_stationary <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in">  <span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -445,7 +529,7 @@ by using the <code><a href="yaml_agent_string.html">yaml_agent_string()</a></cod
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
 </div>
 
     </footer></div>

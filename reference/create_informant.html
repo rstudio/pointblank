@@ -150,12 +150,12 @@ options.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">create_informant</span><span class="op">(</span>
   tbl <span class="op">=</span> <span class="cn">NULL</span>,
-  read_fn <span class="op">=</span> <span class="cn">NULL</span>,
-  agent <span class="op">=</span> <span class="cn">NULL</span>,
   tbl_name <span class="op">=</span> <span class="cn">NULL</span>,
   label <span class="op">=</span> <span class="cn">NULL</span>,
+  agent <span class="op">=</span> <span class="cn">NULL</span>,
   lang <span class="op">=</span> <span class="cn">NULL</span>,
-  locale <span class="op">=</span> <span class="cn">NULL</span>
+  locale <span class="op">=</span> <span class="cn">NULL</span>,
+  read_fn <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -163,18 +163,12 @@ options.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>tbl</dt>
 <dd><p>The input table. This can be a data frame, a tibble, a <code>tbl_dbi</code>
-object, or a <code>tbl_spark</code> object. Alternatively, a function can be used to
-read in the input data table with the <code>read_fn</code> argument (in which case,
-<code>tbl</code> can be <code>NULL</code>).</p></dd>
-<dt>read_fn</dt>
-<dd><p>A function that's used for reading in the data. Even if a
-<code>tbl</code> is provided, this function will be invoked to obtain the data (i.e.,
-the <code>read_fn</code> takes priority). There are two ways to specify a <code>read_fn</code>:
-(1) using a function (e.g., <code>function() { &lt;table reading code&gt; }</code>) or, (2)
-with an R formula expression.</p></dd>
-<dt>agent</dt>
-<dd><p>A pointblank <em>agent</em> object. This object can be used instead of
-supplying a table in <code>tbl</code> or a table-prep formula in <code>read_fn</code>.</p></dd>
+object, or a <code>tbl_spark</code> object. Alternatively, an expression can be
+supplied to serve as instructions on how to retrieve the target table at
+incorporation-time. There are two ways to specify an association to a
+target table: (1) as a table-prep formula, which is a right-hand side (RHS)
+formula expression (e.g., <code>~ { &lt;table reading code&gt;}</code>), or (2) as a
+function (e.g., <code>function() { &lt;table reading code&gt;}</code>).</p></dd>
 <dt>tbl_name</dt>
 <dd><p>A optional name to assign to the input table object. If no
 value is provided, a name will be generated based on whatever information
@@ -184,6 +178,10 @@ is available.</p></dd>
 provided, a label will be generated based on the current system time.
 Markdown can be used here to make the label more visually appealing (it
 will appear in the header area of the information report).</p></dd>
+<dt>agent</dt>
+<dd><p>A pointblank <em>agent</em> object. The table from this object can be
+extracted and used in the new informant instead of supplying a table in
+<code>tbl</code>.</p></dd>
 <dt>lang</dt>
 <dd><p>The language to use for the information report (a summary table
 that provides all of the available information for the table. By default,
@@ -197,6 +195,9 @@ information report according the locale's rules. Examples include <code>"en_US"<
 for English (United States) and <code>"fr_FR"</code> for French (France); more simply,
 this can be a language identifier without a country designation, like "es"
 for Spanish (Spain, same as <code>"es_ES"</code>).</p></dd>
+<dt>read_fn</dt>
+<dd><p>The <code>read_fn</code> argument is deprecated. Instead, supply a
+table-prep formula or function to <code>tbl</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -213,7 +214,7 @@ table (via <code><a href="yaml_informant_incorporate.html">yaml_informant_incorp
 complex call of <code>create_informant()</code> is expressed in R code and in the
 corresponding YAML representation.</p><div class="sourceCode"><pre><code># R statement
 create_informant(
-  read_fn = ~ small_table,
+  tbl = ~ small_table,
   tbl_name = "small_table",
   label = "An example.",
   lang = "fr", 
@@ -222,7 +223,7 @@ create_informant(
 
 # YAML representation
 type: informant
-read_fn: ~small_table
+tbl: ~small_table
 tbl_name: small_table
 info_label: An example.
 lang: fr
@@ -251,9 +252,9 @@ columns:
     _type: character
 </code></pre></div>
 
-<p>The generated YAML includes some top-level keys where <code>type</code> and <code>read_fn</code>
-are mandatory, and, two metadata sections: <code>table</code> and <code>columns</code>. Keys that
-begin with an underscore character are those that are updated whenever
+<p>The generated YAML includes some top-level keys where <code>type</code> and <code>tbl</code> are
+mandatory, and, two metadata sections: <code>table</code> and <code>columns</code>. Keys that begin
+with an underscore character are those that are updated whenever
 <code><a href="incorporate.html">incorporate()</a></code> is called on an <em>informant</em>. The <code>table</code> metadata section can
 have multiple subsections with <em>info text</em>. The <code>columns</code> metadata section
 can similarly have have multiple subsections, so long as they are children to
@@ -270,10 +271,10 @@ as reserved keys).</p>
 <p>An <em>informant</em> object can be written to disk with the <code><a href="x_write_disk.html">x_write_disk()</a></code>
 function. Informants are stored in the serialized RDS format and can be
 easily retrieved with the <code><a href="x_read_disk.html">x_read_disk()</a></code> function.</p>
-<p>It's recommended that table-prep formulas are supplied to the <code>read_fn</code>
-argument of <code>create_informant()</code>. In this way, when an <em>informant</em> is read
-from disk through <code><a href="x_read_disk.html">x_read_disk()</a></code>, it can be reused to access the target
-table (which may changed, hence the need to use an expression for this).</p>
+<p>It's recommended that table-prep formulas are supplied to the <code>tbl</code> argument
+of <code>create_informant()</code>. In this way, when an <em>informant</em> is read from disk
+through <code><a href="x_read_disk.html">x_read_disk()</a></code>, it can be reused to access the target table (which
+may changed, hence the need to use an expression for this).</p>
     </div>
     <div class="section level2">
     <h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a></h2>
@@ -332,7 +333,7 @@ table (which may changed, hence the need to use an expression for this).</p>
 <span class="r-in"><span class="co"># and the `small_table` dataset</span></span>
 <span class="r-in"><span class="va">informant</span> <span class="op">&lt;-</span> </span>
 <span class="r-in">  <span class="fu">create_informant</span><span class="op">(</span></span>
-<span class="r-in">    read_fn <span class="op">=</span> <span class="op">~</span><span class="va">small_table</span>,</span>
+<span class="r-in">    tbl <span class="op">=</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="small_table.html">small_table</a></span>,</span>
 <span class="r-in">    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
 <span class="r-in">    label <span class="op">=</span> <span class="st">"An example."</span></span>
 <span class="r-in">  <span class="op">)</span></span>
@@ -362,7 +363,7 @@ table (which may changed, hence the need to use an expression for this).</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
 </div>
 
     </footer></div>

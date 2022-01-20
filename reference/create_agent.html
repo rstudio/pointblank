@@ -114,14 +114,14 @@ table. This reporting of the interrogation can also be accessed with the
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">create_agent</span><span class="op">(</span>
   tbl <span class="op">=</span> <span class="cn">NULL</span>,
-  read_fn <span class="op">=</span> <span class="cn">NULL</span>,
   tbl_name <span class="op">=</span> <span class="cn">NULL</span>,
   label <span class="op">=</span> <span class="cn">NULL</span>,
   actions <span class="op">=</span> <span class="cn">NULL</span>,
   end_fns <span class="op">=</span> <span class="cn">NULL</span>,
   embed_report <span class="op">=</span> <span class="cn">FALSE</span>,
   lang <span class="op">=</span> <span class="cn">NULL</span>,
-  locale <span class="op">=</span> <span class="cn">NULL</span>
+  locale <span class="op">=</span> <span class="cn">NULL</span>,
+  read_fn <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -129,16 +129,12 @@ table. This reporting of the interrogation can also be accessed with the
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>tbl</dt>
 <dd><p>The input table. This can be a data frame, a tibble, a <code>tbl_dbi</code>
-object, or a <code>tbl_spark</code> object. Alternatively, a function can be used to
-read in the input data table with the <code>read_fn</code> argument (in which case,
-<code>tbl</code> can be <code>NULL</code>).</p></dd>
-<dt>read_fn</dt>
-<dd><p>A table-prep formula that's used to access the target table.
-Even if a <code>tbl</code> is provided, this formula will be invoked to obtain the
-data (i.e., the <code>read_fn</code> takes priority). There are two ways to specify a
-<code>read_fn</code>: (1) with a right-hand side (RHS) formula expression (e.g.,
-<code>~ { &lt;table reading code&gt;}</code>) or (2) as a function (e.g.,
-<code>function() { &lt;table reading code&gt;}</code>).</p></dd>
+object, or a <code>tbl_spark</code> object. Alternatively, an expression can be
+supplied to serve as instructions on how to retrieve the target table at
+interrogation-time. There are two ways to specify an association to a
+target table: (1) as a table-prep formula, which is a right-hand side (RHS)
+formula expression (e.g., <code>~ { &lt;table reading code&gt;}</code>), or (2) as a
+function (e.g., <code>function() { &lt;table reading code&gt;}</code>).</p></dd>
 <dt>tbl_name</dt>
 <dd><p>A optional name to assign to the input table object. If no
 value is provided, a name will be generated based on whatever information
@@ -182,6 +178,9 @@ options include French (<code>"fr"</code>), German (<code>"de"</code>), Italian 
 <code>"en_US"</code> for English (United States) and <code>"fr_FR"</code> for French (France);
 more simply, this can be a language identifier without a country
 designation, like "es" for Spanish (Spain, same as <code>"es_ES"</code>).</p></dd>
+<dt>read_fn</dt>
+<dd><p>The <code>read_fn</code> argument is deprecated. Instead, supply a
+table-prep formula or function to <code>tbl</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -229,7 +228,7 @@ or interrogate the target table (via <code><a href="yaml_agent_interrogate.html"
 example of how a complex call of <code>create_agent()</code> is expressed in R code and
 in the corresponding YAML representation.</p><div class="sourceCode"><pre><code># R statement
 create_agent(
-  read_fn = ~ small_table,
+  tbl = ~ small_table,
   tbl_name = "small_table",
   label = "An example.",
   actions = action_levels(
@@ -248,7 +247,7 @@ create_agent(
 
 # YAML representation
 type: agent
-read_fn: ~small_table
+tbl: ~small_table
 tbl_name: small_table
 label: An example.
 lang: fr
@@ -267,8 +266,7 @@ embed_report: true
 values won't be written to YAML when using <code><a href="yaml_write.html">yaml_write()</a></code> (though it is
 acceptable to include them with their default when generating the YAML by
 other means). The only requirement for writing the YAML representation of an
-<em>agent</em> is having <code>read_fn</code> specified (any table supplied to <code>tbl</code> is
-ignored).</p>
+<em>agent</em> is having <code>tbl</code> specified as table-prep formula.</p>
 <p>What typically follows this chunk of YAML is a <code>steps</code> part, and that
 corresponds to the addition of validation steps via validation functions.
 Help articles for each validation function have a <em>YAML</em> section that
@@ -287,7 +285,7 @@ of the R expressions that are used to regenerate that agent with
 This can be useful for keeping a history of validations and generating views
 of data quality over time. Agents are stored in the serialized RDS format and
 can be easily retrieved with the <code><a href="x_read_disk.html">x_read_disk()</a></code> function.</p>
-<p>It's recommended that table-prep formulas are supplied to the <code>read_fn</code>
+<p>It's recommended that table-prep formulas are supplied to the <code>tbl</code>
 argument of <code>create_agent()</code>. In this way, when an <em>agent</em> is read from disk
 through <code><a href="x_read_disk.html">x_read_disk()</a></code>, it can be reused to access the target table (which
 may change, hence the need to use an expression for this).</p>
@@ -374,10 +372,12 @@ a given target table.</p>
 <span class="r-in"><span class="co"># serves as a default for all validation</span></span>
 <span class="r-in"><span class="co"># steps which can be overridden); the</span></span>
 <span class="r-in"><span class="co"># static thresholds provided by `al` will</span></span>
-<span class="r-in"><span class="co"># make the reporting a bit more useful</span></span>
+<span class="r-in"><span class="co"># make the reporting a bit more useful;</span></span>
+<span class="r-in"><span class="co"># we also provide a target table and we'll</span></span>
+<span class="r-in"><span class="co"># use `pointblank::small_table` </span></span>
 <span class="r-in"><span class="va">agent</span> <span class="op">&lt;-</span> </span>
 <span class="r-in">  <span class="fu">create_agent</span><span class="op">(</span></span>
-<span class="r-in">    read_fn <span class="op">=</span> <span class="op">~</span> <span class="va">small_table</span>,</span>
+<span class="r-in">    tbl <span class="op">=</span> <span class="fu">pointblank</span><span class="fu">::</span><span class="va"><a href="small_table.html">small_table</a></span>,</span>
 <span class="r-in">    tbl_name <span class="op">=</span> <span class="st">"small_table"</span>,</span>
 <span class="r-in">    label <span class="op">=</span> <span class="st">"An example."</span>,</span>
 <span class="r-in">    actions <span class="op">=</span> <span class="va">al</span></span>
@@ -418,11 +418,10 @@ a given target table.</p>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">report</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ptblank_agent_report" "gt_tbl"               "list"                </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># What can you do with the report?</span></span>
+<span class="r-in"><span class="co"># What can you do with the report object?</span></span>
 <span class="r-in"><span class="co"># Print it from an R Markdown code</span></span>
 <span class="r-in"><span class="co"># chunk, use it in a **blastula** email,</span></span>
-<span class="r-in"><span class="co"># put it in a webpage, or further</span></span>
-<span class="r-in"><span class="co"># modify it with the **gt** package</span></span>
+<span class="r-in"><span class="co"># put it in a webpage, etc.</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># From the report we know that Step</span></span>
 <span class="r-in"><span class="co"># 4 had two test units (rows, really)</span></span>
@@ -480,7 +479,7 @@ a given target table.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
 </div>
 
     </footer></div>

@@ -57,12 +57,16 @@ informant <-
 # We can add *info text* to describe
 # the columns in the table by using
 # information in another table; the
-# `info_columns_from_tbl()` takes a
-# table object where the first column
-# has the column names and the second
-# contains the *info text* (the
 # `game_revenue_info` dataset contains
-# metadata for `game_revenue`)
+# metadata for `game_revenue`
+
+game_revenue_info
+
+# The `info_columns_from_tbl()`
+# function takes a table object
+# where the first column has the
+# column names and the second
+# contains the *info text*
 informant <-
   informant \%>\%
   info_columns_from_tbl(

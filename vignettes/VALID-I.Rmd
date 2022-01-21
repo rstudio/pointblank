@@ -28,12 +28,17 @@ The *agent* needs directives on what to do with the table, so, we provide valida
 - `col_vals_not_between()`: Are column data not between two specified values?
 - `col_vals_in_set()`: Are column data part of a specified set of values?
 - `col_vals_not_in_set()`: Are data not part of a specified set of values?
+- `col_vals_make_set()`: Is a set of values entirely accounted for in a column of values?
+- `col_vals_make_subset()`: Is a set of values a subset of a column of values?
+- `col_vals_increasing()`: Are column data increasing by row?
+- `col_vals_decreasing()`: Are column data decreasing by row?
 - `col_vals_null()`: Are column data `NULL`/`NA`?
 - `col_vals_not_null()`: Are column data not `NULL`/`NA`?
 - `col_vals_regex()`: Do strings in column data match a regex pattern?
+- `col_vals_within_spec()`: Do values in column data fit within a specification?
 - `col_vals_expr()`: Do column data agree with a predicate expression?
-- `conjointly()`: Do multiple rowwise validations result in joint validity?
 - `rows_distinct()`: Are row data distinct?
+- `rows_complete()`: Are row data complete?
 - `col_is_character()`: Do the columns contain character/string data?
 - `col_is_numeric()`: Do the columns contain numeric values?
 - `col_is_integer()`: Do the columns contain integer values?
@@ -43,8 +48,13 @@ The *agent* needs directives on what to do with the table, so, we provide valida
 - `col_is_factor()`: Do the columns contain R `factor` objects?
 - `col_exists()`: Do one or more columns actually exist?
 - `col_schema_match()`: Do columns in the table (and their types) match a predefined schema?
+- `row_count_match()`: Does the row count match that of a different table?
+- `tbl_match()`: Does the target table match a comparison table?
+- `conjointly()`: Do multiple rowwise validations result in joint validity?
+- `serially()`: Run several tests and a final validation in a serial manner
+- `specially()`: Perform a specialized validation with a user-defined function
 
-The final function that needs to be called is the `interrogate()` function. The validation functions, when called on an *agent* object, don't act on the target table until `interrogate()` is used. Until interrogation, the usage of validation functions serves as instructions. During the interrogation phase those instructions turn into actions, with the *agent* then carrying out all steps of the interrogation plan.
+The final function that needs to be called is the `interrogate()` function. The validation functions, when called on an *agent* object, don't act on the target table until `interrogate()` is used. In fact, until interrogation, the usage of validation functions serves as instructions (building up an interrogation plan). During the interrogation phase (i.e., when calling `interrogate()`) those instructions turn into actions, with the *agent* then carrying out all the validation steps of the interrogation plan.
 
 # A Simple Example with the Basics
 
@@ -90,7 +100,7 @@ agent <-
 ── Interrogation Completed ─────────────────────────────────────────────────
 ```
 
-The five `OK` messages means that all of the individual validations in each of those five validation steps passed within the failure threshold levels. Since failure thresholds actually weren't set, these steps will always display `OK` unless an evaluation error occurred. Printing the `agent` object gives a step-by-step breakdown of the interrogation process.
+The five `OK` messages means that all of the individual validations in each of those five validation steps passed within the failure threshold levels. Since failure thresholds actually weren't set, these steps will always display `OK` unless an evaluation error occurred (e.g., attempting to interrogate a column that isn't present in the target table). Printing the `agent` object gives a step-by-step breakdown of the interrogation process.
 
 ```{r get_agent_report_1, eval=FALSE}
 agent
@@ -199,7 +209,7 @@ STOP failure threshold of 0.2 of all test units.
 ──────────────────────────────────────────────────────────────────────────
 ```
 
-Using this new `al` object with our validation workflow will result in failures at certain validation steps to be logged. By default, this is to a file named `"pb_log_file"` in the working directory but the `log4r_step()` function is flexible for allowing any **log4r** appender to be used. Running the following data validation code
+Using this new `al` object with our validation workflow will result in failures at certain validation steps to be logged. By default, this is to a file named `"pb_log_file"` in the working directory but the `log4r_step()` function is flexible for allowing any **log4r** *appender* to be used. Running the following data validation code
 
 ```{r agent_small_table_3, eval=FALSE}
 agent <- 

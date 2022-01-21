@@ -466,11 +466,13 @@ x_read_disk <- function(filename,
   }
   
   # Generate cli message w.r.t. read in RDS file
-  cli_bullet_msg(
-    msg = "The {object_type} has been read from `{filename}`",
-    bullet = cli::symbol$tick,
-    color = "green"
-  )
+  if (!quiet) {
+    cli_bullet_msg(
+      msg = "The {object_type} has been read from `{filename}`",
+      bullet = cli::symbol$tick,
+      color = "green"
+    )
+  }
   
   x
 }

@@ -110,8 +110,19 @@ incorporate <- function(informant) {
   # Obtain the informant's snippets
   meta_snippets <- informant$meta_snippets
   
+  # Quieting of an informant's remarks either when the
+  # session is non-interactive
+  if (!interactive()) {
+    quiet <- TRUE
+  } else {
+    quiet <- FALSE
+  }
+  
   # Signal the start of incorporation in the console
-  create_cli_header_i(snippets_to_process = meta_snippets)
+  create_cli_header_i(
+    snippets_to_process = meta_snippets,
+    quiet = quiet
+  )
   
   # Get the starting time for the gathering of info
   info_gather_start_time <- Sys.time()
@@ -195,9 +206,11 @@ incorporate <- function(informant) {
       end_time = info_gather_end_time
     )
   
-  cli::cli_alert_success(
-    c("Information gathered.", print_time(time_diff_s))
-  )
+  if (!quiet) {
+    cli::cli_alert_success(
+      c("Information gathered.", print_time(time_diff_s))
+    )
+  }
   
   #
   # Incorporate snippets
@@ -290,9 +303,11 @@ incorporate <- function(informant) {
     )
   
   if (length(meta_snippets) > 0) {
-    cli::cli_alert_success(
-      c("Snippets processed.", print_time(time_diff_s))
-    )
+    if (!quiet) {
+      cli::cli_alert_success(
+        c("Snippets processed.", print_time(time_diff_s))
+      )
+    }
   }
   
   # Get the starting time for the information building
@@ -359,16 +374,21 @@ incorporate <- function(informant) {
       end_time = info_build_end_time
     )
   
-  cli::cli_alert_success(
-    c("Information built.", print_time(time_diff_s))
-  )
+  if (!quiet) {
+    cli::cli_alert_success(
+      c("Information built.", print_time(time_diff_s))
+    )
+  }
   
-  create_cli_footer_i()
+  create_cli_footer_i(quiet = quiet)
   
   informant
 }
 
-create_cli_header_i <- function(snippets_to_process) {
+create_cli_header_i <- function(snippets_to_process,
+                                quiet) {
+  
+  if (quiet) return()
   
   if (length(snippets_to_process) < 1) {
     incorporation_progress_header <- 
@@ -385,7 +405,9 @@ create_cli_header_i <- function(snippets_to_process) {
   cli::cli_h1(incorporation_progress_header)
 }
 
-create_cli_footer_i <- function() {
+create_cli_footer_i <- function(quiet) {
+  
+  if (quiet) return()
   
   interrogation_progress_footer <- "Incorporation Completed"
   

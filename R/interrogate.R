@@ -211,9 +211,13 @@ interrogate <- function(agent,
 
     # Skip the validation step if `active = FALSE`
     if (!agent$validation_set[[i, "eval_active"]]) {
-      cli::cli_alert_info(
-        "Step {.field {i}} is not set as {.field active}. Skipping."
-      )
+      
+      if (!quiet) {
+        cli::cli_alert_info(
+          "Step {.field {i}} is not set as {.field active}. Skipping."
+        )
+      }
+      
       next
     }
     

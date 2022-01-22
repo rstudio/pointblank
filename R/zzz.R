@@ -207,6 +207,7 @@ utils::globalVariables(
   register_s3_method("knitr", "knit_print", "ptblank_tbl_scan")
   register_s3_method("knitr", "knit_print", "x_list_i")
   register_s3_method("knitr", "knit_print", "x_list_n")
+  register_s3_method("knitr", "knit_print", "tbl_store")
   
   invisible()
 }

@@ -587,6 +587,10 @@ print.action_levels <- function(x, ...) {
   cli::cli_rule()
 }
 
+#
+# tbl_store
+#
+
 #' Print the `tbl_store` object
 #'
 #' This function will allow the `tbl_store` to be nicely printed.
@@ -641,6 +645,67 @@ print.tbl_store <- function(x, ...) {
   }
   
   cli::cli_rule()
+}
+
+#' Knit print the `tbl_store` object
+#'
+#' This facilitates printing of the `tbl_store` within a knitr code
+#' chunk.
+#'
+#' @param x An object of class `tbl_store`.
+#' @param ... Any additional parameters.
+#'
+#' @keywords internal
+#' @noRd
+knit_print.tbl_store <- function(x, ...) {
+  
+  tbl_names <- names(x)
+  
+  n_tbls <- length(tbl_names)
+  
+  has_given_name <- 
+    vapply(
+      x,
+      FUN.VALUE = logical(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) inherits(x, "with_tbl_name")
+    )
+  
+  tbl_formulas <-
+    vapply(
+      x,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) capture_formula(x)[2]
+    )
+  
+  tbl_store_lines <- c()
+  
+  for (i in seq_len(n_tbls)) {
+    
+    tbl_store_lines <-
+      c(tbl_store_lines,
+        paste0(
+          i, " ", tbl_names[i], ifelse(has_given_name[i], "", "*"),
+          " // ", tbl_formulas[i]
+        )
+      )
+  }
+  
+  tbl_store_lines <- paste(tbl_store_lines, collapse = "\n")
+  
+  top_rule <- "-- The `table_store` table-prep formulas"
+  bottom_rule <- "------------------------------------------"
+  
+  tbl_store_str <-
+    glue::glue(
+      "{top_rule}\n",
+      "{tbl_store_lines}\n",
+      "{bottom_rule}\n"
+    )
+  
+  # Use `knit_print()` to print in a code chunk
+  knitr::knit_print(tbl_store_str, ...)
 }
 
 #' Print the a table-prep formula

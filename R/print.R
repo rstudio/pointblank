@@ -278,6 +278,61 @@ print.x_list_i <- function(x, ...) {
   )
 }
 
+#' Knit print a single-step x-list to the console
+#'
+#' This facilitates printing of the `x_list_i` object within a knitr code
+#' chunk.
+#'
+#' @param x An object of class `x_list_i`.
+#' @param ... Any additional parameters.
+#'
+#' @keywords internal
+#' @noRd
+knit_print.x_list_i <- function(x, ...) {
+  
+  length_rows <- length(x$warn)
+
+  tbl_classes <- paste(class(x$tbl), collapse = " ")
+
+  top_rule <-
+    paste0(
+      "-- The x-list for table `", x$tbl_name, "` ",
+      "------------ STEP ", x$i, " --"
+  )
+  
+  if (length(x$time_start) == 0) {
+    bottom_rule <- "-- NO INTERROGATION PERFORMED ------------"
+  } else {
+    bottom_rule <- "------------------------------------------"
+  }
+
+  x_list_str <-
+    glue::glue(
+      "{top_rule}\n",
+      "$time_start $time_end (POSIXct [{length(x$time_start)}])\n",
+      "$label $tbl_name $tbl_src $tbl_src_details (chr [1])\n",
+      "$tbl ({tbl_classes})\n",
+      "$col_names $col_types (chr [{length(x$col_names)}])\n",
+      "$i $type $columns $values $label $briefs ",
+      "(mixed [{length(x$i)}])\n",
+      "$eval_error $eval_warning (lgl [{length(x$i)}])\n",
+      "$capture_stack (list [{length(x$capture_stack)}])\n",
+      "$n $n_passed $n_failed $f_passed $f_failed ",
+      "(num [{length_rows}])\n",
+      "$warn $stop $notify (lgl [{length_rows}])\n",
+      "$lang (chr [1])\n",
+      "{bottom_rule}\n"
+    )
+  
+  #right = ifelse(length(x$time_start) == 0, "NO INTERROGATION PERFORMED", "")
+  # Use `knit_print()` to print in a code chunk
+  knitr::knit_print(x_list_str, ...)
+}
+
+#
+# x_list_n
+#
+
 #' Print an x-list comprising all validation steps to the console
 #'
 #' This function will print a x-list object, with all validation steps included,
@@ -360,6 +415,66 @@ print.x_list_n <- function(x, ...) {
     right = ifelse(length(x$time_start) == 0, "NO INTERROGATION PERFORMED", "")
   )
 }
+
+#' Knit print an x-list comprising all validation steps
+#'
+#' This facilitates printing of the `x_list_n` object within a knitr code
+#' chunk.
+#'
+#' @param x An object of class `x_list_n`.
+#' @param ... Any additional parameters.
+#'
+#' @keywords internal
+#' @noRd
+knit_print.x_list_n <- function(x, ...) {
+  
+  tbl_classes <- paste(class(x$tbl), collapse = " ")
+  
+  length_rows <- length(x$warn)
+  validation_set_rows <- nrow(x$validation_set)
+  validation_set_cols <- ncol(x$validation_set)
+  
+  top_rule <-
+    paste0(
+      "-- The x-list for table `", x$tbl_name, "` ",
+      "------------ ALL STEPS --"
+    )
+  
+  if (length(x$time_start) == 0) {
+    bottom_rule <- "-- NO INTERROGATION PERFORMED ------------"
+  } else {
+    bottom_rule <- "------------------------------------------"
+  }
+  
+  x_list_str <-
+    glue::glue(
+      "{top_rule}\n",
+      "$time_start $time_end (POSIXct [{length(x$time_start)}])\n",
+      "$label $tbl_name $tbl_src $tbl_src_details (chr [1])\n",
+      "$tbl ({tbl_classes})\n",
+      "$col_names $col_types (chr [{length(x$col_names)}])\n",
+      "$i $type $columns $values $label $briefs ",
+      "(mixed [{length(x$i)}])\n",
+      "$eval_error $eval_warning (lgl [{length(x$i)}])\n",
+      "$capture_stack (list [{length(x$capture_stack)}])\n",
+      "$n $n_passed $n_failed $f_passed $f_failed ",
+      "(num [{length_rows}])\n",
+      "$warn $stop $notify (lgl [{length_rows}])\n",
+      "$validation_set (tbl_df [{validation_set_rows}, ",
+      "{validation_set_cols}])\n",
+      "$lang (chr [1])\n",
+      "$report_object (blastula_message)\n",
+      "$report_html $report_html_small (chr [1])\n",
+      "{bottom_rule}\n"
+    )
+  
+  # Use `knit_print()` to print in a code chunk
+  knitr::knit_print(x_list_str, ...)
+}
+
+#
+# action_levels
+#
 
 #' Print the `action_levels` object
 #'

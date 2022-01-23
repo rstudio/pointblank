@@ -56,10 +56,10 @@ gt_tbl <-
     id = "report"
   ) %>%
   tab_header(title = md("Upcoming Tasks and Milestones for **pointblank**")) %>%
-  fmt_markdown(vars(title)) %>%
-  fmt_missing(vars(priority, difficulty, effort), missing_text = "") %>%
+  fmt_markdown(columns = title) %>%
+  fmt_missing(columns = c(priority, difficulty, effort), missing_text = "") %>%
   data_color(
-    columns = vars(priority, difficulty, effort),
+    columns = c(priority, difficulty, effort),
     colors = scales::col_numeric(
       palette = c("#0e8a16", "#fbca04", "#d93f0b", "#c12e49"),
       domain = c(1, 4),
@@ -70,30 +70,30 @@ gt_tbl <-
   ) %>%
   tab_style(
     style = cell_text(color = "black", weight = "600"),
-    locations = cells_body(columns = vars(priority, difficulty, effort))
+    locations = cells_body(columns = c(priority, difficulty, effort))
   ) %>%
   tab_style(
     style = cell_borders(
       sides = "left", style = "dashed", weight = px(2), color = "#F0F1F3"),
-    locations = cells_body(columns = vars(type))
+    locations = cells_body(columns = type)
   ) %>%
   tab_style(
     style = cell_borders(
       sides = "right", style = "solid", weight = px(1), color = "#F0F1F3"),
-    locations = cells_body(columns = vars(priority, difficulty))
+    locations = cells_body(columns = c(priority, difficulty))
   ) %>%
   cols_label(
     title = "",
     type = ""
   ) %>%
-  cols_align("center", columns = vars(priority, difficulty, effort)) %>%
+  cols_align("center", columns = c(priority, difficulty, effort)) %>%
   cols_width(
     1 ~ px(60),
-    vars(title) ~ px(400),
-    vars(priority, difficulty, effort) ~ px(75),
-    TRUE ~ px(140)
+    title ~ px(400),
+    c(priority, difficulty, effort) ~ px(75),
+    everything() ~ px(140)
   ) %>%
-  opt_align_table_header("left") %>%
+  opt_align_table_header(align = "left") %>%
   opt_all_caps() %>%
   opt_table_outline(style = "none") %>%
   tab_options(
@@ -103,20 +103,23 @@ gt_tbl <-
     data_row.padding = px(4)
   ) %>%
   text_transform(
-    locations = cells_body(columns = vars(priority)),
+    locations = cells_body(columns = priority),
     fn = function(x) {
       ifelse(x == "4", "♨︎", x)
     } 
   ) %>%
   text_transform(
-    locations = cells_body(columns = vars(priority)),
+    locations = cells_body(columns = priority),
     fn = function(x) {
       ifelse(x == "4", "♨︎", x)
     } 
   ) %>%
   tab_style(
     style = "height: 50px",
-    locations = cells_body(columns = TRUE, rows = !grepl("Release", type))
+    locations = cells_body(
+      columns = everything(),
+      rows = !grepl("Release", type)
+    )
   ) %>%
   tab_style(
     style = "
@@ -128,7 +131,7 @@ gt_tbl <-
     -o-animation: AnimationName 5s ease infinite;
     animation: AnimationName 5s ease infinite;",
     locations = cells_body(
-      columns = vars(title, type, priority, difficulty, effort),
+      columns = c(title, type, priority, difficulty, effort),
       rows = grepl("Release", type)
     )
   ) %>%
@@ -139,7 +142,7 @@ gt_tbl <-
       weight = "0"
     ),
     locations = cells_body(
-      columns = vars(title, type, priority, difficulty, effort),
+      columns = c(title, type, priority, difficulty, effort),
       rows = grepl("Release", type)
     )
   )

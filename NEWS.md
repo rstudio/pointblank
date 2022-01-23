@@ -1,5 +1,29 @@
 # pointblank (development version)
 
+## New features
+
+* The new function `row_count_match()` (plus `expect_row_count_match()` and `test_row_count_match()`) checks for exact matching of rows across two tables (the target table and a comparison table of your choosing). Works equally well for local tables and for database and Spark tables.
+
+* The new `tbl_match()` function (along with `expect_tbl_match()` and `test_tbl_match()`) check for an exact matching of the target table with a comparison table. It will check for a strict match on table schemas, on equivalent row counts, and then exact matches on cell values across the two tables.
+
+## Minor improvements and bug fixes
+
+* The `set_tbl()` function was given the `tbl_name` and `label` arguments to provide an opportunity to set metadata on the new target table.
+
+* Support for `mssql` tables has been restored and works exceedingly well for the majority of validation functions (the few that are incompatible provide messaging about not being supported).
+
+## Documentation
+
+* All functions in the package now have usage examples.
+
+* An RStudio Cloud project has been prepared with .Rmd files that contain explainers and runnable examples for each function in the package. Look at the project README for a link to the project.
+
+## Breaking changes
+
+* The `read_fn` argument in `create_agent()` and `create_informant()` has been deprecated in favor of an enhanced `tbl` argument. Now, we can supply a variety of inputs to `tbl` for associating a target table to an agent or an informant. With `tbl`, it's now possible to provide a table (e.g., `data.frame`, `tbl_df`, `tbl_dbi`, `tbl_spark`, etc.), an expression (a table-prep formula or a function) to read in the table only at interrogation time, or a table source expression to get table preparations from a table store (as an in-memory object or as defined in a YAML file).
+
+* The `set_read_fn()`, `remove_read_fn()`, and `remove_tbl()` functions were removed since the `read_fn` argument has been deprecated (and there's virtually no need to remove a table from an object with `remove_tbl()` now).
+
 # pointblank 0.9.0
 
 ## New features

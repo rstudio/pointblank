@@ -296,14 +296,14 @@ knit_print.x_list_i <- function(x, ...) {
 
   top_rule <-
     paste0(
-      "-- The x-list for table `", x$tbl_name, "` ",
-      "------------ STEP ", x$i, " --"
+      "-- The x-list for table `", x$tbl_name, "`\n",
+      "---- STEP ", x$i, " ----"
   )
   
   if (length(x$time_start) == 0) {
-    bottom_rule <- "-- NO INTERROGATION PERFORMED ------------"
+    bottom_rule <- "---- NO INTERROGATION PERFORMED ----"
   } else {
-    bottom_rule <- "------------------------------------------"
+    bottom_rule <- "----"
   }
 
   x_list_str <-
@@ -436,14 +436,14 @@ knit_print.x_list_n <- function(x, ...) {
   
   top_rule <-
     paste0(
-      "-- The x-list for table `", x$tbl_name, "` ",
-      "------------ ALL STEPS --"
+      "-- The x-list for table `", x$tbl_name, "`\n",
+      "---- ALL STEPS ----"
     )
   
   if (length(x$time_start) == 0) {
-    bottom_rule <- "-- NO INTERROGATION PERFORMED ------------"
+    bottom_rule <- "---- NO INTERROGATION PERFORMED ----"
   } else {
-    bottom_rule <- "------------------------------------------"
+    bottom_rule <- "----"
   }
   
   x_list_str <-
@@ -587,6 +587,151 @@ print.action_levels <- function(x, ...) {
   cli::cli_rule()
 }
 
+#' Knit print the `action_levels` object
+#'
+#' This facilitates printing of the `action_levels` within a knitr code
+#' chunk.
+#'
+#' @param x An object of class `action_levels`.
+#' @param ... Any additional parameters.
+#'
+#' @keywords internal
+#' @noRd
+knit_print.action_levels <- function(x, ...) {
+  
+  has_warn_fns <- !is.null(x$fns$warn)
+  has_stop_fns <- !is.null(x$fns$stop)
+  has_notify_fns <- !is.null(x$fns$notify)
+  
+  top_rule <- "-- The `action_levels` settings"
+  bottom_rule <- "----"
+  
+  action_levels_lines <- c()
+  
+  if (!is.null(x$warn_fraction)) {
+    action_levels_lines <-
+      c(action_levels_lines,
+        paste0(
+          "WARN failure threshold of ",
+          x$warn_fraction,
+          " of all test units."
+        )
+      )
+  }
+  if (!is.null(x$warn_count)) {
+    action_levels_lines <-
+      c(action_levels_lines,
+        paste0(
+          "WARN failure threshold of ",
+          pb_fmt_number(x$warn_count, decimals = 0),
+          "test units."
+        )
+      )
+  }
+  if (has_warn_fns) {
+    if (is.null(x$warn_fraction) && is.null(x$warn_count)) {
+      action_levels_lines <-
+        c(action_levels_lines,
+          paste0(
+            "WARN fns provided without a failure threshold.\n",
+            "Set the WARN threshold using the `warn_at` argument.\n"
+          )
+        )
+    } else {
+      action_levels_lines <-
+        c(action_levels_lines,
+          paste0("\\fns\\ ", paste(as.character(x$fns$warn), collapse = " "))
+        )
+    }
+  }
+  
+  if (!is.null(x$stop_fraction)) {
+    action_levels_lines <-
+      c(action_levels_lines,
+        paste0(
+          "STOP failure threshold of ",
+          x$stop_fraction,
+          " of all test units."
+        )
+      )
+  }
+  if (!is.null(x$stop_count)) {
+    action_levels_lines <-
+      c(action_levels_lines,
+        paste0(
+          "STOP failure threshold of ",
+          pb_fmt_number(x$stop_count, decimals = 0),
+          "test units."
+        )
+      )
+  }
+  if (has_stop_fns) {
+    if (is.null(x$stop_fraction) && is.null(x$stop_count)) {
+      action_levels_lines <-
+        c(action_levels_lines,
+          paste0(
+            "STOP fns provided without a failure threshold.\n",
+            "Set the STOP threshold using the `stop_at` argument.\n"
+          )
+        )
+    } else {
+      action_levels_lines <-
+        c(action_levels_lines,
+          paste0("\\fns\\ ", paste(as.character(x$fns$stop), collapse = " "))
+        )
+    }
+  }
+  
+  if (!is.null(x$notify_fraction)) {
+    action_levels_lines <-
+      c(action_levels_lines,
+        paste0(
+          "NOTIFY failure threshold of ",
+          x$notify_fraction,
+          " of all test units."
+        )
+      )
+  }
+  if (!is.null(x$notify_count)) {
+    action_levels_lines <-
+      c(action_levels_lines,
+        paste0(
+          "NOTIFY failure threshold of ",
+          pb_fmt_number(x$notify_count, decimals = 0),
+          "test units."
+        )
+      )
+  }
+  if (has_notify_fns) {
+    if (is.null(x$notify_fraction) && is.null(x$notify_count)) {
+      action_levels_lines <-
+        c(action_levels_lines,
+          paste0(
+            "NOTIFY fns provided without a failure threshold.\n",
+            "Set the NOTIFY threshold using the `notify_at` argument.\n"
+          )
+        )
+    } else {
+      action_levels_lines <-
+        c(action_levels_lines,
+          paste0("\\fns\\ ", paste(as.character(x$fns$notify), collapse = " "))
+        )
+    }
+  }
+  
+  action_levels_lines <- paste(action_levels_lines, collapse = "\n")
+  
+  action_levels_str <-
+    glue::glue(
+      "{top_rule}\n",
+      "{action_levels_lines}\n",
+      "{bottom_rule}\n"
+    )
+  
+  # Use `knit_print()` to print in a code chunk
+  knitr::knit_print(action_levels_str, ...)
+}
+
 #
 # tbl_store
 #
@@ -695,7 +840,7 @@ knit_print.tbl_store <- function(x, ...) {
   tbl_store_lines <- paste(tbl_store_lines, collapse = "\n")
   
   top_rule <- "-- The `table_store` table-prep formulas"
-  bottom_rule <- "------------------------------------------"
+  bottom_rule <- "----"
   
   tbl_store_str <-
     glue::glue(

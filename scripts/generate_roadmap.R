@@ -29,6 +29,9 @@ tbl <-
     sep = "\\.",
     remove = FALSE
   ) %>%
+  dplyr::select(
+    number, title, milestone_title, major, minor, patch, type, difficulty, effort, priority
+  ) %>%
   dplyr::mutate(major = gsub("v", "", major)) %>% 
   dplyr::mutate_at(.vars = vars(major, minor, patch), .funs = as.integer) %>%
   dplyr::mutate(difficulty = gsub(".*?([1-3]).*", "\\1", difficulty)) %>%

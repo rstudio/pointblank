@@ -45,5 +45,8 @@ pkgdown
 tests/manual_tests/*.rds
 tests/manual_tests/saved_agents/*.rds
 
+# .DS_Store
+.DS_Store
+
 # Movies
 *.mp4

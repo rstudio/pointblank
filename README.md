@@ -28,14 +28,16 @@ up-to-date with the information that *defines* your tables.
 
 For table *validation*, the *agent* object works with a large collection of
 simple (yet powerful!) validation functions. We can enable much more
-sophisticated validation checks by using custom expressions and also through
-stepwise mutation of the target table (through something we call
-`preconditions`).
+sophisticated validation checks by using custom expressions, segmenting the
+data, and by selective mutations of the target table. The suite of validation
+functions ensures that *everything just works* no matter whether your table is
+a data frame or a database table.
 
-Sometimes we want to maintain table *information* and update it when the table
-goes through changes. For that, we can use an *informant* object + associated
-functions to help define the metadata entries and present it in a way that suits
-you.
+Sometimes, we want to maintain table *information* and update it when the table
+goes through changes. For that, we can use an *informant* object plus associated
+functions to help define the metadata entries and present it as data dictionary.
+Just like we can with validation, **pointblank** offers easy ways to have the
+metadata updated so that this important documentation doesn't become stale.
 
 <hr>
 
@@ -101,9 +103,8 @@ without any long waits for reporting.
 Should you want to perform validation checks on database or *Spark*
 tables, provide a `tbl_dbi` or `tbl_spark` object to `create_agent()`.
 The **pointblank** package currently supports *PostgreSQL*. *MySQL*,
-*MariaDB*, *DuckDB*, *SQLite*, and *Spark DataFrames* (through the
-**sparklyr** package). The `db_tbl()` function is provided by
-**pointblank** to make accessing a DB table insanely easy.
+*MariaDB*, *Microsoft SQL Server*, *DuckDB*, *SQLite*, and
+*Spark DataFrames* (through the **sparklyr** package).
 
 Here are some validation reports for the considerably larger 
 `intendo::intendo_revenue` table.
@@ -231,9 +232,18 @@ IDE (it’s called `Pointblank Validation`). Try it out\!
 
 ## TABLE INFORMATION
 
-Table information can be synthesized in an *information management* workflow, giving us a snapshot of a data table we care to collect information on. The **pointblank** *informant* is fed a series of information functions to define bits of information about a table. This info text can pertain to individual columns, the table as a whole, and whatever additional information makes sense for your organization. We can even glean little snippets of information (like column stats or sample values) from the target table and mix them into the data dictionary wherever they're needed.
+Table information can be synthesized in an *information management* workflow,
+giving us a snapshot of a data table we care to collect information on.
+The **pointblank** *informant* is fed a series of `info_*()` functions to
+define bits of information about a table. This info text can pertain to
+individual columns, the table as a whole, and whatever additional information
+makes sense for your organization. We can even glean little snippets of
+information (like column stats or sample values) from the target table with
+`info_snippet()` and the `snip_*()` functions and mix them into the data
+dictionary wherever they're needed.
 
-Here is an example of how to use **pointblank** to incorporate pieces of info text into an *informant* object.
+Here is an example of how to use **pointblank** to incorporate pieces of
+info text into an *informant* object.
 
 ``` r
 # Create a pointblank `informant` object, with the
@@ -301,7 +311,7 @@ We can use the `scan_data()` function to generate a comprehensive summary of a t
 
 [![Table Scan of dplyr::storms](https://img.shields.io/static/v1?label=Table%20Scan&message=dplyr::storms&color=blue)](https://rpubs.com/rich_i/scan_data_storms)
 
-[![Table Scan of dplyr::storms](https://img.shields.io/static/v1?label=Table%20Scan&message=pointblank::game_revenue&color=blue)](https://rpubs.com/rich_i/scan_data_game_revenue)
+[![Table Scan of pointblank::game_revenue](https://img.shields.io/static/v1?label=Table%20Scan&message=pointblank::game_revenue&color=blue)](https://rpubs.com/rich_i/scan_data_game_revenue)
 
 
 Database tables can be used with `scan_data()` as well. Here are two examples using (1) the `full_region` table of the **Rfam** database (hosted publicly at `mysql-rfam-public.ebi.ac.uk`) and (2) the `assembly` table of the **Ensembl** database (hosted publicly at `ensembldb.ensembl.org`).
@@ -316,14 +326,11 @@ assembly](https://img.shields.io/static/v1?label=Table%20Scan&message=Ensembl:%2
 
 ## OVERVIEW OF PACKAGE FUNCTIONS
 
-There are many functions available in **pointblank** for making
-comprehensive table validations. Each validation function is associated
-with an expectation function (of the form `expect_*()`). They are
-equivalent in usage and behavior to **testthat** tests with the big
-distinction that they check aspects of data tables (and not the results
-of function calls). Furthermore, each validation function has an
-associated test function (of the form `test_*()`) which always returns a
-logical value (`TRUE` or `FALSE`).
+There are many functions available in **pointblank** for understanding data
+quality and doing data documentation. Here is an overview of all of them,
+grouped by family. For much more information on these, visit the
+[documentation website](https://rich-iannone.github.io/pointblank/) or take
+a *Test Drive* in the [RStudio Cloud project](https://rstudio.cloud/project/3411822).
 
 <p align="center">
 
